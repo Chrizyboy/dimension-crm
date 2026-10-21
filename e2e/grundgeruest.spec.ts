@@ -35,10 +35,10 @@ test('Unbekannte Adresse zeigt eine verständliche Seite', async ({ page }) => {
 test.describe('Desktop', () => {
   test.skip(({ isMobile }) => isMobile, 'nur Desktop')
 
-  test('Alle 19 Bereiche sind über die Seitenleiste erreichbar', async ({ page }) => {
+  test('Alle 21 Bereiche sind über die Seitenleiste erreichbar', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
-    await expect(nav.getByRole('link')).toHaveCount(19)
+    await expect(nav.getByRole('link')).toHaveCount(21)
     await nav.getByRole('link', { name: 'Anfragen & Leads' }).click()
     await expect(page).toHaveURL(/#\/sales$/)
     await expect(page.getByText('Vom ersten Kontakt bis zur Auftragszusage')).toBeVisible()

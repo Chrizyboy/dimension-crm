@@ -1,0 +1,22 @@
+/**
+ * Öffentliche Schnittstelle des Moduls «Einkauf & Material».
+ * Andere Teile des CRM dürfen NUR von hier importieren, nie direkt aus Unterordnern.
+ */
+import type { ModulMeta } from '@/types/modul'
+
+/** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
+export const meta: ModulMeta = {
+  id: 'purchasing',
+  titel: { de: 'Einkauf & Material', fr: 'Achats & matériel' },
+  // Ein Satz, was man hier erledigt. Erscheint als Hinweis in Seitenleiste, Suche und Seitenkopf.
+  untertitel: {
+    de: 'Material bei Lieferanten bestellen, Liefertermine, Wareneingang, Lager',
+    fr: 'Commander le matériel, délais de livraison, réception, stock',
+  },
+  pfad: '/purchasing',
+  icon: 'package',
+  gruppe: 'abwicklung',
+  phase: '9a',
+}
+
+export type * from './types'
