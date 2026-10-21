@@ -90,4 +90,6 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 - TypeScript bleibt auf 6.0.x, bis `typescript-eslint` TypeScript 7 unterstützt.
 - Lokale Browser-Tests mit eigenem Chromium: `PW_CHROMIUM=/pfad/zu/chromium npm run test:e2e`.
 - Import der Vorlage: `SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip"`. Nur lokal; der Schlüssel nie in die App oder in Git. Echte Kundendaten nie in `seed.sql`.
+- Anmeldung: Microsoft oder Code per Mail, nur für erfasste Personen (Hook `intern.vor_konto_anlage`). Lokale Testpersonen `admin@`, `verkauf@`, `buchhaltung@test.local`, Code in Mailpit (http://127.0.0.1:54324). Einrichtung im Betrieb: `docs/anmeldung.md`.
+- Browser-Test `anmeldung` braucht die lokale Supabase mit `npx supabase functions serve`; ohne sie wird er übersprungen.
 - Routen nutzen Hash-Adressen (`#/sales`), weil die Desktop-App Dateien lokal lädt.

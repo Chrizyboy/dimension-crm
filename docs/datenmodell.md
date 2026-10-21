@@ -1,6 +1,6 @@
 # Datenmodell
 
-Stand Phase 3. 61 Fachtabellen in `public`, eingerichtet mit `intern.richte_fachtabelle_ein` (siehe Entscheid 0010). Jede hat `id`, `erstellt_am`, `erstellt_von`, `geaendert_am`, `geloescht_am` (Papierkorb), `alt_id` und `alt_daten` (Herkunft aus V233). Beträge stehen immer in Rappen (`…_rappen`, Ganzzahl).
+Stand Phase 4. 62 Fachtabellen in `public`, eingerichtet mit `intern.richte_fachtabelle_ein` (siehe Entscheid 0010). Jede hat `id`, `erstellt_am`, `erstellt_von`, `geaendert_am`, `geloescht_am` (Papierkorb), `alt_id` und `alt_daten` (Herkunft aus V233). Beträge stehen immer in Rappen (`…_rappen`, Ganzzahl).
 
 ```
 Kontakt ─┬─ Objekt ─── Anlage ─── Service-Fall, Wartungsvertrag
@@ -13,6 +13,7 @@ Kontakt ─┬─ Objekt ─── Anlage ─── Service-Fall, Wartungsvertra
 | Bereich           | Tabellen                                                                                               | Recht    |
 | ----------------- | ------------------------------------------------------------------------------------------------------ | -------- |
 | Organisation      | `personen`, `firmen`, `standorte`, `lagerorte`, `regionen`                                             | basis    |
+| Rollen            | `rollen` (Rechte und sichtbare Bereiche; ändern nur mit admin)                                         | basis    |
 | Konfiguration     | `auswahlwerte`, `einstellungen`, `ablauf_vorlagen`, `ablauf_schritte`                                  | basis    |
 | Kunden            | `kontakte`, `objekte`, `sharepoint_ordner`                                                             | basis    |
 | Verkauf           | `verkaufschancen`, `aktivitaeten`, `aufgaben`, `ausschreibungen`                                       | basis    |
@@ -61,3 +62,7 @@ select intern.richte_fachtabelle_ein('beispiel');          -- oder ('beispiel', 
 ```
 
 Danach `npm run db:typen`, damit die App die neuen Spalten kennt.
+
+## Rechte (Phase 4)
+
+Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`personen.rechte`). `admin` schliesst alle anderen ein. Die Datenbank prüft das mit `intern.hat_recht()`. Sichtbare Bereiche: `personen.bereiche`, sonst `rollen.bereiche`, sonst alle; sie steuern nur die Menüs. Das `aenderungsprotokoll` zeigt einen Eintrag nur, wer die betroffene Tabelle lesen darf (`intern.tabellen_leserecht`). Siehe Entscheid 0012.
