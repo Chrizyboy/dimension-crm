@@ -13,6 +13,7 @@ export const meta: ModulMeta = {
   icon: 'square-check',
   gruppe: 'uebersicht',
   phase: 6,
+  immer: true,
 }
 
 export type * from './types'

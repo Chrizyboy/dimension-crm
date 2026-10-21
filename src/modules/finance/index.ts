@@ -13,6 +13,7 @@ export const meta: ModulMeta = {
   icon: 'landmark',
   gruppe: 'verwaltung',
   phase: 10,
+  recht: 'finanzen',
 }
 
 export type * from './types'

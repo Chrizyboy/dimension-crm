@@ -1,3 +1,5 @@
+import type { Recht } from './anmeldung'
+
 /** Sprachen der Oberfläche. Kundendokumente folgen der Sprache des Kunden. */
 export type Sprache = 'de' | 'fr'
 
@@ -21,6 +23,10 @@ export interface ModulMeta {
   gruppe: NavGruppe
   /** Phase des Bauplans, in der das Modul gebaut wird (0 = gemeinsamer Baustein). */
   phase: Phasennummer
+  /** Recht, ohne das der Bereich verborgen bleibt (z. B. «finanzen»). Die Daten schützt zusätzlich RLS. */
+  recht?: Recht
+  /** Immer sichtbar, unabhängig von der Bereichs-Auswahl (wie «Mein Tag» in der Vorlage). */
+  immer?: boolean
 }
 
 /**

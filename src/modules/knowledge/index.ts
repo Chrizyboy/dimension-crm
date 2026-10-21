@@ -13,6 +13,7 @@ export const meta: ModulMeta = {
   icon: 'book-open',
   gruppe: 'weitere',
   phase: 15,
+  immer: true,
 }
 
 export type * from './types'
