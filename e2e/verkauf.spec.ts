@@ -87,7 +87,7 @@ test('Pipeline, Liste, Tagesroute und Monatsbericht ohne Verstösse, hell und du
     ['pipeline', 'Abgeschlossene zeigen', 'dark'],
     ['liste', 'Nach Stand', 'dark'],
     ['tagesroute', 'Leads in der Nähe ergänzen', 'light'],
-    ['bericht', 'Bericht an den Anbieter', 'light'],
+    ['bericht', 'Leads im CRM', 'light'],
     ['kalender', 'Kalender laden', 'dark'],
   ] as const) {
     await page.emulateMedia({ colorScheme: schema })
