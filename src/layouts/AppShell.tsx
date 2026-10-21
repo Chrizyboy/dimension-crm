@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useOberflaeche } from '@/hooks/useOberflaeche'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
+import { Logo } from '@/components/shared/Logo'
 import { Kopfzeile } from './Kopfzeile'
 import { Seitenleiste } from './Seitenleiste'
 
@@ -21,9 +22,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         className={cn('bg-sidebar hidden w-60 shrink-0 flex-col border-r md:flex', eingeklappt && 'md:hidden')}
         aria-label={t('app.name')}
       >
-        <div className="flex h-12 items-center gap-2.5 border-b px-4">
-          <img src="./icon.svg" alt="" className="size-6 rounded-md" />
-          <span className="text-sm font-semibold">{t('app.name')}</span>
+        <div className="flex h-12 items-center border-b px-4">
+          <Logo className="h-8" />
         </div>
         <Seitenleiste />
       </aside>

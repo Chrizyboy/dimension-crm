@@ -35,11 +35,11 @@ test('Unbekannte Adresse zeigt keine leere Seite', async ({ page }) => {
 test.describe('Navigation (Desktop)', () => {
   test.skip(({ isMobile }) => isMobile, 'Handy-Navigation folgt in Phase 2')
 
-  test('Jedes Modul ist über die Seitenleiste erreichbar', async ({ page }) => {
+  test('Alle 19 Module sind über die Seitenleiste erreichbar', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
     const links = nav.getByRole('link')
-    await expect(links).toHaveCount(18)
+    await expect(links).toHaveCount(19)
     await links.filter({ hasText: 'Verkauf' }).first().click()
     await expect(page).toHaveURL(/#\/sales$/)
     await expect(page.getByText('Phase 6').first()).toBeVisible()

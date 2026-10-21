@@ -16,6 +16,8 @@ export function Kopfzeile() {
       <Button variant="ghost" size="icon" onClick={toggleSeitenleiste} aria-label="Seitenleiste ein- oder ausblenden">
         <PanelLeft className="size-4" />
       </Button>
+      {/* Am Handy fehlt die Seitenleiste mit dem Logo, deshalb hier das Zeichen. */}
+      <img src="./icon.svg" alt="Dimension Solaire" className="size-7 md:hidden" />
       <div className="bg-surface text-muted-foreground flex h-8 max-w-md flex-1 items-center gap-2 rounded-md border px-2.5 text-sm">
         <Search className="size-4" aria-hidden="true" />
         <span className="flex-1 truncate">{t('nav.suchen')}</span>

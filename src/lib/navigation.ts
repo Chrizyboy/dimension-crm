@@ -15,6 +15,7 @@ import { meta as quotes } from '@/modules/quotes'
 import { meta as sales } from '@/modules/sales'
 import { meta as settings } from '@/modules/settings'
 import { meta as tasks } from '@/modules/tasks'
+import { meta as tenders } from '@/modules/tenders'
 import { meta as today } from '@/modules/today'
 import type { ModulMeta, NavGruppe } from '@/types/modul'
 
@@ -25,6 +26,7 @@ export const MODULE: readonly ModulMeta[] = [
   tasks,
   sales,
   quotes,
+  tenders,
   customers,
   contacts,
   marketing,
