@@ -2,6 +2,7 @@
  * Öffentliche Schnittstelle des Moduls «Adressbuch».
  * Andere Teile des CRM dürfen NUR von hier importieren, nie direkt aus Unterordnern.
  */
+import { lazy } from 'react'
 import type { ModulMeta } from '@/types/modul'
 
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
@@ -17,5 +18,8 @@ export const meta: ModulMeta = {
   gruppe: 'verkauf',
   phase: 5,
 }
+
+/** Liste aller Kontakte mit Filter nach Art und Papierkorb. */
+export const Adressbuch = lazy(() => import('./components/Adressbuch'))
 
 export type * from './types'

@@ -1,10 +1,12 @@
 import { Command } from 'cmdk'
 import { Search } from 'lucide-react'
 import { Dialog as DialogPrimitive } from 'radix-ui'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Kbd } from '@/components/ui/diverses'
 import { useBefehle, type Befehl } from '@/hooks/useBefehle'
+import { useKontaktBefehle } from '@/hooks/useKontaktBefehle'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { useUi } from '@/stores/ui'
 
@@ -16,17 +18,29 @@ export function Befehlspalette() {
   const { t } = useTranslation()
   const offen = useUi((z) => z.befehlspaletteOffen)
   const setOffen = useUi((z) => z.setBefehlspalette)
-  const befehle = useBefehle(() => {
+  const [suche, setSuche] = useState('')
+  const schliessen = () => {
     setOffen(false)
-  })
+    setSuche('')
+  }
+  const feste = useBefehle(schliessen)
+  const kontakte = useKontaktBefehle(suche, schliessen)
+  const befehle = [...kontakte.befehle, ...feste]
 
   const gruppen: { id: Befehl['gruppe']; titel: string }[] = [
+    { id: 'kontakte', titel: t('befehle.gruppeKontakte') },
     { id: 'gehe-zu', titel: t('befehle.gruppeGeheZu') },
     { id: 'aktionen', titel: t('befehle.gruppeAktionen') },
   ]
 
   return (
-    <DialogPrimitive.Root open={offen} onOpenChange={setOffen}>
+    <DialogPrimitive.Root
+      open={offen}
+      onOpenChange={(o) => {
+        if (o) setOffen(true)
+        else schliessen()
+      }}
+    >
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="animate-einblenden fixed inset-0 z-50 bg-[rgb(2_10_24/0.45)]" />
         <DialogPrimitive.Content
@@ -39,6 +53,8 @@ export function Befehlspalette() {
               <Search className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
               <Command.Input
                 autoFocus
+                value={suche}
+                onValueChange={setSuche}
                 placeholder={t('befehle.platzhalter')}
                 className="placeholder:text-muted-foreground h-12 flex-1 bg-transparent text-sm outline-none"
               />
@@ -46,7 +62,7 @@ export function Befehlspalette() {
             </div>
             <Command.List className="max-h-[min(60vh,26rem)] overflow-y-auto p-1.5">
               <Command.Empty className="text-muted-foreground px-3 py-8 text-center text-sm">
-                {t('befehle.nichts')}
+                {kontakte.laedt ? t('befehle.sucht') : t('befehle.nichts')}
               </Command.Empty>
               {gruppen.map((g) => (
                 <Command.Group

@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as ModulRouteImport } from './app/$modul'
 import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
+import { Route as ContactsRouteImport } from './app/contacts'
+import { Route as CustomersRouteImport } from './app/customers'
 import { Route as DesignRouteImport } from './app/design'
 import { Route as KontoRouteImport } from './app/konto'
 import { Route as SettingsRouteImport } from './app/settings'
@@ -29,6 +31,16 @@ const ModulRoute = ModulRouteImport.update({
 const BenachrichtigungenRoute = BenachrichtigungenRouteImport.update({
   id: '/benachrichtigungen',
   path: '/benachrichtigungen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactsRoute = ContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignRoute = DesignRouteImport.update({
@@ -51,6 +63,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
+  '/contacts': typeof ContactsRoute
+  '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
   '/settings': typeof SettingsRoute
@@ -59,6 +73,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
+  '/contacts': typeof ContactsRoute
+  '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
   '/settings': typeof SettingsRoute
@@ -68,6 +84,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
+  '/contacts': typeof ContactsRoute
+  '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
   '/settings': typeof SettingsRoute
@@ -75,15 +93,31 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/$modul' | '/benachrichtigungen' | '/design' | '/konto' | '/settings'
+    | '/'
+    | '/$modul'
+    | '/benachrichtigungen'
+    | '/contacts'
+    | '/customers'
+    | '/design'
+    | '/konto'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/$modul' | '/benachrichtigungen' | '/design' | '/konto' | '/settings'
+    | '/'
+    | '/$modul'
+    | '/benachrichtigungen'
+    | '/contacts'
+    | '/customers'
+    | '/design'
+    | '/konto'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/$modul'
     | '/benachrichtigungen'
+    | '/contacts'
+    | '/customers'
     | '/design'
     | '/konto'
     | '/settings'
@@ -93,6 +127,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulRoute: typeof ModulRoute
   BenachrichtigungenRoute: typeof BenachrichtigungenRoute
+  ContactsRoute: typeof ContactsRoute
+  CustomersRoute: typeof CustomersRoute
   DesignRoute: typeof DesignRoute
   KontoRoute: typeof KontoRoute
   SettingsRoute: typeof SettingsRoute
@@ -119,6 +155,20 @@ declare module '@tanstack/react-router' {
       path: '/benachrichtigungen'
       fullPath: '/benachrichtigungen'
       preLoaderRoute: typeof BenachrichtigungenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacts': {
+      id: '/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/design': {
@@ -149,6 +199,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulRoute: ModulRoute,
   BenachrichtigungenRoute: BenachrichtigungenRoute,
+  ContactsRoute: ContactsRoute,
+  CustomersRoute: CustomersRoute,
   DesignRoute: DesignRoute,
   KontoRoute: KontoRoute,
   SettingsRoute: SettingsRoute,

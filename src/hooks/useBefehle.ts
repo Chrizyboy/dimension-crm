@@ -9,7 +9,7 @@ export interface Befehl {
   titel: string
   /** Kurze Erklärung neben dem Titel (bei Bereichen der Untertitel). */
   untertitel?: string
-  gruppe: 'gehe-zu' | 'aktionen'
+  gruppe: 'kontakte' | 'gehe-zu' | 'aktionen'
   /** Icon als lucide-Komponente oder Modul-Icon-Name. */
   icon: LucideIcon | string
   /** Zusätzliche Suchbegriffe, z.B. der französische Titel, damit beide Sprachen gefunden werden. */
@@ -19,8 +19,8 @@ export interface Befehl {
 }
 
 /**
- * Alle Befehle der Befehlspalette (Ctrl K). Ab Phase 5 kommen Datensätze dazu
- * («Kunde Muster AG öffnen»), ab Phase 6 «Neuen Lead erfassen» usw.
+ * Feste Befehle der Befehlspalette (Ctrl K): Bereiche und Aktionen. Kontakte kommen aus
+ * `useKontaktBefehle`, ab Phase 6 auch «Neuen Lead erfassen» usw.
  */
 export function useBefehle(onGewaehlt?: () => void): Befehl[] {
   const { t } = useTranslation()
