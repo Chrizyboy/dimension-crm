@@ -38,7 +38,7 @@ jobs:
           retention-days: 7
 
   datenbank:
-    name: Datenbank (Migrationen, pgTAP, Anmeldung)
+    name: Datenbank (Migrationen, pgTAP, Anmeldung, Kunden)
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -48,7 +48,7 @@ jobs:
           version: 2.121.0
       - run: supabase start -x studio,imgproxy,realtime,pooler,vector,analytics
       - run: supabase test db
-      # Phase 4: Anmeldung und Rechte im Browser mit den Testpersonen aus seed.sql.
+      # Phase 4 und 5: Anmeldung, Rechte und Kundenablauf im Browser mit den Testpersonen aus seed.sql.
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -58,7 +58,7 @@ jobs:
       - name: Adresse und öffentlichen Schlüssel der lokalen Supabase übernehmen
         run: |
           supabase status -o env | grep -E '^(API_URL|ANON_KEY)=' | sed -e 's/^API_URL=/VITE_SUPABASE_URL=/' -e 's/^ANON_KEY=/VITE_SUPABASE_ANON_KEY=/' -e 's/"//g' >> "$GITHUB_ENV"
-      - run: npx playwright test --project=anmeldung
+      - run: npx playwright test --project=anmeldung --project=kunden
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

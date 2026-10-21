@@ -83,6 +83,7 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 - Farben nur über Tokens (`bg-surface`, `text-muted-foreground`, `text-ok` …), nie feste Werte. Übersicht: `docs/design-system.md`, live unter `#/design`.
 - Bausteine aus `src/components/ui/` verwenden (Button, Feld, Dialog, Tabelle …), keine eigenen bauen.
 - Rückmeldungen mit `melde()` aus `src/services/meldungen.ts`; Fehler mit `meldeFehler()` aus `src/services/fehler.ts`.
+- Referenzmodul ist `src/modules/customers/` (Phase 5): Listen mit `Datentabelle`, Filter mit `Filterchips`, Verlauf mit `Zeitachse` (alle in `src/components/shared/`), Details als Seitenpanel (`DialogInhalt art="seite"`), offener Datensatz und Reiter in der Adresse (`?kunde=…&reiter=…`), Auswahllisten mit `useAuswahl()`.
 
 ## Bekannte Eigenheiten
 
@@ -91,5 +92,5 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 - Lokale Browser-Tests mit eigenem Chromium: `PW_CHROMIUM=/pfad/zu/chromium npm run test:e2e`.
 - Import der Vorlage: `SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip"`. Nur lokal; der Schlüssel nie in die App oder in Git. Echte Kundendaten nie in `seed.sql`.
 - Anmeldung: Microsoft oder Code per Mail, nur für erfasste Personen (Hook `intern.vor_konto_anlage`). Lokale Testpersonen `admin@`, `verkauf@`, `buchhaltung@test.local`, Code in Mailpit (http://127.0.0.1:54324). Einrichtung im Betrieb: `docs/anmeldung.md`.
-- Browser-Test `anmeldung` braucht die lokale Supabase mit `npx supabase functions serve`; ohne sie wird er übersprungen.
+- Browser-Tests `anmeldung` und `kunden` brauchen die lokale Supabase (für die Einladung auch `npx supabase functions serve`); ohne sie werden sie übersprungen. `kunden` legt bei jedem Lauf einen eigenen Testkunden an.
 - Routen nutzen Hash-Adressen (`#/sales`), weil die Desktop-App Dateien lokal lädt.
