@@ -203,3 +203,28 @@ h3 {
     transition-duration: 1ms !important;
   }
 }
+
+/*
+ * Drucken (Kundenblatt): Der Druckbereich hängt direkt am <body> und ist am Bildschirm unsichtbar.
+ * Beim Drucken wird alles andere ausgeblendet, damit nur das Blatt auf Papier kommt.
+ */
+.druckbereich {
+  display: none;
+}
+
+@media print {
+  body.drucken > *:not(.druckbereich) {
+    display: none !important;
+  }
+
+  body.drucken > .druckbereich {
+    display: block;
+    color: #000;
+    background: #fff;
+  }
+
+  @page {
+    size: A4;
+    margin: 16mm 14mm;
+  }
+}

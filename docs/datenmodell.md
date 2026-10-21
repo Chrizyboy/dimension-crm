@@ -1,6 +1,6 @@
 # Datenmodell
 
-Stand Phase 4. 62 Fachtabellen in `public`, eingerichtet mit `intern.richte_fachtabelle_ein` (siehe Entscheid 0010). Jede hat `id`, `erstellt_am`, `erstellt_von`, `geaendert_am`, `geloescht_am` (Papierkorb), `alt_id` und `alt_daten` (Herkunft aus V233). Beträge stehen immer in Rappen (`…_rappen`, Ganzzahl).
+Stand Phase 5. 62 Fachtabellen in `public`, eingerichtet mit `intern.richte_fachtabelle_ein` (siehe Entscheid 0010). Jede hat `id`, `erstellt_am`, `erstellt_von`, `geaendert_am`, `geloescht_am` (Papierkorb), `alt_id` und `alt_daten` (Herkunft aus V233). Beträge stehen immer in Rappen (`…_rappen`, Ganzzahl).
 
 ```
 Kontakt ─┬─ Objekt ─── Anlage ─── Service-Fall, Wartungsvertrag
@@ -66,3 +66,14 @@ Danach `npm run db:typen`, damit die App die neuen Spalten kennt.
 ## Rechte (Phase 4)
 
 Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`personen.rechte`). `admin` schliesst alle anderen ein. Die Datenbank prüft das mit `intern.hat_recht()`. Sichtbare Bereiche: `personen.bereiche`, sonst `rollen.bereiche`, sonst alle; sie steuern nur die Menüs. Das `aenderungsprotokoll` zeigt einen Eintrag nur, wer die betroffene Tabelle lesen darf (`intern.tabellen_leserecht`). Siehe Entscheid 0012.
+
+## Kunden und Kontakte (Phase 5)
+
+- **`kunden_uebersicht`** (Ansicht, `security_invoker`, also mit den Rechten der lesenden Person): ein Kontakt pro Zeile mit erstem Gebäude, Stand, letztem Kontakt, Anzahl Offerten und Projekte, `moegliche_dublette` und `suchtext`/`telefon_ziffern` für die Suche. Kunden, Adressbuch und Ctrl K lesen sie.
+- **`kundenstand(kontakt)`**: Stand (`auswahlwerte` Liste `kundenstand`, Gruppe in `eigenschaften.gruppe`) aus dem jüngsten Geschäft. Regeln in `intern.stand_projekt`, `intern.stand_offerte`, `intern.stand_verkaufschance`; Nachfass-Frist in `einstellungen.nachfassen_tage`.
+- **`kunden_zeitachse(kontakt)`**: alle Ereignisse eines Kontakts, neueste zuerst (höchstens 500): `aktivitaet:<art>`, `anfrage`, `termin`, `offerte`, `entscheid`, `werkvertrag`, `baubeginn`, `service`, `dokument`, `aenderung:<aktion>`.
+- **`moegliche_dubletten(name, email, telefon, ohne)`**: bis 5 Treffer mit Grund `email`, `telefon` oder `name`.
+- **`kontakt_export(kontakt)`**: alle Daten zur Person als JSON (Auskunft nach revDSG), ohne die Rohdaten aus V233.
+- Ergebnisse von Kontaktversuchen: `auswahlwerte` Liste `kontaktergebnis` (nicht erreicht, Combox, Rückruf, meldet sich, Termin, kein Interesse).
+
+Zugriffsregeln rufen das Recht als `(select intern.hat_recht('…'))` auf, damit Postgres es einmal pro Abfrage prüft. Neue Tabellen bekommen das über `intern.richte_fachtabelle_ein` automatisch. Siehe Entscheid 0013.

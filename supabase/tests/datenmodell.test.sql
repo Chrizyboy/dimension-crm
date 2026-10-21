@@ -54,11 +54,17 @@ set local role anon;
 select is((select count(*) from public.kontakte), 0::bigint, 'ohne Anmeldung keine Kontakte');
 reset role;
 
--- Kundennummer läuft weiter, auch nach einem Import mit hohen Nummern.
-insert into public.kontakte (kundennummer, nachname) values (900, 'Import');
+-- Kundennummer läuft weiter, auch nach einem Import mit hohen Nummern. Die Nummer liegt über allem,
+-- was lokal schon steht (Import, Browser-Tests), damit der Test in jeder Datenbank gleich läuft.
+-- Sequenzen kennen kein Rollback: den Stand merken und am Ende zurücksetzen.
+create temporary table t_seq as select last_value, is_called from public.kundennummer_seq;
+create temporary table t_hoch as select coalesce(max(kundennummer), 0) + 1000 as nr from public.kontakte;
+insert into public.kontakte (kundennummer, nachname) select nr, 'Import' from t_hoch;
 select public.setze_naechste_kundennummer(1);
 insert into public.kontakte (nachname) values ('Neu');
-select is((select kundennummer from public.kontakte where nachname = 'Neu'), 901, 'nächste Kundennummer folgt auf die höchste');
+select is((select kundennummer from public.kontakte where nachname = 'Neu'), (select nr + 1 from t_hoch),
+  'nächste Kundennummer folgt auf die höchste');
+select setval('public.kundennummer_seq', last_value, is_called) from t_seq;
 
 select * from finish();
 rollback;

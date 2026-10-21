@@ -1,2 +1,5 @@
-/** Fachliche Typen des Moduls «Kontakte». Werden in Phase 5 gefüllt. */
-export type ContactsId = string & { readonly __brand: 'ContactsId' }
+/**
+ * Fachliche Typen des Moduls «Adressbuch». Die Zeilen selbst sind `Kontaktzeile` aus
+ * `@/types/kontakt`, weil Kunden, Adressbuch und Befehlspalette dieselben Kontakte zeigen.
+ */
+export type { Kontaktzeile } from '@/types/kontakt'

@@ -1,27 +1,22 @@
-# Modul: Kontakte
+# Modul: Adressbuch
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Alle Personen und Firmen an einem Ort, auch Partner, Architekt:innen, Elektriker:innen, Lieferanten und Behörden, gefiltert nach Art. Hier liegt auch der Papierkorb für Kontakte.
 
-**Stand:** Platzhalter – wird in Phase 5 gebaut.
+**Stand:** Phase 5 gebaut.
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- liest: `kunden_uebersicht` (über `src/services/kontakte.ts`), `auswahlwerte` (`kontaktart`)
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/hooks/useKontakte.ts`, `src/components/shared/Datentabelle.tsx`, `Filterchips.tsx`
+- Die Akte und der Kontakt-Dialog kommen aus dem Modul «Kunden»; die Route `src/app/contacts.tsx` setzt sie zusammen (Module importieren sich nie gegenseitig).
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- keine
 
-## Ordner
+## Export (index.ts)
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `Adressbuch` – die Seite mit Liste, Filter nach Art und Papierkorb

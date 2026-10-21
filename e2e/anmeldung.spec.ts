@@ -1,51 +1,11 @@
-import { existsSync, readFileSync } from 'node:fs'
 import { expect, test, type Page } from '@playwright/test'
+import { ANON, API, anmelden, brauchtDatenbank, mailAn } from './hilfen'
 
 // Phase 4, «Fertig, wenn»: Zwei Testnutzer sehen nur, was sie dürfen.
-// Braucht die lokale Supabase mit seed.sql (npm run db:start, npm run db:reset). Die Mails mit dem
-// Anmeldecode landen lokal im Testpostfach Mailpit; der Test liest den Code dort aus.
-
-const API = 'http://127.0.0.1:54321'
-const MAILPIT = 'http://127.0.0.1:54324'
-// Öffentlicher Schlüssel der lokalen Supabase (kein Geheimnis): aus der Umgebung oder aus .env.local.
-const ANON =
-  process.env.VITE_SUPABASE_ANON_KEY ??
-  (existsSync('.env.local')
-    ? /VITE_SUPABASE_ANON_KEY=(.*)/.exec(readFileSync('.env.local', 'utf8'))?.[1]?.trim()
-    : '') ??
-  ''
+// Braucht die lokale Supabase mit seed.sql (npm run db:start, npm run db:reset).
 
 test.describe.configure({ mode: 'serial' })
-
-test.beforeAll(async () => {
-  const erreichbar = await fetch(`${API}/auth/v1/health`)
-    .then((r) => r.ok)
-    .catch(() => false)
-  test.skip(!erreichbar, 'Lokale Supabase läuft nicht (npm run db:start)')
-})
-
-/** Wartet auf die neueste Mail an eine Adresse und gibt Betreff und Text zurück. */
-async function mailAn(email: string): Promise<{ betreff: string; text: string }> {
-  for (let i = 0; i < 20; i++) {
-    const res = await fetch(`${MAILPIT}/api/v1/search?query=${encodeURIComponent(`to:${email}`)}`)
-    const daten = (await res.json()) as { messages: { Subject: string; Snippet: string }[] }
-    const m = daten.messages.at(0)
-    if (m) return { betreff: m.Subject, text: m.Snippet }
-    await new Promise((r) => setTimeout(r, 250))
-  }
-  throw new Error(`Keine Mail an ${email}`)
-}
-
-async function anmelden(page: Page, email: string) {
-  await fetch(`${MAILPIT}/api/v1/messages`, { method: 'DELETE' })
-  await page.goto('/')
-  await page.getByLabel(/E-Mail-Adresse|Adresse e-mail/).fill(email)
-  await page.getByRole('button', { name: /Code per E-Mail senden|Envoyer un code/ }).click()
-  const code = /\b(\d{6})\b/.exec((await mailAn(email)).text)?.[1] ?? ''
-  await page.getByLabel(/Code aus|Code reçu/).fill(code)
-  await page.getByRole('button', { name: /^(Anmelden|Se connecter)$/ }).click()
-  await expect(page.getByRole('navigation', { name: /Hauptnavigation|Navigation principale/ })).toBeVisible()
-}
+brauchtDatenbank()
 
 /** Fragt die Datenbank mit dem Login der Seite ab, so wie es später jedes Modul tut. */
 async function zaehle(page: Page, tabelle: string): Promise<number> {

@@ -1,27 +1,32 @@
 # Modul: Kunden
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Kundenliste mit Stand und Suche sowie die 360°-Kundenakte: was jetzt zu tun ist, Kontaktdaten, Gebäude, alle Geschäfte, Zeitachse, Dokumente und das Kundenblatt zum Drucken.
 
-**Stand:** Platzhalter – wird in Phase 5 gebaut.
+**Stand:** Phase 5 gebaut.
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- liest: `kunden_uebersicht` (Ansicht), `kontakte`, `objekte`, `verkaufschancen`, `offerten`, `projekte`, `werkvertraege`, `dokumente`, `auswahlwerte`
+- schreibt: `kontakte`, `objekte`, `aktivitaeten` (Kontakt erfassen), `kontakte.geloescht_am` (Papierkorb)
+- Funktionen: `kundenstand()`, `kunden_zeitachse()`, `moegliche_dubletten()`, `kontakt_export()`
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/kontakte.ts` (Liste, einzelner Kontakt, Schnellsuche), `src/services/auswahl.ts`
+- `src/hooks/useKontakte.ts`, `useAuswahl.ts`, `useTaste.ts`, `useDrucken.ts`
+- `src/components/shared/Datentabelle.tsx`, `Zeitachse.tsx`, `Filterchips.tsx`
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** noch keine (ab Phase 6 z. B. `kunde.angelegt` für Leads)
+- **hört auf:** noch keine
 
-## Ordner
+## Export (index.ts)
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `Kunden` – Seite mit Liste und offener Akte
+- `Kundenakte` – das Seitenpanel, auch vom Adressbuch genutzt
+- `KontaktDialog` – Kontakt anlegen oder ändern, mit Dublettenprüfung
+
+## Tastatur
+
+`N` neuer Kunde, `/` Suche, Pfeiltasten in der Liste, Enter öffnet, Esc schliesst, Ctrl+Enter speichert eine Notiz.

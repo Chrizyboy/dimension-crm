@@ -296,6 +296,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'aktivitaeten_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'aktivitaeten_offerte_id_fkey'
             columns: ['offerte_id']
             isOneToOne: false
@@ -428,6 +435,13 @@ export type Database = {
           projekt_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'anlagen_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['objekt_id']
+          },
           {
             foreignKeyName: 'anlagen_objekt_id_fkey'
             columns: ['objekt_id']
@@ -2211,6 +2225,13 @@ export type Database = {
             referencedRelation: 'kontakte'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'lieferanten_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
         ]
       }
       lieferantenpreise: {
@@ -2502,6 +2523,13 @@ export type Database = {
             referencedRelation: 'kontakte'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'newsletter_empfaenger_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
         ]
       }
       objekte: {
@@ -2584,6 +2612,13 @@ export type Database = {
             columns: ['kontakt_id']
             isOneToOne: false
             referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
           },
           {
@@ -2709,6 +2744,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kontakte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'offerten_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'offerten_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'offerten_objekt_id_fkey'
@@ -3095,6 +3144,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kontakte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekte_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'projekte_objekt_id_fkey'
@@ -3506,6 +3569,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'service_faelle_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'service_faelle_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
@@ -3571,6 +3641,13 @@ export type Database = {
             columns: ['kontakt_id']
             isOneToOne: false
             referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'sharepoint_ordner_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
           },
         ]
@@ -3881,6 +3958,13 @@ export type Database = {
             referencedRelation: 'kontakte'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'subunternehmer_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
         ]
       }
       subunternehmer_auftraege: {
@@ -4096,6 +4180,20 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'verkaufschancen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'verkaufschancen_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['objekt_id']
+          },
+          {
             foreignKeyName: 'verkaufschancen_objekt_id_fkey'
             columns: ['objekt_id']
             isOneToOne: false
@@ -4187,6 +4285,13 @@ export type Database = {
             columns: ['kontakt_id']
             isOneToOne: false
             referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
           },
           {
@@ -4295,6 +4400,13 @@ export type Database = {
             columns: ['kontakt_id']
             isOneToOne: false
             referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
           },
           {
@@ -4461,7 +4573,47 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      kunden_uebersicht: {
+        Row: {
+          anrede: string | null
+          anzahl_objekte: number | null
+          anzahl_offerten: number | null
+          anzahl_projekte: number | null
+          art: string | null
+          einwilligung: Json | null
+          email: string | null
+          erstellt_am: string | null
+          firma: string | null
+          geaendert_am: string | null
+          geloescht_am: string | null
+          id: string | null
+          kontaktart: string | null
+          kundennummer: number | null
+          letzter_kontakt: string | null
+          moegliche_dublette: boolean | null
+          nachname: string | null
+          name: string | null
+          notiz: string | null
+          objekt_id: string | null
+          ort: string | null
+          plz: string | null
+          sprache: string | null
+          stand: string | null
+          stand_bezug: string | null
+          stand_datum: string | null
+          stand_gruppe: string | null
+          stand_rang: number | null
+          stand_tabelle: string | null
+          strasse: string | null
+          suchtext: string | null
+          telefon: string | null
+          telefon_ziffern: string | null
+          vorname: string | null
+          werbesperre: boolean | null
+        }
+        ComputedFields: never
+        Relationships: []
+      }
     }
     Functions: {
       aendere_mein_konto: {
@@ -4469,7 +4621,39 @@ export type Database = {
         Returns: undefined
       }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      kontakt_export: { Args: { p_kontakt: string }; Returns: Json }
+      kunden_zeitachse: {
+        Args: { p_kontakt: string }
+        Returns: {
+          art: string
+          bezug_id: string
+          bezug_tabelle: string
+          daten: Json
+          text: string
+          wer: string
+          zeitpunkt: string
+        }[]
+      }
+      kundenstand: {
+        Args: { p_kontakt: string }
+        Returns: {
+          bezug_id: string
+          bezug_tabelle: string
+          stand: string
+          stand_datum: string
+        }[]
+      }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
+      moegliche_dubletten: {
+        Args: { p_email: string; p_name: string; p_ohne?: string; p_telefon: string }
+        Returns: {
+          grund: string
+          id: string
+          kundennummer: number
+          name: string
+          ort: string
+        }[]
+      }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
       show_trgm: { Args: { '': string }; Returns: string[] }
