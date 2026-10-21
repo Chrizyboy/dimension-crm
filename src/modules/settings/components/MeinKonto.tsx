@@ -15,7 +15,8 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import type { MeineAnmeldung } from '@/types/anmeldung'
 import { useBenutzerDaten } from '../hooks/useBenutzer'
-import { feldFehler, kontoAusProfil, kontoSchema, type KontoEingabe } from '../schema'
+import { feldFehler } from '@/lib/formular'
+import { kontoAusProfil, kontoSchema, type KontoEingabe } from '../schema'
 import { speichereMeinKonto } from '../services/benutzer'
 
 /** Felder je Abschnitt, in der Reihenfolge der Vorlage. Telefonnummern im Schweizer Format. */
