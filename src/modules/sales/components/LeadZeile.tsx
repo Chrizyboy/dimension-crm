@@ -14,7 +14,8 @@ interface LeadZeileProps {
   gewaehlt: boolean
   aktiv: boolean
   person: string | null
-  onWahl: (id: string, an: boolean) => void
+  /** `bereich`: Shift gedrückt, bis zur zuletzt gewählten Zeile wählen. */
+  onWahl: (id: string, an: boolean, bereich: boolean) => void
   onOeffnen: (id: string) => void
 }
 
@@ -37,7 +38,7 @@ export function FaelligText({ datum }: { datum: string }) {
 }
 
 /**
- * Eine Zeile der Lead-Liste (V233): Auswahl, Name mit Nummer, Ort, Telefon, Quelle, Eingang,
+ * Eine Zeile der Lead-Liste (V233): Auswahl (Strg- und Shift-Klick wie V66), Name mit Nummer, Ort, Telefon, Quelle, Eingang,
  * letzter Kontakt (rot ab 5 Tagen ohne Bewegung), Person und Stand bzw. «in X Tagen».
  */
 export const LeadZeile = memo(function LeadZeile({ g, gewaehlt, aktiv, person, onWahl, onOeffnen }: LeadZeileProps) {
@@ -57,14 +58,17 @@ export const LeadZeile = memo(function LeadZeile({ g, gewaehlt, aktiv, person, o
       <Checkbox
         checked={gewaehlt}
         aria-label={t('verkauf.liste.waehlen', { name: g.name })}
-        onCheckedChange={(an) => {
-          onWahl(g.id, an === true)
+        onClick={(e) => {
+          // Klick statt onCheckedChange, damit Shift für «bis hier» mitkommt.
+          e.preventDefault()
+          onWahl(g.id, !gewaehlt, e.shiftKey)
         }}
       />
       <button
         type="button"
-        onClick={() => {
-          onOeffnen(g.id)
+        onClick={(e) => {
+          if (e.ctrlKey || e.metaKey || e.shiftKey) onWahl(g.id, e.shiftKey || !gewaehlt, e.shiftKey)
+          else onOeffnen(g.id)
         }}
         className="focus-visible:ring-ring flex min-w-0 flex-col rounded text-left outline-none focus-visible:ring-2"
       >

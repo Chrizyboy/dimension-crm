@@ -1,5 +1,5 @@
 import { ChevronRight, SearchX } from 'lucide-react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -73,14 +73,26 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
       })),
     [geschaefte],
   )
-  const waehle = useCallback((id: string, an: boolean) => {
-    setWahl((alt) => {
-      const neu = new Set(alt)
-      if (an) neu.add(id)
-      else neu.delete(id)
-      return neu
-    })
-  }, [])
+  // Mehrfachauswahl wie V66: Klick aufs Kästchen oder Strg-Klick wählt eine Zeile, Shift-Klick alle
+  // Zeilen bis zur zuletzt gewählten.
+  const reihenfolge = useMemo(() => abschnitte.flatMap((a) => a.zeilen.map((g) => g.id)), [abschnitte])
+  const letzte = useRef<string | null>(null)
+  const waehle = useCallback(
+    (id: string, an: boolean, bereich: boolean) => {
+      setWahl((alt) => {
+        const neu = new Set(alt)
+        const von = letzte.current ? reihenfolge.indexOf(letzte.current) : -1
+        const bis = reihenfolge.indexOf(id)
+        if (bereich && von >= 0 && bis >= 0)
+          for (const x of reihenfolge.slice(Math.min(von, bis), Math.max(von, bis) + 1)) neu.add(x)
+        else if (an) neu.add(id)
+        else neu.delete(id)
+        return neu
+      })
+      letzte.current = id
+    },
+    [reihenfolge],
+  )
   const spalten = useMemo(
     () =>
       geschaeftSpalten(
@@ -150,7 +162,7 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
                   disabled={a.zeilen.length === 0}
                   aria-label={t('verkauf.liste.alleWaehlen')}
                   onCheckedChange={(an) => {
-                    for (const g of a.zeilen) waehle(g.id, an === true)
+                    for (const g of a.zeilen) waehle(g.id, an === true, false)
                   }}
                 />
                 <button
