@@ -3,7 +3,7 @@
 -- und dass Einkaufspreise nur mit dem Recht «preise» sichtbar sind.
 -- Ausführen: npm run db:test
 begin;
-select plan(32);
+select plan(34);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000007a1', 'o7-innen@test.local'),
@@ -108,6 +108,13 @@ select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-000000
 select ok((select count(*) from public.preisliste where marge is not null) > 0 or not exists (select 1 from public.preisliste),
   'Innendienst (Recht «preise») sieht die Marge');
 reset role;
+
+-- Werkvertrag zeigt den Unternehmer auch ohne eigene Firma (über den Standort)
+select ok((select firma_name is not null from public.werkvertraege_liste where offerte_id = (select o from t7)),
+  'Werkvertrag kennt seine Firma');
+-- Wer Offerten bearbeitet, hat auch den Bereich «Preise» (mindestens die Kundenansicht)
+select is((select count(*) from public.rollen where 'quotes' = any(bereiche) and not ('pricing' = any(bereiche))),
+  0::bigint, 'Rollen mit Offerten sehen auch Preise');
 
 select * from finish();
 rollback;
