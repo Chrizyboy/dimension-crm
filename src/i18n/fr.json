@@ -1,0 +1,41 @@
+{
+  "app": { "name": "Dimension CRM", "firma": "Dimension Solaire" },
+  "nav": {
+    "uebersicht": "Aperçu",
+    "verkauf": "Vente",
+    "abwicklung": "Réalisation",
+    "verwaltung": "Administration",
+    "weitere": "Autres",
+    "suchen": "Rechercher ou commande …"
+  },
+  "start": {
+    "titel": "Les fondations sont posées",
+    "lead": "Phase 1 sur 16 : structure, outils et règles. Les domaines métier seront construits l’un après l’autre dès la phase 5.",
+    "status": "État du système",
+    "datenbank": "Base de données",
+    "plattform": "Plateforme",
+    "version": "Version",
+    "module": "Modules créés",
+    "verbunden": "connectée",
+    "nichtKonfiguriert": "pas encore connectée",
+    "fehler": "Erreur",
+    "pruefe": "vérification …",
+    "desktop": "Application Windows",
+    "web": "Navigateur / mobile",
+    "plan": "Plan de construction",
+    "beispiel": "Formats suisses",
+    "naechste": "Prochaine étape : phase 2 – système de design et interface"
+  },
+  "modul": {
+    "phase": "Phase {{phase}}",
+    "geplant": "En préparation",
+    "text": "Ce domaine sera construit en phase {{phase}}. Toutes les fonctions du modèle figurent dans la liste de réception."
+  },
+  "einstellungen": {
+    "sprache": "Langue",
+    "darstellung": "Affichage",
+    "hell": "Clair",
+    "dunkel": "Sombre",
+    "system": "Système"
+  }
+}

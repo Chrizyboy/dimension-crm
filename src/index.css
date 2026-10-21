@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+/*
+ * Design-Tokens (Grundstock, Ausbau in Phase 2).
+ * Marke: Sonnen-Orange #EF7D0E auf tiefem Marineblau #0B2545.
+ * Hell/Dunkel über die Klasse .dark auf <html> (gesetzt aus Einstellung oder System).
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --sun: #ef7d0e;
+  --navy: #0b2545;
+  --background: #fbfbfa;
+  --surface: #ffffff;
+  --foreground: #14181f;
+  --muted: #f1f2f4;
+  --muted-foreground: #5f6673;
+  --border: #e4e6ea;
+  --primary: var(--navy);
+  --primary-foreground: #ffffff;
+  --accent: var(--sun);
+  --ring: var(--sun);
+  --ok: #1f9d55;
+  --warn: #c27c0e;
+  --bad: #d64545;
+  --sidebar: #f5f5f3;
+}
+
+.dark {
+  --background: #0b0f15;
+  --surface: #11161e;
+  --foreground: #e8eaee;
+  --muted: #1a212c;
+  --muted-foreground: #9099a8;
+  --border: #232b37;
+  --primary: var(--sun);
+  --primary-foreground: #14181f;
+  --sidebar: #0e131a;
+}
+
+@theme inline {
+  --color-sun: var(--sun);
+  --color-navy: var(--navy);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-ring: var(--ring);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --color-sidebar: var(--sidebar);
+  --font-sans: 'Inter Variable', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings:
+    'tnum' 1,
+    'cv11' 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  border-color: var(--border);
+}
