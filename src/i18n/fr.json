@@ -662,7 +662,7 @@
       "regionen": "Régions",
       "bericht": "Rapport mensuel"
     },
-    "suche": "Nom, lieu, téléphone, e-mail ou numéro",
+    "suche": "Nom, lieu, téléphone, L012 …",
     "standort": "Site",
     "alle": "Tous",
     "person": "Personne",
@@ -676,7 +676,8 @@
     "anzahl_other": "{{count}} affaires",
     "keineTreffer": "Aucun résultat",
     "keineTrefferText": "Adapter la recherche ou les filtres.",
-    "liegt": "En attente depuis 5 jours",
+    "liegt_one": "En attente depuis {{count}} jour",
+    "liegt_other": "En attente depuis {{count}} jours",
     "tageHer_one": "il y a {{count}} jour",
     "tageHer_other": "il y a {{count}} jours",
     "terminBei": "Rendez-vous avec",
@@ -1023,6 +1024,8 @@
       "alleLeads_other": "Afficher les {{count}} leads",
       "text": "Rapport au fournisseur",
       "textHinweis": "Proposition basée sur les chiffres, modifiable. L’envoi via la boîte d’envoi (avec validation) arrive en phase 8, un texte IA en phase 13.",
+      "gespeicherterText": "Texte enregistré : les chiffres ont pu changer depuis.",
+      "neuAusZahlen": "Recalculer avec les chiffres actuels",
       "kopieren": "Copier le texte",
       "speichern": "Enregistrer",
       "gemeldet": "Marquer comme signalé"

@@ -6,7 +6,7 @@ import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt, MenueTitel } from '@/
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { erlaubteZiele, istLiegengeblieben } from '../lib/geschaeft'
+import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import type { Geschaeft } from '../types'
 
 interface PipelineKarteProps {
@@ -113,10 +113,21 @@ export const PipelineKarte = memo(function PipelineKarte({
           {new Date(g.terminAm).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })}
         </span>
       )}
-      {(g.wertRappen || g.kwp || kuerzel) && (
-        <div className="flex items-center justify-between gap-2 text-xs">
-          <span className="zahlen text-muted-foreground font-mono">
-            {[g.wertRappen ? formatChf(g.wertRappen) : null, g.kwp ? `${g.kwp} kWp` : null].filter(Boolean).join(' · ')}
+      {(g.wertRappen || g.kwp || kuerzel || liegt) && (
+        <div className="flex items-end justify-between gap-2 text-xs">
+          <span className="flex min-w-0 flex-col">
+            {(g.wertRappen || g.kwp) && (
+              <span className="zahlen text-muted-foreground font-mono">
+                {[g.wertRappen ? formatChf(g.wertRappen) : null, g.kwp ? `${g.kwp} kWp` : null]
+                  .filter(Boolean)
+                  .join(' · ')}
+              </span>
+            )}
+            {liegt && (
+              <span className="text-bad text-[11px] font-medium">
+                {t('verkauf.liegt', { count: liegtSeit(g) ?? 0 })}
+              </span>
+            )}
           </span>
           {kuerzel && (
             <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-[10px] font-medium uppercase">
@@ -125,7 +136,6 @@ export const PipelineKarte = memo(function PipelineKarte({
           )}
         </div>
       )}
-      {liegt && <span className="text-bad text-[11px] font-medium">{t('verkauf.liegt')}</span>}
     </article>
   )
 })

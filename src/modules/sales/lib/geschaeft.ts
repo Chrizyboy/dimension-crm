@@ -55,16 +55,20 @@ export function heuteIso(jetzt: Date = new Date()): string {
 }
 
 /**
- * Liegt ein neuer oder offener Lead zu lange? V233: rot ab 5 Tagen seit Eingang
- * oder seit dem Datum zum Nachfassen, ohne dass jemand etwas getan hat.
+ * Seit wie vielen Tagen liegt ein neuer oder offener Lead ohne Bewegung? Gezählt ab dem letzten
+ * Kontakt, sonst ab Eingang oder dem Datum zum Nachfassen. Andere Stände: null.
  */
-export function istLiegengeblieben(g: Geschaeft, heute: string = heuteIso()): boolean {
-  if (g.stand !== 'lead_neu' && g.stand !== 'lead_offen') return false
+export function liegtSeit(g: Geschaeft, heute: string = heuteIso()): number | null {
+  if (g.stand !== 'lead_neu' && g.stand !== 'lead_offen') return null
   const seit = g.wiedervorlageAm ?? g.eingangAm
-  if (!seit) return false
+  if (!seit) return null
   const zuletzt = g.letzterKontakt?.slice(0, 10)
-  if (zuletzt && zuletzt >= seit) return tageZwischen(zuletzt, heute) >= 5
-  return tageZwischen(seit, heute) >= 5
+  return tageZwischen(zuletzt && zuletzt >= seit ? zuletzt : seit, heute)
+}
+
+/** Liegt ein Lead zu lange? V233: rot ab 5 Tagen ohne Bewegung. */
+export function istLiegengeblieben(g: Geschaeft, heute: string = heuteIso()): boolean {
+  return (liegtSeit(g, heute) ?? 0) >= 5
 }
 
 /** «in 3 Tagen», «morgen», «heute», «seit 2 Tagen fällig» (V180). */

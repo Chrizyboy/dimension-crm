@@ -12,7 +12,7 @@ import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/u
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatKundennummer, tonVonFarbe } from '@/lib/kontakt'
 import { useLeadAkte, VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
-import { erlaubteZiele, istLiegengeblieben } from '../lib/geschaeft'
+import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import { ladeGeschaeft } from '../services/geschaefte'
 import type { Geschaeft } from '../types'
 import { AkteAbschnitt } from './AkteAbschnitt'
@@ -89,7 +89,9 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
               <Badge ton={tonVonFarbe(staende.finde(g.stand)?.farbe)} punkt>
                 {staende.text(g.stand)}
               </Badge>
-              {istLiegengeblieben(g) && <Badge ton="kritisch">{t('verkauf.liegt')}</Badge>}
+              {istLiegengeblieben(g) && (
+                <Badge ton="kritisch">{t('verkauf.liegt', { count: liegtSeit(g) ?? 0 })}</Badge>
+              )}
               {g.werbesperre && <Badge ton="warnung">{t('verkauf.akte.werbesperre')}</Badge>}
             </div>
             <div className="flex flex-wrap gap-2 border-b pb-3">

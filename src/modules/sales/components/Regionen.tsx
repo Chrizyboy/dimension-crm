@@ -145,7 +145,7 @@ export default function Regionen({
             </tbody>
           </table>
         </section>
-        <section className="bg-surface rounded-xl border p-4" aria-labelledby="pipe-titel">
+        <section className="bg-surface overflow-x-auto rounded-xl border p-4" aria-labelledby="pipe-titel">
           <h2 id="pipe-titel" className="mb-1 text-sm font-semibold">
             {t('verkauf.regionen.pipeline')}
           </h2>
@@ -153,9 +153,9 @@ export default function Regionen({
           <table className="w-full text-sm">
             <thead>
               <tr className="text-muted-foreground text-xs">
-                <th className="text-left font-medium">{t('verkauf.region')}</th>
+                <th className="text-left align-bottom font-medium">{t('verkauf.region')}</th>
                 {PIPE.map((s) => (
-                  <th key={s} className="w-16 text-right font-medium">
+                  <th key={s} className="min-w-16 px-1 text-right align-bottom leading-tight font-medium">
                     {staende.text(s)}
                   </th>
                 ))}
@@ -167,11 +167,11 @@ export default function Regionen({
                 if (r.id === OHNE && !n.some(Boolean)) return null
                 return (
                   <tr key={r.id} className="border-t">
-                    <th scope="row" className="truncate py-1 text-left font-normal">
+                    <th scope="row" className="max-w-56 truncate py-1 pr-2 text-left font-normal">
                       {r.name}
                     </th>
                     {n.map((x, i) => (
-                      <td key={PIPE[i]} className="zahlen py-1 text-right font-mono">
+                      <td key={PIPE[i]} className="zahlen px-1 py-1 text-right font-mono">
                         {x || ''}
                       </td>
                     ))}

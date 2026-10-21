@@ -32,7 +32,8 @@ function farbe(ton: KartenPunkt['ton']): string {
 
 /**
  * Karte der Schweiz mit den Kartenkacheln von swisstopo (frei nutzbar, Rechenzentrum in der Schweiz).
- * Punkte werden auf eine Zeichenfläche gemalt, damit auch 600 Leads flüssig bleiben.
+ * Punkte als SVG: bleibt mit 600 Leads flüssig. Die Zeichenfläche (Canvas) von Leaflet 1.9 malt nach dem
+ * Entfernen der Karte manchmal noch einmal und wirft dann einen Fehler.
  */
 export function Karte({ punkte, linie, onKlick, className, beschriftung }: KarteProps) {
   const { t } = useTranslation()
@@ -46,10 +47,7 @@ export function Karte({ punkte, linie, onKlick, className, beschriftung }: Karte
 
   useEffect(() => {
     if (!huelle.current) return
-    const m = L.map(huelle.current, { preferCanvas: true, zoomControl: true, attributionControl: true }).setView(
-      [46.9, 7.9],
-      8,
-    )
+    const m = L.map(huelle.current, { zoomControl: true, attributionControl: true }).setView([46.9, 7.9], 8)
     L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg', {
       maxZoom: 18,
       attribution: '© swisstopo',
@@ -97,7 +95,7 @@ export function Karte({ punkte, linie, onKlick, className, beschriftung }: Karte
       marke.addTo(e)
     }
     const alle: [number, number][] = [...punkte.map((p): [number, number] => [p.breite, p.laenge]), ...(linie ?? [])]
-    if (alle.length) m.fitBounds(L.latLngBounds(alle), { padding: [24, 24], maxZoom: 13 })
+    if (alle.length) m.fitBounds(L.latLngBounds(alle), { padding: [24, 24], maxZoom: 13, animate: false })
   }, [punkte, linie])
 
   return (

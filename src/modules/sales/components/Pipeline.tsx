@@ -67,8 +67,9 @@ function Spalte({
           <h2 className="text-sm font-semibold">{t(`verkauf.spalte.${spalte.id}`)}</h2>
           <span className="zahlen text-muted-foreground font-mono text-xs">{s.anzahl}</span>
         </div>
+        {/* Leads haben noch keinen Betrag; «CHF 0.00» wäre nur Lärm. */}
         <p className="zahlen text-muted-foreground font-mono text-[11px]">
-          {formatChf(s.rappen, { mitWaehrung: true })} · {s.kwp} kWp
+          {s.rappen || s.kwp ? `${formatChf(s.rappen, { mitWaehrung: true })} · ${String(s.kwp)} kWp` : ' '}
         </p>
       </header>
       <div className="flex max-h-[calc(100vh-22rem)] min-h-24 flex-col gap-2 overflow-y-auto p-2">{children}</div>

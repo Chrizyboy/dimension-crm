@@ -49,7 +49,7 @@ export const LeadZeile = memo(function LeadZeile({ g, gewaehlt, aktiv, person, o
   return (
     <li
       className={cn(
-        'hover:bg-muted/60 grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-0.5 border-b px-3 py-2 text-sm last:border-b-0 md:grid-cols-[auto_minmax(10rem,1.4fr)_minmax(8rem,1fr)_8rem_7rem_6rem_7rem_4rem_8rem]',
+        'hover:bg-muted/60 grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-0.5 border-b border-l-2 border-l-transparent px-3 py-2 text-sm last:border-b-0 md:grid-cols-[auto_minmax(10rem,1.4fr)_minmax(8rem,1fr)_8rem_7rem_6rem_7rem_4rem_8rem]',
         aktiv && 'bg-accent-soft/50',
         liegt && 'border-l-bad border-l-2',
       )}

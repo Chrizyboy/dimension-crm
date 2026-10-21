@@ -24,12 +24,15 @@ export function Auswahl({ id, optionen, platzhalter, className, 'aria-label': ar
         id={id}
         aria-label={ariaLabel}
         className={cn(
-          'border-border bg-surface hover:border-border-strong focus-visible:border-ring focus-visible:ring-ring/30 data-placeholder:text-muted-foreground flex h-8 w-full items-center justify-between gap-2 rounded-md border px-2.5 text-sm shadow-xs outline-none focus-visible:ring-2',
+          'border-border bg-surface hover:border-border-strong focus-visible:border-ring focus-visible:ring-ring/30 data-placeholder:text-muted-foreground flex h-8 w-full min-w-0 items-center justify-between gap-2 rounded-md border px-2.5 text-left text-sm whitespace-nowrap shadow-xs outline-none focus-visible:ring-2',
           className,
         )}
       >
-        <SelectPrimitive.Value placeholder={platzhalter} />
-        <SelectPrimitive.Icon>
+        {/* Lange Werte (Regionen) kürzen statt umbrechen, sonst springt die Höhe am Handy. */}
+        <span className="min-w-0 truncate">
+          <SelectPrimitive.Value placeholder={platzhalter} />
+        </span>
+        <SelectPrimitive.Icon className="shrink-0">
           <ChevronDown className="text-muted-foreground size-4" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>

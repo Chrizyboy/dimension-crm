@@ -662,7 +662,7 @@
       "regionen": "Regionen",
       "bericht": "Monatsbericht"
     },
-    "suche": "Name, Ort, Telefon, Mail oder Nummer",
+    "suche": "Name, Ort, Telefon, L012 …",
     "standort": "Standort",
     "alle": "Alle",
     "person": "Person",
@@ -676,7 +676,8 @@
     "anzahl_other": "{{count}} Geschäfte",
     "keineTreffer": "Keine Treffer",
     "keineTrefferText": "Suche oder Filter anpassen.",
-    "liegt": "Liegt seit 5 Tagen",
+    "liegt_one": "Liegt seit {{count}} Tag",
+    "liegt_other": "Liegt seit {{count}} Tagen",
     "tageHer_one": "vor {{count}} Tag",
     "tageHer_other": "vor {{count}} Tagen",
     "terminBei": "Termin bei",
@@ -1023,6 +1024,8 @@
       "alleLeads_other": "Alle {{count}} Leads anzeigen",
       "text": "Bericht an den Anbieter",
       "textHinweis": "Vorschlag aus den Zahlen, frei änderbar. Senden über den Ausgangskorb (mit Freigabe) kommt mit Phase 8, ein KI-Text mit Phase 13.",
+      "gespeicherterText": "Gespeicherter Text: die Zahlen können sich seither geändert haben.",
+      "neuAusZahlen": "Aus aktuellen Zahlen neu",
       "kopieren": "Text kopieren",
       "speichern": "Speichern",
       "gemeldet": "Als gemeldet markieren"

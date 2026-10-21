@@ -170,7 +170,22 @@ function QuelleKarte({ q, monat, onOeffnen }: { q: BerichtQuelle; monat: string;
             setText(e.target.value)
           }}
         />
-        <p className="text-muted-foreground text-xs">{t('verkauf.bericht.textHinweis')}</p>
+        {text && text !== vorschlag ? (
+          <p className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-xs">
+            {t('verkauf.bericht.gespeicherterText')}
+            <button
+              type="button"
+              className="text-primary font-medium hover:underline"
+              onClick={() => {
+                setText('')
+              }}
+            >
+              {t('verkauf.bericht.neuAusZahlen')}
+            </button>
+          </p>
+        ) : (
+          <p className="text-muted-foreground text-xs">{t('verkauf.bericht.textHinweis')}</p>
+        )}
       </div>
       <div className="flex flex-wrap gap-2">
         <Button
