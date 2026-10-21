@@ -1,8 +1,8 @@
-# Modul: **TITEL**
+# Modul: __TITEL__
 
 **Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
 
-**Stand:** Platzhalter – wird in Phase **PHASE** gebaut.
+**Stand:** Platzhalter – wird in Phase **__PHASE__** gebaut.
 
 ## Daten
 

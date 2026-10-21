@@ -44,7 +44,7 @@ const ersetzungen = {
   __GRUPPE__: gruppe,
   __PHASE__: phase,
   // Zahl bleibt Zahl, eingeschobene Phasen wie "8b" werden als Text eingesetzt.
-  __PHASE_WERT__: /^\d+$/.test(phase) ? phase : JSON.stringify(phase),
+  __PHASE_WERT__: /^\d+$/.test(phase) ? phase : `'${phase}'`,
   __TYP__: typ,
   __TYP_KLEIN__: typ.charAt(0).toLowerCase() + typ.slice(1),
 }
