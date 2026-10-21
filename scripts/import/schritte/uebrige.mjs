@@ -108,6 +108,39 @@ export async function importiereUebrige(k) {
 
   await einfach(k, 'meta', 'einstellungen', (_d, id) => ({ schluessel: `vorlage.${id}`, wert: _d }))
 
+  // Lead-Monatsbericht (V174): gekaufte Leads pro Monat und Anbieter, Bericht-Text und «gemeldet».
+  const lb = k.sammlung('meta').leadbericht ?? {}
+  /** @type {Map<string, Record<string, unknown>>} */
+  const einkauf = new Map()
+  const eintrag = (/** @type {string} */ monat, /** @type {string} */ src) => {
+    const quelle = k.zuordner.locker('quelle', src) ?? src
+    const schluessel = `${monat}:${quelle}`
+    const e = einkauf.get(schluessel) ?? { alt_id: `leadbericht:${schluessel}`, monat: `${monat}-01`, quelle }
+    einkauf.set(schluessel, e)
+    return e
+  }
+  for (const [monat, proQuelle] of Object.entries(lb.kauf ?? {}))
+    for (const [src, n] of Object.entries(proQuelle ?? {})) eintrag(monat, src).gekauft = Number(n) || 0
+  for (const [src, t] of Object.entries(lb.texte ?? {}))
+    if (t?.month) eintrag(t.month, src).bericht_text = t.text ?? null
+  for (const [monat, proQuelle] of Object.entries(lb.gemeldet ?? {}))
+    for (const [src, g] of Object.entries(proQuelle ?? {}))
+      eintrag(monat, src).gemeldet = {
+        am: g.at ?? null,
+        von: g.by ?? null,
+        an: g.to ?? '',
+        anzahl: g.n ?? null,
+        wie: g.how ?? null,
+      }
+  await k.schreiber.schreibe(
+    'lead_einkauf',
+    [...einkauf.values()].map((zeile) => ({
+      sammlung: 'meta',
+      schluessel: 'leadbericht',
+      zeile: /** @type {Record<string, unknown> & { alt_id: string }} */ (zeile),
+    })),
+  )
+
   // Altes Protokoll: ein Dokument pro Person und Tag mit vielen Einträgen → ein Eintrag pro Änderung.
   await k.schreiber.schreibe(
     'altes_protokoll',

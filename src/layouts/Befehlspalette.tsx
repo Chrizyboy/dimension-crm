@@ -7,6 +7,7 @@ import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Kbd } from '@/components/ui/diverses'
 import { useBefehle, type Befehl } from '@/hooks/useBefehle'
 import { useKontaktBefehle } from '@/hooks/useKontaktBefehle'
+import { useLeadBefehle } from '@/hooks/useLeadBefehle'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { useUi } from '@/stores/ui'
 
@@ -25,7 +26,8 @@ export function Befehlspalette() {
   }
   const feste = useBefehle(schliessen)
   const kontakte = useKontaktBefehle(suche, schliessen)
-  const befehle = [...kontakte.befehle, ...feste]
+  const leads = useLeadBefehle(suche, schliessen)
+  const befehle = [...leads.befehle, ...kontakte.befehle, ...feste]
 
   const gruppen: { id: Befehl['gruppe']; titel: string }[] = [
     { id: 'kontakte', titel: t('befehle.gruppeKontakte') },
@@ -62,7 +64,7 @@ export function Befehlspalette() {
             </div>
             <Command.List className="max-h-[min(60vh,26rem)] overflow-y-auto p-1.5">
               <Command.Empty className="text-muted-foreground px-3 py-8 text-center text-sm">
-                {kontakte.laedt ? t('befehle.sucht') : t('befehle.nichts')}
+                {kontakte.laedt || leads.laedt ? t('befehle.sucht') : t('befehle.nichts')}
               </Command.Empty>
               {gruppen.map((g) => (
                 <Command.Group

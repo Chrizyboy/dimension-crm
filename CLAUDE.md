@@ -94,3 +94,4 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 - Anmeldung: Microsoft oder Code per Mail, nur für erfasste Personen (Hook `intern.vor_konto_anlage`). Lokale Testpersonen `admin@`, `verkauf@`, `buchhaltung@test.local`, Code in Mailpit (http://127.0.0.1:54324). Einrichtung im Betrieb: `docs/anmeldung.md`.
 - Browser-Tests `anmeldung` und `kunden` brauchen die lokale Supabase (für die Einladung auch `npx supabase functions serve`); ohne sie werden sie übersprungen. `kunden` legt bei jedem Lauf einen eigenen Testkunden an.
 - Routen nutzen Hash-Adressen (`#/sales`), weil die Desktop-App Dateien lokal lädt.
+- Verkauf (Phase 6): Stand-Regeln liegen in Datenbank-Funktionen (`setze_stand`, `lead_kontakt_erfassen`), nicht in der App; neue Abläufe dort ergänzen. Ort, Lage und Höhe kommen aus `plz_verzeichnis`, die Karte von swisstopo (in der Cloud-Sandbox blockiert, dort grau). Browser-Test `verkauf` braucht die lokale Supabase.

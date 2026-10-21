@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Bell, House, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
+import { Bell, House, UserPlus, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { useUi } from '@/stores/ui'
@@ -20,7 +20,7 @@ export interface Befehl {
 
 /**
  * Feste Befehle der Befehlspalette (Ctrl K): Bereiche und Aktionen. Kontakte kommen aus
- * `useKontaktBefehle`, ab Phase 6 auch «Neuen Lead erfassen» usw.
+ * `useKontaktBefehle`, Leads nach Nummer aus `useLeadBefehle`.
  */
 export function useBefehle(onGewaehlt?: () => void): Befehl[] {
   const { t } = useTranslation()
@@ -65,7 +65,22 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
     },
   ]
 
+  const verkauf = sichtbar.some((m) => m.id === 'sales')
   const aktionen: Befehl[] = [
+    ...(verkauf
+      ? [
+          {
+            id: 'neuer-lead',
+            titel: t('befehle.neuerLead'),
+            gruppe: 'aktionen',
+            icon: UserPlus,
+            stichworte: ['lead', 'anfrage', 'nouveau', 'demande'],
+            ausfuehren: fertig(() => {
+              void navigate({ to: '/sales', search: { neu: true } })
+            }),
+          } satisfies Befehl,
+        ]
+      : []),
     {
       id: 'sprache',
       titel: sprache === 'de' ? 'Passer en français' : 'Auf Deutsch wechseln',

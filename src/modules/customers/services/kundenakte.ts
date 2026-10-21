@@ -1,7 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type { Json } from '@/types/datenbank'
 import type { AktivitaetEingabe, KontaktEingabe, ObjektEingabe } from '../schema'
-import type { Dokument, Dublette, Kundenakte, Zeitachseneintrag } from '../types'
+import type { Dublette, Kundenakte, Zeitachseneintrag } from '../types'
 
 /** Wirft verständlich, wenn keine Datenbank verbunden ist (Vorschau). */
 function db() {
@@ -193,14 +193,5 @@ export async function exportiereKontakt(id: string): Promise<Json> {
   return data
 }
 
-/**
- * Adresse zum Öffnen eines Dokuments: SharePoint-Link oder ein 5 Minuten gültiger Link
- * auf den privaten Speicher. So bleibt der Speicher geschlossen, auch wenn ein Link weitergegeben wird.
- */
-export async function dokumentAdresse(d: Dokument): Promise<string | null> {
-  if (d.sharepoint_url) return d.sharepoint_url
-  if (!d.speicher_pfad) return null
-  const { data, error } = await db().storage.from('dokumente').createSignedUrl(d.speicher_pfad, 300)
-  if (error) throw error
-  return data.signedUrl
-}
+/** Adresse zum Öffnen eines Dokuments (gemeinsam mit der Lead-Akte, siehe `src/services/dokumente.ts`). */
+export { dokumentAdresse } from '@/services/dokumente'
