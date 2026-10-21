@@ -77,3 +77,16 @@ Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`pers
 - Ergebnisse von Kontaktversuchen: `auswahlwerte` Liste `kontaktergebnis` (nicht erreicht, Combox, Rückruf, meldet sich, Termin, kein Interesse).
 
 Zugriffsregeln rufen das Recht als `(select intern.hat_recht('…'))` auf, damit Postgres es einmal pro Abfrage prüft. Neue Tabellen bekommen das über `intern.richte_fachtabelle_ein` automatisch. Siehe Entscheid 0013.
+
+## Anfragen & Leads (Phase 6)
+
+- **`plz_verzeichnis`** (nur lesen): PLZ, Ort, Kanton, Mittelpunkt, Höhe. `plz_auskunft(plz)` liefert dazu Standort und Sprache, `standort_fuer_plz(plz)` nur den Standort nach `einstellungen.standort_regeln`.
+- **`verkauf_geschaefte`** (Ansicht, `security_invoker`): ein Geschäft pro Lead mit jüngster Offerte und Projekt, Stand und Gruppe wie `kundenstand()`, Lage, Termin, Werte.
+- **`setze_stand(geschaeft, ziel, angaben)`**, **`lead_kontakt_erfassen(…)`**, **`lead_anlegen(jsonb)`**: die Abläufe; Fehler als Schlüssel `stand.*` und `lead.*`.
+- **`verkaufschancen`** neu: `standort_id`, Nummer aus `lead_nummer_seq` (über `intern.naechste_lead_nummer`), `personen.aussendienst`, `standorte.sprache`, `offerten.verlustgrund`.
+- **`gespeicherte_ansichten`**: Filter einer Liste, persönlich oder geteilt.
+- **`kalender_eintraege`**: Termine einer Person aus Datei, Einfügen oder (ab Phase 8) Outlook. `kalender_ersetzen(person, quelle, eintraege)` legt alte Einträge im Zeitraum in den Papierkorb.
+- **`lead_einkauf`**: pro Monat und Quelle gekaufte Leads, Bericht-Text und Meldung (`gemeldet` = am, von, an, anzahl). `lead_monatsbericht(monat)` zählt die erhaltenen Leads pro Quelle.
+- Einstellungen: `tourplanung` (Tempo, Umweg, Besuchsdauer, Elektroauto), `sms_erinnerung` (Vorlage DE/FR). Auswahllisten: `erreichbarkeit`, `finanzierung`, `foerderung`, `zeithorizont`, `interesse`; bei `quelle` markiert `eigenschaften.anbieter` gekaufte Leads.
+
+Siehe Entscheid 0014.
