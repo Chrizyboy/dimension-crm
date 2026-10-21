@@ -19,4 +19,4 @@
 
 Handel (Material an Endkunden) bekommt kein eigenes Modul: eine Rechnung mit Artikeln aus der Preisliste reicht.
 
-**Folgen:** Die Seitenleiste hat 21 statt 19 Bereiche; die zwei neuen sind Platzhalter bis Phase 9a/9b. Phasentitel nutzen jetzt die neuen Bereichsnamen (Entscheid 0008). Noch offen bei Chris: ob es ein eigenes Lager in Muri und/oder Bulle gibt (bestimmt, wie viel «Lager» in 9a gebaut wird).
+**Folgen:** Die Seitenleiste hat 21 statt 19 Bereiche; die zwei neuen sind Platzhalter bis Phase 9a/9b. Phasentitel nutzen jetzt die neuen Bereichsnamen (Entscheid 0008). Lager (Antwort von Chris, 21.10.2026): eigenes Lager nur in Bulle. Phase 9a baut echte Lagerbestände in Bulle mit Reservierung je Projekt und Wareneingang; Muri hat kein Lager. Lagerorte sind trotzdem Daten (Tabelle in Phase 3), damit ein zweiter Standort ohne Umbau dazukommen kann.

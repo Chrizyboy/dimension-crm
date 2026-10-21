@@ -1,6 +1,6 @@
 # Modul: Einkauf & Material
 
-**Zweck:** Bestellt das Material aus der Eturnity-Stückliste bei den Lieferanten (Krannich, Solarmarkt, Tritec, PM Green u.a.), überwacht Liefertermine und bucht den Wareneingang.
+**Zweck:** Bestellt das Material aus der Eturnity-Stückliste bei den Lieferanten (Krannich, Solarmarkt, Tritec, PM Green u.a.), überwacht Liefertermine und bucht den Wareneingang. Eigenes Lager nur in Bulle (Bestand, Reservierung je Projekt); Lagerorte sind Daten.
 
 Freigegeben von Chris am 21.10.2026 (ERP-Lückenanalyse, https://claude.ai/artifact/Q54YPWZzgtFQSSS6PHUnmq).
 
