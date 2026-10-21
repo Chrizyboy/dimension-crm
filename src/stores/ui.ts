@@ -8,14 +8,19 @@ interface UiZustand {
   sprache: Sprache
   darstellung: Darstellung
   seitenleisteEingeklappt: boolean
+  /** Nicht gespeichert: Befehlspalette und Handy-Menü sind nach dem Start immer zu. */
+  befehlspaletteOffen: boolean
+  handyMenueOffen: boolean
   setSprache: (s: Sprache) => void
   setDarstellung: (d: Darstellung) => void
   toggleSeitenleiste: () => void
+  setBefehlspalette: (offen: boolean) => void
+  setHandyMenue: (offen: boolean) => void
 }
 
 /**
  * Reiner Oberflächen-Zustand (keine Geschäftsdaten – die kommen über TanStack Query).
- * Wird lokal gespeichert, damit die App beim nächsten Start gleich aussieht.
+ * Sprache, Darstellung und Seitenleiste werden lokal gespeichert, damit die App beim nächsten Start gleich aussieht.
  */
 export const useUi = create<UiZustand>()(
   persist(
@@ -23,6 +28,8 @@ export const useUi = create<UiZustand>()(
       sprache: 'de',
       darstellung: 'system',
       seitenleisteEingeklappt: false,
+      befehlspaletteOffen: false,
+      handyMenueOffen: false,
       setSprache: (sprache) => {
         set({ sprache })
       },
@@ -32,7 +39,20 @@ export const useUi = create<UiZustand>()(
       toggleSeitenleiste: () => {
         set((z) => ({ seitenleisteEingeklappt: !z.seitenleisteEingeklappt }))
       },
+      setBefehlspalette: (befehlspaletteOffen) => {
+        set({ befehlspaletteOffen })
+      },
+      setHandyMenue: (handyMenueOffen) => {
+        set({ handyMenueOffen })
+      },
     }),
-    { name: 'dimension-ui' },
+    {
+      name: 'dimension-ui',
+      partialize: ({ sprache, darstellung, seitenleisteEingeklappt }) => ({
+        sprache,
+        darstellung,
+        seitenleisteEingeklappt,
+      }),
+    },
   ),
 )
