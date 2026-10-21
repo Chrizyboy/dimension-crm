@@ -26,7 +26,9 @@
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
-    "db:test": "supabase test db"
+    "db:test": "supabase test db",
+    "import:vorlage": "node scripts/import/import-vorlage.mjs",
+    "db:typen": "echo '// Automatisch erzeugt aus der lokalen Datenbank mit «npm run db:typen». Nie von Hand ändern.' > src/types/datenbank.ts && supabase gen types typescript --local >> src/types/datenbank.ts && prettier --write src/types/datenbank.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -46,6 +48,7 @@
     "eslint": "10.13.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.7",
+    "fflate": "0.8.3",
     "globals": "17.13.0",
     "jsdom": "29.1.1",
     "prettier": "3.9.10",

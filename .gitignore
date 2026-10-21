@@ -13,3 +13,4 @@ src-tauri/gen/schemas
 supabase/.temp
 supabase/.branches
 .DS_Store
+import-bericht.md
