@@ -3,6 +3,9 @@ import { defineConfig, devices } from '@playwright/test'
 // Optional: eigener Chromium-Pfad (z. B. in der Cloud-Sandbox). In der CI installiert Playwright den Browser selbst.
 const executablePath = process.env.PW_CHROMIUM
 
+/** Tests, die die lokale Supabase brauchen; sie laufen nur gegen die Fassung mit Datenbank. */
+const MIT_DATENBANK = /(anmeldung|kunden)\.spec/
+
 /**
  * Zwei Fassungen der App:
  * - Port 4173 ohne Datenbank (Vorschau): prüft Rahmen, Navigation und Bedienung ohne Anmeldung.
@@ -24,13 +27,20 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop',
-      testIgnore: /anmeldung\.spec/,
+      testIgnore: MIT_DATENBANK,
       use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } },
     },
-    { name: 'handy', testIgnore: /anmeldung\.spec/, use: { ...devices['Pixel 7'] } },
+    { name: 'handy', testIgnore: MIT_DATENBANK, use: { ...devices['Pixel 7'] } },
     {
       name: 'anmeldung',
       testMatch: /anmeldung\.spec/,
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 }, baseURL: 'http://localhost:4174' },
+    },
+    {
+      // Nach der Anmeldung, damit sich die beiden nicht gleichzeitig mit derselben Testperson anmelden.
+      name: 'kunden',
+      testMatch: /kunden\.spec/,
+      dependencies: ['anmeldung'],
       use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 }, baseURL: 'http://localhost:4174' },
     },
   ],

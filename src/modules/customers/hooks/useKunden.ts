@@ -29,6 +29,9 @@ export function useKontaktAenderung<T, R>(ausfuehren: (eingabe: T) => Promise<R>
   const client = useQueryClient()
   return useMutation({
     mutationFn: ausfuehren,
-    onSuccess: () => client.invalidateQueries({ queryKey: KONTAKT_SCHLUESSEL }),
+    // Nicht auf das Neuladen warten: der Dialog schliesst sofort, die Listen ziehen im Hintergrund nach.
+    onSuccess: () => {
+      void client.invalidateQueries({ queryKey: KONTAKT_SCHLUESSEL })
+    },
   })
 }
