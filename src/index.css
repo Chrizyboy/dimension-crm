@@ -1,41 +1,99 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/public-sans';
+@import '@fontsource-variable/schibsted-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
 
 /*
- * Design-Tokens (Grundstock, Ausbau in Phase 2).
- * Marke: Sonnen-Orange #EF7D0E auf tiefem Marineblau #0B2545.
- * Hell/Dunkel über die Klasse .dark auf <html> (gesetzt aus Einstellung oder System).
+ * Design-Tokens von Dimension CRM.
+ * Marke (aus dem Logo gemessen): Sonnen-Orange #EF7C00, Marineblau #02224F.
+ * Schriften wie in der Vorlage V233: Schibsted Grotesk (Titel), Public Sans (Text), JetBrains Mono (Zahlen, Nummern).
+ * Alle Farben sind Tokens; Komponenten verwenden nie feste Farbwerte. Hell/Dunkel über .dark auf <html>.
+ * Ausführlich: docs/design-system.md, sichtbar unter #/design.
  */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --sun: #ef7d0e;
-  --navy: #0b2545;
-  --background: #fbfbfa;
+  /* Marke */
+  --sun: #ef7c00;
+  --navy: #02224f;
+
+  /* Flächen: leicht ins Marineblau gestimmte Neutraltöne statt reinem Grau */
+  --background: #f5f7fa;
   --surface: #ffffff;
-  --foreground: #14181f;
-  --muted: #f1f2f4;
-  --muted-foreground: #5f6673;
-  --border: #e4e6ea;
+  --surface-2: #f9fafc;
+  --foreground: #0b1b2e;
+  --muted: #edf0f5;
+  --muted-foreground: #556070;
+  --border: #e0e4ea;
+  --border-strong: #c9d0da;
+
+  /* Aktionen */
   --primary: var(--navy);
+  --primary-hover: #0a3470;
   --primary-foreground: #ffffff;
   --accent: var(--sun);
-  --ring: var(--sun);
-  --ok: #1f9d55;
-  --warn: #c27c0e;
-  --bad: #d64545;
-  --sidebar: #f5f5f3;
+  --accent-foreground: #1d1300;
+  --accent-soft: #fdebd8;
+  --accent-ink: #8a4300;
+  --ring: #ef7c00;
+
+  /* Zustände (unabhängig von der Markenfarbe) */
+  --ok: #22794c;
+  --ok-soft: #ddf0e4;
+  --warn: #a35600;
+  --warn-soft: #fbe8d0;
+  --bad: #ae281e;
+  --bad-soft: #f9e0dd;
+  --info: #245a94;
+  --info-soft: #dce7f5;
+
+  /* Seitenleiste: immer Marineblau, damit das CRM sofort als Dimension Solaire erkennbar ist */
+  --sidebar: #02224f;
+  --sidebar-foreground: #c5d0e0;
+  --sidebar-active: #0d3a75;
+  --sidebar-active-foreground: #ffffff;
+  --sidebar-muted: #7f93b0;
+  --sidebar-border: #12346a;
+
+  --shadow-pop: 0 1px 2px rgb(2 34 79 / 0.06), 0 8px 24px rgb(2 34 79 / 0.12);
 }
 
 .dark {
-  --background: #0b0f15;
-  --surface: #11161e;
-  --foreground: #e8eaee;
-  --muted: #1a212c;
-  --muted-foreground: #9099a8;
-  --border: #232b37;
-  --primary: var(--sun);
-  --primary-foreground: #14181f;
-  --sidebar: #0e131a;
+  --background: #0a0f16;
+  --surface: #111821;
+  --surface-2: #151d28;
+  --foreground: #e9edf2;
+  --muted: #1a2331;
+  --muted-foreground: #9aa6b4;
+  --border: #243042;
+  --border-strong: #354357;
+
+  --primary: #f28a1e;
+  --primary-hover: #ff9f3d;
+  --primary-foreground: #1d1300;
+  --accent: #f28a1e;
+  --accent-foreground: #1d1300;
+  --accent-soft: #3a2a14;
+  --accent-ink: #ffc98a;
+  --ring: #ff9f3d;
+
+  --ok: #6fc694;
+  --ok-soft: #153025;
+  --warn: #f0a64a;
+  --warn-soft: #382913;
+  --bad: #ee8b7f;
+  --bad-soft: #3a1d1a;
+  --info: #7fb0e6;
+  --info-soft: #16283d;
+
+  --sidebar: #07111f;
+  --sidebar-foreground: #b4c0d0;
+  --sidebar-active: #13233a;
+  --sidebar-active-foreground: #ffffff;
+  --sidebar-muted: #6c7d94;
+  --sidebar-border: #142236;
+
+  --shadow-pop: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.45);
 }
 
 @theme inline {
@@ -43,21 +101,61 @@
   --color-navy: var(--navy);
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
   --color-ring: var(--ring);
   --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
   --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
   --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
   --color-sidebar: var(--sidebar);
-  --font-sans: 'Inter Variable', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-foreground: var(--sidebar-active-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --font-sans: 'Public Sans Variable', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Schibsted Grotesk Variable', 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, Consolas, monospace;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+
+  --shadow-pop: var(--shadow-pop);
+
+  --animate-einblenden: einblenden 140ms ease-out;
+  --animate-hochgleiten: hochgleiten 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes einblenden {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes hochgleiten {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
 }
 
 html,
@@ -70,12 +168,38 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-feature-settings:
-    'tnum' 1,
-    'cv11' 1;
+  font-size: 0.875rem;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
 }
 
 * {
   border-color: var(--border);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+}
+
+/* Zahlen in Tabellen und Beträgen stehen sauber untereinander. */
+.zahlen {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
 }
