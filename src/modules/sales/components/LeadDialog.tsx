@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAussendienst, useOrte, useVerkaufAenderung } from '../hooks/useVerkauf'
-import { fachFehler } from '../lib/fehler'
+import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { heuteIso } from '../lib/geschaeft'
 import { leadSchema, leererLead, type LeadEingabe } from '../schema'
 import { legeLeadAn, plzAuskunft, plzVorschlaege, pruefeLeadDubletten } from '../services/leads'
@@ -89,9 +89,9 @@ export default function LeadDialog({ onSchliessen }: { onSchliessen: (id: string
       melde('ok', { de: 'Lead angelegt', fr: 'Lead créé' })
       onSchliessen(id)
     } catch (f) {
-      const s = fachFehler(f)
+      const s = fachFehlerSchluessel(f)
       if (!s) meldeFehler(f, 'lead')
-      setHinweis(t(s ?? 'verkauf.fehler.allgemein'))
+      setHinweis(t(s ?? 'fachfehler.allgemein'))
     }
   }
 

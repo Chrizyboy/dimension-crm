@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAussendienst, VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
-import { beideSprachen, fachFehler } from '../lib/fehler'
+import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { erlaubteZiele, standBedarf, summe } from '../lib/geschaeft'
 import { verteile, zielInSpalte, type PipelineSpalte } from '../lib/spalten'
 import { setzeStand } from '../services/geschaefte'
@@ -107,9 +107,9 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
       melde('ok', { de: `${g.name} verschoben`, fr: `${g.name} déplacé` })
     } catch (f) {
       client.setQueryData(schluessel, vorher)
-      const s = fachFehler(f)
+      const s = fachFehlerSchluessel(f)
       if (!s) meldeFehler(f, 'pipeline')
-      melde('kritisch', { de: 'Nicht verschoben', fr: 'Non déplacé' }, s ? { text: beideSprachen(s) } : {})
+      melde('kritisch', { de: 'Nicht verschoben', fr: 'Non déplacé' }, s ? { text: zweisprachig(s) } : {})
     } finally {
       void client.invalidateQueries({ queryKey: VERKAUF_SCHLUESSEL })
     }

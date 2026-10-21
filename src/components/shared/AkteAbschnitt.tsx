@@ -2,7 +2,7 @@ import { ChevronRight } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
-/** Aufklappbarer Abschnitt der Lead-Akte (V233: Kontakt, Objekt, Interesse, Termin …). */
+/** Aufklappbarer Abschnitt einer Akte im Seitenpanel (Lead, Offerte, Artikel, Werkvertrag). */
 export function AkteAbschnitt({
   titel,
   zusatz,

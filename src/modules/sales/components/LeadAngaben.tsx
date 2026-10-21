@@ -11,7 +11,7 @@ import { melde } from '@/services/meldungen'
 import { useAussendienst, useRegionen, useVerkaufAenderung } from '../hooks/useVerkauf'
 import { aendereLead, type LeadFelder } from '../services/leads'
 import type { Geschaeft } from '../types'
-import { AkteAbschnitt, Angabe } from './AkteAbschnitt'
+import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 
 const LEER = '_leer'
 

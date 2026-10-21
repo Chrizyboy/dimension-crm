@@ -12,7 +12,7 @@ import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAussendienst, useVerkaufAenderung } from '../hooks/useVerkauf'
-import { fachFehler } from '../lib/fehler'
+import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { heuteIso } from '../lib/geschaeft'
 import { erfasseKontakt } from '../services/geschaefte'
 import type { Geschaeft, StandAngaben } from '../types'
@@ -75,11 +75,11 @@ export default function KontaktErfassenDialog({
       melde('ok', { de: 'Kontakt erfasst', fr: 'Contact enregistré' })
       onSchliessen()
     } catch (f) {
-      const s = fachFehler(f)
+      const s = fachFehlerSchluessel(f)
       if (s) setFehler(t(s))
       else {
         meldeFehler(f, 'kontakt')
-        setFehler(t('verkauf.fehler.allgemein'))
+        setFehler(t('fachfehler.allgemein'))
       }
     }
   }
