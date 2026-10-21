@@ -4,15 +4,18 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { buttonVariants } from '@/components/ui/button'
+import { AnmeldeTor } from '@/layouts/AnmeldeTor'
 import { AppShell } from '@/layouts/AppShell'
 import { meldeFehler } from '@/services/fehler'
 
 /** Wurzel aller Ansichten: jede Seite liegt im App-Rahmen, auch Fehler- und «nicht gefunden»-Seiten. */
 export const Route = createRootRoute({
   component: () => (
-    <AppShell>
-      <Outlet />
-    </AppShell>
+    <AnmeldeTor>
+      <AppShell>
+        <Outlet />
+      </AppShell>
+    </AnmeldeTor>
   ),
   errorComponent: function FehlerSeite({ error, reset }) {
     const router = useRouter()

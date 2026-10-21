@@ -5,10 +5,13 @@ import { createRoot } from 'react-dom/client'
 import '@/i18n'
 import './index.css'
 import { starteFehlerueberwachung } from '@/services/fehler'
+import { starteAnmeldung } from '@/stores/anmeldung'
 import { routeTree } from './routeTree.gen'
 
 // Möglichst früh, damit auch Fehler beim Start gemeldet werden. Läuft im Hintergrund, die App wartet nicht darauf.
 void starteFehlerueberwachung()
+// Sitzung prüfen, bevor die erste Ansicht erscheint (zeigt sonst kurz die Anmeldeseite).
+starteAnmeldung()
 
 /**
  * Daten bleiben 30 s frisch und werden beim Zurückkehren ins Fenster still aktualisiert.

@@ -2803,6 +2803,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: 'personen_rolle_fk'
+            columns: ['rolle']
+            isOneToOne: false
+            referencedRelation: 'rollen'
+            referencedColumns: ['schluessel']
+          },
+          {
             foreignKeyName: 'personen_standort_fk'
             columns: ['standort_id']
             isOneToOne: false
@@ -3262,6 +3269,64 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      rollen: {
+        Row: {
+          aktiv: boolean
+          alt_daten: Json | null
+          alt_id: string | null
+          bereiche: string[]
+          beschreibung_de: string | null
+          beschreibung_fr: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          name_de: string
+          name_fr: string
+          rechte: string[]
+          reihenfolge: number
+          schluessel: string
+        }
+        ComputedFields: never
+        Insert: {
+          aktiv?: boolean
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bereiche?: string[]
+          beschreibung_de?: string | null
+          beschreibung_fr?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          name_de: string
+          name_fr: string
+          rechte?: string[]
+          reihenfolge?: number
+          schluessel: string
+        }
+        Update: {
+          aktiv?: boolean
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bereiche?: string[]
+          beschreibung_de?: string | null
+          beschreibung_fr?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          name_de?: string
+          name_fr?: string
+          rechte?: string[]
+          reihenfolge?: number
+          schluessel?: string
+        }
+        Relationships: []
       }
       rueckmeldungen: {
         Row: {
@@ -4399,7 +4464,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      aendere_mein_konto: {
+        Args: { p_darstellung?: string; p_profil: Json; p_sprache?: string; p_standort_id?: string }
+        Returns: undefined
+      }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
       show_trgm: { Args: { '': string }; Returns: string[] }
