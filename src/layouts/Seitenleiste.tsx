@@ -1,35 +1,134 @@
 import { Link } from '@tanstack/react-router'
+import { Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Logo } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
+import { Tooltip } from '@/components/ui/tooltip'
 import { GRUPPEN, moduleDerGruppe } from '@/lib/navigation'
+import { kuerzelText } from '@/lib/tastenkuerzel'
+import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
 
-/** Linke Navigation: Module nach Gruppen, wie in der Vorlage (Übersicht, Verkauf, Abwicklung …). */
-export function Seitenleiste() {
+const LINK =
+  'flex h-[30px] items-center gap-2.5 rounded-md px-2 text-[13px] text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-active/70 hover:text-sidebar-active-foreground focus-visible:ring-2 focus-visible:ring-ring'
+const AKTIV = { className: '!bg-sidebar-active !text-sidebar-active-foreground font-medium [&_svg]:!text-sun' }
+
+/**
+ * Linke Navigation in Marineblau: Module nach Gruppen wie in der Vorlage.
+ * Eingeklappt bleiben nur die Icons (mit Tooltip), damit mehr Platz für Tabellen bleibt.
+ * `imMenue`: Darstellung im Handy-Menü (immer ausgeklappt, schliesst nach dem Klick).
+ */
+export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boolean; onNavigiert?: () => void }) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
+  const eingeklappt = useUi((z) => z.seitenleisteEingeklappt) && !imMenue
+  const toggle = useUi((z) => z.toggleSeitenleiste)
+
+  // Eingeklappt zeigt der Hinweis Name + Erklärung, ausgeklappt nur zusätzlich die Erklärung.
+  const eintrag = (key: string, inhalt: React.ReactNode, titel: string, untertitel?: string) =>
+    eingeklappt || untertitel ? (
+      <Tooltip key={key} text={titel} {...(untertitel ? { untertitel } : {})} seite="right">
+        {inhalt}
+      </Tooltip>
+    ) : (
+      inhalt
+    )
 
   return (
-    <nav aria-label="Hauptnavigation" className="flex flex-col gap-5 overflow-y-auto px-3 py-4">
-      {GRUPPEN.map((gruppe) => (
-        <div key={gruppe} className="flex flex-col gap-0.5">
-          <div className="text-muted-foreground px-2 pb-1 text-[11px] font-medium tracking-wide uppercase">
-            {t(`nav.${gruppe}`)}
+    <div className="bg-sidebar text-sidebar-foreground flex h-full flex-col">
+      <div
+        className={cn(
+          'border-sidebar-border flex h-12 shrink-0 items-center border-b',
+          eingeklappt ? 'justify-center' : 'px-4',
+        )}
+      >
+        {eingeklappt ? (
+          <img src="./icon.svg" alt="Dimension Solaire" className="size-7" />
+        ) : (
+          <Logo variante="aufDunkel" className="h-8" />
+        )}
+      </div>
+
+      <nav
+        aria-label={t('nav.haupt')}
+        className={cn('flex flex-1 flex-col gap-3 overflow-y-auto py-2.5', eingeklappt ? 'px-2' : 'px-3')}
+      >
+        {GRUPPEN.map((gruppe) => (
+          <div key={gruppe} className="flex flex-col gap-0.5">
+            {eingeklappt ? (
+              <div className="bg-sidebar-border mx-2 mb-1 h-px first:hidden" aria-hidden="true" />
+            ) : (
+              <div className="text-sidebar-muted px-2 pb-1 text-[10px] font-semibold tracking-[0.08em] uppercase">
+                {t(`nav.${gruppe}`)}
+              </div>
+            )}
+            {moduleDerGruppe(gruppe).map((m) =>
+              eintrag(
+                m.id,
+                <Link
+                  key={m.id}
+                  to="/$modul"
+                  params={{ modul: m.id }}
+                  onClick={onNavigiert}
+                  className={cn(LINK, eingeklappt && 'justify-center px-0')}
+                  activeProps={AKTIV}
+                  aria-label={eingeklappt ? m.titel[sprache] : undefined}
+                >
+                  <ModulIcon name={m.icon} className="text-sidebar-muted size-4 shrink-0" />
+                  {!eingeklappt && <span className="truncate">{m.titel[sprache]}</span>}
+                </Link>,
+                m.titel[sprache],
+                m.untertitel[sprache],
+              ),
+            )}
           </div>
-          {moduleDerGruppe(gruppe).map((m) => (
-            <Link
-              key={m.id}
-              to="/$modul"
-              params={{ modul: m.id }}
-              className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-8 items-center gap-2.5 rounded-md px-2 text-sm transition-colors"
-              activeProps={{ className: 'bg-muted !text-foreground font-medium' }}
+        ))}
+      </nav>
+
+      <div
+        className={cn(
+          'border-sidebar-border flex shrink-0 flex-col gap-0.5 border-t py-2',
+          eingeklappt ? 'px-2' : 'px-3',
+        )}
+      >
+        {eintrag(
+          'design',
+          <Link
+            to="/design"
+            onClick={onNavigiert}
+            className={cn(LINK, eingeklappt && 'justify-center px-0')}
+            activeProps={AKTIV}
+            aria-label={eingeklappt ? t('befehle.design') : undefined}
+          >
+            <Palette className="text-sidebar-muted size-4 shrink-0" aria-hidden="true" />
+            {!eingeklappt && <span className="truncate">{t('befehle.design')}</span>}
+          </Link>,
+          t('befehle.design'),
+        )}
+        {!imMenue &&
+          eintrag(
+            'einklappen',
+            <button
+              type="button"
+              onClick={toggle}
+              className={cn(LINK, eingeklappt && 'justify-center px-0')}
+              aria-label={eingeklappt ? t('nav.ausklappen') : t('nav.einklappen')}
             >
-              <ModulIcon name={m.icon} className="size-4 shrink-0" />
-              <span className="truncate">{m.titel[sprache]}</span>
-            </Link>
-          ))}
-        </div>
-      ))}
-    </nav>
+              {eingeklappt ? (
+                <PanelLeftOpen className="text-sidebar-muted size-4 shrink-0" />
+              ) : (
+                <PanelLeftClose className="text-sidebar-muted size-4 shrink-0" />
+              )}
+              {!eingeklappt && (
+                <>
+                  <span className="flex-1 truncate text-left">{t('nav.einklappen')}</span>
+                  <span className="text-sidebar-muted font-mono text-[10px]">{kuerzelText('b')}</span>
+                </>
+              )}
+            </button>,
+            `${t('nav.ausklappen')} (${kuerzelText('b')})`,
+          )}
+      </div>
+    </div>
   )
 }

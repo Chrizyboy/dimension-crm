@@ -50,3 +50,18 @@ export function formatTelefon(nummer: string): string {
   const m = /^\+41(\d{2})(\d{3})(\d{2})(\d{2})$/.exec(ziffern)
   return m ? `+41 ${m[1]} ${m[2]} ${m[3]} ${m[4]}` : nummer.trim()
 }
+
+/**
+ * Zeitabstand in Worten, z.B. «vor 5 Min.» / «il y a 5 min». Ab 7 Tagen das Datum,
+ * weil «vor 23 Tagen» schwerer zu lesen ist als «28.09.2026».
+ */
+export function formatRelativ(iso: string, sprache: 'de' | 'fr', jetzt: Date = new Date()): string {
+  const sekunden = Math.round((new Date(iso).getTime() - jetzt.getTime()) / 1000)
+  const abs = Math.abs(sekunden)
+  if (abs >= 7 * 86_400) return formatDatum(iso)
+  const rtf = new Intl.RelativeTimeFormat(sprache === 'fr' ? 'fr-CH' : 'de-CH', { numeric: 'auto', style: 'short' })
+  if (abs < 60) return rtf.format(0, 'second')
+  if (abs < 3600) return rtf.format(Math.round(sekunden / 60), 'minute')
+  if (abs < 86_400) return rtf.format(Math.round(sekunden / 3600), 'hour')
+  return rtf.format(Math.round(sekunden / 86_400), 'day')
+}

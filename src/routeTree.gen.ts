@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as ModulRouteImport } from './app/$modul'
+import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
+import { Route as DesignRouteImport } from './app/design'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const ModulRoute = ModulRouteImport.update({
   path: '/$modul',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BenachrichtigungenRoute = BenachrichtigungenRouteImport.update({
+  id: '/benachrichtigungen',
+  path: '/benachrichtigungen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesignRoute = DesignRouteImport.update({
+  id: '/design',
+  path: '/design',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
+  '/benachrichtigungen': typeof BenachrichtigungenRoute
+  '/design': typeof DesignRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
+  '/benachrichtigungen': typeof BenachrichtigungenRoute
+  '/design': typeof DesignRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
+  '/benachrichtigungen': typeof BenachrichtigungenRoute
+  '/design': typeof DesignRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$modul'
+  fullPaths: '/' | '/$modul' | '/benachrichtigungen' | '/design'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$modul'
-  id: '__root__' | '/' | '/$modul'
+  to: '/' | '/$modul' | '/benachrichtigungen' | '/design'
+  id: '__root__' | '/' | '/$modul' | '/benachrichtigungen' | '/design'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulRoute: typeof ModulRoute
+  BenachrichtigungenRoute: typeof BenachrichtigungenRoute
+  DesignRoute: typeof DesignRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModulRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/benachrichtigungen': {
+      id: '/benachrichtigungen'
+      path: '/benachrichtigungen'
+      fullPath: '/benachrichtigungen'
+      preLoaderRoute: typeof BenachrichtigungenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/design': {
+      id: '/design'
+      path: '/design'
+      fullPath: '/design'
+      preLoaderRoute: typeof DesignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulRoute: ModulRoute,
+  BenachrichtigungenRoute: BenachrichtigungenRoute,
+  DesignRoute: DesignRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

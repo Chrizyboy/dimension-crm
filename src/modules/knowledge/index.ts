@@ -1,5 +1,5 @@
 /**
- * Öffentliche Schnittstelle des Moduls «Wissen & Hilfe».
+ * Öffentliche Schnittstelle des Moduls «Handbuch».
  * Andere Teile des CRM dürfen NUR von hier importieren, nie direkt aus Unterordnern.
  */
 import type { ModulMeta } from '@/types/modul'
@@ -7,7 +7,8 @@ import type { ModulMeta } from '@/types/modul'
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
 export const meta: ModulMeta = {
   id: 'knowledge',
-  titel: { de: 'Wissen & Hilfe', fr: 'Savoir & aide' },
+  titel: { de: 'Handbuch', fr: 'Manuel' },
+  untertitel: { de: 'Anleitungen, Vorlagen und Know-how', fr: 'Guides, modèles et savoir-faire' },
   pfad: '/knowledge',
   icon: 'book-open',
   gruppe: 'weitere',

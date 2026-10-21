@@ -70,10 +70,17 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 1. `npm run modul:neu -- lager "Lager" "Stock" package abwicklung 17`
    (id, Titel DE, Titel FR, Icon aus [lucide.dev](https://lucide.dev), Gruppe `uebersicht|verkauf|abwicklung|verwaltung|weitere`, Phase als Zahl oder eingeschoben mit Buchstabe wie `8b`)
 2. Die vom Skript angezeigte Zeile in `src/lib/navigation.ts` eintragen. Das Modul erscheint sofort in der Seitenleiste.
+   In `index.ts` den `untertitel` (DE/FR, ein Satz: was tut man hier?) ausfüllen. Namen müssen eindeutig sein, siehe `docs/entscheidungen/0008`.
 3. `src/modules/lager/README.md` ausfüllen: Zweck, Daten, Abhängigkeiten, Ereignisse.
 4. Fachtypen in `types.ts`, Prüfregeln (Zod) in `schema.ts`, Oberfläche in `components/`, Datenzugriff in `services/`.
 5. Braucht es neue Tabellen: neue Datei in `supabase/migrations/` (`npx supabase migration new <name>`), mit RLS, `geloescht_am` und den beiden Triggern. Einen pgTAP-Test in `supabase/tests/` ergänzen.
 6. `npm run check` und `npm run test:e2e`.
+
+## Design
+
+- Farben nur über Tokens (`bg-surface`, `text-muted-foreground`, `text-ok` …), nie feste Werte. Übersicht: `docs/design-system.md`, live unter `#/design`.
+- Bausteine aus `src/components/ui/` verwenden (Button, Feld, Dialog, Tabelle …), keine eigenen bauen.
+- Rückmeldungen mit `melde()` aus `src/services/meldungen.ts`; Fehler mit `meldeFehler()` aus `src/services/fehler.ts`.
 
 ## Bekannte Eigenheiten
 

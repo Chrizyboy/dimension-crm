@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'invoices',
   titel: { de: 'Rechnungen', fr: 'Factures' },
+  untertitel: { de: 'Rechnungen, Zahlungen und Mahnungen', fr: 'Factures, paiements et rappels' },
   pfad: '/invoices',
   icon: 'receipt',
   gruppe: 'abwicklung',

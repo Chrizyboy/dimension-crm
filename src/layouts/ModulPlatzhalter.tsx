@@ -13,6 +13,7 @@ export function ModulPlatzhalter({ modul }: { modul: ModulMeta }) {
         <ModulIcon name={modul.icon} className="text-muted-foreground size-6" />
       </div>
       <h1 className="text-xl font-semibold">{modul.titel[sprache]}</h1>
+      <p className="text-sm">{modul.untertitel[sprache]}</p>
       <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-xs">
         {t('modul.geplant')} · {t('modul.phase', { phase: modul.phase })}
       </span>

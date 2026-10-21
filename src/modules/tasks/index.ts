@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'tasks',
   titel: { de: 'Aufgaben', fr: 'Tâches' },
+  untertitel: { de: 'Was wer bis wann erledigt', fr: 'Qui fait quoi et pour quand' },
   pfad: '/tasks',
   icon: 'square-check',
   gruppe: 'uebersicht',

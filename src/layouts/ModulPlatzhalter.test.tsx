@@ -9,7 +9,7 @@ describe('ModulPlatzhalter', () => {
 
   it('zeigt Titel und geplante Phase auf Deutsch', () => {
     render(<ModulPlatzhalter modul={verkauf} />)
-    expect(screen.getByRole('heading', { name: 'Verkauf' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Anfragen & Leads' })).toBeInTheDocument()
     expect(screen.getByText(/Phase 6/, { selector: 'span' })).toBeInTheDocument()
   })
 

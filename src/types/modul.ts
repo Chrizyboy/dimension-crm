@@ -12,6 +12,8 @@ export interface ModulMeta {
   /** Eindeutige, kurze Kennung (= Ordnername), z.B. "sales". */
   id: string
   titel: Zweisprachig
+  /** Ein Satz, was man in diesem Bereich erledigt; macht Namen eindeutig (z.B. «Anfragen & Leads» vs. «Offerten»). */
+  untertitel: Zweisprachig
   /** Pfad der Hauptansicht, z.B. "/sales". */
   pfad: string
   /** Name eines lucide-Icons in kebab-case, z.B. "sun". */

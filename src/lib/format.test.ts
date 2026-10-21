@@ -1,4 +1,4 @@
-import { formatChf, formatDatum, formatTelefon, parseChf, rundeAuf5Rappen } from './format'
+import { formatChf, formatDatum, formatRelativ, formatTelefon, parseChf, rundeAuf5Rappen } from './format'
 
 describe('formatChf', () => {
   it('setzt Apostroph als Tausendertrenner', () => {
@@ -46,5 +46,16 @@ describe('formatTelefon', () => {
   })
   it('lässt ausländische Nummern stehen', () => {
     expect(formatTelefon('+33 6 12 34 56 78')).toBe('+33 6 12 34 56 78')
+  })
+})
+
+describe('formatRelativ', () => {
+  const jetzt = new Date('2026-10-21T15:00:00Z')
+  it('zeigt kurze Abstände in Worten', () => {
+    expect(formatRelativ('2026-10-21T14:55:00Z', 'de', jetzt)).toMatch(/5\sMin/)
+    expect(formatRelativ('2026-10-21T12:00:00Z', 'fr', jetzt)).toMatch(/3\sh/)
+  })
+  it('zeigt ab 7 Tagen das Datum', () => {
+    expect(formatRelativ('2026-10-01T12:00:00Z', 'de', jetzt)).toBe('01.10.2026')
   })
 })

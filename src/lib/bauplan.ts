@@ -10,6 +10,8 @@ export interface Phase {
  * Der freigegebene Phasenplan (Phase 0 vom 21.10.2026). Stand wird bei jedem Phasen-Abschluss nachgeführt.
  * 8b: Ausschreibungs-Monitor, von Chris am 21.10.2026 freigegeben. Braucht Kunden, Verkauf, Offerten
  * und den Mailversand über Microsoft 365, deshalb direkt nach Phase 8.
+ * 9a, 9b, 17 und die Erweiterungen von 3, 5, 7, 9, 10, 12 und 14: ERP-Lückenanalyse, von Chris am 21.10.2026
+ * freigegeben. Was genau dazukommt, steht in docs/entscheidungen/0009-erp-erweiterung.md.
  */
 export const BAUPLAN: readonly Phase[] = [
   { nr: 0, titel: { de: 'Analyse der Vorlage', fr: 'Analyse du modèle' }, stand: 'fertig' },
@@ -18,16 +20,35 @@ export const BAUPLAN: readonly Phase[] = [
   { nr: 3, titel: { de: 'Datenmodell und Import der Vorlage', fr: 'Modèle de données et import' }, stand: 'offen' },
   { nr: 4, titel: { de: 'Anmeldung, Benutzer, Rollen', fr: 'Connexion, utilisateurs, rôles' }, stand: 'offen' },
   { nr: 5, titel: { de: 'Kunden und Kontakte (360°)', fr: 'Clients et contacts (360°)' }, stand: 'offen' },
-  { nr: 6, titel: { de: 'Verkauf: Leads, Pipeline, Touren', fr: 'Vente : leads, pipeline, tournées' }, stand: 'offen' },
-  { nr: 7, titel: { de: 'Offerten und Preise', fr: 'Offres et prix' }, stand: 'offen' },
+  {
+    nr: 6,
+    titel: { de: 'Anfragen & Leads, Pipeline, Touren', fr: 'Demandes & leads, pipeline, tournées' },
+    stand: 'offen',
+  },
+  { nr: 7, titel: { de: 'Offerten, Preise, Eturnity', fr: 'Offres, prix, Eturnity' }, stand: 'offen' },
   { nr: 8, titel: { de: 'Microsoft 365, AbaNinja, SMS', fr: 'Microsoft 365, AbaNinja, SMS' }, stand: 'offen' },
   { nr: '8b', titel: { de: 'Ausschreibungs-Monitor', fr: 'Veille des appels d’offres' }, stand: 'offen' },
-  { nr: 9, titel: { de: 'Bauplanung, Service, Verträge', fr: 'Chantiers, service, contrats' }, stand: 'offen' },
-  { nr: 10, titel: { de: 'Rechnungen, Spesen, Finanzen', fr: 'Factures, frais, finances' }, stand: 'offen' },
+  {
+    nr: 9,
+    titel: { de: 'Projekte, Montageplanung, Service, Verträge', fr: 'Projets, planification, service, contrats' },
+    stand: 'offen',
+  },
+  { nr: '9a', titel: { de: 'Einkauf und Material', fr: 'Achats et matériel' }, stand: 'offen' },
+  { nr: '9b', titel: { de: 'Baustelle und Service am Handy', fr: 'Chantier et service sur mobile' }, stand: 'offen' },
+  {
+    nr: 10,
+    titel: { de: 'Rechnungen, Nachkalkulation, Finanzen', fr: 'Factures, post-calcul, finances' },
+    stand: 'offen',
+  },
   { nr: 11, titel: { de: 'Marketing und Social Media', fr: 'Marketing et réseaux sociaux' }, stand: 'offen' },
   { nr: 12, titel: { de: 'Automationen', fr: 'Automatisations' }, stand: 'offen' },
   { nr: 13, titel: { de: 'Assistent (KI)', fr: 'Assistant (IA)' }, stand: 'offen' },
-  { nr: 14, titel: { de: 'Heute und Dashboard', fr: 'Aujourd’hui et tableau de bord' }, stand: 'offen' },
+  { nr: 14, titel: { de: 'Mein Tag und Kennzahlen', fr: 'Ma journée et indicateurs' }, stand: 'offen' },
   { nr: 15, titel: { de: 'Feinschliff', fr: 'Finitions' }, stand: 'offen' },
   { nr: 16, titel: { de: 'Installation und Umzug', fr: 'Installation et migration' }, stand: 'offen' },
+  {
+    nr: 17,
+    titel: { de: 'Fahrzeuge, Geräte, Personal-Akte', fr: 'Véhicules, appareils, dossier du personnel' },
+    stand: 'offen',
+  },
 ]

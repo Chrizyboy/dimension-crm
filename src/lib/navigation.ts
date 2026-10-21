@@ -6,11 +6,13 @@ import { meta as contracts } from '@/modules/contracts'
 import { meta as customers } from '@/modules/customers'
 import { meta as dashboard } from '@/modules/dashboard'
 import { meta as expenses } from '@/modules/expenses'
+import { meta as fieldwork } from '@/modules/fieldwork'
 import { meta as finance } from '@/modules/finance'
 import { meta as invoices } from '@/modules/invoices'
 import { meta as knowledge } from '@/modules/knowledge'
 import { meta as marketing } from '@/modules/marketing'
 import { meta as projects } from '@/modules/projects'
+import { meta as purchasing } from '@/modules/purchasing'
 import { meta as quotes } from '@/modules/quotes'
 import { meta as sales } from '@/modules/sales'
 import { meta as settings } from '@/modules/settings'
@@ -31,6 +33,8 @@ export const MODULE: readonly ModulMeta[] = [
   contacts,
   marketing,
   projects,
+  purchasing,
+  fieldwork,
   contracts,
   invoices,
   aftersales,

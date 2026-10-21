@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'marketing',
   titel: { de: 'Marketing', fr: 'Marketing' },
+  untertitel: { de: 'Newsletter, Social Media und Kampagnen', fr: 'Newsletter, réseaux sociaux et campagnes' },
   pfad: '/marketing',
   icon: 'megaphone',
   gruppe: 'verkauf',

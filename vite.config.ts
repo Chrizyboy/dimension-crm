@@ -29,8 +29,8 @@ export default defineConfig({
         short_name: 'Dimension',
         description: 'CRM für Dimension Solaire',
         lang: 'de-CH',
-        theme_color: '#0B2545',
-        background_color: '#0B2545',
+        theme_color: '#02224F',
+        background_color: '#02224F',
         display: 'standalone',
         start_url: './',
         icons: [

@@ -12,6 +12,15 @@ it('jedes Modul gehört zu einer bekannten Gruppe', () => {
 })
 
 it('findet Module über die id', () => {
-  expect(findeModul('sales')?.titel.de).toBe('Verkauf')
+  expect(findeModul('sales')?.titel.de).toBe('Anfragen & Leads')
   expect(findeModul('gibt-es-nicht')).toBeUndefined()
+})
+
+it('jeder Bereich hat einen eindeutigen Namen und eine Erklärung in beiden Sprachen', () => {
+  // Chris, 21.10.2026: «benenne die jeweiligen Tools so, dass bei niemandem Verwirrung entstehen kann».
+  for (const sprache of ['de', 'fr'] as const) {
+    const namen = MODULE.map((m) => m.titel[sprache].toLowerCase())
+    expect(new Set(namen).size).toBe(namen.length)
+    for (const m of MODULE) expect(m.untertitel[sprache].length).toBeGreaterThan(10)
+  }
 })
