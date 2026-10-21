@@ -11,6 +11,8 @@ export default tseslint.config(
       'dev-dist',
       'src-tauri/target',
       'src/routeTree.gen.ts',
+      // Aus der Datenbank erzeugt (npm run db:typen), nie von Hand ändern
+      'src/types/datenbank.ts',
       'docs/modul-vorlage',
       'supabase/functions',
       'coverage',
