@@ -2,6 +2,7 @@
  * Öffentliche Schnittstelle des Moduls «Werkverträge».
  * Andere Teile des CRM dürfen NUR von hier importieren, nie direkt aus Unterordnern.
  */
+import { lazy } from 'react'
 import type { ModulMeta } from '@/types/modul'
 
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
@@ -17,5 +18,8 @@ export const meta: ModulMeta = {
   gruppe: 'verkauf',
   phase: 7,
 }
+
+/** Der ganze Bereich: Liste der Werkverträge, Auftrag erstellen, Zahlungsplan, PDF. */
+export const Werkvertraege = lazy(() => import('./components/Werkvertraege'))
 
 export type * from './types'
