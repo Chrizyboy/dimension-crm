@@ -19,7 +19,7 @@
   },
   "start": {
     "titel": "Bienvenue dans le nouveau CRM",
-    "lead": "Phase 2 : système de design et interface. Les domaines métier seront construits dès la phase 5.",
+    "lead": "Phase 3 : modèle de données et import du modèle. Les domaines métier seront construits dès la phase 5.",
     "status": "État du système",
     "datenbank": "Base de données",
     "plattform": "Plateforme",

@@ -19,6 +19,7 @@ import { meta as settings } from '@/modules/settings'
 import { meta as tasks } from '@/modules/tasks'
 import { meta as tenders } from '@/modules/tenders'
 import { meta as today } from '@/modules/today'
+import { meta as workcontracts } from '@/modules/workcontracts'
 import type { ModulMeta, NavGruppe } from '@/types/modul'
 
 /** Alle Module in der Reihenfolge der Seitenleiste. Einziger Ort, der alle Module kennt. */
@@ -28,6 +29,7 @@ export const MODULE: readonly ModulMeta[] = [
   tasks,
   sales,
   quotes,
+  workcontracts,
   tenders,
   customers,
   contacts,

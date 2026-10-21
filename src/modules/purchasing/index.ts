@@ -8,7 +8,6 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'purchasing',
   titel: { de: 'Einkauf & Material', fr: 'Achats & matériel' },
-  // Ein Satz, was man hier erledigt. Erscheint als Hinweis in Seitenleiste, Suche und Seitenkopf.
   untertitel: {
     de: 'Material bei Lieferanten bestellen, Liefertermine, Wareneingang, Lager',
     fr: 'Commander le matériel, délais de livraison, réception, stock',

@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from '@/types/datenbank'
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
@@ -8,7 +9,7 @@ const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
  * die Oberfläche zeigt dann «nicht verbunden» statt abzustürzen.
  * Der öffentliche «anon»-Schlüssel ist ungefährlich: was jemand sehen darf, regelt Row Level Security.
  */
-export const supabase: SupabaseClient | null = url && anonKey ? createClient(url, anonKey) : null
+export const supabase: SupabaseClient<Database> | null = url && anonKey ? createClient<Database>(url, anonKey) : null
 
 /** Prüft, ob die Datenbank erreichbar ist (für die Statusanzeige). */
 export async function pruefeVerbindung(): Promise<'verbunden' | 'nicht-konfiguriert' | 'fehler'> {
