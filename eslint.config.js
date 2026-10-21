@@ -54,5 +54,10 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    // shadcn-Muster: Basis-Bausteine exportieren neben der Komponente auch ihre Varianten (buttonVariants …).
+    files: ['src/components/ui/**/*.tsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
   { files: ['**/*.js', '**/*.mjs'], extends: [js.configs.recommended], languageOptions: { globals: globals.node } },
 )
