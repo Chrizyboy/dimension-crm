@@ -17,17 +17,23 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
     spalte.accessor('kundennummer', {
       header: t('kunden.spalte.nummer'),
       cell: (c) => <span className="zahlen font-mono text-[13px]">{formatKundennummer(c.getValue())}</span>,
-      meta: { breite: 'w-20' },
+      meta: { breite: 'w-20', nurBreit: true },
     }),
     spalte.accessor('name', {
       header: t('kunden.spalte.name'),
       sortFn: (a, b) => a.original.name.localeCompare(b.original.name, 'de-CH'),
       cell: (c) => (
-        <span className="flex max-w-[16rem] min-w-0 items-center gap-1.5 font-medium lg:max-w-[18rem]">
-          <span className="truncate">{c.getValue()}</span>
-          {c.row.original.moeglicheDublette && (
-            <CopyCheck className="text-warn size-3.5 shrink-0" aria-label={t('kunden.dublette')} />
-          )}
+        <span className="flex max-w-[10rem] min-w-0 flex-col sm:max-w-[16rem] lg:max-w-[18rem]">
+          <span className="flex min-w-0 items-center gap-1.5 font-medium">
+            <span className="truncate">{c.getValue()}</span>
+            {c.row.original.moeglicheDublette && (
+              <CopyCheck className="text-warn size-3.5 shrink-0" aria-label={t('kunden.dublette')} />
+            )}
+          </span>
+          {/* Am Handy fehlen die Spalten Nummer und Ort; sie stehen klein unter dem Namen. */}
+          <span className="text-muted-foreground truncate text-xs md:hidden">
+            {[formatKundennummer(c.row.original.kundennummer), c.row.original.ort].filter(Boolean).join(' · ')}
+          </span>
         </span>
       ),
     }),
@@ -36,7 +42,11 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
       cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() ?? '–'}</span>,
       meta: { nurBreit: true, breite: 'w-16' },
     }),
-    spalte.accessor('ort', { header: t('kunden.spalte.ort'), cell: (c) => c.getValue() ?? '–' }),
+    spalte.accessor('ort', {
+      header: t('kunden.spalte.ort'),
+      cell: (c) => c.getValue() ?? '–',
+      meta: { nurBreit: true },
+    }),
     spalte.accessor((k) => k.telefon ?? k.email ?? '', {
       id: 'kontakt',
       header: t('kunden.spalte.kontakt'),
