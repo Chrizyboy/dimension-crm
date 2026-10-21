@@ -20,6 +20,10 @@ if (!id || !titel || !titelFr) {
   console.error('Bitte angeben: <id> "<Titel DE>" "<Titel FR>" [icon] [gruppe] [phase]')
   process.exit(1)
 }
+if (!/^\d+[abc]?$/.test(phase)) {
+  console.error('Die Phase ist eine Zahl, für eingeschobene Phasen mit Buchstabe, z.B. "8b".')
+  process.exit(1)
+}
 if (!/^[a-z][a-z0-9-]*$/.test(id)) {
   console.error('Die id darf nur Kleinbuchstaben, Ziffern und Bindestriche enthalten, z.B. "service-faelle".')
   process.exit(1)
@@ -38,7 +42,9 @@ const ersetzungen = {
   __TITEL_FR__: titelFr,
   __ICON__: icon,
   __GRUPPE__: gruppe,
-  __PHASE__: String(Number(phase) || 0),
+  __PHASE__: phase,
+  // Zahl bleibt Zahl, eingeschobene Phasen wie "8b" werden als Text eingesetzt.
+  __PHASE_WERT__: /^\d+$/.test(phase) ? phase : JSON.stringify(phase),
   __TYP__: typ,
   __TYP_KLEIN__: typ.charAt(0).toLowerCase() + typ.slice(1),
 }
@@ -54,7 +60,12 @@ function ersetzeIn(ordner) {
       continue
     }
     let text = readFileSync(pfad, 'utf8')
-    for (const [platzhalter, wert] of Object.entries(ersetzungen)) text = text.replaceAll(platzhalter, wert)
+    // In Code-Dateien stehen die Titel in '…'; ein Apostroph wie in «Appels d'offres» muss maskiert werden.
+    const imCode = pfad.endsWith('.ts')
+    for (const [platzhalter, wert] of Object.entries(ersetzungen)) {
+      const sicher = imCode && platzhalter.startsWith('__TITEL') ? wert.replaceAll("'", "\\'") : wert
+      text = text.replaceAll(platzhalter, sicher)
+    }
     writeFileSync(pfad, text)
   }
 }

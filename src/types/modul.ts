@@ -18,5 +18,11 @@ export interface ModulMeta {
   icon: string
   gruppe: NavGruppe
   /** Phase des Bauplans, in der das Modul gebaut wird (0 = gemeinsamer Baustein). */
-  phase: number
+  phase: Phasennummer
 }
+
+/**
+ * Nummer einer Bau-Phase. Nachträglich eingeschobene Phasen bekommen einen Buchstaben (z.B. "8b"),
+ * damit die freigegebene Nummerierung 0–16 gleich bleibt.
+ */
+export type Phasennummer = number | `${number}${'a' | 'b' | 'c'}`

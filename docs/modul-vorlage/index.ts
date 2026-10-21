@@ -11,7 +11,7 @@ export const meta: ModulMeta = {
   pfad: '/__MODUL__',
   icon: '__ICON__',
   gruppe: '__GRUPPE__',
-  phase: __PHASE__,
+  phase: __PHASE_WERT__,
 }
 
 export type * from './types'
