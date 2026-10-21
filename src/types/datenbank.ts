@@ -5706,6 +5706,7 @@ export type Database = {
       }
       werkvertraege_liste: {
         Row: {
+          angebot_am: string | null
           anrede: string | null
           anzahl_module: number | null
           batterie: string | null

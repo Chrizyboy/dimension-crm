@@ -182,3 +182,8 @@ end
 $$;
 revoke execute on function public.preise_importieren(jsonb, boolean) from public, anon;
 grant execute on function public.preise_importieren(jsonb, boolean) to authenticated;
+
+-- Neuer Bereich «Preise» für alle Rollen, die Offerten sehen: die Kundenansicht ist für alle da,
+-- Einkauf, Marge und Kalkulation bleiben beim Recht «preise». Rollen bleiben in den Einstellungen änderbar.
+update public.rollen set bereiche = array_append(bereiche, 'pricing')
+ where 'quotes' = any(bereiche) and not ('pricing' = any(bereiche));

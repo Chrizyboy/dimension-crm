@@ -196,6 +196,7 @@ select
   ob.strasse as objekt_strasse, ob.plz as objekt_plz, ob.ort as objekt_ort,
   f.name as firma_name, f.strasse as firma_strasse, f.plz as firma_plz, f.ort as firma_ort, f.mwst_nr as firma_mwst_nr,
   o.nummer as offerte_nummer, o.titel, o.leistung_kwp, o.anzahl_module, o.wechselrichter, o.batterie, o.betrag_rappen as offerte_rappen,
+  o.angebot_am,
   p.nummer as projekt_nummer, p.baubeginn, p.zahlungskonditionen, st.kuerzel as standort,
   coalesce((select jsonb_agg(jsonb_build_object('bezeichnung', z.bezeichnung, 'betrag_rappen', z.betrag_rappen,
                                                 'faellig_am', z.faellig_am, 'bezahlt_am', z.bezahlt_am) order by z.faellig_am nulls last, z.erstellt_am)
@@ -208,7 +209,8 @@ left join public.projekte p on p.id = w.projekt_id
 left join public.objekte ob on ob.id = coalesce(p.objekt_id, o.objekt_id)
 left join lateral (select x.strasse, x.plz, x.ort from public.objekte x
                     where x.kontakt_id = k.id and x.geloescht_am is null order by x.erstellt_am limit 1) ko on true
-left join public.firmen f on f.id = w.firma_id
 left join public.standorte st on st.id = coalesce(p.standort_id, o.standort_id)
+-- Verträge aus der Vorlage haben keine Firma gespeichert: dann gilt die Firma des Standorts.
+left join public.firmen f on f.id = coalesce(w.firma_id, st.firma_id)
 where w.geloescht_am is null;
 grant select on public.werkvertraege_liste to authenticated;
