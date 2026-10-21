@@ -12,6 +12,7 @@ import { useGeschaefte } from '../hooks/useVerkauf'
 import { passtZuFilter } from '../lib/geschaeft'
 import { LEERER_FILTER, VERKAUF_ANSICHTEN, type VerkaufAnsicht, type VerkaufFilter } from '../types'
 import { FilterLeiste } from './FilterLeiste'
+import { OrdnerKnopf } from './OrdnerKnopf'
 
 const Pipeline = lazy(() => import('./Pipeline'))
 const LeadListe = lazy(() => import('./LeadListe'))
@@ -45,6 +46,7 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
   const geschaefte = useGeschaefte()
   const [filter, setFilter] = useState<VerkaufFilter>(LEERER_FILTER)
   const [dialog, setDialog] = useState<'excel' | 'sms' | null>(null)
+  const [ordnerDatei, setOrdnerDatei] = useState<File | undefined>()
   const verzoegert = useDeferredValue(filter)
   const oeffne = (id: string | null) => {
     onAdresse({ lead: id })
@@ -106,12 +108,22 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
             <Button
               variant="secondary"
               onClick={() => {
+                setOrdnerDatei(undefined)
                 setDialog('excel')
               }}
             >
               <FileSpreadsheet />
               {t('verkauf.excel.knopf')}
             </Button>
+            {/* Erst wenn die Geschäfte da sind, sonst hielte der Abgleich alle Excel-Leads für neu. */}
+            {geschaefte.data && (
+              <OrdnerKnopf
+                onExcel={(f) => {
+                  setOrdnerDatei(f)
+                  setDialog('excel')
+                }}
+              />
+            )}
             <Button
               onClick={() => {
                 onAdresse({ neu: true })
@@ -201,8 +213,10 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
         {dialog === 'excel' && (
           <ExcelImport
             geschaefte={daten}
+            datei={ordnerDatei}
             onSchliessen={() => {
               setDialog(null)
+              setOrdnerDatei(undefined)
             }}
           />
         )}

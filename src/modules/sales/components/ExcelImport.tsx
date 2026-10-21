@@ -1,5 +1,5 @@
 import { FileSpreadsheet, Upload } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -22,9 +22,12 @@ const ohneZeichen = (s: string) => s.toLowerCase().replace(/[^a-z0-9äöüéèà
  */
 export default function ExcelImport({
   geschaefte,
+  datei,
   onSchliessen,
 }: {
   geschaefte: Geschaeft[]
+  /** Aus dem verbundenen Ordner: gleich lesen und still schliessen, wenn nichts Neues drin ist. */
+  datei?: File | undefined
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
@@ -46,7 +49,7 @@ export default function ExcelImport({
     )
   }
 
-  async function lies(datei: File) {
+  async function lies(datei: File, ausOrdner = false) {
     setFehler(null)
     try {
       const { default: leseExcel } = await import('read-excel-file/browser')
@@ -57,6 +60,10 @@ export default function ExcelImport({
         return
       }
       const mit = roh.map((l) => ({ ...l, bestehend: findeBestehend(l, geschaefte) }))
+      if (ausOrdner && mit.every((l) => l.bestehend)) {
+        onSchliessen()
+        return
+      }
       setLeads(mit)
       setWahl(new Set(mit.filter((l) => !l.bestehend).map((l) => l.zeile)))
     } catch (f) {
@@ -64,6 +71,15 @@ export default function ExcelImport({
       setFehler(t('verkauf.excel.unlesbar'))
     }
   }
+
+  // Nur einmal lesen, auch wenn React den Effekt im Entwicklungsmodus doppelt startet.
+  const gelesen = useRef(false)
+  useEffect(() => {
+    if (!datei || gelesen.current) return
+    gelesen.current = true
+    void lies(datei, true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- nur beim Öffnen mit einer Datei aus dem Ordner
+  }, [datei])
 
   const uebernehmen = useVerkaufAenderung(async (liste: ExcelLead[]) => {
     let n = 0

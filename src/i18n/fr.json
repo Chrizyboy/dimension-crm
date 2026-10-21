@@ -889,6 +889,7 @@
       }
     },
     "terminblatt": {
+      "qr": "QR : Google Maps",
       "titel": "Fiche de visite",
       "drucken": "Imprimer / PDF",
       "luftbild": "Vue aérienne",
@@ -1029,6 +1030,14 @@
       "kopieren": "Copier le texte",
       "speichern": "Enregistrer",
       "gemeldet": "Marquer comme signalé"
+    },
+    "ordner": {
+      "verbinden": "Connecter un dossier",
+      "name": "Dossier : {{name}}",
+      "erlauben": "Charger le dossier « {{name}} »",
+      "jetzt": "Recharger maintenant",
+      "trennen": "Déconnecter le dossier",
+      "neuesExcel": "Nouveau Planungstool dans le dossier : {{name}}"
     },
     "excel": {
       "knopf": "Charger Excel",

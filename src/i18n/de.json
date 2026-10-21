@@ -889,6 +889,7 @@
       }
     },
     "terminblatt": {
+      "qr": "QR-Code: Google Maps",
       "titel": "Terminblatt",
       "drucken": "Drucken / PDF",
       "luftbild": "Luftbild",
@@ -1029,6 +1030,14 @@
       "kopieren": "Text kopieren",
       "speichern": "Speichern",
       "gemeldet": "Als gemeldet markieren"
+    },
+    "ordner": {
+      "verbinden": "Ordner verbinden",
+      "name": "Ordner: {{name}}",
+      "erlauben": "Ordner «{{name}}» laden",
+      "jetzt": "Jetzt neu laden",
+      "trennen": "Ordner trennen",
+      "neuesExcel": "Neues Planungstool im Ordner: {{name}}"
     },
     "excel": {
       "knopf": "Excel laden",

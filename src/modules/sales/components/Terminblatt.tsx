@@ -5,6 +5,8 @@ import { formatDatum, formatTelefon } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
 import type { Geschaeft } from '../types'
 import type { Besichtigung } from '../lib/besichtigung'
+import { mapsLink } from '../lib/karte'
+import { QrCode } from './QrCode'
 
 interface TerminblattProps {
   g: Geschaeft
@@ -67,6 +69,10 @@ function Abschnitt({ titel, children }: { titel: string; children: React.ReactNo
 export function Terminblatt({ g, details, verlauf, luftbild, person }: TerminblattProps) {
   const { t } = useTranslation()
   const interessen = useAuswahl('interesse')
+  // Gespeichert sind Schlüssel («ueber_6»); aufs Blatt gehört der Text in der Sprache der Oberfläche.
+  const finanzierung = useAuswahl('finanzierung')
+  const zeithorizont = useAuswahl('zeithorizont')
+  const erreichbarkeit = useAuswahl('erreichbarkeit')
   const b = (details?.besichtigung ?? {}) as Besichtigung
   const termin = g.terminAm ? new Date(g.terminAm) : null
   const adresse = [g.strasse, [g.plz, g.ort].filter(Boolean).join(' ')].filter(Boolean).join(', ')
@@ -108,20 +114,32 @@ export function Terminblatt({ g, details, verlauf, luftbild, person }: Terminbla
           <Feld label={t('verkauf.akte.adresse')} wert={adresse} />
           <Feld label={t('verkauf.akte.email')} wert={g.email} />
           <Feld label={t('verkauf.akte.hoehe')} wert={g.hoehe ? `${g.hoehe} m ü. M.` : null} />
-          <Feld label={t('verkauf.akte.erreichbarkeit')} wert={g.erreichbarkeit} />
+          <Feld
+            label={t('verkauf.akte.erreichbarkeit')}
+            wert={g.erreichbarkeit ? erreichbarkeit.text(g.erreichbarkeit) : null}
+          />
         </div>
       </Abschnitt>
 
       <Abschnitt titel={t('verkauf.terminblatt.luftbild')}>
-        {luftbild ? (
-          <img
-            src={luftbild}
-            alt={t('verkauf.terminblatt.luftbild')}
-            style={{ width: '100%', maxHeight: 260, objectFit: 'cover', border: '1px solid #999' }}
-          />
-        ) : (
-          <div style={{ border: '1px solid #999', height: 200 }} />
-        )}
+        <div style={{ position: 'relative' }}>
+          {luftbild ? (
+            <img
+              src={luftbild}
+              alt={t('verkauf.terminblatt.luftbild')}
+              style={{ width: '100%', maxHeight: 260, objectFit: 'cover', border: '1px solid #999' }}
+            />
+          ) : (
+            <div style={{ border: '1px solid #999', height: 200 }} />
+          )}
+          {/* V233: QR-Code unten rechts im Luftbild, führt in Google Maps zur Adresse. */}
+          <div style={{ position: 'absolute', right: 6, bottom: 6, background: '#fff', padding: 2, lineHeight: 0 }}>
+            <QrCode text={mapsLink(g)} groesse={72} titel={t('verkauf.terminblatt.qr')} />
+          </div>
+        </div>
+        <p style={{ fontSize: 9, color: '#555', marginTop: 2 }}>
+          {adresse} · {t('verkauf.terminblatt.qr')}
+        </p>
       </Abschnitt>
 
       <Abschnitt titel={t('verkauf.akte.interesse')}>
@@ -131,8 +149,14 @@ export function Terminblatt({ g, details, verlauf, luftbild, person }: Terminbla
           ))}
         </p>
         <div style={RASTER}>
-          <Feld label={t('verkauf.akte.finanzierung')} wert={details?.finanzierung} />
-          <Feld label={t('verkauf.akte.zeithorizont')} wert={details?.zeithorizont} />
+          <Feld
+            label={t('verkauf.akte.finanzierung')}
+            wert={details?.finanzierung ? finanzierung.text(details.finanzierung) : null}
+          />
+          <Feld
+            label={t('verkauf.akte.zeithorizont')}
+            wert={details?.zeithorizont ? zeithorizont.text(details.zeithorizont) : null}
+          />
         </div>
       </Abschnitt>
 

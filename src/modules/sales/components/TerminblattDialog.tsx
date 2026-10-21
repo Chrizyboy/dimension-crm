@@ -11,6 +11,7 @@ import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAussendienst, useLeadAkte, useVerkaufAenderung } from '../hooks/useVerkauf'
 import { speichereLuftbild } from '../services/leads'
+import { mapsLink } from '../lib/karte'
 import type { Geschaeft } from '../types'
 import { Terminblatt } from './Terminblatt'
 
@@ -37,14 +38,6 @@ async function bereiteVor(bild: Blob): Promise<Blob> {
       0.86,
     )
   })
-}
-
-/** Google Maps als Satellitenbild an der Adresse, für den Screenshot. */
-function satellit(g: Geschaeft): string {
-  const ort = [g.strasse, g.plz, g.ort].filter(Boolean).join(' ')
-  if (g.lageGenau && g.breite !== null && g.laenge !== null)
-    return `https://www.google.com/maps/@?api=1&map_action=map&center=${g.breite},${g.laenge}&zoom=20&basemap=satellite`
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ort)}`
 }
 
 /**
@@ -124,7 +117,7 @@ export default function TerminblattDialog({ g, onSchliessen }: { g: Geschaeft; o
       >
         <div className="flex flex-col gap-3">
           <a
-            href={satellit(g)}
+            href={mapsLink(g)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary dark:text-accent inline-flex items-center gap-1.5 text-sm hover:underline"
