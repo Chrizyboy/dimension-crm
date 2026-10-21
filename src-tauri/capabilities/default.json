@@ -1,0 +1,14 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Rechte des Hauptfensters: nur, was das CRM wirklich braucht.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "notification:default",
+    "window-state:default",
+    "autostart:allow-enable",
+    "autostart:allow-disable",
+    "autostart:allow-is-enabled"
+  ]
+}
