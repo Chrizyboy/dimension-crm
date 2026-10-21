@@ -1,0 +1,53 @@
+/// <reference types="vitest/config" />
+import { fileURLToPath, URL } from 'node:url'
+import tailwindcss from '@tailwindcss/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
+
+// Tauri setzt TAURI_ENV_PLATFORM beim Bauen der Desktop-App. Dann brauchen wir keinen Service Worker,
+// die PWA-Teile sind nur für die Handy-/Browser-Variante.
+const isTauri = Boolean(process.env.TAURI_ENV_PLATFORM)
+
+export default defineConfig({
+  base: './',
+  clearScreen: false,
+  server: { port: 1420, strictPort: true },
+  envPrefix: ['VITE_', 'TAURI_ENV_'],
+  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  plugins: [
+    tanstackRouter({ target: 'react', autoCodeSplitting: true, routesDirectory: './src/app' }),
+    react(),
+    tailwindcss(),
+    VitePWA({
+      disable: isTauri,
+      registerType: 'autoUpdate',
+      includeAssets: ['icon.svg'],
+      manifest: {
+        name: 'Dimension CRM',
+        short_name: 'Dimension',
+        description: 'CRM für Dimension Solaire',
+        lang: 'de-CH',
+        theme_color: '#0B2545',
+        background_color: '#0B2545',
+        display: 'standalone',
+        start_url: './',
+        icons: [
+          { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+      },
+    }),
+  ],
+  define: { __APP_VERSION__: JSON.stringify(process.env.npm_package_version ?? '0.1.0') },
+  build: { target: 'es2022', sourcemap: true },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    css: false,
+  },
+})
