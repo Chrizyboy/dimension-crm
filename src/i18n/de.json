@@ -19,7 +19,7 @@
   },
   "start": {
     "titel": "Willkommen im neuen CRM",
-    "lead": "Phase 2: Design-System und Bedienoberfläche. Die Fachbereiche werden ab Phase 5 nacheinander gebaut.",
+    "lead": "Phase 3: Datenmodell und Import der Vorlage. Die Fachbereiche werden ab Phase 5 nacheinander gebaut.",
     "status": "Systemstatus",
     "datenbank": "Datenbank",
     "plattform": "Plattform",

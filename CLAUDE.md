@@ -24,6 +24,8 @@ Desktop-App für Windows (Tauri 2) und Handy/Browser (PWA), Daten in Supabase (F
 | `npm run db:start`       | Lokale Supabase starten (braucht Docker)                 |
 | `npm run db:reset`       | Lokale Datenbank neu aufbauen (Migrationen + `seed.sql`) |
 | `npm run db:test`        | Datenbank-Tests (pgTAP, `supabase/tests/`)               |
+| `npm run db:typen`       | TypeScript-Typen aus der lokalen Datenbank erzeugen      |
+| `npm run import:vorlage` | Export der Vorlage V233 importieren, mit Zählbericht     |
 | `npm run app:build`      | Windows-Installer (MSI/NSIS), nur unter Windows          |
 | `npm run modul:neu -- …` | Neues Fachmodul aus der Vorlage anlegen                  |
 
@@ -73,7 +75,7 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
    In `index.ts` den `untertitel` (DE/FR, ein Satz: was tut man hier?) ausfüllen. Namen müssen eindeutig sein, siehe `docs/entscheidungen/0008`.
 3. `src/modules/lager/README.md` ausfüllen: Zweck, Daten, Abhängigkeiten, Ereignisse.
 4. Fachtypen in `types.ts`, Prüfregeln (Zod) in `schema.ts`, Oberfläche in `components/`, Datenzugriff in `services/`.
-5. Braucht es neue Tabellen: neue Datei in `supabase/migrations/` (`npx supabase migration new <name>`), mit RLS, `geloescht_am` und den beiden Triggern. Einen pgTAP-Test in `supabase/tests/` ergänzen.
+5. Braucht es neue Tabellen: neue Datei in `supabase/migrations/` (`npx supabase migration new <name>`). Jede Tabelle danach mit `select intern.richte_fachtabelle_ein('<tabelle>');` einrichten (Papierkorb, Protokoll, RLS, Herkunft), siehe `docs/datenmodell.md`. Dann `npm run db:typen` und einen pgTAP-Test in `supabase/tests/` ergänzen.
 6. `npm run check` und `npm run test:e2e`.
 
 ## Design
@@ -87,4 +89,5 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 - `.npmrc` setzt `legacy-peer-deps=true` (optionale Peer-Abhängigkeiten von `@hookform/resolvers`), siehe `docs/entscheidungen/0004`.
 - TypeScript bleibt auf 6.0.x, bis `typescript-eslint` TypeScript 7 unterstützt.
 - Lokale Browser-Tests mit eigenem Chromium: `PW_CHROMIUM=/pfad/zu/chromium npm run test:e2e`.
+- Import der Vorlage: `SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip"`. Nur lokal; der Schlüssel nie in die App oder in Git. Echte Kundendaten nie in `seed.sql`.
 - Routen nutzen Hash-Adressen (`#/sales`), weil die Desktop-App Dateien lokal lädt.
