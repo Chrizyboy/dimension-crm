@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test'
 const executablePath = process.env.PW_CHROMIUM
 
 /** Tests, die die lokale Supabase brauchen; sie laufen nur gegen die Fassung mit Datenbank. */
-const MIT_DATENBANK = /(anmeldung|kunden)\.spec/
+const MIT_DATENBANK = /(anmeldung|kunden|verkauf)\.spec/
 
 /**
  * Zwei Fassungen der App:
@@ -41,6 +41,12 @@ export default defineConfig({
       name: 'kunden',
       testMatch: /kunden\.spec/,
       dependencies: ['anmeldung'],
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 }, baseURL: 'http://localhost:4174' },
+    },
+    {
+      name: 'verkauf',
+      testMatch: /verkauf\.spec/,
+      dependencies: ['kunden'],
       use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 }, baseURL: 'http://localhost:4174' },
     },
   ],

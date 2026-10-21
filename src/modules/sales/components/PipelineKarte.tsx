@@ -34,30 +34,26 @@ export const PipelineKarte = memo(function PipelineKarte({
   const { t } = useTranslation()
   const staende = useAuswahl('kundenstand')
   const ziele = erlaubteZiele(g)
-  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+  const { listeners, setNodeRef, isDragging } = useDraggable({
     id: g.id,
     data: g,
     disabled: ziele.size === 0,
   })
   const liegt = istLiegengeblieben(g)
 
+  // Ziehen geht mit der Maus oder dem Finger auf der ganzen Karte. Per Tastatur öffnet der Name die
+  // Akte und «…» wechselt den Stand; eine Karte als Schaltfläche mit Knöpfen darin wäre für
+  // Bildschirmleser verschachtelt (axe «nested-interactive»).
   return (
     <article
       ref={schwebend ? undefined : setNodeRef}
       {...(schwebend ? {} : listeners)}
-      {...(schwebend ? {} : attributes)}
-      role="button"
-      tabIndex={0}
-      aria-roledescription={t('verkauf.pipeline.karte')}
       aria-label={`${g.name}, ${g.ort ?? ''}`}
       onClick={() => {
         onOeffnen(g.id)
       }}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') onOeffnen(g.id)
-      }}
       className={cn(
-        'bg-surface group focus-visible:ring-ring relative flex cursor-grab flex-col gap-1 rounded-lg border p-2.5 text-left text-sm shadow-xs outline-none focus-visible:ring-2 active:cursor-grabbing',
+        'bg-surface group relative flex cursor-grab flex-col gap-1 rounded-lg border p-2.5 text-left text-sm shadow-xs active:cursor-grabbing',
         liegt && 'border-bad',
         aktiv && 'ring-accent ring-2',
         isDragging && 'opacity-40',
@@ -65,7 +61,16 @@ export const PipelineKarte = memo(function PipelineKarte({
       )}
     >
       <div className="flex items-start justify-between gap-2">
-        <span className="min-w-0 truncate font-medium">{g.name}</span>
+        <button
+          type="button"
+          className="focus-visible:ring-ring min-w-0 truncate rounded text-left font-medium outline-none focus-visible:ring-2"
+          onClick={(e) => {
+            e.stopPropagation()
+            onOeffnen(g.id)
+          }}
+        >
+          {g.name}
+        </button>
         {ziele.size > 0 && !schwebend && (
           <Menue>
             <MenueAusloeser

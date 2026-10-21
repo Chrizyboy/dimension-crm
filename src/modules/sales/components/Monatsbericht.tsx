@@ -88,27 +88,32 @@ function QuelleKarte({ q, monat, onOeffnen }: { q: BerichtQuelle; monat: string;
             <dd className="zahlen font-mono text-lg font-semibold">{n}</dd>
           </div>
         ))}
+        {/* Innerhalb von <dl> nur dt/dd: das Eingabefeld steht darum im dd. */}
         <div className="bg-muted/50 rounded-lg p-2">
-          <label htmlFor={`gekauft-${q.quelle}`} className="text-muted-foreground text-[11px]">
-            {t('verkauf.bericht.gekauft')}
-          </label>
-          <Input
-            id={`gekauft-${q.quelle}`}
-            type="number"
-            min={0}
-            className="h-7"
-            value={gekauft}
-            onChange={(e) => {
-              setGekauft(e.target.value)
-            }}
-            onBlur={() => {
-              if (gekauft !== (q.gekauft === null ? '' : String(q.gekauft)))
-                void sichern(
-                  { gekauft: gekauft === '' ? null : Number(gekauft) },
-                  { de: 'Gekaufte Leads gespeichert', fr: 'Leads achetés enregistrés' },
-                )
-            }}
-          />
+          <dt>
+            <label htmlFor={`gekauft-${q.quelle}`} className="text-muted-foreground text-[11px]">
+              {t('verkauf.bericht.gekauft')}
+            </label>
+          </dt>
+          <dd>
+            <Input
+              id={`gekauft-${q.quelle}`}
+              type="number"
+              min={0}
+              className="h-7"
+              value={gekauft}
+              onChange={(e) => {
+                setGekauft(e.target.value)
+              }}
+              onBlur={() => {
+                if (gekauft !== (q.gekauft === null ? '' : String(q.gekauft)))
+                  void sichern(
+                    { gekauft: gekauft === '' ? null : Number(gekauft) },
+                    { de: 'Gekaufte Leads gespeichert', fr: 'Leads achetés enregistrés' },
+                  )
+              }}
+            />
+          </dd>
         </div>
       </dl>
       {diff !== null && diff !== 0 && (

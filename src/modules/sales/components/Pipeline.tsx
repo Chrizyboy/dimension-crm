@@ -1,7 +1,6 @@
 import {
   DndContext,
   DragOverlay,
-  KeyboardSensor,
   PointerSensor,
   useDroppable,
   useSensor,
@@ -89,10 +88,7 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
   const [mehr, setMehr] = useState<Record<string, boolean>>({})
   const [ziehe, setZiehe] = useState<Geschaeft | null>(null)
   const [wechsel, setWechsel] = useState<{ g: Geschaeft; ziel: string } | null>(null)
-  const sensoren = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(KeyboardSensor),
-  )
+  const sensoren = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
   const spalten = useMemo(() => verteile(geschaefte, abgeschlossen), [geschaefte, abgeschlossen])
   const kuerzel = useMemo(
     () => new Map((personen.data ?? []).map((p) => [p.id, p.kuerzel.slice(0, 3)])),
