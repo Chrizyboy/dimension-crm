@@ -8,6 +8,8 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: '__MODUL__',
   titel: { de: '__TITEL__', fr: '__TITEL_FR__' },
+  // Ein Satz, was man hier erledigt. Erscheint als Hinweis in Seitenleiste, Suche und Seitenkopf.
+  untertitel: { de: '', fr: '' },
   pfad: '/__MODUL__',
   icon: '__ICON__',
   gruppe: '__GRUPPE__',

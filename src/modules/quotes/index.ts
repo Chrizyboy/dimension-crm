@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'quotes',
   titel: { de: 'Offerten', fr: 'Offres' },
+  untertitel: { de: 'Kalkulation, Preise, Versionen und PDF', fr: 'Calcul, prix, versions et PDF' },
   pfad: '/quotes',
   icon: 'file-text',
   gruppe: 'verkauf',

@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'automations',
   titel: { de: 'Automationen', fr: 'Automatisations' },
+  untertitel: { de: 'Abläufe, die von selbst laufen', fr: 'Processus qui tournent tout seuls' },
   pfad: '/automations',
   icon: 'workflow',
   gruppe: 'verwaltung',

@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'expenses',
   titel: { de: 'Spesen', fr: 'Frais' },
+  untertitel: { de: 'Belege fotografieren und abrechnen', fr: 'Photographier et décompter les justificatifs' },
   pfad: '/expenses',
   icon: 'wallet',
   gruppe: 'verwaltung',

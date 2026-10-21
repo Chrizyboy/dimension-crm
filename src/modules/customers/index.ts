@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'customers',
   titel: { de: 'Kunden', fr: 'Clients' },
+  untertitel: { de: 'Haushalte und Firmen mit ihren Gebäuden', fr: 'Ménages et entreprises avec leurs bâtiments' },
   pfad: '/customers',
   icon: 'contact',
   gruppe: 'verkauf',

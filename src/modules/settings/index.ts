@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'settings',
   titel: { de: 'Einstellungen', fr: 'Paramètres' },
+  untertitel: { de: 'Benutzer, Rollen, Vorlagen und Verbindungen', fr: 'Utilisateurs, rôles, modèles et connexions' },
   pfad: '/settings',
   icon: 'settings',
   gruppe: 'verwaltung',

@@ -8,6 +8,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'finance',
   titel: { de: 'Finanzen', fr: 'Finances' },
+  untertitel: { de: 'Liquidität, Budget und Auswertungen', fr: 'Liquidités, budget et analyses' },
   pfad: '/finance',
   icon: 'landmark',
   gruppe: 'verwaltung',
