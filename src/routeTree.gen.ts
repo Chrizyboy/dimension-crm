@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './app/index'
 import { Route as ModulRouteImport } from './app/$modul'
 import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
 import { Route as DesignRouteImport } from './app/design'
+import { Route as KontoRouteImport } from './app/konto'
+import { Route as SettingsRouteImport } from './app/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,32 @@ const DesignRoute = DesignRouteImport.update({
   path: '/design',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KontoRoute = KontoRouteImport.update({
+  id: '/konto',
+  path: '/konto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/design': typeof DesignRoute
+  '/konto': typeof KontoRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/design': typeof DesignRoute
+  '/konto': typeof KontoRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,24 @@ export interface FileRoutesById {
   '/$modul': typeof ModulRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/design': typeof DesignRoute
+  '/konto': typeof KontoRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$modul' | '/benachrichtigungen' | '/design'
+  fullPaths:
+    '/' | '/$modul' | '/benachrichtigungen' | '/design' | '/konto' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$modul' | '/benachrichtigungen' | '/design'
-  id: '__root__' | '/' | '/$modul' | '/benachrichtigungen' | '/design'
+  to:
+    '/' | '/$modul' | '/benachrichtigungen' | '/design' | '/konto' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/$modul'
+    | '/benachrichtigungen'
+    | '/design'
+    | '/konto'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +94,8 @@ export interface RootRouteChildren {
   ModulRoute: typeof ModulRoute
   BenachrichtigungenRoute: typeof BenachrichtigungenRoute
   DesignRoute: typeof DesignRoute
+  KontoRoute: typeof KontoRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +128,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesignRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/konto': {
+      id: '/konto'
+      path: '/konto'
+      fullPath: '/konto'
+      preLoaderRoute: typeof KontoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +150,8 @@ const rootRouteChildren: RootRouteChildren = {
   ModulRoute: ModulRoute,
   BenachrichtigungenRoute: BenachrichtigungenRoute,
   DesignRoute: DesignRoute,
+  KontoRoute: KontoRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
