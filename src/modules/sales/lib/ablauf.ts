@@ -3,7 +3,18 @@
  * Gemeinsam für Tagesroute und Tour (V233 computeDay und computeTour hatten je eine eigene Kopie).
  */
 import type { Punkt } from '../types'
-import { ab15, auf15, fahrt, km, planeLaden, weichAus, zuMinuten, type Belegt, type Strecke, type TourEinstellungen } from './route'
+import {
+  ab15,
+  auf15,
+  fahrt,
+  km,
+  planeLaden,
+  weichAus,
+  zuMinuten,
+  type Belegt,
+  type Strecke,
+  type TourEinstellungen,
+} from './route'
 
 /** Ein Halt der Route: Lead, eingefügte Adresse oder Termin aus dem Kalender. */
 export interface Stopp extends Punkt {
@@ -67,7 +78,15 @@ const schluessel = (a: { id?: string; name: string }, b: { id?: string; name: st
   `${a.id ?? a.name}>${b.id ?? b.name}`
 
 /** Rechnet den Ablauf einer Route in der gegebenen Reihenfolge. */
-export function planeAblauf({ start, stopps, ziel, e, belegt = [], abfahrt = null, fahrzeiten = {} }: AblaufEingabe): Ablauf {
+export function planeAblauf({
+  start,
+  stopps,
+  ziel,
+  e,
+  belegt = [],
+  abfahrt = null,
+  fahrzeiten = {},
+}: AblaufEingabe): Ablauf {
   const folge: (Ort | Stopp)[] = [start, ...stopps, ...(ziel ? [ziel] : [])]
   const roh = folge.slice(0, -1).map((a, i) => {
     const b = folge[i + 1] as Ort | Stopp
@@ -76,7 +95,11 @@ export function planeAblauf({ start, stopps, ziel, e, belegt = [], abfahrt = nul
     return { ...f, min: fahrzeiten[k] ?? f.min, schluessel: k, geschaetzt: f.min }
   })
   const geladen = planeLaden(roh, e.auto)
-  const strecken = roh.map((r, i) => ({ ...(geladen[i] as Strecke), schluessel: r.schluessel, geschaetzt: r.geschaetzt }))
+  const strecken = roh.map((r, i) => ({
+    ...(geladen[i] as Strecke),
+    schluessel: r.schluessel,
+    geschaetzt: r.geschaetzt,
+  }))
   const laden = (i: number) => strecken[i]?.laden?.min ?? 0
   const erster = stopps[0]
   let ab = abfahrt ?? 8 * 60 + 30
@@ -89,7 +112,9 @@ export function planeAblauf({ start, stopps, ziel, e, belegt = [], abfahrt = nul
     const ankunft = t
     const geplant = s.fix ?? weichAus(auf15(ankunft + e.puffer_min), s.besuchMin, belegt, e.puffer_min)
     const beginn = Math.max(geplant, ankunft)
-    const ueberschneidet = s.ausKalender ? null : (belegt.find((b) => geplant < b.ende && geplant + s.besuchMin > b.start) ?? null)
+    const ueberschneidet = s.ausKalender
+      ? null
+      : (belegt.find((b) => geplant < b.ende && geplant + s.besuchMin > b.start) ?? null)
     const puffer = geplant - ankunft
     t = beginn + s.besuchMin
     return {
@@ -176,8 +201,29 @@ export function alsTabelle(datum: string, start: Ort, a: Ablauf, hmText: (m: num
     const z = a.zeilen[i]
     const nach = z ? z.stopp.name : 'Ziel'
     const l = s.laden?.min ?? 0
-    if (l && s.laden) zeilen.push([i === 0 ? datum : '', hmText(los), von, hmText(l), hmText(los + l), '', `Laden ${s.laden.von}→${s.laden.bis} %`].join('\t'))
-    zeilen.push([i === 0 && !l ? datum : '', hmText(los + l), von, hmText(s.min), hmText(los + l + s.min), z ? hmText(z.geplant) : '', nach].join('\t'))
+    if (l && s.laden)
+      zeilen.push(
+        [
+          i === 0 ? datum : '',
+          hmText(los),
+          von,
+          hmText(l),
+          hmText(los + l),
+          '',
+          `Laden ${s.laden.von}→${s.laden.bis} %`,
+        ].join('\t'),
+      )
+    zeilen.push(
+      [
+        i === 0 && !l ? datum : '',
+        hmText(los + l),
+        von,
+        hmText(s.min),
+        hmText(los + l + s.min),
+        z ? hmText(z.geplant) : '',
+        nach,
+      ].join('\t'),
+    )
     if (z) {
       von = z.stopp.name
       los = z.ende

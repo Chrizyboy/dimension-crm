@@ -126,7 +126,7 @@ export async function ladeAussendienst(): Promise<Aussendienst[]> {
     .order('name')
   if (error) throw error
   return data.map((p) => {
-    const profil = (p.profil ?? {}) as Record<string, unknown>
+    const profil = p.profil as Record<string, unknown>
     const text = (k: string) => (typeof profil[k] === 'string' ? profil[k] : '')
     const plz = text('plz')
     const vomProfil = text('standort').toLowerCase()

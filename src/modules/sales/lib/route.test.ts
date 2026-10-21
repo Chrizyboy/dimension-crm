@@ -41,7 +41,13 @@ describe('optimiere', () => {
 describe('Laden mit dem Elektroauto', () => {
   it('plant einen Ladehalt, wenn die Reserve sonst unterschritten wird', () => {
     const auto = { ...STANDARD_TOUR.auto, start: 60 }
-    const s = planeLaden([{ km: 100, min: 80 }, { km: 100, min: 80 }], auto)
+    const s = planeLaden(
+      [
+        { km: 100, min: 80 },
+        { km: 100, min: 80 },
+      ],
+      auto,
+    )
     expect(s[0]?.laden).toBeNull()
     expect(s[1]?.laden?.min).toBeGreaterThan(0)
     expect(s.every((x) => !x.reichtNicht)).toBe(true)
@@ -82,7 +88,14 @@ describe('planeAblauf', () => {
     expect(a.zeilen[0]?.geplant).toBeGreaterThanOrEqual(11 * 60)
   })
   it('übernimmt von Hand korrigierte Fahrzeiten', () => {
-    const a = planeAblauf({ start: MURI, stopps: [stopp('A', 47.3, 8.35)], ziel: null, e, abfahrt: 480, fahrzeiten: { 'Muri>A': 33 } })
+    const a = planeAblauf({
+      start: MURI,
+      stopps: [stopp('A', 47.3, 8.35)],
+      ziel: null,
+      e,
+      abfahrt: 480,
+      fahrzeiten: { 'Muri>A': 33 },
+    })
     expect(a.strecken[0]?.min).toBe(33)
   })
   it('liefert Zeilen für Excel', () => {

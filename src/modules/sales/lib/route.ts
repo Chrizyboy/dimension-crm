@@ -14,7 +14,16 @@ export interface TourEinstellungen {
   puffer_min: number
   spaetestens: string
   abfahrt: string
-  auto: { aktiv: boolean; kwh: number; verbrauch: number; start: number; reserve: number; ziel: number; kw: number; zuschlag: number }
+  auto: {
+    aktiv: boolean
+    kwh: number
+    verbrauch: number
+    start: number
+    reserve: number
+    ziel: number
+    kw: number
+    zuschlag: number
+  }
 }
 
 export const STANDARD_TOUR: TourEinstellungen = {
@@ -163,7 +172,10 @@ export function planeLaden(strecken: { km: number; min: number }[], auto: TourEi
     let laden: Strecke['laden'] = null
     if (akku - noetig < reserve) {
       const rest = bedarf.slice(i).reduce((x, y) => x + y, 0)
-      const ziel = Math.min(auto.kwh, Math.max(noetig + reserve, Math.min((auto.kwh * auto.ziel) / 100, rest + reserve)))
+      const ziel = Math.min(
+        auto.kwh,
+        Math.max(noetig + reserve, Math.min((auto.kwh * auto.ziel) / 100, rest + reserve)),
+      )
       if (ziel > akku + 0.5) {
         laden = {
           min: ladeMinuten(akku, ziel, auto),

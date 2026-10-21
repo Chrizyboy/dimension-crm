@@ -59,7 +59,12 @@ const TAGE: Record<string, number> = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5,
 
 /** Wiederholungen einer Serie (täglich, wöchentlich, monatlich, jährlich) im Zeitraum. */
 export function wiederholungen(start: Date, regel: string, von: Date, bis: Date): Date[] {
-  const r = Object.fromEntries(regel.split(';').map((p) => p.split('=') as [string, string]).map(([k, v]) => [k.toUpperCase(), v]))
+  const r = Object.fromEntries(
+    regel
+      .split(';')
+      .map((p) => p.split('=') as [string, string])
+      .map(([k, v]) => [k.toUpperCase(), v]),
+  )
   const schritt = Number(r.INTERVAL ?? 1)
   const anzahl = r.COUNT ? Number(r.COUNT) : Infinity
   let ende = bis
@@ -78,10 +83,18 @@ export function wiederholungen(start: Date, regel: string, von: Date, bis: Date)
   }
   const tag = (j: number, m: number, t: number) => new Date(j, m, t, h, mi)
   if (r.FREQ === 'DAILY') {
-    for (let d = new Date(start); d <= ende && n < anzahl; d = tag(d.getFullYear(), d.getMonth(), d.getDate() + schritt))
+    for (
+      let d = new Date(start);
+      d <= ende && n < anzahl;
+      d = tag(d.getFullYear(), d.getMonth(), d.getDate() + schritt)
+    )
       if (!nimm(d)) break
   } else if (r.FREQ === 'WEEKLY') {
-    const tage = (r.BYDAY ?? '').split(',').filter(Boolean).map((x) => TAGE[x.slice(-2)]).filter((x): x is number => x !== undefined)
+    const tage = (r.BYDAY ?? '')
+      .split(',')
+      .filter(Boolean)
+      .map((x) => TAGE[x.slice(-2)])
+      .filter((x): x is number => x !== undefined)
     const liste = (tage.length ? tage : [start.getDay()]).sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7))
     const montag = new Date(start.getFullYear(), start.getMonth(), start.getDate() - ((start.getDay() + 6) % 7))
     aussen: for (let w = 0; w < 600; w += schritt) {
@@ -111,7 +124,17 @@ export function wiederholungen(start: Date, regel: string, von: Date, bis: Date)
 export function leseIcs(text: string, jetzt: Date = new Date()): Kalendertermin[] {
   const zeilen = text.replace(/\r?\n[ \t]/g, '').split(/\r?\n/)
   const ent = (v: string) => v.replace(/\\n/gi, '\n').replace(/\\([,;\\])/g, '$1')
-  type Roh = { uid?: string; betreff?: string; ort?: string; s?: ReturnType<typeof icsDatum>; e?: ReturnType<typeof icsDatum>; status?: string; regel?: string; ohne: string[]; frei?: string }
+  type Roh = {
+    uid?: string
+    betreff?: string
+    ort?: string
+    s?: ReturnType<typeof icsDatum>
+    e?: ReturnType<typeof icsDatum>
+    status?: string
+    regel?: string
+    ohne: string[]
+    frei?: string
+  }
   const roh: Roh[] = []
   let akt: Roh | null = null
   for (const z of zeilen) {
@@ -148,10 +171,29 @@ export function leseIcs(text: string, jetzt: Date = new Date()): Kalendertermin[
     const s = r.s.d
     const e = r.e?.d ?? new Date(s.getTime() + (r.s.nurDatum ? 86_400_000 : 3_600_000))
     const laenge = e.getTime() - s.getTime()
-    const anzeige = r.frei === 'FREE' || r.frei === 'TRANSPARENT' ? 'free' : r.frei === 'OOF' ? 'oof' : r.frei === 'TENTATIVE' ? 'tentative' : 'busy'
-    const termine = r.regel ? wiederholungen(s, r.regel, von, bis).filter((d) => !r.ohne.includes(d.toLocaleDateString('sv-SE'))) : [s]
+    const anzeige =
+      r.frei === 'FREE' || r.frei === 'TRANSPARENT'
+        ? 'free'
+        : r.frei === 'OOF'
+          ? 'oof'
+          : r.frei === 'TENTATIVE'
+            ? 'tentative'
+            : 'busy'
+    const termine = r.regel
+      ? wiederholungen(s, r.regel, von, bis).filter((d) => !r.ohne.includes(d.toLocaleDateString('sv-SE')))
+      : [s]
     for (const d of termine)
-      aus.push(termin(r.betreff ?? '', r.ort ?? '', d, new Date(d.getTime() + laenge), r.s.nurDatum, anzeige, `${r.uid ?? r.betreff ?? ''}:${d.toISOString()}`))
+      aus.push(
+        termin(
+          r.betreff ?? '',
+          r.ort ?? '',
+          d,
+          new Date(d.getTime() + laenge),
+          r.s.nurDatum,
+          anzeige,
+          `${r.uid ?? r.betreff ?? ''}:${d.toISOString()}`,
+        ),
+      )
   }
   return aus
 }
@@ -161,10 +203,17 @@ export function leseDatumZeit(v: string): { datum: Date; minuten: number | null 
   let m = /(\d{1,2})\.(\d{1,2})\.(\d{2,4})(?:\s+(\d{1,2})[:.](\d{2}))?/.exec(v)
   if (m) {
     const j = (m[3] ?? '').length === 2 ? `20${m[3] ?? ''}` : (m[3] ?? '')
-    return { datum: new Date(+j, +(m[2] ?? 1) - 1, +(m[1] ?? 1)), minuten: m[4] != null ? +m[4] * 60 + +(m[5] ?? 0) : null }
+    return {
+      datum: new Date(+j, +(m[2] ?? 1) - 1, +(m[1] ?? 1)),
+      minuten: m[4] != null ? +m[4] * 60 + +(m[5] ?? 0) : null,
+    }
   }
   m = /(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/.exec(v)
-  if (m) return { datum: new Date(+(m[1] ?? 0), +(m[2] ?? 1) - 1, +(m[3] ?? 1)), minuten: m[4] != null ? +m[4] * 60 + +(m[5] ?? 0) : null }
+  if (m)
+    return {
+      datum: new Date(+(m[1] ?? 0), +(m[2] ?? 1) - 1, +(m[3] ?? 1)),
+      minuten: m[4] != null ? +m[4] * 60 + +(m[5] ?? 0) : null,
+    }
   return null
 }
 
@@ -191,14 +240,26 @@ export function leseTabelle(text: string): Kalendertermin[] {
   const zellen = zeilen.map(teile)
   const k = (zellen[0] ?? []).map((c) => c.toLowerCase())
   const such = (re: RegExp) => k.findIndex((h) => re.test(h))
-  let sp = { betreff: such(/betreff|subject|titel/), ort: such(/^ort|location|standort/), s: such(/beginn|^start|anfang/), e: such(/^ende|^end/), ganz: such(/ganzt|all.?day/) }
+  let sp = {
+    betreff: such(/betreff|subject|titel/),
+    ort: such(/^ort|location|standort/),
+    s: such(/beginn|^start|anfang/),
+    e: such(/^ende|^end/),
+    ganz: such(/ganzt|all.?day/),
+  }
   let daten = zellen.slice(1)
   if (sp.s < 0) {
     // Ohne Kopfzeile: Spalten erraten (erste Zeile mit Datum).
     daten = zellen
     const erste = zellen[0] ?? []
     const dt = erste.map((c, i) => (leseDatumZeit(c) ? i : -1)).filter((i) => i >= 0)
-    sp = { betreff: erste.findIndex((c) => c && !leseDatumZeit(c) && !/\d{4}\s+\D/.test(c)), ort: erste.findIndex((c) => /\d{4}\s+\D/.test(c) && !leseDatumZeit(c)), s: dt[0] ?? -1, e: dt[1] ?? -1, ganz: -1 }
+    sp = {
+      betreff: erste.findIndex((c) => c && !leseDatumZeit(c) && !/\d{4}\s+\D/.test(c)),
+      ort: erste.findIndex((c) => /\d{4}\s+\D/.test(c) && !leseDatumZeit(c)),
+      s: dt[0] ?? -1,
+      e: dt[1] ?? -1,
+      ganz: -1,
+    }
   }
   if (sp.s < 0) return []
   const aus: Kalendertermin[] = []
@@ -208,9 +269,21 @@ export function leseTabelle(text: string): Kalendertermin[] {
     const e = sp.e >= 0 ? leseDatumZeit(r[sp.e] ?? '') : null
     const ganz = sp.ganz >= 0 ? /^(ja|yes|true|wahr|1)$/i.test(r[sp.ganz] ?? '') : s.minuten == null
     const beginn = new Date(s.datum.getTime() + (ganz ? 0 : (s.minuten ?? 0)) * 60_000)
-    const ende = e ? new Date(e.datum.getTime() + (e.minuten ?? (ganz ? 1440 : (s.minuten ?? 0) + 60)) * 60_000) : new Date(beginn.getTime() + (ganz ? 86_400_000 : 3_600_000))
+    const ende = e
+      ? new Date(e.datum.getTime() + (e.minuten ?? (ganz ? 1440 : (s.minuten ?? 0) + 60)) * 60_000)
+      : new Date(beginn.getTime() + (ganz ? 86_400_000 : 3_600_000))
     const betreff = sp.betreff >= 0 ? (r[sp.betreff] ?? '') : ''
-    aus.push(termin(betreff, sp.ort >= 0 ? (r[sp.ort] ?? '') : '', beginn, ende, ganz, 'busy', `${betreff}:${beginn.toISOString()}`))
+    aus.push(
+      termin(
+        betreff,
+        sp.ort >= 0 ? (r[sp.ort] ?? '') : '',
+        beginn,
+        ende,
+        ganz,
+        'busy',
+        `${betreff}:${beginn.toISOString()}`,
+      ),
+    )
   }
   return aus
 }
