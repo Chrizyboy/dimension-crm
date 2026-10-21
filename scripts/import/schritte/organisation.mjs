@@ -1,7 +1,7 @@
 // Schritt 1: Mitarbeitende und Einladungen. Passwort-Hashes werden bewusst nicht übernommen
 // (Anmeldung ab Phase 4 mit Microsoft); Einladungscodes waren nur als Hash gespeichert und sind verfallen.
 
-import { ohne, text, zuSprache, zuZeitstempel } from '../umwandeln.mjs'
+import { bereicheAusRegistern, ohne, text, zuSprache, zuZeitstempel } from '../umwandeln.mjs'
 
 /** @typedef {import('../import-vorlage.mjs').Kontext} Kontext */
 
@@ -43,7 +43,7 @@ export async function importiereOrganisation(k) {
         email: text(u.email)?.toLowerCase() ?? null,
         rolle: u.role === 'admin' ? 'admin' : 'mitarbeit',
         rechte,
-        bereiche: Array.isArray(u.regs) ? u.regs : [],
+        bereiche: bereicheAusRegistern(u.regs),
         aktiv: u.active !== false,
         sprache: zuSprache(u.prefs?.lang),
         darstellung: text(u.prefs?.theme),

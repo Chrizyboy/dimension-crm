@@ -1,0 +1,24 @@
+<!-- Mail mit dem Anmeldecode (Phase 4). Zweisprachig, weil die Sprache der Person beim Versand noch unbekannt ist. -->
+<div
+  style="
+    font-family:
+      Segoe UI,
+      Arial,
+      sans-serif;
+    color: #0b2545;
+    max-width: 480px;
+  "
+>
+  <p style="font-size: 15px">Hallo, hier ist dein Code für die Anmeldung im Dimension CRM:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 6px; margin: 16px 0">{{ .Token }}</p>
+  <p style="font-size: 13px; color: #5b6779">
+    Er gilt 10 Minuten. Hast du keine Anmeldung gestartet, kannst du diese Mail ignorieren.
+  </p>
+  <hr style="border: 0; border-top: 1px solid #dde3ea; margin: 20px 0" />
+  <p style="font-size: 15px">Bonjour, voici ton code de connexion au CRM Dimension&nbsp;:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 6px; margin: 16px 0">{{ .Token }}</p>
+  <p style="font-size: 13px; color: #5b6779">
+    Il est valable 10 minutes. Si tu n’as pas demandé de connexion, ignore ce message.
+  </p>
+  <p style="font-size: 12px; color: #5b6779">Dimension Solaire · Muri AG · Bulle FR</p>
+</div>

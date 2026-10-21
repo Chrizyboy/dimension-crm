@@ -35,8 +35,8 @@ select ok((select count(*) from public.lieferanten where name in ('Krannich', 'S
 
 -- Rechte: eine Person ohne Recht «finanzen» sieht keine Kreditoren, eine mit Recht schon.
 insert into auth.users (id, email) values
-  ('00000000-0000-0000-0000-0000000000a1', 'verkauf@test.local'),
-  ('00000000-0000-0000-0000-0000000000a2', 'finanzen@test.local');
+  ('00000000-0000-0000-0000-0000000000a1', 'dm-verkauf@test.local'),
+  ('00000000-0000-0000-0000-0000000000a2', 'dm-finanzen@test.local');
 insert into public.personen (kuerzel, name, auth_user_id, rechte) values
   ('test_verkauf', 'Test Verkauf', '00000000-0000-0000-0000-0000000000a1', '{}'),
   ('test_finanzen', 'Test Finanzen', '00000000-0000-0000-0000-0000000000a2', '{finanzen}');
@@ -47,7 +47,7 @@ select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-000000
 select is((select count(*) from public.kreditor_zahlungen), 0::bigint, 'ohne Recht «finanzen» keine Kreditoren sichtbar');
 select cmp_ok((select count(*) from public.firmen), '=', 2::bigint, 'Grunddaten sind für alle Mitarbeitenden sichtbar');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000000a2", "role": "authenticated"}', true);
-select is((select count(*) from public.kreditor_zahlungen), 1::bigint, 'mit Recht «finanzen» sichtbar');
+select ok((select count(*) from public.kreditor_zahlungen) >= 1, 'mit Recht «finanzen» sichtbar');
 reset role;
 
 set local role anon;

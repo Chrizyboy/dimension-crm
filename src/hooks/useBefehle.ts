@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router'
 import { Bell, House, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { MODULE } from '@/lib/navigation'
+import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { useUi } from '@/stores/ui'
 
 export interface Befehl {
@@ -26,6 +26,7 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { sprache, setSprache, setDarstellung, toggleSeitenleiste } = useUi()
+  const sichtbar = useSichtbareModule()
 
   const fertig = (aktion: () => void) => () => {
     aktion()
@@ -45,7 +46,7 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       stichworte: ['home', 'accueil'],
       ausfuehren: gehe('/'),
     },
-    ...MODULE.map<Befehl>((m) => ({
+    ...sichtbar.map<Befehl>((m) => ({
       id: `modul-${m.id}`,
       titel: m.titel[sprache],
       untertitel: m.untertitel[sprache],

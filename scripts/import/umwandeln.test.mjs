@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   adressSchluessel,
+  bereicheAusRegistern,
   ohne,
   trenneName,
   zuDatum,
@@ -66,5 +67,10 @@ describe('Umwandlung der Vorlagen-Werte', () => {
 
   it('entfernt Passwörter aus dem alten Datensatz', () => {
     expect(ohne({ name: 'A', pw: { hash: 'x' } }, ['pw'])).toEqual({ name: 'A' })
+  })
+
+  it('übersetzt Register-Freigaben in Bereiche, ohne Freigabe sind alle sichtbar', () => {
+    expect(bereicheAusRegistern(['leads', 'kunden'])).toEqual(['sales', 'tenders', 'customers', 'contacts', 'expenses'])
+    expect(bereicheAusRegistern(null)).toEqual([])
   })
 })

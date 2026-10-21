@@ -17,8 +17,8 @@ export const BAUPLAN: readonly Phase[] = [
   { nr: 0, titel: { de: 'Analyse der Vorlage', fr: 'Analyse du modèle' }, stand: 'fertig' },
   { nr: 1, titel: { de: 'Gerüst, Werkzeuge, Regeln', fr: 'Structure, outils, règles' }, stand: 'fertig' },
   { nr: 2, titel: { de: 'Design-System und Bedienoberfläche', fr: 'Système de design et interface' }, stand: 'fertig' },
-  { nr: 3, titel: { de: 'Datenmodell und Import der Vorlage', fr: 'Modèle de données et import' }, stand: 'aktiv' },
-  { nr: 4, titel: { de: 'Anmeldung, Benutzer, Rollen', fr: 'Connexion, utilisateurs, rôles' }, stand: 'offen' },
+  { nr: 3, titel: { de: 'Datenmodell und Import der Vorlage', fr: 'Modèle de données et import' }, stand: 'fertig' },
+  { nr: 4, titel: { de: 'Anmeldung, Benutzer, Rollen', fr: 'Connexion, utilisateurs, rôles' }, stand: 'aktiv' },
   { nr: 5, titel: { de: 'Kunden und Kontakte (360°)', fr: 'Clients et contacts (360°)' }, stand: 'offen' },
   {
     nr: 6,

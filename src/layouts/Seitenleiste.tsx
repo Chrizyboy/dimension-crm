@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { Logo } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Tooltip } from '@/components/ui/tooltip'
-import { GRUPPEN, moduleDerGruppe } from '@/lib/navigation'
+import { useSichtbareModule } from '@/hooks/useSichtbareModule'
+import { GRUPPEN } from '@/lib/navigation'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
@@ -21,6 +22,7 @@ const AKTIV = { className: '!bg-sidebar-active !text-sidebar-active-foreground f
 export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boolean; onNavigiert?: () => void }) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
+  const sichtbar = useSichtbareModule()
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt) && !imMenue
   const toggle = useUi((z) => z.toggleSeitenleiste)
 
@@ -53,7 +55,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
         aria-label={t('nav.haupt')}
         className={cn('flex flex-1 flex-col gap-3 overflow-y-auto py-2.5', eingeklappt ? 'px-2' : 'px-3')}
       >
-        {GRUPPEN.map((gruppe) => (
+        {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g)).map((gruppe) => (
           <div key={gruppe} className="flex flex-col gap-0.5">
             {eingeklappt ? (
               <div className="bg-sidebar-border mx-2 mb-1 h-px first:hidden" aria-hidden="true" />
@@ -62,25 +64,27 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
                 {t(`nav.${gruppe}`)}
               </div>
             )}
-            {moduleDerGruppe(gruppe).map((m) =>
-              eintrag(
-                m.id,
-                <Link
-                  key={m.id}
-                  to="/$modul"
-                  params={{ modul: m.id }}
-                  onClick={onNavigiert}
-                  className={cn(LINK, eingeklappt && 'justify-center px-0')}
-                  activeProps={AKTIV}
-                  aria-label={eingeklappt ? m.titel[sprache] : undefined}
-                >
-                  <ModulIcon name={m.icon} className="text-sidebar-muted size-4 shrink-0" />
-                  {!eingeklappt && <span className="truncate">{m.titel[sprache]}</span>}
-                </Link>,
-                m.titel[sprache],
-                m.untertitel[sprache],
-              ),
-            )}
+            {sichtbar
+              .filter((m) => m.gruppe === gruppe)
+              .map((m) =>
+                eintrag(
+                  m.id,
+                  <Link
+                    key={m.id}
+                    to="/$modul"
+                    params={{ modul: m.id }}
+                    onClick={onNavigiert}
+                    className={cn(LINK, eingeklappt && 'justify-center px-0')}
+                    activeProps={AKTIV}
+                    aria-label={eingeklappt ? m.titel[sprache] : undefined}
+                  >
+                    <ModulIcon name={m.icon} className="text-sidebar-muted size-4 shrink-0" />
+                    {!eingeklappt && <span className="truncate">{m.titel[sprache]}</span>}
+                  </Link>,
+                  m.titel[sprache],
+                  m.untertitel[sprache],
+                ),
+              )}
           </div>
         ))}
       </nav>

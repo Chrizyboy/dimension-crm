@@ -8,6 +8,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
+      'dist-db',
       'dev-dist',
       'src-tauri/target',
       'src/routeTree.gen.ts',

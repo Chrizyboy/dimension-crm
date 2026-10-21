@@ -1,4 +1,5 @@
-import { Check, Languages, Monitor, Moon, Search, Sun } from 'lucide-react'
+import { useNavigate } from '@tanstack/react-router'
+import { Check, Languages, LogOut, Monitor, Moon, Search, Sun, UserRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Avatar, Kbd } from '@/components/ui/diverses'
 import {
@@ -12,6 +13,8 @@ import {
   MenueTrenner,
 } from '@/components/ui/menue'
 import { kuerzelText } from '@/lib/tastenkuerzel'
+import { abmelden } from '@/services/anmeldung'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
 import { Glocke } from './Benachrichtigungen'
 
@@ -19,6 +22,9 @@ import { Glocke } from './Benachrichtigungen'
 export function Kopfzeile() {
   const { t } = useTranslation()
   const { sprache, darstellung, setSprache, setDarstellung, setBefehlspalette } = useUi()
+  const ich = useAnmeldung((z) => z.ich)
+  const navigate = useNavigate()
+  const name = ich?.name ?? t('konto.vorschau')
 
   return (
     <header className="bg-surface flex h-12 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
@@ -66,13 +72,24 @@ export function Kopfzeile() {
             className="focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
             aria-label={t('konto.menue')}
           >
-            <Avatar name="Chris Rosenberg" />
+            <Avatar name={name} />
           </MenueAusloeser>
           <MenueInhalt align="end" className="w-56">
             <div className="px-2 py-2">
-              <p className="text-sm font-medium">Chris Rosenberg</p>
-              <p className="text-muted-foreground text-xs">{t('konto.ab_phase_4')}</p>
+              <p className="truncate text-sm font-medium">{name}</p>
+              <p className="text-muted-foreground truncate text-xs">
+                {ich ? `${ich.rolle_name[sprache]} · ${ich.email ?? ''}` : t('konto.vorschauText')}
+              </p>
             </div>
+            <MenueTrenner />
+            <MenueEintrag
+              onSelect={() => {
+                void navigate({ to: '/konto' })
+              }}
+            >
+              <UserRound />
+              {t('konto.meinKonto')}
+            </MenueEintrag>
             <MenueTrenner />
             <MenueTitel>{t('einstellungen.darstellung')}</MenueTitel>
             <MenueRadioGruppe
@@ -105,6 +122,15 @@ export function Kopfzeile() {
                 {sprache === s && <Check className="!text-accent" />}
               </MenueEintrag>
             ))}
+            {ich && (
+              <>
+                <MenueTrenner />
+                <MenueEintrag onSelect={() => void abmelden()}>
+                  <LogOut />
+                  {t('anmeldung.abmelden')}
+                </MenueEintrag>
+              </>
+            )}
           </MenueInhalt>
         </Menue>
       </div>

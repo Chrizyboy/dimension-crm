@@ -8,7 +8,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { BAUPLAN } from '@/lib/bauplan'
 import { formatChf, formatDatum, formatTelefon } from '@/lib/format'
-import { MODULE } from '@/lib/navigation'
+import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { plattformName } from '@/lib/plattform'
 import { cn } from '@/lib/utils'
 import { pruefeVerbindung } from '@/services/supabase'
@@ -18,6 +18,7 @@ import { useUi } from '@/stores/ui'
 export function Startseite() {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
+  const sichtbar = useSichtbareModule()
   const db = useQuery({ queryKey: ['verbindung'], queryFn: pruefeVerbindung })
   const dbTon = db.data === 'verbunden' ? 'ok' : db.data === 'fehler' ? 'kritisch' : 'neutral'
   const dbText = db.isPending
@@ -37,7 +38,7 @@ export function Startseite() {
         {dbText}
       </Badge>,
     ],
-    [t('start.module'), <span className="zahlen">{MODULE.length}</span>],
+    [t('start.module'), <span className="zahlen">{sichtbar.length}</span>],
   ]
 
   return (

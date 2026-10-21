@@ -158,3 +158,34 @@ export function ohne(datensatz, felder) {
   for (const f of felder) delete kopie[f]
   return kopie
 }
+
+/**
+ * Register-Freigaben der Vorlage («regs», V118) als Bereiche des neuen CRM.
+ * Ein Register kann mehrere Bereiche ergeben (Kunden = Kunden + Adressbuch). Fehlt «regs», sieht die Person alles.
+ * «heute» und «einstellungen» waren immer sichtbar und brauchen keinen Eintrag.
+ * @type {Record<string, string[]>}
+ */
+const REGISTER_ZU_BEREICHEN = {
+  dashboard: ['dashboard'],
+  marketing: ['marketing'],
+  leads: ['sales', 'tenders'],
+  offerten: ['quotes', 'workcontracts'],
+  preise: ['quotes'],
+  kunden: ['customers', 'contacts'],
+  bauplanung: ['projects', 'purchasing', 'fieldwork'],
+  vertraege: ['contracts'],
+  rechnungen: ['invoices'],
+  aftersales: ['aftersales'],
+}
+
+/**
+ * @param {unknown} regs
+ * @returns {string[]} leer = alle Bereiche
+ */
+export function bereicheAusRegistern(regs) {
+  if (!Array.isArray(regs)) return []
+  const bereiche = new Set(regs.flatMap((r) => REGISTER_ZU_BEREICHEN[String(r)] ?? []))
+  // Spesen waren in der Vorlage für alle offen.
+  if (bereiche.size > 0) bereiche.add('expenses')
+  return [...bereiche]
+}

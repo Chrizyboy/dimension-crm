@@ -3,7 +3,7 @@ import { Menu } from 'lucide-react'
 import { Dialog as DialogPrimitive } from 'radix-ui'
 import { useTranslation } from 'react-i18next'
 import { ModulIcon } from '@/components/shared/ModulIcon'
-import { findeModul } from '@/lib/navigation'
+import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { useUi } from '@/stores/ui'
 import { Seitenleiste } from './Seitenleiste'
 
@@ -17,6 +17,7 @@ const HANDY_MODULE = ['today', 'sales', 'projects', 'tasks'] as const
 export function HandyNavigation() {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
+  const sichtbar = useSichtbareModule()
   const offen = useUi((z) => z.handyMenueOffen)
   const setOffen = useUi((z) => z.setHandyMenue)
 
@@ -30,7 +31,7 @@ export function HandyNavigation() {
         className="bg-surface fixed inset-x-0 bottom-0 z-40 flex h-[calc(3.5rem+env(safe-area-inset-bottom,0px))] border-t pb-[env(safe-area-inset-bottom,0px)] md:hidden"
       >
         {HANDY_MODULE.map((id) => {
-          const m = findeModul(id)
+          const m = sichtbar.find((s) => s.id === id)
           if (!m) return null
           return (
             <Link
