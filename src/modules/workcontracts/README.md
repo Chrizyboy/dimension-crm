@@ -1,29 +1,28 @@
-# Modul: Werkverträge
+# Modul: Werkverträge (`workcontracts`)
 
-**Zweck:** Erstellt aus der angenommenen Offerte den Werkvertrag (Sprache, Firma GmbH oder Sàrl, Zahlungskonditionen wie 50/30/20 oder 80/20), versendet ihn nach Freigabe und hält die Unterschrift fest. Daraus entstehen Zahlungsplan und Projekt.
+**Zweck:** Aus der angenommenen Offerte den Auftrag erstellen (Projekt, Zahlungsplan, Werkvertrag), den Vertrag in der Sprache des Kunden drucken und Versand, Unterschrift oder Storno festhalten.
 
-Auf Wunsch von Chris (21.10.2026: «Werkverträge fehlen»). In V233 war der Werkvertrag nur ein Feld am Projekt.
-
-**Stand:** Platzhalter – wird in Phase **7** gebaut.
+**Stand:** Phase 7 gebaut. Versand per Mail folgt in Phase 8, digitale Unterschrift ist ein offener Vorschlag.
 
 ## Daten
 
-`werkvertraege` (besitzt), liest `offerten`, `projekte`, `kontakte`, `dokumente`, `firmen`.
+- liest `werkvertraege_liste`, `offerten_liste`, `standorte`, Auswahlliste `zahlungskondition`, `einstellungen` (MWST)
+- schreibt über `auftrag_erstellen`, `werkvertrag_status`; Zahlungsplan über `zahlungsplan_berechnen`
+- `betrag_rappen` ist inkl. MWST. Details: `docs/datenmodell.md` (Phase 7), Entscheide 0011 und 0015
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase`, `meldungen`, `fehler`, `fachfehler`; `src/hooks/useMwst`, `useAuswahl`, `useDrucken`
+- Zur Offerte geht es über die Adresse (`/quotes?offerte=…`).
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Liste, Akte, Auftrag-Dialog, Status-Dialog, Druck
+- `hooks/`, `services/` – Laden und Speichern
+- `lib/` – Vertragstext (DE/FR), Zahlungsplan (mit Tests), Status
+- `types.ts`, `index.ts`
