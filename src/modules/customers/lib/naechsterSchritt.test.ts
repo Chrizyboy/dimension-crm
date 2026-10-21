@@ -4,7 +4,14 @@ import { naechsterSchritt } from './naechsterSchritt'
 
 const kopf = (stand: string | null, standBezug: string | null = null) => ({ stand, standBezug }) as Kontaktzeile
 const akte = (offerten: Partial<Offerte>[] = []) =>
-  ({ verkaufschancen: [], offerten, projekte: [], objekte: [], werkvertraege: [], dokumente: [] }) as unknown as Kundenakte
+  ({
+    verkaufschancen: [],
+    offerten,
+    projekte: [],
+    objekte: [],
+    werkvertraege: [],
+    dokumente: [],
+  }) as unknown as Kundenakte
 
 describe('naechsterSchritt', () => {
   it('schlägt bei einer neuen Anfrage den Anruf vor', () => {
