@@ -303,6 +303,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'aktivitaeten_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
             foreignKeyName: 'aktivitaeten_offerte_id_fkey'
             columns: ['offerte_id']
             isOneToOne: false
@@ -448,6 +455,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'objekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'anlagen_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'anlagen_projekt_id_fkey'
@@ -1511,6 +1525,60 @@ export type Database = {
         }
         Relationships: []
       }
+      gespeicherte_ansichten: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bereich: string
+          einstellungen: NonNullable<Json>
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          geteilt: boolean
+          id: string
+          name: string
+          person_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bereich: string
+          einstellungen?: NonNullable<Json>
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geteilt?: boolean
+          id?: string
+          name: string
+          person_id?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bereich?: string
+          einstellungen?: NonNullable<Json>
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geteilt?: boolean
+          id?: string
+          name?: string
+          person_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'gespeicherte_ansichten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       handbuch_eintraege: {
         Row: {
           alt_daten: Json | null
@@ -1697,6 +1765,78 @@ export type Database = {
           quelle?: string
         }
         Relationships: []
+      }
+      kalender_eintraege: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anzeige_als: string
+          beginn: string
+          betreff: string | null
+          ende: string
+          erstellt_am: string
+          erstellt_von: string | null
+          extern_id: string | null
+          ganztags: boolean
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          link: string | null
+          ort: string | null
+          person_id: string
+          plz: string | null
+          quelle: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzeige_als?: string
+          beginn: string
+          betreff?: string | null
+          ende: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          extern_id?: string | null
+          ganztags?: boolean
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          link?: string | null
+          ort?: string | null
+          person_id: string
+          plz?: string | null
+          quelle?: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzeige_als?: string
+          beginn?: string
+          betreff?: string | null
+          ende?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          extern_id?: string | null
+          ganztags?: boolean
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          link?: string | null
+          ort?: string | null
+          person_id?: string
+          plz?: string | null
+          quelle?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'kalender_eintraege_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       kalkulationen: {
         Row: {
@@ -2170,6 +2310,52 @@ export type Database = {
           },
         ]
       }
+      lead_einkauf: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bericht_text: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          gekauft: number | null
+          geloescht_am: string | null
+          gemeldet: Json | null
+          id: string
+          monat: string
+          quelle: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bericht_text?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          gekauft?: number | null
+          geloescht_am?: string | null
+          gemeldet?: Json | null
+          id?: string
+          monat: string
+          quelle: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bericht_text?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          gekauft?: number | null
+          geloescht_am?: string | null
+          gemeldet?: Json | null
+          id?: string
+          monat?: string
+          quelle?: string
+        }
+        Relationships: []
+      }
       lieferanten: {
         Row: {
           aktiv: boolean
@@ -2231,6 +2417,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lieferanten_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
         ]
       }
@@ -2530,6 +2723,13 @@ export type Database = {
             referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'newsletter_empfaenger_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
         ]
       }
       objekte: {
@@ -2622,6 +2822,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
             foreignKeyName: 'objekte_region_id_fkey'
             columns: ['region_id']
             isOneToOne: false
@@ -2661,6 +2868,7 @@ export type Database = {
           titel: string | null
           verantwortlich_id: string | null
           verkaufschance_id: string | null
+          verlustgrund: string | null
           versionen: NonNullable<Json>
           vertagt_grund: string | null
           wechselrichter: string | null
@@ -2697,6 +2905,7 @@ export type Database = {
           titel?: string | null
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
+          verlustgrund?: string | null
           versionen?: NonNullable<Json>
           vertagt_grund?: string | null
           wechselrichter?: string | null
@@ -2732,6 +2941,7 @@ export type Database = {
           titel?: string | null
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
+          verlustgrund?: string | null
           versionen?: NonNullable<Json>
           vertagt_grund?: string | null
           wechselrichter?: string | null
@@ -2753,6 +2963,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'offerten_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
             foreignKeyName: 'offerten_objekt_id_fkey'
             columns: ['objekt_id']
             isOneToOne: false
@@ -2765,6 +2982,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'objekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'offerten_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'offerten_verantwortlich_id_fkey'
@@ -2787,6 +3011,7 @@ export type Database = {
           aktiv: boolean
           alt_daten: Json | null
           alt_id: string | null
+          aussendienst: boolean
           auth_user_id: string | null
           bereiche: string[]
           darstellung: string | null
@@ -2810,6 +3035,7 @@ export type Database = {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          aussendienst?: boolean
           auth_user_id?: string | null
           bereiche?: string[]
           darstellung?: string | null
@@ -2832,6 +3058,7 @@ export type Database = {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          aussendienst?: boolean
           auth_user_id?: string | null
           bereiche?: string[]
           darstellung?: string | null
@@ -2866,6 +3093,64 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      plz_ortschaften: {
+        Row: {
+          ort: string
+          ort_name: string | null
+          plz: string
+        }
+        ComputedFields: never
+        Insert: {
+          ort: string
+          ort_name?: never
+          plz: string
+        }
+        Update: {
+          ort?: string
+          ort_name?: never
+          plz?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'plz_ortschaften_plz_fkey'
+            columns: ['plz']
+            isOneToOne: false
+            referencedRelation: 'plz_verzeichnis'
+            referencedColumns: ['plz']
+          },
+        ]
+      }
+      plz_verzeichnis: {
+        Row: {
+          breite: number
+          hoehe: number | null
+          kanton: string
+          laenge: number
+          ort: string
+          ort_name: string | null
+          plz: string
+        }
+        ComputedFields: never
+        Insert: {
+          breite: number
+          hoehe?: number | null
+          kanton: string
+          laenge: number
+          ort: string
+          ort_name?: never
+          plz: string
+        }
+        Update: {
+          breite?: number
+          hoehe?: number | null
+          kanton?: string
+          laenge?: number
+          ort?: string
+          ort_name?: never
+          plz?: string
+        }
+        Relationships: []
       }
       preisvorlage_positionen: {
         Row: {
@@ -3153,6 +3438,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'projekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
             foreignKeyName: 'projekte_objekt_id_fkey'
             columns: ['objekt_id']
             isOneToOne: false
@@ -3165,6 +3457,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'objekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekte_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'projekte_offerte_id_fkey'
@@ -3576,6 +3875,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'service_faelle_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
             foreignKeyName: 'service_faelle_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
@@ -3649,6 +3955,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'sharepoint_ordner_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
         ]
       }
@@ -3866,6 +4179,7 @@ export type Database = {
           name: string
           ort: string | null
           plz: string | null
+          sprache: string
           strasse: string | null
         }
         ComputedFields: never
@@ -3882,6 +4196,7 @@ export type Database = {
           name: string
           ort?: string | null
           plz?: string | null
+          sprache?: string
           strasse?: string | null
         }
         Update: {
@@ -3897,6 +4212,7 @@ export type Database = {
           name?: string
           ort?: string | null
           plz?: string | null
+          sprache?: string
           strasse?: string | null
         }
         Relationships: [
@@ -3964,6 +4280,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'subunternehmer_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
         ]
       }
@@ -4066,6 +4389,7 @@ export type Database = {
           outlook: Json | null
           quelle: string | null
           region_id: string | null
+          standort_id: string | null
           stufe: string
           termin_am: string | null
           termin_bestaetigt: Json | null
@@ -4101,7 +4425,7 @@ export type Database = {
           kontakt_id: string
           luftbild?: Json | null
           notiz_intern?: string | null
-          nummer: string
+          nummer?: string
           objekt_id?: string | null
           offerte_hinweis?: string | null
           offerte_hinweis_von?: string | null
@@ -4112,6 +4436,7 @@ export type Database = {
           outlook?: Json | null
           quelle?: string | null
           region_id?: string | null
+          standort_id?: string | null
           stufe?: string
           termin_am?: string | null
           termin_bestaetigt?: Json | null
@@ -4157,6 +4482,7 @@ export type Database = {
           outlook?: Json | null
           quelle?: string | null
           region_id?: string | null
+          standort_id?: string | null
           stufe?: string
           termin_am?: string | null
           termin_bestaetigt?: Json | null
@@ -4187,6 +4513,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'verkaufschancen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
             foreignKeyName: 'verkaufschancen_objekt_id_fkey'
             columns: ['objekt_id']
             isOneToOne: false
@@ -4201,10 +4534,24 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'verkaufschancen_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['objekt_id']
+          },
+          {
             foreignKeyName: 'verkaufschancen_region_id_fkey'
             columns: ['region_id']
             isOneToOne: false
             referencedRelation: 'regionen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'verkaufschancen_standort_id_fkey'
+            columns: ['standort_id']
+            isOneToOne: false
+            referencedRelation: 'standorte'
             referencedColumns: ['id']
           },
           {
@@ -4293,6 +4640,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
           {
             foreignKeyName: 'wartungsvertraege_offerte_id_fkey'
@@ -4408,6 +4762,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kunden_uebersicht'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
           {
             foreignKeyName: 'werkvertraege_offerte_id_fkey'
@@ -4614,6 +4975,77 @@ export type Database = {
         ComputedFields: never
         Relationships: []
       }
+      verkauf_geschaefte: {
+        Row: {
+          angebot_am: string | null
+          art: string | null
+          baubeginn: string | null
+          breite: number | null
+          eingang_am: string | null
+          email: string | null
+          entscheid: string | null
+          erreichbarkeit: string | null
+          geaendert_am: string | null
+          gruppe: string | null
+          hoehe: number | null
+          id: string | null
+          interesse: string[] | null
+          kanton: string | null
+          kommentar_kunde: string | null
+          kontakt_id: string | null
+          kundennummer: number | null
+          kwp: number | null
+          laenge: number | null
+          lage_genau: boolean | null
+          lead_nummer: string | null
+          letzter_kontakt: string | null
+          nachfassen_am: string | null
+          name: string | null
+          objekt_id: string | null
+          offerte_id: string | null
+          offerte_nummer: string | null
+          offerte_stand: string | null
+          offerte_status: string | null
+          ort: string | null
+          person_id: string | null
+          plz: string | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          projekt_status: string | null
+          quelle: string | null
+          region_id: string | null
+          sprache: string | null
+          stand: string | null
+          stand_datum: string | null
+          stand_rang: number | null
+          standort: string | null
+          strasse: string | null
+          stufe: string | null
+          suchtext: string | null
+          telefon: string | null
+          telefon_ziffern: string | null
+          termin_am: string | null
+          termin_dauer_min: number | null
+          termin_person_id: string | null
+          verkaufschance_id: string | null
+          verlustgrund: string | null
+          vertagt_grund: string | null
+          werbesperre: boolean | null
+          wert_rappen: number | null
+          wiedervorlage_am: string | null
+          wiedervorlage_grund: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
+            columns: ['termin_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
     }
     Functions: {
       aendere_mein_konto: {
@@ -4621,6 +5053,7 @@ export type Database = {
         Returns: undefined
       }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      kalender_ersetzen: { Args: { p_eintraege: Json; p_person: string; p_quelle: string }; Returns: number }
       kontakt_export: { Args: { p_kontakt: string }; Returns: Json }
       kunden_zeitachse: {
         Args: { p_kontakt: string }
@@ -4643,6 +5076,31 @@ export type Database = {
           stand_datum: string
         }[]
       }
+      lead_anlegen: { Args: { p: Json }; Returns: string }
+      lead_kontakt_erfassen: {
+        Args: {
+          p_angaben?: Json
+          p_art: string
+          p_ergebnis?: string
+          p_richtung?: string
+          p_text?: string
+          p_verkaufschance: string
+        }
+        Returns: string
+      }
+      lead_monatsbericht: {
+        Args: { p_monat: string }
+        Returns: {
+          erhalten: number
+          gruende: Json
+          in_bearbeitung: number
+          kein_interesse: number
+          leads: Json
+          offeriert: number
+          quelle: string
+          termin: number
+        }[]
+      }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       moegliche_dubletten: {
         Args: { p_email: string; p_name: string; p_ohne?: string; p_telefon: string }
@@ -4654,9 +5112,24 @@ export type Database = {
           ort: string
         }[]
       }
+      plz_auskunft: {
+        Args: { p_plz: string }
+        Returns: {
+          breite: number
+          hoehe: number
+          kanton: string
+          laenge: number
+          ort: string
+          plz: string
+          sprache: string
+          standort: string
+        }[]
+      }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
+      setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
       show_trgm: { Args: { '': string }; Returns: string[] }
+      standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
