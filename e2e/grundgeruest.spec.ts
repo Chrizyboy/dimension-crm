@@ -41,7 +41,10 @@ test.describe('Desktop', () => {
     await expect(nav.getByRole('link')).toHaveCount(22)
     await nav.getByRole('link', { name: 'Anfragen & Leads' }).click()
     await expect(page).toHaveURL(/#\/sales$/)
-    await expect(page.getByText('Vom ersten Kontakt bis zur Auftragszusage')).toBeVisible()
+    // Ohne Datenbank zeigt der Bereich einen Hinweis, mit Datenbank die Pipeline (seit Phase 6).
+    await expect(
+      page.getByText(/Vorschau ohne Datenbank|Vom ersten Kontakt bis zur Auftragszusage/).first(),
+    ).toBeVisible()
   })
 
   test('Seitenleiste lässt sich mit Ctrl B einklappen', async ({ page }) => {
