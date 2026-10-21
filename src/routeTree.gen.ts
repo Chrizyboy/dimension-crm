@@ -16,8 +16,11 @@ import { Route as ContactsRouteImport } from './app/contacts'
 import { Route as CustomersRouteImport } from './app/customers'
 import { Route as DesignRouteImport } from './app/design'
 import { Route as KontoRouteImport } from './app/konto'
+import { Route as PricingRouteImport } from './app/pricing'
+import { Route as QuotesRouteImport } from './app/quotes'
 import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
+import { Route as WorkcontractsRouteImport } from './app/workcontracts'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -54,6 +57,16 @@ const KontoRoute = KontoRouteImport.update({
   path: '/konto',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuotesRoute = QuotesRouteImport.update({
+  id: '/quotes',
+  path: '/quotes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SalesRoute = SalesRouteImport.update({
   id: '/sales',
   path: '/sales',
@@ -62,6 +75,11 @@ const SalesRoute = SalesRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkcontractsRoute = WorkcontractsRouteImport.update({
+  id: '/workcontracts',
+  path: '/workcontracts',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -73,8 +91,11 @@ export interface FileRoutesByFullPath {
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
+  '/pricing': typeof PricingRoute
+  '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,8 +105,11 @@ export interface FileRoutesByTo {
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
+  '/pricing': typeof PricingRoute
+  '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,8 +120,11 @@ export interface FileRoutesById {
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
+  '/pricing': typeof PricingRoute
+  '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,8 +136,11 @@ export interface FileRouteTypes {
     | '/customers'
     | '/design'
     | '/konto'
+    | '/pricing'
+    | '/quotes'
     | '/sales'
     | '/settings'
+    | '/workcontracts'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,8 +150,11 @@ export interface FileRouteTypes {
     | '/customers'
     | '/design'
     | '/konto'
+    | '/pricing'
+    | '/quotes'
     | '/sales'
     | '/settings'
+    | '/workcontracts'
   id:
     | '__root__'
     | '/'
@@ -131,8 +164,11 @@ export interface FileRouteTypes {
     | '/customers'
     | '/design'
     | '/konto'
+    | '/pricing'
+    | '/quotes'
     | '/sales'
     | '/settings'
+    | '/workcontracts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,8 +179,11 @@ export interface RootRouteChildren {
   CustomersRoute: typeof CustomersRoute
   DesignRoute: typeof DesignRoute
   KontoRoute: typeof KontoRoute
+  PricingRoute: typeof PricingRoute
+  QuotesRoute: typeof QuotesRoute
   SalesRoute: typeof SalesRoute
   SettingsRoute: typeof SettingsRoute
+  WorkcontractsRoute: typeof WorkcontractsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -198,6 +237,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quotes': {
+      id: '/quotes'
+      path: '/quotes'
+      fullPath: '/quotes'
+      preLoaderRoute: typeof QuotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sales': {
       id: '/sales'
       path: '/sales'
@@ -212,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workcontracts': {
+      id: '/workcontracts'
+      path: '/workcontracts'
+      fullPath: '/workcontracts'
+      preLoaderRoute: typeof WorkcontractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -223,8 +283,11 @@ const rootRouteChildren: RootRouteChildren = {
   CustomersRoute: CustomersRoute,
   DesignRoute: DesignRoute,
   KontoRoute: KontoRoute,
+  PricingRoute: PricingRoute,
+  QuotesRoute: QuotesRoute,
   SalesRoute: SalesRoute,
   SettingsRoute: SettingsRoute,
+  WorkcontractsRoute: WorkcontractsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

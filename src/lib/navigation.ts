@@ -11,6 +11,7 @@ import { meta as finance } from '@/modules/finance'
 import { meta as invoices } from '@/modules/invoices'
 import { meta as knowledge } from '@/modules/knowledge'
 import { meta as marketing } from '@/modules/marketing'
+import { meta as pricing } from '@/modules/pricing'
 import { meta as projects } from '@/modules/projects'
 import { meta as purchasing } from '@/modules/purchasing'
 import { meta as quotes } from '@/modules/quotes'
@@ -29,6 +30,7 @@ export const MODULE: readonly ModulMeta[] = [
   tasks,
   sales,
   quotes,
+  pricing,
   workcontracts,
   tenders,
   customers,
