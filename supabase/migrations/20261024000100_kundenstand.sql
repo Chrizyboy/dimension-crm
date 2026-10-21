@@ -29,6 +29,17 @@ insert into public.auswahlwerte (liste, schluessel, text_de, text_fr, reihenfolg
   ('kundenstand', 'kein', 'Kein Interesse', 'Pas intéressé', 160, 'neutral', '{"gruppe": "aus"}')
 on conflict (liste, schluessel) do nothing;
 
+-- Ergebnis eines Kontaktversuchs (V233): wird beim Erfassen eines Anrufs gewählt.
+insert into public.auswahlwerte (liste, schluessel, text_de, text_fr, reihenfolge, farbe, eigenschaften) values
+  ('kontaktergebnis', 'erreicht', 'Erreicht', 'Joint', 10, 'ok', '{}'),
+  ('kontaktergebnis', 'nicht_erreicht', 'Nicht erreicht', 'Pas joint', 20, 'neutral', '{}'),
+  ('kontaktergebnis', 'combox', 'Combox', 'Messagerie', 30, 'neutral', '{}'),
+  ('kontaktergebnis', 'rueckruf', 'Rückruf vereinbart', 'Rappel convenu', 40, 'info', '{}'),
+  ('kontaktergebnis', 'meldet_sich', 'Meldet sich', 'Va rappeler', 50, 'info', '{}'),
+  ('kontaktergebnis', 'termin', 'Termin vereinbart', 'RDV fixé', 60, 'ok', '{}'),
+  ('kontaktergebnis', 'kein_interesse', 'Kein Interesse', 'Pas intéressé', 70, 'neutral', '{}')
+on conflict (liste, schluessel) do nothing;
+
 -- V233: Eine Offerte fällt 14 Tage nach dem Versand zum Nachfassen (FU_DAYS), ausser es gibt einen eigenen Termin.
 insert into public.einstellungen (schluessel, wert) values ('nachfassen_tage', '14')
 on conflict (schluessel) do nothing;

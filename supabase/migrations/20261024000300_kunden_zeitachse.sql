@@ -33,11 +33,12 @@ language sql stable security invoker set search_path = '' as $$
       from public.verkaufschancen v
      where v.kontakt_id = p_kontakt and v.geloescht_am is null and v.termin_am is not null
     union all
-    select o.angebot_am::timestamptz + interval '12 hours', 'offerte', coalesce(o.titel, ''),
+    -- Offerten ohne Angebotsdatum sind noch in Arbeit; sie stehen dann beim Erstelldatum.
+    select coalesce(o.angebot_am::timestamptz + interval '12 hours', o.erstellt_am), 'offerte', coalesce(o.titel, ''),
            jsonb_build_object('nummer', o.nummer, 'betrag_rappen', o.betrag_rappen, 'kwp', o.leistung_kwp),
            'offerten', o.id, null
       from public.offerten o
-     where o.kontakt_id = p_kontakt and o.geloescht_am is null and o.angebot_am is not null
+     where o.kontakt_id = p_kontakt and o.geloescht_am is null
     union all
     select o.entscheid_am::timestamptz + interval '12 hours', 'entscheid', coalesce(o.vertagt_grund, ''),
            jsonb_build_object('nummer', o.nummer, 'entscheid', o.entscheid), 'offerten', o.id, o.entscheid_von
