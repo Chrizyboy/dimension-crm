@@ -232,7 +232,8 @@ max_frequency = "1s"
 # Number of characters used in the email OTP.
 otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour).
-otp_expiry = 3600
+# Code per E-Mail gilt 10 Minuten (Phase 4). Länger ist bequemer, aber unsicherer.
+otp_expiry = 600
 
 # Use a production-ready SMTP server
 # [auth.email.smtp]
@@ -254,6 +255,20 @@ otp_expiry = 3600
 # enabled = true
 # subject = "Your password has been changed"
 # content_path = "./supabase/templates/password_changed_notification.html"
+
+# Phase 4: Anmeldecode und Einladung, zweisprachig (DE/FR), weil die Sprache beim Versand noch unbekannt ist.
+# Im echten Projekt dieselben Texte im Supabase-Dashboard unter Authentication > Emails eintragen.
+[auth.email.template.magic_link]
+subject = "Dein Anmeldecode · Ton code de connexion"
+content_path = "./supabase/templates/anmeldecode.html"
+
+[auth.email.template.confirmation]
+subject = "Dein Anmeldecode · Ton code de connexion"
+content_path = "./supabase/templates/anmeldecode.html"
+
+[auth.email.template.invite]
+subject = "Einladung ins Dimension CRM · Invitation au CRM Dimension"
+content_path = "./supabase/templates/einladung.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.
@@ -277,9 +292,11 @@ max_frequency = "5s"
 # inactivity_timeout = "8h"
 
 # This hook runs before a new user is created and allows developers to reject the request based on the incoming user object.
-# [auth.hook.before_user_created]
-# enabled = true
-# uri = "pg-functions://postgres/auth/before-user-created-hook"
+# Phase 4: Ein Konto entsteht nur für erfasste, aktive Mitarbeitende (auch beim ersten Microsoft-Login).
+# Im echten Projekt im Dashboard unter Authentication > Hooks «Before User Created» auf dieselbe Funktion setzen.
+[auth.hook.before_user_created]
+enabled = true
+uri = "pg-functions://postgres/intern/vor_konto_anlage"
 
 # This hook runs before a token is issued and allows you to add additional claims based on the authentication method used.
 # [auth.hook.custom_access_token]
@@ -320,6 +337,16 @@ max_frequency = "5s"
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
 # `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin_oidc`, `notion`, `twitch`,
 # `twitter`, `x`, `slack`, `spotify`, `workos`, `zoom`.
+# Phase 4: Anmeldung mit dem Microsoft-Firmenkonto (Entra ID). Lokal aus, weil es eine App-Registrierung braucht.
+# Werte nie hier eintragen, sondern als Umgebungsvariablen (siehe .env.example und docs/anmeldung.md).
+[auth.external.azure]
+enabled = false
+client_id = "env(SUPABASE_AUTH_EXTERNAL_AZURE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_EXTERNAL_AZURE_SECRET)"
+url = "env(SUPABASE_AUTH_EXTERNAL_AZURE_URL)"
+redirect_uri = ""
+skip_nonce_check = false
+
 [auth.external.apple]
 enabled = false
 client_id = ""
