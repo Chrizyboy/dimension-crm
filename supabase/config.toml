@@ -458,6 +458,10 @@ verify_jwt = true
 [functions.abaninja]
 verify_jwt = true
 
+# Phase 8b: Quellen des Ausschreibungs-Monitors von Hand abrufen.
+[functions.ausschreibungen]
+verify_jwt = true
+
 # Microsoft leitet nach der Anmeldung ohne Supabase-Login hierher; geschützt durch state und PKCE.
 [functions.microsoft-rueckruf]
 verify_jwt = false

@@ -21,6 +21,7 @@ import { Route as PricingRouteImport } from './app/pricing'
 import { Route as QuotesRouteImport } from './app/quotes'
 import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
+import { Route as TendersRouteImport } from './app/tenders'
 import { Route as WorkcontractsRouteImport } from './app/workcontracts'
 
 const IndexRoute = IndexRouteImport.update({
@@ -83,6 +84,11 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TendersRoute = TendersRouteImport.update({
+  id: '/tenders',
+  path: '/tenders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkcontractsRoute = WorkcontractsRouteImport.update({
   id: '/workcontracts',
   path: '/workcontracts',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/tenders': typeof TendersRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRoutesByTo {
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/tenders': typeof TendersRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRoutesById {
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/tenders': typeof TendersRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRouteTypes {
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/tenders'
     | '/workcontracts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/tenders'
     | '/workcontracts'
   id:
     | '__root__'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/tenders'
     | '/workcontracts'
   fileRoutesById: FileRoutesById
 }
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   QuotesRoute: typeof QuotesRoute
   SalesRoute: typeof SalesRoute
   SettingsRoute: typeof SettingsRoute
+  TendersRoute: typeof TendersRoute
   WorkcontractsRoute: typeof WorkcontractsRoute
 }
 
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tenders': {
+      id: '/tenders'
+      path: '/tenders'
+      fullPath: '/tenders'
+      preLoaderRoute: typeof TendersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/workcontracts': {
       id: '/workcontracts'
       path: '/workcontracts'
@@ -308,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   QuotesRoute: QuotesRoute,
   SalesRoute: SalesRoute,
   SettingsRoute: SettingsRoute,
+  TendersRoute: TendersRoute,
   WorkcontractsRoute: WorkcontractsRoute,
 }
 export const routeTree = rootRouteImport

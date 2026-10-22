@@ -7,7 +7,11 @@
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
+//  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
+//  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
+//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 
+import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { dienst } from '../_shared/datenbank.ts'
@@ -85,6 +89,27 @@ Deno.serve(async (req) => {
       })
       if (n) await ausgangAbarbeiten(20)
       return `${n} SMS für ${morgen}`
+    })
+  }
+
+  // Ausschreibungs-Monitor: jedes Zeitfenster läuft einmal (Job pro Fenster, danach 10 Stunden gesperrt).
+  const monitor = await monitorEinstellungen()
+  const uhr = jetzt.slice(11, 16)
+  const simap = faelligesFenster(monitor.simap_zeiten ?? ['06:52', '12:00', '17:00'], uhr)
+  if (simap) {
+    ergebnis.simap = await job(`simap ${simap}`, 600, async () => (await quelleLesen('simap')).meldung)
+  }
+  const wochentag = new Date(`${jetzt.slice(0, 10)}T12:00:00Z`).getUTCDay()
+  const amtsblatt = faelligesFenster(monitor.amtsblatt_zeiten ?? ['06:52'], uhr)
+  if (amtsblatt && wochentag !== 0) {
+    ergebnis.amtsblatt = await job(`amtsblatt ${amtsblatt}`, 600, async () => (await quelleLesen('amtsblatt')).meldung)
+  }
+  if (faelligesFenster([monitor.pruefen_zeit ?? '07:00'], uhr)) {
+    ergebnis.ausschreibungen = await job('ausschreibungen_pruefen', 600, async () => {
+      const r = await dienst.rpc<Record<string, number>>('ausschreibungen_pruefen', {})
+      return Object.entries(r)
+        .map(([k, v]) => `${k} ${v}`)
+        .join(', ')
     })
   }
 
