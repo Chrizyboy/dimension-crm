@@ -49,5 +49,10 @@ export async function anmelden(page: Page, email: string) {
   const code = /\b(\d{6})\b/.exec((await mailAn(email, seit)).text)?.[1] ?? ''
   await page.getByLabel(/Code aus|Code reçu/).fill(code)
   await page.getByRole('button', { name: /^(Anmelden|Se connecter)$/ }).click()
-  await expect(page.getByRole('navigation', { name: /Hauptnavigation|Navigation principale/ })).toBeVisible()
+  // Am Computer die Seitenleiste, am Handy die Leiste unten.
+  await expect(
+    page
+      .getByRole('navigation', { name: /Hauptnavigation|Navigation principale|Schnellnavigation|Navigation rapide/ })
+      .first(),
+  ).toBeVisible()
 }

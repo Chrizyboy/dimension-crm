@@ -4,7 +4,8 @@ import { defineConfig, devices } from '@playwright/test'
 const executablePath = process.env.PW_CHROMIUM
 
 /** Tests, die die lokale Supabase brauchen; sie laufen nur gegen die Fassung mit Datenbank. */
-const MIT_DATENBANK = /(anmeldung|kunden|verkauf|offerten|integrationen|ausschreibungen|projekte|einkauf)\.spec/
+const MIT_DATENBANK =
+  /(anmeldung|kunden|verkauf|offerten|integrationen|ausschreibungen|projekte|einkauf|baustelle)\.spec/
 
 /**
  * Zwei Fassungen der App:
@@ -78,6 +79,13 @@ export default defineConfig({
       testMatch: /einkauf\.spec/,
       dependencies: ['projekte'],
       use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 }, baseURL: 'http://localhost:4174' },
+    },
+    {
+      // Baustelle läuft am Handy: der ganze Ablauf in der Grösse eines Pixel 7, mit Funkloch.
+      name: 'baustelle',
+      testMatch: /baustelle\.spec/,
+      dependencies: ['einkauf'],
+      use: { ...devices['Pixel 7'], baseURL: 'http://localhost:4174' },
     },
   ],
   webServer: [
