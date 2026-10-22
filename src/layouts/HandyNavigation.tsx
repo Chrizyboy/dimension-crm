@@ -8,10 +8,10 @@ import { useUi } from '@/stores/ui'
 import { Seitenleiste } from './Seitenleiste'
 
 /**
- * Die vier Bereiche, die unterwegs am meisten gebraucht werden (Verkauf auf Tour, Monteure auf der Baustelle).
- * Alles andere ist eine Berührung weiter unter «Mehr».
+ * Bereiche, die unterwegs am meisten gebraucht werden (Verkauf auf Tour, Monteure auf der Baustelle). Unten
+ * stehen die ersten vier, welche die Person sehen darf; alles andere ist eine Berührung weiter unter «Mehr».
  */
-const HANDY_MODULE = ['today', 'sales', 'projects', 'tasks'] as const
+const HANDY_MODULE = ['today', 'fieldwork', 'sales', 'projects', 'tasks'] as const
 
 /** Leiste unten am Handy, mit dem Daumen erreichbar. Ab 768 px Breite ausgeblendet. */
 export function HandyNavigation() {
@@ -30,22 +30,23 @@ export function HandyNavigation() {
         aria-label={t('nav.handy')}
         className="bg-surface fixed inset-x-0 bottom-0 z-40 flex h-[calc(3.5rem+env(safe-area-inset-bottom,0px))] border-t pb-[env(safe-area-inset-bottom,0px)] md:hidden"
       >
-        {HANDY_MODULE.map((id) => {
-          const m = sichtbar.find((s) => s.id === id)
-          if (!m) return null
-          return (
-            <Link
-              key={id}
-              to="/$modul"
-              params={{ modul: id }}
-              className={stil}
-              activeProps={{ className: '!text-foreground [&_svg]:!text-accent' }}
-            >
-              <ModulIcon name={m.icon} className="size-5" />
-              <span className="max-w-full truncate px-1">{m.titel[sprache]}</span>
-            </Link>
-          )
-        })}
+        {HANDY_MODULE.flatMap((id) => sichtbar.filter((s) => s.id === id))
+          .slice(0, 4)
+          .map((m) => {
+            const id = m.id
+            return (
+              <Link
+                key={id}
+                to="/$modul"
+                params={{ modul: id }}
+                className={stil}
+                activeProps={{ className: '!text-foreground [&_svg]:!text-accent' }}
+              >
+                <ModulIcon name={m.icon} className="size-5" />
+                <span className="max-w-full truncate px-1">{m.titel[sprache]}</span>
+              </Link>
+            )
+          })}
         <button
           type="button"
           className={stil}
