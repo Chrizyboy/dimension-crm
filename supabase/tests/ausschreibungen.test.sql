@@ -3,7 +3,7 @@
 -- Rechte (Andy bewilligt, Chris sendet), Lead erst beim Senden, Antwort erkennen und Quellen-Kontrolle.
 -- Ausführen: npm run db:test
 begin;
-select plan(43);
+select plan(45);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-00000008b0a1', 'as-andy@test.local'),
@@ -144,7 +144,17 @@ select is((select spur || '/' || status from public.ausschreibungen where id = (
   'akquise/entwurf', 'nach dem Zuschlag: Spur Akquise mit Entwurf an den Gewinner');
 select is(intern.gesperrt(null, 'Testdorf Werke'), null, 'die Sperre der Vergabestelle ist aufgehoben');
 
+-- Papierkorb: offene Anschreiben gehen mit dem Dossier und kommen mit ihm zurück
+update public.ausschreibungen set geloescht_am = now() where id = (select id from t where name = 'elektro');
+select is((select count(*)::int from public.anschreiben where ausschreibung_id = (select id from t where name = 'elektro')
+  and geloescht_am is null), 0, 'Dossier im Papierkorb: Entwurf auch');
+update public.ausschreibungen set geloescht_am = null where id = (select id from t where name = 'elektro');
+select is((select count(*)::int from public.anschreiben where ausschreibung_id = (select id from t where name = 'elektro')
+  and geloescht_am is null and status = 'entwurf'), 1, 'wiederhergestellt: Entwurf wieder da');
+
 -- Quellen-Kontrolle
+-- Andere Läufe ausblenden, damit der Test nicht vom Stand der Entwicklungsdatenbank abhängt.
+update public.quellen_laeufe set geloescht_am = now() where geloescht_am is null;
 insert into public.quellen_laeufe (quelle, beginn, ok) values ('simap', now() - interval '5 days', true);
 select cmp_ok((public.ausschreibungen_pruefen() ->> 'quellen_alarm')::int, '>=', 1, 'stille Quelle löst Alarm aus');
 

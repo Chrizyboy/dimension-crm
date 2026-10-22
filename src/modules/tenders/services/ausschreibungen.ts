@@ -72,7 +72,7 @@ export async function ladeKontakte(id: string): Promise<DossierKontakt[]> {
 }
 
 const ANSCHREIBEN_FELDER =
-  'id, ausschreibung_id, dossier_kontakt_id, kanal, art, sprache, an, betreff, text, status, abgelehnt_grund, bewilligt_am, versendet_am, antwort_am, antwort_art, verkaufschance_id, erstellt_am, dossier:ausschreibungen(nummer, titel, gemeinde, prioritaet, frist), kontakt:ausschreibung_kontakte(name, firma), bewilliger:personen!anschreiben_bewilligt_von_fkey(name)'
+  'id, ausschreibung_id, dossier_kontakt_id, kanal, art, sprache, an, betreff, text, status, abgelehnt_grund, bewilligt_am, versendet_am, antwort_am, antwort_art, verkaufschance_id, erstellt_am, dossier:ausschreibungen!inner(nummer, titel, gemeinde, prioritaet, frist), kontakt:ausschreibung_kontakte(name, firma), bewilliger:personen!anschreiben_bewilligt_von_fkey(name)'
 
 type AnschreibenRoh = Omit<Anschreiben, 'empfaenger' | 'bewilligt_durch'> & {
   kontakt: { name: string; firma: string | null } | null
@@ -89,7 +89,8 @@ export async function ladeAnschreiben(o: {
   status?: 'entwurf' | 'bewilligt'
   dossier?: string
 }): Promise<Anschreiben[]> {
-  let q = db().from('anschreiben').select(ANSCHREIBEN_FELDER).is('geloescht_am', null)
+  // Liegt das Dossier im Papierkorb, gehören auch seine Anschreiben nicht mehr in die Listen.
+  let q = db().from('anschreiben').select(ANSCHREIBEN_FELDER).is('geloescht_am', null).is('dossier.geloescht_am', null)
   if (o.status) q = q.eq('status', o.status)
   if (o.dossier) q = q.eq('ausschreibung_id', o.dossier)
   const { data, error } = await q.order('erstellt_am', { ascending: !o.dossier }).limit(300)
