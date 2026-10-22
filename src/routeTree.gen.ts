@@ -18,6 +18,7 @@ import { Route as ContractsRouteImport } from './app/contracts'
 import { Route as CustomersRouteImport } from './app/customers'
 import { Route as DesignRouteImport } from './app/design'
 import { Route as FieldworkRouteImport } from './app/fieldwork'
+import { Route as InvoicesRouteImport } from './app/invoices'
 import { Route as KontoRouteImport } from './app/konto'
 import { Route as OutboxRouteImport } from './app/outbox'
 import { Route as PricingRouteImport } from './app/pricing'
@@ -72,6 +73,11 @@ const DesignRoute = DesignRouteImport.update({
 const FieldworkRoute = FieldworkRouteImport.update({
   id: '/fieldwork',
   path: '/fieldwork',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesRoute = InvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontoRoute = KontoRouteImport.update({
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/fieldwork': typeof FieldworkRoute
+  '/invoices': typeof InvoicesRoute
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/fieldwork': typeof FieldworkRoute
+  '/invoices': typeof InvoicesRoute
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/fieldwork': typeof FieldworkRoute
+  '/invoices': typeof InvoicesRoute
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/customers'
     | '/design'
     | '/fieldwork'
+    | '/invoices'
     | '/konto'
     | '/outbox'
     | '/pricing'
@@ -222,6 +232,7 @@ export interface FileRouteTypes {
     | '/customers'
     | '/design'
     | '/fieldwork'
+    | '/invoices'
     | '/konto'
     | '/outbox'
     | '/pricing'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/customers'
     | '/design'
     | '/fieldwork'
+    | '/invoices'
     | '/konto'
     | '/outbox'
     | '/pricing'
@@ -265,6 +277,7 @@ export interface RootRouteChildren {
   CustomersRoute: typeof CustomersRoute
   DesignRoute: typeof DesignRoute
   FieldworkRoute: typeof FieldworkRoute
+  InvoicesRoute: typeof InvoicesRoute
   KontoRoute: typeof KontoRoute
   OutboxRoute: typeof OutboxRoute
   PricingRoute: typeof PricingRoute
@@ -340,6 +353,13 @@ declare module '@tanstack/react-router' {
       path: '/fieldwork'
       fullPath: '/fieldwork'
       preLoaderRoute: typeof FieldworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices': {
+      id: '/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof InvoicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/konto': {
@@ -425,6 +445,7 @@ const rootRouteChildren: RootRouteChildren = {
   CustomersRoute: CustomersRoute,
   DesignRoute: DesignRoute,
   FieldworkRoute: FieldworkRoute,
+  InvoicesRoute: InvoicesRoute,
   KontoRoute: KontoRoute,
   OutboxRoute: OutboxRoute,
   PricingRoute: PricingRoute,

@@ -3906,6 +3906,13 @@ export type Database = {
             foreignKeyName: 'nachtraege_rapport_id_fkey'
             columns: ['rapport_id']
             isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'nachtraege_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
             referencedRelation: 'rapporte'
             referencedColumns: ['id']
           },
@@ -5467,6 +5474,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
             referencedColumns: ['id']
           },
           {
@@ -7126,6 +7140,13 @@ export type Database = {
             foreignKeyName: 'zeiten_rapport_id_fkey'
             columns: ['rapport_id']
             isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
             referencedRelation: 'rapporte'
             referencedColumns: ['id']
           },
@@ -7389,6 +7410,13 @@ export type Database = {
             foreignKeyName: 'nachtraege_rapport_id_fkey'
             columns: ['rapport_id']
             isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'nachtraege_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
             referencedRelation: 'rapporte'
             referencedColumns: ['id']
           },
@@ -7400,6 +7428,23 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      offene_service_rapporte: {
+        Row: {
+          abgeschlossen_am: string | null
+          art: string | null
+          datum: string | null
+          id: string | null
+          kontakt_id: string | null
+          kunde: string | null
+          nummer: string | null
+          projekt_nummer: string | null
+          service_nummer: string | null
+          service_titel: string | null
+          verrechnung: string | null
+        }
+        ComputedFields: never
+        Relationships: []
       }
       offene_tranchen: {
         Row: {
@@ -8008,6 +8053,13 @@ export type Database = {
             foreignKeyName: 'rechnungen_rapport_id_fkey'
             columns: ['rapport_id']
             isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
             referencedRelation: 'rapporte'
             referencedColumns: ['id']
           },
@@ -8037,6 +8089,45 @@ export type Database = {
             columns: ['zahlungsplan_id']
             isOneToOne: false
             referencedRelation: 'zahlungsplan'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      spesen_liste: {
+        Row: {
+          ausbezahlt_am: string | null
+          ausbezahlt_von: string | null
+          beleg_id: string | null
+          beleg_name: string | null
+          betrag_rappen: number | null
+          datum: string | null
+          erstellt_am: string | null
+          id: string | null
+          kategorie: string | null
+          kuerzel: string | null
+          notiz: string | null
+          person: string | null
+          person_id: string | null
+          status: string | null
+          storniert_am: string | null
+          storniert_grund: string | null
+          storniert_von: string | null
+          zweck: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'spesen_beleg_id_fkey'
+            columns: ['beleg_id']
+            isOneToOne: false
+            referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -8321,6 +8412,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
             referencedColumns: ['id']
           },
           {

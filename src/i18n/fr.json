@@ -1778,7 +1778,21 @@
     "baustelle_zeit_pause": "La pause ne peut pas être négative.",
     "baustelle_zeit_start_fehlt": "Merci d’indiquer le début.",
     "baustelle_zeit_stopp_vor_start": "La fin doit être après le début.",
-    "baustelle_zeit_zukunft": "Un temps ne peut pas commencer dans le futur. L’heure du téléphone est-elle juste ?"
+    "baustelle_zeit_zukunft": "Un temps ne peut pas commencer dans le futur. L’heure du téléphone est-elle juste ?",
+    "finanzen_kein_recht": "Il faut le droit « Finances ».",
+    "finanzen_rechnung_gestellt": "La facture est émise et ne peut plus être modifiée. Merci de l’annuler et d’en créer une nouvelle.",
+    "finanzen_nicht_gestellt": "La facture n’est pas encore émise (ou annulée).",
+    "finanzen_spesen_fest": "Des frais remboursés ou annulés ne peuvent plus être modifiés.",
+    "finanzen_schon_verrechnet": "Il existe déjà une facture pour cela.",
+    "finanzen_rapport_nicht_verrechenbar": "Ce rapport est sous garantie, geste commercial ou contrat et n’est pas facturé.",
+    "finanzen_prozent_fehlt": "Merci d’indiquer un pourcentage entre 1 et 100.",
+    "finanzen_kontakt_fehlt": "Merci de choisir un client.",
+    "finanzen_positionen_ungueltig": "Les positions ne sont pas valables.",
+    "finanzen_rechnung_leer": "Une facture a besoin d’au moins une position et d’un montant.",
+    "finanzen_schon_bezahlt": "Cette facture a déjà reçu un paiement ; l’annulation n’est plus possible.",
+    "finanzen_grund_fehlt": "Merci d’indiquer un motif.",
+    "finanzen_nicht_ueberfaellig": "Cette facture n’est pas en retard.",
+    "finanzen_mahnstufe_max": "Le 3e rappel est le dernier. La suite passe par la poursuite (hors CRM)."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -1881,7 +1895,9 @@
       "kein_recht": "Vous n'avez pas le droit de le faire.",
       "anmeldung": "Veuillez d'abord vous connecter.",
       "sms": "Le SMS n'a pas été accepté (code {{code}}).",
-      "unbekannt": "Cela n'a pas fonctionné (code {{code}})."
+      "unbekannt": "Cela n'a pas fonctionné (code {{code}}).",
+      "nicht_gestellt": "D’abord émettre la facture, puis la transmettre à AbaNinja.",
+      "schon_uebergeben": "Cette facture est déjà dans AbaNinja."
     }
   },
   "verbindungen": {
@@ -3276,5 +3292,220 @@
   "unterschrift": {
     "hinweis": "Signer avec le doigt dans le cadre",
     "loeschen": "Effacer"
+  },
+  "rechnungen": {
+    "titel": "Factures",
+    "beschreibung": "Factures selon le plan de paiement, factures finales avec avenants et factures de service. Facture QR et envoi normalement via AbaNinja.",
+    "neu": "Nouvelle facture",
+    "neuTitel": "Nouveau brouillon de facture",
+    "neuText": "Le CRM propose les positions ; tout reste modifiable dans le brouillon.",
+    "entwurfAnlegen": "Créer le brouillon",
+    "entwurf": "Brouillon",
+    "abgleich": "Synchroniser AbaNinja",
+    "abgleichFertig": "Synchronisation terminée : {{rechnungen}} factures, {{zahlungen}} nouveaux paiements, {{belege_neu}} nouvelles factures fournisseurs ({{belege_zugeordnet}} attribuées à un projet).",
+    "reiter": {
+      "rechnungen": "Factures",
+      "verrechnen": "À facturer",
+      "firmen": "Sociétés & réglages"
+    },
+    "filter": "Filtrer les factures",
+    "filterwert": {
+      "offen": "Ouvertes",
+      "ueberfaellig": "En retard",
+      "entwuerfe": "Brouillons",
+      "bezahlt": "Payées",
+      "alle": "Toutes"
+    },
+    "suche": "Numéro, client, projet …",
+    "export": "Exporter la liste",
+    "dateiname": "Factures",
+    "summeOffen": "Ouvert dans cette liste : {{betrag}}",
+    "leer": "Aucune facture",
+    "leerText": "Sous « À facturer » figurent les tranches dues et les rapports de service.",
+    "ueberfaellig": "En retard",
+    "mahnstufeKurz": "{{stufe}}e rappel",
+    "art": {
+      "anzahlung": "Acompte",
+      "teilzahlung": "Facture partielle",
+      "schluss": "Facture finale",
+      "service": "Service",
+      "wartung": "Entretien",
+      "frei": "Libre"
+    },
+    "status": {
+      "entwurf": "Brouillon",
+      "gestellt": "Émise",
+      "teilbezahlt": "Payée partiellement",
+      "bezahlt": "Payée",
+      "storniert": "Annulée"
+    },
+    "spalte": {
+      "nummer": "Numéro",
+      "kunde": "Client",
+      "projekt": "Projet",
+      "art": "Type",
+      "datum": "Date",
+      "faellig": "Échéance",
+      "total": "Total",
+      "offen": "Ouvert",
+      "status": "État"
+    },
+    "vorlage": "Modèle",
+    "vorlagen": {
+      "anzahlung": "Acompte (30 %)",
+      "montage": "Montage (60 %)",
+      "schluss": "Facture finale (solde avec avenants)",
+      "gesamt": "Montant total (100 %)",
+      "wartung": "Contrat d’entretien",
+      "frei": "Facture libre"
+    },
+    "projektWaehlen": "Choisir le projet",
+    "keineProjekte": "Ce client n’a pas de projet.",
+    "prozent": "Pour-cent de la valeur du contrat",
+    "prozentHinweis": "La valeur du contrat est TVA incluse, arrondie à 5 centimes.",
+    "wartungsvertrag": "Contrat d’entretien",
+    "vertragWaehlen": "Choisir le contrat",
+    "keineVertraege": "Ce client n’a pas de contrat d’entretien.",
+    "verrechnen": {
+      "tranchen": "Tranches du plan de paiement",
+      "tranche": "Tranche",
+      "rapporte": "Rapports de service (payants)",
+      "keineRapporte": "Aucun rapport payant terminé sans facture.",
+      "erstellen": "Créer la facture",
+      "nachBau": "selon l’avancement",
+      "leer": "Rien à facturer",
+      "leerText": "Toutes les tranches et tous les rapports payants ont une facture."
+    },
+    "akte": {
+      "titel": "Facture",
+      "angaben": "Données",
+      "positionen": "Positions",
+      "zahlungen": "Paiements",
+      "firma": "Société",
+      "sprache": "Langue",
+      "faelligNachFrist": "à l’émission + {{tage}} jours",
+      "keineZahlung": "Pas encore de paiement.",
+      "vonHand": "saisi à la main",
+      "zahlungEntfernen": "Supprimer le paiement",
+      "storniertGrund": "Annulée : {{grund}}",
+      "pdf": "PDF",
+      "stellen": "Émettre",
+      "mahnen": "Rappel",
+      "abaninja": "Vers AbaNinja",
+      "mail": "Par e-mail",
+      "zahlung": "Saisir un paiement",
+      "stornieren": "Annuler",
+      "entwurfLoeschen": "Supprimer le brouillon"
+    },
+    "pos": {
+      "text": "Texte",
+      "menge": "Quantité",
+      "einheit": "Unité",
+      "preis": "Prix",
+      "entfernen": "Supprimer la ligne",
+      "neu": "Ligne",
+      "inklMwst": "Prix TVA incluse"
+    },
+    "zahlung": {
+      "titel": "Paiement pour {{nummer}}",
+      "text": "Ouvert : {{offen}}",
+      "betrag": "Montant CHF",
+      "datum": "Reçu le",
+      "notiz": "Remarque",
+      "erfassen": "Saisir le paiement"
+    },
+    "mahnen": {
+      "titel": "{{stufe}}e rappel pour {{nummer}}",
+      "text": "D’abord vérifier, puis enregistrer. L’échéance reste ; le délai de rappel est propre.",
+      "fehlt": "Pour un rappel, il manque dans les données de la société : {{was}}.",
+      "vorschau": "Aperçu",
+      "setzen": "Enregistrer le {{stufe}}e rappel",
+      "stufe": "Niveau",
+      "frist": "Délai de rappel"
+    },
+    "storno": {
+      "titel": "Annuler {{nummer}}",
+      "text": "La facture reste visible. La tranche et les avenants sont libérés.",
+      "abaninja": "La facture est déjà dans AbaNinja ; merci de l’y annuler aussi.",
+      "grund": "Motif",
+      "entwurfTitel": "Supprimer le brouillon",
+      "entwurfText": "Le brouillon va à la corbeille."
+    },
+    "senden": {
+      "titel": "{{nummer}} par e-mail",
+      "mahnungTitel": "Rappel pour {{nummer}} par e-mail",
+      "pdf": "Création du PDF …",
+      "beschreibung": "L’e-mail part via la boîte d’envoi depuis ta messagerie. Normalement, la facture QR vient d’AbaNinja."
+    },
+    "mailtext": {
+      "betreff": "Facture {{nummer}} · {{titel}}",
+      "text": "Bonjour\n\nVeuillez trouver ci-joint notre facture {{nummer}} d’un montant de {{betrag}}, payable jusqu’au {{faellig}}.\n\nNous vous remercions de votre confiance.\n\nMeilleures salutations",
+      "mahnungBetreff": "{{stufe}}e rappel · facture {{nummer}}",
+      "mahnungText": "Bonjour\n\nNotre facture {{nummer}} est encore ouverte. Nous vous prions de verser le montant de {{betrag}} d’ici au {{frist}}. Vous trouverez le bulletin de versement en annexe.\n\nSi votre paiement a croisé ce courrier, merci de ne pas en tenir compte.\n\nMeilleures salutations"
+    },
+    "firma": {
+      "name": "Société",
+      "strasse": "Rue et n°",
+      "plz": "NPA",
+      "ort": "Localité",
+      "mwst_nr": "N° TVA",
+      "uid_nr": "IDE",
+      "iban": "IBAN",
+      "bank": "Banque",
+      "telefon": "Téléphone",
+      "email": "E-mail",
+      "zahlungsfrist": "Délai de paiement (jours)",
+      "ibanHinweis": "IBAN normal (pas de QR-IBAN). Figure sur la section paiement QR.",
+      "iban_format": "Ce n’est pas un IBAN suisse (CH ou LI, 21 caractères).",
+      "iban_pruefziffer": "Le chiffre de contrôle de l’IBAN est faux.",
+      "iban_qr_iban": "C’est un QR-IBAN ; il faut ici l’IBAN normal."
+    },
+    "einstellungen": {
+      "titel": "Factures",
+      "mahnfrist": "Délai de rappel (jours)",
+      "mahnfristHinweis": "Nouveau délai dès la date du rappel, comme dans V233.",
+      "stundensatz": "Tarif horaire service (CHF, hors TVA)",
+      "stundensatzHinweis": "Pour les factures de service issues du rapport."
+    },
+    "pdf": {
+      "titel": "Facture {{nummer}}",
+      "mahnung": "{{stufe}}e rappel – facture {{nummer}}",
+      "datum": "Date",
+      "faellig": "Payable jusqu’au",
+      "kundennummer": "N° de client",
+      "projekt": "Projet",
+      "mwstNr": "N° TVA",
+      "bezeichnung": "Désignation",
+      "menge": "Quantité",
+      "preis": "Prix",
+      "betrag": "Montant",
+      "netto": "Total hors TVA",
+      "mwst": "TVA {{satz}} %",
+      "mwstInkl": "dont TVA {{satz}} %",
+      "total": "Total",
+      "bezahlt": "Déjà payé",
+      "offen": "Montant ouvert",
+      "bank": "Merci de verser le montant sur {{bank}}, IBAN {{iban}}, communication {{nummer}}.",
+      "gruss": "Meilleures salutations",
+      "mahntext1": "Notre facture {{nummer}} du {{datum}} est encore ouverte. Merci de verser le montant ouvert d’ici au délai indiqué ci-dessous.",
+      "mahntext2": "Malgré notre rappel, la facture {{nummer}} du {{datum}} est toujours ouverte. Merci de régler le montant d’ici au délai indiqué ci-dessous.",
+      "mahntext3": "Dernier rappel : la facture {{nummer}} du {{datum}} est toujours ouverte. Sans paiement dans le délai, nous engagerons d’autres démarches."
+    },
+    "qr": {
+      "empfangsschein": "Récépissé",
+      "zahlteil": "Section paiement",
+      "konto": "Compte / Payable à",
+      "info": "Informations supplémentaires",
+      "zahlbarDurch": "Payable par",
+      "waehrung": "Monnaie",
+      "betrag": "Montant",
+      "annahmestelle": "Point de dépôt"
+    },
+    "einheit": {
+      "pauschal": "forfait",
+      "Jahr": "an",
+      "Stk": "pce",
+      "h": "h"
+    }
   }
 }

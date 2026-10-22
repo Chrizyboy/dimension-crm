@@ -1778,7 +1778,21 @@
     "baustelle_zeit_pause": "Die Pause kann nicht negativ sein.",
     "baustelle_zeit_start_fehlt": "Bitte den Start angeben.",
     "baustelle_zeit_stopp_vor_start": "Stopp muss nach dem Start liegen.",
-    "baustelle_zeit_zukunft": "Eine Zeit kann nicht in der Zukunft beginnen. Stimmt die Uhr des Handys?"
+    "baustelle_zeit_zukunft": "Eine Zeit kann nicht in der Zukunft beginnen. Stimmt die Uhr des Handys?",
+    "finanzen_kein_recht": "Dafür braucht es das Recht «Finanzen».",
+    "finanzen_rechnung_gestellt": "Die Rechnung ist gestellt und lässt sich nicht mehr ändern. Bitte stornieren und neu erstellen.",
+    "finanzen_nicht_gestellt": "Die Rechnung ist noch nicht gestellt (oder storniert).",
+    "finanzen_spesen_fest": "Ausbezahlte oder stornierte Spesen lassen sich nicht mehr ändern.",
+    "finanzen_schon_verrechnet": "Dafür gibt es schon eine Rechnung.",
+    "finanzen_rapport_nicht_verrechenbar": "Dieser Rapport ist Garantie, Kulanz oder Vertrag und wird nicht verrechnet.",
+    "finanzen_prozent_fehlt": "Bitte einen Prozentsatz zwischen 1 und 100 angeben.",
+    "finanzen_kontakt_fehlt": "Bitte einen Kunden wählen.",
+    "finanzen_positionen_ungueltig": "Die Positionen sind ungültig.",
+    "finanzen_rechnung_leer": "Eine Rechnung braucht mindestens eine Position und einen Betrag.",
+    "finanzen_schon_bezahlt": "Auf diese Rechnung ist schon bezahlt worden; stornieren geht nicht mehr.",
+    "finanzen_grund_fehlt": "Bitte einen Grund angeben.",
+    "finanzen_nicht_ueberfaellig": "Diese Rechnung ist nicht überfällig.",
+    "finanzen_mahnstufe_max": "Die 3. Mahnung ist die letzte. Weiter geht es mit der Betreibung (ausserhalb des CRM)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -1881,7 +1895,9 @@
       "kein_recht": "Dafür fehlt dir das Recht.",
       "anmeldung": "Bitte zuerst anmelden.",
       "sms": "Die SMS wurde nicht angenommen (Code {{code}}).",
-      "unbekannt": "Das hat nicht geklappt (Code {{code}})."
+      "unbekannt": "Das hat nicht geklappt (Code {{code}}).",
+      "nicht_gestellt": "Erst die Rechnung stellen, dann an AbaNinja übergeben.",
+      "schon_uebergeben": "Diese Rechnung ist schon in AbaNinja."
     }
   },
   "verbindungen": {
@@ -3276,5 +3292,220 @@
   "unterschrift": {
     "hinweis": "Mit dem Finger im Feld unterschreiben",
     "loeschen": "Löschen"
+  },
+  "rechnungen": {
+    "titel": "Rechnungen",
+    "beschreibung": "Rechnungen aus dem Zahlungsplan, Schlussrechnungen mit Nachträgen und Service-Rechnungen. QR-Rechnung und Versand normalerweise über AbaNinja.",
+    "neu": "Neue Rechnung",
+    "neuTitel": "Neuer Rechnungsentwurf",
+    "neuText": "Die Positionen schlägt das CRM vor; im Entwurf lässt sich alles ändern.",
+    "entwurfAnlegen": "Entwurf anlegen",
+    "entwurf": "Entwurf",
+    "abgleich": "Abgleich AbaNinja",
+    "abgleichFertig": "Abgleich fertig: {{rechnungen}} Rechnungen, {{zahlungen}} neue Zahlungen, {{belege_neu}} neue Lieferantenrechnungen ({{belege_zugeordnet}} einem Projekt zugeordnet).",
+    "reiter": {
+      "rechnungen": "Rechnungen",
+      "verrechnen": "Zu verrechnen",
+      "firmen": "Firmen & Einstellungen"
+    },
+    "filter": "Rechnungen filtern",
+    "filterwert": {
+      "offen": "Offen",
+      "ueberfaellig": "Überfällig",
+      "entwuerfe": "Entwürfe",
+      "bezahlt": "Bezahlt",
+      "alle": "Alle"
+    },
+    "suche": "Nummer, Kunde, Projekt …",
+    "export": "Liste exportieren",
+    "dateiname": "Rechnungen",
+    "summeOffen": "Offen in dieser Liste: {{betrag}}",
+    "leer": "Keine Rechnungen",
+    "leerText": "Unter «Zu verrechnen» stehen die fälligen Tranchen und Service-Rapporte.",
+    "ueberfaellig": "Überfällig",
+    "mahnstufeKurz": "{{stufe}}. Mahnung",
+    "art": {
+      "anzahlung": "Anzahlung",
+      "teilzahlung": "Teilrechnung",
+      "schluss": "Schlussrechnung",
+      "service": "Service",
+      "wartung": "Wartung",
+      "frei": "Frei"
+    },
+    "status": {
+      "entwurf": "Entwurf",
+      "gestellt": "Gestellt",
+      "teilbezahlt": "Teilbezahlt",
+      "bezahlt": "Bezahlt",
+      "storniert": "Storniert"
+    },
+    "spalte": {
+      "nummer": "Nummer",
+      "kunde": "Kunde",
+      "projekt": "Projekt",
+      "art": "Art",
+      "datum": "Datum",
+      "faellig": "Fällig",
+      "total": "Total",
+      "offen": "Offen",
+      "status": "Stand"
+    },
+    "vorlage": "Vorlage",
+    "vorlagen": {
+      "anzahlung": "Anzahlung (30 %)",
+      "montage": "Montage (60 %)",
+      "schluss": "Schlussrechnung (Rest mit Nachträgen)",
+      "gesamt": "Gesamtbetrag (100 %)",
+      "wartung": "Wartungsvertrag",
+      "frei": "Freie Rechnung"
+    },
+    "projektWaehlen": "Projekt wählen",
+    "keineProjekte": "Dieser Kunde hat kein Projekt.",
+    "prozent": "Prozent des Vertragswerts",
+    "prozentHinweis": "Der Vertragswert ist inkl. MWST, gerundet auf 5 Rappen.",
+    "wartungsvertrag": "Wartungsvertrag",
+    "vertragWaehlen": "Vertrag wählen",
+    "keineVertraege": "Dieser Kunde hat keinen Wartungsvertrag.",
+    "verrechnen": {
+      "tranchen": "Tranchen aus dem Zahlungsplan",
+      "tranche": "Tranche",
+      "rapporte": "Service-Rapporte (kostenpflichtig)",
+      "keineRapporte": "Keine abgeschlossenen, kostenpflichtigen Rapporte ohne Rechnung.",
+      "erstellen": "Rechnung erstellen",
+      "nachBau": "nach Baufortschritt",
+      "leer": "Nichts zu verrechnen",
+      "leerText": "Alle Tranchen und kostenpflichtigen Rapporte haben eine Rechnung."
+    },
+    "akte": {
+      "titel": "Rechnung",
+      "angaben": "Angaben",
+      "positionen": "Positionen",
+      "zahlungen": "Zahlungen",
+      "firma": "Firma",
+      "sprache": "Sprache",
+      "faelligNachFrist": "beim Stellen + {{tage}} Tage",
+      "keineZahlung": "Noch keine Zahlung.",
+      "vonHand": "von Hand",
+      "zahlungEntfernen": "Zahlung entfernen",
+      "storniertGrund": "Storniert: {{grund}}",
+      "pdf": "PDF",
+      "stellen": "Stellen",
+      "mahnen": "Mahnen",
+      "abaninja": "An AbaNinja",
+      "mail": "Per Mail",
+      "zahlung": "Zahlung erfassen",
+      "stornieren": "Stornieren",
+      "entwurfLoeschen": "Entwurf löschen"
+    },
+    "pos": {
+      "text": "Text",
+      "menge": "Menge",
+      "einheit": "Einheit",
+      "preis": "Preis",
+      "entfernen": "Zeile entfernen",
+      "neu": "Zeile",
+      "inklMwst": "Preise inkl. MWST"
+    },
+    "zahlung": {
+      "titel": "Zahlung zu {{nummer}}",
+      "text": "Offen: {{offen}}",
+      "betrag": "Betrag CHF",
+      "datum": "Eingang am",
+      "notiz": "Notiz",
+      "erfassen": "Zahlung erfassen"
+    },
+    "mahnen": {
+      "titel": "{{stufe}}. Mahnung zu {{nummer}}",
+      "text": "Erst ansehen, dann setzen. Die Fälligkeit bleibt; die Mahnfrist ist eigen.",
+      "fehlt": "Für eine Mahnung fehlt in den Firmenangaben: {{was}}.",
+      "vorschau": "Vorschau",
+      "setzen": "{{stufe}}. Mahnung setzen",
+      "stufe": "Stufe",
+      "frist": "Mahnfrist"
+    },
+    "storno": {
+      "titel": "{{nummer}} stornieren",
+      "text": "Die Rechnung bleibt sichtbar. Tranche und Nachträge werden wieder frei.",
+      "abaninja": "Die Rechnung ist schon in AbaNinja; bitte dort ebenfalls stornieren.",
+      "grund": "Grund",
+      "entwurfTitel": "Entwurf löschen",
+      "entwurfText": "Der Entwurf kommt in den Papierkorb."
+    },
+    "senden": {
+      "titel": "{{nummer}} per Mail",
+      "mahnungTitel": "Mahnung zu {{nummer}} per Mail",
+      "pdf": "PDF wird erstellt …",
+      "beschreibung": "Die Mail geht über den Ausgangskorb aus deinem Postfach. Im Normalfall kommt die QR-Rechnung aus AbaNinja."
+    },
+    "mailtext": {
+      "betreff": "Rechnung {{nummer}} · {{titel}}",
+      "text": "Guten Tag\n\nIm Anhang senden wir Ihnen unsere Rechnung {{nummer}} über {{betrag}}, zahlbar bis {{faellig}}.\n\nHerzlichen Dank für Ihr Vertrauen.\n\nFreundliche Grüsse",
+      "mahnungBetreff": "{{stufe}}. Mahnung · Rechnung {{nummer}}",
+      "mahnungText": "Guten Tag\n\nUnsere Rechnung {{nummer}} ist noch offen. Wir bitten Sie, den Betrag von {{betrag}} bis zum {{frist}} zu überweisen. Den Einzahlungsschein finden Sie im Anhang.\n\nSollte sich Ihre Zahlung mit diesem Schreiben gekreuzt haben, betrachten Sie es bitte als gegenstandslos.\n\nFreundliche Grüsse"
+    },
+    "firma": {
+      "name": "Firma",
+      "strasse": "Strasse und Nr.",
+      "plz": "PLZ",
+      "ort": "Ort",
+      "mwst_nr": "MWST-Nr.",
+      "uid_nr": "UID",
+      "iban": "IBAN",
+      "bank": "Bank",
+      "telefon": "Telefon",
+      "email": "E-Mail",
+      "zahlungsfrist": "Zahlungsfrist (Tage)",
+      "ibanHinweis": "Normale IBAN (keine QR-IBAN). Erscheint im QR-Zahlteil.",
+      "iban_format": "Das ist keine Schweizer IBAN (CH oder LI, 21 Zeichen).",
+      "iban_pruefziffer": "Die Prüfziffer der IBAN stimmt nicht.",
+      "iban_qr_iban": "Das ist eine QR-IBAN; hier braucht es die normale IBAN."
+    },
+    "einstellungen": {
+      "titel": "Rechnungen",
+      "mahnfrist": "Mahnfrist (Tage)",
+      "mahnfristHinweis": "Neue Frist ab dem Mahndatum, wie in V233.",
+      "stundensatz": "Stundensatz Service (CHF, exkl. MWST)",
+      "stundensatzHinweis": "Für Service-Rechnungen aus dem Rapport."
+    },
+    "pdf": {
+      "titel": "Rechnung {{nummer}}",
+      "mahnung": "{{stufe}}. Mahnung – Rechnung {{nummer}}",
+      "datum": "Datum",
+      "faellig": "Zahlbar bis",
+      "kundennummer": "Kundennummer",
+      "projekt": "Projekt",
+      "mwstNr": "MWST-Nr.",
+      "bezeichnung": "Bezeichnung",
+      "menge": "Menge",
+      "preis": "Preis",
+      "betrag": "Betrag",
+      "netto": "Total exkl. MWST",
+      "mwst": "MWST {{satz}} %",
+      "mwstInkl": "darin MWST {{satz}} %",
+      "total": "Total",
+      "bezahlt": "Bereits bezahlt",
+      "offen": "Offener Betrag",
+      "bank": "Bitte überweisen Sie den Betrag auf {{bank}}, IBAN {{iban}}, Mitteilung {{nummer}}.",
+      "gruss": "Freundliche Grüsse",
+      "mahntext1": "Unsere Rechnung {{nummer}} vom {{datum}} ist noch offen. Bitte überweisen Sie den offenen Betrag bis zur unten genannten Frist.",
+      "mahntext2": "Trotz unserer Erinnerung ist die Rechnung {{nummer}} vom {{datum}} noch offen. Bitte begleichen Sie den Betrag bis zur unten genannten Frist.",
+      "mahntext3": "Letzte Mahnung: Die Rechnung {{nummer}} vom {{datum}} ist weiterhin offen. Ohne Zahlung bis zur Frist leiten wir weitere Schritte ein."
+    },
+    "qr": {
+      "empfangsschein": "Empfangsschein",
+      "zahlteil": "Zahlteil",
+      "konto": "Konto / Zahlbar an",
+      "info": "Zusätzliche Informationen",
+      "zahlbarDurch": "Zahlbar durch",
+      "waehrung": "Währung",
+      "betrag": "Betrag",
+      "annahmestelle": "Annahmestelle"
+    },
+    "einheit": {
+      "pauschal": "pauschal",
+      "Jahr": "Jahr",
+      "Stk": "Stk.",
+      "h": "h"
+    }
   }
 }
