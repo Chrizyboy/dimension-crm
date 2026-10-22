@@ -142,3 +142,13 @@ Siehe Entscheid 0018.
 - **Abläufe:** `projekt_material_vorschlagen`, `bestellvorschlag`, `lager_nachbestellen`, `bestellung_freigeben`, `bestellung_zuruecknehmen`, `bestellung_bestellt`, `bestellung_stornieren`, `wareneingang_buchen`, `lager_buchen`. Trigger auf `ausgangskorb`: Bestell-Mail nur für freigegebene Bestellungen, gesendet = bestellt. Fehler als Schlüssel `einkauf.*`.
 
 Siehe Entscheid 0019.
+
+## Baustelle am Handy (Phase 9b)
+
+- **`rapporte`** erweitert: `nummer` (R0001 …, Trigger), `art` (montage, service, wartung, ibn), `einsatz_id`, `wartungsvertrag_id`, `montage_fertig`, `verrechnung` (garantie, kostenpflichtig, kulanz, vertrag), `pruefpunkte` ({schluessel: wert}, werden zusammengeführt), `notiz_intern`. `material` = Mehrmaterial, `unterschrift_kunde` = {name, dokument_id, am} oder {ohne}. Fotos und Unterschrift sind `dokumente` mit Bezug `rapporte`. Abgeschlossene Rapporte sind fest.
+- **`zeiten`**: `art` (arbeit, reise), `freigegeben_am`/`_von`, `notiz`; jede Person sieht ihre eigenen Zeiten, Recht `preise` oder `finanzen` alle. Geprüfte Zeiten ändert nur, wer prüfen darf (die Prüfung fällt dann weg), exportierte sind fest; höchstens eine laufende Zeit je Person. **`nachtraege`**: `nummer` (N001 …), `person_id`, `stunden`, `material`, `unterschrift_kunde`, `abgelehnt_grund`; `projekt_id` darf leer sein, wenn der Nachtrag an einem Service-Rapport hängt.
+- **`garantiefaelle`** (neu): Service-Fall, Anlage, Hersteller, Komponente, Seriennummer, RMA, Stand (offen, gemeldet, eingeschickt, ersatz_erhalten, abgeschlossen, abgelehnt) mit Datum je Schritt, Gutschrift.
+- **Sichten:** `rapporte_liste` (Kunde, Objekt und Projekt auch über Service-Fall, Anlage oder Wartungsvertrag; Stunden, Anzahl Fotos und Nachträge), `zeiten_liste`, `nachtraege_liste`. Einstellung `ibn_pruefpunkte`.
+- **Abläufe:** `mein_tag` (Einsätze und Service-Termine mit Adresse, Team, Material und Rapporten, laufende Zeit), `rapport_speichern`, `rapport_abschliessen`, `rapport_oeffnen`, `zeit_starten`, `zeit_stoppen`, `zeit_speichern`, `zeiten_pruefen`, `zeiten_exportieren`, `nachtrag_speichern`, `nachtrag_status`. Alle wiederholbar mit IDs vom Handy. Fehler als Schlüssel `baustelle.*`.
+
+Siehe Entscheid 0020.

@@ -37,8 +37,8 @@ export const BAUPLAN: readonly Phase[] = [
     titel: { de: 'Projekte, Montageplanung, Service, Verträge', fr: 'Projets, planification, service, contrats' },
     stand: 'fertig',
   },
-  { nr: '9a', titel: { de: 'Einkauf und Material', fr: 'Achats et matériel' }, stand: 'aktiv' },
-  { nr: '9b', titel: { de: 'Baustelle und Service am Handy', fr: 'Chantier et service sur mobile' }, stand: 'offen' },
+  { nr: '9a', titel: { de: 'Einkauf und Material', fr: 'Achats et matériel' }, stand: 'fertig' },
+  { nr: '9b', titel: { de: 'Baustelle und Service am Handy', fr: 'Chantier et service sur mobile' }, stand: 'aktiv' },
   {
     nr: 10,
     titel: { de: 'Rechnungen, Nachkalkulation, Finanzen', fr: 'Factures, post-calcul, finances' },
