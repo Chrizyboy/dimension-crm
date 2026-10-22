@@ -79,7 +79,8 @@ $$;
 
 /**
  * Rapport anlegen oder ändern (p: id, art, datum, projekt_id, service_fall_id, wartungsvertrag_id, einsatz_id,
- * arbeiten, material, team, pruefpunkte, montage_fertig, verrechnung, notiz_intern). Gibt die ID zurück.
+ * arbeiten, material, team, pruefpunkte, montage_fertig, verrechnung, notiz_intern). Prüfpunkte werden mit den
+ * gespeicherten zusammengeführt (nur geänderte senden). Gibt die ID zurück.
  */
 create or replace function public.rapport_speichern(p jsonb)
 returns uuid
@@ -112,7 +113,8 @@ begin
     arbeiten = intern.feld(p, 'arbeiten', arbeiten),
     material = case when p ? 'material' then coalesce(p -> 'material', '[]') else material end,
     team = case when p ? 'team' then coalesce((select array_agg(x::uuid) from jsonb_array_elements_text(p -> 'team') x), '{}') else team end,
-    pruefpunkte = case when p ? 'pruefpunkte' then coalesce(p -> 'pruefpunkte', '{}') else pruefpunkte end,
+    -- Prüfpunkte kommen einzeln vom Handy (Warteschlange), darum zusammenführen statt ersetzen.
+    pruefpunkte = case when p ? 'pruefpunkte' then pruefpunkte || coalesce(p -> 'pruefpunkte', '{}') else pruefpunkte end,
     montage_fertig = coalesce((p ->> 'montage_fertig')::boolean, montage_fertig),
     verrechnung = intern.feld(p, 'verrechnung', verrechnung),
     notiz_intern = intern.feld(p, 'notiz_intern', notiz_intern)

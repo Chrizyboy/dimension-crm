@@ -22,7 +22,8 @@ export function PruefAbschnitt({
   const werte = r.pruefpunkte
   const erledigt = (punkte.data ?? []).filter((p) => werte[p.schluessel] != null && werte[p.schluessel] !== '').length
   const setze = (schluessel: string, wert: string | boolean | null) => {
-    onAendern({ pruefpunkte: { ...werte, [schluessel]: wert } })
+    // Nur den einen Punkt senden: die Datenbank führt zusammen, ein veralteter Stand überschreibt nichts.
+    onAendern({ pruefpunkte: { [schluessel]: wert } })
   }
 
   return (

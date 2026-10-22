@@ -16,7 +16,8 @@ import { useAktion } from '../hooks/useAktion'
 import { useRapport } from '../hooks/useBaustelle'
 import { adressText } from '../lib/links'
 import { rapportOeffnen } from '../services/baustelle'
-import { rapportAendern } from '../services/monteur'
+import { eingabeAnwenden, rapportAendern } from '../services/monteur'
+import { Netzstand } from './Netzstand'
 import type { Rapport, RapportEingabe } from '../types'
 import { AbschlussDialog } from './AbschlussDialog'
 import { ArbeitenAbschnitt } from './ArbeitenAbschnitt'
@@ -44,12 +45,14 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const offen = Boolean(r && !r.abgeschlossen_am)
 
   const aendern = (e: RapportEingabe) => {
-    qc.setQueryData<Rapport>(['baustelle', 'rapport', id], (alt) => (alt ? { ...alt, ...e } : alt))
+    qc.setQueryData<Rapport>(['baustelle', 'rapport', id], (alt) => (alt ? eingabeAnwenden(alt, e) : alt))
     void rapportAendern(id, e)
   }
 
   const fuss = r && (
     <>
+      {/* Im Panel ist der Seitenkopf verdeckt: der Monteur soll auch hier sehen, dass Einträge noch warten. */}
+      <Netzstand className="mr-auto" />
       {!offen && <RapportPdfKnopf rapport={r} />}
       {!offen && r.art === 'ibn' && r.projekt_id && (
         <Button

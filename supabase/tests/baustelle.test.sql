@@ -3,7 +3,7 @@
 -- seine Folgen (Montage fertig, IBN, Service, Wartung), Prüfung und Lohn-Export der Zeiten, Garantiefall.
 -- Ausführen: npm run db:test
 begin;
-select plan(38);
+select plan(39);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-00000000b9a1', 'p9b-mo@test.local'),
@@ -108,6 +108,9 @@ select lives_ok($$ select public.rapport_abschliessen('00000000-0000-0000-0000-0
 -- IBN-Rapport: Anlage mit IBN-Datum, Projekt abgeschlossen
 select public.rapport_speichern('{"id": "00000000-0000-0000-0000-00000000b902", "art": "ibn", "projekt_id": "00000000-0000-0000-0000-00000000b9e1",
   "arbeiten": "Anlage in Betrieb genommen", "pruefpunkte": {"isolation": "200"}}');
+select public.rapport_speichern('{"id": "00000000-0000-0000-0000-00000000b902", "pruefpunkte": {"erdung": true}}');
+select is((select pruefpunkte from public.rapporte where id = '00000000-0000-0000-0000-00000000b902'),
+  '{"isolation": "200", "erdung": true}'::jsonb, 'Prüfpunkte einzeln gesendet werden zusammengeführt');
 select public.rapport_abschliessen('00000000-0000-0000-0000-00000000b902', '{"ohne_unterschrift": "Kunde nicht anwesend"}');
 select ok((select ibn_am = current_date from public.anlagen where projekt_id = '00000000-0000-0000-0000-00000000b9e1'),
   'IBN legt die Anlage mit IBN-Datum an');

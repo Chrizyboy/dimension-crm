@@ -75,7 +75,15 @@ export async function rapportAnlegen(n: NeuerRapport, kopf: Partial<Rapport>): P
 /** Geänderte Felder des Rapports speichern (nur was mitkommt, wird überschrieben). */
 export async function rapportAendern(id: string, e: RapportEingabe): Promise<void> {
   await einreihen({ art: 'rpc', name: 'rapport_speichern', args: { p: { id, ...e } }, bezug: id, erstellt: jetzt() })
-  await ablageAendern<Rapport>(ablageRapport(id), (alt) => (alt ? { ...alt, ...e } : undefined))
+  await ablageAendern<Rapport>(ablageRapport(id), (alt) => (alt ? eingabeAnwenden(alt, e) : undefined))
+}
+
+/**
+ * Änderung auf den Rapport anwenden wie die Datenbank: Prüfpunkte zusammenführen, alles andere ersetzen.
+ * So geht kein Prüfpunkt verloren, wenn der Monteur schnell nacheinander tippt und ein Neuladen dazwischenkommt.
+ */
+export function eingabeAnwenden(alt: Rapport, e: RapportEingabe): Rapport {
+  return { ...alt, ...e, pruefpunkte: e.pruefpunkte ? { ...alt.pruefpunkte, ...e.pruefpunkte } : alt.pruefpunkte }
 }
 
 /** Zeit starten (Start-Knopf); eine laufende Zeit endet damit. */
@@ -161,9 +169,12 @@ export async function rapportAbschliessen(
   await tagAendern((t) => ({
     ...t,
     laufend: t.laufend?.rapport_id === id ? null : t.laufend,
-    eintraege: t.eintraege.map((e) => ({
-      ...e,
-      rapporte: e.rapporte.map((r) => (r.id === id ? { ...r, abgeschlossen_am: am } : r)),
-    })),
+    eintraege: t.eintraege
+      // Erledigter Service-Fall fällt aus dem Tagesplan, auch solange der Abschluss noch am Handy wartet.
+      .filter((e) => !(a.fall_erledigt && e.typ === 'service' && e.rapporte.some((r) => r.id === id)))
+      .map((e) => ({
+        ...e,
+        rapporte: e.rapporte.map((r) => (r.id === id ? { ...r, abgeschlossen_am: am } : r)),
+      })),
   }))
 }

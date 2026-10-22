@@ -129,7 +129,7 @@ export interface Rapport {
   nachtraege_anzahl: number
 }
 
-/** Felder, die der Monteur im Rapport ändert (alle optional: nur Gesendetes wird gespeichert). */
+/** Felder, die der Monteur im Rapport ändert (alle optional: nur Gesendetes wird gespeichert; Prüfpunkte werden zusammengeführt). */
 export type RapportEingabe = Partial<
   Pick<Rapport, 'arbeiten' | 'material' | 'pruefpunkte' | 'montage_fertig' | 'verrechnung' | 'notiz_intern' | 'datum'>
 >

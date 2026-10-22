@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import i18n from '@/i18n'
+import { cn } from '@/lib/utils'
 import { abarbeiten, useWarteschlange, verwerfen } from '../services/warteschlange'
 
 function useOnline() {
@@ -30,14 +31,14 @@ function useOnline() {
  * Zeigt, ob alles beim Server ist: «Ohne Netz», «3 warten» oder abgelehnte Einträge (mit Grund, verwerfbar).
  * Ohne Netz geht nichts verloren; die Einträge gehen beim nächsten Netz von selbst raus.
  */
-export function Netzstand() {
+export function Netzstand({ className }: { className?: string }) {
   const { t } = useTranslation()
   const online = useOnline()
   const { offen, abgelehnt, laeuft } = useWarteschlange()
   const [details, setDetails] = useState(false)
 
   return (
-    <div className="flex flex-wrap items-center gap-2" role="status" aria-live="polite">
+    <div className={cn('flex flex-wrap items-center gap-2', className)} role="status" aria-live="polite">
       {!online && (
         <Badge ton="warnung">
           <CloudOff />

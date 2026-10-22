@@ -60,7 +60,7 @@ export async function ladeDossier(projektId: string, sprache: 'de' | 'fr'): Prom
       .maybeSingle(),
     db()
       .from('projekt_material')
-      .select('artikel:artikel(bezeichnung, datenblaetter)')
+      .select('artikel:artikel(name, datenblaetter)')
       .eq('projekt_id', projektId)
       .is('geloescht_am', null),
     db().from('rapporte').select('id').eq('projekt_id', projektId).is('geloescht_am', null),
@@ -98,11 +98,11 @@ export async function ladeDossier(projektId: string, sprache: 'de' | 'fr'): Prom
 
   const gesehen = new Set<string>()
   const datenblaetter = material.data.flatMap((m) => {
-    const a = m.artikel as { bezeichnung: string; datenblaetter: Record<string, unknown> | null } | null
+    const a = m.artikel as { name: string; datenblaetter: Record<string, unknown> | null } | null
     const url = a?.datenblaetter?.[sprache] ?? a?.datenblaetter?.de
     if (!a || typeof url !== 'string' || !/^https?:\/\//.test(url) || gesehen.has(url)) return []
     gesehen.add(url)
-    return [{ artikel: a.bezeichnung, url }]
+    return [{ artikel: a.name, url }]
   })
 
   return {

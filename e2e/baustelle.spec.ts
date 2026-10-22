@@ -111,7 +111,7 @@ test('Monteur: Rapport am Handy, Funkloch, Unterschrift', async ({ page, context
 
   // Funkloch: weiterarbeiten, alles bleibt am Handy.
   await context.setOffline(true)
-  await expect(page.getByText('Ohne Netz', { exact: true })).toBeVisible()
+  await expect(rapport.getByText('Ohne Netz', { exact: true })).toBeVisible()
   await rapport
     .getByLabel('Ausgeführte Arbeiten')
     .fill('Wechselrichter geprüft, Fehler 3501, Gerät getauscht. Anlage läuft.')
@@ -119,12 +119,12 @@ test('Monteur: Rapport am Handy, Funkloch, Unterschrift', async ({ page, context
   await rapport
     .getByLabel('Foto aufnehmen')
     .setInputFiles({ name: 'b.jpg', mimeType: 'image/jpeg', buffer: await foto(page, '#10263f') })
-  await expect(page.getByRole('button', { name: /Einträge? warte/ })).toBeVisible()
+  await expect(rapport.getByRole('button', { name: /Einträge? warte/ })).toBeVisible()
   await expect(rapport.getByLabel('Wartet auf Netz')).toBeVisible()
 
   // Netz zurück: die Warteschlange leert sich von selbst.
   await context.setOffline(false)
-  await expect(page.getByRole('button', { name: /Einträge? warte/ })).toHaveCount(0, { timeout: 20_000 })
+  await expect(rapport.getByRole('button', { name: /Einträge? warte/ })).toHaveCount(0, { timeout: 20_000 })
   await expect(rapport.getByRole('img', { name: /^Foto-/ })).toHaveCount(2)
 
   await rapport.getByRole('button', { name: 'Abschliessen', exact: true }).click()
@@ -148,12 +148,12 @@ test('Monteur: Rapport am Handy, Funkloch, Unterschrift', async ({ page, context
   expect(await verstoesse(page)).toEqual([])
   await ab.getByRole('button', { name: 'Abschliessen', exact: true }).click()
   await expect(rapport.getByText('Abgeschlossen').first()).toBeVisible()
-  await expect(page.getByRole('button', { name: /Einträge? warte/ })).toHaveCount(0, { timeout: 20_000 })
+  await expect(rapport.getByRole('button', { name: /Einträge? warte/ })).toHaveCount(0, { timeout: 20_000 })
   // Im Tagesplan ist der Fall erledigt und verschwindet nach dem Neuladen.
   await page.keyboard.press('Escape')
   await page.reload()
   await expect(page.getByRole('heading', { name: 'Baustelle & Rapporte', level: 1 })).toBeVisible()
-  await expect(karte).toHaveCount(0)
+  await expect(karte).toHaveCount(0, { timeout: 20_000 })
 })
 
 test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ page }) => {
@@ -189,7 +189,13 @@ test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ pa
   const n = page.getByRole('dialog')
   await n.getByLabel('Betrag in CHF (exkl. MWST)').fill('180.00')
   await n.getByRole('button', { name: 'Speichern' }).click()
-  await expect(page.getByRole('cell', { name: '180.00' })).toBeVisible()
+  // Frühere Läufe haben eigene Nachträge: nur die Zeile dieses Laufs prüfen.
+  await expect(
+    page
+      .getByRole('row')
+      .filter({ hasText: `Zusätzlicher Überspannungsschutz ${lauf}` })
+      .getByRole('cell', { name: '180.00' }),
+  ).toBeVisible()
 
   // Der Service-Fall hat den Rapport im Verlauf und ist erledigt.
   await page.goto('/#/aftersales')
