@@ -1,10 +1,11 @@
 -- Prüft Phase 10: Rechnungen nur mit Recht «finanzen», Entwurf aus Tranche, Schluss mit Nachträgen, Service-Rapport,
 -- Stellen mit Nummer und Fälligkeit, gestellte Rechnung fest, Zahlungen bis «bezahlt» (auch im Zahlungsplan),
 -- Mahnen bis Stufe 3, Stornieren, Abgleich mit AbaNinja (Zahlung und Lieferantenrechnung mit Projekt),
--- Nachkalkulation, Spesen (eigene sehen, Storno, ausbezahlt nur Buchhaltung).
+-- Nachkalkulation, Spesen (eigene sehen, Storno, ausbezahlt nur Buchhaltung), Firmenangaben und Einstellung
+-- «finanzen» nur mit Recht «finanzen», Liquidität (finanz_einstellungen, Zahlungen) nur für die Buchhaltung.
 -- Ausführen: npm run db:test
 begin;
-select plan(37);
+select plan(43);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000010a1', 'p10-bh@test.local'),
@@ -149,6 +150,22 @@ select is((select projekt_id from public.kreditor_zahlungen where abaninja_uuid 
 -- Nachkalkulation
 select is((public.nachkalkulation('00000000-0000-0000-0000-0000000010e1') -> 'ist' ->> 'material_rappen')::bigint, 1000000::bigint,
   'Nachkalkulation: Material aus der Lieferantenrechnung, exkl. MWST');
+
+-- Phase 10b: Bank und Einstellungen nur mit Recht «finanzen» (IBAN ändern ist heikel)
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000010a2", "role": "authenticated"}', true);
+update public.firmen set iban = 'CH0000000000000000000' where kuerzel = 'sarl';
+select isnt((select iban from public.firmen where kuerzel = 'sarl'), 'CH0000000000000000000', 'Verkauf ändert die IBAN nicht');
+select throws_ok($$ update public.einstellungen set wert = wert || '{"mahnfrist_tage": 1}' where schluessel = 'finanzen' $$,
+  '42501', 'finanzen.kein_recht', 'Verkauf ändert die Einstellung «finanzen» nicht');
+select is((select count(*) from public.spesen_liste where person_id <> '00000000-0000-0000-0000-0000000010b2'), 0::bigint,
+  'Spesen-Liste: Verkauf sieht nur die eigenen');
+select is((select count(*) from public.finanz_einstellungen) + (select count(*) from public.kreditor_zahlungen), 0::bigint,
+  'Liquidität (Kontostand, Zahlungen) ist für Verkauf unsichtbar');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000010a1", "role": "authenticated"}', true);
+update public.firmen set zahlungsfrist_tage = 21 where kuerzel = 'sarl';
+select is((select zahlungsfrist_tage from public.firmen where kuerzel = 'sarl'), 21, 'Buchhaltung ändert die Zahlungsfrist');
+select lives_ok($$ update public.einstellungen set wert = wert || '{"mahnfrist_tage": 12}' where schluessel = 'finanzen' $$,
+  'Buchhaltung ändert die Einstellung «finanzen»');
 
 reset role;
 select setval('intern.rapport_nummer', r, ri) from t_seq;
