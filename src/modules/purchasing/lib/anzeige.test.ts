@@ -5,7 +5,8 @@ describe('Einkauf: Anzeige', () => {
   it('zeigt Mengen ohne unnötige Nachkommastellen', () => {
     expect(formatMenge(12)).toBe('12')
     expect(formatMenge(2.5)).toBe('2.5')
-    expect(formatMenge(1250)).toBe('1’250')
+    expect(formatMenge(1250)).toBe("1'250")
+    expect(formatMenge(-1250.5)).toBe("-1'250.5")
     expect(formatMenge(null)).toBe('0')
   })
 

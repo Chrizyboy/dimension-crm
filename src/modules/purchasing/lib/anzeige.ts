@@ -1,8 +1,14 @@
 /** Anzeige-Helfer für den Einkauf. */
 
-/** Menge ohne unnötige Nachkommastellen: 12, 2.5, 0.125. */
+/**
+ * Menge ohne unnötige Nachkommastellen: 12, 2.5, 1'250. Tausender mit «'» wie bei `formatChf`, von Hand, weil
+ * das Trennzeichen von «de-CH» je nach ICU-Version ' oder ’ ist.
+ */
 export function formatMenge(n: number | null | undefined): string {
-  return (n ?? 0).toLocaleString('de-CH', { maximumFractionDigits: 3 })
+  const text = (n ?? 0).toLocaleString('en-US', { maximumFractionDigits: 3, useGrouping: false })
+  const [ganz = '', rest] = text.split('.')
+  const gruppiert = ganz.replace(/\B(?=(\d{3})+(?!\d))/g, "'")
+  return rest ? `${gruppiert}.${rest}` : gruppiert
 }
 
 /** Heute plus n Tage als ISO-Datum (für Datumsfelder). */
