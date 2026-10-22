@@ -1,4 +1,4 @@
-import { Bot } from 'lucide-react'
+import { Bot, Package } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
@@ -66,6 +66,16 @@ export function AkteFahrplan({ projekt, schritte }: { projekt: Projekt; schritte
             {s.ueberfaellig && <span className="text-bad ml-1 font-medium">{t('projekte.fahrplan.ueberfaellig')}</span>}
           </span>
         </button>
+        {s.schluessel === 'material' && (
+          // Der Stand «Material» kommt aus dem Einkauf (Materialliste, Bestellungen, Wareneingang).
+          <a
+            href={`#/purchasing?reiter=material&projekt=${s.projekt_id}`}
+            className="text-accent-ink flex shrink-0 items-center gap-1 pt-0.5 text-xs underline"
+          >
+            <Package className="size-3.5" aria-hidden="true" />
+            {t('projekte.fahrplan.materialliste')}
+          </a>
+        )}
       </li>
     )
   }

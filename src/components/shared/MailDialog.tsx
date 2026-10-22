@@ -21,6 +21,7 @@ export function MailDialog({
   vorlage,
   dateien,
   titel,
+  beschreibung,
   onSchliessen,
   onGesendet,
 }: {
@@ -28,6 +29,8 @@ export function MailDialog({
   /** Dateien zur Auswahl; die ersten `vorgewaehlt` sind angekreuzt. */
   dateien: { id: string; name: string; vorgewaehlt?: boolean }[]
   titel: string
+  /** Hinweis unter dem Titel; ohne Angabe der allgemeine Text für Mails an Kunden. */
+  beschreibung?: string
   onSchliessen: () => void
   onGesendet?: () => void
 }) {
@@ -73,7 +76,7 @@ export function MailDialog({
     >
       <DialogInhalt
         titel={titel}
-        beschreibung={t('mail.beschreibung')}
+        beschreibung={beschreibung ?? t('mail.beschreibung')}
         className="max-w-2xl"
         fuss={
           <>

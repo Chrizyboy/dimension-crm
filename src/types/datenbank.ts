@@ -1555,6 +1555,7 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           artikel_id: string | null
+          artikelnummer: string | null
           bestellung_id: string
           bezeichnung: string
           einheit: string
@@ -1566,12 +1567,15 @@ export type Database = {
           geloescht_am: string | null
           id: string
           menge: number
+          projekt_material_id: string | null
+          reihenfolge: number
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
           artikel_id?: string | null
+          artikelnummer?: string | null
           bestellung_id: string
           bezeichnung: string
           einheit?: string
@@ -1583,11 +1587,14 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           menge: number
+          projekt_material_id?: string | null
+          reihenfolge?: number
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           artikel_id?: string | null
+          artikelnummer?: string | null
           bestellung_id?: string
           bezeichnung?: string
           einheit?: string
@@ -1599,6 +1606,8 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           menge?: number
+          projekt_material_id?: string | null
+          reihenfolge?: number
         }
         Relationships: [
           {
@@ -1622,6 +1631,27 @@ export type Database = {
             referencedRelation: 'bestellungen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'bestellpositionen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellpositionen_projekt_material_id_fkey'
+            columns: ['projekt_material_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_material'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellpositionen_projekt_material_id_fkey'
+            columns: ['projekt_material_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_material_stand'
+            referencedColumns: ['id']
+          },
         ]
       }
       bestellungen: {
@@ -1634,6 +1664,7 @@ export type Database = {
           freigegeben_am: string | null
           freigegeben_von: string | null
           geaendert_am: string
+          geliefert_am: string | null
           geloescht_am: string | null
           id: string
           lagerort_id: string | null
@@ -1643,6 +1674,7 @@ export type Database = {
           nummer: string
           projekt_id: string | null
           status: string
+          storniert_grund: string | null
           total_rappen: number | null
         }
         ComputedFields: never
@@ -1655,15 +1687,17 @@ export type Database = {
           freigegeben_am?: string | null
           freigegeben_von?: string | null
           geaendert_am?: string
+          geliefert_am?: string | null
           geloescht_am?: string | null
           id?: string
           lagerort_id?: string | null
           lieferant_id: string
           liefertermin?: string | null
           notiz?: string | null
-          nummer: string
+          nummer?: string
           projekt_id?: string | null
           status?: string
+          storniert_grund?: string | null
           total_rappen?: number | null
         }
         Update: {
@@ -1675,6 +1709,7 @@ export type Database = {
           freigegeben_am?: string | null
           freigegeben_von?: string | null
           geaendert_am?: string
+          geliefert_am?: string | null
           geloescht_am?: string | null
           id?: string
           lagerort_id?: string | null
@@ -1684,6 +1719,7 @@ export type Database = {
           nummer?: string
           projekt_id?: string | null
           status?: string
+          storniert_grund?: string | null
           total_rappen?: number | null
         }
         Relationships: [
@@ -3229,6 +3265,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'lagerbewegungen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen_liste'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'lagerbewegungen_lagerort_id_fkey'
             columns: ['lagerort_id']
             isOneToOne: false
@@ -3384,6 +3427,8 @@ export type Database = {
           kundennummer_bei_lieferant: string | null
           name: string
           notiz: string | null
+          sprache: string
+          telefon: string | null
         }
         ComputedFields: never
         Insert: {
@@ -3400,6 +3445,8 @@ export type Database = {
           kundennummer_bei_lieferant?: string | null
           name: string
           notiz?: string | null
+          sprache?: string
+          telefon?: string | null
         }
         Update: {
           aktiv?: boolean
@@ -3415,6 +3462,8 @@ export type Database = {
           kundennummer_bei_lieferant?: string | null
           name?: string
           notiz?: string | null
+          sprache?: string
+          telefon?: string | null
         }
         Relationships: [
           {
@@ -4369,6 +4418,110 @@ export type Database = {
           system?: string | null
         }
         Relationships: []
+      }
+      projekt_material: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          artikel_id: string | null
+          bezeichnung: string
+          einheit: string
+          entnommen: number
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          menge: number
+          notiz: string | null
+          projekt_id: string
+          quelle: string
+          reihenfolge: number
+          reserviert: number
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          artikel_id?: string | null
+          bezeichnung: string
+          einheit?: string
+          entnommen?: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          menge: number
+          notiz?: string | null
+          projekt_id: string
+          quelle?: string
+          reihenfolge?: number
+          reserviert?: number
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          artikel_id?: string | null
+          bezeichnung?: string
+          einheit?: string
+          entnommen?: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          menge?: number
+          notiz?: string | null
+          projekt_id?: string
+          quelle?: string
+          reihenfolge?: number
+          reserviert?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekt_material_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'artikel'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'preisliste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
       }
       projekt_schritte: {
         Row: {
@@ -6450,6 +6603,91 @@ export type Database = {
         ComputedFields: never
         Relationships: []
       }
+      bestellungen_liste: {
+        Row: {
+          bestellt_am: string | null
+          email_bestellung: string | null
+          erstellt_am: string | null
+          firma: string | null
+          firma_ort: string | null
+          firma_plz: string | null
+          firma_strasse: string | null
+          freigegeben_am: string | null
+          freigegeben_von: string | null
+          geliefert_am: string | null
+          id: string | null
+          kunde: string | null
+          kundennummer_bei_lieferant: string | null
+          lagerort: string | null
+          lagerort_adresse: string | null
+          lagerort_id: string | null
+          lieferant: string | null
+          lieferant_id: string | null
+          lieferant_sprache: string | null
+          liefertermin: string | null
+          mail_status: string | null
+          menge_geliefert: number | null
+          menge_total: number | null
+          notiz: string | null
+          nummer: string | null
+          objekt_ort: string | null
+          objekt_plz: string | null
+          objekt_strasse: string | null
+          positionen: number | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          projekt_titel: string | null
+          status: string | null
+          storniert_grund: string | null
+          total_rappen: number | null
+          ueberfaellig: boolean | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'bestellungen_lagerort_id_fkey'
+            columns: ['lagerort_id']
+            isOneToOne: false
+            referencedRelation: 'lagerorte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       kunden_uebersicht: {
         Row: {
           anrede: string | null
@@ -6490,6 +6728,49 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: []
+      }
+      lager_uebersicht: {
+        Row: {
+          artikel: string | null
+          artikel_id: string | null
+          artikelnummer: string | null
+          einheit: string | null
+          frei: number | null
+          geaendert_am: string | null
+          id: string | null
+          kategorie: string | null
+          lagerort: string | null
+          lagerort_id: string | null
+          menge: number | null
+          mindestmenge: number | null
+          reserviert: number | null
+          unter_mindest: boolean | null
+          unterwegs: number | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'lagerbestand_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'artikel'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lagerbestand_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'preisliste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lagerbestand_lagerort_id_fkey'
+            columns: ['lagerort_id']
+            isOneToOne: false
+            referencedRelation: 'lagerorte'
+            referencedColumns: ['id']
+          },
+        ]
       }
       offerten_eingang: {
         Row: {
@@ -6738,6 +7019,73 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: []
+      }
+      projekt_material_stand: {
+        Row: {
+          artikel_id: string | null
+          artikelnummer: string | null
+          bezeichnung: string | null
+          direkt_geliefert: number | null
+          einheit: string | null
+          entnommen: number | null
+          fehlt: number | null
+          frei_im_lager: number | null
+          id: string | null
+          kategorie: string | null
+          menge: number | null
+          notiz: string | null
+          projekt_id: string | null
+          quelle: string | null
+          reihenfolge: number | null
+          reserviert: number | null
+          unterwegs: number | null
+          vorhanden: number | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'projekt_material_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'artikel'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'preisliste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
       }
       projekt_stand: {
         Row: {
@@ -7054,6 +7402,11 @@ export type Database = {
           relevant: number
         }[]
       }
+      bestellung_bestellt: { Args: { p_datum?: string; p_id: string }; Returns: undefined }
+      bestellung_freigeben: { Args: { p_id: string }; Returns: undefined }
+      bestellung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      bestellung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -7090,6 +7443,8 @@ export type Database = {
           stand_datum: string
         }[]
       }
+      lager_buchen: { Args: { p: Json }; Returns: undefined }
+      lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
       lead_anlegen: { Args: { p: Json }; Returns: string }
       lead_kontakt_erfassen: {
         Args: {
@@ -7202,6 +7557,7 @@ export type Database = {
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
       projekt_bau_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      projekt_material_vorschlagen: { Args: { p_projekt: string }; Returns: number }
       projekt_schritt_setzen: { Args: { p: Json; p_projekt: string; p_schluessel: string }; Returns: undefined }
       projekt_zeitplan_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       quellen_lauf: {
@@ -7258,6 +7614,7 @@ export type Database = {
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
+      wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       zahlungsplan_berechnen: {

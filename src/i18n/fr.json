@@ -1733,7 +1733,27 @@
     "einsatz_art_ungueltig": "Ce type d’intervention n’existe pas.",
     "service_notiz_leer": "Veuillez saisir un texte.",
     "service_nicht_gefunden": "Ce cas de service n’existe plus.",
-    "wartung_nicht_aktiv": "Le contrat n’est pas actif."
+    "wartung_nicht_aktiv": "Le contrat n’est pas actif.",
+    "einkauf_kein_recht": "Il faut le droit «Prix».",
+    "einkauf_nicht_gefunden": "Commande introuvable.",
+    "einkauf_nicht_entwurf": "Modifiable seulement en brouillon.",
+    "einkauf_keine_positionen": "La commande n’a pas encore de positions.",
+    "einkauf_mail_unterwegs": "L’e-mail de commande est déjà dans la boîte d’envoi.",
+    "einkauf_nicht_freigegeben": "La commande n’est pas validée.",
+    "einkauf_nicht_stornierbar": "Cette commande ne peut plus être annulée.",
+    "einkauf_grund_fehlt": "Veuillez indiquer un motif.",
+    "einkauf_nicht_bestellt": "La commande n’est pas encore passée.",
+    "einkauf_menge_ungueltig": "Veuillez saisir une quantité valable.",
+    "einkauf_position_fehlt": "Position introuvable.",
+    "einkauf_nichts_geliefert": "Veuillez saisir au moins une quantité livrée.",
+    "einkauf_art_ungueltig": "Mouvement inconnu.",
+    "einkauf_material_fehlt": "Ligne de matériel introuvable.",
+    "einkauf_artikel_fehlt": "Veuillez choisir un article.",
+    "einkauf_lager_zu_wenig": "Pas assez de stock libre.",
+    "einkauf_mehr_als_reserviert": "Plus que la quantité réservée.",
+    "einkauf_unter_reserviert": "Le stock ne peut pas descendre sous les réservations.",
+    "einkauf_material_schon_da": "Une liste de matériel existe déjà.",
+    "einkauf_keine_quelle": "Ni calcul ni données d’offre trouvés. Veuillez saisir les lignes à la main."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -2402,7 +2422,8 @@
         "schluss": "Vient du plan de paiement",
         "material": "Statut du matériel",
         "elektro": "Électricité"
-      }
+      },
+      "materialliste": "Liste de matériel"
     },
     "zeitplan": {
       "dialogTitel": "Planning du chantier",
@@ -2695,6 +2716,233 @@
       "nichts": "Aucun entretien dans les 30 prochains jours.",
       "mehr_one": "et {{count}} autre",
       "mehr_other": "et {{count}} autres"
+    }
+  },
+  "einkauf": {
+    "titel": "Achats & matériel",
+    "beschreibung": "Matériel par projet, commandes avec validation et PDF par e-mail, réception et stock de Bulle.",
+    "reiter": {
+      "bestellungen": "Commandes",
+      "material": "Matériel par projet",
+      "lager": "Stock",
+      "lieferanten": "Fournisseurs"
+    },
+    "filter": "Filtre",
+    "filterwert": {
+      "offen": "Ouvertes",
+      "entwuerfe": "À valider / à envoyer",
+      "ueberfaellig": "En retard",
+      "geliefert": "Livrées",
+      "alle": "Toutes"
+    },
+    "suche": "Rechercher n°, fournisseur, projet ou client",
+    "neu": "Nouvelle commande",
+    "neuFuer": "Nouvelle commande pour {{nummer}}",
+    "neuText": "Choisir le fournisseur et le lieu de livraison ; les positions s’ajoutent ensuite.",
+    "anlegen": "Créer",
+    "waehlen": "Veuillez choisir",
+    "leer": "Aucune commande",
+    "leerText": "Les commandes naissent de la liste de matériel d’un projet («Proposition de commande») ou avec «Nouvelle commande».",
+    "fuerLager": "Pour le stock",
+    "baustelle": "Directement sur le chantier",
+    "artikelSuchen": "Rechercher un article (nom ou n°)",
+    "keinArtikel": "Aucun article trouvé.",
+    "freiePosition": "Comme position libre",
+    "gedeckt": "Tout est couvert",
+    "fehlen_one": "{{count}} manquant",
+    "fehlen_other": "{{count}} manquants",
+    "keineListe": "Pas de liste de matériel",
+    "keineProjekte": "Aucun projet ouvert",
+    "keineProjekteText": "Les commandes et chantiers apparaissent ici.",
+    "projektSuche": "Rechercher projet, client ou lieu",
+    "materialFilter": {
+      "fehlt": "Il manque encore du matériel",
+      "mitListe": "Avec liste de matériel",
+      "alle": "Tous les ouverts"
+    },
+    "spalte": {
+      "nummer": "N°",
+      "lieferant": "Fournisseur",
+      "ziel": "Livraison",
+      "liefertermin": "Délai",
+      "geliefert": "Livré",
+      "total": "Total achat",
+      "status": "État",
+      "projekt": "Projet",
+      "kunde": "Client",
+      "baubeginn": "Début des travaux",
+      "material": "Matériel"
+    },
+    "mail": {
+      "wartet": "E-mail en attente",
+      "freigegeben": "E-mail en cours d’envoi",
+      "wird_gesendet": "E-mail en cours d’envoi",
+      "gesendet": "E-mail envoyé",
+      "fehler": "E-mail non envoyé",
+      "verworfen": "E-mail rejeté"
+    },
+    "akte": {
+      "titel": "Commande",
+      "angaben": "Informations",
+      "positionen": "Positions",
+      "keinePositionen": "Pas encore de positions. Rechercher un article ci-dessous.",
+      "freigeben": "Valider",
+      "zuruecknehmen": "Annuler la validation",
+      "ohneMail": "Commandée sans e-mail",
+      "senden": "Commander par e-mail",
+      "wareneingang": "Réception",
+      "stornieren": "Annuler",
+      "pdf": "Voir le PDF",
+      "ueberfaellig": "Livraison en retard",
+      "ohneAdresse": "L’adresse de commande du fournisseur manque. Elle peut être saisie sous «Fournisseurs» ou directement dans l’e-mail."
+    },
+    "feld": {
+      "lieferant": "Fournisseur",
+      "ziel": "Lieu de livraison",
+      "projekt": "Projet",
+      "liefertermin": "Délai de livraison",
+      "freigegeben": "Validée",
+      "bestelltAm": "Commandée le",
+      "geliefertAm": "Livrée le",
+      "stornoGrund": "Motif",
+      "notiz": "Remarque",
+      "notizPlatzhalter": "Remarque pour le fournisseur (figure dans le PDF)"
+    },
+    "pos": {
+      "bezeichnung": "Article",
+      "menge": "Quantité",
+      "geliefert": "Livré",
+      "ek": "Prix d’achat (CHF)",
+      "mengeVon": "Quantité {{name}}",
+      "ekVon": "Prix d’achat {{name}}",
+      "entfernen": "Retirer {{name}}"
+    },
+    "eingang": {
+      "titel": "Réception {{nummer}}",
+      "lager": "La marchandise entre au {{lager}} et y est réservée pour le projet.",
+      "baustelle": "La marchandise est livrée sur le chantier et compte pour le projet.",
+      "datum": "Livrée le",
+      "offen": "Reste {{offen}} sur {{bestellt}} {{einheit}}",
+      "mengeVon": "Quantité livrée {{name}}",
+      "buchen": "Enregistrer la réception"
+    },
+    "storno": {
+      "titel": "Annuler la commande {{nummer}}",
+      "text": "La commande reste visible mais ne sera pas passée.",
+      "bestellt": "La commande est chez le fournisseur. Merci d’indiquer le motif et d’annuler vous-même auprès du fournisseur."
+    },
+    "senden": {
+      "titel": "Envoyer la commande {{nummer}}",
+      "pdf": "Le PDF est en cours de création …",
+      "beschreibung": "Prérempli dans la langue du fournisseur, avec la commande en PDF. «Envoyer» envoie l’e-mail depuis ta boîte via la boîte d’envoi ; la commande est alors considérée comme passée."
+    },
+    "mailtext": {
+      "betreff": "Commande {{nummer}}",
+      "betreffProjekt": "Commande {{nummer}} · projet {{referenz}}",
+      "text": "Bonjour\n\nVeuillez trouver ci-joint notre commande {{nummer}}.\nDate de livraison souhaitée : {{termin}}\nNotre numéro de client : {{kundennummer}}\n\nMerci de nous confirmer la commande et le délai de livraison.\n\nMeilleures salutations"
+    },
+    "pdf": {
+      "titel": "Commande {{nummer}}",
+      "baustelle": "Chantier",
+      "lieferadresse": "Adresse de livraison",
+      "liefertermin": "Délai de livraison",
+      "baldmoeglichst": "Dès que possible",
+      "referenz": "Notre référence",
+      "kundennummer": "Notre numéro de client",
+      "pos": "Pos.",
+      "artikelnummer": "N° art.",
+      "bezeichnung": "Désignation",
+      "menge": "Quantité",
+      "bitte": "Merci de nous confirmer la commande et le délai de livraison.",
+      "gruss": "Meilleures salutations"
+    },
+    "material": {
+      "titel": "Liste de matériel",
+      "bau": "Travaux dès le {{datum}}",
+      "zumProjekt": "Vers le projet",
+      "liste": "Liste de matériel",
+      "leer": "Pas encore de liste. «Proposer» la reprend du calcul ou de l’offre.",
+      "bestellungen": "Commandes",
+      "keineBestellung": "Pas encore de commande pour ce projet.",
+      "neueBestellung": "Nouvelle commande",
+      "zeile": "Ligne",
+      "vorschlagen": "Proposer",
+      "bestellvorschlag": "Proposition de commande",
+      "da": "Disponible",
+      "unterwegs": "En route",
+      "fehlt": "Manque",
+      "ohneArtikel": "sans article",
+      "aktionen": "Actions pour {{name}}",
+      "reservieren": "Réserver {{menge}} du stock",
+      "ausgeben": "Sortir {{menge}} pour le chantier",
+      "freigeben": "Libérer la réservation",
+      "entfernen": "Retirer"
+    },
+    "zeile": {
+      "neu": "Nouvelle ligne",
+      "bearbeiten": "Modifier la ligne",
+      "text": "Choisir un article de la liste de prix ou le décrire librement.",
+      "artikel": "Article",
+      "bezeichnung": "Désignation",
+      "ohneArtikel": "Sans article, cette ligne ne peut pas être commandée automatiquement.",
+      "menge": "Quantité",
+      "einheit": "Unité"
+    },
+    "lager": {
+      "artikel": "Article",
+      "bestand": "Stock",
+      "reserviert": "Réservé",
+      "frei": "Libre",
+      "unterwegs": "En route",
+      "mindest": "Quantité minimale",
+      "mindestHinweis": "En dessous, l’article apparaît sous «Réapprovisionner». Vide = pas d’alerte.",
+      "suche": "Rechercher un article",
+      "nachbestellen": "Réapprovisionner",
+      "buchen": "Mouvement de stock",
+      "buchenText": "Entrée, sortie, correction ou inventaire sans commande.",
+      "stand": "Stock {{bestand}} {{einheit}}, dont {{reserviert}} réservé",
+      "art": "Mouvement",
+      "gezaehlt": "Stock compté",
+      "korrekturHinweis": "Négatif pour moins, p. ex. -2",
+      "leer": "Le stock est vide",
+      "leerText": "Le stock se crée avec la réception ou avec «Mouvement de stock».",
+      "arten": {
+        "eingang": "Entrée",
+        "entnahme": "Sortie",
+        "korrektur": "Correction",
+        "inventur": "Inventaire"
+      },
+      "filter": {
+        "alle": "Tous",
+        "unter": "Sous le minimum",
+        "reserviert": "Réservés"
+      }
+    },
+    "lieferant": {
+      "name": "Nom",
+      "mail": "E-mail de commande",
+      "ohneMail": "Pas d’adresse",
+      "kundennummer": "Notre n° client",
+      "telefon": "Téléphone",
+      "sprache": "Langue de la commande",
+      "stand": "État",
+      "aktiv": "Actif",
+      "inaktiv": "Inactif",
+      "neu": "Nouveau fournisseur",
+      "leer": "Aucun fournisseur",
+      "text": "Les commandes partent à l’e-mail de commande, dans la langue choisie."
+    },
+    "pruefung": {
+      "name": "Veuillez saisir un nom."
+    },
+    "heute": {
+      "titel": "Achats",
+      "oeffnen": "Ouvrir",
+      "nichts": "Rien à valider, rien en retard.",
+      "entwurf": "À valider",
+      "freigegeben": "À envoyer",
+      "unter_one": "{{count}} article sous le minimum",
+      "unter_other": "{{count}} articles sous le minimum"
     }
   }
 }

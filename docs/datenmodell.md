@@ -132,3 +132,13 @@ Siehe Entscheid 0017.
 - **Abläufe:** `projekt_schritt_setzen`, `projekt_bau_planen`, `projekt_bau_zuruecknehmen`, `projekt_bau_rueckgaengig`, `projekt_zeitplan_speichern`, `service_notiz`, `wartung_erledigt`. Fehler als Schlüssel `projekt.*`, `einsatz.*`, `service.*`, `wartung.*`.
 
 Siehe Entscheid 0018.
+
+## Einkauf und Lager (Phase 9a)
+
+- **`projekt_material`** (neu): Materialliste je Projekt mit `artikel_id` (oder freiem Text), Menge, Einheit, `quelle` (kalkulation, offerte, hand), `reserviert` (im Lager für das Projekt gehalten) und `entnommen` (an die Baustelle).
+- **`bestellungen`**: Nummer B0001 … (Trigger), Stand `entwurf`, `freigegeben`, `bestellt`, `teilgeliefert`, `geliefert`, `storniert` (Prüfung), `storniert_grund`, `geliefert_am`. `lagerort_id` leer = direkt auf die Baustelle. **`bestellpositionen`**: `projekt_material_id`, `artikelnummer` (des Lieferanten), `reihenfolge`; nur im Entwurf änderbar, das Total rechnet ein Trigger. Beide Tabellen nur mit Recht `preise`.
+- **`lieferanten`**: `sprache` (der Bestellung), `telefon`.
+- **Sichten:** `bestellungen_liste` (mit Lieferant, Projekt, Lieferziel, bestellender Firma, Lieferstand, überfällig, Stand der Bestell-Mail), `lager_uebersicht` (Bestand, reserviert, frei, unterwegs fürs Lager, unter Mindestmenge), `projekt_material_stand` (je Zeile vorhanden, unterwegs, fehlt, frei im Lager).
+- **Abläufe:** `projekt_material_vorschlagen`, `bestellvorschlag`, `lager_nachbestellen`, `bestellung_freigeben`, `bestellung_zuruecknehmen`, `bestellung_bestellt`, `bestellung_stornieren`, `wareneingang_buchen`, `lager_buchen`. Trigger auf `ausgangskorb`: Bestell-Mail nur für freigegebene Bestellungen, gesendet = bestellt. Fehler als Schlüssel `einkauf.*`.
+
+Siehe Entscheid 0019.
