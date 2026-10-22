@@ -53,7 +53,8 @@ async function fuerAlle(f: (personId: string) => Promise<number>): Promise<strin
       fehler++
     }
   }
-  return `${personen.length} Personen, ${n} Einträge${fehler ? `, ${fehler} Fehler` : ''}`
+  const anzahl = (z: number, eins: string, viele: string) => `${z} ${z === 1 ? eins : viele}`
+  return `${anzahl(personen.length, 'Person', 'Personen')}, ${anzahl(n, 'Eintrag', 'Einträge')}${fehler ? `, ${fehler} Fehler` : ''}`
 }
 
 Deno.serve(async (req) => {
