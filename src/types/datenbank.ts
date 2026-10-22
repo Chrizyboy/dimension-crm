@@ -2078,6 +2078,8 @@ export type Database = {
       }
       integrationen: {
         Row: {
+          alt_daten: Json | null
+          alt_id: string | null
           dienst: string
           einstellungen: NonNullable<Json>
           geaendert_am: string
@@ -2089,6 +2091,8 @@ export type Database = {
         }
         ComputedFields: never
         Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
           dienst: string
           einstellungen?: NonNullable<Json>
           geaendert_am?: string
@@ -2099,6 +2103,8 @@ export type Database = {
           zuletzt_ok?: boolean | null
         }
         Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
           dienst?: string
           einstellungen?: NonNullable<Json>
           geaendert_am?: string
