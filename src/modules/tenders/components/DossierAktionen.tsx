@@ -7,6 +7,9 @@ import { brauchtAngaben, moeglicheEntscheide } from '../lib/entscheide'
 import type { Dossier } from '../types'
 import { EntscheidDialog } from './EntscheidDialog'
 
+/** Entscheide, die nie der hervorgehobene Hauptknopf sind (der eigentliche Schritt ist dann das Anschreiben). */
+const NEBENSACHE = new Set(['verwerfen', 'spaeter', 'beobachten'])
+
 /** Knöpfe für die Entscheide eines Dossiers; fragt nötige Angaben (Grund, Datum …) im Dialog ab. */
 export function DossierAktionen({ dossier }: { dossier: Dossier }) {
   const { t } = useTranslation()
@@ -29,7 +32,7 @@ export function DossierAktionen({ dossier }: { dossier: Dossier }) {
         <Button
           key={e}
           size="sm"
-          variant={i === 0 ? 'primary' : e === 'verwerfen' ? 'ghost' : 'secondary'}
+          variant={i === 0 && !NEBENSACHE.has(e) ? 'primary' : e === 'verwerfen' ? 'ghost' : 'secondary'}
           laedt={laeuft && offen === null && i === 0}
           onClick={() => {
             if (brauchtAngaben(e)) setOffen(e)

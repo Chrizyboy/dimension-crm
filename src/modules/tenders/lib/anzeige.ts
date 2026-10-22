@@ -56,9 +56,17 @@ export function fristTon(datum: string | null): Ton {
   return 'neutral'
 }
 
-/** Ort kurz: «Lenzburg AG» oder «–». */
+/** Ort kurz: «Lenzburg AG» oder «–». Steht der Kanton schon im Namen («Muri AG», «Wohlen (AG)»), nicht doppelt. */
 export function ortKurz(d: Pick<Dossier, 'gemeinde' | 'kanton'>): string {
+  if (d.gemeinde && d.kanton && new RegExp(`\\b${d.kanton}\\)?$`).test(d.gemeinde)) return d.gemeinde
   return [d.gemeinde, d.kanton].filter(Boolean).join(' ') || '–'
+}
+
+/** Ist ein Zeitpunkt genau Mitternacht (Ortszeit)? Dann ist es eine Frist auf einen Tag, ohne Uhrzeit. */
+export function nurDatum(wert: string): boolean {
+  if (wert.length <= 10) return true
+  const d = new Date(wert)
+  return d.getHours() === 0 && d.getMinutes() === 0
 }
 
 /** Mail-Adresse, Adresse oder Telefon eines Anschreibens als eine Zeile. */

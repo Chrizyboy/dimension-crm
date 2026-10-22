@@ -9,7 +9,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { formatDatum, formatDatumZeit } from '@/lib/format'
 import { useUi } from '@/stores/ui'
 import { useDossier } from '../hooks/useAusschreibungen'
-import { fristTon, ortKurz, PRIO_TON, STATUS_TON, tageBis } from '../lib/anzeige'
+import { fristTon, nurDatum, ortKurz, PRIO_TON, STATUS_TON, tageBis } from '../lib/anzeige'
 import { DossierAktionen } from './DossierAktionen'
 import { DossierKontakte } from './DossierKontakte'
 
@@ -27,7 +27,7 @@ export function DossierAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
     wert && (
       <Angabe label={label}>
         <span className="flex items-center gap-2">
-          {zeit ? formatDatumZeit(wert) : formatDatum(wert)}
+          {zeit && !nurDatum(wert) ? formatDatumZeit(wert) : formatDatum(wert)}
           <Badge ton={fristTon(wert)}>
             {(tageBis(wert) ?? 0) < 0
               ? t('ausschreibungen.abgelaufen')
