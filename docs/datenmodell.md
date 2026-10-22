@@ -101,3 +101,14 @@ Siehe Entscheid 0014.
 - **Eturnity:** `eturnity_eingang` (Meldungen aus dem Webhook, unverändert), `eturnity_zuordnen(eingang, offerte)`.
 
 Siehe Entscheid 0015.
+
+## Integrationen und Ausgangskorb (Phase 8)
+
+- **`integrationen`**: ein Eintrag pro Dienst (`microsoft`, `abaninja`, `sms`) mit letztem Test und Meldung; Schlüssel stehen nie hier, nur in den Supabase-Secrets. **`integrations_protokoll`**: jeder Aufruf mit Dienst, Aktion, Person, Dauer und Fehlercode (ohne Inhalte).
+- **`intern.microsoft_verbindungen`**: Verbindung pro Person, Token verschlüsselt (AES-GCM, `VERBINDUNG_SCHLUESSEL`), nur für den Server. Die App sieht `meine_microsoft_verbindung()` und (Admin) `microsoft_verbindungen()`. `intern.oauth_zustaende`: einmaliger Zustand für die Anmeldung.
+- **`ausgangskorb`**: Mail oder SMS mit Empfänger, Text, Anhängen und Bezug (Kontakt, Lead, Offerte, Werkvertrag). Stand `wartet` → `freigegeben` → `wird_gesendet` → `gesendet`/`fehler`, sonst `verworfen` mit Grund. `ausgang_anlegen`, `ausgang_aendern`, `ausgang_freigeben`, `ausgang_verwerfen`; der Server holt mit `ausgang_holen` und meldet mit `ausgang_ergebnis`. Fehler als Schlüssel `ausgang.*`.
+- **SMS-Erinnerung:** `sms_erinnerungen(tag)` (Termine von morgen mit Handynummer und Text), `sms_erinnerungen_senden(ids)`; Einstellung `sms_erinnerung.automatisch` und `uhrzeit`.
+- **Mails aus Outlook:** `intern.mail_eingang` (jede Mail einmal, Message-ID), `anfrage_uebernehmen` (Anfrage zu Lead, ohne Dubletten), `mails_vermerken` (Zeitachse), `kalender_abgleichen`, `termin_vermerken` (`verkaufschancen.outlook`), `sicherung_offen` (Dokumente ohne `sharepoint_url`).
+- **Zeitplan:** pg_cron ruft `intern.zeitplan_anstossen` (Vault `crm_funktionen_url`, `crm_zeitplan_schluessel`); `zeitplan_faellig`, `zeitplan_ergebnis`, Übersicht `zeitplan_laeufe()`.
+
+Siehe Entscheid 0016 und `docs/integrationen.md`.

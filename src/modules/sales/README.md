@@ -2,7 +2,7 @@
 
 **Zweck:** Vom ersten Kontakt bis zur Auftragszusage: Leads erfassen und nachfassen, Pipeline, Termine planen (Tagesroute, Tour, Kalender), Regionen und der Lead-Monatsbericht.
 
-**Stand:** Phase 6 gebaut. Outlook, Mail/SMS-Versand und automatische Lead-Importe folgen in Phase 8, KI-Texte in Phase 13.
+**Stand:** Phase 6 gebaut, Phase 8: SMS-Erinnerung senden, Anfragen aus Outlook oder .eml holen, Termin und Kalender aus Outlook. KI-Texte folgen in Phase 13.
 
 ## Daten
 

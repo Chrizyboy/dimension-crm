@@ -2,7 +2,7 @@
 
 **Zweck:** Kundenliste mit Stand und Suche sowie die 360°-Kundenakte: was jetzt zu tun ist, Kontaktdaten, Gebäude, alle Geschäfte, Zeitachse, Dokumente und das Kundenblatt zum Drucken.
 
-**Stand:** Phase 5 gebaut.
+**Stand:** Phase 5 gebaut, Phase 8: AbaNinja (verknüpfen, anlegen, offene Rechnungen), Mails aus Outlook in der Zeitachse, Dokumente nach SharePoint sichern.
 
 ## Daten
 
