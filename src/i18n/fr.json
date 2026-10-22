@@ -529,7 +529,8 @@
       "offen": "ouvert {{betrag}}",
       "bezahlt": "payée"
     },
-    "mailsAusOutlook": "Charger les e-mails d'Outlook"
+    "mailsAusOutlook": "Charger les e-mails d'Outlook",
+    "projektOeffnen": "Ouvrir dans «Projets & montage»"
   },
   "kontakt": {
     "neuTitel": "Nouveau contact",
@@ -1719,7 +1720,20 @@
     "ausschreibung_form_fehlt": "Choisir la forme du dépôt.",
     "ausschreibung_erst_eingeben": "Enregistrer d’abord comme « Déposé ».",
     "ausschreibung_wert_fehlt": "Indiquer une adresse, un domaine ou un nom.",
-    "ausgang_gesperrt": "L’adresse est sur la liste de blocage. Le message ne sera pas envoyé."
+    "ausgang_gesperrt": "L’adresse est sur la liste de blocage. Le message ne sera pas envoyé.",
+    "projekt_schritt_unbekannt": "Cette étape n’existe pas dans la feuille de route.",
+    "projekt_schritt_automatisch": "Cette étape est définie automatiquement et ne peut pas être modifiée à la main.",
+    "projekt_stand_ungueltig": "Cet état n’existe pas.",
+    "projekt_nicht_gefunden": "Ce projet n’existe plus.",
+    "projekt_nicht_im_bau": "Le projet n’est pas en chantier.",
+    "projekt_nichts_rueckgaengig": "Il n’y a rien à annuler.",
+    "projekt_baustatus_ungueltig": "Ce statut de chantier n’existe pas.",
+    "einsatz_datum_fehlt": "Chaque intervention a besoin d’une date de début et de fin.",
+    "einsatz_bis_vor_von": "«Au» est avant «Du».",
+    "einsatz_art_ungueltig": "Ce type d’intervention n’existe pas.",
+    "service_notiz_leer": "Veuillez saisir un texte.",
+    "service_nicht_gefunden": "Ce cas de service n’existe plus.",
+    "wartung_nicht_aktiv": "Le contrat n’est pas actif."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -2226,6 +2240,287 @@
       "kontakt_fehlt": "contact manquant",
       "fristen": "délais dans 7 jours",
       "quellen_still": "sources muettes"
+    }
+  },
+  "projekte": {
+    "titel": "Projets & montage",
+    "beschreibung": "De la commande signée aux autorisations, au montage et à la mise en service.",
+    "ohneDatenbank": "Sans base de données, il n’y a encore rien à voir ici.",
+    "suche": "Rechercher client, numéro ou lieu",
+    "leer": "Aucun projet trouvé",
+    "leerText": "Les projets naissent lorsqu’un contrat d’entreprise est signé.",
+    "baubeginnOffen": "Début des travaux ouvert",
+    "unterzeichnet": "signé le {{datum}}",
+    "kwp": "{{wert}} kWc",
+    "module_one": "{{count}} module",
+    "module_other": "{{count}} modules",
+    "checkliste": "Électricien {{erledigt}}/{{gesamt}}",
+    "reiter": {
+      "baustellen": "Chantiers",
+      "zeitplan": "Planning",
+      "bewilligungen": "Autorisations",
+      "alle": "Tous les projets",
+      "subunternehmer": "Sous-traitants",
+      "abwesenheiten": "Absences"
+    },
+    "akteReiter": {
+      "uebersicht": "Aperçu",
+      "fahrplan": "Feuille de route",
+      "zeitplan": "Planning",
+      "subunternehmer": "Sous-traitants"
+    },
+    "status": {
+      "auftrag": "Commande",
+      "im_bau": "En chantier",
+      "abgeschlossen": "Terminé"
+    },
+    "bauStatus": {
+      "ausstehend": "Date en attente",
+      "terminiert": "Date fixée",
+      "ibn": "MES en attente",
+      "fertig": "Terminé"
+    },
+    "material": {
+      "offen": "Matériel ouvert",
+      "bestellt": "Matériel commandé",
+      "lager": "Matériel en stock"
+    },
+    "einsatz": {
+      "intern": "Interne",
+      "extern": "Externe",
+      "geplant": "Prévisionnel"
+    },
+    "stand": {
+      "offen": "Ouvert",
+      "teilweise": "En cours",
+      "erledigt": "Fait",
+      "nicht_noetig": "Pas nécessaire"
+    },
+    "phase": {
+      "auftrag": "Commande",
+      "bew": "Autorisations",
+      "vorb": "Préparation",
+      "montage": "Montage",
+      "ibn": "Mise en service",
+      "abschluss": "Clôture"
+    },
+    "subStatus": {
+      "angefragt": "Demandé",
+      "bestaetigt": "Confirmé",
+      "erledigt": "Fait",
+      "abgesagt": "Annulé"
+    },
+    "board": {
+      "leer": "Aucun chantier sur ce site.",
+      "auftraege_one": "{{count}} commande sans date de chantier",
+      "auftraege_other": "{{count}} commandes sans date de chantier",
+      "auftraegeHilfe": "Les plus récentes d’abord. «Date de chantier» reprend la commande dans la planification.",
+      "keineAuftraege": "Toutes les commandes sont planifiées",
+      "mehr_one": "Et {{count}} autre, à trouver par la recherche.",
+      "mehr_other": "Et {{count}} autres, à trouver par la recherche."
+    },
+    "bau": {
+      "knopf": "Date de chantier",
+      "titel": "Fixer la date de chantier",
+      "planen": "Planifier",
+      "ohneTermin": "Reprendre sans date",
+      "vonHinweis": "Prochain jour ouvrable : {{datum}}",
+      "werktage_one": "{{count}} jour ouvrable",
+      "werktage_other": "{{count}} jours ouvrables",
+      "hilfe": "Si la date est passée, l’installation est considérée comme construite : les étapes jusqu’au montage sont faites et l’installation est créée. Tout peut être annulé.",
+      "ergebnis": {
+        "ohne_termin": "dans la planification, date en attente",
+        "geplant": "planifié",
+        "gebaut": "saisi comme construit"
+      }
+    },
+    "akte": {
+      "titel": "Projet",
+      "kunde": "Client et chantier",
+      "anlage": "Installation et contrat",
+      "planung": "Planification",
+      "mehr": "Autres actions",
+      "zuruecknehmen": "Retour aux commandes",
+      "rueckgaengig": "Annuler la dernière étape de chantier",
+      "spaet_one": "{{count}} autorisation en retard",
+      "spaet_other": "{{count}} autorisations en retard"
+    },
+    "feld": {
+      "standort": "Site",
+      "von": "Du",
+      "bis": "Au",
+      "bauStatus": "Statut du chantier",
+      "material": "Matériel",
+      "art": "Type",
+      "subunternehmer": "Sous-traitant",
+      "personen": "Qui participe",
+      "notiz": "Note",
+      "stand": "État",
+      "erledigtAm": "Fait le",
+      "eingereichtAm": "Déposé le",
+      "frist": "Délai",
+      "baustelle": "Chantier",
+      "telefon": "Téléphone",
+      "email": "E-mail",
+      "sprache": "Langue",
+      "anlage": "Installation",
+      "batterie": "Batterie",
+      "unterzeichnet": "Signé",
+      "baubeginn": "Début des travaux",
+      "verantwortlich": "Responsable",
+      "elektriker": "Électricien",
+      "architekt": "Architecte",
+      "werktage": "Jours ouvrables"
+    },
+    "spalte": {
+      "nummer": "N°",
+      "kunde": "Client",
+      "ort": "Lieu",
+      "status": "Statut",
+      "fahrplan": "Feuille de route",
+      "baubeginn": "Début",
+      "wert": "Valeur du contrat",
+      "projekt": "Projet"
+    },
+    "fahrplan": {
+      "balken": "Feuille de route : {{erledigt}} étapes sur {{gesamt}} faites",
+      "alleErledigt": "Toutes les étapes sont faites",
+      "bis": "Délai {{datum}}",
+      "ueberfaellig": "en retard",
+      "weiter": "Clic : état suivant",
+      "automatisch": "Défini automatiquement",
+      "fristAuto": "Sans délai propre, le {{datum}} s’applique.",
+      "checkliste": "Check-list électricien",
+      "elektrikerIst": "Électricien : {{name}}",
+      "elektrikerFehlt": "Pas encore d’électricien saisi (aperçu).",
+      "auto": {
+        "vertrag": "Vient du contrat d’entreprise",
+        "anzahlung": "Vient du plan de paiement",
+        "termin": "Vient du planning",
+        "montage": "Vient du planning (montage passé)",
+        "ibn": "Vient de l’installation (date MES)",
+        "schluss": "Vient du plan de paiement",
+        "material": "Statut du matériel",
+        "elektro": "Électricité"
+      }
+    },
+    "zeitplan": {
+      "dialogTitel": "Planning du chantier",
+      "dazu": "Ajouter une intervention",
+      "entfernen": "Retirer l’intervention",
+      "abwesend": "Absent pendant cette période : {{namen}}",
+      "abwesendLabel": "Absent",
+      "zurueck": "4 semaines en arrière",
+      "vor": "4 semaines en avant",
+      "heute": "Aujourd’hui",
+      "drucken": "Imprimer / PDF",
+      "hilfe": "Un clic sur un chantier ouvre la planification.",
+      "baustelle": "Chantier",
+      "kw": "S {{kw}}",
+      "leer": "Aucun chantier sur cette période.",
+      "auslastung": "Charge",
+      "personen": "Planifiés",
+      "baustellenKurz": "{{n}} ch.",
+      "personenKurz": "{{n}} p.",
+      "abwesendKurz": "{{n}} abs.",
+      "druckTitel": "Planning des chantiers · S {{von}}–{{bis}} · état au {{datum}}",
+      "keineEinsaetze": "Aucune intervention planifiée.",
+      "bearbeiten": "Modifier le planning"
+    },
+    "bewilligungen": {
+      "ansicht": "Vue",
+      "offen": "Ouvertes",
+      "spaet": "En retard",
+      "bald": "Bientôt échues",
+      "hilfe": "Clic sur une case : état, date, délai et note.",
+      "leer": "Aucune autorisation ouverte"
+    },
+    "sub": {
+      "keine": "Pas encore de mandats à des sous-traitants.",
+      "neu": "Mandat à un sous-traitant",
+      "aendern": "Modifier le mandat",
+      "anfragen": "Demande par e-mail",
+      "entfernen": "Mettre à la corbeille",
+      "angefragtAm": "demandé le {{datum}}",
+      "waehlen": "Veuillez choisir un sous-traitant.",
+      "leistung": "Prestation",
+      "betrag": "Montant (CHF)",
+      "termin_von": "Date du",
+      "termin_bis": "Date au",
+      "mail": {
+        "betreff": "Demande chantier {{ort}} ({{nummer}})",
+        "terminOffen": "Date à convenir",
+        "text": "Bonjour\n\nNous vous sollicitons pour le travail suivant :\n\nPrestation : {{leistung}}\nChantier : {{adresse}}\nDate : {{termin}}\n\nPouvez-vous confirmer la date ? Nous restons volontiers à disposition pour toute question.\n\nMeilleures salutations\n{{absender}}"
+      }
+    },
+    "subStamm": {
+      "neu": "Saisir un sous-traitant",
+      "leer": "Pas encore de sous-traitants",
+      "leerText": "Échafaudeurs, électriciens, couvreurs : saisir une fois, puis solliciter par chantier.",
+      "inaktiv": "inactif",
+      "aktiv": "Actif",
+      "name": "Entreprise",
+      "gewerk": "Métier",
+      "email": "E-mail",
+      "telefon": "Téléphone"
+    },
+    "abwesenheit": {
+      "neu": "Saisir une absence",
+      "person": "Personne",
+      "halbtag": "Demi-journée",
+      "erfassen": "Saisir",
+      "leer": "Aucune absence",
+      "leerText": "Vacances, maladie et «absent» d’Outlook apparaissent ici.",
+      "entfernen": "Mettre à la corbeille",
+      "outlook": "Outlook"
+    },
+    "heute": {
+      "titel": "Chantiers aujourd’hui",
+      "oeffnen": "Vers les projets",
+      "nichts": "Rien de particulier sur les chantiers aujourd’hui.",
+      "heute": "Chantiers occupés aujourd’hui",
+      "ohneTermin": "Chantiers sans date",
+      "bewilligungen": "Projets avec autorisation en retard"
+    },
+    "gesuch": {
+      "bauherrschaft": "Maître d’ouvrage",
+      "name": "Nom",
+      "adresse": "Adresse",
+      "standort": "Emplacement de l’installation",
+      "parzelle": "Parcelle / n° RF",
+      "zaehler": "Numéro de compteur",
+      "anlage": "Installation",
+      "leistung": "Puissance",
+      "module": "Nombre de modules",
+      "wechselrichter": "Onduleur",
+      "batterie": "Batterie",
+      "keine": "aucune",
+      "art": "Type",
+      "aufDach": "Sur le toit, suffisamment adaptée (art. 18a LAT)",
+      "baubeginn": "Début des travaux prévu",
+      "installateur": "Installateur",
+      "firma": "Entreprise",
+      "elektriker": "Installateur électricien",
+      "unterschriftKunde": "Date, signature du maître d’ouvrage",
+      "unterschriftFirma": "Date, signature de l’installateur",
+      "tag": {
+        "knopf": "Imprimer la demande de raccordement",
+        "titel": "Demande de raccordement technique",
+        "zweck": "Données pour le gestionnaire de réseau",
+        "hinweis": "Ces données servent à remplir la demande de raccordement auprès du gestionnaire de réseau. La demande elle-même se dépose sur le portail ou le formulaire du gestionnaire."
+      },
+      "meldung": {
+        "knopf": "Imprimer l’annonce à la commune",
+        "titel": "Annonce d’installation solaire",
+        "zweck": "Procédure d’annonce selon l’art. 18a LAT",
+        "hinweis": "Les installations solaires suffisamment adaptées aux toits ne nécessitent pas de permis de construire, mais doivent être annoncées à la commune. Les prescriptions et formulaires cantonaux priment."
+      },
+      "foerderung": {
+        "knopf": "Imprimer la subvention (Pronovo)",
+        "titel": "Données pour la subvention",
+        "zweck": "Rétribution unique Pronovo",
+        "hinweis": "Ces données servent à annoncer la rétribution unique auprès de Pronovo. L’annonce se fait en ligne ; vérifier séparément les subventions cantonales ou communales."
+      }
     }
   }
 }

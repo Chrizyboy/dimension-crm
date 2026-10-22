@@ -18,6 +18,7 @@ import { Route as DesignRouteImport } from './app/design'
 import { Route as KontoRouteImport } from './app/konto'
 import { Route as OutboxRouteImport } from './app/outbox'
 import { Route as PricingRouteImport } from './app/pricing'
+import { Route as ProjectsRouteImport } from './app/projects'
 import { Route as QuotesRouteImport } from './app/quotes'
 import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
@@ -69,6 +70,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuotesRoute = QuotesRouteImport.update({
   id: '/quotes',
   path: '/quotes',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
+  '/projects': typeof ProjectsRoute
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
+  '/projects': typeof ProjectsRoute
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
+  '/projects': typeof ProjectsRoute
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/konto'
     | '/outbox'
     | '/pricing'
+    | '/projects'
     | '/quotes'
     | '/sales'
     | '/settings'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/konto'
     | '/outbox'
     | '/pricing'
+    | '/projects'
     | '/quotes'
     | '/sales'
     | '/settings'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/konto'
     | '/outbox'
     | '/pricing'
+    | '/projects'
     | '/quotes'
     | '/sales'
     | '/settings'
@@ -205,6 +217,7 @@ export interface RootRouteChildren {
   KontoRoute: typeof KontoRoute
   OutboxRoute: typeof OutboxRoute
   PricingRoute: typeof PricingRoute
+  ProjectsRoute: typeof ProjectsRoute
   QuotesRoute: typeof QuotesRoute
   SalesRoute: typeof SalesRoute
   SettingsRoute: typeof SettingsRoute
@@ -277,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quotes': {
       id: '/quotes'
       path: '/quotes'
@@ -325,6 +345,7 @@ const rootRouteChildren: RootRouteChildren = {
   KontoRoute: KontoRoute,
   OutboxRoute: OutboxRoute,
   PricingRoute: PricingRoute,
+  ProjectsRoute: ProjectsRoute,
   QuotesRoute: QuotesRoute,
   SalesRoute: SalesRoute,
   SettingsRoute: SettingsRoute,

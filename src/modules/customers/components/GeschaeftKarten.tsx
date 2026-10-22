@@ -79,6 +79,9 @@ export function GeschaeftKarten({ akte }: { akte: Kundenakte }) {
             </Angabe>
             <Angabe label={t('akte.feld.konditionen')}>{p.zahlungskonditionen}</Angabe>
           </Angaben>
+          <a href={`#/projects?projekt=${p.id}`} className="text-accent-ink self-start text-sm underline">
+            {t('akte.projektOeffnen')}
+          </a>
           <details className="text-sm">
             <summary className="text-muted-foreground cursor-pointer text-xs">{t('akte.technisch')}</summary>
             <Angaben className="mt-3 sm:grid-cols-3">

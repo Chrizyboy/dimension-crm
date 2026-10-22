@@ -529,7 +529,8 @@
       "offen": "offen {{betrag}}",
       "bezahlt": "bezahlt"
     },
-    "mailsAusOutlook": "Mails aus Outlook laden"
+    "mailsAusOutlook": "Mails aus Outlook laden",
+    "projektOeffnen": "In «Projekte & Montage» öffnen"
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
@@ -1719,7 +1720,20 @@
     "ausschreibung_form_fehlt": "Bitte die Form der Eingabe wählen.",
     "ausschreibung_erst_eingeben": "Zuerst als «Eingereicht» festhalten.",
     "ausschreibung_wert_fehlt": "Bitte Adresse, Domain oder Name angeben.",
-    "ausgang_gesperrt": "Die Adresse steht auf der Sperrliste. Die Nachricht wird nicht gesendet."
+    "ausgang_gesperrt": "Die Adresse steht auf der Sperrliste. Die Nachricht wird nicht gesendet.",
+    "projekt_schritt_unbekannt": "Diesen Schritt gibt es im Fahrplan nicht.",
+    "projekt_schritt_automatisch": "Dieser Schritt wird automatisch gesetzt und lässt sich nicht von Hand ändern.",
+    "projekt_stand_ungueltig": "Diesen Stand gibt es nicht.",
+    "projekt_nicht_gefunden": "Dieses Projekt gibt es nicht mehr.",
+    "projekt_nicht_im_bau": "Das Projekt ist nicht im Bau.",
+    "projekt_nichts_rueckgaengig": "Es gibt nichts rückgängig zu machen.",
+    "projekt_baustatus_ungueltig": "Diesen Baustellen-Status gibt es nicht.",
+    "einsatz_datum_fehlt": "Jeder Einsatz braucht ein Von- und ein Bis-Datum.",
+    "einsatz_bis_vor_von": "«Bis» liegt vor «Von».",
+    "einsatz_art_ungueltig": "Diese Einsatz-Art gibt es nicht.",
+    "service_notiz_leer": "Bitte einen Text eingeben.",
+    "service_nicht_gefunden": "Diesen Service-Fall gibt es nicht mehr.",
+    "wartung_nicht_aktiv": "Der Vertrag ist nicht aktiv."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2226,6 +2240,287 @@
       "kontakt_fehlt": "Kontakt fehlt",
       "fristen": "Fristen in 7 Tagen",
       "quellen_still": "Quellen still"
+    }
+  },
+  "projekte": {
+    "titel": "Projekte & Montage",
+    "beschreibung": "Vom unterschriebenen Auftrag über Bewilligungen und Montage bis zur Inbetriebnahme.",
+    "ohneDatenbank": "Ohne Datenbank gibt es hier noch nichts zu sehen.",
+    "suche": "Kunde, Nummer oder Ort suchen",
+    "leer": "Keine Projekte gefunden",
+    "leerText": "Projekte entstehen, wenn ein Werkvertrag unterschrieben ist.",
+    "baubeginnOffen": "Baubeginn offen",
+    "unterzeichnet": "unterschrieben {{datum}}",
+    "kwp": "{{wert}} kWp",
+    "module_one": "{{count}} Modul",
+    "module_other": "{{count}} Module",
+    "checkliste": "Elektriker {{erledigt}}/{{gesamt}}",
+    "reiter": {
+      "baustellen": "Baustellen",
+      "zeitplan": "Zeitplan",
+      "bewilligungen": "Bewilligungen",
+      "alle": "Alle Projekte",
+      "subunternehmer": "Subunternehmer",
+      "abwesenheiten": "Abwesenheiten"
+    },
+    "akteReiter": {
+      "uebersicht": "Übersicht",
+      "fahrplan": "Fahrplan",
+      "zeitplan": "Zeitplan",
+      "subunternehmer": "Subunternehmer"
+    },
+    "status": {
+      "auftrag": "Auftrag",
+      "im_bau": "Im Bau",
+      "abgeschlossen": "Abgeschlossen"
+    },
+    "bauStatus": {
+      "ausstehend": "Termin ausstehend",
+      "terminiert": "Termin fixiert",
+      "ibn": "IBN ausstehend",
+      "fertig": "Fertig"
+    },
+    "material": {
+      "offen": "Material offen",
+      "bestellt": "Material bestellt",
+      "lager": "Material an Lager"
+    },
+    "einsatz": {
+      "intern": "Intern",
+      "extern": "Extern",
+      "geplant": "Voraussichtlich"
+    },
+    "stand": {
+      "offen": "Offen",
+      "teilweise": "In Arbeit",
+      "erledigt": "Erledigt",
+      "nicht_noetig": "Nicht nötig"
+    },
+    "phase": {
+      "auftrag": "Auftrag",
+      "bew": "Bewilligungen",
+      "vorb": "Vorbereitung",
+      "montage": "Montage",
+      "ibn": "Inbetriebnahme",
+      "abschluss": "Abschluss"
+    },
+    "subStatus": {
+      "angefragt": "Angefragt",
+      "bestaetigt": "Bestätigt",
+      "erledigt": "Erledigt",
+      "abgesagt": "Abgesagt"
+    },
+    "board": {
+      "leer": "Keine Baustelle an diesem Standort.",
+      "auftraege_one": "{{count}} Auftrag ohne Bautermin",
+      "auftraege_other": "{{count}} Aufträge ohne Bautermin",
+      "auftraegeHilfe": "Neueste zuerst. «Bautermin» übernimmt den Auftrag in die Bauplanung.",
+      "keineAuftraege": "Alle Aufträge sind eingeplant",
+      "mehr_one": "Und {{count}} weiterer, mit der Suche finden.",
+      "mehr_other": "Und {{count}} weitere, mit der Suche finden."
+    },
+    "bau": {
+      "knopf": "Bautermin",
+      "titel": "Bautermin festlegen",
+      "planen": "Einplanen",
+      "ohneTermin": "Ohne Termin übernehmen",
+      "vonHinweis": "Nächster Werktag: {{datum}}",
+      "werktage_one": "{{count}} Werktag",
+      "werktage_other": "{{count}} Werktage",
+      "hilfe": "Liegt der Termin in der Vergangenheit, gilt die Anlage als gebaut: die Schritte bis zur Montage werden erledigt und die Anlage angelegt. Alles lässt sich rückgängig machen.",
+      "ergebnis": {
+        "ohne_termin": "in der Bauplanung, Termin ausstehend",
+        "geplant": "eingeplant",
+        "gebaut": "als gebaut erfasst"
+      }
+    },
+    "akte": {
+      "titel": "Projekt",
+      "kunde": "Kunde und Baustelle",
+      "anlage": "Anlage und Vertrag",
+      "planung": "Bauplanung",
+      "mehr": "Weitere Aktionen",
+      "zuruecknehmen": "Zurück zu den Aufträgen",
+      "rueckgaengig": "Letzten Bau-Schritt rückgängig",
+      "spaet_one": "{{count}} Bewilligung überfällig",
+      "spaet_other": "{{count}} Bewilligungen überfällig"
+    },
+    "feld": {
+      "standort": "Standort",
+      "von": "Von",
+      "bis": "Bis",
+      "bauStatus": "Baustellen-Status",
+      "material": "Material",
+      "art": "Art",
+      "subunternehmer": "Subunternehmer",
+      "personen": "Wer ist dabei",
+      "notiz": "Notiz",
+      "stand": "Stand",
+      "erledigtAm": "Erledigt am",
+      "eingereichtAm": "Eingereicht am",
+      "frist": "Frist",
+      "baustelle": "Baustelle",
+      "telefon": "Telefon",
+      "email": "E-Mail",
+      "sprache": "Sprache",
+      "anlage": "Anlage",
+      "batterie": "Batterie",
+      "unterzeichnet": "Unterschrieben",
+      "baubeginn": "Baubeginn",
+      "verantwortlich": "Verantwortlich",
+      "elektriker": "Elektriker",
+      "architekt": "Architekt",
+      "werktage": "Werktage"
+    },
+    "spalte": {
+      "nummer": "Nr.",
+      "kunde": "Kunde",
+      "ort": "Ort",
+      "status": "Status",
+      "fahrplan": "Fahrplan",
+      "baubeginn": "Baubeginn",
+      "wert": "Vertragswert",
+      "projekt": "Projekt"
+    },
+    "fahrplan": {
+      "balken": "Fahrplan: {{erledigt}} von {{gesamt}} Schritten erledigt",
+      "alleErledigt": "Alle Schritte erledigt",
+      "bis": "Frist {{datum}}",
+      "ueberfaellig": "überfällig",
+      "weiter": "Klick: nächster Stand",
+      "automatisch": "Wird automatisch gesetzt",
+      "fristAuto": "Ohne eigene Frist gilt {{datum}}.",
+      "checkliste": "Checkliste Elektriker",
+      "elektrikerIst": "Elektriker: {{name}}",
+      "elektrikerFehlt": "Noch kein Elektriker erfasst (Übersicht).",
+      "auto": {
+        "vertrag": "Kommt vom Werkvertrag",
+        "anzahlung": "Kommt vom Zahlungsplan",
+        "termin": "Kommt vom Zeitplan",
+        "montage": "Kommt vom Zeitplan (Montage vorbei)",
+        "ibn": "Kommt von der Anlage (IBN-Datum)",
+        "schluss": "Kommt vom Zahlungsplan",
+        "material": "Material-Status",
+        "elektro": "Elektro"
+      }
+    },
+    "zeitplan": {
+      "dialogTitel": "Zeitplan der Baustelle",
+      "dazu": "Einsatz hinzufügen",
+      "entfernen": "Einsatz entfernen",
+      "abwesend": "Abwesend in dieser Zeit: {{namen}}",
+      "abwesendLabel": "Abwesend",
+      "zurueck": "4 Wochen zurück",
+      "vor": "4 Wochen vor",
+      "heute": "Heute",
+      "drucken": "Drucken / PDF",
+      "hilfe": "Klick auf eine Baustelle öffnet die Planung.",
+      "baustelle": "Baustelle",
+      "kw": "KW {{kw}}",
+      "leer": "Keine Baustelle in diesem Zeitraum.",
+      "auslastung": "Auslastung",
+      "personen": "Eingeplant",
+      "baustellenKurz": "{{n}} B",
+      "personenKurz": "{{n}} P",
+      "abwesendKurz": "{{n}} abw.",
+      "druckTitel": "Zeitplan Baustellen · KW {{von}}–{{bis}} · Stand {{datum}}",
+      "keineEinsaetze": "Noch keine Einsätze geplant.",
+      "bearbeiten": "Zeitplan bearbeiten"
+    },
+    "bewilligungen": {
+      "ansicht": "Ansicht",
+      "offen": "Offen",
+      "spaet": "Überfällig",
+      "bald": "Bald fällig",
+      "hilfe": "Klick auf ein Feld: Stand, Datum, Frist und Notiz.",
+      "leer": "Keine offenen Bewilligungen"
+    },
+    "sub": {
+      "keine": "Noch keine Aufträge an Subunternehmer.",
+      "neu": "Auftrag an Subunternehmer",
+      "aendern": "Auftrag ändern",
+      "anfragen": "Anfrage per Mail",
+      "entfernen": "In den Papierkorb",
+      "angefragtAm": "angefragt {{datum}}",
+      "waehlen": "Bitte einen Subunternehmer wählen.",
+      "leistung": "Leistung",
+      "betrag": "Betrag (CHF)",
+      "termin_von": "Termin von",
+      "termin_bis": "Termin bis",
+      "mail": {
+        "betreff": "Anfrage Baustelle {{ort}} ({{nummer}})",
+        "terminOffen": "Termin nach Absprache",
+        "text": "Guten Tag\n\nGerne fragen wir Sie für folgende Arbeit an:\n\nLeistung: {{leistung}}\nBaustelle: {{adresse}}\nTermin: {{termin}}\n\nKönnen Sie den Termin bestätigen? Für Fragen sind wir gerne da.\n\nFreundliche Grüsse\n{{absender}}"
+      }
+    },
+    "subStamm": {
+      "neu": "Subunternehmer erfassen",
+      "leer": "Noch keine Subunternehmer",
+      "leerText": "Gerüstbauer, Elektriker, Dachdecker: einmal erfassen, dann pro Baustelle anfragen.",
+      "inaktiv": "inaktiv",
+      "aktiv": "Aktiv",
+      "name": "Firma",
+      "gewerk": "Gewerk",
+      "email": "E-Mail",
+      "telefon": "Telefon"
+    },
+    "abwesenheit": {
+      "neu": "Abwesenheit erfassen",
+      "person": "Person",
+      "halbtag": "Halber Tag",
+      "erfassen": "Erfassen",
+      "leer": "Keine Abwesenheiten",
+      "leerText": "Ferien, Krankheit und «Abwesend» aus Outlook erscheinen hier.",
+      "entfernen": "In den Papierkorb",
+      "outlook": "Outlook"
+    },
+    "heute": {
+      "titel": "Bau heute",
+      "oeffnen": "Zu den Projekten",
+      "nichts": "Auf dem Bau steht heute nichts Besonderes an.",
+      "heute": "Baustellen heute besetzt",
+      "ohneTermin": "Baustellen ohne Termin",
+      "bewilligungen": "Projekte mit überfälliger Bewilligung"
+    },
+    "gesuch": {
+      "bauherrschaft": "Bauherrschaft",
+      "name": "Name",
+      "adresse": "Adresse",
+      "standort": "Standort der Anlage",
+      "parzelle": "Parzelle / GB-Nr.",
+      "zaehler": "Zählernummer",
+      "anlage": "Anlage",
+      "leistung": "Leistung",
+      "module": "Anzahl Module",
+      "wechselrichter": "Wechselrichter",
+      "batterie": "Batteriespeicher",
+      "keine": "keiner",
+      "art": "Art",
+      "aufDach": "Auf dem Dach, genügend angepasst (Art. 18a RPG)",
+      "baubeginn": "Geplanter Baubeginn",
+      "installateur": "Installateur",
+      "firma": "Firma",
+      "elektriker": "Elektroinstallateur",
+      "unterschriftKunde": "Datum, Unterschrift Bauherrschaft",
+      "unterschriftFirma": "Datum, Unterschrift Installateur",
+      "tag": {
+        "knopf": "Anschlussgesuch (TAG) drucken",
+        "titel": "Technisches Anschlussgesuch",
+        "zweck": "Angaben für den Netzbetreiber",
+        "hinweis": "Diese Angaben dienen zum Ausfüllen des Anschlussgesuchs beim Netzbetreiber. Das Gesuch selbst wird im Portal oder auf dem Formular des Netzbetreibers eingereicht."
+      },
+      "meldung": {
+        "knopf": "Meldung Gemeinde drucken",
+        "titel": "Meldung Solaranlage",
+        "zweck": "Meldeverfahren nach Art. 18a RPG",
+        "hinweis": "Genügend angepasste Solaranlagen auf Dächern brauchen keine Baubewilligung, müssen der Gemeinde aber gemeldet werden. Kantonale Vorgaben und Formulare gehen vor."
+      },
+      "foerderung": {
+        "knopf": "Förderung (Pronovo) drucken",
+        "titel": "Angaben für die Förderung",
+        "zweck": "Einmalvergütung Pronovo",
+        "hinweis": "Diese Angaben dienen zur Anmeldung der Einmalvergütung bei Pronovo. Die Anmeldung erfolgt online; kantonale oder kommunale Förderungen separat prüfen."
+      }
     }
   }
 }
