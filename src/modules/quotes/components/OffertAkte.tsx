@@ -7,6 +7,7 @@ import {
   FilePlus2,
   FileSignature,
   Hammer,
+  Mail,
   Undo2,
   Users,
   X,
@@ -14,11 +15,14 @@ import {
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { MailDialog } from '@/components/shared/MailDialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatKundennummer } from '@/lib/kontakt'
+import i18n from '@/i18n'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useOffertAkte } from '../hooks/useOfferten'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
@@ -53,6 +57,8 @@ export default function OffertAkte({
   const [entscheid, setEntscheid] = useState<Entscheid | null>(null)
   const [version, setVersion] = useState(false)
   const [zurueck, setZurueck] = useState(false)
+  const [mail, setMail] = useState(false)
+  const ich = useAnmeldung((z) => z.ich)
 
   const versendet = o?.status === 'offeriert'
   const angenommen = o?.status === 'angenommen'
@@ -179,6 +185,18 @@ export default function OffertAkte({
                 <Calculator />
                 {t('offerten.akte.kalkulation')}
               </Button>
+              {o.email && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    setMail(true)
+                  }}
+                >
+                  <Mail />
+                  {t('mail.perMail')}
+                </Button>
+              )}
               {o.verkaufschanceId && (
                 <Button
                   size="sm"
@@ -213,6 +231,25 @@ export default function OffertAkte({
             <OffertVersionen o={o} dokumente={akte.dokumente.data ?? []} />
             <OffertVerlauf eintraege={akte.verlauf.data} laedt={akte.verlauf.isPending} />
           </div>
+        )}
+        {mail && o && (
+          <MailDialog
+            titel={t('mail.offerteTitel', { nummer: o.nummer })}
+            vorlage={{
+              an: o.email ?? '',
+              betreff: i18n.getFixedT(o.sprache)('mail.offerte.betreff', { nummer: o.nummer }),
+              text: i18n.getFixedT(o.sprache)('mail.offerte.text', { name: o.name, absender: ich?.name ?? '' }),
+              sprache: o.sprache,
+              art: 'offerte',
+              kontakt_id: o.kontaktId,
+              offerte_id: o.id,
+              ...(o.verkaufschanceId ? { verkaufschance_id: o.verkaufschanceId } : {}),
+            }}
+            dateien={(akte.dokumente.data ?? []).map((d, i) => ({ id: d.id, name: d.name, vorgewaehlt: i === 0 }))}
+            onSchliessen={() => {
+              setMail(false)
+            }}
+          />
         )}
         <Suspense>
           {o && entscheid && (

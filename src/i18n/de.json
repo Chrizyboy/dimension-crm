@@ -1863,5 +1863,21 @@
       "person": "Person",
       "ergebnis": "Ergebnis"
     }
+  },
+  "mail": {
+    "beschreibung": "Vorausgefüllt in der Sprache des Kunden; alles lässt sich ändern. «Senden» schickt die Mail aus deinem Postfach über den Ausgangskorb.",
+    "ablegen": "In den Ausgangskorb",
+    "senden": "Senden",
+    "perMail": "Per Mail senden",
+    "offerteTitel": "Offerte {{nummer}} per Mail",
+    "vertragTitel": "Werkvertrag {{nummer}} per Mail",
+    "offerte": {
+      "betreff": "Ihre Offerte {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nVielen Dank für Ihr Interesse. Im Anhang finden Sie unsere Offerte. Bei Fragen sind wir gerne für Sie da.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    },
+    "werkvertrag": {
+      "betreff": "Ihr Werkvertrag {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    }
   }
 }

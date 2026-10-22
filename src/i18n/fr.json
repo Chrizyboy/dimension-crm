@@ -1863,5 +1863,21 @@
       "person": "Personne",
       "ergebnis": "Résultat"
     }
+  },
+  "mail": {
+    "beschreibung": "Prérempli dans la langue du client ; tout peut être modifié. « Envoyer » expédie l'e-mail depuis votre boîte via la boîte d'envoi.",
+    "ablegen": "Dans la boîte d'envoi",
+    "senden": "Envoyer",
+    "perMail": "Envoyer par e-mail",
+    "offerteTitel": "Offre {{nummer}} par e-mail",
+    "vertragTitel": "Contrat {{nummer}} par e-mail",
+    "offerte": {
+      "betreff": "Votre offre {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nMerci de votre intérêt. Vous trouverez notre offre en pièce jointe. Nous restons à votre disposition pour toute question.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    },
+    "werkvertrag": {
+      "betreff": "Votre contrat d'entreprise {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    }
   }
 }
