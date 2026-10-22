@@ -16,6 +16,7 @@ import { tonVonFarbe } from '@/lib/kontakt'
 import { dokumentAdresse } from '@/services/dokumente'
 import { useAktion } from '../hooks/useAktion'
 import { useFall, usePersonen } from '../hooks/useService'
+import { GarantieAbschnitt } from './GarantieAbschnitt'
 import { anhangHochladen, aufgabeZumFall, fallNotiz, fallSpeichern } from '../services/service'
 import { KATEGORIEN, PRIORITAETEN, STATUS, type FallEingabe } from '../types'
 
@@ -253,6 +254,7 @@ export function FallAkte({ id, onSchliessen }: { id: string; onSchliessen: () =>
                 {t('service.akte.hochladen')}
               </Button>
             </AkteAbschnitt>
+            <GarantieAbschnitt fall={f} />
           </div>
         )}
       </DialogInhalt>

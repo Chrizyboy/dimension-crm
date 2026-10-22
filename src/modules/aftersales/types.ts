@@ -99,3 +99,31 @@ export interface Person {
   id: string
   name: string
 }
+
+/** Stände eines Garantiefalls beim Hersteller. */
+export const GARANTIE_STATUS = [
+  'offen',
+  'gemeldet',
+  'eingeschickt',
+  'ersatz_erhalten',
+  'abgeschlossen',
+  'abgelehnt',
+] as const
+
+/** Defekte Komponente zurück an den Hersteller: RMA, Rücksendung, Ersatz, Gutschrift. */
+export interface Garantiefall {
+  id: string
+  service_fall_id: string | null
+  anlage_id: string | null
+  hersteller: string
+  komponente: string
+  seriennummer: string | null
+  rma_nummer: string | null
+  status: (typeof GARANTIE_STATUS)[number]
+  gemeldet_am: string | null
+  eingeschickt_am: string | null
+  ersatz_am: string | null
+  gutschrift_rappen: number | null
+  abgeschlossen_am: string | null
+  notiz: string | null
+}
