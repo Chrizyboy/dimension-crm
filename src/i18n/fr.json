@@ -2833,7 +2833,8 @@
     },
     "senden": {
       "titel": "Envoyer la commande {{nummer}}",
-      "pdf": "Le PDF est en cours de création …"
+      "pdf": "Le PDF est en cours de création …",
+      "beschreibung": "Prérempli dans la langue du fournisseur, avec la commande en PDF. «Envoyer» envoie l’e-mail depuis ta boîte via la boîte d’envoi ; la commande est alors considérée comme passée."
     },
     "mailtext": {
       "betreff": "Commande {{nummer}}",
@@ -2936,7 +2937,7 @@
     },
     "heute": {
       "titel": "Achats",
-      "oeffnen": "Achats",
+      "oeffnen": "Ouvrir",
       "nichts": "Rien à valider, rien en retard.",
       "entwurf": "À valider",
       "freigegeben": "À envoyer",

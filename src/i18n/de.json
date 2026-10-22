@@ -2833,7 +2833,8 @@
     },
     "senden": {
       "titel": "Bestellung {{nummer}} senden",
-      "pdf": "Das PDF wird erstellt …"
+      "pdf": "Das PDF wird erstellt …",
+      "beschreibung": "Vorausgefüllt in der Sprache des Lieferanten, mit der Bestellung als PDF. «Senden» schickt die Mail aus deinem Postfach über den Ausgangskorb; danach gilt die Bestellung als bestellt."
     },
     "mailtext": {
       "betreff": "Bestellung {{nummer}}",
@@ -2936,7 +2937,7 @@
     },
     "heute": {
       "titel": "Einkauf",
-      "oeffnen": "Einkauf",
+      "oeffnen": "Öffnen",
       "nichts": "Nichts freizugeben, nichts überfällig.",
       "entwurf": "Freigeben",
       "freigegeben": "Senden",

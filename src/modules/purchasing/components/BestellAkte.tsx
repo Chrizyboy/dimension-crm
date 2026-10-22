@@ -40,7 +40,7 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const fuss = b && (
     <>
       <PdfAnsehen bestellung={b} positionen={positionen} />
-      {(b.status === 'entwurf' || b.status === 'bestellt') && (
+      {['entwurf', 'freigegeben', 'bestellt'].includes(b.status) && (
         <Button
           variant="ghost"
           onClick={() => {

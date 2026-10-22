@@ -14,6 +14,6 @@ export function inTagen(heute: Date, n: number): string {
 
 /** Text in eine Zahl (Komma oder Punkt); leer oder ungültig = null. */
 export function alsZahl(text: string): number | null {
-  const n = Number(text.replace(/'/g, '').replace(',', '.').trim())
+  const n = Number(text.replace(/['’\s]/g, '').replace(',', '.'))
   return text.trim() === '' || !Number.isFinite(n) ? null : n
 }

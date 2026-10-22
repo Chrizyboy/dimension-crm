@@ -96,14 +96,15 @@ begin
     v_n := v_n + 1;
   end if;
   -- Wechselrichter und Batterie stehen in der Offerte als Text: den ähnlichsten Artikel vorschlagen, prüfen bleibt nötig.
+  -- Steht bei der Batterie nur eine Zahl (Import aus V233), ist es die Kapazität in kWh.
   insert into public.projekt_material (projekt_id, artikel_id, bezeichnung, menge, quelle, reihenfolge)
   select p_projekt, (select a.id from public.artikel a
                       where a.kategorie = w.kategorie and a.geloescht_am is null and a.archiviert_am is null
                         and public.similarity(lower(a.name), lower(w.text)) > 0.3
                       order by public.similarity(lower(a.name), lower(w.text)) desc limit 1),
-         w.text, 1, 'offerte', w.r
-    from (values (nullif(trim(o.wechselrichter), ''), 'wechselrichter', 20),
-                 (nullif(trim(o.batterie), ''), 'batteriespeicher', 30)) as w (text, kategorie, r)
+         case when w.text ~ '^[0-9.,]+$' then w.name || ' ' || w.text || ' kWh' else w.text end, 1, 'offerte', w.r
+    from (values (nullif(trim(o.wechselrichter), ''), 'wechselrichter', 20, 'Wechselrichter'),
+                 (nullif(trim(o.batterie), ''), 'batteriespeicher', 30, 'Batterie')) as w (text, kategorie, r, name)
    where w.text is not null;
   get diagnostics v_n = row_count;
   v_n := v_n + case when coalesce(o.anzahl_module, 0) > 0 then 1 else 0 end;

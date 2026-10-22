@@ -64,6 +64,7 @@ export function BestellungSenden({
   return (
     <MailDialog
       titel={t('einkauf.senden.titel', { nummer: b.nummer })}
+      beschreibung={t('einkauf.senden.beschreibung')}
       vorlage={{
         an: b.email_bestellung ?? '',
         betreff: ts(b.projekt_nummer ? 'einkauf.mailtext.betreffProjekt' : 'einkauf.mailtext.betreff', werte),

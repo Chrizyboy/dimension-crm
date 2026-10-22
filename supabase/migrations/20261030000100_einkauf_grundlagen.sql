@@ -154,13 +154,17 @@ select b.id, b.nummer, b.status, b.lieferant_id, b.projekt_id, b.lagerort_id, b.
   left join public.firmen f on f.id = st.firma_id
  where b.geloescht_am is null;
 
-/** Lagerbestand je Lagerort und Artikel: frei = Bestand minus reserviert, dazu offene Lager-Bestellungen. */
+/**
+ * Lagerbestand je Lagerort und Artikel: frei = Bestand minus reserviert. «unterwegs» zählt nur Bestellungen fürs
+ * Lager selbst; Ware für ein Projekt kommt reserviert an und füllt das freie Lager nicht auf.
+ */
 create or replace view public.lager_uebersicht with (security_invoker = true) as
 select lb.id, lb.lagerort_id, lo.name as lagerort, lb.artikel_id, a.name as artikel, a.artikelnummer, a.kategorie,
        a.einheit, lb.menge, lb.reserviert, lb.menge - lb.reserviert as frei, lb.mindestmenge,
        coalesce((select sum(greatest(p.menge - p.geliefert_menge, 0)) from public.bestellpositionen p
                    join public.bestellungen b on b.id = p.bestellung_id
-                  where p.artikel_id = lb.artikel_id and b.lagerort_id = lb.lagerort_id and p.geloescht_am is null
+                  where p.artikel_id = lb.artikel_id and b.lagerort_id = lb.lagerort_id and p.projekt_material_id is null
+                    and p.geloescht_am is null
                     and b.geloescht_am is null and b.status in ('entwurf', 'freigegeben', 'bestellt', 'teilgeliefert')), 0) as unterwegs,
        (lb.mindestmenge is not null and lb.menge - lb.reserviert < lb.mindestmenge) as unter_mindest,
        lb.geaendert_am

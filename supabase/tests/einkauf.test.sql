@@ -37,6 +37,8 @@ insert into public.projekte (id, nummer, kontakt_id, offerte_id, status, standor
 insert into public.lagerbestand (lagerort_id, artikel_id, menge) values
   ((select id from public.lagerorte where name = 'Lager Bulle'), '00000000-0000-0000-0000-00000000a901', 5);
 
+-- Sequenzen kennen kein Rollback: den Stand der Bestellnummer merken und am Ende zurücksetzen.
+create temp table t_seq on commit drop as select last_value, is_called from intern.bestell_nummer;
 create temp table t_b (id uuid) on commit drop;
 grant all on t_b to authenticated;
 
@@ -132,6 +134,7 @@ select is((select count(*) from public.bestellungen), 0::bigint, 'ohne Recht «p
 select throws_ok($$ select public.bestellvorschlag('00000000-0000-0000-0000-00000000a9e1') $$,
   'P0001', 'einkauf.kein_recht', 'ohne Recht «preise» kein Bestellvorschlag');
 reset role;
+select setval('intern.bestell_nummer', last_value, is_called) from t_seq;
 
 select * from finish();
 rollback;
