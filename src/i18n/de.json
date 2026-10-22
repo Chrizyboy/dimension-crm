@@ -110,6 +110,17 @@
       "routeStart": "Startpunkt für Touren",
       "notfallName": "Name",
       "notfallTel": "Telefon"
+    },
+    "microsoft": {
+      "titel": "Microsoft 365",
+      "verbunden": "Verbunden",
+      "neuVerbinden": "Neu verbinden",
+      "erklaerung": "Verbinde dein Microsoft-Konto, damit das CRM Mails aus deinem Postfach sendet, Termine in deinen Kalender einträgt und deinen Kalender und Mail-Verlauf mit Kunden zeigt. Dein Passwort gibst du nur bei Microsoft ein.",
+      "seit": "Verbunden seit {{datum}}",
+      "genutzt": "zuletzt genutzt {{datum}}",
+      "verbinden": "Mit Microsoft verbinden",
+      "testen": "Verbindung prüfen",
+      "trennen": "Trennen"
     }
   },
   "fehler": {
@@ -1751,6 +1762,67 @@
       "anmeldung": "Bitte zuerst anmelden.",
       "sms": "Die SMS wurde nicht angenommen (Code {{code}}).",
       "unbekannt": "Das hat nicht geklappt (Code {{code}})."
+    }
+  },
+  "verbindungen": {
+    "reiter": "Verbindungen",
+    "dienst": {
+      "microsoft": "Microsoft 365",
+      "abaninja": "AbaNinja",
+      "sms": "SMS (ASPSMS)"
+    },
+    "zweck": {
+      "microsoft": "Mails senden, Outlook-Kalender, Anfragen aus info@, Ablage in SharePoint.",
+      "abaninja": "Kunden in der Buchhaltung anlegen und offene Rechnungen sehen.",
+      "sms": "Termin-Erinnerungen und SMS an Kunden, Absender «DimSolaire»."
+    },
+    "eingerichtet": "Eingerichtet",
+    "nichtEingerichtet": "Nicht eingerichtet",
+    "testOk": "Test am {{datum}} erfolgreich",
+    "testFehler": "Test am {{datum}} fehlgeschlagen",
+    "nieGetestet": "Noch nie getestet.",
+    "testen": "Jetzt testen",
+    "rueckruf": "Rückruf-Adresse für Microsoft",
+    "rueckrufHinweis": "Diese Adresse in der App-Registrierung bei Microsoft (Entra ID) unter «Umleitungs-URI» eintragen.",
+    "kopieren": "Kopieren",
+    "teamMicrosoft": "Wer ist mit Microsoft verbunden?",
+    "verbundenAnzahl_one": "{{count}} von {{total}} verbunden",
+    "verbundenAnzahl_other": "{{count}} von {{total}} verbunden",
+    "personVerbunden": "Verbunden · {{datum}}",
+    "personNicht": "Nicht verbunden",
+    "einstellungen": "Einstellungen",
+    "feld": {
+      "microsoft_postfach_anfragen": "Postfach für Anfragen (solar-guide, Landingpage, Messe)",
+      "microsoft_team_postfaecher": "Team-Postfächer (mit Komma getrennt)",
+      "microsoft_eigene_domains": "Eigene Domains (für Mail-Richtung)",
+      "microsoft_kalender_tage": "Kalender laden: Tage voraus",
+      "microsoft_mail_tage": "Mail-Verlauf: Tage zurück",
+      "microsoft_anfragen_tage": "Anfragen suchen: Tage zurück",
+      "microsoft_sharepoint_website": "SharePoint-Website",
+      "microsoft_sharepoint_bibliothek": "SharePoint-Bibliothek",
+      "microsoft_sharepoint_ordner": "Ordner für Kundenordner",
+      "sms_absender": "SMS-Absender (höchstens 11 Zeichen)",
+      "abaninja_anreden_herr": "Anrede «Herr» in AbaNinja",
+      "abaninja_anreden_frau": "Anrede «Frau» in AbaNinja",
+      "abaninja_anreden_standard": "Anrede sonst (Firma, unbekannt)"
+    },
+    "zeitplan": "Hintergrund-Jobs",
+    "zeitplanLeer": "Noch kein Lauf. Der Zeitplan startet, sobald er auf dem Server eingerichtet ist.",
+    "job": {
+      "ausgang": "Ausgangskorb senden",
+      "sms_erinnerung": "SMS-Erinnerung",
+      "anfragen": "Anfragen abholen",
+      "kalender": "Kalender laden",
+      "mails": "Mail-Verlauf",
+      "sicherung": "SharePoint-Sicherung"
+    },
+    "protokoll": "Letzte Aufrufe",
+    "protokollLeer": "Noch keine Aufrufe.",
+    "spalte": {
+      "zeit": "Zeit",
+      "dienst": "Dienst",
+      "person": "Person",
+      "ergebnis": "Ergebnis"
     }
   }
 }

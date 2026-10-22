@@ -110,6 +110,17 @@
       "routeStart": "Point de départ des tournées",
       "notfallName": "Nom",
       "notfallTel": "Téléphone"
+    },
+    "microsoft": {
+      "titel": "Microsoft 365",
+      "verbunden": "Connecté",
+      "neuVerbinden": "Reconnecter",
+      "erklaerung": "Connectez votre compte Microsoft pour que le CRM envoie les e-mails depuis votre boîte, inscrive les rendez-vous dans votre calendrier et affiche votre calendrier et l'historique des e-mails avec les clients. Vous saisissez votre mot de passe uniquement chez Microsoft.",
+      "seit": "Connecté depuis le {{datum}}",
+      "genutzt": "dernière utilisation {{datum}}",
+      "verbinden": "Se connecter avec Microsoft",
+      "testen": "Vérifier la connexion",
+      "trennen": "Déconnecter"
     }
   },
   "fehler": {
@@ -1751,6 +1762,67 @@
       "anmeldung": "Veuillez d'abord vous connecter.",
       "sms": "Le SMS n'a pas été accepté (code {{code}}).",
       "unbekannt": "Cela n'a pas fonctionné (code {{code}})."
+    }
+  },
+  "verbindungen": {
+    "reiter": "Connexions",
+    "dienst": {
+      "microsoft": "Microsoft 365",
+      "abaninja": "AbaNinja",
+      "sms": "SMS (ASPSMS)"
+    },
+    "zweck": {
+      "microsoft": "Envoyer des e-mails, calendrier Outlook, demandes depuis info@, classement dans SharePoint.",
+      "abaninja": "Créer les clients dans la comptabilité et voir les factures ouvertes.",
+      "sms": "Rappels de rendez-vous et SMS aux clients, expéditeur « DimSolaire »."
+    },
+    "eingerichtet": "Configuré",
+    "nichtEingerichtet": "Non configuré",
+    "testOk": "Test du {{datum}} réussi",
+    "testFehler": "Test du {{datum}} échoué",
+    "nieGetestet": "Jamais testé.",
+    "testen": "Tester maintenant",
+    "rueckruf": "Adresse de retour pour Microsoft",
+    "rueckrufHinweis": "Saisir cette adresse dans l'inscription de l'application chez Microsoft (Entra ID) sous « URI de redirection ».",
+    "kopieren": "Copier",
+    "teamMicrosoft": "Qui est connecté à Microsoft ?",
+    "verbundenAnzahl_one": "{{count}} sur {{total}} connecté",
+    "verbundenAnzahl_other": "{{count}} sur {{total}} connectés",
+    "personVerbunden": "Connecté · {{datum}}",
+    "personNicht": "Non connecté",
+    "einstellungen": "Paramètres",
+    "feld": {
+      "microsoft_postfach_anfragen": "Boîte pour les demandes (solar-guide, landing page, salon)",
+      "microsoft_team_postfaecher": "Boîtes d'équipe (séparées par des virgules)",
+      "microsoft_eigene_domains": "Domaines propres (sens des e-mails)",
+      "microsoft_kalender_tage": "Calendrier : jours à l'avance",
+      "microsoft_mail_tage": "Historique e-mails : jours en arrière",
+      "microsoft_anfragen_tage": "Recherche des demandes : jours en arrière",
+      "microsoft_sharepoint_website": "Site SharePoint",
+      "microsoft_sharepoint_bibliothek": "Bibliothèque SharePoint",
+      "microsoft_sharepoint_ordner": "Dossier des dossiers clients",
+      "sms_absender": "Expéditeur SMS (11 caractères au maximum)",
+      "abaninja_anreden_herr": "Formule « Monsieur » dans AbaNinja",
+      "abaninja_anreden_frau": "Formule « Madame » dans AbaNinja",
+      "abaninja_anreden_standard": "Formule sinon (entreprise, inconnue)"
+    },
+    "zeitplan": "Tâches en arrière-plan",
+    "zeitplanLeer": "Aucune exécution. Le planificateur démarre dès qu'il est configuré sur le serveur.",
+    "job": {
+      "ausgang": "Envoyer la boîte d'envoi",
+      "sms_erinnerung": "Rappel SMS",
+      "anfragen": "Récupérer les demandes",
+      "kalender": "Charger le calendrier",
+      "mails": "Historique e-mails",
+      "sicherung": "Sauvegarde SharePoint"
+    },
+    "protokoll": "Derniers appels",
+    "protokollLeer": "Aucun appel pour l'instant.",
+    "spalte": {
+      "zeit": "Heure",
+      "dienst": "Service",
+      "person": "Personne",
+      "ergebnis": "Résultat"
     }
   }
 }

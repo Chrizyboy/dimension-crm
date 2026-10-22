@@ -42,6 +42,13 @@ export function formatDatum(datum: Date | string): string {
   return `${tag}.${monat}.${d.getFullYear()}`
 }
 
+/** Datum und Uhrzeit kurz, z.B. "21.10.2026 14:05"; ohne Wert ein Strich. */
+export function formatDatumZeit(iso: string | null | undefined): string {
+  if (!iso) return '–'
+  const d = new Date(iso)
+  return `${formatDatum(d)} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+}
+
 /** Formatiert eine Telefonnummer einheitlich wie in der Vorlage (V79): "+41 76 123 45 67". */
 export function formatTelefon(nummer: string): string {
   let ziffern = nummer.replace(/[^\d+]/g, '')

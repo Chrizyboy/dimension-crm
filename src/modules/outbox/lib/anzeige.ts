@@ -1,4 +1,4 @@
-import { formatDatum } from '@/lib/format'
+import { formatDatumZeit } from '@/lib/format'
 import type { AusgangStatus } from '../types'
 
 /** Farbe der Statusmarke: offen = Info, raus = ok, Fehler = kritisch. */
@@ -12,11 +12,7 @@ export const STATUS_TON: Record<AusgangStatus, 'neutral' | 'info' | 'ok' | 'warn
 }
 
 /** Datum und Uhrzeit kurz: «21.10.2026 14:05». */
-export function zeitpunkt(iso: string | null): string {
-  if (!iso) return '–'
-  const d = new Date(iso)
-  return `${formatDatum(d)} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
-}
+export const zeitpunkt = formatDatumZeit
 
 /** Erste Zeile des Inhalts als Vorschau (Betreff bei Mails, Text bei SMS). */
 export function vorschau(e: { kanal: string; betreff: string | null; text: string | null }): string {

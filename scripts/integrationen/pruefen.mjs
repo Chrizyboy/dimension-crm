@@ -415,7 +415,8 @@ try {
   // --- Zeitplan -----------------------------------------------------------------------------------------
   // Die SharePoint-Sicherung im Zeitplan würde echte lokale Dateien nehmen: für diesen Test als «gerade gelaufen» markieren.
   sql(
-    `insert into intern.zeitplan_laeufe (job, zuletzt_am) values ('sicherung', now()) on conflict (job) do update set zuletzt_am = now()`,
+    `insert into intern.zeitplan_laeufe (job, zuletzt_am, ok, meldung) values ('sicherung', now(), true, 'im Test übersprungen')
+       on conflict (job) do update set zuletzt_am = now(), ok = true, meldung = 'im Test übersprungen'`,
   )
   r = await funktion('zeitplan', {}, null, { 'x-zeitplan-schluessel': 'falsch' })
   ok(r.status === 401, 'Zeitplan: falscher Schlüssel abgelehnt')

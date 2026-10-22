@@ -18,12 +18,22 @@ import { BenutzerTabelle } from './BenutzerTabelle'
 import { EinladungDialog } from './EinladungDialog'
 import { PersonDialog } from './PersonDialog'
 import { RollenDialog } from './RollenDialog'
+import { Verbindungen } from './Verbindungen'
 
 /**
  * Einstellungen > Benutzer und Rollen (nur Administration).
  * Wer hier fehlt, kann sich nicht anmelden: Ein Login entsteht nur für erfasste, aktive Personen.
  */
-export default function Benutzerverwaltung({ module }: { module: readonly ModulMeta[] }) {
+export default function Benutzerverwaltung({
+  module,
+  reiter = 'personen',
+  onReiter,
+}: {
+  module: readonly ModulMeta[]
+  /** Offener Reiter aus der Adresse (#/settings?reiter=verbindungen). */
+  reiter?: string
+  onReiter: (reiter: string) => void
+}) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const { personen, rollen, standorte, einladungen } = useBenutzerDaten()
@@ -62,13 +72,14 @@ export default function Benutzerverwaltung({ module }: { module: readonly ModulM
         }
       />
 
-      <Reiter defaultValue="personen" className="flex flex-col gap-4">
+      <Reiter value={reiter} onValueChange={onReiter} className="flex flex-col gap-4">
         <ReiterListe>
           <ReiterKnopf value="personen">
             {t('benutzer.reiterPersonen')}
             <span className="zahlen text-muted-foreground ml-1">{liste.length}</span>
           </ReiterKnopf>
           <ReiterKnopf value="rollen">{t('benutzer.reiterRollen')}</ReiterKnopf>
+          <ReiterKnopf value="verbindungen">{t('verbindungen.reiter')}</ReiterKnopf>
         </ReiterListe>
 
         <ReiterInhalt value="personen">
@@ -130,6 +141,10 @@ export default function Benutzerverwaltung({ module }: { module: readonly ModulM
               </button>
             )
           })}
+        </ReiterInhalt>
+
+        <ReiterInhalt value="verbindungen">
+          <Verbindungen />
         </ReiterInhalt>
       </Reiter>
 
