@@ -2,6 +2,7 @@
  * Öffentliche Schnittstelle des Moduls «Ausschreibungen».
  * Andere Teile des CRM dürfen NUR von hier importieren, nie direkt aus Unterordnern.
  */
+import { lazy } from 'react'
 import type { ModulMeta } from '@/types/modul'
 
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
@@ -15,4 +16,11 @@ export const meta: ModulMeta = {
   phase: '8b',
 }
 
+/** Die Seite: Reiter Prüfen, Bewilligen, Senden, Alle, Quellen, Trichter; Akte als Seitenpanel. */
+export const Ausschreibungen = lazy(() => import('./components/Ausschreibungen'))
+
+/** Karte für die Startseite: was heute beim Monitor ansteht (meldet es einmal täglich über die Glocke). */
+export const AusschreibungenHeute = lazy(() => import('./components/HeuteKarte'))
+
+export { REITER } from './types'
 export type * from './types'

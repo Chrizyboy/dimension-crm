@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, Check, CircleDot } from 'lucide-react'
+import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Badge } from '@/components/ui/badge'
@@ -9,9 +10,12 @@ import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { BAUPLAN } from '@/lib/bauplan'
 import { formatChf, formatDatum, formatTelefon } from '@/lib/format'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
+import { darfModul } from '@/lib/rechte'
 import { plattformName } from '@/lib/plattform'
+import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
+import { useAnmeldung } from '@/stores/anmeldung'
+import { pruefeVerbindung, supabase } from '@/services/supabase'
 import { cn } from '@/lib/utils'
-import { pruefeVerbindung } from '@/services/supabase'
 import { useUi } from '@/stores/ui'
 
 /** Startseite während des Aufbaus: Systemstatus und Bauplan. Wird in Phase 14 zu «Heute». */
@@ -19,6 +23,7 @@ export function Startseite() {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const sichtbar = useSichtbareModule()
+  const ich = useAnmeldung((z) => z.ich)
   const db = useQuery({ queryKey: ['verbindung'], queryFn: pruefeVerbindung })
   const dbTon = db.data === 'verbunden' ? 'ok' : db.data === 'fehler' ? 'kritisch' : 'neutral'
   const dbText = db.isPending
@@ -65,6 +70,12 @@ export function Startseite() {
           </div>
         ))}
       </section>
+
+      {supabase && ich && darfModul(ausschreibungenMeta, ich) && (
+        <Suspense>
+          <AusschreibungenHeute />
+        </Suspense>
+      )}
 
       <div className="grid items-start gap-6 md:grid-cols-[1.5fr_1fr]">
         <Karte className="overflow-hidden">
