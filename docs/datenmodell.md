@@ -17,8 +17,8 @@ Kontakt ─┬─ Objekt ─── Anlage ─── Service-Fall, Wartungsvertra
 | Konfiguration     | `auswahlwerte`, `einstellungen`, `ablauf_vorlagen`, `ablauf_schritte`                                  | basis    |
 | Kunden            | `kontakte`, `objekte`, `sharepoint_ordner`                                                             | basis    |
 | Verkauf           | `verkaufschancen`, `aktivitaeten`, `aufgaben`, `ausschreibungen`                                       | basis    |
-| Offerten & Preise | `offerten`, `kalkulationen`, `artikel`, `lieferanten`, `preisvorlagen`, `preisvorlage_positionen`      | basis    |
-| Einkaufspreise    | `lieferantenpreise`                                                                                    | preise   |
+| Offerten & Preise | `offerten`, `lieferanten`, `preisvorlagen`, `preisvorlage_positionen`, `eturnity_eingang`              | basis    |
+| Einkaufspreise    | `lieferantenpreise`, `artikel`, `kalkulationen` (alle anderen lesen die Sicht `preisliste`)            | preise   |
 | Werkverträge      | `werkvertraege`                                                                                        | basis    |
 | Projekte          | `projekte`, `projekt_schritte`, `einsaetze`, `anlagen`, `zahlungsplan`                                 | basis    |
 | Service           | `service_faelle`, `wartungsvertraege`, `rueckmeldungen`                                                | basis    |
@@ -90,3 +90,14 @@ Zugriffsregeln rufen das Recht als `(select intern.hat_recht('…'))` auf, damit
 - Einstellungen: `tourplanung` (Tempo, Umweg, Besuchsdauer, Elektroauto), `sms_erinnerung` (Vorlage DE/FR). Auswahllisten: `erreichbarkeit`, `finanzierung`, `foerderung`, `zeithorizont`, `interesse`; bei `quelle` markiert `eigenschaften.anbieter` gekaufte Leads.
 
 Siehe Entscheid 0014.
+
+## Offerten, Preise, Werkverträge (Phase 7)
+
+- **`offerten`** neu: `standort_id` (Nummernkreis, Firma, Sprache), `wirtschaftlichkeit` (Werte aus Eturnity). `betrag_rappen` ist **exkl.** MWST.
+- **Abläufe:** `offerte_anlegen`, `offerte_status_setzen`, `offerte_version_erfassen`/`_entfernen`, `offerte_zurueck`, `offerte_entscheiden`, `offerte_werte_setzen(offerte, werte, quelle, nur_leere)`; Fehler als Schlüssel `offerte.*`. `mwst_satz()` aus `einstellungen`.
+- **Sichten:** `offerten_liste` (Muri, Bulle, Nachfassen mit Stand und Fälligkeit), `offerten_eingang` (Neue Offerten).
+- **Preise:** `artikel` und `kalkulationen` nur mit Recht `preise`; Sicht `preisliste` für alle (Verkaufspreis, Datenblätter, ohne Einkauf). `vk_aus_ek`, `artikel_preis_setzen`, `artikel_archivieren(artikel, grund, nachfolger)`, `preise_importieren(zeilen, pruefen)`.
+- **Auftrag und Werkvertrag:** `auftrag_erstellen(offerte, angaben)` legt Projekt, Zahlungsplan und Werkvertrag an; `zahlungsplan_berechnen`, `runde_5_rappen`, `werkvertrag_status`. Auswahlliste `zahlungskondition` mit `eigenschaften.tranchen`. `werkvertraege.betrag_rappen` und `projekte.vertragswert_rappen` sind **inkl.** MWST. Sicht `werkvertraege_liste`.
+- **Eturnity:** `eturnity_eingang` (Meldungen aus dem Webhook, unverändert), `eturnity_zuordnen(eingang, offerte)`.
+
+Siehe Entscheid 0015.

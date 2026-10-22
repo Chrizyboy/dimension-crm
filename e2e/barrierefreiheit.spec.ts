@@ -5,7 +5,16 @@ import { expect, test } from '@playwright/test'
 // Prüft hell und dunkel, damit beide Farbwelten lesbar bleiben.
 
 for (const schema of ['light', 'dark'] as const) {
-  for (const pfad of ['/', '/#/design', '/#/sales', '/#/customers', '/#/contacts']) {
+  for (const pfad of [
+    '/',
+    '/#/design',
+    '/#/sales',
+    '/#/customers',
+    '/#/contacts',
+    '/#/quotes',
+    '/#/workcontracts',
+    '/#/pricing',
+  ]) {
     test(`keine Verstösse auf ${pfad} (${schema === 'light' ? 'hell' : 'dunkel'})`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: schema })
       await page.goto(pfad)

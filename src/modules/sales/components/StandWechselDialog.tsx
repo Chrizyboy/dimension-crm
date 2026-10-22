@@ -10,7 +10,7 @@ import { useAuswahl } from '@/hooks/useAuswahl'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAussendienst, useVerkaufAenderung } from '../hooks/useVerkauf'
-import { fachFehler } from '../lib/fehler'
+import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { heuteIso, standBedarf } from '../lib/geschaeft'
 import { setzeStand } from '../services/geschaefte'
 import type { Geschaeft, StandAngaben } from '../types'
@@ -80,11 +80,11 @@ export default function StandWechselDialog({ geschaeft, ziel, vorschlag, onSchli
       })
       onSchliessen(true)
     } catch (f) {
-      const schluessel = fachFehler(f)
+      const schluessel = fachFehlerSchluessel(f)
       if (schluessel) setFehler(t(schluessel))
       else {
         meldeFehler(f, 'stand')
-        setFehler(t('verkauf.fehler.allgemein'))
+        setFehler(t('fachfehler.allgemein'))
       }
     }
   }

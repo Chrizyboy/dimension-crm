@@ -1,27 +1,28 @@
-# Modul: Offerten
+# Modul: Offerten (`quotes`)
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Offerten ausarbeiten (Neue Offerten für den Innendienst), offerierte nachfassen und die Werte aus Eturnity übernehmen; von hier geht es zu «Auftrag erstellen».
 
-**Stand:** Platzhalter – wird in Phase 7 gebaut.
+**Stand:** Phase 7 gebaut. Versand per Mail folgt in Phase 8 (Ausgangskorb mit Freigabe).
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- liest `offerten_liste`, `offerten_eingang`, `eturnity_eingang`, `dokumente`, `aktivitaeten`, `einstellungen` (MWST)
+- schreibt über `offerte_anlegen`, `offerte_status_setzen`, `offerte_version_erfassen`/`_entfernen`, `offerte_zurueck`, `offerte_entscheiden`, `offerte_werte_setzen`, `eturnity_zuordnen`
+- `betrag_rappen` ist exkl. MWST. Details: `docs/datenmodell.md` (Phase 7), Entscheid 0015, `docs/eturnity.md`
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase`, `dokumente`, `meldungen`, `fehler`, `fachfehler`; `src/hooks/useMwst`, `useAuswahl`
+- Zu Lead, Kunde, Werkvertrag und Kalkulation geht es über die Adresse (`/sales?lead=…`, `/workcontracts?auftrag=…`, `/pricing?ansicht=kalkulation&offerte=…`), nie per Import.
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine (der Entscheid steht in der Datenbank und im Verlauf)
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Seite, Listen, Akte, Dialoge, PDF-Import
+- `hooks/`, `services/` – Laden und Speichern
+- `lib/` – PDF lesen, Eturnity-Werte, Nachfassen, Suche (mit Tests)
+- `types.ts`, `index.ts`
