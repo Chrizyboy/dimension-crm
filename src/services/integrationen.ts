@@ -162,6 +162,12 @@ export const abaninja = {
   trennen: (kontakt_id: string) => rufeFunktion('abaninja', 'trennen', { kontakt_id }),
   rechnungen: (kontakt_id: string) =>
     rufeFunktion<{ rechnungen: AbaRechnung[] }>('abaninja', 'rechnungen', { kontakt_id }),
+  /** Gestellte Rechnung als Entwurf an AbaNinja (QR-Rechnung und Versand dort). */
+  rechnungUebergeben: (rechnung_id: string) =>
+    rufeFunktion<{ uuid: string | null }>('abaninja', 'rechnung_uebergeben', { rechnung_id }),
+  /** Rechnungen und Lieferantenrechnungen aus AbaNinja lesen (anwenden mit abaninja_abgleich_anwenden). */
+  abgleich: (seit?: string) =>
+    rufeFunktion<{ rechnungen: unknown[]; belege: unknown[] }>('abaninja', 'abgleich', seit ? { seit } : {}),
 }
 
 /** Welche Dienste auf dem Server eingerichtet sind (nur ja/nein). */

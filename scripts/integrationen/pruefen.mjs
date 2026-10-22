@@ -434,6 +434,45 @@ try {
   r = await funktion('abaninja', { aktion: 'aktualisieren', kontakt_id: kontakt }, token)
   ok(z.aba.geaendert.includes('aba-1'), 'AbaNinja: Adresse aktualisiert')
 
+  // Phase 10: gestellte Rechnung als Entwurf an AbaNinja, danach Abgleich (Zahlung, Lieferantenrechnung)
+  const rechnung = (await rpc('rechnung_entwurf', { p: { kontakt_id: kontakt, titel: 'Rechnung Ersatz' } }, token))
+    .daten
+  await rpc(
+    'rechnung_speichern',
+    { p_id: rechnung, p: { positionen: [{ text: 'Service', menge: 2, einheit: 'h', preis_rappen: 12000 }] } },
+    token,
+  )
+  r = await funktion('abaninja', { aktion: 'rechnung_uebergeben', rechnung_id: rechnung }, token)
+  ok(r.daten?.fehler === 'nicht_gestellt', 'AbaNinja: Entwurf geht erst nach dem Stellen', JSON.stringify(r.daten))
+  const nummer = (await rpc('rechnung_stellen', { p_id: rechnung }, token)).daten
+  r = await funktion('abaninja', { aktion: 'rechnung_uebergeben', rechnung_id: rechnung }, token)
+  const abaRe = z.aba.rechnungen.find((x) => x.reference === nummer)
+  ok(
+    r.daten?.uuid &&
+      abaRe?.receiver.customerNumber === z.aba.personen.find((p) => p.uuid === 'aba-1').customer_number &&
+      abaRe.documentTotal === 259.44,
+    'AbaNinja: Rechnung als Entwurf übergeben (Kundennummer, Referenz, Total inkl. MWST)',
+    JSON.stringify({ daten: r.daten, abaRe }),
+  )
+  r = await funktion('abaninja', { aktion: 'rechnung_uebergeben', rechnung_id: rechnung }, token)
+  ok(r.daten?.fehler === 'schon_uebergeben', 'AbaNinja: nicht zweimal übergeben', JSON.stringify(r.daten))
+  abaRe.openAmount = 0
+  abaRe.status = 'paid'
+  r = await funktion('abaninja', { aktion: 'abgleich' }, token)
+  const angewendet = (await rpc('abaninja_abgleich_anwenden', { p: r.daten }, token)).daten
+  const [bezahlt] = await rest(`rechnungen?id=eq.${rechnung}&select=status,bezahlt_rappen,abaninja_status`)
+  const [beleg] = await rest('kreditor_zahlungen?abaninja_uuid=eq.beleg-ersatz-1&select=betrag_rappen,quelle')
+  ok(
+    angewendet?.zahlungen === 1 && bezahlt.status === 'bezahlt' && bezahlt.abaninja_status === 'paid',
+    'Abgleich: Zahlung aus AbaNinja verbucht, Rechnung bezahlt',
+    JSON.stringify({ angewendet, bezahlt }),
+  )
+  ok(beleg?.betrag_rappen === 1081000 && beleg.quelle === 'abaninja', 'Abgleich: Lieferantenrechnung übernommen')
+  await rest(`rechnungen?id=eq.${rechnung}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ geloescht_am: new Date().toISOString() }),
+  })
+
   // --- Tests auf der Seite «Verbindungen» --------------------------------------------------------------
   for (const d of ['microsoft', 'abaninja', 'sms']) {
     r = await funktion('verbindungen', { aktion: 'testen', dienst: d }, token)
