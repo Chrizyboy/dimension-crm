@@ -1761,7 +1761,8 @@
     "gesendet": "Envoyé",
     "grund": "Motif",
     "grundFrage": "Pourquoi ne pas l'envoyer ?",
-    "automatisch": "Automatique"
+    "automatisch": "Automatique",
+    "verwerfenJa": "Oui, ne pas envoyer"
   },
   "integration": {
     "fehler": {

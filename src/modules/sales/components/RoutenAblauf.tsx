@@ -139,10 +139,9 @@ export function RoutenAblauf({ ablauf, start, ziel, datum, onFahrzeit, onOeffnen
         })}
         {ziel && ablauf.ankunft !== null && (
           <>
+            {/* Die Strecke ist selbst ein Listeneintrag: direkt in die Liste, nicht in eine eigene (Barrierefreiheit) */}
             {ablauf.strecken.at(-1) && (
-              <ol>
-                <Strecke s={ablauf.strecken.at(-1) as Ablauf['strecken'][number]} onFahrzeit={onFahrzeit} />
-              </ol>
+              <Strecke s={ablauf.strecken.at(-1) as Ablauf['strecken'][number]} onFahrzeit={onFahrzeit} />
             )}
             <li className="flex items-center gap-2 py-1 text-sm">
               <Flag className="text-muted-foreground size-4" aria-hidden="true" />

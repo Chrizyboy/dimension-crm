@@ -201,9 +201,11 @@ export function AusgangDetail({
             </div>
           ) : (
             <AkteAbschnitt titel={t('ausgang.inhalt')}>
-              <Angabe label={t('ausgang.an')}>{eintrag.an}</Angabe>
-              {eintrag.cc && <Angabe label={t('ausgang.cc')}>{eintrag.cc}</Angabe>}
-              {eintrag.betreff && <Angabe label={t('ausgang.betreff')}>{eintrag.betreff}</Angabe>}
+              <dl>
+                <Angabe label={t('ausgang.an')}>{eintrag.an}</Angabe>
+                {eintrag.cc && <Angabe label={t('ausgang.cc')}>{eintrag.cc}</Angabe>}
+                {eintrag.betreff && <Angabe label={t('ausgang.betreff')}>{eintrag.betreff}</Angabe>}
+              </dl>
               <p className="bg-muted/60 rounded-md p-3 text-sm whitespace-pre-wrap">{w.text}</p>
             </AkteAbschnitt>
           )}
@@ -219,15 +221,17 @@ export function AusgangDetail({
           )}
 
           <AkteAbschnitt titel={t('ausgang.ablauf')}>
-            <Angabe label={t('ausgang.erstellt')}>{zeitpunkt(eintrag.erstellt_am)}</Angabe>
-            <Angabe label={t('ausgang.absender')}>{eintrag.absender ?? t('ausgang.system')}</Angabe>
-            {eintrag.freigegeben_am && (
-              <Angabe label={t('ausgang.freigegeben')}>
-                {zeitpunkt(eintrag.freigegeben_am)} · {eintrag.freigegeben_durch ?? t('ausgang.automatisch')}
-              </Angabe>
-            )}
-            {eintrag.gesendet_am && <Angabe label={t('ausgang.gesendet')}>{zeitpunkt(eintrag.gesendet_am)}</Angabe>}
-            {eintrag.verworfen_grund && <Angabe label={t('ausgang.grund')}>{eintrag.verworfen_grund}</Angabe>}
+            <dl>
+              <Angabe label={t('ausgang.erstellt')}>{zeitpunkt(eintrag.erstellt_am)}</Angabe>
+              <Angabe label={t('ausgang.absender')}>{eintrag.absender ?? t('ausgang.system')}</Angabe>
+              {eintrag.freigegeben_am && (
+                <Angabe label={t('ausgang.freigegeben')}>
+                  {zeitpunkt(eintrag.freigegeben_am)} · {eintrag.freigegeben_durch ?? t('ausgang.automatisch')}
+                </Angabe>
+              )}
+              {eintrag.gesendet_am && <Angabe label={t('ausgang.gesendet')}>{zeitpunkt(eintrag.gesendet_am)}</Angabe>}
+              {eintrag.verworfen_grund && <Angabe label={t('ausgang.grund')}>{eintrag.verworfen_grund}</Angabe>}
+            </dl>
           </AkteAbschnitt>
 
           {grund !== null && (
@@ -264,7 +268,7 @@ export function AusgangDetail({
                     })
                   }
                 >
-                  {t('ausgang.verwerfen')}
+                  {t('ausgang.verwerfenJa')}
                 </Button>
               </div>
             </div>

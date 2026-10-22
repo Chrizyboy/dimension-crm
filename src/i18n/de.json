@@ -1761,7 +1761,8 @@
     "gesendet": "Gesendet",
     "grund": "Grund",
     "grundFrage": "Warum wird das nicht gesendet?",
-    "automatisch": "Automatisch"
+    "automatisch": "Automatisch",
+    "verwerfenJa": "Ja, nicht senden"
   },
   "integration": {
     "fehler": {

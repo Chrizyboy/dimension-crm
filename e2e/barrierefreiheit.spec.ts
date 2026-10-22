@@ -14,6 +14,7 @@ for (const schema of ['light', 'dark'] as const) {
     '/#/quotes',
     '/#/workcontracts',
     '/#/pricing',
+    '/#/outbox',
   ]) {
     test(`keine Verstösse auf ${pfad} (${schema === 'light' ? 'hell' : 'dunkel'})`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: schema })
