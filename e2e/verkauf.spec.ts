@@ -16,6 +16,8 @@ let nummer = ''
 
 /** WCAG 2.1 AA; Karte (Kacheln von aussen) und Meldungen ausgenommen. */
 async function verstoesse(page: Page): Promise<string[]> {
+  // Erst prüfen, wenn Dialoge fertig eingeblendet sind; mitten im Einblenden misst axe zu wenig Kontrast.
+  await page.evaluate('Promise.all(document.getAnimations().map((a) => a.finished.catch(() => null)))')
   const ergebnis = await new AxeBuilder({ page })
     .exclude('[data-sonner-toaster]')
     .exclude('.leaflet-container')

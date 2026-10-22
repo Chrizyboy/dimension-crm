@@ -12,6 +12,8 @@ const lauf = Date.now().toString().slice(-6)
 
 /** WCAG 2.1 AA; Meldungen ausgenommen. */
 async function verstoesse(page: Page): Promise<string[]> {
+  // Erst prüfen, wenn Dialoge fertig eingeblendet sind; mitten im Einblenden misst axe zu wenig Kontrast.
+  await page.evaluate('Promise.all(document.getAnimations().map((a) => a.finished.catch(() => null)))')
   const ergebnis = await new AxeBuilder({ page })
     .exclude('[data-sonner-toaster]')
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
