@@ -6608,6 +6608,10 @@ export type Database = {
           bestellt_am: string | null
           email_bestellung: string | null
           erstellt_am: string | null
+          firma: string | null
+          firma_ort: string | null
+          firma_plz: string | null
+          firma_strasse: string | null
           freigegeben_am: string | null
           freigegeben_von: string | null
           geliefert_am: string | null

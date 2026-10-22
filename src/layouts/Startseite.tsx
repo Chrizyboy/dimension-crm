@@ -15,6 +15,7 @@ import { plattformName } from '@/lib/plattform'
 import { ServiceHeute, meta as serviceMeta } from '@/modules/aftersales'
 import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
+import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { pruefeVerbindung, supabase } from '@/services/supabase'
@@ -81,7 +82,7 @@ export function Startseite() {
       )}
 
       {supabase && ich && (
-        <div className="grid items-start gap-4 md:grid-cols-3">
+        <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
           {darfModul(projekteMeta, ich) && (
             <Suspense>
               <ProjekteHeute />
@@ -95,6 +96,11 @@ export function Startseite() {
           {darfModul(wartungMeta, ich) && (
             <Suspense>
               <WartungHeute />
+            </Suspense>
+          )}
+          {darfModul(einkaufMeta, ich) && (
+            <Suspense>
+              <EinkaufHeute />
             </Suspense>
           )}
         </div>

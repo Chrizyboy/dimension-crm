@@ -139,7 +139,8 @@ select b.id, b.nummer, b.status, b.lieferant_id, b.projekt_id, b.lagerort_id, b.
        (select coalesce(sum(least(p.geliefert_menge, p.menge)), 0) from public.bestellpositionen p where p.bestellung_id = b.id and p.geloescht_am is null) as menge_geliefert,
        (b.status in ('bestellt', 'teilgeliefert') and b.liefertermin < current_date) as ueberfaellig,
        (select a.status from public.ausgangskorb a where a.bezug_tabelle = 'bestellungen' and a.bezug_id = b.id
-           and a.geloescht_am is null order by a.erstellt_am desc limit 1) as mail_status
+           and a.geloescht_am is null order by a.erstellt_am desc limit 1) as mail_status,
+       f.name as firma, f.strasse as firma_strasse, f.plz as firma_plz, f.ort as firma_ort
   from public.bestellungen b
   join public.lieferanten l on l.id = b.lieferant_id
   left join public.projekte pr on pr.id = b.projekt_id
@@ -147,6 +148,10 @@ select b.id, b.nummer, b.status, b.lieferant_id, b.projekt_id, b.lagerort_id, b.
   left join public.objekte o on o.id = pr.objekt_id
   left join public.lagerorte lo on lo.id = b.lagerort_id
   left join public.personen fp on fp.id = b.freigegeben_von
+  -- Bestellende Firma: die des Lagers, sonst die des Projekt-Standorts, sonst nach Sprache des Lieferanten.
+  left join public.standorte st on st.id = coalesce(lo.standort_id, pr.standort_id,
+    (select id from public.standorte where kuerzel = case when l.sprache = 'fr' then 'bulle' else 'muri' end))
+  left join public.firmen f on f.id = st.firma_id
  where b.geloescht_am is null;
 
 /** Lagerbestand je Lagerort und Artikel: frei = Bestand minus reserviert, dazu offene Lager-Bestellungen. */

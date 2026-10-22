@@ -20,6 +20,8 @@ export interface MailEntwurf {
   projekt_id?: string
   bezug_tabelle?: string
   bezug_id?: string
+  /** Verhindert, dass dieselbe Mail zweimal vorbereitet wird (z. B. «bestellung:<id>»). */
+  schluessel?: string
   anhaenge: { dokument_id: string; name: string }[]
 }
 

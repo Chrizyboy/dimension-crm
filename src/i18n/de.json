@@ -1733,7 +1733,27 @@
     "einsatz_art_ungueltig": "Diese Einsatz-Art gibt es nicht.",
     "service_notiz_leer": "Bitte einen Text eingeben.",
     "service_nicht_gefunden": "Diesen Service-Fall gibt es nicht mehr.",
-    "wartung_nicht_aktiv": "Der Vertrag ist nicht aktiv."
+    "wartung_nicht_aktiv": "Der Vertrag ist nicht aktiv.",
+    "einkauf_kein_recht": "Dafür braucht es das Recht «Preise».",
+    "einkauf_nicht_gefunden": "Bestellung nicht gefunden.",
+    "einkauf_nicht_entwurf": "Nur im Entwurf änderbar.",
+    "einkauf_keine_positionen": "Die Bestellung hat noch keine Positionen.",
+    "einkauf_mail_unterwegs": "Die Bestell-Mail ist schon im Ausgangskorb.",
+    "einkauf_nicht_freigegeben": "Die Bestellung ist nicht freigegeben.",
+    "einkauf_nicht_stornierbar": "Diese Bestellung lässt sich nicht mehr stornieren.",
+    "einkauf_grund_fehlt": "Bitte einen Grund angeben.",
+    "einkauf_nicht_bestellt": "Die Bestellung ist noch nicht bestellt.",
+    "einkauf_menge_ungueltig": "Bitte eine gültige Menge eingeben.",
+    "einkauf_position_fehlt": "Position nicht gefunden.",
+    "einkauf_nichts_geliefert": "Bitte mindestens eine gelieferte Menge eingeben.",
+    "einkauf_art_ungueltig": "Unbekannte Buchung.",
+    "einkauf_material_fehlt": "Zeile der Materialliste nicht gefunden.",
+    "einkauf_artikel_fehlt": "Bitte einen Artikel wählen.",
+    "einkauf_lager_zu_wenig": "Im Lager ist nicht genug frei.",
+    "einkauf_mehr_als_reserviert": "Mehr als reserviert.",
+    "einkauf_unter_reserviert": "Der Bestand darf nicht unter die Reservierungen fallen.",
+    "einkauf_material_schon_da": "Es gibt schon eine Materialliste.",
+    "einkauf_keine_quelle": "Weder Kalkulation noch Offert-Angaben gefunden. Bitte Zeilen von Hand erfassen."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2402,7 +2422,8 @@
         "schluss": "Kommt vom Zahlungsplan",
         "material": "Material-Status",
         "elektro": "Elektro"
-      }
+      },
+      "materialliste": "Materialliste"
     },
     "zeitplan": {
       "dialogTitel": "Zeitplan der Baustelle",
@@ -2695,6 +2716,232 @@
       "nichts": "Keine Wartung in den nächsten 30 Tagen.",
       "mehr_one": "und {{count}} weitere",
       "mehr_other": "und {{count}} weitere"
+    }
+  },
+  "einkauf": {
+    "titel": "Einkauf & Material",
+    "beschreibung": "Material je Projekt, Bestellungen mit Freigabe und PDF per Mail, Wareneingang und Lager Bulle.",
+    "reiter": {
+      "bestellungen": "Bestellungen",
+      "material": "Material je Projekt",
+      "lager": "Lager",
+      "lieferanten": "Lieferanten"
+    },
+    "filter": "Filter",
+    "filterwert": {
+      "offen": "Offen",
+      "entwuerfe": "Freizugeben / zu senden",
+      "ueberfaellig": "Überfällig",
+      "geliefert": "Geliefert",
+      "alle": "Alle"
+    },
+    "suche": "Nummer, Lieferant, Projekt oder Kunde suchen",
+    "neu": "Neue Bestellung",
+    "neuFuer": "Neue Bestellung für {{nummer}}",
+    "neuText": "Lieferant und Lieferziel wählen; die Positionen kommen danach dazu.",
+    "anlegen": "Anlegen",
+    "waehlen": "Bitte wählen",
+    "leer": "Keine Bestellungen",
+    "leerText": "Bestellungen entstehen aus der Materialliste eines Projekts («Bestellvorschlag») oder mit «Neue Bestellung».",
+    "fuerLager": "Für das Lager",
+    "baustelle": "Direkt auf die Baustelle",
+    "artikelSuchen": "Artikel suchen (Name oder Nummer)",
+    "keinArtikel": "Kein Artikel gefunden.",
+    "freiePosition": "Als freie Position",
+    "gedeckt": "Alles gedeckt",
+    "fehlen_one": "{{count}} fehlt",
+    "fehlen_other": "{{count}} fehlen",
+    "keineListe": "Keine Materialliste",
+    "keineProjekte": "Keine offenen Projekte",
+    "keineProjekteText": "Hier erscheinen Aufträge und Baustellen.",
+    "projektSuche": "Projekt, Kunde oder Ort suchen",
+    "materialFilter": {
+      "fehlt": "Es fehlt noch etwas",
+      "mitListe": "Mit Materialliste",
+      "alle": "Alle offenen"
+    },
+    "spalte": {
+      "nummer": "Nr.",
+      "lieferant": "Lieferant",
+      "ziel": "Lieferziel",
+      "liefertermin": "Liefertermin",
+      "geliefert": "Geliefert",
+      "total": "Total EK",
+      "status": "Stand",
+      "projekt": "Projekt",
+      "kunde": "Kunde",
+      "baubeginn": "Baubeginn",
+      "material": "Material"
+    },
+    "mail": {
+      "wartet": "Mail wartet im Ausgangskorb",
+      "freigegeben": "Mail wird gesendet",
+      "wird_gesendet": "Mail wird gesendet",
+      "gesendet": "Mail gesendet",
+      "fehler": "Mail nicht gesendet",
+      "verworfen": "Mail verworfen"
+    },
+    "akte": {
+      "titel": "Bestellung",
+      "angaben": "Angaben",
+      "positionen": "Positionen",
+      "keinePositionen": "Noch keine Positionen. Artikel unten suchen und übernehmen.",
+      "freigeben": "Freigeben",
+      "zuruecknehmen": "Freigabe zurücknehmen",
+      "ohneMail": "Ohne Mail bestellt",
+      "senden": "Per Mail bestellen",
+      "wareneingang": "Wareneingang",
+      "stornieren": "Stornieren",
+      "pdf": "PDF ansehen",
+      "ueberfaellig": "Lieferung überfällig",
+      "ohneAdresse": "Beim Lieferanten fehlt die Bestell-Adresse. Sie lässt sich unter «Lieferanten» eintragen oder in der Mail von Hand eingeben."
+    },
+    "feld": {
+      "lieferant": "Lieferant",
+      "ziel": "Lieferziel",
+      "projekt": "Projekt",
+      "liefertermin": "Liefertermin",
+      "freigegeben": "Freigegeben",
+      "bestelltAm": "Bestellt am",
+      "geliefertAm": "Geliefert am",
+      "stornoGrund": "Grund",
+      "notiz": "Notiz",
+      "notizPlatzhalter": "Hinweis für den Lieferanten (steht im PDF)"
+    },
+    "pos": {
+      "bezeichnung": "Artikel",
+      "menge": "Menge",
+      "geliefert": "Geliefert",
+      "ek": "EK (CHF)",
+      "mengeVon": "Menge {{name}}",
+      "ekVon": "Einkaufspreis {{name}}",
+      "entfernen": "{{name}} entfernen"
+    },
+    "eingang": {
+      "titel": "Wareneingang {{nummer}}",
+      "lager": "Die Ware kommt ins {{lager}} und wird dort für das Projekt reserviert.",
+      "baustelle": "Die Ware ist direkt auf der Baustelle und zählt beim Projekt.",
+      "datum": "Geliefert am",
+      "offen": "Offen {{offen}} von {{bestellt}} {{einheit}}",
+      "mengeVon": "Gelieferte Menge {{name}}",
+      "buchen": "Wareneingang buchen"
+    },
+    "storno": {
+      "titel": "Bestellung {{nummer}} stornieren",
+      "text": "Die Bestellung bleibt sichtbar, wird aber nicht mehr bestellt.",
+      "bestellt": "Die Bestellung ist beim Lieferanten. Bitte den Grund angeben und dem Lieferanten selbst absagen."
+    },
+    "senden": {
+      "titel": "Bestellung {{nummer}} senden",
+      "pdf": "Das PDF wird erstellt …"
+    },
+    "mailtext": {
+      "betreff": "Bestellung {{nummer}}",
+      "betreffProjekt": "Bestellung {{nummer}} · Projekt {{referenz}}",
+      "text": "Guten Tag\n\nIm Anhang senden wir Ihnen unsere Bestellung {{nummer}}.\nGewünschter Liefertermin: {{termin}}\nUnsere Kundennummer: {{kundennummer}}\n\nBitte bestätigen Sie uns die Bestellung und den Liefertermin.\n\nFreundliche Grüsse"
+    },
+    "pdf": {
+      "titel": "Bestellung {{nummer}}",
+      "baustelle": "Baustelle",
+      "lieferadresse": "Lieferadresse",
+      "liefertermin": "Liefertermin",
+      "baldmoeglichst": "So bald wie möglich",
+      "referenz": "Unsere Referenz",
+      "kundennummer": "Unsere Kundennummer",
+      "pos": "Pos.",
+      "artikelnummer": "Art.-Nr.",
+      "bezeichnung": "Bezeichnung",
+      "menge": "Menge",
+      "bitte": "Bitte bestätigen Sie uns die Bestellung und den Liefertermin. Besten Dank.",
+      "gruss": "Freundliche Grüsse"
+    },
+    "material": {
+      "titel": "Materialliste",
+      "bau": "Bau ab {{datum}}",
+      "zumProjekt": "Zum Projekt",
+      "liste": "Materialliste",
+      "leer": "Noch keine Materialliste. «Vorschlagen» übernimmt sie aus der Kalkulation oder der Offerte.",
+      "bestellungen": "Bestellungen",
+      "keineBestellung": "Noch keine Bestellung für dieses Projekt.",
+      "neueBestellung": "Neue Bestellung",
+      "zeile": "Zeile",
+      "vorschlagen": "Vorschlagen",
+      "bestellvorschlag": "Bestellvorschlag",
+      "da": "Da",
+      "unterwegs": "Unterwegs",
+      "fehlt": "Fehlt",
+      "ohneArtikel": "ohne Artikel",
+      "aktionen": "Aktionen für {{name}}",
+      "reservieren": "{{menge}} aus dem Lager reservieren",
+      "ausgeben": "{{menge}} an die Baustelle ausgeben",
+      "freigeben": "Reservierung aufheben",
+      "entfernen": "Entfernen"
+    },
+    "zeile": {
+      "neu": "Neue Zeile",
+      "bearbeiten": "Zeile bearbeiten",
+      "text": "Artikel aus der Preisliste wählen oder frei beschreiben.",
+      "artikel": "Artikel",
+      "bezeichnung": "Bezeichnung",
+      "ohneArtikel": "Ohne Artikel kann diese Zeile nicht automatisch bestellt werden.",
+      "menge": "Menge",
+      "einheit": "Einheit"
+    },
+    "lager": {
+      "artikel": "Artikel",
+      "bestand": "Bestand",
+      "reserviert": "Reserviert",
+      "frei": "Frei",
+      "unterwegs": "Unterwegs",
+      "mindest": "Mindestmenge",
+      "mindestHinweis": "Darunter erscheint der Artikel bei «Nachbestellen». Leer = keine Warnung.",
+      "suche": "Artikel suchen",
+      "nachbestellen": "Nachbestellen",
+      "buchen": "Lager buchen",
+      "buchenText": "Eingang, Entnahme, Korrektur oder Inventur ohne Bestellung.",
+      "stand": "Bestand {{bestand}} {{einheit}}, davon {{reserviert}} reserviert",
+      "art": "Buchung",
+      "gezaehlt": "Gezählter Bestand",
+      "korrekturHinweis": "Minus für weniger, z. B. -2",
+      "leer": "Lager ist leer",
+      "leerText": "Bestand entsteht mit dem Wareneingang oder mit «Lager buchen».",
+      "arten": {
+        "eingang": "Eingang",
+        "entnahme": "Entnahme",
+        "korrektur": "Korrektur",
+        "inventur": "Inventur"
+      },
+      "filter": {
+        "alle": "Alle",
+        "unter": "Unter Mindestmenge",
+        "reserviert": "Reserviert"
+      }
+    },
+    "lieferant": {
+      "name": "Name",
+      "mail": "Bestell-Mail",
+      "ohneMail": "Keine Adresse",
+      "kundennummer": "Unsere Kundennummer",
+      "telefon": "Telefon",
+      "sprache": "Sprache der Bestellung",
+      "stand": "Stand",
+      "aktiv": "Aktiv",
+      "inaktiv": "Inaktiv",
+      "neu": "Neuer Lieferant",
+      "leer": "Keine Lieferanten",
+      "text": "Bestellungen gehen an die Bestell-Mail, in der gewählten Sprache."
+    },
+    "pruefung": {
+      "name": "Bitte einen Namen eingeben."
+    },
+    "heute": {
+      "titel": "Einkauf",
+      "oeffnen": "Einkauf",
+      "nichts": "Nichts freizugeben, nichts überfällig.",
+      "entwurf": "Freigeben",
+      "freigegeben": "Senden",
+      "unter_one": "{{count}} Artikel unter Mindestmenge",
+      "unter_other": "{{count}} Artikel unter Mindestmenge"
     }
   }
 }
