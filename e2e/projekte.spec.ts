@@ -33,6 +33,8 @@ async function testkunde(page: Page) {
 }
 
 test('Projekte: Baustellen, Zeitplan, Bewilligungen und Akte', async ({ page }) => {
+  // Sieben Prüfungen auf Barrierefreiheit über grosse Tabellen (mit Importdaten mehrere hundert Projekte).
+  test.slow()
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/projects')
   await expect(page.getByRole('heading', { name: 'Projekte & Montage', level: 1 })).toBeVisible()
