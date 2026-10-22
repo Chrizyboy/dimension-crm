@@ -29,7 +29,7 @@ select results_eq($$ select s.kuerzel from public.lagerorte l join public.stando
   array['bulle'], 'eigenes Lager nur in Bulle');
 select is((select count(*) from public.ablauf_vorlagen), 4::bigint, 'Abläufe für PV, Wärmepumpe, Speicher, Wallbox');
 select is((select count(*) from public.ablauf_schritte s join public.ablauf_vorlagen v on v.id = s.ablauf_vorlage_id where v.schluessel = 'pv'),
-  20::bigint, 'PV-Ablauf hat die 20 Schritte des V233-Fahrplans');
+  21::bigint, 'PV-Ablauf hat die 20 Schritte des V233-Fahrplans plus Inbetriebnahme (Phase 9)');
 select is((select count(*) from public.auswahlwerte where liste = 'verkaufsstufe' and not eigenschaften ? 'herkunft'), 7::bigint,
   'sieben Verkaufsstufen aus der Vorlage (dazu «Angeschrieben» aus Phase 8b)');
 select ok((select count(*) from public.lieferanten where name in ('Krannich', 'Solarmarkt', 'Tritec', 'PM Green')) = 4, 'die vier Hauptlieferanten sind angelegt');

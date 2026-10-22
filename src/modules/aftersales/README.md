@@ -1,27 +1,32 @@
-# Modul: Service
+# Modul: Service & Garantie
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Erfasst Störungen, Reklamationen, Garantiefälle und Kontrollen nach dem Bau und hält die Daten jeder gebauten Anlage fest.
 
-**Stand:** Platzhalter – wird in Phase 9 gebaut.
+**Stand:** gebaut in Phase **9** (V233: Service V49). Entscheid: `docs/entscheidungen/0018-projekte-service-wartung.md`.
+
+## So läuft es
+
+1. «Neuer Fall»: Kunde wählen, Anlage (falls vorhanden), worum es geht, Kategorie, Priorität, Zuständig, Termin, Garantie. Die Nummer S001 … vergibt die Datenbank.
+2. In der Akte Stand, Priorität und Termin direkt ändern, Notizen in den Verlauf, Fotos und Rapporte als Anhänge, «Aufgabe erstellen» für die Aufgabenliste, «Erledigt».
+3. Reiter «Anlagen»: IBN, Garantie, nächste Kontrolle, Monitoring und Komponenten mit Seriennummer. Anlagen entstehen mit der IBN im Projekt.
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- Besitzt: `service_faelle`, `anlagen`.
+- Schreibt: `aufgaben` (Bezug `service_faelle`), `dokumente` und Speicher `dokumente/service/<fall>/…`.
+- Liest: `kontakte`, `objekte`, `projekte`, `personen`, `auswahlwerte` (Kategorie, Priorität, Stand, Komponenten).
+- Abläufe: `service_notiz`; Nummer und Erledigt-Datum setzt ein Trigger.
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `src/services/kontakte.ts` (über `KundeWahl`), `src/services/dokumente.ts`, `src/services/fachfehler.ts`, `src/services/meldungen.ts`.
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine.
+- **hört auf:** keine.
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Seite, Fall-Liste, Fall-Akte, Dialoge, Anlagen, Startseiten-Karte
+- `hooks/`, `services/`, `lib/` (Fälligkeit), `types.ts`, `schema.ts`, `index.ts`

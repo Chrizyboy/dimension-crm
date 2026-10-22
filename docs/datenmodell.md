@@ -121,3 +121,14 @@ Siehe Entscheid 0016 und `docs/integrationen.md`.
 - Einstellung `ausschreibungen`: Rollen (Kürzel), Fahrzeit, Kantone, CPV-Codes, Amtsblatt-Rubriken, Stichworte, Zeiten, Vorlagen DE/FR, Signatur, PS. Verkaufsstufe `angeschrieben` (nur für Leads aus dem Monitor). Die Einstellung ändert nur die Administration (Trigger `intern.einstellung_schuetzen`). Offene Anschreiben folgen ihrem Dossier in den Papierkorb und zurück.
 
 Siehe Entscheid 0017.
+
+## Projekte, Service und Wartung (Phase 9)
+
+- **`ablauf_schritte`** erweitert: `bewilligung`, `elektriker` (Markierung für die Reiter Bewilligungen und Checkliste), `auto` (woraus sich der Stand ergibt), `hinweis_de`/`_fr`, `frist_nach` + `frist_tage`. Neuer Schritt `ibn` in jeder Vorlage. **`projekt_schritte`**: `eingereicht_am`. **`projekte`**: `bau_vorher` (Stand vor dem letzten Bau-Schritt, für «Rückgängig»).
+- **Sichten:** `projekt_fahrplan` (je Projekt und Schritt: Stand, automatisch, Frist, überfällig, bald) und `projekt_stand` (Zusammenfassung: Phasen, nächster Schritt, Bewilligungen offen/spät, Checkliste). `abwesenheiten_alle` = CRM-Abwesenheiten plus Outlook «Abwesend».
+- **`einsaetze`**: `personen` (uuid[]), `subunternehmer_id`; Art `intern`/`extern`/`geplant`. **`subunternehmer`**: Mail, Telefon, Sprache, Notiz. **`subunternehmer_auftraege`**: angefragt/bestätigt am, Notiz.
+- **`service_faelle`**: Nummer S001 … (Trigger), Erledigt-Datum folgt dem Stand, Verlauf als JSON. **`anlagen`**: Komponenten [{art, hersteller, modell, anzahl, seriennummer, garantie_bis}], Monitoring {hersteller, link, kennung}, Notiz.
+- **`wartungsvertraege`**: Nummer W001 …, `projekt_id`, `start_am`, `laufzeit_jahre`, `status` (aktiv, gekündigt, beendet), `sprache`, `notiz`; Leistungen beim Abschluss aus der Einstellung `wartung_leistungen` kopiert; erste Wartung = Start + Rhythmus.
+- **Abläufe:** `projekt_schritt_setzen`, `projekt_bau_planen`, `projekt_bau_zuruecknehmen`, `projekt_bau_rueckgaengig`, `projekt_zeitplan_speichern`, `service_notiz`, `wartung_erledigt`. Fehler als Schlüssel `projekt.*`, `einsatz.*`, `service.*`, `wartung.*`.
+
+Siehe Entscheid 0018.

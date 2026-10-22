@@ -12,6 +12,9 @@ import { formatChf, formatDatum, formatTelefon } from '@/lib/format'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { darfModul } from '@/lib/rechte'
 import { plattformName } from '@/lib/plattform'
+import { ServiceHeute, meta as serviceMeta } from '@/modules/aftersales'
+import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
+import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { pruefeVerbindung, supabase } from '@/services/supabase'
@@ -75,6 +78,26 @@ export function Startseite() {
         <Suspense>
           <AusschreibungenHeute />
         </Suspense>
+      )}
+
+      {supabase && ich && (
+        <div className="grid items-start gap-4 md:grid-cols-3">
+          {darfModul(projekteMeta, ich) && (
+            <Suspense>
+              <ProjekteHeute />
+            </Suspense>
+          )}
+          {darfModul(serviceMeta, ich) && (
+            <Suspense>
+              <ServiceHeute />
+            </Suspense>
+          )}
+          {darfModul(wartungMeta, ich) && (
+            <Suspense>
+              <WartungHeute />
+            </Suspense>
+          )}
+        </div>
       )}
 
       <div className="grid items-start gap-6 md:grid-cols-[1.5fr_1fr]">

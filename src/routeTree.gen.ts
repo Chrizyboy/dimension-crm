@@ -11,13 +11,16 @@
 import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as ModulRouteImport } from './app/$modul'
+import { Route as AftersalesRouteImport } from './app/aftersales'
 import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
 import { Route as ContactsRouteImport } from './app/contacts'
+import { Route as ContractsRouteImport } from './app/contracts'
 import { Route as CustomersRouteImport } from './app/customers'
 import { Route as DesignRouteImport } from './app/design'
 import { Route as KontoRouteImport } from './app/konto'
 import { Route as OutboxRouteImport } from './app/outbox'
 import { Route as PricingRouteImport } from './app/pricing'
+import { Route as ProjectsRouteImport } from './app/projects'
 import { Route as QuotesRouteImport } from './app/quotes'
 import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
@@ -34,6 +37,11 @@ const ModulRoute = ModulRouteImport.update({
   path: '/$modul',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AftersalesRoute = AftersalesRouteImport.update({
+  id: '/aftersales',
+  path: '/aftersales',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BenachrichtigungenRoute = BenachrichtigungenRouteImport.update({
   id: '/benachrichtigungen',
   path: '/benachrichtigungen',
@@ -42,6 +50,11 @@ const BenachrichtigungenRoute = BenachrichtigungenRouteImport.update({
 const ContactsRoute = ContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractsRoute = ContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CustomersRoute = CustomersRouteImport.update({
@@ -67,6 +80,11 @@ const OutboxRoute = OutboxRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuotesRoute = QuotesRouteImport.update({
@@ -98,13 +116,16 @@ const WorkcontractsRoute = WorkcontractsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
+  '/aftersales': typeof AftersalesRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
+  '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
+  '/projects': typeof ProjectsRoute
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
@@ -114,13 +135,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
+  '/aftersales': typeof AftersalesRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
+  '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
+  '/projects': typeof ProjectsRoute
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
@@ -131,13 +155,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
+  '/aftersales': typeof AftersalesRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
+  '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
   '/konto': typeof KontoRoute
   '/outbox': typeof OutboxRoute
   '/pricing': typeof PricingRoute
+  '/projects': typeof ProjectsRoute
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
@@ -149,13 +176,16 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$modul'
+    | '/aftersales'
     | '/benachrichtigungen'
     | '/contacts'
+    | '/contracts'
     | '/customers'
     | '/design'
     | '/konto'
     | '/outbox'
     | '/pricing'
+    | '/projects'
     | '/quotes'
     | '/sales'
     | '/settings'
@@ -165,13 +195,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$modul'
+    | '/aftersales'
     | '/benachrichtigungen'
     | '/contacts'
+    | '/contracts'
     | '/customers'
     | '/design'
     | '/konto'
     | '/outbox'
     | '/pricing'
+    | '/projects'
     | '/quotes'
     | '/sales'
     | '/settings'
@@ -181,13 +214,16 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$modul'
+    | '/aftersales'
     | '/benachrichtigungen'
     | '/contacts'
+    | '/contracts'
     | '/customers'
     | '/design'
     | '/konto'
     | '/outbox'
     | '/pricing'
+    | '/projects'
     | '/quotes'
     | '/sales'
     | '/settings'
@@ -198,13 +234,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulRoute: typeof ModulRoute
+  AftersalesRoute: typeof AftersalesRoute
   BenachrichtigungenRoute: typeof BenachrichtigungenRoute
   ContactsRoute: typeof ContactsRoute
+  ContractsRoute: typeof ContractsRoute
   CustomersRoute: typeof CustomersRoute
   DesignRoute: typeof DesignRoute
   KontoRoute: typeof KontoRoute
   OutboxRoute: typeof OutboxRoute
   PricingRoute: typeof PricingRoute
+  ProjectsRoute: typeof ProjectsRoute
   QuotesRoute: typeof QuotesRoute
   SalesRoute: typeof SalesRoute
   SettingsRoute: typeof SettingsRoute
@@ -228,6 +267,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModulRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aftersales': {
+      id: '/aftersales'
+      path: '/aftersales'
+      fullPath: '/aftersales'
+      preLoaderRoute: typeof AftersalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/benachrichtigungen': {
       id: '/benachrichtigungen'
       path: '/benachrichtigungen'
@@ -240,6 +286,13 @@ declare module '@tanstack/react-router' {
       path: '/contacts'
       fullPath: '/contacts'
       preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contracts': {
+      id: '/contracts'
+      path: '/contracts'
+      fullPath: '/contracts'
+      preLoaderRoute: typeof ContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/customers': {
@@ -275,6 +328,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quotes': {
@@ -318,13 +378,16 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulRoute: ModulRoute,
+  AftersalesRoute: AftersalesRoute,
   BenachrichtigungenRoute: BenachrichtigungenRoute,
   ContactsRoute: ContactsRoute,
+  ContractsRoute: ContractsRoute,
   CustomersRoute: CustomersRoute,
   DesignRoute: DesignRoute,
   KontoRoute: KontoRoute,
   OutboxRoute: OutboxRoute,
   PricingRoute: PricingRoute,
+  ProjectsRoute: ProjectsRoute,
   QuotesRoute: QuotesRoute,
   SalesRoute: SalesRoute,
   SettingsRoute: SettingsRoute,
