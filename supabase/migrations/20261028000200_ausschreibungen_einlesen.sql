@@ -382,7 +382,7 @@ begin
       perform intern.akquise_vorbereiten(v_id);
     end if;
   end if;
-  return jsonb_build_object('aktion', 'neu', 'id', v_id);
+  return jsonb_build_object('aktion', 'neu', 'id', v_id, 'haupt', v_haupt);
 end
 $$;
 
@@ -403,7 +403,8 @@ begin
   if nullif(trim(p ->> 'quell_url'), '') is null then raise exception using errcode = 'P0001', message = 'ausschreibung.quelle_fehlt'; end if;
   r := intern.as_speichern(p || jsonb_build_object('quelle', coalesce(nullif(p ->> 'quelle', ''), 'hand'),
                                                    'quell_id', coalesce(nullif(p ->> 'quell_id', ''), gen_random_uuid()::text)), true);
-  return (r ->> 'id')::uuid;
+  -- Gehört die Meldung zu einem bestehenden Dossier, dieses öffnen.
+  return coalesce((r ->> 'haupt')::uuid, (r ->> 'id')::uuid);
 end
 $$;
 
