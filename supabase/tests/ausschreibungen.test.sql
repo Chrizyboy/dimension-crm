@@ -3,7 +3,7 @@
 -- Rechte (Andy bewilligt, Chris sendet), Lead erst beim Senden, Antwort erkennen und Quellen-Kontrolle.
 -- Ausführen: npm run db:test
 begin;
-select plan(45);
+select plan(46);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-00000008b0a1', 'as-andy@test.local'),
@@ -78,6 +78,8 @@ select throws_ok(format($$ select public.anschreiben_bewilligen(array[%L]::uuid[
   (select s.id from public.anschreiben s where s.ausschreibung_id = (select id from t where name = 'firma'))),
   'ausschreibung.kein_recht', 'Verkauf darf nicht bewilligen');
 select throws_ok($$ select public.ausschreibungen_pruefen() $$, 'ausschreibung.kein_recht', 'den täglichen Lauf startet nur der Server');
+select throws_ok($$ update public.einstellungen set wert = wert || '{"bewilligen": ["as_vera"]}' where schluessel = 'ausschreibungen' $$,
+  'ausschreibung.kein_recht', 'die Regeln (wer bewilligt) ändert nur die Administration');
 select lives_ok(format($$ select public.dossier_kontakt_speichern(jsonb_build_object('ausschreibung_id', %L, 'rolle', 'gu',
   'art', 'firma', 'name', 'Test GU AG', 'email', 'gu@gu.test', 'quelle_link', 'https://gu.test')) $$, (select id from t where name = 'leer')),
   'Innendienst erfasst den Kontakt mit Quelle');
