@@ -5,7 +5,7 @@
 // Echte Konten prüft dieser Test NICHT; dafür die Knöpfe «Testen» auf der Seite «Verbindungen».
 
 import { execFileSync, spawn } from 'node:child_process'
-import { randomBytes, randomUUID } from 'node:crypto'
+import { randomBytes, randomInt, randomUUID } from 'node:crypto'
 import { writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -125,17 +125,22 @@ writeFileSync(
     `ZEITPLAN_SCHLUESSEL=${zeitplanSchluessel}`,
   ].join('\n'),
 )
-const serve = spawn('npx', ['supabase', 'functions', 'serve', '--env-file', envDatei], {
+// Direkt das CLI starten, als eigene Prozessgruppe: «npx» gibt das Beenden nicht weiter, und ein
+// übrig gebliebenes «functions serve» ersetzt beim nächsten Lauf den Container mitten im Test.
+const serve = spawn('node_modules/.bin/supabase', ['functions', 'serve', '--env-file', envDatei], {
   stdio: ['ignore', 'pipe', 'pipe'],
+  detached: true,
 })
 let protokoll = ''
 serve.stdout.on('data', (d) => (protokoll += d))
 serve.stderr.on('data', (d) => (protokoll += d))
 
 try {
-  for (let i = 0; i < 60; i++) {
-    const r = await fetch(`${API}/functions/v1/verbindungen`, { method: 'OPTIONS' }).catch(() => null)
-    if (r?.ok) break
+  // Bereit erst, wenn die Funktion zweimal hintereinander antwortet (nicht 502): beim Start kann noch ein
+  // alter Laufzeit-Container antworten, der gleich danach ersetzt wird.
+  for (let i = 0, gut = 0; i < 90 && gut < 3; i++) {
+    const r = await fetch(`${API}/functions/v1/verbindungen`, { method: 'POST', body: '{}' }).catch(() => null)
+    gut = r && r.status < 500 ? gut + 1 : 0
     await warte(1000)
   }
   const token = await anmelden()
@@ -143,6 +148,8 @@ try {
 
   // --- Testdaten: ein Lead mit Termin morgen 10 Uhr, Handynummer und Mail (erfunden) -----------------------
   const kennung = randomBytes(3).toString('hex')
+  // Eigene Telefonnummern pro Lauf, sonst hält die Dubletten-Suche die Anfrage für einen früheren Testlead
+  const nr = () => `079 ${randomInt(100, 999)} ${randomInt(10, 99)} ${randomInt(10, 99)}`
   const kundenMail = `integration-${kennung}@ersatz.test`
   const lead = (
     await rpc('lead_anlegen', {
@@ -337,7 +344,7 @@ try {
     receivedDateTime: new Date().toISOString(),
     from: { emailAddress: { address: 'anfrage@solar-guide.ch' } },
     body: {
-      content: `<p>Vorname</p><p>Sola</p><p>Nachname</p><p>${kennung}</p><p>PLZ</p><p>5630</p><p>Ort</p><p>Muri AG</p><p>Welche Dachform hat das Gebäude?</p><p>Flachdach</p><p>Ihre Telefonnummer</p><p>079 444 ${kennung.slice(0, 2)} 11</p>`,
+      content: `<p>Vorname</p><p>Sola</p><p>Nachname</p><p>${kennung}</p><p>PLZ</p><p>5630</p><p>Ort</p><p>Muri AG</p><p>Welche Dachform hat das Gebäude?</p><p>Flachdach</p><p>Ihre Telefonnummer</p><p>${nr()}</p>`,
     },
   })
   r = await funktion('microsoft', { aktion: 'anfragen_abholen' }, token)
@@ -363,7 +370,7 @@ try {
     `Subject: Leads Landingpage`,
     'Content-Type: text/html; charset=utf-8',
     '',
-    `<table><tr><td>Name</td><td>${emlName}</td></tr><tr><td>PLZ</td><td>1630</td></tr><tr><td>Telefon</td><td>079 555 ${kennung.slice(0, 2)} 22</td></tr></table>`,
+    `<table><tr><td>Name</td><td>${emlName}</td></tr><tr><td>PLZ</td><td>1630</td></tr><tr><td>Telefon</td><td>${nr()}</td></tr></table>`,
   ].join('\r\n')
   r = await funktion('microsoft', { aktion: 'mail_einlesen', eml }, token)
   ok(r.daten?.neu === 1, '.eml-Datei: Anfrage der Landingpage wird Lead', JSON.stringify(r.daten))
@@ -454,6 +461,21 @@ try {
   ok(r.daten?.fehler === 'nicht_verbunden', 'Nach dem Trennen kein Zugriff mehr auf Microsoft')
 
   // Testdaten in den Papierkorb (nie hart löschen)
+  // dazu die Leads aus den Anfragen (solar-guide, .eml) mit ihren Kontakten
+  const angefragt = await rest(
+    `verkauf_geschaefte?name=in.(${encodeURIComponent(`"${sgName}","${emlName}"`)})&select=verkaufschance_id,kontakt_id`,
+  )
+  for (const g of angefragt) {
+    for (const [tabelle, id] of [
+      ['verkaufschancen', g.verkaufschance_id],
+      ['kontakte', g.kontakt_id],
+    ]) {
+      await rest(`${tabelle}?id=eq.${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ geloescht_am: new Date().toISOString() }),
+      })
+    }
+  }
   await rest(`verkaufschancen?id=eq.${lead}`, {
     method: 'PATCH',
     body: JSON.stringify({ geloescht_am: new Date().toISOString() }),
@@ -467,7 +489,10 @@ try {
   console.error('Abbruch:', f)
   console.error(protokoll.split('\n').slice(-30).join('\n'))
 } finally {
-  serve.kill('SIGINT')
+  // Warten, bis «functions serve» seinen Container wirklich entfernt hat; sonst stört er den nächsten Lauf.
+  const beendet = new Promise((r) => serve.once('exit', r))
+  process.kill(-serve.pid, 'SIGINT')
+  await Promise.race([beendet, warte(15000)])
   stopp()
 }
 console.log(
