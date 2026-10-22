@@ -987,7 +987,8 @@
       "uebernehmen_other": "{{count}} Termine übernehmen",
       "slotTitel": "Freier Platz am {{datum}} um {{zeit}}",
       "slotText": "Leads ohne Termin, die nächsten zuerst. Ein Klick vereinbart den Termin.",
-      "keineLeads": "Keine offenen Leads mit Adresse."
+      "keineLeads": "Keine offenen Leads mit Adresse.",
+      "ausOutlook": "Aus Outlook laden"
     },
     "regionen": {
       "ohne": "Ohne Region",
@@ -1077,12 +1078,31 @@
     "sms": {
       "knopf": "SMS für morgen",
       "titel": "Erinnerungs-SMS für {{datum}}",
-      "text": "Text in der Sprache des Kunden. Senden kommt mit Phase 8 über den Ausgangskorb (mit Freigabe); bis dahin kopieren.",
+      "text": "Termine von morgen mit fertigem Text in der Sprache des Kunden. «Senden» schickt die SMS über den Ausgangskorb; jeder Termin bekommt höchstens eine.",
       "leer": "Morgen keine Termine",
       "leerText": "Sobald Termine für morgen vereinbart sind, stehen sie hier.",
       "keineNummer": "keine Nummer",
       "keinHandy": "keine Handynummer",
-      "kopieren": "Text kopieren"
+      "kopieren": "Text kopieren",
+      "automatisch": "Automatisch ab {{uhrzeit}} Uhr senden",
+      "alleSenden_one": "{{count}} SMS senden",
+      "alleSenden_other": "Alle {{count}} SMS senden",
+      "senden": "Senden"
+    },
+    "anfragen": {
+      "knopf": "Anfragen holen",
+      "outlook": "Aus Outlook abholen",
+      "datei": "Mail-Datei einlesen (.eml)"
+    },
+    "outlook": {
+      "titel": "Outlook",
+      "eingetragen": "Eingetragen bei {{person}}",
+      "oeffnen": "Öffnen",
+      "nicht": "Noch nicht in Outlook",
+      "kundeEinladen": "Kunde per Mail einladen",
+      "eintragen": "In Outlook eintragen",
+      "aktualisieren": "In Outlook aktualisieren",
+      "absagen": "In Outlook absagen"
     }
   },
   "offerten": {

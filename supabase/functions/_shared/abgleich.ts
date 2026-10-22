@@ -82,10 +82,13 @@ export interface AnfragenErgebnis {
   neu: number
   ergaenzt: number
   geloescht: number
+  /** Schon übernommen oder nicht als Anfrage erkannt. */
+  uebersprungen: number
   postfach_anfragen: 'ok' | 'kein_zugriff' | 'aus'
 }
 
-type MailMitInhalt = OutlookMail & { body?: { content?: string } }
+/** Eine Mail mit Inhalt (aus Outlook oder aus einer .eml-Datei). */
+export type MailMitInhalt = OutlookMail & { body?: { content?: string } }
 
 // Suchen wie V233 (sgSearch, lpImport, mxImport): direkt vom Absender, weitergeleitet und eigene Formulare.
 const SUCHEN: { suche: string; passt: RegExp }[] = [
@@ -96,7 +99,7 @@ const SUCHEN: { suche: string; passt: RegExp }[] = [
 ]
 
 /** Liest eine Mail als Anfrage (oder als Löschmeldung der Messe-App) und übergibt sie der Datenbank. */
-async function anfrageVerarbeiten(m: MailMitInhalt, e: AnfragenErgebnis): Promise<void> {
+export async function anfrageVerarbeiten(m: MailMitInhalt, e: AnfragenErgebnis): Promise<void> {
   const kennung = m.internetMessageId ?? m.id
   const betreff = (m.subject ?? '').replace(/^((WG|FW|Fwd|AW|RE|TR)\s*:\s*)+/i, '')
   const inhalt = m.body?.content ?? m.bodyPreview ?? ''
@@ -114,6 +117,7 @@ async function anfrageVerarbeiten(m: MailMitInhalt, e: AnfragenErgebnis): Promis
         : anfrageErkennen(inhalt, betreff, m.from?.emailAddress?.address)
   if (!anfrage) {
     await dienst.rpc('anfrage_uebersprungen', { p_kennung: kennung, p_quelle: 'unbekannt' })
+    e.uebersprungen++
     return
   }
   const r = await dienst.rpc<{ ergebnis: string }>('anfrage_uebernehmen', {
@@ -121,6 +125,7 @@ async function anfrageVerarbeiten(m: MailMitInhalt, e: AnfragenErgebnis): Promis
   })
   if (r.ergebnis === 'neu') e.neu++
   else if (r.ergebnis === 'ergaenzt') e.ergaenzt++
+  else e.uebersprungen++
 }
 
 /** Anfragen aus dem eigenen Postfach und aus info@ (Stellvertretung) holen und als Leads übernehmen. */
@@ -129,6 +134,7 @@ export async function anfragenAbholen(personId: string, s: MsEinstellungen): Pro
     neu: 0,
     ergaenzt: 0,
     geloescht: 0,
+    uebersprungen: 0,
     postfach_anfragen: s.postfach_anfragen ? 'ok' : 'aus',
   }
   const seit = tageZurueck(s.anfragen_tage ?? 14)

@@ -84,6 +84,8 @@ export async function ladeTourEinstellungen(): Promise<TourEinstellungen> {
 /** Vorlage der SMS am Vortag (V172). */
 export interface SmsVorlage {
   aktiv: boolean
+  /** Ab Phase 8: der Zeitplan sendet ab `uhrzeit` ohne Freigabe (nur wenn ausdrücklich eingeschaltet). */
+  automatisch?: boolean
   uhrzeit: string
   absender: string
   text_de: string

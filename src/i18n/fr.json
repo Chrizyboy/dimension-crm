@@ -987,7 +987,8 @@
       "uebernehmen_other": "Reprendre {{count}} rendez-vous",
       "slotTitel": "Créneau libre le {{datum}} à {{zeit}}",
       "slotText": "Leads sans rendez-vous, les plus proches d’abord. Un clic fixe le rendez-vous.",
-      "keineLeads": "Aucun lead ouvert avec adresse."
+      "keineLeads": "Aucun lead ouvert avec adresse.",
+      "ausOutlook": "Charger depuis Outlook"
     },
     "regionen": {
       "ohne": "Sans région",
@@ -1077,12 +1078,31 @@
     "sms": {
       "knopf": "SMS pour demain",
       "titel": "SMS de rappel pour le {{datum}}",
-      "text": "Texte dans la langue du client. L’envoi arrive en phase 8 via la boîte d’envoi (avec validation) ; d’ici là, copier.",
+      "text": "Rendez-vous de demain avec un texte prêt dans la langue du client. « Envoyer » passe par la boîte d'envoi ; chaque rendez-vous reçoit au plus un SMS.",
       "leer": "Aucun rendez-vous demain",
       "leerText": "Dès que des rendez-vous sont fixés pour demain, ils apparaissent ici.",
       "keineNummer": "pas de numéro",
       "keinHandy": "pas de mobile",
-      "kopieren": "Copier le texte"
+      "kopieren": "Copier le texte",
+      "automatisch": "Envoyer automatiquement dès {{uhrzeit}}",
+      "alleSenden_one": "Envoyer {{count}} SMS",
+      "alleSenden_other": "Envoyer les {{count}} SMS",
+      "senden": "Envoyer"
+    },
+    "anfragen": {
+      "knopf": "Récupérer les demandes",
+      "outlook": "Récupérer depuis Outlook",
+      "datei": "Lire un fichier e-mail (.eml)"
+    },
+    "outlook": {
+      "titel": "Outlook",
+      "eingetragen": "Inscrit chez {{person}}",
+      "oeffnen": "Ouvrir",
+      "nicht": "Pas encore dans Outlook",
+      "kundeEinladen": "Inviter le client par e-mail",
+      "eintragen": "Inscrire dans Outlook",
+      "aktualisieren": "Mettre à jour dans Outlook",
+      "absagen": "Annuler dans Outlook"
     }
   },
   "offerten": {

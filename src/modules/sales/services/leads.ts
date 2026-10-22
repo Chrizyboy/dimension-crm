@@ -172,7 +172,7 @@ export async function ladeLeadDetails(verkaufschanceId: string) {
   const { data, error } = await db()
     .from('verkaufschancen')
     .select(
-      'finanzierung, zeithorizont, foerderung, notiz_intern, besichtigung, verlauf_text, standort_id, tour_person_id',
+      'finanzierung, zeithorizont, foerderung, notiz_intern, besichtigung, verlauf_text, standort_id, tour_person_id, outlook',
     )
     .eq('id', verkaufschanceId)
     .single()

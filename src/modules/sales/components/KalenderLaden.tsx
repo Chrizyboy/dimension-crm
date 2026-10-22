@@ -1,4 +1,4 @@
-import { FileUp, Save } from 'lucide-react'
+import { CalendarSync, FileUp, Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -6,15 +6,17 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Textarea } from '@/components/ui/input'
 import { meldeFehler } from '@/services/fehler'
+import { meldeIntegrationsFehler, microsoft, useMeineMicrosoftVerbindung } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useVerkaufAenderung } from '../hooks/useVerkauf'
 import { leseKalender, type Kalendertermin } from '../lib/kalenderdatei'
 import { ersetzeKalender } from '../services/planung'
 
 /**
  * Kalender einer Person laden (V233 CAL): eine .ics-Datei aus Outlook/Google, eine .csv oder eine aus
- * Outlook kopierte Liste. Ersetzt die bisher geladenen Termine im selben Zeitraum. Ab Phase 8 kommt
- * der Kalender direkt aus Microsoft 365.
+ * Outlook kopierte Liste. Ersetzt die bisher geladenen Termine im selben Zeitraum. Seit Phase 8 kommt
+ * der eigene Kalender direkt aus Microsoft 365 (für alle Verbundenen zusätzlich alle 15 Minuten).
  */
 export default function KalenderLaden({ personId, onSchliessen }: { personId: string; onSchliessen: () => void }) {
   const { t } = useTranslation()
@@ -22,6 +24,9 @@ export default function KalenderLaden({ personId, onSchliessen }: { personId: st
   const [quelle, setQuelle] = useState<'datei' | 'einfuegen'>('datei')
   const [text, setText] = useState('')
   const speichern = useVerkaufAenderung(() => ersetzeKalender(personId, quelle, termine ?? []))
+  const ich = useAnmeldung((z) => z.ich?.id)
+  const verbindung = useMeineMicrosoftVerbindung()
+  const ausOutlook = useVerkaufAenderung(() => microsoft.kalenderLaden())
 
   function lies(inhalt: string, q: 'datei' | 'einfuegen') {
     setQuelle(q)
@@ -62,6 +67,25 @@ export default function KalenderLaden({ personId, onSchliessen }: { personId: st
         }
       >
         <div className="flex flex-col gap-4">
+          {personId === ich && verbindung.data && (
+            <Button
+              variant="secondary"
+              className="self-start"
+              laedt={ausOutlook.isPending}
+              onClick={() => {
+                ausOutlook.mutate(undefined, {
+                  onSuccess: (r) => {
+                    melde('ok', { de: `${r.anzahl} Termine aus Outlook`, fr: `${r.anzahl} rendez-vous d’Outlook` })
+                    onSchliessen()
+                  },
+                  onError: meldeIntegrationsFehler,
+                })
+              }}
+            >
+              <CalendarSync />
+              {t('verkauf.kalender.ausOutlook')}
+            </Button>
+          )}
           <label className="hover:bg-muted/60 focus-within:ring-ring flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 border-dashed p-6 text-center text-sm focus-within:ring-2">
             <FileUp className="text-muted-foreground size-6" aria-hidden="true" />
             {t('verkauf.kalender.datei')}

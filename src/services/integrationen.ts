@@ -104,6 +104,8 @@ export interface AnfragenErgebnis {
   neu: number
   ergaenzt: number
   geloescht: number
+  /** Schon übernommen oder nicht als Anfrage erkannt. */
+  uebersprungen: number
   postfach_anfragen: 'ok' | 'kein_zugriff' | 'aus'
 }
 
@@ -115,6 +117,8 @@ export const microsoft = {
     rufeFunktion<{ anzahl: number }>('microsoft', 'kalender_laden', tage ? { tage } : {}),
   mailsAbgleichen: () => rufeFunktion<{ anzahl: number }>('microsoft', 'mails_abgleichen'),
   anfragenAbholen: () => rufeFunktion<AnfragenErgebnis>('microsoft', 'anfragen_abholen'),
+  /** Eine Anfrage aus einer .eml-Datei übernehmen (braucht keine Microsoft-Verbindung). */
+  mailEinlesen: (eml: string) => rufeFunktion<AnfragenErgebnis>('microsoft', 'mail_einlesen', { eml }),
   terminEintragen: (e: { verkaufschance_id: string; betreff?: string; text?: string; kunde_einladen: boolean }) =>
     rufeFunktion<{ outlook: Record<string, unknown> }>('microsoft', 'termin_eintragen', e),
   terminAbsagen: (verkaufschance_id: string) => rufeFunktion('microsoft', 'termin_absagen', { verkaufschance_id }),

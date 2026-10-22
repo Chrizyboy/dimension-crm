@@ -138,6 +138,8 @@ describe('.eml', () => {
   it('liest Betreff (kodiert) und Text aus mehrteiligen Mails', () => {
     const eml = [
       'From: anfrage@solar-guide.ch',
+      'Message-ID: <abc@solar-guide.ch>',
+      'Date: Wed, 21 Oct 2026 14:05:00 +0200',
       'Subject: =?utf-8?Q?solar-guide.ch:_Anfrage_von_Z=C3=BCri_Test_in_8000_Z=C3=BCrich?=',
       'Content-Type: multipart/alternative; boundary="b1"',
       '',
@@ -151,6 +153,8 @@ describe('.eml', () => {
     const m = emlLesen(eml)
     expect(m.betreff).toBe('solar-guide.ch: Anfrage von Züri Test in 8000 Zürich')
     expect(m.inhalt).toContain('Zürich')
+    expect(m.kennung).toBe('<abc@solar-guide.ch>')
+    expect(m.datum).toBe('2026-10-21T12:05:00.000Z')
     const a = anfrageErkennen(m.inhalt, m.betreff, m.von)!
     expect(a.objekt).toMatchObject({ plz: '8000', ort: 'Zürich' })
   })

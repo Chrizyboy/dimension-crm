@@ -17,6 +17,7 @@ import { ladeGeschaeft } from '../services/geschaefte'
 import type { Geschaeft } from '../types'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { LeadAngaben } from './LeadAngaben'
+import { OutlookTermin } from './OutlookTermin'
 import { besichtigungStand, type Besichtigung } from '../lib/besichtigung'
 import { LeadBesichtigung } from './LeadBesichtigung'
 import { LeadDateien, LeadVerlauf } from './LeadVerlauf'
@@ -176,6 +177,9 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
               </Button>
             </div>
 
+            {g.verkaufschanceId && g.stand === 'termin' && g.terminAm && akte.details.isSuccess && (
+              <OutlookTermin verkaufschanceId={g.verkaufschanceId} outlook={akte.details.data.outlook} />
+            )}
             <LeadAngaben g={g} details={akte.details.data} />
             {g.verkaufschanceId && (
               <AkteAbschnitt

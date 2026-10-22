@@ -418,8 +418,14 @@ function kopfText(s: string): string {
   )
 }
 
-/** .eml-Text → Betreff, Absender und Inhalt (Text bevorzugt, sonst HTML). */
-export function emlLesen(roh: string): { betreff: string; von: string; inhalt: string } {
+/** .eml-Text → Betreff, Absender, Message-ID, Datum und Inhalt (Text bevorzugt, sonst HTML). */
+export function emlLesen(roh: string): {
+  betreff: string
+  von: string
+  inhalt: string
+  kennung: string
+  datum: string
+} {
   const [kopf = '', ...rest] = roh.split(/\r?\n\r?\n/)
   const koepfe = kopf.replace(/\r?\n[ \t]+/g, ' ')
   const feld = (n: string) => kopfText(new RegExp(`^${n}:\\s*(.+)$`, 'im').exec(koepfe)?.[1]?.trim() ?? '')
@@ -442,7 +448,14 @@ export function emlLesen(roh: string): { betreff: string; von: string; inhalt: s
     if (/content-type:\s*text\/html/i.test(h)) html ??= inhalt
     else if (/content-type:\s*text\/plain/i.test(h) || !grenze) text ??= inhalt
   }
-  return { betreff: feld('Subject'), von: feld('From'), inhalt: text ?? html ?? koerper }
+  const datum = Date.parse(feld('Date'))
+  return {
+    betreff: feld('Subject'),
+    von: feld('From'),
+    inhalt: text ?? html ?? koerper,
+    kennung: feld('Message-ID'),
+    datum: Number.isNaN(datum) ? '' : new Date(datum).toISOString(),
+  }
 }
 
 /** Welche Art Anfrage ist diese Mail? Versucht Messe, solar-guide und Landingpage. */
