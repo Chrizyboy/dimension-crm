@@ -44,7 +44,7 @@ export function VertragDialog({
     laufzeit_jahre: v?.laufzeit_jahre ?? 3,
     rhythmus_monate: v?.rhythmus_monate ?? 12,
     preis: v?.preis_rappen ? formatChf(v.preis_rappen) : '',
-    sprache: v?.sprache ?? ('de'),
+    sprache: v?.sprache ?? 'de',
     status: v?.status ?? 'aktiv',
     notiz: v?.notiz ?? '',
   })

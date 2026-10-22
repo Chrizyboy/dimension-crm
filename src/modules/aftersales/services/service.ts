@@ -156,7 +156,7 @@ function alsAnlage({ objekt, projekt, komponenten, monitoring, ...a }: AnlageRoh
       seriennummer: k.seriennummer ?? '',
       garantie_bis: k.garantie_bis ?? null,
     })),
-    monitoring: monitoring && typeof monitoring === 'object' ? (monitoring) : null,
+    monitoring: monitoring && typeof monitoring === 'object' ? monitoring : null,
     kontakt_id: objekt?.kontakt_id ?? null,
     kunde: kundeName(objekt?.kontakt ?? null),
     adresse: [objekt?.strasse, [objekt?.plz, objekt?.ort].filter(Boolean).join(' ')].filter(Boolean).join(', '),
