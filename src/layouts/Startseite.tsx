@@ -15,6 +15,7 @@ import { plattformName } from '@/lib/plattform'
 import { ServiceHeute, meta as serviceMeta } from '@/modules/aftersales'
 import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
+import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -101,6 +102,11 @@ export function Startseite() {
           {darfModul(einkaufMeta, ich) && (
             <Suspense>
               <EinkaufHeute />
+            </Suspense>
+          )}
+          {darfModul(baustelleMeta, ich) && (
+            <Suspense>
+              <BaustelleHeute />
             </Suspense>
           )}
         </div>

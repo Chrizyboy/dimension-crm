@@ -11,6 +11,11 @@ insert into public.personen (kuerzel, name, email, rolle, sprache, standort_id) 
   ('seed_buchhaltung', 'Benoît Buchhaltung', 'buchhaltung@test.local', 'buchhaltung', 'fr', (select id from public.standorte where kuerzel = 'bulle'))
 on conflict (kuerzel) do nothing;
 
+-- Phase 9b: erfundener Monteur für die Handy-Ansicht «Baustelle & Rapporte».
+insert into public.personen (kuerzel, name, email, rolle, sprache, standort_id) values
+  ('seed_montage', 'Mario Montage', 'montage@test.local', 'montage', 'de', (select id from public.standorte where kuerzel = 'bulle'))
+on conflict (kuerzel) do nothing;
+
 -- Erfundene Finanzdaten, damit man sieht, wer was sieht. Kontakte bewusst nicht: sie würden
 -- Kundennummern belegen, die der Import der Vorlage braucht.
 insert into public.kreditor_zahlungen (firma, betrag_rappen, alt_id) values
