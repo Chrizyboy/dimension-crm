@@ -3211,6 +3211,7 @@
       "knopf": "Dossier d’installation",
       "titel": "Créer le dossier d’installation",
       "beschreibung": "Un PDF à remettre au client. Il est déposé dans le projet.",
+      "immerOhne": "Toujours inclus : page de garde avec installation et garantie et le protocole MES signé. Aucune fiche technique dans le matériel du projet. En plus ces documents :",
       "immer": "Toujours inclus : page de garde avec installation et garantie, protocole MES signé et les liens vers {{anzahl}} fiches techniques. En plus ces documents :",
       "keineDokumente": "Le projet n’a pas encore de plans ou attestations en PDF ou image.",
       "erstellen": "Créer le dossier",

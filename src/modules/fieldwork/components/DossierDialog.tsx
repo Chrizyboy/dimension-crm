@@ -103,7 +103,11 @@ export function DossierDialog({ rapport: r, onSchliessen }: { rapport: Rapport; 
           <Skelett className="h-40" />
         ) : (
           <div className="flex flex-col gap-3 text-sm">
-            <p>{t('baustelle.dossier.immer', { anzahl: a.datenblaetter.length })}</p>
+            <p>
+              {a.datenblaetter.length
+                ? t('baustelle.dossier.immer', { anzahl: a.datenblaetter.length })
+                : t('baustelle.dossier.immerOhne')}
+            </p>
             {a.quellen.length === 0 ? (
               <p className="text-muted-foreground">{t('baustelle.dossier.keineDokumente')}</p>
             ) : (

@@ -3211,6 +3211,7 @@
       "knopf": "Anlagedossier",
       "titel": "Anlagedossier erstellen",
       "beschreibung": "Ein PDF zur Übergabe an den Kunden. Es wird beim Projekt abgelegt.",
+      "immerOhne": "Immer dabei: Deckblatt mit Anlage und Garantie und das IBN-Protokoll mit Unterschrift. Datenblätter sind im Material des Projekts keine hinterlegt. Dazu diese Dokumente:",
       "immer": "Immer dabei: Deckblatt mit Anlage und Garantie, IBN-Protokoll mit Unterschrift und die Links zu {{anzahl}} Datenblättern. Dazu diese Dokumente:",
       "keineDokumente": "Beim Projekt liegen noch keine Pläne oder Nachweise als PDF oder Bild.",
       "erstellen": "Dossier erstellen",
