@@ -8,7 +8,9 @@
 - **`…0400_ausschreibungen_ablauf.sql`** – Senden: Mail in den Ausgangskorb, Brief zum Drucken, Anruf als Aufgabe. Erst jetzt entsteht der Lead («Angeschrieben», Wiedervorlage nach 5 Arbeitstagen). Antworten erkennt das CRM an der AS-Nummer; «keine Werbung» setzt den Absender auf die Sperrliste.
 - **`…0500_ausschreibungen_entscheide.sql`** – Entscheide wie «Teilnehmen» (legt die Submissions-Offerte und drei Fristen im Kalender mit Erinnerungen 7 und 2 Tage vorher an), «Nicht teilnehmen», «Später», «Beobachten», «Eingereicht», «Zuschlag», «Absage».
 - **`…0600_ausschreibungen_lauf.sql`** – Der tägliche Lauf (Beobachten wecken oder nach 6 Monaten archivieren, einmal nachfassen, an Bewilligen erinnern, stille Quellen melden), die Tageszahlen für Startseite und Glocke und der Trichter.
-- **`supabase/tests/ausschreibungen.test.sql`** – 43 Prüfungen: Spuren, Doppelte, Sperren, wer bewilligen und senden darf, Lead erst beim Senden, Fristen, Nachfassen nur einmal.
+- **`…0700_ausschreibungen_papierkorb.sql`** – Kommt ein Dossier in den Papierkorb, gehen seine offenen Anschreiben mit (und kommen beim Wiederherstellen zurück).
+- **`…0800_ausschreibungen_regeln_schuetzen.sql`** – Die Regeln (wer bewilligt, wer sendet) ändert nur die Administration, damit niemand die vier Augen umgehen kann.
+- **`supabase/tests/ausschreibungen.test.sql`** – 46 Prüfungen: Spuren, Doppelte, Sperren, wer bewilligen und senden darf, wer die Regeln ändert, Papierkorb, Lead erst beim Senden, Fristen, Nachfassen nur einmal.
 
 ## Server-Funktionen (`supabase/functions/`)
 
