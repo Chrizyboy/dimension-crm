@@ -214,7 +214,9 @@ begin
   if v_projekt is null and nullif(p ->> 'rapport_id', '') is not null then
     select r.projekt_id into v_projekt from public.rapporte r where r.id = (p ->> 'rapport_id')::uuid;
   end if;
-  if v_projekt is null then raise exception using errcode = 'P0001', message = 'baustelle.nachtrag_ohne_projekt'; end if;
+  if v_projekt is null and nullif(p ->> 'rapport_id', '') is null then
+    raise exception using errcode = 'P0001', message = 'baustelle.nachtrag_ohne_projekt';
+  end if;
   insert into public.nachtraege (id, projekt_id, rapport_id, beschreibung, stunden, material, betrag_rappen)
   values (v_id, v_projekt, nullif(p ->> 'rapport_id', '')::uuid, trim(p ->> 'beschreibung'),
           nullif(p ->> 'stunden', '')::numeric, coalesce(p -> 'material', '[]'), nullif(p ->> 'betrag_rappen', '')::bigint);

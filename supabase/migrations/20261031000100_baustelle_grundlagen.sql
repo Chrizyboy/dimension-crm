@@ -112,6 +112,10 @@ alter table public.nachtraege
   add column if not exists abgelehnt_grund text;
 alter table public.nachtraege
   add constraint nachtraege_status_check check (status in ('offen', 'vom_kunden_bestaetigt', 'abgelehnt', 'verrechnet'));
+-- Auch beim Service ohne Projekt gibt es Mehraufwand: dann hängt der Nachtrag nur am Rapport.
+alter table public.nachtraege alter column projekt_id drop not null;
+alter table public.nachtraege
+  add constraint nachtraege_bezug_check check (projekt_id is not null or rapport_id is not null);
 comment on column public.nachtraege.betrag_rappen is 'Preis exkl. MWST in Rappen; setzt das Büro (Recht preise), fliesst in die Schlussrechnung (Phase 10).';
 create index if not exists nachtraege_projekt_idx on public.nachtraege (projekt_id) where geloescht_am is null;
 
@@ -237,10 +241,13 @@ select r.*,
        (select count(*) from public.nachtraege n where n.rapport_id = r.id and n.geloescht_am is null)::int as nachtraege_anzahl
   from public.rapporte r
   left join public.projekte p on p.id = r.projekt_id
-  left join public.kontakte k on k.id = p.kontakt_id
-  left join public.objekte o on o.id = p.objekt_id
-  left join public.personen pe on pe.id = r.person_id
   left join public.service_faelle f on f.id = r.service_fall_id
+  left join public.anlagen a on a.id = f.anlage_id
+  left join public.wartungsvertraege w on w.id = r.wartungsvertrag_id
+  -- Service ohne Projekt: Kunde aus dem Fall (oder Vertrag), Adresse aus der Anlage.
+  left join public.kontakte k on k.id = coalesce(p.kontakt_id, f.kontakt_id, w.kontakt_id)
+  left join public.objekte o on o.id = coalesce(p.objekt_id, a.objekt_id)
+  left join public.personen pe on pe.id = r.person_id
  where r.geloescht_am is null;
 
 /** Zeiten mit Person, Projekt und Stunden (Ortszeit Schweiz), für Prüfung und Lohn-Export. */
@@ -266,9 +273,10 @@ select n.*,
        r.nummer as rapport_nummer,
        pe.name as person
   from public.nachtraege n
-  join public.projekte p on p.id = n.projekt_id
-  left join public.kontakte k on k.id = p.kontakt_id
+  left join public.projekte p on p.id = n.projekt_id
   left join public.rapporte r on r.id = n.rapport_id
+  left join public.service_faelle f on f.id = r.service_fall_id
+  left join public.kontakte k on k.id = coalesce(p.kontakt_id, f.kontakt_id)
   left join public.personen pe on pe.id = n.person_id
  where n.geloescht_am is null;
 

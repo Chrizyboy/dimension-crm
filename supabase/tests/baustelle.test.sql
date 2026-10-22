@@ -3,7 +3,7 @@
 -- seine Folgen (Montage fertig, IBN, Service, Wartung), Prüfung und Lohn-Export der Zeiten, Garantiefall.
 -- Ausführen: npm run db:test
 begin;
-select plan(37);
+select plan(38);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-00000000b9a1', 'p9b-mo@test.local'),
@@ -117,6 +117,10 @@ select is((select status || '/' || bau_status from public.projekte where id = '0
 -- Service-Rapport
 select public.rapport_speichern('{"id": "00000000-0000-0000-0000-00000000b903", "art": "service", "service_fall_id": "00000000-0000-0000-0000-00000000b9f1",
   "arbeiten": "Wechselrichter neu gestartet"}');
+select public.nachtrag_speichern('{"id": "00000000-0000-0000-0000-00000000b922", "rapport_id": "00000000-0000-0000-0000-00000000b903",
+  "beschreibung": "Überspannungsschutz ersetzt"}');
+select is((select kunde from public.nachtraege_liste where id = '00000000-0000-0000-0000-00000000b922'), 'Lea Beispiel',
+  'Nachtrag beim Service ohne Projekt, Kunde aus dem Fall');
 select throws_ok($$ select public.rapport_abschliessen('00000000-0000-0000-0000-00000000b903', '{"ohne_unterschrift": "Fernwartung"}') $$,
   'P0001', 'baustelle.verrechnung_fehlt', 'Service braucht die Verrechnung');
 select public.rapport_abschliessen('00000000-0000-0000-0000-00000000b903', '{"ohne_unterschrift": "Fernwartung", "verrechnung": "garantie", "fall_erledigt": true}');

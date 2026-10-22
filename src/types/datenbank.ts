@@ -3752,7 +3752,7 @@ export type Database = {
           material: NonNullable<Json>
           nummer: string
           person_id: string | null
-          projekt_id: string
+          projekt_id: string | null
           rapport_id: string | null
           status: string
           stunden: number | null
@@ -3774,7 +3774,7 @@ export type Database = {
           material?: NonNullable<Json>
           nummer?: string
           person_id?: string | null
-          projekt_id: string
+          projekt_id?: string | null
           rapport_id?: string | null
           status?: string
           stunden?: number | null
@@ -3795,7 +3795,7 @@ export type Database = {
           material?: NonNullable<Json>
           nummer?: string
           person_id?: string | null
-          projekt_id?: string
+          projekt_id?: string | null
           rapport_id?: string | null
           status?: string
           stunden?: number | null
