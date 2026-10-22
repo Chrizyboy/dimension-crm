@@ -2522,5 +2522,179 @@
         "hinweis": "Ces données servent à annoncer la rétribution unique auprès de Pronovo. L’annonce se fait en ligne ; vérifier séparément les subventions cantonales ou communales."
       }
     }
+  },
+  "kundeWahl": {
+    "platzhalter": "Chercher un nom, une entreprise ou un lieu",
+    "andere": "Choisir un autre client",
+    "keine": "Aucun résultat"
+  },
+  "service": {
+    "titel": "Service & garantie",
+    "beschreibung": "Pannes, réclamations, cas de garantie et contrôles des installations réalisées.",
+    "neu": "Nouveau cas",
+    "filter": "Cas",
+    "suche": "Chercher un numéro, un cas, un client ou un lieu",
+    "leer": "Aucun cas",
+    "leerText": "Les pannes et demandes après la construction apparaissent ici.",
+    "garantie": "Garantie",
+    "filterwert": {
+      "offen": "Ouverts",
+      "hoch": "Urgents",
+      "garantie": "Garantie",
+      "erledigt": "Terminés",
+      "alle": "Tous"
+    },
+    "reiter": {
+      "faelle": "Cas",
+      "anlagen": "Installations"
+    },
+    "spalte": {
+      "nummer": "N°",
+      "fall": "Cas",
+      "kategorie": "Catégorie",
+      "prio": "Priorité",
+      "status": "État",
+      "termin": "Rendez-vous"
+    },
+    "feld": {
+      "kunde": "Client",
+      "anlage": "Installation",
+      "titel": "De quoi s’agit-il ?",
+      "kategorie": "Catégorie",
+      "prioritaet": "Priorité",
+      "zustaendig": "Responsable",
+      "termin": "Rendez-vous",
+      "garantieFall": "Cas de garantie",
+      "beschreibung": "Description",
+      "status": "État"
+    },
+    "akte": {
+      "titel": "Cas de service",
+      "aufgabe": "Créer une tâche",
+      "erledigt": "Terminé",
+      "erledigtAm": "Terminé le {{datum}}",
+      "angaben": "Informations",
+      "verlauf": "Historique",
+      "erfasst": "Cas saisi",
+      "notiz": "Note pour l’historique",
+      "notizSpeichern": "Enregistrer la note",
+      "anhaenge": "Pièces jointes",
+      "hochladen": "Téléverser un fichier"
+    },
+    "anlagen": {
+      "ansicht": "Installations",
+      "alle": "Toutes",
+      "kontrolle": "Contrôle à faire",
+      "garantie": "Garantie échue bientôt",
+      "leer": "Aucune installation",
+      "leerText": "Les installations apparaissent quand un projet est terminé.",
+      "komponenten": "Composants",
+      "ibn": "MES",
+      "monitoring": "Monitoring",
+      "dazu": "Ajouter un composant",
+      "entfernen": "Retirer",
+      "feld": {
+        "ibn_am": "Mise en service",
+        "garantie_bis": "Garantie jusqu’au",
+        "naechste_kontrolle": "Prochain contrôle",
+        "leistung": "Puissance (kWc)",
+        "hersteller": "Fabricant",
+        "link": "Lien (https://…)",
+        "kennung": "Identifiant",
+        "art": "Type",
+        "modell": "Modèle",
+        "anzahl": "Quantité",
+        "seriennummer": "Numéro de série",
+        "notiz": "Note"
+      }
+    },
+    "heute": {
+      "titel": "Service",
+      "oeffnen": "Ouvrir",
+      "nichts": "Aucun cas ouvert.",
+      "hoch": "Cas urgents",
+      "offen": "Cas ouverts",
+      "kontrollen": "Contrôles dans 30 jours"
+    }
+  },
+  "wartung": {
+    "titel": "Contrats d’entretien",
+    "beschreibung": "Entretien récurrent avec prestations, rythme et contrat en PDF.",
+    "neu": "Nouveau contrat",
+    "bearbeiten": "Modifier le contrat {{nummer}}",
+    "filter": "Contrats",
+    "suche": "Chercher un numéro, un client ou un lieu",
+    "leer": "Aucun contrat",
+    "leerText": "Saisissez les contrats avec « Nouveau contrat », en général après la mise en service.",
+    "rhythmus_one": "Chaque mois",
+    "rhythmus_other": "Tous les {{count}} mois",
+    "jahre_one": "{{count}} an",
+    "jahre_other": "{{count}} ans",
+    "filterwert": {
+      "aktiv": "Actifs",
+      "faellig": "Dus dans 30 jours",
+      "alle": "Tous"
+    },
+    "spalte": {
+      "nummer": "N°",
+      "kunde": "Client",
+      "rhythmus": "Rythme",
+      "preis": "Prix par an",
+      "naechste": "Prochain entretien",
+      "status": "État"
+    },
+    "feld": {
+      "kunde": "Client",
+      "projekt": "Projet",
+      "start": "Début du contrat",
+      "laufzeit": "Durée (ans)",
+      "rhythmus": "Rythme",
+      "preis": "Prix par an TVA incl. (CHF)",
+      "sprache": "Langue du contrat",
+      "status": "État",
+      "leistungen": "Prestations",
+      "notiz": "Note",
+      "letzte": "Dernier entretien",
+      "naechste": "Prochain entretien"
+    },
+    "sprache": {
+      "de": "Allemand",
+      "fr": "Français"
+    },
+    "pruefung": {
+      "betrag": "Veuillez saisir un montant comme 480.00.",
+      "leistung": "Veuillez choisir au moins une prestation."
+    },
+    "akte": {
+      "titel": "Contrat d’entretien",
+      "pdf": "Contrat en PDF",
+      "bearbeiten": "Modifier",
+      "erledigt": "Entretien effectué",
+      "naechste": "Prochain entretien {{datum}}",
+      "angaben": "Informations",
+      "verlauf": "Entretiens effectués",
+      "keineWartung": "Aucun entretien enregistré."
+    },
+    "erledigt": {
+      "titel": "Entretien effectué",
+      "text": "Le prochain entretien est fixé selon le rythme du contrat.",
+      "am": "Effectué le",
+      "notiz": "Qu’est-ce qui a été fait ? (facultatif)"
+    },
+    "druck": {
+      "titel": "Contrat d’entretien {{nummer}}",
+      "bis": "jusqu’au {{datum}}",
+      "proJahr": "par an TVA incl.",
+      "bedingungen": "Le contrat est reconduit d’année en année s’il n’est pas résilié par écrit trois mois avant son échéance. Le matériel et les travaux hors des prestations mentionnées sont facturés selon le temps passé.",
+      "unterschriftKunde": "Lieu, date, signature du client",
+      "unterschriftFirma": "Lieu, date, Dimension Solaire"
+    },
+    "heute": {
+      "titel": "Entretiens",
+      "oeffnen": "Ouvrir",
+      "nichts": "Aucun entretien dans les 30 prochains jours.",
+      "mehr_one": "et {{count}} autre",
+      "mehr_other": "et {{count}} autres"
+    }
   }
 }

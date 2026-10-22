@@ -2522,5 +2522,179 @@
         "hinweis": "Diese Angaben dienen zur Anmeldung der Einmalvergütung bei Pronovo. Die Anmeldung erfolgt online; kantonale oder kommunale Förderungen separat prüfen."
       }
     }
+  },
+  "kundeWahl": {
+    "platzhalter": "Name, Firma oder Ort suchen",
+    "andere": "Anderen Kunden wählen",
+    "keine": "Keine Treffer"
+  },
+  "service": {
+    "titel": "Service & Garantie",
+    "beschreibung": "Störungen, Reklamationen, Garantiefälle und Nachkontrollen der gebauten Anlagen.",
+    "neu": "Neuer Fall",
+    "filter": "Fälle",
+    "suche": "Nummer, Fall, Kunde oder Ort suchen",
+    "leer": "Keine Fälle",
+    "leerText": "Hier erscheinen Störungen und Anfragen nach dem Bau.",
+    "garantie": "Garantie",
+    "filterwert": {
+      "offen": "Offen",
+      "hoch": "Dringend",
+      "garantie": "Garantie",
+      "erledigt": "Erledigt",
+      "alle": "Alle"
+    },
+    "reiter": {
+      "faelle": "Fälle",
+      "anlagen": "Anlagen"
+    },
+    "spalte": {
+      "nummer": "Nr.",
+      "fall": "Fall",
+      "kategorie": "Kategorie",
+      "prio": "Priorität",
+      "status": "Stand",
+      "termin": "Termin"
+    },
+    "feld": {
+      "kunde": "Kunde",
+      "anlage": "Anlage",
+      "titel": "Worum geht es?",
+      "kategorie": "Kategorie",
+      "prioritaet": "Priorität",
+      "zustaendig": "Zuständig",
+      "termin": "Termin",
+      "garantieFall": "Garantiefall",
+      "beschreibung": "Beschreibung",
+      "status": "Stand"
+    },
+    "akte": {
+      "titel": "Service-Fall",
+      "aufgabe": "Aufgabe erstellen",
+      "erledigt": "Erledigt",
+      "erledigtAm": "Erledigt am {{datum}}",
+      "angaben": "Angaben",
+      "verlauf": "Verlauf",
+      "erfasst": "Fall erfasst",
+      "notiz": "Notiz zum Verlauf",
+      "notizSpeichern": "Notiz speichern",
+      "anhaenge": "Anhänge",
+      "hochladen": "Datei hochladen"
+    },
+    "anlagen": {
+      "ansicht": "Anlagen",
+      "alle": "Alle",
+      "kontrolle": "Kontrolle fällig",
+      "garantie": "Garantie läuft ab",
+      "leer": "Keine Anlagen",
+      "leerText": "Anlagen entstehen, wenn ein Projekt abgeschlossen wird.",
+      "komponenten": "Komponenten",
+      "ibn": "IBN",
+      "monitoring": "Monitoring",
+      "dazu": "Komponente hinzufügen",
+      "entfernen": "Entfernen",
+      "feld": {
+        "ibn_am": "Inbetriebnahme",
+        "garantie_bis": "Garantie bis",
+        "naechste_kontrolle": "Nächste Kontrolle",
+        "leistung": "Leistung (kWp)",
+        "hersteller": "Hersteller",
+        "link": "Link (https://…)",
+        "kennung": "Anlage-Kennung",
+        "art": "Art",
+        "modell": "Modell",
+        "anzahl": "Anzahl",
+        "seriennummer": "Seriennummer",
+        "notiz": "Notiz"
+      }
+    },
+    "heute": {
+      "titel": "Service",
+      "oeffnen": "Öffnen",
+      "nichts": "Keine offenen Fälle.",
+      "hoch": "Dringende Fälle",
+      "offen": "Offene Fälle",
+      "kontrollen": "Kontrollen in 30 Tagen"
+    }
+  },
+  "wartung": {
+    "titel": "Wartungsverträge",
+    "beschreibung": "Wiederkehrende Wartung mit Leistungen, Rhythmus und Vertrag als PDF.",
+    "neu": "Neuer Vertrag",
+    "bearbeiten": "Vertrag {{nummer}} bearbeiten",
+    "filter": "Verträge",
+    "suche": "Nummer, Kunde oder Ort suchen",
+    "leer": "Keine Verträge",
+    "leerText": "Verträge erfassen Sie mit «Neuer Vertrag», meist nach der Inbetriebnahme.",
+    "rhythmus_one": "Jeden Monat",
+    "rhythmus_other": "Alle {{count}} Monate",
+    "jahre_one": "{{count}} Jahr",
+    "jahre_other": "{{count}} Jahre",
+    "filterwert": {
+      "aktiv": "Aktiv",
+      "faellig": "Fällig in 30 Tagen",
+      "alle": "Alle"
+    },
+    "spalte": {
+      "nummer": "Nr.",
+      "kunde": "Kunde",
+      "rhythmus": "Rhythmus",
+      "preis": "Preis pro Jahr",
+      "naechste": "Nächste Wartung",
+      "status": "Stand"
+    },
+    "feld": {
+      "kunde": "Kunde",
+      "projekt": "Projekt",
+      "start": "Vertragsbeginn",
+      "laufzeit": "Laufzeit (Jahre)",
+      "rhythmus": "Rhythmus",
+      "preis": "Preis pro Jahr inkl. MWST (CHF)",
+      "sprache": "Sprache des Vertrags",
+      "status": "Stand",
+      "leistungen": "Leistungen",
+      "notiz": "Notiz",
+      "letzte": "Letzte Wartung",
+      "naechste": "Nächste Wartung"
+    },
+    "sprache": {
+      "de": "Deutsch",
+      "fr": "Französisch"
+    },
+    "pruefung": {
+      "betrag": "Bitte einen Betrag wie 480.00 eingeben.",
+      "leistung": "Bitte mindestens eine Leistung wählen."
+    },
+    "akte": {
+      "titel": "Wartungsvertrag",
+      "pdf": "Vertrag als PDF",
+      "bearbeiten": "Bearbeiten",
+      "erledigt": "Wartung erledigt",
+      "naechste": "Nächste Wartung {{datum}}",
+      "angaben": "Angaben",
+      "verlauf": "Durchgeführte Wartungen",
+      "keineWartung": "Noch keine Wartung eingetragen."
+    },
+    "erledigt": {
+      "titel": "Wartung erledigt",
+      "text": "Die nächste Wartung wird nach dem Rhythmus des Vertrags gesetzt.",
+      "am": "Durchgeführt am",
+      "notiz": "Was wurde gemacht? (optional)"
+    },
+    "druck": {
+      "titel": "Wartungsvertrag {{nummer}}",
+      "bis": "bis {{datum}}",
+      "proJahr": "pro Jahr inkl. MWST",
+      "bedingungen": "Der Vertrag verlängert sich jeweils um ein Jahr, wenn er nicht drei Monate vor Ablauf schriftlich gekündigt wird. Material und Arbeiten ausserhalb der aufgeführten Leistungen werden nach Aufwand verrechnet.",
+      "unterschriftKunde": "Ort, Datum, Unterschrift Kunde",
+      "unterschriftFirma": "Ort, Datum, Dimension Solaire"
+    },
+    "heute": {
+      "titel": "Wartungen",
+      "oeffnen": "Öffnen",
+      "nichts": "Keine Wartung in den nächsten 30 Tagen.",
+      "mehr_one": "und {{count}} weitere",
+      "mehr_other": "und {{count}} weitere"
+    }
   }
 }
