@@ -112,3 +112,12 @@ Siehe Entscheid 0015.
 - **Zeitplan:** pg_cron ruft `intern.zeitplan_anstossen` (Vault `crm_funktionen_url`, `crm_zeitplan_schluessel`); `zeitplan_faellig`, `zeitplan_ergebnis`, Übersicht `zeitplan_laeufe()`.
 
 Siehe Entscheid 0016 und `docs/integrationen.md`.
+
+## Ausschreibungs-Monitor (Phase 8b)
+
+- **`ausschreibungen`** erweitert: `nummer` (AS-JJJJ-NNNN), `spur` (`angebot`, `akquise`, `beobachten`), `status` (19 Werte, Start `pruefen`), `punkte`/`begruendung` (Stichworte), `fahrzeit_min`, `standort_id`, `frist_fragen`/`_begehung`/`_eingabe`, `bauherr`/`bauherr_art`, `parzelle`, `ausloeser`, `haupt_id` (Doppelte zeigen auf das erste Dossier), `eingereicht_am`/`_form`. `offerten.art` = `submission` für Offerten aus einer Ausschreibung; `aktivitaeten.ausschreibung_id` für den Verlauf.
+- **`ausschreibung_kontakte`** (Rolle, Art privat/firma/gemeinde/behoerde, `quelle_link` Pflicht), **`anschreiben`** (Kanal mail/brief/anruf, erst/nachfassen, Stand entwurf → bewilligt → versendet oder abgelehnt; höchstens eins pro Kontakt und Art), **`kontaktsperren`** (email/domain/name, aufhebbar), **`quellen_laeufe`**.
+- **Abläufe:** `ausschreibung_einlesen` (nur Server), `ausschreibung_erfassen`, `ausschreibung_entscheiden`/`ausschreibungen_entscheiden`, `dossier_kontakt_speichern`, `anschreiben_entwerfen`/`_aendern`/`_bewilligen`/`_ablehnen`/`_senden`/`_antwort`, `anschreiben_volltext`, `kontaktsperre_anlegen`/`_aufheben`, `ausschreibungen_pruefen` (täglich), `ausschreibungen_tagesbericht`, `ausschreibungen_trichter(von, bis)`. Fehler als Schlüssel `ausschreibung.*`; der Ausgangskorb wirft `ausgang.gesperrt`.
+- Einstellung `ausschreibungen`: Rollen (Kürzel), Fahrzeit, Kantone, CPV-Codes, Amtsblatt-Rubriken, Stichworte, Zeiten, Vorlagen DE/FR, Signatur, PS. Verkaufsstufe `angeschrieben` (nur für Leads aus dem Monitor).
+
+Siehe Entscheid 0017.
