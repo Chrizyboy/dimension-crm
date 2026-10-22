@@ -3507,5 +3507,103 @@
       "Stk": "pce",
       "h": "h"
     }
+  },
+  "spesen": {
+    "titel": "Frais",
+    "beschreibung": "Photographier les justificatifs, saisir les frais et les envoyer à la comptabilité.",
+    "neu": "Saisir des frais",
+    "filter": "État",
+    "filterwert": {
+      "offen": "Ouverts",
+      "ausbezahlt": "Payés",
+      "storniert": "Annulés",
+      "alle": "Tous"
+    },
+    "status": {
+      "eingereicht": "Ouvert",
+      "ausbezahlt": "Payé",
+      "storniert": "Annulé"
+    },
+    "ausbezahltAm": "Payé le {{datum}}",
+    "ansicht": {
+      "meine": "Mes frais",
+      "alle": "Tous les frais",
+      "kategorien": "Catégories"
+    },
+    "spalte": {
+      "datum": "Date",
+      "person": "Personne",
+      "zweck": "Motif",
+      "kategorie": "Catégorie",
+      "beleg": "Justificatif",
+      "betrag": "Montant CHF",
+      "status": "État"
+    },
+    "alleWaehlen": "Choisir tous les ouverts",
+    "waehlen": "Choisir « {{zweck}} »",
+    "belegAnsehen": "Voir",
+    "ohneBeleg": "Sans justificatif",
+    "stornieren": "Annuler",
+    "summe": "Somme {{betrag}}",
+    "anzahl_one": "{{count}} frais",
+    "anzahl_other": "{{count}} frais",
+    "offenJePerson": "Ouverts par personne",
+    "exportieren": "Exporter la liste",
+    "dateiname": "Frais",
+    "leer": "Aucun frais",
+    "leerText": "Avec « Saisir des frais », photographier un justificatif et saisir le montant.",
+    "erfassen": {
+      "titel": "Saisir des frais",
+      "text": "Photographier le justificatif ou choisir un fichier. Les frais sont les vôtres et vont à la comptabilité.",
+      "speichern": "Enregistrer",
+      "kategorieWaehlen": "Choisir la catégorie",
+      "zweckBeispiel": "p. ex. parking rendez-vous client Fribourg",
+      "notiz": "Note",
+      "foto": "Photo",
+      "datei": "Choisir un fichier",
+      "belegEntfernen": "Retirer le justificatif",
+      "belegHinweis": "Les photos sont réduites. Sans justificatif, les frais restent marqués en jaune."
+    },
+    "storno": {
+      "titel": "Annuler les frais",
+      "grund": "Motif"
+    },
+    "auszahlen": {
+      "titel_one": "Marquer {{count}} frais comme payé",
+      "titel_other": "Marquer {{count}} frais comme payés",
+      "text": "Total {{betrag}}. Ensuite, ils ne peuvent plus être modifiés.",
+      "datum": "Payé le",
+      "knopf": "Marquer comme payés",
+      "knopfAuswahl_one": "{{count}} payé",
+      "knopfAuswahl_other": "{{count}} payés"
+    },
+    "mail": {
+      "knopf_one": "{{count}} à la comptabilité",
+      "knopf_other": "{{count}} à la comptabilité",
+      "titel": "Frais à la comptabilité",
+      "beschreibung": "Liste avec total dans le texte, justificatifs en annexe. Envoyé depuis votre boîte.",
+      "ohneAdresse": "L'adresse de la comptabilité n'est pas encore saisie (Frais › Catégories). Merci de la compléter.",
+      "betreff": "Frais {{name}} ({{anzahl}})",
+      "text": "Bonjour\n\nVoici mes frais à rembourser :\n\n{{liste}}\n\nLes justificatifs sont en annexe.\n\nMerci et meilleures salutations\n{{name}}"
+    },
+    "kategorien": {
+      "titel": "Catégories",
+      "buchhaltung": "Comptabilité",
+      "mail": "Adresse e-mail de la comptabilité",
+      "mailHinweis": "Les frais y sont envoyés avec « À la comptabilité ».",
+      "de": "Allemand",
+      "fr": "Français",
+      "entfernen": "Retirer la catégorie",
+      "neu": "Catégorie",
+      "hinweis": "Une catégorie retirée reste visible sur les anciens frais."
+    },
+    "heute": {
+      "meine_one": "{{count}} frais personnel ouvert",
+      "meine_other": "{{count}} frais personnels ouverts",
+      "alle_one": "{{count}} frais attend le paiement",
+      "alle_other": "{{count}} frais attendent le paiement",
+      "oeffnen": "Ouvrir",
+      "nichts": "Aucun frais ouvert."
+    }
   }
 }

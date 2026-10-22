@@ -17,6 +17,7 @@ import { Route as ContactsRouteImport } from './app/contacts'
 import { Route as ContractsRouteImport } from './app/contracts'
 import { Route as CustomersRouteImport } from './app/customers'
 import { Route as DesignRouteImport } from './app/design'
+import { Route as ExpensesRouteImport } from './app/expenses'
 import { Route as FieldworkRouteImport } from './app/fieldwork'
 import { Route as InvoicesRouteImport } from './app/invoices'
 import { Route as KontoRouteImport } from './app/konto'
@@ -68,6 +69,11 @@ const CustomersRoute = CustomersRouteImport.update({
 const DesignRoute = DesignRouteImport.update({
   id: '/design',
   path: '/design',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FieldworkRoute = FieldworkRouteImport.update({
@@ -140,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
+  '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
   '/invoices': typeof InvoicesRoute
   '/konto': typeof KontoRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
+  '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
   '/invoices': typeof InvoicesRoute
   '/konto': typeof KontoRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/design': typeof DesignRoute
+  '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
   '/invoices': typeof InvoicesRoute
   '/konto': typeof KontoRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/contracts'
     | '/customers'
     | '/design'
+    | '/expenses'
     | '/fieldwork'
     | '/invoices'
     | '/konto'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/contracts'
     | '/customers'
     | '/design'
+    | '/expenses'
     | '/fieldwork'
     | '/invoices'
     | '/konto'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/contracts'
     | '/customers'
     | '/design'
+    | '/expenses'
     | '/fieldwork'
     | '/invoices'
     | '/konto'
@@ -276,6 +288,7 @@ export interface RootRouteChildren {
   ContractsRoute: typeof ContractsRoute
   CustomersRoute: typeof CustomersRoute
   DesignRoute: typeof DesignRoute
+  ExpensesRoute: typeof ExpensesRoute
   FieldworkRoute: typeof FieldworkRoute
   InvoicesRoute: typeof InvoicesRoute
   KontoRoute: typeof KontoRoute
@@ -346,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/design'
       fullPath: '/design'
       preLoaderRoute: typeof DesignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fieldwork': {
@@ -444,6 +464,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContractsRoute: ContractsRoute,
   CustomersRoute: CustomersRoute,
   DesignRoute: DesignRoute,
+  ExpensesRoute: ExpensesRoute,
   FieldworkRoute: FieldworkRoute,
   InvoicesRoute: InvoicesRoute,
   KontoRoute: KontoRoute,

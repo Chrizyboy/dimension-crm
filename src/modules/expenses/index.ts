@@ -2,9 +2,10 @@
  * Öffentliche Schnittstelle des Moduls «Spesen».
  * Andere Teile des CRM dürfen NUR von hier importieren, nie direkt aus Unterordnern.
  */
+import { lazy } from 'react'
 import type { ModulMeta } from '@/types/modul'
 
-/** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
+/** Kenndaten für Navigation, Berechtigungen und Befehlspalette. Spesen erfasst jede Person für sich. */
 export const meta: ModulMeta = {
   id: 'expenses',
   titel: { de: 'Spesen', fr: 'Frais' },
@@ -15,4 +16,11 @@ export const meta: ModulMeta = {
   phase: 10,
 }
 
+/** Die Seite: meine Spesen, alle Spesen und Kategorien (Buchhaltung). */
+export const Spesen = lazy(() => import('./components/Spesen'))
+
+/** Karte für die Startseite: offene Spesen. */
+export const SpesenHeute = lazy(() => import('./components/HeuteKarte'))
+
+export { ANSICHTEN } from './types'
 export type * from './types'

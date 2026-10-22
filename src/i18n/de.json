@@ -3507,5 +3507,103 @@
       "Stk": "Stk.",
       "h": "h"
     }
+  },
+  "spesen": {
+    "titel": "Spesen",
+    "beschreibung": "Belege fotografieren, Spesen erfassen und an die Buchhaltung senden.",
+    "neu": "Spese erfassen",
+    "filter": "Stand",
+    "filterwert": {
+      "offen": "Offen",
+      "ausbezahlt": "Ausbezahlt",
+      "storniert": "Storniert",
+      "alle": "Alle"
+    },
+    "status": {
+      "eingereicht": "Offen",
+      "ausbezahlt": "Ausbezahlt",
+      "storniert": "Storniert"
+    },
+    "ausbezahltAm": "Ausbezahlt {{datum}}",
+    "ansicht": {
+      "meine": "Meine Spesen",
+      "alle": "Alle Spesen",
+      "kategorien": "Kategorien"
+    },
+    "spalte": {
+      "datum": "Datum",
+      "person": "Person",
+      "zweck": "Zweck",
+      "kategorie": "Kategorie",
+      "beleg": "Beleg",
+      "betrag": "Betrag CHF",
+      "status": "Stand"
+    },
+    "alleWaehlen": "Alle offenen wählen",
+    "waehlen": "«{{zweck}}» wählen",
+    "belegAnsehen": "Ansehen",
+    "ohneBeleg": "Ohne Beleg",
+    "stornieren": "Stornieren",
+    "summe": "Summe {{betrag}}",
+    "anzahl_one": "{{count}} Spese",
+    "anzahl_other": "{{count}} Spesen",
+    "offenJePerson": "Offen je Person",
+    "exportieren": "Liste exportieren",
+    "dateiname": "Spesen",
+    "leer": "Keine Spesen",
+    "leerText": "Mit «Spese erfassen» einen Beleg fotografieren und den Betrag eintragen.",
+    "erfassen": {
+      "titel": "Spese erfassen",
+      "text": "Beleg fotografieren oder als Datei wählen. Die Spese gehört dir und geht an die Buchhaltung.",
+      "speichern": "Speichern",
+      "kategorieWaehlen": "Kategorie wählen",
+      "zweckBeispiel": "z. B. Parkhaus Kundentermin Freiburg",
+      "notiz": "Notiz",
+      "foto": "Foto",
+      "datei": "Datei wählen",
+      "belegEntfernen": "Beleg entfernen",
+      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bleibt die Spese gelb markiert."
+    },
+    "storno": {
+      "titel": "Spese stornieren",
+      "grund": "Grund"
+    },
+    "auszahlen": {
+      "titel_one": "{{count}} Spese als ausbezahlt markieren",
+      "titel_other": "{{count}} Spesen als ausbezahlt markieren",
+      "text": "Total {{betrag}}. Danach lassen sie sich nicht mehr ändern.",
+      "datum": "Ausbezahlt am",
+      "knopf": "Als ausbezahlt markieren",
+      "knopfAuswahl_one": "{{count}} ausbezahlt",
+      "knopfAuswahl_other": "{{count}} ausbezahlt"
+    },
+    "mail": {
+      "knopf_one": "{{count}} an die Buchhaltung",
+      "knopf_other": "{{count}} an die Buchhaltung",
+      "titel": "Spesen an die Buchhaltung",
+      "beschreibung": "Liste mit Total im Text, Belege im Anhang. Gesendet wird aus deinem Postfach.",
+      "ohneAdresse": "Die Adresse der Buchhaltung ist noch nicht eingetragen (Spesen › Kategorien). Bitte von Hand ausfüllen.",
+      "betreff": "Spesen {{name}} ({{anzahl}})",
+      "text": "Hallo\n\nHier meine Spesen zur Auszahlung:\n\n{{liste}}\n\nDie Belege sind angehängt.\n\nDanke und Gruss\n{{name}}"
+    },
+    "kategorien": {
+      "titel": "Kategorien",
+      "buchhaltung": "Buchhaltung",
+      "mail": "Mail-Adresse der Buchhaltung",
+      "mailHinweis": "Dorthin gehen die Spesen mit «An die Buchhaltung».",
+      "de": "Deutsch",
+      "fr": "Französisch",
+      "entfernen": "Kategorie entfernen",
+      "neu": "Kategorie",
+      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar."
+    },
+    "heute": {
+      "meine_one": "{{count}} eigene Spese offen",
+      "meine_other": "{{count}} eigene Spesen offen",
+      "alle_one": "{{count}} Spese wartet auf Auszahlung",
+      "alle_other": "{{count}} Spesen warten auf Auszahlung",
+      "oeffnen": "Öffnen",
+      "nichts": "Keine offenen Spesen."
+    }
   }
 }

@@ -117,17 +117,6 @@ export function rechnungenCsv(
   return `\ufeff${[KOPF[sprache].join(';'), ...zeilen].join('\r\n')}\r\n`
 }
 
-/** Text als Datei herunterladen (CSV, PDF …). */
-export function herunterladen(inhalt: BlobPart, name: string, typ: string): void {
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(new Blob([inhalt], { type: typ }))
-  a.download = name
-  a.click()
-  setTimeout(() => {
-    URL.revokeObjectURL(a.href)
-  }, 10_000)
-}
-
 /** PDF in neuem Fenster öffnen, ohne es abzulegen. */
 export function pdfZeigen(bytes: Uint8Array): void {
   const adresse = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'application/pdf' }))
