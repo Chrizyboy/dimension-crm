@@ -1,27 +1,47 @@
 # Modul: Finanzen
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Liquidität Woche für Woche (Bank-Saldo, offene Zahlungen nach Priorität bis Betreibung, Material je
+Baustelle, Fixkosten, Eingänge mit Wahrscheinlichkeit, offene Rechnungen und Tranchen), Zahllauf und
+Nachkalkulation je Projekt. Nur mit Recht `finanzen`.
 
-**Stand:** Platzhalter – wird in Phase 10 gebaut.
+Gebaut in Phase **10** nach dem Inventar der Vorlage V233 (Liquiditätsplanung) und Entscheid 0009
+(Nachkalkulation, Lieferantenrechnungen je Projekt), Entscheid 0021.
+
+## Reiter (`#/finance?reiter=…`)
+
+- **Übersicht** (`uebersicht`): Kacheln (Kontostand, tiefster Stand, Woche unter Reserve), Warnungen, Szenario
+  realistisch/pessimistisch/optimistisch, Balken je Woche, Woche aufklappen mit allen Bewegungen; Löhne ein-/ausblenden.
+- **Zahlungen** (`zahlungen`): Lieferanten- und andere Zahlungen nach Priorität, Kategorie, «ungeprüft», Suche;
+  bezahlt, Datum planen, Zahllauf-Vorschlag bis zum Kontostand minus Reserve.
+- **Material** (`material`): Material je Baustelle mit Positionen und Zahlungsdatum.
+- **Fixkosten** (`fixkosten`): Miete, Löhne, Versicherungen … mit Rhythmus und Tag; je Monat bezahlt oder verschoben.
+- **Eingänge** (`eingaenge`): erwartete Eingänge mit Wahrscheinlichkeit (sicher, wahrscheinlich, unsicher).
+- **Bank** (`bank`): Kontostand mit Datum, Verlauf, Wochen, Vorlauf, Reserve, MWST-Rückstellung.
+- **Nachkalkulation** (`nachkalkulation`): je Projekt Soll (Kalkulation) gegen Ist (Material, Lieferantenrechnungen,
+  Stunden, Nachträge, verrechnet), Belege einem Projekt zuordnen.
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- Besitzt: `kreditor_zahlungen` (mit `projekt_id`, `lieferant_id`, `abaninja_uuid`, `offen_rappen`, `bezahlt_am`),
+  `material_zahlungen`, `fixkosten`, `erwartete_eingaenge`, `finanz_einstellungen` (`vorlage.main`).
+- Liest: `rechnungen_liste`, `offene_tranchen`, `rechnung_zahlungen` (nach dem Saldo-Datum), `projekte`,
+  Funktion `nachkalkulation`.
+- Die Vorschau rechnet die App (`lib/vorschau.ts`), weil Szenario, Anpassungen und Löhne live umschalten.
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `meldungen.ts`, `fehler.ts`
+- `src/components/shared/`: `AkteAbschnitt`, `Filterchips`, `Seitenkopf`, `Zustaende`
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Seite, Übersicht mit Wochenbalken, je Reiter eine Liste mit Dialog, Zahllauf, Karte für die Startseite
+- `hooks/` – `useFinanzen` (auch Projekte, Nachkalkulation), `useAktion`
+- `services/` – `finanzen`
+- `lib/` – Datum (Kalenderwoche, Fixtermine), Vorschau (Bewegungen, Szenarien, Saldo, Zahllauf), mit Tests
+- `types.ts`, `schema.ts`, `index.ts`

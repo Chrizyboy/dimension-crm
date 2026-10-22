@@ -152,3 +152,15 @@ Siehe Entscheid 0019.
 - **Abläufe:** `mein_tag` (Einsätze und Service-Termine mit Adresse, Team, Material und Rapporten, laufende Zeit), `rapport_speichern`, `rapport_abschliessen`, `rapport_oeffnen`, `zeit_starten`, `zeit_stoppen`, `zeit_speichern`, `zeiten_pruefen`, `zeiten_exportieren`, `nachtrag_speichern`, `nachtrag_status`. Alle wiederholbar mit IDs vom Handy. Fehler als Schlüssel `baustelle.*`.
 
 Siehe Entscheid 0020.
+
+## Rechnungen, Spesen und Finanzen (Phase 10)
+
+- **`firmen`** erweitert: `iban`, `bank`, `telefon`, `email`, `zahlungsfrist_tage`; ändern nur mit Recht `finanzen`.
+- **`rechnungen`** (neu): `nummer` (R2026-n, beim Stellen), `art` (anzahlung, teilzahlung, schluss, service, wartung, frei), `status` (entwurf, gestellt, teilbezahlt, bezahlt, storniert), Bezug auf `kontakt_id`, `projekt_id`, `zahlungsplan_id`, `rapport_id`, `wartungsvertrag_id`, `firma_id`, `sprache`, `positionen` [{text, menge, einheit, preis_rappen}], `inkl_mwst`, `mwst_satz`, Summen (`netto_rappen`, `mwst_rappen`, `total_rappen`, `bezahlt_rappen`) per Trigger, `datum`, `faellig_am`, `mahnstufe`, `gemahnt_am`, `mahnfrist`, `abaninja_uuid`/`_status`, `dokument_id`, `storniert_grund`. Nach dem Stellen fest.
+- **`rechnung_zahlungen`** (neu): Datum, Betrag, Quelle (hand, abaninja); Trigger setzt Stand der Rechnung und `zahlungsplan.bezahlt_am`.
+- **`kreditor_zahlungen`** erweitert: `abaninja_uuid`, `projekt_id`, `lieferant_id`, `offen_rappen`, `bezahlt_am` (Lieferantenrechnungen aus AbaNinja). **`spesen`**: `status` (eingereicht, ausbezahlt, storniert), `storniert_*`, `ausbezahlt_*`, `mail`; eigene oder Recht `finanzen`.
+- **Sichten:** `rechnungen_liste` (Kunde, Projekt, offen, überfällig), `offene_tranchen`, `offene_service_rapporte`, `spesen_liste`.
+- **Abläufe:** `rechnung_entwurf`, `rechnung_speichern`, `rechnung_stellen`, `rechnung_stornieren`, `rechnung_mahnen`, `abaninja_abgleich_anwenden`, `nachkalkulation`, `spesen_stornieren`, `spesen_auszahlen`. Fehler als Schlüssel `finanzen.*`.
+- **Einstellungen:** `einstellungen.finanzen` (Stundensätze Service und intern, Mahnfrist, Buchhaltungs-Adresse, Spesen-Kategorien); `finanz_einstellungen` «vorlage.main» (Kontostand mit Verlauf, Wochen, Vorlauf, Reserve, Anpassungen der Eingänge).
+
+Siehe Entscheid 0021.
