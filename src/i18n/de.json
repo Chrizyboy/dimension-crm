@@ -513,7 +513,23 @@
       "kommentarKunde": "Kommentar Kunde",
       "wiedervorlage": "Wiedervorlage",
       "verlauf": "Verlauf (Vorlage)"
-    }
+    },
+    "abaninja": {
+      "nicht": "Noch nicht mit AbaNinja verknüpft. Verknüpfen, damit Rechnungen hier erscheinen und Adressänderungen nach AbaNinja gehen.",
+      "suchen": "In AbaNinja suchen",
+      "anlegen": "In AbaNinja anlegen",
+      "keinTreffer": "Nichts gefunden.",
+      "verknuepfen": "Verknüpfen",
+      "verknuepft": "Verknüpft",
+      "aktualisieren": "Angaben nach AbaNinja",
+      "trennen": "Verknüpfung lösen",
+      "rechnungenFehler": "Rechnungen konnten nicht geladen werden.",
+      "keineRechnungen": "Keine Rechnungen in AbaNinja.",
+      "faellig": "fällig {{datum}}",
+      "offen": "offen {{betrag}}",
+      "bezahlt": "bezahlt"
+    },
+    "mailsAusOutlook": "Mails aus Outlook laden"
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
@@ -627,7 +643,10 @@
       "beleg": "Belege",
       "social": "Social Media",
       "andere": "Andere"
-    }
+    },
+    "nichtInSharepoint_one": "{{count}} Datei liegt nur im CRM.",
+    "nichtInSharepoint_other": "{{count}} Dateien liegen nur im CRM.",
+    "inSharepoint": "In SharePoint sichern"
   },
   "kundenblatt": {
     "titel": "Kundenblatt",

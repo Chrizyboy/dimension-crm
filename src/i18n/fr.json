@@ -513,7 +513,23 @@
       "kommentarKunde": "Commentaire client",
       "wiedervorlage": "Rappel",
       "verlauf": "Historique (modèle)"
-    }
+    },
+    "abaninja": {
+      "nicht": "Pas encore lié à AbaNinja. Liez-le pour voir les factures ici et transmettre les changements d'adresse à AbaNinja.",
+      "suchen": "Chercher dans AbaNinja",
+      "anlegen": "Créer dans AbaNinja",
+      "keinTreffer": "Aucun résultat.",
+      "verknuepfen": "Lier",
+      "verknuepft": "Lié",
+      "aktualisieren": "Envoyer les données à AbaNinja",
+      "trennen": "Supprimer le lien",
+      "rechnungenFehler": "Impossible de charger les factures.",
+      "keineRechnungen": "Aucune facture dans AbaNinja.",
+      "faellig": "échéance {{datum}}",
+      "offen": "ouvert {{betrag}}",
+      "bezahlt": "payée"
+    },
+    "mailsAusOutlook": "Charger les e-mails d'Outlook"
   },
   "kontakt": {
     "neuTitel": "Nouveau contact",
@@ -627,7 +643,10 @@
       "beleg": "Justificatifs",
       "social": "Réseaux sociaux",
       "andere": "Autres"
-    }
+    },
+    "nichtInSharepoint_one": "{{count}} fichier n'est que dans le CRM.",
+    "nichtInSharepoint_other": "{{count}} fichiers ne sont que dans le CRM.",
+    "inSharepoint": "Sauvegarder dans SharePoint"
   },
   "kundenblatt": {
     "titel": "Fiche client",

@@ -16,6 +16,7 @@ import { AkteDokumente } from './AkteDokumente'
 import { AkteKopf } from './AkteKopf'
 import { AkteUebersicht } from './AkteUebersicht'
 import { AkteZeitachse } from './AkteZeitachse'
+import { OutlookMailsKnopf } from './OutlookMailsKnopf'
 import { AktivitaetDialog } from './AktivitaetDialog'
 import KontaktDialog from './KontaktDialog'
 import { Kundenblatt } from './Kundenblatt'
@@ -162,7 +163,8 @@ export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: Kunde
                     }}
                   />
                 </ReiterInhalt>
-                <ReiterInhalt value="zeitachse">
+                <ReiterInhalt value="zeitachse" className="flex flex-col gap-2">
+                  <OutlookMailsKnopf />
                   <AkteZeitachse eintraege={zeitachse.data} laedt={zeitachse.isPending} />
                 </ReiterInhalt>
                 <ReiterInhalt value="dokumente">
