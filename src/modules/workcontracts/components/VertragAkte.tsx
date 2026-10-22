@@ -1,21 +1,25 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Ban, FileText, Printer, RefreshCw, Send, Signature, Undo2 } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { Ban, FileText, Mail, Printer, RefreshCw, Send, Signature, Undo2 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { MailDialog } from '@/components/shared/MailDialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { useDrucken } from '@/hooks/useDrucken'
 import { formatChf, formatDatum } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
+import i18n from '@/i18n'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
 import { useVertragAenderung } from '../hooks/useWerkvertraege'
 import { NAECHSTE, VERTRAG_TON } from '../lib/status'
 import { werkvertragAbschnitte } from '../lib/werkvertragText'
-import { setzeVertragStatus } from '../services/werkvertraege'
+import { ladeVertragDateien, setzeVertragStatus } from '../services/werkvertraege'
 import type { Werkvertrag, WerkvertragStatus } from '../types'
 import { WerkvertragDruck } from './WerkvertragDruck'
 import { Zahlungsplan } from './Zahlungsplan'
@@ -39,7 +43,13 @@ export default function VertragAkte({
   const { t } = useTranslation()
   const navigate = useNavigate()
   const druck = useDrucken()
-  const [dialog, setDialog] = useState<'unterschrieben' | 'storniert' | null>(null)
+  const [dialog, setDialog] = useState<'unterschrieben' | 'storniert' | 'mail' | null>(null)
+  const ich = useAnmeldung((z) => z.ich)
+  const dateien = useQuery({
+    queryKey: ['werkvertraege', 'dateien', w?.id],
+    queryFn: () => (w ? ladeVertragDateien(w) : []),
+    enabled: dialog === 'mail',
+  })
   const schritt = useVertragAenderung((ziel: WerkvertragStatus) => setzeVertragStatus(w?.id ?? '', ziel))
 
   async function setze(ziel: WerkvertragStatus) {
@@ -83,6 +93,18 @@ export default function VertragAkte({
                 <Printer />
                 {t('werkvertraege.akte.drucken')}
               </Button>
+              {w.email && w.status !== 'storniert' && (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => {
+                    setDialog('mail')
+                  }}
+                >
+                  <Mail />
+                  {t('mail.perMail')}
+                </Button>
+              )}
               {moeglich.includes('versendet') && (
                 <Button size="sm" variant="secondary" laedt={schritt.isPending} onClick={() => void setze('versendet')}>
                   <Send />
@@ -201,8 +223,31 @@ export default function VertragAkte({
             </AkteAbschnitt>
           </div>
         )}
+        {w && dialog === 'mail' && dateien.isSuccess && (
+          <MailDialog
+            titel={t('mail.vertragTitel', { nummer: w.nummer })}
+            vorlage={{
+              an: w.email ?? '',
+              betreff: i18n.getFixedT(w.sprache)('mail.werkvertrag.betreff', { nummer: w.nummer }),
+              text: i18n.getFixedT(w.sprache)('mail.werkvertrag.text', { absender: ich?.name ?? '' }),
+              sprache: w.sprache,
+              art: 'werkvertrag',
+              kontakt_id: w.kontaktId,
+              bezug_tabelle: 'werkvertraege',
+              bezug_id: w.id,
+              ...(w.offerteId ? { offerte_id: w.offerteId } : {}),
+            }}
+            dateien={dateien.data}
+            onSchliessen={() => {
+              setDialog(null)
+            }}
+            onGesendet={() => {
+              if (moeglich.includes('versendet')) void setze('versendet')
+            }}
+          />
+        )}
         <Suspense>
-          {w && dialog && (
+          {w && dialog && dialog !== 'mail' && (
             <StatusDialog
               vertrag={w}
               ziel={dialog}

@@ -444,3 +444,24 @@ enabled = true
 # Eturnity ruft ohne Supabase-Login auf; die Funktion prüft selbst ETURNITY_WEBHOOK_SECRET.
 [functions.eturnity-eingang]
 verify_jwt = false
+
+# Phase 8: Integrationen. Die App ruft mit Login auf (verify_jwt bleibt an).
+[functions.microsoft]
+verify_jwt = true
+
+[functions.verbindungen]
+verify_jwt = true
+
+[functions.ausgang]
+verify_jwt = true
+
+[functions.abaninja]
+verify_jwt = true
+
+# Microsoft leitet nach der Anmeldung ohne Supabase-Login hierher; geschützt durch state und PKCE.
+[functions.microsoft-rueckruf]
+verify_jwt = false
+
+# pg_cron ruft ohne Login auf; die Funktion prüft selbst ZEITPLAN_SCHLUESSEL.
+[functions.zeitplan]
+verify_jwt = false

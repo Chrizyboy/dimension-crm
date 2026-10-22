@@ -1,5 +1,5 @@
 import { UserRound } from 'lucide-react'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
@@ -18,6 +18,7 @@ import { useBenutzerDaten } from '../hooks/useBenutzer'
 import { feldFehler } from '@/lib/formular'
 import { kontoAusProfil, kontoSchema, type KontoEingabe } from '../schema'
 import { speichereMeinKonto } from '../services/benutzer'
+import { MicrosoftKarte } from './MicrosoftKarte'
 
 /** Felder je Abschnitt, in der Reihenfolge der Vorlage. Telefonnummern im Schweizer Format. */
 const ABSCHNITTE: { titel: string; felder: { name: keyof KontoEingabe; typ?: string; platzhalter?: string }[] }[] = [
@@ -52,7 +53,14 @@ const ABSCHNITTE: { titel: string; felder: { name: keyof KontoEingabe; typ?: str
  * «Mein Konto»: eigenes Profil wie in der Vorlage, Sprache und Standort.
  * Rolle und Rechte sieht man hier, ändern kann sie nur die Administration.
  */
-export default function MeinKonto() {
+export default function MeinKonto({
+  microsoft,
+  onMicrosoftGelesen,
+}: {
+  /** Ergebnis nach der Rückkehr von Microsoft (?microsoft=…). */
+  microsoft?: string
+  onMicrosoftGelesen: () => void
+}) {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   if (!ich) {
@@ -63,10 +71,14 @@ export default function MeinKonto() {
     )
   }
   // Neuer Schlüssel pro Person: das Formular startet nach einem Personenwechsel mit deren Werten.
-  return <KontoFormular key={ich.id} ich={ich} />
+  return (
+    <KontoFormular key={ich.id} ich={ich}>
+      <MicrosoftKarte {...(microsoft ? { ergebnis: microsoft } : {})} onErgebnisGelesen={onMicrosoftGelesen} />
+    </KontoFormular>
+  )
 }
 
-function KontoFormular({ ich }: { ich: MeineAnmeldung }) {
+function KontoFormular({ ich, children }: { ich: MeineAnmeldung; children: ReactNode }) {
   const { t } = useTranslation()
   const aktualisiere = useAnmeldung((z) => z.aktualisiere)
   const { sprache, setSprache, darstellung } = useUi()
@@ -156,6 +168,8 @@ function KontoFormular({ ich }: { ich: MeineAnmeldung }) {
           </Feld>
         </KarteInhalt>
       </Karte>
+
+      {children}
 
       {ABSCHNITTE.map((a) => (
         <Karte key={a.titel}>

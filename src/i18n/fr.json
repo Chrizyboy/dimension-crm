@@ -110,6 +110,17 @@
       "routeStart": "Point de départ des tournées",
       "notfallName": "Nom",
       "notfallTel": "Téléphone"
+    },
+    "microsoft": {
+      "titel": "Microsoft 365",
+      "verbunden": "Connecté",
+      "neuVerbinden": "Reconnecter",
+      "erklaerung": "Connectez votre compte Microsoft pour que le CRM envoie les e-mails depuis votre boîte, inscrive les rendez-vous dans votre calendrier et affiche votre calendrier et l'historique des e-mails avec les clients. Vous saisissez votre mot de passe uniquement chez Microsoft.",
+      "seit": "Connecté depuis le {{datum}}",
+      "genutzt": "dernière utilisation {{datum}}",
+      "verbinden": "Se connecter avec Microsoft",
+      "testen": "Vérifier la connexion",
+      "trennen": "Déconnecter"
     }
   },
   "fehler": {
@@ -320,7 +331,8 @@
     "telefon": "Le numéro de téléphone doit compter au moins 9 chiffres.",
     "kontaktname": "Saisir un prénom ou un nom (pour une entreprise, sa raison sociale).",
     "text": "Notez brièvement de quoi il s'agissait.",
-    "ort": "Saisir la localité."
+    "ort": "Saisir la localité.",
+    "pflicht": "Veuillez remplir ce champ."
   },
   "tabelle": {
     "sortieren": "Cliquer pour trier"
@@ -501,7 +513,23 @@
       "kommentarKunde": "Commentaire client",
       "wiedervorlage": "Rappel",
       "verlauf": "Historique (modèle)"
-    }
+    },
+    "abaninja": {
+      "nicht": "Pas encore lié à AbaNinja. Liez-le pour voir les factures ici et transmettre les changements d'adresse à AbaNinja.",
+      "suchen": "Chercher dans AbaNinja",
+      "anlegen": "Créer dans AbaNinja",
+      "keinTreffer": "Aucun résultat.",
+      "verknuepfen": "Lier",
+      "verknuepft": "Lié",
+      "aktualisieren": "Envoyer les données à AbaNinja",
+      "trennen": "Supprimer le lien",
+      "rechnungenFehler": "Impossible de charger les factures.",
+      "keineRechnungen": "Aucune facture dans AbaNinja.",
+      "faellig": "échéance {{datum}}",
+      "offen": "ouvert {{betrag}}",
+      "bezahlt": "payée"
+    },
+    "mailsAusOutlook": "Charger les e-mails d'Outlook"
   },
   "kontakt": {
     "neuTitel": "Nouveau contact",
@@ -615,7 +643,10 @@
       "beleg": "Justificatifs",
       "social": "Réseaux sociaux",
       "andere": "Autres"
-    }
+    },
+    "nichtInSharepoint_one": "{{count}} fichier n'est que dans le CRM.",
+    "nichtInSharepoint_other": "{{count}} fichiers ne sont que dans le CRM.",
+    "inSharepoint": "Sauvegarder dans SharePoint"
   },
   "kundenblatt": {
     "titel": "Fiche client",
@@ -975,7 +1006,8 @@
       "uebernehmen_other": "Reprendre {{count}} rendez-vous",
       "slotTitel": "Créneau libre le {{datum}} à {{zeit}}",
       "slotText": "Leads sans rendez-vous, les plus proches d’abord. Un clic fixe le rendez-vous.",
-      "keineLeads": "Aucun lead ouvert avec adresse."
+      "keineLeads": "Aucun lead ouvert avec adresse.",
+      "ausOutlook": "Charger depuis Outlook"
     },
     "regionen": {
       "ohne": "Sans région",
@@ -1065,12 +1097,31 @@
     "sms": {
       "knopf": "SMS pour demain",
       "titel": "SMS de rappel pour le {{datum}}",
-      "text": "Texte dans la langue du client. L’envoi arrive en phase 8 via la boîte d’envoi (avec validation) ; d’ici là, copier.",
+      "text": "Rendez-vous de demain avec un texte prêt dans la langue du client. « Envoyer » passe par la boîte d'envoi ; chaque rendez-vous reçoit au plus un SMS.",
       "leer": "Aucun rendez-vous demain",
       "leerText": "Dès que des rendez-vous sont fixés pour demain, ils apparaissent ici.",
       "keineNummer": "pas de numéro",
       "keinHandy": "pas de mobile",
-      "kopieren": "Copier le texte"
+      "kopieren": "Copier le texte",
+      "automatisch": "Envoyer automatiquement dès {{uhrzeit}}",
+      "alleSenden_one": "Envoyer {{count}} SMS",
+      "alleSenden_other": "Envoyer les {{count}} SMS",
+      "senden": "Envoyer"
+    },
+    "anfragen": {
+      "knopf": "Récupérer les demandes",
+      "outlook": "Récupérer depuis Outlook",
+      "datei": "Lire un fichier e-mail (.eml)"
+    },
+    "outlook": {
+      "titel": "Outlook",
+      "eingetragen": "Inscrit chez {{person}}",
+      "oeffnen": "Ouvrir",
+      "nicht": "Pas encore dans Outlook",
+      "kundeEinladen": "Inviter le client par e-mail",
+      "eintragen": "Inscrire dans Outlook",
+      "aktualisieren": "Mettre à jour dans Outlook",
+      "absagen": "Annuler dans Outlook"
     }
   },
   "offerten": {
@@ -1637,6 +1688,197 @@
     "auftrag_offerte_verloren": "Une offre refusée ne peut pas devenir une commande.",
     "auftrag_wert_fehlt": "Merci d’indiquer la valeur du contrat.",
     "werkvertrag_datum_zukunft": "La date de signature ne peut pas être dans le futur.",
-    "preise_nachfolger_selbst": "Un article ne peut pas être son propre successeur."
+    "preise_nachfolger_selbst": "Un article ne peut pas être son propre successeur.",
+    "ausgang_adresse_ungueltig": "Cette adresse e-mail n'est pas valable.",
+    "ausgang_betreff_fehlt": "Veuillez saisir un objet.",
+    "ausgang_doppelt": "Ce message est déjà dans la boîte d'envoi.",
+    "ausgang_empfaenger_fehlt": "Veuillez indiquer un destinataire.",
+    "ausgang_kanal": "Ce mode d'envoi n'existe pas.",
+    "ausgang_kein_absender": "Personne n'est connecté à Microsoft pour envoyer cet e-mail.",
+    "ausgang_nicht_aenderbar": "Cet élément est déjà en cours d'envoi ou envoyé et ne peut plus être modifié.",
+    "ausgang_nummer_ungueltig": "Ce numéro de portable n'est pas valable.",
+    "ausgang_text_fehlt": "Veuillez saisir un texte.",
+    "ausgang_unklar": "On ne sait pas si le message est arrivé. Vérifiez la boîte mail avant de le renvoyer."
+  },
+  "ausgang": {
+    "titel": "Boîte d'envoi",
+    "beschreibung": "Tout ce que le CRM veut envoyer par e-mail ou SMS attend ici. Rien ne part sans votre approbation.",
+    "ohneDatenbank": "La boîte d'envoi a besoin de la base de données. Dans l'aperçu sans base, elle est vide.",
+    "filter": "Afficher",
+    "filterwert": {
+      "offen": "En attente",
+      "gesendet": "Envoyés",
+      "verworfen": "Rejetés",
+      "alle": "Tous"
+    },
+    "leer": "La boîte d'envoi est vide",
+    "leerText": "Dès que le CRM veut envoyer un e-mail ou un SMS, il apparaît ici pour approbation.",
+    "spalte": {
+      "kanal": "Type",
+      "an": "À",
+      "inhalt": "Contenu",
+      "status": "État",
+      "zeit": "Heure"
+    },
+    "status": {
+      "wartet": "À approuver",
+      "freigegeben": "Approuvé",
+      "wird_gesendet": "Envoi en cours",
+      "gesendet": "Envoyé",
+      "fehler": "Erreur",
+      "verworfen": "Rejeté"
+    },
+    "art": {
+      "frei": "Message",
+      "sms_erinnerung": "Rappel SMS",
+      "termin_bestaetigung": "Confirmation de rendez-vous",
+      "nachfassen": "Relance",
+      "offerte": "Offre",
+      "werkvertrag": "Contrat d'entreprise",
+      "monatsbericht": "Rapport mensuel"
+    },
+    "titelMail": "Vérifier l'e-mail",
+    "titelSms": "Vérifier le SMS",
+    "mail": "E-mail",
+    "an": "À",
+    "cc": "Copie à",
+    "betreff": "Objet",
+    "text": "Texte",
+    "zeichen_one": "{{count}} caractère",
+    "zeichen_other": "{{count}} caractères",
+    "verwerfen": "Ne pas envoyer",
+    "freigebenSenden": "Approuver et envoyer",
+    "jetztSenden": "Envoyer maintenant",
+    "jetztSendenAnzahl_one": "Envoyer {{count}} approuvé maintenant",
+    "jetztSendenAnzahl_other": "Envoyer {{count}} approuvés maintenant",
+    "inhalt": "Contenu",
+    "anhaenge": "Pièces jointes",
+    "ablauf": "Déroulement",
+    "erstellt": "Créé",
+    "absender": "Expéditeur",
+    "system": "CRM (automatique)",
+    "freigegeben": "Approuvé",
+    "gesendet": "Envoyé",
+    "grund": "Motif",
+    "grundFrage": "Pourquoi ne pas l'envoyer ?",
+    "automatisch": "Automatique",
+    "verwerfenJa": "Oui, ne pas envoyer"
+  },
+  "integration": {
+    "fehler": {
+      "nicht_eingerichtet": "Cette connexion n'est pas encore configurée. Voir Paramètres › Connexions.",
+      "nicht_verbunden": "Vous n'êtes pas encore connecté à Microsoft. Connectez-vous sous « Mon compte ».",
+      "neu_verbinden": "La connexion Microsoft a expiré. Reconnectez-vous sous « Mon compte ».",
+      "kein_zugriff": "L'autorisation Microsoft 365 manque pour cette boîte mail ou ce dossier.",
+      "falsches_konto": "Ce compte Microsoft n'est pas le vôtre ou n'appartient pas à l'entreprise.",
+      "abgelaufen": "La connexion a pris trop de temps. Veuillez réessayer.",
+      "abgebrochen": "La connexion Microsoft a été annulée.",
+      "fremder_termin": "Ce rendez-vous a été inscrit dans Outlook par quelqu'un d'autre. Seule cette personne peut le modifier.",
+      "kein_termin": "Aucun rendez-vous n'est inscrit pour ce lead.",
+      "nicht_gefunden": "Introuvable. Il a peut-être été supprimé entre-temps.",
+      "nicht_verknuepft": "Ce client n'est pas encore lié à AbaNinja.",
+      "schon_verknuepft": "Ce client est déjà lié à AbaNinja.",
+      "abaninja": "AbaNinja a signalé une erreur. Veuillez réessayer plus tard.",
+      "abaninja_zugang": "AbaNinja refuse l'accès. Vérifiez la clé dans les paramètres du serveur.",
+      "abaninja_daten": "AbaNinja n'accepte pas les données. Vérifiez le nom, l'adresse et la formule d'appel.",
+      "graph": "Microsoft 365 a signalé une erreur. Veuillez réessayer plus tard.",
+      "dienst": "Le service a signalé une erreur. Veuillez réessayer plus tard.",
+      "zu_viele": "Trop de demandes à la fois. Réessayez dans une minute.",
+      "anhang": "Une pièce jointe n'a pas pu être envoyée.",
+      "anhang_fehlt": "Une pièce jointe n'existe plus.",
+      "anhang_zu_gross": "Les pièces jointes sont trop volumineuses (25 Mo au maximum).",
+      "datei_fehlt": "Le fichier n'existe plus.",
+      "bibliothek_fehlt": "La bibliothèque SharePoint est introuvable. Vérifiez les paramètres.",
+      "upload": "Le téléversement vers SharePoint a échoué.",
+      "ausgang_unklar": "On ne sait pas si le message est arrivé. Vérifiez la boîte mail.",
+      "ausgang_kein_absender": "Personne n'est connecté à Microsoft pour envoyer cet e-mail.",
+      "ausgang_adresse_ungueltig": "Cette adresse e-mail n'est pas valable.",
+      "zeitlimit": "Le service n'a pas répondu à temps.",
+      "netzwerk": "Pas de connexion au serveur. Vérifiez Internet.",
+      "eingabe": "Les données sont incomplètes.",
+      "intern": "Une erreur s'est produite sur le serveur.",
+      "ohne_datenbank": "Il faut la base de données pour cela.",
+      "kein_recht": "Vous n'avez pas le droit de le faire.",
+      "anmeldung": "Veuillez d'abord vous connecter.",
+      "sms": "Le SMS n'a pas été accepté (code {{code}}).",
+      "unbekannt": "Cela n'a pas fonctionné (code {{code}})."
+    }
+  },
+  "verbindungen": {
+    "reiter": "Connexions",
+    "dienst": {
+      "microsoft": "Microsoft 365",
+      "abaninja": "AbaNinja",
+      "sms": "SMS (ASPSMS)"
+    },
+    "zweck": {
+      "microsoft": "Envoyer des e-mails, calendrier Outlook, demandes depuis info@, classement dans SharePoint.",
+      "abaninja": "Créer les clients dans la comptabilité et voir les factures ouvertes.",
+      "sms": "Rappels de rendez-vous et SMS aux clients, expéditeur « DimSolaire »."
+    },
+    "eingerichtet": "Configuré",
+    "nichtEingerichtet": "Non configuré",
+    "testOk": "Test du {{datum}} réussi",
+    "testFehler": "Test du {{datum}} échoué",
+    "nieGetestet": "Jamais testé.",
+    "testen": "Tester maintenant",
+    "rueckruf": "Adresse de retour pour Microsoft",
+    "rueckrufHinweis": "Saisir cette adresse dans l'inscription de l'application chez Microsoft (Entra ID) sous « URI de redirection ».",
+    "kopieren": "Copier",
+    "teamMicrosoft": "Qui est connecté à Microsoft ?",
+    "verbundenAnzahl_one": "{{count}} sur {{total}} connecté",
+    "verbundenAnzahl_other": "{{count}} sur {{total}} connectés",
+    "personVerbunden": "Connecté · {{datum}}",
+    "personNicht": "Non connecté",
+    "einstellungen": "Paramètres",
+    "feld": {
+      "microsoft_postfach_anfragen": "Boîte pour les demandes (solar-guide, landing page, salon)",
+      "microsoft_team_postfaecher": "Boîtes d'équipe (séparées par des virgules)",
+      "microsoft_eigene_domains": "Domaines propres (sens des e-mails)",
+      "microsoft_kalender_tage": "Calendrier : jours à l'avance",
+      "microsoft_mail_tage": "Historique e-mails : jours en arrière",
+      "microsoft_anfragen_tage": "Recherche des demandes : jours en arrière",
+      "microsoft_sharepoint_website": "Site SharePoint",
+      "microsoft_sharepoint_bibliothek": "Bibliothèque SharePoint",
+      "microsoft_sharepoint_ordner": "Dossier des dossiers clients",
+      "sms_absender": "Expéditeur SMS (11 caractères au maximum)",
+      "abaninja_anreden_herr": "Formule « Monsieur » dans AbaNinja",
+      "abaninja_anreden_frau": "Formule « Madame » dans AbaNinja",
+      "abaninja_anreden_standard": "Formule sinon (entreprise, inconnue)"
+    },
+    "zeitplan": "Tâches en arrière-plan",
+    "zeitplanLeer": "Aucune exécution. Le planificateur démarre dès qu'il est configuré sur le serveur.",
+    "job": {
+      "ausgang": "Envoyer la boîte d'envoi",
+      "sms_erinnerung": "Rappel SMS",
+      "anfragen": "Récupérer les demandes",
+      "kalender": "Charger le calendrier",
+      "mails": "Historique e-mails",
+      "sicherung": "Sauvegarde SharePoint"
+    },
+    "protokoll": "Derniers appels",
+    "protokollLeer": "Aucun appel pour l'instant.",
+    "spalte": {
+      "zeit": "Heure",
+      "dienst": "Service",
+      "person": "Personne",
+      "ergebnis": "Résultat"
+    }
+  },
+  "mail": {
+    "beschreibung": "Prérempli dans la langue du client ; tout peut être modifié. « Envoyer » expédie l'e-mail depuis votre boîte via la boîte d'envoi.",
+    "ablegen": "Dans la boîte d'envoi",
+    "senden": "Envoyer",
+    "perMail": "Envoyer par e-mail",
+    "offerteTitel": "Offre {{nummer}} par e-mail",
+    "vertragTitel": "Contrat {{nummer}} par e-mail",
+    "offerte": {
+      "betreff": "Votre offre {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nMerci de votre intérêt. Vous trouverez notre offre en pièce jointe. Nous restons à votre disposition pour toute question.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    },
+    "werkvertrag": {
+      "betreff": "Votre contrat d'entreprise {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    }
   }
 }

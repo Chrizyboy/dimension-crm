@@ -8,6 +8,7 @@ import type { Kontaktzeile } from '@/types/kontakt'
 import { datumOderLeer, jsonText } from '../lib/anzeige'
 import { naechsterSchritt } from '../lib/naechsterSchritt'
 import type { Kundenakte, Objekt } from '../types'
+import { AkteAbaninja } from './AkteAbaninja'
 import { Angabe, Angaben, Notizblock } from './Angaben'
 import { GeschaeftKarten } from './GeschaeftKarten'
 import { NaechsterSchritt } from './NaechsterSchritt'
@@ -145,6 +146,10 @@ export function AkteUebersicht({ kopf, akte, onAnrufen, onObjekt }: AkteUebersic
 
       <Abschnitt titel={t('akte.geschaefte')}>
         <GeschaeftKarten akte={akte} />
+      </Abschnitt>
+
+      <Abschnitt titel="AbaNinja">
+        <AkteAbaninja kontaktId={k.id} abaninjaId={k.abaninja_id} name={kopf.name} />
       </Abschnitt>
     </div>
   )

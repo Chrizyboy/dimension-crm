@@ -157,3 +157,17 @@ export async function setzeVertragStatus(
   const { error } = await db().rpc('werkvertrag_status', { p_id: id, p_ziel: ziel, p: angaben as Json })
   if (error) throw error
 }
+
+/** Dateien zum Vertrag und zur Offerte (für den Mail-Versand), neueste zuerst. */
+export async function ladeVertragDateien(w: Werkvertrag): Promise<{ id: string; name: string }[]> {
+  const bezuege = [w.id, ...(w.offerteId ? [w.offerteId] : [])]
+  const { data, error } = await db()
+    .from('dokumente')
+    .select('id, name')
+    .in('bezug_id', bezuege)
+    .is('geloescht_am', null)
+    .order('erstellt_am', { ascending: false })
+    .limit(30)
+  if (error) throw error
+  return data
+}

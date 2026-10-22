@@ -1,27 +1,28 @@
-# Modul: Einstellungen
+# Modul: Einstellungen (`settings`)
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Benutzer, Rollen und Rechte verwalten, das eigene Konto pflegen und die Verbindungen zu Microsoft 365, AbaNinja und SMS einrichten und prüfen.
 
-**Stand:** Platzhalter – wird in Phase 4 gebaut.
+**Stand:** Phase 4 gebaut (Benutzer, Rollen, Mein Konto), Phase 8: Reiter «Verbindungen» und Microsoft in «Mein Konto».
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- liest und schreibt `personen`, `rollen`, `rollen_rechte` (über die Funktionen aus Phase 4), `einstellungen` (Abschnitte `microsoft`, `sms`, `abaninja`)
+- liest `integrationen`, `integrations_protokoll`, `zeitplan_laeufe()`, Microsoft-Verbindungen ohne Token über `meine_microsoft_verbindung()` und `microsoft_verbindungen()`
+- Details: Entscheide 0012 und 0016, `docs/anmeldung.md`, `docs/integrationen.md`
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase`, `meldungen`, `fehler`, `fachfehler`
+- `src/services/integrationen.ts` (Verbinden, Testen, Stand der Dienste)
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Benutzerverwaltung (Reiter Benutzer, Rollen, Verbindungen), Mein Konto mit `MicrosoftKarte`, `Verbindungen*`
+- `hooks/` – `useBenutzer`, `useVerbindungen`
+- `services/` – `benutzer.ts`, `verbindungen.ts`
+- `types.ts`, `schema.ts`, `index.ts`

@@ -2,7 +2,7 @@
 
 **Zweck:** Aus der angenommenen Offerte den Auftrag erstellen (Projekt, Zahlungsplan, Werkvertrag), den Vertrag in der Sprache des Kunden drucken und Versand, Unterschrift oder Storno festhalten.
 
-**Stand:** Phase 7 gebaut. Versand per Mail folgt in Phase 8, digitale Unterschrift ist ein offener Vorschlag.
+**Stand:** Phase 7 gebaut, Phase 8: «Per Mail senden» über den Ausgangskorb, danach Status «versendet». Digitale Unterschrift ist ein offener Vorschlag.
 
 ## Daten
 

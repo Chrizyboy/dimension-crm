@@ -718,14 +718,22 @@ export type Database = {
       }
       ausgangskorb: {
         Row: {
+          absender_person_id: string | null
           alt_daten: Json | null
           alt_id: string | null
           an: string
+          anhaenge: NonNullable<Json>
+          art: string
+          automatisch: boolean
           betreff: string | null
           bezug_id: string | null
           bezug_tabelle: string | null
+          cc: string | null
           erstellt_am: string
           erstellt_von: string | null
+          extern_id: string | null
+          fehler: string | null
+          freigegeben_am: string | null
           freigegeben_von: string | null
           geaendert_am: string
           geloescht_am: string | null
@@ -733,19 +741,36 @@ export type Database = {
           html: string | null
           id: string
           kanal: string
+          kontakt_id: string | null
+          offerte_id: string | null
+          projekt_id: string | null
+          schluessel: string | null
+          sende_ab: string | null
+          sprache: string
           status: string
           text: string | null
+          verkaufschance_id: string | null
+          versuche: number
+          verworfen_grund: string | null
         }
         ComputedFields: never
         Insert: {
+          absender_person_id?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           an: string
+          anhaenge?: NonNullable<Json>
+          art?: string
+          automatisch?: boolean
           betreff?: string | null
           bezug_id?: string | null
           bezug_tabelle?: string | null
+          cc?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          extern_id?: string | null
+          fehler?: string | null
+          freigegeben_am?: string | null
           freigegeben_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
@@ -753,18 +778,35 @@ export type Database = {
           html?: string | null
           id?: string
           kanal?: string
+          kontakt_id?: string | null
+          offerte_id?: string | null
+          projekt_id?: string | null
+          schluessel?: string | null
+          sende_ab?: string | null
+          sprache?: string
           status?: string
           text?: string | null
+          verkaufschance_id?: string | null
+          versuche?: number
+          verworfen_grund?: string | null
         }
         Update: {
+          absender_person_id?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           an?: string
+          anhaenge?: NonNullable<Json>
+          art?: string
+          automatisch?: boolean
           betreff?: string | null
           bezug_id?: string | null
           bezug_tabelle?: string | null
+          cc?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          extern_id?: string | null
+          fehler?: string | null
+          freigegeben_am?: string | null
           freigegeben_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
@@ -772,15 +814,108 @@ export type Database = {
           html?: string | null
           id?: string
           kanal?: string
+          kontakt_id?: string | null
+          offerte_id?: string | null
+          projekt_id?: string | null
+          schluessel?: string | null
+          sende_ab?: string | null
+          sprache?: string
           status?: string
           text?: string | null
+          verkaufschance_id?: string | null
+          versuche?: number
+          verworfen_grund?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'ausgangskorb_absender_person_id_fkey'
+            columns: ['absender_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'ausgangskorb_freigegeben_von_fkey'
             columns: ['freigegeben_von']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['offerte_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'verkaufschancen'
             referencedColumns: ['id']
           },
         ]
@@ -1941,6 +2076,91 @@ export type Database = {
         }
         Relationships: []
       }
+      integrationen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          dienst: string
+          einstellungen: NonNullable<Json>
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          meldung: string | null
+          zuletzt_geprueft_am: string | null
+          zuletzt_ok: boolean | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          dienst: string
+          einstellungen?: NonNullable<Json>
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          meldung?: string | null
+          zuletzt_geprueft_am?: string | null
+          zuletzt_ok?: boolean | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          dienst?: string
+          einstellungen?: NonNullable<Json>
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          meldung?: string | null
+          zuletzt_geprueft_am?: string | null
+          zuletzt_ok?: boolean | null
+        }
+        Relationships: []
+      }
+      integrations_protokoll: {
+        Row: {
+          aktion: string
+          dauer_ms: number | null
+          dienst: string
+          id: number
+          meldung: string | null
+          ok: boolean
+          person_id: string | null
+          status: number | null
+          zeitpunkt: string
+        }
+        ComputedFields: never
+        Insert: {
+          aktion: string
+          dauer_ms?: number | null
+          dienst: string
+          id?: never
+          meldung?: string | null
+          ok: boolean
+          person_id?: string | null
+          status?: number | null
+          zeitpunkt?: string
+        }
+        Update: {
+          aktion?: string
+          dauer_ms?: number | null
+          dienst?: string
+          id?: never
+          meldung?: string | null
+          ok?: boolean
+          person_id?: string | null
+          status?: number | null
+          zeitpunkt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'integrations_protokoll_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       kalender_eintraege: {
         Row: {
           alt_daten: Json | null
@@ -2147,6 +2367,8 @@ export type Database = {
       }
       kontakte: {
         Row: {
+          abaninja_abgeglichen_am: string | null
+          abaninja_id: string | null
           alt_daten: Json | null
           alt_id: string | null
           anrede: string | null
@@ -2170,6 +2392,8 @@ export type Database = {
         }
         ComputedFields: never
         Insert: {
+          abaninja_abgeglichen_am?: string | null
+          abaninja_id?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           anrede?: string | null
@@ -2192,6 +2416,8 @@ export type Database = {
           werbesperre?: boolean
         }
         Update: {
+          abaninja_abgeglichen_am?: string | null
+          abaninja_id?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           anrede?: string | null
@@ -5835,11 +6061,71 @@ export type Database = {
         Args: { p_darstellung?: string; p_profil: Json; p_sprache?: string; p_standort_id?: string }
         Returns: undefined
       }
+      anfrage_uebernehmen: { Args: { p: Json }; Returns: Json }
+      anfrage_uebersprungen: { Args: { p_kennung: string; p_quelle: string }; Returns: undefined }
       artikel_archivieren: { Args: { p_artikel: string; p_grund: string; p_nachfolger?: string }; Returns: undefined }
       artikel_preis_setzen: { Args: { p: Json; p_artikel: string }; Returns: undefined }
       auftrag_erstellen: { Args: { p: Json; p_offerte: string }; Returns: string }
+      ausgang_aendern: { Args: { p: Json; p_id: string }; Returns: undefined }
+      ausgang_anlegen: { Args: { p: Json }; Returns: string }
+      ausgang_ergebnis: {
+        Args: { p_extern_id: string; p_id: string; p_meldung: string; p_ok: boolean }
+        Returns: undefined
+      }
+      ausgang_freigeben: { Args: { p_ids: string[] }; Returns: number }
+      ausgang_holen: {
+        Args: { p_limit?: number }
+        Returns: {
+          absender_person_id: string | null
+          alt_daten: Json | null
+          alt_id: string | null
+          an: string
+          anhaenge: NonNullable<Json>
+          art: string
+          automatisch: boolean
+          betreff: string | null
+          bezug_id: string | null
+          bezug_tabelle: string | null
+          cc: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          extern_id: string | null
+          fehler: string | null
+          freigegeben_am: string | null
+          freigegeben_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gesendet_am: string | null
+          html: string | null
+          id: string
+          kanal: string
+          kontakt_id: string | null
+          offerte_id: string | null
+          projekt_id: string | null
+          schluessel: string | null
+          sende_ab: string | null
+          sprache: string
+          status: string
+          text: string | null
+          verkaufschance_id: string | null
+          versuche: number
+          verworfen_grund: string | null
+        }[]
+        SetofOptions: {
+          from: '*'
+          to: 'ausgangskorb'
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      ausgang_verwerfen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
+      kalender_abgleichen: {
+        Args: { p_bis: string; p_eintraege: Json; p_person: string; p_von: string }
+        Returns: number
+      }
       kalender_ersetzen: { Args: { p_eintraege: Json; p_person: string; p_quelle: string }; Returns: number }
       kontakt_export: { Args: { p_kontakt: string }; Returns: Json }
       kunden_zeitachse: {
@@ -5888,7 +6174,22 @@ export type Database = {
           termin: number
         }[]
       }
+      mails_vermerken: { Args: { p_mails: Json; p_person: string }; Returns: number }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
+      meine_microsoft_verbindung: { Args: Record<PropertyKey, never>; Returns: Json }
+      messe_geloescht: { Args: { p_kennung: string; p_sids: string[] }; Returns: number }
+      microsoft_verbindungen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          fehler: string
+          genutzt_am: string
+          konto: string
+          name: string
+          person_id: string
+          verbunden: boolean
+          verbunden_am: string
+        }[]
+      }
       moegliche_dubletten: {
         Args: { p_email: string; p_name: string; p_ohne?: string; p_telefon: string }
         Returns: {
@@ -5897,6 +6198,39 @@ export type Database = {
           kundennummer: number
           name: string
           ort: string
+        }[]
+      }
+      ms_verbindung_genutzt: { Args: { p_fehler: string; p_person: string; p_token: string }; Returns: undefined }
+      ms_verbindung_lesen: {
+        Args: { p_person: string }
+        Returns: {
+          konto: string
+          token: string
+        }[]
+      }
+      ms_verbindung_speichern: {
+        Args: { p_bereiche: string; p_konto: string; p_person: string; p_token: string }
+        Returns: undefined
+      }
+      ms_verbundene: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          email: string
+          konto: string
+          person_id: string
+        }[]
+      }
+      ms_zustand_anlegen: {
+        Args: { p_person: string; p_pruefwert: string; p_sprache: string; p_zustand: string }
+        Returns: undefined
+      }
+      ms_zustand_einloesen: {
+        Args: { p_zustand: string }
+        Returns: {
+          email: string
+          person_id: string
+          pruefwert: string
+          sprache: string
         }[]
       }
       mwst_satz: { Args: Record<PropertyKey, never>; Returns: number }
@@ -5929,7 +6263,41 @@ export type Database = {
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
       show_trgm: { Args: { '': string }; Returns: string[] }
+      sicherung_offen: {
+        Args: { p_ids?: string[]; p_limit?: number }
+        Returns: {
+          id: string
+          kontakt_id: string
+          kunde: string
+          kundennummer: number
+          name: string
+          ordner: string
+          speicher_pfad: string
+        }[]
+      }
+      sms_erinnerungen: {
+        Args: { p_datum: string }
+        Returns: {
+          ausgang_fehler: string
+          ausgang_id: string
+          ausgang_status: string
+          handy: boolean
+          kontakt_id: string
+          name: string
+          schluessel: string
+          sprache: string
+          telefon: string
+          termin_am: string
+          text: string
+          verkaufschance_id: string
+        }[]
+      }
+      sms_erinnerungen_senden: {
+        Args: { p_automatisch?: boolean; p_datum: string; p_leads?: string[] }
+        Returns: number
+      }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       zahlungsplan_berechnen: {
@@ -5939,6 +6307,17 @@ export type Database = {
           bezeichnung: string
           faellig_am: string
           nr: number
+        }[]
+      }
+      zeitplan_ergebnis: { Args: { p_job: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
+      zeitplan_faellig: { Args: { p_job: string; p_minuten: number }; Returns: boolean }
+      zeitplan_laeufe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          job: string
+          meldung: string
+          ok: boolean
+          zuletzt_am: string
         }[]
       }
     }

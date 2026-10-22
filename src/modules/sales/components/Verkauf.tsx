@@ -11,6 +11,7 @@ import { supabase } from '@/services/supabase'
 import { useGeschaefte } from '../hooks/useVerkauf'
 import { passtZuFilter } from '../lib/geschaeft'
 import { LEERER_FILTER, VERKAUF_ANSICHTEN, type VerkaufAnsicht, type VerkaufFilter } from '../types'
+import { AnfragenKnopf } from './AnfragenKnopf'
 import { FilterLeiste } from './FilterLeiste'
 import { OrdnerKnopf } from './OrdnerKnopf'
 
@@ -96,6 +97,7 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
         beschreibung={t('verkauf.beschreibung')}
         aktionen={
           <>
+            <AnfragenKnopf />
             <Button
               variant="secondary"
               onClick={() => {
@@ -222,7 +224,6 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
         )}
         {dialog === 'sms' && (
           <SmsListe
-            geschaefte={daten}
             onSchliessen={() => {
               setDialog(null)
             }}

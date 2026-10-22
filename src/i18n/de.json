@@ -110,6 +110,17 @@
       "routeStart": "Startpunkt für Touren",
       "notfallName": "Name",
       "notfallTel": "Telefon"
+    },
+    "microsoft": {
+      "titel": "Microsoft 365",
+      "verbunden": "Verbunden",
+      "neuVerbinden": "Neu verbinden",
+      "erklaerung": "Verbinde dein Microsoft-Konto, damit das CRM Mails aus deinem Postfach sendet, Termine in deinen Kalender einträgt und deinen Kalender und Mail-Verlauf mit Kunden zeigt. Dein Passwort gibst du nur bei Microsoft ein.",
+      "seit": "Verbunden seit {{datum}}",
+      "genutzt": "zuletzt genutzt {{datum}}",
+      "verbinden": "Mit Microsoft verbinden",
+      "testen": "Verbindung prüfen",
+      "trennen": "Trennen"
     }
   },
   "fehler": {
@@ -320,7 +331,8 @@
     "telefon": "Die Telefonnummer braucht mindestens 9 Ziffern.",
     "kontaktname": "Bitte Vor- oder Nachname (bei Firmen den Firmennamen) eingeben.",
     "text": "Bitte kurz festhalten, worum es ging.",
-    "ort": "Bitte den Ort eingeben."
+    "ort": "Bitte den Ort eingeben.",
+    "pflicht": "Bitte ausfüllen."
   },
   "tabelle": {
     "sortieren": "Klicken zum Sortieren"
@@ -501,7 +513,23 @@
       "kommentarKunde": "Kommentar Kunde",
       "wiedervorlage": "Wiedervorlage",
       "verlauf": "Verlauf (Vorlage)"
-    }
+    },
+    "abaninja": {
+      "nicht": "Noch nicht mit AbaNinja verknüpft. Verknüpfen, damit Rechnungen hier erscheinen und Adressänderungen nach AbaNinja gehen.",
+      "suchen": "In AbaNinja suchen",
+      "anlegen": "In AbaNinja anlegen",
+      "keinTreffer": "Nichts gefunden.",
+      "verknuepfen": "Verknüpfen",
+      "verknuepft": "Verknüpft",
+      "aktualisieren": "Angaben nach AbaNinja",
+      "trennen": "Verknüpfung lösen",
+      "rechnungenFehler": "Rechnungen konnten nicht geladen werden.",
+      "keineRechnungen": "Keine Rechnungen in AbaNinja.",
+      "faellig": "fällig {{datum}}",
+      "offen": "offen {{betrag}}",
+      "bezahlt": "bezahlt"
+    },
+    "mailsAusOutlook": "Mails aus Outlook laden"
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
@@ -615,7 +643,10 @@
       "beleg": "Belege",
       "social": "Social Media",
       "andere": "Andere"
-    }
+    },
+    "nichtInSharepoint_one": "{{count}} Datei liegt nur im CRM.",
+    "nichtInSharepoint_other": "{{count}} Dateien liegen nur im CRM.",
+    "inSharepoint": "In SharePoint sichern"
   },
   "kundenblatt": {
     "titel": "Kundenblatt",
@@ -975,7 +1006,8 @@
       "uebernehmen_other": "{{count}} Termine übernehmen",
       "slotTitel": "Freier Platz am {{datum}} um {{zeit}}",
       "slotText": "Leads ohne Termin, die nächsten zuerst. Ein Klick vereinbart den Termin.",
-      "keineLeads": "Keine offenen Leads mit Adresse."
+      "keineLeads": "Keine offenen Leads mit Adresse.",
+      "ausOutlook": "Aus Outlook laden"
     },
     "regionen": {
       "ohne": "Ohne Region",
@@ -1065,12 +1097,31 @@
     "sms": {
       "knopf": "SMS für morgen",
       "titel": "Erinnerungs-SMS für {{datum}}",
-      "text": "Text in der Sprache des Kunden. Senden kommt mit Phase 8 über den Ausgangskorb (mit Freigabe); bis dahin kopieren.",
+      "text": "Termine von morgen mit fertigem Text in der Sprache des Kunden. «Senden» schickt die SMS über den Ausgangskorb; jeder Termin bekommt höchstens eine.",
       "leer": "Morgen keine Termine",
       "leerText": "Sobald Termine für morgen vereinbart sind, stehen sie hier.",
       "keineNummer": "keine Nummer",
       "keinHandy": "keine Handynummer",
-      "kopieren": "Text kopieren"
+      "kopieren": "Text kopieren",
+      "automatisch": "Automatisch ab {{uhrzeit}} Uhr senden",
+      "alleSenden_one": "{{count}} SMS senden",
+      "alleSenden_other": "Alle {{count}} SMS senden",
+      "senden": "Senden"
+    },
+    "anfragen": {
+      "knopf": "Anfragen holen",
+      "outlook": "Aus Outlook abholen",
+      "datei": "Mail-Datei einlesen (.eml)"
+    },
+    "outlook": {
+      "titel": "Outlook",
+      "eingetragen": "Eingetragen bei {{person}}",
+      "oeffnen": "Öffnen",
+      "nicht": "Noch nicht in Outlook",
+      "kundeEinladen": "Kunde per Mail einladen",
+      "eintragen": "In Outlook eintragen",
+      "aktualisieren": "In Outlook aktualisieren",
+      "absagen": "In Outlook absagen"
     }
   },
   "offerten": {
@@ -1637,6 +1688,197 @@
     "auftrag_offerte_verloren": "Eine abgelehnte Offerte kann keinen Auftrag bekommen.",
     "auftrag_wert_fehlt": "Bitte den Vertragswert angeben.",
     "werkvertrag_datum_zukunft": "Das Datum der Unterschrift darf nicht in der Zukunft liegen.",
-    "preise_nachfolger_selbst": "Ein Artikel kann nicht sein eigener Nachfolger sein."
+    "preise_nachfolger_selbst": "Ein Artikel kann nicht sein eigener Nachfolger sein.",
+    "ausgang_adresse_ungueltig": "Diese E-Mail-Adresse stimmt nicht.",
+    "ausgang_betreff_fehlt": "Bitte einen Betreff eingeben.",
+    "ausgang_doppelt": "Diese Nachricht liegt schon im Ausgangskorb.",
+    "ausgang_empfaenger_fehlt": "Bitte einen Empfänger angeben.",
+    "ausgang_kanal": "Diese Versandart gibt es nicht.",
+    "ausgang_kein_absender": "Es ist niemand mit Microsoft verbunden, der diese Mail senden kann.",
+    "ausgang_nicht_aenderbar": "Dieser Eintrag ist schon unterwegs oder gesendet und kann nicht mehr geändert werden.",
+    "ausgang_nummer_ungueltig": "Diese Handynummer stimmt nicht.",
+    "ausgang_text_fehlt": "Bitte einen Text eingeben.",
+    "ausgang_unklar": "Ob die Nachricht angekommen ist, ist unklar. Bitte im Postfach nachsehen, bevor sie nochmals gesendet wird."
+  },
+  "ausgang": {
+    "titel": "Ausgangskorb",
+    "beschreibung": "Alles, was das CRM per Mail oder SMS verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
+    "ohneDatenbank": "Der Ausgangskorb braucht die Datenbank. In der Vorschau ohne Datenbank ist er leer.",
+    "filter": "Anzeigen",
+    "filterwert": {
+      "offen": "Offen",
+      "gesendet": "Gesendet",
+      "verworfen": "Verworfen",
+      "alle": "Alle"
+    },
+    "leer": "Nichts im Ausgangskorb",
+    "leerText": "Sobald das CRM eine Mail oder SMS senden möchte, erscheint sie hier zur Freigabe.",
+    "spalte": {
+      "kanal": "Art",
+      "an": "An",
+      "inhalt": "Inhalt",
+      "status": "Stand",
+      "zeit": "Zeit"
+    },
+    "status": {
+      "wartet": "Wartet auf Freigabe",
+      "freigegeben": "Freigegeben",
+      "wird_gesendet": "Wird gesendet",
+      "gesendet": "Gesendet",
+      "fehler": "Fehler",
+      "verworfen": "Verworfen"
+    },
+    "art": {
+      "frei": "Nachricht",
+      "sms_erinnerung": "SMS-Erinnerung",
+      "termin_bestaetigung": "Terminbestätigung",
+      "nachfassen": "Nachfassen",
+      "offerte": "Offerte",
+      "werkvertrag": "Werkvertrag",
+      "monatsbericht": "Monatsbericht"
+    },
+    "titelMail": "Mail prüfen",
+    "titelSms": "SMS prüfen",
+    "mail": "Mail",
+    "an": "An",
+    "cc": "Kopie an",
+    "betreff": "Betreff",
+    "text": "Text",
+    "zeichen_one": "{{count}} Zeichen",
+    "zeichen_other": "{{count}} Zeichen",
+    "verwerfen": "Nicht senden",
+    "freigebenSenden": "Freigeben und senden",
+    "jetztSenden": "Jetzt senden",
+    "jetztSendenAnzahl_one": "{{count}} freigegebene jetzt senden",
+    "jetztSendenAnzahl_other": "{{count}} freigegebene jetzt senden",
+    "inhalt": "Inhalt",
+    "anhaenge": "Anhänge",
+    "ablauf": "Ablauf",
+    "erstellt": "Erstellt",
+    "absender": "Absender",
+    "system": "CRM (automatisch)",
+    "freigegeben": "Freigegeben",
+    "gesendet": "Gesendet",
+    "grund": "Grund",
+    "grundFrage": "Warum wird das nicht gesendet?",
+    "automatisch": "Automatisch",
+    "verwerfenJa": "Ja, nicht senden"
+  },
+  "integration": {
+    "fehler": {
+      "nicht_eingerichtet": "Diese Verbindung ist noch nicht eingerichtet. Siehe Einstellungen › Verbindungen.",
+      "nicht_verbunden": "Du bist noch nicht mit Microsoft verbunden. Bitte unter «Mein Konto» verbinden.",
+      "neu_verbinden": "Die Verbindung mit Microsoft ist abgelaufen. Bitte unter «Mein Konto» neu verbinden.",
+      "kein_zugriff": "Für dieses Postfach oder diesen Ordner fehlt die Berechtigung in Microsoft 365.",
+      "falsches_konto": "Dieses Microsoft-Konto gehört nicht zu dir oder nicht zur Firma.",
+      "abgelaufen": "Die Anmeldung hat zu lange gedauert. Bitte nochmals verbinden.",
+      "abgebrochen": "Die Anmeldung bei Microsoft wurde abgebrochen.",
+      "fremder_termin": "Diesen Termin hat jemand anderes in Outlook eingetragen. Nur diese Person kann ihn ändern.",
+      "kein_termin": "Für diesen Lead ist kein Termin eingetragen.",
+      "nicht_gefunden": "Nicht gefunden. Vielleicht wurde es inzwischen gelöscht.",
+      "nicht_verknuepft": "Dieser Kunde ist noch nicht mit AbaNinja verknüpft.",
+      "schon_verknuepft": "Dieser Kunde ist schon mit AbaNinja verknüpft.",
+      "abaninja": "AbaNinja hat einen Fehler gemeldet. Bitte später nochmals versuchen.",
+      "abaninja_zugang": "AbaNinja lehnt den Zugang ab. Bitte den Schlüssel in den Server-Einstellungen prüfen.",
+      "abaninja_daten": "AbaNinja nimmt die Angaben nicht an. Bitte Name, Adresse und Anrede prüfen.",
+      "graph": "Microsoft 365 hat einen Fehler gemeldet. Bitte später nochmals versuchen.",
+      "dienst": "Der Dienst hat einen Fehler gemeldet. Bitte später nochmals versuchen.",
+      "zu_viele": "Zu viele Anfragen auf einmal. Bitte in einer Minute nochmals versuchen.",
+      "anhang": "Ein Anhang konnte nicht mitgeschickt werden.",
+      "anhang_fehlt": "Ein Anhang ist nicht mehr vorhanden.",
+      "anhang_zu_gross": "Die Anhänge sind zusammen zu gross (höchstens 25 MB).",
+      "datei_fehlt": "Die Datei ist nicht mehr vorhanden.",
+      "bibliothek_fehlt": "Die SharePoint-Bibliothek wurde nicht gefunden. Bitte in den Einstellungen prüfen.",
+      "upload": "Das Hochladen nach SharePoint hat nicht geklappt.",
+      "ausgang_unklar": "Ob die Nachricht angekommen ist, ist unklar. Bitte im Postfach nachsehen.",
+      "ausgang_kein_absender": "Es ist niemand mit Microsoft verbunden, der diese Mail senden kann.",
+      "ausgang_adresse_ungueltig": "Diese E-Mail-Adresse stimmt nicht.",
+      "zeitlimit": "Der Dienst hat zu lange nicht geantwortet.",
+      "netzwerk": "Keine Verbindung zum Server. Bitte Internet prüfen.",
+      "eingabe": "Die Angaben sind unvollständig.",
+      "intern": "Auf dem Server ist ein Fehler passiert.",
+      "ohne_datenbank": "Dafür braucht es die Datenbank.",
+      "kein_recht": "Dafür fehlt dir das Recht.",
+      "anmeldung": "Bitte zuerst anmelden.",
+      "sms": "Die SMS wurde nicht angenommen (Code {{code}}).",
+      "unbekannt": "Das hat nicht geklappt (Code {{code}})."
+    }
+  },
+  "verbindungen": {
+    "reiter": "Verbindungen",
+    "dienst": {
+      "microsoft": "Microsoft 365",
+      "abaninja": "AbaNinja",
+      "sms": "SMS (ASPSMS)"
+    },
+    "zweck": {
+      "microsoft": "Mails senden, Outlook-Kalender, Anfragen aus info@, Ablage in SharePoint.",
+      "abaninja": "Kunden in der Buchhaltung anlegen und offene Rechnungen sehen.",
+      "sms": "Termin-Erinnerungen und SMS an Kunden, Absender «DimSolaire»."
+    },
+    "eingerichtet": "Eingerichtet",
+    "nichtEingerichtet": "Nicht eingerichtet",
+    "testOk": "Test am {{datum}} erfolgreich",
+    "testFehler": "Test am {{datum}} fehlgeschlagen",
+    "nieGetestet": "Noch nie getestet.",
+    "testen": "Jetzt testen",
+    "rueckruf": "Rückruf-Adresse für Microsoft",
+    "rueckrufHinweis": "Diese Adresse in der App-Registrierung bei Microsoft (Entra ID) unter «Umleitungs-URI» eintragen.",
+    "kopieren": "Kopieren",
+    "teamMicrosoft": "Wer ist mit Microsoft verbunden?",
+    "verbundenAnzahl_one": "{{count}} von {{total}} verbunden",
+    "verbundenAnzahl_other": "{{count}} von {{total}} verbunden",
+    "personVerbunden": "Verbunden · {{datum}}",
+    "personNicht": "Nicht verbunden",
+    "einstellungen": "Einstellungen",
+    "feld": {
+      "microsoft_postfach_anfragen": "Postfach für Anfragen (solar-guide, Landingpage, Messe)",
+      "microsoft_team_postfaecher": "Team-Postfächer (mit Komma getrennt)",
+      "microsoft_eigene_domains": "Eigene Domains (für Mail-Richtung)",
+      "microsoft_kalender_tage": "Kalender laden: Tage voraus",
+      "microsoft_mail_tage": "Mail-Verlauf: Tage zurück",
+      "microsoft_anfragen_tage": "Anfragen suchen: Tage zurück",
+      "microsoft_sharepoint_website": "SharePoint-Website",
+      "microsoft_sharepoint_bibliothek": "SharePoint-Bibliothek",
+      "microsoft_sharepoint_ordner": "Ordner für Kundenordner",
+      "sms_absender": "SMS-Absender (höchstens 11 Zeichen)",
+      "abaninja_anreden_herr": "Anrede «Herr» in AbaNinja",
+      "abaninja_anreden_frau": "Anrede «Frau» in AbaNinja",
+      "abaninja_anreden_standard": "Anrede sonst (Firma, unbekannt)"
+    },
+    "zeitplan": "Hintergrund-Jobs",
+    "zeitplanLeer": "Noch kein Lauf. Der Zeitplan startet, sobald er auf dem Server eingerichtet ist.",
+    "job": {
+      "ausgang": "Ausgangskorb senden",
+      "sms_erinnerung": "SMS-Erinnerung",
+      "anfragen": "Anfragen abholen",
+      "kalender": "Kalender laden",
+      "mails": "Mail-Verlauf",
+      "sicherung": "SharePoint-Sicherung"
+    },
+    "protokoll": "Letzte Aufrufe",
+    "protokollLeer": "Noch keine Aufrufe.",
+    "spalte": {
+      "zeit": "Zeit",
+      "dienst": "Dienst",
+      "person": "Person",
+      "ergebnis": "Ergebnis"
+    }
+  },
+  "mail": {
+    "beschreibung": "Vorausgefüllt in der Sprache des Kunden; alles lässt sich ändern. «Senden» schickt die Mail aus deinem Postfach über den Ausgangskorb.",
+    "ablegen": "In den Ausgangskorb",
+    "senden": "Senden",
+    "perMail": "Per Mail senden",
+    "offerteTitel": "Offerte {{nummer}} per Mail",
+    "vertragTitel": "Werkvertrag {{nummer}} per Mail",
+    "offerte": {
+      "betreff": "Ihre Offerte {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nVielen Dank für Ihr Interesse. Im Anhang finden Sie unsere Offerte. Bei Fragen sind wir gerne für Sie da.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    },
+    "werkvertrag": {
+      "betreff": "Ihr Werkvertrag {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    }
   }
 }

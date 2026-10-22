@@ -28,9 +28,9 @@ export const BAUPLAN: readonly Phase[] = [
   {
     nr: 7,
     titel: { de: 'Offerten, Werkverträge, Preise, Eturnity', fr: 'Offres, contrats, prix, Eturnity' },
-    stand: 'aktiv',
+    stand: 'fertig',
   },
-  { nr: 8, titel: { de: 'Microsoft 365, AbaNinja, SMS', fr: 'Microsoft 365, AbaNinja, SMS' }, stand: 'offen' },
+  { nr: 8, titel: { de: 'Microsoft 365, AbaNinja, SMS', fr: 'Microsoft 365, AbaNinja, SMS' }, stand: 'aktiv' },
   { nr: '8b', titel: { de: 'Ausschreibungs-Monitor', fr: 'Veille des appels d’offres' }, stand: 'offen' },
   {
     nr: 9,

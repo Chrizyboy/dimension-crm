@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.functions.tsbuildinfo",
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "types": [],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [
+    "supabase/functions/_shared",
+    "supabase/functions/microsoft",
+    "supabase/functions/microsoft-rueckruf",
+    "supabase/functions/verbindungen",
+    "supabase/functions/ausgang",
+    "supabase/functions/abaninja",
+    "supabase/functions/zeitplan"
+  ],
+  "exclude": ["supabase/functions/**/*.test.ts"]
+}
