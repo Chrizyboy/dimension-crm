@@ -181,7 +181,11 @@ export async function zugang(personId: string): Promise<string> {
   const geheim = brauche('VERBINDUNG_SCHLUESSEL')
   let t: TokenAntwort
   try {
-    t = await tokenHolen({ grant_type: 'refresh_token', refresh_token: await entschluessle(v.token, geheim) })
+    // Lässt sich das Token nicht entschlüsseln (Schlüssel gewechselt), hilft nur neu verbinden
+    const refresh = await entschluessle(v.token, geheim).catch(() => {
+      throw new DienstFehler('neu_verbinden', 409, 'Token nicht lesbar')
+    })
+    t = await tokenHolen({ grant_type: 'refresh_token', refresh_token: refresh })
   } catch (f) {
     if (f instanceof DienstFehler && f.code === 'neu_verbinden') {
       await dienst.rpc('ms_verbindung_genutzt', { p_person: personId, p_token: null, p_fehler: 'neu_verbinden' })

@@ -177,6 +177,10 @@ try {
   ok(r.status === 401, 'Ohne Anmeldung kein Zugriff', String(r.status))
 
   // --- Microsoft verbinden (OAuth mit state + PKCE) ----------------------------------------------------
+  // Eine Verbindung aus einem früheren Lauf (mit anderem Schlüssel) zuerst trennen
+  sql(
+    `update intern.microsoft_verbindungen set token = null, getrennt_am = now() where person_id = (select id from public.personen where email = '${EMAIL}')`,
+  )
   r = await funktion('microsoft', { aktion: 'testen' }, token)
   ok(r.daten?.fehler === 'nicht_verbunden', 'Ohne Verbindung: «nicht verbunden»', JSON.stringify(r.daten))
   r = await funktion('microsoft', { aktion: 'verbinden', sprache: 'de' }, token)
@@ -349,6 +353,25 @@ try {
     sgLead.length === 1 && sgLead[0].quelle === 'solar_guide',
     'Lead mit Quelle solar-guide.ch',
     JSON.stringify(sgLead),
+  )
+
+  // Gespeicherte Mail (.eml) ins CRM ziehen: dieselbe Erkennung, ohne Microsoft
+  const emlName = `Emil ${kennung}`
+  const eml = [
+    'From: Landingpage <web@dimension-solaire.ch>',
+    `Message-ID: <eml-${kennung}@test>`,
+    `Subject: Leads Landingpage`,
+    'Content-Type: text/html; charset=utf-8',
+    '',
+    `<table><tr><td>Name</td><td>${emlName}</td></tr><tr><td>PLZ</td><td>1630</td></tr><tr><td>Telefon</td><td>079 555 ${kennung.slice(0, 2)} 22</td></tr></table>`,
+  ].join('\r\n')
+  r = await funktion('microsoft', { aktion: 'mail_einlesen', eml }, token)
+  ok(r.daten?.neu === 1, '.eml-Datei: Anfrage der Landingpage wird Lead', JSON.stringify(r.daten))
+  r = await funktion('microsoft', { aktion: 'mail_einlesen', eml }, token)
+  ok(
+    r.daten?.neu === 0 && r.daten.uebersprungen === 1,
+    '.eml-Datei nochmals: kein zweiter Lead',
+    JSON.stringify(r.daten),
   )
 
   // --- SharePoint-Sicherung -----------------------------------------------------------------------------
