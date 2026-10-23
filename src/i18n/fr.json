@@ -4137,6 +4137,28 @@
       "ci": "Style CI des images (Canva)",
       "ciHinweis": "À quoi doivent ressembler les images : couleurs, police, logo, style.",
       "ciNurAdmin": "Seule l’administration peut le modifier."
+    },
+    "aktionen": {
+      "spalte": "Actions",
+      "fuer": "Actions pour {{name}}",
+      "sperren": "Plus de publicité",
+      "anmelden": "Autoriser à nouveau la publicité",
+      "einwilligung": "Saisir le consentement",
+      "titel": {
+        "sperren": "Plus de publicité à {{name}}",
+        "einwilligung": "Consentement de {{name}}"
+      },
+      "text": {
+        "sperren": "Ne reçoit plus de lettres, e-mails en série ni de newsletter. Peut être annulé.",
+        "einwilligung": "Sans commande, la newsletter n’est envoyée qu’avec consentement. Note quand et comment il a été donné."
+      },
+      "knopf": {
+        "sperren": "Bloquer",
+        "einwilligung": "Enregistrer"
+      },
+      "grund": "Motif (facultatif)",
+      "datum": "Date du consentement",
+      "quelle": "Preuve (p. ex. formulaire salon, e-mail du …)"
     }
   }
 }

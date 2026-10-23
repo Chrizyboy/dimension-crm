@@ -4137,6 +4137,28 @@
       "ci": "CI-Stil für Bilder (Canva)",
       "ciHinweis": "Wie die Bilder aussehen sollen: Farben, Schrift, Logo, Bildsprache.",
       "ciNurAdmin": "Ändern kann nur die Administration."
+    },
+    "aktionen": {
+      "spalte": "Aktionen",
+      "fuer": "Aktionen für {{name}}",
+      "sperren": "Keine Werbung mehr",
+      "anmelden": "Werbung wieder erlauben",
+      "einwilligung": "Einwilligung erfassen",
+      "titel": {
+        "sperren": "Keine Werbung mehr an {{name}}",
+        "einwilligung": "Einwilligung von {{name}}"
+      },
+      "text": {
+        "sperren": "Bekommt keine Serienbriefe, Serien-Mails und Newsletter mehr. Lässt sich wieder aufheben.",
+        "einwilligung": "Wer noch keinen Auftrag hat, bekommt den Newsletter nur mit Einwilligung. Halte fest, wann und wie sie gegeben wurde."
+      },
+      "knopf": {
+        "sperren": "Sperren",
+        "einwilligung": "Speichern"
+      },
+      "grund": "Grund (freiwillig)",
+      "datum": "Datum der Einwilligung",
+      "quelle": "Nachweis (z. B. Formular Messe, Mail vom …)"
     }
   }
 }

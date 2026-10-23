@@ -6,6 +6,7 @@ import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zelle, Zeile } from '@
 import { formatKundennummer } from '@/lib/kontakt'
 import { mitMail, mitPost } from '../lib/zielgruppe'
 import type { Gruppe, Zielkontakt } from '../types'
+import { ZielAktionen } from './ZielAktionen'
 
 /** Höchstens so viele Zeilen zeigen; die Auswahl gilt trotzdem für alle gefilterten. */
 const ZEIGEN = 200
@@ -53,6 +54,9 @@ export function ZielTabelle({
             <Kopfzelle>{t('marketing.spalte.sprache')}</Kopfzelle>
             <Kopfzelle>{t('marketing.spalte.gruppe')}</Kopfzelle>
             <Kopfzelle>{t('marketing.spalte.kontakt')}</Kopfzelle>
+            <Kopfzelle className="w-10">
+              <span className="sr-only">{t('marketing.aktionen.spalte')}</span>
+            </Kopfzelle>
           </tr>
         </TabelleKopf>
         <TabelleKoerper>
@@ -99,6 +103,9 @@ export function ZielTabelle({
                     aria-label={mitPost(k) ? t('marketing.mitPost') : t('marketing.ohnePost')}
                   />
                 </span>
+              </Zelle>
+              <Zelle>
+                <ZielAktionen kontakt={k} />
               </Zelle>
             </Zeile>
           ))}
