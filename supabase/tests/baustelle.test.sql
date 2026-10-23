@@ -4,6 +4,8 @@
 -- Ausführen: npm run db:test
 begin;
 select plan(39);
+-- Die Abläufe rechnen mit dem Schweizer Datum; zwischen 22 und 24 Uhr UTC wäre current_date sonst der Vortag.
+set local timezone = 'Europe/Zurich';
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-00000000b9a1', 'p9b-mo@test.local'),
