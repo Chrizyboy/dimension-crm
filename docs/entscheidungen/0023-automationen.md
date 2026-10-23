@@ -34,7 +34,7 @@ gestartet.
 - **Aufgaben und Glocke:** Aufgaben (Modul «Aufgaben», `#/tasks`) und Benachrichtigungen (Tabelle
   `benachrichtigungen`, in der Glocke) kommen vom Server, je Person und in ihrer Sprache. Die Glocke fragt jede
   Minute nach.
-- **Einstellungen** in `einstellungen.automationen` (Vorlauf Wartung, Karenz Rechnung, Tage nach dem Termin,
+- **Einstellungen** in `einstellungen.automationen` (Vorlauf Wartung, Karenz Rechnung, Rückschau für Termine,
   Bewertungslink), ändern nur die Administration.
 
 **Die elf Vorlagen:** Neuer Lead (Dubletten, Zuteilung Muri/Bulle nach PLZ, Erstkontakt 24 h), Termin vereinbart
