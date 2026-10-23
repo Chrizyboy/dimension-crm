@@ -15,6 +15,9 @@ export interface AusgangEintrag {
   html: string | null
   status: AusgangStatus
   automatisch: boolean
+  /** KI-Text einer Automation (Phase 13): wartet, fertig, fehler, uebersprungen. */
+  ki_status: 'wartet' | 'fertig' | 'fehler' | 'uebersprungen' | null
+  ki_auftrag: { vorlage_text?: string; meldung?: string } | null
   fehler: string | null
   verworfen_grund: string | null
   anhaenge: { dokument_id: string; name?: string }[]

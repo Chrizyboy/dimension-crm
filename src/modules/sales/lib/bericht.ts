@@ -77,7 +77,7 @@ function differenz(gekauft: number, erhalten: number, fr: boolean): string {
 /**
  * Bericht-Text an den Lead-Anbieter wie V233 (lbReportText): erhalten im CRM, gekauft und Differenz,
  * Stand der Leads, die reklamierten Leads (Bitte um Gutschrift) und die übrigen ohne Interesse
- * zur Information. Die KI-Fassung kommt in Phase 13.
+ * zur Information. Die KI-Fassung (V233 lbAiText) bekommt dieselben Fakten über `berichtFakten`.
  */
 export function berichtText(eingabe: {
   monat: string
@@ -140,4 +140,39 @@ export function berichtText(eingabe: {
   }
   z.push('', fr ? 'Meilleures salutations' : 'Freundliche Grüsse')
   return z.join('\n')
+}
+
+/**
+ * Fakten für den KI-Text des Monatsberichts (V233 lbAiText): Die App rechnet, die KI formuliert nur.
+ * Reklamierte Leads mit Datum, Name, Ort und Grund, die übrigen ohne Interesse nur zur Information.
+ */
+export function berichtFakten(eingabe: {
+  monat: string
+  erhalten: number
+  gekauft: number | null
+  stand: BerichtStand
+  ohneInteresse: readonly OhneInteresse[]
+  reklamiert: ReadonlySet<string>
+}): Record<string, unknown> {
+  const { monat, erhalten, gekauft, stand, ohneInteresse, reklamiert } = eingabe
+  const zeile = (l: OhneInteresse) => ({
+    datum: datum(l.eingang_am),
+    name: l.name,
+    ort: [l.plz, l.ort].filter(Boolean).join(' '),
+    grund: l.grund ?? 'nicht erfasst',
+  })
+  return {
+    monat: monatName(monat, 'de'),
+    erhalten,
+    gekauft,
+    differenz: gekauft === null ? null : erhalten - gekauft,
+    stand: {
+      in_bearbeitung: stand.inBearbeitung,
+      termin: stand.termin,
+      offeriert: stand.offeriert,
+      kein_interesse: stand.keinInteresse,
+    },
+    reklamation: ohneInteresse.filter((l) => reklamiert.has(l.id)).map(zeile),
+    zur_info: ohneInteresse.filter((l) => !reklamiert.has(l.id)).map(zeile),
+  }
 }

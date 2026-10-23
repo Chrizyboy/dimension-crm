@@ -1,4 +1,4 @@
-import { Camera, FileUp, X } from 'lucide-react'
+import { Camera, FileUp, Sparkles, X } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -7,7 +7,11 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
 import { useFinanzEinstellungen } from '@/hooks/useFinanzEinstellungen'
-import { parseChf } from '@/lib/format'
+import { formatChf, parseChf } from '@/lib/format'
+import { meldeIntegrationsFehler } from '@/services/integrationen'
+import { kiDatei, rufeKi, type KiBeleg } from '@/services/ki'
+import { melde } from '@/services/meldungen'
+import { supabase } from '@/services/supabase'
 import { useAktion } from '../hooks/useAktion'
 import { heuteZuerich } from '../lib/spesen'
 import { speseSchema } from '../schema'
@@ -15,8 +19,8 @@ import { speseErfassen } from '../services/spesen'
 
 /**
  * Spese erfassen (V233 «Spese erfassen mit Beleg»): Datum, Betrag, Kategorie, Zweck und der Beleg als Foto
- * (Handy-Kamera) oder Datei. Die Spese gehört immer der angemeldeten Person. Das Lesen des Belegs durch die KI
- * kommt mit Phase 13.
+ * (Handy-Kamera) oder Datei. Die Spese gehört immer der angemeldeten Person. «Mit KI lesen» (V233 spAiRead)
+ * füllt Datum, Betrag, Kategorie und Zweck aus dem Beleg; die Person prüft und speichert selbst.
  */
 export function SpeseErfassen({ personId, onSchliessen }: { personId: string; onSchliessen: () => void }) {
   const { t, i18n } = useTranslation()
@@ -28,6 +32,28 @@ export function SpeseErfassen({ personId, onSchliessen }: { personId: string; on
   const [zweck, setZweck] = useState('')
   const [notiz, setNotiz] = useState('')
   const [beleg, setBeleg] = useState<File | null>(null)
+  const [liest, setLiest] = useState(false)
+  const [kiNotiz, setKiNotiz] = useState<string | null>(null)
+
+  async function belegLesen(datei: File) {
+    setLiest(true)
+    try {
+      const r = await rufeKi<KiBeleg>('beleg', { datei: await kiDatei(datei) })
+      if (r.datum) setDatum(r.datum)
+      if (r.betrag_rappen) setBetrag(formatChf(r.betrag_rappen))
+      if (r.kategorie) setKategorie(r.kategorie)
+      if (r.zweck) setZweck(r.zweck)
+      const fremd = r.waehrung && r.waehrung !== 'CHF' ? r.waehrung : null
+      setKiNotiz(
+        [fremd ? t('ki.beleg.waehrung', { waehrung: fremd }) : null, r.bemerkung].filter(Boolean).join(' · ') || null,
+      )
+      melde('info', { de: 'Beleg gelesen – bitte prüfen', fr: 'Justificatif lu – à vérifier' })
+    } catch (f) {
+      meldeIntegrationsFehler(f)
+    } finally {
+      setLiest(false)
+    }
+  }
   const kamera = useRef<HTMLInputElement>(null)
   const datei = useRef<HTMLInputElement>(null)
   const rappen = parseChf(betrag) ?? 0
@@ -136,6 +162,18 @@ export function SpeseErfassen({ personId, onSchliessen }: { personId: string; on
             {beleg ? (
               <div className="bg-muted flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm">
                 <span className="truncate">{beleg.name}</span>
+                {supabase && (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="ml-auto"
+                    laedt={liest}
+                    onClick={() => void belegLesen(beleg)}
+                  >
+                    <Sparkles />
+                    {t('ki.beleg.lesen')}
+                  </Button>
+                )}
                 <Button
                   variant="ghost"
                   size="icon"
@@ -159,6 +197,7 @@ export function SpeseErfassen({ personId, onSchliessen }: { personId: string; on
                 </Button>
               </div>
             )}
+            {kiNotiz && <p className="bg-warn-soft text-warn rounded-md px-3 py-1.5 text-xs">{kiNotiz}</p>}
             <p className="text-muted-foreground text-xs">{t('spesen.erfassen.belegHinweis')}</p>
             <input
               ref={kamera}

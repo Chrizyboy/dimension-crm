@@ -1,4 +1,4 @@
-import { Ban, Send } from 'lucide-react'
+import { Ban, Send, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -144,6 +144,14 @@ export function AusgangDetail({
               {t(`ausgang.status.${eintrag.status}`)}
             </Badge>
             {eintrag.automatisch && <Badge ton="info">{t('ausgang.automatisch')}</Badge>}
+            {eintrag.ki_status && eintrag.ki_status !== 'uebersprungen' && (
+              <Badge
+                ton={eintrag.ki_status === 'fertig' ? 'marke' : eintrag.ki_status === 'fehler' ? 'warnung' : 'info'}
+              >
+                <Sparkles />
+                {t(`ki.ausgang.${eintrag.ki_status}`)}
+              </Badge>
+            )}
             <Badge>{t(`ausgang.art.${eintrag.art}`, { defaultValue: eintrag.art })}</Badge>
           </div>
           {eintrag.status === 'fehler' && eintrag.fehler && (
@@ -197,6 +205,27 @@ export function AusgangDetail({
               </Feld>
               {eintrag.kanal === 'sms' && (
                 <p className="text-muted-foreground text-xs">{t('ausgang.zeichen', { count: w.text.length })}</p>
+              )}
+              {eintrag.ki_status === 'wartet' && (
+                <p className="text-muted-foreground text-xs">{t('ki.ausgang.wartetHinweis')}</p>
+              )}
+              {eintrag.ki_status === 'fertig' && eintrag.ki_auftrag?.vorlage_text && (
+                <details className="text-xs">
+                  <summary className="text-muted-foreground cursor-pointer">{t('ki.ausgang.vorlageZeigen')}</summary>
+                  <p className="bg-muted/60 mt-2 rounded-md p-3 whitespace-pre-wrap">
+                    {eintrag.ki_auftrag.vorlage_text}
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="mt-1"
+                    onClick={() => {
+                      setW({ ...w, text: eintrag.ki_auftrag?.vorlage_text ?? w.text })
+                    }}
+                  >
+                    {t('ki.ausgang.vorlageNehmen')}
+                  </Button>
+                </details>
               )}
             </div>
           ) : (

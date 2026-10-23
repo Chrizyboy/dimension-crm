@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Input } from '@/components/ui/input'
 import { formatChf, formatDatum, formatTelefon } from '@/lib/format'
@@ -52,6 +53,11 @@ export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
       <div className="pb-3">
         <FahrplanBalken stand={p.stand} gross />
       </div>
+      <KiAkteAbschnitt
+        bezug={{ tabelle: 'projekte', id: p.id }}
+        art="auftrag"
+        mail={{ kontakt_id: p.kontakt_id, projekt_id: p.id }}
+      />
       <AkteAbschnitt titel={t('projekte.akte.kunde')}>
         <dl>
           <Angabe label={t('projekte.spalte.kunde')}>

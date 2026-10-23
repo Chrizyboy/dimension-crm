@@ -1,5 +1,7 @@
 import { Building2, Pencil, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { KiKnopf } from '@/components/shared/ki/KiKnopf'
+import { KiZusammenfassung } from '@/components/shared/ki/KiZusammenfassung'
 import { Button } from '@/components/ui/button'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatTelefon } from '@/lib/format'
@@ -90,6 +92,13 @@ export function AkteUebersicht({ kopf, akte, onAnrufen, onObjekt }: AkteUebersic
   return (
     <div className="flex flex-col gap-6">
       <NaechsterSchritt schritt={naechsterSchritt(kopf, akte)} onAnrufen={onAnrufen} />
+
+      <Abschnitt
+        titel={t('ki.abschnitt')}
+        aktion={<KiKnopf variant="ghost" bezug={{ tabelle: 'kontakte', id: k.id }} mail={{ kontakt_id: k.id }} />}
+      >
+        <KiZusammenfassung bezug={{ tabelle: 'kontakte', id: k.id }} />
+      </Abschnitt>
 
       <Abschnitt titel={t('akte.kontaktdaten')}>
         <Angaben>

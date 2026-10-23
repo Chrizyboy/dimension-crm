@@ -11,6 +11,7 @@ import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAussendienst, useLeadAkte, useVerkaufAenderung } from '../hooks/useVerkauf'
 import { speichereLuftbild } from '../services/leads'
+import { LuftbildAnalyse } from './LuftbildAnalyse'
 import { mapsLink } from '../lib/karte'
 import type { Geschaeft } from '../types'
 import { Terminblatt } from './Terminblatt'
@@ -151,6 +152,12 @@ export default function TerminblattDialog({ g, onSchliessen }: { g: Geschaeft; o
             <input type="file" accept="image/*" className="sr-only" onChange={(e) => void nimm(e.target.files?.[0])} />
           </label>
           {ablegen.isPending && <p className="text-muted-foreground text-xs">{t('verkauf.terminblatt.speichert')}</p>}
+          {g.verkaufschanceId && bild && (
+            <LuftbildAnalyse
+              leadId={g.verkaufschanceId}
+              dokumentId={ablegen.isPending ? null : (vorhanden?.id ?? null)}
+            />
+          )}
         </div>
         {druck.aktiv && (
           <Terminblatt

@@ -2,6 +2,7 @@ import { CheckCircle2, ExternalLink, ListTodo, Paperclip } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Badge } from '@/components/ui/badge'
@@ -114,6 +115,15 @@ export function FallAkte({ id, onSchliessen }: { id: string; onSchliessen: () =>
                 <Badge ton="ok">{t('service.akte.erledigtAm', { datum: formatDatum(f.erledigt_am) })}</Badge>
               )}
             </div>
+            <KiAkteAbschnitt
+              bezug={{ tabelle: 'service_faelle', id: f.id }}
+              art="service"
+              mail={{
+                ...(f.kontakt_id ? { kontakt_id: f.kontakt_id } : {}),
+                bezug_tabelle: 'service_faelle',
+                bezug_id: f.id,
+              }}
+            />
             <AkteAbschnitt titel={t('service.akte.angaben')}>
               <dl>
                 <Angabe label={t('service.feld.kunde')}>

@@ -15,6 +15,7 @@ import {
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { MailDialog } from '@/components/shared/MailDialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -228,6 +229,15 @@ export default function OffertAkte({
                 <WirtschaftlichkeitKarte w={o.wirtschaftlichkeit} />
               </AkteAbschnitt>
             )}
+            <KiAkteAbschnitt
+              bezug={{ tabelle: 'offerten', id: o.id }}
+              art={versendet ? 'nachfassen' : 'offerte'}
+              mail={{
+                kontakt_id: o.kontaktId,
+                offerte_id: o.id,
+                ...(o.verkaufschanceId ? { verkaufschance_id: o.verkaufschanceId } : {}),
+              }}
+            />
             <OffertVersionen o={o} dokumente={akte.dokumente.data ?? []} />
             <OffertVerlauf eintraege={akte.verlauf.data} laedt={akte.verlauf.isPending} />
           </div>

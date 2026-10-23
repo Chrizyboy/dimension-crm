@@ -50,6 +50,9 @@ export interface Aktion {
   werbung?: boolean
   tranche?: 'erste' | 'letzte'
   merkmal?: string
+  /** Mail: die KI schreibt den Text im Stil der Firma (Art des Kundentexts); der Text oben ist die Vorlage. */
+  ki?: string
+  ki_wunsch?: string
 }
 
 /** Eine Automation: Auslöser → Bedingungen → Aktionen. */

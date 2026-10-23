@@ -1,12 +1,20 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { FileUp, Inbox, MailPlus } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
+import { FileUp, Inbox, MailPlus, Sparkles } from 'lucide-react'
+import { lazy, Suspense, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { KiMailLesen } from '@/components/shared/ki/KiMailLesen'
 import { Button } from '@/components/ui/button'
 import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/ui/menue'
 import { meldeIntegrationsFehler, microsoft, type AnfragenErgebnis } from '@/services/integrationen'
+import { useAuswahl } from '@/hooks/useAuswahl'
 import { melde } from '@/services/meldungen'
+import { supabase } from '@/services/supabase'
 import { VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
+import { leadAusMail } from '../lib/kiLead'
+import type { LeadEingabe } from '../schema'
+
+const LeadDialog = lazy(() => import('./LeadDialog'))
 
 /** Kurze Rückmeldung in beiden Sprachen: neu, ergänzt, übersprungen. */
 function zusammenfassung(r: AnfragenErgebnis): { de: string; fr: string } {
@@ -35,6 +43,12 @@ export function AnfragenKnopf() {
   const qc = useQueryClient()
   const datei = useRef<HTMLInputElement>(null)
   const [laeuft, setLaeuft] = useState(false)
+  const [kiOffen, setKiOffen] = useState(false)
+  const [vorlage, setVorlage] = useState<Partial<LeadEingabe> | null>(null)
+  const navigate = useNavigate()
+  const interesse = useAuswahl('interesse')
+  const gebaeudeart = useAuswahl('gebaeudeart')
+  const dachform = useAuswahl('dachform')
 
   async function mache(f: () => Promise<AnfragenErgebnis>) {
     setLaeuft(true)
@@ -79,6 +93,16 @@ export function AnfragenKnopf() {
             <FileUp />
             {t('verkauf.anfragen.datei')}
           </MenueEintrag>
+          {supabase && (
+            <MenueEintrag
+              onSelect={() => {
+                setKiOffen(true)
+              }}
+            >
+              <Sparkles />
+              {t('ki.mail.menue')}
+            </MenueEintrag>
+          )}
         </MenueInhalt>
       </Menue>
       <input
@@ -94,6 +118,35 @@ export function AnfragenKnopf() {
           e.target.value = ''
         }}
       />
+      {kiOffen && (
+        <KiMailLesen
+          onSchliessen={() => {
+            setKiOffen(false)
+          }}
+          onLead={(r) => {
+            const werte = (a: ReturnType<typeof useAuswahl>) => a.werte.map((x) => x.schluessel)
+            setVorlage(
+              leadAusMail(r, {
+                interesse: werte(interesse),
+                gebaeudeart: werte(gebaeudeart),
+                dachform: werte(dachform),
+              }),
+            )
+            setKiOffen(false)
+          }}
+        />
+      )}
+      {vorlage && (
+        <Suspense>
+          <LeadDialog
+            vorlage={vorlage}
+            onSchliessen={(id) => {
+              setVorlage(null)
+              if (id) void navigate({ to: '/sales', search: { lead: id } })
+            }}
+          />
+        </Suspense>
+      )}
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { KiNotiz } from '@/components/shared/ki/KiNotiz'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -229,6 +230,20 @@ export default function KontaktErfassenDialog({
               }}
             />
           </Feld>
+          <KiNotiz
+            text={text}
+            bezug={
+              geschaeft.verkaufschanceId
+                ? { tabelle: 'verkaufschancen', id: geschaeft.verkaufschanceId }
+                : { tabelle: 'kontakte', id: geschaeft.kontaktId }
+            }
+            onText={setText}
+            onErgebnis={(e) => {
+              if ((ARTEN as readonly string[]).includes(e.art)) setArt(e.art)
+              if (e.ergebnis && ergebnisse.werte.some((x) => x.schluessel === e.ergebnis)) setErgebnis(e.ergebnis)
+              setText(e.text)
+            }}
+          />
           {fehler && (
             <p role="alert" className="text-bad text-sm">
               {fehler}

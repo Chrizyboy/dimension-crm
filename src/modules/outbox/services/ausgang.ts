@@ -8,7 +8,7 @@ function db() {
 }
 
 const FELDER =
-  'id, kanal, art, an, cc, betreff, text, html, status, automatisch, fehler, verworfen_grund, anhaenge, erstellt_am, freigegeben_am, gesendet_am, kontakt_id, verkaufschance_id, absender:personen!ausgangskorb_absender_person_id_fkey(name), freigeber:personen!ausgangskorb_freigegeben_von_fkey(name), kontakt:kontakte(art, vorname, nachname, firma)'
+  'id, kanal, art, an, cc, betreff, text, html, status, automatisch, ki_status, ki_auftrag, fehler, verworfen_grund, anhaenge, erstellt_am, freigegeben_am, gesendet_am, kontakt_id, verkaufschance_id, absender:personen!ausgangskorb_absender_person_id_fkey(name), freigeber:personen!ausgangskorb_freigegeben_von_fkey(name), kontakt:kontakte(art, vorname, nachname, firma)'
 
 interface Roh extends Omit<AusgangEintrag, 'absender' | 'freigegeben_durch' | 'kunde'> {
   absender: { name: string } | null
