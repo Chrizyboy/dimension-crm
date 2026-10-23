@@ -37,6 +37,7 @@ export function Kosten() {
           <div
             className="bg-muted h-2 overflow-hidden rounded-full"
             role="progressbar"
+            aria-label={t('ki.kosten.heute')}
             aria-valuenow={p}
             aria-valuemin={0}
             aria-valuemax={100}
