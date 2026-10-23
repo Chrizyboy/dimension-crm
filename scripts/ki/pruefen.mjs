@@ -5,7 +5,7 @@
 
 import { execFileSync, spawn } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
-import { writeFileSync } from 'node:fs'
+import { rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { starteClaudeErsatz } from './ersatz-claude.mjs'
@@ -500,6 +500,7 @@ try {
   } catch {
     // schon beendet
   }
+  rmSync(envDatei, { force: true })
   stopp()
 }
 console.log(fehler ? `\n${fehler} Prüfung(en) fehlgeschlagen` : '\nAlle Prüfungen bestanden')
