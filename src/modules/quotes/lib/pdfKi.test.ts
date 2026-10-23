@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import type { PdfWerte } from '../types'
 import { brauchtKi, ergaenzeMitKi, type KiOfferte } from './pdfKi'
 
 const KI: KiOfferte = {
@@ -17,11 +16,11 @@ const KI: KiOfferte = {
 
 describe('Offerten-PDF mit KI', () => {
   it('braucht KI, wenn Nummer oder Betrag fehlt', () => {
-    expect(brauchtKi({ wirtschaftlichkeit: {} } as PdfWerte)).toBe(true)
-    expect(brauchtKi({ nummer: '1', betragRappen: 100, wirtschaftlichkeit: {} } as PdfWerte)).toBe(false)
+    expect(brauchtKi({ wirtschaftlichkeit: {} })).toBe(true)
+    expect(brauchtKi({ nummer: '1', betragRappen: 100, wirtschaftlichkeit: {} })).toBe(false)
   })
   it('füllt nur Lücken; was die Regeln lesen, gilt', () => {
-    const w = ergaenzeMitKi({ nummer: 'E-1', wirtschaftlichkeit: {} } as PdfWerte, KI)
+    const w = ergaenzeMitKi({ nummer: 'E-1', wirtschaftlichkeit: {} }, KI)
     expect(w.nummer).toBe('E-1')
     expect(w.betragRappen).toBe(2_480_050)
     expect(w.kunde).toBe('Paul Exemple')

@@ -93,11 +93,11 @@ async function kiErsetzen(page: Page): Promise<{ aktion: string; eingabe: Record
     const r =
       aktion === 'entwurf' && eingabe.bisher
         ? {
-            ...(antwort as object),
+            ...(antwort),
             text: 'Guten Tag Frau Muster\n\nKurz nachgefragt: Passt die Offerte?\n\nFreundliche Grüsse\nAnna Admin',
           }
         : antwort
-    return route.fulfill({ status: 200, headers: cors, json: { ok: true, ...(r as object) } })
+    return route.fulfill({ status: 200, headers: cors, json: { ok: true, ...(r) } })
   })
   return auftraege
 }
@@ -148,8 +148,8 @@ test('Assistent: Entwurf, überarbeiten, weiter zur Mail', async ({ page }) => {
   await d.getByRole('button', { name: 'Kürzer' }).click()
   await expect(d.getByLabel('Text')).toHaveValue(/Kurz nachgefragt/)
   const zweiter = auftraege.filter((a) => a.aktion === 'entwurf')[1]
-  expect(zweiter?.eingabe.wunsch).toBe('Kürzer')
-  expect(zweiter?.eingabe.bisher).toMatchObject({ betreff: 'Ihre Offerte – kurz nachgefragt' })
+  expect(zweiter.eingabe.wunsch).toBe('Kürzer')
+  expect(zweiter.eingabe.bisher).toMatchObject({ betreff: 'Ihre Offerte – kurz nachgefragt' })
   await d.getByRole('button', { name: 'Weiter zur Mail' }).click()
   const mail = page.getByRole('dialog', { name: 'Mail prüfen und senden' })
   await expect(mail.getByLabel('Text')).toHaveValue(/Kurz nachgefragt/)
