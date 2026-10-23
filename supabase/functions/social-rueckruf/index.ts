@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
   }
   const app = env('APP_URL')
   if (app) {
-    const ziel = `${app.replace(/\/$/, '')}/#/marketing?ansicht=verbindungen&verbunden=${encodeURIComponent(dienst || '-')}&ergebnis=${encodeURIComponent(ergebnis)}`
+    const ziel = `${app.replace(/\/$/, '')}/#/marketing?ansicht=social&verbunden=${encodeURIComponent(dienst || '-')}&ergebnis=${encodeURIComponent(ergebnis)}`
     return new Response(null, { status: 302, headers: { Location: ziel } })
   }
   const t = TEXT[sprache]

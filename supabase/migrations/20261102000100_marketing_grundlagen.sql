@@ -164,7 +164,8 @@ select k.id,
          when k.einwilligung ->> 'datum' is not null then 'einwilligung'
        end as versandgrund,
        (select max(z.zeitpunkt) from public.aktivitaeten z
-         where z.kontakt_id = k.id and z.geloescht_am is null and z.art in ('mail', 'brief')) as zuletzt_angeschrieben
+         where z.kontakt_id = k.id and z.geloescht_am is null and z.art in ('mail', 'brief')) as zuletzt_angeschrieben,
+       k.abmelde_schluessel
   from public.kontakte k
   left join lateral (
     select x.strasse, x.plz, x.ort, x.kanton from public.objekte x
