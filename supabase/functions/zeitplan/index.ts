@@ -3,6 +3,7 @@
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
+//  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * sms          ab «uhrzeit»    SMS-Erinnerungen für morgen, nur wenn «automatisch» eingeschaltet ist (V172)
 //  * anfragen     alle 5 Minuten  solar-guide, Landingpage, Messe aus den Postfächern (V78)
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
@@ -14,6 +15,7 @@
 
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
+import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { dienst } from '../_shared/datenbank.ts'
 import { DienstFehler } from '../_shared/http.ts'
@@ -75,6 +77,13 @@ Deno.serve(async (req) => {
   ergebnis.ausgang = await job('ausgang', 0, async () => {
     const r = await ausgangAbarbeiten(20)
     return `${r.gesendet} gesendet, ${r.fehler} Fehler`
+  })
+
+  // Automationen (Phase 12): die Datenbank macht alles ausser den Schritten, die Microsoft oder AbaNinja brauchen.
+  ergebnis.automationen = await job('automationen', 0, async () => {
+    const r = await dienst.rpc<Record<string, number>>('automationen_abarbeiten', { p_limit: 50 })
+    const s = r.server ? await serverSchritteAbarbeiten(10) : { erledigt: 0, fehler: 0 }
+    return `${r.neue_laeufe} neu, ${r.schritte} Läufe, ${s.erledigt} Server-Schritte, ${s.fehler} Fehler`
   })
 
   // Freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11); ohne Verbindung bleibt der Post «Fehler».
