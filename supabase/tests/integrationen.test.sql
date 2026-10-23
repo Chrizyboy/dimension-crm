@@ -1,9 +1,9 @@
 -- Prüft Phase 8: Ausgangskorb (anlegen, prüfen, ändern, freigeben, verwerfen, nie doppelt), SMS-Erinnerung
 -- am Vortag (eine pro Termin, «automatisch» nur vom Zeitplan), Rechte der Server-Funktionen und die
--- Übernahme von Anfragen aus Mails (Dubletten über die Mail-Kennung).
+-- Übernahme von Anfragen aus Mails (Dubletten über die Mail-Kennung), verschobene Outlook-Termine.
 -- Ausführen: npm run db:test
 begin;
-select plan(24);
+select plan(26);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000008a1', 'i8-verkauf@test.local');
@@ -84,6 +84,18 @@ select is((public.anfrage_uebernehmen(jsonb_build_object('kennung', '<t8@beispie
   || '/' || (public.anfrage_uebernehmen(jsonb_build_object('kennung', '<t8@beispiel.test>', 'quelle', 'solar-guide',
   'kontakt', jsonb_build_object('vorname', 'Max', 'nachname', 'Testanfrage8'), 'objekt', '{}', 'lead', '{}')) ->> 'ergebnis'),
   'neu/schon', 'dieselbe Mail legt nur einmal einen Lead an');
+
+-- Outlook-Abgleich: ein Termin, der aus der Vergangenheit in die Zukunft verschoben wurde, kommt mit
+insert into public.kalender_eintraege (person_id, beginn, ende, betreff, quelle, extern_id) values
+  ('00000000-0000-0000-0000-0000000008b1', now() - interval '10 days', now() - interval '10 days' + interval '1 hour',
+   'Alt', 'outlook', 't8-verschoben');
+select is(public.kalender_abgleichen('00000000-0000-0000-0000-0000000008b1', now(), now() + interval '7 days',
+  jsonb_build_array(jsonb_build_object('extern_id', 't8-verschoben', 'betreff', 'Neu',
+    'beginn', now() + interval '2 days', 'ende', now() + interval '2 days 1 hour'))),
+  1, 'verschobener Outlook-Termin wird übernommen');
+select is((select string_agg(betreff, ',') from public.kalender_eintraege
+            where extern_id = 't8-verschoben' and geloescht_am is null),
+  'Neu', 'und ersetzt die alte Zeile');
 
 select * from finish();
 rollback;

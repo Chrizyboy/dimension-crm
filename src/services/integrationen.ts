@@ -40,7 +40,7 @@ export function meldeIntegrationsFehler(f: unknown): void {
 
 /** Ruft eine Server-Funktion mit einer Aktion auf. Wirft IntegrationsFehler mit dem Code des Servers. */
 export async function rufeFunktion<T extends object>(
-  funktion: 'microsoft' | 'abaninja' | 'ausgang' | 'verbindungen' | 'ausschreibungen',
+  funktion: 'microsoft' | 'abaninja' | 'ausgang' | 'verbindungen' | 'ausschreibungen' | 'social',
   aktion: string,
   eingabe: Record<string, unknown> = {},
 ): Promise<T> {

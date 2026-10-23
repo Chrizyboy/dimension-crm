@@ -1792,7 +1792,21 @@
     "finanzen_schon_bezahlt": "Cette facture a déjà reçu un paiement ; l’annulation n’est plus possible.",
     "finanzen_grund_fehlt": "Merci d’indiquer un motif.",
     "finanzen_nicht_ueberfaellig": "Cette facture n’est pas en retard.",
-    "finanzen_mahnstufe_max": "Le 3e rappel est le dernier. La suite passe par la poursuite (hors CRM)."
+    "finanzen_mahnstufe_max": "Le 3e rappel est le dernier. La suite passe par la poursuite (hors CRM).",
+    "marketing_kontakt_fehlt": "Contact introuvable.",
+    "marketing_einwilligung_unvollstaendig": "Le consentement nécessite une date et une preuve.",
+    "marketing_art": "Type inconnu.",
+    "marketing_newsletter_fehlt": "Newsletter introuvable.",
+    "marketing_keine_empfaenger": "Aucun destinataire.",
+    "marketing_ci_nur_admin": "Seule l’administration modifie le style CI.",
+    "social_fehlt": "Publication introuvable.",
+    "social_nicht_entwurf": "Seuls les brouillons peuvent être validés ou classés.",
+    "social_netzwerk_fehlt": "Choisis au moins un réseau.",
+    "social_text_fehlt": "Chaque réseau et chaque langue a besoin d’un texte.",
+    "social_zu_lang": "Un texte est trop long pour le réseau.",
+    "social_bild_fehlt": "Instagram a besoin d’une image.",
+    "social_nicht_verbunden": "Le réseau n’est pas connecté. L’administration le connecte sous Réseaux sociaux → Connexions.",
+    "social_nicht_geplant": "La publication n’est pas validée."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -1897,7 +1911,18 @@
       "sms": "Le SMS n'a pas été accepté (code {{code}}).",
       "unbekannt": "Cela n'a pas fonctionné (code {{code}}).",
       "nicht_gestellt": "D’abord émettre la facture, puis la transmettre à AbaNinja.",
-      "schon_uebergeben": "Cette facture est déjà dans AbaNinja."
+      "schon_uebergeben": "Cette facture est déjà dans AbaNinja.",
+      "keine_seite": "Aucune page trouvée : le compte ne gère aucune page Facebook ni page entreprise LinkedIn.",
+      "kein_instagram": "Aucun compte Instagram professionnel n’est lié à la page Facebook.",
+      "meta": "Meta a refusé la publication.",
+      "linkedin": "LinkedIn a refusé la publication.",
+      "canva": "Canva a signalé une erreur.",
+      "canva_export": "Impossible de reprendre l’image de Canva.",
+      "bild_fehlt": "Image manquante.",
+      "bild_abgelehnt": "Instagram refuse l’image (format ou taille).",
+      "speicher": "Impossible d’enregistrer l’image.",
+      "unklar": "Pas de réponse : vérifie sur le réseau si la publication est parue.",
+      "social_nicht_geplant": "La publication n’est pas validée."
     }
   },
   "verbindungen": {
@@ -3837,6 +3862,303 @@
       "nichts": "Rien à payer cette semaine.",
       "weitere_one": "+ {{count}} autre cette semaine",
       "weitere_other": "+ {{count}} autres cette semaine"
+    }
+  },
+  "marketing": {
+    "titel": "Marketing",
+    "beschreibung": "Écrire aux clients, réseaux sociaux et newsletter. Ce qui part vers l’extérieur, tu le valides d’un clic.",
+    "ansicht": {
+      "anschreiben": "Écrire aux clients",
+      "social": "Réseaux sociaux",
+      "newsletter": "Newsletter",
+      "vorlagen": "Modèles"
+    },
+    "gruppe": {
+      "interessent": "Intéressé",
+      "offerte": "Offre ouverte",
+      "kunde": "Client",
+      "verloren": "Offre perdue",
+      "kein_interesse": "Pas intéressé",
+      "ohne": "Sans affaire"
+    },
+    "sprache": {
+      "de": "Allemand",
+      "fr": "Français"
+    },
+    "standort": {
+      "muri": "Muri",
+      "bulle": "Bulle"
+    },
+    "kontaktweg": {
+      "mail": "Avec e-mail",
+      "post": "Avec adresse postale"
+    },
+    "anlage": {
+      "ohne_batterie": "Sans batterie",
+      "ohne_wallbox": "Sans borne de recharge",
+      "ohne_waermepumpe": "Sans pompe à chaleur",
+      "alt": "Installation ≥ 3 ans"
+    },
+    "filter": {
+      "suche": "Nom, lieu, e-mail, n° client",
+      "gruppe": "Groupe",
+      "kanton": "Canton",
+      "sprache": "Langue",
+      "spracheAlle": "Toutes les langues",
+      "standort": "Site",
+      "standortAlle": "Tous les sites",
+      "kontakt": "Moyen de contact",
+      "kontaktAlle": "E-mail ou courrier",
+      "anlage": "Installation",
+      "anlageAlle": "Toute installation",
+      "abgemeldete": "Afficher les désinscrits"
+    },
+    "spalte": {
+      "name": "Nom",
+      "ort": "Lieu",
+      "kanton": "Canton",
+      "sprache": "Langue",
+      "gruppe": "Groupe",
+      "kontakt": "E-mail / courrier"
+    },
+    "abgemeldet": "Désinscrit",
+    "ohneName": "(sans nom)",
+    "mitMail": "E-mail disponible",
+    "ohneMail": "Pas d’e-mail",
+    "mitPost": "Adresse postale disponible",
+    "ohnePost": "Adresse postale incomplète",
+    "kiSpaeter": "La rédaction avec l’IA arrive avec l’assistant (phase 13).",
+    "anschreiben": {
+      "tabelle": "Groupe cible",
+      "waehlen": "Sélection",
+      "waehlenName": "Sélectionner {{name}}",
+      "gewaehlt": "{{anzahl}} sélectionné(s) sur {{von}}",
+      "alleAngezeigten": "Sélectionner tous les affichés",
+      "leeren": "Vider la sélection",
+      "serienbrief": "Lettre circulaire",
+      "serienmail": "E-mail en série",
+      "adressliste": "Liste d’adresses",
+      "adresslisteDatei": "liste-adresses",
+      "mehr": "{{anzahl}} autres sélectionnables mais non affichés. Affine la liste avec les filtres.",
+      "leer": "Personne ne correspond à ces filtres",
+      "leerText": "Retire un filtre ou affiche les désinscrits."
+    },
+    "serien": {
+      "titel": {
+        "brief": "Lettre circulaire",
+        "mail": "E-mail en série"
+      },
+      "info": "{{anzahl}} destinataires · {{de}} allemand · {{fr}} français · {{ohne}} sans adresse omis · {{doppelt}} doublons retirés",
+      "absender": "Expéditeur (ligne au-dessus de l’adresse)",
+      "betreff": "Objet",
+      "text": "Texte",
+      "platzhalter": "Champs : {Anrede} {Vorname} {Nachname} {Name} {Firma} {Strasse} {PLZ} {Ort} {Kundennummer} {Absender}",
+      "vorschau": "Aperçu pour {{name}}",
+      "alsVorlage": "Enregistrer comme modèle",
+      "los": {
+        "brief_one": "Créer le PDF ({{count}} lettre)",
+        "brief_other": "Créer le PDF ({{count}} lettres)",
+        "mail_one": "Envoyer {{count}} e-mail",
+        "mail_other": "Envoyer {{count}} e-mails"
+      },
+      "mailHinweis": "Chaque e-mail part séparément depuis ton Outlook ({{absender}}) avec ta signature et un lien de désinscription. Le clic sur « Envoyer » les valide ; tu les vois ensuite dans la boîte d’envoi.",
+      "dateiname": "lettre-circulaire",
+      "keiner": {
+        "brief": "Personne dans la sélection n’a d’adresse postale complète (rue, NPA, localité). Tu peux quand même modifier les textes et les enregistrer comme modèle.",
+        "mail": "Personne dans la sélection n’a d’adresse e-mail (ou tous sont désinscrits). Tu peux quand même modifier les textes et les enregistrer comme modèle."
+      }
+    },
+    "letzte": {
+      "titel": "Dernières actions",
+      "art": {
+        "serienbrief": "Lettre circulaire",
+        "serienmail": "E-mail en série",
+        "newsletter": "Newsletter",
+        "adressliste": "Liste d’adresses"
+      },
+      "zeile": "{{anzahl}} · {{wann}} · {{wer}}"
+    },
+    "netzwerk": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn"
+    },
+    "format": {
+      "quadrat": "Carré 1080 × 1080",
+      "hoch": "Portrait 1080 × 1350",
+      "story": "Story 1080 × 1920",
+      "quer": "Paysage 1200 × 627"
+    },
+    "post": {
+      "neu": "Nouvelle publication",
+      "bearbeiten": "Modifier la publication",
+      "offene": "Brouillons et publications planifiées",
+      "vergangene": "Passées",
+      "leer": "Pas encore de publication",
+      "leerText": "Crée une publication : thème, textes pour chaque réseau, image de Canva ou ta propre photo.",
+      "ohneText": "(encore sans texte)",
+      "ohneThema": "Sans thème",
+      "status": {
+        "entwurf": "Brouillon",
+        "geplant": "Validée, planifiée",
+        "wird_veroeffentlicht": "En cours de publication",
+        "veroeffentlicht": "Publiée",
+        "fehler": "Erreur",
+        "erledigt": "Classée"
+      },
+      "thema": "Thème",
+      "idee": "Idée / contenu",
+      "sprache": "Langue",
+      "netzwerke": "Réseaux",
+      "format": "Format d’image",
+      "spracheWert": {
+        "de": "Allemand",
+        "fr": "Français",
+        "de_fr": "Allemand et français"
+      },
+      "quelle": "D’où vient l’idée ?",
+      "quelleWert": {
+        "eigen": "Thème propre",
+        "anlage": "Installation réalisée",
+        "tipp": "Conseil"
+      },
+      "anlage": "Installation (sans nom)",
+      "anlageWaehlen": "Choisir l’installation",
+      "foto": "Propre photo",
+      "inCanva": "Créer dans Canva",
+      "ausCanva": "Reprendre l’image de Canva",
+      "canvaNichtVerbunden": "Canva n’est pas connecté. Les propres photos fonctionnent toujours.",
+      "bildNr": "Image {{nr}}",
+      "bildEntfernen": "Retirer l’image",
+      "wirdGepostet": "sera publiée",
+      "zeichen": "{{anzahl}} / {{max}} caractères",
+      "hinweis": {
+        "textFehlt": "Texte manquant.",
+        "zuLang": "Trop long : au plus {{wert}} caractères.",
+        "hashtagsInstagram": "Instagram : 8–12 hashtags conseillés (actuellement {{wert}}).",
+        "hashtagsLinkedin": "LinkedIn : au plus 3 hashtags (actuellement {{wert}}).",
+        "emojisLinkedin": "LinkedIn : plutôt sans emojis.",
+        "bildFehlt": "Instagram a besoin d’une image."
+      },
+      "datum": "Date",
+      "zeit": "Heure",
+      "speichern": "Enregistrer le brouillon",
+      "planen": "Valider et planifier",
+      "jetzt": "Publier maintenant",
+      "zurueckziehen": "Retirer",
+      "erledigt": "Classer comme fait",
+      "papierkorb": "Mettre à la corbeille",
+      "fehlerCode": "Erreur ({{code}})",
+      "fehlerText": {
+        "neu_verbinden": "Connexion expirée. Reconnecte-la plus haut sous « Connexions », puis valide à nouveau.",
+        "nicht_eingerichtet": "Non connecté. Connecte-le plus haut sous « Connexions »."
+      }
+    },
+    "verbindung": {
+      "titel": "Connexions",
+      "dienst": {
+        "meta": "Facebook et Instagram",
+        "linkedin": "Page entreprise LinkedIn",
+        "canva": "Canva"
+      },
+      "wozu": {
+        "meta": "Publications sur la page Facebook et le compte Instagram de Dimension Solaire.",
+        "linkedin": "Publications sur la page entreprise LinkedIn.",
+        "canva": "Créer des images avec le kit de marque et les reprendre dans le CRM."
+      },
+      "verbundenKurz": "Connecté",
+      "nicht": "Non connecté",
+      "neuVerbinden": "À reconnecter",
+      "wer": "{{name}} · par {{von}} le {{am}}",
+      "nichtEingerichtet": "Pas encore configuré sur le serveur (voir guide Marketing).",
+      "verbinden": "Connecter",
+      "erneuern": "Reconnecter",
+      "trennen": "Déconnecter",
+      "verbunden": "Connecté : {{dienst}}",
+      "fehlgeschlagen": "La connexion a échoué ({{code}})"
+    },
+    "newsletter": {
+      "zahlen": "Chiffres clés",
+      "zahl": {
+        "empfaenger": "Adresses e-mail autorisées",
+        "kunden": "dont clients",
+        "einwilligung": "dont avec consentement",
+        "abgemeldet": "Désinscrits"
+      },
+      "liste": "Newsletters",
+      "neu": "Nouvelle newsletter",
+      "leer": "Pas encore de newsletter",
+      "leerText": "Choisir le thème, définir le groupe cible, écrire le texte, vérifier et envoyer.",
+      "status": {
+        "entwurf": "Brouillon",
+        "versendet": "Envoyée"
+      },
+      "versendetAm": "Envoyée {{wann}} · {{anzahl}} destinataires · {{wer}}",
+      "entwurfVom": "Brouillon du {{wann}}",
+      "alsVorlage": "Utiliser comme modèle",
+      "kopie": "copie",
+      "ohneThema": "Newsletter",
+      "ablauf": "Thème → groupe cible → texte → vérification → envoi",
+      "thema": "Thème",
+      "zielgruppe": "Groupe cible",
+      "einzelne": "Inclure les destinataires individuels avec consentement (sans relation client)",
+      "versandgrund": "Seulement avec un motif d’envoi : client (au moins une commande) ou consentement avec date et preuve. Jamais les désinscrits.",
+      "speichernPruefen": "Enregistrer et vérifier",
+      "senden_one": "Envoyer à {{count}} destinataire",
+      "senden_other": "Envoyer à {{count}} destinataires",
+      "pruefung": "Vérification",
+      "empfaengerZahl": "{{neu}} destinataires la recevront ; {{schon}} l’ont déjà et sont ignorés.",
+      "hinweis": {
+        "betreffFehlt": "{{sprache}} : objet manquant.",
+        "textFehlt": "{{sprache}} : texte manquant.",
+        "zuLang": "{{sprache}} : {{wert}} mots, conseillé au plus {{max}}.",
+        "ohneAnrede": "{{sprache}} : sans {Anrede}, la salutation personnelle manque.",
+        "platzhalterText": "{{sprache}} : le texte contient encore « … »."
+      }
+    },
+    "vorlagen": {
+      "platzhalter": "Champs dans tous les textes : {{liste}}",
+      "abschnitt": {
+        "brief": "Lettre circulaire",
+        "mail": "E-mail en série et newsletter",
+        "social": "Réseaux sociaux"
+      },
+      "absender": "Expéditeur",
+      "ort": "Lieu pour la date",
+      "briefBetreff": "Objet lettre",
+      "briefText": "Texte lettre",
+      "mailBetreff": "Objet e-mail",
+      "mailText": "Texte e-mail",
+      "abmelden": "Phrase de désinscription sous chaque e-mail ({Abmeldelink} = lien)",
+      "maxWoerter": "Newsletter : mots au plus",
+      "themen": "Thèmes",
+      "themenHinweis": "Séparés par des virgules ; proposés lors d’une publication.",
+      "regel": "Règles pour {{netzwerk}}",
+      "ci": "Style CI des images (Canva)",
+      "ciHinweis": "À quoi doivent ressembler les images : couleurs, police, logo, style.",
+      "ciNurAdmin": "Seule l’administration peut le modifier."
+    },
+    "aktionen": {
+      "spalte": "Actions",
+      "fuer": "Actions pour {{name}}",
+      "sperren": "Plus de publicité",
+      "anmelden": "Autoriser à nouveau la publicité",
+      "einwilligung": "Saisir le consentement",
+      "titel": {
+        "sperren": "Plus de publicité à {{name}}",
+        "einwilligung": "Consentement de {{name}}"
+      },
+      "text": {
+        "sperren": "Ne reçoit plus de lettres, e-mails en série ni de newsletter. Peut être annulé.",
+        "einwilligung": "Sans commande, la newsletter n’est envoyée qu’avec consentement. Note quand et comment il a été donné."
+      },
+      "knopf": {
+        "sperren": "Bloquer",
+        "einwilligung": "Enregistrer"
+      },
+      "grund": "Motif (facultatif)",
+      "datum": "Date du consentement",
+      "quelle": "Preuve (p. ex. formulaire salon, e-mail du …)"
     }
   }
 }

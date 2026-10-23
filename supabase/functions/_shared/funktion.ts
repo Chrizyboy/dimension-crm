@@ -13,9 +13,12 @@ export type Aktion = (eingabe: Record<string, unknown>, ich: Ich) => Promise<unk
 /** Aktionen mit dem jeweils nötigen Recht (basis, preise, finanzen, admin). */
 export type Aktionen = Record<string, { recht: string; f: Aktion }>
 
-/** Prüft ein Recht; Admins dürfen alles. */
+/**
+ * Prüft ein Recht wie intern.hat_recht in der Datenbank: «basis» hat jede angemeldete, aktive Person
+ * (meine_anmeldung gibt sonst null), Admins dürfen alles.
+ */
 export function darf(ich: Ich, recht: string): boolean {
-  return ich.rechte.includes('admin') || ich.rechte.includes(recht)
+  return recht === 'basis' || ich.rechte.includes('admin') || ich.rechte.includes(recht)
 }
 
 /** Text aus der Eingabe (leer = Fehler «eingabe»). */

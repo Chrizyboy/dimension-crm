@@ -164,3 +164,16 @@ Siehe Entscheid 0020.
 - **Einstellungen:** `einstellungen.finanzen` (Stundensätze Service und intern, Mahnfrist, Buchhaltungs-Adresse, Spesen-Kategorien); `finanz_einstellungen` «vorlage.main» (Kontostand mit Verlauf, Wochen, Vorlauf, Reserve, Anpassungen der Eingänge).
 
 Siehe Entscheid 0021.
+
+## Marketing (Phase 11)
+
+- **`kontakte`** erweitert: `abmelde_schluessel` (zufällig, eindeutig; für den Abmelde-Link), dazu wie bisher `werbesperre` und `einwilligung` ({datum, quelle, abgemeldet_am, abmelde_grund}). **`newsletter_empfaenger`** ebenso mit `abmelde_schluessel`.
+- **`kampagnen`** erweitert: `art` (serienbrief, serienmail, newsletter, adressliste), `details`, `newsletter_id`. Jede Aktion wird hier vermerkt (Letzte Aktionen).
+- **`newsletter`** erweitert: `betreff_de`/`_fr`, `status` (entwurf, versendet), `versendet_am`, `versendet_von`, `anzahl`; `segment` {gruppen, sprache, standort, kantone, einzelne}.
+- **`social_posts`** erweitert: `status` (entwurf, geplant, wird_veroeffentlicht, veroeffentlicht, fehler, erledigt), `netzwerke` ⊂ {instagram, facebook, linkedin}, `texte` {netzwerk: {de, fr}}, `bilder` (Dokument-IDs), `geplant_am`, `freigegeben_von`/`_am`, `veroeffentlicht_am`, `ergebnis` {netzwerk: {ok, id, url, fehler}}.
+- **`intern.social_konten`** (neu, nur Server): ein Konto je Dienst (meta, linkedin, canva) mit verschlüsseltem Token und Refresh-Token, Ablauf, Seite/Organisation, wer verbunden hat. **`intern.social_zustaende`**: Anmelde-Zustand (state, PKCE) für 10 Minuten.
+- **Sicht `marketing_zielgruppe`** (security_invoker): je Kontakt Name, Anrede, Mail, Telefon, Sprache, Adresse, Kanton (auch aus `plz_verzeichnis`), Standort, Gruppe aus dem Stand der Geschäfte, Anlage (Batterie, Wallbox, Wärmepumpe, seit), Werbesperre, Einwilligung, `versandgrund` (kunde, einwilligung), zuletzt angeschrieben.
+- **Abläufe:** `marketing_senden` (Serien-Mail und Newsletter in den Ausgangskorb, ohne Gesperrte und Doppelte), `marketing_vermerken`, `marketing_sperre`, `marketing_einwilligung`, `newsletter_empfaenger_fuer`, `social_freigeben`, `social_zurueckziehen`, `social_erledigt`, `social_verbindungen` (ohne Token). Nur Server: `marketing_abmelden`, `social_beanspruchen`, `social_ergebnis`, `social_konto_*`, `social_zustand_*`. Fehler als Schlüssel `marketing.*` und `social.*`.
+- **Einstellungen:** `einstellungen.marketing` (Absender und Ort je Firma, Brief- und Mailtexte DE/FR, Abmelde-Satz, Wörter pro Newsletter, Themen, Regeln je Netzwerk, CI-Stil; den CI-Stil ändert nur die Administration).
+
+Siehe Entscheid 0022.
