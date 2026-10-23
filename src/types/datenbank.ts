@@ -9008,6 +9008,7 @@ export type Database = {
         }[]
       }
       automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_lauf_abbrechen: { Args: { p_lauf: string }; Returns: boolean }
       automation_server_ergebnis: {
         Args: {
           p_ergebnis: string

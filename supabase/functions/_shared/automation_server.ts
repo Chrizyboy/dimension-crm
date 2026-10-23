@@ -80,16 +80,20 @@ async function sharepointOrdner(s: ServerSchritt): Promise<ServerErgebnis> {
     `sharepoint_ordner?kontakt_id=eq.${s.kontakt_id}&geloescht_am=is.null&select=url&limit=1`,
   )
   if (vorhanden) return { ergebnis: 'ok', meldung: 'ordner_vorhanden', ziel: vorhanden.url ?? undefined }
-  const [k] = await dienst.lies<{ kundennummer: number | null; vorname: string | null; nachname: string | null; firma: string | null }[]>(
-    `kontakte?id=eq.${s.kontakt_id}&select=kundennummer,vorname,nachname,firma`,
-  )
+  const [k] = await dienst.lies<
+    { kundennummer: number | null; vorname: string | null; nachname: string | null; firma: string | null }[]
+  >(`kontakte?id=eq.${s.kontakt_id}&select=kundennummer,vorname,nachname,firma`)
   if (!k) return uebersprungen('kein_kontakt')
   const verbunden = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
   const personId = verbunden.find((p) => p.person_id === s.person_id)?.person_id ?? verbunden[0]?.person_id
   if (!personId) return uebersprungen('nicht_verbunden')
   const einst = await msEinstellungen()
   const laufwerk = await laufwerkId(personId, einst)
-  const name = kundenordner(k.kundennummer, [k.vorname, k.nachname].filter(Boolean).join(' ') || k.firma || '', s.kontakt_id)
+  const name = kundenordner(
+    k.kundennummer,
+    [k.vorname, k.nachname].filter(Boolean).join(' ') || k.firma || '',
+    s.kontakt_id,
+  )
   let eltern = ''
   for (const teil of (einst.sharepoint_ordner ?? 'Direction Interne/CRM Backups/Kunden Backup').split('/')) {
     await ordner(personId, laufwerk, eltern, teil)
@@ -133,7 +137,10 @@ async function abaninjaKunde(s: ServerSchritt): Promise<ServerErgebnis> {
     )
     uuid = await aba.kundeAnlegen(aba.kundeFuerAbaninja({ ...k, ...(o ?? {}) }, z?.einstellungen.anreden ?? {}))
   }
-  await dienst.aendere(`kontakte?id=eq.${k.id}`, { abaninja_id: uuid, abaninja_abgeglichen_am: new Date().toISOString() })
+  await dienst.aendere(`kontakte?id=eq.${k.id}`, {
+    abaninja_id: uuid,
+    abaninja_abgeglichen_am: new Date().toISOString(),
+  })
   return { ergebnis: 'ok', meldung: treffer[0] ? 'abaninja_verknuepft' : 'abaninja_angelegt' }
 }
 
@@ -142,7 +149,8 @@ export async function serverSchritt(s: ServerSchritt): Promise<ServerErgebnis> {
   const ein = eingerichtet()
   try {
     if (s.art === 'outlook_termin') return ein.microsoft ? await outlookTermin(s) : uebersprungen('nicht_eingerichtet')
-    if (s.art === 'sharepoint_ordner') return ein.microsoft ? await sharepointOrdner(s) : uebersprungen('nicht_eingerichtet')
+    if (s.art === 'sharepoint_ordner')
+      return ein.microsoft ? await sharepointOrdner(s) : uebersprungen('nicht_eingerichtet')
     if (s.art === 'abaninja_kunde') return ein.abaninja ? await abaninjaKunde(s) : uebersprungen('nicht_eingerichtet')
     return { ergebnis: 'fehler', meldung: 'automation.aktion_unbekannt' }
   } catch (f) {

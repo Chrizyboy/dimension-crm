@@ -65,7 +65,7 @@ declare
   an text := case when kanal = 'sms' then ctx #>> '{kontakt,telefon}' else ctx #>> '{kontakt,email}' end;
   absender uuid := coalesce((intern.automation_empfaenger(coalesce(x -> 'absender', '["zustaendig"]'), ctx))[1], p_als);
   frei boolean := a.modus = 'automatisch';
-  schluessel text := 'automation:' || l.id || ':' || nr;
+  v_schluessel text := 'automation:' || l.id || ':' || nr;
   sende_ab timestamptz;
   termin timestamptz;
   art text := coalesce(x ->> 'ausgang_art', case when x ->> 'art' = 'zahlungserinnerung' then 'mahnung' else 'automation' end);
@@ -87,10 +87,10 @@ begin
       return jsonb_build_object('ergebnis', 'uebersprungen', 'meldung', 'kein_termin');
     end if;
     -- Gleicher Schlüssel wie die SMS-Erinnerung aus Phase 8: so geht nie eine zweite SMS für denselben Termin.
-    schluessel := 'sms_erinnerung:' || l.bezug_id || ':' || to_char(termin at time zone 'Europe/Zurich', 'YYYY-MM-DD"T"HH24:MI');
+    v_schluessel := 'sms_erinnerung:' || l.bezug_id || ':' || to_char(termin at time zone 'Europe/Zurich', 'YYYY-MM-DD"T"HH24:MI');
     art := 'sms_erinnerung';
     sende_ab := (((termin at time zone 'Europe/Zurich')::date - 1)
-                 + coalesce((select (wert ->> 'uhrzeit')::time from public.einstellungen where schluessel = 'sms_erinnerung'),
+                 + coalesce((select (wert ->> 'uhrzeit')::time from public.einstellungen e where e.schluessel = 'sms_erinnerung'),
                             '16:00'::time)) at time zone 'Europe/Zurich';
     if sende_ab < now() then sende_ab := null; end if;
   end if;
@@ -103,7 +103,7 @@ begin
       'verkaufschance_id', case when l.tabelle = 'verkaufschancen' then l.bezug_id end,
       'offerte_id', case when l.tabelle = 'offerten' then l.bezug_id end,
       'projekt_id', case when l.tabelle = 'projekte' then l.bezug_id end,
-      'bezug_tabelle', l.tabelle, 'bezug_id', l.bezug_id, 'schluessel', schluessel, 'sende_ab', sende_ab,
+      'bezug_tabelle', l.tabelle, 'bezug_id', l.bezug_id, 'schluessel', v_schluessel, 'sende_ab', sende_ab,
       'freigeben', frei));
   exception when others then
     if sqlerrm = 'ausgang.doppelt' then
