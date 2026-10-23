@@ -3,7 +3,7 @@
 // (nur für Server-Aufgaben wie Token speichern oder den Ausgangskorb abarbeiten).
 
 import { DienstFehler, leseJson, rufe, type Bytes } from './http.ts'
-import { brauche } from './umgebung.ts'
+import { brauche, env } from './umgebung.ts'
 
 /** Wer ruft auf? Ergebnis von meine_anmeldung() mit dem Login der Person. */
 export interface Ich {
@@ -88,6 +88,35 @@ export const dienst = {
     )
     if (!res.ok) throw new DienstFehler('datei_fehlt', res.status, 'Datei')
     return new Uint8Array(await res.arrayBuffer())
+  },
+  /** Datei in den Speicher legen (z. B. ein aus Canva geholtes Bild). */
+  async hochladen(bucket: string, pfad: string, bytes: Bytes, typ: string): Promise<void> {
+    const k = brauche('SUPABASE_SERVICE_ROLE_KEY')
+    const res = await rufe(
+      `${brauche('SUPABASE_URL')}/storage/v1/object/${bucket}/${pfad.split('/').map(encodeURIComponent).join('/')}`,
+      { method: 'POST', headers: { apikey: k, Authorization: `Bearer ${k}`, 'Content-Type': typ }, body: bytes },
+      { versuche: 1, zeitlimitMs: 20_000 },
+    )
+    if (!res.ok) throw new DienstFehler('speicher', res.status, 'Speicher')
+  },
+  /**
+   * Kurz gültige Adresse einer Datei, die ein fremder Dienst selbst abholt (Meta lädt Bilder nur per Adresse).
+   * Basis-Adresse SPEICHER_URL, falls die Funktion intern eine andere Adresse sieht als der Dienst von aussen.
+   */
+  async signiert(bucket: string, pfad: string, sekunden = 900): Promise<string> {
+    const k = brauche('SUPABASE_SERVICE_ROLE_KEY')
+    const res = await rufe(
+      `${brauche('SUPABASE_URL')}/storage/v1/object/sign/${bucket}/${pfad.split('/').map(encodeURIComponent).join('/')}`,
+      {
+        method: 'POST',
+        headers: { apikey: k, Authorization: `Bearer ${k}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expiresIn: sekunden }),
+      },
+      { versuche: 2 },
+    )
+    const daten = await leseJson<{ signedURL?: string }>(res)
+    if (!res.ok || !daten?.signedURL) throw new DienstFehler('datei_fehlt', res.status, 'Datei')
+    return `${env('SPEICHER_URL') ?? brauche('SUPABASE_URL')}/storage/v1${daten.signedURL}`
   },
 }
 

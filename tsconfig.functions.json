@@ -21,7 +21,10 @@
     "supabase/functions/verbindungen",
     "supabase/functions/ausgang",
     "supabase/functions/abaninja",
-    "supabase/functions/zeitplan"
+    "supabase/functions/zeitplan",
+    "supabase/functions/social",
+    "supabase/functions/social-rueckruf",
+    "supabase/functions/abmelden"
   ],
   "exclude": ["supabase/functions/**/*.test.ts"]
 }

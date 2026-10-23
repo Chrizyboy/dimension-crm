@@ -2,6 +2,7 @@
 // geschützt durch den Schlüssel ZEITPLAN_SCHLUESSEL im Kopf. Jeder Job läuft nur, wenn er fällig ist
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
+//  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
 //  * sms          ab «uhrzeit»    SMS-Erinnerungen für morgen, nur wenn «automatisch» eingeschaltet ist (V172)
 //  * anfragen     alle 5 Minuten  solar-guide, Landingpage, Messe aus den Postfächern (V78)
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
@@ -19,6 +20,8 @@ import { DienstFehler } from '../_shared/http.ts'
 import { dokumentSichern, type SicherungsDokument } from '../_shared/sharepoint.ts'
 import { eingerichtet, env } from '../_shared/umgebung.ts'
 import { ausgangAbarbeiten } from '../_shared/versand.ts'
+import { postsAbarbeiten } from '../_shared/posten.ts'
+import { socialEingerichtet } from '../_shared/social_konten.ts'
 import { utcZuZuerich } from '../_shared/outlook.ts'
 
 declare const Deno: { serve(h: (req: Request) => Promise<Response>): unknown }
@@ -73,6 +76,15 @@ Deno.serve(async (req) => {
     const r = await ausgangAbarbeiten(20)
     return `${r.gesendet} gesendet, ${r.fehler} Fehler`
   })
+
+  // Freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11); ohne Verbindung bleibt der Post «Fehler».
+  const so = socialEingerichtet()
+  if (so.meta || so.linkedin) {
+    ergebnis.social = await job('social', 0, async () => {
+      const r = await postsAbarbeiten()
+      return `${r.posts} Posts, ${r.fehler} Fehler`
+    })
+  }
 
   // SMS-Erinnerung für morgen ab der eingestellten Uhrzeit (Ortszeit Zürich); die Datenbank prüft «automatisch».
   const [sms] = await dienst.lies<{ wert: { uhrzeit?: string } }[]>(

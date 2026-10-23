@@ -469,3 +469,14 @@ verify_jwt = false
 # pg_cron ruft ohne Login auf; die Funktion prüft selbst ZEITPLAN_SCHLUESSEL.
 [functions.zeitplan]
 verify_jwt = false
+
+# Phase 11: Marketing. «social» ruft die App mit Login auf; Rückruf von Meta/LinkedIn/Canva und der Abmelde-Link
+# kommen ohne Supabase-Login (geschützt durch state bzw. zufälligen Schlüssel).
+[functions.social]
+verify_jwt = true
+
+[functions.social-rueckruf]
+verify_jwt = false
+
+[functions.abmelden]
+verify_jwt = false
