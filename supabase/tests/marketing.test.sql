@@ -6,6 +6,9 @@
 begin;
 select plan(30);
 
+-- Eigene Ausgangslage: lokale Verbindungen (z. B. aus marketing:pruefen) zählen hier nicht; alles wird zurückgerollt.
+delete from intern.social_konten;
+
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000011a1', 'p11-vk@test.local'),
   ('00000000-0000-0000-0000-0000000011a2', 'p11-ad@test.local');
