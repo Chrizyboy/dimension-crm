@@ -8,7 +8,7 @@
 - **`…0400_automationen_signale.sql`** – Trigger, die bei neuen Leads, Terminen, Offerten, Aufträgen, Baugesuchen und erledigten Fahrplan-Schritten ein Signal geben (nicht beim Import), und die tägliche Durchsicht für Zeit-Auslöser.
 - **`…0500_automationen_vorlagen.sql`** – Die elf mitgelieferten Automationen mit Texten DE/FR, alle «mit Freigabe».
 - **`…0600_automationen_oberflaeche.sql`** – Lauf von Hand beenden; die Einstellung `automationen` ändert nur die Administration.
-- **`supabase/tests/automationen.test.sql`** – 40 Prüfungen: Katalog und Vorlagen, Rechte, Prüfregeln, Signale (nicht beim Import), Warten, Aufgabe und Glocke in der Sprache der Person, Mail im Ausgangskorb, Server-Schritte, Bedingungen, Werbesperre, «automatisch», Papierkorb, ausgeschaltet, Mahnstufe.
+- **`supabase/tests/automationen.test.sql`** – 41 Prüfungen: Katalog und Vorlagen, Rechte, Prüfregeln, Signale (nicht beim Import), Warten, Aufgabe und Glocke in der Sprache der Person, Mail im Ausgangskorb, Server-Schritte, Bedingungen, Werbesperre, «automatisch», Papierkorb, ausgeschaltet, Mahnstufe.
 - **`src/types/datenbank.ts`** – Typen neu aus der Datenbank erzeugt.
 
 ## Server (`supabase/functions/`)
