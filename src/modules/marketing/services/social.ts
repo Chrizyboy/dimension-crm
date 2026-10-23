@@ -109,7 +109,7 @@ export async function canvaNeu(format: Format, titel: string) {
   return r
 }
 
-/** Fertiges Canva-Design als PNG zum Post holen; gibt die Dokument-ID zurück. */
+/** Fertiges Canva-Design als JPG zum Post holen; gibt die Dokument-ID zurück. */
 export async function canvaHolen(postId: string, designId: string): Promise<string> {
   return (
     await rufeFunktion<{ dokument_id: string }>('social', 'canva_holen', { post_id: postId, design_id: designId })

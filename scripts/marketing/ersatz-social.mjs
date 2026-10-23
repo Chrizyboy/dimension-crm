@@ -5,9 +5,9 @@
 import { createHash, randomUUID } from 'node:crypto'
 import { createServer } from 'node:http'
 
-// Kleinstes gültiges PNG (1×1 Pixel), als «Export» aus Canva
-const PNG = Buffer.from(
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+// Kleinstes gültiges JPEG (1×1 Pixel), als «Export» aus Canva
+const JPG = Buffer.from(
+  '/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=',
   'base64',
 )
 
@@ -24,6 +24,7 @@ export function starteSocialErsatz({ port, host }) {
     li: [],
     hochgeladen: [],
     designs: [],
+    exporte: [],
     abgelaufen: new Set(), // Tokens, die der Test für ungültig erklärt
   }
   const neu = (vorsilbe) => `${vorsilbe}-${randomUUID()}`
@@ -99,9 +100,12 @@ export function starteSocialErsatz({ port, host }) {
     }
     if (p === '/meta-graph/2002/media') {
       const f = formular(roh)
-      // Instagram lädt das Bild selbst: die Adresse muss erreichbar sein
+      // Instagram lädt das Bild selbst: die Adresse muss erreichbar sein, und nur JPEG ist erlaubt
       const bild = await fetch(f.image_url.replace(host, '127.0.0.1')).catch(() => null)
       if (!bild?.ok) return json(res, 400, { error: { code: 9004, message: 'Bild nicht erreichbar' } })
+      if (!(bild.headers.get('content-type') ?? '').startsWith('image/jpeg')) {
+        return json(res, 400, { error: { code: 36003, message: 'Only JPEG images are supported' } })
+      }
       const id = `c${z.ig.length}`
       z.ig.push({
         behaelter: id,
@@ -186,14 +190,16 @@ export function starteSocialErsatz({ port, host }) {
         design: { id, title: b.title, urls: { edit_url: `https://www.canva.com/design/${id}/edit` } },
       })
     }
-    if (p === '/canva/exports' && req.method === 'POST')
+    if (p === '/canva/exports' && req.method === 'POST') {
+      z.exporte.push(JSON.parse(roh.toString('utf8')))
       return json(res, 200, { job: { id: 'E1', status: 'in_progress' } })
-    if (p === '/canva/exports/E1') {
-      return json(res, 200, { job: { id: 'E1', status: 'success', urls: [`http://${host}:${port}/canva/datei.png`] } })
     }
-    if (p === '/canva/datei.png') {
-      res.writeHead(200, { 'Content-Type': 'image/png' })
-      return res.end(PNG)
+    if (p === '/canva/exports/E1') {
+      return json(res, 200, { job: { id: 'E1', status: 'success', urls: [`http://${host}:${port}/canva/datei.jpg`] } })
+    }
+    if (p === '/canva/datei.jpg') {
+      res.writeHead(200, { 'Content-Type': 'image/jpeg' })
+      return res.end(JPG)
     }
 
     json(res, 404, { message: `unbekannt: ${req.method} ${p}` })

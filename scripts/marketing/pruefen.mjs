@@ -206,6 +206,11 @@ try {
   ok(Boolean(bild), 'Canva: Bild ins CRM geholt', JSON.stringify(r.daten))
   const [dok] = await rest(`dokumente?id=eq.${bild}&select=ordner,mime_typ,bezug_id`)
   ok(dok?.ordner === 'marketing' && dok.bezug_id === post.id, 'Bild liegt im Ordner «marketing» beim Post')
+  ok(
+    z.exporte[0]?.format?.type === 'jpg' && dok.mime_typ === 'image/jpeg',
+    'Canva: Export als JPG (Instagram nimmt nur JPEG)',
+    JSON.stringify(z.exporte[0]),
+  )
   await rest(`social_posts?id=eq.${post.id}`, { method: 'PATCH', body: JSON.stringify({ bilder: [bild] }) })
 
   // --- Sofort veröffentlichen nach Freigabe ------------------------------------------------------------------

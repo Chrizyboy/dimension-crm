@@ -1,4 +1,4 @@
-// Canva (Connect API): leeres Design im richtigen Format anlegen und das fertige Bild als PNG ins CRM holen.
+// Canva (Connect API): leeres Design im richtigen Format anlegen und das fertige Bild als JPG ins CRM holen.
 // Gestaltet wird in Canva selbst mit dem Markenkit «Dimension Solaire» (V233: Bild über Canva).
 
 import { dienst } from './datenbank.ts'
@@ -46,11 +46,14 @@ export async function canvaNeu(format: string, titel: string): Promise<{ id: str
   return { id: r.design.id, adresse: r.design.urls.edit_url }
 }
 
-/** Design als PNG exportieren, in die Ablage legen (Ordner «marketing») und als Dokument eintragen. */
+/**
+ * Design als JPG exportieren (Instagram nimmt nur JPEG), in die Ablage legen (Ordner «marketing») und als Dokument
+ * eintragen.
+ */
 export async function canvaHolen(postId: string, designId: string, wer: string): Promise<string> {
   const job = await canva<{ job: { id: string } }>('/exports', {
     methode: 'POST',
-    inhalt: { design_id: designId, format: { type: 'png' } },
+    inhalt: { design_id: designId, format: { type: 'jpg', quality: 90 } },
   })
   let urls: string[] = []
   for (let i = 0; i < 20 && !urls.length; i++) {
@@ -63,13 +66,13 @@ export async function canvaHolen(postId: string, designId: string, wer: string):
   const res = await rufe(urls[0], {}, { zeitlimitMs: 30_000 })
   if (!res.ok) throw new DienstFehler('canva_export', res.status, 'Bild nicht erhalten')
   const bytes = new Uint8Array(await res.arrayBuffer())
-  const pfad = `marketing/${postId}/${String(Date.now())}-canva.png`
-  await dienst.hochladen('dokumente', pfad, bytes, 'image/png')
+  const pfad = `marketing/${postId}/${String(Date.now())}-canva.jpg`
+  await dienst.hochladen('dokumente', pfad, bytes, 'image/jpeg')
   const id = crypto.randomUUID()
   await dienst.schreibe('dokumente', {
     id,
-    name: 'Canva.png',
-    mime_typ: 'image/png',
+    name: 'Canva.jpg',
+    mime_typ: 'image/jpeg',
     bytes: bytes.length,
     ordner: 'marketing',
     speicher: 'intern',
