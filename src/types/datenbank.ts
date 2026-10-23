@@ -874,6 +874,7 @@ export type Database = {
           geaendert_am: string
           geloescht_am: string | null
           id: string
+          lauf_id: string | null
           person_id: string | null
           text: string | null
           titel: string
@@ -892,6 +893,7 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          lauf_id?: string | null
           person_id?: string | null
           text?: string | null
           titel: string
@@ -909,6 +911,7 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          lauf_id?: string | null
           person_id?: string | null
           text?: string | null
           titel?: string
@@ -919,6 +922,13 @@ export type Database = {
             columns: ['erledigt_von']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_lauf_id_fkey'
+            columns: ['lauf_id']
+            isOneToOne: false
+            referencedRelation: 'automation_laeufe'
             referencedColumns: ['id']
           },
           {
@@ -1577,6 +1587,246 @@ export type Database = {
           text_fr?: string
         }
         Relationships: []
+      }
+      automation_laeufe: {
+        Row: {
+          automation_id: string
+          beendet_am: string | null
+          bezug_id: string | null
+          ereignis: string
+          erstellt_am: string
+          fehler: number
+          geaendert_am: string
+          id: string
+          kontakt_id: string | null
+          protokoll: NonNullable<Json>
+          schritt: number
+          signal_id: number
+          stand: string
+          tabelle: string | null
+          titel: string | null
+          weiter_am: string
+        }
+        ComputedFields: never
+        Insert: {
+          automation_id: string
+          beendet_am?: string | null
+          bezug_id?: string | null
+          ereignis: string
+          erstellt_am?: string
+          fehler?: number
+          geaendert_am?: string
+          id?: string
+          kontakt_id?: string | null
+          protokoll?: NonNullable<Json>
+          schritt?: number
+          signal_id: number
+          stand?: string
+          tabelle?: string | null
+          titel?: string | null
+          weiter_am?: string
+        }
+        Update: {
+          automation_id?: string
+          beendet_am?: string | null
+          bezug_id?: string | null
+          ereignis?: string
+          erstellt_am?: string
+          fehler?: number
+          geaendert_am?: string
+          id?: string
+          kontakt_id?: string | null
+          protokoll?: NonNullable<Json>
+          schritt?: number
+          signal_id?: number
+          stand?: string
+          tabelle?: string | null
+          titel?: string | null
+          weiter_am?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'automation_laeufe_automation_id_fkey'
+            columns: ['automation_id']
+            isOneToOne: false
+            referencedRelation: 'automationen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
+      automationen: {
+        Row: {
+          aktionen: NonNullable<Json>
+          aktiv: boolean
+          aktiv_seit: string | null
+          alt_daten: Json | null
+          alt_id: string | null
+          ausfuehren_als: string | null
+          ausloeser: string
+          bedingungen: NonNullable<Json>
+          beschreibung_de: string | null
+          beschreibung_fr: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          modus: string
+          name_de: string
+          name_fr: string
+          reihenfolge: number
+          vorlage: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          aktionen?: NonNullable<Json>
+          aktiv?: boolean
+          aktiv_seit?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ausfuehren_als?: string | null
+          ausloeser: string
+          bedingungen?: NonNullable<Json>
+          beschreibung_de?: string | null
+          beschreibung_fr?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          modus?: string
+          name_de: string
+          name_fr: string
+          reihenfolge?: number
+          vorlage?: string | null
+        }
+        Update: {
+          aktionen?: NonNullable<Json>
+          aktiv?: boolean
+          aktiv_seit?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ausfuehren_als?: string | null
+          ausloeser?: string
+          bedingungen?: NonNullable<Json>
+          beschreibung_de?: string | null
+          beschreibung_fr?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          modus?: string
+          name_de?: string
+          name_fr?: string
+          reihenfolge?: number
+          vorlage?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'automationen_ausfuehren_als_fkey'
+            columns: ['ausfuehren_als']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      benachrichtigungen: {
+        Row: {
+          art: string
+          ausgeblendet_am: string | null
+          erstellt_am: string
+          gelesen_am: string | null
+          id: string
+          lauf_id: string | null
+          person_id: string
+          text_de: string | null
+          text_fr: string | null
+          titel_de: string
+          titel_fr: string
+          ziel: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          art?: string
+          ausgeblendet_am?: string | null
+          erstellt_am?: string
+          gelesen_am?: string | null
+          id?: string
+          lauf_id?: string | null
+          person_id: string
+          text_de?: string | null
+          text_fr?: string | null
+          titel_de: string
+          titel_fr: string
+          ziel?: string | null
+        }
+        Update: {
+          art?: string
+          ausgeblendet_am?: string | null
+          erstellt_am?: string
+          gelesen_am?: string | null
+          id?: string
+          lauf_id?: string | null
+          person_id?: string
+          text_de?: string | null
+          text_fr?: string | null
+          titel_de?: string
+          titel_fr?: string
+          ziel?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'benachrichtigungen_lauf_id_fkey'
+            columns: ['lauf_id']
+            isOneToOne: false
+            referencedRelation: 'automation_laeufe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'benachrichtigungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       bestellpositionen: {
         Row: {
@@ -8757,6 +9007,23 @@ export type Database = {
           relevant: number
         }[]
       }
+      automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_lauf_abbrechen: { Args: { p_lauf: string }; Returns: boolean }
+      automation_server_ergebnis: {
+        Args: {
+          p_ergebnis: string
+          p_lauf: string
+          p_meldung: string
+          p_schritt: number
+          p_werte?: Json
+          p_ziel?: string
+        }
+        Returns: undefined
+      }
+      automation_server_offen: { Args: { p_limit?: number }; Returns: Json }
+      automationen_abarbeiten: { Args: { p_limit?: number }; Returns: Json }
+      benachrichtigung_ausblenden: { Args: { p_id: string }; Returns: undefined }
+      benachrichtigungen_gelesen: { Args: { p_ids?: string[] }; Returns: number }
       bestellung_bestellt: { Args: { p_datum?: string; p_id: string }; Returns: undefined }
       bestellung_freigeben: { Args: { p_id: string }; Returns: undefined }
       bestellung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }

@@ -1,7 +1,7 @@
 // Prüft alle Integrationen der Phase 8 von Anfang bis Ende gegen Ersatz-Server (npm run integrationen:pruefen).
 // Startet die Edge Functions lokal mit Test-Zugangsdaten, meldet sich als admin@test.local an und geht jeden
 // Ablauf durch: Microsoft verbinden, Kalender, Termin in Outlook, Mail mit Anhang, Mail-Verlauf, Anfragen aus
-// dem Postfach, SharePoint-Sicherung, SMS, AbaNinja, Zeitplan. Braucht die lokale Supabase (npm run db:start).
+// dem Postfach, SharePoint-Sicherung, SMS, AbaNinja, Zeitplan mit den Server-Schritten der Automationen (Phase 12). Braucht die lokale Supabase (npm run db:start).
 // Echte Konten prüft dieser Test NICHT; dafür die Knöpfe «Testen» auf der Seite «Verbindungen».
 
 import { execFileSync, spawn } from 'node:child_process'
@@ -492,6 +492,52 @@ try {
   r = await funktion('zeitplan', {}, null, { 'x-zeitplan-schluessel': zeitplanSchluessel })
   ok(r.daten?.ok && r.daten.ergebnis.ausgang, 'Zeitplan läuft durch', JSON.stringify(r.daten))
 
+  // --- Automationen (Phase 12): Server-Schritte im Zeitplan ---------------------------------------------
+  // Ein erfundenes Projekt zum Testkontakt mit dem Signal «Auftrag erstellt»; die Vorlage legt den SharePoint-Ordner
+  // an und verknüpft AbaNinja. Der Termin des Test-Leads kommt über «Termin vereinbart» ins Outlook.
+  const projekt = sql(
+    `insert into public.projekte (nummer, kontakt_id, status, bau_status) values ('PRUEF-${kennung}', '${kontakt}', 'im_bau', 'terminiert')
+     returning id`,
+  ).split('\n')[0]
+  sql(`select intern.automation_signal('auftrag.erstellt', 'projekte', '${projekt}', '${projekt}:pruefen')`)
+  for (let i = 0; i < 4; i++) await funktion('zeitplan', {}, null, { 'x-zeitplan-schluessel': zeitplanSchluessel })
+  const schritte = (bezug, ereignis) =>
+    JSON.parse(
+      sql(`select coalesce(jsonb_agg(e), '[]') from public.automation_laeufe l, jsonb_array_elements(l.protokoll) e
+            where l.bezug_id = '${bezug}' and l.ereignis = '${ereignis}'`) || '[]',
+    )
+  const auftrag = schritte(projekt, 'auftrag.erstellt')
+  const ordnerSchritt = auftrag.find((e) => e.art === 'sharepoint_ordner' && e.ergebnis !== 'server')
+  ok(
+    ordnerSchritt?.meldung === 'ordner_angelegt',
+    'Automation: SharePoint-Ordner angelegt',
+    JSON.stringify(ordnerSchritt),
+  )
+  ok(
+    [...z.ordner.keys()].some((p) => p.endsWith(`Ersatz ${kennung}/DEVIS - ANGEBOT`)),
+    'Automation: Unterordner der Vorlage da',
+  )
+  const [ordnerZeile] = await rest(`sharepoint_ordner?kontakt_id=eq.${kontakt}&select=url`)
+  ok(ordnerZeile?.url?.startsWith('https://sharepoint.ersatz/'), 'Automation: Ordner im CRM vermerkt')
+  const abaSchritt = auftrag.find((e) => e.art === 'abaninja_kunde' && e.ergebnis !== 'server')
+  ok(
+    abaSchritt?.meldung === 'abaninja_schon',
+    'Automation: Kunde schon mit AbaNinja verknüpft',
+    JSON.stringify(abaSchritt),
+  )
+  ok(
+    auftrag.some((e) => e.art === 'aufgabe' && e.ergebnis === 'ok'),
+    'Automation: nach den Server-Schritten geht es weiter',
+  )
+  const outlookSchritt = schritte(lead, 'lead.termin_vereinbart').find(
+    (e) => e.art === 'outlook_termin' && e.ergebnis !== 'server',
+  )
+  ok(
+    outlookSchritt?.meldung === 'outlook_eingetragen',
+    'Automation: Termin im Outlook der zuständigen Person',
+    JSON.stringify(outlookSchritt),
+  )
+
   // --- Trennen ------------------------------------------------------------------------------------------
   r = await funktion('microsoft', { aktion: 'termin_absagen', verkaufschance_id: lead }, token)
   ok(z.events.size === 0, 'Termin in Outlook abgesagt')
@@ -519,6 +565,8 @@ try {
     method: 'PATCH',
     body: JSON.stringify({ geloescht_am: new Date().toISOString() }),
   })
+  sql(`update public.projekte set geloescht_am = now() where nummer like 'PRUEF-%' and geloescht_am is null`)
+  sql(`update public.sharepoint_ordner set geloescht_am = now() where kontakt_id = '${kontakt}'`)
   await rest(`kontakte?id=eq.${kontakt}`, {
     method: 'PATCH',
     body: JSON.stringify({ geloescht_am: new Date().toISOString(), abaninja_id: null }),

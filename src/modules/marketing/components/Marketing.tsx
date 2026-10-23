@@ -4,7 +4,7 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
-import type { Ansicht } from '../types'
+import type { Ansicht, ZielFilter } from '../types'
 import { Anschreiben } from './Anschreiben'
 import { NewsletterSeite } from './NewsletterSeite'
 import { Social } from './Social'
@@ -15,7 +15,15 @@ import { Vorlagen } from './Vorlagen'
  * Facebook, LinkedIn mit Bild aus Canva), Newsletter und Vorlagen. Alles, was nach aussen geht, braucht eine
  * Freigabe (Regel 6). #/marketing?ansicht=…
  */
-export default function Marketing({ ansicht, onAnsicht }: { ansicht: Ansicht; onAnsicht: (a: Ansicht) => void }) {
+export default function Marketing({
+  ansicht,
+  onAnsicht,
+  anlage,
+}: {
+  ansicht: Ansicht
+  onAnsicht: (a: Ansicht) => void
+  anlage?: ZielFilter['anlage']
+}) {
   const { t } = useTranslation()
   if (!supabase) {
     return (
@@ -40,7 +48,7 @@ export default function Marketing({ ansicht, onAnsicht }: { ansicht: Ansicht; on
           <ReiterKnopf value="vorlagen">{t('marketing.ansicht.vorlagen')}</ReiterKnopf>
         </ReiterListe>
         <ReiterInhalt value="anschreiben" className="pt-4">
-          {ansicht === 'anschreiben' && <Anschreiben />}
+          {ansicht === 'anschreiben' && <Anschreiben {...(anlage ? { anlage } : {})} />}
         </ReiterInhalt>
         <ReiterInhalt value="social" className="pt-4">
           {ansicht === 'social' && <Social />}

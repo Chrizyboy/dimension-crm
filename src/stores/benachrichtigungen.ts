@@ -15,6 +15,8 @@ export interface Benachrichtigung {
   gelesen: boolean
   /** Ansicht, die beim Klick geöffnet wird, z.B. "/sales". */
   ziel?: string
+  /** «server»: aus der Datenbank (Automationen); gelesen und entfernt wird dann dort. */
+  quelle?: 'server'
 }
 
 export type NeueBenachrichtigung = Omit<Benachrichtigung, 'id' | 'zeit' | 'gelesen'>
@@ -27,7 +29,7 @@ interface BenachrichtigungsZustand {
   entfernen: (id: string) => void
 }
 
-/** Mehr hebt das Gerät nicht auf; ältere Meldungen bleiben ab Phase 12 in der Datenbank abrufbar. */
+/** Mehr hebt das Gerät nicht auf; Meldungen der Automationen liegen in der Datenbank (siehe useBenachrichtigungsListe). */
 const MAX_EINTRAEGE = 50
 
 const WILLKOMMEN: Benachrichtigung = {
@@ -44,8 +46,8 @@ const WILLKOMMEN: Benachrichtigung = {
 }
 
 /**
- * Posteingang für Benachrichtigungen (Glocke oben rechts).
- * Phase 2: lokal im Gerät. Ab Phase 12 kommen sie vom Server (Automationen, Erinnerungen, Freigaben).
+ * Lokaler Teil des Posteingangs (Glocke oben rechts): Meldungen, die nur dieses Gerät betreffen.
+ * Meldungen der Automationen kommen vom Server und werden in useBenachrichtigungsListe dazugemischt.
  */
 export const useBenachrichtigungen = create<BenachrichtigungsZustand>()(
   persist(

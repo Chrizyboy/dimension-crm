@@ -1,27 +1,30 @@
 # Modul: Automationen
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Die Administration stellt Abläufe «Wenn → Nur wenn → Dann» ein (z. B. neuer Lead → Aufgabe Erstkontakt), und sieht im Protokoll jeden Lauf mit allen Schritten.
 
-**Stand:** Platzhalter – wird in Phase 12 gebaut.
+**Stand:** Phase 12 gebaut. Nur mit Recht `admin` sichtbar (`meta.recht`). Entscheid 0023.
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- `automationen` (Regeln als Daten; elf Vorlagen mit `vorlage`, eigene ohne), Papierkorb über `geloescht_am`.
+- `automation_laeufe` (nur lesen; `protokoll` als Liste von Schritten), `einstellungen.automationen`.
+- Funktionen: `automation_katalog()` (Auslöser, Felder, Aktionen, Empfänger, Platzhalter), `automation_lauf_abbrechen`.
+- Der Motor selbst läuft in der Datenbank und im Zeitplan, nie in der App (siehe `docs/datenmodell.md`).
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+`src/services/supabase.ts`, `src/services/fachfehler.ts` (Fehler-Schlüssel `automation.*`), `src/lib/ziel.ts` (Links zum Datensatz), gemeinsame Bausteine `Datentabelle`, `Filterchips`, `Zeitachse`.
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine (Signale entstehen in der Datenbank).
+- **hört auf:** keine.
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
+- `components/` – Liste, Editor (Bedingungen, Aktionen, Empfänger, Texte DE/FR), Protokoll, Lauf, Einstellungen
+- `hooks/` – `useAutomationen`, `useKatalog`, `useLaeufe`, `useAutomationsEinstellungen`, `useAktion`
+- `services/` – Laden, Speichern, Schalten, Papierkorb, Lauf beenden
+- `lib/` – Anzeige-Hilfen (Werte, Platzhalter, Wartetage) und der Entwurf einer neuen Automation
 - `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
 - `index.ts` – das Einzige, was andere importieren dürfen

@@ -177,3 +177,15 @@ Siehe Entscheid 0021.
 - **Einstellungen:** `einstellungen.marketing` (Absender und Ort je Firma, Brief- und Mailtexte DE/FR, Abmelde-Satz, Wörter pro Newsletter, Themen, Regeln je Netzwerk, CI-Stil; den CI-Stil ändert nur die Administration).
 
 Siehe Entscheid 0022.
+
+## Automationen (Phase 12)
+
+- **`automationen`** (Fachtabelle, ändern nur `admin`): `vorlage` (Schlüssel der mitgelieferten, sonst null), `name_de`/`_fr`, `beschreibung_de`/`_fr`, `aktiv`, `aktiv_seit` (nur Neueres löst aus), `modus` (freigabe, automatisch), `ausloeser`, `bedingungen` [{feld, op, wert}], `aktionen` [{art, …}], `ausfuehren_als` (mit deren Rechten handelt die Automation), `reihenfolge`. Eine Prüfung vor dem Speichern lehnt unbekannte Auslöser und Aktionen, leere Aktionslisten, falsche Bedingungen und Wartezeiten unter einem Tag ab (`automation.*`).
+- **`intern.automation_signale`** (nur Server): Ereignis, Tabelle, Bezug, Schlüssel (eindeutig je Ereignis), `daten`, `basis` (Bestand beim ersten Durchsehen, löst nichts aus), `verteilt`. Signale kommen aus Triggern auf `verkaufschancen`, `offerten`, `projekte`, `projekt_schritte` (nicht beim Import) und aus `automationen_durchsehen` (Zeit-Auslöser). **`intern.automation_durchsicht`**: wann ein Zeit-Auslöser zuerst und zuletzt durchgesehen wurde.
+- **`automation_laeufe`** (lesen nur `admin`): je Automation und Signal ein Lauf mit `stand` (laeuft, wartet, server, fertig, uebersprungen, fehler, abgebrochen), `schritt` (0 = Bedingungen), `weiter_am`, `protokoll` [{nr, art, ergebnis, meldung, werte, ziel, zeit}], Bezug und Kontakt.
+- **`benachrichtigungen`**: je Person (lesen nur die eigenen), `art` (info, ok, warnung, kritisch), Titel und Text DE/FR, `ziel` (Adresse in der App), `lauf_id`, `gelesen_am`, `ausgeblendet_am`.
+- **`aufgaben`** erweitert: `lauf_id`, Index für offene Aufgaben je Person.
+- **Abläufe:** `automation_katalog()` (Auslöser, Felder je Tabelle, Aktionen, Empfänger, Platzhalter, Operatoren, Zielgruppen), `automation_lauf_abbrechen` (admin), `benachrichtigungen_gelesen`, `benachrichtigung_ausblenden`. Nur Server (Zeitplan, jede Minute): `automationen_abarbeiten` (durchsehen, verteilen, Läufe weiter), `automation_server_offen`, `automation_server_ergebnis` (Outlook, SharePoint, AbaNinja). Intern: `automation_kontext`, `automation_empfaenger`, `automation_aktion`, `automation_nach_aussen` (Mail, SMS und Zahlungserinnerung über `ausgang_anlegen`; bei «freigabe» wartet der Eintrag), `automation_lauf_weiter`. Trigger `mahnung_gesendet`: Mahnstufe steigt erst, wenn die Zahlungserinnerung gesendet ist.
+- **Einstellungen:** `einstellungen.automationen` {wartung_vorlauf_tage, rechnung_karenz_tage, termin_gehabt_tage, bewertung_link}; ändern nur `admin`.
+
+Siehe Entscheid 0023.

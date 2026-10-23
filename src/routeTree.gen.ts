@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as ModulRouteImport } from './app/$modul'
 import { Route as AftersalesRouteImport } from './app/aftersales'
+import { Route as AutomationsRouteImport } from './app/automations'
 import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
 import { Route as ContactsRouteImport } from './app/contacts'
 import { Route as ContractsRouteImport } from './app/contracts'
@@ -30,6 +31,7 @@ import { Route as PurchasingRouteImport } from './app/purchasing'
 import { Route as QuotesRouteImport } from './app/quotes'
 import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
+import { Route as TasksRouteImport } from './app/tasks'
 import { Route as TendersRouteImport } from './app/tenders'
 import { Route as WorkcontractsRouteImport } from './app/workcontracts'
 
@@ -46,6 +48,11 @@ const ModulRoute = ModulRouteImport.update({
 const AftersalesRoute = AftersalesRouteImport.update({
   id: '/aftersales',
   path: '/aftersales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationsRoute = AutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BenachrichtigungenRoute = BenachrichtigungenRouteImport.update({
@@ -138,6 +145,11 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TendersRoute = TendersRouteImport.update({
   id: '/tenders',
   path: '/tenders',
@@ -153,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/aftersales': typeof AftersalesRoute
+  '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
   '/contracts': typeof ContractsRoute
@@ -171,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
@@ -178,6 +192,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/aftersales': typeof AftersalesRoute
+  '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
   '/contracts': typeof ContractsRoute
@@ -196,6 +211,7 @@ export interface FileRoutesByTo {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
@@ -204,6 +220,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/aftersales': typeof AftersalesRoute
+  '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
   '/contracts': typeof ContractsRoute
@@ -222,6 +239,7 @@ export interface FileRoutesById {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
@@ -231,6 +249,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$modul'
     | '/aftersales'
+    | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
     | '/contracts'
@@ -249,6 +268,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/tasks'
     | '/tenders'
     | '/workcontracts'
   fileRoutesByTo: FileRoutesByTo
@@ -256,6 +276,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$modul'
     | '/aftersales'
+    | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
     | '/contracts'
@@ -274,6 +295,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/tasks'
     | '/tenders'
     | '/workcontracts'
   id:
@@ -281,6 +303,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$modul'
     | '/aftersales'
+    | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
     | '/contracts'
@@ -299,6 +322,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/tasks'
     | '/tenders'
     | '/workcontracts'
   fileRoutesById: FileRoutesById
@@ -307,6 +331,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulRoute: typeof ModulRoute
   AftersalesRoute: typeof AftersalesRoute
+  AutomationsRoute: typeof AutomationsRoute
   BenachrichtigungenRoute: typeof BenachrichtigungenRoute
   ContactsRoute: typeof ContactsRoute
   ContractsRoute: typeof ContractsRoute
@@ -325,6 +350,7 @@ export interface RootRouteChildren {
   QuotesRoute: typeof QuotesRoute
   SalesRoute: typeof SalesRoute
   SettingsRoute: typeof SettingsRoute
+  TasksRoute: typeof TasksRoute
   TendersRoute: typeof TendersRoute
   WorkcontractsRoute: typeof WorkcontractsRoute
 }
@@ -350,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/aftersales'
       fullPath: '/aftersales'
       preLoaderRoute: typeof AftersalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automations': {
+      id: '/automations'
+      path: '/automations'
+      fullPath: '/automations'
+      preLoaderRoute: typeof AutomationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/benachrichtigungen': {
@@ -478,6 +511,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tenders': {
       id: '/tenders'
       path: '/tenders'
@@ -499,6 +539,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulRoute: ModulRoute,
   AftersalesRoute: AftersalesRoute,
+  AutomationsRoute: AutomationsRoute,
   BenachrichtigungenRoute: BenachrichtigungenRoute,
   ContactsRoute: ContactsRoute,
   ContractsRoute: ContractsRoute,
@@ -517,6 +558,7 @@ const rootRouteChildren: RootRouteChildren = {
   QuotesRoute: QuotesRoute,
   SalesRoute: SalesRoute,
   SettingsRoute: SettingsRoute,
+  TasksRoute: TasksRoute,
   TendersRoute: TendersRoute,
   WorkcontractsRoute: WorkcontractsRoute,
 }

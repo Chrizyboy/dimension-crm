@@ -36,6 +36,8 @@ export function starteErsatz({ port, tenant, email }) {
       rechnungen: [],
     },
     hochgeladen: [],
+    // Ordner (Automation «SharePoint-Ordner»): Pfad → id
+    ordner: new Map(),
     mails: [],
     anfragen: [],
   }
@@ -197,6 +199,20 @@ export function starteErsatz({ port, tenant, email }) {
           ],
         })
       if (g.startsWith('/sites/')) return json(res, 200, { id: 'site-1' })
+      // Ordner anlegen (gibt es ihn schon: 409 wie Graph mit conflictBehavior «fail») und Ordner lesen
+      const neuOrdner = /^\/drives\/([^/]+)\/root(?::\/(.+):)?\/children$/.exec(g)
+      if (neuOrdner && req.method === 'POST') {
+        const pfad = [neuOrdner[2] ? decodeURIComponent(neuOrdner[2]) : '', daten.name].filter(Boolean).join('/')
+        if (z.ordner.has(pfad)) return json(res, 409, { error: { code: 'nameAlreadyExists' } })
+        z.ordner.set(pfad, 'ordner-' + (z.ordner.size + 1))
+        return json(res, 201, { id: z.ordner.get(pfad), webUrl: `https://sharepoint.ersatz/${encodeURI(pfad)}` })
+      }
+      const ordnerLesen = /^\/drives\/([^/]+)\/root:\/([^:]+)$/.exec(g)
+      if (ordnerLesen && req.method === 'GET') {
+        const pfad = decodeURIComponent(ordnerLesen[2])
+        if (!z.ordner.has(pfad)) return json(res, 404, { error: { code: 'itemNotFound' } })
+        return json(res, 200, { id: z.ordner.get(pfad), webUrl: `https://sharepoint.ersatz/${encodeURI(pfad)}` })
+      }
       const up = /^\/drives\/([^/]+)\/root:\/(.+):\/content$/.exec(g)
       if (up && req.method === 'PUT') {
         const pfad = decodeURIComponent(up[2])
