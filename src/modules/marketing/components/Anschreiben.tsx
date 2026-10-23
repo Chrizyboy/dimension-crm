@@ -19,12 +19,15 @@ import { ZielTabelle } from './ZielTabelle'
  * Kunden anschreiben (V233): Zielgruppe aus Leads, Offerten und Projekten filtern, auswählen und als Serienbrief
  * (PDF), Serien-E-Mail (Ausgangskorb) oder Adressliste (CSV) anschreiben. Abgemeldete sind nie dabei.
  */
-export function Anschreiben() {
+export function Anschreiben({ anlage = '' }: { anlage?: ZielFilter['anlage'] }) {
   const { t } = useTranslation()
   const daten = useZielgruppe()
   const vorlagen = useVorlagen()
   const { aus } = useAktion()
-  const [filter, setFilter] = useState<ZielFilter>(LEERER_FILTER)
+  const [filter, setFilter] = useState<ZielFilter>(
+    // Aus der Meldung «Nachrüstung» (Automation): gleiche Auswahl wie gezählt, Kunden mit diesem Merkmal
+    anlage ? { ...LEERER_FILTER, anlage, gruppen: ['kunde'] } : LEERER_FILTER,
+  )
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
   const [dialog, setDialog] = useState<'brief' | 'mail' | null>(null)
   const alle = useMemo(() => daten.data ?? [], [daten.data])

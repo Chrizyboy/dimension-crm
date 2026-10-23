@@ -4,7 +4,7 @@ import { zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
 import { KeinZugriff } from '@/layouts/KeinZugriff'
 import { darfModul } from '@/lib/rechte'
-import { ANSICHTEN, Marketing, meta, type Ansicht } from '@/modules/marketing'
+import { ANSICHTEN, Marketing, meta, type Ansicht, type ZielFilter } from '@/modules/marketing'
 import { useAnmeldung } from '@/stores/anmeldung'
 
 interface Suche {
@@ -12,9 +12,12 @@ interface Suche {
   /** Rückkehr von der Anmeldung bei Meta, LinkedIn oder Canva (social-rueckruf). */
   verbunden?: string
   ergebnis?: string
+  /** Aus der Automation «Nachrüstung»: Filter «Kunden ohne Batterie» usw. vorwählen. */
+  anlage?: ZielFilter['anlage']
 }
 
 const GUELTIG = new Set<string>(ANSICHTEN)
+const ANLAGEN = new Set<string>(['ohne_batterie', 'ohne_wallbox', 'ohne_waermepumpe', 'alt'])
 
 /** Marketing: Reiter in der Adresse (#/marketing?ansicht=social). */
 export const Route = createFileRoute('/marketing')({
@@ -22,9 +25,10 @@ export const Route = createFileRoute('/marketing')({
     ...(typeof s.ansicht === 'string' && GUELTIG.has(s.ansicht) ? { ansicht: s.ansicht as Ansicht } : {}),
     ...(typeof s.verbunden === 'string' ? { verbunden: s.verbunden } : {}),
     ...(typeof s.ergebnis === 'string' ? { ergebnis: s.ergebnis } : {}),
+    ...(typeof s.anlage === 'string' && ANLAGEN.has(s.anlage) ? { anlage: s.anlage as ZielFilter['anlage'] } : {}),
   }),
   component: function MarketingSeite() {
-    const { ansicht, verbunden, ergebnis } = Route.useSearch()
+    const { ansicht, verbunden, ergebnis, anlage } = Route.useSearch()
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     // Nach der Anmeldung bei einem Dienst: Ergebnis einmal melden und aus der Adresse entfernen
@@ -39,6 +43,7 @@ export const Route = createFileRoute('/marketing')({
       <Suspense>
         <Marketing
           ansicht={ansicht ?? 'anschreiben'}
+          {...(anlage ? { anlage } : {})}
           onAnsicht={(a) => {
             void navigate({ search: a === 'anschreiben' ? {} : { ansicht: a } })
           }}

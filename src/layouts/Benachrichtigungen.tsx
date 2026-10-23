@@ -7,12 +7,8 @@ import { Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { formatRelativ } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import {
-  useBenachrichtigungen,
-  zaehleUngelesen,
-  type Benachrichtigung,
-  type MeldungsArt,
-} from '@/stores/benachrichtigungen'
+import { useBenachrichtigungsListe } from '@/hooks/useBenachrichtigungsListe'
+import { zaehleUngelesen, type Benachrichtigung, type MeldungsArt } from '@/stores/benachrichtigungen'
 import { useUi } from '@/stores/ui'
 
 const ART: Record<MeldungsArt, { icon: LucideIcon; farbe: string }> = {
@@ -27,15 +23,16 @@ export function BenachrichtigungsListe({ onOeffnen }: { onOeffnen?: () => void }
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const navigate = useNavigate()
-  const { liste, markiereGelesen, entfernen } = useBenachrichtigungen()
+  const { liste, markiereGelesen, entfernen } = useBenachrichtigungsListe()
 
   if (liste.length === 0) {
     return <Leerzustand icon={Bell} titel={t('benachrichtigungen.leerTitel')} text={t('benachrichtigungen.leerText')} />
   }
 
   const oeffne = (b: Benachrichtigung) => {
-    markiereGelesen(b.id)
-    if (b.ziel) void navigate({ to: b.ziel })
+    markiereGelesen(b)
+    // Ziele vom Server tragen Suchparameter («/sales?lead=…»), darum als ganze Adresse.
+    if (b.ziel) void navigate({ href: b.ziel })
     onOeffnen?.()
   }
 
@@ -68,7 +65,7 @@ export function BenachrichtigungsListe({ onOeffnen }: { onOeffnen?: () => void }
             <button
               type="button"
               onClick={() => {
-                entfernen(b.id)
+                entfernen(b)
               }}
               className="text-muted-foreground hover:bg-muted absolute top-2 right-2 rounded p-1 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
               aria-label={t('benachrichtigungen.entfernen')}
@@ -86,8 +83,7 @@ export function BenachrichtigungsListe({ onOeffnen }: { onOeffnen?: () => void }
 export function Glocke() {
   const { t } = useTranslation()
   const [offen, setOffen] = useState(false)
-  const liste = useBenachrichtigungen((z) => z.liste)
-  const alleGelesen = useBenachrichtigungen((z) => z.alleGelesen)
+  const { liste, alleGelesen } = useBenachrichtigungsListe()
   const ungelesen = zaehleUngelesen(liste)
 
   return (

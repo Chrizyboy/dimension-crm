@@ -5,13 +5,13 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Button } from '@/components/ui/button'
 import { Karte } from '@/components/ui/karte'
 import { BenachrichtigungsListe } from '@/layouts/Benachrichtigungen'
-import { useBenachrichtigungen } from '@/stores/benachrichtigungen'
+import { useBenachrichtigungsListe } from '@/hooks/useBenachrichtigungsListe'
 
 /** Alle Benachrichtigungen auf einer Seite (vor allem fürs Handy). */
 export const Route = createFileRoute('/benachrichtigungen')({
   component: function BenachrichtigungenSeite() {
     const { t } = useTranslation()
-    const alleGelesen = useBenachrichtigungen((z) => z.alleGelesen)
+    const { alleGelesen } = useBenachrichtigungsListe()
     return (
       <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-8 sm:px-6">
         <Seitenkopf
