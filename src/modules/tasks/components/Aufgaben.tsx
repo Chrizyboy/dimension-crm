@@ -85,7 +85,10 @@ export default function Aufgaben() {
         <span className="flex min-w-0 flex-col">
           <span
             className={
-              c.row.original.erledigt_am ? 'text-muted-foreground truncate line-through' : 'truncate font-medium'
+              // Umbrechen statt abschneiden: am Handy würde eine lange Zeile die Spalte «Fällig» aus dem Bild schieben.
+              c.row.original.erledigt_am
+                ? 'text-muted-foreground line-clamp-2 line-through'
+                : 'line-clamp-2 font-medium'
             }
           >
             {c.getValue()}

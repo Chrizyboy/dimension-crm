@@ -4,7 +4,7 @@
 -- Basis beim ersten Durchsehen, Mahnstufe erst nach dem Senden, Benachrichtigungen nur für sich, Lauf beenden.
 -- Ausführen: npm run db:test
 begin;
-select plan(40);
+select plan(41);
 
 -- Die Ausführung handelt als Person (request.jwt.claim.sub, nur für die Transaktion); darum setzt der Test
 -- beim Wechsel der Person beide Angaben.
@@ -56,7 +56,7 @@ insert into public.automationen (id, name_de, name_fr, ausloeser, aktiv, modus, 
    '[{"feld": "lead.quelle", "op": "!=", "wert": "messe"}]',
    '[{"art": "aufgabe", "an": ["person:00000000-0000-0000-0000-0000000012b1"], "titel": {"de": "Anrufen: {Name}", "fr": "Appeler : {Name}"}, "faellig_tage": 1},
      {"art": "benachrichtigung", "an": ["person:00000000-0000-0000-0000-0000000012b2"], "titel": {"de": "Neu: {Name}", "fr": "Nouveau : {Name}"}},
-     {"art": "mail", "absender": ["person:00000000-0000-0000-0000-0000000012b2"], "betreff": {"de": "Danke {Vorname}", "fr": "Merci {Vorname}"}, "text": {"de": "{Anrede}", "fr": "{Anrede}"}},
+     {"art": "mail", "absender": ["person:00000000-0000-0000-0000-0000000012b2"], "betreff": {"de": "Danke {Vorname}", "fr": "Merci {Vorname}"}, "text": {"de": "{Anrede}", "fr": "{Anrede}\n{Absender}"}},
      {"art": "warten", "tage": 3},
      {"art": "pruefen", "bedingungen": [{"feld": "lead.stufe", "op": "=", "wert": "neu"}]},
      {"art": "outlook_termin"}]');
@@ -99,6 +99,8 @@ select is((select status from public.ausgangskorb where schluessel = 'automation
   'Mail wartet im Ausgangskorb auf Freigabe');
 select is((select betreff from public.ausgangskorb where schluessel = 'automation:' || (select id from l12) || ':3'), 'Merci Lea',
   'Mail in der Sprache des Kunden');
+select ok((select text like '%Adam Admin' from public.ausgangskorb where schluessel = 'automation:' || (select id from l12) || ':3'),
+  '{Absender} ist die Person, die unterschreibt und sendet');
 select is((select count(*)::int from public.benachrichtigungen where lauf_id = (select id from l12)
             and person_id = '00000000-0000-0000-0000-0000000012b2' and ziel like '/outbox?eintrag=%'), 1,
   'Absender bekommt «Entwurf wartet auf Freigabe»');

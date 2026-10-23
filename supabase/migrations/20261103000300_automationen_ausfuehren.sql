@@ -94,6 +94,9 @@ begin
                             '16:00'::time)) at time zone 'Europe/Zurich';
     if sende_ab < now() then sende_ab := null; end if;
   end if;
+  -- {Absender} ist, wer unterschreibt und sendet (die Mail geht über deren Outlook), nicht unbedingt die zuständige Person.
+  ctx := jsonb_set(ctx, '{platzhalter,Absender}',
+                   to_jsonb(coalesce((select p.name from public.personen p where p.id = absender), ctx #>> '{platzhalter,Absender}', '')));
   betreff := intern.automation_text(intern.zweisprachig(x -> 'betreff', spr), ctx);
   begin
     id := public.ausgang_anlegen(jsonb_build_object(
