@@ -20,6 +20,7 @@ import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
+import { KiBriefing } from '@/modules/ai'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { pruefeVerbindung, supabase } from '@/services/supabase'
 import { cn } from '@/lib/utils'
@@ -77,6 +78,12 @@ export function Startseite() {
           </div>
         ))}
       </section>
+
+      {supabase && ich && (
+        <Suspense>
+          <KiBriefing />
+        </Suspense>
+      )}
 
       {supabase && ich && darfModul(ausschreibungenMeta, ich) && (
         <Suspense>
