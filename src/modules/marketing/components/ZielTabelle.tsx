@@ -51,7 +51,7 @@ export function ZielTabelle({
             <Kopfzelle>{t('marketing.spalte.name')}</Kopfzelle>
             <Kopfzelle className="hidden md:table-cell">{t('marketing.spalte.ort')}</Kopfzelle>
             <Kopfzelle className="hidden lg:table-cell">{t('marketing.spalte.kanton')}</Kopfzelle>
-            <Kopfzelle>{t('marketing.spalte.sprache')}</Kopfzelle>
+            <Kopfzelle className="hidden sm:table-cell">{t('marketing.spalte.sprache')}</Kopfzelle>
             <Kopfzelle>{t('marketing.spalte.gruppe')}</Kopfzelle>
             <Kopfzelle>{t('marketing.spalte.kontakt')}</Kopfzelle>
             <Kopfzelle className="w-10">
@@ -84,7 +84,7 @@ export function ZielTabelle({
               </Zelle>
               <Zelle className="hidden md:table-cell">{[k.plz, k.ort].filter(Boolean).join(' ')}</Zelle>
               <Zelle className="hidden lg:table-cell">{k.kanton}</Zelle>
-              <Zelle className="uppercase">{k.sprache}</Zelle>
+              <Zelle className="hidden uppercase sm:table-cell">{k.sprache}</Zelle>
               <Zelle>
                 {k.werbesperre ? (
                   <Badge ton="warnung">{t('marketing.abgemeldet')}</Badge>
