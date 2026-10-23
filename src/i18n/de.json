@@ -1792,7 +1792,21 @@
     "finanzen_schon_bezahlt": "Auf diese Rechnung ist schon bezahlt worden; stornieren geht nicht mehr.",
     "finanzen_grund_fehlt": "Bitte einen Grund angeben.",
     "finanzen_nicht_ueberfaellig": "Diese Rechnung ist nicht überfällig.",
-    "finanzen_mahnstufe_max": "Die 3. Mahnung ist die letzte. Weiter geht es mit der Betreibung (ausserhalb des CRM)."
+    "finanzen_mahnstufe_max": "Die 3. Mahnung ist die letzte. Weiter geht es mit der Betreibung (ausserhalb des CRM).",
+    "marketing_kontakt_fehlt": "Kontakt nicht gefunden.",
+    "marketing_einwilligung_unvollstaendig": "Für die Einwilligung braucht es Datum und Nachweis.",
+    "marketing_art": "Unbekannte Art.",
+    "marketing_newsletter_fehlt": "Newsletter nicht gefunden.",
+    "marketing_keine_empfaenger": "Keine Empfänger.",
+    "marketing_ci_nur_admin": "Den CI-Stil ändert nur die Administration.",
+    "social_fehlt": "Post nicht gefunden.",
+    "social_nicht_entwurf": "Nur Entwürfe lassen sich freigeben oder ablegen.",
+    "social_netzwerk_fehlt": "Wähle mindestens ein Netzwerk.",
+    "social_text_fehlt": "Für jedes Netzwerk und jede Sprache braucht es Text.",
+    "social_zu_lang": "Ein Text ist zu lang für das Netzwerk.",
+    "social_bild_fehlt": "Instagram braucht ein Bild.",
+    "social_nicht_verbunden": "Das Netzwerk ist nicht verbunden. Die Administration verbindet es unter Social Media → Verbindungen.",
+    "social_nicht_geplant": "Der Post ist nicht freigegeben."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -1897,7 +1911,18 @@
       "sms": "Die SMS wurde nicht angenommen (Code {{code}}).",
       "unbekannt": "Das hat nicht geklappt (Code {{code}}).",
       "nicht_gestellt": "Erst die Rechnung stellen, dann an AbaNinja übergeben.",
-      "schon_uebergeben": "Diese Rechnung ist schon in AbaNinja."
+      "schon_uebergeben": "Diese Rechnung ist schon in AbaNinja.",
+      "keine_seite": "Keine Seite gefunden: Das Konto verwaltet keine Facebook-Seite oder LinkedIn-Firmenseite.",
+      "kein_instagram": "An der Facebook-Seite hängt kein Instagram-Geschäftskonto.",
+      "meta": "Meta hat den Post abgelehnt.",
+      "linkedin": "LinkedIn hat den Post abgelehnt.",
+      "canva": "Canva hat einen Fehler gemeldet.",
+      "canva_export": "Das Bild liess sich nicht aus Canva holen.",
+      "bild_fehlt": "Bild fehlt.",
+      "bild_abgelehnt": "Instagram lehnt das Bild ab (Format oder Grösse).",
+      "speicher": "Das Bild liess sich nicht speichern.",
+      "unklar": "Keine Antwort: Bitte im Netzwerk nachsehen, ob der Post erschienen ist.",
+      "social_nicht_geplant": "Der Post ist nicht freigegeben."
     }
   },
   "verbindungen": {
@@ -3837,6 +3862,281 @@
       "nichts": "Diese Woche nichts fällig.",
       "weitere_one": "+ {{count}} weitere diese Woche",
       "weitere_other": "+ {{count}} weitere diese Woche"
+    }
+  },
+  "marketing": {
+    "titel": "Marketing",
+    "beschreibung": "Kunden anschreiben, Social Media und Newsletter. Was nach aussen geht, gibst du mit einem Klick frei.",
+    "ansicht": {
+      "anschreiben": "Kunden anschreiben",
+      "social": "Social Media",
+      "newsletter": "Newsletter",
+      "vorlagen": "Vorlagen"
+    },
+    "gruppe": {
+      "interessent": "Interessent",
+      "offerte": "Offerte offen",
+      "kunde": "Kunde",
+      "verloren": "Offerte verloren",
+      "kein_interesse": "Kein Interesse",
+      "ohne": "Ohne Geschäft"
+    },
+    "sprache": {
+      "de": "Deutsch",
+      "fr": "Französisch"
+    },
+    "standort": {
+      "muri": "Muri",
+      "bulle": "Bulle"
+    },
+    "kontaktweg": {
+      "mail": "Mit E-Mail",
+      "post": "Mit Postadresse"
+    },
+    "anlage": {
+      "ohne_batterie": "Ohne Batterie",
+      "ohne_wallbox": "Ohne Wallbox",
+      "ohne_waermepumpe": "Ohne Wärmepumpe",
+      "alt": "Anlage ≥ 3 Jahre"
+    },
+    "filter": {
+      "suche": "Name, Ort, Mail, Kundennummer",
+      "gruppe": "Gruppe",
+      "kanton": "Kanton",
+      "sprache": "Sprache",
+      "spracheAlle": "Alle Sprachen",
+      "standort": "Standort",
+      "standortAlle": "Alle Standorte",
+      "kontakt": "Kontaktweg",
+      "kontaktAlle": "Mail oder Post",
+      "anlage": "Anlage",
+      "anlageAlle": "Jede Anlage",
+      "abgemeldete": "Abgemeldete zeigen"
+    },
+    "spalte": {
+      "name": "Name",
+      "ort": "Ort",
+      "kanton": "Kanton",
+      "sprache": "Sprache",
+      "gruppe": "Gruppe",
+      "kontakt": "Mail / Post"
+    },
+    "abgemeldet": "Abgemeldet",
+    "ohneName": "(ohne Namen)",
+    "mitMail": "Mail vorhanden",
+    "ohneMail": "Keine Mail",
+    "mitPost": "Postadresse vorhanden",
+    "ohnePost": "Keine vollständige Postadresse",
+    "kiSpaeter": "Texte mit KI schreiben kommt mit dem Assistenten (Phase 13).",
+    "anschreiben": {
+      "tabelle": "Zielgruppe",
+      "waehlen": "Auswahl",
+      "waehlenName": "{{name}} auswählen",
+      "gewaehlt": "{{anzahl}} ausgewählt von {{von}}",
+      "alleAngezeigten": "Alle angezeigten auswählen",
+      "leeren": "Auswahl leeren",
+      "serienbrief": "Serienbrief",
+      "serienmail": "Serien-E-Mail",
+      "adressliste": "Adressliste",
+      "adresslisteDatei": "adressliste",
+      "mehr": "{{anzahl}} weitere ausgewählt oder auswählbar, aber nicht angezeigt. Grenze die Liste mit den Filtern ein.",
+      "leer": "Niemand passt zu diesen Filtern",
+      "leerText": "Nimm einen Filter weg oder blende Abgemeldete ein."
+    },
+    "serien": {
+      "titel": {
+        "brief": "Serienbrief",
+        "mail": "Serien-E-Mail"
+      },
+      "info": "{{anzahl}} Empfänger · {{de}} deutsch · {{fr}} französisch · {{ohne}} ohne Adresse ausgelassen · {{doppelt}} Duplikate entfernt",
+      "absender": "Absender (Zeile über der Adresse)",
+      "betreff": "Betreff",
+      "text": "Text",
+      "platzhalter": "Platzhalter: {Anrede} {Vorname} {Nachname} {Name} {Firma} {Strasse} {PLZ} {Ort} {Kundennummer} {Absender}",
+      "vorschau": "Vorschau für {{name}}",
+      "alsVorlage": "Als Vorlage speichern",
+      "los": {
+        "brief_one": "PDF erstellen ({{count}} Brief)",
+        "brief_other": "PDF erstellen ({{count}} Briefe)",
+        "mail_one": "{{count}} Mail senden",
+        "mail_other": "{{count}} Mails senden"
+      },
+      "mailHinweis": "Jede Mail geht einzeln über dein Outlook ({{absender}}) mit deiner Signatur und einem Abmelde-Link. Der Klick auf «Senden» gibt sie frei; du siehst sie danach im Ausgangskorb.",
+      "dateiname": "serienbrief",
+      "keiner": {
+        "brief": "Niemand aus der Auswahl hat eine vollständige Postadresse (Strasse, PLZ, Ort). Die Texte kannst du trotzdem bearbeiten und als Vorlage speichern.",
+        "mail": "Niemand aus der Auswahl hat eine Mail-Adresse (oder alle sind abgemeldet). Die Texte kannst du trotzdem bearbeiten und als Vorlage speichern."
+      }
+    },
+    "letzte": {
+      "titel": "Letzte Aktionen",
+      "art": {
+        "serienbrief": "Serienbrief",
+        "serienmail": "Serien-E-Mail",
+        "newsletter": "Newsletter",
+        "adressliste": "Adressliste"
+      },
+      "zeile": "{{anzahl}} · {{wann}} · {{wer}}"
+    },
+    "netzwerk": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn"
+    },
+    "format": {
+      "quadrat": "Quadrat 1080 × 1080",
+      "hoch": "Hochformat 1080 × 1350",
+      "story": "Story 1080 × 1920",
+      "quer": "Querformat 1200 × 627"
+    },
+    "post": {
+      "neu": "Neuer Post",
+      "bearbeiten": "Post bearbeiten",
+      "offene": "Entwürfe und geplante Posts",
+      "vergangene": "Vergangene",
+      "leer": "Noch keine Posts",
+      "leerText": "Leg einen Post an: Thema, Texte für jedes Netzwerk, Bild aus Canva oder ein eigenes Foto.",
+      "ohneText": "(noch ohne Text)",
+      "ohneThema": "Ohne Thema",
+      "status": {
+        "entwurf": "Entwurf",
+        "geplant": "Freigegeben, geplant",
+        "wird_veroeffentlicht": "Wird veröffentlicht",
+        "veroeffentlicht": "Veröffentlicht",
+        "fehler": "Fehler",
+        "erledigt": "Erledigt"
+      },
+      "thema": "Thema",
+      "idee": "Idee / Inhalt",
+      "sprache": "Sprache",
+      "netzwerke": "Netzwerke",
+      "format": "Bildformat",
+      "spracheWert": {
+        "de": "Deutsch",
+        "fr": "Französisch",
+        "de_fr": "Deutsch und Französisch"
+      },
+      "quelle": "Woher kommt die Idee?",
+      "quelleWert": {
+        "eigen": "Eigenes Thema",
+        "anlage": "Verbaute Anlage",
+        "tipp": "Tipp"
+      },
+      "anlage": "Anlage (ohne Namen)",
+      "anlageWaehlen": "Anlage wählen",
+      "foto": "Eigenes Foto",
+      "inCanva": "In Canva gestalten",
+      "ausCanva": "Bild aus Canva übernehmen",
+      "canvaNichtVerbunden": "Canva ist nicht verbunden. Eigene Fotos gehen immer.",
+      "bildNr": "Bild {{nr}}",
+      "bildEntfernen": "Bild entfernen",
+      "wirdGepostet": "wird gepostet",
+      "zeichen": "{{anzahl}} / {{max}} Zeichen",
+      "hinweis": {
+        "textFehlt": "Text fehlt.",
+        "zuLang": "Zu lang: höchstens {{wert}} Zeichen.",
+        "hashtagsInstagram": "Instagram: 8–12 Hashtags empfohlen (jetzt {{wert}}).",
+        "hashtagsLinkedin": "LinkedIn: höchstens 3 Hashtags (jetzt {{wert}}).",
+        "emojisLinkedin": "LinkedIn: besser ohne Emojis.",
+        "bildFehlt": "Instagram braucht ein Bild."
+      },
+      "datum": "Datum",
+      "zeit": "Uhrzeit",
+      "speichern": "Entwurf speichern",
+      "planen": "Freigeben und planen",
+      "jetzt": "Jetzt veröffentlichen",
+      "zurueckziehen": "Zurückziehen",
+      "erledigt": "Als erledigt ablegen",
+      "papierkorb": "In den Papierkorb",
+      "fehlerCode": "Fehler ({{code}})",
+      "fehlerText": {
+        "neu_verbinden": "Verbindung abgelaufen. Oben unter «Verbindungen» neu verbinden, dann nochmals freigeben.",
+        "nicht_eingerichtet": "Nicht verbunden. Oben unter «Verbindungen» verbinden."
+      }
+    },
+    "verbindung": {
+      "titel": "Verbindungen",
+      "dienst": {
+        "meta": "Facebook und Instagram",
+        "linkedin": "LinkedIn-Firmenseite",
+        "canva": "Canva"
+      },
+      "wozu": {
+        "meta": "Posts auf die Facebook-Seite und das Instagram-Konto von Dimension Solaire.",
+        "linkedin": "Posts auf die LinkedIn-Firmenseite.",
+        "canva": "Bilder mit dem Markenkit gestalten und ins CRM holen."
+      },
+      "verbundenKurz": "Verbunden",
+      "nicht": "Nicht verbunden",
+      "neuVerbinden": "Neu verbinden",
+      "wer": "{{name}} · von {{von}} am {{am}}",
+      "nichtEingerichtet": "Auf dem Server noch nicht eingerichtet (siehe Anleitung Marketing).",
+      "verbinden": "Verbinden",
+      "erneuern": "Neu verbinden",
+      "trennen": "Trennen",
+      "verbunden": "Verbunden: {{dienst}}",
+      "fehlgeschlagen": "Verbindung fehlgeschlagen ({{code}})"
+    },
+    "newsletter": {
+      "zahlen": "Kennzahlen",
+      "zahl": {
+        "empfaenger": "Mail-Adressen, die ihn bekommen dürfen",
+        "kunden": "davon Kunden",
+        "einwilligung": "davon mit Einwilligung",
+        "abgemeldet": "Abgemeldet"
+      },
+      "liste": "Newsletter",
+      "neu": "Neuer Newsletter",
+      "leer": "Noch kein Newsletter",
+      "leerText": "Thema wählen, Zielgruppe bestimmen, Text schreiben, prüfen und senden.",
+      "status": {
+        "entwurf": "Entwurf",
+        "versendet": "Versendet"
+      },
+      "versendetAm": "Versendet {{wann}} · {{anzahl}} Empfänger · {{wer}}",
+      "entwurfVom": "Entwurf vom {{wann}}",
+      "alsVorlage": "Als Vorlage verwenden",
+      "kopie": "Kopie",
+      "ohneThema": "Newsletter",
+      "ablauf": "Thema → Zielgruppe → Text → Prüfung → Senden",
+      "thema": "Thema",
+      "zielgruppe": "Zielgruppe",
+      "einzelne": "Einzelne Empfänger mit Einwilligung (ohne Kundenbeziehung) einschliessen",
+      "versandgrund": "Nur wer einen Versandgrund hat: Kunde (mindestens ein Auftrag) oder Einwilligung mit Datum und Nachweis. Abgemeldete nie.",
+      "speichernPruefen": "Speichern und prüfen",
+      "senden_one": "An {{count}} Empfänger senden",
+      "senden_other": "An {{count}} Empfänger senden",
+      "pruefung": "Prüfung",
+      "empfaengerZahl": "{{neu}} Empfänger bekommen ihn; {{schon}} haben ihn schon und werden übersprungen.",
+      "hinweis": {
+        "betreffFehlt": "{{sprache}}: Betreff fehlt.",
+        "textFehlt": "{{sprache}}: Text fehlt.",
+        "zuLang": "{{sprache}}: {{wert}} Wörter, empfohlen höchstens {{max}}.",
+        "ohneAnrede": "{{sprache}}: ohne {Anrede} fehlt die persönliche Anrede.",
+        "platzhalterText": "{{sprache}}: Der Text enthält noch «…»."
+      }
+    },
+    "vorlagen": {
+      "platzhalter": "Platzhalter in allen Texten: {{liste}}",
+      "abschnitt": {
+        "brief": "Serienbrief",
+        "mail": "Serien-E-Mail und Newsletter",
+        "social": "Social Media"
+      },
+      "absender": "Absender",
+      "ort": "Ort für das Datum",
+      "briefBetreff": "Betreff Brief",
+      "briefText": "Text Brief",
+      "mailBetreff": "Betreff Mail",
+      "mailText": "Text Mail",
+      "abmelden": "Abmelde-Satz unter jeder Mail ({Abmeldelink} = Link)",
+      "maxWoerter": "Newsletter: Wörter höchstens",
+      "themen": "Themen",
+      "themenHinweis": "Mit Komma getrennt; erscheinen als Vorschlag beim Post.",
+      "regel": "Regeln für {{netzwerk}}",
+      "ci": "CI-Stil für Bilder (Canva)",
+      "ciHinweis": "Wie die Bilder aussehen sollen: Farben, Schrift, Logo, Bildsprache.",
+      "ciNurAdmin": "Ändern kann nur die Administration."
     }
   }
 }
