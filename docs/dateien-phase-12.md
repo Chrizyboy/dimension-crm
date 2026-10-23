@@ -26,7 +26,7 @@
 - **`components/AutomationsListe.tsx`** – Karten mit Schalter, Ablauf als Kette, Freigabe/Automatisch und Anzahl Läufe.
 - **`components/AutomationEditor.tsx`**, **`BedingungenEditor.tsx`**, **`AktionenEditor.tsx`**, **`AktionFelder.tsx`**, **`EmpfaengerWahl.tsx`**, **`ZweisprachigFeld.tsx`** – Automation bearbeiten: Wenn, Nur wenn, Dann; Texte DE/FR mit Warnung bei unbekannten Platzhaltern; Papierkorb.
 - **`components/Protokoll.tsx`**, **`LaufDetail.tsx`**, **`ZielLink.tsx`** – Alle Läufe mit Filter, Zeitachse je Lauf, Link zum Datensatz, Lauf beenden.
-- **`components/Einstellungen.tsx`** – Vorlauf, Karenz, Tage nach dem Termin, Bewertungslink.
+- **`components/Einstellungen.tsx`** – Vorlauf, Karenz, Rückschau für vorbei gegangene Termine, Bewertungslink.
 - **`components/symbole.ts`**, **`texte.ts`**, **`lib/anzeige.ts`** (mit Test), **`lib/entwurf.ts`** – Symbole, Texte fürs Protokoll, Hilfen für die Anzeige.
 - **`services/`**, **`hooks/`**, **`types.ts`**, **`index.ts`**, **`README.md`**.
 

@@ -113,8 +113,8 @@ begin
   end;
   if not frei then
     perform intern.automation_melden(array[absender], 'info',
-      jsonb_build_object('de', 'Entwurf wartet auf Freigabe: ' || coalesce(betreff, 'SMS'),
-                         'fr', 'Brouillon à valider : ' || coalesce(betreff, 'SMS')),
+      jsonb_build_object('de', 'Entwurf wartet auf Freigabe: ' || coalesce(nullif(betreff, ''), 'SMS'),
+                         'fr', 'Brouillon à valider : ' || coalesce(nullif(betreff, ''), 'SMS')),
       jsonb_build_object('de', '{Name} · ' || a.name_de, 'fr', '{Name} · ' || a.name_fr),
       ctx, intern.automation_ziel('ausgangskorb', id), l.id);
   end if;
