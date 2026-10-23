@@ -12,6 +12,8 @@ export interface Ich {
   name: string
   email: string
   rechte: string[]
+  /** Login der Person (nur im Speicher, nie zurückgeben), für Abfragen mit ihren Rechten. */
+  auth?: string
 }
 
 /** Aufruf der REST-Schnittstelle. */
@@ -36,12 +38,33 @@ export async function wer(req: Request): Promise<Ich | null> {
   const auth = req.headers.get('Authorization') ?? ''
   if (!auth.startsWith('Bearer ')) return null
   try {
-    return await rest<Ich | null>('/rest/v1/rpc/meine_anmeldung', brauche('SUPABASE_ANON_KEY'), auth, {
+    const ich = await rest<Ich | null>('/rest/v1/rpc/meine_anmeldung', brauche('SUPABASE_ANON_KEY'), auth, {
       method: 'POST',
       body: '{}',
     })
+    return ich ? { ...ich, auth } : null
   } catch {
     return null
+  }
+}
+
+/**
+ * Zugriff mit dem Login der Person: dieselben Rechte (RLS) wie in der App. Für alles, was die KI über Kunden lesen
+ * darf, damit sie nie mehr sieht als die Person, die fragt.
+ */
+export function alsPerson(ich: Ich) {
+  if (!ich.auth) throw new DienstFehler('anmeldung', 401, 'Ohne Login')
+  const auth = ich.auth
+  return {
+    rpc<T>(name: string, args: Record<string, unknown>): Promise<T> {
+      return rest<T>(`/rest/v1/rpc/${name}`, brauche('SUPABASE_ANON_KEY'), auth, {
+        method: 'POST',
+        body: JSON.stringify(args),
+      })
+    },
+    lies<T>(pfad: string): Promise<T> {
+      return rest<T>(`/rest/v1/${pfad}`, brauche('SUPABASE_ANON_KEY'), auth)
+    },
   }
 }
 

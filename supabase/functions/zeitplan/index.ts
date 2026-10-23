@@ -4,6 +4,7 @@
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
+//  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
 //  * sms          ab «uhrzeit»    SMS-Erinnerungen für morgen, nur wenn «automatisch» eingeschaltet ist (V172)
 //  * anfragen     alle 5 Minuten  solar-guide, Landingpage, Messe aus den Postfächern (V78)
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
@@ -17,6 +18,8 @@ import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
+import { kiEntwuerfeAbarbeiten } from '../_shared/ki_automation.ts'
+import { kiEingerichtet } from '../_shared/ki_rahmen.ts'
 import { dienst } from '../_shared/datenbank.ts'
 import { DienstFehler } from '../_shared/http.ts'
 import { dokumentSichern, type SicherungsDokument } from '../_shared/sharepoint.ts'
@@ -85,6 +88,11 @@ Deno.serve(async (req) => {
     const s = r.server ? await serverSchritteAbarbeiten(10) : { erledigt: 0, fehler: 0 }
     return `${r.neue_laeufe} neu, ${r.schritte} Läufe, ${s.erledigt} Server-Schritte, ${s.fehler} Fehler`
   })
+
+  // KI-Entwürfe (Phase 13): ersetzt den Vorlagentext wartender Mails; ohne Schlüssel bleibt die Vorlage.
+  if (kiEingerichtet()) {
+    ergebnis.ki = await job('ki', 0, () => kiEntwuerfeAbarbeiten(2))
+  }
 
   // Freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11); ohne Verbindung bleibt der Post «Fehler».
   const so = socialEingerichtet()
