@@ -12,7 +12,12 @@ import { anhaengeLaden, anonymisiere, bezugFeld, frei, spracheFeld, type Sprache
 type Eingabe = Record<string, unknown>
 
 const wunschListe = (w: unknown): string[] =>
-  Array.isArray(w) ? w.filter((x): x is string => typeof x === 'string').map((x) => x.slice(0, 500)).slice(-8) : []
+  Array.isArray(w)
+    ? w
+        .filter((x): x is string => typeof x === 'string')
+        .map((x) => x.slice(0, 500))
+        .slice(-8)
+    : []
 
 const textPaar = (w: unknown): { betreff: string; text: string } | null => {
   const o = w as { betreff?: unknown; text?: unknown } | null
@@ -24,7 +29,9 @@ export async function entwurf(e: Eingabe, ich: Ich) {
   const art = frei(e, 'art', 40) || 'frei'
   if (!(art in T.KUNDEN_TEXTE)) throw new DienstFehler('eingabe', 400, 'art')
   const bezug = bezugFeld(e)
-  const kontext = bezug ? await alsPerson(ich).rpc<Record<string, unknown>>('ki_kontext', { p_tabelle: bezug.tabelle, p_id: bezug.id }) : null
+  const kontext = bezug
+    ? await alsPerson(ich).rpc<Record<string, unknown>>('ki_kontext', { p_tabelle: bezug.tabelle, p_id: bezug.id })
+    : null
   const sprache = spracheFeld(e, (kontext?.kunde as { sprache?: string } | undefined)?.sprache)
   const anh =
     bezug && e.anhaenge === true
@@ -69,7 +76,9 @@ export async function entwurf(e: Eingabe, ich: Ich) {
 function ids(kontext: Record<string, unknown> | null): string[] {
   if (!kontext) return []
   const haupt = (l: unknown) =>
-    Array.isArray(l) ? (l as { id?: string; hauptsache?: boolean }[]).filter((x) => x.hauptsache && x.id).map((x) => x.id!) : []
+    Array.isArray(l)
+      ? (l as { id?: string; hauptsache?: boolean }[]).filter((x) => x.hauptsache && x.id).map((x) => x.id!)
+      : []
   return [...haupt(kontext.leads), ...haupt(kontext.offerten), ...haupt(kontext.projekte)]
 }
 
@@ -82,14 +91,24 @@ export async function stilLernen(e: Eingabe, ich: Ich) {
   const entwurfText = frei(e, 'entwurf', 6000)
   if (!endfassung) throw new DienstFehler('eingabe', 400, 'endfassung')
   const bezug = bezugFeld(e)
-  const kontext = bezug ? await alsPerson(ich).rpc('ki_kontext', { p_tabelle: bezug.tabelle, p_id: bezug.id }).catch(() => null) : null
+  const kontext = bezug
+    ? await alsPerson(ich)
+        .rpc('ki_kontext', { p_tabelle: bezug.tabelle, p_id: bezug.id })
+        .catch(() => null)
+    : null
   const [alt] = await dienst.lies<{ id: string; regeln: unknown; beispiele: unknown; anzahl: number }[]>(
     `schreibstile?person_id=eq.${ich.id}&geloescht_am=is.null&select=id,regeln,beispiele,anzahl`,
   )
-  const regeln = Array.isArray(alt?.regeln) ? (alt.regeln as unknown[]).filter((r): r is string => typeof r === 'string') : []
+  const regeln = Array.isArray(alt?.regeln)
+    ? (alt.regeln as unknown[]).filter((r): r is string => typeof r === 'string')
+    : []
   const beispiele = [
     ...(Array.isArray(alt?.beispiele) ? (alt.beispiele as unknown[]) : []),
-    { art: frei(e, 'art', 40) || null, text: anonymisiere(endfassung, kontext).slice(0, 3000), am: new Date().toISOString() },
+    {
+      art: frei(e, 'art', 40) || null,
+      text: anonymisiere(endfassung, kontext).slice(0, 3000),
+      am: new Date().toISOString(),
+    },
   ].slice(-4)
   const wuensche = wunschListe(e.wuensche)
   let neu = regeln
@@ -116,7 +135,9 @@ export async function stilLernen(e: Eingabe, ich: Ich) {
 export async function marketingText(e: Eingabe, ich: Ich) {
   const art = frei(e, 'art', 40) || 'mail'
   if (!(art in T.MARKETING_TEXTE)) throw new DienstFehler('eingabe', 400, 'art')
-  const sprachen = (Array.isArray(e.sprachen) ? e.sprachen : ['de']).filter((s): s is Sprache => s === 'de' || s === 'fr')
+  const sprachen = (Array.isArray(e.sprachen) ? e.sprachen : ['de']).filter(
+    (s): s is Sprache => s === 'de' || s === 'fr',
+  )
   if (!sprachen.length) throw new DienstFehler('eingabe', 400, 'sprachen')
   const bisher: Partial<Record<Sprache, { betreff: string; text: string }>> = {}
   for (const s of sprachen) {
@@ -166,10 +187,10 @@ export async function social(e: Eingabe, ich: Ich) {
   )
   let anlage: unknown = null
   if (projektId) {
-    const k = await alsPerson(ich).rpc<{ projekte?: { anlage?: unknown; titel?: string }[]; objekte?: { ort?: string }[] }>(
-      'ki_kontext',
-      { p_tabelle: 'projekte', p_id: projektId },
-    )
+    const k = await alsPerson(ich).rpc<{
+      projekte?: { anlage?: unknown; titel?: string }[]
+      objekte?: { ort?: string }[]
+    }>('ki_kontext', { p_tabelle: 'projekte', p_id: projektId })
     // Nur Technik und Ort, nie Namen, Strasse oder Beträge (Regel: keine Kundendaten in Posts).
     anlage = { anlage: k.projekte?.[0]?.anlage ?? null, ort: k.objekte?.[0]?.ort ?? null }
   }

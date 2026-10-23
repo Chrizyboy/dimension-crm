@@ -24,6 +24,7 @@ export function MailDialog({
   beschreibung,
   onSchliessen,
   onGesendet,
+  onFertig,
 }: {
   vorlage: Omit<MailEntwurf, 'anhaenge'>
   /** Dateien zur Auswahl; die ersten `vorgewaehlt` sind angekreuzt. */
@@ -33,6 +34,8 @@ export function MailDialog({
   beschreibung?: string
   onSchliessen: () => void
   onGesendet?: () => void
+  /** Nach Senden oder Ablegen, mit dem Text, wie er rausgeht (z. B. damit die KI den Schreibstil lernt). */
+  onFertig?: (w: Omit<MailEntwurf, 'anhaenge'>) => void
 }) {
   const { t } = useTranslation()
   const [w, setW] = useState(vorlage)
@@ -44,6 +47,7 @@ export function MailDialog({
     try {
       const anhaenge = dateien.filter((d) => gewaehlt.has(d.id)).map((d) => ({ dokument_id: d.id, name: d.name }))
       await mailVorbereiten({ ...w, anhaenge }, sofort)
+      onFertig?.(w)
       if (sofort) {
         const r = await ausgangJetztSenden().catch(() => null)
         melde(r && r.fehler === 0 ? 'ok' : 'info', {

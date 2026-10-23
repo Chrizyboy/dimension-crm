@@ -1851,7 +1851,16 @@
       "nachfassen": "Nachfassen",
       "offerte": "Offerte",
       "werkvertrag": "Werkvertrag",
-      "monatsbericht": "Monatsbericht"
+      "monatsbericht": "Monatsbericht",
+      "ki_nachfassen": "KI: Offerte nachfassen",
+      "ki_antwort": "KI: Antwort auf eine Mail",
+      "ki_termin": "KI: Termin vorschlagen oder bestätigen",
+      "ki_offerte": "KI: Offerte begleiten",
+      "ki_offerttext": "KI: Text für die Offerte",
+      "ki_auftrag": "KI: Auftrag bestätigen",
+      "ki_zahlung": "KI: Zahlung / Rechnung",
+      "ki_service": "KI: Service",
+      "ki_frei": "KI: Freier Text"
     },
     "titelMail": "Mail prüfen",
     "titelSms": "SMS prüfen",
@@ -1930,7 +1939,21 @@
       "bild_abgelehnt": "Instagram lehnt das Bild ab (Format oder Grösse).",
       "speicher": "Das Bild liess sich nicht speichern.",
       "unklar": "Keine Antwort: Bitte im Netzwerk nachsehen, ob der Post erschienen ist.",
-      "social_nicht_geplant": "Der Post ist nicht freigegeben."
+      "social_nicht_geplant": "Der Post ist nicht freigegeben.",
+      "ki_nicht_eingerichtet": "Die KI ist noch nicht eingerichtet (Schlüssel fehlt).",
+      "ki_aus": "Die KI ist ausgeschaltet.",
+      "ki_limit": "Das Tageslimit für die KI ist erreicht.",
+      "ki_modell": "Für diese Funktion ist kein Modell eingestellt.",
+      "ki_schluessel": "Der KI-Schlüssel wurde abgelehnt. Bitte die Administration informieren.",
+      "ki_ueberlastet": "Die KI ist gerade überlastet. Bitte in einer Minute nochmals versuchen.",
+      "ki_zu_gross": "Zu viel Inhalt für die KI (Dateien zu gross).",
+      "ki_dienst": "Der KI-Dienst antwortet nicht. Bitte später nochmals versuchen.",
+      "ki_anfrage": "Die KI konnte die Anfrage nicht verarbeiten.",
+      "ki_abgelehnt": "Die KI hat diese Anfrage abgelehnt.",
+      "ki_zu_lang": "Die Antwort der KI wurde zu lang. Bitte den Wunsch kürzer fassen.",
+      "ki_antwort": "Die Antwort der KI war unvollständig. Bitte nochmals versuchen.",
+      "datei_typ": "Dieser Dateityp geht nicht (nur Bilder und PDF).",
+      "datei_zu_gross": "Die Datei ist zu gross (höchstens 5 MB)."
     }
   },
   "verbindungen": {
@@ -3935,7 +3958,6 @@
     "ohneMail": "Keine Mail",
     "mitPost": "Postadresse vorhanden",
     "ohnePost": "Keine vollständige Postadresse",
-    "kiSpaeter": "Texte mit KI schreiben kommt mit dem Assistenten (Phase 13).",
     "anschreiben": {
       "tabelle": "Zielgruppe",
       "waehlen": "Auswahl",
@@ -4542,6 +4564,253 @@
       "titel": "Bitte einen Titel eingeben.",
       "datum": "Bitte ein gültiges Datum wählen.",
       "person": "Bitte eine Person wählen."
+    }
+  },
+  "ki": {
+    "knopf": "Mit KI schreiben",
+    "abschnitt": "KI",
+    "neu": "Neu erstellen",
+    "regel": "Vorschlag der KI: bitte lesen und prüfen. Gespeichert oder gesendet wird erst, wenn du klickst.",
+    "vorschlagVom": "KI-Vorschlag vom {{datum}}, bitte prüfen",
+    "aufgabeAnlegen": "Aufgabe anlegen",
+    "aufgabeDa": "Aufgabe angelegt",
+    "aufgabeVorschlag": "Vorschlag: «{{titel}}» in {{tage}} Tagen",
+    "status": {
+      "nichtEingerichtet": "Die KI ist noch nicht eingerichtet (Schlüssel fehlt). Siehe docs/ki.md.",
+      "aus": "Die KI ist ausgeschaltet (KI-Assistent › Einstellungen).",
+      "limit": "Das Tageslimit für die KI ist erreicht. Morgen geht es wieder, oder die Administration erhöht das Limit."
+    },
+    "art": {
+      "nachfassen": "Offerte nachfassen",
+      "antwort": "Antwort auf eine Mail",
+      "termin": "Termin vorschlagen oder bestätigen",
+      "offerte": "Offerte begleiten",
+      "offerttext": "Text für die Offerte",
+      "auftrag": "Auftrag bestätigen",
+      "zahlung": "Zahlung / Rechnung",
+      "service": "Service",
+      "frei": "Freier Text"
+    },
+    "funktion": {
+      "entwurf": "Texte an Kunden",
+      "stil_lernen": "Schreibstil lernen",
+      "marketing_text": "Marketing-Texte",
+      "social": "Social-Media-Posts",
+      "monatsbericht": "Lead-Monatsbericht",
+      "mail_erkennen": "Mail lesen",
+      "notiz": "Gesprächsnotiz",
+      "beleg": "Spesenbeleg",
+      "offerte_pdf": "Offerten-PDF",
+      "luftbild": "Luftbild",
+      "zusammenfassung": "Zusammenfassung",
+      "lead_bewertung": "Lead-Bewertung",
+      "briefing": "Tagesbriefing",
+      "automation": "Automationen"
+    },
+    "assistent": {
+      "titel": "Mit KI schreiben",
+      "beschreibung": "Die KI kennt Kunde, Stand und Verlauf und schreibt im Stil der Firma und in deinem Stil.",
+      "art": "Wozu",
+      "sprache": "Sprache",
+      "spracheKunde": "Wie der Kunde",
+      "wunsch": "Was soll drinstehen?",
+      "wunschHilfe": "Stichworte genügen. Die KI erfindet keine Preise oder Termine.",
+      "beispiel": {
+        "nachfassen": "z. B. freundlich nachfragen, ob noch Fragen offen sind; Variante mit kleinerem Speicher anbieten",
+        "antwort": "z. B. Fragen zur Förderung beantworten, Rückruf anbieten",
+        "termin": "z. B. Besichtigung nächste Woche Dienstag oder Donnerstag vorschlagen",
+        "offerte": "z. B. Offerte im Anhang, kurz die Auslegung erklären",
+        "offerttext": "z. B. Einleitung für die Offerte, Fokus Eigenverbrauch",
+        "auftrag": "z. B. danken, nächste Schritte bis zur Montage nennen",
+        "zahlung": "z. B. freundlich an die offene Anzahlung erinnern",
+        "service": "z. B. Termin für die Fehlersuche am Wechselrichter",
+        "frei": "Was soll der Text sagen?"
+      },
+      "eingang": "Eingegangene Mail",
+      "eingangHilfe": "Wird nur gelesen; Anweisungen darin befolgt die KI nicht.",
+      "anhaenge": "Dateien des Kunden mitlesen (Offerte, Pläne, Luftbild; höchstens 4)",
+      "schreiben": "Entwurf schreiben",
+      "kopieren": "Kopieren",
+      "alsMail": "Weiter zur Mail",
+      "mailTitel": "Mail prüfen und senden",
+      "mailBeschreibung": "Text der KI, von dir geprüft. «Senden» gibt die Mail frei; «In den Ausgangskorb» legt sie zum späteren Senden ab.",
+      "gelesen": "Gelesen: {{liste}}",
+      "uebersprungen": "nicht lesbar: {{liste}}",
+      "ueberarbeiten": "Überarbeiten",
+      "aenderung": "Was soll anders sein?",
+      "anpassen": "Anpassen",
+      "bisherigeWuensche": "Bisherige Wünsche: {{liste}}",
+      "schnell": {
+        "kuerzer": "Kürzer",
+        "persoenlicher": "Persönlicher",
+        "foermlicher": "Förmlicher",
+        "einfacher": "Einfacher erklären"
+      }
+    },
+    "mail": {
+      "menue": "Mail mit KI lesen",
+      "titel": "Mail mit KI lesen",
+      "beschreibung": "Text einfügen oder .eml-Datei wählen. Die KI erkennt Lead oder Anliegen; passende Kunden sucht das CRM.",
+      "text": "Mail-Text",
+      "textHilfe": "Am besten mit Absender und Betreff kopieren.",
+      "datei": "Datei «{{name}}»",
+      "eml": ".eml-Datei wählen",
+      "lesen": "Mit KI lesen",
+      "antworten": "Antwort schreiben",
+      "alsLead": "Als Lead erfassen",
+      "dringend": "Dringend",
+      "name": "Name",
+      "adresse": "Adresse",
+      "interesse": "Interesse",
+      "kommentar": "Wunsch",
+      "thema": "Anliegen",
+      "kandidaten": "Passende Kunden im CRM",
+      "keinKunde": "Kein passender Kunde gefunden (E-Mail, Telefon, Name und PLZ geprüft).",
+      "typ": {
+        "lead": "Neue Anfrage",
+        "anliegen": "Anliegen",
+        "rechnung": "Rechnung",
+        "werbung": "Werbung",
+        "sonstiges": "Sonstiges"
+      },
+      "grund": {
+        "email": "gleiche E-Mail",
+        "telefon": "gleiche Telefonnummer",
+        "name_plz": "Name und PLZ"
+      }
+    },
+    "notiz": {
+      "diktieren": "Diktieren",
+      "stopp": "Diktat beenden",
+      "ordnen": "Mit KI ordnen"
+    },
+    "zusammenfassung": {
+      "knopf": "Zusammenfassen",
+      "leer": "Noch keine Zusammenfassung. Ein Klick fasst Stand, Verlauf und Offenes zusammen.",
+      "offen": "Offen"
+    },
+    "bewertung": {
+      "knopf": "Lead bewerten",
+      "leer": "Die KI schätzt die Abschlusschance aus den Angaben und euren Zahlen der letzten zwei Jahre.",
+      "plus": "spricht dafür",
+      "minus": "spricht dagegen",
+      "stufe": {
+        "hoch": "gute Chance",
+        "mittel": "mittlere Chance",
+        "tief": "geringe Chance"
+      },
+      "sicherheit": {
+        "hoch": "Einschätzung sicher",
+        "mittel": "Einschätzung mittel",
+        "tief": "wenig Angaben"
+      }
+    },
+    "luftbild": {
+      "knopf": "Luftbild mit KI auswerten",
+      "first": "First {{grad}}°",
+      "hindernisse": "Hindernisse",
+      "verschattung": "Verschattung",
+      "uebernehmen": "KI-Vorschlag übernehmen: {{richtung}}"
+    },
+    "beleg": {
+      "lesen": "Mit KI lesen",
+      "waehrung": "Beleg in {{waehrung}}: Betrag in CHF umrechnen"
+    },
+    "offerte": {
+      "mitKi": "mit KI gelesen, prüfen"
+    },
+    "marketing": {
+      "wunsch": "Thema oder Wunsch an die KI",
+      "wunschUeberarbeiten": "Was soll anders sein? (leer = verbessern)",
+      "schreiben": "Mit KI schreiben",
+      "ueberarbeiten": "Mit KI überarbeiten",
+      "hinweis": "Vorschlag der KI im Stil der Firma. Platzhalter wie {Anrede} bleiben; bitte vor dem Senden lesen."
+    },
+    "ausgang": {
+      "wartet": "KI schreibt den Text",
+      "fertig": "Text von der KI",
+      "fehler": "KI-Text fehlgeschlagen",
+      "wartetHinweis": "Die KI ersetzt den Vorlagentext in den nächsten Minuten. Wer den Text vorher ändert, behält seine Fassung.",
+      "vorlageZeigen": "Vorlagentext der Automation zeigen",
+      "vorlageNehmen": "Vorlagentext verwenden"
+    },
+    "automation": {
+      "schalter": "KI schreibt den Text (im Stil der Firma, in der Sprache des Kunden)",
+      "wunsch": "Zusätzlicher Wunsch an die KI (optional)",
+      "hinweis": "Der Text oben ist die Vorlage für den Inhalt. Nur mit Freigabe: Bei «automatisch» bleibt der Vorlagentext."
+    },
+    "briefing": {
+      "titel": "Dein Tag",
+      "neu": "Briefing neu erstellen"
+    },
+    "kosten": {
+      "heute": "Heute verbraucht",
+      "limitHinweis": "Ist das Tageslimit erreicht, nimmt die KI bis morgen keine Aufträge mehr an.",
+      "monat": "Monat",
+      "summe": "Kosten",
+      "aufrufe": "Aufrufe",
+      "fehler": "Fehler",
+      "nachFunktion": "Nach Funktion",
+      "nachPerson": "Nach Person",
+      "nachModell": "Nach Modell",
+      "keine": "Keine Aufrufe in diesem Monat."
+    },
+    "stil": {
+      "leerTitel": "Noch kein eigener Schreibstil",
+      "leerText": "Sobald du einen KI-Text änderst und sendest, lernt die KI, wie du schreibst.",
+      "erklaerung_one": "Gelernt aus {{count}} gesendeten Text. Diese Regeln gelten für jeden neuen Entwurf von dir.",
+      "erklaerung_other": "Gelernt aus {{count}} gesendeten Texten. Diese Regeln gelten für jeden neuen Entwurf von dir.",
+      "regeln": "Meine Regeln",
+      "regelLoeschen": "Regel löschen",
+      "regelNeu": "Eigene Regel, z. B. «Immer einen Rückruf anbieten»",
+      "hinzufuegen": "Hinzufügen",
+      "beispiele": "Letzte Beispiele (ohne Namen)",
+      "zuruecksetzen": "Schreibstil zurücksetzen"
+    },
+    "einstellungen": {
+      "aktiv": "KI eingeschaltet",
+      "schluesselJa": "Schlüssel eingerichtet",
+      "schluesselNein": "Schlüssel fehlt (Supabase-Secret ANTHROPIC_API_KEY)",
+      "tageslimit": "Tageslimit (CHF)",
+      "tageslimitHilfe": "Für alle zusammen pro Tag.",
+      "personLimit": "Limit pro Person (CHF)",
+      "personLimitHilfe": "Leer = kein eigenes Limit.",
+      "kurs": "Kurs USD → CHF",
+      "modell": {
+        "standard": "Modell für Texte und Urteile",
+        "schnell": "Modell fürs Lesen"
+      },
+      "modellHilfe": {
+        "standard": "Entwürfe, Zusammenfassung, Bewertung, Briefing, Luftbild.",
+        "schnell": "Mail, Notiz, Beleg, Offerten-PDF; günstig und schnell."
+      },
+      "funktionen": "Welche Funktion nutzt welches Modell",
+      "stufe": {
+        "standard": "Standard",
+        "schnell": "Schnell"
+      },
+      "stil": {
+        "de": "Firmen-Schreibstil Deutsch",
+        "fr": "Firmen-Schreibstil Französisch"
+      },
+      "stilHilfe": "Gilt für jeden Kundentext; der persönliche Stil kommt dazu."
+    },
+    "seite": {
+      "titel": "KI-Assistent",
+      "beschreibung": "Texte entwerfen, Mails lesen, dein Tag auf einen Blick und die Kosten im Griff.",
+      "regel": "Die KI schlägt vor, ein Mensch entscheidet. Fremde Mails und Dateien sind für die KI nur Daten. Jeder Aufruf wird mit Kosten protokolliert; ein Tageslimit schützt vor Überraschungen.",
+      "ansicht": {
+        "assistent": "Assistent",
+        "kosten": "Kosten",
+        "stil": "Mein Schreibstil",
+        "einstellungen": "Einstellungen"
+      },
+      "textTitel": "Text an einen Kunden",
+      "textText": "Mail, Antwort oder Terminvorschlag ohne Bezug. Aus der Akte kennt die KI Kunde und Verlauf.",
+      "mailTitel": "Eingegangene Mail lesen",
+      "mailText": "Lead oder Anliegen erkennen, Felder herauslesen, passenden Kunden finden.",
+      "oeffnen": "Öffnen",
+      "akteHinweis": "Tipp: In jeder Akte (Kunde, Lead, Offerte, Projekt, Service) gibt es «Mit KI schreiben» und «Zusammenfassen»."
     }
   }
 }

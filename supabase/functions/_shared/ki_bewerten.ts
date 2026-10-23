@@ -27,7 +27,12 @@ export function zusammenfassungTeile(kontext: unknown): Teil[] {
 }
 
 /** Schema der Zusammenfassung. */
-export const ZUSAMMENFASSUNG_SCHEMA = objekt({ kurz: text, punkte: liste(text), offen: liste(text), naechster_schritt: text })
+export const ZUSAMMENFASSUNG_SCHEMA = objekt({
+  kurz: text,
+  punkte: liste(text),
+  offen: liste(text),
+  naechster_schritt: text,
+})
 
 /** Lead-Bewertung mit Erfahrungswerten aus der eigenen Datenbank. */
 export function leadBewertungTeile(kontext: unknown, statistik: unknown, heute: string): Teil[] {

@@ -11,9 +11,7 @@ export const API_VERSION = '2026-10-21'
 
 /** Ein Teil der Eingabe: Text, Bild (JPEG/PNG/WebP) oder PDF, Bilder und PDF als Base64. */
 export type Teil =
-  | { art: 'text'; text: string }
-  | { art: 'bild'; typ: string; base64: string }
-  | { art: 'pdf'; base64: string }
+  { art: 'text'; text: string } | { art: 'bild'; typ: string; base64: string } | { art: 'pdf'; base64: string }
 
 /** Was die KI tun soll. Der Systemtext enthält Regeln und Stil, die Teile die Aufgabe und die Daten. */
 export interface KiAnfrage {

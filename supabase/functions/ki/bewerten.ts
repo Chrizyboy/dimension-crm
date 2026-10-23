@@ -20,7 +20,12 @@ export async function zusammenfassung(e: Eingabe, ich: Ich) {
   const r = await kiAufruf(
     { funktion: 'zusammenfassung', personId: ich.id, bezugTabelle: bezug.tabelle, bezugId: bezug.id },
     cfg,
-    { system: B.systemIntern(sprache), teile: B.zusammenfassungTeile(kontext), schema: B.ZUSAMMENFASSUNG_SCHEMA, maxTokens: 3000 },
+    {
+      system: B.systemIntern(sprache),
+      teile: B.zusammenfassungTeile(kontext),
+      schema: B.ZUSAMMENFASSUNG_SCHEMA,
+      maxTokens: 3000,
+    },
   )
   const j = r.json as { kurz: string; punkte: string[]; offen: string[]; naechster_schritt: string }
   const inhalt = {
@@ -46,7 +51,13 @@ export async function leadBewertung(e: Eingabe, ich: Ich) {
   const r = await kiAufruf(
     { funktion: 'lead_bewertung', personId: ich.id, bezugTabelle: 'verkaufschancen', bezugId: lead },
     cfg,
-    { system: B.systemIntern(sprache), teile: B.leadBewertungTeile(kontext, statistik, heute()), schema: B.LEAD_SCHEMA, maxTokens: 3000, aufwand: 'medium' },
+    {
+      system: B.systemIntern(sprache),
+      teile: B.leadBewertungTeile(kontext, statistik, heute()),
+      schema: B.LEAD_SCHEMA,
+      maxTokens: 3000,
+      aufwand: 'medium',
+    },
   )
   const j = r.json as {
     wahrscheinlichkeit: number
@@ -78,7 +89,8 @@ export async function briefing(e: Eingabe, ich: Ich) {
       `ki_ergebnisse?art=eq.briefing&bezug_tabelle=eq.personen&bezug_id=eq.${ich.id}&geloescht_am=is.null` +
         `&erstellt_am=gte.${tag}T00:00:00%2B00:00&select=inhalt,erstellt_am,sprache&order=erstellt_am.desc&limit=1`,
     )
-    if (alt && alt.sprache === sprache) return { briefing: alt.inhalt, erstellt_am: alt.erstellt_am, aus_speicher: true }
+    if (alt && alt.sprache === sprache)
+      return { briefing: alt.inhalt, erstellt_am: alt.erstellt_am, aus_speicher: true }
   }
   const d = await alsPerson(ich).rpc('ki_briefing_daten', {})
   const cfg = await kiEinstellung()
@@ -89,7 +101,12 @@ export async function briefing(e: Eingabe, ich: Ich) {
     maxTokens: 3000,
   })
   const refs = B.refsIn(d)
-  const j = r.json as { gruss: string; einleitung: string; prioritaeten: { titel: string; warum: string; ref: string | null }[]; hinweis: string | null }
+  const j = r.json as {
+    gruss: string
+    einleitung: string
+    prioritaeten: { titel: string; warum: string; ref: string | null }[]
+    hinweis: string | null
+  }
   const inhalt = {
     gruss: kurz(j.gruss, 200),
     einleitung: kurz(j.einleitung, 600),

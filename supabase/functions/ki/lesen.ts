@@ -7,7 +7,17 @@ import { DienstFehler } from '../_shared/http.ts'
 import * as L from '../_shared/ki_lesen.ts'
 import { kiAufruf, kiEinstellung } from '../_shared/ki_rahmen.ts'
 import { erlaubt, kurz } from '../_shared/ki_schema.ts'
-import { auswahlen, bezugFeld, dateiFeld, dokumentTeil, frei, heute, idFeld, speichereErgebnis, spracheFeld } from './hilfe.ts'
+import {
+  auswahlen,
+  bezugFeld,
+  dateiFeld,
+  dokumentTeil,
+  frei,
+  heute,
+  idFeld,
+  speichereErgebnis,
+  spracheFeld,
+} from './hilfe.ts'
 
 type Eingabe = Record<string, unknown>
 
@@ -27,11 +37,23 @@ interface MailErgebnis {
  * Text oder .eml; die Zuordnung macht die Datenbank (nachvollziehbar), die KI liest nur die Felder.
  */
 export async function mailErkennen(e: Eingabe, ich: Ich) {
-  let m = { von: frei(e, 'von', 300), betreff: frei(e, 'betreff', 500), text: frei(e, 'text', 20_000), datum: frei(e, 'datum', 40) }
+  let m = {
+    von: frei(e, 'von', 300),
+    betreff: frei(e, 'betreff', 500),
+    text: frei(e, 'text', 20_000),
+    datum: frei(e, 'datum', 40),
+  }
   if (typeof e.eml === 'string') {
     if (e.eml.length > 5_000_000) throw new DienstFehler('datei_zu_gross', 413, 'eml')
     const x = emlLesen(e.eml)
-    m = { von: x.von, betreff: x.betreff, text: entitaeten(x.inhalt.replace(/<[^>]+>/g, ' ')).replace(/\s+\n/g, '\n').slice(0, 20_000), datum: x.datum }
+    m = {
+      von: x.von,
+      betreff: x.betreff,
+      text: entitaeten(x.inhalt.replace(/<[^>]+>/g, ' '))
+        .replace(/\s+\n/g, '\n')
+        .slice(0, 20_000),
+      datum: x.datum,
+    }
   }
   if (!m.text.trim() && !m.betreff.trim()) throw new DienstFehler('eingabe', 400, 'text')
   const a = await auswahlen()
@@ -45,7 +67,7 @@ export async function mailErkennen(e: Eingabe, ich: Ich) {
   const j = r.json as MailErgebnis
   const k = j.kontakt ?? {}
   const kandidaten = await alsPerson(ich).rpc<unknown[]>('ki_zuordnung', {
-    p_email: k.email ?? (/<([^>]+)>/.exec(m.von)?.[1] ?? (m.von.includes('@') ? m.von : null)),
+    p_email: k.email ?? /<([^>]+)>/.exec(m.von)?.[1] ?? (m.von.includes('@') ? m.von : null),
     p_telefon: k.telefon ?? null,
     p_vorname: k.vorname ?? null,
     p_nachname: k.nachname ?? null,
@@ -104,12 +126,22 @@ export async function beleg(e: Eingabe, ich: Ich) {
     schema: L.belegSchema(kategorien.map((k) => k.schluessel)),
     maxTokens: 1500,
   })
-  const j = r.json as { datum: string | null; betrag: number | null; waehrung: string | null; kategorie: string | null; zweck: string | null; bemerkung: string | null }
+  const j = r.json as {
+    datum: string | null
+    betrag: number | null
+    waehrung: string | null
+    kategorie: string | null
+    zweck: string | null
+    bemerkung: string | null
+  }
   return {
     datum: j.datum && /^\d{4}-\d{2}-\d{2}$/.test(j.datum) ? j.datum : null,
     betrag_rappen: typeof j.betrag === 'number' && j.betrag > 0 ? Math.round(j.betrag * 100) : null,
     waehrung: kurz(j.waehrung, 5).toUpperCase() || null,
-    kategorie: erlaubt(j.kategorie, kategorien.map((k) => k.schluessel)),
+    kategorie: erlaubt(
+      j.kategorie,
+      kategorien.map((k) => k.schluessel),
+    ),
     zweck: kurz(j.zweck, 80) || null,
     bemerkung: kurz(j.bemerkung, 200) || null,
   }
@@ -135,13 +167,17 @@ export async function luftbild(e: Eingabe, ich: Ich) {
   const { teil } = await dokumentTeil(ich, idFeld(e, 'dokument_id'))
   if (teil.art !== 'bild') throw new DienstFehler('datei_typ', 415, 'luftbild')
   const cfg = await kiEinstellung()
-  const r = await kiAufruf({ funktion: 'luftbild', personId: ich.id, bezugTabelle: 'verkaufschancen', bezugId: lead }, cfg, {
-    system: L.SYSTEM_LESEN,
-    teile: L.luftbildTeile(teil),
-    schema: L.LUFTBILD_SCHEMA,
-    maxTokens: 4000,
-    aufwand: 'medium',
-  })
+  const r = await kiAufruf(
+    { funktion: 'luftbild', personId: ich.id, bezugTabelle: 'verkaufschancen', bezugId: lead },
+    cfg,
+    {
+      system: L.SYSTEM_LESEN,
+      teile: L.luftbildTeile(teil),
+      schema: L.LUFTBILD_SCHEMA,
+      maxTokens: 4000,
+      aufwand: 'medium',
+    },
+  )
   await speichereErgebnis('luftbild', 'verkaufschancen', lead, ich.id, spracheFeld(e), r.json, r.modell)
   return { analyse: r.json }
 }

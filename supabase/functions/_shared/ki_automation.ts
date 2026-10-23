@@ -36,12 +36,27 @@ export async function kiEntwuerfeAbarbeiten(limit = 3): Promise<string> {
           : null
       const art = o.auftrag.art && o.auftrag.art in KUNDEN_TEXTE ? o.auftrag.art : 'frei'
       const r = await kiAufruf(
-        { funktion: 'automation', personId: p?.id ?? null, bezugTabelle: o.auftrag.tabelle, bezugId: o.auftrag.bezug_id },
+        {
+          funktion: 'automation',
+          personId: p?.id ?? null,
+          bezugTabelle: o.auftrag.tabelle,
+          bezugId: o.auftrag.bezug_id,
+        },
         cfg,
         {
-          system: systemKundentext(o.sprache, p?.name ?? '', cfg.stil[o.sprache], p ? await persoenlicherStil(p.id, p.name) : ''),
+          system: systemKundentext(
+            o.sprache,
+            p?.name ?? '',
+            cfg.stil[o.sprache],
+            p ? await persoenlicherStil(p.id, p.name) : '',
+          ),
           teile: entwurfTeile(
-            { art, sprache: o.sprache, vorlage: o.text ?? '', ...(o.auftrag.wunsch ? { wunsch: o.auftrag.wunsch } : {}) },
+            {
+              art,
+              sprache: o.sprache,
+              vorlage: o.text ?? '',
+              ...(o.auftrag.wunsch ? { wunsch: o.auftrag.wunsch } : {}),
+            },
             kontext,
           ),
           schema: ENTWURF_SCHEMA,

@@ -147,7 +147,15 @@ export async function kiAufruf(
   try {
     const r = await frageClaude({ ...anfrage, modell })
     const preis = e.preise_usd[r.modell] ?? e.preise_usd[modell]
-    await protokolliere(auftrag, r.modell, true, null, r.nutzung, kostenMillirappen(r.nutzung, preis, e.usd_chf), Date.now() - start)
+    await protokolliere(
+      auftrag,
+      r.modell,
+      true,
+      null,
+      r.nutzung,
+      kostenMillirappen(r.nutzung, preis, e.usd_chf),
+      Date.now() - start,
+    )
     return r
   } catch (f) {
     const kf = f instanceof KiFehler ? f : null

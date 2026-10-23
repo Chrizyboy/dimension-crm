@@ -67,7 +67,8 @@ export function entwurfTeile(e: EntwurfEingabe, kontext: unknown, anhaenge: Teil
   if (e.eingang) teile.push({ art: 'text', text: daten('eingang', e.eingang.slice(0, 12_000)) })
   teile.push(...anhaenge)
   let auftrag = `AUFGABE: ${aufgabe}`
-  if (e.vorlage) auftrag += `\nDiese Vorlage sagt, was der Text transportieren soll (Inhalt übernehmen, Formulierung im Stil oben):\n${e.vorlage}`
+  if (e.vorlage)
+    auftrag += `\nDiese Vorlage sagt, was der Text transportieren soll (Inhalt übernehmen, Formulierung im Stil oben):\n${e.vorlage}`
   if (e.bisher) {
     auftrag += `\n\nBISHERIGER ENTWURF:\nBetreff: ${e.bisher.betreff}\n\n${e.bisher.text}`
     if (e.wuensche?.length) auftrag += `\n\nFRÜHERE WÜNSCHE:\n${e.wuensche.map((w) => `– ${w}`).join('\n')}`
@@ -84,11 +85,19 @@ export function entwurfTeile(e: EntwurfEingabe, kontext: unknown, anhaenge: Teil
 export const ENTWURF_SCHEMA = objekt({ betreff: text, text, hinweise: liste(text) })
 
 /** Stil lernen (V233 aisLearn): bisherige Regeln mit den Änderungen der Person zusammenführen. */
-export function stilLernenTeile(name: string, regeln: string[], entwurf: string, endfassung: string, wuensche: string[]): Teil[] {
+export function stilLernenTeile(
+  name: string,
+  regeln: string[],
+  entwurf: string,
+  endfassung: string,
+  wuensche: string[],
+): Teil[] {
   return [
     { art: 'text', text: daten('ki_entwurf', entwurf.slice(0, 5000)) },
     { art: 'text', text: daten('endfassung', endfassung.slice(0, 5000)) },
-    ...(wuensche.length ? [{ art: 'text' as const, text: daten('wuensche', wuensche.map((w) => `– ${w}`).join('\n')) }] : []),
+    ...(wuensche.length
+      ? [{ art: 'text' as const, text: daten('wuensche', wuensche.map((w) => `– ${w}`).join('\n')) }]
+      : []),
     {
       art: 'text',
       text: `Du pflegst eine kurze Liste mit Schreibregeln für ${name || 'eine Person'} (Verkauf, Dimension Solaire, Solaranlagen). Die Liste wird künftigen KI-Entwürfen für Kundentexte mitgegeben, damit sie so klingen, wie diese Person schreibt.

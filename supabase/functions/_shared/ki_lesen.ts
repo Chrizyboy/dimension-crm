@@ -22,7 +22,10 @@ export interface Auswahlen {
 /** Eingegangene Mail: Lead, Anliegen eines Kunden oder anderes; Felder für Lead und Kontakt. */
 export function mailTeile(m: { von: string; betreff: string; text: string; datum?: string }, heute: string): Teil[] {
   return [
-    { art: 'text', text: daten('mail', { von: m.von, betreff: m.betreff, datum: m.datum ?? null, text: m.text.slice(0, 15_000) }) },
+    {
+      art: 'text',
+      text: daten('mail', { von: m.von, betreff: m.betreff, datum: m.datum ?? null, text: m.text.slice(0, 15_000) }),
+    },
     {
       art: 'text',
       text: `Heute ist ${heute}. AUFGABE: Ordne die eingegangene E-Mail ein und lies die Angaben heraus.
@@ -178,7 +181,12 @@ export const LUFTBILD_SCHEMA = objekt({
   dachform: text,
   first_grad: oderNull(ganz),
   flaechen: liste(
-    objekt({ ausrichtung: text, azimut: ganz, eignung: wahl(['sehr gut', 'gut', 'mässig', 'ungeeignet']), anteil: text }),
+    objekt({
+      ausrichtung: text,
+      azimut: ganz,
+      eignung: wahl(['sehr gut', 'gut', 'mässig', 'ungeeignet']),
+      anteil: text,
+    }),
   ),
   hindernisse: liste(text),
   verschattung: oderNull(text),
