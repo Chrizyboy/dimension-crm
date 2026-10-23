@@ -1,27 +1,40 @@
 # Modul: Spesen
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Spesen mit Foto oder PDF des Belegs erfassen (am Handy direkt mit der Kamera), die eigenen sehen und
+stornieren; die Buchhaltung sieht alle, setzt «ausbezahlt am/von», schickt eine Auswahl mit Belegen an die
+Buchhaltung und exportiert CSV.
 
-**Stand:** Platzhalter – wird in Phase 10 gebaut.
+Gebaut in Phase **10** nach dem Inventar der Vorlage V233, Entscheid 0021.
+
+## Ansichten (`#/expenses?ansicht=…`)
+
+- **Meine** (`meine`): eigene Spesen, «Spese erfassen», Storno mit Grund (statt Löschen).
+- **Alle** (`alle`, nur Recht `finanzen`): alle Personen, Filter nach Person, Kategorie und Stand, offene Summe je
+  Person, Auswahl auszahlen, an die Buchhaltung mailen (Ausgangskorb), CSV.
+- **Kategorien** (`kategorien`, nur Recht `finanzen`): Liste DE/FR in der Einstellung `finanzen.spesen_kategorien`.
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- Besitzt: `spesen` (Sicht `spesen_liste`), Belege in `dokumente` (Ordner `spesen`, Bezug `spesen`).
+- Liest: `personen`, Einstellung `finanzen` (Kategorien, Mail der Buchhaltung).
+- Abläufe: `spesen_stornieren`, `spesen_auszahlen`. Der Trigger `intern.spesen_pruefen` macht ausbezahlte und
+  stornierte Spesen fest. Jede Person sieht nur ihre eigenen (RLS), `finanzen` sieht alle.
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `meldungen.ts`, `fehler.ts`, `fachfehler.ts`
+- `src/hooks/useFinanzEinstellungen.ts`, `src/lib/bild.ts` (Foto verkleinern), `src/lib/datei.ts`
+- `src/components/shared/`: `AkteAbschnitt`, `Filterchips`, `MailDialog`, `Seitenkopf`, `Zustaende`
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Seite, Tabelle, Erfassen, Storno, Auszahlen, An Buchhaltung, Kategorien, Karte für die Startseite
+- `hooks/` – `useSpesen`, `useAktion`, `useKategorieText`
+- `services/` – `spesen` (Laden, Erfassen, Beleg hochladen, Storno, Auszahlen, Mail vermerken)
+- `lib/` – Filter, Summen, CSV, Mail-Zeilen (mit Tests)
+- `types.ts`, `schema.ts`, `index.ts`

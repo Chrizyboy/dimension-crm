@@ -17,6 +17,8 @@ import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
+import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
+import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { pruefeVerbindung, supabase } from '@/services/supabase'
@@ -107,6 +109,16 @@ export function Startseite() {
           {darfModul(baustelleMeta, ich) && (
             <Suspense>
               <BaustelleHeute />
+            </Suspense>
+          )}
+          {darfModul(finanzenMeta, ich) && (
+            <Suspense>
+              <FinanzenHeute />
+            </Suspense>
+          )}
+          {darfModul(spesenMeta, ich) && (
+            <Suspense>
+              <SpesenHeute />
             </Suspense>
           )}
         </div>

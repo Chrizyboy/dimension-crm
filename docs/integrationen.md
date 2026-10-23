@@ -79,6 +79,13 @@ Bibliothek `Administration`, Ordner `Direction Interne/CRM Backups/Kunden Backup
 
 Rechnungen sehen nur Personen mit dem Recht «Finanzen». Buchhaltung, Lohn und MWST bleiben in AbaNinja.
 
+**Ab Phase 10:** Eine gestellte Rechnung geht mit «An AbaNinja» als Entwurf hinüber (Kunde, Positionen, Referenz =
+Rechnungsnummer); die QR-Rechnung entsteht und wird in AbaNinja versendet. «Abgleich» (Seite Rechnungen) holt den
+offenen Betrag jeder übergebenen Rechnung (Zahlung wird im CRM verbucht) und die Lieferantenrechnungen (Belege) in
+die Finanzen; steht eine Projektnummer in der Referenz, wird der Beleg dem Projekt zugeordnet. Ändern, löschen und
+bezahlen geschieht in AbaNinja selbst (die API bietet dafür nichts Verlässliches). Beim ersten echten Abgleich
+prüfen, ob Beträge und Zuordnung stimmen.
+
 ---
 
 ## 3. SMS über ASPSMS (Erinnerung am Vortag)

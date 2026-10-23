@@ -33,6 +33,7 @@ export function starteErsatz({ port, tenant, email }) {
       ],
       neu: [],
       geaendert: [],
+      rechnungen: [],
     },
     hochgeladen: [],
     mails: [],
@@ -241,29 +242,76 @@ export function starteErsatz({ port, tenant, email }) {
         z.aba.neu.push(neu)
         return json(res, 201, { data: neu })
       }
+      // Rechnungen (API v2: data.documents); neue Entwürfe erscheinen in der Liste, damit der Abgleich sie findet.
+      if (a === '/documents/v2/invoices' && req.method === 'POST') {
+        const d = JSON.parse(text).documents?.[0]
+        if (!d?.receiver?.customerNumber || !Array.isArray(d.positions) || !d.reference)
+          return json(res, 422, { message: 'invalid' })
+        const summe = d.positions.reduce((s, x) => s + x.singlePrice * x.quantity, 0)
+        const total = d.pricesIncludeVat ? summe : summe * (1 + d.positions[0].vat.percentage / 100)
+        const neu = {
+          uuid: 'inv-' + randomUUID(),
+          systemInvoiceNumber: 'RE-2026-' + (100 + z.aba.rechnungen.length),
+          reference: d.reference,
+          title: d.title,
+          invoiceDate: d.invoiceDate,
+          dueDate: d.dueDate,
+          documentTotal: Math.round(total * 100) / 100,
+          openAmount: Math.round(total * 100) / 100,
+          status: 'draft',
+          receiver: { customerNumber: d.receiver.customerNumber },
+          positions: d.positions,
+        }
+        z.aba.rechnungen.push(neu)
+        return json(res, 201, { data: { documents: [neu] } })
+      }
       if (a === '/documents/v2/invoices') {
         return json(res, 200, {
-          data: [
-            {
-              uuid: 'inv-1',
-              documentNumber: 'RE-2026-001',
-              documentDate: '2026-10-01',
-              dueDate: '2026-10-31',
-              documentTotal: 12500,
-              openAmount: 2500,
-              status: 'open',
-              receiver: { personUuid: 'aba-1' },
-            },
-            {
-              uuid: 'inv-2',
-              documentNumber: 'RE-2026-002',
-              documentDate: '2026-09-01',
-              documentTotal: 99,
-              openAmount: 0,
-              status: 'paid',
-              receiver: { personUuid: 'anderer' },
-            },
-          ],
+          data: {
+            documents: [
+              {
+                uuid: 'inv-1',
+                systemInvoiceNumber: 'RE-2026-001',
+                invoiceDate: '2026-10-01',
+                dueDate: '2026-10-31',
+                documentTotal: 12500,
+                openAmount: 2500,
+                status: 'open',
+                receiver: { personUuid: 'aba-1' },
+              },
+              {
+                uuid: 'inv-2',
+                systemInvoiceNumber: 'RE-2026-002',
+                invoiceDate: '2026-09-01',
+                documentTotal: 99,
+                openAmount: 0,
+                status: 'paid',
+                receiver: { personUuid: 'anderer' },
+              },
+              ...z.aba.rechnungen,
+            ],
+          },
+        })
+      }
+      if (a === '/documents/v2/receipts') {
+        return json(res, 200, {
+          data: {
+            documents: [
+              {
+                uuid: 'beleg-ersatz-1',
+                receiptNumber: 'K-2026-77',
+                reference: z.aba.belegReferenz ?? 'Lager',
+                title: 'Module und Wechselrichter',
+                invoiceDate: '2026-10-05',
+                dueDate: '2026-11-04',
+                documentTotal: 10810,
+                openAmount: 10810,
+                isCancelled: false,
+                isArchived: false,
+                receiver: { receiverInformation: { companyName: 'Ersatz Grosshandel AG' } },
+              },
+            ],
+          },
         })
       }
     }

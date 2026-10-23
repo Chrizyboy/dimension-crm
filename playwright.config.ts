@@ -5,7 +5,7 @@ const executablePath = process.env.PW_CHROMIUM
 
 /** Tests, die die lokale Supabase brauchen; sie laufen nur gegen die Fassung mit Datenbank. */
 const MIT_DATENBANK =
-  /(anmeldung|kunden|verkauf|offerten|integrationen|ausschreibungen|projekte|einkauf|baustelle)\.spec/
+  /(anmeldung|kunden|verkauf|offerten|integrationen|ausschreibungen|projekte|einkauf|baustelle|finanzen)\.spec/
 
 /**
  * Zwei Fassungen der App:
@@ -86,6 +86,12 @@ export default defineConfig({
       testMatch: /baustelle\.spec/,
       dependencies: ['einkauf'],
       use: { ...devices['Pixel 7'], baseURL: 'http://localhost:4174' },
+    },
+    {
+      name: 'finanzen',
+      testMatch: /finanzen\.spec/,
+      dependencies: ['baustelle'],
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 }, baseURL: 'http://localhost:4174' },
     },
   ],
   webServer: [

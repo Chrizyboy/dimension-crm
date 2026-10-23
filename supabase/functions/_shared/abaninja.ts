@@ -1,6 +1,7 @@
-// AbaNinja (V139–V145): Kunden suchen, verknüpfen, anlegen, aktualisieren und offene Rechnungen lesen.
+// AbaNinja (V139–V145): Kunden suchen, verknüpfen, anlegen, aktualisieren, Rechnungen lesen und (Phase 10)
+// Rechnungen als Entwurf übergeben sowie Zahlungen und Lieferantenrechnungen für den Abgleich lesen.
 // API v2 mit Token (Bearer) und Konto-UUID, beide nur in den Secrets. Buchhaltung bleibt in AbaNinja
-// (ERP-Entscheid 21.10.2026); das CRM liest und schreibt nur Adressen und liest Rechnungen.
+// (ERP-Entscheid 21.10.2026); das CRM schreibt Adressen und Rechnungsentwürfe, versendet aber nichts.
 
 import { DienstFehler, leseJson, rufe } from './http.ts'
 import { brauche, env } from './umgebung.ts'
@@ -184,33 +185,157 @@ export interface AbaRechnung {
 
 const rappen = (v: unknown) => Math.round(Number(v ?? 0) * 100) || 0
 
-/** Antwort von AbaNinja (Rechnung) → AbaRechnung. Feldnamen tolerant, weil die Doku sie nicht festlegt. */
-export function rechnungLesen(r: Roh): AbaRechnung {
+/** Antwort von AbaNinja (Rechnung) → AbaRechnung. Feldnamen tolerant (API v2 und ältere Antworten). */
+export function rechnungLesen(r: Roh): AbaRechnung & { referenz: string; empfaenger: string[] } {
+  const e = (r.receiver ?? {}) as Roh
   return {
     uuid: text(r.uuid),
-    nummer: text(r.documentNumber ?? r.document_number ?? r.number ?? r.invoiceNumber),
-    datum: text(r.documentDate ?? r.document_date ?? r.date).slice(0, 10),
+    nummer: text(
+      r.systemInvoiceNumber ??
+        r.importedInvoiceNumber ??
+        r.documentNumber ??
+        r.document_number ??
+        r.number ??
+        r.invoiceNumber,
+    ),
+    datum: text(r.invoiceDate ?? r.documentDate ?? r.document_date ?? r.date).slice(0, 10),
     faellig: text(r.dueDate ?? r.due_date).slice(0, 10),
     total_rappen: rappen(r.documentTotal ?? r.total),
     offen_rappen: rappen(r.openAmount ?? r.open_amount),
     status: text(r.status),
+    referenz: text(r.reference),
+    empfaenger: [e.personUuid, e.companyUuid, e.person_uuid, e.company_uuid, e.uuid].map(text).filter(Boolean),
   }
+}
+
+/** Liste aus einer Antwort von AbaNinja: v2 liefert data.documents, ältere Antworten data als Liste. */
+export function dokumente(d: unknown): Roh[] {
+  const daten = (d as { data?: unknown } | null)?.data
+  if (Array.isArray(daten)) return daten as Roh[]
+  const docs = (daten as { documents?: unknown } | undefined)?.documents
+  return Array.isArray(docs) ? (docs as Roh[]) : []
+}
+
+/** Alle Rechnungen seitenweise (höchstens maxSeiten × 400), optional nur seit einem Zeitpunkt geänderte. */
+async function alleRechnungen(maxSeiten: number, seit?: string): Promise<ReturnType<typeof rechnungLesen>[]> {
+  const alle: ReturnType<typeof rechnungLesen>[] = []
+  for (let seite = 1; seite <= maxSeiten; seite++) {
+    const filter = seit ? `&updatedSince=${encodeURIComponent(seit)}` : ''
+    const liste = dokumente(await aba(`/documents/v2/invoices?page=${seite}&limit=400${filter}`))
+    alle.push(...liste.map(rechnungLesen))
+    if (liste.length < 400) break
+  }
+  return alle
 }
 
 /** Rechnungen eines Kunden (neueste zuerst). AbaNinja filtert nicht nach Kunde, darum seitenweise. */
 export async function rechnungen(kundeUuid: string, maxSeiten = 5): Promise<AbaRechnung[]> {
-  const treffer: AbaRechnung[] = []
-  for (let seite = 1; seite <= maxSeiten; seite++) {
-    const d = await aba<{ data?: Roh[] }>(`/documents/v2/invoices?page=${seite}&limit=100`)
-    const liste = d?.data ?? []
-    for (const r of liste) {
-      const e = (r.receiver ?? {}) as Roh
-      if ([e.personUuid, e.companyUuid, e.person_uuid, e.company_uuid, e.uuid].includes(kundeUuid))
-        treffer.push(rechnungLesen(r))
-    }
-    if (liste.length < 100) break
+  const treffer = (await alleRechnungen(maxSeiten)).filter((r) => r.empfaenger.includes(kundeUuid))
+  return treffer.map(({ referenz: _r, empfaenger: _e, ...rest }) => rest).sort((a, b) => b.datum.localeCompare(a.datum))
+}
+
+/** Rechnung aus dem CRM (Ausschnitt), die als Entwurf an AbaNinja geht. */
+export interface CrmRechnung {
+  nummer: string
+  titel: string
+  datum: string
+  faellig_am: string
+  inkl_mwst: boolean
+  mwst_satz: number
+  positionen: { text: string; menge?: number; einheit?: string; preis_rappen: number }[]
+}
+
+/**
+ * CRM-Rechnung → Entwurf für AbaNinja (API v2). Positionen als freie Produktzeilen mit dem MWST-Satz
+ * der Rechnung, Referenz = Rechnungsnummer des CRM (darüber findet der Abgleich die Rechnung wieder).
+ * Ohne Zahlungsangaben nimmt AbaNinja das Standard-Bankkonto (QR-Rechnung entsteht dort).
+ */
+export function rechnungFuerAbaninja(r: CrmRechnung, kundennummer: string): Roh {
+  return {
+    documents: [
+      {
+        receiver: { customerNumber: kundennummer },
+        currencyCode: 'CHF',
+        title: r.titel,
+        reference: r.nummer,
+        invoiceDate: r.datum,
+        dueDate: r.faellig_am,
+        pricesIncludeVat: r.inkl_mwst,
+        positions: r.positionen.map((p) => ({
+          kind: 'product',
+          productDescription: p.text,
+          quantity: Number(p.menge ?? 1),
+          singlePrice: Math.round(p.preis_rappen) / 100,
+          vat: { percentage: Number(r.mwst_satz) },
+        })),
+      },
+    ],
   }
-  return treffer.sort((a, b) => b.datum.localeCompare(a.datum))
+}
+
+/** Entwurf in AbaNinja anlegen. Gibt die UUID zurück, oder null, wenn AbaNinja ihn erst in die Warteschlange legt. */
+export async function rechnungAnlegen(inhalt: Roh): Promise<string | null> {
+  const d = await aba<{ data?: Roh & { queueUuid?: string } }>('/documents/v2/invoices', 'POST', inhalt)
+  const erste = dokumente(d)[0]
+  return text(erste?.uuid ?? d?.data?.uuid) || null
+}
+
+/** Lieferantenrechnung (Beleg) aus AbaNinja, wie der Abgleich sie braucht (Beträge in Rappen). */
+export interface AbaBeleg {
+  uuid: string
+  nummer: string
+  reference: string
+  titel: string
+  lieferant: string
+  datum: string
+  faellig_am: string
+  total_rappen: number
+  offen_rappen: number
+  storniert: boolean
+}
+
+/** Antwort von AbaNinja (Beleg) → AbaBeleg. */
+export function belegLesen(r: Roh): AbaBeleg {
+  const e = (r.receiver ?? {}) as Roh
+  const info = (e.receiverInformation ?? {}) as Roh
+  return {
+    uuid: text(r.uuid),
+    nummer: text(r.receiptNumber),
+    reference: text(r.reference),
+    titel: text(r.title),
+    lieferant: text(info.companyName ?? info.name ?? e.name),
+    datum: text(r.invoiceDate).slice(0, 10),
+    faellig_am: text(r.dueDate).slice(0, 10),
+    total_rappen: rappen(r.documentTotal),
+    offen_rappen: rappen(r.openAmount),
+    storniert: r.isCancelled === true,
+  }
+}
+
+/** Abgleich: Rechnungen (für Zahlungen) und Lieferantenrechnungen, optional nur seit einem Zeitpunkt geänderte. */
+export async function abgleichDaten(seit?: string, maxSeiten = 10) {
+  const re = await alleRechnungen(maxSeiten, seit)
+  const belege: AbaBeleg[] = []
+  for (let seite = 1; seite <= maxSeiten; seite++) {
+    const filter = seit ? `&updatedSince=${encodeURIComponent(seit)}` : ''
+    const liste = dokumente(await aba(`/documents/v2/receipts?page=${seite}&limit=400${filter}`))
+    belege.push(...liste.filter((b) => b.isArchived !== true).map(belegLesen))
+    if (liste.length < 400) break
+  }
+  return {
+    rechnungen: re
+      .filter((r) => r.referenz)
+      .map((r) => ({
+        uuid: r.uuid,
+        reference: r.referenz,
+        nummer: r.nummer,
+        status: r.status,
+        total_rappen: r.total_rappen,
+        offen_rappen: r.offen_rappen,
+        datum: r.datum,
+      })),
+    belege,
+  }
 }
 
 /** Verbindungstest: eine Person lesen. */

@@ -1,5 +1,6 @@
 // Edge Function «abaninja»: Kunde in AbaNinja suchen, verknüpfen, anlegen, aktualisieren, trennen und
-// Rechnungen lesen (V139–V145). Rechnungen sehen nur Personen mit Recht «finanzen».
+// Rechnungen lesen (V139–V145). Phase 10: gestellte Rechnung als Entwurf übergeben und Abgleich lesen.
+// Rechnungen nur mit Recht «finanzen». Versendet wird in AbaNinja nichts; das macht die Buchhaltung dort.
 
 import * as aba from '../_shared/abaninja.ts'
 import { dienst, gemessen } from '../_shared/datenbank.ts'
@@ -89,6 +90,44 @@ starte({
       const k = await kontakt(textFeld(e, 'kontakt_id'))
       if (!k.abaninja_id) return { kunde: null }
       return { kunde: await gemessen('abaninja', 'lesen', ich.id, () => aba.kundeHolen(k.abaninja_id!)) }
+    },
+  },
+  rechnung_uebergeben: {
+    recht: 'finanzen',
+    f: async (e, ich) => {
+      const id = textFeld(e, 'rechnung_id')
+      const [r] = await dienst.lies<
+        (aba.CrmRechnung & { kontakt_id: string; status: string; abaninja_uuid: string | null })[]
+      >(
+        `rechnungen?id=eq.${encodeURIComponent(id)}&geloescht_am=is.null&select=nummer,titel,datum,faellig_am,inkl_mwst,mwst_satz,positionen,kontakt_id,status,abaninja_uuid`,
+      )
+      if (!r) throw new DienstFehler('nicht_gefunden', 404, 'Rechnung')
+      if (r.status === 'entwurf' || r.status === 'storniert' || !r.nummer)
+        throw new DienstFehler('nicht_gestellt', 409, 'Erst stellen')
+      if (r.abaninja_uuid) throw new DienstFehler('schon_uebergeben', 409, 'Schon in AbaNinja')
+      const k = await kontakt(r.kontakt_id)
+      if (!k.abaninja_id) throw new DienstFehler('nicht_verknuepft', 409, 'Kunde nicht in AbaNinja')
+      const uuid = await gemessen('abaninja', 'rechnung', ich.id, async () => {
+        const kunde = await aba.kundeHolen(k.abaninja_id!)
+        if (!kunde.kundennummer) throw new DienstFehler('abaninja_daten', 422, 'Kunde ohne Kundennummer')
+        return aba.rechnungAnlegen(aba.rechnungFuerAbaninja(r, kunde.kundennummer))
+      })
+      // Ohne UUID (Warteschlange) findet der nächste Abgleich die Rechnung über die Referenz.
+      await dienst.aendere(`rechnungen?id=eq.${encodeURIComponent(id)}`, {
+        abaninja_uuid: uuid,
+        abaninja_status: uuid ? 'draft' : 'warteschlange',
+        abaninja_abgeglichen_am: new Date().toISOString(),
+      })
+      return { uuid }
+    },
+  },
+  // Liest Rechnungen und Lieferantenrechnungen; die App wendet sie mit dem eigenen Login an
+  // (abaninja_abgleich_anwenden), damit die Rechte der Person gelten.
+  abgleich: {
+    recht: 'finanzen',
+    f: async (e, ich) => {
+      const seit = typeof e.seit === 'string' && e.seit ? e.seit : undefined
+      return await gemessen('abaninja', 'abgleich', ich.id, () => aba.abgleichDaten(seit))
     },
   },
   rechnungen: {

@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
+import { verkleinern } from '@/lib/bild'
 import { melde } from '@/services/meldungen'
 import { useBilder } from '../hooks/useBaustelle'
-import { verkleinern } from '../lib/bild'
 import { bildAblegen } from '../services/monteur'
 
 /** Fotos der Baustelle: direkt mit der Kamera, verkleinert, auch ohne Netz (gehen später hoch). */

@@ -1,6 +1,15 @@
 // @vitest-environment node
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { kundeFuerAbaninja, kundeLesen, passt, rechnungLesen, strasseTeilen } from './abaninja.ts'
+import {
+  belegLesen,
+  dokumente,
+  kundeFuerAbaninja,
+  kundeLesen,
+  passt,
+  rechnungFuerAbaninja,
+  rechnungLesen,
+  strasseTeilen,
+} from './abaninja.ts'
 import { absenderPruefen } from './aspsms.ts'
 import { DienstFehler, rufe, wartezeit } from './http.ts'
 import { entschluessle, pkceChallenge, verschluessle } from './krypto.ts'
@@ -253,6 +262,69 @@ describe('AbaNinja', () => {
       total_rappen: 1250050,
       offen_rappen: 0,
       faellig: '2026-11-30',
+    })
+  })
+
+  it('liest Listen aus API v2 (data.documents) und ältere (data als Liste)', () => {
+    expect(dokumente({ data: { documents: [{ uuid: 'a' }] } })).toEqual([{ uuid: 'a' }])
+    expect(dokumente({ data: [{ uuid: 'b' }] })).toEqual([{ uuid: 'b' }])
+    expect(dokumente(null)).toEqual([])
+    expect(
+      rechnungLesen({ systemInvoiceNumber: 'RE-9', reference: 'R2026-17', invoiceDate: '2026-10-01' }),
+    ).toMatchObject({ nummer: 'RE-9', referenz: 'R2026-17', datum: '2026-10-01' })
+  })
+
+  it('Rechnung als Entwurf für AbaNinja: freie Positionen mit MWST, Referenz = CRM-Nummer', () => {
+    const d = rechnungFuerAbaninja(
+      {
+        nummer: 'R2026-17',
+        titel: 'Schlussrechnung 200005',
+        datum: '2026-10-22',
+        faellig_am: '2026-11-21',
+        inkl_mwst: true,
+        mwst_satz: 8.1,
+        positionen: [
+          { text: 'Solde 10 %', preis_rappen: 300000 },
+          { text: 'Abzüglich Rechnung R2026-3', menge: 1, preis_rappen: -90000 },
+        ],
+      },
+      '9001',
+    ) as { documents: Record<string, unknown>[] }
+    expect(d.documents[0]).toMatchObject({
+      receiver: { customerNumber: '9001' },
+      reference: 'R2026-17',
+      pricesIncludeVat: true,
+      currencyCode: 'CHF',
+    })
+    expect(d.documents[0]!.positions).toEqual([
+      { kind: 'product', productDescription: 'Solde 10 %', quantity: 1, singlePrice: 3000, vat: { percentage: 8.1 } },
+      {
+        kind: 'product',
+        productDescription: 'Abzüglich Rechnung R2026-3',
+        quantity: 1,
+        singlePrice: -900,
+        vat: { percentage: 8.1 },
+      },
+    ])
+  })
+
+  it('liest Lieferantenrechnungen (Belege)', () => {
+    expect(
+      belegLesen({
+        uuid: 'b1',
+        receiptNumber: 'K-77',
+        reference: 'Projekt 200005',
+        documentTotal: 1081.5,
+        openAmount: '0',
+        isCancelled: false,
+        receiver: { receiverInformation: { companyName: 'Grosshandel AG' } },
+      }),
+    ).toMatchObject({
+      nummer: 'K-77',
+      lieferant: 'Grosshandel AG',
+      total_rappen: 108150,
+      offen_rappen: 0,
+      storniert: false,
     })
   })
 })
