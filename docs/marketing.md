@@ -85,7 +85,7 @@ npx supabase secrets set LINKEDIN_ORGANISATION=urn:li:organization:<Nummer>
 
 Im Post: **In Canva gestalten** legt ein leeres Design im gewählten Format an (Quadrat, Hochformat, Story,
 Querformat) und öffnet es in Canva. Dort mit dem Markenkit gestalten, dann im CRM **Bild aus Canva übernehmen**:
-das Bild kommt als PNG in die Ablage (Ordner «marketing»). Ohne Canva-Verbindung: in Canva herunterladen und als
+das Bild kommt als JPG in die Ablage (Ordner «marketing»). Ohne Canva-Verbindung: in Canva herunterladen und als
 **Eigenes Foto** hochladen; das geht immer.
 
 ## 4. Abmelde-Link und Werbesperre

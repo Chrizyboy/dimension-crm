@@ -26,7 +26,7 @@ posten (kein Metricool). Phase 11 wurde von Chris am 23.10.2026 mit «weiter» g
   Zeitplan veröffentlicht zur Zeit → Ergebnis je Netzwerk mit Link. Bei Fehlern wird beim nächsten Mal nur das
   fehlgeschlagene Netzwerk gepostet. Nach einer Zeitüberschreitung heisst es «unklar» statt «Fehler», damit niemand
   doppelt postet.
-- **Canva** über die Connect-API: leeres Design im Format anlegen, in Canva mit dem Markenkit gestalten, PNG zurück
+- **Canva** über die Connect-API: leeres Design im Format anlegen, in Canva mit dem Markenkit gestalten, JPG zurück
   in die Ablage. Eigene Fotos gehen immer.
 - **Vorlagen als Daten** in `einstellungen.marketing` (Absender und Ort je Firma, Brief- und Mailtexte DE/FR,
   Abmelde-Satz, Themen, Regeln je Netzwerk, CI-Stil). Den CI-Stil ändert nur die Administration.
