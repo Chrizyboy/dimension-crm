@@ -49,7 +49,14 @@ it('sagt, wenn die Anzahl stimmt, und schreibt Französisch', () => {
 })
 
 it('Fakten für den KI-Text: Differenz, Reklamation und zur Info getrennt', () => {
-  const l = (id: string) => ({ id, eingang_am: '2026-09-03', name: `Test ${id}`, plz: '1630', ort: 'Bulle', grund: null })
+  const l = (id: string) => ({
+    id,
+    eingang_am: '2026-09-03',
+    name: `Test ${id}`,
+    plz: '1630',
+    ort: 'Bulle',
+    grund: null,
+  })
   const f = berichtFakten({
     monat: '2026-09',
     erhalten: 10,

@@ -81,14 +81,20 @@ describe('Modell je Funktion', () => {
 
 describe('Briefing-Verweise', () => {
   it('findet alle ref in verschachtelten Daten', () => {
-    const r = refsIn({ termine: [{ ref: 'lead:1' }], aufgaben: { liste: [{ ref: 'aufgabe:2', x: { ref: 'projekt:3' } }] } })
+    const r = refsIn({
+      termine: [{ ref: 'lead:1' }],
+      aufgaben: { liste: [{ ref: 'aufgabe:2', x: { ref: 'projekt:3' } }] },
+    })
     expect([...r].sort()).toEqual(['aufgabe:2', 'lead:1', 'projekt:3'])
   })
 })
 
 describe('Schema', () => {
   it('alle Felder Pflicht, keine zusätzlichen', () => {
-    const s = objekt({ a: text, b: oderNull(wahl(['x', 'y'])) }) as { required: string[]; additionalProperties: boolean }
+    const s = objekt({ a: text, b: oderNull(wahl(['x', 'y'])) }) as {
+      required: string[]
+      additionalProperties: boolean
+    }
     expect(s.required).toEqual(['a', 'b'])
     expect(s.additionalProperties).toBe(false)
   })

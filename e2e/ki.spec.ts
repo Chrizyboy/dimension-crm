@@ -93,11 +93,11 @@ async function kiErsetzen(page: Page): Promise<{ aktion: string; eingabe: Record
     const r =
       aktion === 'entwurf' && eingabe.bisher
         ? {
-            ...(antwort),
+            ...antwort,
             text: 'Guten Tag Frau Muster\n\nKurz nachgefragt: Passt die Offerte?\n\nFreundliche Grüsse\nAnna Admin',
           }
         : antwort
-    return route.fulfill({ status: 200, headers: cors, json: { ok: true, ...(r) } })
+    return route.fulfill({ status: 200, headers: cors, json: { ok: true, ...r } })
   })
   return auftraege
 }
