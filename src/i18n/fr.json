@@ -4574,7 +4574,9 @@
     "vorschlagVom": "Proposition de l’IA du {{datum}}, à vérifier",
     "aufgabeAnlegen": "Créer la tâche",
     "aufgabeDa": "Tâche créée",
-    "aufgabeVorschlag": "Proposition : « {{titel}} » dans {{tage}} jours",
+    "aufgabeVorschlag_zero": "Proposition : « {{titel}} » aujourd’hui",
+    "aufgabeVorschlag_one": "Proposition : « {{titel}} » demain",
+    "aufgabeVorschlag_other": "Proposition : « {{titel}} » dans {{count}} jours",
     "status": {
       "nichtEingerichtet": "L’IA n’est pas encore configurée (clé manquante). Voir docs/ki.md.",
       "aus": "L’IA est désactivée (Assistant IA › Paramètres).",

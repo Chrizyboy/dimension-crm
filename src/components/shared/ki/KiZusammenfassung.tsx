@@ -5,7 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { formatDatumZeit } from '@/lib/format'
 import { meldeIntegrationsFehler } from '@/services/integrationen'
-import { rufeKi, useKiErgebnis, useKiNachher, type KiBezug } from '@/services/ki'
+import {
+  kiErgebnisSetzen,
+  rufeKi,
+  useKiErgebnis,
+  useKiNachher,
+  type KiBezug,
+  type KiZusammenfassungInhalt,
+} from '@/services/ki'
 import { supabase } from '@/services/supabase'
 import { useUi } from '@/stores/ui'
 
@@ -25,8 +32,12 @@ export function KiZusammenfassung({ bezug }: { bezug: KiBezug }) {
   async function erstellen() {
     setLaeuft(true)
     try {
-      await rufeKi('zusammenfassung', { tabelle: bezug.tabelle, id: bezug.id, sprache })
-      await qc.invalidateQueries({ queryKey: ['ki', 'ergebnis', 'zusammenfassung', bezug.id] })
+      const r = await rufeKi<{ zusammenfassung: KiZusammenfassungInhalt }>('zusammenfassung', {
+        tabelle: bezug.tabelle,
+        id: bezug.id,
+        sprache,
+      })
+      kiErgebnisSetzen(qc, 'zusammenfassung', bezug.id, r.zusammenfassung)
     } catch (f) {
       meldeIntegrationsFehler(f)
     } finally {

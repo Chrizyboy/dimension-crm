@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query'
 import { verkleinern } from '@/lib/bild'
 import { rufeFunktion } from './integrationen'
 import { supabase } from './supabase'
@@ -173,6 +173,19 @@ export function useKiErgebnis<A extends keyof KiErgebnisse>(art: A, bezug: KiBez
       return data as { inhalt: KiErgebnisse[A]; erstellt_am: string; modell: string } | null
     },
   })
+}
+
+/**
+ * Legt ein frisches Ergebnis direkt in den Zwischenspeicher, statt es nochmals aus der Datenbank zu laden
+ * (der Server hat es eben gespeichert; das spart einen Aufruf und zeigt es sofort).
+ */
+export function kiErgebnisSetzen<A extends keyof KiErgebnisse>(
+  qc: QueryClient,
+  art: A,
+  id: string,
+  inhalt: KiErgebnisse[A],
+): void {
+  qc.setQueryData(['ki', 'ergebnis', art, id], { inhalt, erstellt_am: new Date().toISOString(), modell: '' })
 }
 
 /** Was die KI aus einer eingegangenen Mail liest (alles Vorschläge). */

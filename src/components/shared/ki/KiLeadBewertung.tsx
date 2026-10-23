@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { formatDatumZeit } from '@/lib/format'
 import { meldeIntegrationsFehler } from '@/services/integrationen'
-import { rufeKi, useKiErgebnis, useKiNachher } from '@/services/ki'
+import { kiErgebnisSetzen, rufeKi, useKiErgebnis, useKiNachher, type KiLeadBewertungInhalt } from '@/services/ki'
 import { supabase } from '@/services/supabase'
 import { useUi } from '@/stores/ui'
 
@@ -29,8 +29,11 @@ export function KiLeadBewertung({ leadId }: { leadId: string }) {
   async function bewerten() {
     setLaeuft(true)
     try {
-      await rufeKi('lead_bewertung', { verkaufschance_id: leadId, sprache })
-      await qc.invalidateQueries({ queryKey: ['ki', 'ergebnis', 'lead_bewertung', leadId] })
+      const r = await rufeKi<{ bewertung: KiLeadBewertungInhalt }>('lead_bewertung', {
+        verkaufschance_id: leadId,
+        sprache,
+      })
+      kiErgebnisSetzen(qc, 'lead_bewertung', leadId, r.bewertung)
     } catch (f) {
       meldeIntegrationsFehler(f)
     } finally {

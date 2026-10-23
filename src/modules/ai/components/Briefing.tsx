@@ -92,7 +92,7 @@ export default function Briefing() {
           </Button>
         )}
       </KarteKopf>
-      <div className="flex flex-col gap-3 px-4 pb-4">
+      <div className="flex flex-col gap-3 px-4 pt-3 pb-4">
         {b.isPending ? (
           <>
             <Skelett className="h-5 w-1/2" />

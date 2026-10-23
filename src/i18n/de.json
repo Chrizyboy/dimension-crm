@@ -4574,7 +4574,9 @@
     "vorschlagVom": "KI-Vorschlag vom {{datum}}, bitte prüfen",
     "aufgabeAnlegen": "Aufgabe anlegen",
     "aufgabeDa": "Aufgabe angelegt",
-    "aufgabeVorschlag": "Vorschlag: «{{titel}}» in {{tage}} Tagen",
+    "aufgabeVorschlag_zero": "Vorschlag: «{{titel}}» heute",
+    "aufgabeVorschlag_one": "Vorschlag: «{{titel}}» morgen",
+    "aufgabeVorschlag_other": "Vorschlag: «{{titel}}» in {{count}} Tagen",
     "status": {
       "nichtEingerichtet": "Die KI ist noch nicht eingerichtet (Schlüssel fehlt). Siehe docs/ki.md.",
       "aus": "Die KI ist ausgeschaltet (KI-Assistent › Einstellungen).",

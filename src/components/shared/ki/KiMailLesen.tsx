@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Textarea } from '@/components/ui/input'
+import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatTelefon } from '@/lib/format'
 import { meldeIntegrationsFehler } from '@/services/integrationen'
 import { kiAufgabeAnlegen, rufeKi, useKiNachher, type KiMailErgebnis } from '@/services/ki'
@@ -34,6 +35,7 @@ export function KiMailLesen({
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
+  const interesse = useAuswahl('interesse')
   const nachher = useKiNachher()
   const ich = useAnmeldung((z) => z.ich)
   const datei = useRef<HTMLInputElement>(null)
@@ -178,7 +180,7 @@ export function KiMailLesen({
                   ],
                   ...(e.typ === 'lead'
                     ? [
-                        [t('ki.mail.interesse'), e.lead.interesse.join(', ')],
+                        [t('ki.mail.interesse'), e.lead.interesse.map((x) => interesse.text(x)).join(', ')],
                         [t('ki.mail.kommentar'), e.lead.kommentar],
                       ]
                     : []),
@@ -251,7 +253,7 @@ export function KiMailLesen({
               {e.aufgabe && ich && (
                 <div className="flex flex-wrap items-center gap-2 rounded-lg border border-dashed px-3 py-2 text-sm">
                   <CalendarPlus className="text-muted-foreground size-4" aria-hidden="true" />
-                  <span>{t('ki.aufgabeVorschlag', { titel: e.aufgabe.titel, tage: e.aufgabe.in_tagen })}</span>
+                  <span>{t('ki.aufgabeVorschlag', { titel: e.aufgabe.titel, count: e.aufgabe.in_tagen })}</span>
                   <Button
                     size="sm"
                     variant="secondary"

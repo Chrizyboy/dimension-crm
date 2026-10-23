@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { meldeIntegrationsFehler } from '@/services/integrationen'
-import { rufeKi, useKiNachher } from '@/services/ki'
+import { kiErgebnisSetzen, rufeKi, useKiNachher, type KiLuftbildInhalt } from '@/services/ki'
 import { useLuftbildAnalyse } from '../hooks/useLuftbildAnalyse'
 import { useUi } from '@/stores/ui'
 
@@ -32,8 +32,12 @@ export function LuftbildAnalyse({ leadId, dokumentId }: { leadId: string; dokume
     if (!dokumentId) return
     setLaeuft(true)
     try {
-      await rufeKi('luftbild', { verkaufschance_id: leadId, dokument_id: dokumentId, sprache })
-      await qc.invalidateQueries({ queryKey: ['ki', 'ergebnis', 'luftbild', leadId] })
+      const r = await rufeKi<{ analyse: KiLuftbildInhalt }>('luftbild', {
+        verkaufschance_id: leadId,
+        dokument_id: dokumentId,
+        sprache,
+      })
+      kiErgebnisSetzen(qc, 'luftbild', leadId, r.analyse)
     } catch (f) {
       meldeIntegrationsFehler(f)
     } finally {
