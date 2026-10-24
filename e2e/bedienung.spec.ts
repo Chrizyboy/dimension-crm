@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test'
 test('Befehlspalette öffnet mit Ctrl K und springt zu einem Bereich', async ({ page, isMobile }) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-  if (isMobile) await page.getByRole('button', { name: 'Befehlspalette' }).click()
+  if (isMobile) await page.getByRole('button', { name: /Suchen oder Befehl/ }).click()
   else await page.keyboard.press('Control+k')
   const palette = page.getByRole('dialog', { name: 'Befehlspalette' })
   await expect(palette).toBeVisible()
