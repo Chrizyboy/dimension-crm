@@ -9163,12 +9163,32 @@ export type Database = {
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
       integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       kalender_abgleichen: {
         Args: { p_bis: string; p_eintraege: Json; p_person: string; p_von: string }
         Returns: number
       }
       kalender_ersetzen: { Args: { p_eintraege: Json; p_person: string; p_quelle: string }; Returns: number }
+      kennzahlen_betrieb: { Args: { p_bis: string; p_von: string }; Returns: Json }
+      kennzahlen_fakten: {
+        Args: { p_bis: string; p_von: string }
+        Returns: {
+          art: string
+          betrag_rappen: number
+          datum: string
+          id: string
+          name: string
+          nummer: string
+          ort: string
+          person_id: string
+          quelle: string
+          schluessel: string
+          stand: string
+          standort: string
+        }[]
+      }
+      kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
       ki_briefing_daten: { Args: Record<PropertyKey, never>; Returns: Json }
       ki_budget: { Args: { p_person: string }; Returns: Json }
       ki_entwuerfe_offen: { Args: { p_limit?: number }; Returns: Json }
