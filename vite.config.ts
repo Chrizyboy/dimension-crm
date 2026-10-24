@@ -3,12 +3,31 @@ import { fileURLToPath, URL } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // Tauri setzt TAURI_ENV_PLATFORM beim Bauen der Desktop-App. Dann brauchen wir keinen Service Worker,
 // die PWA-Teile sind nur für die Handy-/Browser-Variante.
 const isTauri = Boolean(process.env.TAURI_ENV_PLATFORM)
+
+/**
+ * Lädt die zwei Hauptschriften (Latin) gleich mit der Seite. Ohne das kommen sie erst nach dem CSS,
+ * der Text springt beim Austausch der Schrift und die Startseite verschiebt sich (Lighthouse «CLS»).
+ */
+function schriftenVorladen(): Plugin {
+  return {
+    name: 'schriften-vorladen',
+    apply: 'build',
+    transformIndexHtml(_html, ctx) {
+      const dateien = Object.keys(ctx.bundle ?? {}).filter((f) => /(public-sans|schibsted-grotesk)-latin-wght/.test(f))
+      return dateien.map((f) => ({
+        tag: 'link',
+        attrs: { rel: 'preload', as: 'font', type: 'font/woff2', crossorigin: '', href: `./${f}` },
+        injectTo: 'head' as const,
+      }))
+    },
+  }
+}
 
 export default defineConfig({
   base: './',
@@ -20,6 +39,7 @@ export default defineConfig({
     tanstackRouter({ target: 'react', autoCodeSplitting: true, routesDirectory: './src/app' }),
     react(),
     tailwindcss(),
+    schriftenVorladen(),
     VitePWA({
       disable: isTauri,
       registerType: 'autoUpdate',
