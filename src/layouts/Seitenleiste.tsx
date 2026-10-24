@@ -6,6 +6,7 @@ import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { GRUPPEN } from '@/lib/navigation'
+import { SPRUENGE } from '@/lib/spruenge'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
@@ -27,14 +28,23 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
   const toggle = useUi((z) => z.toggleSeitenleiste)
 
   // Eingeklappt zeigt der Hinweis Name + Erklärung, ausgeklappt nur zusätzlich die Erklärung.
-  const eintrag = (key: string, inhalt: React.ReactNode, titel: string, untertitel?: string) =>
-    eingeklappt || untertitel ? (
-      <Tooltip key={key} text={titel} {...(untertitel ? { untertitel } : {})} seite="right">
+  // Mit Sprung-Taste steht «G K» rechts im Hinweis (nicht im Handy-Menü, dort gibt es keine Tastatur).
+  const eintrag = (key: string, inhalt: React.ReactNode, titel: string, untertitel?: string) => {
+    const sprung = imMenue ? undefined : SPRUENGE.find((s) => s.modul === key)
+    return eingeklappt || untertitel ? (
+      <Tooltip
+        key={key}
+        text={titel}
+        {...(untertitel ? { untertitel } : {})}
+        {...(sprung ? { kuerzel: `G ${sprung.taste.toUpperCase()}` } : {})}
+        seite="right"
+      >
         {inhalt}
       </Tooltip>
     ) : (
       inhalt
     )
+  }
 
   return (
     <div className="bg-sidebar text-sidebar-foreground flex h-full flex-col">

@@ -100,11 +100,12 @@ export function Glocke() {
         >
           <Bell />
           {ungelesen > 0 && (
+            // Zahl als CSS-Inhalt: Der Name des Knopfs nennt die genaue Anzahl, «9+» ist nur fürs Auge.
             <span
               aria-hidden="true"
-              className="zahlen bg-accent text-accent-foreground absolute top-1 right-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full px-1 text-[9px] font-bold">
-              {ungelesen > 9 ? '9+' : ungelesen}
-            </span>
+              data-zahl={ungelesen > 9 ? '9+' : String(ungelesen)}
+              className="zahlen bg-accent text-accent-foreground absolute top-1 right-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full px-1 text-[9px] font-bold after:content-[attr(data-zahl)]"
+            />
           )}
         </Button>
       </PopoverPrimitive.Trigger>
