@@ -28,7 +28,13 @@ async function verstoesse(page: Page): Promise<string[]> {
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .withRules(['heading-order'])
     .analyze()
-  return ergebnis.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).slice(0, 3).join(' | ')}`)
+  return ergebnis.violations.map(
+    (v) =>
+      `${v.id}: ${v.nodes
+        .map((n) => n.target.join(' '))
+        .slice(0, 3)
+        .join(' | ')}`,
+  )
 }
 
 test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse', async ({ page }) => {
@@ -43,10 +49,10 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
   await page.getByRole('button', { name: 'Prozess hinzufügen' }).click()
   const dialog = page.getByRole('dialog', { name: 'Prozess hinzufügen' })
   await dialog
-    .getByLabel('Datei (PDF)', { exact: true })
+    .getByLabel(/^Datei \(PDF\)/)
     .setInputFiles({ name: `Prozess_Testablauf-${lauf}_01.10.2026.pdf`, mimeType: 'application/pdf', buffer: pdf() })
   // Titel kommt aus dem Dateinamen.
-  await expect(dialog.getByLabel('Titel', { exact: true })).toHaveValue(`Testablauf-${lauf}`)
+  await expect(dialog.getByLabel(/^Titel( \*)?$/)).toHaveValue(`Testablauf-${lauf}`)
   await dialog.getByLabel('Kurzbeschreibung', { exact: true }).fill('Nur für den Browser-Test')
   await dialog.getByRole('button', { name: 'Speichern' }).click()
   await expect(dialog).toBeHidden()
@@ -58,7 +64,7 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
   const version = page.getByRole('dialog', { name: `Neue Version: Testablauf-${lauf}` })
   await expect(version.getByLabel('Version', { exact: true })).toHaveValue('1.1')
   await version
-    .getByLabel('Datei (PDF)', { exact: true })
+    .getByLabel(/^Datei \(PDF\)/)
     .setInputFiles({ name: `Testablauf-${lauf}-v2.pdf`, mimeType: 'application/pdf', buffer: pdf() })
   await version.getByRole('button', { name: 'Speichern' }).click()
   await expect(version).toBeHidden()
@@ -76,7 +82,7 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
 
 test('Handbuch: Verkauf meldet einen Fehler, Administration antwortet', async ({ browser }) => {
   test.slow()
-  const verkauf = await browser.newPage()
+  const verkauf = await (await browser.newContext()).newPage()
   await anmelden(verkauf, 'verkauf@test.local')
   await verkauf.goto('/#/customers')
   await verkauf.keyboard.press('Control+k')
@@ -95,7 +101,7 @@ test('Handbuch: Verkauf meldet einen Fehler, Administration antwortet', async ({
   // Admin-Bedienung sieht die Verkaufsperson nicht.
   await expect(verkauf.getByRole('button', { name: 'Prozess hinzufügen' })).toHaveCount(0)
 
-  const admin = await browser.newPage()
+  const admin = await (await browser.newContext()).newPage()
   await anmelden(admin, 'admin@test.local')
   await admin.goto('/#/knowledge?ansicht=meldungen')
   const karte = admin.getByRole('listitem').filter({ hasText: `Testmeldung ${lauf}` })
