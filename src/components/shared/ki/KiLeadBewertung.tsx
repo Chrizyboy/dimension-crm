@@ -65,7 +65,7 @@ export function KiLeadBewertung({ leadId }: { leadId: string }) {
             ))}
           </ul>
           {b.naechster_schritt && <p className="text-primary dark:text-accent font-medium">→ {b.naechster_schritt}</p>}
-          <p className="text-muted-foreground text-[11px]">
+          <p className="text-muted-foreground text-xs">
             {t('ki.vorschlagVom', { datum: formatDatumZeit(gespeichert.data?.erstellt_am) })}
           </p>
         </div>

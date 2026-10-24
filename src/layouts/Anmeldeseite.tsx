@@ -60,7 +60,7 @@ export function Anmeldeseite() {
           <div
             role="group"
             aria-label={t('einstellungen.sprache')}
-            className="flex h-7 rounded-md border p-0.5 text-[11px] font-semibold"
+            className="flex h-7 rounded-md border p-0.5 text-xs font-semibold"
           >
             {(['de', 'fr'] as const).map((s) => (
               <button

@@ -106,7 +106,7 @@ export function LaufDetail({
                     {meldungText(t, e) && (
                       <span className="text-muted-foreground text-xs break-words">{meldungText(t, e)}</span>
                     )}
-                    <span className="text-muted-foreground text-[11px]">{formatDatumZeit(e.zeit)}</span>
+                    <span className="text-muted-foreground text-xs">{formatDatumZeit(e.zeit)}</span>
                     {e.ziel && <ZielLink ziel={e.ziel}>{t('automationen.protokoll.oeffnen')}</ZielLink>}
                   </div>
                 </li>

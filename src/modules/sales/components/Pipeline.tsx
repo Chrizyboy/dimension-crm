@@ -67,7 +67,7 @@ function Spalte({
           <span className="zahlen text-muted-foreground font-mono text-xs">{s.anzahl}</span>
         </div>
         {/* Leads haben noch keinen Betrag; «CHF 0.00» wäre nur Lärm. */}
-        <p className="zahlen text-muted-foreground font-mono text-[11px]">
+        <p className="zahlen text-muted-foreground font-mono text-xs">
           {s.rappen || s.kwp ? `${formatChf(s.rappen, { mitWaehrung: true })} · ${String(s.kwp)} kWp` : ' '}
         </p>
       </header>

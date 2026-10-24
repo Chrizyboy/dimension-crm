@@ -148,7 +148,7 @@ export default function PreisListe({
       <span className="zahlen flex flex-col text-right font-mono text-[13px]">
         <span>{c.row.original.vkRappen ? formatChf(c.row.original.vkRappen) : '–'}</span>
         {c.row.original.vkRappen ? (
-          <span className="text-muted-foreground text-[11px]">
+          <span className="text-muted-foreground text-xs">
             {t('preise.inkl', { betrag: formatChf(mitMwst(c.row.original.vkRappen, satz)) })}
           </span>
         ) : null}

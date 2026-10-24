@@ -59,7 +59,7 @@ export function KiWunschZeile({
           {hatText ? t('ki.marketing.ueberarbeiten') : t('ki.marketing.schreiben')}
         </Button>
       </div>
-      <p className="text-muted-foreground text-[11px]">{t('ki.marketing.hinweis')}</p>
+      <p className="text-muted-foreground text-xs">{t('ki.marketing.hinweis')}</p>
     </div>
   )
 }

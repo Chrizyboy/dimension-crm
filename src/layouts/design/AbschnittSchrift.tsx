@@ -25,7 +25,7 @@ export function AbschnittSchrift() {
       <div className="bg-surface flex flex-col divide-y rounded-lg border">
         {stufen.map((s) => (
           <div key={s.name} className="grid gap-1 px-4 py-3 sm:grid-cols-[14rem_1fr] sm:items-baseline sm:gap-4">
-            <span className="text-muted-foreground font-mono text-[11px]">{s.name}</span>
+            <span className="text-muted-foreground font-mono text-xs">{s.name}</span>
             <span className={`min-w-0 ${s.klasse}`}>{s.text}</span>
           </div>
         ))}

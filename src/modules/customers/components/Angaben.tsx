@@ -6,7 +6,7 @@ export function Angabe({ label, children, breit = false }: { label: string; chil
   const leer = children === null || children === undefined || children === ''
   return (
     <div className={cn('flex min-w-0 flex-col gap-0.5', breit && 'sm:col-span-2')}>
-      <dt className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">{label}</dt>
+      <dt className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{label}</dt>
       <dd className={cn('text-sm break-words', leer && 'text-muted-foreground')}>{leer ? '–' : children}</dd>
     </div>
   )
@@ -22,7 +22,7 @@ export function Notizblock({ label, text }: { label: string; text: string | null
   if (!text?.trim()) return null
   return (
     <div className="bg-surface-2 flex flex-col gap-1 rounded-md px-3 py-2">
-      <p className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">{label}</p>
+      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{label}</p>
       <p className="max-h-48 overflow-y-auto text-sm whitespace-pre-line">{text}</p>
     </div>
   )

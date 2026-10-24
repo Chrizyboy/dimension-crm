@@ -27,7 +27,7 @@ export function Kopfzelle({
   return (
     <th
       className={cn(
-        'text-muted-foreground h-9 border-b px-3 text-left text-[11px] font-medium tracking-wide whitespace-nowrap uppercase',
+        'text-muted-foreground h-9 border-b px-3 text-left text-xs font-medium tracking-wide whitespace-nowrap uppercase',
         zahl && 'text-right',
         className,
       )}

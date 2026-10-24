@@ -53,7 +53,7 @@ export function Zeitachse({ eintraege, sprache, nachMonat = true }: ZeitachsePro
         return (
           <li key={e.id} className="flex flex-col">
             {neuerMonat && (
-              <h4 className="text-muted-foreground bg-surface sticky top-0 z-[1] pt-3 pb-1.5 text-[11px] font-medium tracking-wide uppercase">
+              <h4 className="text-muted-foreground bg-surface sticky top-0 z-[1] pt-3 pb-1.5 text-xs font-medium tracking-wide uppercase">
                 {m}
               </h4>
             )}
@@ -73,7 +73,7 @@ export function Zeitachse({ eintraege, sprache, nachMonat = true }: ZeitachsePro
               <div className="flex min-w-0 flex-1 flex-col gap-0.5 pt-1">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                   <p className="text-sm font-medium">{e.titel}</p>
-                  <time dateTime={e.zeitpunkt} className="text-muted-foreground zahlen font-mono text-[11px]">
+                  <time dateTime={e.zeitpunkt} className="text-muted-foreground zahlen font-mono text-xs">
                     {uhrzeit(e.zeitpunkt, sprache)}
                   </time>
                 </div>

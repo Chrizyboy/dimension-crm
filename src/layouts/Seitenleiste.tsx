@@ -60,7 +60,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
             {eingeklappt ? (
               <div className="bg-sidebar-border mx-2 mb-1 h-px first:hidden" aria-hidden="true" />
             ) : (
-              <div className="text-sidebar-muted px-2 pb-1 text-[10px] font-semibold tracking-[0.08em] uppercase">
+              <div className="text-sidebar-muted px-2 pb-1 text-[11px] font-semibold tracking-[0.08em] uppercase">
                 {t(`nav.${gruppe}`)}
               </div>
             )}

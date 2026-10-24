@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
  * deshalb steht immer auch ein Wort darin.
  */
 export const badgeVariants = cva(
-  'inline-flex h-5 items-center gap-1 rounded-full px-2 text-[11px] font-medium whitespace-nowrap [&_svg]:size-3',
+  'inline-flex h-5 items-center gap-1 rounded-full px-2 text-xs font-medium whitespace-nowrap [&_svg]:size-3',
   {
     variants: {
       ton: {

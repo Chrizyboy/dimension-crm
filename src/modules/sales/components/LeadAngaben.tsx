@@ -225,9 +225,7 @@ export function LeadAngaben({ g, details }: LeadAngabenProps) {
           )}
           {g.kommentarKunde && (
             <blockquote className="bg-muted/60 rounded-md p-2 text-sm whitespace-pre-wrap">
-              <span className="text-muted-foreground block text-[11px] uppercase">
-                {t('verkauf.akte.kommentarKunde')}
-              </span>
+              <span className="text-muted-foreground block text-xs uppercase">{t('verkauf.akte.kommentarKunde')}</span>
               {g.kommentarKunde}
             </blockquote>
           )}

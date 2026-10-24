@@ -13,7 +13,7 @@ export function AbschnittZustaende() {
     <Abschnitt id="zustaende" titel={t('design.zustaende')} text={t('design.zustaendeText')}>
       <div className="grid gap-4 lg:grid-cols-3">
         <Karte className="flex flex-col gap-3 p-4" aria-label={t('design.laden')}>
-          <p className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">{t('design.laden')}</p>
+          <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{t('design.laden')}</p>
           {[0, 1, 2].map((i) => (
             <div key={i} className="flex items-center gap-3">
               <Skelett className="size-8 rounded-full" />

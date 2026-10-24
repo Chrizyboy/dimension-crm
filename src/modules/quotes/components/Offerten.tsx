@@ -81,7 +81,7 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
             >
               {t(`offerten.ansicht.${a}`)}
               {a !== 'import' && !laedt && (
-                <span className="zahlen text-muted-foreground font-mono text-[11px]">{zahlen[a]}</span>
+                <span className="zahlen text-muted-foreground font-mono text-xs">{zahlen[a]}</span>
               )}
             </button>
           ))}

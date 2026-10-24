@@ -48,7 +48,7 @@ export function Kopfzeile() {
         <div
           role="group"
           aria-label={t('einstellungen.sprache')}
-          className="hidden h-7 items-center rounded-md border p-0.5 text-[11px] font-semibold sm:flex"
+          className="hidden h-7 items-center rounded-md border p-0.5 text-xs font-semibold sm:flex"
         >
           {(['de', 'fr'] as const).map((s) => (
             <button
