@@ -32,6 +32,9 @@
   --primary-hover: #0a3470;
   --primary-foreground: #ffffff;
   --accent: var(--sun);
+  /* Diagramme: zwei Reihen (Muri, Bulle), geprüft auf Farbsehschwäche und Kontrast (Phase 14) */
+  --reihe-1: #2f62b0;
+  --reihe-2: #d06a00;
   --accent-foreground: #1d1300;
   --accent-soft: #fdebd8;
   --accent-ink: #7a3b00;
@@ -67,6 +70,8 @@
   --muted-foreground: #aeb8c5;
   --border: #2b3749;
   --border-strong: #3d4c62;
+  --reihe-1: #5f93dd;
+  --reihe-2: #d27c20;
 
   --primary: #f28a1e;
   --primary-hover: #ff9f3d;
@@ -123,6 +128,8 @@
   --color-bad-soft: var(--bad-soft);
   --color-info: var(--info);
   --color-info-soft: var(--info-soft);
+  --color-reihe-1: var(--reihe-1);
+  --color-reihe-2: var(--reihe-2);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-active: var(--sidebar-active);

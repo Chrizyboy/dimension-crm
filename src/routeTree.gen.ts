@@ -18,6 +18,7 @@ import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen
 import { Route as ContactsRouteImport } from './app/contacts'
 import { Route as ContractsRouteImport } from './app/contracts'
 import { Route as CustomersRouteImport } from './app/customers'
+import { Route as DashboardRouteImport } from './app/dashboard'
 import { Route as DesignRouteImport } from './app/design'
 import { Route as ExpensesRouteImport } from './app/expenses'
 import { Route as FieldworkRouteImport } from './app/fieldwork'
@@ -34,6 +35,7 @@ import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
 import { Route as TasksRouteImport } from './app/tasks'
 import { Route as TendersRouteImport } from './app/tenders'
+import { Route as TodayRouteImport } from './app/today'
 import { Route as WorkcontractsRouteImport } from './app/workcontracts'
 
 const IndexRoute = IndexRouteImport.update({
@@ -79,6 +81,11 @@ const ContractsRoute = ContractsRouteImport.update({
 const CustomersRoute = CustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignRoute = DesignRouteImport.update({
@@ -161,6 +168,11 @@ const TendersRoute = TendersRouteImport.update({
   path: '/tenders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TodayRoute = TodayRouteImport.update({
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkcontractsRoute = WorkcontractsRouteImport.update({
   id: '/workcontracts',
   path: '/workcontracts',
@@ -177,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/contacts': typeof ContactsRoute
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
+  '/dashboard': typeof DashboardRoute
   '/design': typeof DesignRoute
   '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
@@ -193,6 +206,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
+  '/today': typeof TodayRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRoutesByTo {
@@ -205,6 +219,7 @@ export interface FileRoutesByTo {
   '/contacts': typeof ContactsRoute
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
+  '/dashboard': typeof DashboardRoute
   '/design': typeof DesignRoute
   '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
@@ -221,6 +236,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
+  '/today': typeof TodayRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRoutesById {
@@ -234,6 +250,7 @@ export interface FileRoutesById {
   '/contacts': typeof ContactsRoute
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
+  '/dashboard': typeof DashboardRoute
   '/design': typeof DesignRoute
   '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
@@ -250,6 +267,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
+  '/today': typeof TodayRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
 export interface FileRouteTypes {
@@ -264,6 +282,7 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/contracts'
     | '/customers'
+    | '/dashboard'
     | '/design'
     | '/expenses'
     | '/fieldwork'
@@ -280,6 +299,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/tenders'
+    | '/today'
     | '/workcontracts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -292,6 +312,7 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/contracts'
     | '/customers'
+    | '/dashboard'
     | '/design'
     | '/expenses'
     | '/fieldwork'
@@ -308,6 +329,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/tenders'
+    | '/today'
     | '/workcontracts'
   id:
     | '__root__'
@@ -320,6 +342,7 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/contracts'
     | '/customers'
+    | '/dashboard'
     | '/design'
     | '/expenses'
     | '/fieldwork'
@@ -336,6 +359,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/tenders'
+    | '/today'
     | '/workcontracts'
   fileRoutesById: FileRoutesById
 }
@@ -349,6 +373,7 @@ export interface RootRouteChildren {
   ContactsRoute: typeof ContactsRoute
   ContractsRoute: typeof ContractsRoute
   CustomersRoute: typeof CustomersRoute
+  DashboardRoute: typeof DashboardRoute
   DesignRoute: typeof DesignRoute
   ExpensesRoute: typeof ExpensesRoute
   FieldworkRoute: typeof FieldworkRoute
@@ -365,6 +390,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   TasksRoute: typeof TasksRoute
   TendersRoute: typeof TendersRoute
+  TodayRoute: typeof TodayRoute
   WorkcontractsRoute: typeof WorkcontractsRoute
 }
 
@@ -431,6 +457,13 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/customers'
       preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/design': {
@@ -545,6 +578,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TendersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/today': {
+      id: '/today'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/workcontracts': {
       id: '/workcontracts'
       path: '/workcontracts'
@@ -565,6 +605,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactsRoute: ContactsRoute,
   ContractsRoute: ContractsRoute,
   CustomersRoute: CustomersRoute,
+  DashboardRoute: DashboardRoute,
   DesignRoute: DesignRoute,
   ExpensesRoute: ExpensesRoute,
   FieldworkRoute: FieldworkRoute,
@@ -581,6 +622,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   TasksRoute: TasksRoute,
   TendersRoute: TendersRoute,
+  TodayRoute: TodayRoute,
   WorkcontractsRoute: WorkcontractsRoute,
 }
 export const routeTree = rootRouteImport
