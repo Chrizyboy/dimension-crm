@@ -130,7 +130,14 @@ export function OffertenBalken({
           </div>
           <div className="flex gap-[2px] pt-1" aria-hidden="true">
             {faecher.map((f, i) => (
-              <span key={f.fach} className="text-muted-foreground min-w-0 flex-1 truncate text-center text-xs">
+              <span
+                key={f.fach}
+                // Am Handy ist jedes zweite Fach zu schmal für «01.2026»: dort nur jede zweite Beschriftung zeigen.
+                className={cn(
+                  'text-muted-foreground min-w-0 flex-1 overflow-visible text-center text-xs whitespace-nowrap',
+                  (i / jedes) % 2 === 1 && 'max-sm:invisible',
+                )}
+              >
                 {i % jedes === 0 ? f.text : ''}
               </span>
             ))}
