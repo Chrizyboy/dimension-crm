@@ -200,3 +200,10 @@ Siehe Entscheid 0023.
 - **Abläufe:** `ki_mein_budget()`, `ki_kosten(von, bis)` (Summen je Funktion, Person und Tag), `ki_kontext(tabelle, id)` (Daten zu Kunde, Lead, Offerte, Projekt oder Service-Fall mit den Rechten der Person; Rechnungen nur mit `finanzen`), `ki_briefing_daten()`, `ki_zuordnung(email, telefon, vorname, nachname, plz)` (passende Kunden für eine Mail), `ki_lead_statistik()` (Abschlussquoten der letzten zwei Jahre). Nur Server: `ki_budget(person)`, `ki_entwuerfe_offen(n)`, `ki_entwurf_einsetzen(...)` (ersetzt den Text nur, wenn er noch der Vorlage entspricht). `automation_nach_aussen` legt bei `ki` im Mail-Schritt den Auftrag an.
 
 Siehe Entscheid 0024.
+
+## Mein Tag und Kennzahlen (Phase 14)
+
+- **Keine neuen Tabellen.** Einstellung **`kennzahlen`**: `quellen_kosten_rappen` {quelle: Rappen pro Lead} (aus V233 `vorlage.kosten` übernommen), `auslastung_rollen` (Vorgabe `["montage"]`), `tage_pro_woche`.
+- **Abläufe:** `heute_fuer_mich()` (Listen {anzahl, zeilen} für termine, aufgaben, vergeben, nachfassen, neue_leads, wiedervorlagen, fristen, zahlungen, service, kontrollen), `kennzahlen_fakten(von, bis)` (Zeilen mit schluessel, art, id, datum, standort, person_id, betrag_rappen, quelle, name, nummer, ort, stand), `kennzahlen_quellen_kosten(quelle, rappen)`, `kennzahlen_betrieb(von, bis)` ({auftragsbestand, auslastung, marge nur mit `preise`/`finanzen`}). Intern: `tag_zeile`, `tag_liste`, `werktage`. Alle mit den Rechten der Person (security invoker), nicht anonym. Fehler als Schlüssel `tag.*` und `kennzahlen.*`.
+
+Siehe Entscheid 0025.
