@@ -20,7 +20,7 @@
 
 ## Ordner
 
-- `components/` – Liste mit Filtern (Meine/Alle, Offen/Erledigt), neue Aufgabe
+- `components/` – Liste mit Filtern (Meine/Von mir vergeben/Alle, Offen/Erledigt), neue Aufgabe; `NeueAufgabeKnopf` für Mein Tag
 - `hooks/` – `useAufgaben`, `usePersonen`
 - `services/` – Laden, Abhaken, Anlegen
 - `lib/` – Fälligkeit (heute in Zürich, überfällig, bald)

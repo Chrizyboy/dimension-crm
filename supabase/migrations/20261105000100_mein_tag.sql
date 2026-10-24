@@ -93,9 +93,10 @@ begin
        where a.geloescht_am is null and a.erledigt_am is null and a.person_id = ich
          and (a.faellig_am is null or a.faellig_am <= heute + 7)), '[]'), 30),
     'vergeben', intern.tag_liste(coalesce((
+      -- Zuletzt Vergebenes zuerst: «Was habe ich eben delegiert?»
       select jsonb_agg(intern.tag_zeile('aufgabe', a.faellig_am, null, a.titel, p.name, null, a.bezug_tabelle, a.bezug_id,
                                         jsonb_build_object('aufgabe_id', a.id, 'ueberfaellig', a.faellig_am < heute))
-                       order by a.faellig_am nulls last, a.erstellt_am)
+                       order by a.erstellt_am desc)
         from public.aufgaben a left join public.personen p on p.id = a.person_id
        where a.geloescht_am is null and a.erledigt_am is null and a.erstellt_von = ich_auth
          and a.person_id is distinct from ich), '[]')));

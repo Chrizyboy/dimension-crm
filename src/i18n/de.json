@@ -4537,7 +4537,8 @@
       "meine": "Meine",
       "alle": "Alle",
       "offen": "Offen",
-      "erledigt": "Erledigt"
+      "erledigt": "Erledigt",
+      "vergeben": "Von mir vergeben"
     },
     "spalte": {
       "aufgabe": "Aufgabe",
@@ -4564,7 +4565,8 @@
       "titel": "Bitte einen Titel eingeben.",
       "datum": "Bitte ein gültiges Datum wählen.",
       "person": "Bitte eine Person wählen."
-    }
+    },
+    "neuKurz": "Aufgabe"
   },
   "ki": {
     "knopf": "Mit KI schreiben",
@@ -4813,6 +4815,223 @@
       "mailText": "Lead oder Anliegen erkennen, Felder herauslesen, passenden Kunden finden.",
       "oeffnen": "Öffnen",
       "akteHinweis": "Tipp: In jeder Akte (Kunde, Lead, Offerte, Projekt, Service) gibt es «Mit KI schreiben» und «Zusammenfassen»."
+    }
+  },
+  "tag": {
+    "gruss": {
+      "morgen": "Guten Morgen, {{name}}",
+      "tag": "Guten Tag, {{name}}",
+      "abend": "Guten Abend, {{name}}"
+    },
+    "zusammenfassung_one": "{{datum}} · 1 Punkt steht an",
+    "zusammenfassung_other": "{{datum}} · {{count}} Punkte stehen an",
+    "zusammenfassung_zero": "{{datum}} · nichts Dringendes",
+    "liste": {
+      "termine": "Termine heute und morgen",
+      "aufgaben": "Aufgaben",
+      "vergeben": "Von mir vergeben",
+      "nachfassen": "Offerten nachfassen",
+      "neue_leads": "Neue Anfragen",
+      "wiedervorlagen": "Wiedervorlagen",
+      "fristen": "Bewilligungen und Fristen",
+      "zahlungen": "Zahlungen (7 Tage)",
+      "service": "Service und Garantie",
+      "kontrollen": "Kontrollen und Wartungen (30 Tage)"
+    },
+    "aufgabenFilter": {
+      "fuerMich": "Für mich",
+      "vergeben": "Von mir vergeben"
+    },
+    "art": {
+      "besichtigung": "Besichtigung",
+      "service": "Service",
+      "einsatz": "Baustelle",
+      "kalender": "Outlook",
+      "aufgabe": "Aufgabe",
+      "nachfassen": "Nachfassen",
+      "lead": "Anfrage",
+      "wiedervorlage": "Wiedervorlage",
+      "frist": "Frist",
+      "zahlung": "Zahlung",
+      "fall": "Fall",
+      "kontrolle": "Kontrolle",
+      "wartung": "Wartung"
+    },
+    "heute": "heute",
+    "morgen": "morgen",
+    "ueberfaellig": "überfällig",
+    "bewilligung": "Bewilligung",
+    "hoch": "dringend",
+    "alle": "Alle {{count}} anzeigen",
+    "oeffnen": "Öffnen",
+    "anrufen": "{{nummer}} anrufen",
+    "abhaken": "«{{titel}}» erledigt",
+    "leerTitel": "Heute steht nichts an",
+    "leerText": "Keine Termine, Aufgaben oder Fristen. Neue Anfragen und Aufgaben erscheinen hier von selbst.",
+    "nichts": "Nichts offen",
+    "mail": {
+      "knopf": "Übersicht per Mail",
+      "titel": "Übersicht per Mail an mich",
+      "beschreibung": "Geht über den Ausgangskorb aus deinem Postfach an dich selbst.",
+      "an": "An",
+      "betreff": "Mein Tag – {{datum}}",
+      "kopf": "Mein Tag – {{datum}} ({{name}})",
+      "senden": "An mich senden",
+      "ohneAdresse": "Für deine Person ist keine Mail-Adresse erfasst.",
+      "gesendet": "Übersicht liegt im Ausgangskorb und wird gleich gesendet"
+    },
+    "kennzahlen": "Kennzahlen",
+    "team": "Team und Betrieb",
+    "system": "System und Bauplan"
+  },
+  "kz": {
+    "titel": "Kennzahlen",
+    "beschreibung": "Wie läuft es? Jede Zahl lässt sich anklicken und zeigt, was dahinter steht.",
+    "reiter": {
+      "verkauf": "Verkauf",
+      "pipeline": "Pipeline pro Region",
+      "betrieb": "Aufträge und Auslastung"
+    },
+    "zeitraum": {
+      "titel": "Zeitraum",
+      "monat": "Monat",
+      "quartal": "Quartal",
+      "jahr": "Jahr",
+      "12m": "12 Monate",
+      "alle": "Alles"
+    },
+    "bereich": {
+      "titel": "Firma",
+      "alle": "Beide",
+      "muri": "Muri",
+      "bulle": "Bulle"
+    },
+    "kachel": {
+      "leads": "Neue Leads",
+      "gesendet": "Offerten gesendet",
+      "angenommen": "Angenommen",
+      "quote": "Abschlussquote",
+      "quoteHinweis": "angenommen von {{n}} entschiedenen",
+      "nachfassen": "Nachfassen fällig",
+      "nachfassenHinweis": "zur Liste Nachfassen"
+    },
+    "spalte": {
+      "muri": "Muri",
+      "bulle": "Bulle",
+      "zusammen": "Zusammen",
+      "uebrige": "Übrige",
+      "kennzahl": "Kennzahl"
+    },
+    "nachStandort": "Nach Standort",
+    "nachPerson": "Nach Person",
+    "gruppe": {
+      "leads": "Leads",
+      "offerten": "Offerten",
+      "zahlungen": "Zahlungen",
+      "aftersales": "Service und Garantie"
+    },
+    "zeile": {
+      "leads_neu": "Neue Leads",
+      "leads_offen": "Leads offen (aktuell)",
+      "termine": "Kundentermine",
+      "kein_interesse": "Kein Interesse",
+      "gesendet": "Offerten gesendet",
+      "angebotswert": "Angebotswert (exkl. MWST)",
+      "offen": "Offerten offen (aktuell)",
+      "nf_faellig": "Nachfassen fällig (aktuell)",
+      "angenommen": "Angenommen",
+      "auftragswert": "Auftragswert (inkl. MWST)",
+      "verloren": "Verloren",
+      "quote": "Abschlussquote",
+      "bau": "Baustellen (aktuell)",
+      "zahlung_offen": "Zahlungen offen",
+      "zahlung_ueberfaellig": "Zahlungen überfällig",
+      "zahlung_eingang": "Zahlungen eingegangen",
+      "faelle_offen": "Fälle offen (aktuell)",
+      "faelle_neu": "Fälle neu",
+      "faelle_garantie": "Davon Garantie",
+      "faelle_erledigt": "Fälle erledigt"
+    },
+    "chart": {
+      "titel": "Gesendete Offerten",
+      "beschreibung": "Anzahl pro {{fach}}, Muri und Bulle nebeneinander",
+      "fach": {
+        "monat": "Tag",
+        "quartal": "Woche",
+        "jahr": "Monat",
+        "12m": "Monat",
+        "alle": "Quartal"
+      },
+      "tooltip": "{{fach}}: Muri {{muri}}, Bulle {{bulle}}",
+      "tabelle": "Als Tabelle"
+    },
+    "quellen": {
+      "titel": "Lead-Quellen",
+      "beschreibung": "Wie weit kamen die Leads des Zeitraums? Kosten pro Lead sind änderbar.",
+      "quelle": "Quelle",
+      "leads": "Leads",
+      "termine": "Termine",
+      "offerten": "Offerten",
+      "auftraege": "Aufträge",
+      "umsatz": "Auftragswert",
+      "quote": "Quote",
+      "kostenLead": "Kosten/Lead",
+      "kostenAuftrag": "Kosten/Auftrag",
+      "kostenAendern": "Kosten pro Lead für {{quelle}}",
+      "gespeichert": "Kosten gespeichert",
+      "ohne": "ohne Quelle"
+    },
+    "detail": {
+      "total": "Total",
+      "anzahl_one": "1 Eintrag",
+      "anzahl_other": "{{count}} Einträge",
+      "leer": "Keine Einträge",
+      "name": "Name",
+      "nummer": "Nummer",
+      "datum": "Datum",
+      "ort": "Ort / Zusatz",
+      "betrag": "Betrag"
+    },
+    "pipeline": {
+      "titel": "Offene Pipeline pro Region",
+      "beschreibung": "Alle offenen Geschäfte vom Lead bis zur Unterschrift, nach Standort und Kanton.",
+      "region": "Region",
+      "anzahl": "Geschäfte",
+      "wert": "Wert",
+      "kwp": "kWp",
+      "gruppe": {
+        "lead": "Leads",
+        "offerte": "in Offerte",
+        "offeriert": "offeriert",
+        "auftrag": "Auftrag"
+      },
+      "ohne": "ohne Kanton"
+    },
+    "betrieb": {
+      "auftragsbestand": "Auftragsbestand",
+      "auftragsbestandText": "Unterschriebene Projekte, die noch nicht fertig verrechnet sind.",
+      "projekt": "Projekt",
+      "vertrag": "Vertrag",
+      "verrechnet": "Verrechnet",
+      "rest": "Noch zu verrechnen",
+      "total": "Total",
+      "auslastung": "Auslastung Montage",
+      "auslastungText": "Gebuchte Einsatztage von 5 pro Woche, abzüglich Abwesenheiten. Rot = mehr gebucht als verfügbar.",
+      "kw": "KW {{kw}}",
+      "person": "Person",
+      "ohnePersonen": "Einsätze ohne Person",
+      "tage": "{{gebucht}} von {{verfuegbar}} Tagen",
+      "marge": "Marge je Projekt",
+      "margeText": "Projekte, die im Zeitraum unterschrieben wurden: geplant aus der Offerte, Ist aus Material, Stunden und Rechnungen.",
+      "geplant": "Marge geplant",
+      "ist": "Marge Ist",
+      "umsatz": "Umsatz Ist",
+      "margeOhne": "Nur mit Recht «Preise» oder «Finanzen» sichtbar.",
+      "status": {
+        "auftrag": "Auftrag",
+        "im_bau": "im Bau",
+        "abgeschlossen": "abgeschlossen"
+      }
     }
   }
 }

@@ -19,8 +19,8 @@ export interface Person {
   name: string
 }
 
-/** «meine» oder «alle»; «offen» oder «erledigt». */
+/** «meine», «vergeben» (von mir an andere) oder «alle»; «offen» oder «erledigt». */
 export interface AufgabenFilter {
-  wer: 'meine' | 'alle'
+  wer: 'meine' | 'vergeben' | 'alle'
   stand: 'offen' | 'erledigt'
 }

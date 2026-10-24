@@ -1,21 +1,25 @@
 import { expect, test } from '@playwright/test'
 
-// Rauchtest: Die App startet, zeigt den Systemstatus und reagiert auf die Grundbedienung.
+// Rauchtest: Die App startet auf «Mein Tag», zeigt den Systemstatus und reagiert auf die Grundbedienung.
 
-test('Startseite zeigt Titel, Systemstatus und Bauplan', async ({ page }) => {
+const GRUSS = /^Guten (Morgen|Tag|Abend)/
+const GRUSS_FR = /^Bon(jour|soir)/
+
+test('Startseite ist «Mein Tag» mit Systemstatus und Bauplan', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: 'Willkommen im neuen CRM' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Bauplan' })).toBeVisible()
-  await expect(page.getByText("12'500.00").first()).toBeVisible()
+  await expect(page).toHaveURL(/#\/today$/)
+  await expect(page.getByRole('heading', { name: GRUSS, level: 1 })).toBeVisible()
+  await page.getByText('System und Bauplan').click()
+  await expect(page.getByRole('list', { name: 'Bauplan' })).toBeVisible()
 })
 
 test('Sprache wechselt über das Konto-Menü auf Französisch und bleibt gespeichert', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'Konto und Einstellungen' }).click()
   await page.getByRole('menuitem', { name: 'Français' }).click()
-  await expect(page.getByRole('heading', { name: 'Bienvenue dans le nouveau CRM' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: GRUSS_FR, level: 1 })).toBeVisible()
   await page.reload()
-  await expect(page.getByRole('heading', { name: 'Bienvenue dans le nouveau CRM' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: GRUSS_FR, level: 1 })).toBeVisible()
 })
 
 test('Dunkle Darstellung lässt sich einschalten', async ({ page }) => {
@@ -29,7 +33,7 @@ test('Unbekannte Adresse zeigt eine verständliche Seite', async ({ page }) => {
   await page.goto('/#/gibt-es-nicht')
   await expect(page.getByText('Diese Seite gibt es nicht')).toBeVisible()
   await page.getByRole('link', { name: 'Zur Startseite' }).click()
-  await expect(page.getByRole('heading', { name: 'Willkommen im neuen CRM' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: GRUSS, level: 1 })).toBeVisible()
 })
 
 test.describe('Desktop', () => {
@@ -49,7 +53,7 @@ test.describe('Desktop', () => {
 
   test('Seitenleiste lässt sich mit Ctrl B einklappen', async ({ page }) => {
     await page.goto('/')
-    await page.getByRole('heading', { name: 'Willkommen im neuen CRM' }).click()
+    await page.getByRole('heading', { name: GRUSS, level: 1 }).click()
     await page.keyboard.press('Control+b')
     await expect(page.getByRole('button', { name: 'Seitenleiste ausklappen' })).toBeVisible()
   })
