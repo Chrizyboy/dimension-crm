@@ -71,7 +71,9 @@ export function SpesenTabelle({
           <Kopfzelle className="hidden md:table-cell">{t('spesen.spalte.beleg')}</Kopfzelle>
           <Kopfzelle className="text-right">{t('spesen.spalte.betrag')}</Kopfzelle>
           <Kopfzelle>{t('spesen.spalte.status')}</Kopfzelle>
-          <Kopfzelle />
+          <Kopfzelle>
+                <span className="sr-only">{t('tabelle.aktionen')}</span>
+              </Kopfzelle>
         </tr>
       </TabelleKopf>
       <TabelleKoerper>

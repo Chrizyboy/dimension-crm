@@ -263,7 +263,7 @@ export default function Wochenkalender({
               {Array.from({ length: (BIS - VON) / SCHRITT }, (_, i) => VON + i * SCHRITT).map((m) => (
                 <div
                   key={m}
-                  className="text-muted-foreground pr-1 text-right font-mono text-[10px]"
+                  className="text-muted-foreground pr-1 text-right font-mono text-xs"
                   style={{ height: ZEILE_PX }}
                 >
                   {m % 60 === 0 ? hm(m) : ''}

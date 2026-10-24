@@ -58,6 +58,7 @@ export function BenachrichtigungsListe({ onOeffnen }: { onOeffnen?: () => void }
             </button>
             {!b.gelesen && (
               <span
+                role="img"
                 className="bg-accent mt-2 size-2 shrink-0 rounded-full"
                 aria-label={t('benachrichtigungen.ungelesen')}
               />
@@ -99,7 +100,9 @@ export function Glocke() {
         >
           <Bell />
           {ungelesen > 0 && (
-            <span className="zahlen bg-accent text-accent-foreground absolute top-1 right-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full px-1 text-[9px] font-bold">
+            <span
+              aria-hidden="true"
+              className="zahlen bg-accent text-accent-foreground absolute top-1 right-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full px-1 text-[9px] font-bold">
               {ungelesen > 9 ? '9+' : ungelesen}
             </span>
           )}

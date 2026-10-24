@@ -135,7 +135,7 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
                   }}
                 >
                   <CalendarPlus />
-                  <span className="hidden sm:inline">{t('projekte.bau.knopf')}</span>
+                  <span className="max-sm:sr-only">{t('projekte.bau.knopf')}</span>
                 </Button>
               </li>
             ))}

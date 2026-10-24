@@ -41,7 +41,7 @@ export function Filterchips({ optionen, gewaehlt, onChange, beschriftung, einzel
           >
             {o.text}
             {o.anzahl !== undefined && (
-              <span className={cn('zahlen font-mono text-[10px]', an ? 'opacity-80' : 'text-muted-foreground')}>
+              <span className={cn('zahlen font-mono text-xs', an ? 'opacity-80' : 'text-muted-foreground')}>
                 {o.anzahl}
               </span>
             )}

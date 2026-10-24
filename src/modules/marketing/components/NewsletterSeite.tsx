@@ -42,7 +42,7 @@ export function NewsletterSeite() {
         ))}
       </ul>
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-base font-semibold">{t('marketing.newsletter.liste')}</h3>
+        <h2 className="font-display text-base font-semibold">{t('marketing.newsletter.liste')}</h2>
         <Button
           onClick={() => {
             setOffen({})

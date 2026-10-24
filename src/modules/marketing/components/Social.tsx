@@ -81,9 +81,9 @@ export function Social() {
   const gruppen = (liste: SocialPost[]) =>
     nachThema(liste).map(([thema, ps]) => (
       <section key={thema} className="flex flex-col gap-1">
-        <h4 className="text-muted-foreground px-3 text-xs font-semibold uppercase">
+        <h3 className="text-muted-foreground px-3 text-xs font-semibold uppercase">
           {thema || t('marketing.post.ohneThema')}
-        </h4>
+        </h3>
         <ul className="flex flex-col">{ps.map(zeile)}</ul>
       </section>
     ))
@@ -92,7 +92,7 @@ export function Social() {
     <div className="flex flex-col gap-4">
       <Verbindungen />
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-base font-semibold">{t('marketing.post.offene')}</h3>
+        <h2 className="font-display text-base font-semibold">{t('marketing.post.offene')}</h2>
         <Button
           onClick={() => {
             setOffen('neu')
@@ -111,7 +111,7 @@ export function Social() {
       )}
       {vergangen.length > 0 && (
         <>
-          <h3 className="font-display text-base font-semibold">{t('marketing.post.vergangene')}</h3>
+          <h2 className="font-display text-base font-semibold">{t('marketing.post.vergangene')}</h2>
           <div className="bg-surface flex flex-col gap-3 rounded-lg border py-2">{gruppen(vergangen)}</div>
         </>
       )}

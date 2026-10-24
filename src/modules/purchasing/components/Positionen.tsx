@@ -67,7 +67,11 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
               <Kopfzelle zahl>{t('einkauf.pos.menge')}</Kopfzelle>
               {mitLieferung && <Kopfzelle zahl>{t('einkauf.pos.geliefert')}</Kopfzelle>}
               <Kopfzelle zahl>{t('einkauf.pos.ek')}</Kopfzelle>
-              {entwurf && <Kopfzelle className="w-8" />}
+              {entwurf && (
+                <Kopfzelle className="w-8">
+                  <span className="sr-only">{t('tabelle.aktionen')}</span>
+                </Kopfzelle>
+              )}
             </tr>
           </TabelleKopf>
           <TabelleKoerper>

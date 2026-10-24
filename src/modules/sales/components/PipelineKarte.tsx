@@ -133,7 +133,7 @@ export const PipelineKarte = memo(function PipelineKarte({
             )}
           </span>
           {kuerzel && (
-            <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-[10px] font-medium uppercase">
+            <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium uppercase">
               {kuerzel}
             </span>
           )}

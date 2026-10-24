@@ -132,7 +132,7 @@ export function Zahlungen({
       {gruppen.map(
         (g) =>
           g.liste.length > 0 && (
-            <AkteAbschnitt
+            <AkteAbschnitt ebene={2}
               key={g.titel}
               titel={g.titel}
               zusatz={`${String(g.liste.length)} · ${formatChf(summe(g.liste))}`}

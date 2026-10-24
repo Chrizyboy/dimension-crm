@@ -98,9 +98,9 @@ export function ZeitplanRaster({
 
         {gruppen.map((g) => (
           <section key={g.standort} aria-label={g.standort}>
-            <h3 className="bg-muted/30 border-b px-3 py-1 text-xs font-semibold">
+            <h2 className="bg-muted/30 border-b px-3 py-1 text-xs font-semibold">
               {g.standort} <span className="text-muted-foreground zahlen font-mono">{g.zeilen.length}</span>
-            </h3>
+            </h2>
             {g.zeilen.length === 0 && (
               <p className="text-muted-foreground border-b px-3 py-2">{t('projekte.zeitplan.leer')}</p>
             )}

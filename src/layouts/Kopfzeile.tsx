@@ -37,7 +37,6 @@ export function Kopfzeile() {
           setBefehlspalette(true)
         }}
         className="bg-surface-2 text-muted-foreground hover:border-border-strong focus-visible:ring-ring flex h-8 max-w-md min-w-0 flex-1 items-center gap-2 rounded-md border px-2.5 text-sm transition-colors outline-none focus-visible:ring-2"
-        aria-label={t('befehle.titel')}
       >
         <Search className="size-4 shrink-0" aria-hidden="true" />
         <span className="flex-1 truncate text-left">{t('nav.suchen')}</span>
@@ -72,7 +71,9 @@ export function Kopfzeile() {
             className="focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
             aria-label={t('konto.menue')}
           >
-            <Avatar name={name} />
+            <span aria-hidden="true">
+              <Avatar name={name} />
+            </span>
           </MenueAusloeser>
           <MenueInhalt align="end" className="w-56">
             <div className="px-2 py-2">

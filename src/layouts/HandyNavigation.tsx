@@ -22,7 +22,7 @@ export function HandyNavigation() {
   const setOffen = useUi((z) => z.setHandyMenue)
 
   const stil =
-    'flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 text-[10px] font-medium text-muted-foreground outline-none focus-visible:bg-muted'
+    'flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 text-xs font-medium text-muted-foreground outline-none focus-visible:bg-muted'
 
   return (
     <>

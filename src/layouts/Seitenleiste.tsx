@@ -60,7 +60,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
             {eingeklappt ? (
               <div className="bg-sidebar-border mx-2 mb-1 h-px first:hidden" aria-hidden="true" />
             ) : (
-              <div className="text-sidebar-muted px-2 pb-1 text-[11px] font-semibold tracking-[0.08em] uppercase">
+              <div className="text-sidebar-muted px-2 pb-1 text-xs font-semibold tracking-[0.08em] uppercase">
                 {t(`nav.${gruppe}`)}
               </div>
             )}
@@ -116,7 +116,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
               type="button"
               onClick={toggle}
               className={cn(LINK, eingeklappt && 'justify-center px-0')}
-              aria-label={eingeklappt ? t('nav.ausklappen') : t('nav.einklappen')}
+              aria-label={eingeklappt ? t('nav.ausklappen') : undefined}
             >
               {eingeklappt ? (
                 <PanelLeftOpen className="text-sidebar-muted size-4 shrink-0" />
@@ -126,7 +126,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
               {!eingeklappt && (
                 <>
                   <span className="flex-1 truncate text-left">{t('nav.einklappen')}</span>
-                  <span className="text-sidebar-muted font-mono text-[10px]">{kuerzelText('b')}</span>
+                  <span className="text-sidebar-muted font-mono text-xs">{kuerzelText('b')}</span>
                 </>
               )}
             </button>,

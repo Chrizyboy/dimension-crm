@@ -30,7 +30,7 @@ export function Stil() {
     <div className="flex max-w-3xl flex-col gap-4">
       <p className="text-muted-foreground text-sm">{t('ki.stil.erklaerung', { count: s.anzahl })}</p>
       <Karte className="flex flex-col gap-2 p-4">
-        <h3 className="text-sm font-semibold">{t('ki.stil.regeln')}</h3>
+        <h2 className="text-sm font-semibold">{t('ki.stil.regeln')}</h2>
         <ul className="flex flex-col divide-y">
           {s.regeln.map((r, i) => (
             <li key={`${r}-${i}`} className="flex items-center justify-between gap-2 py-1.5 text-sm">
@@ -72,7 +72,7 @@ export function Stil() {
       </Karte>
       {s.beispiele.length > 0 && (
         <Karte className="flex flex-col gap-2 p-4">
-          <h3 className="text-sm font-semibold">{t('ki.stil.beispiele')}</h3>
+          <h2 className="text-sm font-semibold">{t('ki.stil.beispiele')}</h2>
           {s.beispiele.map((b) => (
             <details key={b.am} className="text-sm">
               <summary className="text-muted-foreground cursor-pointer text-xs">

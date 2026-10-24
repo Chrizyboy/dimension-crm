@@ -109,7 +109,7 @@ function Formular({ start }: { start: KiEinstellungen }) {
         ))}
       </div>
       <section className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold">{t('ki.einstellungen.funktionen')}</h3>
+        <h2 className="text-sm font-semibold">{t('ki.einstellungen.funktionen')}</h2>
         <div className="grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
           {Object.entries(e.funktionen).map(([f, stufe]) => (
             <div key={f} className="flex items-center justify-between gap-2 text-sm">

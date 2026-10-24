@@ -28,7 +28,7 @@ export function Tooltip({
         >
           <span className="flex items-center gap-2 font-medium">
             {text}
-            {kuerzel && <kbd className="font-mono text-[10px] opacity-70">{kuerzel}</kbd>}
+            {kuerzel && <kbd className="font-mono text-xs opacity-80">{kuerzel}</kbd>}
           </span>
           {untertitel && <span className="opacity-75">{untertitel}</span>}
         </TooltipPrimitive.Content>

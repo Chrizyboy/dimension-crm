@@ -49,7 +49,7 @@ export function Kategorien() {
 
   return (
     <div className="flex max-w-3xl flex-col">
-      <AkteAbschnitt titel={t('spesen.kategorien.buchhaltung')}>
+      <AkteAbschnitt ebene={2} titel={t('spesen.kategorien.buchhaltung')}>
         <Feld
           id="spesen-buchhaltung-mail"
           label={t('spesen.kategorien.mail')}
@@ -65,7 +65,7 @@ export function Kategorien() {
           />
         </Feld>
       </AkteAbschnitt>
-      <AkteAbschnitt titel={t('spesen.kategorien.titel')} zusatz={String(liste.length)}>
+      <AkteAbschnitt ebene={2} titel={t('spesen.kategorien.titel')} zusatz={String(liste.length)}>
         <ul className="flex flex-col gap-2">
           {liste.map((k, i) => (
             <li key={`${k.schluessel}-${String(i)}`} className="flex items-center gap-2">
