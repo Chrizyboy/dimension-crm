@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Bell, House, Keyboard, UserPlus, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
+import { Bell, House, Keyboard, LifeBuoy, UserPlus, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { SPRUENGE } from '@/lib/spruenge'
@@ -149,6 +149,18 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       icon: Bell,
       stichworte: ['notifications', 'glocke'],
       ausfuehren: gehe('/benachrichtigungen'),
+    },
+    {
+      id: 'fehler-melden',
+      titel: t('befehle.fehlerMelden'),
+      gruppe: 'aktionen',
+      icon: LifeBuoy,
+      stichworte: ['bug', 'problème', 'signaler', 'helpdesk', 'meldung', 'support'],
+      ausfuehren: fertig(() => {
+        // Der Bereich, in dem man gerade ist, wird in der Meldung vorgewählt.
+        const bereich = window.location.hash.replace(/^#\//, '').split(/[/?]/)[0] || 'anderes'
+        void navigate({ to: '/knowledge', search: { ansicht: 'meldungen', neu: bereich } })
+      }),
     },
     {
       id: 'kuerzel',
