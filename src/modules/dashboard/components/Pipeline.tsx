@@ -57,7 +57,7 @@ export function Pipeline({ bereich }: { bereich: Bereich }) {
 
   return (
     <Karte className="overflow-hidden" data-testid="kz-pipeline">
-      <KarteKopf className="flex flex-col gap-0.5">
+      <KarteKopf className="flex flex-col items-start gap-0.5">
         <KarteTitel>{t('kz.pipeline.titel')}</KarteTitel>
         <span className="text-muted-foreground text-xs">{t('kz.pipeline.beschreibung')}</span>
       </KarteKopf>

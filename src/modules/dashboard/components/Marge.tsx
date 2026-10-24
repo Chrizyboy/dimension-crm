@@ -17,7 +17,7 @@ export function Marge({ zeilen }: { zeilen: MargeZeile[] }) {
   const navigate = useNavigate()
   return (
     <Karte className="overflow-hidden" data-testid="kz-marge">
-      <KarteKopf className="flex flex-col gap-0.5">
+      <KarteKopf className="flex flex-col items-start gap-0.5">
         <KarteTitel>{t('kz.betrieb.marge')}</KarteTitel>
         <span className="text-muted-foreground text-xs">{t('kz.betrieb.margeText')}</span>
       </KarteKopf>

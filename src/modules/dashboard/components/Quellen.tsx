@@ -60,7 +60,7 @@ export function Quellen({ fakten, onDetail }: { fakten: Fakt[]; onDetail: (d: De
 
   return (
     <Karte className="overflow-hidden" data-testid="kz-quellen">
-      <KarteKopf className="flex flex-col gap-0.5">
+      <KarteKopf className="flex flex-col items-start gap-0.5">
         <KarteTitel>{t('kz.quellen.titel')}</KarteTitel>
         <span className="text-muted-foreground text-xs">{t('kz.quellen.beschreibung')}</span>
       </KarteKopf>

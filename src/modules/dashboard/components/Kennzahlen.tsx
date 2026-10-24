@@ -115,24 +115,22 @@ export default function Kennzahlen({
                 onDetail={setDetail}
                 onNachfassen={() => void navigate({ to: '/quotes', search: { ansicht: 'nachfassen' } })}
               />
-              <div className="grid items-start gap-4 xl:grid-cols-[1fr_1.2fr]">
+              <div className="grid items-start gap-4 xl:grid-cols-2">
                 <KennzahlTabelle
                   titel={t('kz.nachStandort')}
                   spalten={nachStandort(gefiltert).map((s) => ({ ...s, titel: t(`kz.spalte.${s.id}`) }))}
                   onDetail={setDetail}
                   testId="kz-standort"
                 />
-                <div className="flex flex-col gap-4">
-                  <OffertenBalken
-                    fakten={gefiltert}
-                    zeitraum={auswahl.zeitraum}
-                    von={von}
-                    bis={bis}
-                    onDetail={setDetail}
-                  />
-                  <Quellen fakten={gefiltert} onDetail={setDetail} />
-                </div>
+                <OffertenBalken
+                  fakten={gefiltert}
+                  zeitraum={auswahl.zeitraum}
+                  von={von}
+                  bis={bis}
+                  onDetail={setDetail}
+                />
               </div>
+              <Quellen fakten={gefiltert} onDetail={setDetail} />
               <KennzahlTabelle
                 titel={t('kz.nachPerson')}
                 spalten={spaltenPerson}

@@ -63,11 +63,6 @@ export function Startseite() {
               <Suspense>
                 <KiBriefing />
               </Suspense>
-              {darfModul(ausschreibungenMeta, ich) && (
-                <Suspense>
-                  <AusschreibungenHeute />
-                </Suspense>
-              )}
             </>
           )
         }
@@ -78,6 +73,11 @@ export function Startseite() {
                 <h2 id="team-betrieb" className="font-display text-base font-semibold">
                   {t('tag.team')}
                 </h2>
+                {darfModul(ausschreibungenMeta, ich) && (
+                  <Suspense>
+                    <AusschreibungenHeute />
+                  </Suspense>
+                )}
                 <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
                   {karten
                     .filter(([m]) => darfModul(m, ich))

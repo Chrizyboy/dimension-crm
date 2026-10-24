@@ -21,7 +21,7 @@ export function AuslastungTabelle({ auslastung }: { auslastung: Auslastung }) {
   const ohne = auslastung.wochen.some((w) => w.ohne_personen > 0)
   return (
     <Karte className="overflow-hidden" data-testid="kz-auslastung">
-      <KarteKopf className="flex flex-col gap-0.5">
+      <KarteKopf className="flex flex-col items-start gap-0.5">
         <KarteTitel>{t('kz.betrieb.auslastung')}</KarteTitel>
         <span className="text-muted-foreground text-xs">{t('kz.betrieb.auslastungText')}</span>
       </KarteKopf>

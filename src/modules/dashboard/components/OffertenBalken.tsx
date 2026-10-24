@@ -40,7 +40,7 @@ export function OffertenBalken({
   return (
     <Karte className="overflow-hidden" data-testid="kz-balken">
       <KarteKopf className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-col items-start gap-0.5">
           <KarteTitel>{t('kz.chart.titel')}</KarteTitel>
           <span className="text-muted-foreground text-xs">
             {t('kz.chart.beschreibung', { fach: t(`kz.chart.fach.${zeitraum}`) })}

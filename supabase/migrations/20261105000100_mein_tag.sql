@@ -111,7 +111,9 @@ begin
        where o.stand = 'nachfassen' and o.faellig_am <= heute
          and (o.verantwortlich_id = ich or (o.verantwortlich_id is null and admin))), '[]')),
     'neue_leads', intern.tag_liste(coalesce((
-      select jsonb_agg(intern.tag_zeile('lead', g.eingang_am, null, g.name, concat_ws(' · ', g.lead_nummer, concat_ws(' ', g.plz, g.ort), g.quelle),
+      select jsonb_agg(intern.tag_zeile('lead', g.eingang_am, null, g.name, concat_ws(' · ', g.lead_nummer, concat_ws(' ', g.plz, g.ort),
+                                                  coalesce((select a.text_de from public.auswahlwerte a
+                                                             where a.liste = 'quelle' and a.schluessel = g.quelle), g.quelle)),
                                         g.telefon, 'verkaufschancen', g.verkaufschance_id)
                        order by g.eingang_am)
         from public.verkauf_geschaefte g

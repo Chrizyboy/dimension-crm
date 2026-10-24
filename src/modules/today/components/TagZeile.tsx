@@ -13,7 +13,9 @@ function wann(datum: string | undefined, heute: string, t: (s: string) => string
   if (!datum) return ''
   if (datum === heute) return t('tag.heute')
   const morgen = new Date(Date.parse(heute) + 86_400_000).toISOString().slice(0, 10)
-  return datum === morgen ? t('tag.morgen') : formatDatum(datum)
+  if (datum === morgen) return t('tag.morgen')
+  // Im laufenden Jahr reicht «22.10.»; so bleibt die Spalte schmal und nichts überlappt.
+  return datum.slice(0, 4) === heute.slice(0, 4) ? `${datum.slice(8, 10)}.${datum.slice(5, 7)}.` : formatDatum(datum)
 }
 
 /**
@@ -46,7 +48,7 @@ export function TagZeile({ zeile, heute, onAbhaken }: { zeile: Zeile; heute: str
       )}
       <span
         className={cn(
-          'zahlen w-16 shrink-0 text-xs',
+          'zahlen w-20 shrink-0 text-xs',
           zeile.ueberfaellig ? 'text-bad font-medium' : 'text-muted-foreground',
         )}
       >
