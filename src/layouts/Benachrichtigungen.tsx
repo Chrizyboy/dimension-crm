@@ -54,7 +54,7 @@ export function BenachrichtigungsListe({ onOeffnen }: { onOeffnen?: () => void }
             >
               <span className={cn('text-sm', !b.gelesen && 'font-semibold')}>{b.titel[sprache]}</span>
               {b.text && <span className="text-muted-foreground text-xs">{b.text[sprache]}</span>}
-              <span className="text-muted-foreground text-[11px]">{formatRelativ(b.zeit, sprache)}</span>
+              <span className="text-muted-foreground text-xs">{formatRelativ(b.zeit, sprache)}</span>
             </button>
             {!b.gelesen && (
               <span

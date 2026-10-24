@@ -29,7 +29,7 @@ export function DesignSeite() {
   return (
     <div className="mx-auto flex max-w-6xl gap-10 px-4 py-8 sm:px-6">
       <nav aria-label={t('design.inhalt')} className="sticky top-8 hidden h-fit w-40 shrink-0 flex-col gap-0.5 xl:flex">
-        <p className="text-muted-foreground mb-1 px-2 text-[11px] font-medium tracking-wide uppercase">
+        <p className="text-muted-foreground mb-1 px-2 text-xs font-medium tracking-wide uppercase">
           {t('design.inhalt')}
         </p>
         {ABSCHNITTE.map((id) => (

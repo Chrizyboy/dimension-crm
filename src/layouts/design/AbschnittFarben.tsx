@@ -46,7 +46,7 @@ export function AbschnittFarben() {
       <div className="grid gap-5 lg:grid-cols-3">
         {GRUPPEN.map((g) => (
           <div key={g.schluessel} className="flex flex-col gap-2">
-            <p className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">
+            <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
               {t(`design.farbgruppe.${g.schluessel}`)}
             </p>
             <div className="grid grid-cols-2 gap-2">
@@ -55,7 +55,7 @@ export function AbschnittFarben() {
                   key={f.token}
                   className={`flex h-16 flex-col justify-end rounded-lg border p-2.5 ${f.klasse} ${f.schrift}`}
                 >
-                  <span className="font-mono text-[11px] font-medium">{f.token}</span>
+                  <span className="font-mono text-xs font-medium">{f.token}</span>
                 </div>
               ))}
             </div>

@@ -29,12 +29,12 @@ const TON = { ueberfaellig: 'kritisch', heute: 'warnung', bald: 'info', spaeter:
  * Aufgaben (Phase 12): was wer bis wann erledigt. Viele entstehen aus Automationen («Erstkontakt innert 24 h»);
  * ein Klick öffnet den Lead, die Offerte oder das Projekt dazu.
  */
-export default function Aufgaben() {
+export default function Aufgaben({ wer = 'meine' }: { wer?: AufgabenFilter['wer'] }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const client = useQueryClient()
   const ichId = useAnmeldung((z) => z.ich?.id ?? null)
-  const [filter, setFilter] = useState<AufgabenFilter>({ wer: 'meine', stand: 'offen' })
+  const [filter, setFilter] = useState<AufgabenFilter>({ wer, stand: 'offen' })
   const [neu, setNeu] = useState(false)
   const aufgaben = useAufgaben(filter)
   const personen = usePersonen()
@@ -149,9 +149,9 @@ export default function Aufgaben() {
           einzeln
           beschriftung={t('aufgaben.spalte.wer')}
           gewaehlt={[filter.wer]}
-          optionen={(['meine', 'alle'] as const).map((w) => ({ wert: w, text: t(`aufgaben.filter.${w}`) }))}
+          optionen={(['meine', 'vergeben', 'alle'] as const).map((w) => ({ wert: w, text: t(`aufgaben.filter.${w}`) }))}
           onChange={([w]) => {
-            setFilter({ ...filter, wer: w === 'alle' ? 'alle' : 'meine' })
+            setFilter({ ...filter, wer: w === 'alle' || w === 'vergeben' ? w : 'meine' })
           }}
         />
         <Filterchips

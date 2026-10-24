@@ -4537,7 +4537,8 @@
       "meine": "Les miennes",
       "alle": "Toutes",
       "offen": "Ouvertes",
-      "erledigt": "Faites"
+      "erledigt": "Faites",
+      "vergeben": "Confiées par moi"
     },
     "spalte": {
       "aufgabe": "Tâche",
@@ -4564,7 +4565,8 @@
       "titel": "Merci de saisir un titre.",
       "datum": "Merci de choisir une date valide.",
       "person": "Merci de choisir une personne."
-    }
+    },
+    "neuKurz": "Tâche"
   },
   "ki": {
     "knopf": "Rédiger avec l’IA",
@@ -4813,6 +4815,224 @@
       "mailText": "Reconnaître une demande ou une requête, extraire les champs, trouver le client.",
       "oeffnen": "Ouvrir",
       "akteHinweis": "Astuce : chaque dossier (client, lead, offre, projet, service) propose « Rédiger avec l’IA » et « Résumer »."
+    }
+  },
+  "tag": {
+    "gruss": {
+      "morgen": "Bonjour {{name}}",
+      "tag": "Bonjour {{name}}",
+      "abend": "Bonsoir {{name}}"
+    },
+    "zusammenfassung_one": "{{datum}} · 1 point à traiter",
+    "zusammenfassung_other": "{{datum}} · {{count}} points à traiter",
+    "zusammenfassung_zero": "{{datum}} · rien d’urgent",
+    "liste": {
+      "termine": "Rendez-vous aujourd’hui et demain",
+      "aufgaben": "Tâches",
+      "vergeben": "Confiées par moi",
+      "nachfassen": "Offres à relancer",
+      "neue_leads": "Nouvelles demandes",
+      "wiedervorlagen": "Rappels",
+      "fristen": "Autorisations et délais",
+      "zahlungen": "Paiements (7 jours)",
+      "service": "Service et garantie",
+      "kontrollen": "Contrôles et entretiens (30 jours)"
+    },
+    "aufgabenFilter": {
+      "fuerMich": "Pour moi",
+      "vergeben": "Confiées par moi"
+    },
+    "art": {
+      "besichtigung": "Visite",
+      "service": "Service",
+      "einsatz": "Chantier",
+      "kalender": "Outlook",
+      "aufgabe": "Tâche",
+      "nachfassen": "Relance",
+      "lead": "Demande",
+      "wiedervorlage": "Rappel",
+      "frist": "Délai",
+      "zahlung": "Paiement",
+      "fall": "Cas",
+      "kontrolle": "Contrôle",
+      "wartung": "Entretien"
+    },
+    "heute": "aujourd’hui",
+    "morgen": "demain",
+    "ueberfaellig": "en retard",
+    "bewilligung": "Autorisation",
+    "hoch": "urgent",
+    "alle": "Afficher les {{count}}",
+    "oeffnen": "Ouvrir",
+    "anrufen": "Appeler {{nummer}}",
+    "abhaken": "« {{titel}} » terminée",
+    "leerTitel": "Rien de prévu aujourd’hui",
+    "leerText": "Aucun rendez-vous, tâche ou délai. Les nouvelles demandes et tâches apparaissent ici automatiquement.",
+    "nichts": "Rien en attente",
+    "mail": {
+      "knopf": "Résumé par e-mail",
+      "titel": "Résumé par e-mail à moi-même",
+      "beschreibung": "Passe par la corbeille de sortie, depuis ta boîte, à toi-même.",
+      "an": "À",
+      "betreff": "Ma journée – {{datum}}",
+      "kopf": "Ma journée – {{datum}} ({{name}})",
+      "senden": "M’envoyer",
+      "ohneAdresse": "Aucune adresse e-mail n’est saisie pour ta personne.",
+      "gesendet": "Le résumé est dans la corbeille de sortie et part dans un instant"
+    },
+    "kennzahlen": "Indicateurs",
+    "team": "Équipe et exploitation",
+    "system": "Système et plan de construction"
+  },
+  "kz": {
+    "titel": "Indicateurs",
+    "beschreibung": "Où en sommes-nous ? Chaque chiffre est cliquable et montre ce qu’il contient.",
+    "reiter": {
+      "verkauf": "Vente",
+      "pipeline": "Pipeline par région",
+      "betrieb": "Commandes et charge"
+    },
+    "zeitraum": {
+      "titel": "Période",
+      "monat": "Mois",
+      "quartal": "Trimestre",
+      "jahr": "Année",
+      "12m": "12 mois",
+      "alle": "Tout"
+    },
+    "bereich": {
+      "titel": "Société",
+      "alle": "Les deux",
+      "muri": "Muri",
+      "bulle": "Bulle"
+    },
+    "kachel": {
+      "leads": "Nouveaux leads",
+      "gesendet": "Offres envoyées",
+      "angenommen": "Acceptées",
+      "quote": "Taux de conclusion",
+      "quoteHinweis": "acceptées sur {{n}} décidées",
+      "nachfassen": "Relances dues",
+      "nachfassenHinweis": "vers la liste des relances"
+    },
+    "spalte": {
+      "muri": "Muri",
+      "bulle": "Bulle",
+      "zusammen": "Ensemble",
+      "uebrige": "Autres",
+      "kennzahl": "Indicateur"
+    },
+    "nachStandort": "Par site",
+    "nachPerson": "Par personne",
+    "gruppe": {
+      "leads": "Leads",
+      "offerten": "Offres",
+      "zahlungen": "Paiements",
+      "aftersales": "Service et garantie"
+    },
+    "zeile": {
+      "leads_neu": "Nouveaux leads",
+      "leads_offen": "Leads ouverts (actuel)",
+      "termine": "Rendez-vous clients",
+      "kein_interesse": "Pas d’intérêt",
+      "gesendet": "Offres envoyées",
+      "angebotswert": "Valeur offerte (HT)",
+      "offen": "Offres ouvertes (actuel)",
+      "nf_faellig": "Relances dues (actuel)",
+      "angenommen": "Acceptées",
+      "auftragswert": "Valeur commandes (TTC)",
+      "verloren": "Perdues",
+      "quote": "Taux de conclusion",
+      "bau": "Chantiers (actuel)",
+      "zahlung_offen": "Paiements ouverts",
+      "zahlung_ueberfaellig": "Paiements en retard",
+      "zahlung_eingang": "Paiements reçus",
+      "faelle_offen": "Cas ouverts (actuel)",
+      "faelle_neu": "Nouveaux cas",
+      "faelle_garantie": "Dont garantie",
+      "faelle_erledigt": "Cas terminés"
+    },
+    "chart": {
+      "titel": "Offres envoyées",
+      "beschreibung": "Nombre par {{fach}}, Muri et Bulle côte à côte",
+      "fach": {
+        "monat": "jour",
+        "quartal": "semaine",
+        "jahr": "mois",
+        "12m": "mois",
+        "alle": "trimestre"
+      },
+      "tooltip": "{{fach}} : Muri {{muri}}, Bulle {{bulle}}",
+      "tabelle": "En tableau"
+    },
+    "quellen": {
+      "titel": "Sources de leads",
+      "beschreibung": "Jusqu’où sont allés les leads de la période ? Le coût par lead est modifiable.",
+      "quelle": "Source",
+      "leads": "Leads",
+      "termine": "Rendez-vous",
+      "offerten": "Offres",
+      "auftraege": "Commandes",
+      "umsatz": "Valeur commandes",
+      "quote": "Taux",
+      "kostenLead": "Coût/lead",
+      "kostenAuftrag": "Coût/commande",
+      "kostenAendern": "Coût par lead pour {{quelle}}",
+      "gespeichert": "Coût enregistré",
+      "ohne": "sans source"
+    },
+    "detail": {
+      "total": "Total",
+      "anzahl_one": "1 entrée",
+      "anzahl_other": "{{count}} entrées",
+      "leer": "Aucune entrée",
+      "name": "Nom",
+      "nummer": "Numéro",
+      "datum": "Date",
+      "ort": "Lieu / complément",
+      "betrag": "Montant"
+    },
+    "pipeline": {
+      "titel": "Pipeline ouverte par région",
+      "beschreibung": "Toutes les affaires ouvertes, du lead à la signature, par site et canton.",
+      "region": "Région",
+      "anzahl": "Affaires",
+      "wert": "Valeur",
+      "kwp": "kWc",
+      "gruppe": {
+        "lead": "Leads",
+        "offerte": "en offre",
+        "offeriert": "offertes",
+        "auftrag": "Commande"
+      },
+      "ohne": "sans canton",
+      "ohneStandort": "Sans site"
+    },
+    "betrieb": {
+      "auftragsbestand": "Carnet de commandes",
+      "auftragsbestandText": "Projets signés qui ne sont pas encore entièrement facturés.",
+      "projekt": "Projet",
+      "vertrag": "Contrat",
+      "verrechnet": "Facturé",
+      "rest": "Reste à facturer",
+      "total": "Total",
+      "auslastung": "Charge du montage",
+      "auslastungText": "Jours d’intervention réservés sur 5 par semaine, absences déduites. Rouge = plus réservé que disponible.",
+      "kw": "S{{kw}}",
+      "person": "Personne",
+      "ohnePersonen": "Interventions sans personne",
+      "tage": "{{gebucht}} sur {{verfuegbar}} jours",
+      "marge": "Marge par projet",
+      "margeText": "Projets signés dans la période : prévu selon l’offre, réel selon matériel, heures et factures.",
+      "geplant": "Marge prévue",
+      "ist": "Marge réelle",
+      "umsatz": "Chiffre réel",
+      "margeOhne": "Visible uniquement avec le droit « Prix » ou « Finances ».",
+      "status": {
+        "auftrag": "Commande",
+        "im_bau": "en chantier",
+        "abgeschlossen": "terminé"
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ export function zielVon(tabelle: string | null | undefined, id: string | null | 
     projekte: `/projects?projekt=${id}`,
     rechnungen: `/invoices?rechnung=${id}`,
     wartungsvertraege: '/aftersales?reiter=wartung',
+    service_faelle: `/aftersales?fall=${id}`,
     kontakte: `/customers?kunde=${id}`,
     ausgangskorb: `/outbox?eintrag=${id}`,
     ausschreibungen: `/tenders?dossier=${id}`,

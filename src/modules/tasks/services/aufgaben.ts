@@ -16,6 +16,12 @@ export async function ladeAufgaben(f: AufgabenFilter, ichId: string | null): Pro
     .is('geloescht_am', null)
     .limit(500)
   if (f.wer === 'meine' && ichId) q = q.eq('person_id', ichId)
+  if (f.wer === 'vergeben') {
+    // Von mir erstellt, aber für jemand anderen (oder noch niemanden): «Was habe ich delegiert?»
+    const { data } = await db().auth.getSession()
+    q = q.eq('erstellt_von', data.session?.user.id ?? '00000000-0000-0000-0000-000000000000')
+    if (ichId) q = q.or(`person_id.is.null,person_id.neq.${ichId}`)
+  }
   q =
     f.stand === 'offen'
       ? q.is('erledigt_am', null).order('faellig_am', { ascending: true, nullsFirst: false })

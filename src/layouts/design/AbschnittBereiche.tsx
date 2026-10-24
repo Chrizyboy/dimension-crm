@@ -15,7 +15,7 @@ export function AbschnittBereiche() {
       <div className="grid gap-5 lg:grid-cols-2">
         {GRUPPEN.map((g) => (
           <div key={g} className="bg-surface flex flex-col overflow-hidden rounded-lg border">
-            <p className="bg-surface-2 text-muted-foreground border-b px-4 py-2 text-[11px] font-semibold tracking-wide uppercase">
+            <p className="bg-surface-2 text-muted-foreground border-b px-4 py-2 text-xs font-semibold tracking-wide uppercase">
               {t(`nav.${g}`)}
             </p>
             <ul className="divide-y">

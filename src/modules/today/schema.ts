@@ -1,7 +1,4 @@
 import { z } from 'zod'
 
-/**
- * Prüfregeln (Zod) für Formulare und Daten des Moduls «Heute».
- * Dieselben Regeln gelten im Formular und vor dem Speichern.
- */
-export const todaySchema = z.object({})
+/** Prüfregeln für «Mein Tag»: die Übersicht per Mail geht nur an eine gültige Adresse. */
+export const tagMailSchema = z.object({ an: z.email() })

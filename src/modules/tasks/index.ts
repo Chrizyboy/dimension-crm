@@ -20,4 +20,7 @@ export const meta: ModulMeta = {
 /** Die Seite «Aufgaben» (meine/alle, offen/erledigt). */
 export const Aufgaben = lazy(() => import('./components/Aufgaben'))
 
+/** Knopf «+ Aufgabe» mit Dialog, für «Mein Tag». */
+export const NeueAufgabeKnopf = lazy(() => import('./components/NeueAufgabeKnopf'))
+
 export type * from './types'

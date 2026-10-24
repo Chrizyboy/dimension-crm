@@ -9,6 +9,10 @@ Sichtbar in der App unter **Design-System** (`#/design`, unten in der Seitenleis
 - **Zustände unabhängig von der Marke:** Grün = gut, Orange-Braun = Achtung, Rot = kritisch, Blau = Info. Orange wird nie für Fehler verwendet.
 - **Alles mit der Tastatur:** Ctrl K öffnet die Befehlspalette, Ctrl B klappt die Seitenleiste ein. Jeder Knopf hat einen sichtbaren Fokus-Ring.
 - **Zugänglich:** WCAG 2.1 AA, automatisch geprüft mit axe in Hell und Dunkel (`e2e/barrierefreiheit.spec.ts`).
+- **Gut lesbar auch draussen und spät abends** (Rückmeldung Chris, 24.10.2026): Nebentext (`muted-foreground`) und
+  Statusmarken haben mindestens Kontrast 6:1 statt der knappen 4.5:1 von AA, im Dunkeln ist der Hintergrund kein
+  reines Schwarz (weniger Flimmern). Kleinste Schrift für Lesetext 12 px (`text-xs`); 10–11 px nur für Tastenkürzel
+  und Zahlen in kleinen Kreisen.
 
 ## Tokens (`src/index.css`)
 

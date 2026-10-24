@@ -129,7 +129,7 @@ export default function Briefing() {
             {b.data.briefing.hinweis && (
               <p className="bg-info-soft text-info rounded-md px-3 py-2 text-xs">{b.data.briefing.hinweis}</p>
             )}
-            <p className="text-muted-foreground text-[11px]">
+            <p className="text-muted-foreground text-xs">
               {t('ki.vorschlagVom', { datum: formatDatumZeit(b.data.erstellt_am) })}
             </p>
           </>

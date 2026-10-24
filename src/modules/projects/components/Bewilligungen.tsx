@@ -122,7 +122,7 @@ export function Bewilligungen({ onOeffnen }: { onOeffnen: (id: string) => void }
                           <Badge ton={schrittTon(s)} punkt>
                             {t(`projekte.stand.${s.stand}`)}
                           </Badge>
-                          <span className="text-muted-foreground zahlen flex flex-col text-[11px]">
+                          <span className="text-muted-foreground zahlen flex flex-col text-xs">
                             {datum && <span>{formatDatum(datum)}</span>}
                             {s.frist && s.stand !== 'erledigt' && s.stand !== 'nicht_noetig' && (
                               <span className={s.ueberfaellig ? 'text-bad font-medium' : s.bald ? 'text-warn' : ''}>

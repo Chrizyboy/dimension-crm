@@ -72,7 +72,7 @@ export function KiZusammenfassung({ bezug }: { bezug: KiBezug }) {
           {z.inhalt.naechster_schritt && (
             <p className="text-primary dark:text-accent font-medium">→ {z.inhalt.naechster_schritt}</p>
           )}
-          <p className="text-muted-foreground text-[11px]">
+          <p className="text-muted-foreground text-xs">
             {t('ki.vorschlagVom', { datum: formatDatumZeit(z.erstellt_am) })}
           </p>
         </div>

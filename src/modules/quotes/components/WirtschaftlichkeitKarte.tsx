@@ -28,7 +28,7 @@ export function WirtschaftlichkeitKarte({ w }: { w: Wirtschaftlichkeit }) {
     <dl className="grid grid-cols-2 gap-2 sm:grid-cols-3">
       {kacheln.map((k) => (
         <div key={k.k} className="bg-muted/60 rounded-lg p-2">
-          <dt className="text-muted-foreground text-[11px]">{t(`offerten.wirtschaftlichkeit.${k.k}`)}</dt>
+          <dt className="text-muted-foreground text-xs">{t(`offerten.wirtschaftlichkeit.${k.k}`)}</dt>
           <dd className="zahlen font-mono text-sm font-semibold">{k.wert}</dd>
         </div>
       ))}

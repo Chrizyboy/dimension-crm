@@ -129,9 +129,7 @@ export const PipelineKarte = memo(function PipelineKarte({
               </span>
             )}
             {liegt && (
-              <span className="text-bad text-[11px] font-medium">
-                {t('verkauf.liegt', { count: liegtSeit(g) ?? 0 })}
-              </span>
+              <span className="text-bad text-xs font-medium">{t('verkauf.liegt', { count: liegtSeit(g) ?? 0 })}</span>
             )}
           </span>
           {kuerzel && (

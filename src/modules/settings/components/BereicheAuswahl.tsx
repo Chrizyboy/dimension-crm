@@ -37,7 +37,7 @@ export function BereicheAuswahl({ id, module, wert, onChange }: BereicheAuswahlP
             <Label htmlFor={feld} className="flex min-w-0 items-center gap-1.5 font-normal">
               <ModulIcon name={m.icon} className="text-muted-foreground size-3.5 shrink-0" />
               <span className="truncate">{m.titel[sprache]}</span>
-              {m.recht && <span className="text-muted-foreground text-[11px]">({t(`rechte.${m.recht}`)})</span>}
+              {m.recht && <span className="text-muted-foreground text-xs">({t(`rechte.${m.recht}`)})</span>}
             </Label>
           </div>
         )

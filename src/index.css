@@ -21,52 +21,57 @@
   --background: #f5f7fa;
   --surface: #ffffff;
   --surface-2: #f9fafc;
-  --foreground: #0b1b2e;
+  --foreground: #08182b;
   --muted: #edf0f5;
-  --muted-foreground: #556070;
-  --border: #e0e4ea;
-  --border-strong: #c9d0da;
+  --muted-foreground: #465163;
+  --border: #d9dee6;
+  --border-strong: #c0c8d3;
 
   /* Aktionen */
   --primary: var(--navy);
   --primary-hover: #0a3470;
   --primary-foreground: #ffffff;
   --accent: var(--sun);
+  /* Diagramme: zwei Reihen (Muri, Bulle), geprüft auf Farbsehschwäche und Kontrast (Phase 14) */
+  --reihe-1: #2f62b0;
+  --reihe-2: #d06a00;
   --accent-foreground: #1d1300;
   --accent-soft: #fdebd8;
-  --accent-ink: #8a4300;
+  --accent-ink: #7a3b00;
   --ring: #ef7c00;
 
   /* Zustände (unabhängig von der Markenfarbe) */
-  --ok: #22794c;
+  --ok: #186238;
   --ok-soft: #ddf0e4;
-  --warn: #a35600;
+  --warn: #874500;
   --warn-soft: #fbe8d0;
-  --bad: #ae281e;
+  --bad: #96211a;
   --bad-soft: #f9e0dd;
-  --info: #245a94;
+  --info: #1c4c84;
   --info-soft: #dce7f5;
 
   /* Seitenleiste: immer Marineblau, damit das CRM sofort als Dimension Solaire erkennbar ist */
   --sidebar: #02224f;
-  --sidebar-foreground: #c5d0e0;
+  --sidebar-foreground: #d3dcea;
   --sidebar-active: #0d3a75;
   --sidebar-active-foreground: #ffffff;
-  --sidebar-muted: #7f93b0;
+  --sidebar-muted: #93a5bf;
   --sidebar-border: #12346a;
 
   --shadow-pop: 0 1px 2px rgb(2 34 79 / 0.06), 0 8px 24px rgb(2 34 79 / 0.12);
 }
 
 .dark {
-  --background: #0a0f16;
-  --surface: #111821;
-  --surface-2: #151d28;
-  --foreground: #e9edf2;
-  --muted: #1a2331;
-  --muted-foreground: #9aa6b4;
-  --border: #243042;
-  --border-strong: #354357;
+  --background: #0f151e;
+  --surface: #141c27;
+  --surface-2: #18212d;
+  --foreground: #edf1f6;
+  --muted: #1f2a3a;
+  --muted-foreground: #aeb8c5;
+  --border: #2b3749;
+  --border-strong: #3d4c62;
+  --reihe-1: #5f93dd;
+  --reihe-2: #d27c20;
 
   --primary: #f28a1e;
   --primary-hover: #ff9f3d;
@@ -77,21 +82,21 @@
   --accent-ink: #ffc98a;
   --ring: #ff9f3d;
 
-  --ok: #6fc694;
-  --ok-soft: #153025;
-  --warn: #f0a64a;
-  --warn-soft: #382913;
-  --bad: #ee8b7f;
-  --bad-soft: #3a1d1a;
-  --info: #7fb0e6;
-  --info-soft: #16283d;
+  --ok: #7fd3a3;
+  --ok-soft: #173528;
+  --warn: #f6b363;
+  --warn-soft: #3b2c15;
+  --bad: #f59b90;
+  --bad-soft: #3f201c;
+  --info: #93bdf0;
+  --info-soft: #182c43;
 
-  --sidebar: #07111f;
-  --sidebar-foreground: #b4c0d0;
+  --sidebar: #0a1424;
+  --sidebar-foreground: #c3cedc;
   --sidebar-active: #13233a;
   --sidebar-active-foreground: #ffffff;
-  --sidebar-muted: #6c7d94;
-  --sidebar-border: #142236;
+  --sidebar-muted: #8797ad;
+  --sidebar-border: #17263b;
 
   --shadow-pop: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.45);
 }
@@ -123,6 +128,8 @@
   --color-bad-soft: var(--bad-soft);
   --color-info: var(--info);
   --color-info-soft: var(--info-soft);
+  --color-reihe-1: var(--reihe-1);
+  --color-reihe-2: var(--reihe-2);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-active: var(--sidebar-active);

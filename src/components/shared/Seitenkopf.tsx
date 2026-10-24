@@ -16,7 +16,7 @@ export function Seitenkopf({ titel, beschreibung, ueber, aktionen, className }: 
   return (
     <header className={cn('flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between', className)}>
       <div className="flex min-w-0 flex-col gap-1">
-        {ueber && <p className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">{ueber}</p>}
+        {ueber && <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">{ueber}</p>}
         <h1 className="text-2xl font-semibold">{titel}</h1>
         {beschreibung && <p className="text-muted-foreground max-w-2xl text-sm">{beschreibung}</p>}
       </div>

@@ -22,7 +22,7 @@ export function NaechsterSchritt({ schritt, onAnrufen }: { schritt: Schritt | nu
         <Icon className="size-4" aria-hidden="true" />
       </span>
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <p className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">{t('akte.wasJetzt')}</p>
+        <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{t('akte.wasJetzt')}</p>
         <p className="text-sm">{t(`akte.schritt.${schritt.schluessel}`, schritt.werte)}</p>
       </div>
       {schritt.anrufen && (

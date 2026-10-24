@@ -1,27 +1,24 @@
-# Modul: Dashboard
+# Modul: Kennzahlen
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Wie läuft es? Verkauf (Kacheln, Tabelle nach Standort und Person, gesendete Offerten, Lead-Quellen mit Kosten), offene Pipeline pro Region, Auftragsbestand, Auslastung Montage und Marge je Projekt (V233 Dashboard, ERP 0009). Jede Zahl zeigt per Klick ihre Einträge.
 
-**Stand:** Platzhalter – wird in Phase 14 gebaut.
+**Stand:** Phase 14 (`#/dashboard?reiter=…&zeitraum=…&bereich=…`).
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- `kennzahlen_fakten(von, bis)`: jede gezählte Sache als Zeile; gezählt und summiert in `lib/auswertung.ts`.
+- `kennzahlen_betrieb(von, bis)`: Auftragsbestand, Auslastung, Marge (nur mit Recht `preise` oder `finanzen`).
+- `verkauf_geschaefte` (Pipeline), `einstellungen.kennzahlen` (Kosten pro Lead; ändern über `kennzahlen_quellen_kosten`), `auswahlwerte` (Namen der Quellen), `personen`.
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `src/lib/ziel.ts`, `src/lib/format.ts`.
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine
+- **hört auf:** keine
 
-## Ordner
+## Neue Kennzahl
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+Schlüssel in `kennzahlen_fakten` (neue Migration) und eine Zeile in `GRUPPEN` (`lib/auswertung.ts`) plus Text `kz.zeile.<id>` in DE und FR.

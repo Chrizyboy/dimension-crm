@@ -46,7 +46,7 @@ export function MenueRadio({ className, children, ...props }: ComponentProps<typ
 export function MenueTitel({ className, ...props }: ComponentProps<typeof MenuPrimitive.Label>) {
   return (
     <MenuPrimitive.Label
-      className={cn('text-muted-foreground px-2 pt-2 pb-1 text-[11px] font-medium tracking-wide uppercase', className)}
+      className={cn('text-muted-foreground px-2 pt-2 pb-1 text-xs font-medium tracking-wide uppercase', className)}
       {...props}
     />
   )

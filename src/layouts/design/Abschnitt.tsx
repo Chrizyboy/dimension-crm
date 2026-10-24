@@ -30,7 +30,7 @@ export function Abschnitt({
 export function Beispiel({ titel, children, className }: { titel: string; children: ReactNode; className?: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-2">
-      <p className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">{titel}</p>
+      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{titel}</p>
       <div className={cn('flex flex-wrap items-center gap-2', className)}>{children}</div>
     </div>
   )

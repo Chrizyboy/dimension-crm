@@ -61,7 +61,7 @@ export function ArtikelLieferanten({ a }: { a: Artikel }) {
               <td className="py-1 pr-2">
                 {z.lieferant ?? '–'}
                 {z.id === guenstigster && zeilen.length > 1 && (
-                  <span className="text-ok block text-[11px]">{t('preise.akte.guenstigster')}</span>
+                  <span className="text-ok block text-xs">{t('preise.akte.guenstigster')}</span>
                 )}
               </td>
               <td className="py-1 pr-2 font-mono text-xs">{z.artikelnummer ?? '–'}</td>
