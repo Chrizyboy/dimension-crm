@@ -5005,7 +5005,8 @@
         "offeriert": "offertes",
         "auftrag": "Commande"
       },
-      "ohne": "sans canton"
+      "ohne": "sans canton",
+      "ohneStandort": "Sans site"
     },
     "betrieb": {
       "auftragsbestand": "Carnet de commandes",

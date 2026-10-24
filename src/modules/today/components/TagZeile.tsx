@@ -48,7 +48,7 @@ export function TagZeile({ zeile, heute, onAbhaken }: { zeile: Zeile; heute: str
       )}
       <span
         className={cn(
-          'zahlen w-20 shrink-0 text-xs',
+          'zahlen w-14 shrink-0 text-xs sm:w-20',
           zeile.ueberfaellig ? 'text-bad font-medium' : 'text-muted-foreground',
         )}
       >

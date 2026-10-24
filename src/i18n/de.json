@@ -5005,7 +5005,8 @@
         "offeriert": "offeriert",
         "auftrag": "Auftrag"
       },
-      "ohne": "ohne Kanton"
+      "ohne": "ohne Kanton",
+      "ohneStandort": "Ohne Standort"
     },
     "betrieb": {
       "auftragsbestand": "Auftragsbestand",

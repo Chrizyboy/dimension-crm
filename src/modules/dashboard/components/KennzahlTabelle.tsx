@@ -62,7 +62,7 @@ export function KennzahlTabelle({
                     const c = zelle(s.fakten, z)
                     const leer = c.fakten.length === 0
                     return (
-                      <Zelle key={s.id} zahl className="py-1">
+                      <Zelle key={s.id} zahl className="py-1 whitespace-nowrap">
                         <button
                           type="button"
                           disabled={leer}

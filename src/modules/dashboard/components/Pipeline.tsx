@@ -81,7 +81,11 @@ export function Pipeline({ bereich }: { bereich: Bereich }) {
             const kantone = [...new Set(hier.map((z) => z.kanton ?? ''))].sort()
             return (
               <Fragment key={s}>
-                {zeile(s === '–' ? '–' : t(`kz.spalte.${s}`, { defaultValue: s }), hier, true)}
+                {zeile(
+                  s === '–' ? t('kz.pipeline.ohneStandort') : t(`kz.spalte.${s}`, { defaultValue: s }),
+                  hier,
+                  true,
+                )}
                 {kantone.map((k) =>
                   zeile(
                     k || t('kz.pipeline.ohne'),
