@@ -181,7 +181,8 @@ export default function MeinTag({
         </>
       )}
 
-      {unten}
+      {/* Erst nach den eigenen Karten: Sonst ist «Team und Betrieb» beim Laden kurz im Bild und lädt sofort mit. */}
+      {!tag.isLoading && unten}
 
       {mail && d && (
         <TagesMail

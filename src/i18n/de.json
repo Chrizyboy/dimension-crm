@@ -360,7 +360,8 @@
   },
   "tabelle": {
     "sortieren": "Klicken zum Sortieren",
-    "aktionen": "Aktionen"
+    "aktionen": "Aktionen",
+    "mehr": "Weitere {{anzahl}} anzeigen"
   },
   "kunden": {
     "titel": "Kunden",

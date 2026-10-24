@@ -360,7 +360,8 @@
   },
   "tabelle": {
     "sortieren": "Cliquer pour trier",
-    "aktionen": "Actions"
+    "aktionen": "Actions",
+    "mehr": "Afficher {{anzahl}} de plus"
   },
   "kunden": {
     "titel": "Clients",

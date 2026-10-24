@@ -38,11 +38,17 @@ export function ladeSprache(sprache: Sprache): Promise<void> {
   return p
 }
 
-/** Für den Start: erst die eigene Sprache (die Ansicht wartet darauf), die andere ohne Warten hinterher. */
+/**
+ * Für den Start: erst die eigene Sprache (die Ansicht wartet darauf), die andere, sobald der Browser nichts
+ * mehr zu tun hat (spätestens nach 3 s), damit sie am Handy nicht mit den Daten der ersten Ansicht um die Leitung
+ * kämpft.
+ */
 export async function starteSprachen(eigene: Sprache): Promise<void> {
   await ladeSprache(eigene)
   await i18n.changeLanguage(eigene)
-  void ladeSprache(eigene === 'de' ? 'fr' : 'de')
+  const andere = () => void ladeSprache(eigene === 'de' ? 'fr' : 'de')
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(andere, { timeout: 3000 })
+  else setTimeout(andere, 1000)
 }
 
 export default i18n
