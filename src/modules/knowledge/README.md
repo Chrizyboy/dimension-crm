@@ -1,27 +1,25 @@
-# Modul: Wissen & Hilfe
+# Modul: Handbuch
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Anleitung zu jedem Bereich, die Prozesse der Firma mit Versionen, Erklärvideos und «Fehler melden» an die Administration (V233 Helpdesk).
 
-**Stand:** Platzhalter – wird in Phase 15 gebaut.
+**Stand:** Phase 15 (`#/knowledge?ansicht=anleitung|prozesse|videos|meldungen&meldung=…&neu=<bereich>`).
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- `handbuch_eintraege` (Prozesse und Videos; ändern nur über `handbuch_speichern`, `handbuch_entfernen`, nur Administration).
+- `rueckmeldungen` (Meldungen; anlegen über `rueckmeldung_melden`, antworten über `rueckmeldung_beantworten`).
+- `dokumente` und Bucket `dokumente` (Dateien unter `handbuch/`).
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `src/services/fachfehler.ts`, `src/services/meldungen.ts`, `src/hooks/useSichtbareModule.ts`.
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine (Glocke kommt vom Server)
+- **hört auf:** keine
 
-## Ordner
+## Hinweise
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- «Fehler melden» erreicht man auch über die Befehlspalette und jede Fehleranzeige; der Bereich steht in `neu`.
+- Neue Prozess-Version: die alte Datei bleibt unter «Frühere Versionen» (höchstens 20).

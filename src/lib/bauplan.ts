@@ -47,8 +47,8 @@ export const BAUPLAN: readonly Phase[] = [
   { nr: 11, titel: { de: 'Marketing und Social Media', fr: 'Marketing et réseaux sociaux' }, stand: 'fertig' },
   { nr: 12, titel: { de: 'Automationen', fr: 'Automatisations' }, stand: 'fertig' },
   { nr: 13, titel: { de: 'Assistent (KI)', fr: 'Assistant (IA)' }, stand: 'fertig' },
-  { nr: 14, titel: { de: 'Mein Tag und Kennzahlen', fr: 'Ma journée et indicateurs' }, stand: 'aktiv' },
-  { nr: 15, titel: { de: 'Feinschliff', fr: 'Finitions' }, stand: 'offen' },
+  { nr: 14, titel: { de: 'Mein Tag und Kennzahlen', fr: 'Ma journée et indicateurs' }, stand: 'fertig' },
+  { nr: 15, titel: { de: 'Feinschliff', fr: 'Finitions' }, stand: 'aktiv' },
   { nr: 16, titel: { de: 'Installation und Umzug', fr: 'Installation et migration' }, stand: 'offen' },
   {
     nr: 17,
