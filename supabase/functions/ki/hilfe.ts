@@ -46,6 +46,25 @@ export function heute(): string {
   return new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Zurich' }).format(new Date())
 }
 
+/** Abstand der Schweizer Zeit zu UTC in Minuten für einen Zeitpunkt (60 im Winter, 120 im Sommer). */
+function zuerichVersatz(zeit: number): number {
+  const teil = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Zurich', timeZoneName: 'longOffset' })
+    .formatToParts(new Date(zeit))
+    .find((t) => t.type === 'timeZoneName')?.value
+  const m = /GMT([+-])(\d{2}):(\d{2})/.exec(teil ?? '')
+  return m ? (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3])) : 0
+}
+
+/**
+ * Beginn des heutigen Schweizer Tages als UTC-Zeitpunkt (ISO). Nötig, weil zwischen Mitternacht und 1 bzw. 2 Uhr
+ * der Schweizer Tag schon begonnen hat, der UTC-Tag aber noch nicht; zweimal gerechnet wegen der Zeitumstellung.
+ */
+export function tagesbeginn(tag = heute()): string {
+  const mitternachtUtc = Date.parse(`${tag}T00:00:00Z`)
+  const erst = mitternachtUtc - zuerichVersatz(mitternachtUtc) * 60_000
+  return new Date(mitternachtUtc - zuerichVersatz(erst) * 60_000).toISOString()
+}
+
 const BILDER = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
 /** Datei aus der App (Base64), höchstens 5 MB: Bild oder PDF. */
