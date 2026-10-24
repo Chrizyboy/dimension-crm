@@ -90,24 +90,40 @@ export function Freigabeliste({
     }
   }
 
-  useTaste('arrowdown', () => {
-    wechsle(1)
-  })
-  useTaste('arrowup', () => {
-    wechsle(-1)
-  })
-  useTaste('x', () => {
-    if (aktiv) umschalten(aktiv.id)
-  })
-  useTaste('b', () => void bewilligeAuswahl(), modus === 'bewilligen')
+  useTaste(
+    'arrowdown',
+    () => {
+      wechsle(1)
+    },
+    true,
+    t('kuerzel.naechster'),
+  )
+  useTaste(
+    'arrowup',
+    () => {
+      wechsle(-1)
+    },
+    true,
+    t('kuerzel.vorheriger'),
+  )
+  useTaste(
+    'x',
+    () => {
+      if (aktiv) umschalten(aktiv.id)
+    },
+    true,
+    t('kuerzel.auswahl'),
+  )
+  useTaste('b', () => void bewilligeAuswahl(), modus === 'bewilligen', t('kuerzel.bewilligen'))
   useTaste(
     'a',
     () => {
       if (aktiv && darf) setAblehnenId(aktiv.id)
     },
     modus === 'bewilligen',
+    t('kuerzel.ablehnen'),
   )
-  useTaste('s', () => void sendeAuswahl(), modus === 'senden')
+  useTaste('s', () => void sendeAuswahl(), modus === 'senden', t('kuerzel.senden'))
 
   if (liste.error) return <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
   if (liste.isPending) return <Skelett className="h-96" />

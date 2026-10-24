@@ -30,7 +30,7 @@ export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
   const regionen = useRegionen()
   const quellen = useAuswahl('quelle')
   const suchfeld = useRef<HTMLInputElement>(null)
-  useTaste('/', () => suchfeld.current?.focus())
+  useTaste('/', () => suchfeld.current?.focus(), true, t('kuerzel.suche'))
   const gefiltert = JSON.stringify(filter) !== JSON.stringify(LEERER_FILTER)
   const eins = (liste: string[]) => liste[0] ?? ALLE
   const setze = (feld: keyof Omit<VerkaufFilter, 'suche'>) => (w: string) => {

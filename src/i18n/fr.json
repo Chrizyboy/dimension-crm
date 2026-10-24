@@ -75,6 +75,28 @@
     "sucht": "Recherche …",
     "neuerLead": "Saisir un nouveau lead"
   },
+  "kuerzel": {
+    "titel": "Raccourcis clavier",
+    "beschreibung": "Tout ce qui est fréquent se fait sans souris. Les raccourcis ne s'appliquent pas pendant la saisie dans un champ.",
+    "ueberall": "Partout",
+    "palette": "Palette de commandes : chercher un domaine, un contact ou une action",
+    "seitenleiste": "Réduire ou déplier la barre latérale",
+    "hilfe": "Cet aperçu",
+    "schliessen": "Fermer la fenêtre ou le panneau",
+    "seite": "Dans cette vue",
+    "spruenge": "Aller à : d'abord G, puis la lettre",
+    "suche": "Aller au champ de recherche",
+    "naechster": "Entrée suivante",
+    "vorheriger": "Entrée précédente",
+    "auswahl": "Sélectionner ou désélectionner",
+    "bewilligen": "Approuver la sélection",
+    "ablehnen": "Refuser l'entrée",
+    "senden": "Envoyer la sélection",
+    "neuerLead": "Nouveau lead",
+    "neuerKunde": "Nouveau client",
+    "neuerKontakt": "Nouveau contact",
+    "ansicht": "Changer de vue (onglets depuis la gauche)"
+  },
   "benachrichtigungen": {
     "titel": "Notifications",
     "mitZahl": "Notifications, {{anzahl}} non lues",

@@ -7,6 +7,7 @@ import { useTastenkuerzel } from '@/hooks/useTastenkuerzel'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
 import { Befehlspalette } from './Befehlspalette'
+import { KuerzelHilfe } from './KuerzelHilfe'
 import { HandyNavigation } from './HandyNavigation'
 import { Kopfzeile } from './Kopfzeile'
 import { Seitenleiste } from './Seitenleiste'
@@ -53,6 +54,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
       <HandyNavigation />
       <Befehlspalette />
+      <KuerzelHilfe />
       <Toaster
         position="bottom-right"
         theme={darstellung === 'hell' ? 'light' : darstellung === 'dunkel' ? 'dark' : 'system'}

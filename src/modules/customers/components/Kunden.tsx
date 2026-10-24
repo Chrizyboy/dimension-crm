@@ -42,10 +42,15 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
   // Die Liste filtert erst, wenn die Tastatur kurz ruht; das Tippen bleibt flüssig.
   const verzoegert = useDeferredValue(suche)
 
-  useTaste('n', () => {
-    setNeu(true)
-  })
-  useTaste('/', () => suchfeld.current?.focus())
+  useTaste(
+    'n',
+    () => {
+      setNeu(true)
+    },
+    true,
+    t('kuerzel.neuerKunde'),
+  )
+  useTaste('/', () => suchfeld.current?.focus(), true, t('kuerzel.suche'))
 
   const kunden = useMemo(
     () => (kontakte.data ?? []).filter((k) => KUNDENARTEN.has(k.kontaktart) || k.stand !== null),

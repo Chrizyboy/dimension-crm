@@ -75,6 +75,28 @@
     "sucht": "Suche …",
     "neuerLead": "Neuen Lead erfassen"
   },
+  "kuerzel": {
+    "titel": "Tastenkürzel",
+    "beschreibung": "Alles Häufige geht ohne Maus. Kürzel wirken nicht, solange du in einem Feld schreibst.",
+    "ueberall": "Überall",
+    "palette": "Befehlspalette: Bereich, Kontakt oder Aktion suchen",
+    "seitenleiste": "Seitenleiste ein- oder ausklappen",
+    "hilfe": "Diese Übersicht",
+    "schliessen": "Fenster oder Panel schliessen",
+    "seite": "In dieser Ansicht",
+    "spruenge": "Springen: erst G, dann der Buchstabe",
+    "suche": "Ins Suchfeld springen",
+    "naechster": "Nächster Eintrag",
+    "vorheriger": "Vorheriger Eintrag",
+    "auswahl": "Eintrag an- oder abwählen",
+    "bewilligen": "Auswahl bewilligen",
+    "ablehnen": "Eintrag ablehnen",
+    "senden": "Auswahl senden",
+    "neuerLead": "Neuer Lead",
+    "neuerKunde": "Neuer Kunde",
+    "neuerKontakt": "Neuer Kontakt",
+    "ansicht": "Ansicht wechseln (Reiter von links)"
+  },
   "benachrichtigungen": {
     "titel": "Benachrichtigungen",
     "mitZahl": "Benachrichtigungen, {{anzahl}} ungelesen",
