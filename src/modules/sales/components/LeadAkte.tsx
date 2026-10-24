@@ -16,6 +16,9 @@ import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import { ladeGeschaeft } from '../services/geschaefte'
 import type { Geschaeft } from '../types'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { KiKnopf } from '@/components/shared/ki/KiKnopf'
+import { KiLeadBewertung } from '@/components/shared/ki/KiLeadBewertung'
+import { KiZusammenfassung } from '@/components/shared/ki/KiZusammenfassung'
 import { LeadAngaben } from './LeadAngaben'
 import { OutlookTermin } from './OutlookTermin'
 import { besichtigungStand, type Besichtigung } from '../lib/besichtigung'
@@ -175,6 +178,16 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 <Contact />
                 {t('verkauf.akte.kundenakte')}
               </Button>
+              <KiKnopf
+                variant="ghost"
+                art={g.offerteId ? 'nachfassen' : 'frei'}
+                bezug={kiBezug(g)}
+                mail={{
+                  kontakt_id: g.kontaktId,
+                  ...(g.verkaufschanceId ? { verkaufschance_id: g.verkaufschanceId } : {}),
+                  ...(g.offerteId ? { offerte_id: g.offerteId } : {}),
+                }}
+              />
             </div>
 
             {g.verkaufschanceId && g.stand === 'termin' && g.terminAm && akte.details.isSuccess && (
@@ -206,6 +219,12 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 )}
               </AkteAbschnitt>
             )}
+            <AkteAbschnitt titel={t('ki.abschnitt')} offen={false}>
+              <div className="flex flex-col gap-4">
+                {g.verkaufschanceId && <KiLeadBewertung leadId={g.verkaufschanceId} />}
+                <KiZusammenfassung bezug={kiBezug(g)} />
+              </div>
+            </AkteAbschnitt>
             {g.verkaufschanceId && (
               <AkteAbschnitt titel={t('verkauf.akte.dateien')} zusatz={akte.dateien.data?.length} offen={false}>
                 <LeadDateien dateien={akte.dateien.data ?? []} />
@@ -243,4 +262,11 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
       </DialogInhalt>
     </Dialog>
   )
+}
+
+/** Wovon die KI liest: der Lead, sonst die Offerte, sonst der Kunde. */
+function kiBezug(g: Geschaeft) {
+  if (g.verkaufschanceId) return { tabelle: 'verkaufschancen' as const, id: g.verkaufschanceId }
+  if (g.offerteId) return { tabelle: 'offerten' as const, id: g.offerteId }
+  return { tabelle: 'kontakte' as const, id: g.kontaktId }
 }

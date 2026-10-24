@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { AlertTriangle, Send, Sparkles, Trash2, Users } from 'lucide-react'
+import { AlertTriangle, Send, Trash2, Users } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -14,6 +14,8 @@ import { useAktion } from '../hooks/useAktion'
 import { useVorlagen } from '../hooks/useMarketing'
 import { newsletterPruefen } from '../lib/texte'
 import { fuellen } from '../lib/zielgruppe'
+import { marketingMitKi, textDa } from '../lib/kiTexte'
+import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 import { abmeldeLink, ladeEmpfaenger, newsletterPapierkorb, senden, speichereNewsletter } from '../services/marketing'
 import { GRUPPEN, type Gruppe, type Newsletter, type NewsletterSegment, type Sprache } from '../types'
 
@@ -201,10 +203,13 @@ export function NewsletterEditor({
             </div>
             <p className="text-muted-foreground text-xs">{t('marketing.newsletter.versandgrund')}</p>
           </section>
-          <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-            <Sparkles className="size-3.5" aria-hidden="true" />
-            {t('marketing.kiSpaeter')}
-          </p>
+          <KiWunschZeile
+            fest={fest}
+            hatText={textDa(texte, sprachen)}
+            onSchreiben={async (wunsch) => {
+              setTexte(await marketingMitKi('newsletter', sprachen, [thema, wunsch].filter(Boolean).join('. '), texte))
+            }}
+          />
           {sprachen.map((s) => (
             <section key={s} className="flex flex-col gap-2" aria-label={t(`marketing.sprache.${s}`)}>
               <h3 className="text-sm font-semibold">{t(`marketing.sprache.${s}`)}</h3>

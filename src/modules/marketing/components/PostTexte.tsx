@@ -1,13 +1,14 @@
-import { Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Feld } from '@/components/ui/feld'
 import { Textarea } from '@/components/ui/input'
+import { rufeKi } from '@/services/ki'
 import { postHinweise, postText, sprachenVon, ZEICHEN_MAX } from '../lib/texte'
 import type { MarketingVorlagen, Netzwerk, SocialPost, Sprache } from '../types'
+import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 
 /**
  * Texte je Netzwerk und Sprache, mit Zeichenzähler (Instagram 2200) und Hinweisen nach den Regeln aus den
- * Vorlagen (Hashtags, Emojis, Bild). Texte mit KI kommen mit dem Assistenten (Phase 13).
+ * Vorlagen (Hashtags, Emojis, Bild). «Mit KI schreiben» (V233 smWrite) füllt alle Netzwerke und Sprachen.
  */
 export function PostTexte({
   post,
@@ -15,7 +16,7 @@ export function PostTexte({
   fest,
   onTexte,
 }: {
-  post: Pick<SocialPost, 'netzwerke' | 'sprache' | 'texte' | 'bilder'>
+  post: Pick<SocialPost, 'netzwerke' | 'sprache' | 'texte' | 'bilder' | 'thema' | 'idee'>
   regeln: MarketingVorlagen['social']['regeln']
   fest: boolean
   onTexte: (t: SocialPost['texte']) => void
@@ -27,10 +28,23 @@ export function PostTexte({
   }
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-        <Sparkles className="size-3.5" aria-hidden="true" />
-        {t('marketing.kiSpaeter')}
-      </p>
+      <KiWunschZeile
+        fest={fest}
+        hatText={post.netzwerke.some((n) => Object.values(post.texte[n] ?? {}).some(Boolean))}
+        onSchreiben={async (wunsch) => {
+          const bisher = post.netzwerke.some((n) => Object.values(post.texte[n] ?? {}).some(Boolean))
+            ? post.texte
+            : null
+          const r = await rufeKi<{ texte: SocialPost['texte'] }>('social', {
+            netzwerke: post.netzwerke,
+            sprache: post.sprache ?? 'de',
+            thema: [post.thema, post.idee].filter(Boolean).join('\n') || wunsch,
+            wunsch,
+            bisher,
+          })
+          onTexte({ ...post.texte, ...r.texte })
+        }}
+      />
       {post.netzwerke.map((n) => {
         const laenge = postText(post, n).length
         return (

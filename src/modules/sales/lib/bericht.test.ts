@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { berichtBetreff, berichtText, monatName } from './bericht'
+import { berichtBetreff, berichtFakten, berichtText, monatName } from './bericht'
 
 const stand = { inBearbeitung: 8, termin: 0, offeriert: 10, keinInteresse: 2 }
 const ohne = [
@@ -46,4 +46,26 @@ it('sagt, wenn die Anzahl stimmt, und schreibt Französisch', () => {
   })
   expect(text).toContain('Différence : aucune')
   expect(text.startsWith('Bonjour')).toBe(true)
+})
+
+it('Fakten für den KI-Text: Differenz, Reklamation und zur Info getrennt', () => {
+  const l = (id: string) => ({
+    id,
+    eingang_am: '2026-09-03',
+    name: `Test ${id}`,
+    plz: '1630',
+    ort: 'Bulle',
+    grund: null,
+  })
+  const f = berichtFakten({
+    monat: '2026-09',
+    erhalten: 10,
+    gekauft: 12,
+    stand: { inBearbeitung: 3, termin: 2, offeriert: 1, keinInteresse: 4 },
+    ohneInteresse: [l('a'), l('b')],
+    reklamiert: new Set(['a']),
+  })
+  expect(f.differenz).toBe(-2)
+  expect(f.reklamation).toEqual([{ datum: '03.09.2026', name: 'Test a', ort: '1630 Bulle', grund: 'nicht erfasst' }])
+  expect((f.zur_info as unknown[]).length).toBe(1)
 })

@@ -1,6 +1,7 @@
 import { BadgeCheck, Copy, Printer, Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
@@ -9,10 +10,11 @@ import { Checkbox } from '@/components/ui/schalter'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useDrucken } from '@/hooks/useDrucken'
 import { formatDatum } from '@/lib/format'
+import { rufeKi } from '@/services/ki'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
-import { berichtBetreff, berichtText, monatName } from '../lib/bericht'
+import { berichtBetreff, berichtFakten, berichtText, monatName } from '../lib/bericht'
 import type { BerichtQuelle, Meldung } from '../services/bericht'
 import { BerichtDruck } from './BerichtDruck'
 
@@ -174,6 +176,32 @@ export default function BerichtDialog({ q, monat, laedt, onSpeichern, onSchliess
               />
             </Feld>
           </div>
+          <KiWunschZeile
+            hatText={false}
+            onSchreiben={async (wunsch) => {
+              const stand = {
+                inBearbeitung: q.inBearbeitung,
+                termin: q.termin,
+                offeriert: q.offeriert,
+                keinInteresse: q.keinInteresse,
+              }
+              const r = await rufeKi<{ text: string }>('monatsbericht', {
+                anbieter: name,
+                fakten: berichtFakten({
+                  monat,
+                  erhalten: q.erhalten,
+                  gekauft: q.gekauft,
+                  stand,
+                  ohneInteresse: ohne,
+                  reklamiert: rek,
+                }),
+                vorlage: q.berichtText ?? '',
+                aktuell: text,
+                wunsch,
+              })
+              setText(r.text)
+            }}
+          />
           <Feld id="bericht-text" label={t('verkauf.bericht.text')}>
             <Textarea
               id="bericht-text"

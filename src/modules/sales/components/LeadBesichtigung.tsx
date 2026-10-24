@@ -11,6 +11,7 @@ import type { Json } from '@/types/datenbank'
 import { useVerkaufAenderung } from '../hooks/useVerkauf'
 import type { Besichtigung } from '../lib/besichtigung'
 import { aendereLead } from '../services/leads'
+import { useLuftbildAnalyse } from '../hooks/useLuftbildAnalyse'
 
 const AUSRICHTUNG = ['sued', 'suedost', 'suedwest', 'ost', 'west', 'ost_west', 'nord', 'flach'] as const
 const MATERIAL = [
@@ -32,6 +33,8 @@ const LEER = '_leer'
 export function LeadBesichtigung({ verkaufschanceId, wert }: { verkaufschanceId: string; wert: Besichtigung | null }) {
   const { t } = useTranslation()
   const [b, setB] = useState<Besichtigung>(wert ?? {})
+  const luftbild = useLuftbildAnalyse(verkaufschanceId).data?.inhalt
+  const kiAusrichtung = luftbild && luftbild.ausrichtung !== b.ausrichtung ? luftbild.ausrichtung : null
   const speichern = useVerkaufAenderung((neu: Besichtigung) =>
     aendereLead(verkaufschanceId, { besichtigung: neu as unknown as Json }),
   )
@@ -77,6 +80,17 @@ export function LeadBesichtigung({ verkaufschanceId, wert }: { verkaufschanceId:
               ...AUSRICHTUNG.map((a) => ({ wert: a, text: t(`verkauf.besichtigung.richtung.${a}`) })),
             ]}
           />
+          {kiAusrichtung && (
+            <button
+              type="button"
+              className="text-primary dark:text-accent self-start text-xs hover:underline"
+              onClick={() => {
+                setze('ausrichtung')(kiAusrichtung)
+              }}
+            >
+              {t('ki.luftbild.uebernehmen', { richtung: t(`verkauf.besichtigung.richtung.${kiAusrichtung}`) })}
+            </button>
+          )}
         </Feld>
         {feld('neigung', 'number', '°')}
         <Feld id="besichtigung-material" label={t('verkauf.besichtigung.material')}>

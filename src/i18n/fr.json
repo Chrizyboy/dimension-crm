@@ -1851,7 +1851,16 @@
       "nachfassen": "Relance",
       "offerte": "Offre",
       "werkvertrag": "Contrat d'entreprise",
-      "monatsbericht": "Rapport mensuel"
+      "monatsbericht": "Rapport mensuel",
+      "ki_nachfassen": "IA : Relance d’offre",
+      "ki_antwort": "IA : Réponse à un e-mail",
+      "ki_termin": "IA : Proposer ou confirmer un rendez-vous",
+      "ki_offerte": "IA : Accompagner l’offre",
+      "ki_offerttext": "IA : Texte pour l’offre",
+      "ki_auftrag": "IA : Confirmer la commande",
+      "ki_zahlung": "IA : Paiement / facture",
+      "ki_service": "IA : Service",
+      "ki_frei": "IA : Texte libre"
     },
     "titelMail": "Vérifier l'e-mail",
     "titelSms": "Vérifier le SMS",
@@ -1930,7 +1939,21 @@
       "bild_abgelehnt": "Instagram refuse l’image (format ou taille).",
       "speicher": "Impossible d’enregistrer l’image.",
       "unklar": "Pas de réponse : vérifie sur le réseau si la publication est parue.",
-      "social_nicht_geplant": "La publication n’est pas validée."
+      "social_nicht_geplant": "La publication n’est pas validée.",
+      "ki_nicht_eingerichtet": "L’IA n’est pas encore configurée (clé manquante).",
+      "ki_aus": "L’IA est désactivée.",
+      "ki_limit": "La limite journalière de l’IA est atteinte.",
+      "ki_modell": "Aucun modèle n’est configuré pour cette fonction.",
+      "ki_schluessel": "La clé IA a été refusée. Merci d’informer l’administration.",
+      "ki_ueberlastet": "L’IA est surchargée. Merci de réessayer dans une minute.",
+      "ki_zu_gross": "Trop de contenu pour l’IA (fichiers trop gros).",
+      "ki_dienst": "Le service IA ne répond pas. Merci de réessayer plus tard.",
+      "ki_anfrage": "L’IA n’a pas pu traiter la demande.",
+      "ki_abgelehnt": "L’IA a refusé cette demande.",
+      "ki_zu_lang": "La réponse de l’IA était trop longue. Merci de formuler le souhait plus brièvement.",
+      "ki_antwort": "La réponse de l’IA était incomplète. Merci de réessayer.",
+      "datei_typ": "Ce type de fichier n’est pas pris en charge (images et PDF uniquement).",
+      "datei_zu_gross": "Le fichier est trop gros (5 Mo au maximum)."
     }
   },
   "verbindungen": {
@@ -3935,7 +3958,6 @@
     "ohneMail": "Pas d’e-mail",
     "mitPost": "Adresse postale disponible",
     "ohnePost": "Adresse postale incomplète",
-    "kiSpaeter": "La rédaction avec l’IA arrive avec l’assistant (phase 13).",
     "anschreiben": {
       "tabelle": "Groupe cible",
       "waehlen": "Sélection",
@@ -4542,6 +4564,255 @@
       "titel": "Merci de saisir un titre.",
       "datum": "Merci de choisir une date valide.",
       "person": "Merci de choisir une personne."
+    }
+  },
+  "ki": {
+    "knopf": "Rédiger avec l’IA",
+    "abschnitt": "IA",
+    "neu": "Recréer",
+    "regel": "Proposition de l’IA : à lire et vérifier. Rien n’est enregistré ni envoyé avant ton clic.",
+    "vorschlagVom": "Proposition de l’IA du {{datum}}, à vérifier",
+    "aufgabeAnlegen": "Créer la tâche",
+    "aufgabeDa": "Tâche créée",
+    "aufgabeVorschlag_zero": "Proposition : « {{titel}} » aujourd’hui",
+    "aufgabeVorschlag_one": "Proposition : « {{titel}} » demain",
+    "aufgabeVorschlag_other": "Proposition : « {{titel}} » dans {{count}} jours",
+    "status": {
+      "nichtEingerichtet": "L’IA n’est pas encore configurée (clé manquante). Voir docs/ki.md.",
+      "aus": "L’IA est désactivée (Assistant IA › Paramètres).",
+      "limit": "La limite journalière de l’IA est atteinte. Demain cela refonctionne, ou l’administration augmente la limite."
+    },
+    "art": {
+      "nachfassen": "Relance d’offre",
+      "antwort": "Réponse à un e-mail",
+      "termin": "Proposer ou confirmer un rendez-vous",
+      "offerte": "Accompagner l’offre",
+      "offerttext": "Texte pour l’offre",
+      "auftrag": "Confirmer la commande",
+      "zahlung": "Paiement / facture",
+      "service": "Service",
+      "frei": "Texte libre"
+    },
+    "funktion": {
+      "entwurf": "Textes aux clients",
+      "stil_lernen": "Apprendre le style",
+      "marketing_text": "Textes marketing",
+      "social": "Posts réseaux sociaux",
+      "monatsbericht": "Rapport mensuel leads",
+      "mail_erkennen": "Lire un e-mail",
+      "notiz": "Note d’entretien",
+      "beleg": "Justificatif de frais",
+      "offerte_pdf": "PDF d’offre",
+      "luftbild": "Vue aérienne",
+      "zusammenfassung": "Résumé",
+      "lead_bewertung": "Évaluation du lead",
+      "briefing": "Briefing du jour",
+      "automation": "Automatisations"
+    },
+    "assistent": {
+      "titel": "Rédiger avec l’IA",
+      "beschreibung": "L’IA connaît le client, l’état et l’historique, et écrit dans le style de l’entreprise et dans le tien.",
+      "art": "Pour quoi",
+      "sprache": "Langue",
+      "spracheKunde": "Comme le client",
+      "wunsch": "Que doit contenir le texte ?",
+      "wunschHilfe": "Quelques mots suffisent. L’IA n’invente ni prix ni dates.",
+      "beispiel": {
+        "nachfassen": "p. ex. demander s’il reste des questions ; proposer une variante avec une batterie plus petite",
+        "antwort": "p. ex. répondre aux questions sur les subventions, proposer de rappeler",
+        "termin": "p. ex. proposer une visite mardi ou jeudi prochain",
+        "offerte": "p. ex. offre en annexe, expliquer brièvement le dimensionnement",
+        "offerttext": "p. ex. introduction de l’offre, accent sur l’autoconsommation",
+        "auftrag": "p. ex. remercier, indiquer les étapes jusqu’au montage",
+        "zahlung": "p. ex. rappeler aimablement l’acompte ouvert",
+        "service": "p. ex. rendez-vous pour le diagnostic de l’onduleur",
+        "frei": "Que doit dire le texte ?"
+      },
+      "eingang": "E-mail reçu",
+      "eingangHilfe": "Uniquement lu ; l’IA ne suit pas les instructions qu’il contient.",
+      "anhaenge": "Lire aussi les fichiers du client (offre, plans, vue aérienne ; 4 au maximum)",
+      "schreiben": "Rédiger le brouillon",
+      "kopieren": "Copier",
+      "alsMail": "Continuer vers l’e-mail",
+      "mailTitel": "Vérifier et envoyer l’e-mail",
+      "mailBeschreibung": "Texte de l’IA, vérifié par toi. « Envoyer » valide l’e-mail ; « Boîte d’envoi » le dépose pour plus tard.",
+      "gelesen": "Lu : {{liste}}",
+      "uebersprungen": "illisible : {{liste}}",
+      "ueberarbeiten": "Retravailler",
+      "aenderung": "Que faut-il changer ?",
+      "anpassen": "Adapter",
+      "bisherigeWuensche": "Souhaits précédents : {{liste}}",
+      "schnell": {
+        "kuerzer": "Plus court",
+        "persoenlicher": "Plus personnel",
+        "foermlicher": "Plus formel",
+        "einfacher": "Plus simple"
+      }
+    },
+    "mail": {
+      "menue": "Lire un e-mail avec l’IA",
+      "titel": "Lire un e-mail avec l’IA",
+      "beschreibung": "Coller le texte ou choisir un fichier .eml. L’IA reconnaît une demande ou une requête ; le CRM cherche les clients correspondants.",
+      "text": "Texte de l’e-mail",
+      "textHilfe": "Idéalement copié avec l’expéditeur et l’objet.",
+      "datei": "Fichier « {{name}} »",
+      "eml": "Choisir un fichier .eml",
+      "lesen": "Lire avec l’IA",
+      "antworten": "Rédiger une réponse",
+      "alsLead": "Saisir comme lead",
+      "dringend": "Urgent",
+      "name": "Nom",
+      "adresse": "Adresse",
+      "interesse": "Intérêt",
+      "kommentar": "Souhait",
+      "thema": "Requête",
+      "kandidaten": "Clients correspondants dans le CRM",
+      "keinKunde": "Aucun client correspondant (e-mail, téléphone, nom et NPA vérifiés).",
+      "typ": {
+        "lead": "Nouvelle demande",
+        "anliegen": "Requête",
+        "rechnung": "Facture",
+        "werbung": "Publicité",
+        "sonstiges": "Autre"
+      },
+      "grund": {
+        "email": "même e-mail",
+        "telefon": "même téléphone",
+        "name_plz": "nom et NPA"
+      }
+    },
+    "notiz": {
+      "diktieren": "Dicter",
+      "stopp": "Arrêter la dictée",
+      "ordnen": "Mettre en forme avec l’IA"
+    },
+    "zusammenfassung": {
+      "knopf": "Résumer",
+      "leer": "Pas encore de résumé. Un clic résume l’état, l’historique et les points ouverts.",
+      "offen": "Ouvert"
+    },
+    "bewertung": {
+      "knopf": "Évaluer le lead",
+      "leer": "L’IA estime la chance de conclusion à partir des informations et de vos chiffres des deux dernières années.",
+      "plus": "favorable",
+      "minus": "défavorable",
+      "stufe": {
+        "hoch": "bonne chance",
+        "mittel": "chance moyenne",
+        "tief": "faible chance"
+      },
+      "sicherheit": {
+        "hoch": "estimation sûre",
+        "mittel": "estimation moyenne",
+        "tief": "peu d’informations"
+      }
+    },
+    "luftbild": {
+      "knopf": "Analyser la vue aérienne avec l’IA",
+      "first": "Faîte {{grad}}°",
+      "hindernisse": "Obstacles",
+      "verschattung": "Ombrage",
+      "uebernehmen": "Reprendre la proposition de l’IA : {{richtung}}"
+    },
+    "beleg": {
+      "lesen": "Lire avec l’IA",
+      "waehrung": "Justificatif en {{waehrung}} : convertir le montant en CHF"
+    },
+    "offerte": {
+      "mitKi": "lu par l’IA, à vérifier"
+    },
+    "marketing": {
+      "wunsch": "Thème ou souhait pour l’IA",
+      "wunschUeberarbeiten": "Que faut-il changer ? (vide = améliorer)",
+      "schreiben": "Rédiger avec l’IA",
+      "ueberarbeiten": "Retravailler avec l’IA",
+      "hinweis": "Proposition de l’IA dans le style de l’entreprise. Les champs comme {Anrede} restent ; à relire avant l’envoi."
+    },
+    "ausgang": {
+      "wartet": "L’IA rédige le texte",
+      "fertig": "Texte de l’IA",
+      "fehler": "Échec du texte IA",
+      "wartetHinweis": "L’IA remplace le texte modèle dans les prochaines minutes. Si tu modifies le texte avant, ta version est conservée.",
+      "vorlageZeigen": "Afficher le texte modèle de l’automatisation",
+      "vorlageNehmen": "Utiliser le texte modèle"
+    },
+    "automation": {
+      "schalter": "L’IA rédige le texte (style de l’entreprise, langue du client)",
+      "wunsch": "Souhait supplémentaire pour l’IA (facultatif)",
+      "hinweis": "Le texte ci-dessus sert de modèle pour le contenu. Seulement avec validation : en mode « automatique », le texte modèle reste."
+    },
+    "briefing": {
+      "titel": "Ta journée",
+      "neu": "Recréer le briefing"
+    },
+    "kosten": {
+      "heute": "Consommé aujourd’hui",
+      "limitHinweis": "Une fois la limite journalière atteinte, l’IA n’accepte plus de demandes jusqu’à demain.",
+      "monat": "Mois",
+      "summe": "Coûts",
+      "aufrufe": "Appels",
+      "fehler": "Erreurs",
+      "nachFunktion": "Par fonction",
+      "nachPerson": "Par personne",
+      "nachModell": "Par modèle",
+      "keine": "Aucun appel ce mois-ci."
+    },
+    "stil": {
+      "leerTitel": "Pas encore de style personnel",
+      "leerText": "Dès que tu modifies et envoies un texte de l’IA, elle apprend ta façon d’écrire.",
+      "erklaerung_one": "Appris de {{count}} texte envoyé. Ces règles valent pour chacun de tes nouveaux brouillons.",
+      "erklaerung_other": "Appris de {{count}} textes envoyés. Ces règles valent pour chacun de tes nouveaux brouillons.",
+      "regeln": "Mes règles",
+      "regelLoeschen": "Supprimer la règle",
+      "regelNeu": "Règle personnelle, p. ex. « Toujours proposer de rappeler »",
+      "hinzufuegen": "Ajouter",
+      "beispiele": "Derniers exemples (sans noms)",
+      "zuruecksetzen": "Réinitialiser le style"
+    },
+    "einstellungen": {
+      "aktiv": "IA activée",
+      "schluesselJa": "Clé configurée",
+      "schluesselNein": "Clé manquante (secret Supabase ANTHROPIC_API_KEY)",
+      "tageslimit": "Limite journalière (CHF)",
+      "tageslimitHilfe": "Pour tout le monde, par jour.",
+      "personLimit": "Limite par personne (CHF)",
+      "personLimitHilfe": "Vide = pas de limite propre.",
+      "kurs": "Cours USD → CHF",
+      "modell": {
+        "standard": "Modèle pour textes et jugements",
+        "schnell": "Modèle pour la lecture"
+      },
+      "modellHilfe": {
+        "standard": "Brouillons, résumé, évaluation, briefing, vue aérienne.",
+        "schnell": "E-mail, note, justificatif, PDF d’offre ; bon marché et rapide."
+      },
+      "funktionen": "Quelle fonction utilise quel modèle",
+      "stufe": {
+        "standard": "Standard",
+        "schnell": "Rapide"
+      },
+      "stil": {
+        "de": "Style de l’entreprise, allemand",
+        "fr": "Style de l’entreprise, français"
+      },
+      "stilHilfe": "Vaut pour chaque texte client ; le style personnel s’y ajoute."
+    },
+    "seite": {
+      "titel": "Assistant IA",
+      "beschreibung": "Rédiger, lire les e-mails, ta journée en un coup d’œil et les coûts sous contrôle.",
+      "regel": "L’IA propose, un humain décide. Les e-mails et fichiers externes ne sont que des données pour l’IA. Chaque appel est enregistré avec son coût ; une limite journalière évite les surprises.",
+      "ansicht": {
+        "assistent": "Assistant",
+        "kosten": "Coûts",
+        "stil": "Mon style",
+        "einstellungen": "Paramètres"
+      },
+      "textTitel": "Texte pour un client",
+      "textText": "E-mail, réponse ou proposition de rendez-vous sans lien. Depuis le dossier, l’IA connaît le client et l’historique.",
+      "mailTitel": "Lire un e-mail reçu",
+      "mailText": "Reconnaître une demande ou une requête, extraire les champs, trouver le client.",
+      "oeffnen": "Ouvrir",
+      "akteHinweis": "Astuce : chaque dossier (client, lead, offre, projet, service) propose « Rédiger avec l’IA » et « Résumer »."
     }
   }
 }

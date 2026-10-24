@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as ModulRouteImport } from './app/$modul'
 import { Route as AftersalesRouteImport } from './app/aftersales'
+import { Route as AiRouteImport } from './app/ai'
 import { Route as AutomationsRouteImport } from './app/automations'
 import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
 import { Route as ContactsRouteImport } from './app/contacts'
@@ -48,6 +49,11 @@ const ModulRoute = ModulRouteImport.update({
 const AftersalesRoute = AftersalesRouteImport.update({
   id: '/aftersales',
   path: '/aftersales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiRoute = AiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutomationsRoute = AutomationsRouteImport.update({
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/aftersales': typeof AftersalesRoute
+  '/ai': typeof AiRoute
   '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
@@ -192,6 +199,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/aftersales': typeof AftersalesRoute
+  '/ai': typeof AiRoute
   '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$modul': typeof ModulRoute
   '/aftersales': typeof AftersalesRoute
+  '/ai': typeof AiRoute
   '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$modul'
     | '/aftersales'
+    | '/ai'
     | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$modul'
     | '/aftersales'
+    | '/ai'
     | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$modul'
     | '/aftersales'
+    | '/ai'
     | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
@@ -331,6 +343,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulRoute: typeof ModulRoute
   AftersalesRoute: typeof AftersalesRoute
+  AiRoute: typeof AiRoute
   AutomationsRoute: typeof AutomationsRoute
   BenachrichtigungenRoute: typeof BenachrichtigungenRoute
   ContactsRoute: typeof ContactsRoute
@@ -376,6 +389,13 @@ declare module '@tanstack/react-router' {
       path: '/aftersales'
       fullPath: '/aftersales'
       preLoaderRoute: typeof AftersalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai': {
+      id: '/ai'
+      path: '/ai'
+      fullPath: '/ai'
+      preLoaderRoute: typeof AiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/automations': {
@@ -539,6 +559,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulRoute: ModulRoute,
   AftersalesRoute: AftersalesRoute,
+  AiRoute: AiRoute,
   AutomationsRoute: AutomationsRoute,
   BenachrichtigungenRoute: BenachrichtigungenRoute,
   ContactsRoute: ContactsRoute,

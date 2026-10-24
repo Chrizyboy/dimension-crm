@@ -31,6 +31,7 @@
     "integrationen:pruefen": "node scripts/integrationen/pruefen.mjs",
     "ausschreibungen:pruefen": "node scripts/ausschreibungen/pruefen.mjs",
     "marketing:pruefen": "node scripts/marketing/pruefen.mjs",
+    "ki:pruefen": "node scripts/ki/pruefen.mjs",
     "db:typen": "echo '// Automatisch erzeugt aus der lokalen Datenbank mit «npm run db:typen». Nie von Hand ändern.' > src/types/datenbank.ts && supabase gen types typescript --local >> src/types/datenbank.ts && prettier --write src/types/datenbank.ts"
   },
   "devDependencies": {

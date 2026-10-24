@@ -189,3 +189,14 @@ Siehe Entscheid 0022.
 - **Einstellungen:** `einstellungen.automationen` {wartung_vorlauf_tage, rechnung_karenz_tage, termin_gehabt_tage, bewertung_link}; ändern nur `admin`.
 
 Siehe Entscheid 0023.
+
+## KI-Funktionen (Phase 13)
+
+- **Einstellung `ki`** (ändern nur `admin`): `aktiv`, `modelle` {standard, schnell}, `funktionen` (je Funktion die Stufe), `preise_usd` je Modell {ein, aus, cache_lesen, cache_schreiben} in USD je Million Tokens, `usd_chf`, `tageslimit_rappen`, `person_limit_rappen` (null = ohne), `stil` {de, fr} (Firmen-Schreibstil aus V233).
+- **`ki_aufrufe`** (schreiben nur der Server, lesen die eigenen bzw. `admin` alle): je Aufruf `funktion`, `modell` (das geantwortet hat), `ok`, `fehler`, Tokens (ein, aus, cache), `kosten_millirappen` (1000 = 1 Rappen), `dauer_ms`, Bezug. Keine Inhalte.
+- **`ki_ergebnisse`** (Fachtabelle): `art` (zusammenfassung, lead_bewertung, briefing, luftbild), Bezug, Person, Sprache, `inhalt` (JSON), `modell`. Das Briefing sieht nur die eigene Person (und `admin`).
+- **`schreibstile`** erweitert: eine Zeile je Person, `regeln` (höchstens 15), `beispiele` (höchstens 4, ohne Namen und Adressen), `anzahl`; sehen und ändern nur die Person selbst und `admin`.
+- **`ausgangskorb`** erweitert: `ki_status` (wartet, fertig, fehler, uebersprungen) und `ki_auftrag` {art, wunsch, vorlage_text} für Mails aus Automationen, deren Text die KI schreibt.
+- **Abläufe:** `ki_mein_budget()`, `ki_kosten(von, bis)` (Summen je Funktion, Person und Tag), `ki_kontext(tabelle, id)` (Daten zu Kunde, Lead, Offerte, Projekt oder Service-Fall mit den Rechten der Person; Rechnungen nur mit `finanzen`), `ki_briefing_daten()`, `ki_zuordnung(email, telefon, vorname, nachname, plz)` (passende Kunden für eine Mail), `ki_lead_statistik()` (Abschlussquoten der letzten zwei Jahre). Nur Server: `ki_budget(person)`, `ki_entwuerfe_offen(n)`, `ki_entwurf_einsetzen(...)` (ersetzt den Text nur, wenn er noch der Vorlage entspricht). `automation_nach_aussen` legt bei `ki` im Mail-Schritt den Auftrag an.
+
+Siehe Entscheid 0024.

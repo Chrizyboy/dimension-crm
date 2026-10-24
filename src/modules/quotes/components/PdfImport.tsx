@@ -8,8 +8,10 @@ import { formatChf } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
+import { supabase } from '@/services/supabase'
 import { useOffertAenderung } from '../hooks/useOfferten'
 import { leseEturnityOfferte } from '../lib/eturnity'
+import { brauchtKi, ergaenzeMitKi, leseMitKi } from '../lib/pdfKi'
 import { pdfZeilen } from '../lib/pdfText'
 import { findeZiel, type ImportZiel } from '../lib/pdfImport'
 import { werteFuerOfferte } from '../lib/pdfUebernahme'
@@ -23,6 +25,8 @@ interface Posten {
   ziel: ImportZiel
   fertig: 'ok' | 'fehler' | null
   fehler?: string
+  /** Mit KI ergänzt (kein Eturnity-Format): besonders gut prüfen. */
+  ki?: boolean
 }
 
 const KEINS = 'keins'
@@ -72,8 +76,17 @@ export default function PdfImport({
     const neu: Posten[] = []
     for (const datei of pdfs) {
       try {
-        const werte = leseEturnityOfferte(await pdfZeilen(datei))
-        neu.push({ datei, werte, ziel: findeZiel(werte, offerten, eingang), fertig: null })
+        const zeilen = await pdfZeilen(datei)
+        let werte = leseEturnityOfferte(zeilen)
+        let ki = false
+        if (supabase && brauchtKi(werte)) {
+          const k = await leseMitKi(zeilen).catch(() => null)
+          if (k) {
+            werte = ergaenzeMitKi(werte, k)
+            ki = true
+          }
+        }
+        neu.push({ datei, werte, ziel: findeZiel(werte, offerten, eingang), fertig: null, ki })
       } catch (f) {
         meldeFehler(f, 'offerten.import')
         neu.push({
@@ -161,6 +174,7 @@ export default function PdfImport({
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
+                  {p.ki && <Badge ton="info">{t('ki.offerte.mitKi')}</Badge>}
                   {p.fertig === 'ok' && <Badge ton="ok">{t('offerten.import.erledigt')}</Badge>}
                   {p.fertig === 'fehler' && <Badge ton="kritisch">{p.fehler}</Badge>}
                   {!p.fertig && p.ziel.art === 'offerte' && (

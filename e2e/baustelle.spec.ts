@@ -172,7 +172,7 @@ test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ pa
   await page.keyboard.press('Escape')
 
   await page.getByRole('tab', { name: 'Zeiten' }).click()
-  await page.getByLabel('Person').click()
+  await page.getByRole('combobox', { name: 'Person' }).click()
   await page.getByRole('option', { name: 'Mario Montage' }).click()
   await page.getByLabel('Alle prüfbaren wählen').click()
   await page.getByRole('button', { name: /^Prüfen/ }).click()

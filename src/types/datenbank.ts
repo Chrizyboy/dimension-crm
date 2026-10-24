@@ -965,6 +965,8 @@ export type Database = {
           html: string | null
           id: string
           kanal: string
+          ki_auftrag: Json | null
+          ki_status: string | null
           kontakt_id: string | null
           offerte_id: string | null
           projekt_id: string | null
@@ -1002,6 +1004,8 @@ export type Database = {
           html?: string | null
           id?: string
           kanal?: string
+          ki_auftrag?: Json | null
+          ki_status?: string | null
           kontakt_id?: string | null
           offerte_id?: string | null
           projekt_id?: string | null
@@ -1038,6 +1042,8 @@ export type Database = {
           html?: string | null
           id?: string
           kanal?: string
+          ki_auftrag?: Json | null
+          ki_status?: string | null
           kontakt_id?: string | null
           offerte_id?: string | null
           projekt_id?: string | null
@@ -3279,6 +3285,126 @@ export type Database = {
             columns: ['newsletter_id']
             isOneToOne: false
             referencedRelation: 'newsletter'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ki_aufrufe: {
+        Row: {
+          ausgabe_tokens: number
+          bezug_id: string | null
+          bezug_tabelle: string | null
+          cache_tokens: number
+          dauer_ms: number | null
+          eingabe_tokens: number
+          fehler: string | null
+          funktion: string
+          id: number
+          kosten_millirappen: number
+          modell: string
+          ok: boolean
+          person_id: string | null
+          zeitpunkt: string
+        }
+        ComputedFields: never
+        Insert: {
+          ausgabe_tokens?: number
+          bezug_id?: string | null
+          bezug_tabelle?: string | null
+          cache_tokens?: number
+          dauer_ms?: number | null
+          eingabe_tokens?: number
+          fehler?: string | null
+          funktion: string
+          id?: never
+          kosten_millirappen?: number
+          modell: string
+          ok: boolean
+          person_id?: string | null
+          zeitpunkt?: string
+        }
+        Update: {
+          ausgabe_tokens?: number
+          bezug_id?: string | null
+          bezug_tabelle?: string | null
+          cache_tokens?: number
+          dauer_ms?: number | null
+          eingabe_tokens?: number
+          fehler?: string | null
+          funktion?: string
+          id?: never
+          kosten_millirappen?: number
+          modell?: string
+          ok?: boolean
+          person_id?: string | null
+          zeitpunkt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ki_aufrufe_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ki_ergebnisse: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          bezug_id: string
+          bezug_tabelle: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          inhalt: NonNullable<Json>
+          modell: string | null
+          person_id: string | null
+          sprache: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          bezug_id: string
+          bezug_tabelle: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          inhalt: NonNullable<Json>
+          modell?: string | null
+          person_id?: string | null
+          sprache?: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bezug_id?: string
+          bezug_tabelle?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          inhalt?: NonNullable<Json>
+          modell?: string | null
+          person_id?: string | null
+          sprache?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ki_ergebnisse_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -6038,6 +6164,7 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          anzahl: number
           beispiele: NonNullable<Json>
           erstellt_am: string
           erstellt_von: string | null
@@ -6051,6 +6178,7 @@ export type Database = {
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anzahl?: number
           beispiele?: NonNullable<Json>
           erstellt_am?: string
           erstellt_von?: string | null
@@ -6063,6 +6191,7 @@ export type Database = {
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anzahl?: number
           beispiele?: NonNullable<Json>
           erstellt_am?: string
           erstellt_von?: string | null
@@ -8969,6 +9098,8 @@ export type Database = {
           html: string | null
           id: string
           kanal: string
+          ki_auftrag: Json | null
+          ki_status: string | null
           kontakt_id: string | null
           offerte_id: string | null
           projekt_id: string | null
@@ -9038,6 +9169,21 @@ export type Database = {
         Returns: number
       }
       kalender_ersetzen: { Args: { p_eintraege: Json; p_person: string; p_quelle: string }; Returns: number }
+      ki_briefing_daten: { Args: Record<PropertyKey, never>; Returns: Json }
+      ki_budget: { Args: { p_person: string }; Returns: Json }
+      ki_entwuerfe_offen: { Args: { p_limit?: number }; Returns: Json }
+      ki_entwurf_einsetzen: {
+        Args: { p_betreff: string; p_id: string; p_meldung?: string; p_ok: boolean; p_text: string; p_vorher: string }
+        Returns: string
+      }
+      ki_kontext: { Args: { p_id: string; p_tabelle: string }; Returns: Json }
+      ki_kosten: { Args: { p_bis: string; p_von: string }; Returns: Json }
+      ki_lead_statistik: { Args: { p_lead: string }; Returns: Json }
+      ki_mein_budget: { Args: Record<PropertyKey, never>; Returns: Json }
+      ki_zuordnung: {
+        Args: { p_email: string; p_nachname: string; p_plz: string; p_telefon: string; p_vorname: string }
+        Returns: Json
+      }
       kontakt_export: { Args: { p_kontakt: string }; Returns: Json }
       kontaktsperre_anlegen: {
         Args: { p_art: string; p_bis?: string; p_grund: string; p_wert: string }

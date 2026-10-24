@@ -1,6 +1,7 @@
 import { Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { KiNotiz } from '@/components/shared/ki/KiNotiz'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -145,6 +146,22 @@ export function AktivitaetDialog({ kontaktId, onSchliessen }: AktivitaetDialogPr
               }}
             />
           </Feld>
+          <KiNotiz
+            text={werte.text}
+            bezug={{ tabelle: 'kontakte', id: kontaktId }}
+            onText={(text) => {
+              setWerte((w) => ({ ...w, text }))
+            }}
+            onErgebnis={(e) => {
+              setWerte((w) => ({
+                ...w,
+                art: waehlbar.some((a) => a.schluessel === e.art) ? e.art : w.art,
+                richtung: e.richtung,
+                ergebnis: e.ergebnis,
+                text: e.text,
+              }))
+            }}
+          />
         </div>
       </DialogInhalt>
     </Dialog>

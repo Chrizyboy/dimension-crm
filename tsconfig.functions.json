@@ -24,7 +24,8 @@
     "supabase/functions/zeitplan",
     "supabase/functions/social",
     "supabase/functions/social-rueckruf",
-    "supabase/functions/abmelden"
+    "supabase/functions/abmelden",
+    "supabase/functions/ki"
   ],
   "exclude": ["supabase/functions/**/*.test.ts"]
 }

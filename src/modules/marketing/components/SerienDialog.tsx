@@ -1,4 +1,4 @@
-import { FileDown, Send, Sparkles } from 'lucide-react'
+import { FileDown, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,8 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { serienbriefPdf } from '../lib/serienbrief'
 import { empfaenger, fuellen } from '../lib/zielgruppe'
+import { marketingMitKi, textDa } from '../lib/kiTexte'
+import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 import { abmeldeLink, senden, speichereVorlagen, vermerken } from '../services/marketing'
 import type { MarketingVorlagen, Sprache, Textvorlage, Zielkontakt } from '../types'
 
@@ -140,10 +142,12 @@ export function SerienDialog({
               {t('marketing.serien.mailHinweis', { absender: ich?.email ?? '' })}
             </p>
           )}
-          <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-            <Sparkles className="size-3.5" aria-hidden="true" />
-            {t('marketing.kiSpaeter')}
-          </p>
+          <KiWunschZeile
+            hatText={textDa(texte, sprachen)}
+            onSchreiben={async (wunsch) => {
+              setTexte(await marketingMitKi(art, sprachen, wunsch, texte))
+            }}
+          />
           {sprachen.map((s) => {
             const b = beispiel(s)
             return (

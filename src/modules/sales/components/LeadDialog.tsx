@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { CopyCheck, Save } from 'lucide-react'
-import { useDeferredValue, useState } from 'react'
+import { useDeferredValue, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
@@ -28,7 +28,14 @@ const LEER = '_leer'
  * Aus der PLZ kommen Ort, Standort (Muri/Bulle) und Sprache. Vor dem Speichern prüft das CRM auf Dubletten;
  * ein bestehender Kontakt kann übernommen werden, damit niemand doppelt im Adressbuch steht.
  */
-export default function LeadDialog({ onSchliessen }: { onSchliessen: (id: string | null) => void }) {
+export default function LeadDialog({
+  vorlage,
+  onSchliessen,
+}: {
+  /** Vorausgefüllte Felder, z. B. aus einer Mail, die die KI gelesen hat (die Person prüft vor dem Speichern). */
+  vorlage?: Partial<LeadEingabe>
+  onSchliessen: (id: string | null) => void
+}) {
   const { t } = useTranslation()
   const quellen = useAuswahl('quelle')
   const gebaeudearten = useAuswahl('gebaeudeart')
@@ -36,7 +43,7 @@ export default function LeadDialog({ onSchliessen }: { onSchliessen: (id: string
   const erreichbarkeit = useAuswahl('erreichbarkeit')
   const personen = useAussendienst()
   const orte = useOrte()
-  const [w, setW] = useState<LeadEingabe>(() => leererLead(heuteIso()))
+  const [w, setW] = useState<LeadEingabe>(() => ({ ...leererLead(heuteIso()), ...vorlage }))
   const [fehler, setFehler] = useState<Partial<Record<keyof LeadEingabe, string>>>({})
   const [hinweis, setHinweis] = useState<string | null>(null)
   const [dubletten, setDubletten] = useState<Dublette[] | null>(null)
@@ -70,6 +77,18 @@ export default function LeadDialog({ onSchliessen }: { onSchliessen: (id: string
       sprache: alt.sprache ?? a.sprache,
     }))
   }
+
+  // Vorlage mit PLZ: Ort, Standort und Sprache wie beim Tippen ergänzen (einmal, sobald die Standorte da sind).
+  const vorlagePlz = vorlage?.plz ?? ''
+  const standorteDa = Boolean(orte.data)
+  useEffect(() => {
+    if (!vorlagePlz || !standorteDa) return
+    const z = setTimeout(() => void plzFertig(vorlagePlz), 0)
+    return () => {
+      clearTimeout(z)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- nur beim Öffnen
+  }, [vorlagePlz, standorteDa])
 
   async function absenden(kontakt: string | null = null) {
     const geprueft = leadSchema.safeParse(w)

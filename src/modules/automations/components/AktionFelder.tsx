@@ -160,6 +160,32 @@ export function AktionFelder({ id, aktion: a, katalog, felder, onChange }: Props
           }}
         />
       )}
+      {a.art === 'mail' && (
+        <>
+          <Schalter
+            id={`${id}-ki`}
+            text={t('ki.automation.schalter')}
+            an={Boolean(a.ki)}
+            onChange={(an) => {
+              const ohne: Aktion = { ...a }
+              delete ohne.ki
+              delete ohne.ki_wunsch
+              onChange(an ? { ...a, ki: 'frei' } : ohne)
+            }}
+          />
+          {a.ki && (
+            <Feld id={`${id}-ki-wunsch`} label={t('ki.automation.wunsch')} hinweis={t('ki.automation.hinweis')}>
+              <Input
+                id={`${id}-ki-wunsch`}
+                value={a.ki_wunsch ?? ''}
+                onChange={(e) => {
+                  onChange({ ...a, ki_wunsch: e.target.value })
+                }}
+              />
+            </Feld>
+          )}
+        </>
+      )}
       {f.werbung && (
         <Schalter
           id={`${id}-werbung`}
