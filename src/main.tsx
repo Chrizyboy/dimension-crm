@@ -2,10 +2,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createRouter, createHashHistory, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@/i18n'
+import { starteSprachen } from '@/i18n'
 import './index.css'
 import { starteFehlerueberwachung } from '@/services/fehler'
 import { starteAnmeldung } from '@/stores/anmeldung'
+import { useUi } from '@/stores/ui'
 import { routeTree } from './routeTree.gen'
 
 // Möglichst früh, damit auch Fehler beim Start gemeldet werden. Läuft im Hintergrund, die App wartet nicht darauf.
@@ -31,10 +32,13 @@ declare module '@tanstack/react-router' {
 const root = document.getElementById('root')
 if (!root) throw new Error('Element #root fehlt in index.html')
 
-createRoot(root).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </StrictMode>,
-)
+// Erst die Texte der eigenen Sprache laden, sonst stünden kurz die Schlüssel statt der Wörter da.
+void starteSprachen(useUi.getState().sprache).then(() => {
+  createRoot(root).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+})

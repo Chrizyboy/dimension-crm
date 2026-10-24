@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ChartColumn } from 'lucide-react'
 import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ErstWennSichtbar } from '@/components/shared/ErstWennSichtbar'
 import { buttonVariants } from '@/components/ui/button'
 import { darfModul, hatRecht } from '@/lib/rechte'
 import { ServiceHeute, meta as serviceMeta } from '@/modules/aftersales'
@@ -73,20 +74,23 @@ export function Startseite() {
                 <h2 id="team-betrieb" className="font-display text-base font-semibold">
                   {t('tag.team')}
                 </h2>
-                {darfModul(ausschreibungenMeta, ich) && (
-                  <Suspense>
-                    <AusschreibungenHeute />
-                  </Suspense>
-                )}
-                <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
-                  {karten
-                    .filter(([m]) => darfModul(m, ich))
-                    .map(([m, Karte]) => (
-                      <Suspense key={m.id}>
-                        <Karte />
-                      </Suspense>
-                    ))}
-                </div>
+                {/* Die Karten holen je eigene Daten (Projekte, Finanzen …); erst laden, wenn man hinscrollt. */}
+                <ErstWennSichtbar minHoehe={400}>
+                  {darfModul(ausschreibungenMeta, ich) && (
+                    <Suspense>
+                      <AusschreibungenHeute />
+                    </Suspense>
+                  )}
+                  <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {karten
+                      .filter(([m]) => darfModul(m, ich))
+                      .map(([m, Karte]) => (
+                        <Suspense key={m.id}>
+                          <Karte />
+                        </Suspense>
+                      ))}
+                  </div>
+                </ErstWennSichtbar>
               </section>
             )}
             {(!ich || hatRecht(ich, 'admin')) && <Systemstatus />}
