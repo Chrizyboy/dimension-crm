@@ -161,7 +161,13 @@ try {
     })
   ).daten
   const morgen = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10)
-  const termin = new Date(`${morgen}T08:00:00Z`).toISOString()
+  // 10:00 Ortszeit: Im Winter ist Zürich UTC+1, im Sommer UTC+2. Fest «08:00Z» schlug nach der Zeitumstellung fehl.
+  const zuerichStunde = Number(
+    new Intl.DateTimeFormat('en', { timeZone: 'Europe/Zurich', hour: 'numeric', hourCycle: 'h23' }).format(
+      new Date(`${morgen}T12:00:00Z`),
+    ),
+  )
+  const termin = new Date(`${morgen}T${String(10 - (zuerichStunde - 12)).padStart(2, '0')}:00:00Z`).toISOString()
   await rest(`verkaufschancen?id=eq.${lead}`, {
     method: 'PATCH',
     body: JSON.stringify({
