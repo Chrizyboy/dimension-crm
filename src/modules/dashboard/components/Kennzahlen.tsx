@@ -115,21 +115,13 @@ export default function Kennzahlen({
                 onDetail={setDetail}
                 onNachfassen={() => void navigate({ to: '/quotes', search: { ansicht: 'nachfassen' } })}
               />
-              <div className="grid items-start gap-4 xl:grid-cols-2">
-                <KennzahlTabelle
-                  titel={t('kz.nachStandort')}
-                  spalten={nachStandort(gefiltert).map((s) => ({ ...s, titel: t(`kz.spalte.${s.id}`) }))}
-                  onDetail={setDetail}
-                  testId="kz-standort"
-                />
-                <OffertenBalken
-                  fakten={gefiltert}
-                  zeitraum={auswahl.zeitraum}
-                  von={von}
-                  bis={bis}
-                  onDetail={setDetail}
-                />
-              </div>
+              <OffertenBalken fakten={gefiltert} zeitraum={auswahl.zeitraum} von={von} bis={bis} onDetail={setDetail} />
+              <KennzahlTabelle
+                titel={t('kz.nachStandort')}
+                spalten={nachStandort(gefiltert).map((s) => ({ ...s, titel: t(`kz.spalte.${s.id}`) }))}
+                onDetail={setDetail}
+                testId="kz-standort"
+              />
               <Quellen fakten={gefiltert} onDetail={setDetail} />
               <KennzahlTabelle
                 titel={t('kz.nachPerson')}
