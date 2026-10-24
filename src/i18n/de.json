@@ -73,7 +73,8 @@
     "benachrichtigungen": "Benachrichtigungen öffnen",
     "gruppeKontakte": "Kontakte",
     "sucht": "Suche …",
-    "neuerLead": "Neuen Lead erfassen"
+    "neuerLead": "Neuen Lead erfassen",
+    "fehlerMelden": "Fehler melden"
   },
   "kuerzel": {
     "titel": "Tastenkürzel",
@@ -152,7 +153,8 @@
     "startseite": "Zur Startseite",
     "details": "Technische Details",
     "nichtGefundenTitel": "Diese Seite gibt es nicht",
-    "nichtGefundenText": "Vielleicht ein alter Link. Über die Suche (Ctrl K) findest du jeden Bereich."
+    "nichtGefundenText": "Vielleicht ein alter Link. Über die Suche (Ctrl K) findest du jeden Bereich.",
+    "melden": "Fehler melden"
   },
   "design": {
     "ueber": "Phase 2",
@@ -357,7 +359,8 @@
     "pflicht": "Bitte ausfüllen."
   },
   "tabelle": {
-    "sortieren": "Klicken zum Sortieren"
+    "sortieren": "Klicken zum Sortieren",
+    "aktionen": "Aktionen"
   },
   "kunden": {
     "titel": "Kunden",
@@ -1836,7 +1839,14 @@
     "automation_warten_tage": "Warten braucht mindestens 1 Tag.",
     "automation_keine_person": "Es gibt keine Person, in deren Namen die Automation laufen kann.",
     "automation_ergebnis": "Ungültiges Ergebnis vom Server.",
-    "automation_kein_recht": "Automationen ändert nur die Administration."
+    "automation_kein_recht": "Automationen ändert nur die Administration.",
+    "handbuch_kein_recht": "Prozesse und Videos pflegt nur die Administration.",
+    "handbuch_titel_fehlt": "Bitte einen Titel eintragen.",
+    "handbuch_text_fehlt": "Bitte beschreiben, was passiert ist.",
+    "handbuch_datei_fehlt": "Bitte eine Datei wählen.",
+    "handbuch_doppelt": "Diesen Prozess gibt es schon. Dort «Neue Version» verwenden.",
+    "handbuch_nicht_gefunden": "Eintrag nicht gefunden, vielleicht schon entfernt.",
+    "handbuch_art": "Unbekannte Art."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5055,6 +5065,134 @@
         "im_bau": "im Bau",
         "abgeschlossen": "abgeschlossen"
       }
+    }
+  },
+  "handbuch": {
+    "titel": "Handbuch",
+    "beschreibung": "Anleitung zu jedem Bereich, unsere Prozesse, Erklärvideos und deine Meldungen an die Administration.",
+    "reiter": {
+      "anleitung": "Anleitung",
+      "prozesse": "Prozesse",
+      "videos": "Videos",
+      "meldungen": "Meldungen"
+    },
+    "nichtsGefunden": "Nichts gefunden",
+    "titelFeld": "Titel",
+    "beschreibungFeld": "Kurzbeschreibung",
+    "titelFr": "Titel französisch",
+    "beschreibungFr": "Kurzbeschreibung französisch",
+    "versionFeld": "Version",
+    "gueltigAb": "Gültig ab",
+    "version": "Version {{version}}",
+    "vom": "vom {{datum}}",
+    "datei": "Datei",
+    "aktuell": "Aktuell: {{name}}",
+    "nurDeutsch": "deutsche Fassung",
+    "deFr": "DE + FR",
+    "nurDe": "nur Deutsch",
+    "entfernen": "Entfernen",
+    "wirklichEntfernen": "Wirklich entfernen?",
+    "prozesse": {
+      "intro": "Unsere Abläufe als PDF, immer die aktuelle Version. Ein Klick öffnet sie.",
+      "suche": "Prozess suchen",
+      "neu": "Prozess hinzufügen",
+      "neuText": "PDF wählen, Titel prüfen, speichern. Die französische Fassung ist freiwillig.",
+      "neueVersion": "Neue Version",
+      "neueVersionVon": "Neue Version: {{titel}}",
+      "neueVersionText": "Die bisherige Fassung bleibt unter «Frühere Versionen» erreichbar.",
+      "leer": "Noch keine Prozesse abgelegt",
+      "leerAdmin": "Mit «Prozess hinzufügen» den ersten ablegen.",
+      "frueher": "Frühere Versionen ({{anzahl}})",
+      "datei": "Datei (PDF)",
+      "dateiFr": "Datei französisch (PDF)",
+      "franzoesisch": "Französische Fassung (für Mitarbeitende mit Sprache Französisch)",
+      "titelBeispiel": "z. B. Lead-Terminierung",
+      "beschreibungBeispiel": "z. B. Vom Leadeingang bis zum Beratungstermin vor Ort"
+    },
+    "videos": {
+      "intro": "Kurze Erklärvideos zum CRM. Ein Klick spielt sie ab.",
+      "suche": "Video suchen",
+      "neu": "Video hinzufügen",
+      "bearbeiten": "Video bearbeiten",
+      "dialogText": "Dauer und Vorschaubild liest das CRM selbst aus der Datei.",
+      "leer": "Noch keine Videos abgelegt",
+      "leerAdmin": "Mit «Video hinzufügen» das erste hochladen.",
+      "abspielen": "Abspielen: {{titel}}",
+      "keinVideo": "Dieser Browser kann das Video nicht abspielen.",
+      "datei": "Videodatei (MP4 oder WebM)",
+      "dateiHinweis": "Höchstens 20 MB",
+      "gesprochen": "Gesprochen in",
+      "sprache": {
+        "de": "Deutsch",
+        "fr": "Französisch"
+      },
+      "reihenfolge": "Reihenfolge",
+      "reihenfolgeHinweis": "1 steht zuerst",
+      "titelBeispiel": "z. B. Leadbearbeitung im CRM",
+      "beschreibungBeispiel": "z. B. Vom neuen Lead bis zur Offerte"
+    },
+    "meldungen": {
+      "melden": "Fehler melden",
+      "meldenText": "Was ist passiert? Browser, Fenstergrösse und Sprache schickt das CRM automatisch mit.",
+      "senden": "Meldung senden",
+      "titel": "Worum geht es?",
+      "titelBeispiel": "z. B. Offerte lässt sich nicht speichern",
+      "was": "Was ist passiert?",
+      "wasBeispiel": "Was hast du gemacht, was kam dann?",
+      "erwartet": "Was hast du erwartet?",
+      "erwartetKurz": "Erwartet:",
+      "bereich": "Bereich",
+      "anderes": "Anderes",
+      "prio": "Dringlichkeit",
+      "prioWert": {
+        "niedrig": "Niedrig",
+        "normal": "Normal",
+        "dringend": "Dringend"
+      },
+      "dateien": "Bildschirmfotos oder Dateien",
+      "dateienHinweis": "Ein Bildschirmfoto hilft am meisten.",
+      "intro": "Deine Meldungen und die Antworten der Administration.",
+      "introAdmin": "Alle Meldungen der Mitarbeitenden. Status setzen und antworten; die meldende Person sieht die Antwort hier und in der Glocke.",
+      "filter": "Meldungen filtern",
+      "filterWert": {
+        "offen": "Offen",
+        "erledigt": "Erledigt",
+        "alle": "Alle"
+      },
+      "leer": "Noch keine Meldungen",
+      "keineImFilter": "Keine Meldungen in diesem Filter",
+      "leerText": "Etwas klemmt oder fehlt? Mit «Fehler melden» erreicht deine Meldung die Administration.",
+      "status": {
+        "neu": "Neu",
+        "arbeit": "In Arbeit",
+        "info": "Rückfrage",
+        "erledigt": "Erledigt"
+      },
+      "statusSetzen": "Status",
+      "antwort": "Antwort",
+      "antwortVon": "Antwort von {{name}}",
+      "antwortAn": "Antwort an {{name}}",
+      "offenSr": "offen:"
+    },
+    "anleitung": {
+      "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
+      "suche": "In der Anleitung suchen",
+      "schneller": "So geht es schneller",
+      "tippSuche": "Bereich, Kontakt oder Aktion suchen",
+      "tippSprung": "Springen, z. B. zu den Kunden",
+      "tippNeu": "Neuer Eintrag in Listen",
+      "tippFilter": "In Listen ins Suchfeld",
+      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)"
+    },
+    "fehler": {
+      "titel": "Bitte einen Titel eintragen.",
+      "pdf": "Bitte die PDF-Datei wählen.",
+      "keinPdf": "Bitte eine PDF-Datei wählen.",
+      "video": "Bitte die Videodatei wählen.",
+      "videoGross": "Das Video ist grösser als 20 MB. Bitte kürzer oder kleiner speichern.",
+      "doppelt": "Diesen Prozess gibt es schon. Dort «Neue Version» verwenden.",
+      "meldungTitel": "Bitte kurz beschreiben, worum es geht.",
+      "meldungText": "Bitte beschreiben, was passiert ist."
     }
   }
 }

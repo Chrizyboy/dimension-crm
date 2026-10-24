@@ -1,6 +1,6 @@
 import { ChevronRight, Filter, History, Pencil, Send, Workflow } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Leerzustand } from '@/components/shared/Zustaende'
+import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
@@ -27,6 +27,7 @@ export function AutomationsListe({ onBearbeiten, onLaeufe }: Props) {
   const laeufe = useLaeufe({})
   const { aus } = useAktion()
 
+  if (liste.error) return <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
   if (liste.isLoading) return <Skelett className="h-64" />
   if (!liste.data?.length) {
     return <Leerzustand icon={Workflow} titel={t('automationen.leerTitel')} text={t('automationen.leerText')} />

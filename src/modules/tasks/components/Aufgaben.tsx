@@ -169,6 +169,8 @@ export default function Aufgaben({ wer = 'meine' }: { wer?: AufgabenFilter['wer'
         spalten={spalten}
         kennung={(a) => a.id}
         laedt={aufgaben.isLoading}
+        fehler={aufgaben.error}
+        onNochmal={() => void aufgaben.refetch()}
         beschriftung={t('aufgaben.titel')}
         onOeffnen={(a) => {
           const ziel = zielVon(a.bezug_tabelle, a.bezug_id)

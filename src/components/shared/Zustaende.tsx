@@ -37,14 +37,17 @@ interface FehlerzustandProps {
   details?: string
   onNochmal?: () => void
   className?: string
+  /** Überschrift-Ebene: h1 nur, wenn der Fehler die ganze Seite ersetzt; in einer Ansicht h2 (Reihenfolge der Überschriften). */
+  ebene?: 'h1' | 'h2'
 }
 
 /**
  * Fehlerzustand: erklärt in einfachen Worten, dass etwas nicht geklappt hat, und was man tun kann.
  * Der Fehler ist zu diesem Zeitpunkt bereits an die Fehlerüberwachung gemeldet.
  */
-export function Fehlerzustand({ details, onNochmal, className }: FehlerzustandProps) {
+export function Fehlerzustand({ details, onNochmal, className, ebene = 'h2' }: FehlerzustandProps) {
   const { t } = useTranslation()
+  const Titel = ebene
   return (
     <div
       role="alert"
@@ -54,7 +57,7 @@ export function Fehlerzustand({ details, onNochmal, className }: FehlerzustandPr
         <CircleAlert className="text-bad size-5" aria-hidden="true" />
       </div>
       <div className="flex flex-col gap-1">
-        <h1 className="text-lg font-semibold">{t('fehler.titel')}</h1>
+        <Titel className="text-lg font-semibold">{t('fehler.titel')}</Titel>
         <p className="text-muted-foreground text-sm">{t('fehler.text')}</p>
       </div>
       <div className="flex gap-2">
@@ -66,6 +69,16 @@ export function Fehlerzustand({ details, onNochmal, className }: FehlerzustandPr
           }}
         >
           {t('fehler.startseite')}
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            // Bereich vorwählen, in dem der Fehler passiert ist (erstes Stück der Adresse).
+            const bereich = window.location.hash.replace(/^#\//, '').split(/[/?]/)[0] || 'anderes'
+            window.location.hash = `#/knowledge?ansicht=meldungen&neu=${encodeURIComponent(bereich)}`
+          }}
+        >
+          {t('fehler.melden')}
         </Button>
       </div>
       {details && (

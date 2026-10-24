@@ -2,6 +2,7 @@ import { useTable, type RowData, type SortingState } from '@tanstack/react-table
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Skelett } from '@/components/ui/diverses'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zelle, Zeile } from '@/components/ui/tabelle'
 import { tabellenFunktionen, type Spalten } from '@/lib/tabelle'
@@ -18,6 +19,9 @@ interface DatentabelleProps<T extends RowData> {
   laedt?: boolean
   /** Wird statt der Tabelle gezeigt, wenn keine Zeilen da sind. */
   leer?: ReactNode
+  /** Fehler der Abfrage: dann erscheint der Fehlerzustand statt «leer», sonst sähe ein Fehler wie «nichts da» aus. */
+  fehler?: unknown
+  onNochmal?: () => void
   beschriftung: string
 }
 
@@ -36,6 +40,8 @@ export function Datentabelle<T extends RowData>({
   sortierung = KEINE_SORTIERUNG,
   laedt = false,
   leer,
+  fehler,
+  onNochmal,
   beschriftung,
 }: DatentabelleProps<T>) {
   const { t } = useTranslation()
@@ -47,6 +53,7 @@ export function Datentabelle<T extends RowData>({
     getRowId: kennung,
   })
 
+  if (fehler) return <Fehlerzustand details={fehler instanceof Error ? fehler.message : JSON.stringify(fehler)} {...(onNochmal ? { onNochmal } : {})} />
   if (!laedt && daten.length === 0 && leer) return <>{leer}</>
 
   return (

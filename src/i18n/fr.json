@@ -73,7 +73,8 @@
     "benachrichtigungen": "Ouvrir les notifications",
     "gruppeKontakte": "Contacts",
     "sucht": "Recherche …",
-    "neuerLead": "Saisir un nouveau lead"
+    "neuerLead": "Saisir un nouveau lead",
+    "fehlerMelden": "Signaler un problème"
   },
   "kuerzel": {
     "titel": "Raccourcis clavier",
@@ -152,7 +153,8 @@
     "startseite": "Retour à l’accueil",
     "details": "Détails techniques",
     "nichtGefundenTitel": "Cette page n’existe pas",
-    "nichtGefundenText": "Peut-être un ancien lien. La recherche (Ctrl K) mène à chaque domaine."
+    "nichtGefundenText": "Peut-être un ancien lien. La recherche (Ctrl K) mène à chaque domaine.",
+    "melden": "Signaler un problème"
   },
   "design": {
     "ueber": "Phase 2",
@@ -357,7 +359,8 @@
     "pflicht": "Veuillez remplir ce champ."
   },
   "tabelle": {
-    "sortieren": "Cliquer pour trier"
+    "sortieren": "Cliquer pour trier",
+    "aktionen": "Actions"
   },
   "kunden": {
     "titel": "Clients",
@@ -1836,7 +1839,14 @@
     "automation_warten_tage": "Attendre demande au moins 1 jour.",
     "automation_keine_person": "Aucune personne au nom de laquelle l’automatisation peut s’exécuter.",
     "automation_ergebnis": "Résultat invalide du serveur.",
-    "automation_kein_recht": "Seule l’administration modifie les automatisations."
+    "automation_kein_recht": "Seule l’administration modifie les automatisations.",
+    "handbuch_kein_recht": "Seule l’administration gère les processus et les vidéos.",
+    "handbuch_titel_fehlt": "Saisis un titre.",
+    "handbuch_text_fehlt": "Décris ce qui s’est passé.",
+    "handbuch_datei_fehlt": "Choisis un fichier.",
+    "handbuch_doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
+    "handbuch_nicht_gefunden": "Entrée introuvable, peut-être déjà retirée.",
+    "handbuch_art": "Type inconnu."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5055,6 +5065,134 @@
         "im_bau": "en chantier",
         "abgeschlossen": "terminé"
       }
+    }
+  },
+  "handbuch": {
+    "titel": "Manuel",
+    "beschreibung": "Mode d’emploi de chaque domaine, nos processus, des vidéos explicatives et tes signalements à l’administration.",
+    "reiter": {
+      "anleitung": "Mode d’emploi",
+      "prozesse": "Processus",
+      "videos": "Vidéos",
+      "meldungen": "Signalements"
+    },
+    "nichtsGefunden": "Aucun résultat",
+    "titelFeld": "Titre",
+    "beschreibungFeld": "Brève description",
+    "titelFr": "Titre en français",
+    "beschreibungFr": "Brève description en français",
+    "versionFeld": "Version",
+    "gueltigAb": "Valable dès",
+    "version": "Version {{version}}",
+    "vom": "du {{datum}}",
+    "datei": "Fichier",
+    "aktuell": "Actuel : {{name}}",
+    "nurDeutsch": "version allemande",
+    "deFr": "DE + FR",
+    "nurDe": "allemand seulement",
+    "entfernen": "Retirer",
+    "wirklichEntfernen": "Vraiment retirer ?",
+    "prozesse": {
+      "intro": "Nos processus internes en PDF, toujours la version actuelle. Un clic pour ouvrir.",
+      "suche": "Chercher un processus",
+      "neu": "Ajouter un processus",
+      "neuText": "Choisir le PDF, vérifier le titre, enregistrer. La version française est facultative.",
+      "neueVersion": "Nouvelle version",
+      "neueVersionVon": "Nouvelle version : {{titel}}",
+      "neueVersionText": "La version précédente reste disponible sous « Versions précédentes ».",
+      "leer": "Encore aucun processus enregistré",
+      "leerAdmin": "Ajoute le premier avec « Ajouter un processus ».",
+      "frueher": "Versions précédentes ({{anzahl}})",
+      "datei": "Fichier (PDF)",
+      "dateiFr": "Fichier en français (PDF)",
+      "franzoesisch": "Version française (pour les collaborateurs en français)",
+      "titelBeispiel": "p. ex. Prise de rendez-vous des leads",
+      "beschreibungBeispiel": "p. ex. De l’arrivée du lead au rendez-vous de conseil"
+    },
+    "videos": {
+      "intro": "Courtes vidéos explicatives sur le CRM. Un clic pour regarder.",
+      "suche": "Chercher une vidéo",
+      "neu": "Ajouter une vidéo",
+      "bearbeiten": "Modifier la vidéo",
+      "dialogText": "Le CRM lit lui-même la durée et l’image d’aperçu.",
+      "leer": "Encore aucune vidéo",
+      "leerAdmin": "Ajoute la première avec « Ajouter une vidéo ».",
+      "abspielen": "Regarder : {{titel}}",
+      "keinVideo": "Ce navigateur ne peut pas lire la vidéo.",
+      "datei": "Fichier vidéo (MP4 ou WebM)",
+      "dateiHinweis": "20 Mo au maximum",
+      "gesprochen": "Langue parlée",
+      "sprache": {
+        "de": "Allemand",
+        "fr": "Français"
+      },
+      "reihenfolge": "Ordre",
+      "reihenfolgeHinweis": "1 apparaît en premier",
+      "titelBeispiel": "p. ex. Traiter les leads dans le CRM",
+      "beschreibungBeispiel": "p. ex. Du nouveau lead à l’offre"
+    },
+    "meldungen": {
+      "melden": "Signaler un problème",
+      "meldenText": "Que s’est-il passé ? Le CRM joint automatiquement le navigateur, la taille de la fenêtre et la langue.",
+      "senden": "Envoyer le signalement",
+      "titel": "De quoi s’agit-il ?",
+      "titelBeispiel": "p. ex. Impossible d’enregistrer l’offre",
+      "was": "Que s’est-il passé ?",
+      "wasBeispiel": "Qu’as-tu fait, que s’est-il passé ensuite ?",
+      "erwartet": "Qu’attendais-tu ?",
+      "erwartetKurz": "Attendu :",
+      "bereich": "Domaine",
+      "anderes": "Autre",
+      "prio": "Urgence",
+      "prioWert": {
+        "niedrig": "Faible",
+        "normal": "Normale",
+        "dringend": "Urgente"
+      },
+      "dateien": "Captures d’écran ou fichiers",
+      "dateienHinweis": "Une capture d’écran aide le plus.",
+      "intro": "Tes signalements et les réponses de l’administration.",
+      "introAdmin": "Tous les signalements des collaborateurs. Définir le statut et répondre ; la personne voit la réponse ici et dans la cloche.",
+      "filter": "Filtrer les signalements",
+      "filterWert": {
+        "offen": "Ouverts",
+        "erledigt": "Réglés",
+        "alle": "Tous"
+      },
+      "leer": "Encore aucun signalement",
+      "keineImFilter": "Aucun signalement dans ce filtre",
+      "leerText": "Quelque chose bloque ou manque ? Avec « Signaler un problème », ton message arrive à l’administration.",
+      "status": {
+        "neu": "Nouveau",
+        "arbeit": "En cours",
+        "info": "Question",
+        "erledigt": "Réglé"
+      },
+      "statusSetzen": "Statut",
+      "antwort": "Réponse",
+      "antwortVon": "Réponse de {{name}}",
+      "antwortAn": "Réponse à {{name}}",
+      "offenSr": "ouverts :"
+    },
+    "anleitung": {
+      "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
+      "suche": "Chercher dans le mode d’emploi",
+      "schneller": "Pour aller plus vite",
+      "tippSuche": "Chercher un domaine, un contact ou une action",
+      "tippSprung": "Aller à, p. ex. aux clients",
+      "tippNeu": "Nouvelle entrée dans les listes",
+      "tippFilter": "Dans les listes, aller au champ de recherche",
+      "alleKuerzel": "Afficher tous les raccourcis (?)"
+    },
+    "fehler": {
+      "titel": "Saisis un titre.",
+      "pdf": "Choisis le fichier PDF.",
+      "keinPdf": "Choisis un fichier PDF.",
+      "video": "Choisis le fichier vidéo.",
+      "videoGross": "La vidéo dépasse 20 Mo. Enregistre-la plus courte ou plus légère.",
+      "doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
+      "meldungTitel": "Décris brièvement de quoi il s’agit.",
+      "meldungText": "Décris ce qui s’est passé."
     }
   }
 }
