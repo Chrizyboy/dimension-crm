@@ -33,7 +33,11 @@ export const Route = createFileRoute('/knowledge')({
           meldung={suche.meldung ?? null}
           neu={suche.neu ?? null}
           onAdresse={(a) => {
-            const naechste = { ansicht: a.ansicht ?? ansicht, meldung: a.meldung === undefined ? suche.meldung : a.meldung, neu: a.neu === undefined ? suche.neu : a.neu }
+            const naechste = {
+              ansicht: a.ansicht ?? ansicht,
+              meldung: a.meldung === undefined ? suche.meldung : a.meldung,
+              neu: a.neu === undefined ? suche.neu : a.neu,
+            }
             void navigate({
               search: {
                 ...(naechste.ansicht !== 'anleitung' ? { ansicht: naechste.ansicht } : {}),

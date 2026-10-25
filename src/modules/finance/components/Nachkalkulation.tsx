@@ -80,7 +80,10 @@ export function Nachkalkulation({ daten }: { daten: Finanzdaten }) {
       </div>
       {projektId && (
         <div className="grid items-start gap-4 lg:grid-cols-2">
-          <AkteAbschnitt ebene={2} titel={projekt ? `${projekt.nummer} · ${projekt.kunde ?? ''}` : t('finanzen.nk.titel')}>
+          <AkteAbschnitt
+            ebene={2}
+            titel={projekt ? `${projekt.nummer} · ${projekt.kunde ?? ''}` : t('finanzen.nk.titel')}
+          >
             {nk.error ? (
               <Fehlerzustand details={String(nk.error)} onNochmal={() => void nk.refetch()} />
             ) : !n ? (

@@ -42,7 +42,8 @@ export function Fixkosten({
         </Button>
       </div>
       {[...gruppen.entries()].map(([g, liste]) => (
-        <AkteAbschnitt ebene={2}
+        <AkteAbschnitt
+          ebene={2}
           key={g}
           titel={g}
           zusatz={

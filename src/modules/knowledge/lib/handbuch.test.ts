@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import type { HandbuchEintrag } from '../types'
-import { dauerText, fassung, groesse, meldungNummer, naechsteVersion, passt, sortiere, titelAusDateiname } from './handbuch'
+import {
+  dauerText,
+  fassung,
+  groesse,
+  meldungNummer,
+  naechsteVersion,
+  passt,
+  sortiere,
+  titelAusDateiname,
+} from './handbuch'
 
 const eintrag = (teil: Partial<HandbuchEintrag>): HandbuchEintrag => ({
   id: '1',

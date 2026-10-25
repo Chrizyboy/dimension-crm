@@ -78,7 +78,13 @@ export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | nul
         }
       >
         <div className="grid gap-4 sm:grid-cols-2">
-          <Feld id="meldung-titel" label={t('handbuch.meldungen.titel')} pflicht className="sm:col-span-2" fehler={fehler('titel')}>
+          <Feld
+            id="meldung-titel"
+            label={t('handbuch.meldungen.titel')}
+            pflicht
+            className="sm:col-span-2"
+            fehler={fehler('titel')}
+          >
             <Input
               id="meldung-titel"
               placeholder={t('handbuch.meldungen.titelBeispiel')}
@@ -88,7 +94,13 @@ export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | nul
               }}
             />
           </Feld>
-          <Feld id="meldung-text" label={t('handbuch.meldungen.was')} pflicht className="sm:col-span-2" fehler={fehler('text')}>
+          <Feld
+            id="meldung-text"
+            label={t('handbuch.meldungen.was')}
+            pflicht
+            className="sm:col-span-2"
+            fehler={fehler('text')}
+          >
             <Textarea
               id="meldung-text"
               rows={4}

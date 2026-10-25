@@ -32,7 +32,11 @@ export function VideoAbspielen({ eintrag, onSchliessen }: { eintrag: HandbuchEin
         if (!o) onSchliessen()
       }}
     >
-      <DialogInhalt titel={f.titel} {...(f.beschreibung ? { beschreibung: f.beschreibung } : {})} className="md:max-w-4xl">
+      <DialogInhalt
+        titel={f.titel}
+        {...(f.beschreibung ? { beschreibung: f.beschreibung } : {})}
+        className="md:max-w-4xl"
+      >
         {adresse.error ? (
           <Fehlerzustand details={String(adresse.error)} onNochmal={() => void adresse.refetch()} />
         ) : adresse.data ? (

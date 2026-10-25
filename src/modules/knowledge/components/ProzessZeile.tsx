@@ -29,9 +29,9 @@ export function ProzessZeile({
   const [wegFragen, setWegFragen] = useState(false)
   const [frueher, setFrueher] = useState(false)
   const alte = [...e.versionen].reverse()
-  const dateiIds = alte.flatMap((v) => [sprache === 'fr' ? (v.datei_fr_id ?? v.datei_de_id) : v.datei_de_id]).filter(
-    (x): x is string => Boolean(x),
-  )
+  const dateiIds = alte
+    .flatMap((v) => [sprache === 'fr' ? (v.datei_fr_id ?? v.datei_de_id) : v.datei_de_id])
+    .filter((x): x is string => Boolean(x))
   const dateien = useDateien(dateiIds, frueher)
 
   const angaben = [
@@ -106,9 +106,13 @@ export function ProzessZeile({
               const id = sprache === 'fr' ? (v.datei_fr_id ?? v.datei_de_id) : v.datei_de_id
               const datei = dateien.data?.find((d) => d.id === id) ?? null
               const text =
-                [v.version ? t('handbuch.version', { version: v.version }) : null, v.datum ? formatDatum(v.datum) : null]
+                [
+                  v.version ? t('handbuch.version', { version: v.version }) : null,
+                  v.datum ? formatDatum(v.datum) : null,
+                ]
                   .filter(Boolean)
-                  .join(' · ') || (datei?.name ?? t('handbuch.datei'))
+                  .join(' · ') ||
+                (datei?.name ?? t('handbuch.datei'))
               return (
                 <li key={`${id ?? ''}-${String(i)}`}>
                   <button

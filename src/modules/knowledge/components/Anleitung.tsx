@@ -34,7 +34,10 @@ export function Anleitung() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <p className="text-muted-foreground max-w-prose text-sm">{t('handbuch.anleitung.intro')}</p>
         <div className="relative">
-          <Search className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2" aria-hidden="true" />
+          <Search
+            className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
+            aria-hidden="true"
+          />
           <Input
             type="search"
             aria-label={t('handbuch.anleitung.suche')}

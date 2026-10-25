@@ -72,8 +72,8 @@ export function SpesenTabelle({
           <Kopfzelle className="text-right">{t('spesen.spalte.betrag')}</Kopfzelle>
           <Kopfzelle>{t('spesen.spalte.status')}</Kopfzelle>
           <Kopfzelle>
-                <span className="sr-only">{t('tabelle.aktionen')}</span>
-              </Kopfzelle>
+            <span className="sr-only">{t('tabelle.aktionen')}</span>
+          </Kopfzelle>
         </tr>
       </TabelleKopf>
       <TabelleKoerper>

@@ -34,26 +34,28 @@ export function VideoKarte({
     enabled: e.vorschaubild !== null,
     staleTime: 4 * 60_000,
   })
-  const angaben = [
-    e.sprache ? t(`handbuch.videos.sprache.${e.sprache}`) : null,
-    formatDatum(e.erstellt_am),
-  ].filter(Boolean)
+  const angaben = [e.sprache ? t(`handbuch.videos.sprache.${e.sprache}`) : null, formatDatum(e.erstellt_am)].filter(
+    Boolean,
+  )
 
   return (
     <li>
       <Karte className="flex h-full flex-col overflow-hidden">
         <button
           type="button"
-          className="group focus-visible:ring-ring relative block aspect-video w-full overflow-hidden bg-primary outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="group focus-visible:ring-ring bg-primary relative block aspect-video w-full overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-inset"
           aria-label={t('handbuch.videos.abspielen', { titel: f.titel })}
           onClick={onAbspielen}
         >
           {bild.data ? (
             <img src={bild.data} alt="" loading="lazy" className="size-full object-cover" />
           ) : (
-            <Video className="absolute top-1/2 left-1/2 size-10 -translate-1/2 text-primary-foreground/60" aria-hidden="true" />
+            <Video
+              className="text-primary-foreground/60 absolute top-1/2 left-1/2 size-10 -translate-1/2"
+              aria-hidden="true"
+            />
           )}
-          <span className="absolute top-1/2 left-1/2 flex size-12 -translate-1/2 items-center justify-center rounded-full bg-surface text-primary shadow transition group-hover:scale-110">
+          <span className="bg-surface text-primary absolute top-1/2 left-1/2 flex size-12 -translate-1/2 items-center justify-center rounded-full shadow transition group-hover:scale-110">
             <Play className="ml-0.5 size-5 fill-current" aria-hidden="true" />
           </span>
           {e.dauer_s ? (

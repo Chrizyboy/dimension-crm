@@ -93,7 +93,11 @@ export function VideoDialog({ eintrag, onSchliessen }: { eintrag: HandbuchEintra
             pflicht={!eintrag}
             className="sm:col-span-2"
             fehler={fehler('datei_de')}
-            hinweis={eintrag?.datei_de ? t('handbuch.aktuell', { name: eintrag.datei_de.name }) : t('handbuch.videos.dateiHinweis')}
+            hinweis={
+              eintrag?.datei_de
+                ? t('handbuch.aktuell', { name: eintrag.datei_de.name })
+                : t('handbuch.videos.dateiHinweis')
+            }
           >
             <Input
               id="video-datei"
@@ -106,7 +110,13 @@ export function VideoDialog({ eintrag, onSchliessen }: { eintrag: HandbuchEintra
               }}
             />
           </Feld>
-          <Feld id="video-titel" label={t('handbuch.titelFeld')} pflicht className="sm:col-span-2" fehler={fehler('titel_de')}>
+          <Feld
+            id="video-titel"
+            label={t('handbuch.titelFeld')}
+            pflicht
+            className="sm:col-span-2"
+            fehler={fehler('titel_de')}
+          >
             <Input
               id="video-titel"
               placeholder={t('handbuch.videos.titelBeispiel')}
@@ -139,7 +149,11 @@ export function VideoDialog({ eintrag, onSchliessen }: { eintrag: HandbuchEintra
               ]}
             />
           </Feld>
-          <Feld id="video-reihenfolge" label={t('handbuch.videos.reihenfolge')} hinweis={t('handbuch.videos.reihenfolgeHinweis')}>
+          <Feld
+            id="video-reihenfolge"
+            label={t('handbuch.videos.reihenfolge')}
+            hinweis={t('handbuch.videos.reihenfolgeHinweis')}
+          >
             <Input
               id="video-reihenfolge"
               type="number"

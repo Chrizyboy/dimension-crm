@@ -43,8 +43,7 @@ export function ProzessDialog({
     const f = pruefung.error.issues.find((i) => i.path[0] === feld)
     return f ? t(f.message) : undefined
   }
-  const doppelt =
-    !eintrag && vorhandene.some((e) => e.titel_de.trim().toLowerCase() === titel.trim().toLowerCase())
+  const doppelt = !eintrag && vorhandene.some((e) => e.titel_de.trim().toLowerCase() === titel.trim().toLowerCase())
   const keinPdf = (f: File | null) => f !== null && !/pdf$/i.test(f.type) && !/\.pdf$/i.test(f.name)
 
   async function speichern() {
@@ -66,7 +65,9 @@ export function ProzessDialog({
           datei_de: datei,
           datei_fr: dateiFr,
         }),
-      eintrag ? { de: 'Neue Version gespeichert', fr: 'Nouvelle version enregistrée' } : { de: 'Prozess abgelegt', fr: 'Processus enregistré' },
+      eintrag
+        ? { de: 'Neue Version gespeichert', fr: 'Nouvelle version enregistrée' }
+        : { de: 'Prozess abgelegt', fr: 'Processus enregistré' },
     )
     if (ok) onSchliessen()
   }
@@ -79,7 +80,9 @@ export function ProzessDialog({
       }}
     >
       <DialogInhalt
-        titel={eintrag ? t('handbuch.prozesse.neueVersionVon', { titel: eintrag.titel_de }) : t('handbuch.prozesse.neu')}
+        titel={
+          eintrag ? t('handbuch.prozesse.neueVersionVon', { titel: eintrag.titel_de }) : t('handbuch.prozesse.neu')
+        }
         beschreibung={eintrag ? t('handbuch.prozesse.neueVersionText') : t('handbuch.prozesse.neuText')}
         className="md:max-w-xl"
         fuss={

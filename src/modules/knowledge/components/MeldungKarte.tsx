@@ -24,7 +24,15 @@ const TON: Record<MeldungStatus, 'info' | 'warnung' | 'ok' | 'marke'> = {
 }
 
 /** Eine Meldung mit Text, Anhängen und Antwort; die Administration setzt Status und antwortet direkt hier. */
-export function MeldungKarte({ meldung: m, admin, hervorheben }: { meldung: Meldung; admin: boolean; hervorheben: boolean }) {
+export function MeldungKarte({
+  meldung: m,
+  admin,
+  hervorheben,
+}: {
+  meldung: Meldung
+  admin: boolean
+  hervorheben: boolean
+}) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const module = useSichtbareModule()
@@ -36,7 +44,8 @@ export function MeldungKarte({ meldung: m, admin, hervorheben }: { meldung: Meld
   useEffect(() => {
     if (hervorheben) ref.current?.scrollIntoView({ block: 'center' })
   }, [hervorheben])
-  const bereich = module.find((x) => x.id === m.bereich)?.titel[sprache] ?? (m.bereich ? t('handbuch.meldungen.anderes') : null)
+  const bereich =
+    module.find((x) => x.id === m.bereich)?.titel[sprache] ?? (m.bereich ? t('handbuch.meldungen.anderes') : null)
   const geaendert = status !== m.status || antwort.trim() !== (m.antwort ?? '')
 
   return (
@@ -79,7 +88,9 @@ export function MeldungKarte({ meldung: m, admin, hervorheben }: { meldung: Meld
         {m.antwort && !admin && (
           <div className="bg-muted rounded-md p-3 text-sm">
             <p className="font-medium">
-              {m.antwort_von ? t('handbuch.meldungen.antwortVon', { name: m.antwort_von }) : t('handbuch.meldungen.antwort')}
+              {m.antwort_von
+                ? t('handbuch.meldungen.antwortVon', { name: m.antwort_von })
+                : t('handbuch.meldungen.antwort')}
             </p>
             <p className="whitespace-pre-line">{m.antwort}</p>
           </div>
@@ -109,7 +120,10 @@ export function MeldungKarte({ meldung: m, admin, hervorheben }: { meldung: Meld
               disabled={!geaendert}
               laedt={laeuft}
               onClick={() =>
-                void aus(() => beantworten(m.id, status, antwort), { de: 'Meldung gespeichert', fr: 'Signalement enregistré' })
+                void aus(() => beantworten(m.id, status, antwort), {
+                  de: 'Meldung gespeichert',
+                  fr: 'Signalement enregistré',
+                })
               }
             >
               {t('allgemein.speichern')}

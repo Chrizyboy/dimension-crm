@@ -17,11 +17,7 @@ export function KarteKopf({ className, ...props }: HTMLAttributes<HTMLDivElement
  * Titel einer Karte. Standard h2, weil Karten meist direkt unter dem Seitentitel (h1) stehen; so springt
  * die Reihenfolge der Überschriften nicht (wichtig für Screenreader). In einem Abschnitt mit h2 `ebene={3}`.
  */
-export function KarteTitel({
-  className,
-  ebene = 2,
-  ...props
-}: HTMLAttributes<HTMLHeadingElement> & { ebene?: 2 | 3 }) {
+export function KarteTitel({ className, ebene = 2, ...props }: HTMLAttributes<HTMLHeadingElement> & { ebene?: 2 | 3 }) {
   const Titel = ebene === 3 ? 'h3' : 'h2'
   return <Titel className={cn('text-sm font-semibold', className)} {...props} />
 }

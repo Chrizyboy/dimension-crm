@@ -23,7 +23,14 @@ export function Prozesse({ admin }: { admin: boolean }) {
   const [suche, setSuche] = useState('')
   const [dialog, setDialog] = useState<HandbuchEintrag | 'neu' | null>(null)
   const alle = useMemo(() => (daten.data ?? []).filter((e) => e.art === 'prozess'), [daten.data])
-  const liste = useMemo(() => sortiere(alle.filter((e) => passt(e, suche)), sprache), [alle, suche, sprache])
+  const liste = useMemo(
+    () =>
+      sortiere(
+        alle.filter((e) => passt(e, suche)),
+        sprache,
+      ),
+    [alle, suche, sprache],
+  )
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,7 +38,10 @@ export function Prozesse({ admin }: { admin: boolean }) {
         <p className="text-muted-foreground max-w-prose text-sm">{t('handbuch.prozesse.intro')}</p>
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative">
-            <Search className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2" aria-hidden="true" />
+            <Search
+              className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
+              aria-hidden="true"
+            />
             <Input
               type="search"
               aria-label={t('handbuch.prozesse.suche')}

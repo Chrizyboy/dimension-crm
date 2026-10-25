@@ -49,7 +49,10 @@ export async function melden(n: NeueMeldung, sprache: string): Promise<{ id: str
   const r = data as { id: string; nummer: number }
   for (const datei of n.dateien) {
     const id = await dateiAblegen(datei, datei.name)
-    const v = await db().from('dokumente').update({ bezug_tabelle: 'rueckmeldungen', bezug_id: r.id, ordner: 'meldungen' }).eq('id', id)
+    const v = await db()
+      .from('dokumente')
+      .update({ bezug_tabelle: 'rueckmeldungen', bezug_id: r.id, ordner: 'meldungen' })
+      .eq('id', id)
     if (v.error) throw v.error
   }
   return r

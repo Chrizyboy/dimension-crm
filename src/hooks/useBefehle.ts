@@ -1,5 +1,18 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Bell, House, Keyboard, LifeBuoy, UserPlus, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
+import {
+  Bell,
+  House,
+  Keyboard,
+  LifeBuoy,
+  UserPlus,
+  Languages,
+  Monitor,
+  Moon,
+  Palette,
+  PanelLeft,
+  Sun,
+  type LucideIcon,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { SPRUENGE } from '@/lib/spruenge'
