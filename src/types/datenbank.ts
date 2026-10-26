@@ -2483,6 +2483,97 @@ export type Database = {
           },
         ]
       }
+      fahrzeuge: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          ausser_betrieb: boolean
+          bezeichnung: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          jahrgang: number | null
+          kennzeichen: string
+          km_stand: number | null
+          km_stand_am: string | null
+          leasing_bis: string | null
+          marke_modell: string | null
+          naechste_mfk: string | null
+          naechster_service: string | null
+          notiz: string | null
+          person_id: string | null
+          service_km: number | null
+          standort_id: string | null
+          versicherung: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ausser_betrieb?: boolean
+          bezeichnung: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          jahrgang?: number | null
+          kennzeichen: string
+          km_stand?: number | null
+          km_stand_am?: string | null
+          leasing_bis?: string | null
+          marke_modell?: string | null
+          naechste_mfk?: string | null
+          naechster_service?: string | null
+          notiz?: string | null
+          person_id?: string | null
+          service_km?: number | null
+          standort_id?: string | null
+          versicherung?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ausser_betrieb?: boolean
+          bezeichnung?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          jahrgang?: number | null
+          kennzeichen?: string
+          km_stand?: number | null
+          km_stand_am?: string | null
+          leasing_bis?: string | null
+          marke_modell?: string | null
+          naechste_mfk?: string | null
+          naechster_service?: string | null
+          notiz?: string | null
+          person_id?: string | null
+          service_km?: number | null
+          standort_id?: string | null
+          versicherung?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'fahrzeuge_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'fahrzeuge_standort_id_fkey'
+            columns: ['standort_id']
+            isOneToOne: false
+            referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       finanz_einstellungen: {
         Row: {
           alt_daten: Json | null
@@ -2741,6 +2832,95 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      geraete: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          bezeichnung: string
+          erstellt_am: string
+          erstellt_von: string | null
+          fahrzeug_id: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          hersteller: string | null
+          id: string
+          inventar_nr: string | null
+          naechste_pruefung: string | null
+          notiz: string | null
+          person_id: string | null
+          pruef_monate: number | null
+          serien_nr: string | null
+          standort_id: string | null
+          zustand: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          bezeichnung: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hersteller?: string | null
+          id?: string
+          inventar_nr?: string | null
+          naechste_pruefung?: string | null
+          notiz?: string | null
+          person_id?: string | null
+          pruef_monate?: number | null
+          serien_nr?: string | null
+          standort_id?: string | null
+          zustand?: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bezeichnung?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hersteller?: string | null
+          id?: string
+          inventar_nr?: string | null
+          naechste_pruefung?: string | null
+          notiz?: string | null
+          person_id?: string | null
+          pruef_monate?: number | null
+          serien_nr?: string | null
+          standort_id?: string | null
+          zustand?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'geraete_fahrzeug_id_fkey'
+            columns: ['fahrzeug_id']
+            isOneToOne: false
+            referencedRelation: 'fahrzeuge'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'geraete_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'geraete_standort_id_fkey'
+            columns: ['standort_id']
+            isOneToOne: false
+            referencedRelation: 'standorte'
             referencedColumns: ['id']
           },
         ]
@@ -4827,6 +5007,78 @@ export type Database = {
           },
         ]
       }
+      personal_akten: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          austritt: string | null
+          eintritt: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geburtsdatum: string | null
+          geloescht_am: string | null
+          id: string
+          kleidergroesse: string | null
+          notfall_name: string | null
+          notfall_telefon: string | null
+          notiz: string | null
+          pensum: number | null
+          person_id: string
+          schuhgroesse: string | null
+          telefon_privat: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          austritt?: string | null
+          eintritt?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geburtsdatum?: string | null
+          geloescht_am?: string | null
+          id?: string
+          kleidergroesse?: string | null
+          notfall_name?: string | null
+          notfall_telefon?: string | null
+          notiz?: string | null
+          pensum?: number | null
+          person_id: string
+          schuhgroesse?: string | null
+          telefon_privat?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          austritt?: string | null
+          eintritt?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geburtsdatum?: string | null
+          geloescht_am?: string | null
+          id?: string
+          kleidergroesse?: string | null
+          notfall_name?: string | null
+          notfall_telefon?: string | null
+          notiz?: string | null
+          pensum?: number | null
+          person_id?: string
+          schuhgroesse?: string | null
+          telefon_privat?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'personal_akten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       personen: {
         Row: {
           aktiv: boolean
@@ -5496,6 +5748,69 @@ export type Database = {
           },
         ]
       }
+      qualifikationen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          aussteller: string | null
+          bezeichnung: string | null
+          datei_pfad: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          erworben_am: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gueltig_bis: string | null
+          id: string
+          notiz: string | null
+          person_id: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          aussteller?: string | null
+          bezeichnung?: string | null
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          erworben_am?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string | null
+          id?: string
+          notiz?: string | null
+          person_id: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          aussteller?: string | null
+          bezeichnung?: string | null
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          erworben_am?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string | null
+          id?: string
+          notiz?: string | null
+          person_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'qualifikationen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       quellen_laeufe: {
         Row: {
           aktualisiert: number
@@ -6058,6 +6373,99 @@ export type Database = {
             columns: ['standort_id']
             isOneToOne: false
             referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ressourcen_eintraege: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          datum: string
+          dokument_id: string | null
+          ergebnis: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          fahrzeug_id: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          geraet_id: string | null
+          id: string
+          km: number | null
+          kosten_rappen: number | null
+          naechste_am: string | null
+          person_id: string | null
+          text: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          datum?: string
+          dokument_id?: string | null
+          ergebnis?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geraet_id?: string | null
+          id?: string
+          km?: number | null
+          kosten_rappen?: number | null
+          naechste_am?: string | null
+          person_id?: string | null
+          text?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          datum?: string
+          dokument_id?: string | null
+          ergebnis?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geraet_id?: string | null
+          id?: string
+          km?: number | null
+          kosten_rappen?: number | null
+          naechste_am?: string | null
+          person_id?: string | null
+          text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ressourcen_eintraege_dokument_id_fkey'
+            columns: ['dokument_id']
+            isOneToOne: false
+            referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_eintraege_fahrzeug_id_fkey'
+            columns: ['fahrzeug_id']
+            isOneToOne: false
+            referencedRelation: 'fahrzeuge'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_eintraege_geraet_id_fkey'
+            columns: ['geraet_id']
+            isOneToOne: false
+            referencedRelation: 'geraete'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_eintraege_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -7909,6 +8317,19 @@ export type Database = {
           },
         ]
       }
+      fristen: {
+        Row: {
+          art: string | null
+          bezug_id: string | null
+          bezug_tabelle: string | null
+          faellig_am: string | null
+          person_id: string | null
+          standort_id: string | null
+          titel: string | null
+        }
+        ComputedFields: never
+        Relationships: []
+      }
       kunden_uebersicht: {
         Row: {
           anrede: string | null
@@ -8385,6 +8806,63 @@ export type Database = {
             columns: ['verkaufschance_id']
             isOneToOne: false
             referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      personal_akten_sicht: {
+        Row: {
+          austritt: string | null
+          eintritt: string | null
+          geaendert_am: string | null
+          geburtsdatum: string | null
+          id: string | null
+          kleidergroesse: string | null
+          notfall_name: string | null
+          notfall_telefon: string | null
+          notiz: string | null
+          pensum: number | null
+          person_id: string | null
+          schuhgroesse: string | null
+          telefon_privat: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          austritt?: string | null
+          eintritt?: string | null
+          geaendert_am?: string | null
+          geburtsdatum?: string | null
+          id?: string | null
+          kleidergroesse?: string | null
+          notfall_name?: string | null
+          notfall_telefon?: string | null
+          notiz?: never
+          pensum?: number | null
+          person_id?: string | null
+          schuhgroesse?: string | null
+          telefon_privat?: string | null
+        }
+        Update: {
+          austritt?: string | null
+          eintritt?: string | null
+          geaendert_am?: string | null
+          geburtsdatum?: string | null
+          id?: string | null
+          kleidergroesse?: string | null
+          notfall_name?: string | null
+          notfall_telefon?: string | null
+          notiz?: never
+          pensum?: number | null
+          person_id?: string | null
+          schuhgroesse?: string | null
+          telefon_privat?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'personal_akten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -9264,6 +9742,7 @@ export type Database = {
       betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
+      fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_speichern: {
@@ -9519,6 +9998,26 @@ export type Database = {
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      ressource_eintrag_erfassen: {
+        Args: {
+          p_art: string
+          p_datum: string
+          p_dokument?: string
+          p_ergebnis?: string
+          p_fahrzeug: string
+          p_geraet: string
+          p_id: string
+          p_km?: number
+          p_kosten_rappen?: number
+          p_naechste?: string
+          p_text?: string
+        }
+        Returns: string
+      }
+      ressource_uebergeben: {
+        Args: { p_fahrzeug: string; p_geraet: string; p_in_fahrzeug?: string; p_person: string; p_text?: string }
+        Returns: undefined
+      }
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
       rueckmeldung_melden: {
         Args: {
