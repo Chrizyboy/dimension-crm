@@ -1,27 +1,37 @@
 # Modul: Team & Ausweise
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Übersicht «wer darf was» (Kurse und Ausweise aller Personen, Pflicht je Rolle) und die Personal-Akte.
+Jede Person pflegt ihre eigenen Ausweise und ihre Akte, die Administration alle.
 
-**Stand:** Platzhalter – wird in Phase **17** gebaut.
+Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028. Für alle sichtbar (`immer`).
+
+## Ansicht (`#/staff?person=…`)
+
+- Übersicht als Tabelle Person × Ausweis: «fehlt» (Pflicht für die Rolle), gelb (läuft in 60 Tagen ab), rot
+  (abgelaufen). Filter «Handlungsbedarf». «Meine Akte» öffnet die eigene Person.
+- Person als Seitenpanel: Kurse und Ausweise mit Bestätigung (Foto/PDF), Personal-Akte (nur Administration und die
+  Person selbst, sonst ein Hinweis).
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- Besitzt: `qualifikationen` (lesen alle, ändern Administration oder die Person), `personal_akten` (nur
+  Administration und die Person; die App liest `personal_akten_sicht`), Speicher `personal` (Ordner = Person).
+- Liest: `personen` mit `rollen`, Auswahlliste `qualifikation` (Gültigkeit, Pflicht je Rolle).
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `meldungen.ts`, `fehler.ts`, `fachfehler.ts`, `src/hooks/useAuswahl.ts`, `src/lib/bild.ts`
+- `src/components/shared/`: `AkteAbschnitt`, `Filterchips`, `Seitenkopf`, `Zustaende`
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine (ablaufende Ausweise meldet `fristen_melden` in der Datenbank)
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Seite, Übersicht, Person, Dialoge Ausweis und Akte
+- `hooks/` – `useTeam`, `useAktion`
+- `services/` – `personal`
+- `lib/` – `matrix` (gültiger Ausweis, Stand, Vorschlag «gültig bis», mit Tests)
+- `types.ts`, `schema.ts`, `index.ts`

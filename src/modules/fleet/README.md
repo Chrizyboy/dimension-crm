@@ -1,27 +1,38 @@
 # Modul: Fahrzeuge & Geräte
 
-**Zweck:** _(ein Satz, was dieses Modul für die Benutzer:innen erledigt)_
+**Zweck:** Fahrzeuge mit MFK, Service und Kilometerstand, Geräte (Absturzsicherungen, Leitern, Messgeräte …) mit
+Prüftermin und wer sie gerade hat, und alle Fristen an einem Ort. Am Handy: Eintrag erfassen und übergeben.
 
-**Stand:** Platzhalter – wird in Phase **17** gebaut.
+Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028.
+
+## Ansichten (`#/fleet?ansicht=…`)
+
+- **Fahrzeuge** (Standard), Akte mit `?fahrzeug=<id>`: Fristen, Angaben, Geräte an Bord, Verlauf.
+- **Geräte** (`geraete`), Akte mit `?geraet=<id>`: Zustand, nächste Prüfung, wo es ist, Verlauf.
+- **Fristen** (`fristen`): MFK, Service, Prüfungen und ablaufende Ausweise (30 / 90 Tage / alle).
 
 ## Daten
 
-_(Tabellen in Supabase, die dieses Modul besitzt oder liest)_
+- Besitzt: `fahrzeuge`, `geraete`, `ressourcen_eintraege` (schreiben nur über `ressource_eintrag_erfassen` und
+  `ressource_uebergeben`).
+- Liest: Sicht `fristen` (auch Ausweise aus «Team & Ausweise»), `personen`, `standorte`, Auswahllisten `geraeteart`,
+  `ressourcen_eintrag`, `qualifikation`; Einstellung `ressourcen` (Intervalle, Vorlauf) wirkt in der Datenbank.
+- Erinnerung: `fristen_melden` (Zeitplan, stündlich) → Aufgaben und Glocke.
 
 ## Abhängigkeiten
 
-_(Welche gemeinsamen Dienste aus `src/services/` genutzt werden. Andere Module werden nie direkt importiert.)_
+- `src/services/supabase.ts`, `meldungen.ts`, `fehler.ts`, `fachfehler.ts`, `src/hooks/useAuswahl.ts`
+- `src/components/shared/`: `AkteAbschnitt`, `Datentabelle`, `Filterchips`, `Seitenkopf`, `Zeitachse`, `Zustaende`
 
 ## Ereignisse
 
-- **sendet:** _(z.B. `offerte.angenommen`)_
-- **hört auf:** _(z.B. `lead.erstellt`)_
+- **sendet:** keine (Schaden und Fristen melden sich über die Datenbank in der Glocke)
+- **hört auf:** keine
 
 ## Ordner
 
-- `components/` – Oberflächen-Bausteine nur für dieses Modul
-- `hooks/` – React-Hooks (Daten laden, Zustand)
-- `services/` – Zugriff auf Supabase und Server-Funktionen
-- `types.ts` – fachliche Typen
-- `schema.ts` – Prüfregeln (Zod)
-- `index.ts` – das Einzige, was andere importieren dürfen
+- `components/` – Seite, Listen, Akten, Dialoge, Karte «Fristen» für Mein Tag
+- `hooks/` – `useRessourcen` (Laden, Namen), `useAktion`
+- `services/` – `ressourcen`
+- `lib/` – `fristen` (Stand einer Frist, mit Tests)
+- `types.ts`, `schema.ts`, `index.ts`
