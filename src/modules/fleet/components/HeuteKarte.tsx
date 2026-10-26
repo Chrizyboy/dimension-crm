@@ -47,15 +47,13 @@ export default function HeuteKarte() {
         <ul className="divide-y">
           {meine.slice(0, 5).map((f) => (
             <li key={`${f.art}-${f.bezug_id}`}>
-              <a
-                href={ziel(f)}
-                className="hover:bg-surface-2 flex items-center justify-between gap-3 px-4 py-2 text-sm"
-              >
-                <span className="flex min-w-0 flex-col">
-                  <span className="truncate">{f.art === 'ausweis' ? quali.text(f.titel) : f.titel}</span>
+              {/* Titel auf eigener Zeile, Frist darunter: in der schmalen Karte bliebe sonst vom Namen nichts übrig. */}
+              <a href={ziel(f)} className="hover:bg-surface-2 flex flex-col gap-1 px-4 py-2 text-sm">
+                <span className="truncate">{f.art === 'ausweis' ? quali.text(f.titel) : f.titel}</span>
+                <span className="flex flex-wrap items-center gap-2">
+                  <FristBadge datum={f.faellig_am} vorlauf={f.art === 'ausweis' ? 60 : 30} />
                   <span className="text-muted-foreground text-xs">{t(`fuhrpark.fristen.art.${f.art}`)}</span>
                 </span>
-                <FristBadge datum={f.faellig_am} vorlauf={f.art === 'ausweis' ? 60 : 30} />
               </a>
             </li>
           ))}

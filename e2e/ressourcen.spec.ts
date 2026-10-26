@@ -66,8 +66,8 @@ test('Fahrzeug: anlegen, Kilometer und Service erfassen, Papierkorb', async ({ p
 
 test.describe('am Handy', () => {
   // Nur Fenster und Touch des Pixel 7: der Browser bleibt derselbe (sonst bräuchte es einen eigenen Worker).
-  const { defaultBrowserType: _browser, ...handy } = devices['Pixel 7']
-  test.use(handy)
+  const { viewport, userAgent, deviceScaleFactor, isMobile, hasTouch } = devices['Pixel 7']
+  test.use({ viewport, userAgent, deviceScaleFactor, isMobile, hasTouch })
 
   test('Gerät nehmen und Prüfung erfassen', async ({ page }) => {
     await anmelden(page, 'admin@test.local')
