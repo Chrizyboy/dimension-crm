@@ -1848,7 +1848,19 @@
     "handbuch_doppelt": "Diesen Prozess gibt es schon. Dort «Neue Version» verwenden.",
     "handbuch_nicht_gefunden": "Eintrag nicht gefunden, vielleicht schon entfernt.",
     "handbuch_art": "Unbekannte Art.",
-    "betrieb_kein_recht": "Nur die Administration sieht den Betrieb."
+    "betrieb_kein_recht": "Nur die Administration sieht den Betrieb.",
+    "ressourcen_kein_recht": "Dafür fehlt dir das Recht.",
+    "ressourcen_bezug": "Bitte genau ein Fahrzeug oder ein Gerät wählen.",
+    "ressourcen_art": "Diese Art passt hier nicht.",
+    "ressourcen_datum": "Das Datum darf nicht in der Zukunft liegen.",
+    "ressourcen_nicht_gefunden": "Diesen Eintrag gibt es nicht mehr.",
+    "ressourcen_km_fehlt": "Bitte den Kilometerstand eingeben.",
+    "ressourcen_km_kleiner": "Der Kilometerstand ist kleiner als der letzte.",
+    "ressourcen_mfk_naechste": "Bitte die nächste MFK vom Fahrzeugausweis eingeben.",
+    "ressourcen_ergebnis_fehlt": "Bitte das Ergebnis der Prüfung wählen.",
+    "ressourcen_uebergabe_doppelt": "Entweder an eine Person oder in ein Fahrzeug.",
+    "ressourcen_person": "Diese Person ist nicht mehr aktiv.",
+    "ressourcen_doppelt": "Dieses Kennzeichen oder diese Inventar-Nr. gibt es schon."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5387,6 +5399,233 @@
         "ok": "Eingerichtet.",
         "offen": "Freiwillig. Schlüssel als Secret setzen (docs/ki.md)."
       }
+    }
+  },
+  "fuhrpark": {
+    "titel": "Fahrzeuge & Geräte",
+    "beschreibung": "Fahrzeuge mit MFK und Service, Geräte mit Prüftermin und wer was hat.",
+    "filter": "Filter",
+    "filterwert": {
+      "alle": "Alle",
+      "meine": "Meine",
+      "beiMir": "Bei mir",
+      "faellig": "Fällig",
+      "defekt": "Defekt oder Mängel"
+    },
+    "reiter": {
+      "fahrzeuge": "Fahrzeuge",
+      "geraete": "Geräte",
+      "fristen": "Fristen"
+    },
+    "spalte": {
+      "fahrzeug": "Fahrzeug",
+      "kennzeichen": "Kennzeichen",
+      "faehrt": "Fährt",
+      "km": "Kilometer",
+      "mfk": "Nächste MFK",
+      "service": "Nächster Service",
+      "geraet": "Gerät",
+      "art": "Art",
+      "wo": "Wo",
+      "zustand": "Zustand",
+      "pruefung": "Nächste Prüfung",
+      "faellig": "Fällig",
+      "was": "Was",
+      "person": "Person"
+    },
+    "zustand": {
+      "ok": "In Ordnung",
+      "maengel": "Mängel",
+      "defekt": "Defekt",
+      "ausser_betrieb": "Ausser Betrieb"
+    },
+    "ergebnis": {
+      "ok": "In Ordnung",
+      "maengel": "Mit Mängeln"
+    },
+    "frist": {
+      "vorbei": "vorbei seit {{datum}}",
+      "inTagen_one": "{{datum}} (morgen)",
+      "inTagen_other": "{{datum}} (in {{count}} Tagen)"
+    },
+    "ausserBetrieb": "Ausser Betrieb",
+    "lager": "Lager",
+    "entfernen": "In den Papierkorb",
+    "monate_one": "alle {{count}} Monat",
+    "monate_other": "alle {{count}} Monate",
+    "keinePruefung": "keine Prüfpflicht",
+    "leer": {
+      "fahrzeuge": "Noch keine Fahrzeuge",
+      "fahrzeugeText": "Mit «Fahrzeug erfassen» legst du das erste an, mit MFK und Service.",
+      "geraete": "Noch keine Geräte",
+      "geraeteText": "Messgeräte, Absturzsicherungen und Leitern mit Prüftermin erfassen."
+    },
+    "fristen": {
+      "zeitraum": "Zeitraum",
+      "bis": {
+        "30": "Nächste 30 Tage",
+        "90": "Nächste 90 Tage",
+        "alle": "Alle"
+      },
+      "leer": "Nichts fällig",
+      "leerText": "In diesem Zeitraum läuft keine Frist ab.",
+      "art": {
+        "mfk": "MFK",
+        "service": "Service",
+        "pruefung": "Geräteprüfung",
+        "ausweis": "Ausweis läuft ab"
+      }
+    },
+    "akte": {
+      "fahrzeug": "Fahrzeug",
+      "geraet": "Gerät",
+      "weg": "Dieser Eintrag ist nicht mehr da (Papierkorb).",
+      "fristen": "Fristen",
+      "stand": "Stand",
+      "angaben": "Angaben",
+      "bearbeiten": "Angaben ändern",
+      "anBord": "Geräte an Bord",
+      "verlauf": "Verlauf",
+      "beiKm": "bei {{km}} km"
+    },
+    "feld": {
+      "kennzeichen": "Kennzeichen",
+      "bezeichnung": "Bezeichnung",
+      "bezeichnungBeispiel": "z. B. Lieferwagen Bulle",
+      "marke_modell": "Marke und Modell",
+      "jahrgang": "Jahrgang",
+      "km_stand": "Kilometerstand",
+      "naechste_mfk": "Nächste MFK",
+      "naechster_service": "Nächster Service",
+      "leasing_bis": "Leasing bis",
+      "leasingBis": "Leasing bis",
+      "versicherung": "Versicherung",
+      "standort": "Standort",
+      "notiz": "Notiz",
+      "status": "Status",
+      "inventar_nr": "Inventar-Nr.",
+      "serien_nr": "Serien-Nr.",
+      "serienNr": "Serien-Nr.",
+      "hersteller": "Hersteller",
+      "pruefMonate": "Prüfintervall (Monate)",
+      "naechste_pruefung": "Nächste Prüfung"
+    },
+    "fahrzeug": {
+      "neu": "Fahrzeug erfassen",
+      "bearbeiten": "Fahrzeug ändern"
+    },
+    "geraet": {
+      "neu": "Gerät erfassen",
+      "bearbeiten": "Gerät ändern",
+      "artWaehlen": "Art wählen",
+      "monateHinweis": "Leer = keine Prüfpflicht"
+    },
+    "eintrag": {
+      "knopf": "Eintrag erfassen",
+      "titel": "Eintrag erfassen",
+      "text": {
+        "fahrzeug": "MFK, Service, Kilometerstand oder Schaden festhalten.",
+        "geraet": "Prüfung, Kalibrierung, Reparatur oder Schaden festhalten."
+      },
+      "art": "Was",
+      "datum": "Datum",
+      "bisher": "Bisher {{km}} km",
+      "ergebnis": "Ergebnis",
+      "ergebnisWaehlen": "Ergebnis wählen",
+      "naechste": {
+        "mfk": "Nächste MFK (laut Ausweis)",
+        "service": "Nächster Service",
+        "pruefung": "Nächste Prüfung",
+        "kalibrierung": "Nächste Kalibrierung"
+      },
+      "mfkHinweis": "Steht auf dem Fahrzeugausweis.",
+      "automatisch": "Leer lassen: das CRM rechnet sie aus dem Intervall.",
+      "kosten": "Kosten (CHF)",
+      "bemerkung": "Bemerkung",
+      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen"
+    },
+    "uebergeben": {
+      "knopf": "Übergeben",
+      "titel": "Übergeben",
+      "an": "An",
+      "anMich": "An mich",
+      "inFahrzeug": "Ins Fahrzeug: {{name}}",
+      "niemand": "Niemand fest zugeteilt"
+    },
+    "verlauf": {
+      "leer": "Noch keine Einträge.",
+      "naechste": "nächste {{datum}}"
+    },
+    "heute": {
+      "titel": "Fristen",
+      "alle_one": "{{count}} anstehend",
+      "alle_other": "{{count}} anstehend",
+      "nichts": "Keine Frist in den nächsten 30 Tagen."
+    }
+  },
+  "team": {
+    "titel": "Team & Ausweise",
+    "beschreibung": "Wer darf was: Kurse und Ausweise aller Personen, dazu die eigene Personal-Akte.",
+    "meineAkte": "Meine Akte",
+    "filter": "Filter",
+    "filterwert": {
+      "alle": "Alle",
+      "probleme": "Handlungsbedarf"
+    },
+    "matrix": "Übersicht: wer darf was",
+    "spalte": {
+      "person": "Person"
+    },
+    "zelle": {
+      "fehlt": "fehlt",
+      "abgelaufen": "abgelaufen",
+      "bis": "bis {{datum}}",
+      "ja": "ja"
+    },
+    "legende": "«fehlt» = Pflicht für die Rolle (Einstellung in der Liste «Kurse und Ausweise»). Gelb = läuft in 60 Tagen ab.",
+    "leer": "Keine Personen",
+    "leerText": "Niemand hat in diesem Filter Handlungsbedarf.",
+    "ausweise": "Kurse und Ausweise",
+    "keineAusweise": "Noch keine Kurse oder Ausweise erfasst.",
+    "ausweis": {
+      "neu": "Kurs oder Ausweis erfassen",
+      "bearbeiten": "Kurs oder Ausweis ändern",
+      "nachtragen": "{{art}} erfassen",
+      "art": "Art",
+      "artWaehlen": "Art wählen",
+      "erworben": "Erworben am",
+      "gueltigBis": "Gültig bis",
+      "gueltigMonate_one": "Gilt {{count}} Monat",
+      "gueltigMonate_other": "Gilt {{count}} Monate",
+      "unbefristet": "Leer = unbefristet",
+      "bezeichnung": "Kurs, Kategorie",
+      "aussteller": "Ausgestellt von",
+      "datei": "Bestätigung (Foto oder PDF)",
+      "dateiWaehlen": "Datei wählen",
+      "dateiErsetzen": "Datei ersetzen",
+      "dateiEntfernen": "Datei entfernen",
+      "dateiAnsehen": "Bestätigung ansehen",
+      "entfernen": "In den Papierkorb"
+    },
+    "akte": {
+      "titel": "Personal-Akte",
+      "text": "Notfallkontakt und Grössen füllst du selbst. Lohn und Verträge bleiben in AbaNinja.",
+      "privat": "Nur für die Person selbst und die Administration sichtbar.",
+      "notfall": "Notfallkontakt",
+      "notfall_name": "Notfallkontakt (Name)",
+      "notfall_telefon": "Notfallkontakt (Telefon)",
+      "telefon_privat": "Telefon privat",
+      "geburtsdatum": "Geburtsdatum",
+      "kleidergroesse": "Kleidergrösse",
+      "schuhgroesse": "Schuhgrösse",
+      "groessen": "Arbeitskleider",
+      "schuh": "Schuhe {{groesse}}",
+      "eintritt": "Eintritt",
+      "austritt": "Austritt",
+      "pensum": "Pensum (%)",
+      "bis": "bis {{datum}}",
+      "notiz": "Notiz (nur Administration)",
+      "notizHinweis": "Die Person sieht diese Notiz nicht."
     }
   }
 }
