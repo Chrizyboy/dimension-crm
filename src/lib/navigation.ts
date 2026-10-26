@@ -8,6 +8,7 @@ import { meta as dashboard } from '@/modules/dashboard'
 import { meta as expenses } from '@/modules/expenses'
 import { meta as fieldwork } from '@/modules/fieldwork'
 import { meta as finance } from '@/modules/finance'
+import { meta as fleet } from '@/modules/fleet'
 import { meta as invoices } from '@/modules/invoices'
 import { meta as knowledge } from '@/modules/knowledge'
 import { meta as marketing } from '@/modules/marketing'
@@ -18,6 +19,7 @@ import { meta as purchasing } from '@/modules/purchasing'
 import { meta as quotes } from '@/modules/quotes'
 import { meta as sales } from '@/modules/sales'
 import { meta as settings } from '@/modules/settings'
+import { meta as staff } from '@/modules/staff'
 import { meta as tasks } from '@/modules/tasks'
 import { meta as tenders } from '@/modules/tenders'
 import { meta as today } from '@/modules/today'
@@ -41,11 +43,13 @@ export const MODULE: readonly ModulMeta[] = [
   projects,
   purchasing,
   fieldwork,
+  fleet,
   contracts,
   invoices,
   aftersales,
   finance,
   expenses,
+  staff,
   automations,
   settings,
   knowledge,

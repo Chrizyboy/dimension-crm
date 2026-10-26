@@ -10,6 +10,7 @@ import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
 import { meta as kennzahlenMeta } from '@/modules/dashboard'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
+import { FristenHeute, meta as fristenMeta } from '@/modules/fleet'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
@@ -36,6 +37,7 @@ export function Startseite() {
     [wartungMeta, WartungHeute],
     [einkaufMeta, EinkaufHeute],
     [baustelleMeta, BaustelleHeute],
+    [fristenMeta, FristenHeute],
     [finanzenMeta, FinanzenHeute],
     [spesenMeta, SpesenHeute],
   ] as const

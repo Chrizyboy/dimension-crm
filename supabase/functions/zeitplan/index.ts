@@ -14,6 +14,7 @@
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
 
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
@@ -98,6 +99,12 @@ Deno.serve(async (req) => {
     const r = await dienst.rpc<Record<string, number>>('automationen_abarbeiten', { p_limit: 50 })
     const s = r.server ? await serverSchritteAbarbeiten(10) : { erledigt: 0, fehler: 0 }
     return `${r.neue_laeufe} neu, ${r.schritte} Läufe, ${s.erledigt} Server-Schritte, ${s.fehler} Fehler`
+  })
+
+  // Fristen (Phase 17): nur intern (Aufgabe und Glocke), darum ohne Microsoft und ohne Freigabe.
+  ergebnis.fristen = await job('fristen', 60, async () => {
+    const n = await dienst.rpc<number>('fristen_melden', {})
+    return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
   // KI-Entwürfe (Phase 13): ersetzt den Vorlagentext wartender Mails; ohne Schlüssel bleibt die Vorlage.

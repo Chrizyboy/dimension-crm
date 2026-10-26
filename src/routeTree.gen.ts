@@ -23,6 +23,7 @@ import { Route as DesignRouteImport } from './app/design'
 import { Route as ExpensesRouteImport } from './app/expenses'
 import { Route as FieldworkRouteImport } from './app/fieldwork'
 import { Route as FinanceRouteImport } from './app/finance'
+import { Route as FleetRouteImport } from './app/fleet'
 import { Route as InvoicesRouteImport } from './app/invoices'
 import { Route as KnowledgeRouteImport } from './app/knowledge'
 import { Route as KontoRouteImport } from './app/konto'
@@ -34,6 +35,7 @@ import { Route as PurchasingRouteImport } from './app/purchasing'
 import { Route as QuotesRouteImport } from './app/quotes'
 import { Route as SalesRouteImport } from './app/sales'
 import { Route as SettingsRouteImport } from './app/settings'
+import { Route as StaffRouteImport } from './app/staff'
 import { Route as TasksRouteImport } from './app/tasks'
 import { Route as TendersRouteImport } from './app/tenders'
 import { Route as TodayRouteImport } from './app/today'
@@ -109,6 +111,11 @@ const FinanceRoute = FinanceRouteImport.update({
   path: '/finance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FleetRoute = FleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InvoicesRoute = InvoicesRouteImport.update({
   id: '/invoices',
   path: '/invoices',
@@ -164,6 +171,11 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StaffRoute = StaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
@@ -200,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
   '/finance': typeof FinanceRoute
+  '/fleet': typeof FleetRoute
   '/invoices': typeof InvoicesRoute
   '/knowledge': typeof KnowledgeRoute
   '/konto': typeof KontoRoute
@@ -211,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/staff': typeof StaffRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
   '/today': typeof TodayRoute
@@ -231,6 +245,7 @@ export interface FileRoutesByTo {
   '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
   '/finance': typeof FinanceRoute
+  '/fleet': typeof FleetRoute
   '/invoices': typeof InvoicesRoute
   '/knowledge': typeof KnowledgeRoute
   '/konto': typeof KontoRoute
@@ -242,6 +257,7 @@ export interface FileRoutesByTo {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/staff': typeof StaffRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
   '/today': typeof TodayRoute
@@ -263,6 +279,7 @@ export interface FileRoutesById {
   '/expenses': typeof ExpensesRoute
   '/fieldwork': typeof FieldworkRoute
   '/finance': typeof FinanceRoute
+  '/fleet': typeof FleetRoute
   '/invoices': typeof InvoicesRoute
   '/knowledge': typeof KnowledgeRoute
   '/konto': typeof KontoRoute
@@ -274,6 +291,7 @@ export interface FileRoutesById {
   '/quotes': typeof QuotesRoute
   '/sales': typeof SalesRoute
   '/settings': typeof SettingsRoute
+  '/staff': typeof StaffRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
   '/today': typeof TodayRoute
@@ -296,6 +314,7 @@ export interface FileRouteTypes {
     | '/expenses'
     | '/fieldwork'
     | '/finance'
+    | '/fleet'
     | '/invoices'
     | '/knowledge'
     | '/konto'
@@ -307,6 +326,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/staff'
     | '/tasks'
     | '/tenders'
     | '/today'
@@ -327,6 +347,7 @@ export interface FileRouteTypes {
     | '/expenses'
     | '/fieldwork'
     | '/finance'
+    | '/fleet'
     | '/invoices'
     | '/knowledge'
     | '/konto'
@@ -338,6 +359,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/staff'
     | '/tasks'
     | '/tenders'
     | '/today'
@@ -358,6 +380,7 @@ export interface FileRouteTypes {
     | '/expenses'
     | '/fieldwork'
     | '/finance'
+    | '/fleet'
     | '/invoices'
     | '/knowledge'
     | '/konto'
@@ -369,6 +392,7 @@ export interface FileRouteTypes {
     | '/quotes'
     | '/sales'
     | '/settings'
+    | '/staff'
     | '/tasks'
     | '/tenders'
     | '/today'
@@ -390,6 +414,7 @@ export interface RootRouteChildren {
   ExpensesRoute: typeof ExpensesRoute
   FieldworkRoute: typeof FieldworkRoute
   FinanceRoute: typeof FinanceRoute
+  FleetRoute: typeof FleetRoute
   InvoicesRoute: typeof InvoicesRoute
   KnowledgeRoute: typeof KnowledgeRoute
   KontoRoute: typeof KontoRoute
@@ -401,6 +426,7 @@ export interface RootRouteChildren {
   QuotesRoute: typeof QuotesRoute
   SalesRoute: typeof SalesRoute
   SettingsRoute: typeof SettingsRoute
+  StaffRoute: typeof StaffRoute
   TasksRoute: typeof TasksRoute
   TendersRoute: typeof TendersRoute
   TodayRoute: typeof TodayRoute
@@ -507,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FinanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fleet': {
+      id: '/fleet'
+      path: '/fleet'
+      fullPath: '/fleet'
+      preLoaderRoute: typeof FleetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/invoices': {
       id: '/invoices'
       path: '/invoices'
@@ -584,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/staff': {
+      id: '/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof StaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tasks': {
       id: '/tasks'
       path: '/tasks'
@@ -630,6 +670,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExpensesRoute: ExpensesRoute,
   FieldworkRoute: FieldworkRoute,
   FinanceRoute: FinanceRoute,
+  FleetRoute: FleetRoute,
   InvoicesRoute: InvoicesRoute,
   KnowledgeRoute: KnowledgeRoute,
   KontoRoute: KontoRoute,
@@ -641,6 +682,7 @@ const rootRouteChildren: RootRouteChildren = {
   QuotesRoute: QuotesRoute,
   SalesRoute: SalesRoute,
   SettingsRoute: SettingsRoute,
+  StaffRoute: StaffRoute,
   TasksRoute: TasksRoute,
   TendersRoute: TendersRoute,
   TodayRoute: TodayRoute,

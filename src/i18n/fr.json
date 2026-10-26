@@ -1848,7 +1848,19 @@
     "handbuch_doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
     "handbuch_nicht_gefunden": "Entrée introuvable, peut-être déjà retirée.",
     "handbuch_art": "Type inconnu.",
-    "betrieb_kein_recht": "Seule l’administration voit l’exploitation."
+    "betrieb_kein_recht": "Seule l’administration voit l’exploitation.",
+    "ressourcen_kein_recht": "Tu n'as pas le droit de faire cela.",
+    "ressourcen_bezug": "Choisis exactement un véhicule ou un appareil.",
+    "ressourcen_art": "Ce type ne convient pas ici.",
+    "ressourcen_datum": "La date ne peut pas être dans le futur.",
+    "ressourcen_nicht_gefunden": "Cette entrée n'existe plus.",
+    "ressourcen_km_fehlt": "Indique le kilométrage.",
+    "ressourcen_km_kleiner": "Le kilométrage est inférieur au dernier.",
+    "ressourcen_mfk_naechste": "Indique la prochaine expertise selon le permis.",
+    "ressourcen_ergebnis_fehlt": "Choisis le résultat du contrôle.",
+    "ressourcen_uebergabe_doppelt": "Soit à une personne, soit dans un véhicule.",
+    "ressourcen_person": "Cette personne n'est plus active.",
+    "ressourcen_doppelt": "Ces plaques ou ce numéro d'inventaire existent déjà."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5387,6 +5399,233 @@
         "ok": "Configuré.",
         "offen": "Facultatif. Définir la clé comme secret (docs/ki.md)."
       }
+    }
+  },
+  "fuhrpark": {
+    "titel": "Véhicules & appareils",
+    "beschreibung": "Véhicules avec expertise et service, appareils avec contrôles et qui a quoi.",
+    "filter": "Filtre",
+    "filterwert": {
+      "alle": "Tous",
+      "meine": "Les miens",
+      "beiMir": "Chez moi",
+      "faellig": "À faire",
+      "defekt": "Défaut ou manques"
+    },
+    "reiter": {
+      "fahrzeuge": "Véhicules",
+      "geraete": "Appareils",
+      "fristen": "Échéances"
+    },
+    "spalte": {
+      "fahrzeug": "Véhicule",
+      "kennzeichen": "Plaques",
+      "faehrt": "Conducteur",
+      "km": "Kilomètres",
+      "mfk": "Prochaine expertise",
+      "service": "Prochain service",
+      "geraet": "Appareil",
+      "art": "Type",
+      "wo": "Où",
+      "zustand": "État",
+      "pruefung": "Prochain contrôle",
+      "faellig": "Échéance",
+      "was": "Quoi",
+      "person": "Personne"
+    },
+    "zustand": {
+      "ok": "En ordre",
+      "maengel": "Manques",
+      "defekt": "Défectueux",
+      "ausser_betrieb": "Hors service"
+    },
+    "ergebnis": {
+      "ok": "En ordre",
+      "maengel": "Avec manques"
+    },
+    "frist": {
+      "vorbei": "échue depuis le {{datum}}",
+      "inTagen_one": "{{datum}} (demain)",
+      "inTagen_other": "{{datum}} (dans {{count}} jours)"
+    },
+    "ausserBetrieb": "Hors service",
+    "lager": "Dépôt",
+    "entfernen": "Mettre à la corbeille",
+    "monate_one": "tous les {{count}} mois",
+    "monate_other": "tous les {{count}} mois",
+    "keinePruefung": "pas de contrôle obligatoire",
+    "leer": {
+      "fahrzeuge": "Encore aucun véhicule",
+      "fahrzeugeText": "Avec «Saisir un véhicule», tu crées le premier, avec expertise et service.",
+      "geraete": "Encore aucun appareil",
+      "geraeteText": "Saisir appareils de mesure, protections antichute et échelles avec leur contrôle."
+    },
+    "fristen": {
+      "zeitraum": "Période",
+      "bis": {
+        "30": "30 prochains jours",
+        "90": "90 prochains jours",
+        "alle": "Toutes"
+      },
+      "leer": "Rien à faire",
+      "leerText": "Aucune échéance dans cette période.",
+      "art": {
+        "mfk": "Expertise",
+        "service": "Service",
+        "pruefung": "Contrôle d'appareil",
+        "ausweis": "Permis échu"
+      }
+    },
+    "akte": {
+      "fahrzeug": "Véhicule",
+      "geraet": "Appareil",
+      "weg": "Cette entrée n'existe plus (corbeille).",
+      "fristen": "Échéances",
+      "stand": "État",
+      "angaben": "Données",
+      "bearbeiten": "Modifier les données",
+      "anBord": "Appareils à bord",
+      "verlauf": "Historique",
+      "beiKm": "à {{km}} km"
+    },
+    "feld": {
+      "kennzeichen": "Plaques",
+      "bezeichnung": "Désignation",
+      "bezeichnungBeispiel": "p. ex. fourgon Bulle",
+      "marke_modell": "Marque et modèle",
+      "jahrgang": "Année",
+      "km_stand": "Kilométrage",
+      "naechste_mfk": "Prochaine expertise",
+      "naechster_service": "Prochain service",
+      "leasing_bis": "Leasing jusqu'au",
+      "leasingBis": "Leasing jusqu'au",
+      "versicherung": "Assurance",
+      "standort": "Site",
+      "notiz": "Note",
+      "status": "Statut",
+      "inventar_nr": "N° d'inventaire",
+      "serien_nr": "N° de série",
+      "serienNr": "N° de série",
+      "hersteller": "Fabricant",
+      "pruefMonate": "Intervalle de contrôle (mois)",
+      "naechste_pruefung": "Prochain contrôle"
+    },
+    "fahrzeug": {
+      "neu": "Saisir un véhicule",
+      "bearbeiten": "Modifier le véhicule"
+    },
+    "geraet": {
+      "neu": "Saisir un appareil",
+      "bearbeiten": "Modifier l'appareil",
+      "artWaehlen": "Choisir le type",
+      "monateHinweis": "Vide = pas de contrôle obligatoire"
+    },
+    "eintrag": {
+      "knopf": "Saisir une entrée",
+      "titel": "Saisir une entrée",
+      "text": {
+        "fahrzeug": "Noter expertise, service, kilométrage ou dommage.",
+        "geraet": "Noter contrôle, étalonnage, réparation ou dommage."
+      },
+      "art": "Quoi",
+      "datum": "Date",
+      "bisher": "Jusqu'ici {{km}} km",
+      "ergebnis": "Résultat",
+      "ergebnisWaehlen": "Choisir le résultat",
+      "naechste": {
+        "mfk": "Prochaine expertise (selon permis)",
+        "service": "Prochain service",
+        "pruefung": "Prochain contrôle",
+        "kalibrierung": "Prochain étalonnage"
+      },
+      "mfkHinweis": "Figure sur le permis de circulation.",
+      "automatisch": "Laisser vide : le CRM la calcule selon l'intervalle.",
+      "kosten": "Coût (CHF)",
+      "bemerkung": "Remarque",
+      "schadenBeispiel": "Que s'est-il passé ? p. ex. couture du harnais ouverte"
+    },
+    "uebergeben": {
+      "knopf": "Remettre",
+      "titel": "Remettre",
+      "an": "À",
+      "anMich": "À moi",
+      "inFahrzeug": "Dans le véhicule : {{name}}",
+      "niemand": "Personne attitrée"
+    },
+    "verlauf": {
+      "leer": "Encore aucune entrée.",
+      "naechste": "prochaine le {{datum}}"
+    },
+    "heute": {
+      "titel": "Échéances",
+      "alle_one": "{{count}} à venir",
+      "alle_other": "{{count}} à venir",
+      "nichts": "Aucune échéance dans les 30 prochains jours."
+    }
+  },
+  "team": {
+    "titel": "Équipe & certificats",
+    "beschreibung": "Qui peut faire quoi : cours et permis de chacun, et son propre dossier du personnel.",
+    "meineAkte": "Mon dossier",
+    "filter": "Filtre",
+    "filterwert": {
+      "alle": "Tous",
+      "probleme": "À régler"
+    },
+    "matrix": "Vue d'ensemble : qui peut faire quoi",
+    "spalte": {
+      "person": "Personne"
+    },
+    "zelle": {
+      "fehlt": "manque",
+      "abgelaufen": "échu",
+      "bis": "jusqu'à {{datum}}",
+      "ja": "oui"
+    },
+    "legende": "«manque» = obligatoire pour le rôle (réglage dans la liste «Cours et permis»). Jaune = échoit dans 60 jours.",
+    "leer": "Aucune personne",
+    "leerText": "Personne n'a quelque chose à régler dans ce filtre.",
+    "ausweise": "Cours et permis",
+    "keineAusweise": "Encore aucun cours ni permis saisi.",
+    "ausweis": {
+      "neu": "Saisir un cours ou permis",
+      "bearbeiten": "Modifier le cours ou permis",
+      "nachtragen": "Saisir {{art}}",
+      "art": "Type",
+      "artWaehlen": "Choisir le type",
+      "erworben": "Obtenu le",
+      "gueltigBis": "Valable jusqu'au",
+      "gueltigMonate_one": "Valable {{count}} mois",
+      "gueltigMonate_other": "Valable {{count}} mois",
+      "unbefristet": "Vide = illimité",
+      "bezeichnung": "Cours, catégorie",
+      "aussteller": "Délivré par",
+      "datei": "Attestation (photo ou PDF)",
+      "dateiWaehlen": "Choisir un fichier",
+      "dateiErsetzen": "Remplacer le fichier",
+      "dateiEntfernen": "Retirer le fichier",
+      "dateiAnsehen": "Voir l'attestation",
+      "entfernen": "Mettre à la corbeille"
+    },
+    "akte": {
+      "titel": "Dossier du personnel",
+      "text": "Tu remplis toi-même le contact d'urgence et les tailles. Salaire et contrats restent dans AbaNinja.",
+      "privat": "Visible uniquement par la personne et l'administration.",
+      "notfall": "Contact d'urgence",
+      "notfall_name": "Contact d'urgence (nom)",
+      "notfall_telefon": "Contact d'urgence (téléphone)",
+      "telefon_privat": "Téléphone privé",
+      "geburtsdatum": "Date de naissance",
+      "kleidergroesse": "Taille de vêtements",
+      "schuhgroesse": "Pointure",
+      "groessen": "Vêtements de travail",
+      "schuh": "chaussures {{groesse}}",
+      "eintritt": "Entrée",
+      "austritt": "Sortie",
+      "pensum": "Taux (%)",
+      "bis": "jusqu'au {{datum}}",
+      "notiz": "Note (administration seulement)",
+      "notizHinweis": "La personne ne voit pas cette note."
     }
   }
 }
