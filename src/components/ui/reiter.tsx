@@ -6,7 +6,7 @@ export const Reiter = TabsPrimitive.Root
 
 /** Leiste der Reiter (z.B. Kundenblatt: Übersicht · Objekte · Offerten · Projekte). */
 export function ReiterListe({ className, ...props }: ComponentProps<typeof TabsPrimitive.List>) {
-  return <TabsPrimitive.List className={cn('flex gap-1 overflow-x-auto border-b', className)} {...props} />
+  return <TabsPrimitive.List className={cn('flex flex-wrap gap-x-1 border-b', className)} {...props} />
 }
 
 /** Ein Reiter. */

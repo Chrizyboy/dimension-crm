@@ -49,7 +49,7 @@ export function AkteAbschnitt({
 /** Beschriftung und Wert nebeneinander, Wert darf leer sein. */
 export function Angabe({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[8rem_1fr] items-start gap-2 py-1 text-sm">
+    <div className="grid grid-cols-[8rem_1fr] items-start gap-2 py-1 text-sm sm:grid-cols-[10.5rem_1fr]">
       <dt className="text-muted-foreground pt-1 text-xs">{label}</dt>
       <dd className="min-w-0">{children ?? '–'}</dd>
     </div>

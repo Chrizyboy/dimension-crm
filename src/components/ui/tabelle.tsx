@@ -49,7 +49,7 @@ export function Kopfzelle({
   return (
     <th
       className={cn(
-        'text-muted-foreground h-9 border-b px-3 text-left text-xs font-medium tracking-wide whitespace-nowrap uppercase',
+        'text-muted-foreground h-9 border-b px-2 text-left text-xs font-medium tracking-wide whitespace-nowrap uppercase sm:px-3',
         zahl && 'text-right',
         className,
       )}
@@ -81,7 +81,7 @@ export function Zelle({
 }: TdHTMLAttributes<HTMLTableCellElement> & { zahl?: boolean }) {
   return (
     <td
-      className={cn('h-10 px-3 align-middle', zahl && 'zahlen text-right font-mono text-[13px]', className)}
+      className={cn('h-10 px-2 align-middle sm:px-3', zahl && 'zahlen text-right font-mono text-[13px]', className)}
       {...props}
     />
   )

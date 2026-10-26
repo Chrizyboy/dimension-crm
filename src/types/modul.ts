@@ -14,6 +14,8 @@ export interface ModulMeta {
   /** Eindeutige, kurze Kennung (= Ordnername), z.B. "sales". */
   id: string
   titel: Zweisprachig
+  /** Kurzer Name für die Leiste unten am Handy, wenn der Titel dort nicht ganz Platz hat (z. B. «Baustelle»). */
+  kurztitel?: Zweisprachig
   /** Ein Satz, was man in diesem Bereich erledigt; macht Namen eindeutig (z.B. «Anfragen & Leads» vs. «Offerten»). */
   untertitel: Zweisprachig
   /** Pfad der Hauptansicht, z.B. "/sales". */
