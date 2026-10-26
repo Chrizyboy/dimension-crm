@@ -23,3 +23,4 @@
 
 - «Fehler melden» erreicht man auch über die Befehlspalette und jede Fehleranzeige; der Bereich steht in `neu`.
 - Neue Prozess-Version: die alte Datei bleibt unter «Frühere Versionen» (höchstens 20).
+- «Erste Schritte» (Phase 16) ist die Schulungs-Kurzanleitung; der Text steht in `handbuch.start` der Sprachdateien (DE/FR gleich aufgebaut) und lässt sich auf eine A4-Seite drucken.

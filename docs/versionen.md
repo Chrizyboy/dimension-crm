@@ -9,4 +9,4 @@ veröffentlichen» starten (docs/installation.md).
 
 - Desktop-App für Windows mit automatischen Updates: Neue Versionen erscheinen oben als «Update», installiert wird erst nach deinem Klick.
 - Datensicherung wie bisher um 12:00 und 16:00, mit Kopie in SharePoint, herunterladen und wiederherstellen (Administration).
-- «Erste Schritte» im Handbuch: Installieren, Anmelden und die wichtigsten Abläufe auf zwei Seiten.
+- «Erste Schritte» im Handbuch: Installieren, Anmelden und die wichtigsten Abläufe auf einer Seite, zum Ausdrucken.
