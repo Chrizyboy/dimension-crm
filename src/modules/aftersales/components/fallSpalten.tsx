@@ -14,14 +14,16 @@ export function fallSpalten(t: TFunction, auswahl: Text): Spalten<ServiceFall> {
     spalte.accessor('nummer', {
       header: t('service.spalte.nummer'),
       cell: (c) => <span className="zahlen font-mono text-xs">{c.getValue()}</span>,
-      meta: { breite: 'w-20' },
+      // Am Handy steht die Nummer in der Zeile darunter.
+      meta: { breite: 'w-20', nurBreit: true },
     }),
     spalte.accessor('titel', {
       header: t('service.spalte.fall'),
       cell: (c) => (
         <span className="flex max-w-[22rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground truncate text-xs">
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+          <span className="text-muted-foreground line-clamp-2 text-xs">
+            <span className="zahlen font-mono md:hidden">{c.row.original.nummer} · </span>
             {[c.row.original.kunde, c.row.original.ort].filter(Boolean).join(' · ')}
           </span>
         </span>

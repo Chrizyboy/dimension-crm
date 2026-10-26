@@ -23,8 +23,8 @@ export function dossierSpalten(t: TFunction): Spalten<Dossier> {
       header: t('ausschreibungen.spalte.dossier'),
       cell: (c) => (
         <span className="flex max-w-[26rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground truncate text-xs">
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+          <span className="text-muted-foreground line-clamp-2 text-xs">
             <span className="zahlen font-mono">{c.row.original.nummer}</span> ·{' '}
             {t(`ausschreibungen.art.${c.row.original.art}`)}
             {c.row.original.begruendung ? ` · ${c.row.original.begruendung}` : ''}
@@ -37,7 +37,7 @@ export function dossierSpalten(t: TFunction): Spalten<Dossier> {
       header: t('ausschreibungen.spalte.ort'),
       cell: (c) => (
         <span className="flex flex-col">
-          <span className="truncate">{c.getValue()}</span>
+          <span className="line-clamp-2">{c.getValue()}</span>
           {c.row.original.fahrzeit_min != null && (
             <span className="text-muted-foreground text-xs">
               {t('ausschreibungen.fahrzeit', { min: c.row.original.fahrzeit_min })}

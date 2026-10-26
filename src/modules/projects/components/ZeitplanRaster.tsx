@@ -68,7 +68,7 @@ export function ZeitplanRaster({
   return (
     <div className="bg-surface overflow-x-auto rounded-xl border">
       <div className="min-w-[64rem] text-xs">
-        <div className="bg-muted/40 sticky top-0 grid grid-cols-[14rem_1fr] border-b">
+        <div className="bg-muted/40 sticky top-0 grid grid-cols-[16rem_1fr] border-b">
           <span className="text-muted-foreground row-span-2 self-end px-3 py-1.5 font-medium">
             {t('projekte.zeitplan.baustelle')}
           </span>
@@ -105,7 +105,7 @@ export function ZeitplanRaster({
               <p className="text-muted-foreground border-b px-3 py-2">{t('projekte.zeitplan.leer')}</p>
             )}
             {g.zeilen.map(({ projekt: p, einsaetze }) => (
-              <div key={p.id} className="hover:bg-muted/30 grid grid-cols-[14rem_1fr] border-b">
+              <div key={p.id} className="hover:bg-muted/30 grid grid-cols-[16rem_1fr] border-b">
                 <button
                   type="button"
                   onClick={() => {
@@ -113,16 +113,12 @@ export function ZeitplanRaster({
                   }}
                   className="focus-visible:ring-ring flex min-w-0 flex-col items-start px-3 py-1.5 text-left outline-none focus-visible:ring-2 focus-visible:ring-inset"
                 >
-                  <span className="w-full truncate font-medium">{p.kunde}</span>
-                  <span className="flex w-full items-center gap-1">
-                    <Badge
-                      ton={BAU_TON[p.bau_status ?? 'ausstehend'] ?? 'neutral'}
-                      punkt
-                      className="h-4 px-1 text-[10px]"
-                    >
+                  <span className="line-clamp-2 w-full font-medium">{p.kunde}</span>
+                  <span className="flex w-full flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                    <Badge ton={BAU_TON[p.bau_status ?? 'ausstehend'] ?? 'neutral'} punkt>
                       {t(`projekte.bauStatus.${p.bau_status ?? 'ausstehend'}`)}
                     </Badge>
-                    <span className="text-muted-foreground truncate">{p.ort}</span>
+                    <span className="text-muted-foreground">{p.ort}</span>
                   </span>
                 </button>
                 <div className="relative">
@@ -130,13 +126,16 @@ export function ZeitplanRaster({
                   {einsaetze.map((e) => {
                     const l = balken(e.von, e.bis, start, tage)
                     if (!l) return null
-                    const wer = e.art === 'extern' ? e.notiz : kurz(e.personen)
+                    // Ohne eingeteilte Personen steht die Art im Balken (statt «–»), damit er etwas sagt.
+                    const wer =
+                      (e.art === 'extern' ? e.notiz : e.personen.length > 0 ? kurz(e.personen) : '') ||
+                      t(`projekte.einsatz.${e.art}`)
                     return (
                       <span
                         key={e.id}
-                        title={`${t(`projekte.einsatz.${e.art}`)}: ${formatDatum(e.von)} – ${formatDatum(e.bis)} · ${wer ?? ''}`}
+                        title={`${t(`projekte.einsatz.${e.art}`)}: ${formatDatum(e.von)} – ${formatDatum(e.bis)} · ${wer}`}
                         className={cn(
-                          'absolute top-1/2 flex h-5 -translate-y-1/2 items-center overflow-hidden rounded px-1 text-[10px] whitespace-nowrap',
+                          'absolute top-1/2 flex h-6 -translate-y-1/2 items-center overflow-hidden rounded px-1.5 text-xs whitespace-nowrap',
                           BALKEN[e.art],
                         )}
                         style={{ left: `${l.links}%`, width: `max(${l.breite}%, 4px)` }}
@@ -151,7 +150,7 @@ export function ZeitplanRaster({
           </section>
         ))}
 
-        <div className="bg-muted/40 grid grid-cols-[14rem_1fr]">
+        <div className="bg-muted/40 grid grid-cols-[16rem_1fr]">
           <span className="text-muted-foreground px-3 py-1.5 font-medium">{t('projekte.zeitplan.auslastung')}</span>
           <div className="flex">
             {auslastung.map((a, i) => (

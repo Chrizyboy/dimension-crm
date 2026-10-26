@@ -68,7 +68,7 @@ export default function Kennzahlen({
   }))
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6">
+    <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf titel={t('kz.titel')} beschreibung={t('kz.beschreibung')} />
       <div className="flex flex-wrap gap-x-6 gap-y-2">
         <Filterchips

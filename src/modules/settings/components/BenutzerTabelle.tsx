@@ -34,7 +34,7 @@ export function BenutzerTabelle({ personen, status, rollen, standorte, onWaehle 
       <TabelleKopf>
         <tr>
           <Kopfzelle>{t('benutzer.name')}</Kopfzelle>
-          <Kopfzelle>{t('benutzer.rolle')}</Kopfzelle>
+          <Kopfzelle className="hidden sm:table-cell">{t('benutzer.rolle')}</Kopfzelle>
           <Kopfzelle className="hidden md:table-cell">{t('benutzer.standort')}</Kopfzelle>
           <Kopfzelle>{t('benutzer.stand')}</Kopfzelle>
           <Kopfzelle className="hidden lg:table-cell">{t('benutzer.zuletztAktiv')}</Kopfzelle>
@@ -62,15 +62,19 @@ export function BenutzerTabelle({ personen, status, rollen, standorte, onWaehle 
                 <div className="flex min-w-0 items-center gap-2.5">
                   <Avatar name={p.name} className="size-7 shrink-0" />
                   <div className="flex min-w-0 flex-col">
-                    <span className="truncate font-medium">{p.name}</span>
-                    <span className="text-muted-foreground truncate text-xs">{p.email ?? t('benutzer.ohneEmail')}</span>
+                    <span className="line-clamp-2 font-medium">{p.name}</span>
+                    <span className="text-muted-foreground line-clamp-2 text-xs break-all">
+                      {p.email ?? t('benutzer.ohneEmail')}
+                    </span>
+                    {/* Am Handy steht die Rolle hier, damit der Stand daneben Platz hat. */}
+                    <span className="text-muted-foreground text-xs sm:hidden">{rollenName(p.rolle)}</span>
                   </div>
                 </div>
               </Zelle>
-              <Zelle>
-                <span className="whitespace-nowrap">{rollenName(p.rolle)}</span>
+              <Zelle className="hidden sm:table-cell">
+                <span>{rollenName(p.rolle)}</span>
                 {p.rechte.length > 0 && (
-                  <span className="text-muted-foreground ml-1 text-xs">
+                  <span className="text-muted-foreground block text-xs">
                     + {p.rechte.map((r) => t(`rechte.${r}`)).join(', ')}
                   </span>
                 )}

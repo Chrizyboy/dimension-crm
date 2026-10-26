@@ -68,7 +68,7 @@ export function Fixkosten({
                     <span className={f.aktiv ? 'truncate font-medium' : 'text-muted-foreground truncate line-through'}>
                       {f.bezeichnung ?? '–'}
                     </span>
-                    <span className="text-muted-foreground truncate text-xs">
+                    <span className="text-muted-foreground line-clamp-2 text-xs">
                       {[f.detail, f.standort, f.bis ? t('finanzen.fix.bis', { datum: formatDatum(f.bis) }) : null]
                         .filter(Boolean)
                         .join(' · ')}

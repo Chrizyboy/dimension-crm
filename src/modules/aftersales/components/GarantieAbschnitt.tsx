@@ -95,7 +95,7 @@ export function GarantieAbschnitt({ fall }: { fall: ServiceFall }) {
               }}
             >
               <span className="flex items-center justify-between gap-2">
-                <span className="truncate font-medium">
+                <span className="line-clamp-2 font-medium">
                   {g.hersteller} · {g.komponente}
                 </span>
                 <Badge ton={tonVonFarbe(status.finde(g.status)?.farbe)} punkt>

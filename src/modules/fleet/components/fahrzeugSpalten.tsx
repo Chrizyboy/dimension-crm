@@ -14,8 +14,8 @@ export function fahrzeugSpalten(t: TFunction, name: (id: string | null) => strin
       header: t('fuhrpark.spalte.fahrzeug'),
       cell: (c) => (
         <span className="flex max-w-[20rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground truncate text-xs">
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+          <span className="text-muted-foreground line-clamp-2 text-xs">
             {[c.row.original.marke_modell, c.row.original.jahrgang].filter(Boolean).join(' · ')}
           </span>
         </span>

@@ -80,7 +80,7 @@ export default function Ausschreibungen({
           onNavigation({ dossier: null, reiter: r as ReiterTyp })
         }}
       >
-        <ReiterListe className="max-w-full overflow-x-auto">
+        <ReiterListe>
           {REITER.map((r) => {
             const n = bericht.data && ZAHL[r]?.(bericht.data)
             return (

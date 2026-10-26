@@ -103,8 +103,8 @@ export function AnlagenListe() {
                 >
                   <Zelle>
                     <span className="flex max-w-[18rem] min-w-0 flex-col">
-                      <span className="truncate font-medium">{a.kunde}</span>
-                      <span className="text-muted-foreground truncate text-xs">
+                      <span className="line-clamp-2 font-medium">{a.kunde}</span>
+                      <span className="text-muted-foreground line-clamp-2 text-xs">
                         {[a.adresse, a.leistung_kwp ? `${String(a.leistung_kwp)} kWp` : null, a.projekt]
                           .filter(Boolean)
                           .join(' · ')}

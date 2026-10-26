@@ -79,7 +79,7 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6">
+    <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-5 px-4 py-6 sm:px-6">
       <Seitenkopf
         titel={t('kunden.titel')}
         beschreibung={t('kunden.beschreibung')}

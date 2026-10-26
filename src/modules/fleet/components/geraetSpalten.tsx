@@ -24,7 +24,7 @@ export function geraetSpalten(
       header: t('fuhrpark.spalte.geraet'),
       cell: (c) => (
         <span className="flex max-w-[20rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
           <span className="text-muted-foreground zahlen truncate text-xs">
             {[c.row.original.inventar_nr, c.row.original.hersteller].filter(Boolean).join(' · ')}
           </span>

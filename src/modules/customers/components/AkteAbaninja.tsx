@@ -124,8 +124,8 @@ export function AkteAbaninja({
                 {treffer.map((k) => (
                   <li key={k.uuid} className="flex items-center justify-between gap-2 px-3 py-2">
                     <span className="flex min-w-0 flex-col">
-                      <span className="truncate font-medium">{k.name}</span>
-                      <span className="text-muted-foreground truncate text-xs">
+                      <span className="line-clamp-2 font-medium">{k.name}</span>
+                      <span className="text-muted-foreground line-clamp-2 text-xs">
                         {[k.kundennummer, k.email, k.ort].filter(Boolean).join(' · ')}
                       </span>
                     </span>

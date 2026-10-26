@@ -70,7 +70,7 @@ export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
           setze('standorte')(w[0] ?? ALLE)
         }}
       />
-      <div className="grid grid-cols-3 gap-2 lg:flex">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:flex">
         <Auswahl
           aria-label={t('verkauf.person')}
           className="lg:w-40"

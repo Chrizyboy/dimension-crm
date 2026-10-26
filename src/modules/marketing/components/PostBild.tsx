@@ -120,7 +120,7 @@ export function PostBild({
                 <div className="bg-muted size-24 rounded-md border" />
               )}
               {i === 0 && (
-                <span className="bg-primary text-primary-foreground absolute bottom-1 left-1 rounded px-1 text-[10px]">
+                <span className="bg-primary text-primary-foreground absolute bottom-1 left-1 rounded px-1 text-xs">
                   {t('marketing.post.wirdGepostet')}
                 </span>
               )}

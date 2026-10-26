@@ -61,7 +61,7 @@ export function Material({
             <Karte key={m.id} className="flex flex-col gap-2 p-4">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex min-w-0 flex-col">
-                  <span className="truncate font-medium">{m.baustelle ?? '–'}</span>
+                  <span className="line-clamp-2 font-medium">{m.baustelle ?? '–'}</span>
                   <span className="text-muted-foreground text-xs">
                     {[
                       m.bautermin ? t('finanzen.material.bautermin', { datum: formatDatum(m.bautermin) }) : null,
@@ -97,7 +97,7 @@ export function Material({
               <ul className="divide-y text-sm">
                 {m.positionen.map((p, i) => (
                   <li key={`${p.position}-${String(i)}`} className="flex items-center gap-2 py-1.5">
-                    <span className="min-w-0 flex-1 truncate">
+                    <span className="line-clamp-2 min-w-0 flex-1">
                       {p.position}
                       {p.lieferant && <span className="text-muted-foreground ml-1 text-xs">· {p.lieferant}</span>}
                       {p.exkl && (

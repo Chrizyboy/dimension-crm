@@ -14,7 +14,7 @@ export function VerbindungenProtokoll({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
       <Karte>
         <KarteKopf>
           <KarteTitel>{t('verbindungen.zeitplan')}</KarteTitel>
@@ -32,7 +32,7 @@ export function VerbindungenProtokoll({
                       {formatDatumZeit(z.zuletzt_am)}
                     </Badge>
                   </span>
-                  {z.meldung && <span className="text-muted-foreground truncate text-xs">{z.meldung}</span>}
+                  {z.meldung && <span className="text-muted-foreground line-clamp-2 text-xs">{z.meldung}</span>}
                 </li>
               ))}
             </ul>

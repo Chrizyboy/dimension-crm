@@ -46,10 +46,10 @@ export function BewegungZeile({
   return (
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-sm">
       <span className="flex min-w-0 flex-1 basis-56 flex-col">
-        <span className="truncate font-medium">{b.titel}</span>
+        <span className="line-clamp-2 font-medium">{b.titel}</span>
         <span className="text-muted-foreground flex min-w-0 flex-wrap items-center gap-1 text-xs">
           <span>{t(`finanzen.quelle.${b.quelle}`)}</span>
-          {b.zusatz && <span className="truncate">· {b.zusatz}</span>}
+          {b.zusatz && <span className="line-clamp-2">· {b.zusatz}</span>}
           {b.prioritaet !== 'normal' && (
             <Badge ton={PRIO_TON[b.prioritaet]}>{t(`finanzen.prio.${b.prioritaet}`)}</Badge>
           )}

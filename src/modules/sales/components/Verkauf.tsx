@@ -145,7 +145,7 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
         }
       />
 
-      <nav aria-label={t('verkauf.ansichten')} className="-mx-1 flex gap-1 overflow-x-auto border-b px-1">
+      <nav aria-label={t('verkauf.ansichten')} className="-mx-1 flex flex-wrap gap-x-1 border-b px-1">
         {VERKAUF_ANSICHTEN.map((a, i) => (
           <button
             key={a}

@@ -26,7 +26,7 @@ export function geschaeftSpalten(
       sortFn: (a, b) => a.original.name.localeCompare(b.original.name, 'de-CH'),
       cell: (c) => (
         <span className="flex max-w-[16rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
           <span className="text-muted-foreground truncate text-xs md:hidden">{c.row.original.ort}</span>
         </span>
       ),
@@ -35,7 +35,7 @@ export function geschaeftSpalten(
       id: 'ort',
       header: t('verkauf.spalteListe.ort'),
       cell: (c) => [c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–',
-      meta: { nurBreit: true },
+      meta: { nurBreit: true, breite: 'min-w-44' },
     }),
     spalte.accessor('standRang', {
       header: t('verkauf.spalteListe.stand'),

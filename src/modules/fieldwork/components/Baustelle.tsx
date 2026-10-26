@@ -62,7 +62,7 @@ export default function Baustelle({
           onNavigation({ reiter: r as ReiterTyp, rapport: null })
         }}
       >
-        <ReiterListe className="max-w-full overflow-x-auto">
+        <ReiterListe>
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`baustelle.reiter.${r}`)}

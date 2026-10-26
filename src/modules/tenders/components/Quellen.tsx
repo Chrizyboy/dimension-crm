@@ -122,7 +122,7 @@ export function Quellen({ admin }: { admin: boolean }) {
                     </Zelle>
                     <Zelle zahl>{l.gelesen}</Zelle>
                     <Zelle zahl>{l.neu}</Zelle>
-                    <Zelle className="text-muted-foreground max-w-[24rem] truncate text-xs">{l.meldung}</Zelle>
+                    <Zelle className="text-muted-foreground max-w-[24rem] text-xs">{l.meldung}</Zelle>
                   </Zeile>
                 ))}
               </TabelleKoerper>

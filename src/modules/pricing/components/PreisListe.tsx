@@ -95,10 +95,10 @@ export default function PreisListe({
       ),
     cell: (c) => (
       <span className="flex max-w-[22rem] min-w-0 flex-col">
-        <span className="truncate font-medium" title={c.getValue()}>
+        <span className="line-clamp-2 font-medium" title={c.getValue()}>
           {c.getValue()}
         </span>
-        <span className="text-muted-foreground truncate text-xs">
+        <span className="text-muted-foreground line-clamp-2 text-xs">
           {[c.row.original.gruppe, c.row.original.artikelnummer, kategorien.text(c.row.original.kategorie)]
             .filter(Boolean)
             .join(' · ')}
@@ -123,6 +123,8 @@ export default function PreisListe({
     'wp',
     (a) => String(a.leistungW ?? ''),
     (a, x) => void speichere(a, { leistung_w: x.trim() ? Math.round(Number(x.replace(',', '.'))) : null }),
+    // Am Handy zählen EK und VK; die Leistung steht ohnehin im Artikelnamen.
+    true,
   )
   const ekSpalte = zahl(
     'ek',

@@ -39,15 +39,15 @@ export function MaterialProjekte({
       spalte.columns([
         spalte.accessor('nummer', {
           header: t('einkauf.spalte.projekt'),
-          cell: (c) => <span className="zahlen font-mono text-xs">{c.getValue()}</span>,
+          cell: (c) => <span className="zahlen font-mono text-xs whitespace-nowrap">{c.getValue()}</span>,
           meta: { breite: 'w-24' },
         }),
         spalte.accessor('kunde', {
           header: t('einkauf.spalte.kunde'),
           cell: (c) => (
             <span className="flex max-w-[22rem] min-w-0 flex-col">
-              <span className="truncate font-medium">{c.getValue()}</span>
-              <span className="text-muted-foreground truncate text-xs">
+              <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+              <span className="text-muted-foreground line-clamp-2 text-xs">
                 {[c.row.original.ort, c.row.original.titel].filter(Boolean).join(' · ')}
               </span>
             </span>

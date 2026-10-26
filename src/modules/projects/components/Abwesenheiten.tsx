@@ -129,7 +129,7 @@ export function Abwesenheiten() {
             {liste.data.map((a) => (
               <li key={a.id} className="flex items-center gap-3 px-3 py-2 text-sm">
                 <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="truncate font-medium">{name(a.person_id)}</span>
+                  <span className="line-clamp-2 font-medium">{name(a.person_id)}</span>
                   <span className="text-muted-foreground zahlen text-xs">
                     {formatDatum(a.von)}
                     {a.bis !== a.von ? ` – ${formatDatum(a.bis)}` : ''} ·{' '}
@@ -154,7 +154,7 @@ export function Abwesenheiten() {
                     <Trash2 />
                   </Button>
                 ) : (
-                  <span className="text-muted-foreground w-8 text-center text-xs">
+                  <span className="text-muted-foreground min-w-8 shrink-0 text-center text-xs">
                     {t('projekte.abwesenheit.outlook')}
                   </span>
                 )}

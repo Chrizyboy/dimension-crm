@@ -114,7 +114,7 @@ export function RoutenAblauf({ ablauf, start, ziel, datum, onFahrzeit, onOeffnen
                   >
                     {z.stopp.name}
                   </button>
-                  <span className="text-muted-foreground truncate text-xs">{z.stopp.adresse}</span>
+                  <span className="text-muted-foreground line-clamp-2 text-xs">{z.stopp.adresse}</span>
                   <span className="text-muted-foreground text-xs">
                     {t('verkauf.route.ankunft', { zeit: hm(z.ankunft) })} · {dauer(z.besuchMin)}
                     {z.stopp.fix !== null ? ` · ${t('verkauf.route.fix')}` : ` · ${t('verkauf.route.vorschlag')}`}

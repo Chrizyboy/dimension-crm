@@ -122,8 +122,8 @@ export function ZahllaufDialog({ daten, onSchliessen }: { daten: Finanzdaten; on
                   }}
                 />
                 <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="truncate font-medium">{z.firma}</span>
-                  <span className="text-muted-foreground truncate text-xs">
+                  <span className="line-clamp-2 font-medium">{z.firma}</span>
+                  <span className="text-muted-foreground line-clamp-2 text-xs">
                     {[z.text, z.faellig_am ? t('finanzen.faelligKurz', { datum: formatDatum(z.faellig_am) }) : null]
                       .filter(Boolean)
                       .join(' · ')}

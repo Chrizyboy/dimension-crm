@@ -32,7 +32,7 @@ export function FahrplanBalken({ stand, gross = false }: { stand: Projekt['stand
           </span>
         ))}
       </div>
-      <p className="text-muted-foreground truncate text-xs">
+      <p className="text-muted-foreground line-clamp-2 text-xs">
         {n ? (
           <>
             <span className="text-foreground font-medium">{t(`projekte.phase.${n.phase}`)}</span>

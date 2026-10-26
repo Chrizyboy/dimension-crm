@@ -155,7 +155,7 @@ export function Zahlungen({
           <ul className="divide-y text-sm">
             {bezahlt.slice(0, 200).map((z) => (
               <li key={z.id} className="flex flex-wrap justify-between gap-2 py-1.5">
-                <span className="min-w-0 truncate">
+                <span className="line-clamp-2 min-w-0">
                   {z.firma}
                   <span className="text-muted-foreground ml-2 text-xs">
                     {[z.text, z.rechnung_nr].filter(Boolean).join(' · ')}

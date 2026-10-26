@@ -53,7 +53,7 @@ export function MaterialTabelle({
         {zeilen.map((z) => (
           <Zeile key={z.id}>
             <Zelle className="py-1.5">
-              <span className="block max-w-[18rem] truncate">{z.bezeichnung}</span>
+              <span className="line-clamp-2 max-w-[22rem]">{z.bezeichnung}</span>
               <span className="text-muted-foreground block text-xs">
                 {[z.artikelnummer, !z.artikel_id ? t('einkauf.material.ohneArtikel') : null, z.notiz]
                   .filter(Boolean)

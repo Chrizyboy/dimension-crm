@@ -65,7 +65,7 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
       <Seitenkopf titel={t('offerten.titel')} beschreibung={t('offerten.beschreibung')} />
 
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <nav aria-label={t('offerten.ansichten')} className="-mx-1 flex gap-1 overflow-x-auto border-b px-1">
+        <nav aria-label={t('offerten.ansichten')} className="-mx-1 flex flex-wrap gap-x-1 border-b px-1">
           {OFFERT_ANSICHTEN.map((a) => (
             <button
               key={a}

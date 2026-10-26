@@ -82,7 +82,7 @@ function Termin({ b, onOeffnen }: { b: Block; onOeffnen: (id: string) => void })
       }}
       title={`${hm(b.start)}–${hm(b.ende)} ${b.titel}`}
       className={cn(
-        'absolute inset-x-0.5 z-[2] overflow-hidden rounded-md px-1.5 py-0.5 text-left text-[11px] leading-tight shadow-xs',
+        'absolute inset-x-0.5 z-[2] overflow-hidden rounded-md px-1.5 py-0.5 text-left text-xs leading-tight shadow-xs',
         b.art === 'crm' && 'bg-primary text-primary-foreground cursor-grab',
         b.art === 'kalender' && 'bg-info-soft text-info border-info/30 border',
         b.art === 'abwesend' && 'bg-muted text-muted-foreground',
@@ -287,7 +287,7 @@ export default function Wochenkalender({
                       onClick={() => {
                         setSlot({ tag, start: f.start })
                       }}
-                      className="bg-ok-soft/70 text-ok hover:bg-ok-soft focus-visible:ring-ring absolute inset-x-1 z-[1] rounded-md text-[10px] font-medium outline-none focus-visible:ring-2"
+                      className="bg-ok-soft/70 text-ok hover:bg-ok-soft focus-visible:ring-ring absolute inset-x-1 z-[1] rounded-md text-xs font-medium outline-none focus-visible:ring-2"
                       style={{
                         top: ((f.start - VON) / SCHRITT) * ZEILE_PX + 2,
                         height: ((f.ende - f.start) / SCHRITT) * ZEILE_PX - 4,

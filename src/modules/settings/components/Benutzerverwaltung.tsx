@@ -56,9 +56,8 @@ export default function Benutzerverwaltung({
   const liste = personen.data ?? []
 
   return (
-    <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-6 sm:px-6">
+    <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6 px-4 py-6 sm:px-6">
       <Seitenkopf
-        ueber={t('nav.verwaltung')}
         titel={t('benutzer.titel')}
         beschreibung={t('benutzer.beschreibung')}
         aktionen={

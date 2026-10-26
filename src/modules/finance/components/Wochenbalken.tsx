@@ -64,7 +64,7 @@ export function Wochenbalken({ wochen, reserve }: { wochen: Woche[]; reserve: nu
         )}
       </svg>
       <div
-        className="text-muted-foreground zahlen grid text-center text-[10px]"
+        className="text-muted-foreground zahlen grid text-center text-xs"
         style={{ gridTemplateColumns: `repeat(${String(wochen.length)}, 1fr)` }}
       >
         {wochen.map((w) => (

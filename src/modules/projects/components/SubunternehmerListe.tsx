@@ -46,8 +46,8 @@ export function SubunternehmerListe() {
                 }}
               >
                 <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="truncate text-sm font-medium">{s.name}</span>
-                  <span className="text-muted-foreground truncate text-xs">
+                  <span className="line-clamp-2 text-sm font-medium">{s.name}</span>
+                  <span className="text-muted-foreground line-clamp-2 text-xs">
                     {[s.gewerk, s.telefon ? formatTelefon(s.telefon) : null, s.email].filter(Boolean).join(' · ') ||
                       '–'}
                   </span>

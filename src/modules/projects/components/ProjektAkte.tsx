@@ -157,7 +157,7 @@ export function ProjektAkte({
                 onReiter(r as AkteReiter)
               }}
             >
-              <ReiterListe className="max-w-full overflow-x-auto">
+              <ReiterListe>
                 {AKTE_REITER.map((r) => (
                   <ReiterKnopf key={r} value={r}>
                     {t(`projekte.akteReiter.${r}`)}

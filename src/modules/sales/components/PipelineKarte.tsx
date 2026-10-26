@@ -63,7 +63,7 @@ export const PipelineKarte = memo(function PipelineKarte({
       <div className="flex items-start justify-between gap-2">
         <button
           type="button"
-          className="focus-visible:ring-ring min-w-0 truncate rounded text-left font-medium outline-none focus-visible:ring-2"
+          className="focus-visible:ring-ring line-clamp-2 min-w-0 rounded text-left font-medium outline-none focus-visible:ring-2"
           onClick={(e) => {
             e.stopPropagation()
             onOeffnen(g.id)
@@ -108,7 +108,7 @@ export const PipelineKarte = memo(function PipelineKarte({
           </Menue>
         )}
       </div>
-      <span className="text-muted-foreground truncate text-xs">
+      <span className="text-muted-foreground line-clamp-2 text-xs">
         {[g.nummer, [g.plz, g.ort].filter(Boolean).join(' ')].filter(Boolean).join(' · ')}
       </span>
       {g.terminAm && (g.stand === 'termin' || g.stand === 'nach_termin') && (

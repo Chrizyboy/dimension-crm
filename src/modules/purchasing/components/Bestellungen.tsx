@@ -50,7 +50,7 @@ export function Bestellungen({ aktiveId, onOeffnen }: { aktiveId: string | null;
         <div className="flex w-full items-center gap-2 sm:w-auto">
           <Input
             type="search"
-            className="w-full sm:w-64"
+            className="w-full sm:w-80"
             aria-label={t('einkauf.suche')}
             placeholder={t('einkauf.suche')}
             value={suche}

@@ -63,7 +63,7 @@ export function AkteSubunternehmer({ projekt }: { projekt: Projekt }) {
             <li key={a.id} className="flex items-start gap-2 px-3 py-2 text-sm">
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="flex items-center gap-2">
-                  <span className="truncate font-medium">{a.subunternehmer}</span>
+                  <span className="line-clamp-2 font-medium">{a.subunternehmer}</span>
                   <Badge ton={TON[a.status]}>{t(`projekte.subStatus.${a.status}`)}</Badge>
                 </span>
                 <span className="text-muted-foreground text-xs">
