@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Handbuch» (V233 Helpdesk: Anleitung, Prozesse, Videos, Meldungen). */
 
 /** Reiter des Handbuchs, in der Adresse `#/knowledge?ansicht=…`. */
-export const ANSICHTEN = ['anleitung', 'prozesse', 'videos', 'meldungen'] as const
+export const ANSICHTEN = ['anleitung', 'start', 'prozesse', 'videos', 'meldungen'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 /** Eine abgelegte Datei (PDF, Video, Vorschaubild) aus `dokumente`. */

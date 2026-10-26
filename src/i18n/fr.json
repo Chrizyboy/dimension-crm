@@ -1847,7 +1847,8 @@
     "handbuch_datei_fehlt": "Choisis un fichier.",
     "handbuch_doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
     "handbuch_nicht_gefunden": "Entrée introuvable, peut-être déjà retirée.",
-    "handbuch_art": "Type inconnu."
+    "handbuch_art": "Type inconnu.",
+    "betrieb_kein_recht": "Seule l’administration voit l’exploitation."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -1986,7 +1987,10 @@
       "ki_zu_lang": "La réponse de l’IA était trop longue. Merci de formuler le souhait plus brièvement.",
       "ki_antwort": "La réponse de l’IA était incomplète. Merci de réessayer.",
       "datei_typ": "Ce type de fichier n’est pas pris en charge (images et PDF uniquement).",
-      "datei_zu_gross": "Le fichier est trop gros (5 Mo au maximum)."
+      "datei_zu_gross": "Le fichier est trop gros (5 Mo au maximum).",
+      "sicherung_laeuft": "Une sauvegarde est en cours. Réessaie dans une minute.",
+      "sicherung_fehlt": "Cette sauvegarde n’existe plus.",
+      "sicherung_format": "Le fichier n’est pas une sauvegarde de ce CRM."
     }
   },
   "verbindungen": {
@@ -5075,7 +5079,8 @@
       "anleitung": "Mode d’emploi",
       "prozesse": "Processus",
       "videos": "Vidéos",
-      "meldungen": "Signalements"
+      "meldungen": "Signalements",
+      "start": "Premiers pas"
     },
     "nichtsGefunden": "Aucun résultat",
     "titelFeld": "Titre",
@@ -5194,6 +5199,194 @@
       "doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
       "meldungTitel": "Décris brièvement de quoi il s’agit.",
       "meldungText": "Décris ce qui s’est passé."
+    },
+    "start": {
+      "reiter": "Premiers pas",
+      "intro": "L’essentiel pour démarrer, sur une page. Pour le distribuer à l’équipe : « Imprimer » (ou enregistrer en PDF).",
+      "drucken": "Imprimer",
+      "druckTitel": "Dimension CRM : premiers pas",
+      "abschnitte": [
+        {
+          "titel": "1. Installer",
+          "punkte": [
+            "PC : Mon compte › Cette app › « Télécharger l’app de bureau » (ou le lien de l’invitation). Lancer le fichier, c’est tout, sans droits d’administrateur.",
+            "Si Windows affiche « Windows a protégé votre ordinateur » : Informations complémentaires › Exécuter quand même. Seulement la première fois.",
+            "Mobile : ouvrir l’adresse de l’invitation dans le navigateur. iPhone : Partager › Sur l’écran d’accueil. Android : ⋮ › Installer l’application.",
+            "Les mises à jour arrivent toutes seules. Sur le PC, « Mise à jour » apparaît en haut : enregistrer d’abord, puis cliquer."
+          ]
+        },
+        {
+          "titel": "2. Se connecter",
+          "punkte": [
+            "Saisir ton e-mail professionnel, « Envoyer le code par e-mail », taper le code à 6 chiffres. Il n’y a pas de mot de passe.",
+            "Ou « Se connecter avec Microsoft », dès que c’est activé.",
+            "Une fois par appareil. Se déconnecter via tes initiales en haut à droite.",
+            "Mon compte › « Connecter Microsoft » : les e-mails et rendez-vous partent alors de ta propre boîte."
+          ]
+        },
+        {
+          "titel": "3. Ma journée",
+          "punkte": [
+            "La page d’accueil montre tes rendez-vous, tes tâches et ce qui est prévu aujourd’hui.",
+            "La cloche en haut signale les nouveautés : validations, réponses, erreurs.",
+            "Ctrl K ouvre la recherche : clients, leads, projets et commandes."
+          ]
+        },
+        {
+          "titel": "4. Les tâches principales",
+          "punkte": [
+            "Nouvelle demande : Demandes & leads › « Nouveau lead » (touche N).",
+            "Offre : dans le lead « Créer une offre » ou sous Offres. Les prix viennent de la liste de prix.",
+            "Consulter un client : Clients › dossier avec historique, documents et projets.",
+            "Projet : Projets & montage › cocher le planning étape par étape.",
+            "Chantier : sur le mobile sous Chantier & rapports, saisir rapport, photos et heures, même sans réseau.",
+            "Frais : Frais › photographier le justificatif, vérifier le montant, enregistrer.",
+            "Les e-mails et SMS passent par la boîte d’envoi et ne partent qu’après validation."
+          ]
+        },
+        {
+          "titel": "5. Aide",
+          "punkte": [
+            "Manuel : guide pour chaque domaine, processus en PDF, vidéos explicatives.",
+            "La touche ? affiche tous les raccourcis, G et une lettre ouvre un domaine.",
+            "Quelque chose ne marche pas ? « Signaler un problème » (en haut du manuel ou à chaque message d’erreur). La réponse arrive dans la cloche."
+          ]
+        }
+      ]
+    }
+  },
+  "update": {
+    "knopf": "Mise à jour {{version}}",
+    "titel": "Nouvelle version {{version}}",
+    "text": "Tu utilises la version {{jetzt}}.",
+    "vom": "Publiée le {{datum}}",
+    "hinweis": "L’app télécharge la nouvelle version, l’installe et redémarre. Cela prend environ une minute. Enregistre d’abord ce que tu es en train de faire.",
+    "jetzt": "Mettre à jour maintenant",
+    "spaeter": "Plus tard",
+    "laedt": "Téléchargement … {{prozent}} %",
+    "karte": "Cette app",
+    "desktop": "App de bureau pour Windows",
+    "browser": "Dans le navigateur ou comme app sur le mobile",
+    "suchen": "Rechercher des mises à jour",
+    "pruefe": "Recherche …",
+    "aktuell": "Tu as la version la plus récente.",
+    "fehler": "Pas de connexion au service de mise à jour. Réessaie plus tard.",
+    "testversion": "Version de test : les mises à jour n’arrivent pas automatiquement ici. Installe la version de la page de téléchargement.",
+    "autostart": "Démarrer avec Windows",
+    "autostartText": "Le CRM s’ouvre après la connexion à Windows. Valable uniquement pour ce PC.",
+    "downloadText": "Pour le PC, il existe l’app de bureau avec notifications et mises à jour automatiques :",
+    "download": "Télécharger l’app de bureau"
+  },
+  "sicherung": {
+    "reiter": "Sauvegarde",
+    "titel": "Sauvegarde des données",
+    "plan": "Automatiquement à {{stunden}}",
+    "und": "et",
+    "naechsteHeute": "prochaine aujourd’hui {{zeit}}",
+    "naechsteMorgen": "prochaine demain {{zeit}}",
+    "letzte": "dernière {{zeit}}",
+    "aufbewahren": "Les sauvegardes automatiques sont conservées 14 jours, les autres 90 jours. Chaque sauvegarde contient toutes les données du CRM et est copiée en plus dans SharePoint (Direction Interne › CRM Backups).",
+    "jetzt": "Sauvegarder maintenant",
+    "leerTitel": "Pas encore de sauvegarde",
+    "leerText": "La première sauvegarde automatique a lieu à la prochaine heure prévue. Ou sauvegarde maintenant à la main.",
+    "herunterladen": "Télécharger",
+    "wiederherstellen": "Restaurer",
+    "inhalt": "{{kontakte}} contacts · {{offerten}} offres · {{groesse}}",
+    "sharepoint": "Dans SharePoint",
+    "sharepointFehler": "Échec SharePoint",
+    "sharepointNein": "Pas dans SharePoint",
+    "wiederhergestelltAm": "Restaurée le {{zeit}} par {{von}}",
+    "status": {
+      "ok": "ok",
+      "laeuft": "en cours",
+      "fehler": "Erreur",
+      "abgelaufen": "expirée"
+    },
+    "art": {
+      "automatisch": "automatique",
+      "manuell": "manuelle",
+      "vor_wiederherstellung": "avant restauration"
+    },
+    "dialogTitel": "Restaurer l’état du {{zeit}} ?",
+    "dialogText": "Cela concerne toute l’équipe. Idéalement quand personne ne travaille.",
+    "punktVorher": "Le CRM sauvegarde d’abord l’état actuel. La restauration peut donc aussi être annulée.",
+    "punktZurueck": "Tout ce qui a été modifié depuis le {{zeit}} reprend les valeurs d’alors.",
+    "punktNeu": "Ce qui a été saisi depuis va dans la corbeille (pas supprimé).",
+    "punktBleibt": "Les e-mails, SMS et posts envoyés, les personnes et les rôles restent inchangés.",
+    "verstanden": "J’ai compris que les modifications depuis le {{zeit}} seront annulées.",
+    "fertigText": "Terminé. Voici ce qui a changé :",
+    "nichtsGeaendert": "Il n’y avait rien à changer : l’état était déjà identique.",
+    "tabelle": "Table",
+    "zurueck": "restaurées",
+    "papierkorb": "dans la corbeille"
+  },
+  "betrieb": {
+    "reiter": "Exploitation",
+    "titel": "Prêt pour l’équipe ?",
+    "allesBereit": "Tout est configuré. L’équipe peut travailler.",
+    "offen_one": "Encore {{count}} point ouvert. Guide : docs/umzug.md",
+    "offen_other": "Encore {{count}} points ouverts. Guide : docs/umzug.md",
+    "stand": {
+      "ok": "fait",
+      "offen": "ouvert",
+      "fehlt": "manquant"
+    },
+    "punkt": {
+      "datenbank": {
+        "titel": "Base de données",
+        "ok": "Connectée, état {{schema}}.",
+        "fehlt": "Pas de base de données. Étape 1 du déménagement : créer le projet et « npm run umzug -- datenbank »."
+      },
+      "funktionen": {
+        "titel": "Fonctions serveur",
+        "ok": "Accessibles.",
+        "fehlt": "Inaccessibles. « npm run umzug -- funktionen » les téléverse."
+      },
+      "zeitplan": {
+        "titel": "Planification (envoi, synchronisation, sauvegarde)",
+        "ok": "Fonctionne, dernière fois {{zeit}}.",
+        "fehlt": "Ne fonctionne pas. Définir ZEITPLAN_SCHLUESSEL comme secret et les deux entrées du coffre (déménagement, étape 4)."
+      },
+      "sicherung": {
+        "titel": "Sauvegarde",
+        "ok": "Dernière sauvegarde {{zeit}}.",
+        "fehlt": "Aucune sauvegarde ces 30 dernières heures. Vérifier dans l’onglet « Sauvegarde »."
+      },
+      "daten": {
+        "titel": "Données de l’ancien CRM",
+        "ok": "{{kontakte}} contacts et {{offerten}} offres, reprises le {{zeit}}.",
+        "fehlt": "Pas encore reprises. « npm run umzug -- daten » avec l’export le plus récent."
+      },
+      "personen": {
+        "titel": "Personnes et rôles",
+        "ok": "{{aktiv}} personnes avec rôle, {{angemeldet}} se sont déjà connectées.",
+        "offen": "{{ohne}} personnes n’ont pas encore de rôle et voient donc peu de choses. Attribuer dans l’onglet « Personnes »."
+      },
+      "anmeldung": {
+        "titel": "Connexion avec Microsoft",
+        "ok": "Activée.",
+        "offen": "Facultatif. En attendant, l’équipe se connecte avec un code par e-mail (docs/anmeldung.md)."
+      },
+      "microsoft": {
+        "titel": "Microsoft 365 (e-mails, calendrier, SharePoint)",
+        "ok": "Configuré, {{anzahl}} personnes connectées.",
+        "offen": "Pas encore configuré (docs/integrationen.md). Sans cela, aucun e-mail ne part du CRM et pas de copie dans SharePoint."
+      },
+      "abaninja": {
+        "titel": "AbaNinja",
+        "ok": "Configuré.",
+        "offen": "Pas encore configuré (docs/integrationen.md)."
+      },
+      "sms": {
+        "titel": "SMS (ASPSMS)",
+        "ok": "Configuré.",
+        "offen": "Pas encore configuré (docs/integrationen.md)."
+      },
+      "ki": {
+        "titel": "Fonctions IA",
+        "ok": "Configuré.",
+        "offen": "Facultatif. Définir la clé comme secret (docs/ki.md)."
+      }
     }
   }
 }

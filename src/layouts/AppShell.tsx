@@ -4,6 +4,7 @@ import { Toaster } from 'sonner'
 import { TooltipAnbieter } from '@/components/ui/tooltip'
 import { useOberflaeche } from '@/hooks/useOberflaeche'
 import { useTastenkuerzel } from '@/hooks/useTastenkuerzel'
+import { useUpdatePruefung } from '@/hooks/useUpdatePruefung'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
 import { Befehlspalette } from './Befehlspalette'
@@ -20,6 +21,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation()
   useOberflaeche()
   useTastenkuerzel()
+  useUpdatePruefung()
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt)
   const darstellung = useUi((z) => z.darstellung)
 

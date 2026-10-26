@@ -30,7 +30,13 @@ starte({
     recht: 'basis',
     f: () =>
       Promise.resolve({
-        eingerichtet: { ...eingerichtet(), zeitplan: Boolean(env('ZEITPLAN_SCHLUESSEL')) },
+        eingerichtet: {
+          ...eingerichtet(),
+          zeitplan: Boolean(env('ZEITPLAN_SCHLUESSEL')),
+          // Phase 16 (Einstellungen › Betrieb): weitere Secrets, nur ja/nein
+          ki: Boolean(env('ANTHROPIC_API_KEY')),
+          app_url: Boolean(env('APP_URL')),
+        },
         rueckruf: env('MS_CLIENT_ID') || env('SUPABASE_URL') ? safe(rueckrufAdresse) : '',
       }),
   },

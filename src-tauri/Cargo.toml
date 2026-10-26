@@ -25,6 +25,9 @@ tauri-plugin-notification = "2"
 tauri-plugin-window-state = "2"
 tauri-plugin-autostart = "2"
 tauri-plugin-single-instance = "2"
+# Automatische Updates (Phase 16): neue Version von GitHub holen, Signatur prüfen, App neu starten.
+tauri-plugin-updater = "=2.13.3"
+tauri-plugin-process = "=2.4.0"
 
 [profile.release]
 codegen-units = 1

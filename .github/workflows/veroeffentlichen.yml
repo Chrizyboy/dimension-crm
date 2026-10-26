@@ -1,0 +1,90 @@
+# «Neue Version veröffentlichen» (Phase 16): auf GitHub unter Actions › Neue Version veröffentlichen › Run workflow.
+# Baut die Desktop-App mit Update-Signatur, legt sie als Release «v<version>» ab (dort holen die installierten
+# Apps ihre Updates) und stellt die Web-App fürs Handy auf GitHub Pages. Version und Notizen kommen aus
+# package.json und docs/versionen.md. Einrichten (einmal): docs/installation.md.
+name: Neue Version veröffentlichen
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: veroeffentlichen
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    name: Desktop-App (Windows) mit Update
+    runs-on: windows-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    env:
+      # Öffentliche Werte als «Variables», Schlüssel für die Signatur als «Secrets» (nie im Code).
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+      VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+      VITE_AKTUALISIERUNG: github
+      TAURI_UPDATER_PUBKEY: ${{ vars.TAURI_UPDATER_PUBKEY }}
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Einstellungen prüfen, Version und Notizen lesen
+        id: v
+        run: node scripts/veroeffentlichen/vorbereiten.mjs
+      - name: Gibt es die Version schon?
+        shell: bash
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/v${{ steps.v.outputs.version }}" >/dev/null; then
+            echo "Version ${{ steps.v.outputs.version }} gibt es schon. Bitte in package.json erhöhen."; exit 1
+          fi
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: npm ci
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: Dimension CRM __VERSION__
+          releaseBody: ${{ steps.v.outputs.notizen }}
+          releaseDraft: false
+          prerelease: false
+          args: --config src-tauri/tauri.release.conf.json
+
+  web:
+    name: Web-App fürs Handy (GitHub Pages)
+    needs: windows
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.seite.outputs.page_url }}
+    env:
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+      VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Ohne Quellkarten: sie zeigen nur Programmtext, den niemand am Handy braucht.
+      - run: find dist -name '*.map' -delete
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: seite
+        uses: actions/deploy-pages@v4

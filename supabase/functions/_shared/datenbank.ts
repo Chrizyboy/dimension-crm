@@ -17,14 +17,20 @@ export interface Ich {
 }
 
 /** Aufruf der REST-Schnittstelle. */
-async function rest<T>(pfad: string, schluessel: string, auth: string, init: RequestInit = {}): Promise<T> {
+async function rest<T>(
+  pfad: string,
+  schluessel: string,
+  auth: string,
+  init: RequestInit = {},
+  zeitlimitMs = 8000,
+): Promise<T> {
   const res = await rufe(
     `${brauche('SUPABASE_URL')}${pfad}`,
     {
       ...init,
       headers: { apikey: schluessel, Authorization: auth, 'Content-Type': 'application/json', ...(init.headers ?? {}) },
     },
-    { versuche: init.method && init.method !== 'GET' ? 1 : 2, zeitlimitMs: 8000 },
+    { versuche: init.method && init.method !== 'GET' ? 1 : 2, zeitlimitMs },
   )
   const daten = await leseJson<T & { message?: string }>(res)
   if (!res.ok) {
@@ -70,10 +76,16 @@ export function alsPerson(ich: Ich) {
 
 /** Zugriff mit dem Service-Schlüssel (umgeht RLS – nur für Server-Aufgaben). */
 export const dienst = {
-  /** RPC-Funktion aufrufen. */
-  rpc<T>(name: string, args: Record<string, unknown>): Promise<T> {
+  /** RPC-Funktion aufrufen (zeitlimitMs nur für lange Arbeiten wie das Wiederherstellen einer Sicherung). */
+  rpc<T>(name: string, args: Record<string, unknown>, zeitlimitMs?: number): Promise<T> {
     const k = brauche('SUPABASE_SERVICE_ROLE_KEY')
-    return rest<T>(`/rest/v1/rpc/${name}`, k, `Bearer ${k}`, { method: 'POST', body: JSON.stringify(args) })
+    return rest<T>(
+      `/rest/v1/rpc/${name}`,
+      k,
+      `Bearer ${k}`,
+      { method: 'POST', body: JSON.stringify(args) },
+      zeitlimitMs,
+    )
   },
   /** Lesen, z. B. «personen?id=eq.…&select=id,email». */
   lies<T>(pfad: string, schema = 'public'): Promise<T> {
@@ -112,13 +124,37 @@ export const dienst = {
     if (!res.ok) throw new DienstFehler('datei_fehlt', res.status, 'Datei')
     return new Uint8Array(await res.arrayBuffer())
   },
-  /** Datei in den Speicher legen (z. B. ein aus Canva geholtes Bild). */
-  async hochladen(bucket: string, pfad: string, bytes: Bytes, typ: string): Promise<void> {
+  /** Datei in den Speicher legen (z. B. ein aus Canva geholtes Bild); ersetzen = gleichnamige überschreiben. */
+  async hochladen(bucket: string, pfad: string, bytes: Bytes, typ: string, ersetzen = false): Promise<void> {
     const k = brauche('SUPABASE_SERVICE_ROLE_KEY')
     const res = await rufe(
       `${brauche('SUPABASE_URL')}/storage/v1/object/${bucket}/${pfad.split('/').map(encodeURIComponent).join('/')}`,
-      { method: 'POST', headers: { apikey: k, Authorization: `Bearer ${k}`, 'Content-Type': typ }, body: bytes },
-      { versuche: 1, zeitlimitMs: 20_000 },
+      {
+        method: 'POST',
+        headers: {
+          apikey: k,
+          Authorization: `Bearer ${k}`,
+          'Content-Type': typ,
+          ...(ersetzen ? { 'x-upsert': 'true' } : {}),
+        },
+        body: bytes,
+      },
+      { versuche: 1, zeitlimitMs: 60_000 },
+    )
+    if (!res.ok) throw new DienstFehler('speicher', res.status, 'Speicher')
+  },
+  /** Dateien aus dem Speicher entfernen (nur für abgelaufene Sicherungen; Fachdaten nie hart löschen). */
+  async entfernen(bucket: string, pfade: string[]): Promise<void> {
+    if (!pfade.length) return
+    const k = brauche('SUPABASE_SERVICE_ROLE_KEY')
+    const res = await rufe(
+      `${brauche('SUPABASE_URL')}/storage/v1/object/${bucket}`,
+      {
+        method: 'DELETE',
+        headers: { apikey: k, Authorization: `Bearer ${k}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prefixes: pfade }),
+      },
+      { versuche: 2 },
     )
     if (!res.ok) throw new DienstFehler('speicher', res.status, 'Speicher')
   },

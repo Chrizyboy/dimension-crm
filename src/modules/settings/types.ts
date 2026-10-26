@@ -99,3 +99,42 @@ export interface Protokolleintrag {
   meldung: string | null
   person: string | null
 }
+
+/** Eine Datensicherung (Phase 16), wie die Liste sie zeigt. */
+export type Sicherung = Pick<
+  Tables<'sicherungen'>,
+  | 'id'
+  | 'slot'
+  | 'art'
+  | 'status'
+  | 'von_name'
+  | 'begonnen_am'
+  | 'fertig_am'
+  | 'bytes'
+  | 'pfad'
+  | 'fehler'
+  | 'wiederhergestellt_am'
+  | 'wiederhergestellt_von'
+> & {
+  anzahl: Record<string, number>
+  sharepoint: { ok: boolean; url?: string; fehler?: string; am?: string } | null
+}
+
+/** Ergebnis einer Wiederherstellung je Tabelle. */
+export type Wiederherstellung = Record<string, { zurueck: number; papierkorb: number }>
+
+/** Stand des Betriebs (betrieb_stand), für Einstellungen › Betrieb. */
+export interface BetriebStand {
+  schema: string | null
+  tresor_url: boolean
+  tresor_schluessel: boolean
+  zeitplan_zuletzt: string | null
+  sicherung_zuletzt: string | null
+  personen_aktiv: number
+  personen_ohne_rolle: number
+  personen_angemeldet: number
+  microsoft_verbunden: number
+  kontakte: number
+  offerten: number
+  import_zuletzt: string | null
+}

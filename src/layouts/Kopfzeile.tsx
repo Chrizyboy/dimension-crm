@@ -16,6 +16,7 @@ import { kuerzelText } from '@/lib/tastenkuerzel'
 import { abmelden } from '@/services/anmeldung'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
+import { UpdateKnopf } from './Aktualisierung'
 import { Glocke } from './Benachrichtigungen'
 
 /** Obere Leiste: Suche/Befehlspalette, Sprache, Benachrichtigungen, Konto-Menü. */
@@ -64,6 +65,7 @@ export function Kopfzeile() {
           ))}
         </div>
 
+        <UpdateKnopf />
         <Glocke />
 
         <Menue>

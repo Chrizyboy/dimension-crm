@@ -40,7 +40,7 @@ export function meldeIntegrationsFehler(f: unknown): void {
 
 /** Ruft eine Server-Funktion mit einer Aktion auf. Wirft IntegrationsFehler mit dem Code des Servers. */
 export async function rufeFunktion<T extends object>(
-  funktion: 'microsoft' | 'abaninja' | 'ausgang' | 'verbindungen' | 'ausschreibungen' | 'social' | 'ki',
+  funktion: 'microsoft' | 'abaninja' | 'ausgang' | 'verbindungen' | 'ausschreibungen' | 'social' | 'ki' | 'sicherung',
   aktion: string,
   eingabe: Record<string, unknown> = {},
 ): Promise<T> {
@@ -172,7 +172,14 @@ export const abaninja = {
 
 /** Welche Dienste auf dem Server eingerichtet sind (nur ja/nein). */
 export interface VerbindungsStatus {
-  eingerichtet: { microsoft: boolean; abaninja: boolean; sms: boolean; zeitplan: boolean }
+  eingerichtet: {
+    microsoft: boolean
+    abaninja: boolean
+    sms: boolean
+    zeitplan: boolean
+    ki?: boolean
+    app_url?: boolean
+  }
   rueckruf: string
 }
 

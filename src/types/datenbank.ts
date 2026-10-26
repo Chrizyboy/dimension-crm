@@ -6479,6 +6479,72 @@ export type Database = {
           },
         ]
       }
+      sicherungen: {
+        Row: {
+          anzahl: NonNullable<Json>
+          art: string
+          begonnen_am: string
+          bytes: number | null
+          fehler: string | null
+          fertig_am: string | null
+          id: string
+          pfad: string | null
+          sharepoint: Json | null
+          slot: string
+          status: string
+          von: string | null
+          von_name: string | null
+          wiederhergestellt_am: string | null
+          wiederhergestellt_anzahl: Json | null
+          wiederhergestellt_von: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          anzahl?: NonNullable<Json>
+          art: string
+          begonnen_am?: string
+          bytes?: number | null
+          fehler?: string | null
+          fertig_am?: string | null
+          id?: string
+          pfad?: string | null
+          sharepoint?: Json | null
+          slot: string
+          status?: string
+          von?: string | null
+          von_name?: string | null
+          wiederhergestellt_am?: string | null
+          wiederhergestellt_anzahl?: Json | null
+          wiederhergestellt_von?: string | null
+        }
+        Update: {
+          anzahl?: NonNullable<Json>
+          art?: string
+          begonnen_am?: string
+          bytes?: number | null
+          fehler?: string | null
+          fertig_am?: string | null
+          id?: string
+          pfad?: string | null
+          sharepoint?: Json | null
+          slot?: string
+          status?: string
+          von?: string | null
+          von_name?: string | null
+          wiederhergestellt_am?: string | null
+          wiederhergestellt_anzahl?: Json | null
+          wiederhergestellt_von?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'sicherungen_von_fkey'
+            columns: ['von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       signaturen: {
         Row: {
           alt_daten: Json | null
@@ -9195,6 +9261,7 @@ export type Database = {
       bestellung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       bestellung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
+      betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -9470,6 +9537,20 @@ export type Database = {
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
       show_trgm: { Args: { '': string }; Returns: string[] }
+      sicherung_abschliessen: {
+        Args: { p_anzahl?: Json; p_bytes?: number; p_fehler?: string; p_id: string; p_ok: boolean; p_pfad?: string }
+        Returns: undefined
+      }
+      sicherung_aufraeumen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          pfad: string
+        }[]
+      }
+      sicherung_beginnen: { Args: { p_art: string; p_person?: string; p_slot: string }; Returns: string }
+      sicherung_einspielen: { Args: { p_lauf: string }; Returns: Json }
+      sicherung_faellig: { Args: { p_jetzt?: string }; Returns: string }
       sicherung_offen: {
         Args: { p_ids?: string[]; p_limit?: number }
         Returns: {
@@ -9482,6 +9563,20 @@ export type Database = {
           speicher_pfad: string
         }[]
       }
+      sicherung_puffern: {
+        Args: { p_lauf: string; p_tabelle: string; p_teil: number; p_zeilen: Json }
+        Returns: undefined
+      }
+      sicherung_sharepoint: { Args: { p_id: string; p_stand: Json }; Returns: undefined }
+      sicherung_tabelle: { Args: { p_tabelle: string }; Returns: Json }
+      sicherung_tabellen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          stufe: number
+          tabelle: string
+        }[]
+      }
+      sicherung_wiederhergestellt: { Args: { p_anzahl: Json; p_id: string; p_person: string }; Returns: undefined }
       sms_erinnerungen: {
         Args: { p_datum: string }
         Returns: {

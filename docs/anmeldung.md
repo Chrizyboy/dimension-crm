@@ -32,7 +32,10 @@ Dashboard → _Authentication_ → _Emails_:
 
 ## 5. Desktop-App (Tauri)
 
-Der Code per Mail funktioniert in der Desktop-App ohne Zusatz. Für Microsoft öffnet die App das Anmeldefenster im System-Browser. Die Rückkehr in die App (eigenes URL-Schema) wird in Phase 16 (Installation) eingerichtet. Bis dahin: Code per Mail.
+Der Code per Mail funktioniert in der Desktop-App ohne Zusatz. «Mit Microsoft anmelden» läuft im Fenster der App
+selbst: Microsoft und Supabase leiten zurück auf die App-Adresse `http://tauri.localhost/`. Dafür bei Supabase ›
+Authentication › URL Configuration › Redirect URLs `http://tauri.localhost/**` eintragen (Phase 16, siehe
+`docs/umzug.md`). Lokal steht die Adresse schon in `supabase/config.toml`.
 
 ## Testpersonen (nur lokal, aus `seed.sql`)
 

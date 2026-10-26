@@ -10,6 +10,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useMeldungen } from '../hooks/useHandbuch'
 import type { Ansicht } from '../types'
 import { Anleitung } from './Anleitung'
+import { ErsteSchritte } from './ErsteSchritte'
 import { MeldungDialog } from './MeldungDialog'
 import { Meldungen } from './Meldungen'
 import { Prozesse } from './Prozesse'
@@ -68,6 +69,7 @@ export default function Handbuch({ ansicht, meldung, neu, onAdresse }: Props) {
         }}
       >
         <ReiterListe>
+          <ReiterKnopf value="start">{t('handbuch.reiter.start')}</ReiterKnopf>
           <ReiterKnopf value="anleitung">{t('handbuch.reiter.anleitung')}</ReiterKnopf>
           <ReiterKnopf value="prozesse">{t('handbuch.reiter.prozesse')}</ReiterKnopf>
           <ReiterKnopf value="videos">{t('handbuch.reiter.videos')}</ReiterKnopf>
@@ -83,6 +85,9 @@ export default function Handbuch({ ansicht, meldung, neu, onAdresse }: Props) {
         </ReiterListe>
         <ReiterInhalt value="anleitung" className="pt-4">
           <Anleitung />
+        </ReiterInhalt>
+        <ReiterInhalt value="start" className="pt-4">
+          <ErsteSchritte />
         </ReiterInhalt>
         <ReiterInhalt value="prozesse" className="pt-4">
           <Prozesse admin={admin} />
