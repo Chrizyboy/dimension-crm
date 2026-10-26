@@ -1986,7 +1986,10 @@
       "ki_zu_lang": "Die Antwort der KI wurde zu lang. Bitte den Wunsch kürzer fassen.",
       "ki_antwort": "Die Antwort der KI war unvollständig. Bitte nochmals versuchen.",
       "datei_typ": "Dieser Dateityp geht nicht (nur Bilder und PDF).",
-      "datei_zu_gross": "Die Datei ist zu gross (höchstens 5 MB)."
+      "datei_zu_gross": "Die Datei ist zu gross (höchstens 5 MB).",
+      "sicherung_laeuft": "Eine Sicherung läuft gerade. Bitte in einer Minute nochmals versuchen.",
+      "sicherung_fehlt": "Diese Sicherung ist nicht mehr vorhanden.",
+      "sicherung_format": "Die Datei ist keine Sicherung dieses CRM."
     }
   },
   "verbindungen": {
@@ -5217,5 +5220,48 @@
     "autostartText": "Das CRM öffnet sich nach dem Anmelden bei Windows. Gilt nur für diesen PC.",
     "downloadText": "Für den PC gibt es die Desktop-App mit Benachrichtigungen und automatischen Updates:",
     "download": "Desktop-App herunterladen"
+  },
+  "sicherung": {
+    "reiter": "Datensicherung",
+    "titel": "Datensicherung",
+    "plan": "Automatisch um {{stunden}}",
+    "und": "und",
+    "naechsteHeute": "nächste heute {{zeit}}",
+    "naechsteMorgen": "nächste morgen {{zeit}}",
+    "letzte": "letzte {{zeit}}",
+    "aufbewahren": "Automatische Sicherungen bleiben 14 Tage, alle anderen 90 Tage. Jede Sicherung enthält alle Daten des CRM und kommt zusätzlich nach SharePoint (Direction Interne › CRM Backups).",
+    "jetzt": "Jetzt sichern",
+    "leerTitel": "Noch keine Sicherung",
+    "leerText": "Die erste automatische Sicherung kommt beim nächsten Termin. Oder jetzt von Hand sichern.",
+    "herunterladen": "Herunterladen",
+    "wiederherstellen": "Wiederherstellen",
+    "inhalt": "{{kontakte}} Kontakte · {{offerten}} Offerten · {{groesse}}",
+    "sharepoint": "In SharePoint",
+    "sharepointFehler": "SharePoint fehlgeschlagen",
+    "sharepointNein": "Nicht in SharePoint",
+    "wiederhergestelltAm": "Wiederhergestellt am {{zeit}} von {{von}}",
+    "status": {
+      "ok": "ok",
+      "laeuft": "läuft",
+      "fehler": "Fehler",
+      "abgelaufen": "abgelaufen"
+    },
+    "art": {
+      "automatisch": "automatisch",
+      "manuell": "von Hand",
+      "vor_wiederherstellung": "vor Wiederherstellung"
+    },
+    "dialogTitel": "Stand vom {{zeit}} wiederherstellen?",
+    "dialogText": "Das betrifft alle im Team. Am besten, wenn niemand gerade arbeitet.",
+    "punktVorher": "Zuerst sichert das CRM den jetzigen Stand. So lässt sich auch das Wiederherstellen rückgängig machen.",
+    "punktZurueck": "Alles, was seit {{zeit}} geändert wurde, bekommt wieder die Werte von damals.",
+    "punktNeu": "Was seither neu erfasst wurde, kommt in den Papierkorb (nicht gelöscht).",
+    "punktBleibt": "Gesendete Mails, SMS und Posts, Personen und Rollen bleiben, wie sie sind.",
+    "verstanden": "Ich habe verstanden, dass Änderungen seit {{zeit}} zurückgesetzt werden.",
+    "fertigText": "Erledigt. Das hat sich geändert:",
+    "nichtsGeaendert": "Es war nichts zu ändern: Der Stand war schon gleich.",
+    "tabelle": "Tabelle",
+    "zurueck": "zurückgesetzt",
+    "papierkorb": "in den Papierkorb"
   }
 }

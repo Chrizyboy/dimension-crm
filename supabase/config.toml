@@ -475,6 +475,10 @@ verify_jwt = false
 [functions.social]
 verify_jwt = true
 
+# Phase 16: Datensicherung «Jetzt sichern» und «Wiederherstellen» (nur Administration).
+[functions.sicherung]
+verify_jwt = true
+
 # Phase 13: KI-Funktionen über die Claude API (Schlüssel nur als Secret ANTHROPIC_API_KEY).
 [functions.ki]
 verify_jwt = true

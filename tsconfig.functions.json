@@ -25,7 +25,8 @@
     "supabase/functions/social",
     "supabase/functions/social-rueckruf",
     "supabase/functions/abmelden",
-    "supabase/functions/ki"
+    "supabase/functions/ki",
+    "supabase/functions/sicherung"
   ],
   "exclude": ["supabase/functions/**/*.test.ts"]
 }

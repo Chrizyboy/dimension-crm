@@ -1986,7 +1986,10 @@
       "ki_zu_lang": "La réponse de l’IA était trop longue. Merci de formuler le souhait plus brièvement.",
       "ki_antwort": "La réponse de l’IA était incomplète. Merci de réessayer.",
       "datei_typ": "Ce type de fichier n’est pas pris en charge (images et PDF uniquement).",
-      "datei_zu_gross": "Le fichier est trop gros (5 Mo au maximum)."
+      "datei_zu_gross": "Le fichier est trop gros (5 Mo au maximum).",
+      "sicherung_laeuft": "Une sauvegarde est en cours. Réessaie dans une minute.",
+      "sicherung_fehlt": "Cette sauvegarde n’existe plus.",
+      "sicherung_format": "Le fichier n’est pas une sauvegarde de ce CRM."
     }
   },
   "verbindungen": {
@@ -5217,5 +5220,48 @@
     "autostartText": "Le CRM s’ouvre après la connexion à Windows. Valable uniquement pour ce PC.",
     "downloadText": "Pour le PC, il existe l’app de bureau avec notifications et mises à jour automatiques :",
     "download": "Télécharger l’app de bureau"
+  },
+  "sicherung": {
+    "reiter": "Sauvegarde",
+    "titel": "Sauvegarde des données",
+    "plan": "Automatiquement à {{stunden}}",
+    "und": "et",
+    "naechsteHeute": "prochaine aujourd’hui {{zeit}}",
+    "naechsteMorgen": "prochaine demain {{zeit}}",
+    "letzte": "dernière {{zeit}}",
+    "aufbewahren": "Les sauvegardes automatiques sont conservées 14 jours, les autres 90 jours. Chaque sauvegarde contient toutes les données du CRM et est copiée en plus dans SharePoint (Direction Interne › CRM Backups).",
+    "jetzt": "Sauvegarder maintenant",
+    "leerTitel": "Pas encore de sauvegarde",
+    "leerText": "La première sauvegarde automatique a lieu à la prochaine heure prévue. Ou sauvegarde maintenant à la main.",
+    "herunterladen": "Télécharger",
+    "wiederherstellen": "Restaurer",
+    "inhalt": "{{kontakte}} contacts · {{offerten}} offres · {{groesse}}",
+    "sharepoint": "Dans SharePoint",
+    "sharepointFehler": "Échec SharePoint",
+    "sharepointNein": "Pas dans SharePoint",
+    "wiederhergestelltAm": "Restaurée le {{zeit}} par {{von}}",
+    "status": {
+      "ok": "ok",
+      "laeuft": "en cours",
+      "fehler": "Erreur",
+      "abgelaufen": "expirée"
+    },
+    "art": {
+      "automatisch": "automatique",
+      "manuell": "manuelle",
+      "vor_wiederherstellung": "avant restauration"
+    },
+    "dialogTitel": "Restaurer l’état du {{zeit}} ?",
+    "dialogText": "Cela concerne toute l’équipe. Idéalement quand personne ne travaille.",
+    "punktVorher": "Le CRM sauvegarde d’abord l’état actuel. La restauration peut donc aussi être annulée.",
+    "punktZurueck": "Tout ce qui a été modifié depuis le {{zeit}} reprend les valeurs d’alors.",
+    "punktNeu": "Ce qui a été saisi depuis va dans la corbeille (pas supprimé).",
+    "punktBleibt": "Les e-mails, SMS et posts envoyés, les personnes et les rôles restent inchangés.",
+    "verstanden": "J’ai compris que les modifications depuis le {{zeit}} seront annulées.",
+    "fertigText": "Terminé. Voici ce qui a changé :",
+    "nichtsGeaendert": "Il n’y avait rien à changer : l’état était déjà identique.",
+    "tabelle": "Table",
+    "zurueck": "restaurées",
+    "papierkorb": "dans la corbeille"
   }
 }

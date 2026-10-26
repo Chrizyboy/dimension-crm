@@ -10,6 +10,7 @@
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
+//  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
@@ -23,6 +24,7 @@ import { kiEingerichtet } from '../_shared/ki_rahmen.ts'
 import { dienst } from '../_shared/datenbank.ts'
 import { DienstFehler } from '../_shared/http.ts'
 import { dokumentSichern, type SicherungsDokument } from '../_shared/sharepoint.ts'
+import { sicherungenAufraeumen, sicherungErstellen } from '../_shared/sicherung.ts'
 import { eingerichtet, env } from '../_shared/umgebung.ts'
 import { ausgangAbarbeiten } from '../_shared/versand.ts'
 import { postsAbarbeiten } from '../_shared/posten.ts'
@@ -76,6 +78,15 @@ Deno.serve(async (req) => {
   }
   const ein = eingerichtet()
   const ergebnis: Record<string, string> = {}
+
+  // Datensicherung zuerst und unabhängig von Microsoft: Die Kopie in SharePoint ist ein Zusatz.
+  ergebnis.datensicherung = await job('datensicherung', 5, async () => {
+    const slot = await dienst.rpc<string | null>('sicherung_faellig', {})
+    const r = slot ? await sicherungErstellen('automatisch', null, slot) : null
+    const weg = await sicherungenAufraeumen()
+    const text = !slot ? 'nicht fällig' : r ? `${r.slot}: ${r.zeilen} Zeilen` : 'läuft schon'
+    return weg ? `${text}, ${weg} abgelaufen` : text
+  })
 
   ergebnis.ausgang = await job('ausgang', 0, async () => {
     const r = await ausgangAbarbeiten(20)

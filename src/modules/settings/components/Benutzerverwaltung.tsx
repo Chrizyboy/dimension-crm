@@ -15,6 +15,7 @@ import { useBenutzerDaten } from '../hooks/useBenutzer'
 import { statusVon } from '../services/benutzer'
 import type { Person, Rolle } from '../types'
 import { BenutzerTabelle } from './BenutzerTabelle'
+import { Datensicherung } from './Datensicherung'
 import { EinladungDialog } from './EinladungDialog'
 import { PersonDialog } from './PersonDialog'
 import { RollenDialog } from './RollenDialog'
@@ -80,6 +81,7 @@ export default function Benutzerverwaltung({
           </ReiterKnopf>
           <ReiterKnopf value="rollen">{t('benutzer.reiterRollen')}</ReiterKnopf>
           <ReiterKnopf value="verbindungen">{t('verbindungen.reiter')}</ReiterKnopf>
+          <ReiterKnopf value="sicherung">{t('sicherung.reiter')}</ReiterKnopf>
         </ReiterListe>
 
         <ReiterInhalt value="personen">
@@ -145,6 +147,10 @@ export default function Benutzerverwaltung({
 
         <ReiterInhalt value="verbindungen">
           <Verbindungen />
+        </ReiterInhalt>
+
+        <ReiterInhalt value="sicherung">
+          <Datensicherung />
         </ReiterInhalt>
       </Reiter>
 

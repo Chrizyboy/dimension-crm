@@ -398,6 +398,14 @@ try {
   const [gesichert] = await rest(`dokumente?id=eq.${dok.id}&select=sharepoint_status,sharepoint_url`)
   ok(gesichert.sharepoint_status?.ok === true && gesichert.sharepoint_url, 'Stand der Sicherung am Dokument')
 
+  // --- Datensicherung (Phase 16): Kopie in SharePoint wie V233 ------------------------------------------
+  r = await funktion('sicherung', { aktion: 'erstellen' }, token)
+  const db = z.hochgeladen.find((h) => h.pfad === `Direction Interne/CRM Backups/CRM-Backup_${r.daten?.slot}.json.gz`)
+  ok(r.status === 200 && db?.bytes > 1000, 'Datensicherung: Kopie in SharePoint (CRM Backups)', JSON.stringify(r.daten))
+  const [dbStand] = await rest(`sicherungen?id=eq.${r.daten?.id}&select=sharepoint`)
+  ok(dbStand?.sharepoint?.ok === true && dbStand.sharepoint.url, 'Datensicherung: Link zur Kopie vermerkt')
+  sql(`update public.sicherungen set begonnen_am = now() - interval '100 days' where id = '${r.daten?.id}'`)
+
   // --- SMS-Erinnerung -----------------------------------------------------------------------------------
   const liste = (await rpc('sms_erinnerungen', { p_datum: morgen }, token)).daten
   const meine = liste.find((x) => x.verkaufschance_id === lead)

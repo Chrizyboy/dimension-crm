@@ -99,3 +99,26 @@ export interface Protokolleintrag {
   meldung: string | null
   person: string | null
 }
+
+/** Eine Datensicherung (Phase 16), wie die Liste sie zeigt. */
+export type Sicherung = Pick<
+  Tables<'sicherungen'>,
+  | 'id'
+  | 'slot'
+  | 'art'
+  | 'status'
+  | 'von_name'
+  | 'begonnen_am'
+  | 'fertig_am'
+  | 'bytes'
+  | 'pfad'
+  | 'fehler'
+  | 'wiederhergestellt_am'
+  | 'wiederhergestellt_von'
+> & {
+  anzahl: Record<string, number>
+  sharepoint: { ok: boolean; url?: string; fehler?: string; am?: string } | null
+}
+
+/** Ergebnis einer Wiederherstellung je Tabelle. */
+export type Wiederherstellung = Record<string, { zurueck: number; papierkorb: number }>
