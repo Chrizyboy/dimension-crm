@@ -32,6 +32,7 @@
     "ausschreibungen:pruefen": "node scripts/ausschreibungen/pruefen.mjs",
     "marketing:pruefen": "node scripts/marketing/pruefen.mjs",
     "ki:pruefen": "node scripts/ki/pruefen.mjs",
+    "messen": "node scripts/messen/lighthouse.mjs",
     "db:typen": "echo '// Automatisch erzeugt aus der lokalen Datenbank mit «npm run db:typen». Nie von Hand ändern.' > src/types/datenbank.ts && supabase gen types typescript --local >> src/types/datenbank.ts && prettier --write src/types/datenbank.ts"
   },
   "devDependencies": {
@@ -56,6 +57,7 @@
     "fflate": "0.8.3",
     "globals": "17.13.0",
     "jsdom": "29.1.1",
+    "lighthouse": "13.5.0",
     "prettier": "3.9.10",
     "prettier-plugin-tailwindcss": "0.8.1",
     "supabase": "2.121.0",

@@ -121,6 +121,8 @@ export function Protokoll({ automationId, onAutomation }: Props) {
         spalten={spalten}
         kennung={(l) => l.id}
         laedt={laeufe.isLoading}
+        fehler={laeufe.error}
+        onNochmal={() => void laeufe.refetch()}
         aktiveId={offen?.id ?? null}
         onOeffnen={setOffen}
         beschriftung={t('automationen.ansicht.protokoll')}

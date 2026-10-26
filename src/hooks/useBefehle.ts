@@ -1,7 +1,22 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Bell, House, UserPlus, Languages, Monitor, Moon, Palette, PanelLeft, Sun, type LucideIcon } from 'lucide-react'
+import {
+  Bell,
+  House,
+  Keyboard,
+  LifeBuoy,
+  UserPlus,
+  Languages,
+  Monitor,
+  Moon,
+  Palette,
+  PanelLeft,
+  Sun,
+  type LucideIcon,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
+import { SPRUENGE } from '@/lib/spruenge'
+import { useKuerzel } from '@/stores/kuerzel'
 import { useUi } from '@/stores/ui'
 
 export interface Befehl {
@@ -14,8 +29,17 @@ export interface Befehl {
   icon: LucideIcon | string
   /** Zusätzliche Suchbegriffe, z.B. der französische Titel, damit beide Sprachen gefunden werden. */
   stichworte: string[]
+  /** Ctrl/Cmd-Kürzel, angezeigt als «Ctrl B». */
   kuerzel?: string
+  /** Einfache Tasten ohne Ctrl, angezeigt wie geschrieben, z. B. «G K» oder «?». */
+  tasten?: string
   ausfuehren: () => void
+}
+
+/** «G K» für Bereiche mit Sprung-Kürzel, sonst nichts. */
+function sprungTasten(modul: string): { tasten?: string } {
+  const s = SPRUENGE.find((x) => x.modul === modul)
+  return s ? { tasten: `G ${s.taste.toUpperCase()}` } : {}
 }
 
 /**
@@ -53,6 +77,7 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       gruppe: 'gehe-zu',
       icon: m.icon,
       stichworte: [m.titel.de, m.titel.fr, m.id],
+      ...sprungTasten(m.id),
       ausfuehren: gehe(m.pfad),
     })),
     {
@@ -137,6 +162,29 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       icon: Bell,
       stichworte: ['notifications', 'glocke'],
       ausfuehren: gehe('/benachrichtigungen'),
+    },
+    {
+      id: 'fehler-melden',
+      titel: t('befehle.fehlerMelden'),
+      gruppe: 'aktionen',
+      icon: LifeBuoy,
+      stichworte: ['bug', 'problème', 'signaler', 'helpdesk', 'meldung', 'support'],
+      ausfuehren: fertig(() => {
+        // Der Bereich, in dem man gerade ist, wird in der Meldung vorgewählt.
+        const bereich = window.location.hash.replace(/^#\//, '').split(/[/?]/)[0] || 'anderes'
+        void navigate({ to: '/knowledge', search: { ansicht: 'meldungen', neu: bereich } })
+      }),
+    },
+    {
+      id: 'kuerzel',
+      titel: t('kuerzel.titel'),
+      gruppe: 'aktionen',
+      icon: Keyboard,
+      stichworte: ['tastatur', 'clavier', 'raccourcis', 'shortcuts', 'hilfe'],
+      tasten: '?',
+      ausfuehren: fertig(() => {
+        useKuerzel.getState().setHilfe(true)
+      }),
     },
   ]
 

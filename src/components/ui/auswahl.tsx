@@ -1,6 +1,6 @@
 import { Check, ChevronDown } from 'lucide-react'
 import { Select as SelectPrimitive } from 'radix-ui'
-import type { ComponentProps } from 'react'
+import { useId, type ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface AuswahlOption {
@@ -18,18 +18,25 @@ interface AuswahlProps extends Omit<ComponentProps<typeof SelectPrimitive.Root>,
 
 /** Auswahlliste (z.B. Status, Standort Muri/Bulle). Für lange Listen mit Suche kommt später eine Kombobox. */
 export function Auswahl({ id, optionen, platzhalter, className, 'aria-label': ariaLabel, ...props }: AuswahlProps) {
+  const kennung = useId()
   return (
     <SelectPrimitive.Root {...props}>
+      {/* Name = Beschriftung + sichtbarer Wert («Person Alle Personen»): wer per Sprache steuert, sagt, was er sieht (WCAG 2.5.3). */}
+      {ariaLabel && (
+        <span id={`${kennung}-name`} hidden>
+          {ariaLabel}
+        </span>
+      )}
       <SelectPrimitive.Trigger
         id={id}
-        aria-label={ariaLabel}
+        {...(ariaLabel ? { 'aria-labelledby': `${kennung}-name ${kennung}-wert` } : {})}
         className={cn(
           'border-border bg-surface hover:border-border-strong focus-visible:border-ring focus-visible:ring-ring/30 data-placeholder:text-muted-foreground flex h-8 w-full min-w-0 items-center justify-between gap-2 rounded-md border px-2.5 text-left text-sm whitespace-nowrap shadow-xs outline-none focus-visible:ring-2',
           className,
         )}
       >
         {/* Lange Werte (Regionen) kürzen statt umbrechen, sonst springt die Höhe am Handy. */}
-        <span className="min-w-0 truncate">
+        <span id={`${kennung}-wert`} className="min-w-0 truncate">
           <SelectPrimitive.Value placeholder={platzhalter} />
         </span>
         <SelectPrimitive.Icon className="shrink-0">

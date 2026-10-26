@@ -44,7 +44,7 @@ export function Trichter() {
         }}
         optionen={ZEITRAUM.map((z) => ({ wert: z, text: t('ausschreibungen.trichter.tage', { count: Number(z) }) }))}
       />
-      <section aria-label={t('ausschreibungen.trichter.titel')} className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         {STUFEN.map((s, i) => (
           <div key={s} className="bg-surface flex flex-col gap-1 rounded-lg border p-4">
             <div className="text-muted-foreground text-xs">{t(`ausschreibungen.trichter.${s}`)}</div>

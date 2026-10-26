@@ -5,7 +5,7 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Kbd, Skelett } from '@/components/ui/diverses'
-import { useTaste } from '@/hooks/useTaste'
+import { useKuerzelAnzeige, useTaste } from '@/hooks/useTaste'
 import { cn } from '@/lib/utils'
 import { supabase } from '@/services/supabase'
 import { useGeschaefte } from '../hooks/useVerkauf'
@@ -53,9 +53,15 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
     onAdresse({ lead: id })
   }
 
-  useTaste('n', () => {
-    onAdresse({ neu: true })
-  })
+  useTaste(
+    'n',
+    () => {
+      onAdresse({ neu: true })
+    },
+    true,
+    t('kuerzel.neuerLead'),
+  )
+  useKuerzelAnzeige('1–7', t('kuerzel.ansicht'))
   // Die Tasten 1 bis 7 wechseln die Ansicht, wie die Reiter von links nach rechts.
   const wechsle = useRef(onAdresse)
   useEffect(() => {

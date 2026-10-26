@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
-import { anonymisiere, bezugFeld, dateiFeld, spracheFeld } from './hilfe.ts'
+import { anonymisiere, bezugFeld, dateiFeld, spracheFeld, tagesbeginn } from './hilfe.ts'
 
 describe('anonymisiere', () => {
   it('entfernt Name, Strasse, E-Mail und Telefon aus Stil-Beispielen', () => {
@@ -31,5 +31,13 @@ describe('Eingaben', () => {
   it('Datei: nur Bilder und PDF', () => {
     expect(dateiFeld({ datei: { typ: 'application/pdf', base64: 'AA' } }).art).toBe('pdf')
     expect(() => dateiFeld({ datei: { typ: 'text/html', base64: 'AA' } })).toThrow()
+  })
+})
+
+describe('tagesbeginn', () => {
+  it('Schweizer Mitternacht in UTC, auch am Tag der Zeitumstellung', () => {
+    expect(tagesbeginn('2026-07-01')).toBe('2026-06-30T22:00:00.000Z')
+    expect(tagesbeginn('2026-10-25')).toBe('2026-10-24T22:00:00.000Z')
+    expect(tagesbeginn('2026-10-26')).toBe('2026-10-25T23:00:00.000Z')
   })
 })

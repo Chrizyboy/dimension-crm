@@ -86,5 +86,7 @@ test('Sperrliste, Quellen und Trichter ohne Verstösse', async ({ page }) => {
   expect(await verstoesse(page)).toEqual([])
 
   await page.goto('/#/')
+  // Die Karten unter «Team und Betrieb» laden erst, wenn man hinscrollt.
+  await page.getByRole('heading', { name: 'Team und Betrieb' }).scrollIntoViewIfNeeded()
   await expect(page.getByText('Ausschreibungen heute')).toBeVisible()
 })

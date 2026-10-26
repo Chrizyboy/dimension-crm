@@ -2816,6 +2816,7 @@ export type Database = {
           geloescht_am: string | null
           id: string
           reihenfolge: number | null
+          sprache: string | null
           titel_de: string
           titel_fr: string | null
           version: string | null
@@ -2839,6 +2840,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           reihenfolge?: number | null
+          sprache?: string | null
           titel_de: string
           titel_fr?: string | null
           version?: string | null
@@ -2861,6 +2863,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           reihenfolge?: number | null
+          sprache?: string | null
           titel_de?: string
           titel_fr?: string | null
           version?: string | null
@@ -6123,13 +6126,21 @@ export type Database = {
           alt_id: string | null
           antwort: string | null
           antwort_von: string | null
+          beantwortet_am: string | null
+          bereich: string | null
           erstellt_am: string
           erstellt_von: string | null
+          erwartet: string | null
           geaendert_am: string
           geloescht_am: string | null
           id: string
+          nummer: number | null
+          person_id: string | null
+          prio: string
           status: string
           text: string
+          titel: string | null
+          umgebung: string | null
         }
         ComputedFields: never
         Insert: {
@@ -6137,28 +6148,52 @@ export type Database = {
           alt_id?: string | null
           antwort?: string | null
           antwort_von?: string | null
+          beantwortet_am?: string | null
+          bereich?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          erwartet?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          nummer?: number | null
+          person_id?: string | null
+          prio?: string
           status?: string
           text: string
+          titel?: string | null
+          umgebung?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           antwort?: string | null
           antwort_von?: string | null
+          beantwortet_am?: string | null
+          bereich?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          erwartet?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          nummer?: number | null
+          person_id?: string | null
+          prio?: string
           status?: string
           text?: string
+          titel?: string | null
+          umgebung?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'rueckmeldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       schreibstile: {
         Row: {
@@ -9163,6 +9198,26 @@ export type Database = {
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
+      handbuch_speichern: {
+        Args: {
+          p_art: string
+          p_beschreibung_de: string
+          p_beschreibung_fr: string
+          p_datei_de_id: string
+          p_datei_fr_id: string
+          p_datum: string
+          p_dauer_s?: number
+          p_id: string
+          p_reihenfolge?: number
+          p_sprache?: string
+          p_titel_de: string
+          p_titel_fr: string
+          p_version: string
+          p_vorschaubild_id?: string
+        }
+        Returns: string
+      }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
       integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       kalender_abgleichen: {
@@ -9397,6 +9452,18 @@ export type Database = {
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
+      rueckmeldung_melden: {
+        Args: {
+          p_bereich: string
+          p_erwartet: string
+          p_prio: string
+          p_text: string
+          p_titel: string
+          p_umgebung: string
+        }
+        Returns: Json
+      }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }

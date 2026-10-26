@@ -43,6 +43,7 @@ export function Fixkosten({
       </div>
       {[...gruppen.entries()].map(([g, liste]) => (
         <AkteAbschnitt
+          ebene={2}
           key={g}
           titel={g}
           zusatz={

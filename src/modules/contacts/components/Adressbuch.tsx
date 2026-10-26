@@ -37,10 +37,15 @@ export default function Adressbuch({ aktiveId, onOeffnen, onNeu }: AdressbuchPro
   const suchfeld = useRef<HTMLInputElement>(null)
   const verzoegert = useDeferredValue(suche)
 
-  useTaste('n', () => {
-    onNeu(gewaehlt.length === 1 ? (gewaehlt[0] ?? 'privat') : 'privat')
-  })
-  useTaste('/', () => suchfeld.current?.focus())
+  useTaste(
+    'n',
+    () => {
+      onNeu(gewaehlt.length === 1 ? (gewaehlt[0] ?? 'privat') : 'privat')
+    },
+    true,
+    t('kuerzel.neuerKontakt'),
+  )
+  useTaste('/', () => suchfeld.current?.focus(), true, t('kuerzel.suche'))
 
   const alle = useMemo(() => kontakte.data ?? [], [kontakte.data])
   const anzahl = useMemo(() => {

@@ -40,6 +40,8 @@ test('Mein Tag: Aufgabe anlegen, vergeben sehen, abhaken; Mail-Vorschau', async 
   // Eine Aufgabe für mich …
   await page.getByRole('button', { name: 'Aufgabe', exact: true }).click()
   await page.getByLabel('Was ist zu tun?').fill(`Heute-Test ${lauf}`)
+  // Überfällig steht zuoberst; die Karte zeigt nur die ersten acht, auf einer benutzten Datenbank sind es mehr.
+  await page.getByRole('dialog').getByLabel('Fällig').fill('2026-01-01')
   await page.getByRole('dialog').getByRole('button', { name: 'Speichern' }).click()
   const aufgaben = page.getByTestId('tag-aufgaben')
   await expect(aufgaben.getByText(`Heute-Test ${lauf}`)).toBeVisible()

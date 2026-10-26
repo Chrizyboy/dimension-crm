@@ -54,7 +54,7 @@ export function Bank({ daten }: { daten: Finanzdaten }) {
 
   return (
     <div className="grid items-start gap-4 lg:grid-cols-2">
-      <AkteAbschnitt titel={t('finanzen.bank.kontostand')}>
+      <AkteAbschnitt ebene={2} titel={t('finanzen.bank.kontostand')}>
         <p className="text-sm">
           {s.bekannt
             ? t('finanzen.bank.aktuell', {
@@ -115,7 +115,7 @@ export function Bank({ daten }: { daten: Finanzdaten }) {
           </ul>
         )}
       </AkteAbschnitt>
-      <AkteAbschnitt titel={t('finanzen.bank.einstellungen')}>
+      <AkteAbschnitt ebene={2} titel={t('finanzen.bank.einstellungen')}>
         <div className="grid gap-3 sm:grid-cols-3">
           <Feld id="bank-wochen" label={t('finanzen.bank.wochen')} hinweis="4–26">
             <Input

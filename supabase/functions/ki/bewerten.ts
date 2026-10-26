@@ -5,7 +5,7 @@ import { alsPerson, dienst, type Ich } from '../_shared/datenbank.ts'
 import * as B from '../_shared/ki_bewerten.ts'
 import { kiAufruf, kiEinstellung } from '../_shared/ki_rahmen.ts'
 import { kurz } from '../_shared/ki_schema.ts'
-import { bezugFeld, heute, idFeld, speichereErgebnis, spracheFeld } from './hilfe.ts'
+import { bezugFeld, heute, idFeld, speichereErgebnis, spracheFeld, tagesbeginn } from './hilfe.ts'
 import { DienstFehler } from '../_shared/http.ts'
 
 type Eingabe = Record<string, unknown>
@@ -83,11 +83,10 @@ export async function leadBewertung(e: Eingabe, ich: Ich) {
  */
 export async function briefing(e: Eingabe, ich: Ich) {
   const sprache = spracheFeld(e)
-  const tag = heute()
   if (e.neu !== true) {
     const [alt] = await dienst.lies<{ inhalt: unknown; erstellt_am: string; sprache: string }[]>(
       `ki_ergebnisse?art=eq.briefing&bezug_tabelle=eq.personen&bezug_id=eq.${ich.id}&geloescht_am=is.null` +
-        `&erstellt_am=gte.${tag}T00:00:00%2B00:00&select=inhalt,erstellt_am,sprache&order=erstellt_am.desc&limit=1`,
+        `&erstellt_am=gte.${encodeURIComponent(tagesbeginn())}&select=inhalt,erstellt_am,sprache&order=erstellt_am.desc&limit=1`,
     )
     if (alt && alt.sprache === sprache)
       return { briefing: alt.inhalt, erstellt_am: alt.erstellt_am, aus_speicher: true }

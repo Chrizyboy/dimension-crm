@@ -94,6 +94,7 @@ export function Befehlspalette() {
                           )}
                         </span>
                         {b.kuerzel && <Kbd>{kuerzelText(b.kuerzel)}</Kbd>}
+                        {b.tasten && <Kbd>{b.tasten}</Kbd>}
                       </Command.Item>
                     ))}
                 </Command.Group>

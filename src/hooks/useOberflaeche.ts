@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import i18n from '@/i18n'
+import i18n, { ladeSprache } from '@/i18n'
 import { useUi } from '@/stores/ui'
 
 /**
@@ -11,7 +11,7 @@ export function useOberflaeche(): void {
   const darstellung = useUi((z) => z.darstellung)
 
   useEffect(() => {
-    void i18n.changeLanguage(sprache)
+    void ladeSprache(sprache).then(() => i18n.changeLanguage(sprache))
     document.documentElement.lang = sprache === 'fr' ? 'fr-CH' : 'de-CH'
   }, [sprache])
 

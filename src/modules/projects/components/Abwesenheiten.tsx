@@ -154,7 +154,7 @@ export function Abwesenheiten() {
                     <Trash2 />
                   </Button>
                 ) : (
-                  <span className="text-muted-foreground w-8 text-center text-[10px]">
+                  <span className="text-muted-foreground w-8 text-center text-xs">
                     {t('projekte.abwesenheit.outlook')}
                   </span>
                 )}

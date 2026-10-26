@@ -41,7 +41,7 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
 
   return (
     <div className="flex flex-col">
-      <AkteAbschnitt titel={t('rechnungen.verrechnen.tranchen')} zusatz={String(tranchen.length)}>
+      <AkteAbschnitt ebene={2} titel={t('rechnungen.verrechnen.tranchen')} zusatz={String(tranchen.length)}>
         <Tabelle aria-label={t('rechnungen.verrechnen.tranchen')}>
           <TabelleKopf>
             <tr>
@@ -49,7 +49,9 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
               <Kopfzelle>{t('rechnungen.verrechnen.tranche')}</Kopfzelle>
               <Kopfzelle>{t('rechnungen.spalte.faellig')}</Kopfzelle>
               <Kopfzelle className="text-right">{t('rechnungen.spalte.total')}</Kopfzelle>
-              <Kopfzelle />
+              <Kopfzelle>
+                <span className="sr-only">{t('tabelle.aktionen')}</span>
+              </Kopfzelle>
             </tr>
           </TabelleKopf>
           <TabelleKoerper>
@@ -90,7 +92,7 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
           </TabelleKoerper>
         </Tabelle>
       </AkteAbschnitt>
-      <AkteAbschnitt titel={t('rechnungen.verrechnen.rapporte')} zusatz={String(rapporte.length)}>
+      <AkteAbschnitt ebene={2} titel={t('rechnungen.verrechnen.rapporte')} zusatz={String(rapporte.length)}>
         {rapporte.length === 0 ? (
           <p className="text-muted-foreground text-sm">{t('rechnungen.verrechnen.keineRapporte')}</p>
         ) : (

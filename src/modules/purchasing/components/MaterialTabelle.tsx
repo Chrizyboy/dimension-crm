@@ -44,7 +44,9 @@ export function MaterialTabelle({
             {t('einkauf.material.unterwegs')}
           </Kopfzelle>
           <Kopfzelle zahl>{t('einkauf.material.fehlt')}</Kopfzelle>
-          <Kopfzelle className="w-8" />
+          <Kopfzelle className="w-8">
+            <span className="sr-only">{t('tabelle.aktionen')}</span>
+          </Kopfzelle>
         </tr>
       </TabelleKopf>
       <TabelleKoerper>

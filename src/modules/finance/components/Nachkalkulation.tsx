@@ -80,7 +80,10 @@ export function Nachkalkulation({ daten }: { daten: Finanzdaten }) {
       </div>
       {projektId && (
         <div className="grid items-start gap-4 lg:grid-cols-2">
-          <AkteAbschnitt titel={projekt ? `${projekt.nummer} · ${projekt.kunde ?? ''}` : t('finanzen.nk.titel')}>
+          <AkteAbschnitt
+            ebene={2}
+            titel={projekt ? `${projekt.nummer} · ${projekt.kunde ?? ''}` : t('finanzen.nk.titel')}
+          >
             {nk.error ? (
               <Fehlerzustand details={String(nk.error)} onNochmal={() => void nk.refetch()} />
             ) : !n ? (
@@ -110,7 +113,7 @@ export function Nachkalkulation({ daten }: { daten: Finanzdaten }) {
               </div>
             )}
           </AkteAbschnitt>
-          <AkteAbschnitt titel={t('finanzen.nk.belege')} zusatz={String(zugeordnet.length)}>
+          <AkteAbschnitt ebene={2} titel={t('finanzen.nk.belege')} zusatz={String(zugeordnet.length)}>
             <ul className="divide-y text-sm">
               {zugeordnet.map((z) => (
                 <li key={z.id} className="flex justify-between gap-2 py-1.5">

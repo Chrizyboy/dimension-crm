@@ -25,6 +25,7 @@ export const Route = createRootRoute({
     return (
       <AppShell>
         <Fehlerzustand
+          ebene="h1"
           details={error instanceof Error ? error.message : String(error)}
           onNochmal={() => {
             reset()

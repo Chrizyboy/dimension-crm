@@ -42,7 +42,7 @@ export function ZweisprachigFeld({ id, label, wert, onChange, mehrzeilig = false
                 onChange({ ...w, [s]: e.target.value })
               }}
             />
-            <span className="text-muted-foreground pointer-events-none absolute top-1.5 right-2 text-[10px] font-semibold uppercase">
+            <span className="text-muted-foreground pointer-events-none absolute top-1.5 right-2 text-xs font-semibold uppercase">
               {s}
             </span>
           </div>
