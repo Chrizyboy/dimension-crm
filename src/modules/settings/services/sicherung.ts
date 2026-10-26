@@ -1,7 +1,7 @@
 import { herunterladen } from '@/lib/datei'
 import { rufeFunktion } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
-import type { Sicherung, Wiederherstellung } from '../types'
+import type { BetriebStand, Sicherung, Wiederherstellung } from '../types'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -46,4 +46,11 @@ export async function ladeSicherungHerunter(s: Pick<Sicherung, 'pfad'>): Promise
   const { data, error } = await db().storage.from('sicherungen').download(s.pfad)
   if (error) throw error
   herunterladen(data, s.pfad, 'application/gzip')
+}
+
+/** Stand des Betriebs: Zeitplan, Sicherung, Personen, Daten (nur Administration). */
+export async function ladeBetrieb(): Promise<BetriebStand> {
+  const { data, error } = await db().rpc('betrieb_stand')
+  if (error) throw error
+  return data as unknown as BetriebStand
 }

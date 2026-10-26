@@ -1847,7 +1847,8 @@
     "handbuch_datei_fehlt": "Choisis un fichier.",
     "handbuch_doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
     "handbuch_nicht_gefunden": "Entrée introuvable, peut-être déjà retirée.",
-    "handbuch_art": "Type inconnu."
+    "handbuch_art": "Type inconnu.",
+    "betrieb_kein_recht": "Seule l’administration voit l’exploitation."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5263,5 +5264,74 @@
     "tabelle": "Table",
     "zurueck": "restaurées",
     "papierkorb": "dans la corbeille"
+  },
+  "betrieb": {
+    "reiter": "Exploitation",
+    "titel": "Prêt pour l’équipe ?",
+    "allesBereit": "Tout est configuré. L’équipe peut travailler.",
+    "offen_one": "Encore {{count}} point ouvert. Guide : docs/umzug.md",
+    "offen_other": "Encore {{count}} points ouverts. Guide : docs/umzug.md",
+    "stand": {
+      "ok": "fait",
+      "offen": "ouvert",
+      "fehlt": "manquant"
+    },
+    "punkt": {
+      "datenbank": {
+        "titel": "Base de données",
+        "ok": "Connectée, état {{schema}}.",
+        "fehlt": "Pas de base de données. Étape 1 du déménagement : créer le projet et « npm run umzug -- datenbank »."
+      },
+      "funktionen": {
+        "titel": "Fonctions serveur",
+        "ok": "Accessibles.",
+        "fehlt": "Inaccessibles. « npm run umzug -- funktionen » les téléverse."
+      },
+      "zeitplan": {
+        "titel": "Planification (envoi, synchronisation, sauvegarde)",
+        "ok": "Fonctionne, dernière fois {{zeit}}.",
+        "fehlt": "Ne fonctionne pas. Définir ZEITPLAN_SCHLUESSEL comme secret et les deux entrées du coffre (déménagement, étape 4)."
+      },
+      "sicherung": {
+        "titel": "Sauvegarde",
+        "ok": "Dernière sauvegarde {{zeit}}.",
+        "fehlt": "Aucune sauvegarde ces 30 dernières heures. Vérifier dans l’onglet « Sauvegarde »."
+      },
+      "daten": {
+        "titel": "Données de l’ancien CRM",
+        "ok": "{{kontakte}} contacts et {{offerten}} offres, reprises le {{zeit}}.",
+        "fehlt": "Pas encore reprises. « npm run umzug -- daten » avec l’export le plus récent."
+      },
+      "personen": {
+        "titel": "Personnes et rôles",
+        "ok": "{{aktiv}} personnes avec rôle, {{angemeldet}} se sont déjà connectées.",
+        "offen": "{{ohne}} personnes n’ont pas encore de rôle et voient donc peu de choses. Attribuer dans l’onglet « Personnes »."
+      },
+      "anmeldung": {
+        "titel": "Connexion avec Microsoft",
+        "ok": "Activée.",
+        "offen": "Facultatif. En attendant, l’équipe se connecte avec un code par e-mail (docs/anmeldung.md)."
+      },
+      "microsoft": {
+        "titel": "Microsoft 365 (e-mails, calendrier, SharePoint)",
+        "ok": "Configuré, {{anzahl}} personnes connectées.",
+        "offen": "Pas encore configuré (docs/integrationen.md). Sans cela, aucun e-mail ne part du CRM et pas de copie dans SharePoint."
+      },
+      "abaninja": {
+        "titel": "AbaNinja",
+        "ok": "Configuré.",
+        "offen": "Pas encore configuré (docs/integrationen.md)."
+      },
+      "sms": {
+        "titel": "SMS (ASPSMS)",
+        "ok": "Configuré.",
+        "offen": "Pas encore configuré (docs/integrationen.md)."
+      },
+      "ki": {
+        "titel": "Fonctions IA",
+        "ok": "Configuré.",
+        "offen": "Facultatif. Définir la clé comme secret (docs/ki.md)."
+      }
+    }
   }
 }

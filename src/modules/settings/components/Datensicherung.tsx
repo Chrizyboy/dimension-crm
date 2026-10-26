@@ -91,7 +91,7 @@ export function Datensicherung() {
         ) : daten.length === 0 ? (
           <Leerzustand icon={History} titel={t('sicherung.leerTitel')} text={t('sicherung.leerText')} />
         ) : (
-          <ul className="divide-y border-t">
+          <ul className="divide-y">
             {daten.map((s) => {
               const k = kurzInhalt(s.anzahl)
               const brauchbar = s.status === 'ok' && Boolean(s.pfad)

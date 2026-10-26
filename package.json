@@ -34,7 +34,8 @@
     "ki:pruefen": "node scripts/ki/pruefen.mjs",
     "messen": "node scripts/messen/lighthouse.mjs",
     "db:typen": "echo '// Automatisch erzeugt aus der lokalen Datenbank mit «npm run db:typen». Nie von Hand ändern.' > src/types/datenbank.ts && supabase gen types typescript --local >> src/types/datenbank.ts && prettier --write src/types/datenbank.ts",
-    "sicherung:pruefen": "node scripts/sicherung/pruefen.mjs"
+    "sicherung:pruefen": "node scripts/sicherung/pruefen.mjs",
+    "umzug": "node scripts/umzug/umzug.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

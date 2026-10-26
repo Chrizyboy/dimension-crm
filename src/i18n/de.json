@@ -1847,7 +1847,8 @@
     "handbuch_datei_fehlt": "Bitte eine Datei wählen.",
     "handbuch_doppelt": "Diesen Prozess gibt es schon. Dort «Neue Version» verwenden.",
     "handbuch_nicht_gefunden": "Eintrag nicht gefunden, vielleicht schon entfernt.",
-    "handbuch_art": "Unbekannte Art."
+    "handbuch_art": "Unbekannte Art.",
+    "betrieb_kein_recht": "Nur die Administration sieht den Betrieb."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5263,5 +5264,74 @@
     "tabelle": "Tabelle",
     "zurueck": "zurückgesetzt",
     "papierkorb": "in den Papierkorb"
+  },
+  "betrieb": {
+    "reiter": "Betrieb",
+    "titel": "Bereit für das Team?",
+    "allesBereit": "Alles eingerichtet. Das Team kann arbeiten.",
+    "offen_one": "Noch {{count}} Punkt offen. Anleitung: docs/umzug.md",
+    "offen_other": "Noch {{count}} Punkte offen. Anleitung: docs/umzug.md",
+    "stand": {
+      "ok": "erledigt",
+      "offen": "offen",
+      "fehlt": "fehlt"
+    },
+    "punkt": {
+      "datenbank": {
+        "titel": "Datenbank",
+        "ok": "Verbunden, Stand {{schema}}.",
+        "fehlt": "Keine Datenbank. Schritt 1 im Umzug: Projekt anlegen und «npm run umzug -- datenbank»."
+      },
+      "funktionen": {
+        "titel": "Server-Funktionen",
+        "ok": "Erreichbar.",
+        "fehlt": "Nicht erreichbar. «npm run umzug -- funktionen» lädt sie hoch."
+      },
+      "zeitplan": {
+        "titel": "Zeitplan (Senden, Abgleich, Sicherung)",
+        "ok": "Läuft, zuletzt {{zeit}}.",
+        "fehlt": "Läuft nicht. ZEITPLAN_SCHLUESSEL als Secret und die zwei Einträge im Tresor setzen (Umzug, Schritt 4)."
+      },
+      "sicherung": {
+        "titel": "Datensicherung",
+        "ok": "Letzte Sicherung {{zeit}}.",
+        "fehlt": "Keine Sicherung in den letzten 30 Stunden. Im Reiter «Datensicherung» prüfen."
+      },
+      "daten": {
+        "titel": "Daten aus dem bisherigen CRM",
+        "ok": "{{kontakte}} Kontakte und {{offerten}} Offerten, übernommen am {{zeit}}.",
+        "fehlt": "Noch nicht übernommen. «npm run umzug -- daten» mit dem neusten Export."
+      },
+      "personen": {
+        "titel": "Personen und Rollen",
+        "ok": "{{aktiv}} Personen mit Rolle, {{angemeldet}} haben sich schon angemeldet.",
+        "offen": "{{ohne}} Personen haben noch keine Rolle und sehen deshalb nur wenig. Im Reiter «Personen» zuweisen."
+      },
+      "anmeldung": {
+        "titel": "Anmelden mit Microsoft",
+        "ok": "Eingeschaltet.",
+        "offen": "Freiwillig. Bis dahin meldet sich das Team mit einem Code per Mail an (docs/anmeldung.md)."
+      },
+      "microsoft": {
+        "titel": "Microsoft 365 (Mails, Kalender, SharePoint)",
+        "ok": "Eingerichtet, {{anzahl}} Personen verbunden.",
+        "offen": "Noch nicht eingerichtet (docs/integrationen.md). Ohne das gehen keine Mails aus dem CRM und keine Kopie nach SharePoint."
+      },
+      "abaninja": {
+        "titel": "AbaNinja",
+        "ok": "Eingerichtet.",
+        "offen": "Noch nicht eingerichtet (docs/integrationen.md)."
+      },
+      "sms": {
+        "titel": "SMS (ASPSMS)",
+        "ok": "Eingerichtet.",
+        "offen": "Noch nicht eingerichtet (docs/integrationen.md)."
+      },
+      "ki": {
+        "titel": "KI-Funktionen",
+        "ok": "Eingerichtet.",
+        "offen": "Freiwillig. Schlüssel als Secret setzen (docs/ki.md)."
+      }
+    }
   }
 }

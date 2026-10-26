@@ -9261,6 +9261,7 @@ export type Database = {
       bestellung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       bestellung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
+      betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }

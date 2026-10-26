@@ -122,3 +122,19 @@ export type Sicherung = Pick<
 
 /** Ergebnis einer Wiederherstellung je Tabelle. */
 export type Wiederherstellung = Record<string, { zurueck: number; papierkorb: number }>
+
+/** Stand des Betriebs (betrieb_stand), für Einstellungen › Betrieb. */
+export interface BetriebStand {
+  schema: string | null
+  tresor_url: boolean
+  tresor_schluessel: boolean
+  zeitplan_zuletzt: string | null
+  sicherung_zuletzt: string | null
+  personen_aktiv: number
+  personen_ohne_rolle: number
+  personen_angemeldet: number
+  microsoft_verbunden: number
+  kontakte: number
+  offerten: number
+  import_zuletzt: string | null
+}

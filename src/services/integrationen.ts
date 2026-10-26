@@ -172,7 +172,14 @@ export const abaninja = {
 
 /** Welche Dienste auf dem Server eingerichtet sind (nur ja/nein). */
 export interface VerbindungsStatus {
-  eingerichtet: { microsoft: boolean; abaninja: boolean; sms: boolean; zeitplan: boolean }
+  eingerichtet: {
+    microsoft: boolean
+    abaninja: boolean
+    sms: boolean
+    zeitplan: boolean
+    ki?: boolean
+    app_url?: boolean
+  }
   rueckruf: string
 }
 
