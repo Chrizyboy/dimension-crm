@@ -5195,5 +5195,27 @@
       "meldungTitel": "Décris brièvement de quoi il s’agit.",
       "meldungText": "Décris ce qui s’est passé."
     }
+  },
+  "update": {
+    "knopf": "Mise à jour {{version}}",
+    "titel": "Nouvelle version {{version}}",
+    "text": "Tu utilises la version {{jetzt}}.",
+    "vom": "Publiée le {{datum}}",
+    "hinweis": "L’app télécharge la nouvelle version, l’installe et redémarre. Cela prend environ une minute. Enregistre d’abord ce que tu es en train de faire.",
+    "jetzt": "Mettre à jour maintenant",
+    "spaeter": "Plus tard",
+    "laedt": "Téléchargement … {{prozent}} %",
+    "karte": "Cette app",
+    "desktop": "App de bureau pour Windows",
+    "browser": "Dans le navigateur ou comme app sur le mobile",
+    "suchen": "Rechercher des mises à jour",
+    "pruefe": "Recherche …",
+    "aktuell": "Tu as la version la plus récente.",
+    "fehler": "Pas de connexion au service de mise à jour. Réessaie plus tard.",
+    "testversion": "Version de test : les mises à jour n’arrivent pas automatiquement ici. Installe la version de la page de téléchargement.",
+    "autostart": "Démarrer avec Windows",
+    "autostartText": "Le CRM s’ouvre après la connexion à Windows. Valable uniquement pour ce PC.",
+    "downloadText": "Pour le PC, il existe l’app de bureau avec notifications et mises à jour automatiques :",
+    "download": "Télécharger l’app de bureau"
   }
 }

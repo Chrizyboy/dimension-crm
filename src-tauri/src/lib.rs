@@ -23,7 +23,11 @@ pub fn run() {
             .plugin(tauri_plugin_autostart::init(
                 tauri_plugin_autostart::MacosLauncher::LaunchAgent,
                 None,
-            ));
+            ))
+            // Automatische Updates: Die App fragt GitHub nach einer neuen Version, prüft die Signatur und
+            // installiert erst nach Klick der Person (nie mitten in der Arbeit). Danach Neustart über «process».
+            .plugin(tauri_plugin_updater::Builder::new().build())
+            .plugin(tauri_plugin_process::init());
     }
 
     builder

@@ -16,3 +16,7 @@ supabase/.branches
 .DS_Store
 import-bericht.md
 messungen/
+
+# Veröffentlichen (Phase 16): entsteht im Workflow, nie einchecken
+src-tauri/tauri.release.conf.json
+versionsnotizen.md

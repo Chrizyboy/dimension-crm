@@ -18,6 +18,7 @@ import { useBenutzerDaten } from '../hooks/useBenutzer'
 import { feldFehler } from '@/lib/formular'
 import { kontoAusProfil, kontoSchema, type KontoEingabe } from '../schema'
 import { speichereMeinKonto } from '../services/benutzer'
+import { AppKarte } from './AppKarte'
 import { MicrosoftKarte } from './MicrosoftKarte'
 
 /** Felder je Abschnitt, in der Reihenfolge der Vorlage. Telefonnummern im Schweizer Format. */
@@ -74,6 +75,7 @@ export default function MeinKonto({
   return (
     <KontoFormular key={ich.id} ich={ich}>
       <MicrosoftKarte {...(microsoft ? { ergebnis: microsoft } : {})} onErgebnisGelesen={onMicrosoftGelesen} />
+      <AppKarte />
     </KontoFormular>
   )
 }

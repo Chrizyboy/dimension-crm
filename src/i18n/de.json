@@ -5195,5 +5195,27 @@
       "meldungTitel": "Bitte kurz beschreiben, worum es geht.",
       "meldungText": "Bitte beschreiben, was passiert ist."
     }
+  },
+  "update": {
+    "knopf": "Update {{version}}",
+    "titel": "Neue Version {{version}}",
+    "text": "Du arbeitest mit Version {{jetzt}}.",
+    "vom": "Veröffentlicht am {{datum}}",
+    "hinweis": "Die App lädt die neue Version, installiert sie und startet neu. Das dauert etwa eine Minute. Speichere vorher, woran du gerade arbeitest.",
+    "jetzt": "Jetzt aktualisieren",
+    "spaeter": "Später",
+    "laedt": "Lädt … {{prozent}} %",
+    "karte": "Diese App",
+    "desktop": "Desktop-App für Windows",
+    "browser": "Im Browser oder als App am Handy",
+    "suchen": "Nach Updates suchen",
+    "pruefe": "Sucht …",
+    "aktuell": "Du hast die neuste Version.",
+    "fehler": "Keine Verbindung zum Update-Dienst. Später nochmals versuchen.",
+    "testversion": "Testversion: Updates kommen hier nicht automatisch. Installiere die Version von der Download-Seite.",
+    "autostart": "Mit Windows starten",
+    "autostartText": "Das CRM öffnet sich nach dem Anmelden bei Windows. Gilt nur für diesen PC.",
+    "downloadText": "Für den PC gibt es die Desktop-App mit Benachrichtigungen und automatischen Updates:",
+    "download": "Desktop-App herunterladen"
   }
 }
