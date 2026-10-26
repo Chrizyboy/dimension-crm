@@ -5079,7 +5079,8 @@
       "anleitung": "Anleitung",
       "prozesse": "Prozesse",
       "videos": "Videos",
-      "meldungen": "Meldungen"
+      "meldungen": "Meldungen",
+      "start": "Erste Schritte"
     },
     "nichtsGefunden": "Nichts gefunden",
     "titelFeld": "Titel",
@@ -5198,6 +5199,60 @@
       "doppelt": "Diesen Prozess gibt es schon. Dort «Neue Version» verwenden.",
       "meldungTitel": "Bitte kurz beschreiben, worum es geht.",
       "meldungText": "Bitte beschreiben, was passiert ist."
+    },
+    "start": {
+      "reiter": "Erste Schritte",
+      "intro": "Alles Wichtige für den Start, auf einer Seite. Zum Verteilen im Team: «Drucken» (oder als PDF sichern).",
+      "drucken": "Drucken",
+      "druckTitel": "Dimension CRM: Erste Schritte",
+      "abschnitte": [
+        {
+          "titel": "1. Installieren",
+          "punkte": [
+            "PC: Mein Konto › Diese App › «Desktop-App herunterladen» (oder der Link aus der Einladung). Datei starten, fertig, ohne Administratorrechte.",
+            "Zeigt Windows «Der Computer wurde geschützt»: Weitere Informationen › Trotzdem ausführen. Das kommt nur beim ersten Mal.",
+            "Handy: Adresse aus der Einladung im Browser öffnen. iPhone: Teilen › Zum Home-Bildschirm. Android: ⋮ › App installieren.",
+            "Updates kommen von selbst. Am PC erscheint oben «Update»: zuerst speichern, dann klicken."
+          ]
+        },
+        {
+          "titel": "2. Anmelden",
+          "punkte": [
+            "Deine Firmen-Mail eingeben, «Code per E-Mail senden», den 6-stelligen Code eintippen. Ein Passwort gibt es nicht.",
+            "Oder «Mit Microsoft anmelden», sobald eingeschaltet.",
+            "Einmal pro Gerät. Abmelden über dein Kürzel oben rechts.",
+            "Mein Konto › «Mit Microsoft verbinden»: Dann gehen Mails und Termine aus deinem eigenen Postfach."
+          ]
+        },
+        {
+          "titel": "3. Mein Tag",
+          "punkte": [
+            "Die Startseite zeigt deine Termine, Aufgaben und was heute ansteht.",
+            "Die Glocke oben meldet Neues: Freigaben, Antworten, Fehler.",
+            "Ctrl K öffnet die Suche: Kunden, Leads, Projekte und Befehle."
+          ]
+        },
+        {
+          "titel": "4. Die wichtigsten Abläufe",
+          "punkte": [
+            "Neue Anfrage: Anfragen & Leads › «Neuer Lead» (Taste N).",
+            "Offerte: im Lead «Offerte erstellen» oder unter Offerten. Preise kommen aus der Preisliste.",
+            "Kunde nachschlagen: Kunden › Akte mit Verlauf, Dokumenten und Projekten.",
+            "Projekt: Projekte & Montage › Fahrplan Schritt für Schritt abhaken.",
+            "Baustelle: am Handy unter Baustelle & Rapporte Rapport, Fotos und Zeiten erfassen, auch ohne Netz.",
+            "Spesen: Spesen › Beleg fotografieren, Betrag prüfen, speichern.",
+            "Mails und SMS gehen über den Ausgangskorb und erst nach der Freigabe hinaus."
+          ]
+        },
+        {
+          "titel": "5. Hilfe",
+          "punkte": [
+            "Handbuch: Anleitung zu jedem Bereich, Prozesse als PDF, Erklärvideos.",
+            "Taste ? zeigt alle Tastenkürzel, G und ein Buchstabe springt in einen Bereich.",
+            "Etwas geht nicht? «Fehler melden» (oben im Handbuch oder bei jeder Fehlermeldung). Die Antwort kommt in die Glocke."
+          ]
+        }
+      ]
     }
   },
   "update": {

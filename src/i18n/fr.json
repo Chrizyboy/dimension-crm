@@ -5079,7 +5079,8 @@
       "anleitung": "Mode d’emploi",
       "prozesse": "Processus",
       "videos": "Vidéos",
-      "meldungen": "Signalements"
+      "meldungen": "Signalements",
+      "start": "Premiers pas"
     },
     "nichtsGefunden": "Aucun résultat",
     "titelFeld": "Titre",
@@ -5198,6 +5199,60 @@
       "doppelt": "Ce processus existe déjà. Utilise « Nouvelle version ».",
       "meldungTitel": "Décris brièvement de quoi il s’agit.",
       "meldungText": "Décris ce qui s’est passé."
+    },
+    "start": {
+      "reiter": "Premiers pas",
+      "intro": "L’essentiel pour démarrer, sur une page. Pour le distribuer à l’équipe : « Imprimer » (ou enregistrer en PDF).",
+      "drucken": "Imprimer",
+      "druckTitel": "Dimension CRM : premiers pas",
+      "abschnitte": [
+        {
+          "titel": "1. Installer",
+          "punkte": [
+            "PC : Mon compte › Cette app › « Télécharger l’app de bureau » (ou le lien de l’invitation). Lancer le fichier, c’est tout, sans droits d’administrateur.",
+            "Si Windows affiche « Windows a protégé votre ordinateur » : Informations complémentaires › Exécuter quand même. Seulement la première fois.",
+            "Mobile : ouvrir l’adresse de l’invitation dans le navigateur. iPhone : Partager › Sur l’écran d’accueil. Android : ⋮ › Installer l’application.",
+            "Les mises à jour arrivent toutes seules. Sur le PC, « Mise à jour » apparaît en haut : enregistrer d’abord, puis cliquer."
+          ]
+        },
+        {
+          "titel": "2. Se connecter",
+          "punkte": [
+            "Saisir ton e-mail professionnel, « Envoyer le code par e-mail », taper le code à 6 chiffres. Il n’y a pas de mot de passe.",
+            "Ou « Se connecter avec Microsoft », dès que c’est activé.",
+            "Une fois par appareil. Se déconnecter via tes initiales en haut à droite.",
+            "Mon compte › « Connecter Microsoft » : les e-mails et rendez-vous partent alors de ta propre boîte."
+          ]
+        },
+        {
+          "titel": "3. Ma journée",
+          "punkte": [
+            "La page d’accueil montre tes rendez-vous, tes tâches et ce qui est prévu aujourd’hui.",
+            "La cloche en haut signale les nouveautés : validations, réponses, erreurs.",
+            "Ctrl K ouvre la recherche : clients, leads, projets et commandes."
+          ]
+        },
+        {
+          "titel": "4. Les tâches principales",
+          "punkte": [
+            "Nouvelle demande : Demandes & leads › « Nouveau lead » (touche N).",
+            "Offre : dans le lead « Créer une offre » ou sous Offres. Les prix viennent de la liste de prix.",
+            "Consulter un client : Clients › dossier avec historique, documents et projets.",
+            "Projet : Projets & montage › cocher le planning étape par étape.",
+            "Chantier : sur le mobile sous Chantier & rapports, saisir rapport, photos et heures, même sans réseau.",
+            "Frais : Frais › photographier le justificatif, vérifier le montant, enregistrer.",
+            "Les e-mails et SMS passent par la boîte d’envoi et ne partent qu’après validation."
+          ]
+        },
+        {
+          "titel": "5. Aide",
+          "punkte": [
+            "Manuel : guide pour chaque domaine, processus en PDF, vidéos explicatives.",
+            "La touche ? affiche tous les raccourcis, G et une lettre ouvre un domaine.",
+            "Quelque chose ne marche pas ? « Signaler un problème » (en haut du manuel ou à chaque message d’erreur). La réponse arrive dans la cloche."
+          ]
+        }
+      ]
     }
   },
   "update": {
