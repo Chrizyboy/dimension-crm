@@ -9,6 +9,7 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'projects',
   titel: { de: 'Projekte & Montage', fr: 'Projets & montage' },
+  kurztitel: { de: 'Projekte', fr: 'Projets' },
   untertitel: { de: 'Vom Auftrag bis zur Inbetriebnahme', fr: 'De la commande à la mise en service' },
   pfad: '/projects',
   icon: 'hard-hat',

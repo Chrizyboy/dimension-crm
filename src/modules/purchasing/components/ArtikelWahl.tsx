@@ -83,8 +83,10 @@ export function ArtikelWahl({
                   waehle(a)
                 }}
               >
-                <span className="truncate font-medium">{a.name}</span>
-                {a.artikelnummer && <span className="text-muted-foreground truncate text-xs">{a.artikelnummer}</span>}
+                <span className="line-clamp-2 font-medium">{a.name}</span>
+                {a.artikelnummer && (
+                  <span className="text-muted-foreground line-clamp-2 text-xs">{a.artikelnummer}</span>
+                )}
               </button>
             </li>
           ))}

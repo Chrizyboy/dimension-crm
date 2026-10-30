@@ -41,8 +41,8 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
           header: t('einkauf.lager.artikel'),
           cell: (c) => (
             <span className="flex max-w-[24rem] min-w-0 flex-col">
-              <span className="truncate font-medium">{c.getValue()}</span>
-              <span className="text-muted-foreground truncate text-xs">{c.row.original.artikelnummer}</span>
+              <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+              <span className="text-muted-foreground line-clamp-2 text-xs">{c.row.original.artikelnummer}</span>
             </span>
           ),
         }),

@@ -78,7 +78,7 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
             {positionen.map((p) => (
               <Zeile key={p.id}>
                 <Zelle className="min-w-0 py-1.5">
-                  <span className="block max-w-[16rem] truncate">{p.bezeichnung}</span>
+                  <span className="line-clamp-2 max-w-[20rem]">{p.bezeichnung}</span>
                   {p.artikelnummer && <span className="text-muted-foreground block text-xs">{p.artikelnummer}</span>}
                 </Zelle>
                 <Zelle zahl>

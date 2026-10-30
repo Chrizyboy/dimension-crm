@@ -43,7 +43,7 @@ export function DossierKontakte({
               return (
                 <li key={k.id} className="flex flex-col gap-1 rounded-md border p-2.5 text-sm">
                   <div className="flex items-center gap-2">
-                    <span className="min-w-0 flex-1 truncate font-medium">{k.firma ?? k.name}</span>
+                    <span className="line-clamp-2 min-w-0 flex-1 font-medium">{k.firma ?? k.name}</span>
                     <Badge>{t(`ausschreibungen.rolle.${k.rolle}`)}</Badge>
                     <Badge ton={k.art === 'privat' ? 'warnung' : 'neutral'}>
                       {t(`ausschreibungen.kontaktart.${k.art}`)}
@@ -60,7 +60,7 @@ export function DossierKontakte({
                       .join(' · ') || t('ausschreibungen.akte.ohneAdresse')}
                   </span>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-muted-foreground truncate text-xs">
+                    <span className="text-muted-foreground line-clamp-2 text-xs">
                       {t('ausschreibungen.kontakt.quelle_link')}:{' '}
                       {istWebLink(k.quelle_link) ? (
                         <a
@@ -129,7 +129,7 @@ export function DossierKontakte({
                       className="text-muted-foreground size-4 shrink-0"
                       aria-label={t(`ausschreibungen.kanal.${a.kanal}`)}
                     />
-                    <span className="min-w-0 flex-1 truncate">{a.betreff}</span>
+                    <span className="line-clamp-2 min-w-0 flex-1">{a.betreff}</span>
                     <Badge ton={ANSCHREIBEN_TON[a.status]} punkt>
                       {t(`ausschreibungen.anschreibenStatus.${a.status}`)}
                     </Badge>

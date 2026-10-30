@@ -95,7 +95,7 @@ export default function Rechnungen({
           onNavigation({ reiter: r as ReiterTyp, rechnung: null })
         }}
       >
-        <ReiterListe className="max-w-full overflow-x-auto">
+        <ReiterListe>
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`rechnungen.reiter.${r}`)}

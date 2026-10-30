@@ -33,8 +33,8 @@ export function rapportSpalten(t: TFunction): Spalten<Rapport> {
         const r = c.row.original
         return (
           <span className="flex max-w-[22rem] min-w-0 flex-col">
-            <span className="truncate font-medium">{c.getValue() || '–'}</span>
-            <span className="text-muted-foreground truncate text-xs">
+            <span className="line-clamp-2 font-medium">{c.getValue() || '–'}</span>
+            <span className="text-muted-foreground line-clamp-2 text-xs">
               {[r.projekt_nummer ?? r.service_nummer, r.objekt_ort].filter(Boolean).join(' · ')}
             </span>
           </span>

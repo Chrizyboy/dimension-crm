@@ -61,7 +61,7 @@ export default function Projekte({
           onNavigation({ reiter: r as ReiterTyp, projekt: null })
         }}
       >
-        <ReiterListe className="max-w-full overflow-x-auto">
+        <ReiterListe>
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`projekte.reiter.${r}`)}

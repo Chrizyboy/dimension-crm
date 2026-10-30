@@ -47,7 +47,7 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
             <tr>
               <Kopfzelle>{t('rechnungen.spalte.projekt')}</Kopfzelle>
               <Kopfzelle>{t('rechnungen.verrechnen.tranche')}</Kopfzelle>
-              <Kopfzelle>{t('rechnungen.spalte.faellig')}</Kopfzelle>
+              <Kopfzelle className="hidden md:table-cell">{t('rechnungen.spalte.faellig')}</Kopfzelle>
               <Kopfzelle className="text-right">{t('rechnungen.spalte.total')}</Kopfzelle>
               <Kopfzelle>
                 <span className="sr-only">{t('tabelle.aktionen')}</span>
@@ -59,32 +59,39 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
               <Zeile key={z.id}>
                 <Zelle>
                   <span className="flex min-w-0 flex-col">
-                    <span className="truncate font-medium">{z.kunde ?? '–'}</span>
-                    <span className="text-muted-foreground truncate text-xs">
+                    <span className="line-clamp-2 font-medium">{z.kunde ?? '–'}</span>
+                    <span className="text-muted-foreground line-clamp-2 text-xs">
                       {[z.projekt_nummer, z.projekt_titel].filter(Boolean).join(' · ')}
                     </span>
                   </span>
                 </Zelle>
-                <Zelle>{z.bezeichnung}</Zelle>
                 <Zelle>
+                  {z.bezeichnung}
+                  {/* Am Handy steht die Fälligkeit unter der Tranche. */}
+                  <span className="text-muted-foreground block text-xs md:hidden">
+                    {z.faellig_am ? formatDatum(z.faellig_am) : t('rechnungen.verrechnen.nachBau')}
+                  </span>
+                </Zelle>
+                <Zelle className="hidden md:table-cell">
                   {z.faellig_am ? (
                     <Badge ton={z.faellig_am <= bald ? 'warnung' : 'neutral'}>{formatDatum(z.faellig_am)}</Badge>
                   ) : (
                     <span className="text-muted-foreground text-xs">{t('rechnungen.verrechnen.nachBau')}</span>
                   )}
                 </Zelle>
-                <Zelle className="zahlen text-right">{formatChf(z.betrag_rappen)}</Zelle>
+                <Zelle className="zahlen text-right whitespace-nowrap">{formatChf(z.betrag_rappen)}</Zelle>
                 <Zelle className="text-right">
                   <Button
                     size="sm"
                     variant="secondary"
                     laedt={laeuft}
+                    aria-label={t('rechnungen.verrechnen.erstellen')}
                     onClick={() => {
                       erstellen({ zahlungsplan_id: z.id })
                     }}
                   >
                     <FilePlus2 />
-                    {t('rechnungen.verrechnen.erstellen')}
+                    <span className="hidden sm:inline">{t('rechnungen.verrechnen.erstellen')}</span>
                   </Button>
                 </Zelle>
               </Zeile>
@@ -102,10 +109,10 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
                 <span className="flex min-w-0 items-center gap-2">
                   <Wrench className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
                   <span className="flex min-w-0 flex-col">
-                    <span className="truncate font-medium">
+                    <span className="line-clamp-2 font-medium">
                       {r.nummer} · {r.kunde ?? '–'}
                     </span>
-                    <span className="text-muted-foreground truncate text-xs">
+                    <span className="text-muted-foreground line-clamp-2 text-xs">
                       {[formatDatum(r.datum), r.service_nummer, r.service_titel, r.projekt_nummer]
                         .filter(Boolean)
                         .join(' · ')}

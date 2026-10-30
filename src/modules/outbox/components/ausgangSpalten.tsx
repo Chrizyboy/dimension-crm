@@ -23,9 +23,9 @@ export function ausgangSpalten(t: TFunction): Spalten<AusgangEintrag> {
     spalte.accessor('an', {
       header: t('ausgang.spalte.an'),
       cell: (c) => (
-        <span className="flex max-w-[12rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.row.original.kunde ?? c.getValue()}</span>
-          {c.row.original.kunde && <span className="text-muted-foreground truncate text-xs">{c.getValue()}</span>}
+        <span className="flex max-w-[9.5rem] min-w-0 flex-col sm:max-w-[15rem]">
+          <span className="line-clamp-2 font-medium">{c.row.original.kunde ?? c.getValue()}</span>
+          {c.row.original.kunde && <span className="text-muted-foreground line-clamp-2 text-xs">{c.getValue()}</span>}
         </span>
       ),
     }),
@@ -34,14 +34,14 @@ export function ausgangSpalten(t: TFunction): Spalten<AusgangEintrag> {
       header: t('ausgang.spalte.inhalt'),
       enableSorting: false,
       cell: (c) => (
-        <span className="flex max-w-[22rem] items-center gap-1.5">
+        <span className="flex max-w-[22rem] items-center gap-1.5 2xl:max-w-[30rem]">
           {c.row.original.automatisch && (
             <Bot className="text-muted-foreground size-3.5 shrink-0" aria-label={t('ausgang.automatisch')} />
           )}
           {c.row.original.anhaenge.length > 0 && (
             <Paperclip className="text-muted-foreground size-3.5 shrink-0" aria-label={t('ausgang.anhaenge')} />
           )}
-          <span className="truncate">{c.getValue()}</span>
+          <span className="line-clamp-2">{c.getValue()}</span>
         </span>
       ),
       meta: { nurBreit: true },
@@ -53,13 +53,15 @@ export function ausgangSpalten(t: TFunction): Spalten<AusgangEintrag> {
           {t(`ausgang.status.${c.getValue()}`)}
         </Badge>
       ),
-      meta: { breite: 'w-32' },
+      meta: { breite: 'w-40' },
     }),
     spalte.accessor((e) => e.gesendet_am ?? e.erstellt_am, {
       id: 'zeit',
       header: t('ausgang.spalte.zeit'),
       cell: (c) => (
-        <span className="zahlen text-muted-foreground font-mono text-[13px]">{zeitpunkt(c.getValue())}</span>
+        <span className="zahlen text-muted-foreground font-mono text-[13px] whitespace-nowrap">
+          {zeitpunkt(c.getValue())}
+        </span>
       ),
       meta: { nurBreit: true, breite: 'w-36' },
     }),

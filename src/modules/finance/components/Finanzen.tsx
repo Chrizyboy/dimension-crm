@@ -65,7 +65,7 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
           onReiter(r as ReiterTyp)
         }}
       >
-        <ReiterListe className="max-w-full overflow-x-auto">
+        <ReiterListe>
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`finanzen.reiter.${r}`)}

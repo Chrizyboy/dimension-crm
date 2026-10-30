@@ -63,7 +63,7 @@ export default function Einkauf({
           onNavigation({ reiter: r as ReiterTyp, bestellung: null })
         }}
       >
-        <ReiterListe className="max-w-full overflow-x-auto">
+        <ReiterListe>
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`einkauf.reiter.${r}`)}

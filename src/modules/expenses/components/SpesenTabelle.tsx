@@ -65,8 +65,8 @@ export function SpesenTabelle({
               }}
             />
           </Kopfzelle>
-          <Kopfzelle>{t('spesen.spalte.datum')}</Kopfzelle>
-          {mitPerson && <Kopfzelle>{t('spesen.spalte.person')}</Kopfzelle>}
+          <Kopfzelle className="hidden md:table-cell">{t('spesen.spalte.datum')}</Kopfzelle>
+          {mitPerson && <Kopfzelle className="hidden md:table-cell">{t('spesen.spalte.person')}</Kopfzelle>}
           <Kopfzelle>{t('spesen.spalte.zweck')}</Kopfzelle>
           <Kopfzelle className="hidden md:table-cell">{t('spesen.spalte.beleg')}</Kopfzelle>
           <Kopfzelle className="text-right">{t('spesen.spalte.betrag')}</Kopfzelle>
@@ -93,14 +93,18 @@ export function SpesenTabelle({
                 />
               )}
             </Zelle>
-            <Zelle className="zahlen whitespace-nowrap">{formatDatum(s.datum)}</Zelle>
-            {mitPerson && <Zelle className="whitespace-nowrap">{s.person ?? '–'}</Zelle>}
+            {/* Am Handy stehen Datum und Person unter dem Zweck, damit Betrag und Stand sichtbar bleiben. */}
+            <Zelle className="zahlen hidden whitespace-nowrap md:table-cell">{formatDatum(s.datum)}</Zelle>
+            {mitPerson && <Zelle className="hidden whitespace-nowrap md:table-cell">{s.person ?? '–'}</Zelle>}
             <Zelle>
               <span className="flex max-w-[26rem] min-w-0 flex-col">
-                <span className={s.status === 'storniert' ? 'truncate line-through' : 'truncate font-medium'}>
+                <span className={s.status === 'storniert' ? 'line-clamp-2 line-through' : 'line-clamp-2 font-medium'}>
                   {s.zweck ?? '–'}
                 </span>
-                <span className="text-muted-foreground truncate text-xs">
+                <span className="text-muted-foreground zahlen text-xs md:hidden">
+                  {[formatDatum(s.datum), mitPerson ? s.person : null].filter(Boolean).join(' · ')}
+                </span>
+                <span className="text-muted-foreground line-clamp-2 text-xs">
                   {[kategorie(s.kategorie), s.storniert_grund ?? s.notiz].filter(Boolean).join(' · ')}
                 </span>
               </span>

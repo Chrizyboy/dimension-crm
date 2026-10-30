@@ -72,8 +72,8 @@ export const LeadZeile = memo(function LeadZeile({ g, gewaehlt, aktiv, person, o
         }}
         className="focus-visible:ring-ring flex min-w-0 flex-col rounded text-left outline-none focus-visible:ring-2"
       >
-        <span className="truncate font-medium">{g.name}</span>
-        <span className="text-muted-foreground truncate text-xs">
+        <span className="line-clamp-2 font-medium">{g.name}</span>
+        <span className="text-muted-foreground line-clamp-2 text-xs">
           {[g.nummer, g.ort].filter(Boolean).join(' · ')}
           <span className="md:hidden">{g.telefon ? ` · ${formatTelefon(g.telefon)}` : ''}</span>
         </span>

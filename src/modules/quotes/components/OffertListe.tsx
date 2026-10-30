@@ -41,15 +41,17 @@ export default function OffertListe({
       header: t('offerten.spalte.nr'),
       cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue()}</span>,
       sortFn: (a, b) => a.original.nummer.localeCompare(b.original.nummer, 'de-CH', { numeric: true }),
-      meta: { breite: 'w-20' },
+      // Am Handy steht die Nummer unter dem Namen.
+      meta: { breite: 'w-20', nurBreit: true },
     }),
     spalte.accessor('name', {
       header: t('offerten.spalte.name'),
       sortFn: (a, b) => a.original.name.localeCompare(b.original.name, 'de-CH'),
       cell: (c) => (
         <span className="flex max-w-[16rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground truncate text-xs">
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+          <span className="text-muted-foreground line-clamp-2 text-xs">
+            <span className="zahlen font-mono md:hidden">{c.row.original.nummer} · </span>
             {[c.row.original.titel, c.row.original.betragRappen ? formatChf(c.row.original.betragRappen) : null]
               .filter(Boolean)
               .join(' · ')}

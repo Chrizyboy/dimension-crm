@@ -1906,7 +1906,13 @@
       "ki_auftrag": "IA : Confirmer la commande",
       "ki_zahlung": "IA : Paiement / facture",
       "ki_service": "IA : Service",
-      "ki_frei": "IA : Texte libre"
+      "ki_frei": "IA : Texte libre",
+      "automation": "Automatisation",
+      "mahnung": "Rappel (sommation)",
+      "bestellung": "Commande",
+      "serienmail": "E-mail groupé",
+      "newsletter": "Newsletter",
+      "zahlungserinnerung": "Rappel de paiement"
     },
     "titelMail": "Vérifier l'e-mail",
     "titelSms": "Vérifier le SMS",
@@ -4602,7 +4608,12 @@
       "rechnungen": "Facture",
       "wartungsvertraege": "Maintenance",
       "kontakte": "Client",
-      "ausschreibungen": "Appel d’offres"
+      "ausschreibungen": "Appel d’offres",
+      "fahrzeuge": "Véhicule",
+      "geraete": "Appareil",
+      "qualifikationen": "Attestation",
+      "service_faelle": "Cas de service",
+      "ausgangskorb": "Boîte d’envoi"
     },
     "feld": {
       "titel": "Que faut-il faire ?",
@@ -5346,7 +5357,7 @@
     "punkt": {
       "datenbank": {
         "titel": "Base de données",
-        "ok": "Connectée, état {{schema}}.",
+        "ok": "Connectée et configurée.",
         "fehlt": "Pas de base de données. Étape 1 du déménagement : créer le projet et « npm run umzug -- datenbank »."
       },
       "funktionen": {

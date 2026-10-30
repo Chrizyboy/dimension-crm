@@ -39,11 +39,13 @@ export function HandyNavigation() {
                 key={id}
                 to="/$modul"
                 params={{ modul: id }}
+                // Sichtbar steht der Kurztitel, vorgelesen der volle Name (enthält den Kurztitel).
+                aria-label={m.titel[sprache]}
                 className={stil}
                 activeProps={{ className: '!text-foreground [&_svg]:!text-accent' }}
               >
                 <ModulIcon name={m.icon} className="size-5" />
-                <span className="max-w-full truncate px-1">{m.titel[sprache]}</span>
+                <span className="max-w-full truncate px-1">{(m.kurztitel ?? m.titel)[sprache]}</span>
               </Link>
             )
           })}

@@ -94,7 +94,7 @@ export default function Aufgaben({ wer = 'meine' }: { wer?: AufgabenFilter['wer'
             {c.getValue()}
           </span>
           {c.row.original.text && (
-            <span className="text-muted-foreground line-clamp-1 text-xs">{c.row.original.text}</span>
+            <span className="text-muted-foreground line-clamp-3 text-xs">{c.row.original.text}</span>
           )}
         </span>
       ),
@@ -129,7 +129,7 @@ export default function Aufgaben({ wer = 'meine' }: { wer?: AufgabenFilter['wer'
   ])
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6">
+    <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf
         titel={t('aufgaben.titel')}
         beschreibung={t('aufgaben.beschreibung')}

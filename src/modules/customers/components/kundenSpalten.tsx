@@ -25,7 +25,7 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
       cell: (c) => (
         <span className="flex max-w-[10rem] min-w-0 flex-col sm:max-w-[16rem] lg:max-w-[18rem]">
           <span className="flex min-w-0 items-center gap-1.5 font-medium">
-            <span className="truncate">{c.getValue()}</span>
+            <span className="line-clamp-2">{c.getValue()}</span>
             {c.row.original.moeglicheDublette && (
               <CopyCheck className="text-warn size-3.5 shrink-0" aria-label={t('kunden.dublette')} />
             )}
@@ -45,7 +45,7 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
     spalte.accessor('ort', {
       header: t('kunden.spalte.ort'),
       cell: (c) => c.getValue() ?? '–',
-      meta: { nurBreit: true },
+      meta: { nurBreit: true, breite: 'min-w-44' },
     }),
     spalte.accessor((k) => k.telefon ?? k.email ?? '', {
       id: 'kontakt',
@@ -54,7 +54,7 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
       cell: (c) => {
         const k = c.row.original
         return (
-          <span className="text-muted-foreground block max-w-[11rem] truncate">
+          <span className="text-muted-foreground line-clamp-2 max-w-[15rem]">
             {k.telefon ? formatTelefon(k.telefon) : (k.email ?? '–')}
           </span>
         )

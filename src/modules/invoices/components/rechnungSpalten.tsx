@@ -18,7 +18,8 @@ export function rechnungSpalten(t: TFunction): Spalten<Rechnung> {
           {c.getValue() || <em className="not-italic">{t('rechnungen.entwurf')}</em>}
         </span>
       ),
-      meta: { breite: 'w-28' },
+      // Am Handy steht die Nummer unter dem Kunden, damit Fällig und Offen Platz haben.
+      meta: { breite: 'w-28', nurBreit: true },
     }),
     spalte.accessor('kunde', {
       header: t('rechnungen.spalte.kunde'),
@@ -26,8 +27,9 @@ export function rechnungSpalten(t: TFunction): Spalten<Rechnung> {
         const r = c.row.original
         return (
           <span className="flex max-w-[22rem] min-w-0 flex-col">
-            <span className="truncate font-medium">{c.getValue()}</span>
-            <span className="text-muted-foreground truncate text-xs">
+            <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+            <span className="text-muted-foreground line-clamp-2 text-xs">
+              <span className="zahlen font-mono md:hidden">{r.nummer ?? t('rechnungen.entwurf')} · </span>
               {[r.projekt_nummer, r.titel].filter(Boolean).join(' · ')}
             </span>
           </span>
@@ -52,7 +54,7 @@ export function rechnungSpalten(t: TFunction): Spalten<Rechnung> {
         const r = c.row.original
         if (!c.getValue()) return '–'
         return (
-          <span className="flex items-center gap-1">
+          <span className="flex flex-wrap items-center gap-1">
             <span className={r.ueberfaellig ? 'text-bad font-medium' : ''}>{formatDatum(c.getValue())}</span>
             {r.mahnstufe > 0 && <Badge ton="kritisch">{t('rechnungen.mahnstufeKurz', { stufe: r.mahnstufe })}</Badge>}
           </span>
@@ -69,7 +71,7 @@ export function rechnungSpalten(t: TFunction): Spalten<Rechnung> {
       cell: (c) => {
         const r = c.row.original
         const offen = r.status === 'gestellt' || r.status === 'teilbezahlt'
-        return <span className="zahlen">{offen ? formatChf(c.getValue()) : '–'}</span>
+        return <span className="zahlen whitespace-nowrap">{offen ? formatChf(c.getValue()) : '–'}</span>
       },
     }),
     spalte.accessor('status', {

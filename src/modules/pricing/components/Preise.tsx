@@ -89,7 +89,7 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
       />
 
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <nav aria-label={t('preise.ansichten')} className="-mx-1 flex gap-1 overflow-x-auto border-b px-1">
+        <nav aria-label={t('preise.ansichten')} className="-mx-1 flex flex-wrap gap-x-1 border-b px-1">
           {sichtbar.map((a) => (
             <button
               key={a}

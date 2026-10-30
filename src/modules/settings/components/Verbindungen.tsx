@@ -136,7 +136,7 @@ export function Verbindungen() {
                 <li key={p.person_id} className="flex flex-wrap items-center justify-between gap-2 py-2">
                   <span className="flex min-w-0 flex-col">
                     <span className="font-medium">{p.name}</span>
-                    {p.konto && <span className="text-muted-foreground truncate text-xs">{p.konto}</span>}
+                    {p.konto && <span className="text-muted-foreground line-clamp-2 text-xs">{p.konto}</span>}
                   </span>
                   {p.verbunden && !p.fehler ? (
                     <Badge ton="ok" punkt>

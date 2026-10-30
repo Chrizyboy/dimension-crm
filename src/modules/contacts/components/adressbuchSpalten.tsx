@@ -18,7 +18,7 @@ export function adressbuchSpalten(t: TFunction, kontaktart: (schluessel: string)
     spalte.accessor('name', {
       header: t('kunden.spalte.name'),
       sortFn: (a, b) => a.original.name.localeCompare(b.original.name, 'de-CH'),
-      cell: (c) => <span className="block max-w-[16rem] truncate font-medium lg:max-w-[18rem]">{c.getValue()}</span>,
+      cell: (c) => <span className="line-clamp-2 max-w-[16rem] font-medium lg:max-w-[20rem]">{c.getValue()}</span>,
     }),
     spalte.accessor('kontaktart', {
       header: t('adressbuch.spalte.art'),
@@ -42,7 +42,9 @@ export function adressbuchSpalten(t: TFunction, kontaktart: (schluessel: string)
       id: 'email',
       header: t('adressbuch.spalte.email'),
       enableSorting: false,
-      cell: (c) => <span className="text-muted-foreground block max-w-[11rem] truncate">{c.getValue() || '–'}</span>,
+      cell: (c) => (
+        <span className="text-muted-foreground line-clamp-2 max-w-[15rem] break-words">{c.getValue() || '–'}</span>
+      ),
       meta: { nurBreit: true },
     }),
   ])

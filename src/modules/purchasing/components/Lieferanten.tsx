@@ -22,12 +22,21 @@ export function Lieferanten() {
       spalte.columns([
         spalte.accessor('name', {
           header: t('einkauf.lieferant.name'),
-          cell: (c) => <span className="font-medium">{c.getValue()}</span>,
+          // Am Handy steht die Bestell-Adresse unter dem Namen, damit beide Spalten nicht gequetscht werden.
+          cell: (c) => (
+            <span className="flex flex-col">
+              <span className="font-medium">{c.getValue()}</span>
+              <span className="text-muted-foreground text-xs break-all md:hidden">
+                {c.row.original.email_bestellung ?? t('einkauf.lieferant.ohneMail')}
+              </span>
+            </span>
+          ),
         }),
         spalte.accessor((l) => l.email_bestellung ?? '', {
           id: 'mail',
           header: t('einkauf.lieferant.mail'),
           cell: (c) => c.getValue() || <Badge ton="warnung">{t('einkauf.lieferant.ohneMail')}</Badge>,
+          meta: { nurBreit: true },
         }),
         spalte.accessor((l) => l.kundennummer_bei_lieferant ?? '', {
           id: 'kundennummer',

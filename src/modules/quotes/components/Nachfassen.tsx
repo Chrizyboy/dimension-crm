@@ -198,10 +198,10 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
                 >
                   <span className="flex flex-wrap items-center gap-2">
                     <span className="zahlen font-mono text-[13px]">{o.nummer}</span>
-                    <span className="truncate font-medium">{o.name}</span>
+                    <span className="line-clamp-2 font-medium">{o.name}</span>
                     <NachfassChip offerte={o} />
                   </span>
-                  <span className="text-muted-foreground truncate text-xs">
+                  <span className="text-muted-foreground line-clamp-2 text-xs">
                     {[
                       [o.plz, o.ort].filter(Boolean).join(' '),
                       o.betragRappen ? formatChf(o.betragRappen, { mitWaehrung: true }) : null,

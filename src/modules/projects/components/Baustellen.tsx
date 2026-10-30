@@ -111,10 +111,10 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
                     onOeffnen(p.id)
                   }}
                 >
-                  <span className="truncate text-sm font-medium">
+                  <span className="line-clamp-2 text-sm font-medium">
                     {p.kunde} <span className="text-muted-foreground zahlen font-mono text-xs">{p.nummer}</span>
                   </span>
-                  <span className="text-muted-foreground truncate text-xs">
+                  <span className="text-muted-foreground line-clamp-2 text-xs">
                     {[
                       p.unterzeichnet_am
                         ? t('projekte.unterzeichnet', { datum: formatDatum(p.unterzeichnet_am) })

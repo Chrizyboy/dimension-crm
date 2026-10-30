@@ -22,15 +22,15 @@ export function projektSpalten(t: TFunction): Spalten<Projekt> {
       header: t('projekte.spalte.kunde'),
       cell: (c) => (
         <span className="flex max-w-[18rem] min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground truncate text-xs">{anlageKurz(c.row.original, t) || '–'}</span>
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+          <span className="text-muted-foreground line-clamp-2 text-xs">{anlageKurz(c.row.original, t) || '–'}</span>
         </span>
       ),
     }),
     spalte.accessor((p) => ortZeile(p), {
       id: 'ort',
       header: t('projekte.spalte.ort'),
-      meta: { nurBreit: true },
+      meta: { nurBreit: true, breite: 'min-w-44' },
     }),
     spalte.accessor('status', {
       header: t('projekte.spalte.status'),

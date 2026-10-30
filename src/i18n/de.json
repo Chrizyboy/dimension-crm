@@ -1906,7 +1906,13 @@
       "ki_auftrag": "KI: Auftrag bestätigen",
       "ki_zahlung": "KI: Zahlung / Rechnung",
       "ki_service": "KI: Service",
-      "ki_frei": "KI: Freier Text"
+      "ki_frei": "KI: Freier Text",
+      "automation": "Automation",
+      "mahnung": "Mahnung",
+      "bestellung": "Bestellung",
+      "serienmail": "Serien-Mail",
+      "newsletter": "Newsletter",
+      "zahlungserinnerung": "Zahlungserinnerung"
     },
     "titelMail": "Mail prüfen",
     "titelSms": "SMS prüfen",
@@ -4602,7 +4608,12 @@
       "rechnungen": "Rechnung",
       "wartungsvertraege": "Wartung",
       "kontakte": "Kunde",
-      "ausschreibungen": "Ausschreibung"
+      "ausschreibungen": "Ausschreibung",
+      "fahrzeuge": "Fahrzeug",
+      "geraete": "Gerät",
+      "qualifikationen": "Ausweis",
+      "service_faelle": "Service-Fall",
+      "ausgangskorb": "Ausgangskorb"
     },
     "feld": {
       "titel": "Was ist zu tun?",
@@ -5346,7 +5357,7 @@
     "punkt": {
       "datenbank": {
         "titel": "Datenbank",
-        "ok": "Verbunden, Stand {{schema}}.",
+        "ok": "Verbunden und eingerichtet.",
         "fehlt": "Keine Datenbank. Schritt 1 im Umzug: Projekt anlegen und «npm run umzug -- datenbank»."
       },
       "funktionen": {

@@ -212,10 +212,10 @@ export function Freigabeliste({
                 }}
               >
                 <span className="flex items-center gap-2">
-                  <span className="truncate text-sm font-medium">{e.empfaenger}</span>
+                  <span className="line-clamp-2 text-sm font-medium">{e.empfaenger}</span>
                   <Badge className="ml-auto">{t(`ausschreibungen.kanal.${e.kanal}`)}</Badge>
                 </span>
-                <span className="text-muted-foreground truncate text-xs">
+                <span className="text-muted-foreground line-clamp-2 text-xs">
                   {e.dossier.nummer} · {e.dossier.titel}
                   {e.dossier.gemeinde ? `, ${e.dossier.gemeinde}` : ''}
                 </span>

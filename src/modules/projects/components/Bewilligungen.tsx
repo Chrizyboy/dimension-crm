@@ -83,7 +83,13 @@ export function Bewilligungen({ onOeffnen }: { onOeffnen: (id: string) => void }
               <tr>
                 <Kopfzelle>{t('projekte.spalte.projekt')}</Kopfzelle>
                 {spalten.map((s) => (
-                  <Kopfzelle key={s.schluessel}>{s.name}</Kopfzelle>
+                  // Lange Schrittnamen (z. B. «Technisches Anschlussgesuch») brechen um, statt die Tabelle zu verbreitern.
+                  <Kopfzelle
+                    key={s.schluessel}
+                    className="h-auto max-w-[11rem] min-w-[8rem] py-2 align-bottom whitespace-normal"
+                  >
+                    {s.name}
+                  </Kopfzelle>
                 ))}
               </tr>
             </TabelleKopf>
@@ -98,8 +104,8 @@ export function Bewilligungen({ onOeffnen }: { onOeffnen: (id: string) => void }
                         onOeffnen(p.id)
                       }}
                     >
-                      <span className="truncate font-medium">{p.kunde}</span>
-                      <span className="text-muted-foreground truncate text-xs">
+                      <span className="line-clamp-2 font-medium">{p.kunde}</span>
+                      <span className="text-muted-foreground line-clamp-2 text-xs">
                         <span className="zahlen font-mono">{p.nummer}</span> · {p.ort ?? '–'} ·{' '}
                         {t(`projekte.status.${p.status}`)}
                       </span>

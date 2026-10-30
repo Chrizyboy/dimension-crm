@@ -37,8 +37,8 @@ export function Nachtraege({ onRapport }: { onRapport: (id: string) => void }) {
           header: t('baustelle.spalte.kunde'),
           cell: (c) => (
             <span className="flex max-w-[16rem] min-w-0 flex-col">
-              <span className="truncate font-medium">{c.getValue() || '–'}</span>
-              <span className="text-muted-foreground truncate text-xs">
+              <span className="line-clamp-2 font-medium">{c.getValue() || '–'}</span>
+              <span className="text-muted-foreground line-clamp-2 text-xs">
                 {[c.row.original.projekt_nummer, c.row.original.rapport_nummer].filter(Boolean).join(' · ')}
               </span>
             </span>

@@ -77,7 +77,9 @@ export function FristenListe({ onOeffnen }: { onOeffnen: (f: Frist) => void }) {
                 </Zelle>
                 <Zelle>
                   <span className="flex min-w-0 flex-col">
-                    <span className="truncate font-medium">{f.art === 'ausweis' ? quali.text(f.titel) : f.titel}</span>
+                    <span className="line-clamp-2 font-medium">
+                      {f.art === 'ausweis' ? quali.text(f.titel) : f.titel}
+                    </span>
                     <span className="text-muted-foreground text-xs">{t(`fuhrpark.fristen.art.${f.art}`)}</span>
                   </span>
                 </Zelle>

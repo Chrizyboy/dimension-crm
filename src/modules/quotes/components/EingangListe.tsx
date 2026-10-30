@@ -80,15 +80,21 @@ export default function EingangListe({
       id: 'nr',
       header: t('offerten.spalte.nr'),
       cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() || '–'}</span>,
-      meta: { breite: 'w-20' },
+      // Am Handy steht die Nummer unter dem Namen.
+      meta: { breite: 'w-20', nurBreit: true },
     }),
     spalte.accessor('name', {
       header: t('offerten.spalte.name'),
       cell: (c) => (
         <span className="flex min-w-0 flex-col">
-          <span className="truncate font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground truncate text-xs md:hidden">
-            {[c.row.original.plz, c.row.original.ort].filter(Boolean).join(' ')}
+          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
+          <span className="text-muted-foreground line-clamp-2 text-xs md:hidden">
+            {[
+              c.row.original.offerteNummer ?? c.row.original.leadNummer,
+              [c.row.original.plz, c.row.original.ort].filter(Boolean).join(' '),
+            ]
+              .filter(Boolean)
+              .join(' · ')}
           </span>
         </span>
       ),

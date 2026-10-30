@@ -14,6 +14,9 @@ export function zielVon(tabelle: string | null | undefined, id: string | null | 
     kontakte: `/customers?kunde=${id}`,
     ausgangskorb: `/outbox?eintrag=${id}`,
     ausschreibungen: `/tenders?dossier=${id}`,
+    fahrzeuge: `/fleet?fahrzeug=${id}`,
+    geraete: `/fleet?ansicht=geraete&geraet=${id}`,
+    qualifikationen: '/staff',
   }
   return pfad[tabelle] ?? null
 }

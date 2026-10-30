@@ -51,7 +51,7 @@ export function KalkPositionen({ k, onAendern }: { k: Kalkulation; onAendern: (k
                     />
                   ) : (
                     <span className="flex min-w-0 flex-col">
-                      <span className="max-w-[20rem] truncate font-medium" title={p.name}>
+                      <span className="line-clamp-2 max-w-[24rem] font-medium" title={p.name}>
                         {p.name}
                       </span>
                       <span className="text-muted-foreground text-xs">

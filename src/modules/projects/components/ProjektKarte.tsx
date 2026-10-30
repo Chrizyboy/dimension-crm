@@ -31,8 +31,8 @@ export function ProjektKarte({ p, aktiv, onOeffnen }: { p: Projekt; aktiv: boole
         </span>
         <span className="zahlen font-mono">{p.nummer}</span>
       </span>
-      <span className="truncate text-sm font-semibold">{p.kunde}</span>
-      <span className="text-muted-foreground truncate text-xs">
+      <span className="line-clamp-2 text-sm font-semibold">{p.kunde}</span>
+      <span className="text-muted-foreground line-clamp-2 text-xs">
         {[ortZeile(p), anlage].filter(Boolean).join(' · ') || '–'}
       </span>
       <span className="flex flex-wrap gap-1">

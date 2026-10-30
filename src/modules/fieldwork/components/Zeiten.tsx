@@ -91,7 +91,7 @@ export function Zeiten() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <Button
             size="icon"
             variant="ghost"
@@ -103,7 +103,7 @@ export function Zeiten() {
           >
             <ChevronLeft />
           </Button>
-          <span className="zahlen min-w-44 text-center text-sm font-medium">
+          <span className="zahlen min-w-44 text-center text-sm font-medium whitespace-nowrap">
             {formatDatum(woche)} – {formatDatum(bis)}
           </span>
           <Button
@@ -120,7 +120,7 @@ export function Zeiten() {
           {darfPruefen && (
             <Auswahl
               aria-label={t('baustelle.zeiten.person')}
-              className="ml-2 w-48"
+              className="w-full sm:ml-2 sm:w-48"
               value={person}
               onValueChange={setPerson}
               optionen={[
@@ -193,9 +193,11 @@ export function Zeiten() {
                   </Kopfzelle>
                 )}
                 <Kopfzelle>{t('baustelle.spalte.datum')}</Kopfzelle>
-                {person === ALLE && <Kopfzelle>{t('baustelle.spalte.person')}</Kopfzelle>}
+                {person === ALLE && (
+                  <Kopfzelle className="hidden md:table-cell">{t('baustelle.spalte.person')}</Kopfzelle>
+                )}
                 <Kopfzelle>{t('baustelle.zeiten.vonBis')}</Kopfzelle>
-                <Kopfzelle className="text-right">{t('baustelle.zeiten.pause')}</Kopfzelle>
+                <Kopfzelle className="hidden text-right md:table-cell">{t('baustelle.zeiten.pause')}</Kopfzelle>
                 <Kopfzelle className="text-right">{t('baustelle.spalte.zeit')}</Kopfzelle>
                 <Kopfzelle>{t('baustelle.zeiten.bezug')}</Kopfzelle>
                 <Kopfzelle>{t('baustelle.spalte.stand')}</Kopfzelle>
@@ -227,12 +229,22 @@ export function Zeiten() {
                       )}
                     </Zelle>
                   )}
-                  <Zelle className="zahlen">{formatDatum(z.tag)}</Zelle>
-                  {person === ALLE && <Zelle>{z.person}</Zelle>}
-                  <Zelle className="zahlen">
+                  <Zelle className="zahlen whitespace-nowrap">
+                    {formatDatum(z.tag)}
+                    {/* Am Handy steht die Person unter dem Datum. */}
+                    {person === ALLE && (
+                      <span className="text-muted-foreground block text-xs whitespace-normal md:hidden">
+                        {z.person}
+                      </span>
+                    )}
+                  </Zelle>
+                  {person === ALLE && <Zelle className="hidden md:table-cell">{z.person}</Zelle>}
+                  <Zelle className="zahlen whitespace-nowrap">
                     {zuerich(z.start).zeit} – {z.stopp ? zuerich(z.stopp).zeit : '…'}
                   </Zelle>
-                  <Zelle className="zahlen text-right">{z.pause_min ? `${String(z.pause_min)}′` : ''}</Zelle>
+                  <Zelle className="zahlen hidden text-right md:table-cell">
+                    {z.pause_min ? `${String(z.pause_min)}′` : ''}
+                  </Zelle>
                   <Zelle className="zahlen text-right">{dauerText(minuten(z))}</Zelle>
                   <Zelle>
                     <span className="text-muted-foreground text-xs">

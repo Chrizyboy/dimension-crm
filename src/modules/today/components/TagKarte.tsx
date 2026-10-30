@@ -46,7 +46,7 @@ export function TagKarte({
       {liste.anzahl === 0 ? (
         <p className="text-muted-foreground px-4 py-3 text-sm">{t('tag.nichts')}</p>
       ) : (
-        <ul className="divide-y">
+        <ul className="@container divide-y">
           {liste.zeilen.slice(0, max).map((z, i) => (
             <TagZeile
               key={`${z.aufgabe_id ?? z.id ?? ''}-${String(i)}`}
