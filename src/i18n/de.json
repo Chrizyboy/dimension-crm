@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Dimension CRM",
+    "name": "Dimension Work",
     "firma": "Dimension Solaire"
   },
   "nav": {
@@ -266,7 +266,7 @@
     "bereicheText": "Jeder Bereich hat einen eindeutigen Namen und einen Satz, was man dort erledigt. Der Satz erscheint auch beim Darüberfahren in der Seitenleiste und in der Suche."
   },
   "anmeldung": {
-    "titel": "Anmelden",
+    "titel": "Bei Dimension Work anmelden",
     "text": "Mit dem Firmenkonto oder mit einem Code, den wir dir per E-Mail schicken.",
     "microsoft": "Mit Microsoft anmelden",
     "oder": "oder",
@@ -5274,7 +5274,7 @@
       "reiter": "Erste Schritte",
       "intro": "Alles Wichtige für den Start, auf einer Seite. Zum Verteilen im Team: «Drucken» (oder als PDF sichern).",
       "drucken": "Drucken",
-      "druckTitel": "Dimension CRM: Erste Schritte",
+      "druckTitel": "Dimension Work: Erste Schritte",
       "abschnitte": [
         {
           "titel": "1. Installieren",

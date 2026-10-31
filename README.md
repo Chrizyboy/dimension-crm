@@ -1,4 +1,4 @@
-# Dimension CRM
+# Dimension Work
 
 Das neue CRM/ERP von Dimension Solaire: Windows-App fürs Büro, PWA fürs Handy, Daten sicher in Supabase (Frankfurt).
 

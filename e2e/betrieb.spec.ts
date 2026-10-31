@@ -72,7 +72,7 @@ test('Handbuch: Erste Schritte mit Druckfassung', async ({ page }) => {
   // Druckdialog nicht öffnen; nur prüfen, dass die Druckfassung entsteht.
   await page.evaluate('window.print = () => undefined')
   await page.getByRole('button', { name: 'Drucken' }).click()
-  await expect(page.locator('.druckbereich')).toContainText('Dimension CRM: Erste Schritte')
+  await expect(page.locator('.druckbereich')).toContainText('Dimension Work: Erste Schritte')
 
   // Verkauf: keine Datensicherung, kein Betrieb.
   await page.goto('/#/settings?reiter=sicherung')

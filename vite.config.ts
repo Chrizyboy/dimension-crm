@@ -45,9 +45,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg', 'logo/*.png'],
       manifest: {
-        name: 'Dimension CRM',
+        name: 'Dimension Work',
         short_name: 'Dimension',
-        description: 'CRM für Dimension Solaire',
+        description: 'CRM und ERP für Dimension Solaire',
         lang: 'de-CH',
         theme_color: '#02224F',
         background_color: '#02224F',
