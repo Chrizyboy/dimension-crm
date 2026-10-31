@@ -41,6 +41,17 @@ export function zuGanzzahl(wert) {
 }
 
 /**
+ * Anzahl Module: wie zuGanzzahl, aber «24+3» (so in V233 erfasst) ergibt die Summe 27.
+ * @param {unknown} wert
+ * @returns {number | null}
+ */
+export function zuModulzahl(wert) {
+  const t = text(wert)
+  if (t && /^\d+(\s*\+\s*\d+)+$/.test(t)) return t.split('+').reduce((s, x) => s + Number(x), 0)
+  return zuGanzzahl(wert)
+}
+
+/**
  * Leerer Text wird null, sonst getrimmt.
  * @param {unknown} wert
  * @returns {string | null}

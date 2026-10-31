@@ -2,6 +2,7 @@
 // Importiert den Export «Für Web-App» der Vorlage V233 in die Datenbank und erstellt einen Zählbericht.
 //
 //   SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip" [--bericht import-bericht.md]
+//     [--ablage sharepoint-adjudications.json]   (gewonnen nur mit Ordner in Adjudications, siehe ablage.mjs)
 //
 // Wiederholbar: jede Zeile hat eine alt_id; ein zweiter Lauf aktualisiert statt zu verdoppeln.
 // Standardmässig nur gegen die lokale Datenbank; der echte Umzug (Phase 16) braucht --umzug.
@@ -13,6 +14,7 @@ import { Schreiber } from './schreiber.mjs'
 import { Zuordner } from './zuordner.mjs'
 import { erstelleBericht, alsMarkdown } from './bericht.mjs'
 import { text } from './umwandeln.mjs'
+import { korrigiereNachAblage, leseAblage } from './ablage.mjs'
 import { ladeStammdaten, importiereOrganisation } from './schritte/organisation.mjs'
 import { importierePreise } from './schritte/preise.mjs'
 import { importiereKunden } from './schritte/kunden.mjs'
@@ -40,10 +42,10 @@ import { importiereUebrige } from './schritte/uebrige.mjs'
  */
 
 const argumente = process.argv.slice(2)
-const pfad = argumente.find((a) => !a.startsWith('--'))
-const berichtDatei = argumente.includes('--bericht')
-  ? argumente[argumente.indexOf('--bericht') + 1]
-  : 'import-bericht.md'
+const wert = (/** @type {string} */ n) => (argumente.includes(n) ? argumente[argumente.indexOf(n) + 1] : undefined)
+const pfad = argumente.find((a, i) => !a.startsWith('--') && !argumente[i - 1]?.startsWith('--'))
+const berichtDatei = wert('--bericht') ?? 'import-bericht.md'
+const ablageDatei = wert('--ablage')
 const url = process.env.SUPABASE_URL ?? 'http://127.0.0.1:54321'
 const schluessel = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -67,11 +69,18 @@ console.log(
   `Export vom ${daten.at} (${daten.by}): ${Object.keys(daten.cols).length} Sammlungen, ${daten.blobs.length} Dateien`,
 )
 
+/** @type {string[]} */
+const hinweise = []
+if (ablageDatei) {
+  const korrekturen = korrigiereNachAblage(daten.cols.projects ?? {}, leseAblage(ablageDatei))
+  for (const x of korrekturen)
+    hinweise.push(`Offerte ${x.nr}: Stand ${x.vorher || '(leer)'} → ${x.nachher} (${x.grund})`)
+  console.log(`Ablage SharePoint: ${korrekturen.length} Offerten mit korrigiertem Stand`)
+} else console.warn('Ohne --ablage: Stand «gewonnen» wird nicht gegen SharePoint Adjudications geprüft.')
+
 const { data: auswahl, error: auswahlFehler } = await db.from('auswahlwerte').select('liste, schluessel, eigenschaften')
 if (auswahlFehler) throw new Error(`auswahlwerte: ${auswahlFehler.message}`)
 
-/** @type {string[]} */
-const hinweise = []
 const namen = [
   'personen',
   'standorte',

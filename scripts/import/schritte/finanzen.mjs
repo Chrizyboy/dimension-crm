@@ -30,7 +30,27 @@ export async function importiereFinanzen(k) {
       alt_daten: s,
     },
   }))
-  const sIds = await k.schreiber.schreibe('spesen', spesen)
+  // Ausbezahlte und stornierte Spesen schützt die Datenbank (finanzen.spesen_fest). Beim zweiten Lauf
+  // (Stichtag nach dem Probe-Import) bleiben sie, wie sie sind; nur die Zuordnung alt → neu wird gemerkt.
+  const { data: fest, error: festFehler } = await k.db
+    .from('spesen')
+    .select('id, alt_id')
+    .in(
+      'alt_id',
+      spesen.map((x) => x.zeile.alt_id),
+    )
+    .in('status', ['ausbezahlt', 'storniert'])
+  if (festFehler) throw new Error(`spesen: ${festFehler.message}`)
+  const festIds = new Map((fest ?? []).map((f) => [f.alt_id, f.id]))
+  for (const x of spesen) {
+    const id = festIds.get(x.zeile.alt_id)
+    if (id) k.schreiber.merke(x.sammlung, x.schluessel, 'spesen', id)
+  }
+  const sIds = await k.schreiber.schreibe(
+    'spesen',
+    spesen.filter((x) => !festIds.has(x.zeile.alt_id)),
+  )
+  for (const [alt, id] of festIds) sIds.set(alt, id)
   await k.verknuepfeDokumente(
     'spesen',
     spesen.map((s) => [s.zeile.beleg_id, sIds.get(s.zeile.alt_id)]),
