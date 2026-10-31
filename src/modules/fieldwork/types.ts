@@ -76,6 +76,15 @@ export interface LaufendeZeit {
   art: ZeitArt
 }
 
+/** Abwesenheit der eigenen Person (Sicht `abwesenheiten_alle`); Art aus der Auswahlliste «abwesenheit». */
+export interface Abwesenheit {
+  id: string
+  art: string
+  von: string
+  bis: string
+  halbtag: boolean
+}
+
 /** Antwort von `mein_tag`. */
 export interface MeinTag {
   person_id: string | null

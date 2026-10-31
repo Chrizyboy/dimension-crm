@@ -16,6 +16,11 @@ insert into public.personen (kuerzel, name, email, rolle, sprache, standort_id) 
   ('seed_montage', 'Mario Montage', 'montage@test.local', 'montage', 'de', (select id from public.standorte where kuerzel = 'bulle'))
 on conflict (kuerzel) do nothing;
 
+-- Monteur-Version (einfache Ansicht: nur Zeit, Spesen, Plan), erfunden.
+insert into public.personen (kuerzel, name, email, rolle, sprache, standort_id) values
+  ('seed_monteur', 'Milo Monteur', 'milo@test.local', 'monteur', 'de', (select id from public.standorte where kuerzel = 'bulle'))
+on conflict (kuerzel) do nothing;
+
 -- Erfundene Finanzdaten, damit man sieht, wer was sieht. Kontakte bewusst nicht: sie würden
 -- Kundennummern belegen, die der Import der Vorlage braucht.
 insert into public.kreditor_zahlungen (firma, betrag_rappen, alt_id) values

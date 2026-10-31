@@ -33,6 +33,7 @@ export type Rolle = Pick<
   | 'rechte'
   | 'bereiche'
   | 'reihenfolge'
+  | 'ansicht'
 >
 
 export type Standort = Pick<Tables<'standorte'>, 'id' | 'kuerzel' | 'name'>

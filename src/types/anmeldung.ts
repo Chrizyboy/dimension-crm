@@ -15,6 +15,8 @@ export interface MeineAnmeldung {
   rechte: Recht[]
   /** Sichtbare Bereiche (Modul-ids); leer = alle. */
   bereiche: string[]
+  /** «einfach»: nur Arbeitszeit und Spesen ohne Seitenleiste (Monteure), aus der Rolle. */
+  ansicht?: 'voll' | 'einfach'
   sprache: Sprache
   darstellung: string | null
   standort_id: string | null
