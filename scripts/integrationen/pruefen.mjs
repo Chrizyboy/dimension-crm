@@ -434,7 +434,11 @@ try {
     JSON.stringify(peKunde),
   )
   const [peNews] = await rest(`posteingang?outlook_id=eq.pe-news-${kennung}&select=art,stand`)
-  ok(peNews?.art === 'werbung' && peNews.stand === 'abgelegt', 'Newsletter: als Werbung abgelegt', JSON.stringify(peNews))
+  ok(
+    peNews?.art === 'werbung' && peNews.stand === 'abgelegt',
+    'Newsletter: als Werbung abgelegt',
+    JSON.stringify(peNews),
+  )
   r = await funktion('microsoft', { aktion: 'posteingang_text', id: peKunde?.id }, token)
   ok(r.daten?.text?.includes('Monteure genau'), 'Volltext der Mail aus Outlook', JSON.stringify(r.daten))
   z.gesendetOrdner.push({
