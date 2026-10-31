@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabase'
-import type { HandbuchDatei, Meldung, MeldungStatus, NeueMeldung } from '../types'
+import type { HandbuchDatei, HelpdeskStand, Meldung, MeldungStatus, NeueMeldung } from '../types'
 import { dateiAblegen } from './handbuch'
 
 /**
@@ -17,7 +17,8 @@ export async function ladeMeldungen(): Promise<Meldung[]> {
     .from('rueckmeldungen')
     .select(
       'id, nummer, titel, text, erwartet, bereich, prio, status, antwort, antwort_von, beantwortet_am, umgebung, ' +
-        'person_id, erstellt_am, person:personen(name)',
+        'person_id, erstellt_am, einschaetzung, entscheid, entscheid_notiz, entschieden_am, umgesetzt_in, ' +
+        'person:personen!rueckmeldungen_person_id_fkey(name)',
     )
     .is('geloescht_am', null)
     .order('erstellt_am', { ascending: false })
@@ -61,6 +62,26 @@ export async function melden(n: NeueMeldung, sprache: string): Promise<{ id: str
 /** Status setzen und antworten (nur Administration). */
 export async function beantworten(id: string, status: MeldungStatus, antwort: string): Promise<void> {
   const { error } = await db().rpc('rueckmeldung_beantworten', { p_id: id, p_status: status, p_antwort: antwort })
+  if (error) throw error
+}
+
+/** «Erledige es» oder «Nicht» (nur die entscheidende Person); erst danach wird etwas geändert. */
+export async function entscheiden(id: string, entscheid: 'erledigen' | 'nicht', notiz: string): Promise<void> {
+  const { error } = await db().rpc('rueckmeldung_entscheiden', { p_id: id, p_entscheid: entscheid, p_notiz: notiz })
+  if (error) throw error
+}
+
+/** Wer entscheidet und ob eine SMS kommt (nur Administration). */
+export async function ladeHelpdeskStand(): Promise<HelpdeskStand> {
+  const { data, error } = await db().rpc('helpdesk_stand')
+  if (error) throw error
+  return data as unknown as HelpdeskStand
+}
+
+/** Entscheidende Person und SMS festlegen (nur Administration). */
+export async function helpdeskEinstellen(personId: string | null, sms: boolean): Promise<void> {
+  // null = niemand bestimmt; die erzeugten Typen kennen bei Parametern kein null.
+  const { error } = await db().rpc('helpdesk_einstellen', { p_person_id: personId as string, p_sms: sms })
   if (error) throw error
 }
 

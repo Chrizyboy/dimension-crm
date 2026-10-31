@@ -493,3 +493,7 @@ verify_jwt = false
 
 [functions.abmelden]
 verify_jwt = false
+
+# Helpdesk: Claude bearbeitet Meldungen ohne Supabase-Login; die Funktion prüft selbst HELPDESK_SCHLUESSEL.
+[functions.helpdesk]
+verify_jwt = false

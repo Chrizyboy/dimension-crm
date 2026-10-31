@@ -4,7 +4,7 @@ import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { supabase } from '@/services/supabase'
-import { ladeAnhaenge, ladeMeldungen } from '../services/meldungen'
+import { ladeAnhaenge, ladeHelpdeskStand, ladeMeldungen } from '../services/meldungen'
 import { ladeDateien, ladeHandbuch } from '../services/handbuch'
 
 /** Prozesse und Videos. */
@@ -20,6 +20,11 @@ export function useDateien(ids: string[], aktiv: boolean) {
 /** Meldungen (eigene oder, für die Administration, alle). */
 export function useMeldungen() {
   return useQuery({ queryKey: ['meldungen'], queryFn: ladeMeldungen, enabled: supabase !== null })
+}
+
+/** Wer über Meldungen entscheidet (nur für die Administration geladen). */
+export function useHelpdeskStand(admin: boolean) {
+  return useQuery({ queryKey: ['meldungen', 'stand'], queryFn: ladeHelpdeskStand, enabled: supabase !== null && admin })
 }
 
 /** Anhänge einer Meldung, wenn sie offen ist. */

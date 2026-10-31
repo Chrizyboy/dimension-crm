@@ -14,23 +14,28 @@ import { useAktion, useAnhaenge } from '../hooks/useHandbuch'
 import { meldungNummer } from '../lib/handbuch'
 import { beantworten } from '../services/meldungen'
 import { MELDUNG_STATUS, type Meldung, type MeldungStatus } from '../types'
+import { MeldungEntscheid } from './MeldungEntscheid'
 import { oeffneDatei } from './Oeffnen'
 
-const TON: Record<MeldungStatus, 'info' | 'warnung' | 'ok' | 'marke'> = {
+const TON: Record<MeldungStatus, 'info' | 'warnung' | 'ok' | 'marke' | 'neutral'> = {
   neu: 'info',
+  wartet: 'warnung',
   arbeit: 'warnung',
   info: 'marke',
   erledigt: 'ok',
+  abgelehnt: 'neutral',
 }
 
 /** Eine Meldung mit Text, Anhängen und Antwort; die Administration setzt Status und antwortet direkt hier. */
 export function MeldungKarte({
   meldung: m,
   admin,
+  ichEntscheide,
   hervorheben,
 }: {
   meldung: Meldung
   admin: boolean
+  ichEntscheide: boolean
   hervorheben: boolean
 }) {
   const { t } = useTranslation()
@@ -94,6 +99,12 @@ export function MeldungKarte({
             </p>
             <p className="whitespace-pre-line">{m.antwort}</p>
           </div>
+        )}
+        {admin && <MeldungEntscheid meldung={m} ichEntscheide={ichEntscheide} />}
+        {admin && m.antwort && (
+          <p className="text-muted-foreground text-xs">
+            {t('handbuch.meldungen.beantwortet', { name: m.antwort_von ?? '' })}
+          </p>
         )}
         {admin && (
           <div className="flex flex-col gap-2 border-t pt-3 sm:flex-row sm:items-start">
