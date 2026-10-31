@@ -1,6 +1,7 @@
 import { ClipboardCheck } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
@@ -14,11 +15,18 @@ import { formatChf, parseChf } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
-import { useAuftragsOfferte, useStandorte, useVertragAenderung } from '../hooks/useWerkvertraege'
+import {
+  useAuftragsOfferte,
+  useStandorte,
+  useVertragAenderung,
+  useWerkvertragEinstellung,
+} from '../hooks/useWerkvertraege'
+import { vorschlagGegenstand, vorschlagMaterial } from '../lib/vertragInhalt'
 import { berechneZahlungsplan, vorschlagKondition } from '../lib/zahlungsplan'
 import { erstelleAuftrag } from '../services/werkvertraege'
-import type { AuftragsOfferte, KonditionTranche } from '../types'
-import { Zahlungsplan } from './Zahlungsplan'
+import type { AuftragsOfferte, KonditionTranche, VertragAngaben } from '../types'
+import { VertragFelder } from './VertragFelder'
+import { ZahlungWahl } from './ZahlungWahl'
 
 function heute(): string {
   const d = new Date()
@@ -36,19 +44,50 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
   const satz = useMwst()
   const standorte = useStandorte()
   const konditionen = useAuswahl('zahlungskondition')
+  const einstellung = useWerkvertragEinstellung().data
+  // Bearbeiten: Werte des bestehenden Vertrags; neu: Vorschläge aus Offerte und Einstellung.
+  const alt = o.vertrag
   const [standortId, setStandortId] = useState(o.standortId ?? '')
   // Die Sprache folgt dem Standort (Bulle FR, Muri DE), bis man sie selbst wählt.
   const [sprache, setSprache] = useState<'de' | 'fr' | null>(null)
-  const [kondition, setKondition] = useState(vorschlagKondition(o))
-  const [wert, setWert] = useState(o.betragRappen ? formatChf(mitMwst(o.betragRappen, satz)) : '')
-  const [datum, setDatum] = useState(heute())
+  const [kondition, setKondition] = useState(
+    alt?.angaben.zahlung?.kondition ??
+      vorschlagKondition(o, {
+        pv: einstellung?.kondition_pv ?? 'normal',
+        batterie: einstellung?.kondition_batterie ?? '70_30',
+      }),
+  )
+  const [anzahlung, setAnzahlung] = useState(
+    alt?.angaben.zahlung?.anzahlung_rappen ? formatChf(alt.angaben.zahlung.anzahlung_rappen) : '',
+  )
+  // Die Zahlung steht oben (eigene Felder), darum nicht in den Angaben.
+  const [angaben, setAngaben] = useState<VertragAngaben>(() => {
+    const kopie = { ...alt?.angaben }
+    delete kopie.zahlung
+    return kopie
+  })
+  const [wert, setWert] = useState(
+    alt?.betragRappen ? formatChf(alt.betragRappen) : o.betragRappen ? formatChf(mitMwst(o.betragRappen, satz)) : '',
+  )
+  const [datum, setDatum] = useState(alt?.unterzeichnet ?? heute())
   const [mitVertrag, setMitVertrag] = useState(true)
   const [fehler, setFehler] = useState<string | null>(null)
   const standort = standorte.data?.find((s) => s.id === standortId)
   const spracheJetzt = sprache ?? (standort?.sprache === 'fr' ? 'fr' : o.sprache)
   const rappen = parseChf(wert)
+  const anzahlungRappen = kondition === 'anzahlung' ? parseChf(anzahlung) : null
   const tranchen = tranchenAus(konditionen.finde(kondition)?.eigenschaften)
-  const vorschau = rappen && datum ? berechneZahlungsplan(rappen, tranchen, spracheJetzt, datum) : []
+  const vorschau =
+    rappen && datum ? berechneZahlungsplan(rappen, tranchen, spracheJetzt, datum, null, anzahlungRappen) : []
+  const fuerVorschlag = {
+    kwp: o.kwp,
+    anzahlModule: o.anzahlModule,
+    batterie: o.batterie,
+    wechselrichter: o.wechselrichter ?? null,
+    titel: o.titel ?? null,
+    sprache: spracheJetzt,
+    objekt: { strasse: null, plz: null, ort: o.ort ?? null },
+  }
 
   const speichern = useVertragAenderung(() =>
     erstelleAuftrag(o.id, {
@@ -58,6 +97,8 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
       vertragswert_rappen: rappen ?? 0,
       unterzeichnet_am: datum,
       werkvertrag: mitVertrag,
+      anzahlung_rappen: anzahlungRappen,
+      angaben,
     }),
   )
 
@@ -67,10 +108,14 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
       setFehler(t('werkvertraege.auftrag.pflicht'))
       return
     }
+    if (kondition === 'anzahlung' && !anzahlungRappen) {
+      setFehler(t('werkvertraege.auftrag.anzahlungFehlt'))
+      return
+    }
     try {
       const vertrag = await speichern.mutateAsync(undefined)
       melde('ok', zweisprachig('werkvertraege.auftrag.erstellt', { nummer: o.nummer }))
-      onSchliessen(mitVertrag ? vertrag : null)
+      onSchliessen(mitVertrag && vertrag ? vertrag : null)
     } catch (f) {
       const s = fachFehlerSchluessel(f)
       if (!s) meldeFehler(f, 'werkvertraege.auftrag')
@@ -80,7 +125,7 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
 
   return (
     <DialogInhalt
-      titel={t('werkvertraege.auftrag.titel')}
+      titel={t(alt ? 'werkvertraege.auftrag.bearbeiten' : 'werkvertraege.auftrag.titel')}
       beschreibung={`${o.nummer} · ${o.name}`}
       fuss={
         <>
@@ -94,7 +139,7 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
           </Button>
           <Button laedt={speichern.isPending} onClick={() => void absenden()}>
             <ClipboardCheck />
-            {t('werkvertraege.auftrag.erstellen')}
+            {t(alt ? 'werkvertraege.auftrag.speichern' : 'werkvertraege.auftrag.erstellen')}
           </Button>
         </>
       }
@@ -128,14 +173,6 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
               ]}
             />
           </Feld>
-          <Feld id="auftrag-kondition" label={t('werkvertraege.auftrag.kondition')}>
-            <Auswahl
-              id="auftrag-kondition"
-              value={kondition}
-              onValueChange={setKondition}
-              optionen={konditionen.werte.map((k) => ({ wert: k.schluessel, text: konditionen.text(k.schluessel) }))}
-            />
-          </Feld>
           <Feld
             id="auftrag-wert"
             label={t('werkvertraege.auftrag.wert')}
@@ -164,10 +201,25 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
             />
           </Feld>
         </div>
-        <div>
-          <h3 className="text-muted-foreground pb-1 text-xs font-medium">{t('werkvertraege.akte.zahlungsplan')}</h3>
-          <Zahlungsplan tranchen={vorschau} />
-        </div>
+        <AkteAbschnitt titel={t('werkvertraege.auftrag.zahlung')}>
+          <ZahlungWahl
+            kondition={kondition}
+            anzahlung={anzahlung}
+            vorschau={vorschau}
+            onKondition={setKondition}
+            onAnzahlung={setAnzahlung}
+          />
+        </AkteAbschnitt>
+        {mitVertrag && (
+          <AkteAbschnitt titel={t('werkvertraege.auftrag.imVertrag')}>
+            <VertragFelder
+              angaben={angaben}
+              vorschlag={{ gegenstand: vorschlagGegenstand(fuerVorschlag), material: vorschlagMaterial(fuerVorschlag) }}
+              batterie={!!o.batterie}
+              onChange={setAngaben}
+            />
+          </AkteAbschnitt>
+        )}
         <label className="flex items-center gap-2 text-sm">
           <Checkbox
             checked={mitVertrag}
@@ -177,7 +229,6 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
           />
           {t('werkvertraege.auftrag.mitVertrag')}
         </label>
-        <p className="text-muted-foreground text-xs">{t('werkvertraege.auftrag.spaeter')}</p>
         {fehler && (
           <p role="alert" className="text-bad text-sm">
             {fehler}
@@ -189,8 +240,8 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
 }
 
 /**
- * «Auftrag erstellen» (V232): Standort, Sprache, Zahlungskondition, Vertragswert inkl. MWST und Datum
- * der Unterzeichnung, mit Vorschau des Zahlungsplans. Speichern legt Projekt, Zahlungsplan und
+ * «Auftrag erstellen» (V232) und «Vertrag bearbeiten»: Standort, Sprache, Vertragswert inkl. MWST, Datum der
+ * Unterzeichnung, Zahlungsbedingung per Klick (mit Vorschau des Zahlungsplans) und was im Vertrag steht. Speichern legt Projekt, Zahlungsplan und
  * (wahlweise) den Werkvertrag an; die Offerte gilt danach als angenommen.
  */
 export default function AuftragDialog({

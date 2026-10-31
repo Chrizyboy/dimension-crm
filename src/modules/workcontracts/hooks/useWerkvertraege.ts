@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ladeAuftragsOfferte, ladeStandorte, ladeVertraege } from '../services/werkvertraege'
+import { ladeAuftragsOfferte, ladeEinstellung, ladeStandorte, ladeVertraege } from '../services/werkvertraege'
 
 /** Zwischenspeicher-Schlüssel der Werkverträge. */
 export const VERTRAG_SCHLUESSEL = ['werkvertraege'] as const
@@ -35,5 +35,14 @@ export function useVertragAenderung<A, R = unknown>(aktion: (a: A) => Promise<R>
         qc.invalidateQueries({ queryKey: ['verkauf'] }),
       ])
     },
+  })
+}
+
+/** Einstellung «werkvertrag» (Unterzeichner, Ansprechperson, Standard-Bedingungen). */
+export function useWerkvertragEinstellung() {
+  return useQuery({
+    queryKey: [...VERTRAG_SCHLUESSEL, 'einstellung'],
+    queryFn: ladeEinstellung,
+    staleTime: 10 * 60_000,
   })
 }
