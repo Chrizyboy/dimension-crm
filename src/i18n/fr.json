@@ -1862,7 +1862,17 @@
     "ressourcen_ergebnis_fehlt": "Choisis le résultat du contrôle.",
     "ressourcen_uebergabe_doppelt": "Soit à une personne, soit dans un véhicule.",
     "ressourcen_person": "Cette personne n'est plus active.",
-    "ressourcen_doppelt": "Ces plaques ou ce numéro d'inventaire existent déjà."
+    "ressourcen_doppelt": "Ces plaques ou ce numéro d'inventaire existent déjà.",
+    "grossprojekt_kein_recht": "Tu n’as pas le droit pour cela.",
+    "grossprojekt_titel_fehlt": "Merci d’indiquer un titre.",
+    "grossprojekt_quelle_fehlt": "Merci d’indiquer la source (lien ou provenance).",
+    "grossprojekt_weg": "Ce grand projet n’existe plus.",
+    "grossprojekt_nicht_bewilligen": "Seul Andy ou son remplaçant peut approuver.",
+    "grossprojekt_bauherr_fehlt": "Le lead nécessite le maître d’ouvrage. Merci de le saisir sous « Modifier les données ».",
+    "grossprojekt_grund_fehlt": "Merci d’indiquer une raison.",
+    "grossprojekt_schon_lead": "Un lead en est déjà issu. Merci de continuer là-bas.",
+    "grossprojekt_entscheid_unbekannt": "Cette décision n’existe pas.",
+    "grossprojekt_nur_ablauf": "État et décision se modifient uniquement avec les boutons en bas du dossier."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5574,6 +5584,246 @@
       "alle_one": "{{count}} à venir",
       "alle_other": "{{count}} à venir",
       "nichts": "Aucune échéance dans les 30 prochains jours."
+    }
+  },
+  "grossprojekte": {
+    "titel": "Grands projets",
+    "beschreibung": "Grandes toitures, entreprises, communes et lotissements pour lesquels un contracting PV ou chaleur peut valoir la peine. Le CRM calcule points et estimation, Andy décide.",
+    "erfassen": "Saisir un grand projet",
+    "punkte": "{{n}} points",
+    "fahrzeit": "{{min}} min",
+    "waerme": "chaleur",
+    "jahr": "an",
+    "filter": "Type de contracting",
+    "filterwert": {
+      "alle": "Tous",
+      "pv": "PV",
+      "waerme": "Chaleur",
+      "beides": "PV et chaleur"
+    },
+    "reiter": {
+      "pruefen": "À examiner",
+      "beobachten": "En observation",
+      "bewilligt": "Approuvés",
+      "alle": "Tous",
+      "annahmen": "Hypothèses"
+    },
+    "leer": {
+      "pruefen": "Rien à examiner",
+      "beobachten": "Rien en observation",
+      "bewilligt": "Rien d’approuvé pour l’instant",
+      "alle": "Pas encore de grands projets",
+      "annahmen": "Aucune hypothèse",
+      "text": "Le moniteur examine chaque publication de simap et de la feuille officielle. Saisis en haut à droite les indices issus de discussions."
+    },
+    "spalte": {
+      "punkte": "Points",
+      "projekt": "Projet",
+      "contracting": "Contracting",
+      "investition": "Investissement env.",
+      "bauherr": "Maître d’ouvrage",
+      "stand": "État"
+    },
+    "stand": {
+      "pruefen": "À examiner",
+      "beobachten": "En observation",
+      "bewilligt": "Approuvé",
+      "verworfen": "Écarté"
+    },
+    "art": {
+      "pv": "PV",
+      "waerme": "Chaleur",
+      "beides": "PV et chaleur"
+    },
+    "ausschluss": {
+      "geschuetzt": "Protégé",
+      "efh": "Maison individuelle",
+      "fahrzeit": "Trop loin",
+      "zu_klein": "Trop petit"
+    },
+    "ausschlussText": {
+      "geschuetzt": "Bâtiment protégé : installation solaire et remplacement du chauffage difficiles. D’où 0 point.",
+      "efh": "Maison individuelle : trop petite pour un contracting. D’où 0 point.",
+      "fahrzeit": "À plus de 60 minutes de Muri et de Bulle. D’où 0 point.",
+      "zu_klein": "Toit de moins de 200 m² et pas de grand chauffage. D’où 0 point."
+    },
+    "teil": {
+      "dach": "Toit",
+      "nutzung": "Autoconsommation",
+      "heizung": "Chauffage",
+      "heizungsersatz": "Remplacement du chauffage prévu",
+      "bauherr": "Maître d’ouvrage",
+      "fahrzeit": "Temps de trajet",
+      "wohnungen": "Logements (RCP)"
+    },
+    "bauherrArt": {
+      "gemeinde": "Commune",
+      "kanton": "Canton",
+      "genossenschaft": "Coopérative",
+      "pensionskasse": "Caisse de pension",
+      "immobilien": "Société immobilière",
+      "gewerbe": "Entreprise",
+      "landwirtschaft": "Agriculture",
+      "kirche": "Église",
+      "privat": "Privé",
+      "unbekannt": "Inconnu"
+    },
+    "nutzung": {
+      "industrie": "Industrie",
+      "gewerbe": "Artisanat, entrepôt",
+      "kuehlung": "Froid",
+      "spital": "Hôpital",
+      "heim": "EMS, foyer",
+      "schule": "École",
+      "sport": "Salle de sport",
+      "verwaltung": "Administration, bureaux",
+      "ueberbauung": "Lotissement",
+      "mfh": "Immeuble locatif",
+      "landwirtschaft": "Agriculture",
+      "efh": "Maison individuelle",
+      "andere": "Autre"
+    },
+    "heizung": {
+      "oel": "Mazout",
+      "gas": "Gaz",
+      "elektro": "Électrique",
+      "holz": "Bois",
+      "waermepumpe": "Pompe à chaleur",
+      "fernwaerme": "Chauffage à distance",
+      "unbekannt": "Inconnu"
+    },
+    "klasse": {
+      "1": "faible",
+      "2": "moyenne",
+      "3": "bonne",
+      "4": "très bonne",
+      "5": "excellente"
+    },
+    "quelle": {
+      "simap": "simap",
+      "amtsblatt": "Feuille officielle",
+      "hand": "Saisie manuelle"
+    },
+    "feld": {
+      "dachflaeche": "Surface de toit",
+      "heizung": "Chauffage",
+      "heizungsersatz": "Remplacement du chauffage prévu",
+      "nutzung": "Affectation",
+      "geschuetzt": "Protégé (monument)",
+      "wohnungen": "Logements",
+      "baujahr": "Année de construction",
+      "egid": "EGID",
+      "bauherr": "Nom",
+      "bauherrArt": "Type",
+      "quelle": "Source",
+      "notiz": "Note"
+    },
+    "akte": {
+      "titel": "Grand projet",
+      "weg": "Ce grand projet n’existe plus.",
+      "warum": "Pourquoi il convient",
+      "schaetzung": "Estimation sommaire",
+      "gebaeude": "Bâtiment",
+      "bauherrschaft": "Maître d’ouvrage et source",
+      "verlauf": "Historique",
+      "verlaufLeer": "Rien ne s’est encore passé.",
+      "dach": "{{m2}} m² adaptés (aptitude {{klasse}})",
+      "seit": "depuis {{jahr}}",
+      "bis": "jusqu’au {{datum}}",
+      "angereichert": "Données du bâtiment du {{datum}} : {{text}}",
+      "anreichernBald": "Les données du bâtiment seront récupérées dans l’heure.",
+      "ohneAdresse": "Sans adresse ni parcelle, le CRM ne peut pas chercher le toit et le chauffage.",
+      "anreichern": "Récupérer les données du bâtiment",
+      "karte": "Sur la carte des toits solaires",
+      "dossier": "Ouvrir le dossier",
+      "entschieden": "Décidé",
+      "bearbeiten": "Modifier les données",
+      "zumLead": "Vers le lead",
+      "bewilligtAndy": "Andy approuve (remplaçant Chris).",
+      "keineSchaetzung": "Pas encore d’estimation : il manque la surface de toit ou le chauffage.",
+      "wenigDaten": "Il manque encore des données. Avec l’adresse, le CRM cherche toit et chauffage auprès de la Confédération.",
+      "geholt": "Données du bâtiment récupérées : {{text}}",
+      "spaeter": "Le service fédéral est indisponible. Le CRM récupère les données dans l’heure."
+    },
+    "schaetzung": {
+      "pv": "Photovoltaïque",
+      "investition": "Investissement PV",
+      "preis": "Prix contracting",
+      "rpKwh": "env. {{rp}} ct./kWh",
+      "waerme": "Puissance thermique",
+      "waermeInvestition": "Investissement chaleur",
+      "rate": "Annuité chaleur par an",
+      "hinweis": "Estimation sommaire à partir de la surface de toit et des hypothèses (onglet « Hypothèses »), pas une offre."
+    },
+    "entscheid": {
+      "bewilligen": "Approuver",
+      "beobachten": "Observer",
+      "verwerfen": "Écarter",
+      "zurueck": "Réexaminer",
+      "verwerfenTitel": "Écarter le grand projet",
+      "verwerfenText": "Pourquoi ne convient-il pas ? La raison aide à améliorer le moniteur.",
+      "beobachtenTitel": "Observer le grand projet",
+      "beobachtenText": "À cette date, il revient dans « À examiner », par exemple après le permis de construire.",
+      "bisDatum": "Réexaminer le",
+      "grund": "Raison"
+    },
+    "formular": {
+      "neu": "Saisir un grand projet",
+      "aendern": "Modifier les données",
+      "beschreibung": "Avec l’adresse ou la parcelle, le CRM cherche toit et chauffage auprès de la Confédération. Ce que tu saisis ici reste.",
+      "titel": "Titre",
+      "quell_url": "Source (lien ou provenance)",
+      "strasse": "Rue et numéro",
+      "plz": "NPA",
+      "gemeinde": "Commune",
+      "parzelle": "Parcelle",
+      "bauherr": "Maître d’ouvrage",
+      "bauherr_art": "Type de maître d’ouvrage",
+      "nutzung": "Affectation",
+      "heizung": "Chauffage",
+      "heizung_jahr": "Chauffage depuis (année)",
+      "dachflaeche_m2": "Surface de toit adaptée (m²)",
+      "waermeleistung_kw": "Puissance thermique (kW)",
+      "wohnungen": "Logements",
+      "notiz": "Note",
+      "offen": "Je ne sais pas"
+    },
+    "pruefung": {
+      "zahl": "Merci d’indiquer un nombre entier."
+    },
+    "annahmen": {
+      "titel": "Hypothèses de l’estimation",
+      "melden_ab": "Cloche dès points",
+      "kwp_pro_m2": "kWc par m² de toit",
+      "kwh_pro_kwp": "kWh par kWc (sans sonnendach.ch)",
+      "zins_prozent": "Taux d’intérêt (%)",
+      "laufzeit_jahre": "Durée PV (années)",
+      "betrieb_prozent": "Exploitation et entretien (% par an)",
+      "marge_prozent": "Marge (%)",
+      "kw_pro_wohnung": "Chaleur kW par logement",
+      "chf_pro_kw_waerme": "Chaleur CHF par kW",
+      "laufzeit_waerme_jahre": "Durée chaleur (années)",
+      "nurAdmin": "Seule l’administration peut modifier.",
+      "punkteTitel": "Comment naissent les points (0 à 100)",
+      "punkteText": "Chaque résultat reçoit des points de six éléments. Dès 70 points très bien, dès 50 bien.",
+      "teil": {
+        "dach": "Toit : dès 500 m² de surface adaptée, 30 points dès 1'500 m² (sonnendach.ch)",
+        "nutzung": "Autoconsommation : industrie, froid, hôpital 20, artisanat 18, EMS 16, école et lotissement 14",
+        "heizung": "Chauffage : mazout 20, gaz 16, électrique 14 ; moitié s’il a moins de 15 ans ou moins de 50 kW",
+        "bauherr": "Maître d’ouvrage : commune, canton, coopérative, caisse de pension 15, société immobilière 13, entreprise 10",
+        "fahrzeit": "Trajet : jusqu’à 30 min 10, jusqu’à 45 min 7, jusqu’à 60 min 4",
+        "wohnungen": "Logements pour un regroupement dans le cadre de la consommation propre (RCP) : dès 6 logements 3, dès 20 logements 5"
+      },
+      "staffel": "Prix par kWc",
+      "staffelBis": "jusqu’à {{bis}} kWc : CHF {{chf}}",
+      "staffelRest": "au-delà : CHF {{chf}}",
+      "neuRechnen": "Après l’enregistrement, le CRM recalcule tous les grands projets ouverts."
+    },
+    "heute": {
+      "titel": "Grands projets",
+      "alle_one": "{{count}} à examiner",
+      "alle_other": "{{count}} à examiner",
+      "nichts": "Aucun grand projet n’attend de décision."
     }
   },
   "team": {
