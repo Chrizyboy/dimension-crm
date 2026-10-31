@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { MailDialog } from '@/components/shared/MailDialog'
@@ -81,7 +82,6 @@ export default function OffertAkte({
                 .join(' · '),
             }
           : {})}
-        className="md:w-[36rem]"
       >
         {!o ? (
           <p className="text-muted-foreground text-sm" data-id={id}>
@@ -89,7 +89,7 @@ export default function OffertAkte({
           </p>
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-2 pb-3">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <OffertStand stand={o.stand} />
               {versendet && <NachfassChip offerte={o} />}
               {o.imEingang && <Badge ton="info">{t('offerten.akte.imEingang')}</Badge>}
@@ -99,7 +99,7 @@ export default function OffertAkte({
                 </Badge>
               )}
             </div>
-            <div className="flex flex-wrap gap-2 border-b pb-3">
+            <Knopfleiste haupt="erste" className="border-b pb-3">
               {versendet && (
                 <>
                   <Button
@@ -220,7 +220,7 @@ export default function OffertAkte({
                 <Contact />
                 {t('offerten.akte.kundenakte')}
               </Button>
-            </div>
+            </Knopfleiste>
 
             <OffertAngaben o={o} />
             <PdfWerteAbschnitt o={o} />

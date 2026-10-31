@@ -69,7 +69,6 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[34rem]"
         titel={v ? `${v.nummer ?? ''} · ${v.kunde}` : t('wartung.akte.titel')}
         {...(v ? { beschreibung: [v.ort, v.projekt].filter(Boolean).join(' · '), fuss } : {})}
       >
@@ -79,7 +78,7 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap gap-1.5 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={tonVonFarbe(status.finde(v.status)?.farbe)} punkt>
                 {status.text(v.status)}
               </Badge>

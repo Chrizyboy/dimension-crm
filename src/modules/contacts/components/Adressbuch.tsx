@@ -1,13 +1,13 @@
-import { ArrowLeft, BookUser, Plus, Search, SearchX, Trash2 } from 'lucide-react'
+import { ArrowLeft, BookUser, Plus, SearchX, Trash2 } from 'lucide-react'
 import { useDeferredValue, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Kbd } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useKontakte } from '@/hooks/useKontakte'
 import { useTaste } from '@/hooks/useTaste'
@@ -100,30 +100,22 @@ export default function Adressbuch({ aktiveId, onOeffnen, onNeu }: AdressbuchPro
         }
       />
 
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <div className="relative sm:w-80">
-            <Search
-              className="text-muted-foreground pointer-events-none absolute top-2 left-2.5 size-4"
-              aria-hidden="true"
-            />
-            <Input
-              ref={suchfeld}
-              type="search"
-              value={suche}
-              onChange={(e) => {
-                setSuche(e.target.value)
-              }}
-              placeholder={t('kunden.suche')}
-              aria-label={t('kunden.suche')}
-              className="pr-8 pl-8"
-            />
-            <Kbd className="absolute top-1.5 right-1.5">/</Kbd>
-          </div>
-          <p className="text-muted-foreground text-sm sm:ml-auto" aria-live="polite">
-            {kontakte.isSuccess && t('adressbuch.anzahl', { count: sichtbar.length })}
-          </p>
-        </div>
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            ref={suchfeld}
+            kuerzel="/"
+            beschriftung={t('kunden.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+        rechts={
+          <span aria-live="polite">{kontakte.isSuccess && t('adressbuch.anzahl', { count: sichtbar.length })}</span>
+        }
+      >
         <Filterchips
           beschriftung={t('adressbuch.artFilter')}
           gewaehlt={gewaehlt}
@@ -134,9 +126,9 @@ export default function Adressbuch({ aktiveId, onOeffnen, onNeu }: AdressbuchPro
             anzahl: anzahl[a.schluessel] ?? 0,
           }))}
         />
-      </div>
+      </Werkzeugleiste>
 
-      <div className="bg-surface overflow-hidden rounded-xl border">
+      <>
         {kontakte.isError ? (
           <Fehlerzustand details={String(kontakte.error)} onNochmal={() => void kontakte.refetch()} />
         ) : (
@@ -179,7 +171,7 @@ export default function Adressbuch({ aktiveId, onOeffnen, onNeu }: AdressbuchPro
             }
           />
         )}
-      </div>
+      </>
     </div>
   )
 }

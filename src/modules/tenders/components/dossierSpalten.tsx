@@ -24,7 +24,7 @@ export function dossierSpalten(t: TFunction): Spalten<Dossier> {
       cell: (c) => (
         <span className="flex max-w-[26rem] min-w-0 flex-col">
           <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs">
+          <span className="text-muted-foreground truncate text-xs">
             <span className="zahlen font-mono">{c.row.original.nummer}</span> ·{' '}
             {t(`ausschreibungen.art.${c.row.original.art}`)}
             {c.row.original.begruendung ? ` · ${c.row.original.begruendung}` : ''}

@@ -130,7 +130,6 @@ export function ProjektAkte({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[36rem]"
         titel={p?.kunde ?? t('projekte.akte.titel')}
         {...(p ? { beschreibung: [p.nummer, ortZeile(p), p.standort].filter(Boolean).join(' · '), fuss } : {})}
       >

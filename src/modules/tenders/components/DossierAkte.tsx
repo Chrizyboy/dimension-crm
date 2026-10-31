@@ -46,7 +46,6 @@ export function DossierAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[34rem]"
         titel={d?.titel ?? t('ausschreibungen.akte.titel')}
         {...(d ? { beschreibung: `${d.nummer} · ${ortKurz(d)}`, fuss: <DossierAktionen dossier={d} /> } : {})}
       >
@@ -56,7 +55,7 @@ export function DossierAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-2 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               {d.prioritaet && (
                 <Badge ton={PRIO_TON[d.prioritaet]}>{t('ausschreibungen.prio', { prio: d.prioritaet })}</Badge>
               )}

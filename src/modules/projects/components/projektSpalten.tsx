@@ -1,11 +1,11 @@
 import type { TFunction } from 'i18next'
 import { Badge } from '@/components/ui/badge'
-import { formatChf, formatDatum } from '@/lib/format'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import { anlageKurz, ortZeile } from '../lib/anzeige'
 import { BAU_TON } from '../lib/fahrplan'
 import type { Projekt } from '../types'
 import { FahrplanBalken } from './FahrplanBalken'
+import { BetragZelle, DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Projekt>()
 const STATUS_TON = { auftrag: 'info', im_bau: 'marke', abgeschlossen: 'ok' } as const
@@ -15,7 +15,7 @@ export function projektSpalten(t: TFunction): Spalten<Projekt> {
   return spalte.columns([
     spalte.accessor('nummer', {
       header: t('projekte.spalte.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-xs">{c.getValue()}</span>,
+      cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
       meta: { breite: 'w-24' },
     }),
     spalte.accessor('kunde', {
@@ -23,7 +23,7 @@ export function projektSpalten(t: TFunction): Spalten<Projekt> {
       cell: (c) => (
         <span className="flex max-w-[18rem] min-w-0 flex-col">
           <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs">{anlageKurz(c.row.original, t) || '–'}</span>
+          <span className="text-muted-foreground truncate text-xs">{anlageKurz(c.row.original, t) || '–'}</span>
         </span>
       ),
     }),
@@ -58,13 +58,13 @@ export function projektSpalten(t: TFunction): Spalten<Projekt> {
     spalte.accessor((p) => p.baubeginn ?? '', {
       id: 'baubeginn',
       header: t('projekte.spalte.baubeginn'),
-      cell: (c) => (c.getValue() ? formatDatum(c.getValue()) : '–'),
+      cell: (c) => <DatumZelle wert={c.getValue()} />,
       meta: { nurBreit: true },
     }),
     spalte.accessor((p) => p.vertragswert_rappen ?? 0, {
       id: 'wert',
       header: t('projekte.spalte.wert'),
-      cell: (c) => (c.getValue() ? formatChf(c.getValue()) : '–'),
+      cell: (c) => <BetragZelle rappen={c.getValue() || null} />,
       meta: { zahl: true, nurBreit: true },
     }),
   ])

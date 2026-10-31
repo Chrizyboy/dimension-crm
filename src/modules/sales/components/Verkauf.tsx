@@ -6,7 +6,7 @@ import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Kbd, Skelett } from '@/components/ui/diverses'
 import { useKuerzelAnzeige, useTaste } from '@/hooks/useTaste'
-import { cn } from '@/lib/utils'
+import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useGeschaefte } from '../hooks/useVerkauf'
 import { passtZuFilter } from '../lib/geschaeft'
@@ -145,7 +145,7 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
         }
       />
 
-      <nav aria-label={t('verkauf.ansichten')} className="-mx-1 flex flex-wrap gap-x-1 border-b px-1">
+      <nav aria-label={t('verkauf.ansichten')} className={reiterListeKlasse}>
         {VERKAUF_ANSICHTEN.map((a, i) => (
           <button
             key={a}
@@ -155,10 +155,7 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
             onClick={() => {
               onAdresse({ ansicht: a })
             }}
-            className={cn(
-              'text-muted-foreground hover:text-foreground focus-visible:ring-ring -mb-px h-9 shrink-0 border-b-2 border-transparent px-3 text-sm outline-none focus-visible:ring-2',
-              a === ansicht && 'border-accent text-foreground font-medium',
-            )}
+            className={reiterKnopfKlasse}
           >
             {t(`verkauf.ansicht.${a}`)}
           </button>

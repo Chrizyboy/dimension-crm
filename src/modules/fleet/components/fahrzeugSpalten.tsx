@@ -4,6 +4,7 @@ import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import { serviceKmStand } from '../lib/fristen'
 import type { Fahrzeug } from '../types'
 import { FristBadge } from './FristBadge'
+import { NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Fahrzeug>()
 
@@ -15,7 +16,7 @@ export function fahrzeugSpalten(t: TFunction, name: (id: string | null) => strin
       cell: (c) => (
         <span className="flex max-w-[20rem] min-w-0 flex-col">
           <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs">
+          <span className="text-muted-foreground truncate text-xs">
             {[c.row.original.marke_modell, c.row.original.jahrgang].filter(Boolean).join(' · ')}
           </span>
         </span>
@@ -25,7 +26,7 @@ export function fahrzeugSpalten(t: TFunction, name: (id: string | null) => strin
       header: t('fuhrpark.spalte.kennzeichen'),
       cell: (c) => (
         <span className="flex flex-wrap items-center gap-1">
-          <span className="zahlen font-mono text-xs whitespace-nowrap">{c.getValue()}</span>
+          <NummerZelle>{c.getValue()}</NummerZelle>
           {c.row.original.ausser_betrieb && <Badge>{t('fuhrpark.ausserBetrieb')}</Badge>}
         </span>
       ),

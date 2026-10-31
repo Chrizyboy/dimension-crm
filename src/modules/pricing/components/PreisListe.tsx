@@ -98,7 +98,7 @@ export default function PreisListe({
         <span className="line-clamp-2 font-medium" title={c.getValue()}>
           {c.getValue()}
         </span>
-        <span className="text-muted-foreground line-clamp-2 text-xs">
+        <span className="text-muted-foreground truncate text-xs">
           {[c.row.original.gruppe, c.row.original.artikelnummer, kategorien.text(c.row.original.kategorie)]
             .filter(Boolean)
             .join(' · ')}

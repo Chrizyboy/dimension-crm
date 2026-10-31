@@ -1,11 +1,10 @@
-import { Search, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
-import { Kbd } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useTaste } from '@/hooks/useTaste'
 import { useAussendienst, useRegionen } from '../hooks/useVerkauf'
@@ -39,24 +38,15 @@ export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
 
   return (
     <div className="flex flex-col gap-2 lg:flex-row lg:flex-wrap lg:items-center">
-      <div className="relative lg:w-72">
-        <Search
-          className="text-muted-foreground pointer-events-none absolute top-2 left-2.5 size-4"
-          aria-hidden="true"
-        />
-        <Input
-          ref={suchfeld}
-          type="search"
-          value={filter.suche}
-          onChange={(e) => {
-            onChange({ ...filter, suche: e.target.value })
-          }}
-          placeholder={t('verkauf.suche')}
-          aria-label={t('verkauf.suche')}
-          className="pr-8 pl-8"
-        />
-        <Kbd className="absolute top-1.5 right-1.5">/</Kbd>
-      </div>
+      <Suchfeld
+        ref={suchfeld}
+        kuerzel="/"
+        beschriftung={t('verkauf.suche')}
+        value={filter.suche}
+        onChange={(e) => {
+          onChange({ ...filter, suche: e.target.value })
+        }}
+      />
       <Filterchips
         beschriftung={t('verkauf.standort')}
         einzeln

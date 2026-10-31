@@ -6,7 +6,6 @@ import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { supabase } from '@/services/supabase'
 import { useVertraege } from '../hooks/useVertraege'
@@ -15,6 +14,7 @@ import { FILTER, type Filter } from '../types'
 import { VertragAkte } from './VertragAkte'
 import { VertragDialog } from './VertragDialog'
 import { vertragSpalten } from './vertragSpalten'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 /**
  * Wartungsverträge (V233 «Verträge»): W001 … mit Leistungskatalog, Rhythmus, nächster Wartung und PDF.
@@ -69,7 +69,17 @@ export default function Vertraege({
           </Button>
         }
       />
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('wartung.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('wartung.filter')}
@@ -79,17 +89,7 @@ export default function Vertraege({
             if (f) setFilter(f as Filter)
           }}
         />
-        <Input
-          type="search"
-          className="w-full sm:w-64"
-          aria-label={t('wartung.suche')}
-          placeholder={t('wartung.suche')}
-          value={suche}
-          onChange={(e) => {
-            setSuche(e.target.value)
-          }}
-        />
-      </div>
+      </Werkzeugleiste>
       {liste.error ? (
         <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
       ) : (

@@ -5915,5 +5915,9 @@
       "nichts": "Rien de prévu",
       "halbtag": "demi-journée"
     }
+  },
+  "knopfleiste": {
+    "mehr": "Plus",
+    "weniger": "Moins"
   }
 }

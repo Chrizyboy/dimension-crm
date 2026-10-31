@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
-import { Input } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useFaelle } from '../hooks/useService'
 import { FALL_FILTER, type FallFilter } from '../types'
 import { fallSpalten } from './fallSpalten'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 /** Liste der Service-Fälle mit Filter (offen, hoch, Garantie, erledigt, alle) und Suche. */
 export function FallListe({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
@@ -35,7 +35,17 @@ export function FallListe({ aktiveId, onOeffnen }: { aktiveId: string | null; on
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('service.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('service.filter')}
@@ -45,17 +55,7 @@ export function FallListe({ aktiveId, onOeffnen }: { aktiveId: string | null; on
             if (f) setFilter(f as FallFilter)
           }}
         />
-        <Input
-          type="search"
-          className="w-full sm:w-64"
-          aria-label={t('service.suche')}
-          placeholder={t('service.suche')}
-          value={suche}
-          onChange={(e) => {
-            setSuche(e.target.value)
-          }}
-        />
-      </div>
+      </Werkzeugleiste>
       {liste.error ? (
         <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
       ) : (

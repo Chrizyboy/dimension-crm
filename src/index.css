@@ -197,6 +197,18 @@ h3 {
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * Eine Zeile, seitlich wischen (Chris 31.10.2026): Reiter und Filter brechen am Handy nicht um,
+ * sondern lassen sich mit dem Finger verschieben. Der Balken bleibt unsichtbar, die Tastatur kommt trotzdem hin.
+ */
+.wischzeile {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.wischzeile::-webkit-scrollbar {
+  display: none;
+}
+
 ::selection {
   background: var(--accent-soft);
   color: var(--foreground);

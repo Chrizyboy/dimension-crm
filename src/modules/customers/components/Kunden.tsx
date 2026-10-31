@@ -1,12 +1,12 @@
-import { Plus, Search, SearchX, Users } from 'lucide-react'
+import { Plus, SearchX, Users } from 'lucide-react'
 import { Suspense, lazy, useDeferredValue, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Kbd } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { useKontakte } from '@/hooks/useKontakte'
 import { useTaste } from '@/hooks/useTaste'
 import { passtZurSuche } from '@/lib/kontakt'
@@ -96,34 +96,24 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
         }
       />
 
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <div className="relative sm:w-80">
-            <Search
-              className="text-muted-foreground pointer-events-none absolute top-2 left-2.5 size-4"
-              aria-hidden="true"
-            />
-            <Input
-              ref={suchfeld}
-              type="search"
-              value={suche}
-              onChange={(e) => {
-                setSuche(e.target.value)
-              }}
-              placeholder={t('kunden.suche')}
-              aria-label={t('kunden.suche')}
-              className="pr-8 pl-8"
-            />
-            <Kbd className="absolute top-1.5 right-1.5">/</Kbd>
-          </div>
-          <p className="text-muted-foreground text-sm sm:ml-auto" aria-live="polite">
-            {kontakte.isSuccess && t('kunden.anzahl', { count: sichtbar.length })}
-          </p>
-        </div>
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            ref={suchfeld}
+            kuerzel="/"
+            beschriftung={t('kunden.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+        rechts={<span aria-live="polite">{kontakte.isSuccess && t('kunden.anzahl', { count: sichtbar.length })}</span>}
+      >
         <StandFilter gewaehlt={gruppen} anzahl={anzahl} onChange={setGruppen} />
-      </div>
+      </Werkzeugleiste>
 
-      <div className="bg-surface overflow-hidden rounded-xl border">
+      <>
         {kontakte.isError ? (
           <Fehlerzustand details={String(kontakte.error)} onNochmal={() => void kontakte.refetch()} />
         ) : (
@@ -176,7 +166,7 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
             }
           />
         )}
-      </div>
+      </>
 
       <Suspense>
         {kundeId && (

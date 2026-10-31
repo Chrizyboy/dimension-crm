@@ -5,12 +5,12 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useBestellungen } from '../hooks/useEinkauf'
 import { BESTELL_FILTER, type BestellFilter } from '../types'
 import { bestellSpalten } from './bestellSpalten'
 import { NeueBestellungDialog } from './NeueBestellungDialog'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 /** Liste der Bestellungen mit Filtern (offen, Entwürfe, überfällig, geliefert, alle) und «Neue Bestellung». */
 export function Bestellungen({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
@@ -37,7 +37,29 @@ export function Bestellungen({ aktiveId, onOeffnen }: { aktiveId: string | null;
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('einkauf.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+        rechts={
+          <>
+            <Button
+              onClick={() => {
+                setNeu(true)
+              }}
+            >
+              <Plus />
+              {t('einkauf.neu')}
+            </Button>
+          </>
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('einkauf.filter')}
@@ -47,27 +69,7 @@ export function Bestellungen({ aktiveId, onOeffnen }: { aktiveId: string | null;
             if (f) setFilter(f as BestellFilter)
           }}
         />
-        <div className="flex w-full items-center gap-2 sm:w-auto">
-          <Input
-            type="search"
-            className="w-full sm:w-80"
-            aria-label={t('einkauf.suche')}
-            placeholder={t('einkauf.suche')}
-            value={suche}
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-          <Button
-            onClick={() => {
-              setNeu(true)
-            }}
-          >
-            <Plus />
-            {t('einkauf.neu')}
-          </Button>
-        </div>
-      </div>
+      </Werkzeugleiste>
       {liste.error ? (
         <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
       ) : (

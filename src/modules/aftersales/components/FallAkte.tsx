@@ -95,7 +95,6 @@ export function FallAkte({ id, onSchliessen }: { id: string; onSchliessen: () =>
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[34rem]"
         titel={f ? `${f.nummer} · ${f.titel}` : t('service.akte.titel')}
         {...(f ? { beschreibung: [f.kunde, f.ort, f.projekt].filter(Boolean).join(' · '), fuss } : {})}
       >
@@ -105,7 +104,7 @@ export function FallAkte({ id, onSchliessen }: { id: string; onSchliessen: () =>
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap gap-1.5 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={tonVonFarbe(status.finde(f.status)?.farbe)} punkt>
                 {status.text(f.status)}
               </Badge>

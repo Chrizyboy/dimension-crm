@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Ban, FileText, Mail, Printer, RefreshCw, Send, Signature, Undo2 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { MailDialog } from '@/components/shared/MailDialog'
 import { Badge } from '@/components/ui/badge'
@@ -75,20 +76,19 @@ export default function VertragAkte({
         art="seite"
         titel={w ? `${t('werkvertraege.akte.titel')} ${w.nummer}` : t('werkvertraege.titel')}
         {...(w ? { beschreibung: `${w.name} · ${formatKundennummer(w.kundennummer)}` } : {})}
-        className="md:w-[38rem]"
       >
         {!w ? (
           <p className="text-muted-foreground text-sm">{t('werkvertraege.akte.nichtMehr')}</p>
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-2 pb-3">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={VERTRAG_TON[w.status]} punkt>
                 {t(`werkvertraege.status.${w.status}`)}
               </Badge>
               <Badge ton="neutral">{w.sprache === 'fr' ? 'FR' : 'DE'}</Badge>
               {w.version > 1 && <Badge ton="neutral">V{w.version}</Badge>}
             </div>
-            <div className="flex flex-wrap gap-2 border-b pb-3">
+            <Knopfleiste haupt="erste" className="border-b pb-3">
               <Button size="sm" onClick={druck.drucke}>
                 <Printer />
                 {t('werkvertraege.akte.drucken')}
@@ -168,7 +168,7 @@ export default function VertragAkte({
                   {t('werkvertraege.akte.stornieren')}
                 </Button>
               )}
-            </div>
+            </Knopfleiste>
             <AkteAbschnitt titel={t('werkvertraege.akte.angaben')}>
               <dl>
                 <Angabe label={t('werkvertraege.akte.betrag')}>

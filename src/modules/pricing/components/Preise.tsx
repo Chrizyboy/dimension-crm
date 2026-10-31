@@ -1,14 +1,14 @@
-import { FileSpreadsheet, Search, Tag } from 'lucide-react'
+import { FileSpreadsheet, Tag } from 'lucide-react'
 import { Suspense, lazy, useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
+import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
-import { cn } from '@/lib/utils'
+import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useDarfPreise, usePreisliste } from '../hooks/usePreise'
 import { PREIS_ANSICHTEN, type PreisAnsicht } from '../types'
@@ -88,41 +88,31 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
           : {})}
       />
 
-      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <nav aria-label={t('preise.ansichten')} className="-mx-1 flex flex-wrap gap-x-1 border-b px-1">
-          {sichtbar.map((a) => (
-            <button
-              key={a}
-              type="button"
-              aria-current={a === ziel ? 'page' : undefined}
-              onClick={() => {
-                onAdresse({ ansicht: a })
-              }}
-              className={cn(
-                'text-muted-foreground hover:text-foreground focus-visible:ring-ring -mb-px inline-flex h-9 shrink-0 items-center gap-1.5 border-b-2 border-transparent px-3 text-sm outline-none focus-visible:ring-2',
-                a === ziel && 'border-accent text-foreground font-medium',
-              )}
-            >
-              {t(`preise.ansicht.${a}`)}
-            </button>
-          ))}
-        </nav>
-        {mitFilter && (
-          <label className="relative w-full md:w-72">
-            <span className="sr-only">{t('preise.suche')}</span>
-            <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2" />
-            <Input
-              type="search"
-              value={suche}
-              placeholder={t('preise.sucheHinweis')}
-              className="pl-8"
-              onChange={(e) => {
-                setSuche(e.target.value)
-              }}
-            />
-          </label>
-        )}
-      </div>
+      <nav aria-label={t('preise.ansichten')} className={reiterListeKlasse}>
+        {sichtbar.map((a) => (
+          <button
+            key={a}
+            type="button"
+            aria-current={a === ziel ? 'page' : undefined}
+            onClick={() => {
+              onAdresse({ ansicht: a })
+            }}
+            className={reiterKnopfKlasse}
+          >
+            {t(`preise.ansicht.${a}`)}
+          </button>
+        ))}
+      </nav>
+      {mitFilter && (
+        <Suchfeld
+          beschriftung={t('preise.suche')}
+          placeholder={t('preise.sucheHinweis')}
+          value={suche}
+          onChange={(e) => {
+            setSuche(e.target.value)
+          }}
+        />
+      )}
 
       {mitFilter && (
         <Filterchips

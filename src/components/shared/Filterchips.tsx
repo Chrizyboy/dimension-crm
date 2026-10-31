@@ -19,10 +19,15 @@ interface FilterchipsProps {
 /**
  * Filter als runde Knöpfe über Listen. Ein Klick schaltet ein und aus; die Zahl zeigt,
  * wie viele Einträge der Filter trifft. Für Stand, Kontaktart, Zeitachse und spätere Listen.
+ * Am Handy eine Zeile zum Wischen, am PC dürfen viele Knöpfe umbrechen.
  */
 export function Filterchips({ optionen, gewaehlt, onChange, beschriftung, einzeln = false }: FilterchipsProps) {
   return (
-    <div role="group" aria-label={beschriftung} className="flex flex-wrap gap-1.5">
+    <div
+      role="group"
+      aria-label={beschriftung}
+      className="wischzeile flex max-w-full gap-1.5 overflow-x-auto sm:flex-wrap sm:overflow-visible"
+    >
       {optionen.map((o) => {
         const an = gewaehlt.includes(o.wert)
         return (
@@ -35,7 +40,7 @@ export function Filterchips({ optionen, gewaehlt, onChange, beschriftung, einzel
               else onChange(an ? gewaehlt.filter((x) => x !== o.wert) : [...gewaehlt, o.wert])
             }}
             className={cn(
-              'focus-visible:ring-ring inline-flex h-7 items-center gap-1.5 rounded-full border px-3 text-xs font-medium outline-none focus-visible:ring-2',
+              'focus-visible:ring-ring inline-flex h-7 shrink-0 items-center gap-1.5 rounded-full border px-3 text-xs font-medium whitespace-nowrap outline-none focus-visible:ring-2',
               an ? 'bg-primary text-primary-foreground border-primary' : 'bg-surface hover:bg-muted text-foreground',
             )}
           >

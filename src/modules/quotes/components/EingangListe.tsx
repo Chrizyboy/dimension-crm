@@ -16,6 +16,7 @@ import { useOffertAenderung } from '../hooks/useOfferten'
 import { STATUS_TON } from '../lib/status'
 import { setzeEingangStatus } from '../services/offerten'
 import { EINGANG_STATUS, type Eingang, type EingangStatus } from '../types'
+import { DatumZelle, EinzeilerZelle, NameZelle, NummerZelle, StatusZelle, unterzeile } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Eingang>()
 
@@ -79,34 +80,35 @@ export default function EingangListe({
     spalte.accessor((e) => e.offerteNummer ?? e.leadNummer ?? '', {
       id: 'nr',
       header: t('offerten.spalte.nr'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() || '–'}</span>,
+      cell: (c) => <NummerZelle>{c.getValue() || '–'}</NummerZelle>,
       // Am Handy steht die Nummer unter dem Namen.
       meta: { breite: 'w-20', nurBreit: true },
     }),
     spalte.accessor('name', {
       header: t('offerten.spalte.name'),
-      cell: (c) => (
-        <span className="flex min-w-0 flex-col">
-          <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs md:hidden">
-            {[
-              c.row.original.offerteNummer ?? c.row.original.leadNummer,
-              [c.row.original.plz, c.row.original.ort].filter(Boolean).join(' '),
-            ]
-              .filter(Boolean)
-              .join(' · ')}
-          </span>
-        </span>
-      ),
+      cell: (c) => {
+        const e = c.row.original
+        return (
+          <NameZelle
+            name={c.getValue()}
+            unterNurHandy
+            unter={unterzeile(
+              e.offerteNummer ?? e.leadNummer,
+              [e.plz, e.ort].filter(Boolean).join(' '),
+              e.richtofferte ? t('offerten.eingang.richtofferte') : e.terminAm ? formatDatum(e.terminAm) : null,
+            )}
+          />
+        )
+      },
     }),
     spalte.accessor('plz', {
       header: t('offerten.spalte.plz'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() ?? '–'}</span>,
+      cell: (c) => <NummerZelle>{c.getValue() ?? '–'}</NummerZelle>,
       meta: { nurBreit: true, breite: 'w-16' },
     }),
     spalte.accessor('ort', {
       header: t('offerten.spalte.ort'),
-      cell: (c) => c.getValue() ?? '–',
+      cell: (c) => <EinzeilerZelle>{c.getValue() ?? '–'}</EinzeilerZelle>,
       meta: { nurBreit: true },
     }),
     spalte.accessor('sprache', {
@@ -120,26 +122,26 @@ export default function EingangListe({
       cell: (c) => {
         const e = c.row.original
         return e.richtofferte ? (
-          <span className="text-muted-foreground">
+          <span className="text-muted-foreground whitespace-nowrap">
             {t('offerten.eingang.richtofferte')}
             {e.zurOfferteAm ? ` · ${formatDatum(e.zurOfferteAm)}` : ''}
           </span>
         ) : (
-          <span className="zahlen font-mono text-[13px]">{e.terminAm ? formatDatum(e.terminAm) : '–'}</span>
+          <DatumZelle wert={e.terminAm} />
         )
       },
+      meta: { nurBreit: true },
     }),
     spalte.accessor('status', {
       header: t('offerten.spalte.status'),
       cell: (c) => {
         const e = c.row.original
         return (
-          <span className="flex flex-col items-start gap-0.5">
+          <StatusZelle zusatz={e.von && e.status !== 'neu' ? <span className="max-md:hidden">{e.von}</span> : null}>
             <Badge ton={STATUS_TON[e.status]} punkt>
               {t(`offerten.status.${e.status}`)}
             </Badge>
-            {e.von && e.status !== 'neu' && <span className="text-muted-foreground text-xs">{e.von}</span>}
-          </span>
+          </StatusZelle>
         )
       },
     }),

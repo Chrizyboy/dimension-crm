@@ -5,7 +5,6 @@ import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Skelett } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zelle, Zeile } from '@/components/ui/tabelle'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatDatum } from '@/lib/format'
@@ -13,6 +12,7 @@ import { useAnlagen } from '../hooks/useService'
 import { faellig, tageBis } from '../lib/anzeige'
 import type { Anlage } from '../types'
 import { AnlageDialog } from './AnlageDialog'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 type Ansicht = 'alle' | 'kontrolle' | 'garantie'
 
@@ -49,7 +49,17 @@ export function AnlagenListe() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('service.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('service.anlagen.ansicht')}
@@ -63,17 +73,7 @@ export function AnlagenListe() {
             setAnsicht((a ?? 'alle') as Ansicht)
           }}
         />
-        <Input
-          type="search"
-          className="w-full sm:w-64"
-          aria-label={t('service.suche')}
-          placeholder={t('service.suche')}
-          value={suche}
-          onChange={(e) => {
-            setSuche(e.target.value)
-          }}
-        />
-      </div>
+      </Werkzeugleiste>
       {daten.length === 0 ? (
         <Leerzustand icon={SunMedium} titel={t('service.anlagen.leer')} text={t('service.anlagen.leerText')} />
       ) : (

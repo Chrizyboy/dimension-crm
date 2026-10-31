@@ -5,11 +5,11 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { useRapporte } from '../hooks/useBaustelle'
 import { RAPPORT_FILTER, type RapportFilter } from '../types'
 import { NeuerRapportDialog } from './NeuerRapportDialog'
 import { rapportSpalten } from './rapportSpalten'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 /** Alle Rapporte fürs Büro: offen, abgeschlossen, alle; Suche nach Kunde, Projekt, Ort, Monteur. */
 export function RapportListe({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
@@ -32,7 +32,29 @@ export function RapportListe({ aktiveId, onOeffnen }: { aktiveId: string | null;
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('baustelle.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+        rechts={
+          <>
+            <Button
+              onClick={() => {
+                setNeu(true)
+              }}
+            >
+              <Plus />
+              {t('baustelle.neu.knopf')}
+            </Button>
+          </>
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('baustelle.filter')}
@@ -42,27 +64,7 @@ export function RapportListe({ aktiveId, onOeffnen }: { aktiveId: string | null;
             if (f) setFilter(f as RapportFilter)
           }}
         />
-        <div className="flex w-full items-center gap-2 sm:w-auto">
-          <Input
-            type="search"
-            className="w-full sm:w-64"
-            aria-label={t('baustelle.suche')}
-            placeholder={t('baustelle.suche')}
-            value={suche}
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-          <Button
-            onClick={() => {
-              setNeu(true)
-            }}
-          >
-            <Plus />
-            {t('baustelle.neu.knopf')}
-          </Button>
-        </div>
-      </div>
+      </Werkzeugleiste>
       {liste.error ? (
         <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
       ) : (

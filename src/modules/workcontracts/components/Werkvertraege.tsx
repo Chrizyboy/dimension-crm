@@ -1,11 +1,11 @@
-import { FileSignature, Search } from 'lucide-react'
+import { FileSignature } from 'lucide-react'
 import { Suspense, lazy, useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Skelett } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { supabase } from '@/services/supabase'
 import { useVertraege } from '../hooks/useWerkvertraege'
 import { passt } from '../lib/status'
@@ -52,7 +52,18 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf titel={t('werkvertraege.titel')} beschreibung={t('werkvertraege.beschreibung')} />
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('werkvertraege.suche')}
+            placeholder={t('werkvertraege.sucheHinweis')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      >
         <Filterchips
           beschriftung={t('werkvertraege.spalte.status')}
           gewaehlt={stand}
@@ -63,20 +74,7 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
             anzahl: gefunden.filter((w) => w.status === x).length,
           })).filter((o) => o.anzahl > 0)}
         />
-        <label className="relative w-full md:w-72">
-          <span className="sr-only">{t('werkvertraege.suche')}</span>
-          <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2" />
-          <Input
-            type="search"
-            value={suche}
-            placeholder={t('werkvertraege.sucheHinweis')}
-            className="pl-8"
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-        </label>
-      </div>
+      </Werkzeugleiste>
 
       {vertraege.error ? (
         <Fehlerzustand details={String(vertraege.error)} onNochmal={() => void vertraege.refetch()} />

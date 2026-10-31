@@ -81,7 +81,11 @@ export function Zelle({
 }: TdHTMLAttributes<HTMLTableCellElement> & { zahl?: boolean }) {
   return (
     <td
-      className={cn('h-10 px-2 align-middle sm:px-3', zahl && 'zahlen text-right font-mono text-[13px]', className)}
+      className={cn(
+        'h-10 px-2 align-middle sm:px-3',
+        zahl && 'zahlen text-right font-mono text-[13px] whitespace-nowrap',
+        className,
+      )}
       {...props}
     />
   )

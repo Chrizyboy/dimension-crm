@@ -112,7 +112,6 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[40rem]"
         titel={b ? `${b.nummer} · ${b.lieferant}` : t('einkauf.akte.titel')}
         {...(b
           ? { beschreibung: b.projekt_nummer ? `${b.projekt_nummer} · ${b.kunde ?? ''}` : t('einkauf.fuerLager'), fuss }
@@ -124,7 +123,7 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap gap-1.5 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={tonVonFarbe(status.finde(b.status)?.farbe)} punkt>
                 {status.text(b.status)}
               </Badge>

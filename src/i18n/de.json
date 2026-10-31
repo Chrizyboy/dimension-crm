@@ -5915,5 +5915,9 @@
       "nichts": "Nichts geplant",
       "halbtag": "halber Tag"
     }
+  },
+  "knopfleiste": {
+    "mehr": "Mehr",
+    "weniger": "Weniger"
   }
 }

@@ -5,12 +5,13 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
-import { formatChf, formatDatum } from '@/lib/format'
+import { formatChf } from '@/lib/format'
 import { spaltenHelfer } from '@/lib/tabelle'
 import { useNachtraege } from '../hooks/useBaustelle'
 import { nachtragTon } from '../lib/anzeige'
 import { NACHTRAG_FILTER, type Nachtrag, type NachtragFilter } from '../types'
 import { NachtragDialog } from './NachtragDialog'
+import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Nachtrag>()
 
@@ -25,12 +26,12 @@ export function Nachtraege({ onRapport }: { onRapport: (id: string) => void }) {
       spalte.columns([
         spalte.accessor('nummer', {
           header: t('baustelle.spalte.nummer'),
-          cell: (c) => <span className="font-mono text-xs">{c.getValue()}</span>,
+          cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
           meta: { breite: 'w-16' },
         }),
         spalte.accessor('erstellt_am', {
           header: t('baustelle.spalte.datum'),
-          cell: (c) => <span className="zahlen">{formatDatum(c.getValue())}</span>,
+          cell: (c) => <DatumZelle wert={c.getValue()} />,
         }),
         spalte.accessor((n) => n.kunde ?? '', {
           id: 'kunde',
@@ -38,7 +39,7 @@ export function Nachtraege({ onRapport }: { onRapport: (id: string) => void }) {
           cell: (c) => (
             <span className="flex max-w-[16rem] min-w-0 flex-col">
               <span className="line-clamp-2 font-medium">{c.getValue() || '–'}</span>
-              <span className="text-muted-foreground line-clamp-2 text-xs">
+              <span className="text-muted-foreground truncate text-xs">
                 {[c.row.original.projekt_nummer, c.row.original.rapport_nummer].filter(Boolean).join(' · ')}
               </span>
             </span>

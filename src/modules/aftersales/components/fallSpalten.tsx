@@ -1,9 +1,9 @@
 import type { TFunction } from 'i18next'
 import { Badge } from '@/components/ui/badge'
-import { formatDatum } from '@/lib/format'
 import { tonVonFarbe } from '@/lib/kontakt'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import type { ServiceFall } from '../types'
+import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<ServiceFall>()
 type Text = (liste: string, wert: string | null) => { text: string; farbe: string | null }
@@ -13,7 +13,7 @@ export function fallSpalten(t: TFunction, auswahl: Text): Spalten<ServiceFall> {
   return spalte.columns([
     spalte.accessor('nummer', {
       header: t('service.spalte.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-xs">{c.getValue()}</span>,
+      cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
       // Am Handy steht die Nummer in der Zeile darunter.
       meta: { breite: 'w-20', nurBreit: true },
     }),
@@ -22,7 +22,7 @@ export function fallSpalten(t: TFunction, auswahl: Text): Spalten<ServiceFall> {
       cell: (c) => (
         <span className="flex max-w-[22rem] min-w-0 flex-col">
           <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs">
+          <span className="text-muted-foreground truncate text-xs">
             <span className="zahlen font-mono md:hidden">{c.row.original.nummer} · </span>
             {[c.row.original.kunde, c.row.original.ort].filter(Boolean).join(' · ')}
           </span>
@@ -62,7 +62,7 @@ export function fallSpalten(t: TFunction, auswahl: Text): Spalten<ServiceFall> {
     spalte.accessor((f) => f.termin_am ?? '', {
       id: 'termin',
       header: t('service.spalte.termin'),
-      cell: (c) => (c.getValue() ? formatDatum(c.getValue()) : '–'),
+      cell: (c) => <DatumZelle wert={c.getValue()} />,
       meta: { nurBreit: true },
     }),
   ])
