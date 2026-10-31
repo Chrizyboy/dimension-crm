@@ -5940,5 +5940,30 @@
     "wirdAngelegt": "Dossier en création",
     "wirdVerschoben": "Dossier (en déplacement)",
     "fehler": "Dossier : erreur"
+  },
+  "zust": {
+    "reiter": "Responsabilités",
+    "titel": "Qui est responsable ?",
+    "zweck": "Les nouveaux leads, y compris ceux du site web, reçoivent automatiquement la personne selon ces règles ; la tâche et la cloche lui arrivent directement. Les nouvelles offres vont à la personne responsable des offres. En cas d'absence, le remplaçant prend le relais. Dans le lead et l'offre, la personne peut être changée à tout moment.",
+    "verkauf": "Vente : nouveaux leads",
+    "verkaufHinweis": "Toutes les conditions choisies doivent correspondre. Les règles plus précises (plus de conditions) passent en premier.",
+    "sprache": "Langue",
+    "standort": "Site",
+    "region": "Région",
+    "produkt": "Produit",
+    "person": "Personne",
+    "alle": "Tous",
+    "produkte": {
+      "pv": "Photovoltaïque",
+      "batterie": "Batterie",
+      "wallbox": "Borne de recharge",
+      "waermepumpe": "Pompe à chaleur"
+    },
+    "regelNeu": "Ajouter une règle",
+    "regelWeg": "Supprimer la règle",
+    "offerten": "Établir les offres",
+    "stellvertretung": "Remplacement en cas d'absence",
+    "stellvertretungHinweis": "S'applique quand quelqu'un est inscrit dans les absences (vacances, maladie …).",
+    "vertretungFuer": "Remplaçant de {{name}}"
   }
 }

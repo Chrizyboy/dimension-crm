@@ -146,7 +146,13 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
         }}
         onDragEnd={abgelegt}
       >
-        <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6">
+        {/* Mit der Tastatur erreichbar, damit man die Spalten auch ohne Maus seitlich verschieben kann (WCAG 2.1.1). */}
+        <div
+          role="region"
+          aria-label={t('verkauf.ansicht.pipeline')}
+          tabIndex={0}
+          className="focus-visible:ring-ring -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 outline-none focus-visible:ring-2 sm:-mx-6 sm:px-6"
+        >
           {spalten.map(({ spalte, karten }) => {
             const alle = mehr[spalte.id] === true
             const sichtbar = alle ? karten : karten.slice(0, ERSTE_KARTEN)

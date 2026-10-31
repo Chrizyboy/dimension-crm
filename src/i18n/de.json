@@ -5940,5 +5940,30 @@
     "wirdAngelegt": "Ordner wird angelegt",
     "wirdVerschoben": "Ordner (wird verschoben)",
     "fehler": "Ordner: Fehler"
+  },
+  "zust": {
+    "reiter": "Zuständigkeiten",
+    "titel": "Wer ist zuständig?",
+    "zweck": "Neue Leads, auch von der Webseite, bekommen die Person automatisch nach diesen Regeln; Aufgabe und Glocke gehen direkt an sie. Neue Offerten gehen an die Person für Offerten. Ist jemand abwesend, übernimmt die Stellvertretung. Im Lead und in der Offerte lässt sich die Person jederzeit ändern.",
+    "verkauf": "Verkauf: neue Leads",
+    "verkaufHinweis": "Alle gewählten Bedingungen müssen passen. Genauere Regeln (mehr Bedingungen) gelten zuerst.",
+    "sprache": "Sprache",
+    "standort": "Standort",
+    "region": "Region",
+    "produkt": "Produkt",
+    "person": "Person",
+    "alle": "Alle",
+    "produkte": {
+      "pv": "Photovoltaik",
+      "batterie": "Batterie",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "regelNeu": "Regel hinzufügen",
+    "regelWeg": "Regel entfernen",
+    "offerten": "Offerten erstellen",
+    "stellvertretung": "Stellvertretung bei Abwesenheit",
+    "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
+    "vertretungFuer": "Stellvertretung für {{name}}"
   }
 }
