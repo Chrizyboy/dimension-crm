@@ -5961,5 +5961,57 @@
       "nichts": "Nichts geplant",
       "halbtag": "halber Tag"
     }
+  },
+  "ablage": {
+    "titel": "Dateiablage in SharePoint",
+    "zweck": "Dimension Work legt den Ordner jeder neuen Offerte selbst an (mit den Unterordnern), verschiebt ihn bei Annahme zu den Aufträgen und bei Verlust ins Archiv und legt Dateien aus dem CRM in den passenden Unterordner. Ältere Ordner bleiben, wie sie sind.",
+    "aktiv": "Automatische Ablage eingeschaltet",
+    "seit": "für Offerten ab {{datum}}",
+    "fertig_one": "{{count}} Ordner am Platz",
+    "fertig_other": "{{count}} Ordner am Platz",
+    "wartend_one": "{{count}} wartet",
+    "wartend_other": "{{count}} warten",
+    "mitFehler_one": "{{count}} mit Fehler",
+    "mitFehler_other": "{{count}} mit Fehler",
+    "bibliothek": "Bibliothek",
+    "name": "Ordnername",
+    "nameHinweis": "Platzhalter: {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offerten",
+      "auftraege": "Aufträge",
+      "verloren": "Verloren"
+    },
+    "unterordner": "Unterordner (werden in jedem neuen Ordner angelegt)",
+    "oeffnen": "Ordner in SharePoint",
+    "wirdAngelegt": "Ordner wird angelegt",
+    "wirdVerschoben": "Ordner (wird verschoben)",
+    "fehler": "Ordner: Fehler",
+    "person": "Microsoft-Verbindung von (Kürzel)",
+    "personHinweis": "Diese Person braucht Zugriff auf die Bibliothek und muss mit Microsoft verbunden sein."
+  },
+  "zust": {
+    "reiter": "Zuständigkeiten",
+    "titel": "Wer ist zuständig?",
+    "zweck": "Neue Leads, auch von der Webseite, bekommen die Person automatisch nach diesen Regeln; Aufgabe und Glocke gehen direkt an sie. Neue Offerten gehen an die Person für Offerten. Ist jemand abwesend, übernimmt die Stellvertretung. Im Lead und in der Offerte lässt sich die Person jederzeit ändern.",
+    "verkauf": "Verkauf: neue Leads",
+    "verkaufHinweis": "Alle gewählten Bedingungen müssen passen. Genauere Regeln (mehr Bedingungen) gelten zuerst.",
+    "sprache": "Sprache",
+    "standort": "Standort",
+    "region": "Region",
+    "produkt": "Produkt",
+    "person": "Person",
+    "alle": "Alle",
+    "produkte": {
+      "pv": "Photovoltaik",
+      "batterie": "Batterie",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "regelNeu": "Regel hinzufügen",
+    "regelWeg": "Regel entfernen",
+    "offerten": "Offerten erstellen",
+    "stellvertretung": "Stellvertretung bei Abwesenheit",
+    "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
+    "vertretungFuer": "Stellvertretung für {{name}}"
   }
 }

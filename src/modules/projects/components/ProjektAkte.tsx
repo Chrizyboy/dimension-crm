@@ -1,6 +1,7 @@
 import { CalendarPlus, FileText, MoreHorizontal, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AblageLink } from '@/components/shared/AblageLink'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -140,7 +141,7 @@ export function ProjektAkte({
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col gap-2">
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5">
               <Badge>{t(`projekte.status.${p.status}`)}</Badge>
               {p.status === 'im_bau' && p.bau_status && (
                 <Badge ton={BAU_TON[p.bau_status] ?? 'neutral'} punkt>
@@ -150,6 +151,7 @@ export function ProjektAkte({
               {p.stand && p.stand.bewilligungen_spaet > 0 && (
                 <Badge ton="kritisch">{t('projekte.akte.spaet', { count: p.stand.bewilligungen_spaet })}</Badge>
               )}
+              <AblageLink projektId={p.id} offerteId={p.offerte_id} />
             </div>
             <Reiter
               value={reiter}

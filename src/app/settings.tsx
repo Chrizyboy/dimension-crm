@@ -6,9 +6,9 @@ import { hatRecht } from '@/lib/rechte'
 import { Benutzerverwaltung } from '@/modules/settings'
 import { useAnmeldung } from '@/stores/anmeldung'
 
-const REITER = new Set(['personen', 'rollen', 'verbindungen', 'sicherung', 'betrieb'])
+const REITER = new Set(['personen', 'rollen', 'zustaendigkeiten', 'verbindungen', 'sicherung', 'betrieb'])
 
-/** Einstellungen: Benutzer, Rollen, Verbindungen, Datensicherung und Betrieb (nur Administration). Reiter in der Adresse (?reiter=…). */
+/** Einstellungen: Benutzer, Rollen, Zuständigkeiten, Verbindungen, Datensicherung und Betrieb (nur Administration). Reiter in der Adresse (?reiter=…). */
 export const Route = createFileRoute('/settings')({
   validateSearch: (s: Record<string, unknown>): { reiter?: string } =>
     typeof s.reiter === 'string' && REITER.has(s.reiter) && s.reiter !== 'personen' ? { reiter: s.reiter } : {},
