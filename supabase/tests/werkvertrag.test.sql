@@ -3,7 +3,7 @@
 -- Anzahlungsrechnung aus dem Vertrag (nur mit Recht «finanzen», keine doppelte) und Einstellung nur Administration.
 -- Ausführen: npm run db:test
 begin;
-select plan(19);
+select plan(24);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000030a1', 'wv-admin@test.local'),
@@ -16,11 +16,20 @@ insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte) val
 select results_eq($$ select betrag_rappen from public.zahlungsplan_vorschlag(1000001, '{"kondition": "70_30"}', 'fr', '2026-10-31') $$,
   array[700000::bigint, 300001::bigint], '70/30: Anzahlung auf ganze Franken, Saldo nimmt den Rest');
 select results_eq($$ select bezeichnung from public.zahlungsplan_vorschlag(1000001, '{"kondition": "70_30"}', 'fr', '2026-10-31') $$,
-  array['70 % à la signature du contrat', '30 % après la mise en service'], 'Texte in der Vertragssprache');
+  array['70 % matériel, à la signature du contrat', '30 % après la mise en service'], 'Texte in der Vertragssprache');
 select results_eq($$ select betrag_rappen from public.zahlungsplan_vorschlag(629683, '{"kondition": "anzahlung", "anzahlung_rappen": 400000}', 'de', '2026-10-31') $$,
   array[400000::bigint, 229683::bigint], 'Eigene Anzahlung CHF 4''000, Rest nach Inbetriebnahme');
 select results_eq($$ select betrag_rappen from public.zahlungsplan_vorschlag(500000, '{"kondition": "anzahlung", "anzahlung_rappen": 600000}', 'de', '2026-10-31') $$,
   array[500000::bigint], 'Anzahlung ab Vertragswert ergibt eine einzige Rate');
+select results_eq($$ select betrag_rappen from public.zahlungsplan_vorschlag(2500000, '{"kondition": "40_30_30"}', 'de', '2026-10-31') $$,
+  array[1000000::bigint, 750000::bigint, 750000::bigint], '40/30/30 für normale Anlagen');
+select is((select bezeichnung from public.zahlungsplan_vorschlag(1000000, '{"kondition": "70_30"}', 'fr', '2026-10-31') where nr = 1),
+  '70 % matériel, à la signature du contrat', '70/30 Batterie: Material zuerst');
+select results_eq($$ select bezeichnung || ' ' || betrag_rappen from public.zahlungsplan_vorschlag(1234500,
+  '{"kondition": "eigene", "raten": [{"text": "50 % Anzahlung", "prozent": 50}, {"text": "50 % Schluss", "prozent": 50}]}', 'de', '2026-10-31') $$,
+  array['50 % Anzahlung 617300', '50 % Schluss 617200'], 'Eigene Raten mit Bezeichnung');
+select throws_ok($$ select * from public.zahlungsplan_vorschlag(500000, '{"kondition": "eigene", "raten": [{"text": "a", "prozent": 60}, {"text": "b", "prozent": 30}]}', 'de', '2026-10-31') $$,
+  'auftrag.raten_summe', 'Eigene Raten müssen 100 % ergeben');
 select is((select count(*) from public.zahlungsplan_vorschlag(1195808, '{"kondition": "100"}', 'de', '2026-10-31')), 1::bigint,
   '100 % ist eine Rate');
 select throws_ok($$ select * from public.zahlungsplan_vorschlag(500000, '{"kondition": "anzahlung"}', 'de', '2026-10-31') $$,
@@ -48,6 +57,8 @@ select is((select angaben ->> 'gegenstand' from public.werkvertraege where id = 
   'Gegenstand gespeichert');
 select ok((select not (angaben ? 'unbekannt') and not (angaben ? 'material') from public.werkvertraege where id = (select w from t30)),
   'nur bekannte, nicht leere Angaben');
+select is((select v.schluessel from public.projekte p join public.ablauf_vorlagen v on v.id = p.ablauf_vorlage_id
+            where p.offerte_id = (select o from t30)), 'speicher', 'Projekt bekommt den Fahrplan (Batterie = Speicher)');
 select is((select angaben -> 'zahlung' from public.werkvertraege where id = (select w from t30)),
   '{"kondition": "anzahlung", "anzahlung_rappen": 400000}'::jsonb, 'Zahlungsbedingung am Vertrag');
 select is((select (anzahlung ->> 'betrag_rappen')::bigint from public.werkvertraege_liste where id = (select w from t30)),
@@ -76,8 +87,8 @@ select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-000000
 select throws_ok($$ update public.einstellungen set wert = wert || '{"unterzeichner": "X"}' where schluessel = 'werkvertrag' $$,
   '42501', null, 'Verkauf ändert die Werkvertrag-Einstellung nicht');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000030a1", "role": "authenticated"}', true);
-select is((select wert ->> 'unterzeichner' from public.einstellungen where schluessel = 'werkvertrag'), 'Erich Rosenberg',
-  'Unterzeichner ist Erich Rosenberg');
+select is((select wert ->> 'unterzeichner' from public.einstellungen where schluessel = 'werkvertrag'), 'Chris Rosenberg',
+  'Unterzeichner ist Chris Rosenberg');
 reset role;
 
 select * from finish();

@@ -144,6 +144,20 @@
       "verbinden": "Se connecter avec Microsoft",
       "testen": "Vérifier la connexion",
       "trennen": "Déconnecter"
+    },
+    "unterschrift": {
+      "titel": "Ma signature",
+      "text": "Pour les documents que tu signes depuis le CRM (p. ex. contrats d’entreprise). Personne d’autre ne la voit ni ne l’utilise.",
+      "bild": "Ta signature",
+      "keine": "Aucune signature enregistrée.",
+      "zeichnen": "Dessiner",
+      "hochladen": "Téléverser une image",
+      "entfernen": "Supprimer",
+      "zeichnenTitel": "Dessiner la signature",
+      "zeichnenText": "Signe dans la zone blanche avec la souris, le doigt ou un stylet.",
+      "neu": "Recommencer",
+      "uebernehmen": "Utiliser",
+      "flaeche": "Zone de signature"
     }
   },
   "fehler": {
@@ -1514,7 +1528,14 @@
       "anzahlungFehlt": "Veuillez indiquer le montant de l’acompte.",
       "imVertrag": "Dans le contrat",
       "bearbeiten": "Modifier le contrat d’entreprise",
-      "speichern": "Enregistrer"
+      "speichern": "Enregistrer",
+      "raten": "Échéances",
+      "rateText": "Libellé échéance {{nr}}",
+      "rateProzent": "Pourcentage échéance {{nr}}",
+      "rateHinzu": "Ajouter une échéance",
+      "rateEntfernen": "Supprimer l’échéance {{nr}}",
+      "ratenSumme": "Total {{summe}} % – il faut exactement 100 %.",
+      "ratenHinweis": "La première échéance est l’acompte (payable 10 jours après la signature)."
     },
     "felder": {
       "gegenstand": "Objet (ligne sous les parties)",
@@ -1541,18 +1562,22 @@
         "keinRecht": "Émettre des factures nécessite le droit «Finances».",
         "schonVerrechnet": "Déjà facturé (p. ex. dans AbaNinja) {{nummer}} : veuillez joindre cette facture à la main.",
         "keinPlan": "Pas encore d’échéancier."
-      }
+      },
+      "mitUnterschrift": "Signer avec ma signature",
+      "unterschriftHinweis": "Ta signature figure dans la case « Signature Dimension Solaire », ton nom en dessous.",
+      "keineUnterschrift": "Aucune signature enregistrée : sous Mon compte › Ma signature. Sans elle, la case reste vide."
     },
     "einstellung": {
       "titel": "Réglages",
       "beschreibung": "S’applique à tous les nouveaux contrats (administration seulement).",
       "unterzeichner": "Signe pour Dimension Solaire",
       "ansprechperson": "Interlocuteur dans le contrat",
-      "telefon": "Téléphone dans le contrat",
       "email": "E-mail dans le contrat",
       "adresse": "Adresse dans le contrat",
       "konditionPv": "Paiement proposé pour le PV",
-      "konditionBatterie": "Paiement proposé pour batterie"
+      "konditionBatterie": "Paiement proposé pour batterie",
+      "telefon_de": "Téléphone (contrat allemand)",
+      "telefon_fr": "Téléphone (contrat français)"
     }
   },
   "preise": {
@@ -1924,7 +1949,10 @@
     "auftrag_anzahlung_fehlt": "Veuillez indiquer le montant de l’acompte.",
     "werkvertrag_anzahlung_verrechnet": "L’acompte est déjà facturé ou payé (p. ex. dans AbaNinja).",
     "werkvertrag_kein_zahlungsplan": "Ce contrat n’a pas encore d’échéancier.",
-    "werkvertrag_storniert": "Le contrat est annulé."
+    "werkvertrag_storniert": "Le contrat est annulé.",
+    "auftrag_raten_summe": "Les échéances doivent totaliser exactement 100 %.",
+    "auftrag_raten_text": "Merci de donner un libellé à chaque échéance.",
+    "auftrag_raten_fehlen": "Merci d’indiquer 1 à 6 échéances."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",

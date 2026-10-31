@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { FileText, Mail, Receipt } from 'lucide-react'
-import { useState } from 'react'
+import { FileText, Mail, PenLine, Receipt } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MailDialog } from '@/components/shared/MailDialog'
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,7 @@ import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { meldeFehler } from '@/services/fehler'
 import { rechnungPdf } from '@/services/rechnungPdf'
 import { ladeRechnung, rechnungPdfAblegen } from '@/services/rechnungsdaten'
+import { ladeUnterschrift } from '@/services/unterschrift'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { VERTRAG_SCHLUESSEL } from '../hooks/useWerkvertraege'
 import { vertragInhalt } from '../lib/vertragInhalt'
@@ -53,6 +54,17 @@ export function SendenDialog({
   const [laeuft, setLaeuft] = useState(false)
   const [fehler, setFehler] = useState<string | null>(null)
   const [dateien, setDateien] = useState<Datei[] | null>(null)
+  // Eigene Unterschrift (Mein Konto): undefined = lädt, null = keine abgelegt.
+  const [unterschrift, setUnterschrift] = useState<Uint8Array | null | undefined>(undefined)
+  const [mitUnterschrift, setMitUnterschrift] = useState(true)
+  useEffect(() => {
+    if (!ich) return
+    ladeUnterschrift(ich.id)
+      .then(setUnterschrift)
+      .catch(() => {
+        setUnterschrift(null)
+      })
+  }, [ich])
   const ts = i18n.getFixedT(w.sprache)
   const betrag = w.anzahlung ? formatChf(w.anzahlung.betragRappen, { mitWaehrung: true }) : ''
 
@@ -61,7 +73,13 @@ export function SendenDialog({
     setFehler(null)
     try {
       const e = await ladeEinstellung()
-      const vertrag = await vertragPdfAblegen(w, await werkvertragPdf(vertragInhalt(w, e)))
+      const inhalt = vertragInhalt(w, e)
+      // Wer mit eigener Unterschrift sendet, unterschreibt selbst: Bild in den Kasten, eigener Name darunter.
+      const signiert =
+        mitUnterschrift && unterschrift && ich
+          ? { ...inhalt, unterzeichner: ich.name, unterschriftBild: unterschrift }
+          : inhalt
+      const vertrag = await vertragPdfAblegen(w, await werkvertragPdf(signiert))
       const neu: Datei[] = [{ ...vertrag, vorgewaehlt: true }]
       if (mitRechnung) {
         const r = await ladeRechnung(await anzahlungsrechnung(w.id))
@@ -149,6 +167,26 @@ export function SendenDialog({
               </span>
               <span className="text-muted-foreground text-xs">
                 {t(`werkvertraege.senden.grund.${moeglich.grund}`, { nummer: w.anzahlung?.rechnungNr ?? '' })}
+              </span>
+            </span>
+          </label>
+          <label className="flex items-start gap-2">
+            <Checkbox
+              checked={!!unterschrift && mitUnterschrift}
+              disabled={!unterschrift}
+              onCheckedChange={(an) => {
+                setMitUnterschrift(an === true)
+              }}
+            />
+            <span className="flex flex-col gap-0.5">
+              <span className="flex items-center gap-2">
+                <PenLine className="text-muted-foreground size-4" />
+                {t('werkvertraege.senden.mitUnterschrift')}
+              </span>
+              <span className="text-muted-foreground text-xs">
+                {unterschrift === null
+                  ? t('werkvertraege.senden.keineUnterschrift')
+                  : t('werkvertraege.senden.unterschriftHinweis')}
               </span>
             </span>
           </label>

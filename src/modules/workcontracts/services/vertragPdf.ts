@@ -132,7 +132,11 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
     }
   }
   /** Unterschriftsfeld wie im Original: Rahmen mit Schatten, Name darunter. */
-  const kasten = (label: string, labelBreite: number, o: { name?: string; breite?: number; x?: number } = {}) => {
+  const kasten = (
+    label: string,
+    labelBreite: number,
+    o: { name?: string; breite?: number; x?: number; bild?: PDFImage | null } = {},
+  ) => {
     const x0 = LR + (o.x ?? 0)
     const bw = o.breite ?? 59 * MM
     const bh = 12.5 * MM
@@ -154,6 +158,13 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
       borderColor: schwarz,
       borderWidth: 0.8,
     })
+    if (o.bild) {
+      // Unterschrift in den Kasten einpassen (mit etwas Rand), mittig.
+      const mass = Math.min((bw - 3 * MM) / o.bild.width, (bh - 2 * MM) / o.bild.height)
+      const b = o.bild.width * mass
+      const h = o.bild.height * mass
+      seite.drawImage(o.bild, { x: x0 + labelBreite + (bw - b) / 2, y: y0 + (bh - h) / 2, width: b, height: h })
+    }
     y = y0
     if (o.name) {
       y -= 5 * MM
@@ -234,7 +245,15 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
   luecke(20)
   absatz([{ text: v.firmaOrtDatum }])
   luecke(6)
-  kasten(v.firmaUnterschrift, 57.5 * MM, { name: v.unterzeichner })
+  let bild: PDFImage | null = null
+  if (v.unterschriftBild) {
+    try {
+      bild = await doc.embedPng(v.unterschriftBild)
+    } catch {
+      // Kaputtes Bild: Vertrag ohne Unterschrift statt gar keiner.
+    }
+  }
+  kasten(v.firmaUnterschrift, 57.5 * MM, { name: v.unterzeichner, bild })
 
   // AGB zweispaltig
   neueSeite()

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { berechneZahlungsplan, vorschlagKondition } from './zahlungsplan'
+import { berechneZahlungsplan, eigeneTranchen, ratenGueltig, ratenStart, vorschlagKondition } from './zahlungsplan'
 
 const NORMAL = [
   { anteil: 0.5, de: 'Anzahlung 50 %', fr: 'Acompte 50 %', faellig: 'unterschrift' as const, tage: 10 },
@@ -54,9 +54,34 @@ describe('Zahlungsplan', () => {
 
   it('schlägt für Batterie ohne Solaranlage die Batterie-Bedingung vor', () => {
     expect(vorschlagKondition({ kwp: null, anzahlModule: null, batterie: 'LUNA 10 kWh' })).toBe('70_30')
-    expect(vorschlagKondition({ kwp: 12, anzahlModule: 28, batterie: 'LUNA 10 kWh' })).toBe('normal')
+    expect(vorschlagKondition({ kwp: 12, anzahlModule: 28, batterie: 'LUNA 10 kWh' })).toBe('40_30_30')
     expect(vorschlagKondition({ kwp: 12, anzahlModule: 28, batterie: null }, { pv: '55_45', batterie: '100' })).toBe(
       '55_45',
     )
+  })
+
+  it('eigene Raten: Text frei, erste Rate ist die Anzahlung, Summe genau 100 %', () => {
+    const raten = [
+      { text: 'Anzahlung', prozent: 33.3 },
+      { text: 'Material', prozent: 33.3 },
+      { text: 'Schluss', prozent: 33.4 },
+    ]
+    expect(ratenGueltig(raten)).toBe(true)
+    expect(ratenGueltig([{ text: 'a', prozent: 60 }])).toBe(false)
+    expect(ratenGueltig([{ text: ' ', prozent: 100 }])).toBe(false)
+    const plan = berechneZahlungsplan(1234500, eigeneTranchen(raten), 'de', '2026-10-31')
+    expect(plan.map((p) => [p.bezeichnung, p.betragRappen, p.faelligAm])).toEqual([
+      ['Anzahlung', 411100, '2026-11-10'],
+      ['Material', 411100, null],
+      ['Schluss', 412300, null],
+    ])
+  })
+
+  it('eigene Raten starten mit der gewählten Vorlage', () => {
+    expect(ratenStart(NORMAL, 'fr').map((r) => [r.text, r.prozent])).toEqual([
+      ['Acompte 50 %', 50],
+      ['30 % avant', 30],
+      ['Solde 20 %', 20],
+    ])
   })
 })

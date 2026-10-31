@@ -27,7 +27,8 @@ const StatusDialog = lazy(() => import('./StatusDialog'))
 const LEER = {
   unterzeichner: '',
   ansprechperson: '',
-  telefon: null,
+  telefon_de: null,
+  telefon_fr: null,
   email: null,
   adresse: '',
   kondition_pv: 'normal',

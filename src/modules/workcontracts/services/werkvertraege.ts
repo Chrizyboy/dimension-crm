@@ -4,6 +4,7 @@ import {
   WERKVERTRAG_STATUS,
   type Anzahlung,
   type AuftragsOfferte,
+  type EigeneRate,
   type Tranche,
   type VertragAngaben,
   type Werkvertrag,
@@ -119,6 +120,16 @@ export function angabenAus(roh: Json | null): VertragAngaben {
     r.zahlung = {
       kondition: z.kondition,
       ...(typeof z.anzahlung_rappen === 'number' ? { anzahlung_rappen: z.anzahlung_rappen } : {}),
+      ...(Array.isArray(z.raten)
+        ? {
+            raten: z.raten.flatMap((x) => {
+              const r = objekt(x as Json)
+              return r && typeof r.text === 'string' && typeof r.prozent === 'number'
+                ? [{ text: r.text, prozent: r.prozent }]
+                : []
+            }),
+          }
+        : {}),
     }
   }
   return r
@@ -217,6 +228,7 @@ export async function erstelleAuftrag(
     unterzeichnet_am: string
     werkvertrag: boolean
     anzahlung_rappen?: number | null
+    raten?: EigeneRate[] | null
     angaben?: VertragAngaben
   },
 ): Promise<string> {
@@ -261,12 +273,13 @@ export async function ladeVertragDateien(w: Werkvertrag): Promise<{ id: string; 
 }
 
 const EINSTELLUNG_STANDARD: WerkvertragEinstellung = {
-  unterzeichner: 'Erich Rosenberg',
+  unterzeichner: 'Chris Rosenberg',
   ansprechperson: '',
-  telefon: null,
+  telefon_de: null,
+  telefon_fr: null,
   email: null,
   adresse: '',
-  kondition_pv: 'normal',
+  kondition_pv: '40_30_30',
   kondition_batterie: '70_30',
 }
 

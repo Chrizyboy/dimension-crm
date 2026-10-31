@@ -42,6 +42,8 @@ export interface VertragInhalt {
   firmaOrtDatum: string
   firmaUnterschrift: string
   unterzeichner: string
+  /** Eigene Unterschrift der Person, die aus dem CRM unterschreibt (PNG); sonst bleibt der Kasten leer. */
+  unterschriftBild?: Uint8Array
   agbTitel: string
   agb: readonly (readonly [string, readonly string[]])[]
   agbSchluss: string
@@ -161,7 +163,7 @@ export function vertragInhalt(w: Werkvertrag, e: WerkvertragEinstellung): Vertra
       [d(T('Firma', 'Société')), 'Dimension Solaire'],
       [d(T('Adresse', 'Adresse')), e.adresse],
       [d(T('Ansprechperson', 'Interlocuteur')), a.ansprechperson?.trim() || e.ansprechperson],
-      [d(T('Telefon', 'Téléphone')), e.telefon ?? w.firma.telefon ?? ''],
+      [d(T('Telefon', 'Téléphone')), (fr ? e.telefon_fr : e.telefon_de) ?? w.firma.telefon ?? ''],
       [d('E-mail'), e.email ?? w.firma.email ?? ''],
     ],
     abschnitt1: T('1. Vertragsgegenstand', '1. Objet du contrat'),

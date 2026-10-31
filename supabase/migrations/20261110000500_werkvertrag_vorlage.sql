@@ -7,31 +7,40 @@
 alter table public.werkvertraege add column if not exists angaben jsonb not null default '{}';
 comment on column public.werkvertraege.angaben is
   'Angaben im Vertrag: gegenstand, material, beginn, fertig, optionen {monitoring, wartung, divers}, '
-  'ansprechperson, zahlung {kondition, anzahlung_rappen}.';
+  'ansprechperson, zahlung {kondition, anzahlung_rappen, raten [{text, prozent}]}.';
 
--- Neue Vorlagen vorne; die alten bleiben wählbar (nichts entfernen).
+-- Neue Vorlagen vorne; die alten bleiben wählbar (nichts entfernen). Standard (Chris 31.10.2026):
+-- normale Anlagen 40/30/30 (Unterzeichnung/Administration, Material, Inbetriebnahme), Batterien 70/30
+-- (Material, Inbetriebnahme). «Eigene Raten» frei mit Bezeichnung und Prozent, «Eigene Anzahlung» in CHF.
 insert into public.auswahlwerte (liste, schluessel, text_de, text_fr, reihenfolge, eigenschaften) values
-  ('zahlungskondition', '70_30', '70 / 30', '70 / 30', -4, '{"tranchen": [
-    {"anteil": 0.7, "de": "70 % bei Vertragsunterzeichnung", "fr": "70 % à la signature du contrat", "faellig": "unterschrift", "tage": 10},
+  ('zahlungskondition', '40_30_30', '40 / 30 / 30', '40 / 30 / 30', -7, '{"tranchen": [
+    {"anteil": 0.4, "de": "40 % bei Vertragsunterzeichnung (Administration)", "fr": "40 % à la signature du contrat (administration)", "faellig": "unterschrift", "tage": 10},
+    {"anteil": 0.3, "de": "30 % Material, vor Beginn der Arbeiten", "fr": "30 % matériel, avant le début des travaux", "faellig": "baubeginn"},
     {"anteil": 0.3, "de": "30 % nach Inbetriebnahme", "fr": "30 % après la mise en service"}]}'),
-  ('zahlungskondition', '100', '100 % bei Unterzeichnung', '100 % à la signature', -3, '{"tranchen": [
+  ('zahlungskondition', '70_30', '70 / 30', '70 / 30', -6, '{"tranchen": [
+    {"anteil": 0.7, "de": "70 % Material, bei Vertragsunterzeichnung", "fr": "70 % matériel, à la signature du contrat", "faellig": "unterschrift", "tage": 10},
+    {"anteil": 0.3, "de": "30 % nach Inbetriebnahme", "fr": "30 % après la mise en service"}]}'),
+  ('zahlungskondition', '100', '100 % bei Unterzeichnung', '100 % à la signature', -5, '{"tranchen": [
     {"anteil": 1, "de": "100 % bei Vertragsunterzeichnung", "fr": "100 % à la signature du contrat", "faellig": "unterschrift", "tage": 10}]}'),
-  ('zahlungskondition', '55_45', '55 / 45 (AGB)', '55 / 45 (CG)', -2, '{"tranchen": [
+  ('zahlungskondition', '55_45', '55 / 45 (AGB)', '55 / 45 (CG)', -4, '{"tranchen": [
     {"anteil": 0.55, "de": "55 % bei Vertragsunterzeichnung", "fr": "55 % à la signature du contrat", "faellig": "unterschrift", "tage": 10},
     {"anteil": 0.45, "de": "45 % nach Inbetriebnahme", "fr": "45 % après la mise en service"}]}'),
-  ('zahlungskondition', 'anzahlung', 'Eigene Anzahlung (CHF)', 'Acompte libre (CHF)', -1, '{"tranchen": [
+  ('zahlungskondition', 'anzahlung', 'Eigene Anzahlung (CHF)', 'Acompte libre (CHF)', -3, '{"tranchen": [
     {"betrag": true, "de": "Anzahlung bei Vertragsunterzeichnung", "fr": "Acompte à la signature du contrat", "faellig": "unterschrift", "tage": 10},
-    {"anteil": 1, "de": "Saldo nach Inbetriebnahme", "fr": "Solde après la mise en service"}]}')
+    {"anteil": 1, "de": "Saldo nach Inbetriebnahme", "fr": "Solde après la mise en service"}]}'),
+  ('zahlungskondition', 'eigene', 'Eigene Raten', 'Échéances libres', -2, '{"eigene": true, "tranchen": []}')
 on conflict do nothing;
 
 -- Wer unterschreibt und wer Ansprechperson ist, sind Daten (Administration ändert sie in den Werkverträgen).
+-- Telefon: deutscher Vertrag mit der Hauptnummer Muri, französischer mit der Hauptnummer Bulle (Chris 31.10.2026).
 insert into public.einstellungen (schluessel, wert) values ('werkvertrag', $j${
-  "unterzeichner": "Erich Rosenberg",
+  "unterzeichner": "Chris Rosenberg",
   "ansprechperson": "Chris Rosenberg",
-  "telefon": null,
+  "telefon_de": "+41 56 552 11 25",
+  "telefon_fr": "+41 26 919 13 00",
   "email": "info@dimension-solaire.ch",
   "adresse": "Luzernerstrasse 35, 5630 Muri / Chemin des Crêts 4, 1630 Bulle",
-  "kondition_pv": "normal",
+  "kondition_pv": "40_30_30",
   "kondition_batterie": "70_30"
 }$j$) on conflict do nothing;
 
@@ -41,8 +50,38 @@ language sql immutable set search_path = '' as $$ select (round(p_rappen / 100) 
 grant execute on function public.runde_franken(numeric) to authenticated;
 
 /**
+ * Eigene Raten [{text, prozent}] als Tranchen: Bezeichnung in beiden Sprachen gleich, erste Rate 10 Tage nach
+ * Unterzeichnung fällig (sie ist die Anzahlungsrechnung). Zusammen genau 100 %, jede Rate mit Text, höchstens 6.
+ */
+create or replace function intern.eigene_tranchen(p_raten jsonb) returns jsonb
+language plpgsql immutable set search_path = '' as $$
+declare
+  t jsonb := '[]';
+  summe numeric := 0;
+  r jsonb;
+  i int := 0;
+begin
+  if jsonb_typeof(p_raten) is distinct from 'array' or jsonb_array_length(p_raten) = 0
+     or jsonb_array_length(p_raten) > 6 then
+    raise exception using message = 'auftrag.raten_fehlen';
+  end if;
+  for r in select value from jsonb_array_elements(p_raten) loop
+    if nullif(trim(coalesce(r ->> 'text', '')), '') is null then raise exception using message = 'auftrag.raten_text'; end if;
+    if coalesce((r ->> 'prozent')::numeric, 0) <= 0 then raise exception using message = 'auftrag.raten_summe'; end if;
+    summe := summe + (r ->> 'prozent')::numeric;
+    t := t || jsonb_build_array(jsonb_build_object('anteil', (r ->> 'prozent')::numeric / 100,
+           'de', trim(r ->> 'text'), 'fr', trim(r ->> 'text')) ||
+           case when i = 0 then '{"faellig": "unterschrift", "tage": 10}'::jsonb else '{}'::jsonb end);
+    i := i + 1;
+  end loop;
+  if summe <> 100 then raise exception using message = 'auftrag.raten_summe'; end if;
+  return t;
+end
+$$;
+
+/**
  * Zahlungsplan aus Vertragswert und Zahlungsbedingung. p_zahlung: {"kondition": "70_30"} oder
- * {"kondition": "anzahlung", "anzahlung_rappen": 400000}. Jede Rate auf ganze Franken, die letzte nimmt
+ * {"kondition": "anzahlung", "anzahlung_rappen": 400000} oder {"kondition": "eigene", "raten": [{"text", "prozent"}]}. Jede Rate auf ganze Franken, die letzte nimmt
  * den Rest, damit die Summe genau stimmt. Eine Anzahlung ab dem Vertragswert ergibt eine einzige Rate.
  */
 create or replace function public.zahlungsplan_vorschlag(p_wert bigint, p_zahlung jsonb, p_sprache text,
@@ -61,6 +100,9 @@ begin
   select eigenschaften -> 'tranchen' into t from public.auswahlwerte
    where liste = 'zahlungskondition' and schluessel = kond and aktiv and geloescht_am is null;
   if t is null then raise exception using message = 'auftrag.kondition_unbekannt'; end if;
+  if kond = 'eigene' then
+    t := intern.eigene_tranchen(p_zahlung -> 'raten');
+  end if;
   if t -> 0 ? 'betrag' then
     if fix is null or fix <= 0 then raise exception using message = 'auftrag.anzahlung_fehlt'; end if;
     if fix >= p_wert then t := jsonb_build_array(t -> 0 || '{"anteil": 1}'); end if;
@@ -102,6 +144,23 @@ language sql immutable set search_path = '' as $$
      and v <> '""'::jsonb and v <> 'null'::jsonb
 $$;
 
+-- Fahrplan: Projekte aus «Auftrag erstellen» bekamen bisher keine Ablauf-Vorlage und damit keinen Fahrplan.
+-- Batterie ohne PV-Leistung = Speicher-Nachrüstung, sonst Photovoltaik (wie der Import).
+create or replace function intern.ablauf_fuer_offerte(o public.offerten) returns uuid
+language sql stable security definer set search_path = '' as $$
+  select id from public.ablauf_vorlagen
+   where geloescht_am is null and aktiv
+     and schluessel = case when nullif(trim(coalesce(o.batterie, '')), '') is not null
+                                and coalesce(o.leistung_kwp, 0) = 0 then 'speicher' else 'pv' end
+   limit 1
+$$;
+
+update public.projekte p
+   set ablauf_vorlage_id = coalesce(
+         (select intern.ablauf_fuer_offerte(o) from public.offerten o where o.id = p.offerte_id),
+         (select id from public.ablauf_vorlagen where schluessel = 'pv' and geloescht_am is null))
+ where p.ablauf_vorlage_id is null and p.geloescht_am is null;
+
 /**
  * Auftrag erstellen (V232), erweitert: p.kondition (Vorlage oder «anzahlung» mit p.anzahlung_rappen) und
  * p.angaben (Texte des Vertrags). Sonst wie bisher: Offerte angenommen, Projekt, Zahlungsplan (nur solange
@@ -128,7 +187,8 @@ begin
   if o.status in ('verloren', 'archiviert') then raise exception using message = 'auftrag.offerte_verloren'; end if;
   if wert is null or wert <= 0 then raise exception using message = 'auftrag.wert_fehlt'; end if;
   zahlung := jsonb_strip_nulls(jsonb_build_object('kondition', kond,
-               'anzahlung_rappen', case when kond = 'anzahlung' then nullif(p ->> 'anzahlung_rappen', '')::bigint end));
+               'anzahlung_rappen', case when kond = 'anzahlung' then nullif(p ->> 'anzahlung_rappen', '')::bigint end,
+               'raten', case when kond = 'eigene' then p -> 'raten' end));
   -- Prüft die Bedingung, bevor etwas gespeichert wird (z. B. Anzahlung fehlt).
   perform 1 from public.zahlungsplan_vorschlag(wert, zahlung, 'de', unterz);
   std := coalesce(nullif(p ->> 'standort_id', '')::uuid, o.standort_id);
@@ -142,14 +202,16 @@ begin
   select * into pr from public.projekte where offerte_id = o.id and geloescht_am is null order by erstellt_am desc limit 1;
   if pr.id is null then
     insert into public.projekte (nummer, kontakt_id, objekt_id, offerte_id, verkaufschance_id, titel, status, standort_id,
-                                 verantwortlich_id, unterzeichnet_am, vertragswert_rappen, vertrag_sprache, zahlungskonditionen)
+                                 verantwortlich_id, unterzeichnet_am, vertragswert_rappen, vertrag_sprache, zahlungskonditionen,
+                                 ablauf_vorlage_id)
     values (case when exists (select 1 from public.projekte where nummer = o.nummer) then o.nummer || '-A' else o.nummer end,
             o.kontakt_id, o.objekt_id, o.id, o.verkaufschance_id, o.titel, 'auftrag', std,
-            o.verantwortlich_id, unterz, wert, spr, kond)
+            o.verantwortlich_id, unterz, wert, spr, kond, intern.ablauf_fuer_offerte(o))
     returning * into pr;
   else
     update public.projekte set standort_id = std, unterzeichnet_am = unterz, vertragswert_rappen = wert,
-           vertrag_sprache = spr, zahlungskonditionen = kond
+           vertrag_sprache = spr, zahlungskonditionen = kond,
+           ablauf_vorlage_id = coalesce(ablauf_vorlage_id, intern.ablauf_fuer_offerte(o))
      where id = pr.id returning * into pr;
   end if;
 
@@ -298,3 +360,19 @@ begin
   return new;
 end
 $$;
+
+-- ---------- Eigene Unterschrift (Chris 31.10.2026) ----------
+-- Jede Person legt ihre Unterschrift selbst ab (Mein Konto) und setzt sie in Dokumente ein, die sie aus dem
+-- CRM unterschreibt. Privater Speicher, Ordner = Person; nur die Person selbst liest und ändert ihn, auch die
+-- Administration nicht (eine Unterschrift setzt nur, wer sie besitzt).
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('unterschriften', 'unterschriften', false, 1048576, array['image/png'])
+on conflict (id) do nothing;
+create policy "unterschrift lesen" on storage.objects for select to authenticated
+  using (bucket_id = 'unterschriften' and (storage.foldername(name))[1] = intern.meine_person_id()::text);
+create policy "unterschrift ablegen" on storage.objects for insert to authenticated
+  with check (bucket_id = 'unterschriften' and (storage.foldername(name))[1] = intern.meine_person_id()::text);
+create policy "unterschrift ersetzen" on storage.objects for update to authenticated
+  using (bucket_id = 'unterschriften' and (storage.foldername(name))[1] = intern.meine_person_id()::text);
+create policy "unterschrift entfernen" on storage.objects for delete to authenticated
+  using (bucket_id = 'unterschriften' and (storage.foldername(name))[1] = intern.meine_person_id()::text);

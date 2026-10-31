@@ -31,9 +31,17 @@ export interface KonditionTranche {
 }
 
 /** Zahlungsbedingung am Vertrag: Vorlage (70_30, 100 …) oder eigene Anzahlung in Rappen. */
+/** Eine eigene Rate: Bezeichnung (im Vertrag und auf der Rechnung) und Anteil in Prozent. */
+export interface EigeneRate {
+  text: string
+  prozent: number
+}
+
 export interface Zahlung {
   kondition: string
   anzahlung_rappen?: number
+  /** Nur bei «eigene»: frei festgelegte Raten, zusammen 100 %. */
+  raten?: EigeneRate[]
 }
 
 /** Angaben im Vertrag (Seite 1 und 2 der Vorlage Muri); leere Felder nehmen den Vorschlag aus der Offerte. */
@@ -61,7 +69,10 @@ export interface Anzahlung {
 export interface WerkvertragEinstellung {
   unterzeichner: string
   ansprechperson: string
-  telefon: string | null
+  /** Hauptnummer im deutschen Vertrag (Muri). */
+  telefon_de: string | null
+  /** Hauptnummer im französischen Vertrag (Bulle). */
+  telefon_fr: string | null
   email: string | null
   adresse: string
   kondition_pv: string

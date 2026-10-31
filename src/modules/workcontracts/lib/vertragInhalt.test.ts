@@ -48,12 +48,13 @@ export const BEISPIEL: Werkvertrag = {
 }
 
 export const EINSTELLUNG: WerkvertragEinstellung = {
-  unterzeichner: 'Erich Rosenberg',
+  unterzeichner: 'Chris Rosenberg',
   ansprechperson: 'Chris Rosenberg',
-  telefon: null,
+  telefon_de: '+41 56 552 11 25',
+  telefon_fr: '+41 26 919 13 00',
   email: 'info@dimension-solaire.ch',
   adresse: 'Luzernerstrasse 35, 5630 Muri / Chemin des Crêts 4, 1630 Bulle',
-  kondition_pv: 'normal',
+  kondition_pv: '40_30_30',
   kondition_batterie: '70_30',
 }
 
@@ -69,8 +70,9 @@ describe('Werkvertrag nach Vorlage Muri', () => {
       ['70 % à la signature du contrat :', "CHF 7'000.00"],
       ['30 % après la mise en service :', "CHF 3'000.01"],
     ])
-    expect(v.unterzeichner).toBe('Erich Rosenberg')
+    expect(v.unterzeichner).toBe('Chris Rosenberg')
     expect(v.firmaOrtDatum).toBe('Lieu, date : Bulle, 31.10.2026')
+    expect(v.unternehmer[3]?.[1]).toBe('+41 26 919 13 00')
     expect(v.agb).toHaveLength(20)
   })
 
@@ -82,5 +84,6 @@ describe('Werkvertrag nach Vorlage Muri', () => {
     expect(v.abschnitt3).toBe('3. Werklohn (Preis)')
     expect(v.termine[0]?.[1]).toBe('nach Absprache')
     expect(v.agb[0]?.[0]).toBe('1. Einleitung')
+    expect(v.unternehmer[3]?.[1]).toBe('+41 56 552 11 25')
   })
 })

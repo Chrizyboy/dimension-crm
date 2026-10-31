@@ -15,7 +15,7 @@ import type { WerkvertragEinstellung } from '../types'
 
 /**
  * Einstellungen der Werkverträge (nur Administration): wer für Dimension Solaire unterschreibt, Ansprechperson,
- * Telefon, Mail und Adresse im Vertrag, und welche Zahlungsbedingung bei PV und bei Batterien vorgeschlagen wird.
+ * Telefon (deutscher und französischer Vertrag), Mail und Adresse, und welche Zahlungsbedingung bei PV und bei Batterien vorgeschlagen wird.
  */
 export default function EinstellungDialog({
   einstellung,
@@ -36,7 +36,12 @@ export default function EinstellungDialog({
   async function speichern() {
     setLaeuft(true)
     try {
-      await speichereEinstellung({ ...e, telefon: e.telefon?.trim() || null, email: e.email?.trim() || null })
+      await speichereEinstellung({
+        ...e,
+        telefon_de: e.telefon_de?.trim() || null,
+        telefon_fr: e.telefon_fr?.trim() || null,
+        email: e.email?.trim() || null,
+      })
       await qc.invalidateQueries({ queryKey: VERTRAG_SCHLUESSEL })
       melde('ok', { de: 'Einstellungen gespeichert', fr: 'Réglages enregistrés' })
       onSchliessen()
@@ -47,7 +52,7 @@ export default function EinstellungDialog({
     }
   }
 
-  const feld = (k: 'unterzeichner' | 'ansprechperson' | 'telefon' | 'email' | 'adresse') => (
+  const feld = (k: 'unterzeichner' | 'ansprechperson' | 'telefon_de' | 'telefon_fr' | 'email' | 'adresse') => (
     <Feld id={`wv-${k}`} label={t(`werkvertraege.einstellung.${k}`)} className={k === 'adresse' ? 'sm:col-span-2' : ''}>
       <Input
         id={`wv-${k}`}
@@ -82,7 +87,8 @@ export default function EinstellungDialog({
         <div className="grid gap-4 sm:grid-cols-2">
           {feld('unterzeichner')}
           {feld('ansprechperson')}
-          {feld('telefon')}
+          {feld('telefon_de')}
+          {feld('telefon_fr')}
           {feld('email')}
           {feld('adresse')}
           <Feld id="wv-pv" label={t('werkvertraege.einstellung.konditionPv')}>

@@ -144,6 +144,20 @@
       "verbinden": "Mit Microsoft verbinden",
       "testen": "Verbindung prüfen",
       "trennen": "Trennen"
+    },
+    "unterschrift": {
+      "titel": "Meine Unterschrift",
+      "text": "Für Dokumente, die du aus dem CRM unterschreibst (z. B. Werkverträge). Nur du siehst und verwendest sie.",
+      "bild": "Deine Unterschrift",
+      "keine": "Noch keine Unterschrift hinterlegt.",
+      "zeichnen": "Zeichnen",
+      "hochladen": "Bild hochladen",
+      "entfernen": "Entfernen",
+      "zeichnenTitel": "Unterschrift zeichnen",
+      "zeichnenText": "Mit Maus, Finger oder Stift in der weissen Fläche unterschreiben.",
+      "neu": "Neu beginnen",
+      "uebernehmen": "Übernehmen",
+      "flaeche": "Fläche zum Unterschreiben"
     }
   },
   "fehler": {
@@ -1514,7 +1528,14 @@
       "anzahlungFehlt": "Bitte den Betrag der Anzahlung angeben.",
       "imVertrag": "Im Vertrag",
       "bearbeiten": "Werkvertrag bearbeiten",
-      "speichern": "Speichern"
+      "speichern": "Speichern",
+      "raten": "Raten",
+      "rateText": "Bezeichnung Rate {{nr}}",
+      "rateProzent": "Prozent Rate {{nr}}",
+      "rateHinzu": "Rate hinzufügen",
+      "rateEntfernen": "Rate {{nr}} entfernen",
+      "ratenSumme": "Zusammen {{summe}} % – es müssen genau 100 % sein.",
+      "ratenHinweis": "Die erste Rate ist die Anzahlung (fällig 10 Tage nach Unterzeichnung)."
     },
     "felder": {
       "gegenstand": "Gegenstand (Zeile unter den Parteien)",
@@ -1541,18 +1562,22 @@
         "keinRecht": "Rechnungen stellen braucht das Recht «Finanzen».",
         "schonVerrechnet": "Schon verrechnet (z. B. in AbaNinja) {{nummer}}: bitte jene Rechnung von Hand anhängen.",
         "keinPlan": "Noch kein Zahlungsplan."
-      }
+      },
+      "mitUnterschrift": "Mit meiner Unterschrift unterschreiben",
+      "unterschriftHinweis": "Deine Unterschrift steht im Kasten «Unterschrift Dimension Solaire», dein Name darunter.",
+      "keineUnterschrift": "Noch keine Unterschrift hinterlegt: unter Mein Konto › Meine Unterschrift. Ohne sie bleibt der Kasten leer."
     },
     "einstellung": {
       "titel": "Einstellungen",
       "beschreibung": "Gilt für alle neuen Werkverträge (nur Administration).",
       "unterzeichner": "Unterschreibt für Dimension Solaire",
       "ansprechperson": "Ansprechperson im Vertrag",
-      "telefon": "Telefon im Vertrag",
       "email": "E-Mail im Vertrag",
       "adresse": "Adresse im Vertrag",
       "konditionPv": "Vorschlag Zahlung bei PV",
-      "konditionBatterie": "Vorschlag Zahlung bei Batterie"
+      "konditionBatterie": "Vorschlag Zahlung bei Batterie",
+      "telefon_de": "Telefon im deutschen Vertrag",
+      "telefon_fr": "Telefon im französischen Vertrag"
     }
   },
   "preise": {
@@ -1924,7 +1949,10 @@
     "auftrag_anzahlung_fehlt": "Bitte den Betrag der Anzahlung angeben.",
     "werkvertrag_anzahlung_verrechnet": "Die Anzahlung ist schon verrechnet oder bezahlt (z. B. in AbaNinja).",
     "werkvertrag_kein_zahlungsplan": "Zu diesem Vertrag gibt es noch keinen Zahlungsplan.",
-    "werkvertrag_storniert": "Der Werkvertrag ist storniert."
+    "werkvertrag_storniert": "Der Werkvertrag ist storniert.",
+    "auftrag_raten_summe": "Die Raten müssen zusammen genau 100 % ergeben.",
+    "auftrag_raten_text": "Bitte jeder Rate eine Bezeichnung geben.",
+    "auftrag_raten_fehlen": "Bitte 1 bis 6 Raten angeben."
   },
   "ausgang": {
     "titel": "Ausgangskorb",

@@ -22,9 +22,9 @@ import {
   useWerkvertragEinstellung,
 } from '../hooks/useWerkvertraege'
 import { vorschlagGegenstand, vorschlagMaterial } from '../lib/vertragInhalt'
-import { berechneZahlungsplan, vorschlagKondition } from '../lib/zahlungsplan'
+import { berechneZahlungsplan, eigeneTranchen, ratenGueltig, ratenStart, vorschlagKondition } from '../lib/zahlungsplan'
 import { erstelleAuftrag } from '../services/werkvertraege'
-import type { AuftragsOfferte, KonditionTranche, VertragAngaben } from '../types'
+import type { AuftragsOfferte, EigeneRate, KonditionTranche, VertragAngaben } from '../types'
 import { VertragFelder } from './VertragFelder'
 import { ZahlungWahl } from './ZahlungWahl'
 
@@ -53,13 +53,14 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
   const [kondition, setKondition] = useState(
     alt?.angaben.zahlung?.kondition ??
       vorschlagKondition(o, {
-        pv: einstellung?.kondition_pv ?? 'normal',
+        pv: einstellung?.kondition_pv ?? '40_30_30',
         batterie: einstellung?.kondition_batterie ?? '70_30',
       }),
   )
   const [anzahlung, setAnzahlung] = useState(
     alt?.angaben.zahlung?.anzahlung_rappen ? formatChf(alt.angaben.zahlung.anzahlung_rappen) : '',
   )
+  const [raten, setRaten] = useState<EigeneRate[]>(alt?.angaben.zahlung?.raten ?? [])
   // Die Zahlung steht oben (eigene Felder), darum nicht in den Angaben.
   const [angaben, setAngaben] = useState<VertragAngaben>(() => {
     const kopie = { ...alt?.angaben }
@@ -76,7 +77,12 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
   const spracheJetzt = sprache ?? (standort?.sprache === 'fr' ? 'fr' : o.sprache)
   const rappen = parseChf(wert)
   const anzahlungRappen = kondition === 'anzahlung' ? parseChf(anzahlung) : null
-  const tranchen = tranchenAus(konditionen.finde(kondition)?.eigenschaften)
+  const tranchen =
+    kondition === 'eigene'
+      ? ratenGueltig(raten)
+        ? eigeneTranchen(raten)
+        : []
+      : tranchenAus(konditionen.finde(kondition)?.eigenschaften)
   const vorschau =
     rappen && datum ? berechneZahlungsplan(rappen, tranchen, spracheJetzt, datum, null, anzahlungRappen) : []
   const fuerVorschlag = {
@@ -98,6 +104,7 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
       unterzeichnet_am: datum,
       werkvertrag: mitVertrag,
       anzahlung_rappen: anzahlungRappen,
+      raten: kondition === 'eigene' ? raten : null,
       angaben,
     }),
   )
@@ -110,6 +117,10 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
     }
     if (kondition === 'anzahlung' && !anzahlungRappen) {
       setFehler(t('werkvertraege.auftrag.anzahlungFehlt'))
+      return
+    }
+    if (kondition === 'eigene' && !ratenGueltig(raten)) {
+      setFehler(t('fachfehler.auftrag_raten_summe'))
       return
     }
     try {
@@ -205,9 +216,17 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
           <ZahlungWahl
             kondition={kondition}
             anzahlung={anzahlung}
+            raten={raten}
             vorschau={vorschau}
-            onKondition={setKondition}
+            onKondition={(k) => {
+              // «Eigene Raten» startet mit der bisher gewählten Vorlage, damit man nur anpasst.
+              if (k === 'eigene' && raten.length === 0) {
+                setRaten(ratenStart(tranchenAus(konditionen.finde(kondition)?.eigenschaften), spracheJetzt))
+              }
+              setKondition(k)
+            }}
             onAnzahlung={setAnzahlung}
+            onRaten={setRaten}
           />
         </AkteAbschnitt>
         {mitVertrag && (
