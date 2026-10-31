@@ -6,6 +6,7 @@ import { useOberflaeche } from '@/hooks/useOberflaeche'
 import { useTastenkuerzel } from '@/hooks/useTastenkuerzel'
 import { useUpdatePruefung } from '@/hooks/useUpdatePruefung'
 import { cn } from '@/lib/utils'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { Befehlspalette } from './Befehlspalette'
 import { KuerzelHilfe } from './KuerzelHilfe'
@@ -16,6 +17,7 @@ import { Seitenleiste } from './Seitenleiste'
 /**
  * Rahmen jeder Ansicht: Seitenleiste links (einklappbar), Kopfzeile oben, Inhalt rechts.
  * Am Handy: Leiste unten statt Seitenleiste, Menü über «Mehr».
+ * Einfache Ansicht (Monteure): ohne Seitenleiste und Handy-Leiste, nur Kopfzeile und Inhalt.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation()
@@ -24,6 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   useUpdatePruefung()
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt)
   const darstellung = useUi((z) => z.darstellung)
+  const einfach = useAnmeldung((z) => z.ich?.ansicht === 'einfach')
 
   return (
     <TooltipAnbieter delayDuration={300}>
@@ -38,23 +41,30 @@ export function AppShell({ children }: { children: ReactNode }) {
         {t('nav.zumInhalt')}
       </a>
       <div className="flex h-full">
-        <aside
-          className={cn('hidden shrink-0 transition-[width] duration-200 md:block', eingeklappt ? 'w-14' : 'w-60')}
-        >
-          <Seitenleiste />
-        </aside>
+        {!einfach && (
+          <aside
+            className={cn('hidden shrink-0 transition-[width] duration-200 md:block', eingeklappt ? 'w-14' : 'w-60')}
+          >
+            <Seitenleiste />
+          </aside>
+        )}
         <div className="flex min-w-0 flex-1 flex-col">
           <Kopfzeile />
           <main
             id="inhalt"
             tabIndex={-1}
-            className="min-h-0 flex-1 overflow-y-auto pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] outline-none md:pb-0"
+            className={cn(
+              'min-h-0 flex-1 overflow-y-auto outline-none',
+              einfach
+                ? 'pb-[env(safe-area-inset-bottom,0px)]'
+                : 'pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] md:pb-0',
+            )}
           >
             {children}
           </main>
         </div>
       </div>
-      <HandyNavigation />
+      {!einfach && <HandyNavigation />}
       <Befehlspalette />
       <KuerzelHilfe />
       <Toaster

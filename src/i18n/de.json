@@ -345,7 +345,9 @@
     "bereiche_one": "{{count}} Bereich",
     "bereiche_other": "{{count}} Bereiche",
     "personen_one": "{{count}} Person",
-    "personen_other": "{{count}} Personen"
+    "personen_other": "{{count}} Personen",
+    "einfacheAnsicht": "Einfache Ansicht (nur Arbeitszeit und Spesen)",
+    "einfacheAnsichtText": "Ohne Seitenleiste, zwei grosse Knöpfe. Für Monteure."
   },
   "pruefung": {
     "name": "Bitte einen Namen mit mindestens 2 Zeichen eingeben.",
@@ -5887,6 +5889,31 @@
       "bis": "bis {{datum}}",
       "notiz": "Notiz (nur Administration)",
       "notizHinweis": "Die Person sieht diese Notiz nicht."
+    }
+  },
+  "einfach": {
+    "titel": "Hallo {{name}}",
+    "text": "Arbeitszeit per Knopfdruck, Spesen mit Belegfoto und dein Plan.",
+    "zeit": {
+      "titel": "Arbeitszeit",
+      "baustelle": "Baustelle",
+      "ohneBaustelle": "Ohne Baustelle",
+      "heute": "Heute",
+      "woche": "Diese Woche",
+      "art": {
+        "arbeit": "Arbeit",
+        "reise": "Reise"
+      }
+    },
+    "spesen": {
+      "erfassen": "Spese erfassen",
+      "keine": "Noch keine Spesen erfasst.",
+      "offen": "Offen {{betrag}}"
+    },
+    "plan": {
+      "titel": "Mein Plan",
+      "nichts": "Nichts geplant",
+      "halbtag": "halber Tag"
     }
   }
 }

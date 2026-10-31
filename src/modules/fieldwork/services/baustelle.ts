@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabase'
 import type {
+  Abwesenheit,
   MeinTag,
   Nachtrag,
   NachtragFilter,
@@ -30,6 +31,19 @@ export async function ladeTag(von: string, bis: string, person?: string | null):
   })
   if (error) throw error
   return data as unknown as MeinTag
+}
+
+/** Eigene Abwesenheiten (Ferien, Krank, Kurs …, auch «Abwesend» aus Outlook) im Zeitraum, für «Mein Plan». */
+export async function ladeAbwesenheiten(von: string, bis: string, person: string): Promise<Abwesenheit[]> {
+  const { data, error } = await db()
+    .from('abwesenheiten_alle')
+    .select('id, art, von, bis, halbtag')
+    .eq('person_id', person)
+    .lte('von', bis)
+    .gte('bis', von)
+    .order('von')
+  if (error) throw error
+  return data as Abwesenheit[]
 }
 
 /** Ein Rapport (null, wenn er erst am Handy existiert). */

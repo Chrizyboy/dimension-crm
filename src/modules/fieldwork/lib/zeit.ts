@@ -22,6 +22,9 @@ export function heute(jetzt: Date = new Date()): string {
   return zuerich(jetzt).datum
 }
 
+/** Tage, die «Mein Plan» der Monteure zeigt (heute und die nächsten 13). */
+export const PLAN_TAGE = 14
+
 /** Datum plus/minus Tage, ohne Zeitzonen-Sprünge (Rechnung in UTC auf dem reinen Datum). */
 export function plusTage(datum: string, tage: number): string {
   const d = new Date(`${datum}T12:00:00Z`)
