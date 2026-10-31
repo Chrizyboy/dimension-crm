@@ -30,6 +30,7 @@
     "import:vorlage": "node scripts/import/import-vorlage.mjs",
     "integrationen:pruefen": "node scripts/integrationen/pruefen.mjs",
     "ausschreibungen:pruefen": "node scripts/ausschreibungen/pruefen.mjs",
+    "grossprojekte:pruefen": "node scripts/grossprojekte/pruefen.mjs",
     "marketing:pruefen": "node scripts/marketing/pruefen.mjs",
     "ki:pruefen": "node scripts/ki/pruefen.mjs",
     "messen": "node scripts/messen/lighthouse.mjs",

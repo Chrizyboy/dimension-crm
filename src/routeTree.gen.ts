@@ -16,6 +16,7 @@ import { Route as AiRouteImport } from './app/ai'
 import { Route as AutomationsRouteImport } from './app/automations'
 import { Route as BenachrichtigungenRouteImport } from './app/benachrichtigungen'
 import { Route as ContactsRouteImport } from './app/contacts'
+import { Route as ContractingRouteImport } from './app/contracting'
 import { Route as ContractsRouteImport } from './app/contracts'
 import { Route as CustomersRouteImport } from './app/customers'
 import { Route as DashboardRouteImport } from './app/dashboard'
@@ -74,6 +75,11 @@ const BenachrichtigungenRoute = BenachrichtigungenRouteImport.update({
 const ContactsRoute = ContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractingRoute = ContractingRouteImport.update({
+  id: '/contracting',
+  path: '/contracting',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContractsRoute = ContractsRouteImport.update({
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
+  '/contracting': typeof ContractingRoute
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/dashboard': typeof DashboardRoute
@@ -238,6 +245,7 @@ export interface FileRoutesByTo {
   '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
+  '/contracting': typeof ContractingRoute
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/dashboard': typeof DashboardRoute
@@ -272,6 +280,7 @@ export interface FileRoutesById {
   '/automations': typeof AutomationsRoute
   '/benachrichtigungen': typeof BenachrichtigungenRoute
   '/contacts': typeof ContactsRoute
+  '/contracting': typeof ContractingRoute
   '/contracts': typeof ContractsRoute
   '/customers': typeof CustomersRoute
   '/dashboard': typeof DashboardRoute
@@ -307,6 +316,7 @@ export interface FileRouteTypes {
     | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
+    | '/contracting'
     | '/contracts'
     | '/customers'
     | '/dashboard'
@@ -340,6 +350,7 @@ export interface FileRouteTypes {
     | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
+    | '/contracting'
     | '/contracts'
     | '/customers'
     | '/dashboard'
@@ -373,6 +384,7 @@ export interface FileRouteTypes {
     | '/automations'
     | '/benachrichtigungen'
     | '/contacts'
+    | '/contracting'
     | '/contracts'
     | '/customers'
     | '/dashboard'
@@ -407,6 +419,7 @@ export interface RootRouteChildren {
   AutomationsRoute: typeof AutomationsRoute
   BenachrichtigungenRoute: typeof BenachrichtigungenRoute
   ContactsRoute: typeof ContactsRoute
+  ContractingRoute: typeof ContractingRoute
   ContractsRoute: typeof ContractsRoute
   CustomersRoute: typeof CustomersRoute
   DashboardRoute: typeof DashboardRoute
@@ -482,6 +495,13 @@ declare module '@tanstack/react-router' {
       path: '/contacts'
       fullPath: '/contacts'
       preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contracting': {
+      id: '/contracting'
+      path: '/contracting'
+      fullPath: '/contracting'
+      preLoaderRoute: typeof ContractingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contracts': {
@@ -663,6 +683,7 @@ const rootRouteChildren: RootRouteChildren = {
   AutomationsRoute: AutomationsRoute,
   BenachrichtigungenRoute: BenachrichtigungenRoute,
   ContactsRoute: ContactsRoute,
+  ContractingRoute: ContractingRoute,
   ContractsRoute: ContractsRoute,
   CustomersRoute: CustomersRoute,
   DashboardRoute: DashboardRoute,

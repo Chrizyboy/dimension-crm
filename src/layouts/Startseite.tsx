@@ -7,6 +7,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { darfModul, hatRecht } from '@/lib/rechte'
 import { ServiceHeute, meta as serviceMeta } from '@/modules/aftersales'
 import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
+import { GrossprojekteHeute, meta as grossprojekteMeta } from '@/modules/contracting'
 import { meta as kennzahlenMeta } from '@/modules/dashboard'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
@@ -32,6 +33,7 @@ export function Startseite() {
   const mitDb = supabase !== null && ich !== null
 
   const karten = [
+    [grossprojekteMeta, GrossprojekteHeute],
     [projekteMeta, ProjekteHeute],
     [serviceMeta, ServiceHeute],
     [wartungMeta, WartungHeute],
