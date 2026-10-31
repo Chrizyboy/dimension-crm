@@ -26,5 +26,11 @@ export const Baustelle = lazy(() => import('./components/Baustelle'))
 /** Karte für die Startseite: Einsätze heute, offene Rapporte, Nachträge zum Prüfen. */
 export const BaustelleHeute = lazy(() => import('./components/HeuteKarte'))
 
+/** Stempeluhr für die einfache Monteur-Ansicht: Arbeit/Reise starten und stoppen, Summen heute und Woche. */
+export const Stempeluhr = lazy(() => import('./components/Stempeluhr'))
+
+/** «Mein Plan» für die einfache Monteur-Ansicht: Baustellen und Abwesenheiten der nächsten zwei Wochen. */
+export const MeinPlan = lazy(() => import('./components/MeinPlan'))
+
 export { REITER } from './types'
 export type * from './types'

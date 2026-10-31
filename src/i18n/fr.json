@@ -345,7 +345,9 @@
     "bereiche_one": "{{count}} domaine",
     "bereiche_other": "{{count}} domaines",
     "personen_one": "{{count}} personne",
-    "personen_other": "{{count}} personnes"
+    "personen_other": "{{count}} personnes",
+    "einfacheAnsicht": "Vue simple (uniquement temps et frais)",
+    "einfacheAnsichtText": "Sans barre latérale, deux grands boutons. Pour les monteurs."
   },
   "pruefung": {
     "name": "Merci de saisir un nom d’au moins 2 caractères.",
@@ -5637,6 +5639,31 @@
       "bis": "jusqu'au {{datum}}",
       "notiz": "Note (administration seulement)",
       "notizHinweis": "La personne ne voit pas cette note."
+    }
+  },
+  "einfach": {
+    "titel": "Bonjour {{name}}",
+    "text": "Temps de travail d’un clic, frais avec photo du justificatif et ton planning.",
+    "zeit": {
+      "titel": "Temps de travail",
+      "baustelle": "Chantier",
+      "ohneBaustelle": "Sans chantier",
+      "heute": "Aujourd’hui",
+      "woche": "Cette semaine",
+      "art": {
+        "arbeit": "Travail",
+        "reise": "Trajet"
+      }
+    },
+    "spesen": {
+      "erfassen": "Saisir des frais",
+      "keine": "Aucun frais saisi.",
+      "offen": "Ouvert {{betrag}}"
+    },
+    "plan": {
+      "titel": "Mon planning",
+      "nichts": "Rien de prévu",
+      "halbtag": "demi-journée"
     }
   }
 }

@@ -5,7 +5,7 @@ const executablePath = process.env.PW_CHROMIUM
 
 /** Tests, die die lokale Supabase brauchen; sie laufen nur gegen die Fassung mit Datenbank. */
 const MIT_DATENBANK =
-  /(anmeldung|kunden|verkauf|offerten|integrationen|ausschreibungen|projekte|einkauf|baustelle|finanzen|marketing|automationen|ki|heute|handbuch|betrieb|ressourcen)\.spec/
+  /(anmeldung|kunden|verkauf|offerten|integrationen|ausschreibungen|projekte|einkauf|baustelle|finanzen|marketing|automationen|ki|heute|handbuch|betrieb|ressourcen|monteur)\.spec/
 
 /**
  * Zwei Fassungen der App:
@@ -85,6 +85,13 @@ export default defineConfig({
       name: 'baustelle',
       testMatch: /baustelle\.spec/,
       dependencies: ['einkauf'],
+      use: { ...devices['Pixel 7'], baseURL: 'http://localhost:4174' },
+    },
+    {
+      // Monteur-Version am Handy: nur Zeit, Spesen und Plan.
+      name: 'monteur',
+      testMatch: /monteur\.spec/,
+      dependencies: ['baustelle'],
       use: { ...devices['Pixel 7'], baseURL: 'http://localhost:4174' },
     },
     {
