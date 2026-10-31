@@ -25,7 +25,8 @@ interface UiZustand {
 export const useUi = create<UiZustand>()(
   persist(
     (set) => ({
-      sprache: 'de',
+      // Erster Start: Sprache des Geräts (z. B. Französisch in Bulle), danach die zuletzt gewählte.
+      sprache: typeof navigator !== 'undefined' && navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'de',
       darstellung: 'system',
       seitenleisteEingeklappt: false,
       befehlspaletteOffen: false,

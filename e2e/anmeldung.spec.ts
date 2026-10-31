@@ -66,6 +66,24 @@ test('Admin lädt eine Person ein, die Mail geht hinaus', async ({ page }) => {
   expect((await mailAn(email)).betreff).toContain('Einladung')
 })
 
+test('Gewählte Sprache bleibt nach dem Neustart, mit passendem Logo', async ({ page }) => {
+  // Benoît hat im Profil Französisch.
+  await anmelden(page, 'buchhaltung@test.local')
+  const logoFr = page.getByRole('img', { name: /systèmes solaires intelligents/ }).first()
+  const logoDe = page.getByRole('img', { name: /smarte Solaranlagen/ }).first()
+  await expect(logoFr).toBeVisible()
+  await page.getByRole('group', { name: 'Langue' }).getByRole('button', { name: 'DE' }).click()
+  await expect(logoDe).toBeVisible()
+  // Beim Start übernimmt die App die Sprache aus dem Profil; die Wahl muss dort gespeichert sein.
+  await page.waitForTimeout(500)
+  await page.reload()
+  await expect(logoDe).toBeVisible()
+  await page.getByRole('group', { name: 'Sprache' }).getByRole('button', { name: 'FR' }).click()
+  await page.waitForTimeout(500)
+  await page.reload()
+  await expect(logoFr).toBeVisible()
+})
+
 test('Abmelden führt zurück zur Anmeldung', async ({ page }) => {
   await anmelden(page, 'verkauf@test.local')
   await page.getByRole('button', { name: 'Konto und Einstellungen' }).click()
