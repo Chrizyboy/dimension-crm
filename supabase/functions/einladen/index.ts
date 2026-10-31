@@ -83,7 +83,8 @@ Deno.serve(async (req) => {
     // 4. Einladungs-Mail. Hat die Person schon ein Login, braucht sie keine Mail mehr.
     const mail = await rufe(url, '/auth/v1/invite', dienstKey, dienst, {
       email: eingabe.email,
-      data: { name: eingabe.name },
+      // Die Einladung kommt nur in der Sprache der Person (Vorlage wählt nach .Data.sprache).
+      data: { name: eingabe.name, sprache: eingabe.sprache },
     })
     if (!mail.ok) {
       const schonDa = mail.status === 422

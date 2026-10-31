@@ -4,7 +4,7 @@
 @import '@fontsource-variable/jetbrains-mono';
 
 /*
- * Design-Tokens von Dimension CRM.
+ * Design-Tokens von Dimension Work.
  * Marke (aus dem Logo gemessen): Sonnen-Orange #EF7C00, Marineblau #02224F.
  * Schriften wie in der Vorlage V233: Schibsted Grotesk (Titel), Public Sans (Text), JetBrains Mono (Zahlen, Nummern).
  * Alle Farben sind Tokens; Komponenten verwenden nie feste Farbwerte. Hell/Dunkel über .dark auf <html>.
