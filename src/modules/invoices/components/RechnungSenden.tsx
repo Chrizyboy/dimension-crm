@@ -8,7 +8,8 @@ import { formatChf, formatDatum } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useNeuLaden } from '../hooks/useRechnungen'
-import { rechnungPdf, rechnungPdfAblegen } from '../services/rechnungPdf'
+import { rechnungPdf } from '@/services/rechnungPdf'
+import { rechnungPdfAblegen } from '@/services/rechnungsdaten'
 import type { RechnungVoll } from '../types'
 
 /**
