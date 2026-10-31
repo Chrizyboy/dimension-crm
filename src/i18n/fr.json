@@ -5950,7 +5950,9 @@
     "oeffnen": "Dossier dans SharePoint",
     "wirdAngelegt": "Dossier en création",
     "wirdVerschoben": "Dossier (en déplacement)",
-    "fehler": "Dossier : erreur"
+    "fehler": "Dossier : erreur",
+    "person": "Connexion Microsoft de (abréviation)",
+    "personHinweis": "Cette personne doit avoir accès à la bibliothèque et être connectée à Microsoft."
   },
   "zust": {
     "reiter": "Responsabilités",

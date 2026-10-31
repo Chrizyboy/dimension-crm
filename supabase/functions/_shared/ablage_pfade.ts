@@ -8,6 +8,8 @@ export interface AblageEinstellung {
   aktiv: boolean
   aktiv_seit: string | null
   bibliothek?: string
+  /** Kürzel der Person, deren Microsoft-Verbindung die Ablage nutzt (braucht Zugriff auf die Bibliothek). */
+  person?: string
   name?: string
   standorte: Record<string, { offerten: string; auftraege: string; verloren: string }>
   unterordner: Record<string, string>

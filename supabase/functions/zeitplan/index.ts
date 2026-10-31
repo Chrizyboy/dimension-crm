@@ -201,10 +201,7 @@ Deno.serve(async (req) => {
       })
     })
     // Ablage vor der Sicherung: Dateien von Offerten und Projekten gehören in deren Ordner, nicht ins Kunden-Backup.
-    ergebnis.ablage = await job('ablage', 5, async () => {
-      const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
-      return p ? ablageAbarbeiten(p.person_id, s) : 'keine verbundene Person'
-    })
+    ergebnis.ablage = await job('ablage', 5, () => ablageAbarbeiten(s))
     ergebnis.sicherung = await job('sicherung', 30, async () => {
       const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
       if (!p) return 'keine verbundene Person'

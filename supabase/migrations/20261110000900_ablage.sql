@@ -3,12 +3,14 @@
 -- Neu legt Dimension Work den Ordner einer Offerte selbst an (mit den 10 Unterordnern), verschiebt ihn bei
 -- Annahme zu den Aufträgen und bei Verlust ins Archiv und legt Dateien aus dem CRM in den passenden Unterordner.
 -- Die Arbeit mit Microsoft macht der Zeitplan (Edge Function, _shared/ablage.ts); hier stehen nur Regeln und Stand.
--- Standard «aus»: Erst wenn die Administration die Ablage einschaltet, zählt sie, und nur für Offerten ab dann
--- (aktiv_seit). Alte Ordner bleiben, wie sie sind.
+-- Eingeschaltet ab dem Start am Montag 2.11.2026 (Chris: «Alles ab Montag»), nur für Offerten ab dann (aktiv_seit)
+-- und nie für Übernommenes aus der Vorlage (alt_id): alte Ordner bleiben, wie sie sind. Die Microsoft-Verbindung
+-- nimmt die Person «person» (Kürzel), sonst die erste verbundene.
 
 insert into public.einstellungen (schluessel, wert) values ('ablage', $json${
-  "aktiv": false,
-  "aktiv_seit": null,
+  "aktiv": true,
+  "aktiv_seit": "2026-11-02T00:00:00+01:00",
+  "person": "chris",
   "bibliothek": "Public",
   "name": "{nummer} - {kunde} - {ort}",
   "standorte": {
@@ -18,9 +20,9 @@ insert into public.einstellungen (schluessel, wert) values ('ablage', $json${
       "verloren": "BULLE/Archives -Perdus"
     },
     "muri": {
-      "offerten": "MURI/2. DEVIS - OFFERTE/{jahr}",
+      "offerten": "MURI/2. DEVIS - OFFERTE/Kundentermin/Vor-Ort-Termin/{jahr}",
       "auftraege": "MURI/1. ADJUDICATION - AUFTRÄGE/{jahr}",
-      "verloren": "MURI/2. DEVIS - OFFERTE/Verloren - Perdus"
+      "verloren": "MURI/2. DEVIS - OFFERTE/Kundentermin/Archiv"
     }
   },
   "unterordner": {
@@ -115,7 +117,7 @@ declare
   seit timestamptz := intern.ablage_seit();
 begin
   if tg_op = 'INSERT' then
-    if seit is not null and new.geloescht_am is null and new.erstellt_am >= seit then
+    if seit is not null and new.geloescht_am is null and new.erstellt_am >= seit and new.alt_id is null then
       insert into public.ablage_ordner (offerte_id, soll) values (new.id, intern.ablage_soll(new.entscheid))
       on conflict (offerte_id) do nothing;
     end if;
@@ -137,7 +139,7 @@ language plpgsql security definer set search_path = '' as $$
 begin
   update public.ablage_ordner set projekt_id = new.id, soll = 'auftrag'
    where offerte_id = new.offerte_id and new.offerte_id is not null and projekt_id is null;
-  if not found and intern.ablage_seit() is not null and new.erstellt_am >= intern.ablage_seit()
+  if not found and new.alt_id is null and intern.ablage_seit() is not null and new.erstellt_am >= intern.ablage_seit()
      and not exists (select 1 from public.ablage_ordner where offerte_id = new.offerte_id) then
     insert into public.ablage_ordner (projekt_id, soll) values (new.id, 'auftrag') on conflict do nothing;
   end if;

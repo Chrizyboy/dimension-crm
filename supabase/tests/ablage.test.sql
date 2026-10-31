@@ -3,7 +3,7 @@
 -- verschiebt Pfade der Dateien mit; Dateien gehen in die Ablage statt ins Kunden-Backup; Rechte.
 -- Ausführen: npm run db:test
 begin;
-select plan(17);
+select plan(18);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000030a1', 'p30-vk@test.local');
@@ -13,7 +13,7 @@ insert into public.kontakte (id, art, kontaktart, vorname, nachname) values
   ('00000000-0000-0000-0000-0000000030c1', 'person', 'privat', 'Lea', 'Beispiel');
 insert into public.objekte (kontakt_id, ort) values ('00000000-0000-0000-0000-0000000030c1', 'Riaz');
 
--- Aus: keine Ordner
+-- Vor dem Start (aktiv_seit 2.11.2026) bzw. aus: keine Ordner
 insert into public.offerten (id, nummer, kontakt_id, sprache) values
   ('00000000-0000-0000-0000-0000000030d0', 'T30-0', '00000000-0000-0000-0000-0000000030c1', 'fr');
 select is((select count(*)::int from public.ablage_ordner), 0, 'Ablage aus: kein Ordner');
@@ -28,6 +28,10 @@ update public.offerten set entscheid = 'vertagt' where id = '00000000-0000-0000-
 select is((select count(*)::int from public.ablage_ordner where offerte_id = '00000000-0000-0000-0000-0000000030d0'), 0,
   'Offerte von vorher bleibt aussen vor');
 
+insert into public.offerten (id, nummer, kontakt_id, sprache, alt_id) values
+  ('00000000-0000-0000-0000-0000000030d9', 'T30-9', '00000000-0000-0000-0000-0000000030c1', 'fr', 'test30-import');
+select is((select count(*)::int from public.ablage_ordner where offerte_id = '00000000-0000-0000-0000-0000000030d9'), 0,
+  'Übernommenes aus der Vorlage bekommt keinen Ordner');
 select is((select count(*)::int from public.ablage_offen(10) o where o.nummer = 'T30-1'), 1, 'Server sieht den Ordner');
 select is((select o.kunde || ' | ' || o.ort || ' | ' || o.standort from public.ablage_offen(10) o where o.nummer = 'T30-1'),
   'Lea Beispiel | Riaz | bulle', 'Name, Ort aus dem Objekt, Standort aus der Sprache');

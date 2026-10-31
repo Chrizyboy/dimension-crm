@@ -135,10 +135,25 @@ async function dateiAblegen(
   }
 }
 
+/** Person für die Ablage: die eingestellte (Kürzel), wenn sie mit Microsoft verbunden ist, sonst die erste verbundene. */
+async function ablagePerson(e: AblageEinstellung): Promise<string | null> {
+  const verbundene = (await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})).map((p) => p.person_id)
+  if (e.person) {
+    const [p] = await dienst.lies<{ id: string }[]>(
+      `personen?kuerzel=eq.${encodeURIComponent(e.person)}&aktiv=is.true&select=id`,
+    )
+    if (p && verbundene.includes(p.id)) return p.id
+  }
+  return verbundene[0] ?? null
+}
+
 /** Ein Lauf: erst Ordner anlegen/verschieben, dann Dateien einordnen. Meldung für das Zeitplan-Protokoll. */
-export async function ablageAbarbeiten(personId: string, s: MsEinstellungen, limit = 10): Promise<string> {
+export async function ablageAbarbeiten(s: MsEinstellungen, limit = 10): Promise<string> {
   const e = await ablageEinstellung()
   if (!e) return 'aus'
+  if (e.aktiv_seit && Date.parse(e.aktiv_seit) > Date.now()) return `ab ${e.aktiv_seit.slice(0, 10)}`
+  const personId = await ablagePerson(e)
+  if (!personId) return 'keine verbundene Person'
   const laufwerk = await laufwerkId(personId, { ...s, sharepoint_bibliothek: e.bibliothek ?? 'Public' })
   const cache = new Map<string, Eintrag>()
   const offen = await dienst.rpc<OffenerOrdner[]>('ablage_offen', { p_limit: limit })

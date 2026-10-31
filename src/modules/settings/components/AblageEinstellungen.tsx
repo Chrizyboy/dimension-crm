@@ -99,6 +99,16 @@ function AblageFormular({
               }}
             />
           </Feld>
+          <Feld id="ablage-person" label={t('ablage.person')} hinweis={t('ablage.personHinweis')}>
+            <Input
+              id="ablage-person"
+              value={w.person ?? ''}
+              placeholder="chris"
+              onChange={(x) => {
+                setW({ ...w, person: x.target.value })
+              }}
+            />
+          </Feld>
           <Feld id="ablage-name" label={t('ablage.name')} hinweis={t('ablage.nameHinweis')}>
             <Input
               id="ablage-name"

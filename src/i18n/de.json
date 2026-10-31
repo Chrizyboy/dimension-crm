@@ -5950,7 +5950,9 @@
     "oeffnen": "Ordner in SharePoint",
     "wirdAngelegt": "Ordner wird angelegt",
     "wirdVerschoben": "Ordner (wird verschoben)",
-    "fehler": "Ordner: Fehler"
+    "fehler": "Ordner: Fehler",
+    "person": "Microsoft-Verbindung von (Kürzel)",
+    "personHinweis": "Diese Person braucht Zugriff auf die Bibliothek und muss mit Microsoft verbunden sein."
   },
   "zust": {
     "reiter": "Zuständigkeiten",
