@@ -267,7 +267,7 @@ subject = "Dein Anmeldecode · Ton code de connexion"
 content_path = "./supabase/templates/anmeldecode.html"
 
 [auth.email.template.invite]
-subject = "Einladung ins Dimension CRM · Invitation au CRM Dimension"
+subject = "Einladung in Dimension Work · Invitation à Dimension Work"
 content_path = "./supabase/templates/einladung.html"
 
 [auth.sms]

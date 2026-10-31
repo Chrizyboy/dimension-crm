@@ -9,7 +9,7 @@ import { DienstFehler, leseJson, rufe, type AufrufOptionen, type Bytes } from '.
 import { entschluessle, pkceChallenge, verschluessle, zufall } from './krypto.ts'
 import { brauche, env } from './umgebung.ts'
 
-/** Delegierte Rechte (Entra-App «Dimension CRM»). Team-Postfächer und info@ über Stellvertretung (.Shared). */
+/** Delegierte Rechte (Entra-App «Dimension Work»). Team-Postfächer und info@ über Stellvertretung (.Shared). */
 export const BEREICHE = [
   'offline_access',
   'openid',

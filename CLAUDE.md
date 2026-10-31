@@ -1,4 +1,4 @@
-# CLAUDE.md – Dimension CRM
+# CLAUDE.md – Dimension Work
 
 CRM/ERP für Dimension Solaire (Photovoltaik und Wärmepumpen, Standorte Muri GmbH und Bulle Sàrl).
 Desktop-App für Windows (Tauri 2) und Handy/Browser (PWA), Daten in Supabase (Frankfurt).

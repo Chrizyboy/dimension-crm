@@ -70,5 +70,5 @@ test('Abmelden führt zurück zur Anmeldung', async ({ page }) => {
   await anmelden(page, 'verkauf@test.local')
   await page.getByRole('button', { name: 'Konto und Einstellungen' }).click()
   await page.getByRole('menuitem', { name: 'Abmelden' }).click()
-  await expect(page.getByRole('heading', { name: 'Anmelden' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Bei Dimension Work anmelden' })).toBeVisible()
 })
