@@ -2995,6 +2995,7 @@ export type Database = {
           alt_id: string | null
           angereichert_am: string | null
           anreicherung: string | null
+          ansprechperson: Json | null
           art: string | null
           ausschluss: string | null
           ausschreibung_id: string | null
@@ -3033,6 +3034,9 @@ export type Database = {
           quell_id: string | null
           quell_url: string
           quelle: string
+          recherche: Json | null
+          recherche_am: string | null
+          recherche_stand: string | null
           schaetzung: NonNullable<Json>
           sprache: string
           stand: string
@@ -3040,6 +3044,7 @@ export type Database = {
           strasse: string | null
           stromertrag_kwh: number | null
           titel: string
+          verantwortlich_id: string | null
           verkaufschance_id: string | null
           waermeleistung_kw: number | null
           wiedervorlage_am: string | null
@@ -3051,6 +3056,7 @@ export type Database = {
           alt_id?: string | null
           angereichert_am?: string | null
           anreicherung?: string | null
+          ansprechperson?: Json | null
           art?: string | null
           ausschluss?: string | null
           ausschreibung_id?: string | null
@@ -3089,6 +3095,9 @@ export type Database = {
           quell_id?: string | null
           quell_url: string
           quelle?: string
+          recherche?: Json | null
+          recherche_am?: string | null
+          recherche_stand?: string | null
           schaetzung?: NonNullable<Json>
           sprache?: string
           stand?: string
@@ -3096,6 +3105,7 @@ export type Database = {
           strasse?: string | null
           stromertrag_kwh?: number | null
           titel: string
+          verantwortlich_id?: string | null
           verkaufschance_id?: string | null
           waermeleistung_kw?: number | null
           wiedervorlage_am?: string | null
@@ -3106,6 +3116,7 @@ export type Database = {
           alt_id?: string | null
           angereichert_am?: string | null
           anreicherung?: string | null
+          ansprechperson?: Json | null
           art?: string | null
           ausschluss?: string | null
           ausschreibung_id?: string | null
@@ -3144,6 +3155,9 @@ export type Database = {
           quell_id?: string | null
           quell_url?: string
           quelle?: string
+          recherche?: Json | null
+          recherche_am?: string | null
+          recherche_stand?: string | null
           schaetzung?: NonNullable<Json>
           sprache?: string
           stand?: string
@@ -3151,6 +3165,7 @@ export type Database = {
           strasse?: string | null
           stromertrag_kwh?: number | null
           titel?: string
+          verantwortlich_id?: string | null
           verkaufschance_id?: string | null
           waermeleistung_kw?: number | null
           wiedervorlage_am?: string | null
@@ -3176,6 +3191,13 @@ export type Database = {
             columns: ['standort_id']
             isOneToOne: false
             referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -9965,6 +9987,19 @@ export type Database = {
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
       grossprojekt_aus_suche: { Args: { p: Json; p_meldung?: string }; Returns: string }
       grossprojekt_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
+      grossprojekt_in_vorrat: { Args: { p: Json; p_meldung?: string }; Returns: boolean }
+      grossprojekt_recherche_anfordern: { Args: { p_id: string }; Returns: undefined }
+      grossprojekt_recherche_offen: { Args: { p_limit?: number }; Returns: Json }
+      grossprojekt_recherche_speichern: {
+        Args: { p_ergebnis: Json; p_fehler?: string; p_id: string }
+        Returns: undefined
+      }
+      grossprojekt_recherche_uebernehmen: {
+        Args: { p_ansprechperson: Json; p_bauherr: string; p_bauherr_art: string; p_id: string }
+        Returns: undefined
+      }
+      grossprojekt_recherche_zurueck: { Args: { p_id: string }; Returns: undefined }
+      grossprojekt_schritte_als_aufgaben: { Args: { p_id: string; p_schritte: Json }; Returns: number }
       grossprojekt_speichern: { Args: { p: Json }; Returns: string }
       grossprojekt_suche_kachel_fertig: {
         Args: { p_gebaeude: number; p_kachel: string; p_kandidaten: number; p_treffer: number }
@@ -9972,6 +10007,8 @@ export type Database = {
       }
       grossprojekt_suche_naechste: { Args: { p_anzahl?: number }; Returns: Json }
       grossprojekt_suche_stand: { Args: Record<PropertyKey, never>; Returns: Json }
+      grossprojekt_verantwortlich_setzen: { Args: { p_id: string; p_person: string }; Returns: undefined }
+      grossprojekt_vorrat_freigeben: { Args: Record<PropertyKey, never>; Returns: number }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_speichern: {

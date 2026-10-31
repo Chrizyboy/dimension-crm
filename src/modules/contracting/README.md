@@ -22,7 +22,8 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
 ## Daten
 
 - Besitzt: `grossprojekte`, Einstellung `grossprojekte` (mit `suche`), Fortschritt der Dachsuche in
-  `intern.gp_suchkacheln`, Verlauf in `aktivitaeten.grossprojekt_id`.
+  `intern.gp_suchkacheln`, Vorrat in `intern.gp_suchvorrat` (pro Woche nur die besten), Recherche und Ansprechperson in
+  `grossprojekte.recherche`/`ansprechperson`, verantwortlich in `grossprojekte.verantwortlich_id`, Verlauf in `aktivitaeten.grossprojekt_id`.
 - Schreibt über Datenbank-Funktionen in: `verkaufschancen` und `kontakte` (`lead_anlegen`), `benachrichtigungen`.
 - Liest: `standorte`, `plz_verzeichnis`, `ausschreibungen` (Verknüpfung zum Dossier).
 
@@ -39,6 +40,7 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
 ## Ordner
 
 - `components/` – Seite, Liste, Akte, Punkte und Schätzung, Erfassen, Entscheid, Annahmen, Stand der Dachsuche,
+  Suchgebiet, Recherche (Eigentümer, Ansprechperson, Schritte), verantwortlich,
   Karte für «Mein Tag»
 - `hooks/` – Daten laden (`useGrossprojekte`), Änderungen mit Fehlermeldung (`useAktion`)
 - `services/` – Zugriff auf Supabase und die Server-Funktion

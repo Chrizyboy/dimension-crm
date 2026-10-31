@@ -52,7 +52,8 @@ const gebiet = [
     gklas: 1251,
     gkat: 1060,
     garea: 2400,
-    gkode: 2669517.2,
+    // Eigener Ort je Lauf: Frühere Läufe liegen im Papierkorb, und am gleichen Ort nimmt die Suche nichts doppelt auf.
+    gkode: 2669517.2 + (parseInt(LAUF, 16) % 40) * 40,
     gkodn: 1237488.6,
     strname: ['Hallenweg'],
     deinr: ['3'],
@@ -247,6 +248,13 @@ try {
   sql(`insert into intern.zeitplan_laeufe (job, zuletzt_am, ok, meldung) values ('datensicherung', now(), true, 'im Test übersprungen')
        on conflict (job) do update set zuletzt_am = now(), ok = true, meldung = 'im Test übersprungen'`)
   sql(`update intern.zeitplan_laeufe set zuletzt_am = null where job = 'grossprojekte'`)
+  // Pro Woche gehen nur die besten aus dem Vorrat in die Liste: für den Test Platz schaffen (am Schluss zurück).
+  const proWoche = sql(
+    `select coalesce(wert #>> '{suche,pro_woche}', '10') from public.einstellungen where schluessel = 'grossprojekte'`,
+  )
+  sql(
+    `update public.einstellungen set wert = jsonb_set(wert, '{suche,pro_woche}', '1000') where schluessel = 'grossprojekte'`,
+  )
   const zweites = neu('zeitplan', {
     strasse: `Industriestrasse ${LAUF}`,
     plz: '5630',
@@ -286,7 +294,18 @@ try {
       `select quelle || '/' || stand || '/' || dachflaeche_m2 || '/' || nutzung || '/' || heizung
          from public.grossprojekte where egid = '${HALLE}'`,
     ) === 'suche/pruefen/1600/industrie/gas',
-    'Dachsuche: grosse Industriehalle mit Dach und Heizung aufgenommen',
+    'Dachsuche: grosse Industriehalle über den Vorrat in die Liste',
+  )
+  ok(
+    sql(`select freigegeben_am is not null from intern.gp_suchvorrat where egid = '${HALLE}'`) === 't',
+    'Vorrat: Halle als freigegeben vermerkt',
+  )
+  ok(
+    sql(`select recherche_stand from public.grossprojekte where egid = '${HALLE}'`) === 'wartet',
+    'neues Grossprojekt wartet auf die Recherche',
+  )
+  sql(
+    `update public.einstellungen set wert = jsonb_set(wert, '{suche,pro_woche}', '${proWoche}') where schluessel = 'grossprojekte'`,
   )
   ok(
     sql(`select count(*) from public.grossprojekte where egid = '${HALLE}'`) === '1',
@@ -317,6 +336,9 @@ try {
     `update public.grossprojekte set geloescht_am = now() where quell_id like 'ersatz-${LAUF}-%' or egid = '${HALLE}'`,
   )
   sql(`delete from intern.gp_suchkacheln where geprueft_am >= '${START}'`)
+  sql(`update public.einstellungen set wert = jsonb_set(wert, '{suche,pro_woche}', '10')
+        where schluessel = 'grossprojekte' and wert #>> '{suche,pro_woche}' = '1000'`)
+  sql(`delete from intern.gp_suchvorrat where egid = '${HALLE}' or gefunden_am >= '${START}'`)
   const beendet = new Promise((r) => serve.once('exit', r))
   process.kill(-serve.pid, 'SIGINT')
   await Promise.race([beendet, warte(15000)])
