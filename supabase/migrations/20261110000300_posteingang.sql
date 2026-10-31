@@ -201,7 +201,8 @@ $$;
 
 /**
  * Wer ist zuständig? Zuerst wer den Fall, das Projekt oder den Lead betreut, dann die Einstellung je Art und Sprache
- * (Kürzel), zuletzt die Person, in deren Postfach die Mail liegt.
+ * (Kürzel), bei Anfragen und Kunden der Verkauf nach Sprache (Zuständigkeiten), zuletzt die Person, in deren
+ * Postfach die Mail liegt.
  */
 create or replace function intern.pe_zustaendig(r public.posteingang, p_cfg jsonb) returns uuid
 language plpgsql stable security definer set search_path = '' as $$
@@ -227,12 +228,18 @@ begin
   v := coalesce(v,
                 intern.pe_person(p_cfg -> 'zustaendig' -> coalesce(r.art, 'sonstiges') ->> sprache),
                 intern.pe_person(p_cfg -> 'zustaendig' -> 'standard' ->> sprache),
+                -- Anfragen und Kunden ohne eigene Regel: Verkauf nach Sprache aus einstellungen.zustaendigkeiten
+                -- (Chris 31.10.2026: Französisch Filipe, Deutsch Loris; Abwesenheit dort schon berücksichtigt)
+                case when r.art in ('anfrage', 'kunde') then intern.verkauf_zustaendig(sprache, null, null, null) end,
                 r.postfach_person_id);
   return v;
 end
 $$;
 
-/** Ist die Person jetzt abwesend (Outlook «abwesend»)? Dann die eingestellte Stellvertretung, sonst sie selbst. */
+/**
+ * Ist die Person jetzt abwesend (Outlook «abwesend» oder Abwesenheit im CRM)? Dann die Stellvertretung, sonst sie
+ * selbst.
+ */
 create or replace function intern.pe_vertretung(p_person uuid, p_cfg jsonb) returns uuid
 language plpgsql stable security definer set search_path = '' as $$
 declare
@@ -242,11 +249,15 @@ begin
   if p_person is null then return null; end if;
   if not exists (select 1 from public.kalender_eintraege k
                   where k.person_id = p_person and k.geloescht_am is null and k.anzeige_als = 'oof'
-                    and k.beginn <= now() and k.ende > now()) then
+                    and k.beginn <= now() and k.ende > now())
+     and not intern.abwesend(p_person) then
     return p_person;
   end if;
   select p.kuerzel into kuerzel from public.personen p where p.id = p_person;
-  v := intern.pe_person(p_cfg -> 'vertretung' ->> kuerzel);
+  -- Eigene Stellvertretung des Posteingangs, sonst die aus den Zuständigkeiten (Entscheid 0032)
+  v := coalesce(intern.pe_person(p_cfg -> 'vertretung' ->> kuerzel),
+                intern.pe_person((select e.wert -> 'stellvertretung' ->> kuerzel
+                                    from public.einstellungen e where e.schluessel = 'zustaendigkeiten')));
   return coalesce(v, p_person);
 end
 $$;

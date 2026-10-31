@@ -1,4 +1,4 @@
-# 0031 – Posteingang mit Antwortfristen
+# 0033 – Posteingang mit Antwortfristen
 
 **Kontext:** Chris wünschte am 31.10.2026 einen Bereich, der alle eingehenden Mails «richtig organisiert und die
 wichtigen Dinge ins CRM zieht», für bessere Administration und Reaktionszeit: «die Kunden dürfen nicht im Stich

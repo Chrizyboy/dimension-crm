@@ -8496,6 +8496,7 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          angaben: NonNullable<Json>
           betrag_rappen: number | null
           dokument_id: string | null
           erstellt_am: string
@@ -8522,6 +8523,7 @@ export type Database = {
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          angaben?: NonNullable<Json>
           betrag_rappen?: number | null
           dokument_id?: string | null
           erstellt_am?: string
@@ -8547,6 +8549,7 @@ export type Database = {
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          angaben?: NonNullable<Json>
           betrag_rappen?: number | null
           dokument_id?: string | null
           erstellt_am?: string
@@ -10060,20 +10063,24 @@ export type Database = {
       }
       werkvertraege_liste: {
         Row: {
+          angaben: Json | null
           angebot_am: string | null
           anrede: string | null
           anzahl_module: number | null
+          anzahlung: Json | null
           batterie: string | null
           baubeginn: string | null
           betrag_rappen: number | null
           email: string | null
           erstellt_datum: string | null
+          firma_email: string | null
           firma_id: string | null
           firma_mwst_nr: string | null
           firma_name: string | null
           firma_ort: string | null
           firma_plz: string | null
           firma_strasse: string | null
+          firma_telefon: string | null
           geaendert_am: string | null
           id: string | null
           kontakt_firma: string | null
@@ -10788,6 +10795,7 @@ export type Database = {
         Returns: Json
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
+      runde_franken: { Args: { p_rappen: number }; Returns: number }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
@@ -10951,9 +10959,19 @@ export type Database = {
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
+      werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       zahlungsplan_berechnen: {
         Args: { p_baubeginn?: string; p_kondition: string; p_sprache: string; p_unterzeichnet: string; p_wert: number }
+        Returns: {
+          betrag_rappen: number
+          bezeichnung: string
+          faellig_am: string
+          nr: number
+        }[]
+      }
+      zahlungsplan_vorschlag: {
+        Args: { p_baubeginn?: string; p_sprache: string; p_unterzeichnet: string; p_wert: number; p_zahlung: Json }
         Returns: {
           betrag_rappen: number
           bezeichnung: string

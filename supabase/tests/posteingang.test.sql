@@ -4,7 +4,7 @@
 -- persönlicher Mails, Änderungen nur über posteingang_setzen, Einstellung nur Administration.
 -- Ausführen: npm run db:test
 begin;
-select plan(31);
+select plan(32);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000018a1', 'pe-anna@test.local'),
@@ -92,6 +92,18 @@ select is((select zustaendig_id::text || '/' || vertretung_fuer::text from publi
   '00000000-0000-0000-0000-0000000018b1/00000000-0000-0000-0000-0000000018b2', 'Französisch → Ben, abwesend → Anna');
 select is((select frist_am from public.posteingang where kennung = '<pe5@x>'), '2026-11-02 13:00+01'::timestamptz,
   'Anfrage: 4 Arbeitsstunden');
+
+-- Ohne eigene Regel im Posteingang: Anfragen gehen an den Verkauf nach Sprache (einstellungen.zustaendigkeiten)
+update public.einstellungen set wert = wert #- '{zustaendig,standard,de}' where schluessel = 'posteingang';
+update public.einstellungen set wert = wert || '{"verkauf": [{"sprache": "de", "person": "pe_chef"}]}'::jsonb
+ where schluessel = 'zustaendigkeiten';
+select public.posteingang_aufnehmen('00000000-0000-0000-0000-0000000018b1', 'me', $j$[
+  {"kennung": "<pe6@x>", "outlook_id": "o6", "eingang_am": "2026-11-02T09:00:00+01:00", "von": "neu.pe@gmail.com",
+   "betreff": "Offerte Solaranlage"}]$j$);
+select public.posteingang_sortieren((select id from public.posteingang where kennung = '<pe6@x>'),
+  '{"art": "anfrage", "sprache": "de", "antwort_noetig": true, "zusammenfassung": "Will eine Offerte"}');
+select is((select zustaendig_id from public.posteingang where kennung = '<pe6@x>'), '00000000-0000-0000-0000-0000000018b3'::uuid,
+  'Deutsche Anfrage ohne eigene Regel → Verkauf Deutsch aus den Zuständigkeiten');
 
 -- Beantwortet: gesendete Mail im gleichen Verlauf (auch direkt aus Outlook)
 select is(public.posteingang_antworten('[{"konversation": "k1", "von": "pe-ben@dimension-solaire.ch",

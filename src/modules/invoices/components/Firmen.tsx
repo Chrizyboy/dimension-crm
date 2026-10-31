@@ -11,7 +11,7 @@ import { finanzEinstellungenSpeichern, useFinanzEinstellungen } from '@/hooks/us
 import { formatChf, parseChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { useFirmen } from '../hooks/useRechnungen'
-import { ibanAnzeige, ibanPruefen } from '../lib/qr'
+import { ibanAnzeige, ibanPruefen } from '@/lib/rechnung'
 import { firmaSpeichern } from '../services/rechnungen'
 import type { Firma } from '../types'
 
