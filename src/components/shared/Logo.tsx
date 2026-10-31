@@ -7,26 +7,36 @@ interface LogoProps {
   variante?: 'auto' | 'aufDunkel'
 }
 
+const CLAIM = { de: 'Smarte Solaranlagen', fr: 'Systèmes solaires intelligents' }
+
 /**
- * Offizielles Logo von Dimension Solaire mit Claim in der aktuellen Sprache
- * (DE «Smarte Solaranlagen», FR «Systèmes solaires intelligents»).
- * Beide Farbvarianten werden geladen und per CSS umgeschaltet, damit «System» ohne Flackern funktioniert.
+ * Logo der App «Dimension Work» (Chris 31.10.2026): das Signet von Dimension Solaire mit dem App-Namen als
+ * Schriftzug daneben, darunter Firma und Claim in der aktuellen Sprache. Drucksachen für Kunden behalten das
+ * Firmenlogo (`public/logo/`), weil sie von Dimension Solaire kommen, nicht von der App.
  */
 export function Logo({ className, variante = 'auto' }: LogoProps) {
   const sprache = useUi((z) => z.sprache)
-  const alt =
-    sprache === 'fr' ? 'Dimension Solaire – systèmes solaires intelligents' : 'Dimension Solaire – smarte Solaranlagen'
-  if (variante === 'aufDunkel') {
-    return (
-      <span className={cn('inline-flex', className)}>
-        <img src={`./logo/logo-dunkel-${sprache}.png`} alt={alt} className="h-full w-auto" />
-      </span>
-    )
-  }
+  const dunkel = variante === 'aufDunkel'
   return (
-    <span className={cn('inline-flex', className)}>
-      <img src={`./logo/logo-hell-${sprache}.png`} alt={alt} className="h-full w-auto dark:hidden" />
-      <img src={`./logo/logo-dunkel-${sprache}.png`} alt={alt} className="hidden h-full w-auto dark:block" />
+    <span
+      role="img"
+      aria-label={`Dimension Work – Dimension Solaire, ${CLAIM[sprache]}`}
+      className={cn('inline-flex items-center gap-2', className)}
+    >
+      <img src="./icon.svg" alt="" className="aspect-square h-full w-auto shrink-0" />
+      <span aria-hidden="true" className="flex flex-col justify-center leading-none whitespace-nowrap">
+        <span
+          className={cn(
+            'text-[1.05rem] font-bold tracking-tight',
+            dunkel ? 'text-sidebar-foreground' : 'text-foreground',
+          )}
+        >
+          Dimension <span className={dunkel ? 'text-accent' : 'text-accent-ink'}>Work</span>
+        </span>
+        <span className={cn('mt-0.5 text-xs', dunkel ? 'text-sidebar-muted' : 'text-muted-foreground')}>
+          Dimension Solaire · {CLAIM[sprache]}
+        </span>
+      </span>
     </span>
   )
 }
