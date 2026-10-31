@@ -7004,6 +7004,7 @@ export type Database = {
           aktiv: boolean
           alt_daten: Json | null
           alt_id: string | null
+          ansicht: string
           bereiche: string[]
           beschreibung_de: string | null
           beschreibung_fr: string | null
@@ -7023,6 +7024,7 @@ export type Database = {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          ansicht?: string
           bereiche?: string[]
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
@@ -7041,6 +7043,7 @@ export type Database = {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          ansicht?: string
           bereiche?: string[]
           beschreibung_de?: string | null
           beschreibung_fr?: string | null

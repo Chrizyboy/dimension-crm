@@ -22,6 +22,7 @@ import { NeueAufgabeKnopf } from '@/modules/tasks'
 import { MeinTag } from '@/modules/today'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { supabase } from '@/services/supabase'
+import { EinfachStart } from './EinfachStart'
 import { Systemstatus } from './Systemstatus'
 
 /**
@@ -32,6 +33,7 @@ export function Startseite() {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const mitDb = supabase !== null && ich !== null
+  if (ich?.ansicht === 'einfach') return <EinfachStart />
 
   const karten = [
     [grossprojekteMeta, GrossprojekteHeute],
