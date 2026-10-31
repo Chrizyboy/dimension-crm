@@ -11,6 +11,8 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
 ## So läuft es
 
 1. Jede Meldung von simap und dem Amtsblatt (Ausschreibungs-Monitor) wird auch hier geprüft; dazu von Hand erfasst.
+   Dazu die **Dachsuche**: stündlich einige Gebiete um Muri und Bulle, grosse Gebäude mit viel Verbrauch aus dem
+   Gebäuderegister, Dach von sonnendach.ch; aufgenommen wird nur, was genug Punkte hat (Nachtrag in Entscheid 0029).
 2. Der Server holt mit Adresse oder Parzelle Dach (sonnendach.ch) und Heizung (Gebäuderegister), sofort nach dem
    Erfassen und sonst stündlich.
 3. Die Datenbank rechnet Punkte und Schätzung bei jedem Speichern neu (`intern.gp_bewerten`).
@@ -19,7 +21,8 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
 
 ## Daten
 
-- Besitzt: `grossprojekte`, Einstellung `grossprojekte`, Verlauf in `aktivitaeten.grossprojekt_id`.
+- Besitzt: `grossprojekte`, Einstellung `grossprojekte` (mit `suche`), Fortschritt der Dachsuche in
+  `intern.gp_suchkacheln`, Verlauf in `aktivitaeten.grossprojekt_id`.
 - Schreibt über Datenbank-Funktionen in: `verkaufschancen` und `kontakte` (`lead_anlegen`), `benachrichtigungen`.
 - Liest: `standorte`, `plz_verzeichnis`, `ausschreibungen` (Verknüpfung zum Dossier).
 
@@ -35,7 +38,8 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
 
 ## Ordner
 
-- `components/` – Seite, Liste, Akte, Punkte und Schätzung, Erfassen, Entscheid, Annahmen, Karte für «Mein Tag»
+- `components/` – Seite, Liste, Akte, Punkte und Schätzung, Erfassen, Entscheid, Annahmen, Stand der Dachsuche,
+  Karte für «Mein Tag»
 - `hooks/` – Daten laden (`useGrossprojekte`), Änderungen mit Fehlermeldung (`useAktion`)
 - `services/` – Zugriff auf Supabase und die Server-Funktion
 - `lib/` – Anzeige-Hilfen (Stufen, Grösse, Adresse, Kartenlink)
