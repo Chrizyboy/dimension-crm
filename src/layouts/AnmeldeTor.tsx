@@ -1,12 +1,13 @@
 import { LockKeyhole, LogOut } from 'lucide-react'
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Logo } from '@/components/shared/Logo'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
-import { abmelden } from '@/services/anmeldung'
+import { abmelden, speichereMeineSprache } from '@/services/anmeldung'
 import { useAnmeldung } from '@/stores/anmeldung'
+import type { Sprache } from '@/types/modul'
 import { useUi } from '@/stores/ui'
 import { Anmeldeseite } from './Anmeldeseite'
 
@@ -19,8 +20,14 @@ export function AnmeldeTor({ children }: { children: ReactNode }) {
   const { status, ich, loginEmail } = useAnmeldung()
   const { setSprache, setDarstellung } = useUi()
 
+  const sprache = useUi((z) => z.sprache)
+  const gerade = useRef(false)
+  const imProfil = useRef<Sprache | null>(null)
+
   useEffect(() => {
     if (!ich) return
+    gerade.current = true
+    imProfil.current = ich.sprache
     setSprache(ich.sprache)
     if (ich.darstellung === 'hell' || ich.darstellung === 'dunkel' || ich.darstellung === 'system') {
       setDarstellung(ich.darstellung)
@@ -28,6 +35,18 @@ export function AnmeldeTor({ children }: { children: ReactNode }) {
     // Nur beim Wechsel der Person, nicht bei jeder Änderung danach.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ich?.id])
+
+  // Wechselt die Person die Sprache (Kopfzeile, Menü, Befehl), kommt sie ins Profil. Sonst stellt der nächste
+  // Start wieder die alte Sprache ein, samt Logo. Die Übernahme beim Start selbst wird nicht zurückgeschrieben.
+  useEffect(() => {
+    if (gerade.current) {
+      gerade.current = false
+      return
+    }
+    if (!ich || imProfil.current === null || sprache === imProfil.current) return
+    imProfil.current = sprache
+    void speichereMeineSprache(sprache).catch(() => null)
+  }, [sprache, ich])
 
   if (status === 'laden') {
     return (

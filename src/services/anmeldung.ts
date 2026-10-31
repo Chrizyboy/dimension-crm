@@ -1,4 +1,5 @@
 import type { MeineAnmeldung } from '@/types/anmeldung'
+import type { Sprache } from '@/types/modul'
 import { supabase } from './supabase'
 
 /** Fehlerarten, die die Anmeldeseite verständlich anzeigt. */
@@ -79,6 +80,13 @@ export async function ladeMeineAnmeldung(): Promise<MeineAnmeldung | null> {
   const { data, error } = await supabase.rpc('meine_anmeldung')
   if (error) throw error
   return (data as MeineAnmeldung | null) ?? null
+}
+
+/** Hält die gewählte Sprache im eigenen Profil fest, damit sie beim nächsten Start und auf dem Handy gleich ist. */
+export async function speichereMeineSprache(sprache: Sprache): Promise<void> {
+  if (!supabase) return
+  const { error } = await supabase.rpc('aendere_mein_konto', { p_profil: {}, p_sprache: sprache })
+  if (error) throw error
 }
 
 /** Meldet ab; lokale Daten der Sitzung werden von Supabase entfernt. */
