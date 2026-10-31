@@ -184,8 +184,11 @@ export function pruefeVerkauf(b, alt, neu) {
     b.vergleiche('Offerten', nr, 'Strasse', p.street, ob?.strasse)
     b.vergleiche('Offerten', nr, 'Ort', p.ort, ob?.ort)
 
-    const auftrag = WON.includes(p.statusKey) || !!t(p.unterzeichnetAm)
-    const pr = neu.nachAltId.projekte.get(`project:${p.id}`)
+    // Wie der Import: ein Unterschriftsdatum allein zählt nicht, wenn die Ablage den Stand zurückgesetzt hat.
+    const auftrag = WON.includes(p.statusKey) || (!!t(p.unterzeichnetAm) && p._statusVorlage === undefined)
+    // Im Papierkorb (z. B. nach der Ablage-Korrektur nicht mehr gewonnen) zählt als nicht vorhanden.
+    const prAlle = neu.nachAltId.projekte.get(`project:${p.id}`)
+    const pr = prAlle?.geloescht_am ? undefined : prAlle
     if (!b.vergleiche('Projekte', nr, 'vorhanden', auftrag, !!pr)) continue
     if (!pr) continue
     b.vergleiche(
