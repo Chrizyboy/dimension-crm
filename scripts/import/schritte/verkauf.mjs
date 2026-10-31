@@ -2,6 +2,7 @@
 
 import { text, zuDatum, zuGanzzahl, zuJaNein, zuOrtszeit, zuZeitstempel } from '../umwandeln.mjs'
 import { alleLeads, objektVon } from './kunden.mjs'
+import { leadStandort } from '../v233.mjs'
 
 /** @typedef {import('../import-vorlage.mjs').Kontext} Kontext */
 
@@ -36,6 +37,8 @@ export async function importiereVerkauf(k) {
         eingang_am: zuDatum(l.rec) ?? zuDatum(l.createdAt),
         zustaendig: text(l.zu),
         erstkontakt_standort: text(l.erst),
+        // Wie V233 leadStandort; die Datenbank-Regel (zuständig, sonst Erstkontakt) wiche bei «Andy» ab.
+        standort_id: k.ids.standorte.get(leadStandort(l).toLowerCase()) ?? null,
         zugewiesen_von: text(l.zuvon),
         region_id: region(k, l.tour),
         tour_person_id: k.person(l.tourPerson),

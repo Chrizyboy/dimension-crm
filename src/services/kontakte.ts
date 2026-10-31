@@ -1,6 +1,7 @@
 import type { Database } from '@/types/datenbank'
 import type { Kontaktzeile } from '@/types/kontakt'
 import { supabase } from './supabase'
+import { alleSeiten } from './seiten'
 
 type Zeile = Database['public']['Views']['kunden_uebersicht']['Row']
 
@@ -54,10 +55,10 @@ export function kontaktAusZeile(z: Zeile): Kontaktzeile {
  * weil das bei einigen tausend Kontakten sofort reagiert und offline weiter geht.
  */
 export async function ladeKontakte({ papierkorb = false }: { papierkorb?: boolean } = {}): Promise<Kontaktzeile[]> {
-  let abfrage = db().from('kunden_uebersicht').select('*').order('name')
-  abfrage = papierkorb ? abfrage.not('geloescht_am', 'is', null) : abfrage.is('geloescht_am', null)
-  const { data, error } = await abfrage
-  if (error) throw error
+  const data = await alleSeiten((von, bis) => {
+    const abfrage = db().from('kunden_uebersicht').select('*').order('name').order('id')
+    return (papierkorb ? abfrage.not('geloescht_am', 'is', null) : abfrage.is('geloescht_am', null)).range(von, bis)
+  })
   return data.map(kontaktAusZeile)
 }
 

@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabase'
 import type { Betrieb, Fakt, PipelineZeile } from '../types'
+import { alleSeiten } from '@/services/seiten'
 
 /** Datenzugriff «Kennzahlen». Gezählt wird in der Datenbank-Sicht der Person (RLS), gerechnet in der App. */
 function db() {
@@ -9,8 +10,17 @@ function db() {
 
 /** Alle Detail-Zeilen des Zeitraums (Leads, Offerten, Zahlungen, Fälle). */
 export async function ladeFakten(von: string, bis: string): Promise<Fakt[]> {
-  const { data, error } = await db().rpc('kennzahlen_fakten', { p_von: von, p_bis: bis })
-  if (error) throw error
+  // Über 1000 Zeilen (Zeitraum «Alles») liefert die Schnittstelle nur seitenweise; Reihenfolge eindeutig machen.
+  const data = await alleSeiten((a, b) =>
+    db()
+      .rpc('kennzahlen_fakten', { p_von: von, p_bis: bis })
+      .order('schluessel')
+      .order('id')
+      .order('datum')
+      .order('ort')
+      .order('betrag_rappen')
+      .range(a, b),
+  )
   return data as Fakt[]
 }
 
