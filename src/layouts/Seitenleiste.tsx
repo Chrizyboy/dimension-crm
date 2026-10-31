@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Logo } from '@/components/shared/Logo'
+import { Logo, SIGNET } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
@@ -13,7 +13,11 @@ import { useUi } from '@/stores/ui'
 
 const LINK =
   'flex h-[30px] items-center gap-2.5 rounded-md px-2 text-[13px] text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-active/70 hover:text-sidebar-active-foreground focus-visible:ring-2 focus-visible:ring-ring'
-const AKTIV = { className: '!bg-sidebar-active !text-sidebar-active-foreground font-medium [&_svg]:!text-sun' }
+// Variante C (Chris 31.10.2026): Blau wie bisher, Orange als Akzent: Linie links am aktiven Punkt, Icon orange.
+const AKTIV = {
+  className:
+    'relative !bg-sidebar-active !text-sidebar-active-foreground font-medium [&_svg]:!text-accent before:absolute before:inset-y-1 before:left-0 before:w-[3px] before:rounded-full before:bg-accent',
+}
 
 /**
  * Linke Navigation in Marineblau: Module nach Gruppen wie in der Vorlage.
@@ -50,14 +54,15 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
     <div className="bg-sidebar text-sidebar-foreground flex h-full flex-col">
       <div
         className={cn(
-          'border-sidebar-border flex h-12 shrink-0 items-center border-b',
+          // Orange Linie unter dem Logo (Variante C); «!», weil die Grundregel «* { border-color }» ausserhalb der Ebenen steht.
+          '!border-accent flex h-12 shrink-0 items-center border-b-2',
           eingeklappt ? 'justify-center' : 'px-4',
         )}
       >
         {eingeklappt ? (
-          <img src="./icon.svg" alt="Dimension Solaire" className="size-7" />
+          <img src={SIGNET} alt="Dimension Work" className="size-7" />
         ) : (
-          <Logo variante="aufDunkel" className="h-8" />
+          <Logo variante="aufDunkel" kurz className="h-7" />
         )}
       </div>
 

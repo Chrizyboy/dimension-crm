@@ -12,6 +12,7 @@ import {
   MenueTitel,
   MenueTrenner,
 } from '@/components/ui/menue'
+import { Logo, SIGNET } from '@/components/shared/Logo'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { abmelden } from '@/services/anmeldung'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -26,23 +27,27 @@ export function Kopfzeile() {
   const ich = useAnmeldung((z) => z.ich)
   const navigate = useNavigate()
   const name = ich?.name ?? t('konto.vorschau')
+  // Einfache Ansicht (Monteure): keine Seitenleiste und keine Suche, das Logo steht immer hier.
+  const einfach = ich?.ansicht === 'einfach'
 
   return (
     <header className="bg-surface flex h-12 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
       {/* Am Handy fehlt die Seitenleiste mit dem Logo, deshalb hier das Zeichen. */}
-      <img src="./icon.svg" alt="Dimension Solaire" className="size-7 md:hidden" />
+      {einfach ? <Logo kurz className="h-7" /> : <img src={SIGNET} alt="Dimension Work" className="size-7 md:hidden" />}
 
-      <button
-        type="button"
-        onClick={() => {
-          setBefehlspalette(true)
-        }}
-        className="bg-surface-2 text-muted-foreground hover:border-border-strong focus-visible:ring-ring flex h-8 max-w-md min-w-0 flex-1 items-center gap-2 rounded-md border px-2.5 text-sm transition-colors outline-none focus-visible:ring-2"
-      >
-        <Search className="size-4 shrink-0" aria-hidden="true" />
-        <span className="flex-1 truncate text-left">{t('nav.suchen')}</span>
-        <Kbd className="hidden sm:inline-flex">{kuerzelText('k')}</Kbd>
-      </button>
+      {!einfach && (
+        <button
+          type="button"
+          onClick={() => {
+            setBefehlspalette(true)
+          }}
+          className="bg-surface-2 text-muted-foreground hover:border-border-strong focus-visible:ring-ring flex h-8 max-w-md min-w-0 flex-1 items-center gap-2 rounded-md border px-2.5 text-sm transition-colors outline-none focus-visible:ring-2"
+        >
+          <Search className="size-4 shrink-0" aria-hidden="true" />
+          <span className="flex-1 truncate text-left">{t('nav.suchen')}</span>
+          <Kbd className="hidden sm:inline-flex">{kuerzelText('k')}</Kbd>
+        </button>
+      )}
 
       <div className="ml-auto flex items-center gap-1">
         <div

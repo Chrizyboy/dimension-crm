@@ -252,6 +252,7 @@ export type Database = {
           erstellt_von: string | null
           geaendert_am: string
           geloescht_am: string | null
+          grossprojekt_id: string | null
           id: string
           kontakt_id: string | null
           mail_kennung: string | null
@@ -275,6 +276,7 @@ export type Database = {
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          grossprojekt_id?: string | null
           id?: string
           kontakt_id?: string | null
           mail_kennung?: string | null
@@ -297,6 +299,7 @@ export type Database = {
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          grossprojekt_id?: string | null
           id?: string
           kontakt_id?: string | null
           mail_kennung?: string | null
@@ -314,6 +317,13 @@ export type Database = {
             columns: ['ausschreibung_id']
             isOneToOne: false
             referencedRelation: 'ausschreibungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aktivitaeten_grossprojekt_id_fkey'
+            columns: ['grossprojekt_id']
+            isOneToOne: false
+            referencedRelation: 'grossprojekte'
             referencedColumns: ['id']
           },
           {
@@ -2975,6 +2985,211 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      grossprojekte: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          angereichert_am: string | null
+          anreicherung: string | null
+          art: string | null
+          ausschluss: string | null
+          ausschreibung_id: string | null
+          bauherr: string | null
+          bauherr_art: string | null
+          baujahr: number | null
+          beschreibung: string | null
+          dach_klasse: number | null
+          dachflaeche_m2: number | null
+          egid: string | null
+          entschieden_am: string | null
+          entschieden_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          fahrzeit_min: number | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gemeinde: string | null
+          gemeldet_am: string | null
+          geschuetzt: boolean
+          grund: string | null
+          heizung: string | null
+          heizung_jahr: number | null
+          heizungsersatz: boolean
+          id: string
+          kanton: string | null
+          lage_e: number | null
+          lage_n: number | null
+          notiz: string | null
+          nummer: string | null
+          nutzung: string | null
+          parzelle: string | null
+          plz: string | null
+          punkte: number
+          punkte_details: NonNullable<Json>
+          quell_id: string | null
+          quell_url: string
+          quelle: string
+          schaetzung: NonNullable<Json>
+          sprache: string
+          stand: string
+          standort_id: string | null
+          strasse: string | null
+          stromertrag_kwh: number | null
+          titel: string
+          verkaufschance_id: string | null
+          waermeleistung_kw: number | null
+          wiedervorlage_am: string | null
+          wohnungen: number | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angereichert_am?: string | null
+          anreicherung?: string | null
+          art?: string | null
+          ausschluss?: string | null
+          ausschreibung_id?: string | null
+          bauherr?: string | null
+          bauherr_art?: string | null
+          baujahr?: number | null
+          beschreibung?: string | null
+          dach_klasse?: number | null
+          dachflaeche_m2?: number | null
+          egid?: string | null
+          entschieden_am?: string | null
+          entschieden_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeit_min?: number | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gemeinde?: string | null
+          gemeldet_am?: string | null
+          geschuetzt?: boolean
+          grund?: string | null
+          heizung?: string | null
+          heizung_jahr?: number | null
+          heizungsersatz?: boolean
+          id?: string
+          kanton?: string | null
+          lage_e?: number | null
+          lage_n?: number | null
+          notiz?: string | null
+          nummer?: string | null
+          nutzung?: string | null
+          parzelle?: string | null
+          plz?: string | null
+          punkte?: number
+          punkte_details?: NonNullable<Json>
+          quell_id?: string | null
+          quell_url: string
+          quelle?: string
+          schaetzung?: NonNullable<Json>
+          sprache?: string
+          stand?: string
+          standort_id?: string | null
+          strasse?: string | null
+          stromertrag_kwh?: number | null
+          titel: string
+          verkaufschance_id?: string | null
+          waermeleistung_kw?: number | null
+          wiedervorlage_am?: string | null
+          wohnungen?: number | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angereichert_am?: string | null
+          anreicherung?: string | null
+          art?: string | null
+          ausschluss?: string | null
+          ausschreibung_id?: string | null
+          bauherr?: string | null
+          bauherr_art?: string | null
+          baujahr?: number | null
+          beschreibung?: string | null
+          dach_klasse?: number | null
+          dachflaeche_m2?: number | null
+          egid?: string | null
+          entschieden_am?: string | null
+          entschieden_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeit_min?: number | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gemeinde?: string | null
+          gemeldet_am?: string | null
+          geschuetzt?: boolean
+          grund?: string | null
+          heizung?: string | null
+          heizung_jahr?: number | null
+          heizungsersatz?: boolean
+          id?: string
+          kanton?: string | null
+          lage_e?: number | null
+          lage_n?: number | null
+          notiz?: string | null
+          nummer?: string | null
+          nutzung?: string | null
+          parzelle?: string | null
+          plz?: string | null
+          punkte?: number
+          punkte_details?: NonNullable<Json>
+          quell_id?: string | null
+          quell_url?: string
+          quelle?: string
+          schaetzung?: NonNullable<Json>
+          sprache?: string
+          stand?: string
+          standort_id?: string | null
+          strasse?: string | null
+          stromertrag_kwh?: number | null
+          titel?: string
+          verkaufschance_id?: string | null
+          waermeleistung_kw?: number | null
+          wiedervorlage_am?: string | null
+          wohnungen?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'grossprojekte_ausschreibung_id_fkey'
+            columns: ['ausschreibung_id']
+            isOneToOne: false
+            referencedRelation: 'ausschreibungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_entschieden_von_fkey'
+            columns: ['entschieden_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_standort_id_fkey'
+            columns: ['standort_id']
+            isOneToOne: false
+            referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'verkaufschancen'
             referencedColumns: ['id']
           },
         ]
@@ -6475,6 +6690,7 @@ export type Database = {
           aktiv: boolean
           alt_daten: Json | null
           alt_id: string | null
+          ansicht: string
           bereiche: string[]
           beschreibung_de: string | null
           beschreibung_fr: string | null
@@ -6494,6 +6710,7 @@ export type Database = {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          ansicht?: string
           bereiche?: string[]
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
@@ -6512,6 +6729,7 @@ export type Database = {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          ansicht?: string
           bereiche?: string[]
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
@@ -9744,6 +9962,17 @@ export type Database = {
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
+      grossprojekt_aus_suche: { Args: { p: Json; p_meldung?: string }; Returns: string }
+      grossprojekt_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
+      grossprojekt_speichern: { Args: { p: Json }; Returns: string }
+      grossprojekt_suche_kachel_fertig: {
+        Args: { p_gebaeude: number; p_kachel: string; p_kandidaten: number; p_treffer: number }
+        Returns: undefined
+      }
+      grossprojekt_suche_naechste: { Args: { p_anzahl?: number }; Returns: Json }
+      grossprojekt_suche_stand: { Args: Record<PropertyKey, never>; Returns: Json }
+      grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_speichern: {
         Args: {

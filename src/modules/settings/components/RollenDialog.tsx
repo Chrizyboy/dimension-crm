@@ -26,7 +26,9 @@ export function RollenDialog({ rolle, onSchliessen, module }: RollenDialogProps)
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const [entwurf, setEntwurf] = useState<Rolle | null>(rolle)
-  const speichern = useBenutzerAenderung((r: Rolle) => speichereRolle(r.id, { rechte: r.rechte, bereiche: r.bereiche }))
+  const speichern = useBenutzerAenderung((r: Rolle) =>
+    speichereRolle(r.id, { rechte: r.rechte, bereiche: r.bereiche, ansicht: r.ansicht }),
+  )
   if (!entwurf) return null
   const alle = entwurf.bereiche.length === 0
 
@@ -74,6 +76,20 @@ export function RollenDialog({ rolle, onSchliessen, module }: RollenDialogProps)
                 setEntwurf({ ...entwurf, rechte })
               }}
             />
+          </section>
+          <Trenner />
+          <section className="flex items-start gap-3">
+            <Switch
+              id="rolle-einfach"
+              checked={entwurf.ansicht === 'einfach'}
+              onCheckedChange={(an) => {
+                setEntwurf({ ...entwurf, ansicht: an ? 'einfach' : 'voll' })
+              }}
+            />
+            <div className="flex flex-col gap-0.5">
+              <Label htmlFor="rolle-einfach">{t('rollen.einfacheAnsicht')}</Label>
+              <p className="text-muted-foreground text-xs">{t('rollen.einfacheAnsichtText')}</p>
+            </div>
           </section>
           <Trenner />
           <section className="flex flex-col gap-3">

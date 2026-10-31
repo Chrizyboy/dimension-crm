@@ -73,8 +73,11 @@ export function fehlendeFunktionen(lokal, entfernt) {
   return lokal.filter((f) => !da.has(f))
 }
 
+// Unter Windows heisst npx «npx.cmd», und .cmd-Dateien startet Node nur über die Shell (die Argumente sind fest).
+const WINDOWS = process.platform === 'win32'
+const NPX = WINDOWS ? 'npx.cmd' : 'npx'
 const cli = (args) =>
-  execFileSync('npx', ['supabase', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] })
+  execFileSync(NPX, ['supabase', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], shell: WINDOWS })
 const json = (args) => JSON.parse(cli([...args, '-o', 'json']))
 const zeile = (gut, text, weiter = '') =>
   console.log(`${gut ? '✓' : '✗'} ${text}${!gut && weiter ? `\n    → ${weiter}` : ''}`)
@@ -135,7 +138,7 @@ function pruefen() {
 }
 
 function ausfuehren(befehl, args) {
-  const r = spawnSync(befehl, args, { stdio: 'inherit' })
+  const r = spawnSync(befehl, args, { stdio: 'inherit', shell: WINDOWS })
   process.exit(r.status ?? 1)
 }
 
@@ -170,8 +173,8 @@ function daten(zip) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const [schritt, ...rest] = process.argv.slice(2)
   if (schritt === 'pruefen') pruefen()
-  else if (schritt === 'datenbank') ausfuehren('npx', ['supabase', 'db', 'push'])
-  else if (schritt === 'funktionen') ausfuehren('npx', ['supabase', 'functions', 'deploy'])
+  else if (schritt === 'datenbank') ausfuehren(NPX, ['supabase', 'db', 'push'])
+  else if (schritt === 'funktionen') ausfuehren(NPX, ['supabase', 'functions', 'deploy'])
   else if (schritt === 'tresor') tresor()
   else if (schritt === 'daten') daten(rest[0])
   else {

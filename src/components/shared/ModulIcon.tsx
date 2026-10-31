@@ -1,6 +1,7 @@
 import {
   BookOpen,
   BookUser,
+  Building2,
   ChartColumn,
   Circle,
   ClipboardCheck,
@@ -33,6 +34,7 @@ import {
 const ICONS: Record<string, LucideIcon> = {
   'book-open': BookOpen,
   'book-user': BookUser,
+  'building-2': Building2,
   'chart-column': ChartColumn,
   'clipboard-check': ClipboardCheck,
   contact: Contact,

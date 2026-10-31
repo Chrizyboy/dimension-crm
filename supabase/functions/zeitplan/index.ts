@@ -15,8 +15,11 @@
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
 
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
+import { dachsuche } from '../_shared/dachsuche.ts'
+import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
@@ -105,6 +108,15 @@ Deno.serve(async (req) => {
   ergebnis.fristen = await job('fristen', 60, async () => {
     const n = await dienst.rpc<number>('fristen_melden', {})
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Grossprojekte (Phase 8c): erst Gebäudedaten holen, dann einige Gebiete nach grossen Dächern durchsuchen, zuletzt
+  // starke Treffer melden (nur Glocke), damit auch die neuen aus der Dachsuche gleich in der Glocke stehen.
+  ergebnis.grossprojekte = await job('grossprojekte', 60, async () => {
+    const angereichert = await grossprojekteAnreichern(20)
+    const gesucht = await dachsuche()
+    const r = await dienst.rpc<{ wieder: number; gemeldet: number }>('grossprojekte_melden', {})
+    return `${angereichert}, ${gesucht}, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
   })
 
   // KI-Entwürfe (Phase 13): ersetzt den Vorlagentext wartender Mails; ohne Schlüssel bleibt die Vorlage.
