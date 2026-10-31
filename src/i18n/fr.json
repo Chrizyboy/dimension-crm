@@ -5700,7 +5700,8 @@
     "quelle": {
       "simap": "simap",
       "amtsblatt": "Feuille officielle",
-      "hand": "Saisie manuelle"
+      "hand": "Saisie manuelle",
+      "suche": "Recherche de toits"
     },
     "feld": {
       "dachflaeche": "Surface de toit",
@@ -5822,6 +5823,16 @@
       "alle_one": "{{count}} à examiner",
       "alle_other": "{{count}} à examiner",
       "nichts": "Aucun grand projet n’attend de décision."
+    },
+    "suche": {
+      "titel": "Recherche de toits",
+      "aktiv": "Recherche de toits active",
+      "an": "Active",
+      "aus": "Suspendue",
+      "fortschritt": "Avancement de la recherche",
+      "text": "Le CRM cherche lui-même de grandes toitures avec une forte consommation : chaque heure, il avance dans la région autour de Muri et Bulle (les zones proches d’abord), reprend du registre des bâtiments les grands bâtiments industriels, commerciaux, hôpitaux, EMS, écoles et salles de sport et vérifie la toiture sur sonnendach.ch. Seuls les bâtiments avec assez de points entrent dans la liste.",
+      "stand": "{{durchsucht}} zones sur {{gebiete}} parcourues, {{gebaeude}} bâtiments examinés, {{treffer}} résultats dans la liste.",
+      "zuletzt": "Dernière recherche : {{zeit}}"
     }
   },
   "team": {

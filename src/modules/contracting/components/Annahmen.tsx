@@ -9,6 +9,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
+import { DachsucheKarte } from './DachsucheKarte'
 import { useRegeln } from '../hooks/useGrossprojekte'
 import { speichereAnnahmen } from '../services/grossprojekte'
 import type { GrossprojektRegeln } from '../types'
@@ -52,6 +53,9 @@ function AnnahmenFormular({ regeln }: { regeln: GrossprojektRegeln }) {
 
   return (
     <div className="grid items-start gap-4 lg:grid-cols-2">
+      <div className="lg:col-span-2">
+        <DachsucheKarte />
+      </div>
       <Karte>
         <KarteKopf>
           <KarteTitel>{t('grossprojekte.annahmen.titel')}</KarteTitel>

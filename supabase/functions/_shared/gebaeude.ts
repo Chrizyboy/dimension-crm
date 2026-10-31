@@ -122,7 +122,8 @@ export function gwrFelder(g: GwrGebaeude): Gebaeude {
 export class GeoAdmin {
   constructor(private readonly basis = env('GEO_ADMIN_URL') ?? 'https://api3.geo.admin.ch') {}
 
-  private async json<T>(pfad: string, werte: Record<string, string>): Promise<T> {
+  /** Eine Abfrage an den Dienst; Fehlerantwort oder leere Antwort wird zum DienstFehler «geo_admin». */
+  async json<T>(pfad: string, werte: Record<string, string>): Promise<T> {
     const res = await rufe(`${this.basis}${pfad}?${new URLSearchParams(werte).toString()}`, {}, { zeitlimitMs: 8000 })
     const d = await leseJson<T>(res)
     if (!res.ok || !d) throw new DienstFehler('geo_admin', res.status, `geo.admin ${res.status}`)

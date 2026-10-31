@@ -35,3 +35,30 @@ Edge Function `grossprojekte` (Aktion `anreichern`), Job `grossprojekte` im Zeit
 der Cloud-Sandbox gesperrt: `npm run grossprojekte:pruefen` prüft gegen einen Ersatz-Server. Die Feldnamen (sonnendach
 `flaeche`, `klasse`, `stromertrag`, `building_id`; GWR `egid`, `gbauj`, `ganzwhg`, `gkat`, `gklas`, `genh1`,
 `gwaerdath1`) stammen aus der Dokumentation und sind beim ersten echten Lauf zu bestätigen.
+
+## Nachtrag 31.10.2026: Dachsuche
+
+**Kontext:** Chris: «Grossprojekte soll selbständig nach grossen Dächern suchen mit viel Verbrauch, wo PV eine gute
+Option wäre. Wir haben mit Youdera eine super Ausgangslage für Contracting und wollen im nächsten Jahr einige
+Grossprojekte machen.» Meldungen von simap und Amtsblatt reichen dafür nicht: Bestehende Gebäude ohne Baugesuch fehlen.
+
+**Entscheid:**
+
+- **Kacheln statt Meldungen:** Das Gebiet um die Zentren in `einstellungen.grossprojekte.suche.zentren` (Muri, Bulle,
+  je 30 km) ist in Kacheln von 2 × 2 km geteilt (`intern.gp_kacheln`, rund 1'400). Der Zeitplan nimmt stündlich die
+  nächsten `kacheln_pro_lauf` (Standard 6) noch nicht oder vor über einem Jahr durchsuchten, die nahen zuerst; so ist
+  das ganze Gebiet in rund zehn Tagen einmal durchsucht. Fortschritt in `intern.gp_suchkacheln`.
+- **Viel Verbrauch = Gebäudeklasse:** Pro Kachel alle Gebäude aus dem Gebäuderegister (Identify mit Rechteck,
+  seitenweise), behalten werden die Klassen in `suche.klassen` (Industrie 1251, Lager 1252, Handel 1230, Büro 1220,
+  Schule 1263, Spital 1264, Sport 1265, Heim 1130) ab `min_grundflaeche_m2` (800 m²). Für diese das Dach bei
+  sonnendach.ch; ab `min_dach_m2` (500 m²) geht das Gebäude an `grossprojekt_aus_suche`.
+- **Nur was sich lohnt:** `grossprojekt_aus_suche` bewertet vor dem Speichern (`intern.gp_vorbereitet`, gleiche
+  Rechnung wie der Trigger) und nimmt nur auf, was mindestens `suche.ab_punkte` (50) hat und nicht ausgeschlossen ist.
+  Nie doppelt: gleiche EGID oder innert 30 m, auch im Papierkorb oder verworfen (was Andy weggelegt hat, kommt nicht
+  wieder). Quelle «Dachsuche», Bauherrschaft offen (steht nicht im Register; Andy klärt sie im Grundbuch).
+- **Anhalten:** Schalter «Dachsuche» im Reiter Annahmen (nur Administration), dort auch der Fortschritt.
+
+**Folgen:** Mehr Abfragen beim Bund (pro Kachel 1–8 fürs Register, 2 pro grossem Gebäude für das Dach); bei Ausfall
+hört der Lauf auf und macht in der nächsten Stunde weiter. Feldnamen des Registers für Lage und Adresse (`gkode`,
+`gkodn`, `garea`, `strname`, `deinr`, `dplz4`, `ggdename`, `lparz`) und `limit`/`offset` beim Identify sind beim ersten
+echten Lauf zu bestätigen; `npm run grossprojekte:pruefen` prüft die Suche gegen den Ersatz-Server.

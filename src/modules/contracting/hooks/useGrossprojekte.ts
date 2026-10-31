@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeGrossprojekte, ladeRegeln, ladeVerlauf } from '../services/grossprojekte'
+import { ladeGrossprojekte, ladeRegeln, ladeSucheStand, ladeVerlauf } from '../services/grossprojekte'
 
 const mitDb = supabase !== null
 
@@ -15,6 +15,10 @@ export const useVerlauf = (id: string) =>
 /** Annahmen und Schwellen (selten geändert). */
 export const useRegeln = () =>
   useQuery({ queryKey: ['grossprojekte', 'regeln'], enabled: mitDb, queryFn: ladeRegeln, staleTime: 10 * 60_000 })
+
+/** Stand der Dachsuche. */
+export const useSucheStand = () =>
+  useQuery({ queryKey: ['grossprojekte', 'suche'], enabled: mitDb, queryFn: ladeSucheStand })
 
 /** Nach einer Änderung alles im Bereich neu laden. */
 export function useNeuLaden() {
