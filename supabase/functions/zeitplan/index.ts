@@ -16,11 +16,14 @@
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
-//  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
+//  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
+//                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
+//  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
 
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { dachsuche } from '../_shared/dachsuche.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
+import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
@@ -117,9 +120,17 @@ Deno.serve(async (req) => {
   ergebnis.grossprojekte = await job('grossprojekte', 60, async () => {
     const angereichert = await grossprojekteAnreichern(20)
     const gesucht = await dachsuche()
+    // Pro Woche nur die besten aus dem Vorrat in die Liste (einstellungen.grossprojekte.suche.pro_woche).
+    const frei = await dienst.rpc<number>('grossprojekt_vorrat_freigeben', {})
     const r = await dienst.rpc<{ wieder: number; gemeldet: number }>('grossprojekte_melden', {})
-    return `${angereichert}, ${gesucht}, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
+    return `${angereichert}, ${gesucht}, ${frei} freigegeben, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
   })
+
+  // Recherche zu neuen Grossprojekten (Eigentümer, Ansprechperson, nächste Schritte); eine pro halbe Stunde, weil die
+  // Websuche bis zu zwei Minuten dauert. Ohne Schlüssel bleibt sie in der Warteschlange.
+  if (kiEingerichtet()) {
+    ergebnis.grossprojekte_recherche = await job('grossprojekte_recherche', 30, () => grossprojekteRecherchieren(1))
+  }
 
   // KI-Entwürfe (Phase 13): ersetzt den Vorlagentext wartender Mails; ohne Schlüssel bleibt die Vorlage.
   if (kiEingerichtet()) {
