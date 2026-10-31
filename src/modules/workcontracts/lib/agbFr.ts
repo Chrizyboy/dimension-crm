@@ -1,6 +1,6 @@
 /**
  * AGB der Dimension Solaire (20 Punkte), Wortlaut der Vorlage Muri 2026 (Französisch, getreue Übersetzung). Steht nach dem Vertrag,
- * zweispaltig. Änderungen am Wortlaut nur nach Rücksprache mit Chris (Entscheid 0030).
+ * zweispaltig. Änderungen am Wortlaut nur nach Rücksprache mit Chris (Entscheid 0031).
  */
 export const AGB_FR: readonly (readonly [string, readonly string[]])[] = [
   [

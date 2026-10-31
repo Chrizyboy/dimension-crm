@@ -2,7 +2,7 @@
 
 **Zweck:** Aus der angenommenen Offerte den Auftrag erstellen (Projekt, Zahlungsplan, Werkvertrag), Zahlungsbedingung per Klick wählen (Standard 40/30/30, Batterien 70/30, 100 %, eigene Anzahlung in CHF, eigene Raten mit Bezeichnung und Prozent …), den Vertrag nach Vorlage Muri (DE/FR, AGB zweispaltig) als PDF erstellen, mit der Anzahlungsrechnung an den Kunden senden und Versand, Unterschrift oder Storno festhalten.
 
-**Stand:** Phase 7 gebaut, Phase 8: Mail über den Ausgangskorb. 31.10.2026: Vorlage Muri, Zahlungsbedingungen per Klick, Anzahlungsrechnung (Entscheid 0030). Eigene Unterschrift der sendenden Person (Mein Konto, `src/services/unterschrift.ts`) im Kasten Dimension Solaire.
+**Stand:** Phase 7 gebaut, Phase 8: Mail über den Ausgangskorb. 31.10.2026: Vorlage Muri, Zahlungsbedingungen per Klick, Anzahlungsrechnung (Entscheid 0031). Eigene Unterschrift der sendenden Person (Mein Konto, `src/services/unterschrift.ts`) im Kasten Dimension Solaire.
 
 ## Daten
 

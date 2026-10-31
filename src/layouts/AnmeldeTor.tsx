@@ -51,7 +51,7 @@ export function AnmeldeTor({ children }: { children: ReactNode }) {
   if (status === 'laden') {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-4" aria-busy="true">
-        <Logo className="h-9" />
+        <Logo className="h-10 sm:h-12" />
         <Skelett className="h-2 w-40" />
         <span className="sr-only">{t('anmeldung.laden')}</span>
       </div>

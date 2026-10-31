@@ -12,7 +12,7 @@ export async function ladeServerBenachrichtigungen(): Promise<Benachrichtigung[]
   if (!supabase) return []
   const { data, error } = await supabase
     .from('benachrichtigungen')
-    .select('id, art, titel_de, titel_fr, text_de, text_fr, ziel, gelesen_am, erstellt_am')
+    .select('id, art, titel_de, titel_fr, text_de, text_fr, ziel, gelesen_am, erstellt_am, popup')
     .is('ausgeblendet_am', null)
     .order('erstellt_am', { ascending: false })
     .limit(ANZAHL)
@@ -26,6 +26,7 @@ export async function ladeServerBenachrichtigungen(): Promise<Benachrichtigung[]
     gelesen: b.gelesen_am !== null,
     ...(b.ziel ? { ziel: b.ziel } : {}),
     quelle: 'server' as const,
+    ...(b.popup ? { popup: true } : {}),
   }))
 }
 

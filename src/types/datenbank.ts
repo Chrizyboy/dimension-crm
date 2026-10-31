@@ -1792,6 +1792,7 @@ export type Database = {
           id: string
           lauf_id: string | null
           person_id: string
+          popup: boolean
           text_de: string | null
           text_fr: string | null
           titel_de: string
@@ -1807,6 +1808,7 @@ export type Database = {
           id?: string
           lauf_id?: string | null
           person_id: string
+          popup?: boolean
           text_de?: string | null
           text_fr?: string | null
           titel_de: string
@@ -1821,6 +1823,7 @@ export type Database = {
           id?: string
           lauf_id?: string | null
           person_id?: string
+          popup?: boolean
           text_de?: string | null
           text_fr?: string | null
           titel_de?: string
@@ -6748,12 +6751,19 @@ export type Database = {
       }
       rueckmeldungen: {
         Row: {
+          abgeschlossen_am: string | null
           alt_daten: Json | null
           alt_id: string | null
           antwort: string | null
           antwort_von: string | null
           beantwortet_am: string | null
           bereich: string | null
+          eingeschaetzt_am: string | null
+          einschaetzung: Json | null
+          entscheid: string | null
+          entscheid_notiz: string | null
+          entschieden_am: string | null
+          entschieden_von: string | null
           erstellt_am: string
           erstellt_von: string | null
           erwartet: string | null
@@ -6767,15 +6777,23 @@ export type Database = {
           text: string
           titel: string | null
           umgebung: string | null
+          umgesetzt_in: string | null
         }
         ComputedFields: never
         Insert: {
+          abgeschlossen_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           antwort?: string | null
           antwort_von?: string | null
           beantwortet_am?: string | null
           bereich?: string | null
+          eingeschaetzt_am?: string | null
+          einschaetzung?: Json | null
+          entscheid?: string | null
+          entscheid_notiz?: string | null
+          entschieden_am?: string | null
+          entschieden_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           erwartet?: string | null
@@ -6789,14 +6807,22 @@ export type Database = {
           text: string
           titel?: string | null
           umgebung?: string | null
+          umgesetzt_in?: string | null
         }
         Update: {
+          abgeschlossen_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           antwort?: string | null
           antwort_von?: string | null
           beantwortet_am?: string | null
           bereich?: string | null
+          eingeschaetzt_am?: string | null
+          einschaetzung?: Json | null
+          entscheid?: string | null
+          entscheid_notiz?: string | null
+          entschieden_am?: string | null
+          entschieden_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           erwartet?: string | null
@@ -6810,8 +6836,16 @@ export type Database = {
           text?: string
           titel?: string | null
           umgebung?: string | null
+          umgesetzt_in?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'rueckmeldungen_entschieden_von_fkey'
+            columns: ['entschieden_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'rueckmeldungen_person_id_fkey'
             columns: ['person_id']
@@ -9088,28 +9122,6 @@ export type Database = {
           },
         ]
       }
-      pg_all_foreign_keys: {
-        Row: {
-          fk_columns: unknown[] | null
-          fk_constraint_name: unknown
-          fk_schema_name: unknown
-          fk_table_name: unknown
-          fk_table_oid: unknown
-          is_deferrable: boolean | null
-          is_deferred: boolean | null
-          match_type: string | null
-          on_delete: string | null
-          on_update: string | null
-          pk_columns: unknown[] | null
-          pk_constraint_name: unknown
-          pk_index_name: unknown
-          pk_schema_name: unknown
-          pk_table_name: unknown
-          pk_table_oid: unknown
-        }
-        ComputedFields: never
-        Relationships: []
-      }
       preisliste: {
         Row: {
           archiv_grund: string | null
@@ -9556,25 +9568,6 @@ export type Database = {
           },
         ]
       }
-      tap_funky: {
-        Row: {
-          args: string | null
-          is_definer: boolean | null
-          is_strict: boolean | null
-          is_visible: boolean | null
-          kind: unknown
-          langoid: unknown
-          name: unknown
-          oid: unknown
-          owner: unknown
-          returns: string | null
-          returns_set: boolean | null
-          schema: unknown
-          volatility: string | null
-        }
-        ComputedFields: never
-        Relationships: []
-      }
       verkauf_geschaefte: {
         Row: {
           angebot_am: string | null
@@ -9893,22 +9886,6 @@ export type Database = {
       }
     }
     Functions: {
-      _cleanup: { Args: Record<PropertyKey, never>; Returns: boolean }
-      _contract_on: { Args: { '': string }; Returns: unknown }
-      _currtest: { Args: Record<PropertyKey, never>; Returns: number }
-      _db_privs: { Args: Record<PropertyKey, never>; Returns: unknown[] }
-      _extensions: { Args: Record<PropertyKey, never>; Returns: unknown[] }
-      _get: { Args: { '': string }; Returns: number }
-      _get_latest: { Args: { '': string }; Returns: number[] }
-      _get_note: { Args: { '': string }; Returns: string }
-      _is_verbose: { Args: Record<PropertyKey, never>; Returns: boolean }
-      _prokind: { Args: { p_oid: unknown }; Returns: unknown }
-      _query: { Args: { '': string }; Returns: string }
-      _refine_vol: { Args: { '': string }; Returns: string }
-      _retval: { Args: { '': string }; Returns: string }
-      _table_privs: { Args: Record<PropertyKey, never>; Returns: unknown[] }
-      _temptypes: { Args: { '': string }; Returns: string }
-      _todo: { Args: Record<PropertyKey, never>; Returns: string }
       abaninja_abgleich_anwenden: { Args: { p: Json }; Returns: Json }
       aendere_mein_konto: {
         Args: { p_darstellung?: string; p_profil: Json; p_sprache?: string; p_standort_id?: string }
@@ -9916,6 +9893,7 @@ export type Database = {
       }
       anfrage_uebernehmen: { Args: { p: Json }; Returns: Json }
       anfrage_uebersprungen: { Args: { p_kennung: string; p_quelle: string }; Returns: undefined }
+      anmelde_sprache: { Args: { p_email: string; p_sprache: string }; Returns: undefined }
       anschreiben_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       anschreiben_aendern: { Args: { p_betreff: string; p_id: string; p_text: string }; Returns: undefined }
       anschreiben_antwort: { Args: { p_art: string; p_id: string }; Returns: undefined }
@@ -10022,44 +10000,20 @@ export type Database = {
       bestellung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
       betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
-      col_is_null:
-        | {
-            Args: { column_name: unknown; description?: string; schema_name: unknown; table_name: unknown }
-            Returns: string
-          }
-        | { Args: { column_name: unknown; description?: string; table_name: unknown }; Returns: string }
-      col_not_null:
-        | {
-            Args: { column_name: unknown; description?: string; schema_name: unknown; table_name: unknown }
-            Returns: string
-          }
-        | { Args: { column_name: unknown; description?: string; table_name: unknown }; Returns: string }
-      diag:
-        | {
-            Args: { msg: unknown }
-            Returns: {
-              error: true
-            } & 'Could not choose the best candidate function between: public.diag(msg => text), public.diag(msg => anyelement). Try renaming the parameters or the function itself in the database so function overloading can be resolved'
-          }
-        | {
-            Args: { msg: string }
-            Returns: {
-              error: true
-            } & 'Could not choose the best candidate function between: public.diag(msg => text), public.diag(msg => anyelement). Try renaming the parameters or the function itself in the database so function overloading can be resolved'
-          }
-      diag_test_name: { Args: { '': string }; Returns: string }
-      do_tap: { Args: Record<PropertyKey, never>; Returns: string[] } | { Args: { '': string }; Returns: string[] }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
-      fail: { Args: Record<PropertyKey, never>; Returns: string } | { Args: { '': string }; Returns: string }
-      findfuncs: { Args: { '': string }; Returns: string[] }
-      finish: { Args: { exception_on_failure?: boolean }; Returns: string[] }
-      format_type_string: { Args: { '': string }; Returns: string }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
+      grossprojekt_aus_suche: { Args: { p: Json; p_meldung?: string }; Returns: string }
       grossprojekt_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
       grossprojekt_speichern: { Args: { p: Json }; Returns: string }
+      grossprojekt_suche_kachel_fertig: {
+        Args: { p_gebaeude: number; p_kachel: string; p_kandidaten: number; p_treffer: number }
+        Returns: undefined
+      }
+      grossprojekt_suche_naechste: { Args: { p_anzahl?: number }; Returns: Json }
+      grossprojekt_suche_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_speichern: {
@@ -10081,12 +10035,16 @@ export type Database = {
         }
         Returns: string
       }
-      has_unique: { Args: { '': string }; Returns: string }
+      helpdesk_abschliessen: {
+        Args: { p_antwort: string; p_ergebnis: string; p_id: string; p_version: string }
+        Returns: Json
+      }
+      helpdesk_einschaetzen: { Args: { p: Json; p_id: string; p_link: string }; Returns: Json }
+      helpdesk_einstellen: { Args: { p_person_id: string; p_sms: boolean }; Returns: undefined }
+      helpdesk_offen: { Args: Record<PropertyKey, never>; Returns: Json }
+      helpdesk_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
-      in_todo: { Args: Record<PropertyKey, never>; Returns: boolean }
       integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
-      is_empty: { Args: { '': string }; Returns: string }
-      isnt_empty: { Args: { '': string }; Returns: string }
       kalender_abgleichen: {
         Args: { p_bis: string; p_eintraege: Json; p_person: string; p_von: string }
         Returns: number
@@ -10180,7 +10138,6 @@ export type Database = {
           termin: number
         }[]
       }
-      lives_ok: { Args: { '': string }; Returns: string }
       mails_vermerken: { Args: { p_mails: Json; p_person: string }; Returns: number }
       marketing_abmelden: { Args: { p_schluessel: string }; Returns: string }
       marketing_einwilligung: { Args: { p_datum: string; p_kontakt: string; p_quelle: string }; Returns: undefined }
@@ -10270,8 +10227,6 @@ export type Database = {
           vorname: string
         }[]
       }
-      no_plan: { Args: Record<PropertyKey, never>; Returns: boolean[] }
-      num_failed: { Args: Record<PropertyKey, never>; Returns: number }
       offerte_anlegen: { Args: { p: Json }; Returns: string }
       offerte_entscheiden: { Args: { p_angaben?: Json; p_offerte: string; p_ziel: string }; Returns: string }
       offerte_status_setzen: { Args: { p_angaben?: Json; p_status: string; p_verkaufschance: string }; Returns: string }
@@ -10282,11 +10237,6 @@ export type Database = {
         Returns: undefined
       }
       offerte_zurueck: { Args: { p_grund: string; p_offerte: string; p_ziel: string }; Returns: undefined }
-      os_name: { Args: Record<PropertyKey, never>; Returns: string }
-      pass: { Args: Record<PropertyKey, never>; Returns: string } | { Args: { '': string }; Returns: string }
-      pg_version: { Args: Record<PropertyKey, never>; Returns: string }
-      pg_version_num: { Args: Record<PropertyKey, never>; Returns: number }
-      pgtap_version: { Args: Record<PropertyKey, never>; Returns: number }
       plz_auskunft: {
         Args: { p_plz: string }
         Returns: {
@@ -10348,6 +10298,7 @@ export type Database = {
         Returns: undefined
       }
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
+      rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
         Args: {
           p_bereich: string
@@ -10361,7 +10312,6 @@ export type Database = {
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
-      runtests: { Args: Record<PropertyKey, never>; Returns: string[] } | { Args: { '': string }; Returns: string[] }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
@@ -10407,7 +10357,6 @@ export type Database = {
         }[]
       }
       sicherung_wiederhergestellt: { Args: { p_anzahl: Json; p_id: string; p_person: string }; Returns: undefined }
-      skip: { Args: { '': string }; Returns: string } | { Args: { how_many: number; why: string }; Returns: string }
       sms_erinnerungen: {
         Args: { p_datum: string }
         Returns: {
@@ -10523,15 +10472,6 @@ export type Database = {
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
-      throws_ok: { Args: { '': string }; Returns: string }
-      todo:
-        | { Args: { how_many: number }; Returns: boolean[] }
-        | { Args: { how_many: number; why: string }; Returns: boolean[] }
-        | { Args: { why: string }; Returns: boolean[] }
-        | { Args: { how_many: number; why: string }; Returns: boolean[] }
-      todo_end: { Args: Record<PropertyKey, never>; Returns: boolean[] }
-      todo_start:
-        { Args: Record<PropertyKey, never>; Returns: boolean[] } | { Args: { '': string }; Returns: boolean[] }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
@@ -10576,9 +10516,7 @@ export type Database = {
       [_ in never]: never
     }
     CompositeTypes: {
-      _time_trial_type: {
-        a_time: number | null
-      }
+      [_ in never]: never
     }
   }
 }

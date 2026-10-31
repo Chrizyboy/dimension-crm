@@ -1,11 +1,13 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, API, brauchtDatenbank } from './hilfen'
 
 // Phase 15: Handbuch und Tastatur. Administration legt einen Prozess ab, lädt eine neue Version hoch (die alte
 // steht unter «Frühere Versionen») und entfernt ihn; alle Reiter ohne Verstösse. Verkauf meldet einen Fehler
 // über die Befehlspalette, die Administration antwortet, Verkauf sieht die Antwort. Tastatur: «?» zeigt die
 // Kürzel, «G» und «K» springt zu den Kunden, dort steht «Neuer Kunde» in der Übersicht.
+// Helpdesk mit Freigabe: der Server legt eine Einschätzung ab, die Administration entscheidet «Erledige es», der
+// Server schliesst ab, Verkauf sieht die Antwort (braucht SUPABASE_SERVICE_ROLE_KEY der lokalen Supabase).
 
 test.describe.configure({ mode: 'serial' })
 brauchtDatenbank()
@@ -35,6 +37,18 @@ async function verstoesse(page: Page): Promise<string[]> {
         .slice(0, 3)
         .join(' | ')}`,
   )
+}
+
+/** Ruft eine Server-Funktion des Helpdesks wie die Edge Function «helpdesk» (lokaler Service-Schlüssel). */
+async function server(name: string, args: Record<string, unknown>): Promise<unknown> {
+  const k = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+  const res = await fetch(`${API}/rest/v1/rpc/${name}`, {
+    method: 'POST',
+    headers: { apikey: k, Authorization: `Bearer ${k}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+  })
+  expect(res.ok, await res.clone().text()).toBe(true)
+  return res.json()
 }
 
 test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse', async ({ page }) => {
@@ -116,6 +130,60 @@ test('Handbuch: Verkauf meldet einen Fehler, Administration antwortet', async ({
   const erledigt = verkauf.getByRole('listitem').filter({ hasText: `Testmeldung ${lauf}` })
   await expect(erledigt).toContainText('Ist behoben, danke!')
   await expect(erledigt).toContainText('Erledigt')
+})
+
+test('Helpdesk: Einschätzung, «Erledige es», Abschluss mit Antwort', async ({ browser }) => {
+  test.slow()
+  test.skip(!process.env.SUPABASE_SERVICE_ROLE_KEY, 'Braucht SUPABASE_SERVICE_ROLE_KEY der lokalen Supabase')
+  const verkauf = await (await browser.newContext()).newPage()
+  await anmelden(verkauf, 'verkauf@test.local')
+  await verkauf.goto('/#/knowledge?ansicht=meldungen')
+  await verkauf.getByRole('button', { name: 'Fehler melden' }).first().click()
+  const melden = verkauf.getByRole('dialog', { name: 'Fehler melden' })
+  await melden.getByLabel('Worum geht es?').fill(`PDF-Rabatt ${lauf}`)
+  await melden.getByLabel('Was ist passiert?').fill('Rabatt 8 % eingetragen, im PDF stehen 5 %.')
+  await melden.getByRole('button', { name: 'Meldung senden' }).click()
+  await expect(melden).toBeHidden()
+
+  const offen = (await server('helpdesk_offen', {})) as { pruefen: { id: string; titel: string }[] }
+  const meldung = offen.pruefen.find((m) => m.titel === `PDF-Rabatt ${lauf}`)
+  expect(meldung).toBeDefined()
+  await server('helpdesk_einschaetzen', {
+    p_id: meldung?.id,
+    p: {
+      kurz: 'Kleiner Fehler, ca. 20 Min.',
+      was: 'Das PDF nimmt den Rabatt, bevor er gespeichert ist.',
+      loesung: 'PDF erst nach dem Speichern erstellen.',
+      risiko: 'klein',
+      empfehlung: 'erledigen',
+    },
+    p_link: null,
+  })
+
+  const admin = await (await browser.newContext()).newPage()
+  await anmelden(admin, 'admin@test.local')
+  await admin.goto(`/#/knowledge?ansicht=meldungen&meldung=${meldung?.id ?? ''}`)
+  const karte = admin.getByRole('listitem').filter({ hasText: `PDF-Rabatt ${lauf}` })
+  await expect(karte).toContainText('Wartet auf Entscheid')
+  await expect(karte).toContainText('Einschätzung: Kleiner Fehler, ca. 20 Min.')
+  expect(await verstoesse(admin)).toEqual([])
+  await karte.getByRole('button', { name: 'Erledige es' }).click()
+  await expect(admin.getByText('Wird erledigt')).toBeVisible()
+  await expect(karte).toContainText('Entscheid: erledigen')
+  await expect(karte.getByRole('button', { name: 'Erledige es' })).toHaveCount(0)
+
+  await server('helpdesk_abschliessen', {
+    p_id: meldung?.id,
+    p_ergebnis: 'erledigt',
+    p_antwort: 'Behoben: der Rabatt im PDF stimmt jetzt immer.',
+    p_version: '0.17.1',
+  })
+  await verkauf.reload()
+  await verkauf.getByRole('button', { name: /^Erledigt/ }).click()
+  const fertig = verkauf.getByRole('listitem').filter({ hasText: `PDF-Rabatt ${lauf}` })
+  await expect(fertig).toContainText('Behoben: der Rabatt im PDF stimmt jetzt immer.')
+  // Die Einschätzung sieht nur die Administration.
+  await expect(fertig).not.toContainText('Einschätzung')
 })
 
 test('Tastatur: Übersicht mit «?», Sprung G K, Kürzel der Ansicht', async ({ page, isMobile }) => {

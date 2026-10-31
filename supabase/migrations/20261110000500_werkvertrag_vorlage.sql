@@ -2,7 +2,7 @@
 -- Ankreuz-Optionen, Seite 2 Termine, Werklohn mit Zahlungsplan und Unterschriften, danach die AGB.
 -- Zahlungsbedingungen einfach wählbar (Vorlage wie 70/30 oder 100 %, oder eigene Anzahlung in CHF),
 -- Beträge auf ganze Franken (letzte Rate = Rest). Anzahlungsrechnung direkt aus dem Werkvertrag.
--- Entscheid 0030.
+-- Entscheid 0031.
 
 alter table public.werkvertraege add column if not exists angaben jsonb not null default '{}';
 comment on column public.werkvertraege.angaben is
