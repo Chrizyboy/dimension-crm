@@ -9,6 +9,8 @@
 //  * anfragen     alle 5 Minuten  solar-guide, Landingpage, Messe aus den Postfächern (V78)
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
+//  * posteingang  alle 5 Minuten  alle Mails holen, «beantwortet» erkennen, mit KI einordnen (Phase 18)
+//  * posteingang_erinnern alle 5 Min.  Antwortfristen: Glocke an Zuständige, bei doppelter Frist an die Leitung
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
@@ -22,6 +24,7 @@ import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
+import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
 import { kiEntwuerfeAbarbeiten } from '../_shared/ki_automation.ts'
 import { kiEingerichtet } from '../_shared/ki_rahmen.ts'
 import { dienst } from '../_shared/datenbank.ts'
@@ -109,6 +112,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
+  ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
+    const n = await dienst.rpc<number>('posteingang_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
   // Grossprojekte (Phase 8c): erst Gebäudedaten holen, dann bewerten lassen und starke Treffer melden (nur Glocke).
   ergebnis.grossprojekte = await job('grossprojekte', 60, async () => {
     const angereichert = await grossprojekteAnreichern(20)
@@ -194,6 +203,20 @@ Deno.serve(async (req) => {
         team = [] // Team-Postfächer nur einmal pro Lauf lesen
         return n
       })
+    })
+    // Nach «anfragen», damit Formular-Anfragen schon ihren Lead haben.
+    ergebnis.posteingang = await job('posteingang', 5, async () => {
+      let mitTeam = true
+      let neu = 0
+      let beantwortet = 0
+      const meldung = await fuerAlle(async (id) => {
+        const r = await posteingangAbholen(id, s, mitTeam)
+        mitTeam = false // Team-Postfächer nur einmal pro Lauf lesen
+        neu += r.neu
+        beantwortet += r.beantwortet
+        return r.neu
+      })
+      return `${meldung}; ${neu} neu, ${beantwortet} beantwortet; ${await posteingangEinordnen(15)}`
     })
     ergebnis.sicherung = await job('sicherung', 30, async () => {
       const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})

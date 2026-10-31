@@ -1,6 +1,6 @@
 // Prüft alle Integrationen der Phase 8 von Anfang bis Ende gegen Ersatz-Server (npm run integrationen:pruefen).
 // Startet die Edge Functions lokal mit Test-Zugangsdaten, meldet sich als admin@test.local an und geht jeden
-// Ablauf durch: Microsoft verbinden, Kalender, Termin in Outlook, Mail mit Anhang, Mail-Verlauf, Anfragen aus
+// Ablauf durch: Microsoft verbinden, Kalender, Termin in Outlook, Mail mit Anhang, Mail-Verlauf, Posteingang, Anfragen aus
 // dem Postfach, SharePoint-Sicherung, SMS, AbaNinja, Zeitplan mit den Server-Schritten der Automationen (Phase 12). Braucht die lokale Supabase (npm run db:start).
 // Echte Konten prüft dieser Test NICHT; dafür die Knöpfe «Testen» auf der Seite «Verbindungen».
 
@@ -385,6 +385,73 @@ try {
     r.daten?.neu === 0 && r.daten.uebersprungen === 1,
     '.eml-Datei nochmals: kein zweiter Lead',
     JSON.stringify(r.daten),
+  )
+
+  // --- Posteingang: Mails abholen, einordnen, Frist, Volltext, beantwortet ------------------------------
+  const peJetzt = Date.now()
+  z.eingang.push(
+    {
+      postfach: 'me',
+      id: `pe-kunde-${kennung}`,
+      internetMessageId: `<pe-kunde-${kennung}@ersatz>`,
+      conversationId: `konv-${kennung}`,
+      subject: `Frage zur Montage ${kennung}`,
+      bodyPreview: 'Guten Tag, wann kommen die Monteure genau?',
+      text: 'Guten Tag, wann kommen die Monteure genau? Freundliche Grüsse, Ina',
+      receivedDateTime: new Date(peJetzt - 5 * 60_000).toISOString(),
+      webLink: 'https://outlook.ersatz/pe-kunde',
+      hasAttachments: false,
+      from: { emailAddress: { address: kundenMail, name: `Ina Ersatz ${kennung}` } },
+      toRecipients: [{ emailAddress: { address: 'chris@dimension-solaire.ch' } }],
+    },
+    {
+      postfach: 'me',
+      id: `pe-news-${kennung}`,
+      internetMessageId: `<pe-news-${kennung}@ersatz>`,
+      conversationId: `konv-news-${kennung}`,
+      subject: 'Unser Newsletter im November',
+      bodyPreview: 'Neuigkeiten aus der Branche',
+      receivedDateTime: new Date(peJetzt - 4 * 60_000).toISOString(),
+      hasAttachments: false,
+      from: { emailAddress: { address: `newsletter-${kennung}@werbung.ersatz.test` } },
+      toRecipients: [{ emailAddress: { address: 'chris@dimension-solaire.ch' } }],
+    },
+  )
+  r = await funktion('microsoft', { aktion: 'posteingang_abholen' }, token)
+  ok(r.daten?.neu === 2, 'Posteingang: zwei neue Mails abgeholt', JSON.stringify(r.daten))
+  r = await funktion('microsoft', { aktion: 'posteingang_abholen' }, token)
+  ok(r.daten?.neu === 0, 'Posteingang: dieselben Mails nochmals, keine doppelt', JSON.stringify(r.daten))
+  const [peKunde] = await rest(
+    `posteingang?outlook_id=eq.pe-kunde-${kennung}&select=id,art,sortiert,stand,kontakt_id,frist_am,zustaendig_id`,
+  )
+  ok(
+    peKunde?.kontakt_id &&
+      peKunde.art === 'kunde' &&
+      ['ki', 'ohne_ki'].includes(peKunde.sortiert) &&
+      peKunde.stand === 'offen' &&
+      peKunde.frist_am,
+    'Kunden-Mail: Kunde erkannt, eingeordnet, offen mit Frist',
+    JSON.stringify(peKunde),
+  )
+  const [peNews] = await rest(`posteingang?outlook_id=eq.pe-news-${kennung}&select=art,stand`)
+  ok(peNews?.art === 'werbung' && peNews.stand === 'abgelegt', 'Newsletter: als Werbung abgelegt', JSON.stringify(peNews))
+  r = await funktion('microsoft', { aktion: 'posteingang_text', id: peKunde?.id }, token)
+  ok(r.daten?.text?.includes('Monteure genau'), 'Volltext der Mail aus Outlook', JSON.stringify(r.daten))
+  z.gesendetOrdner.push({
+    postfach: 'me',
+    id: `pe-antwort-${kennung}`,
+    conversationId: `konv-${kennung}`,
+    sentDateTime: new Date(peJetzt - 60_000).toISOString(),
+    from: { emailAddress: { address: EMAIL } },
+    toRecipients: [{ emailAddress: { address: kundenMail } }],
+  })
+  r = await funktion('microsoft', { aktion: 'posteingang_abholen' }, token)
+  ok(r.daten?.beantwortet === 1, 'Antwort in «Gesendet» erkannt', JSON.stringify(r.daten))
+  const [peErledigt] = await rest(`posteingang?id=eq.${peKunde?.id}&select=stand,erledigt_grund,reaktion_minuten`)
+  ok(
+    peErledigt?.stand === 'erledigt' && peErledigt.erledigt_grund === 'beantwortet',
+    'Kunden-Mail: beantwortet und erledigt',
+    JSON.stringify(peErledigt),
   )
 
   // --- SharePoint-Sicherung -----------------------------------------------------------------------------

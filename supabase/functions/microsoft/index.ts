@@ -1,6 +1,7 @@
 // Edge Function «microsoft»: alles, was die App mit Microsoft 365 tut, immer im Namen der angemeldeten Person.
 // Aktionen: verbinden, trennen, testen, kalender_laden, mails_abgleichen, anfragen_abholen,
-// termin_eintragen, termin_absagen, sharepoint_sichern (alle offenen oder nur dokument_ids).
+// termin_eintragen, termin_absagen, sharepoint_sichern (alle offenen oder nur dokument_ids),
+// posteingang_abholen (jetzt statt in 5 Minuten), posteingang_text (Volltext einer Mail im Posteingang).
 // Die Person braucht eine eigene Microsoft-Verbindung; nur mail_einlesen (Anfrage aus einer .eml-Datei,
 // die jemand ins CRM zieht) geht ohne.
 
@@ -17,6 +18,7 @@ import { dienst, gemessen } from '../_shared/datenbank.ts'
 import { starte, textFeld } from '../_shared/funktion.ts'
 import { DienstFehler } from '../_shared/http.ts'
 import { anmeldeAdresse, graph, trennen } from '../_shared/microsoft.ts'
+import { posteingangAbholen, posteingangEinordnen, posteingangText } from '../_shared/posteingang.ts'
 import { dokumentSichern, type SicherungsDokument } from '../_shared/sharepoint.ts'
 import { terminAbsagen, terminEintragen } from '../_shared/termin.ts'
 import { brauche } from '../_shared/umgebung.ts'
@@ -64,6 +66,18 @@ starte({
     recht: 'basis',
     f: async (_e, ich) =>
       gemessen('microsoft', 'anfragen', ich.id, async () => anfragenAbholen(ich.id, await msEinstellungen())),
+  },
+  posteingang_abholen: {
+    recht: 'basis',
+    f: (_e, ich) =>
+      gemessen('microsoft', 'posteingang', ich.id, async () => {
+        const r = await posteingangAbholen(ich.id, await msEinstellungen(), true)
+        return { ...r, eingeordnet: await posteingangEinordnen(15) }
+      }),
+  },
+  posteingang_text: {
+    recht: 'basis',
+    f: (e, ich) => posteingangText(ich, textFeld(e, 'id')),
   },
   mail_einlesen: {
     recht: 'basis',
