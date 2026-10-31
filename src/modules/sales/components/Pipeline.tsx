@@ -146,7 +146,7 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
         }}
         onDragEnd={abgelegt}
       >
-        {/* Fokussierbar, damit man die Spalten auch ohne Maus waagrecht durchblättern kann (auch wenn keine Karte offen ist). */}
+        {/* Mit Tastatur seitlich scrollbar (auch wenn die Spalten leer sind und nichts Fokussierbares enthalten). */}
         <div
           role="region"
           aria-label={t('verkauf.ansicht.pipeline')}

@@ -16,7 +16,7 @@ Diese Anleitung ist für den Betrieb. Sie braucht keine Programmierkenntnisse, a
    (für den Anfang reichen USD 20–50).
 2. Unter **Settings › Limits** ein **Monatslimit** setzen (z.B. USD 50). Das ist die zweite Sicherung neben dem
    Tageslimit im CRM.
-3. **Settings › API Keys › Create Key**, Name «Dimension CRM». Den Schlüssel (beginnt mit `sk-ant-`) sofort kopieren,
+3. **Settings › API Keys › Create Key**, Name «Dimension Work». Den Schlüssel (beginnt mit `sk-ant-`) sofort kopieren,
    er wird nur einmal gezeigt.
 
 ## 2. Schlüssel in Supabase hinterlegen

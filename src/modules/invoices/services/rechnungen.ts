@@ -1,18 +1,8 @@
 import { abaninja } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
 import type { TablesUpdate } from '@/types/datenbank'
-import type {
-  Empfaenger,
-  EntwurfVorgabe,
-  Firma,
-  OffenerRapport,
-  Position,
-  Rechnung,
-  RechnungFilter,
-  RechnungVoll,
-  Tranche,
-  Zahlung,
-} from '../types'
+import type { EntwurfVorgabe, Firma, OffenerRapport, Position, Rechnung, RechnungFilter, Tranche } from '../types'
+import { FIRMA_SPALTEN as FIRMA } from '@/services/rechnungsdaten'
 
 /**
  * Datenzugriff für Rechnungen. Die Regeln (Nummer, Fälligkeit, fest nach dem Stellen, Mahnstufen,
@@ -39,57 +29,7 @@ export async function ladeRechnungen(filter: RechnungFilter, projektId?: string)
   return data as unknown as Rechnung[]
 }
 
-const FIRMA =
-  'id, kuerzel, name, strasse, plz, ort, sprache, mwst_nr, uid_nr, iban, bank, telefon, email, zahlungsfrist_tage'
-
-/** Eine Rechnung mit Positionen, Firma, Empfänger-Adresse und Zahlungen. */
-export async function ladeRechnung(id: string): Promise<RechnungVoll> {
-  const [l, r, z] = await Promise.all([
-    db().from('rechnungen_liste').select('*').eq('id', id).single(),
-    db().from('rechnungen').select('positionen, mwst_satz, notiz, storniert_grund').eq('id', id).single(),
-    db()
-      .from('rechnung_zahlungen')
-      .select('id, datum, betrag_rappen, quelle, notiz')
-      .eq('rechnung_id', id)
-      .is('geloescht_am', null)
-      .order('datum'),
-  ])
-  if (l.error) throw l.error
-  if (r.error) throw r.error
-  if (z.error) throw z.error
-  const liste = l.data as unknown as Rechnung
-  const [f, k, o] = await Promise.all([
-    db().from('firmen').select(FIRMA).eq('id', liste.firma_id).single(),
-    db().from('kontakte').select('anrede, email').eq('id', liste.kontakt_id).single(),
-    db()
-      .from('objekte')
-      .select('strasse, plz, ort')
-      .eq('kontakt_id', liste.kontakt_id)
-      .is('geloescht_am', null)
-      .order('erstellt_am', { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-  ])
-  if (f.error) throw f.error
-  const empfaenger: Empfaenger = {
-    name: liste.kunde,
-    anrede: k.data?.anrede ?? null,
-    email: k.data?.email ?? null,
-    strasse: o.data?.strasse ?? null,
-    plz: o.data?.plz ?? null,
-    ort: o.data?.ort ?? null,
-  }
-  return {
-    ...liste,
-    positionen: r.data.positionen as unknown as Position[],
-    mwst_satz: r.data.mwst_satz,
-    notiz: r.data.notiz,
-    storniert_grund: r.data.storniert_grund,
-    firma_daten: f.data,
-    empfaenger,
-    zahlungen: z.data as Zahlung[],
-  }
-}
+export { ladeRechnung } from '@/services/rechnungsdaten'
 
 /** Tranchen aus dem Zahlungsplan ohne Rechnung, nach Fälligkeit. */
 export async function ladeTranchen(): Promise<Tranche[]> {

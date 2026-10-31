@@ -1,19 +1,23 @@
-import { FileSignature, Search } from 'lucide-react'
+import { FileSignature, Search, Settings } from 'lucide-react'
 import { Suspense, lazy, useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
+import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { Input } from '@/components/ui/input'
+import { hatRecht } from '@/lib/rechte'
 import { supabase } from '@/services/supabase'
-import { useVertraege } from '../hooks/useWerkvertraege'
+import { useAnmeldung } from '@/stores/anmeldung'
+import { useVertraege, useWerkvertragEinstellung } from '../hooks/useWerkvertraege'
 import { passt } from '../lib/status'
 import { WERKVERTRAG_STATUS } from '../types'
 
 const VertragListe = lazy(() => import('./VertragListe'))
 const VertragAkte = lazy(() => import('./VertragAkte'))
 const AuftragDialog = lazy(() => import('./AuftragDialog'))
+const EinstellungDialog = lazy(() => import('./EinstellungDialog'))
 
 export interface WerkvertraegeProps {
   /** Offener Werkvertrag aus der Adresse (?vertrag=…). */
@@ -32,6 +36,12 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
   const vertraege = useVertraege()
   const [suche, setSuche] = useState('')
   const [stand, setStand] = useState<string[]>([])
+  const [einstellen, setEinstellen] = useState(false)
+  const admin = hatRecht(
+    useAnmeldung((z) => z.ich),
+    'admin',
+  )
+  const einstellung = useWerkvertragEinstellung()
   const s = useDeferredValue(suche)
   const gefunden = useMemo(() => (vertraege.data ?? []).filter((w) => passt(w.suchtext, s)), [vertraege.data, s])
   const sichtbar = useMemo(
@@ -51,7 +61,26 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
-      <Seitenkopf titel={t('werkvertraege.titel')} beschreibung={t('werkvertraege.beschreibung')} />
+      <Seitenkopf
+        titel={t('werkvertraege.titel')}
+        beschreibung={t('werkvertraege.beschreibung')}
+        {...(admin && einstellung.data
+          ? {
+              aktionen: (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    setEinstellen(true)
+                  }}
+                >
+                  <Settings />
+                  {t('werkvertraege.einstellung.titel')}
+                </Button>
+              ),
+            }
+          : {})}
+      />
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <Filterchips
           beschriftung={t('werkvertraege.spalte.status')}
@@ -103,6 +132,14 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
             }}
             onSchliessen={() => {
               onAdresse({ vertrag: null })
+            }}
+          />
+        )}
+        {einstellen && einstellung.data && (
+          <EinstellungDialog
+            einstellung={einstellung.data}
+            onSchliessen={() => {
+              setEinstellen(false)
             }}
           />
         )}

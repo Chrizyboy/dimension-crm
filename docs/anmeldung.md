@@ -5,7 +5,7 @@ So kommt die Anmeldung vom lokalen Test in den echten Betrieb. Lokal ist alles s
 ## 1. Microsoft-Anmeldung (Entra ID)
 
 1. [Microsoft Entra Admin Center](https://entra.microsoft.com) → _Anwendungen_ → _App-Registrierungen_ → _Neue Registrierung_.
-2. Name «Dimension CRM», Kontotyp «Nur Konten in diesem Organisationsverzeichnis».
+2. Name «Dimension Work», Kontotyp «Nur Konten in diesem Organisationsverzeichnis».
 3. Umleitungs-URI (Web): `https://<projekt>.supabase.co/auth/v1/callback`.
 4. _Zertifikate & Geheimnisse_ → neuer geheimer Clientschlüssel. Wert sofort kopieren.
 5. Supabase-Dashboard → _Authentication_ → _Sign In / Providers_ → _Azure_: Client-ID, Geheimnis und als URL `https://login.microsoftonline.com/<tenant-id>` eintragen, einschalten.

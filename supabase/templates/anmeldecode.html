@@ -1,24 +1,115 @@
-<!-- Mail mit dem Anmeldecode (Phase 4). Zweisprachig, weil die Sprache der Person beim Versand noch unbekannt ist. -->
-<div
-  style="
-    font-family:
-      Segoe UI,
-      Arial,
-      sans-serif;
-    color: #0b2545;
-    max-width: 480px;
-  "
->
-  <p style="font-size: 15px">Hallo, hier ist dein Code für die Anmeldung im Dimension CRM:</p>
-  <p style="font-size: 32px; font-weight: 700; letter-spacing: 6px; margin: 16px 0">{{ .Token }}</p>
-  <p style="font-size: 13px; color: #5b6779">
-    Er gilt 10 Minuten. Hast du keine Anmeldung gestartet, kannst du diese Mail ignorieren.
-  </p>
-  <hr style="border: 0; border-top: 1px solid #dde3ea; margin: 20px 0" />
-  <p style="font-size: 15px">Bonjour, voici ton code de connexion au CRM Dimension&nbsp;:</p>
-  <p style="font-size: 32px; font-weight: 700; letter-spacing: 6px; margin: 16px 0">{{ .Token }}</p>
-  <p style="font-size: 13px; color: #5b6779">
-    Il est valable 10 minutes. Si tu n’as pas demandé de connexion, ignore ce message.
-  </p>
-  <p style="font-size: 12px; color: #5b6779">Dimension Solaire · Muri AG · Bulle FR</p>
-</div>
+<!-- Mail mit dem Anmeldecode im Design von Dimension Work (Chris 31.10.2026). Nur in einer Sprache: `.Data.sprache` aus den Login-Metadaten (Migration 20261110000700, Anmeldeseite setzt sie vor dem Versand), ohne Wert Deutsch. Tabellen und Inline-Stile wegen Outlook; das Logo liegt öffentlich im Repository. -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f4f6f9; padding: 24px 0">
+  <tr>
+    <td align="center">
+      <table
+        role="presentation"
+        width="520"
+        cellpadding="0"
+        cellspacing="0"
+        style="max-width: 520px; width: 100%; background: #ffffff; border-radius: 10px; border-top: 4px solid #ef7c00"
+      >
+        <tr>
+          <td style="padding: 24px 28px 8px 28px">
+            <img
+              src="https://raw.githubusercontent.com/Chrizyboy/dimension-crm/main/public/logo/dimension-work-hell.png"
+              width="240"
+              height="37"
+              alt="Dimension Work"
+              style="display: block; border: 0"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td
+            style="
+              padding: 8px 28px 0 28px;
+              font-family:
+                Segoe UI,
+                Arial,
+                sans-serif;
+              color: #02224f;
+            "
+          >
+            {{ if .Data.sprache }}{{ if eq .Data.sprache "fr" }}
+            <p style="font-size: 15px; margin: 16px 0 8px 0">
+              Bonjour, voici ton code de connexion à Dimension Work&nbsp;:
+            </p>
+            <p
+              style="
+                font-size: 32px;
+                font-weight: 700;
+                letter-spacing: 8px;
+                margin: 12px 0;
+                padding: 12px 0;
+                text-align: center;
+                background: #fdebd8;
+                border-radius: 8px;
+                color: #02224f;
+              "
+            >
+              {{ .Token }}
+            </p>
+            <p style="font-size: 13px; color: #4a5568; margin: 8px 0 0 0">
+              Il est valable 10 minutes. Si tu n’as pas demandé de connexion, ignore ce message.
+            </p>
+            <p style="font-size: 12px; color: #4a5568; margin: 24px 0">
+              Dimension Solaire · Muri AG · Bulle FR · Message automatique, merci de ne pas répondre.
+            </p>
+            {{ else }}
+            <p style="font-size: 15px; margin: 16px 0 8px 0">
+              Hallo, hier ist dein Code für die Anmeldung in Dimension Work:
+            </p>
+            <p
+              style="
+                font-size: 32px;
+                font-weight: 700;
+                letter-spacing: 8px;
+                margin: 12px 0;
+                padding: 12px 0;
+                text-align: center;
+                background: #fdebd8;
+                border-radius: 8px;
+                color: #02224f;
+              "
+            >
+              {{ .Token }}
+            </p>
+            <p style="font-size: 13px; color: #4a5568; margin: 8px 0 0 0">
+              Er gilt 10 Minuten. Hast du keine Anmeldung gestartet, kannst du diese Mail ignorieren.
+            </p>
+            <p style="font-size: 12px; color: #4a5568; margin: 24px 0">
+              Dimension Solaire · Muri AG · Bulle FR · Automatisch versendet, bitte nicht antworten.
+            </p>
+            {{ end }}{{ else }}
+            <p style="font-size: 15px; margin: 16px 0 8px 0">
+              Hallo, hier ist dein Code für die Anmeldung in Dimension Work:
+            </p>
+            <p
+              style="
+                font-size: 32px;
+                font-weight: 700;
+                letter-spacing: 8px;
+                margin: 12px 0;
+                padding: 12px 0;
+                text-align: center;
+                background: #fdebd8;
+                border-radius: 8px;
+                color: #02224f;
+              "
+            >
+              {{ .Token }}
+            </p>
+            <p style="font-size: 13px; color: #4a5568; margin: 8px 0 0 0">
+              Er gilt 10 Minuten. Hast du keine Anmeldung gestartet, kannst du diese Mail ignorieren.
+            </p>
+            <p style="font-size: 12px; color: #4a5568; margin: 24px 0">
+              Dimension Solaire · Muri AG · Bulle FR · Automatisch versendet, bitte nicht antworten.
+            </p>
+            {{ end }}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

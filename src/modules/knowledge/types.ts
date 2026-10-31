@@ -60,7 +60,7 @@ export interface HandbuchEingabe {
   datei_fr: File | null
 }
 
-export const MELDUNG_STATUS = ['neu', 'arbeit', 'info', 'erledigt'] as const
+export const MELDUNG_STATUS = ['neu', 'wartet', 'arbeit', 'info', 'erledigt', 'abgelehnt'] as const
 export type MeldungStatus = (typeof MELDUNG_STATUS)[number]
 export const PRIOS = ['niedrig', 'normal', 'dringend'] as const
 export type Prio = (typeof PRIOS)[number]
@@ -82,6 +82,31 @@ export interface Meldung {
   person_id: string | null
   person: string | null
   erstellt_am: string
+  einschaetzung: Einschaetzung | null
+  entscheid: 'erledigen' | 'nicht' | null
+  entscheid_notiz: string | null
+  entschieden_am: string | null
+  umgesetzt_in: string | null
+}
+
+/** Einschätzung einer Meldung (vom Server geprüft, nur für die Administration sichtbar). */
+export interface Einschaetzung {
+  kurz: string
+  was: string
+  ursache?: string
+  auswirkung?: string
+  loesung?: string
+  aufwand?: string
+  risiko?: string
+  empfehlung: 'erledigen' | 'nicht'
+}
+
+/** Wer über Meldungen entscheidet und ob dazu eine SMS kommt (Einstellung «helpdesk»). */
+export interface HelpdeskStand {
+  entscheider_person_id: string | null
+  sms: boolean
+  ich_entscheide: boolean
+  kandidaten: { id: string; name: string; mobil: boolean }[]
 }
 
 export interface NeueMeldung {
