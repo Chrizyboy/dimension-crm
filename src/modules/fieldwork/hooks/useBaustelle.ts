@@ -27,6 +27,21 @@ export const useTag = (von: string, bis: string, person: string | null) =>
     },
   })
 
+/** Eigene Abwesenheiten für «Mein Plan», mit Kopie am Gerät (auch ohne Netz sichtbar). */
+export const useAbwesenheiten = (von: string, bis: string, person: string | null) =>
+  useQuery({
+    queryKey: ['baustelle', 'abwesenheiten', von, bis, person],
+    networkMode: 'always',
+    enabled: an && Boolean(person),
+    queryFn: async () => {
+      const a = await mitAblage('abwesenheiten', async () => ({
+        schluessel: `${von}:${bis}`,
+        daten: await b.ladeAbwesenheiten(von, bis, person ?? ''),
+      }))
+      return a.daten
+    },
+  })
+
 /** Ein Rapport, auch wenn er erst am Handy existiert. */
 export const useRapport = (id: string) =>
   useQuery({

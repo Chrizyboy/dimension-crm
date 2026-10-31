@@ -2,6 +2,7 @@ import { meta as aftersales } from '@/modules/aftersales'
 import { meta as ai } from '@/modules/ai'
 import { meta as automations } from '@/modules/automations'
 import { meta as contacts } from '@/modules/contacts'
+import { meta as contracting } from '@/modules/contracting'
 import { meta as contracts } from '@/modules/contracts'
 import { meta as customers } from '@/modules/customers'
 import { meta as dashboard } from '@/modules/dashboard'
@@ -37,6 +38,7 @@ export const MODULE: readonly ModulMeta[] = [
   pricing,
   workcontracts,
   tenders,
+  contracting,
   customers,
   contacts,
   marketing,

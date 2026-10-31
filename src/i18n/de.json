@@ -345,7 +345,9 @@
     "bereiche_one": "{{count}} Bereich",
     "bereiche_other": "{{count}} Bereiche",
     "personen_one": "{{count}} Person",
-    "personen_other": "{{count}} Personen"
+    "personen_other": "{{count}} Personen",
+    "einfacheAnsicht": "Einfache Ansicht (nur Arbeitszeit und Spesen)",
+    "einfacheAnsichtText": "Ohne Seitenleiste, zwei grosse Knöpfe. Für Monteure."
   },
   "pruefung": {
     "name": "Bitte einen Namen mit mindestens 2 Zeichen eingeben.",
@@ -1861,6 +1863,16 @@
     "ressourcen_uebergabe_doppelt": "Entweder an eine Person oder in ein Fahrzeug.",
     "ressourcen_person": "Diese Person ist nicht mehr aktiv.",
     "ressourcen_doppelt": "Dieses Kennzeichen oder diese Inventar-Nr. gibt es schon.",
+    "grossprojekt_kein_recht": "Dafür fehlt dir das Recht.",
+    "grossprojekt_titel_fehlt": "Bitte einen Titel eingeben.",
+    "grossprojekt_quelle_fehlt": "Bitte die Quelle angeben (Link oder Fundort).",
+    "grossprojekt_weg": "Dieses Grossprojekt gibt es nicht mehr.",
+    "grossprojekt_nicht_bewilligen": "Bewilligen darf nur Andy oder seine Vertretung.",
+    "grossprojekt_bauherr_fehlt": "Für den Lead braucht es die Bauherrschaft. Bitte unter «Angaben ändern» eintragen.",
+    "grossprojekt_grund_fehlt": "Bitte einen Grund angeben.",
+    "grossprojekt_schon_lead": "Daraus ist schon ein Lead entstanden. Bitte dort weiterarbeiten.",
+    "grossprojekt_entscheid_unbekannt": "Diesen Entscheid gibt es nicht.",
+    "grossprojekt_nur_ablauf": "Stand und Entscheid ändern nur die Knöpfe unten in der Akte.",
     "handbuch_nur_entscheider": "Über diese Meldung entscheidet eine andere Person.",
     "handbuch_entscheid_ungueltig": "Bitte «Erledige es» oder «Nicht» wählen.",
     "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
@@ -5197,10 +5209,10 @@
       "leerText": "Etwas klemmt oder fehlt? Mit «Fehler melden» erreicht deine Meldung die Administration.",
       "status": {
         "neu": "Neu",
-        "wartet": "Wartet auf Entscheid",
         "arbeit": "In Arbeit",
         "info": "Rückfrage",
         "erledigt": "Erledigt",
+        "wartet": "Wartet auf Entscheid",
         "abgelehnt": "Nicht umgesetzt"
       },
       "statusSetzen": "Status",
@@ -5609,6 +5621,246 @@
       "nichts": "Keine Frist in den nächsten 30 Tagen."
     }
   },
+  "grossprojekte": {
+    "titel": "Grossprojekte",
+    "beschreibung": "Grosse Dächer, Gewerbe, Gemeinden und Überbauungen, bei denen sich PV- oder Wärme-Contracting lohnen kann. Punkte und Schätzung rechnet das CRM, Andy entscheidet.",
+    "erfassen": "Grossprojekt erfassen",
+    "punkte": "{{n}} Punkte",
+    "fahrzeit": "{{min}} Min.",
+    "waerme": "Wärme",
+    "jahr": "Jahr",
+    "filter": "Contracting-Art",
+    "filterwert": {
+      "alle": "Alle",
+      "pv": "PV",
+      "waerme": "Wärme",
+      "beides": "PV und Wärme"
+    },
+    "reiter": {
+      "pruefen": "Prüfen",
+      "beobachten": "Beobachten",
+      "bewilligt": "Bewilligt",
+      "alle": "Alle",
+      "annahmen": "Annahmen"
+    },
+    "leer": {
+      "pruefen": "Nichts zu prüfen",
+      "beobachten": "Nichts in Beobachtung",
+      "bewilligt": "Noch nichts bewilligt",
+      "alle": "Noch keine Grossprojekte",
+      "annahmen": "Keine Annahmen",
+      "text": "Der Monitor prüft jede Meldung von simap und dem Amtsblatt. Hinweise aus Gesprächen erfasst du oben rechts."
+    },
+    "spalte": {
+      "punkte": "Punkte",
+      "projekt": "Projekt",
+      "contracting": "Contracting",
+      "investition": "Investition ca.",
+      "bauherr": "Bauherrschaft",
+      "stand": "Stand"
+    },
+    "stand": {
+      "pruefen": "Prüfen",
+      "beobachten": "Beobachten",
+      "bewilligt": "Bewilligt",
+      "verworfen": "Verworfen"
+    },
+    "art": {
+      "pv": "PV",
+      "waerme": "Wärme",
+      "beides": "PV und Wärme"
+    },
+    "ausschluss": {
+      "geschuetzt": "Geschützt",
+      "efh": "Einfamilienhaus",
+      "fahrzeit": "Zu weit",
+      "zu_klein": "Zu klein"
+    },
+    "ausschlussText": {
+      "geschuetzt": "Geschütztes Gebäude: Solaranlage und Heizungsersatz sind schwierig. Darum 0 Punkte.",
+      "efh": "Einfamilienhaus: für Contracting zu klein. Darum 0 Punkte.",
+      "fahrzeit": "Mehr als 60 Minuten von Muri und Bulle entfernt. Darum 0 Punkte.",
+      "zu_klein": "Dach unter 200 m² und keine grosse Heizung. Darum 0 Punkte."
+    },
+    "teil": {
+      "dach": "Dach",
+      "nutzung": "Eigenverbrauch",
+      "heizung": "Heizung",
+      "heizungsersatz": "Heizungsersatz geplant",
+      "bauherr": "Bauherrschaft",
+      "fahrzeit": "Fahrzeit",
+      "wohnungen": "Wohnungen (ZEV)"
+    },
+    "bauherrArt": {
+      "gemeinde": "Gemeinde",
+      "kanton": "Kanton",
+      "genossenschaft": "Genossenschaft",
+      "pensionskasse": "Pensionskasse",
+      "immobilien": "Immobilienfirma",
+      "gewerbe": "Firma",
+      "landwirtschaft": "Landwirtschaft",
+      "kirche": "Kirche",
+      "privat": "Privat",
+      "unbekannt": "Unbekannt"
+    },
+    "nutzung": {
+      "industrie": "Industrie",
+      "gewerbe": "Gewerbe, Lager",
+      "kuehlung": "Kühlung",
+      "spital": "Spital",
+      "heim": "Heim",
+      "schule": "Schule",
+      "sport": "Sporthalle",
+      "verwaltung": "Verwaltung, Büro",
+      "ueberbauung": "Überbauung",
+      "mfh": "Mehrfamilienhaus",
+      "landwirtschaft": "Landwirtschaft",
+      "efh": "Einfamilienhaus",
+      "andere": "Andere"
+    },
+    "heizung": {
+      "oel": "Öl",
+      "gas": "Gas",
+      "elektro": "Elektro",
+      "holz": "Holz",
+      "waermepumpe": "Wärmepumpe",
+      "fernwaerme": "Fernwärme",
+      "unbekannt": "Unbekannt"
+    },
+    "klasse": {
+      "1": "gering",
+      "2": "mittel",
+      "3": "gut",
+      "4": "sehr gut",
+      "5": "hervorragend"
+    },
+    "quelle": {
+      "simap": "simap",
+      "amtsblatt": "Amtsblatt",
+      "hand": "Von Hand"
+    },
+    "feld": {
+      "dachflaeche": "Dachfläche",
+      "heizung": "Heizung",
+      "heizungsersatz": "Heizungsersatz geplant",
+      "nutzung": "Nutzung",
+      "geschuetzt": "Geschützt (Denkmal)",
+      "wohnungen": "Wohnungen",
+      "baujahr": "Baujahr",
+      "egid": "EGID",
+      "bauherr": "Name",
+      "bauherrArt": "Art",
+      "quelle": "Quelle",
+      "notiz": "Notiz"
+    },
+    "akte": {
+      "titel": "Grossprojekt",
+      "weg": "Dieses Grossprojekt gibt es nicht mehr.",
+      "warum": "Warum es passt",
+      "schaetzung": "Grobe Schätzung",
+      "gebaeude": "Gebäude",
+      "bauherrschaft": "Bauherrschaft und Quelle",
+      "verlauf": "Verlauf",
+      "verlaufLeer": "Noch nichts passiert.",
+      "dach": "{{m2}} m² geeignet (Eignung {{klasse}})",
+      "seit": "seit {{jahr}}",
+      "bis": "bis {{datum}}",
+      "angereichert": "Gebäudedaten vom {{datum}}: {{text}}",
+      "anreichernBald": "Gebäudedaten werden innert einer Stunde geholt.",
+      "ohneAdresse": "Ohne Adresse oder Parzelle kann das CRM Dach und Heizung nicht nachschlagen.",
+      "anreichern": "Gebäudedaten holen",
+      "karte": "Auf der Solardach-Karte",
+      "dossier": "Dossier öffnen",
+      "entschieden": "Entschieden",
+      "bearbeiten": "Angaben ändern",
+      "zumLead": "Zum Lead",
+      "bewilligtAndy": "Bewilligen darf Andy (Vertretung Chris).",
+      "keineSchaetzung": "Noch keine Schätzung: Es fehlen Dachfläche oder Heizung.",
+      "wenigDaten": "Es fehlen noch Angaben. Mit Adresse holt das CRM Dach und Heizung beim Bund.",
+      "geholt": "Gebäudedaten geholt: {{text}}",
+      "spaeter": "Der Bund ist gerade nicht erreichbar. Das CRM holt die Gebäudedaten innert einer Stunde."
+    },
+    "schaetzung": {
+      "pv": "Photovoltaik",
+      "investition": "Investition PV",
+      "preis": "Contracting-Preis",
+      "rpKwh": "ca. {{rp}} Rp./kWh",
+      "waerme": "Wärmeleistung",
+      "waermeInvestition": "Investition Wärme",
+      "rate": "Rate Wärme pro Jahr",
+      "hinweis": "Grobe Schätzung aus Dachfläche und Annahmen (Reiter «Annahmen»), keine Offerte."
+    },
+    "entscheid": {
+      "bewilligen": "Bewilligen",
+      "beobachten": "Beobachten",
+      "verwerfen": "Verwerfen",
+      "zurueck": "Wieder prüfen",
+      "verwerfenTitel": "Grossprojekt verwerfen",
+      "verwerfenText": "Warum passt es nicht? Der Grund hilft, den Monitor zu verbessern.",
+      "beobachtenTitel": "Grossprojekt beobachten",
+      "beobachtenText": "Am Datum kommt es wieder in «Prüfen», zum Beispiel nach der Baubewilligung.",
+      "bisDatum": "Wieder prüfen am",
+      "grund": "Grund"
+    },
+    "formular": {
+      "neu": "Grossprojekt erfassen",
+      "aendern": "Angaben ändern",
+      "beschreibung": "Mit Adresse oder Parzelle holt das CRM Dach und Heizung beim Bund. Was du hier einträgst, bleibt stehen.",
+      "titel": "Titel",
+      "quell_url": "Quelle (Link oder Fundort)",
+      "strasse": "Strasse und Nummer",
+      "plz": "PLZ",
+      "gemeinde": "Gemeinde",
+      "parzelle": "Parzelle",
+      "bauherr": "Bauherrschaft",
+      "bauherr_art": "Art der Bauherrschaft",
+      "nutzung": "Nutzung",
+      "heizung": "Heizung",
+      "heizung_jahr": "Heizung seit (Jahr)",
+      "dachflaeche_m2": "Geeignete Dachfläche (m²)",
+      "waermeleistung_kw": "Wärmeleistung (kW)",
+      "wohnungen": "Wohnungen",
+      "notiz": "Notiz",
+      "offen": "Weiss nicht"
+    },
+    "pruefung": {
+      "zahl": "Bitte eine ganze Zahl eingeben."
+    },
+    "annahmen": {
+      "titel": "Annahmen der Schätzung",
+      "melden_ab": "Glocke ab Punkten",
+      "kwp_pro_m2": "kWp pro m² Dach",
+      "kwh_pro_kwp": "kWh pro kWp (ohne sonnendach.ch)",
+      "zins_prozent": "Zins (%)",
+      "laufzeit_jahre": "Laufzeit PV (Jahre)",
+      "betrieb_prozent": "Betrieb und Unterhalt (% pro Jahr)",
+      "marge_prozent": "Marge (%)",
+      "kw_pro_wohnung": "Wärme kW pro Wohnung",
+      "chf_pro_kw_waerme": "Wärme CHF pro kW",
+      "laufzeit_waerme_jahre": "Laufzeit Wärme (Jahre)",
+      "nurAdmin": "Ändern darf nur die Administration.",
+      "punkteTitel": "So entstehen die Punkte (0 bis 100)",
+      "punkteText": "Jeder Treffer bekommt Punkte aus sechs Bausteinen. Ab 70 Punkten sehr gut, ab 50 gut.",
+      "teil": {
+        "dach": "Dach: ab 500 m² geeigneter Fläche, volle 30 Punkte ab 1'500 m² (sonnendach.ch)",
+        "nutzung": "Eigenverbrauch: Industrie, Kühlung, Spital 20, Gewerbe 18, Heim 16, Schule und Überbauung 14",
+        "heizung": "Heizung: Öl 20, Gas 16, Elektro 14; halb so viel, wenn sie jünger als 15 Jahre oder kleiner als 50 kW ist",
+        "bauherr": "Bauherrschaft: Gemeinde, Kanton, Genossenschaft, Pensionskasse 15, Immobilienfirma 13, Firma 10",
+        "fahrzeit": "Fahrzeit: bis 30 Min. 10, bis 45 Min. 7, bis 60 Min. 4",
+        "wohnungen": "Wohnungen für einen Zusammenschluss zum Eigenverbrauch (ZEV): ab 6 Wohnungen 3, ab 20 Wohnungen 5"
+      },
+      "staffel": "Preis pro kWp",
+      "staffelBis": "bis {{bis}} kWp: CHF {{chf}}",
+      "staffelRest": "darüber: CHF {{chf}}",
+      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu."
+    },
+    "heute": {
+      "titel": "Grossprojekte",
+      "alle_one": "{{count}} zu prüfen",
+      "alle_other": "{{count}} zu prüfen",
+      "nichts": "Kein Grossprojekt wartet auf einen Entscheid."
+    }
+  },
   "team": {
     "titel": "Team & Ausweise",
     "beschreibung": "Wer darf was: Kurse und Ausweise aller Personen, dazu die eigene Personal-Akte.",
@@ -5672,6 +5924,31 @@
       "bis": "bis {{datum}}",
       "notiz": "Notiz (nur Administration)",
       "notizHinweis": "Die Person sieht diese Notiz nicht."
+    }
+  },
+  "einfach": {
+    "titel": "Hallo {{name}}",
+    "text": "Arbeitszeit per Knopfdruck, Spesen mit Belegfoto und dein Plan.",
+    "zeit": {
+      "titel": "Arbeitszeit",
+      "baustelle": "Baustelle",
+      "ohneBaustelle": "Ohne Baustelle",
+      "heute": "Heute",
+      "woche": "Diese Woche",
+      "art": {
+        "arbeit": "Arbeit",
+        "reise": "Reise"
+      }
+    },
+    "spesen": {
+      "erfassen": "Spese erfassen",
+      "keine": "Noch keine Spesen erfasst.",
+      "offen": "Offen {{betrag}}"
+    },
+    "plan": {
+      "titel": "Mein Plan",
+      "nichts": "Nichts geplant",
+      "halbtag": "halber Tag"
     }
   }
 }

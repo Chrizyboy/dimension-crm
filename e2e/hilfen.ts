@@ -39,8 +39,11 @@ export async function mailAn(email: string, seit = 0): Promise<{ betreff: string
   throw new Error(`Keine Mail an ${email}`)
 }
 
-/** Meldet eine Testperson aus seed.sql mit dem Code aus Mailpit an. */
-export async function anmelden(page: Page, email: string) {
+/**
+ * Meldet eine Testperson aus seed.sql mit dem Code aus Mailpit an. `einfach`: Rolle mit einfacher Ansicht
+ * (Monteur), dort gibt es keine Navigation, sondern die Stempeluhr.
+ */
+export async function anmelden(page: Page, email: string, einfach = false) {
   await page.goto('/')
   // Eine Sekunde Spielraum, falls die Uhr von Mailpit leicht anders geht.
   const seit = Date.now() - 1000
@@ -49,6 +52,10 @@ export async function anmelden(page: Page, email: string) {
   const code = /\b(\d{6})\b/.exec((await mailAn(email, seit)).text)?.[1] ?? ''
   await page.getByLabel(/Code aus|Code reçu/).fill(code)
   await page.getByRole('button', { name: /^(Anmelden|Se connecter)$/ }).click()
+  if (einfach) {
+    await expect(page.getByRole('heading', { name: /Arbeitszeit|Temps de travail/ })).toBeVisible()
+    return
+  }
   // Am Computer die Seitenleiste, am Handy die Leiste unten.
   await expect(
     page

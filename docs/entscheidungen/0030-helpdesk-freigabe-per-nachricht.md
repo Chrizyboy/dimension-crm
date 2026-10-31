@@ -1,4 +1,4 @@
-# 0029 Helpdesk: Meldungen mit Freigabe per SMS und Knopf im CRM
+# 0030 Helpdesk: Meldungen mit Freigabe per SMS und Knopf im CRM
 
 Datum: 31.10.2026 · Entschieden von Chris
 

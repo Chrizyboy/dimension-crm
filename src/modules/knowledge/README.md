@@ -24,4 +24,4 @@
 - «Fehler melden» erreicht man auch über die Befehlspalette und jede Fehleranzeige; der Bereich steht in `neu`.
 - Neue Prozess-Version: die alte Datei bleibt unter «Frühere Versionen» (höchstens 20).
 - «Erste Schritte» (Phase 16) ist die Schulungs-Kurzanleitung; der Text steht in `handbuch.start` der Sprachdateien (DE/FR gleich aufgebaut) und lässt sich auf eine A4-Seite drucken.
-- Helpdesk mit Freigabe (31.10.2026): Claude prüft jede Meldung über die Edge Function `helpdesk`, die entscheidende Person (Einstellung `helpdesk`, wählbar oben in «Meldungen») bekommt SMS, Glocke und Windows-Pop-up und entscheidet mit einem Knopf. Die Einschätzung sieht nur die Administration. Entscheid 0029.
+- Helpdesk mit Freigabe (31.10.2026): Claude prüft jede Meldung über die Edge Function `helpdesk`, die entscheidende Person (Einstellung `helpdesk`, wählbar oben in «Meldungen») bekommt SMS, Glocke und Windows-Pop-up und entscheidet mit einem Knopf. Die Einschätzung sieht nur die Administration. Entscheid 0030.

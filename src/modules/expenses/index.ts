@@ -22,5 +22,8 @@ export const Spesen = lazy(() => import('./components/Spesen'))
 /** Karte für die Startseite: offene Spesen. */
 export const SpesenHeute = lazy(() => import('./components/HeuteKarte'))
 
+/** Spesen für die einfache Monteur-Ansicht: grosser Knopf «Spese erfassen» und die letzten eigenen Spesen. */
+export const SpesenSchnell = lazy(() => import('./components/SpesenSchnell'))
+
 export { ANSICHTEN } from './types'
 export type * from './types'

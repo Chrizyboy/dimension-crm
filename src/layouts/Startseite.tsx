@@ -7,6 +7,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { darfModul, hatRecht } from '@/lib/rechte'
 import { ServiceHeute, meta as serviceMeta } from '@/modules/aftersales'
 import { WartungHeute, meta as wartungMeta } from '@/modules/contracts'
+import { GrossprojekteHeute, meta as grossprojekteMeta } from '@/modules/contracting'
 import { meta as kennzahlenMeta } from '@/modules/dashboard'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
@@ -20,6 +21,7 @@ import { NeueAufgabeKnopf } from '@/modules/tasks'
 import { MeinTag } from '@/modules/today'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { supabase } from '@/services/supabase'
+import { EinfachStart } from './EinfachStart'
 import { Systemstatus } from './Systemstatus'
 
 /**
@@ -30,8 +32,10 @@ export function Startseite() {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const mitDb = supabase !== null && ich !== null
+  if (ich?.ansicht === 'einfach') return <EinfachStart />
 
   const karten = [
+    [grossprojekteMeta, GrossprojekteHeute],
     [projekteMeta, ProjekteHeute],
     [serviceMeta, ServiceHeute],
     [wartungMeta, WartungHeute],

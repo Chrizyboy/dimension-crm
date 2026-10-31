@@ -26,7 +26,9 @@ export async function ladePersonen(): Promise<Person[]> {
 export async function ladeRollen(): Promise<Rolle[]> {
   const { data, error } = await db()
     .from('rollen')
-    .select('id, schluessel, name_de, name_fr, beschreibung_de, beschreibung_fr, rechte, bereiche, reihenfolge')
+    .select(
+      'id, schluessel, name_de, name_fr, beschreibung_de, beschreibung_fr, rechte, bereiche, reihenfolge, ansicht',
+    )
     .is('geloescht_am', null)
     .eq('aktiv', true)
     .order('reihenfolge')
@@ -79,10 +81,10 @@ export async function speicherePerson(
   if (error) throw error
 }
 
-/** Ändert Rechte und Bereiche einer Rolle. Nur Admins (RLS). */
+/** Ändert Rechte, Bereiche und Ansicht (voll/einfach) einer Rolle. Nur Admins (RLS). */
 export async function speichereRolle(
   id: string,
-  aenderung: Partial<Pick<Rolle, 'rechte' | 'bereiche'>>,
+  aenderung: Partial<Pick<Rolle, 'rechte' | 'bereiche' | 'ansicht'>>,
 ): Promise<void> {
   const { error } = await db().from('rollen').update(aenderung).eq('id', id)
   if (error) throw error

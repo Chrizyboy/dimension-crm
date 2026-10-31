@@ -2,7 +2,7 @@
 
 Wunsch von Chris (31.10.2026): Jede Meldung aus «Fehler melden» geht an Claude. Claude ändert nichts, sondern schickt
 eine Einschätzung. Chris antwortet nur «Erledige es» oder «Nicht». Danach setzt Claude um, schliesst die Meldung und
-die meldende Person bekommt eine Mail. Entscheid 0029.
+die meldende Person bekommt eine Mail. Entscheid 0030.
 
 ## Ablauf
 

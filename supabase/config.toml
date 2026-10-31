@@ -462,6 +462,10 @@ verify_jwt = true
 [functions.ausschreibungen]
 verify_jwt = true
 
+# Phase 8c: Gebäudedaten eines Grossprojekts sofort holen (sonst stündlich im Zeitplan).
+[functions.grossprojekte]
+verify_jwt = true
+
 # Microsoft leitet nach der Anmeldung ohne Supabase-Login hierher; geschützt durch state und PKCE.
 [functions.microsoft-rueckruf]
 verify_jwt = false
