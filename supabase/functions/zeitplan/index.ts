@@ -9,6 +9,7 @@
 //  * anfragen     alle 5 Minuten  solar-guide, Landingpage, Messe aus den Postfächern (V78)
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
+//  * ablage       alle 5 Minuten  Offert-Ordner in SharePoint anlegen/verschieben, Dateien einordnen (Entscheid 0030)
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
@@ -19,6 +20,7 @@
 
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
+import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
@@ -194,6 +196,11 @@ Deno.serve(async (req) => {
         team = [] // Team-Postfächer nur einmal pro Lauf lesen
         return n
       })
+    })
+    // Ablage vor der Sicherung: Dateien von Offerten und Projekten gehören in deren Ordner, nicht ins Kunden-Backup.
+    ergebnis.ablage = await job('ablage', 5, async () => {
+      const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
+      return p ? ablageAbarbeiten(p.person_id, s) : 'keine verbundene Person'
     })
     ergebnis.sicherung = await job('sicherung', 30, async () => {
       const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})

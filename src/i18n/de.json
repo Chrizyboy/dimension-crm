@@ -5915,5 +5915,30 @@
       "nichts": "Nichts geplant",
       "halbtag": "halber Tag"
     }
+  },
+  "ablage": {
+    "titel": "Dateiablage in SharePoint",
+    "zweck": "Dimension Work legt den Ordner jeder neuen Offerte selbst an (mit den Unterordnern), verschiebt ihn bei Annahme zu den Aufträgen und bei Verlust ins Archiv und legt Dateien aus dem CRM in den passenden Unterordner. Ältere Ordner bleiben, wie sie sind.",
+    "aktiv": "Automatische Ablage eingeschaltet",
+    "seit": "für Offerten ab {{datum}}",
+    "fertig_one": "{{count}} Ordner am Platz",
+    "fertig_other": "{{count}} Ordner am Platz",
+    "wartend_one": "{{count}} wartet",
+    "wartend_other": "{{count}} warten",
+    "mitFehler_one": "{{count}} mit Fehler",
+    "mitFehler_other": "{{count}} mit Fehler",
+    "bibliothek": "Bibliothek",
+    "name": "Ordnername",
+    "nameHinweis": "Platzhalter: {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offerten",
+      "auftraege": "Aufträge",
+      "verloren": "Verloren"
+    },
+    "unterordner": "Unterordner (werden in jedem neuen Ordner angelegt)",
+    "oeffnen": "Ordner in SharePoint",
+    "wirdAngelegt": "Ordner wird angelegt",
+    "wirdVerschoben": "Ordner (wird verschoben)",
+    "fehler": "Ordner: Fehler"
   }
 }

@@ -5915,5 +5915,30 @@
       "nichts": "Rien de prévu",
       "halbtag": "demi-journée"
     }
+  },
+  "ablage": {
+    "titel": "Classement dans SharePoint",
+    "zweck": "Dimension Work crée lui-même le dossier de chaque nouvelle offre (avec les sous-dossiers), le déplace vers les adjudications à l'acceptation et vers les archives en cas de perte, et range les fichiers du CRM dans le bon sous-dossier. Les anciens dossiers restent tels quels.",
+    "aktiv": "Classement automatique activé",
+    "seit": "pour les offres dès le {{datum}}",
+    "fertig_one": "{{count}} dossier en place",
+    "fertig_other": "{{count}} dossiers en place",
+    "wartend_one": "{{count}} en attente",
+    "wartend_other": "{{count}} en attente",
+    "mitFehler_one": "{{count}} en erreur",
+    "mitFehler_other": "{{count}} en erreur",
+    "bibliothek": "Bibliothèque",
+    "name": "Nom du dossier",
+    "nameHinweis": "Variables : {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offres",
+      "auftraege": "Adjudications",
+      "verloren": "Perdus"
+    },
+    "unterordner": "Sous-dossiers (créés dans chaque nouveau dossier)",
+    "oeffnen": "Dossier dans SharePoint",
+    "wirdAngelegt": "Dossier en création",
+    "wirdVerschoben": "Dossier (en déplacement)",
+    "fehler": "Dossier : erreur"
   }
 }
