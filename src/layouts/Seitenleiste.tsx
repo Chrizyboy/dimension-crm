@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Logo } from '@/components/shared/Logo'
+import { Logo, SIGNET } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
@@ -55,9 +55,9 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
         )}
       >
         {eingeklappt ? (
-          <img src="./icon.svg" alt="Dimension Solaire" className="size-7" />
+          <img src={SIGNET} alt="Dimension Work" className="size-7" />
         ) : (
-          <Logo variante="aufDunkel" className="h-8" />
+          <Logo variante="aufDunkel" kurz className="h-7" />
         )}
       </div>
 
