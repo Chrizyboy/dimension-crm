@@ -138,4 +138,15 @@ export interface GrossprojektRegeln {
     chf_pro_kw_waerme?: number
     laufzeit_waerme_jahre?: number
   }
+  suche?: { aktiv?: boolean; min_dach_m2?: number; min_grundflaeche_m2?: number; ab_punkte?: number }
+}
+
+/** Stand der Dachsuche (grossprojekt_suche_stand). */
+export interface SucheStand {
+  aktiv: boolean
+  gebiete: number
+  durchsucht: number
+  gebaeude: number
+  treffer: number
+  zuletzt: string | null
 }

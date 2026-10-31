@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Dimension CRM",
+    "name": "Dimension Work",
     "firma": "Dimension Solaire"
   },
   "nav": {
@@ -266,7 +266,7 @@
     "bereicheText": "Chaque domaine a un nom univoque et une phrase qui explique ce qu’on y fait. Elle apparaît aussi au survol dans la barre latérale et dans la recherche."
   },
   "anmeldung": {
-    "titel": "Connexion",
+    "titel": "Connexion à Dimension Work",
     "text": "Avec ton compte professionnel ou avec un code que nous t’envoyons par e-mail.",
     "microsoft": "Se connecter avec Microsoft",
     "oder": "ou",
@@ -1877,7 +1877,11 @@
     "posteingang_nicht_gefunden": "Cet e-mail n’existe plus ou tu n’as pas le droit de le voir.",
     "posteingang_person_fehlt": "Merci de choisir une personne active.",
     "posteingang_art_unbekannt": "Ce type n’existe pas.",
-    "posteingang_aktion_unbekannt": "Ce n’est pas possible avec cet e-mail."
+    "posteingang_aktion_unbekannt": "Ce n’est pas possible avec cet e-mail.",
+    "handbuch_nur_entscheider": "Une autre personne décide de ce signalement.",
+    "handbuch_entscheid_ungueltig": "Choisis « Règle-le » ou « Non ».",
+    "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
+    "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5198,7 +5202,7 @@
       "dateien": "Captures d’écran ou fichiers",
       "dateienHinweis": "Une capture d’écran aide le plus.",
       "intro": "Tes signalements et les réponses de l’administration.",
-      "introAdmin": "Tous les signalements des collaborateurs. Définir le statut et répondre ; la personne voit la réponse ici et dans la cloche.",
+      "introAdmin": "Tous les signalements de l’équipe. Le CRM examine chaque signalement et rédige une évaluation ; la décision se prend avec « Règle-le » ou « Non ». La personne voit la réponse ici, dans la cloche et par e-mail.",
       "filter": "Filtrer les signalements",
       "filterWert": {
         "offen": "Ouverts",
@@ -5212,13 +5216,44 @@
         "neu": "Nouveau",
         "arbeit": "En cours",
         "info": "Question",
-        "erledigt": "Réglé"
+        "erledigt": "Réglé",
+        "wartet": "Attend une décision",
+        "abgelehnt": "Non réalisé"
       },
       "statusSetzen": "Statut",
       "antwort": "Réponse",
       "antwortVon": "Réponse de {{name}}",
       "antwortAn": "Réponse à {{name}}",
-      "offenSr": "ouverts :"
+      "offenSr": "ouverts :",
+      "wirdGeprueft": "En cours d’examen. L’évaluation arrive au plus tard dans une heure (de 7 h à 19 h).",
+      "einschaetzung": "Évaluation",
+      "einschaetzungZeile": {
+        "was": "Ce qui se passe",
+        "ursache": "Cause",
+        "auswirkung": "Impact",
+        "loesung": "Solution",
+        "aufwand": "Effort",
+        "risiko": "Risque",
+        "empfehlung": "Recommandation"
+      },
+      "empfehlung": {
+        "erledigen": "Régler",
+        "nicht": "Ne pas réaliser"
+      },
+      "notiz": "Remarque (facultatif), p. ex. pourquoi pas",
+      "erledigeEs": "Règle-le",
+      "nicht": "Non",
+      "wartetAufAndere": "Attend la décision de la personne responsable.",
+      "entschieden": {
+        "erledigen": "Décision : régler",
+        "nicht": "Décision : ne pas réaliser"
+      },
+      "umgesetztIn": "réalisé dans la version {{version}}",
+      "beantwortet": "Répondu par {{name}}",
+      "entscheidet": "Décide des signalements",
+      "alleAdmins": "Toute l’administration",
+      "perSms": "Évaluation aussi par SMS",
+      "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
     "anleitung": {
       "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
@@ -5244,7 +5279,7 @@
       "reiter": "Premiers pas",
       "intro": "L’essentiel pour démarrer, sur une page. Pour le distribuer à l’équipe : « Imprimer » (ou enregistrer en PDF).",
       "drucken": "Imprimer",
-      "druckTitel": "Dimension CRM : premiers pas",
+      "druckTitel": "Dimension Work : premiers pas",
       "abschnitte": [
         {
           "titel": "1. Installer",
@@ -5707,7 +5742,8 @@
     "quelle": {
       "simap": "simap",
       "amtsblatt": "Feuille officielle",
-      "hand": "Saisie manuelle"
+      "hand": "Saisie manuelle",
+      "suche": "Recherche de toits"
     },
     "feld": {
       "dachflaeche": "Surface de toit",
@@ -5829,6 +5865,16 @@
       "alle_one": "{{count}} à examiner",
       "alle_other": "{{count}} à examiner",
       "nichts": "Aucun grand projet n’attend de décision."
+    },
+    "suche": {
+      "titel": "Recherche de toits",
+      "aktiv": "Recherche de toits active",
+      "an": "Active",
+      "aus": "Suspendue",
+      "fortschritt": "Avancement de la recherche",
+      "text": "Le CRM cherche lui-même de grandes toitures avec une forte consommation : chaque heure, il avance dans la région autour de Muri et Bulle (les zones proches d’abord), reprend du registre des bâtiments les grands bâtiments industriels, commerciaux, hôpitaux, EMS, écoles et salles de sport et vérifie la toiture sur sonnendach.ch. Seuls les bâtiments avec assez de points entrent dans la liste.",
+      "stand": "{{durchsucht}} zones sur {{gebiete}} parcourues, {{gebaeude}} bâtiments examinés, {{treffer}} résultats dans la liste.",
+      "zuletzt": "Dernière recherche : {{zeit}}"
     }
   },
   "team": {

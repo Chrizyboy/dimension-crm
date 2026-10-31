@@ -146,10 +146,10 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
         }}
         onDragEnd={abgelegt}
       >
+        {/* Mit Tastatur seitlich scrollbar (auch wenn die Spalten leer sind und nichts Fokussierbares enthalten). */}
         <div
           role="region"
           aria-label={t('verkauf.ansicht.pipeline')}
-          // Tastatur: auch leere Spalten lassen sich seitwärts scrollen (axe scrollable-region-focusable)
           tabIndex={0}
           className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6"
         >

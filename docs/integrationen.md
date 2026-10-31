@@ -19,7 +19,7 @@ sendet dann aus ihrem Postfach und trägt Termine in ihren Kalender ein.
 ### 1.1 App bei Microsoft registrieren (einmal, Admin)
 
 1. <https://entra.microsoft.com> › **Applications › App registrations › New registration**
-2. Name: `Dimension CRM`. Kontotyp: **Nur Konten in diesem Organisationsverzeichnis**.
+2. Name: `Dimension Work`. Kontotyp: **Nur Konten in diesem Organisationsverzeichnis**.
 3. **Redirect URI**: Typ «Web», Adresse aus Einstellungen › Verbindungen («Rückruf-Adresse für Microsoft»),
    im echten Projekt `https://<projekt>.supabase.co/functions/v1/microsoft-rueckruf`.
 4. Nach dem Anlegen notieren: **Application (client) ID** und **Directory (tenant) ID**.

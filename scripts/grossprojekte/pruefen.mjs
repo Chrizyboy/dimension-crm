@@ -42,7 +42,29 @@ const sql = (befehl) =>
 // --- Ersatz für api3.geo.admin.ch ------------------------------------------------------------------------
 // Industriestrasse: grosses Dach (zwei geeignete Flächen, eine ungeeignete), Ölheizung von 1996, Industrie.
 // Parzelle 777 in Muri: nur über die Parzellensuche zu finden. Alles andere: Adresse unbekannt.
+// Dachsuche: In jedem Gebiet stehen eine grosse Industriehalle (kommt in die Liste), ein kleines Büro und ein
+// Einfamilienhaus (beide nicht). Die Halle hat pro Lauf eine eigene EGID, damit frühere Läufe sie nicht sperren.
 const z = { aus: false, aufrufe: [] }
+const HALLE = String(190800000 + (parseInt(LAUF, 16) % 99999))
+const gebiet = [
+  {
+    egid: HALLE,
+    gklas: 1251,
+    gkat: 1060,
+    garea: 2400,
+    gkode: 2669517.2,
+    gkodn: 1237488.6,
+    strname: ['Hallenweg'],
+    deinr: ['3'],
+    dplz4: [5630],
+    ggdename: 'Muri (AG)',
+    gbauj: 1984,
+    genh1: 7520,
+    gwaerdath1: '2001-05-01',
+  },
+  { egid: 190700001, gklas: 1220, gkat: 1060, garea: 300, gkode: 2669600, gkodn: 1237600 },
+  { egid: 190700002, gklas: 1110, gkat: 1020, garea: 140, gkode: 2669700, gkodn: 1237700 },
+]
 const lage = { x: 1236000, y: 2668000 } // wie beim Bund: x = Nord, y = Ost
 const server = createServer((req, res) => {
   const url = new URL(req.url, 'http://ersatz')
@@ -66,6 +88,12 @@ const server = createServer((req, res) => {
       return json(200, {
         results: [{ attributes: { building_id: 4711, flaeche: 900, klasse: 4, stromertrag: 150000 } }],
       })
+    }
+    if (
+      q.get('layers') === 'all:ch.bfs.gebaeude_wohnungs_register' &&
+      q.get('geometryType') === 'esriGeometryEnvelope'
+    ) {
+      return json(200, { results: q.get('offset') === '0' ? gebiet.map((attributes) => ({ attributes })) : [] })
     }
     if (q.get('layers') === 'all:ch.bfs.gebaeude_wohnungs_register') {
       return json(200, {
@@ -147,6 +175,7 @@ const neu = (name, felder) =>
   ).split('\n')[0]
 const feld = (id, spalten) => sql(`select ${spalten} from public.grossprojekte where id = '${id}'`)
 
+const START = sql('select now()')
 const envDatei = join(tmpdir(), `crm-grossprojekte-${process.pid}.env`)
 writeFileSync(envDatei, [`GEO_ADMIN_URL=http://${HOST}:${PORT}`, `ZEITPLAN_SCHLUESSEL=${ZEITPLAN}`].join('\n'))
 // Direkt das CLI starten, als eigene Prozessgruppe, damit es sich sauber beenden lässt (siehe integrationen:pruefen).
@@ -246,6 +275,31 @@ try {
     Number(sql(`select count(*) from public.benachrichtigungen where ziel = '/contracting?projekt=${zweites}'`)) >= 1,
     'starker Treffer steht in der Glocke',
   )
+  // Dachsuche im gleichen Zeitplan-Lauf
+  ok(
+    /Dachsuche: \d+ Gebiete/.test(r.daten?.ergebnis?.grossprojekte ?? ''),
+    'Zeitplan: Dachsuche läuft mit',
+    r.daten?.ergebnis?.grossprojekte,
+  )
+  ok(
+    sql(
+      `select quelle || '/' || stand || '/' || dachflaeche_m2 || '/' || nutzung || '/' || heizung
+         from public.grossprojekte where egid = '${HALLE}'`,
+    ) === 'suche/pruefen/1600/industrie/gas',
+    'Dachsuche: grosse Industriehalle mit Dach und Heizung aufgenommen',
+  )
+  ok(
+    sql(`select count(*) from public.grossprojekte where egid = '${HALLE}'`) === '1',
+    'Halle nur einmal, auch wenn sie in mehreren Gebieten auftaucht',
+  )
+  ok(
+    sql(`select count(*) from public.grossprojekte where egid in ('190700001', '190700002')`) === '0',
+    'kleines Büro und Einfamilienhaus nicht aufgenommen',
+  )
+  ok(
+    Number(sql(`select count(*) from intern.gp_suchkacheln where geprueft_am >= '${START}'`)) >= 1,
+    'durchsuchte Gebiete sind vermerkt',
+  )
   ok(
     z.aufrufe.some((a) => a.includes('/MapServer/find')),
     'alle Dachflächen des Gebäudes über «find» geholt',
@@ -257,8 +311,12 @@ try {
 } finally {
   // Testdaten in den Papierkorb (nie hart löschen).
   sql(`update public.benachrichtigungen set ausgeblendet_am = now()
-        where ziel in (select '/contracting?projekt=' || id from public.grossprojekte where quell_id like 'ersatz-${LAUF}-%')`)
-  sql(`update public.grossprojekte set geloescht_am = now() where quell_id like 'ersatz-${LAUF}-%'`)
+        where ziel in (select '/contracting?projekt=' || id from public.grossprojekte
+                        where quell_id like 'ersatz-${LAUF}-%' or egid = '${HALLE}')`)
+  sql(
+    `update public.grossprojekte set geloescht_am = now() where quell_id like 'ersatz-${LAUF}-%' or egid = '${HALLE}'`,
+  )
+  sql(`delete from intern.gp_suchkacheln where geprueft_am >= '${START}'`)
   const beendet = new Promise((r) => serve.once('exit', r))
   process.kill(-serve.pid, 'SIGINT')
   await Promise.race([beendet, warte(15000)])

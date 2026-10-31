@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Dimension CRM",
+    "name": "Dimension Work",
     "firma": "Dimension Solaire"
   },
   "nav": {
@@ -266,7 +266,7 @@
     "bereicheText": "Jeder Bereich hat einen eindeutigen Namen und einen Satz, was man dort erledigt. Der Satz erscheint auch beim Darüberfahren in der Seitenleiste und in der Suche."
   },
   "anmeldung": {
-    "titel": "Anmelden",
+    "titel": "Bei Dimension Work anmelden",
     "text": "Mit dem Firmenkonto oder mit einem Code, den wir dir per E-Mail schicken.",
     "microsoft": "Mit Microsoft anmelden",
     "oder": "oder",
@@ -1877,7 +1877,11 @@
     "posteingang_nicht_gefunden": "Diese Mail gibt es nicht mehr oder du darfst sie nicht sehen.",
     "posteingang_person_fehlt": "Bitte eine aktive Person wählen.",
     "posteingang_art_unbekannt": "Diese Art gibt es nicht.",
-    "posteingang_aktion_unbekannt": "Das geht mit dieser Mail nicht."
+    "posteingang_aktion_unbekannt": "Das geht mit dieser Mail nicht.",
+    "handbuch_nur_entscheider": "Über diese Meldung entscheidet eine andere Person.",
+    "handbuch_entscheid_ungueltig": "Bitte «Erledige es» oder «Nicht» wählen.",
+    "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
+    "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5198,7 +5202,7 @@
       "dateien": "Bildschirmfotos oder Dateien",
       "dateienHinweis": "Ein Bildschirmfoto hilft am meisten.",
       "intro": "Deine Meldungen und die Antworten der Administration.",
-      "introAdmin": "Alle Meldungen der Mitarbeitenden. Status setzen und antworten; die meldende Person sieht die Antwort hier und in der Glocke.",
+      "introAdmin": "Alle Meldungen der Mitarbeitenden. Das CRM prüft jede Meldung und schreibt eine Einschätzung; entschieden wird mit «Erledige es» oder «Nicht». Die meldende Person sieht die Antwort hier, in der Glocke und per Mail.",
       "filter": "Meldungen filtern",
       "filterWert": {
         "offen": "Offen",
@@ -5212,13 +5216,44 @@
         "neu": "Neu",
         "arbeit": "In Arbeit",
         "info": "Rückfrage",
-        "erledigt": "Erledigt"
+        "erledigt": "Erledigt",
+        "wartet": "Wartet auf Entscheid",
+        "abgelehnt": "Nicht umgesetzt"
       },
       "statusSetzen": "Status",
       "antwort": "Antwort",
       "antwortVon": "Antwort von {{name}}",
       "antwortAn": "Antwort an {{name}}",
-      "offenSr": "offen:"
+      "offenSr": "offen:",
+      "wirdGeprueft": "Wird geprüft. Die Einschätzung kommt spätestens in einer Stunde (7 bis 19 Uhr).",
+      "einschaetzung": "Einschätzung",
+      "einschaetzungZeile": {
+        "was": "Was los ist",
+        "ursache": "Ursache",
+        "auswirkung": "Auswirkung",
+        "loesung": "Lösung",
+        "aufwand": "Aufwand",
+        "risiko": "Risiko",
+        "empfehlung": "Empfehlung"
+      },
+      "empfehlung": {
+        "erledigen": "Erledigen",
+        "nicht": "Nicht umsetzen"
+      },
+      "notiz": "Notiz dazu (freiwillig), z. B. warum nicht",
+      "erledigeEs": "Erledige es",
+      "nicht": "Nicht",
+      "wartetAufAndere": "Wartet auf den Entscheid der zuständigen Person.",
+      "entschieden": {
+        "erledigen": "Entscheid: erledigen",
+        "nicht": "Entscheid: nicht umsetzen"
+      },
+      "umgesetztIn": "umgesetzt in Version {{version}}",
+      "beantwortet": "Beantwortet von {{name}}",
+      "entscheidet": "Über Meldungen entscheidet",
+      "alleAdmins": "Alle aus der Administration",
+      "perSms": "Einschätzung zusätzlich per SMS",
+      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
     "anleitung": {
       "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
@@ -5244,7 +5279,7 @@
       "reiter": "Erste Schritte",
       "intro": "Alles Wichtige für den Start, auf einer Seite. Zum Verteilen im Team: «Drucken» (oder als PDF sichern).",
       "drucken": "Drucken",
-      "druckTitel": "Dimension CRM: Erste Schritte",
+      "druckTitel": "Dimension Work: Erste Schritte",
       "abschnitte": [
         {
           "titel": "1. Installieren",
@@ -5707,7 +5742,8 @@
     "quelle": {
       "simap": "simap",
       "amtsblatt": "Amtsblatt",
-      "hand": "Von Hand"
+      "hand": "Von Hand",
+      "suche": "Dachsuche"
     },
     "feld": {
       "dachflaeche": "Dachfläche",
@@ -5829,6 +5865,16 @@
       "alle_one": "{{count}} zu prüfen",
       "alle_other": "{{count}} zu prüfen",
       "nichts": "Kein Grossprojekt wartet auf einen Entscheid."
+    },
+    "suche": {
+      "titel": "Dachsuche",
+      "aktiv": "Dachsuche aktiv",
+      "an": "Läuft",
+      "aus": "Angehalten",
+      "fortschritt": "Fortschritt der Dachsuche",
+      "text": "Das CRM sucht selbst nach grossen Dächern mit viel Stromverbrauch: Es geht das Gebiet um Muri und Bulle stündlich ein Stück weiter durch (die nächsten Gebiete zuerst), holt grosse Industrie-, Gewerbe-, Spital-, Heim-, Schul- und Sportbauten aus dem Gebäuderegister und prüft das Dach bei sonnendach.ch. Neu in die Liste kommt nur, was genug Punkte hat.",
+      "stand": "{{durchsucht}} von {{gebiete}} Gebieten durchsucht, {{gebaeude}} Gebäude angeschaut, {{treffer}} Treffer in der Liste.",
+      "zuletzt": "Zuletzt gesucht: {{zeit}}"
     }
   },
   "team": {

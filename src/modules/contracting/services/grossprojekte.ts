@@ -1,6 +1,6 @@
 import { rufeFunktion } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
-import type { Grossprojekt, GrossprojektRegeln, Vermerk } from '../types'
+import type { Grossprojekt, GrossprojektRegeln, SucheStand, Vermerk } from '../types'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -96,4 +96,23 @@ export async function entscheiden(
 export async function anreichern(id: string): Promise<string> {
   const r = await rufeFunktion<{ meldung: string }>('grossprojekte', 'anreichern', { id })
   return r.meldung
+}
+
+/** Wie weit die Dachsuche ist (Gebiete durchsucht, Treffer). */
+export async function ladeSucheStand(): Promise<SucheStand> {
+  const { data, error } = await db().rpc('grossprojekt_suche_stand')
+  if (error) throw error
+  return data as unknown as SucheStand
+}
+
+/** Dachsuche ein- oder ausschalten (nur Administration; die Datenbank prüft das). */
+export async function setzeSucheAktiv(aktiv: boolean): Promise<void> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'grossprojekte').single()
+  if (error) throw error
+  const alt = data.wert as GrossprojektRegeln
+  const r = await db()
+    .from('einstellungen')
+    .update({ wert: { ...alt, suche: { ...alt.suche, aktiv } } })
+    .eq('schluessel', 'grossprojekte')
+  if (r.error) throw r.error
 }
