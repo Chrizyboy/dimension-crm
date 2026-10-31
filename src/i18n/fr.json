@@ -1946,6 +1946,11 @@
     "grossprojekt_schon_lead": "Un lead en est déjà issu. Merci de continuer là-bas.",
     "grossprojekt_entscheid_unbekannt": "Cette décision n’existe pas.",
     "grossprojekt_nur_ablauf": "État et décision se modifient uniquement avec les boutons en bas du dossier.",
+    "posteingang_kein_recht": "Tu n’as pas le droit (administration uniquement).",
+    "posteingang_nicht_gefunden": "Cet e-mail n’existe plus ou tu n’as pas le droit de le voir.",
+    "posteingang_person_fehlt": "Merci de choisir une personne active.",
+    "posteingang_art_unbekannt": "Ce type n’existe pas.",
+    "posteingang_aktion_unbekannt": "Ce n’est pas possible avec cet e-mail.",
     "auftrag_anzahlung_fehlt": "Veuillez indiquer le montant de l’acompte.",
     "werkvertrag_anzahlung_verrechnet": "L’acompte est déjà facturé ou payé (p. ex. dans AbaNinja).",
     "werkvertrag_kein_zahlungsplan": "Ce contrat n’a pas encore d’échéancier.",
@@ -6070,6 +6075,174 @@
       "bis": "jusqu'au {{datum}}",
       "notiz": "Note (administration seulement)",
       "notizHinweis": "La personne ne voit pas cette note."
+    }
+  },
+  "posteingang": {
+    "titel": "Boîte de réception",
+    "beschreibung": "Tous les e-mails d’info@ et de vos boîtes, triés et rattachés au bon dossier. Qui attend une réponse, et jusqu’à quand répondons-nous ?",
+    "holen": "Relever maintenant",
+    "reiter": {
+      "eingang": "Boîte de réception",
+      "auswertung": "Délai de réponse",
+      "einstellungen": "Paramètres"
+    },
+    "filter": "Quels e-mails",
+    "artFilter": "Type",
+    "alleArten": "Tous les types",
+    "ansicht": {
+      "warten": "En attente de nous",
+      "neu": "Tous ouverts",
+      "meine": "Les miens",
+      "erledigt": "Terminés",
+      "abgelegt": "Publicité & interne"
+    },
+    "leer": {
+      "warten": "Personne n’attend de réponse",
+      "neu": "Aucun e-mail ouvert",
+      "meine": "Rien ne t’est attribué pour l’instant",
+      "erledigt": "Rien de terminé ces 14 derniers jours",
+      "abgelegt": "Rien de classé",
+      "text": "Les nouveaux e-mails arrivent d’Outlook toutes les 5 minutes. « Relever maintenant » les récupère tout de suite."
+    },
+    "art": {
+      "anfrage": "Nouvelle demande",
+      "stoerung": "Panne",
+      "kunde": "Client",
+      "rechnung": "Facture & paiement",
+      "lieferant": "Fournisseur",
+      "amt": "Autorité & GRD",
+      "monitor": "Appel d’offres",
+      "sonstiges": "Divers",
+      "intern": "Interne",
+      "werbung": "Publicité & newsletter",
+      "privat": "Privé"
+    },
+    "spalte": {
+      "mail": "E-mail",
+      "art": "Type",
+      "zustaendig": "Responsable",
+      "frist": "Réponse",
+      "eingang": "Reçu"
+    },
+    "dringend": "Urgent",
+    "anhang": "Avec pièce jointe",
+    "ohneBetreff": "(sans objet)",
+    "wirdEingeordnet": "en cours de tri",
+    "fuer": "pour {{name}}",
+    "vertretung": "remplace {{name}}, absent·e",
+    "frist": {
+      "ueber": "attend depuis {{dauer}}",
+      "noch": "encore {{dauer}}",
+      "heute": "jusqu’à {{zeit}}",
+      "morgen": "jusqu’à demain {{zeit}}",
+      "bis": "jusqu’au {{datum}} {{zeit}}",
+      "beantwortetNach": "répondu après {{dauer}}",
+      "beantwortet": "répondu",
+      "automatisch": "repris automatiquement",
+      "erledigt": "terminé",
+      "abgelegt": "classé",
+      "neu": "en cours de tri",
+      "info": "pour info"
+    },
+    "zahl": {
+      "warten_one": "client attend une réponse",
+      "warten_other": "clients attendent une réponse",
+      "ueber_one": "{{count}} hors délai",
+      "ueber_other": "{{count}} hors délai",
+      "reaktion": "Délai de réponse aujourd’hui (médiane, heures de travail)",
+      "abgelegt": "Publicité & interne classés (14 jours)"
+    },
+    "akte": {
+      "titel": "E-mail",
+      "weg": "Cet e-mail n’existe plus ou tu n’as pas le droit de le voir.",
+      "oeffnen": "Rouvrir",
+      "weitergeben": "Transmettre",
+      "erledigt": "Terminé sans réponse",
+      "antworten": "Répondre",
+      "persoenlich": "boîte personnelle",
+      "kurz": "En bref",
+      "ohneKi": "Trié sans IA. Merci de vérifier le type.",
+      "zugeordnet": "Rattaché à",
+      "kundeZuordnen": "Associer un client",
+      "zuordnen": "Associer",
+      "entwurf": "Brouillon",
+      "niemand": "personne encore",
+      "leadAnlegen": "Créer un lead",
+      "fallEroeffnen": "Ouvrir un cas de service",
+      "outlook": "Ouvrir dans Outlook",
+      "mail": "E-mail",
+      "laedt": "Chargement du texte depuis Outlook …",
+      "nurVorschau": "Le texte complet vient d’Outlook. Sans connexion Microsoft, seul le début s’affiche."
+    },
+    "feld": {
+      "kunde": "Client",
+      "lead": "Lead",
+      "offerte": "Offre",
+      "projekt": "Projet",
+      "fall": "Cas de service",
+      "rechnung": "Facture",
+      "bestellung": "Commande",
+      "art": "Type",
+      "zustaendig": "Responsable",
+      "erledigt": "Terminé",
+      "betreff": "Objet"
+    },
+    "weitergeben": {
+      "titel": "Transmettre l’e-mail",
+      "text": "La personne reçoit une notification. Le délai de réponse reste le même.",
+      "knopf": "Transmettre",
+      "wer": "Choisir une personne"
+    },
+    "auswertung": {
+      "wochen": "Délai de réponse par semaine",
+      "personen": "Par personne, 7 derniers jours",
+      "person": "Personne",
+      "anzahl": "E-mails",
+      "mitte": "Médiane",
+      "inFrist": "Dans le délai",
+      "kw": "S. ",
+      "leer": "Pas encore d’e-mails répondus avec délai.",
+      "hinweis": "Médiane du temps de travail jusqu’à la réponse et part dans le délai. Seuls les e-mails qui demandaient une réponse comptent."
+    },
+    "einst": {
+      "allgemein": "Général",
+      "aktiv": "Boîte de réception activée (relève toutes les 5 minutes)",
+      "von": "Heures de travail de",
+      "bis": "Heures de travail à",
+      "vorwarnung": "Préavis (minutes avant le délai)",
+      "arbeitszeitHinweis": "Les délais ne courent que du lundi au vendredi pendant ces heures, jours fériés exclus.",
+      "fristen": "Délai de réponse par type",
+      "stunden": "Heures de travail, vide = pas de réponse nécessaire",
+      "keine": "aucun",
+      "zustaendig": "Qui est responsable",
+      "zustaendigHinweis": "Qui suit un client, un projet ou un cas de service reçoit toujours ses e-mails. Cette liste vaut pour tous les autres, selon la langue de l’e-mail.",
+      "standard": "Tous les autres",
+      "deutsch": "Allemand",
+      "franzoesisch": "Français",
+      "niemand": "–",
+      "vertretung": "Remplacement en cas d’absence",
+      "vertretungHinweis": "Si quelqu’un est « absent » dans Outlook, les nouveaux e-mails vont à son remplaçant.",
+      "vertretungFuer": "Remplaçant de {{name}}",
+      "eskalation": "Notification au double du délai",
+      "eskalationHinweis": "Si un client attend deux fois plus longtemps que prévu, ces personnes reçoivent une notification. Personne = administration."
+    },
+    "pruefung": {
+      "uhrzeit": "Merci de saisir une heure, p. ex. 07:30.",
+      "stunden": "Merci de saisir des heures en chiffres, p. ex. 4 ou 0,5.",
+      "minuten": "Merci de saisir des minutes en chiffres.",
+      "zeitraum": "« à » doit être après « de »."
+    },
+    "heute": {
+      "titel": "Des clients attendent ta réponse",
+      "team": "Des clients attendent une réponse",
+      "alle_one": "{{count}} ouvert",
+      "alle_other": "{{count}} ouverts",
+      "nichts": "Personne n’attend de réponse."
+    },
+    "uebergabe": {
+      "laedt": "Chargement de l’e-mail …",
+      "fehlt": "Cet e-mail n’existe plus.",
+      "verknuepft": "Lié à l’e-mail dans la boîte de réception"
     }
   },
   "einfach": {

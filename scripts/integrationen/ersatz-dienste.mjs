@@ -40,6 +40,9 @@ export function starteErsatz({ port, tenant, email }) {
     ordner: new Map(),
     mails: [],
     anfragen: [],
+    // Posteingang: eingegangene und gesendete Mails je Postfach
+    eingang: [],
+    gesendetOrdner: [],
   }
   const zugang = 'zugang-' + randomUUID()
 
@@ -182,6 +185,20 @@ export function starteErsatz({ port, tenant, email }) {
         z.entwuerfe.delete(m[1])
         res.writeHead(202)
         return res.end()
+      }
+      const ordner = /^\/(me|users\/[^/]+)\/mailFolders\/(inbox|sentitems)\/messages$/.exec(g)
+      if (ordner && req.method === 'GET') {
+        const postfach = g.startsWith('/me') ? 'me' : decodeURIComponent(g.split('/')[2])
+        if (postfach === 'gesperrt@ersatz.test') return json(res, 403, { error: { code: 'ErrorAccessDenied' } })
+        const liste = ordner[2] === 'inbox' ? z.eingang : z.gesendetOrdner
+        return json(res, 200, { value: liste.filter((a) => a.postfach === postfach) })
+      }
+      const einzeln = /^\/(me|users\/[^/]+)\/messages\/([^/]+)$/.exec(g)
+      if (einzeln && req.method === 'GET') {
+        const m = z.eingang.find((a) => a.id === decodeURIComponent(einzeln[2]))
+        if (!m) return json(res, 404, { error: { code: 'ErrorItemNotFound' } })
+        const text = m.text ?? m.bodyPreview ?? ''
+        return json(res, 200, { id: m.id, body: { content: text }, uniqueBody: { content: text } })
       }
       if (/^\/(me|users\/[^/]+)\/messages$/.test(g) && req.method === 'GET') {
         const postfach = g.startsWith('/me') ? 'me' : decodeURIComponent(g.split('/')[2])

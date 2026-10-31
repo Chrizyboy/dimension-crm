@@ -10,6 +10,7 @@ import { meta as expenses } from '@/modules/expenses'
 import { meta as fieldwork } from '@/modules/fieldwork'
 import { meta as finance } from '@/modules/finance'
 import { meta as fleet } from '@/modules/fleet'
+import { meta as inbox } from '@/modules/inbox'
 import { meta as invoices } from '@/modules/invoices'
 import { meta as knowledge } from '@/modules/knowledge'
 import { meta as marketing } from '@/modules/marketing'
@@ -30,6 +31,7 @@ import type { ModulMeta, NavGruppe } from '@/types/modul'
 /** Alle Module in der Reihenfolge der Seitenleiste. Einziger Ort, der alle Module kennt. */
 export const MODULE: readonly ModulMeta[] = [
   today,
+  inbox,
   dashboard,
   tasks,
   outbox,

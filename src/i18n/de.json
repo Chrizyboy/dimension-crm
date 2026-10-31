@@ -1946,6 +1946,11 @@
     "grossprojekt_schon_lead": "Daraus ist schon ein Lead entstanden. Bitte dort weiterarbeiten.",
     "grossprojekt_entscheid_unbekannt": "Diesen Entscheid gibt es nicht.",
     "grossprojekt_nur_ablauf": "Stand und Entscheid ändern nur die Knöpfe unten in der Akte.",
+    "posteingang_kein_recht": "Dafür fehlt dir das Recht (nur Administration).",
+    "posteingang_nicht_gefunden": "Diese Mail gibt es nicht mehr oder du darfst sie nicht sehen.",
+    "posteingang_person_fehlt": "Bitte eine aktive Person wählen.",
+    "posteingang_art_unbekannt": "Diese Art gibt es nicht.",
+    "posteingang_aktion_unbekannt": "Das geht mit dieser Mail nicht.",
     "auftrag_anzahlung_fehlt": "Bitte den Betrag der Anzahlung angeben.",
     "werkvertrag_anzahlung_verrechnet": "Die Anzahlung ist schon verrechnet oder bezahlt (z. B. in AbaNinja).",
     "werkvertrag_kein_zahlungsplan": "Zu diesem Vertrag gibt es noch keinen Zahlungsplan.",
@@ -6070,6 +6075,174 @@
       "bis": "bis {{datum}}",
       "notiz": "Notiz (nur Administration)",
       "notizHinweis": "Die Person sieht diese Notiz nicht."
+    }
+  },
+  "posteingang": {
+    "titel": "Posteingang",
+    "beschreibung": "Alle Mails aus info@ und euren Postfächern, eingeordnet und der Akte zugeordnet. Wer wartet auf uns, und bis wann antworten wir?",
+    "holen": "Jetzt abholen",
+    "reiter": {
+      "eingang": "Posteingang",
+      "auswertung": "Reaktionszeit",
+      "einstellungen": "Einstellungen"
+    },
+    "filter": "Welche Mails",
+    "artFilter": "Art",
+    "alleArten": "Alle Arten",
+    "ansicht": {
+      "warten": "Wartet auf uns",
+      "neu": "Alle offenen",
+      "meine": "Meine",
+      "erledigt": "Erledigt",
+      "abgelegt": "Werbung & Intern"
+    },
+    "leer": {
+      "warten": "Niemand wartet auf eine Antwort",
+      "neu": "Keine offenen Mails",
+      "meine": "Dir ist gerade nichts zugeteilt",
+      "erledigt": "In den letzten 14 Tagen nichts erledigt",
+      "abgelegt": "Nichts abgelegt",
+      "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort."
+    },
+    "art": {
+      "anfrage": "Neue Anfrage",
+      "stoerung": "Störung",
+      "kunde": "Kunde",
+      "rechnung": "Rechnung & Zahlung",
+      "lieferant": "Lieferant",
+      "amt": "Amt & Netzbetreiber",
+      "monitor": "Ausschreibung",
+      "sonstiges": "Sonstiges",
+      "intern": "Intern",
+      "werbung": "Werbung & Newsletter",
+      "privat": "Privat"
+    },
+    "spalte": {
+      "mail": "Mail",
+      "art": "Art",
+      "zustaendig": "Zuständig",
+      "frist": "Antwort",
+      "eingang": "Eingang"
+    },
+    "dringend": "Dringend",
+    "anhang": "Mit Anhang",
+    "ohneBetreff": "(ohne Betreff)",
+    "wirdEingeordnet": "wird eingeordnet",
+    "fuer": "für {{name}}",
+    "vertretung": "vertritt {{name}}, abwesend",
+    "frist": {
+      "ueber": "wartet seit {{dauer}}",
+      "noch": "noch {{dauer}}",
+      "heute": "bis {{zeit}}",
+      "morgen": "bis morgen {{zeit}}",
+      "bis": "bis {{datum}} {{zeit}}",
+      "beantwortetNach": "beantwortet nach {{dauer}}",
+      "beantwortet": "beantwortet",
+      "automatisch": "automatisch übernommen",
+      "erledigt": "erledigt",
+      "abgelegt": "abgelegt",
+      "neu": "wird eingeordnet",
+      "info": "zur Kenntnis"
+    },
+    "zahl": {
+      "warten_one": "Kunde wartet auf Antwort",
+      "warten_other": "Kunden warten auf Antwort",
+      "ueber_one": "{{count}} über der Frist",
+      "ueber_other": "{{count}} über der Frist",
+      "reaktion": "Reaktionszeit heute (Mitte, Arbeitszeit)",
+      "abgelegt": "Werbung & Intern still abgelegt (14 Tage)"
+    },
+    "akte": {
+      "titel": "Mail",
+      "weg": "Diese Mail gibt es nicht mehr oder du darfst sie nicht sehen.",
+      "oeffnen": "Wieder öffnen",
+      "weitergeben": "Weitergeben",
+      "erledigt": "Erledigt ohne Antwort",
+      "antworten": "Antworten",
+      "persoenlich": "persönliches Postfach",
+      "kurz": "Kurz gesagt",
+      "ohneKi": "Ohne KI eingeordnet. Bitte Art prüfen.",
+      "zugeordnet": "Zugeordnet",
+      "kundeZuordnen": "Kunde zuordnen",
+      "zuordnen": "Zuordnen",
+      "entwurf": "Entwurf",
+      "niemand": "noch niemand",
+      "leadAnlegen": "Lead anlegen",
+      "fallEroeffnen": "Service-Fall eröffnen",
+      "outlook": "In Outlook öffnen",
+      "mail": "Mail",
+      "laedt": "Text wird aus Outlook geladen …",
+      "nurVorschau": "Der ganze Text kommt aus Outlook. Ohne Microsoft-Verbindung steht hier nur der Anfang."
+    },
+    "feld": {
+      "kunde": "Kunde",
+      "lead": "Lead",
+      "offerte": "Offerte",
+      "projekt": "Projekt",
+      "fall": "Service-Fall",
+      "rechnung": "Rechnung",
+      "bestellung": "Bestellung",
+      "art": "Art",
+      "zustaendig": "Zuständig",
+      "erledigt": "Erledigt",
+      "betreff": "Betreff"
+    },
+    "weitergeben": {
+      "titel": "Mail weitergeben",
+      "text": "Die Person bekommt die Glocke. Die Antwortfrist bleibt gleich.",
+      "knopf": "Weitergeben",
+      "wer": "Person wählen"
+    },
+    "auswertung": {
+      "wochen": "Reaktionszeit je Woche",
+      "personen": "Pro Person, letzte 7 Tage",
+      "person": "Person",
+      "anzahl": "Mails",
+      "mitte": "Mitte",
+      "inFrist": "In Frist",
+      "kw": "KW ",
+      "leer": "Noch keine beantworteten Mails mit Frist.",
+      "hinweis": "Mitte der Arbeitszeit bis zur Antwort und Anteil in der Frist. Es zählen nur Mails, die eine Antwort brauchten."
+    },
+    "einst": {
+      "allgemein": "Allgemein",
+      "aktiv": "Posteingang eingeschaltet (holt alle 5 Minuten)",
+      "von": "Arbeitszeit von",
+      "bis": "Arbeitszeit bis",
+      "vorwarnung": "Vorwarnung (Minuten vor der Frist)",
+      "arbeitszeitHinweis": "Fristen laufen nur Montag bis Freitag in dieser Zeit, Feiertage zählen nicht.",
+      "fristen": "Antwortfrist je Art",
+      "stunden": "Arbeitsstunden, leer = keine Antwort nötig",
+      "keine": "keine",
+      "zustaendig": "Wer ist zuständig",
+      "zustaendigHinweis": "Wer einen Kunden, ein Projekt oder einen Service-Fall betreut, bekommt dessen Mails immer selbst. Diese Liste gilt für alle anderen, getrennt nach Sprache der Mail.",
+      "standard": "Alle anderen",
+      "deutsch": "Deutsch",
+      "franzoesisch": "Französisch",
+      "niemand": "–",
+      "vertretung": "Stellvertretung bei Abwesenheit",
+      "vertretungHinweis": "Steht jemand in Outlook auf «abwesend», gehen neue Mails an die Stellvertretung.",
+      "vertretungFuer": "Stellvertretung für {{name}}",
+      "eskalation": "Glocke bei doppelter Frist",
+      "eskalationHinweis": "Wartet ein Kunde doppelt so lange wie vorgesehen, bekommen diese Personen die Glocke. Niemand gewählt = Administration."
+    },
+    "pruefung": {
+      "uhrzeit": "Bitte als Zeit eingeben, z. B. 07:30.",
+      "stunden": "Bitte Stunden als Zahl eingeben, z. B. 4 oder 0,5.",
+      "minuten": "Bitte Minuten als Zahl eingeben.",
+      "zeitraum": "«bis» muss nach «von» liegen."
+    },
+    "heute": {
+      "titel": "Kunden warten auf deine Antwort",
+      "team": "Kunden warten auf Antwort",
+      "alle_one": "{{count}} offen",
+      "alle_other": "{{count}} offen",
+      "nichts": "Niemand wartet auf eine Antwort."
+    },
+    "uebergabe": {
+      "laedt": "Mail wird geladen …",
+      "fehlt": "Diese Mail ist nicht mehr da.",
+      "verknuepft": "Mit der Mail im Posteingang verknüpft"
     }
   },
   "einfach": {

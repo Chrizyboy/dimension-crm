@@ -12,6 +12,7 @@ import { meta as kennzahlenMeta } from '@/modules/dashboard'
 import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
 import { FristenHeute, meta as fristenMeta } from '@/modules/fleet'
+import { PosteingangHeute, meta as posteingangMeta } from '@/modules/inbox'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
@@ -25,8 +26,8 @@ import { EinfachStart } from './EinfachStart'
 import { Systemstatus } from './Systemstatus'
 
 /**
- * Startseite = «Mein Tag» (Phase 14). Setzt zusammen, was aus verschiedenen Bereichen kommt: KI-Briefing,
- * Ausschreibungen, die Karten der Bereiche («Team und Betrieb») und für die Administration Systemstatus und Bauplan.
+ * Startseite = «Mein Tag» (Phase 14). Setzt zusammen, was aus verschiedenen Bereichen kommt: KI-Briefing, wer auf
+ * eine Antwort wartet (Posteingang), Ausschreibungen, die Karten der Bereiche («Team und Betrieb») und für die Administration Systemstatus und Bauplan.
  */
 export function Startseite() {
   const { t } = useTranslation()
@@ -70,6 +71,12 @@ export function Startseite() {
               <Suspense>
                 <KiBriefing />
               </Suspense>
+              {/* Wer auf eine Antwort wartet, gehört ganz nach oben: dafür gibt es den Posteingang. */}
+              {darfModul(posteingangMeta, ich) && (
+                <Suspense>
+                  <PosteingangHeute />
+                </Suspense>
+              )}
             </>
           )
         }

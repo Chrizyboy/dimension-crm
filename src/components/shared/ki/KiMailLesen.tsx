@@ -27,9 +27,12 @@ const plusTage = (n: number) => new Date(Date.now() + n * 86_400_000).toISOStrin
  * Der Mail-Text ist fremder Inhalt: Die KI liest ihn nur als Daten, Anweisungen darin werden nicht befolgt.
  */
 export function KiMailLesen({
+  startText = '',
   onLead,
   onSchliessen,
 }: {
+  /** Mail-Text, der gleich gelesen wird (z. B. aus dem Posteingang). */
+  startText?: string
   /** Lead-Formular mit den erkannten Feldern öffnen (das Modul «Anfragen & Leads» kennt seine Felder). */
   onLead?: (e: KiMailErgebnis) => void
   onSchliessen: () => void
@@ -39,7 +42,7 @@ export function KiMailLesen({
   const nachher = useKiNachher()
   const ich = useAnmeldung((z) => z.ich)
   const datei = useRef<HTMLInputElement>(null)
-  const [text, setText] = useState('')
+  const [text, setText] = useState(startText)
   const [eml, setEml] = useState<{ name: string; inhalt: string } | null>(null)
   const [laeuft, setLaeuft] = useState(false)
   const [r, setR] = useState<KiMailErgebnis | null>(null)
