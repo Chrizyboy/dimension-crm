@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Dimension CRM",
+    "name": "Dimension Work",
     "firma": "Dimension Solaire"
   },
   "nav": {
@@ -144,6 +144,20 @@
       "verbinden": "Mit Microsoft verbinden",
       "testen": "Verbindung prüfen",
       "trennen": "Trennen"
+    },
+    "unterschrift": {
+      "titel": "Meine Unterschrift",
+      "text": "Für Dokumente, die du aus dem CRM unterschreibst (z. B. Werkverträge). Nur du siehst und verwendest sie.",
+      "bild": "Deine Unterschrift",
+      "keine": "Noch keine Unterschrift hinterlegt.",
+      "zeichnen": "Zeichnen",
+      "hochladen": "Bild hochladen",
+      "entfernen": "Entfernen",
+      "zeichnenTitel": "Unterschrift zeichnen",
+      "zeichnenText": "Mit Maus, Finger oder Stift in der weissen Fläche unterschreiben.",
+      "neu": "Neu beginnen",
+      "uebernehmen": "Übernehmen",
+      "flaeche": "Fläche zum Unterschreiben"
     }
   },
   "fehler": {
@@ -266,7 +280,7 @@
     "bereicheText": "Jeder Bereich hat einen eindeutigen Namen und einen Satz, was man dort erledigt. Der Satz erscheint auch beim Darüberfahren in der Seitenleiste und in der Suche."
   },
   "anmeldung": {
-    "titel": "Anmelden",
+    "titel": "Bei Dimension Work anmelden",
     "text": "Mit dem Firmenkonto oder mit einem Code, den wir dir per E-Mail schicken.",
     "microsoft": "Mit Microsoft anmelden",
     "oder": "oder",
@@ -1463,11 +1477,10 @@
     "akte": {
       "titel": "Werkvertrag",
       "nichtMehr": "Diesen Werkvertrag gibt es nicht (mehr).",
-      "drucken": "Drucken / PDF",
+      "drucken": "PDF ansehen",
       "versendet": "Versendet",
       "unterschrieben": "Unterschrieben",
       "reaktivieren": "Wieder aktivieren",
-      "neuErstellen": "Neu erstellen",
       "offerte": "Offerte",
       "stornieren": "Stornieren",
       "angaben": "Angaben",
@@ -1481,7 +1494,12 @@
       "unterschriebenAm": "Unterschrieben am",
       "notiz": "Notiz",
       "zahlungsplan": "Zahlungsplan",
-      "text": "Vertragstext"
+      "senden": "An Kunden senden",
+      "bearbeiten": "Bearbeiten",
+      "imVertrag": "Im Vertrag",
+      "anzahlungsrechnung": "Anzahlungsrechnung",
+      "rechnungNr": "Nr. {{nummer}}",
+      "nochKeine": "noch keine"
     },
     "plan": {
       "keiner": "Noch kein Zahlungsplan",
@@ -1503,8 +1521,63 @@
       "wertHinweis": "Offerte CHF {{betrag}} exkl. + {{satz}} % MWST",
       "datum": "Unterzeichnet am",
       "mitVertrag": "Werkvertrag erstellen",
-      "spaeter": "Anzahlungsrechnung in AbaNinja folgt mit Phase 8, der Bautermin mit Phase 9.",
-      "pflicht": "Bitte Standort, Vertragswert und Datum angeben."
+      "pflicht": "Bitte Standort, Vertragswert und Datum angeben.",
+      "zahlung": "Zahlungsbedingung",
+      "anzahlung": "Anzahlung in CHF",
+      "anzahlungHinweis": "Bei Unterzeichnung fällig, der Rest nach Inbetriebnahme",
+      "anzahlungFehlt": "Bitte den Betrag der Anzahlung angeben.",
+      "imVertrag": "Im Vertrag",
+      "bearbeiten": "Werkvertrag bearbeiten",
+      "speichern": "Speichern",
+      "raten": "Raten",
+      "rateText": "Bezeichnung Rate {{nr}}",
+      "rateProzent": "Prozent Rate {{nr}}",
+      "rateHinzu": "Rate hinzufügen",
+      "rateEntfernen": "Rate {{nr}} entfernen",
+      "ratenSumme": "Zusammen {{summe}} % – es müssen genau 100 % sein.",
+      "ratenHinweis": "Die erste Rate ist die Anzahlung (fällig 10 Tage nach Unterzeichnung)."
+    },
+    "felder": {
+      "gegenstand": "Gegenstand (Zeile unter den Parteien)",
+      "material": "Material",
+      "materialLeer": "gemäss Offerte",
+      "beginn": "Baubeginn",
+      "fertig": "Fertigstellung & Inbetriebnahme",
+      "nachAbsprache": "nach Absprache",
+      "optionen": "Optionale Leistungen (im Vertrag angekreuzt)",
+      "monitoring": "Energiemessung / Monitoring",
+      "wartung": "Wartungsvertrag",
+      "batterie": "Batteriespeicher (aus der Offerte)",
+      "divers": "Diverses"
+    },
+    "senden": {
+      "titel": "Werkvertrag an Kunden senden",
+      "keineMail": "keine E-Mail-Adresse",
+      "weiter": "Mail vorbereiten",
+      "vertrag": "Werkvertrag mit AGB als PDF ({{sprache}})",
+      "rechnung": "Anzahlungsrechnung {{betrag}} mit QR-Zahlteil",
+      "grund": {
+        "neu": "Wird beim Vorbereiten gestellt (Nummer, Fälligkeit). Gesendet wird erst im nächsten Schritt.",
+        "vorhanden": "Die Rechnung gibt es schon im CRM, sie wird beigelegt.",
+        "keinRecht": "Rechnungen stellen braucht das Recht «Finanzen».",
+        "schonVerrechnet": "Schon verrechnet (z. B. in AbaNinja) {{nummer}}: bitte jene Rechnung von Hand anhängen.",
+        "keinPlan": "Noch kein Zahlungsplan."
+      },
+      "mitUnterschrift": "Mit meiner Unterschrift unterschreiben",
+      "unterschriftHinweis": "Deine Unterschrift steht im Kasten «Unterschrift Dimension Solaire», dein Name darunter.",
+      "keineUnterschrift": "Noch keine Unterschrift hinterlegt: unter Mein Konto › Meine Unterschrift. Ohne sie bleibt der Kasten leer."
+    },
+    "einstellung": {
+      "titel": "Einstellungen",
+      "beschreibung": "Gilt für alle neuen Werkverträge (nur Administration).",
+      "unterzeichner": "Unterschreibt für Dimension Solaire",
+      "ansprechperson": "Ansprechperson im Vertrag",
+      "email": "E-Mail im Vertrag",
+      "adresse": "Adresse im Vertrag",
+      "konditionPv": "Vorschlag Zahlung bei PV",
+      "konditionBatterie": "Vorschlag Zahlung bei Batterie",
+      "telefon_de": "Telefon im deutschen Vertrag",
+      "telefon_fr": "Telefon im französischen Vertrag"
     }
   },
   "preise": {
@@ -1872,7 +1945,18 @@
     "grossprojekt_grund_fehlt": "Bitte einen Grund angeben.",
     "grossprojekt_schon_lead": "Daraus ist schon ein Lead entstanden. Bitte dort weiterarbeiten.",
     "grossprojekt_entscheid_unbekannt": "Diesen Entscheid gibt es nicht.",
-    "grossprojekt_nur_ablauf": "Stand und Entscheid ändern nur die Knöpfe unten in der Akte."
+    "grossprojekt_nur_ablauf": "Stand und Entscheid ändern nur die Knöpfe unten in der Akte.",
+    "auftrag_anzahlung_fehlt": "Bitte den Betrag der Anzahlung angeben.",
+    "werkvertrag_anzahlung_verrechnet": "Die Anzahlung ist schon verrechnet oder bezahlt (z. B. in AbaNinja).",
+    "werkvertrag_kein_zahlungsplan": "Zu diesem Vertrag gibt es noch keinen Zahlungsplan.",
+    "werkvertrag_storniert": "Der Werkvertrag ist storniert.",
+    "auftrag_raten_summe": "Die Raten müssen zusammen genau 100 % ergeben.",
+    "auftrag_raten_text": "Bitte jeder Rate eine Bezeichnung geben.",
+    "auftrag_raten_fehlen": "Bitte 1 bis 6 Raten angeben.",
+    "handbuch_nur_entscheider": "Über diese Meldung entscheidet eine andere Person.",
+    "handbuch_entscheid_ungueltig": "Bitte «Erledige es» oder «Nicht» wählen.",
+    "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
+    "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2097,7 +2181,9 @@
     },
     "werkvertrag": {
       "betreff": "Ihr Werkvertrag {{nummer}} von Dimension Solaire",
-      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire",
+      "betreffMitRechnung": "Ihr Werkvertrag {{nummer}} und die Anzahlungsrechnung von Dimension Solaire",
+      "textMitRechnung": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag und die Anzahlungsrechnung über {{betrag}}. Bitte senden Sie uns den Werkvertrag unterschrieben zurück und überweisen Sie die Anzahlung mit dem QR-Zahlteil. Nach Eingang der Anzahlung bestellen wir das Material und vereinbaren mit Ihnen den Montagetermin.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
@@ -5193,7 +5279,7 @@
       "dateien": "Bildschirmfotos oder Dateien",
       "dateienHinweis": "Ein Bildschirmfoto hilft am meisten.",
       "intro": "Deine Meldungen und die Antworten der Administration.",
-      "introAdmin": "Alle Meldungen der Mitarbeitenden. Status setzen und antworten; die meldende Person sieht die Antwort hier und in der Glocke.",
+      "introAdmin": "Alle Meldungen der Mitarbeitenden. Das CRM prüft jede Meldung und schreibt eine Einschätzung; entschieden wird mit «Erledige es» oder «Nicht». Die meldende Person sieht die Antwort hier, in der Glocke und per Mail.",
       "filter": "Meldungen filtern",
       "filterWert": {
         "offen": "Offen",
@@ -5207,13 +5293,44 @@
         "neu": "Neu",
         "arbeit": "In Arbeit",
         "info": "Rückfrage",
-        "erledigt": "Erledigt"
+        "erledigt": "Erledigt",
+        "wartet": "Wartet auf Entscheid",
+        "abgelehnt": "Nicht umgesetzt"
       },
       "statusSetzen": "Status",
       "antwort": "Antwort",
       "antwortVon": "Antwort von {{name}}",
       "antwortAn": "Antwort an {{name}}",
-      "offenSr": "offen:"
+      "offenSr": "offen:",
+      "wirdGeprueft": "Wird geprüft. Die Einschätzung kommt spätestens in einer Stunde (7 bis 19 Uhr).",
+      "einschaetzung": "Einschätzung",
+      "einschaetzungZeile": {
+        "was": "Was los ist",
+        "ursache": "Ursache",
+        "auswirkung": "Auswirkung",
+        "loesung": "Lösung",
+        "aufwand": "Aufwand",
+        "risiko": "Risiko",
+        "empfehlung": "Empfehlung"
+      },
+      "empfehlung": {
+        "erledigen": "Erledigen",
+        "nicht": "Nicht umsetzen"
+      },
+      "notiz": "Notiz dazu (freiwillig), z. B. warum nicht",
+      "erledigeEs": "Erledige es",
+      "nicht": "Nicht",
+      "wartetAufAndere": "Wartet auf den Entscheid der zuständigen Person.",
+      "entschieden": {
+        "erledigen": "Entscheid: erledigen",
+        "nicht": "Entscheid: nicht umsetzen"
+      },
+      "umgesetztIn": "umgesetzt in Version {{version}}",
+      "beantwortet": "Beantwortet von {{name}}",
+      "entscheidet": "Über Meldungen entscheidet",
+      "alleAdmins": "Alle aus der Administration",
+      "perSms": "Einschätzung zusätzlich per SMS",
+      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
     "anleitung": {
       "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
@@ -5239,7 +5356,7 @@
       "reiter": "Erste Schritte",
       "intro": "Alles Wichtige für den Start, auf einer Seite. Zum Verteilen im Team: «Drucken» (oder als PDF sichern).",
       "drucken": "Drucken",
-      "druckTitel": "Dimension CRM: Erste Schritte",
+      "druckTitel": "Dimension Work: Erste Schritte",
       "abschnitte": [
         {
           "titel": "1. Installieren",
@@ -5979,5 +6096,57 @@
       "nichts": "Nichts geplant",
       "halbtag": "halber Tag"
     }
+  },
+  "ablage": {
+    "titel": "Dateiablage in SharePoint",
+    "zweck": "Dimension Work legt den Ordner jeder neuen Offerte selbst an (mit den Unterordnern), verschiebt ihn bei Annahme zu den Aufträgen und bei Verlust ins Archiv und legt Dateien aus dem CRM in den passenden Unterordner. Ältere Ordner bleiben, wie sie sind.",
+    "aktiv": "Automatische Ablage eingeschaltet",
+    "seit": "für Offerten ab {{datum}}",
+    "fertig_one": "{{count}} Ordner am Platz",
+    "fertig_other": "{{count}} Ordner am Platz",
+    "wartend_one": "{{count}} wartet",
+    "wartend_other": "{{count}} warten",
+    "mitFehler_one": "{{count}} mit Fehler",
+    "mitFehler_other": "{{count}} mit Fehler",
+    "bibliothek": "Bibliothek",
+    "name": "Ordnername",
+    "nameHinweis": "Platzhalter: {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offerten",
+      "auftraege": "Aufträge",
+      "verloren": "Verloren"
+    },
+    "unterordner": "Unterordner (werden in jedem neuen Ordner angelegt)",
+    "oeffnen": "Ordner in SharePoint",
+    "wirdAngelegt": "Ordner wird angelegt",
+    "wirdVerschoben": "Ordner (wird verschoben)",
+    "fehler": "Ordner: Fehler",
+    "person": "Microsoft-Verbindung von (Kürzel)",
+    "personHinweis": "Diese Person braucht Zugriff auf die Bibliothek und muss mit Microsoft verbunden sein."
+  },
+  "zust": {
+    "reiter": "Zuständigkeiten",
+    "titel": "Wer ist zuständig?",
+    "zweck": "Neue Leads, auch von der Webseite, bekommen die Person automatisch nach diesen Regeln; Aufgabe und Glocke gehen direkt an sie. Neue Offerten gehen an die Person für Offerten. Ist jemand abwesend, übernimmt die Stellvertretung. Im Lead und in der Offerte lässt sich die Person jederzeit ändern.",
+    "verkauf": "Verkauf: neue Leads",
+    "verkaufHinweis": "Alle gewählten Bedingungen müssen passen. Genauere Regeln (mehr Bedingungen) gelten zuerst.",
+    "sprache": "Sprache",
+    "standort": "Standort",
+    "region": "Region",
+    "produkt": "Produkt",
+    "person": "Person",
+    "alle": "Alle",
+    "produkte": {
+      "pv": "Photovoltaik",
+      "batterie": "Batterie",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "regelNeu": "Regel hinzufügen",
+    "regelWeg": "Regel entfernen",
+    "offerten": "Offerten erstellen",
+    "stellvertretung": "Stellvertretung bei Abwesenheit",
+    "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
+    "vertretungFuer": "Stellvertretung für {{name}}"
   }
 }

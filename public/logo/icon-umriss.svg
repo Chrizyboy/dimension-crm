@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 120 120">
+  <title>Dimension Work</title>
+
+  <path fill="none" stroke="#EF7C00" stroke-width="8" stroke-linejoin="miter" d="M26 0H112V84L84 112H0V26Z"/>
+  <g fill="#EF7C00">
+    <circle cx="56.00" cy="33.40" r="7"/>
+    <circle cx="56.00" cy="18.40" r="5.2"/>
+    <circle cx="71.98" cy="40.02" r="7"/>
+    <circle cx="82.59" cy="29.41" r="5.2"/>
+    <circle cx="78.60" cy="56.00" r="7"/>
+    <circle cx="93.60" cy="56.00" r="5.2"/>
+    <circle cx="71.98" cy="71.98" r="7"/>
+    <circle cx="82.59" cy="82.59" r="5.2"/>
+    <circle cx="56.00" cy="78.60" r="7"/>
+    <circle cx="56.00" cy="93.60" r="5.2"/>
+    <circle cx="40.02" cy="71.98" r="7"/>
+    <circle cx="29.41" cy="82.59" r="5.2"/>
+    <circle cx="33.40" cy="56.00" r="7"/>
+    <circle cx="18.40" cy="56.00" r="5.2"/>
+    <circle cx="40.02" cy="40.02" r="7"/>
+    <circle cx="29.41" cy="29.41" r="5.2"/>
+  </g>
+  <circle cx="56" cy="56" r="10" fill="none" stroke="#EF7C00" stroke-width="6"/>
+
+</svg>

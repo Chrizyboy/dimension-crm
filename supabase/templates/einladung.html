@@ -1,38 +1,112 @@
-<!-- Einladung neuer Mitarbeitender (Phase 4). Der Knopf öffnet nur das CRM; angemeldet wird mit Microsoft
-     oder mit einem Code per E-Mail. So braucht die Einladung keinen Schlüssel im Link. -->
-<div
-  style="
-    font-family:
-      Segoe UI,
-      Arial,
-      sans-serif;
-    color: #0b2545;
-    max-width: 480px;
-  "
->
-  <p style="font-size: 15px">Hallo, du hast jetzt Zugang zum Dimension CRM.</p>
-  <p style="font-size: 15px">
-    Öffne das CRM und melde dich mit deinem Microsoft-Firmenkonto an, oder lass dir einen Code an diese Adresse
-    schicken.
-  </p>
-  <p style="margin: 20px 0">
-    <a
-      href="{{ .SiteURL }}"
-      style="
-        background: #ef7d0e;
-        color: #ffffff;
-        padding: 10px 18px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 600;
-      "
-      >CRM öffnen · Ouvrir le CRM</a
-    >
-  </p>
-  <hr style="border: 0; border-top: 1px solid #dde3ea; margin: 20px 0" />
-  <p style="font-size: 15px">Bonjour, tu as maintenant accès au CRM Dimension.</p>
-  <p style="font-size: 15px">
-    Ouvre le CRM et connecte-toi avec ton compte Microsoft professionnel, ou demande un code à cette adresse.
-  </p>
-  <p style="font-size: 12px; color: #5b6779">Dimension Solaire · Muri AG · Bulle FR</p>
-</div>
+<!-- Einladung im Design von Dimension Work, nur in der Sprache der Person (`.Data.sprache`, gesetzt von der Edge Function «einladen»). Der Knopf öffnet nur die App; angemeldet wird mit Microsoft oder mit Code, darum kein Schlüssel im Link. -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f4f6f9; padding: 24px 0">
+  <tr>
+    <td align="center">
+      <table
+        role="presentation"
+        width="520"
+        cellpadding="0"
+        cellspacing="0"
+        style="max-width: 520px; width: 100%; background: #ffffff; border-radius: 10px; border-top: 4px solid #ef7c00"
+      >
+        <tr>
+          <td style="padding: 24px 28px 8px 28px">
+            <img
+              src="https://raw.githubusercontent.com/Chrizyboy/dimension-crm/main/public/logo/dimension-work-hell.png"
+              width="240"
+              height="37"
+              alt="Dimension Work"
+              style="display: block; border: 0"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td
+            style="
+              padding: 8px 28px 0 28px;
+              font-family:
+                Segoe UI,
+                Arial,
+                sans-serif;
+              color: #02224f;
+            "
+          >
+            {{ if .Data.sprache }}{{ if eq .Data.sprache "fr" }}
+            <p style="font-size: 15px; margin: 16px 0 8px 0">Bonjour, tu as maintenant accès à Dimension Work.</p>
+            <p style="font-size: 15px; margin: 0 0 8px 0">
+              Ouvre l’application et connecte-toi avec ton compte Microsoft professionnel, ou demande un code à cette
+              adresse.
+            </p>
+            <p style="margin: 20px 0">
+              <a
+                href="{{ .SiteURL }}"
+                style="
+                  background: #ef7c00;
+                  color: #1d1300;
+                  padding: 12px 20px;
+                  border-radius: 6px;
+                  text-decoration: none;
+                  font-weight: 600;
+                  display: inline-block;
+                "
+                >Ouvrir Dimension Work</a
+              >
+            </p>
+            <p style="font-size: 12px; color: #4a5568; margin: 24px 0">
+              Dimension Solaire · Muri AG · Bulle FR · Message automatique, merci de ne pas répondre.
+            </p>
+            {{ else }}
+            <p style="font-size: 15px; margin: 16px 0 8px 0">Hallo, du hast jetzt Zugang zu Dimension Work.</p>
+            <p style="font-size: 15px; margin: 0 0 8px 0">
+              Öffne die App und melde dich mit deinem Microsoft-Firmenkonto an, oder lass dir einen Code an diese
+              Adresse schicken.
+            </p>
+            <p style="margin: 20px 0">
+              <a
+                href="{{ .SiteURL }}"
+                style="
+                  background: #ef7c00;
+                  color: #1d1300;
+                  padding: 12px 20px;
+                  border-radius: 6px;
+                  text-decoration: none;
+                  font-weight: 600;
+                  display: inline-block;
+                "
+                >Dimension Work öffnen</a
+              >
+            </p>
+            <p style="font-size: 12px; color: #4a5568; margin: 24px 0">
+              Dimension Solaire · Muri AG · Bulle FR · Automatisch versendet, bitte nicht antworten.
+            </p>
+            {{ end }}{{ else }}
+            <p style="font-size: 15px; margin: 16px 0 8px 0">Hallo, du hast jetzt Zugang zu Dimension Work.</p>
+            <p style="font-size: 15px; margin: 0 0 8px 0">
+              Öffne die App und melde dich mit deinem Microsoft-Firmenkonto an, oder lass dir einen Code an diese
+              Adresse schicken.
+            </p>
+            <p style="margin: 20px 0">
+              <a
+                href="{{ .SiteURL }}"
+                style="
+                  background: #ef7c00;
+                  color: #1d1300;
+                  padding: 12px 20px;
+                  border-radius: 6px;
+                  text-decoration: none;
+                  font-weight: 600;
+                  display: inline-block;
+                "
+                >Dimension Work öffnen</a
+              >
+            </p>
+            <p style="font-size: 12px; color: #4a5568; margin: 24px 0">
+              Dimension Solaire · Muri AG · Bulle FR · Automatisch versendet, bitte nicht antworten.
+            </p>
+            {{ end }}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

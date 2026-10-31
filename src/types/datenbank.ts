@@ -22,6 +22,114 @@ export type Database = {
   }
   public: {
     Tables: {
+      ablage_ordner: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          fehler: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          item_id: string | null
+          offerte_id: string | null
+          pfad: string | null
+          projekt_id: string | null
+          soll: string
+          stand: string | null
+          url: string | null
+          versucht_am: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fehler?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          item_id?: string | null
+          offerte_id?: string | null
+          pfad?: string | null
+          projekt_id?: string | null
+          soll?: string
+          stand?: string | null
+          url?: string | null
+          versucht_am?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fehler?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          item_id?: string | null
+          offerte_id?: string | null
+          pfad?: string | null
+          projekt_id?: string | null
+          soll?: string
+          stand?: string | null
+          url?: string | null
+          versucht_am?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ablage_ordner_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: true
+            referencedRelation: 'offerten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['offerte_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       ablauf_schritte: {
         Row: {
           ablauf_vorlage_id: string
@@ -1792,6 +1900,7 @@ export type Database = {
           id: string
           lauf_id: string | null
           person_id: string
+          popup: boolean
           text_de: string | null
           text_fr: string | null
           titel_de: string
@@ -1807,6 +1916,7 @@ export type Database = {
           id?: string
           lauf_id?: string | null
           person_id: string
+          popup?: boolean
           text_de?: string | null
           text_fr?: string | null
           titel_de: string
@@ -1821,6 +1931,7 @@ export type Database = {
           id?: string
           lauf_id?: string | null
           person_id?: string
+          popup?: boolean
           text_de?: string | null
           text_fr?: string | null
           titel_de?: string
@@ -6770,12 +6881,19 @@ export type Database = {
       }
       rueckmeldungen: {
         Row: {
+          abgeschlossen_am: string | null
           alt_daten: Json | null
           alt_id: string | null
           antwort: string | null
           antwort_von: string | null
           beantwortet_am: string | null
           bereich: string | null
+          eingeschaetzt_am: string | null
+          einschaetzung: Json | null
+          entscheid: string | null
+          entscheid_notiz: string | null
+          entschieden_am: string | null
+          entschieden_von: string | null
           erstellt_am: string
           erstellt_von: string | null
           erwartet: string | null
@@ -6789,15 +6907,23 @@ export type Database = {
           text: string
           titel: string | null
           umgebung: string | null
+          umgesetzt_in: string | null
         }
         ComputedFields: never
         Insert: {
+          abgeschlossen_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           antwort?: string | null
           antwort_von?: string | null
           beantwortet_am?: string | null
           bereich?: string | null
+          eingeschaetzt_am?: string | null
+          einschaetzung?: Json | null
+          entscheid?: string | null
+          entscheid_notiz?: string | null
+          entschieden_am?: string | null
+          entschieden_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           erwartet?: string | null
@@ -6811,14 +6937,22 @@ export type Database = {
           text: string
           titel?: string | null
           umgebung?: string | null
+          umgesetzt_in?: string | null
         }
         Update: {
+          abgeschlossen_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           antwort?: string | null
           antwort_von?: string | null
           beantwortet_am?: string | null
           bereich?: string | null
+          eingeschaetzt_am?: string | null
+          einschaetzung?: Json | null
+          entscheid?: string | null
+          entscheid_notiz?: string | null
+          entschieden_am?: string | null
+          entschieden_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           erwartet?: string | null
@@ -6832,8 +6966,16 @@ export type Database = {
           text?: string
           titel?: string | null
           umgebung?: string | null
+          umgesetzt_in?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'rueckmeldungen_entschieden_von_fkey'
+            columns: ['entschieden_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'rueckmeldungen_person_id_fkey'
             columns: ['person_id']
@@ -8062,6 +8204,7 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          angaben: NonNullable<Json>
           betrag_rappen: number | null
           dokument_id: string | null
           erstellt_am: string
@@ -8088,6 +8231,7 @@ export type Database = {
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          angaben?: NonNullable<Json>
           betrag_rappen?: number | null
           dokument_id?: string | null
           erstellt_am?: string
@@ -8113,6 +8257,7 @@ export type Database = {
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          angaben?: NonNullable<Json>
           betrag_rappen?: number | null
           dokument_id?: string | null
           erstellt_am?: string
@@ -9626,20 +9771,24 @@ export type Database = {
       }
       werkvertraege_liste: {
         Row: {
+          angaben: Json | null
           angebot_am: string | null
           anrede: string | null
           anzahl_module: number | null
+          anzahlung: Json | null
           batterie: string | null
           baubeginn: string | null
           betrag_rappen: number | null
           email: string | null
           erstellt_datum: string | null
+          firma_email: string | null
           firma_id: string | null
           firma_mwst_nr: string | null
           firma_name: string | null
           firma_ort: string | null
           firma_plz: string | null
           firma_strasse: string | null
+          firma_telefon: string | null
           geaendert_am: string | null
           id: string | null
           kontakt_firma: string | null
@@ -9868,12 +10017,53 @@ export type Database = {
     }
     Functions: {
       abaninja_abgleich_anwenden: { Args: { p: Json }; Returns: Json }
+      ablage_dateien_offen: {
+        Args: { p_limit?: number }
+        Returns: {
+          ablage_pfad: string
+          id: string
+          name: string
+          ordner: string
+          speicher_pfad: string
+        }[]
+      }
+      ablage_ergebnis: {
+        Args: {
+          p_fehler?: string
+          p_id: string
+          p_item?: string
+          p_ok: boolean
+          p_pfad?: string
+          p_stand?: string
+          p_url?: string
+        }
+        Returns: undefined
+      }
+      ablage_offen: {
+        Args: { p_limit?: number }
+        Returns: {
+          id: string
+          item_id: string
+          jahr_auftrag: number
+          jahr_offerte: number
+          kunde: string
+          nummer: string
+          ort: string
+          pfad: string
+          soll: string
+          stand: string
+          standort: string
+          titel: string
+          url: string
+        }[]
+      }
       aendere_mein_konto: {
         Args: { p_darstellung?: string; p_profil: Json; p_sprache?: string; p_standort_id?: string }
         Returns: undefined
       }
       anfrage_uebernehmen: { Args: { p: Json }; Returns: Json }
       anfrage_uebersprungen: { Args: { p_kennung: string; p_quelle: string }; Returns: undefined }
+      anmelde_sprache: { Args: { p_email: string; p_sprache: string }; Returns: undefined }
       anschreiben_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       anschreiben_aendern: { Args: { p_betreff: string; p_id: string; p_text: string }; Returns: undefined }
       anschreiben_antwort: { Args: { p_art: string; p_id: string }; Returns: undefined }
@@ -10030,6 +10220,14 @@ export type Database = {
         }
         Returns: string
       }
+      helpdesk_abschliessen: {
+        Args: { p_antwort: string; p_ergebnis: string; p_id: string; p_version: string }
+        Returns: Json
+      }
+      helpdesk_einschaetzen: { Args: { p: Json; p_id: string; p_link: string }; Returns: Json }
+      helpdesk_einstellen: { Args: { p_person_id: string; p_sms: boolean }; Returns: undefined }
+      helpdesk_offen: { Args: Record<PropertyKey, never>; Returns: Json }
+      helpdesk_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
       integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       kalender_abgleichen: {
@@ -10285,6 +10483,7 @@ export type Database = {
         Returns: undefined
       }
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
+      rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
         Args: {
           p_bereich: string
@@ -10297,6 +10496,7 @@ export type Database = {
         Returns: Json
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
+      runde_franken: { Args: { p_rappen: number }; Returns: number }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
@@ -10460,9 +10660,19 @@ export type Database = {
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
+      werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       zahlungsplan_berechnen: {
         Args: { p_baubeginn?: string; p_kondition: string; p_sprache: string; p_unterzeichnet: string; p_wert: number }
+        Returns: {
+          betrag_rappen: number
+          bezeichnung: string
+          faellig_am: string
+          nr: number
+        }[]
+      }
+      zahlungsplan_vorschlag: {
+        Args: { p_baubeginn?: string; p_sprache: string; p_unterzeichnet: string; p_wert: number; p_zahlung: Json }
         Returns: {
           betrag_rappen: number
           bezeichnung: string

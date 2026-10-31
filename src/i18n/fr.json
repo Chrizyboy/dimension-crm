@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Dimension CRM",
+    "name": "Dimension Work",
     "firma": "Dimension Solaire"
   },
   "nav": {
@@ -144,6 +144,20 @@
       "verbinden": "Se connecter avec Microsoft",
       "testen": "Vérifier la connexion",
       "trennen": "Déconnecter"
+    },
+    "unterschrift": {
+      "titel": "Ma signature",
+      "text": "Pour les documents que tu signes depuis le CRM (p. ex. contrats d’entreprise). Personne d’autre ne la voit ni ne l’utilise.",
+      "bild": "Ta signature",
+      "keine": "Aucune signature enregistrée.",
+      "zeichnen": "Dessiner",
+      "hochladen": "Téléverser une image",
+      "entfernen": "Supprimer",
+      "zeichnenTitel": "Dessiner la signature",
+      "zeichnenText": "Signe dans la zone blanche avec la souris, le doigt ou un stylet.",
+      "neu": "Recommencer",
+      "uebernehmen": "Utiliser",
+      "flaeche": "Zone de signature"
     }
   },
   "fehler": {
@@ -266,7 +280,7 @@
     "bereicheText": "Chaque domaine a un nom univoque et une phrase qui explique ce qu’on y fait. Elle apparaît aussi au survol dans la barre latérale et dans la recherche."
   },
   "anmeldung": {
-    "titel": "Connexion",
+    "titel": "Connexion à Dimension Work",
     "text": "Avec ton compte professionnel ou avec un code que nous t’envoyons par e-mail.",
     "microsoft": "Se connecter avec Microsoft",
     "oder": "ou",
@@ -1463,11 +1477,10 @@
     "akte": {
       "titel": "Contrat",
       "nichtMehr": "Ce contrat n’existe pas (ou plus).",
-      "drucken": "Imprimer / PDF",
+      "drucken": "Voir le PDF",
       "versendet": "Envoyé",
       "unterschrieben": "Signé",
       "reaktivieren": "Réactiver",
-      "neuErstellen": "Établir à nouveau",
       "offerte": "Offre",
       "stornieren": "Annuler",
       "angaben": "Données",
@@ -1481,7 +1494,12 @@
       "unterschriebenAm": "Signé le",
       "notiz": "Note",
       "zahlungsplan": "Échéancier",
-      "text": "Texte du contrat"
+      "senden": "Envoyer au client",
+      "bearbeiten": "Modifier",
+      "imVertrag": "Dans le contrat",
+      "anzahlungsrechnung": "Facture d’acompte",
+      "rechnungNr": "N° {{nummer}}",
+      "nochKeine": "pas encore"
     },
     "plan": {
       "keiner": "Pas encore d’échéancier",
@@ -1503,8 +1521,63 @@
       "wertHinweis": "Offre CHF {{betrag}} hors TVA + {{satz}} % TVA",
       "datum": "Signé le",
       "mitVertrag": "Établir le contrat d’entreprise",
-      "spaeter": "La facture d’acompte dans AbaNinja suit avec la phase 8, la date des travaux avec la phase 9.",
-      "pflicht": "Merci d’indiquer le site, la valeur du contrat et la date."
+      "pflicht": "Merci d’indiquer le site, la valeur du contrat et la date.",
+      "zahlung": "Conditions de paiement",
+      "anzahlung": "Acompte en CHF",
+      "anzahlungHinweis": "Dû à la signature, le solde après la mise en service",
+      "anzahlungFehlt": "Veuillez indiquer le montant de l’acompte.",
+      "imVertrag": "Dans le contrat",
+      "bearbeiten": "Modifier le contrat d’entreprise",
+      "speichern": "Enregistrer",
+      "raten": "Échéances",
+      "rateText": "Libellé échéance {{nr}}",
+      "rateProzent": "Pourcentage échéance {{nr}}",
+      "rateHinzu": "Ajouter une échéance",
+      "rateEntfernen": "Supprimer l’échéance {{nr}}",
+      "ratenSumme": "Total {{summe}} % – il faut exactement 100 %.",
+      "ratenHinweis": "La première échéance est l’acompte (payable 10 jours après la signature)."
+    },
+    "felder": {
+      "gegenstand": "Objet (ligne sous les parties)",
+      "material": "Matériel",
+      "materialLeer": "selon l’offre",
+      "beginn": "Début des travaux",
+      "fertig": "Achèvement & mise en service",
+      "nachAbsprache": "à convenir",
+      "optionen": "Prestations optionnelles (cochées dans le contrat)",
+      "monitoring": "Mesure d’énergie / monitoring",
+      "wartung": "Contrat de maintenance",
+      "batterie": "Batterie (selon l’offre)",
+      "divers": "Divers"
+    },
+    "senden": {
+      "titel": "Envoyer le contrat au client",
+      "keineMail": "pas d’adresse e-mail",
+      "weiter": "Préparer l’e-mail",
+      "vertrag": "Contrat d’entreprise avec CG en PDF ({{sprache}})",
+      "rechnung": "Facture d’acompte {{betrag}} avec QR-facture",
+      "grund": {
+        "neu": "Sera émise lors de la préparation (numéro, échéance). L’envoi se fait à l’étape suivante.",
+        "vorhanden": "La facture existe déjà dans le CRM, elle est jointe.",
+        "keinRecht": "Émettre des factures nécessite le droit «Finances».",
+        "schonVerrechnet": "Déjà facturé (p. ex. dans AbaNinja) {{nummer}} : veuillez joindre cette facture à la main.",
+        "keinPlan": "Pas encore d’échéancier."
+      },
+      "mitUnterschrift": "Signer avec ma signature",
+      "unterschriftHinweis": "Ta signature figure dans la case « Signature Dimension Solaire », ton nom en dessous.",
+      "keineUnterschrift": "Aucune signature enregistrée : sous Mon compte › Ma signature. Sans elle, la case reste vide."
+    },
+    "einstellung": {
+      "titel": "Réglages",
+      "beschreibung": "S’applique à tous les nouveaux contrats (administration seulement).",
+      "unterzeichner": "Signe pour Dimension Solaire",
+      "ansprechperson": "Interlocuteur dans le contrat",
+      "email": "E-mail dans le contrat",
+      "adresse": "Adresse dans le contrat",
+      "konditionPv": "Paiement proposé pour le PV",
+      "konditionBatterie": "Paiement proposé pour batterie",
+      "telefon_de": "Téléphone (contrat allemand)",
+      "telefon_fr": "Téléphone (contrat français)"
     }
   },
   "preise": {
@@ -1872,7 +1945,18 @@
     "grossprojekt_grund_fehlt": "Merci d’indiquer une raison.",
     "grossprojekt_schon_lead": "Un lead en est déjà issu. Merci de continuer là-bas.",
     "grossprojekt_entscheid_unbekannt": "Cette décision n’existe pas.",
-    "grossprojekt_nur_ablauf": "État et décision se modifient uniquement avec les boutons en bas du dossier."
+    "grossprojekt_nur_ablauf": "État et décision se modifient uniquement avec les boutons en bas du dossier.",
+    "auftrag_anzahlung_fehlt": "Veuillez indiquer le montant de l’acompte.",
+    "werkvertrag_anzahlung_verrechnet": "L’acompte est déjà facturé ou payé (p. ex. dans AbaNinja).",
+    "werkvertrag_kein_zahlungsplan": "Ce contrat n’a pas encore d’échéancier.",
+    "werkvertrag_storniert": "Le contrat est annulé.",
+    "auftrag_raten_summe": "Les échéances doivent totaliser exactement 100 %.",
+    "auftrag_raten_text": "Merci de donner un libellé à chaque échéance.",
+    "auftrag_raten_fehlen": "Merci d’indiquer 1 à 6 échéances.",
+    "handbuch_nur_entscheider": "Une autre personne décide de ce signalement.",
+    "handbuch_entscheid_ungueltig": "Choisis « Règle-le » ou « Non ».",
+    "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
+    "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -2097,7 +2181,9 @@
     },
     "werkvertrag": {
       "betreff": "Votre contrat d'entreprise {{nummer}} de Dimension Solaire",
-      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire",
+      "betreffMitRechnung": "Votre contrat d'entreprise {{nummer}} et la facture d'acompte de Dimension Solaire",
+      "textMitRechnung": "Bonjour\n\nMerci pour votre commande. Vous trouverez en pièce jointe le contrat d'entreprise et la facture d'acompte de {{betrag}}. Merci de nous retourner le contrat signé et de régler l'acompte avec la QR-facture. Dès réception de l'acompte, nous commandons le matériel et convenons avec vous de la date de montage.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
@@ -5193,7 +5279,7 @@
       "dateien": "Captures d’écran ou fichiers",
       "dateienHinweis": "Une capture d’écran aide le plus.",
       "intro": "Tes signalements et les réponses de l’administration.",
-      "introAdmin": "Tous les signalements des collaborateurs. Définir le statut et répondre ; la personne voit la réponse ici et dans la cloche.",
+      "introAdmin": "Tous les signalements de l’équipe. Le CRM examine chaque signalement et rédige une évaluation ; la décision se prend avec « Règle-le » ou « Non ». La personne voit la réponse ici, dans la cloche et par e-mail.",
       "filter": "Filtrer les signalements",
       "filterWert": {
         "offen": "Ouverts",
@@ -5207,13 +5293,44 @@
         "neu": "Nouveau",
         "arbeit": "En cours",
         "info": "Question",
-        "erledigt": "Réglé"
+        "erledigt": "Réglé",
+        "wartet": "Attend une décision",
+        "abgelehnt": "Non réalisé"
       },
       "statusSetzen": "Statut",
       "antwort": "Réponse",
       "antwortVon": "Réponse de {{name}}",
       "antwortAn": "Réponse à {{name}}",
-      "offenSr": "ouverts :"
+      "offenSr": "ouverts :",
+      "wirdGeprueft": "En cours d’examen. L’évaluation arrive au plus tard dans une heure (de 7 h à 19 h).",
+      "einschaetzung": "Évaluation",
+      "einschaetzungZeile": {
+        "was": "Ce qui se passe",
+        "ursache": "Cause",
+        "auswirkung": "Impact",
+        "loesung": "Solution",
+        "aufwand": "Effort",
+        "risiko": "Risque",
+        "empfehlung": "Recommandation"
+      },
+      "empfehlung": {
+        "erledigen": "Régler",
+        "nicht": "Ne pas réaliser"
+      },
+      "notiz": "Remarque (facultatif), p. ex. pourquoi pas",
+      "erledigeEs": "Règle-le",
+      "nicht": "Non",
+      "wartetAufAndere": "Attend la décision de la personne responsable.",
+      "entschieden": {
+        "erledigen": "Décision : régler",
+        "nicht": "Décision : ne pas réaliser"
+      },
+      "umgesetztIn": "réalisé dans la version {{version}}",
+      "beantwortet": "Répondu par {{name}}",
+      "entscheidet": "Décide des signalements",
+      "alleAdmins": "Toute l’administration",
+      "perSms": "Évaluation aussi par SMS",
+      "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
     "anleitung": {
       "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
@@ -5239,7 +5356,7 @@
       "reiter": "Premiers pas",
       "intro": "L’essentiel pour démarrer, sur une page. Pour le distribuer à l’équipe : « Imprimer » (ou enregistrer en PDF).",
       "drucken": "Imprimer",
-      "druckTitel": "Dimension CRM : premiers pas",
+      "druckTitel": "Dimension Work : premiers pas",
       "abschnitte": [
         {
           "titel": "1. Installer",
@@ -5979,5 +6096,57 @@
       "nichts": "Rien de prévu",
       "halbtag": "demi-journée"
     }
+  },
+  "ablage": {
+    "titel": "Classement dans SharePoint",
+    "zweck": "Dimension Work crée lui-même le dossier de chaque nouvelle offre (avec les sous-dossiers), le déplace vers les adjudications à l'acceptation et vers les archives en cas de perte, et range les fichiers du CRM dans le bon sous-dossier. Les anciens dossiers restent tels quels.",
+    "aktiv": "Classement automatique activé",
+    "seit": "pour les offres dès le {{datum}}",
+    "fertig_one": "{{count}} dossier en place",
+    "fertig_other": "{{count}} dossiers en place",
+    "wartend_one": "{{count}} en attente",
+    "wartend_other": "{{count}} en attente",
+    "mitFehler_one": "{{count}} en erreur",
+    "mitFehler_other": "{{count}} en erreur",
+    "bibliothek": "Bibliothèque",
+    "name": "Nom du dossier",
+    "nameHinweis": "Variables : {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offres",
+      "auftraege": "Adjudications",
+      "verloren": "Perdus"
+    },
+    "unterordner": "Sous-dossiers (créés dans chaque nouveau dossier)",
+    "oeffnen": "Dossier dans SharePoint",
+    "wirdAngelegt": "Dossier en création",
+    "wirdVerschoben": "Dossier (en déplacement)",
+    "fehler": "Dossier : erreur",
+    "person": "Connexion Microsoft de (abréviation)",
+    "personHinweis": "Cette personne doit avoir accès à la bibliothèque et être connectée à Microsoft."
+  },
+  "zust": {
+    "reiter": "Responsabilités",
+    "titel": "Qui est responsable ?",
+    "zweck": "Les nouveaux leads, y compris ceux du site web, reçoivent automatiquement la personne selon ces règles ; la tâche et la cloche lui arrivent directement. Les nouvelles offres vont à la personne responsable des offres. En cas d'absence, le remplaçant prend le relais. Dans le lead et l'offre, la personne peut être changée à tout moment.",
+    "verkauf": "Vente : nouveaux leads",
+    "verkaufHinweis": "Toutes les conditions choisies doivent correspondre. Les règles plus précises (plus de conditions) passent en premier.",
+    "sprache": "Langue",
+    "standort": "Site",
+    "region": "Région",
+    "produkt": "Produit",
+    "person": "Personne",
+    "alle": "Tous",
+    "produkte": {
+      "pv": "Photovoltaïque",
+      "batterie": "Batterie",
+      "wallbox": "Borne de recharge",
+      "waermepumpe": "Pompe à chaleur"
+    },
+    "regelNeu": "Ajouter une règle",
+    "regelWeg": "Supprimer la règle",
+    "offerten": "Établir les offres",
+    "stellvertretung": "Remplacement en cas d'absence",
+    "stellvertretungHinweis": "S'applique quand quelqu'un est inscrit dans les absences (vacances, maladie …).",
+    "vertretungFuer": "Remplaçant de {{name}}"
   }
 }

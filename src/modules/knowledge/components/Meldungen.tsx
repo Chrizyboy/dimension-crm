@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Skelett } from '@/components/ui/diverses'
-import { useMeldungen } from '../hooks/useHandbuch'
+import { useHelpdeskStand, useMeldungen } from '../hooks/useHandbuch'
 import { istOffen } from '../lib/handbuch'
+import { HelpdeskEinstellung } from './HelpdeskEinstellung'
 import { MeldungKarte } from './MeldungKarte'
 
 type Filter = 'offen' | 'erledigt' | 'alle'
@@ -17,6 +18,8 @@ type Filter = 'offen' | 'erledigt' | 'alle'
 export function Meldungen({ admin, offen: offenId }: { admin: boolean; offen: string | null }) {
   const { t } = useTranslation()
   const daten = useMeldungen()
+  const stand = useHelpdeskStand(admin)
+  const ichEntscheide = stand.data?.ich_entscheide ?? false
   const [filter, setFilter] = useState<Filter>('offen')
   const alle = useMemo(() => daten.data ?? [], [daten.data])
   const zahl = (f: Filter) => alle.filter((m) => f === 'alle' || (f === 'offen' ? istOffen(m) : !istOffen(m))).length
@@ -45,6 +48,7 @@ export function Meldungen({ admin, offen: offenId }: { admin: boolean; offen: st
           }}
         />
       </div>
+      {admin && <HelpdeskEinstellung />}
       {daten.error ? (
         <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} />
       ) : !daten.data ? (
@@ -58,7 +62,13 @@ export function Meldungen({ admin, offen: offenId }: { admin: boolean; offen: st
       ) : (
         <ul className="flex flex-col gap-3">
           {liste.map((m) => (
-            <MeldungKarte key={m.id} meldung={m} admin={admin} hervorheben={m.id === offenId} />
+            <MeldungKarte
+              key={m.id}
+              meldung={m}
+              admin={admin}
+              ichEntscheide={ichEntscheide}
+              hervorheben={m.id === offenId}
+            />
           ))}
         </ul>
       )}

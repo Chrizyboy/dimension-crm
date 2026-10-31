@@ -1,35 +1,45 @@
 import { useNavigate } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
-import { Ban, FileText, Mail, Printer, RefreshCw, Send, Signature, Undo2 } from 'lucide-react'
+import { Ban, FileText, Mail, Pencil, Printer, Send, Signature, Undo2 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
-import { MailDialog } from '@/components/shared/MailDialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
-import { useDrucken } from '@/hooks/useDrucken'
 import { formatChf, formatDatum } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
-import i18n from '@/i18n'
-import { useAnmeldung } from '@/stores/anmeldung'
+import { pdfZeigen } from '@/lib/datei'
 import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
 import { useVertragAenderung } from '../hooks/useWerkvertraege'
 import { NAECHSTE, VERTRAG_TON } from '../lib/status'
-import { werkvertragAbschnitte } from '../lib/werkvertragText'
-import { ladeVertragDateien, setzeVertragStatus } from '../services/werkvertraege'
+import { vertragInhalt } from '../lib/vertragInhalt'
+import { ladeEinstellung, setzeVertragStatus } from '../services/werkvertraege'
+import { werkvertragPdf } from '../services/vertragPdf'
 import type { Werkvertrag, WerkvertragStatus } from '../types'
-import { WerkvertragDruck } from './WerkvertragDruck'
+import { SendenDialog } from './SendenDialog'
 import { Zahlungsplan } from './Zahlungsplan'
 
 const StatusDialog = lazy(() => import('./StatusDialog'))
 
+/** Für die Anzeige in der Akte reichen Platzhalter; Unterzeichner usw. stehen erst im PDF. */
+const LEER = {
+  unterzeichner: '',
+  ansprechperson: '',
+  telefon_de: null,
+  telefon_fr: null,
+  email: null,
+  adresse: '',
+  kondition_pv: 'normal',
+  kondition_batterie: '70_30',
+}
+
 /**
  * Ein Werkvertrag (V232): Angaben, Zahlungsplan, Vertragstext in der Vertragssprache und die Schritte
- * Versendet, Unterschrieben (mit Datum) und Storniert (mit Grund). «Drucken / PDF» erstellt das Blatt;
- * «Neu erstellen» öffnet «Auftrag erstellen» noch einmal (neue Version mit geänderten Angaben).
+ * Versendet, Unterschrieben (mit Datum) und Storniert (mit Grund). «An Kunden senden» legt Vertrag und
+ * Anzahlungsrechnung in eine Mail, «PDF ansehen» zeigt den Vertrag nach Vorlage Muri, «Bearbeiten» öffnet
+ * den Auftrag noch einmal (Zahlungsbedingung, Termine, Material; nach Versand eine neue Version).
  */
 export default function VertragAkte({
   vertrag: w,
@@ -42,14 +52,8 @@ export default function VertragAkte({
 }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const druck = useDrucken()
   const [dialog, setDialog] = useState<'unterschrieben' | 'storniert' | 'mail' | null>(null)
-  const ich = useAnmeldung((z) => z.ich)
-  const dateien = useQuery({
-    queryKey: ['werkvertraege', 'dateien', w?.id],
-    queryFn: () => (w ? ladeVertragDateien(w) : []),
-    enabled: dialog === 'mail',
-  })
+  const [pdfLaeuft, setPdfLaeuft] = useState(false)
   const schritt = useVertragAenderung((ziel: WerkvertragStatus) => setzeVertragStatus(w?.id ?? '', ziel))
 
   async function setze(ziel: WerkvertragStatus) {
@@ -60,6 +64,19 @@ export default function VertragAkte({
       const s = fachFehlerSchluessel(f)
       if (!s) meldeFehler(f, 'werkvertraege.status')
       melde('kritisch', zweisprachig(s ?? 'fachfehler.allgemein'))
+    }
+  }
+
+  /** Vertrag als PDF ansehen (zum Drucken oder Prüfen), ohne ihn abzulegen. */
+  async function zeigePdf() {
+    if (!w) return
+    setPdfLaeuft(true)
+    try {
+      pdfZeigen(await werkvertragPdf(vertragInhalt(w, await ladeEinstellung())))
+    } catch (f) {
+      meldeFehler(f, 'werkvertraege.pdf')
+    } finally {
+      setPdfLaeuft(false)
     }
   }
 
@@ -89,22 +106,21 @@ export default function VertragAkte({
               {w.version > 1 && <Badge ton="neutral">V{w.version}</Badge>}
             </div>
             <div className="flex flex-wrap gap-2 border-b pb-3">
-              <Button size="sm" onClick={druck.drucke}>
-                <Printer />
-                {t('werkvertraege.akte.drucken')}
-              </Button>
-              {w.email && w.status !== 'storniert' && (
+              {w.status !== 'storniert' && w.status !== 'unterschrieben' && (
                 <Button
                   size="sm"
-                  variant="secondary"
                   onClick={() => {
                     setDialog('mail')
                   }}
                 >
                   <Mail />
-                  {t('mail.perMail')}
+                  {t('werkvertraege.akte.senden')}
                 </Button>
               )}
+              <Button size="sm" variant="secondary" laedt={pdfLaeuft} onClick={() => void zeigePdf()}>
+                <Printer />
+                {t('werkvertraege.akte.drucken')}
+              </Button>
               {moeglich.includes('versendet') && (
                 <Button size="sm" variant="secondary" laedt={schritt.isPending} onClick={() => void setze('versendet')}>
                   <Send />
@@ -137,8 +153,8 @@ export default function VertragAkte({
                     onNeuErstellen(w.offerteId ?? '')
                   }}
                 >
-                  <RefreshCw />
-                  {t('werkvertraege.akte.neuErstellen')}
+                  <Pencil />
+                  {t('werkvertraege.akte.bearbeiten')}
                 </Button>
               )}
               {w.offerteId && (
@@ -211,33 +227,26 @@ export default function VertragAkte({
             <AkteAbschnitt titel={t('werkvertraege.akte.zahlungsplan')} zusatz={w.zahlungsplan.length || undefined}>
               <Zahlungsplan tranchen={w.zahlungsplan} />
             </AkteAbschnitt>
-            <AkteAbschnitt titel={t('werkvertraege.akte.text')} offen={false}>
-              <div className="flex flex-col gap-3 text-sm">
-                {werkvertragAbschnitte(w).map(([titel, text]) => (
-                  <section key={titel}>
-                    <h4 className="font-medium">{titel}</h4>
-                    <p className="text-muted-foreground whitespace-pre-line">{text}</p>
-                  </section>
+            <AkteAbschnitt titel={t('werkvertraege.akte.imVertrag')}>
+              <dl>
+                <Angabe label={t('werkvertraege.felder.gegenstand')}>{vertragInhalt(w, LEER).gegenstand}</Angabe>
+                {vertragInhalt(w, LEER).termine.map(([l, wert]) => (
+                  <Angabe key={l} label={l.replace(/\s*:$/, '')}>
+                    {wert}
+                  </Angabe>
                 ))}
-              </div>
+                <Angabe label={t('werkvertraege.akte.anzahlungsrechnung')}>
+                  {w.anzahlung?.rechnungNr
+                    ? t('werkvertraege.akte.rechnungNr', { nummer: w.anzahlung.rechnungNr })
+                    : t('werkvertraege.akte.nochKeine')}
+                </Angabe>
+              </dl>
             </AkteAbschnitt>
           </div>
         )}
-        {w && dialog === 'mail' && dateien.isSuccess && (
-          <MailDialog
-            titel={t('mail.vertragTitel', { nummer: w.nummer })}
-            vorlage={{
-              an: w.email ?? '',
-              betreff: i18n.getFixedT(w.sprache)('mail.werkvertrag.betreff', { nummer: w.nummer }),
-              text: i18n.getFixedT(w.sprache)('mail.werkvertrag.text', { absender: ich?.name ?? '' }),
-              sprache: w.sprache,
-              art: 'werkvertrag',
-              kontakt_id: w.kontaktId,
-              bezug_tabelle: 'werkvertraege',
-              bezug_id: w.id,
-              ...(w.offerteId ? { offerte_id: w.offerteId } : {}),
-            }}
-            dateien={dateien.data}
+        {w && dialog === 'mail' && (
+          <SendenDialog
+            vertrag={w}
             onSchliessen={() => {
               setDialog(null)
             }}
@@ -257,7 +266,6 @@ export default function VertragAkte({
             />
           )}
         </Suspense>
-        {w && druck.aktiv && <WerkvertragDruck w={w} />}
       </DialogInhalt>
     </Dialog>
   )
