@@ -1,6 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type { Database, Json } from '@/types/datenbank'
 import type { Aussendienst, Geschaeft, StandAngaben } from '../types'
+import { alleSeiten } from '@/services/seiten'
 
 type Zeile = Database['public']['Views']['verkauf_geschaefte']['Row']
 
@@ -73,8 +74,9 @@ export function geschaeftAusZeile(z: Zeile): Geschaeft {
 
 /** Alle Geschäfte. Gefiltert wird in der App, damit Kanban, Liste und Karte sofort reagieren. */
 export async function ladeGeschaefte(): Promise<Geschaeft[]> {
-  const { data, error } = await db().from('verkauf_geschaefte').select('*')
-  if (error) throw error
+  const data = await alleSeiten((von, bis) =>
+    db().from('verkauf_geschaefte').select('*').order('art').order('id').range(von, bis),
+  )
   return data.map(geschaeftAusZeile)
 }
 

@@ -19,6 +19,8 @@ import { anreichern, entscheiden } from '../services/grossprojekte'
 import type { Grossprojekt } from '../types'
 import { PunkteMarke } from './PunkteMarke'
 import { PunkteAufschluesselung, SchaetzungAngaben } from './Bewertung'
+import { RechercheAbschnitt } from './RechercheAbschnitt'
+import { VerantwortlichWahl } from './VerantwortlichWahl'
 import { Verlauf } from './Verlauf'
 
 export type AkteAktion = 'bearbeiten' | 'verwerfen' | 'beobachten'
@@ -27,7 +29,8 @@ const istLink = (s: string) => /^https?:\/\//i.test(s)
 
 /**
  * Akte eines Grossprojekts als Seitenpanel: warum es passt (Punkte), grobe Schätzung, Gebäude, Bauherrschaft und
- * Verlauf. Unten der Entscheid: Verwerfen, Beobachten oder Bewilligen (legt den Lead an; nur Andy und Vertretung).
+ * Verlauf, dazu die Recherche (Eigentümer, Ansprechperson, nächste Schritte) und wer bei uns verantwortlich ist.
+ * Unten der Entscheid: Verwerfen, Beobachten oder Bewilligen (legt den Lead an; nur Andy und Vertretung).
  */
 export function GrossprojektAkte({
   id,
@@ -162,9 +165,13 @@ export function GrossprojektAkte({
               )}
             </div>
             {g.grund && <p className="text-muted-foreground pb-2 text-sm">{g.grund}</p>}
+            <VerantwortlichWahl g={g} />
 
             <AkteAbschnitt titel={t('grossprojekte.akte.warum')} zusatz={t('grossprojekte.punkte', { n: g.punkte })}>
               <PunkteAufschluesselung g={g} />
+            </AkteAbschnitt>
+            <AkteAbschnitt titel={t('grossprojekte.recherche.titel')}>
+              <RechercheAbschnitt g={g} />
             </AkteAbschnitt>
             <AkteAbschnitt titel={t('grossprojekte.akte.schaetzung')}>
               <SchaetzungAngaben g={g} />
@@ -245,6 +252,18 @@ export function GrossprojektAkte({
                 <Angabe label={t('grossprojekte.feld.bauherrArt')}>
                   {t(`grossprojekte.bauherrArt.${g.bauherr_art ?? 'unbekannt'}`)}
                 </Angabe>
+                {g.ansprechperson && (
+                  <Angabe label={t('grossprojekte.recherche.ansprechperson')}>
+                    {[
+                      g.ansprechperson.name,
+                      g.ansprechperson.funktion,
+                      g.ansprechperson.telefon,
+                      g.ansprechperson.email,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </Angabe>
+                )}
                 <Angabe label={t('grossprojekte.feld.quelle')}>
                   {istLink(g.quell_url) ? (
                     <a

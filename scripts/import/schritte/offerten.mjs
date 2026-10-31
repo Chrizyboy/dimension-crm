@@ -2,8 +2,10 @@
 // Daraus entstehen: jede Zeile eine Offerte; angenommene/unterschriebene zusätzlich ein Projekt
 // und ein Werkvertrag; Fahrplan-Schritte und Einsätze hängen am Projekt.
 
-import { text, zuDatum, zuGanzzahl, zuRappen, zuSprache, zuZahl, zuZeitstempel } from '../umwandeln.mjs'
-import { objektVon } from './kunden.mjs'
+import { text, zuDatum, zuModulzahl, zuRappen, zuSprache, zuZahl, zuGanzzahl, zuZeitstempel } from '../umwandeln.mjs'
+import { alleLeads, objektVon } from './kunden.mjs'
+import { offerPerson, offerStandort } from '../v233.mjs'
+import { mwstAusVorlage, werkvertragBetrag } from '../entscheide.mjs'
 
 /** @typedef {import('../import-vorlage.mjs').Kontext} Kontext */
 
@@ -20,12 +22,21 @@ const FAHRPLAN_STAND = /** @type {Record<string, string>} */ ({
 const hatWerkvertragsDatei = (p) => (p.sp?.files ?? []).some((/** @type {any} */ f) => f.folder === 'werkvertrag')
 
 /**
- * Firma des Vertrags nach Standort; ohne Angabe bleibt sie leer statt geraten.
+ * Standort wie V233 ihn zeigt: eingetragener Standort, sonst nach Sprache der Offerte (fr = Bulle, sonst Muri).
+ * @param {Record<string, any>} p
+ * @returns {string} «bulle» oder «muri»
+ */
+function standortVon(p) {
+  return (text(p.vertragStandort) ?? text(p.standort) ?? offerStandort(p)).toLowerCase()
+}
+
+/**
+ * Firma des Vertrags nach Standort (Bulle = Sàrl, Muri = GmbH).
  * @param {Kontext} k
  * @param {Record<string, any>} p
  */
 function firma(k, p) {
-  const s = (text(p.vertragStandort) ?? text(p.standort) ?? '').toLowerCase()
+  const s = standortVon(p)
   return s === 'bulle' ? (k.ids.firmen.get('sarl') ?? null) : s === 'muri' ? (k.ids.firmen.get('gmbh') ?? null) : null
 }
 
@@ -46,6 +57,12 @@ export async function importiereOfferten(k) {
     k.ids.offertNr.set(id, nr)
   }
 
+  // «Verantwortlich» rechnete V233 bei jedem Anzeigen aus (offerPerson): nur von Hand Gewähltes war gespeichert.
+  // Das neue CRM speichert die Person, deshalb wird hier dieselbe Regel einmal angewendet.
+  const leads = alleLeads(k).map(({ nummer, lead }) => ({ ...lead, id: nummer }))
+  const verantwortlich = (/** @type {string} */ id, /** @type {Record<string, any>} */ p) =>
+    k.person(offerPerson({ ...p, id }, leads))
+
   const offerten = projekte.map(([id, p]) => ({
     sammlung: 'projects',
     schluessel: id,
@@ -63,7 +80,7 @@ export async function importiereOfferten(k) {
       angebot_am_frueher: zuDatum(p.angebotAmFrueher) ? [zuDatum(p.angebotAmFrueher)] : null,
       betrag_rappen: zuRappen(p.angebotswert),
       leistung_kwp: zuZahl(p.leistung),
-      anzahl_module: zuGanzzahl(p.anzahlModule),
+      anzahl_module: zuModulzahl(p.anzahlModule),
       wechselrichter: text(p.wechselrichter),
       batterie: text(p.batterie),
       betrag_manuell: p.vmanuell === true,
@@ -75,7 +92,8 @@ export async function importiereOfferten(k) {
       nachfassen_am: zuDatum(p.nachfolgeTermin),
       zurueckgegeben: p.zurueck ?? null,
       versionen: p.versionen ?? [],
-      verantwortlich_id: k.person(p.verantwortlich),
+      verantwortlich_id: verantwortlich(id, p),
+      standort_id: k.ids.standorte.get(standortVon(p)) ?? null,
       erstellt_am: zuZeitstempel(p.createdAt) ?? k.daten.at,
       alt_daten: p,
     },
@@ -83,7 +101,10 @@ export async function importiereOfferten(k) {
   const oIds = await k.schreiber.schreibe('offerten', offerten)
   for (const [id] of projekte) k.ids.offerten.set(id, /** @type {string} */ (oIds.get(`project:${id}`)))
 
-  const auftraege = projekte.filter(([, p]) => AUFTRAG.has(p.statusKey) || zuDatum(p.unterzeichnetAm))
+  // Ein Unterschriftsdatum allein macht einen Auftrag, ausser die Ablage hat den Stand zurückgesetzt (ablage.mjs).
+  const auftraege = projekte.filter(
+    ([, p]) => AUFTRAG.has(p.statusKey) || (zuDatum(p.unterzeichnetAm) && p._statusVorlage === undefined),
+  )
   const pIds = await k.schreiber.schreibe(
     'projekte',
     auftraege.map(([id, p]) => ({
@@ -102,8 +123,8 @@ export async function importiereOfferten(k) {
           ? k.zuordner.streng('projektstatus', p.statusKey, `projects/${id}`, 'auftrag')
           : 'auftrag',
         bau_status: k.zuordner.streng('baustatus', p.bauStatus, `projects/${id}`),
-        standort_id: k.ids.standorte.get((text(p.standort) ?? '').toLowerCase()) ?? null,
-        verantwortlich_id: k.person(p.verantwortlich),
+        standort_id: k.ids.standorte.get(standortVon(p)) ?? null,
+        verantwortlich_id: verantwortlich(id, p),
         architekt: text(p.architekt),
         elektriker: text(p.elektriker),
         material_status: text(p.material),
@@ -116,12 +137,25 @@ export async function importiereOfferten(k) {
         checkliste: Object.fromEntries(CHECKLISTE.filter((f) => p[f] !== undefined).map((f) => [f, p[f]])),
         bewilligungen: p.bew ?? {},
         zahlungskonditionen: text(p.zahlKond),
+        // Wieder gewonnen nach einem früheren Lauf: zurück aus dem Papierkorb.
+        geloescht_am: null,
         alt_daten: p,
       },
     })),
   )
   for (const [id] of auftraege) k.ids.projekte.set(id, /** @type {string} */ (pIds.get(`project:${id}`)))
+  // Frühere Importe legten für jetzt nicht mehr gewonnene Offerten ein Projekt an: in den Papierkorb, nie hart löschen.
+  const keinAuftrag = projekte.filter(([id]) => !auftraege.some(([a]) => a === id)).map(([id]) => `project:${id}`)
+  for (let i = 0; i < keinAuftrag.length; i += 200) {
+    const { error } = await k.db
+      .from('projekte')
+      .update({ geloescht_am: new Date().toISOString() })
+      .in('alt_id', keinAuftrag.slice(i, i + 200))
+      .is('geloescht_am', null)
+    if (error) throw new Error(`projekte (kein Auftrag mehr): ${error.message}`)
+  }
 
+  const mwst = mwstAusVorlage(k.sammlung('finset'))
   await k.schreiber
     .schreibe(
       'werkvertraege',
@@ -138,7 +172,7 @@ export async function importiereOfferten(k) {
             kontakt_id: k.ids.kontakte.get(Number(p.kundenNr)),
             firma_id: firma(k, p),
             sprache: zuSprache(p.vertragLang ?? p.lang),
-            betrag_rappen: zuRappen(p.vertragswert) ?? zuRappen(p.angebotswert),
+            betrag_rappen: werkvertragBetrag(p, mwst).betrag,
             status: zuDatum(p.unterzeichnetAm) ? 'unterschrieben' : 'erstellt',
             erstellt_datum: zuDatum(p.werkvertrag?.erstelltAm),
             unterschrieben_am: zuDatum(p.unterzeichnetAm),
@@ -146,6 +180,7 @@ export async function importiereOfferten(k) {
               werkvertrag: p.werkvertrag ?? null,
               unterzeichnetAm: p.unterzeichnetAm ?? null,
               vertragswert: p.vertragswert ?? null,
+              mwst_ergaenzt: werkvertragBetrag(p, mwst).mwstErgaenzt ? mwst : null,
             },
           },
         })),

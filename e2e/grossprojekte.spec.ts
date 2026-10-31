@@ -57,6 +57,10 @@ test('Grossprojekt erfassen, bewerten, beobachten und bewilligen', async ({ page
   await expect(akte).toContainText('Eigenverbrauch · Schule')
   await expect(akte).toContainText('216 kWp')
   await expect(akte).toContainText('Rp./kWh')
+  // Recherche zu Eigentümer und Ansprechperson folgt vom Zeitplan; verantwortlich bei uns ist änderbar.
+  await expect(akte.getByRole('heading', { name: 'Eigentümer und Ansprechperson' })).toBeVisible()
+  await expect(akte).toContainText('Die Recherche folgt')
+  await expect(akte.getByRole('combobox', { name: /Verantwortlich bei uns/ })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await akte.getByRole('button', { name: 'Verwerfen' }).click()
@@ -82,6 +86,10 @@ test('Grossprojekt erfassen, bewerten, beobachten und bewilligen', async ({ page
   await page.goto('/#/contracting?ansicht=annahmen')
   await expect(page.getByRole('heading', { name: 'Dachsuche' })).toBeVisible()
   await expect(page.getByText(/von [\d'’]+ Gebieten durchsucht/)).toBeVisible()
+  await expect(page.getByText(/Diese Woche \d+ von \d+ neuen Grossprojekten/)).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Suchgebiet und Grössen' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Gebiete \(\d+\)/ })).toBeVisible()
+  await expect(page.getByRole('switch', { name: 'Genf durchsuchen' })).toBeChecked()
   const schalter = page.getByRole('switch', { name: 'Dachsuche aktiv' })
   await expect(schalter).toBeChecked()
   expect(await verstoesse(page)).toEqual([])

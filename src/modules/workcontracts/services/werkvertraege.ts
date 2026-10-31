@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabase'
 import type { Database, Json } from '@/types/datenbank'
+import { alleSeiten } from '@/services/seiten'
 import {
   WERKVERTRAG_STATUS,
   type Anzahlung,
@@ -151,8 +152,9 @@ function anzahlungAus(roh: Json | null): Anzahlung | null {
 
 /** Alle Werkverträge, neueste Nummer zuerst. */
 export async function ladeVertraege(): Promise<Werkvertrag[]> {
-  const { data, error } = await db().from('werkvertraege_liste').select('*').order('nummer', { ascending: false })
-  if (error) throw error
+  const data = await alleSeiten((von, bis) =>
+    db().from('werkvertraege_liste').select('*').order('nummer', { ascending: false }).order('id').range(von, bis),
+  )
   return data.map(vertragAusZeile)
 }
 

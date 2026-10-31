@@ -5954,9 +5954,62 @@
       "an": "Active",
       "aus": "Suspendue",
       "fortschritt": "Avancement de la recherche",
-      "text": "Le CRM cherche lui-même de grandes toitures avec une forte consommation : chaque heure, il avance dans la région autour de Muri et Bulle (les zones proches d’abord), reprend du registre des bâtiments les grands bâtiments industriels, commerciaux, hôpitaux, EMS, écoles et salles de sport et vérifie la toiture sur sonnendach.ch. Seuls les bâtiments avec assez de points entrent dans la liste.",
+      "text": "Le CRM cherche lui-même de grandes toitures à forte consommation d’électricité : chaque heure, il parcourt un peu plus loin toutes les régions de Muri et Bulle (les plus proches d’abord), récupère dans le registre des bâtiments les grands bâtiments industriels, artisanaux, hôpitaux, homes, écoles et halles de sport et vérifie la toiture sur toitsolaire.ch. Ce qui est intéressant entre dans la réserve ; chaque semaine, le CRM met les meilleurs dans la liste et recherche propriétaire et interlocuteur.",
       "stand": "{{durchsucht}} zones sur {{gebiete}} parcourues, {{gebaeude}} bâtiments examinés, {{treffer}} résultats dans la liste.",
-      "zuletzt": "Dernière recherche : {{zeit}}"
+      "zuletzt": "Dernière recherche : {{zeit}}",
+      "woche": "Cette semaine {{diese}} sur {{pro}} nouveaux grands projets, {{vorrat}} bons résultats en réserve (chaque semaine, seuls les meilleurs entrent dans la liste)."
+    },
+    "recherche": {
+      "titel": "Propriétaire et interlocuteur",
+      "wartet": "La recherche suit dans la demi-heure : le CRM cherche sur le web (registre du commerce, site de l'entreprise, commune) le propriétaire et l'interlocuteur.",
+      "laeuft": "Le CRM effectue la recherche …",
+      "fehler": "La recherche n'a pas abouti. Vous pouvez la relancer.",
+      "keine": "Pas encore de recherche.",
+      "starten": "Rechercher",
+      "neu": "Relancer la recherche",
+      "angestossen": "Recherche lancée",
+      "vorschlag": "Proposition de l'IA du {{datum}}. Vérifiez avant de reprendre quoi que ce soit ; confirmer la propriété au registre foncier.",
+      "eigentuemer": "Propriétaire",
+      "unbekannt": "Non trouvé",
+      "nutzer": "Utilise le bâtiment",
+      "sicherheit": {
+        "hoch": "sûr",
+        "mittel": "probable",
+        "tief": "incertain"
+      },
+      "alsBauherr": "Reprendre comme maître d'ouvrage",
+      "personen": "Interlocuteurs",
+      "keinePersonen": "Aucun interlocuteur trouvé.",
+      "uebernehmen": "Reprendre",
+      "uebernommen": "Repris",
+      "ansprechperson": "Interlocuteur",
+      "schritte": "Prochaines étapes",
+      "inTagen_one": "dans {{count}} jour",
+      "inTagen_other": "dans {{count}} jours",
+      "alsAufgaben": "Créer comme tâches",
+      "aufgabenAngelegt": "Tâches créées",
+      "quellen": "Sources",
+      "quelle": "Source"
+    },
+    "gebiet": {
+      "titel": "Zone de recherche et tailles",
+      "text": "Par défaut, toutes les régions de dimension-solaire.ch. Une zone est un NPA comme centre avec un rayon. Pas de seuil strict : ce qui atteint la taille minimale entre dans la réserve, et les points (toiture, consommation, chauffage, propriétaire) décident lesquels entrent chaque semaine dans la liste.",
+      "pro_woche": "Nouveaux par semaine",
+      "ab_punkte": "Dans la réserve dès (points)",
+      "min_dach_m2": "Toiture au moins (m²)",
+      "min_grundflaeche_m2": "Surface au sol au moins (m²)",
+      "gebiete": "Zones ({{n}})",
+      "aktiv": "Parcourir {{name}}",
+      "name": "Nom de la zone",
+      "plz": "NPA du centre",
+      "radius": "Rayon en km",
+      "entfernen": "Retirer {{name}}",
+      "neu": "Ajouter une zone"
+    },
+    "verantwortlich": {
+      "label": "Responsable chez nous",
+      "standard": "Responsable des nouveaux grands projets",
+      "niemand": "Personne"
     }
   },
   "team": {

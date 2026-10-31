@@ -5954,9 +5954,62 @@
       "an": "Läuft",
       "aus": "Angehalten",
       "fortschritt": "Fortschritt der Dachsuche",
-      "text": "Das CRM sucht selbst nach grossen Dächern mit viel Stromverbrauch: Es geht das Gebiet um Muri und Bulle stündlich ein Stück weiter durch (die nächsten Gebiete zuerst), holt grosse Industrie-, Gewerbe-, Spital-, Heim-, Schul- und Sportbauten aus dem Gebäuderegister und prüft das Dach bei sonnendach.ch. Neu in die Liste kommt nur, was genug Punkte hat.",
+      "text": "Das CRM sucht selbst nach grossen Dächern mit viel Stromverbrauch: Es geht alle Regionen von Muri und Bulle stündlich ein Stück weiter durch (die nächsten Gebiete zuerst), holt grosse Industrie-, Gewerbe-, Spital-, Heim-, Schul- und Sportbauten aus dem Gebäuderegister und prüft das Dach bei sonnendach.ch. Was interessant ist, kommt in den Vorrat; pro Woche gibt das CRM die besten in die Liste und recherchiert dazu Eigentümer und Ansprechperson.",
       "stand": "{{durchsucht}} von {{gebiete}} Gebieten durchsucht, {{gebaeude}} Gebäude angeschaut, {{treffer}} Treffer in der Liste.",
-      "zuletzt": "Zuletzt gesucht: {{zeit}}"
+      "zuletzt": "Zuletzt gesucht: {{zeit}}",
+      "woche": "Diese Woche {{diese}} von {{pro}} neuen Grossprojekten, {{vorrat}} gute Treffer warten im Vorrat (pro Woche kommen nur die besten in die Liste)."
+    },
+    "recherche": {
+      "titel": "Eigentümer und Ansprechperson",
+      "wartet": "Die Recherche folgt innert einer halben Stunde: Das CRM sucht im Web (Handelsregister, Firmenwebsite, Gemeinde) nach Eigentümer und Ansprechperson.",
+      "laeuft": "Das CRM recherchiert gerade …",
+      "fehler": "Die Recherche hat nicht geklappt. Du kannst sie nochmals anstossen.",
+      "keine": "Noch keine Recherche.",
+      "starten": "Recherchieren",
+      "neu": "Neu recherchieren",
+      "angestossen": "Recherche angestossen",
+      "vorschlag": "Vorschlag der KI vom {{datum}}. Bitte prüfen, bevor du etwas übernimmst; das Eigentum im Grundbuch bestätigen.",
+      "eigentuemer": "Eigentümer",
+      "unbekannt": "Nicht gefunden",
+      "nutzer": "Nutzt das Gebäude",
+      "sicherheit": {
+        "hoch": "sicher",
+        "mittel": "wahrscheinlich",
+        "tief": "unsicher"
+      },
+      "alsBauherr": "Als Bauherrschaft übernehmen",
+      "personen": "Ansprechpersonen",
+      "keinePersonen": "Keine Ansprechperson gefunden.",
+      "uebernehmen": "Übernehmen",
+      "uebernommen": "Übernommen",
+      "ansprechperson": "Ansprechperson",
+      "schritte": "Nächste Schritte",
+      "inTagen_one": "in {{count}} Tag",
+      "inTagen_other": "in {{count}} Tagen",
+      "alsAufgaben": "Als Aufgaben anlegen",
+      "aufgabenAngelegt": "Aufgaben angelegt",
+      "quellen": "Quellen",
+      "quelle": "Quelle"
+    },
+    "gebiet": {
+      "titel": "Suchgebiet und Grössen",
+      "text": "Standard sind alle Regionen von dimension-solaire.ch. Ein Gebiet ist eine PLZ als Mitte mit Radius. Es gibt keine harte Schwelle: Was die Mindestgrösse erreicht, kommt in den Vorrat, und die Punkte (Dach, Verbrauch, Heizung, Eigentümer) bestimmen, welche pro Woche in die Liste kommen.",
+      "pro_woche": "Neue pro Woche",
+      "ab_punkte": "In den Vorrat ab Punkten",
+      "min_dach_m2": "Dach mindestens (m²)",
+      "min_grundflaeche_m2": "Grundfläche mindestens (m²)",
+      "gebiete": "Gebiete ({{n}})",
+      "aktiv": "{{name}} durchsuchen",
+      "name": "Name des Gebiets",
+      "plz": "PLZ der Mitte",
+      "radius": "Radius in km",
+      "entfernen": "{{name}} entfernen",
+      "neu": "Gebiet hinzufügen"
+    },
+    "verantwortlich": {
+      "label": "Verantwortlich bei uns",
+      "standard": "Verantwortlich für neue Grossprojekte",
+      "niemand": "Niemand"
     }
   },
   "team": {
