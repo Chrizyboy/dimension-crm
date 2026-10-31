@@ -9852,6 +9852,7 @@ export type Database = {
       }
       anfrage_uebernehmen: { Args: { p: Json }; Returns: Json }
       anfrage_uebersprungen: { Args: { p_kennung: string; p_quelle: string }; Returns: undefined }
+      anmelde_sprache: { Args: { p_email: string; p_sprache: string }; Returns: undefined }
       anschreiben_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       anschreiben_aendern: { Args: { p_betreff: string; p_id: string; p_text: string }; Returns: undefined }
       anschreiben_antwort: { Args: { p_art: string; p_id: string }; Returns: undefined }
