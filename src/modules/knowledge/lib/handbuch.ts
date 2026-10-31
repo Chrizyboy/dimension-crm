@@ -69,7 +69,12 @@ export function meldungNummer(m: Pick<Meldung, 'nummer'>): string {
   return `T${String(m.nummer).padStart(3, '0')}`
 }
 
-/** Offen = alles ausser erledigt; «Rückfrage» zählt für die meldende Person als offen. */
+/** Offen = alles ausser erledigt und nicht umgesetzt; «Rückfrage» zählt für die meldende Person als offen. */
 export function istOffen(m: Pick<Meldung, 'status'>): boolean {
-  return m.status !== 'erledigt'
+  return m.status !== 'erledigt' && m.status !== 'abgelehnt'
+}
+
+/** Wartet die Meldung auf den Entscheid «Erledige es» oder «Nicht»? */
+export function wartetAufEntscheid(m: Pick<Meldung, 'status' | 'einschaetzung' | 'entscheid'>): boolean {
+  return m.status === 'wartet' && m.einschaetzung !== null && m.entscheid === null
 }

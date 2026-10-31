@@ -1860,7 +1860,11 @@
     "ressourcen_ergebnis_fehlt": "Choisis le résultat du contrôle.",
     "ressourcen_uebergabe_doppelt": "Soit à une personne, soit dans un véhicule.",
     "ressourcen_person": "Cette personne n'est plus active.",
-    "ressourcen_doppelt": "Ces plaques ou ce numéro d'inventaire existent déjà."
+    "ressourcen_doppelt": "Ces plaques ou ce numéro d'inventaire existent déjà.",
+    "handbuch_nur_entscheider": "Une autre personne décide de ce signalement.",
+    "handbuch_entscheid_ungueltig": "Choisis « Règle-le » ou « Non ».",
+    "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
+    "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5193,15 +5197,46 @@
       "leerText": "Quelque chose bloque ou manque ? Avec « Signaler un problème », ton message arrive à l’administration.",
       "status": {
         "neu": "Nouveau",
+        "wartet": "Attend une décision",
         "arbeit": "En cours",
         "info": "Question",
-        "erledigt": "Réglé"
+        "erledigt": "Réglé",
+        "abgelehnt": "Non réalisé"
       },
       "statusSetzen": "Statut",
       "antwort": "Réponse",
       "antwortVon": "Réponse de {{name}}",
       "antwortAn": "Réponse à {{name}}",
-      "offenSr": "ouverts :"
+      "offenSr": "ouverts :",
+      "wirdGeprueft": "En cours d’examen. L’évaluation arrive au plus tard dans une heure (de 7 h à 19 h).",
+      "einschaetzung": "Évaluation",
+      "einschaetzungZeile": {
+        "was": "Ce qui se passe",
+        "ursache": "Cause",
+        "auswirkung": "Impact",
+        "loesung": "Solution",
+        "aufwand": "Effort",
+        "risiko": "Risque",
+        "empfehlung": "Recommandation"
+      },
+      "empfehlung": {
+        "erledigen": "Régler",
+        "nicht": "Ne pas réaliser"
+      },
+      "notiz": "Remarque (facultatif), p. ex. pourquoi pas",
+      "erledigeEs": "Règle-le",
+      "nicht": "Non",
+      "wartetAufAndere": "Attend la décision de la personne responsable.",
+      "entschieden": {
+        "erledigen": "Décision : régler",
+        "nicht": "Décision : ne pas réaliser"
+      },
+      "umgesetztIn": "réalisé dans la version {{version}}",
+      "beantwortet": "Répondu par {{name}}",
+      "entscheidet": "Décide des signalements",
+      "alleAdmins": "Toute l’administration",
+      "perSms": "Évaluation aussi par SMS",
+      "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
     "anleitung": {
       "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",

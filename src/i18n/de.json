@@ -1860,7 +1860,11 @@
     "ressourcen_ergebnis_fehlt": "Bitte das Ergebnis der Prüfung wählen.",
     "ressourcen_uebergabe_doppelt": "Entweder an eine Person oder in ein Fahrzeug.",
     "ressourcen_person": "Diese Person ist nicht mehr aktiv.",
-    "ressourcen_doppelt": "Dieses Kennzeichen oder diese Inventar-Nr. gibt es schon."
+    "ressourcen_doppelt": "Dieses Kennzeichen oder diese Inventar-Nr. gibt es schon.",
+    "handbuch_nur_entscheider": "Über diese Meldung entscheidet eine andere Person.",
+    "handbuch_entscheid_ungueltig": "Bitte «Erledige es» oder «Nicht» wählen.",
+    "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
+    "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5193,15 +5197,46 @@
       "leerText": "Etwas klemmt oder fehlt? Mit «Fehler melden» erreicht deine Meldung die Administration.",
       "status": {
         "neu": "Neu",
+        "wartet": "Wartet auf Entscheid",
         "arbeit": "In Arbeit",
         "info": "Rückfrage",
-        "erledigt": "Erledigt"
+        "erledigt": "Erledigt",
+        "abgelehnt": "Nicht umgesetzt"
       },
       "statusSetzen": "Status",
       "antwort": "Antwort",
       "antwortVon": "Antwort von {{name}}",
       "antwortAn": "Antwort an {{name}}",
-      "offenSr": "offen:"
+      "offenSr": "offen:",
+      "wirdGeprueft": "Wird geprüft. Die Einschätzung kommt spätestens in einer Stunde (7 bis 19 Uhr).",
+      "einschaetzung": "Einschätzung",
+      "einschaetzungZeile": {
+        "was": "Was los ist",
+        "ursache": "Ursache",
+        "auswirkung": "Auswirkung",
+        "loesung": "Lösung",
+        "aufwand": "Aufwand",
+        "risiko": "Risiko",
+        "empfehlung": "Empfehlung"
+      },
+      "empfehlung": {
+        "erledigen": "Erledigen",
+        "nicht": "Nicht umsetzen"
+      },
+      "notiz": "Notiz dazu (freiwillig), z. B. warum nicht",
+      "erledigeEs": "Erledige es",
+      "nicht": "Nicht",
+      "wartetAufAndere": "Wartet auf den Entscheid der zuständigen Person.",
+      "entschieden": {
+        "erledigen": "Entscheid: erledigen",
+        "nicht": "Entscheid: nicht umsetzen"
+      },
+      "umgesetztIn": "umgesetzt in Version {{version}}",
+      "beantwortet": "Beantwortet von {{name}}",
+      "entscheidet": "Über Meldungen entscheidet",
+      "alleAdmins": "Alle aus der Administration",
+      "perSms": "Einschätzung zusätzlich per SMS",
+      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
     "anleitung": {
       "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",

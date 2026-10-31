@@ -17,6 +17,8 @@ export interface Benachrichtigung {
   ziel?: string
   /** «server»: aus der Datenbank (Automationen); gelesen und entfernt wird dann dort. */
   quelle?: 'server'
+  /** Zusätzlich als Systemmeldung zeigen (Windows-App), z. B. «Meldung wartet auf deinen Entscheid». */
+  popup?: boolean
 }
 
 export type NeueBenachrichtigung = Omit<Benachrichtigung, 'id' | 'zeit' | 'gelesen'>
