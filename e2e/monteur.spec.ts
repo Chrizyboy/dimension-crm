@@ -10,7 +10,7 @@ brauchtDatenbank()
 const lauf = Date.now().toString().slice(-6)
 
 test('Monteur: nur Zeit, Spesen und Plan, Arbeit starten und stoppen, Spese erfassen', async ({ page }) => {
-  await anmelden(page, 'monteur@test.local', true)
+  await anmelden(page, 'milo@test.local', true)
 
   // Kein CRM-Rahmen: keine Navigation, keine Suche, dafür das Logo «Dimension Work».
   await expect(page.getByRole('navigation', { name: /Hauptnavigation|Schnellnavigation/ })).toHaveCount(0)

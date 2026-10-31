@@ -18,7 +18,7 @@ on conflict (kuerzel) do nothing;
 
 -- Monteur-Version (einfache Ansicht: nur Zeit, Spesen, Plan), erfunden.
 insert into public.personen (kuerzel, name, email, rolle, sprache, standort_id) values
-  ('seed_monteur', 'Milo Monteur', 'monteur@test.local', 'monteur', 'de', (select id from public.standorte where kuerzel = 'bulle'))
+  ('seed_monteur', 'Milo Monteur', 'milo@test.local', 'monteur', 'de', (select id from public.standorte where kuerzel = 'bulle'))
 on conflict (kuerzel) do nothing;
 
 -- Erfundene Finanzdaten, damit man sieht, wer was sieht. Kontakte bewusst nicht: sie würden
