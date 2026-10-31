@@ -20,13 +20,17 @@ export function anmeldefehlerVon(
 
 /**
  * Schickt einen 6-stelligen Anmeldecode an die Adresse. Ein Konto entsteht dabei nur,
- * wenn die Adresse im CRM als aktive Person erfasst ist (prüft die Datenbank).
+ * wenn die Adresse im CRM als aktive Person erfasst ist (prüft die Datenbank). Die Mail kommt in `sprache`.
  */
-export async function sendeAnmeldecode(email: string): Promise<Anmeldefehler | null> {
+export async function sendeAnmeldecode(email: string, sprache: Sprache): Promise<Anmeldefehler | null> {
   if (!supabase) return 'netzwerk'
+  const adresse = email.trim().toLowerCase()
+  // Die Mail kommt nur in der gewählten Sprache: erst die Sprache am Konto setzen, dann den Code anfordern.
+  // Scheitert das, kommt die Mail eben in der zuletzt gespeicherten Sprache; der Code selbst ist wichtiger.
+  await supabase.rpc('anmelde_sprache', { p_email: adresse, p_sprache: sprache })
   const { error } = await supabase.auth.signInWithOtp({
-    email: email.trim().toLowerCase(),
-    options: { shouldCreateUser: true },
+    email: adresse,
+    options: { shouldCreateUser: true, data: { sprache } },
   })
   return error ? anmeldefehlerVon(error) : null
 }

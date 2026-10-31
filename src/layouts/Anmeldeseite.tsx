@@ -46,7 +46,7 @@ export function Anmeldeseite() {
     e.preventDefault()
     setLaeuft(true)
     setFehler(null)
-    const f = schritt === 'email' ? await sendeAnmeldecode(email) : await pruefeAnmeldecode(email, code)
+    const f = schritt === 'email' ? await sendeAnmeldecode(email, sprache) : await pruefeAnmeldecode(email, code)
     setLaeuft(false)
     setFehler(f)
     if (!f && schritt === 'email') setSchritt('code')

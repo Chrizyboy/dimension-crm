@@ -256,18 +256,19 @@ otp_expiry = 600
 # subject = "Your password has been changed"
 # content_path = "./supabase/templates/password_changed_notification.html"
 
-# Phase 4: Anmeldecode und Einladung, zweisprachig (DE/FR), weil die Sprache beim Versand noch unbekannt ist.
+# Anmeldecode und Einladung im Design von Dimension Work, nur in der Sprache der Person (`.Data.sprache` aus den
+# Login-Metadaten, Migration 20261110000700); ohne Wert Deutsch. Betreff und Inhalt wählen gleich.
 # Im echten Projekt dieselben Texte im Supabase-Dashboard unter Authentication > Emails eintragen.
 [auth.email.template.magic_link]
-subject = "Dein Anmeldecode · Ton code de connexion"
+subject = "{{ if .Data.sprache }}{{ if eq .Data.sprache \"fr\" }}Ton code de connexion · Dimension Work{{ else }}Dein Anmeldecode · Dimension Work{{ end }}{{ else }}Dein Anmeldecode · Dimension Work{{ end }}"
 content_path = "./supabase/templates/anmeldecode.html"
 
 [auth.email.template.confirmation]
-subject = "Dein Anmeldecode · Ton code de connexion"
+subject = "{{ if .Data.sprache }}{{ if eq .Data.sprache \"fr\" }}Ton code de connexion · Dimension Work{{ else }}Dein Anmeldecode · Dimension Work{{ end }}{{ else }}Dein Anmeldecode · Dimension Work{{ end }}"
 content_path = "./supabase/templates/anmeldecode.html"
 
 [auth.email.template.invite]
-subject = "Einladung ins Dimension CRM · Invitation au CRM Dimension"
+subject = "{{ if .Data.sprache }}{{ if eq .Data.sprache \"fr\" }}Invitation à Dimension Work{{ else }}Einladung zu Dimension Work{{ end }}{{ else }}Einladung zu Dimension Work{{ end }}"
 content_path = "./supabase/templates/einladung.html"
 
 [auth.sms]
