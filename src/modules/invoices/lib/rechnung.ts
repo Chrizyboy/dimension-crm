@@ -19,9 +19,7 @@ export function summen(
   return { netto: summe, mwst, total: summe + mwst }
 }
 
-/** Zeilenbetrag in Rappen. */
-export const zeilenBetrag = (p: Pick<Position, 'menge' | 'preis_rappen'>) =>
-  Math.round((p.menge || 0) * (p.preis_rappen || 0))
+export { zeilenBetrag } from '@/lib/rechnung'
 
 /** Darf gemahnt werden? (gestellt oder teilbezahlt, fällig vorbei, noch nicht Stufe 3) */
 export function mahnbar(r: Pick<Rechnung, 'status' | 'faellig_am' | 'mahnstufe'>, heute: string): boolean {
@@ -117,11 +115,4 @@ export function rechnungenCsv(
   return `\ufeff${[KOPF[sprache].join(';'), ...zeilen].join('\r\n')}\r\n`
 }
 
-/** PDF in neuem Fenster öffnen, ohne es abzulegen. */
-export function pdfZeigen(bytes: Uint8Array): void {
-  const adresse = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'application/pdf' }))
-  window.open(adresse, '_blank', 'noopener')
-  setTimeout(() => {
-    URL.revokeObjectURL(adresse)
-  }, 60_000)
-}
+export { pdfZeigen } from '@/lib/datei'

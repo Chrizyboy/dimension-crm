@@ -2,7 +2,7 @@ import type { TFunction } from 'i18next'
 import type { PDFFont, PDFPage } from 'pdf-lib'
 import qrcode from 'qrcode-generator'
 import { formatChf } from '@/lib/format'
-import { ibanAnzeige, qrInhalt, type QrAdresse } from '../lib/qr'
+import { ibanAnzeige, qrInhalt, type QrAdresse } from '@/lib/rechnung'
 
 const MM = 72 / 25.4
 
