@@ -14,18 +14,33 @@ import { fallSchema } from '../schema'
 import { fallSpeichern } from '../services/service'
 import { KATEGORIEN, PRIORITAETEN } from '../types'
 
+/** Vorbelegung, z. B. aus einer Mail im Posteingang. */
+export interface FallVorlage {
+  titel: string
+  beschreibung: string
+  kunde: GewaehlterKunde | null
+}
+
 /** Neuen Service-Fall erfassen: Kunde, Anlage, worum es geht, wie dringend, wer kümmert sich. */
-export function FallDialog({ onSchliessen, onErfasst }: { onSchliessen: () => void; onErfasst: (id: string) => void }) {
+export function FallDialog({
+  vorlage = null,
+  onSchliessen,
+  onErfasst,
+}: {
+  vorlage?: FallVorlage | null
+  onSchliessen: () => void
+  onErfasst: (id: string) => void
+}) {
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
   const kat = useAuswahl('servicekategorie')
   const prio = useAuswahl('prioritaet')
   const personen = usePersonen()
-  const [kunde, setKunde] = useState<GewaehlterKunde | null>(null)
+  const [kunde, setKunde] = useState<GewaehlterKunde | null>(vorlage?.kunde ?? null)
   const anlagen = useKundenAnlagen(kunde?.id ?? null)
   const [w, setW] = useState({
-    titel: '',
-    beschreibung: '',
+    titel: vorlage?.titel ?? '',
+    beschreibung: vorlage?.beschreibung ?? '',
     kategorie: 'stoerung',
     prioritaet: 'normal',
     garantie: false,
