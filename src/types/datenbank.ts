@@ -5440,6 +5440,320 @@ export type Database = {
         }
         Relationships: []
       }
+      posteingang: {
+        Row: {
+          abgeholt_von: string
+          alt_daten: Json | null
+          alt_id: string | null
+          an: NonNullable<Json>
+          art: string | null
+          bestellung_id: string | null
+          betreff: string | null
+          dringend: boolean
+          eingang_am: string
+          erinnert: number
+          erledigt_am: string | null
+          erledigt_grund: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          eskalation_am: string | null
+          frist_am: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          hat_anhang: boolean
+          id: string
+          kennung: string
+          kontakt_id: string | null
+          konversation_id: string | null
+          nummern: string[]
+          offerte_id: string | null
+          outlook_id: string
+          postfach: string
+          postfach_person_id: string | null
+          projekt_id: string | null
+          reaktion_minuten: number | null
+          rechnung_id: string | null
+          service_fall_id: string | null
+          sichtbar: string
+          sortiert: string
+          sprache: string | null
+          stand: string
+          verkaufschance_id: string | null
+          vertretung_fuer: string | null
+          von_email: string | null
+          von_name: string | null
+          vorschau: string | null
+          web_link: string | null
+          zusammenfassung: string | null
+          zustaendig_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          abgeholt_von: string
+          alt_daten?: Json | null
+          alt_id?: string | null
+          an?: NonNullable<Json>
+          art?: string | null
+          bestellung_id?: string | null
+          betreff?: string | null
+          dringend?: boolean
+          eingang_am: string
+          erinnert?: number
+          erledigt_am?: string | null
+          erledigt_grund?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          eskalation_am?: string | null
+          frist_am?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hat_anhang?: boolean
+          id?: string
+          kennung: string
+          kontakt_id?: string | null
+          konversation_id?: string | null
+          nummern?: string[]
+          offerte_id?: string | null
+          outlook_id: string
+          postfach: string
+          postfach_person_id?: string | null
+          projekt_id?: string | null
+          reaktion_minuten?: number | null
+          rechnung_id?: string | null
+          service_fall_id?: string | null
+          sichtbar?: string
+          sortiert?: string
+          sprache?: string | null
+          stand?: string
+          verkaufschance_id?: string | null
+          vertretung_fuer?: string | null
+          von_email?: string | null
+          von_name?: string | null
+          vorschau?: string | null
+          web_link?: string | null
+          zusammenfassung?: string | null
+          zustaendig_id?: string | null
+        }
+        Update: {
+          abgeholt_von?: string
+          alt_daten?: Json | null
+          alt_id?: string | null
+          an?: NonNullable<Json>
+          art?: string | null
+          bestellung_id?: string | null
+          betreff?: string | null
+          dringend?: boolean
+          eingang_am?: string
+          erinnert?: number
+          erledigt_am?: string | null
+          erledigt_grund?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          eskalation_am?: string | null
+          frist_am?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hat_anhang?: boolean
+          id?: string
+          kennung?: string
+          kontakt_id?: string | null
+          konversation_id?: string | null
+          nummern?: string[]
+          offerte_id?: string | null
+          outlook_id?: string
+          postfach?: string
+          postfach_person_id?: string | null
+          projekt_id?: string | null
+          reaktion_minuten?: number | null
+          rechnung_id?: string | null
+          service_fall_id?: string | null
+          sichtbar?: string
+          sortiert?: string
+          sprache?: string | null
+          stand?: string
+          verkaufschance_id?: string | null
+          vertretung_fuer?: string | null
+          von_email?: string | null
+          von_name?: string | null
+          vorschau?: string | null
+          web_link?: string | null
+          zusammenfassung?: string | null
+          zustaendig_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'posteingang_abgeholt_von_fkey'
+            columns: ['abgeholt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['offerte_id']
+          },
+          {
+            foreignKeyName: 'posteingang_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_rechnung_id_fkey'
+            columns: ['rechnung_id']
+            isOneToOne: false
+            referencedRelation: 'rechnungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_rechnung_id_fkey'
+            columns: ['rechnung_id']
+            isOneToOne: false
+            referencedRelation: 'rechnungen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_vertretung_fuer_fkey'
+            columns: ['vertretung_fuer']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_zustaendig_id_fkey'
+            columns: ['zustaendig_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       preisvorlage_positionen: {
         Row: {
           alt_daten: Json | null
@@ -10188,6 +10502,28 @@ export type Database = {
           plz: string
           sprache: string
           standort: string
+        }[]
+      }
+      posteingang_antworten: { Args: { p_mails: Json }; Returns: number }
+      posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
+      posteingang_auswertung: { Args: { p_wochen?: number }; Returns: Json }
+      posteingang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      posteingang_seit: { Args: Record<PropertyKey, never>; Returns: string }
+      posteingang_setzen: { Args: { p?: Json; p_aktion: string; p_id: string }; Returns: undefined }
+      posteingang_sortieren: { Args: { p: Json; p_id: string }; Returns: undefined }
+      posteingang_unsortiert: {
+        Args: { p_limit: number }
+        Returns: {
+          abgeholt_von: string
+          betreff: string
+          eingang_am: string
+          id: string
+          kunde: string
+          outlook_id: string
+          postfach: string
+          von_email: string
+          von_name: string
+          vorschau: string
         }[]
       }
       preise_importieren: { Args: { p_pruefen?: boolean; p_zeilen: Json }; Returns: Json }
