@@ -6,7 +6,8 @@ import type { Mail } from '../types'
 
 /**
  * Zahlen oben: wer auf uns wartet (davon über der Frist), Reaktionszeit heute (Mitte), still Abgelegtes.
- * Aus derselben Liste wie die Filter, damit Zahl und Liste übereinstimmen. Klick auf «warten» filtert.
+ * Aus derselben Liste wie die Filter, damit Zahl und Liste übereinstimmen. Klick auf «warten» filtert. Am Handy nur
+ * «warten», damit die Liste ohne Scrollen sichtbar bleibt.
  */
 export function Kopfzahlen({ liste, onWarten }: { liste: Mail[]; onWarten: () => void }) {
   const { t } = useTranslation()
@@ -26,13 +27,13 @@ export function Kopfzahlen({ liste, onWarten }: { liste: Mail[]; onWarten: () =>
           {z.ueber > 0 && ` · ${t('posteingang.zahl.ueber', { count: z.ueber })}`}
         </span>
       </button>
-      <div className={kachel}>
+      <div className={cn(kachel, 'hidden sm:flex')}>
         <span className="font-display zahlen text-2xl font-semibold">
           {z.mitteHeute == null ? '–' : dauer(z.mitteHeute, sprache)}
         </span>
         <span className="text-muted-foreground text-xs">{t('posteingang.zahl.reaktion')}</span>
       </div>
-      <div className={kachel}>
+      <div className={cn(kachel, 'hidden sm:flex')}>
         <span className="font-display zahlen text-2xl font-semibold">{z.abgelegt}</span>
         <span className="text-muted-foreground text-xs">{t('posteingang.zahl.abgelegt')}</span>
       </div>
