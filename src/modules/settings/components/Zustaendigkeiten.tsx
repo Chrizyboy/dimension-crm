@@ -91,8 +91,18 @@ function Formular({
         <section className="flex flex-col gap-2">
           <h3 className="font-medium">{t('zust.verkauf')}</h3>
           <p className="text-muted-foreground text-xs">{t('zust.verkaufHinweis')}</p>
+          <div
+            className="text-muted-foreground hidden gap-2 text-xs font-medium sm:grid sm:grid-cols-[repeat(4,1fr)_1.3fr_2rem]"
+            aria-hidden="true"
+          >
+            <span>{t('zust.sprache')}</span>
+            <span>{t('zust.standort')}</span>
+            <span>{t('zust.region')}</span>
+            <span>{t('zust.produkt')}</span>
+            <span>{t('zust.person')}</span>
+          </div>
           {w.verkauf.map((r, i) => (
-            <div key={i} className="grid grid-cols-2 items-center gap-2 sm:grid-cols-[repeat(4,1fr)_1.3fr_auto]">
+            <div key={i} className="grid grid-cols-2 items-center gap-2 sm:grid-cols-[repeat(4,1fr)_1.3fr_2rem]">
               <Auswahl
                 aria-label={t('zust.sprache')}
                 value={r.sprache ?? ALLE}
