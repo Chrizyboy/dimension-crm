@@ -4,7 +4,7 @@
 nach Art, dem richtigen Kunden, Lead, Projekt, Service-Fall, Offerte, Rechnung oder Bestellung zugeordnet, mit
 Antwortfrist in Arbeitszeit und Erinnerung, damit kein Kunde warten muss. Werbung und Interne gehen still weg.
 
-Wunsch von Chris am 31.10.2026. Entscheid: `docs/entscheidungen/0030-posteingang.md`.
+Wunsch von Chris am 31.10.2026. Entscheid: `docs/entscheidungen/0031-posteingang.md`.
 
 **Stand:** gebaut in Phase **18**.
 
