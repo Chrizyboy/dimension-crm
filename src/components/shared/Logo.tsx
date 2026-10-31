@@ -8,6 +8,8 @@ interface LogoProps {
 }
 
 const CLAIM = { de: 'Smarte Solaranlagen', fr: 'Systèmes solaires intelligents' }
+/** Vorlesetext wie beim bisherigen Logo-Bild (Claim klein, mitten im Satz). */
+const ALT = { de: 'smarte Solaranlagen', fr: 'systèmes solaires intelligents' }
 
 /**
  * Logo der App «Dimension Work» (Chris 31.10.2026): das Signet von Dimension Solaire mit dem App-Namen als
@@ -20,7 +22,7 @@ export function Logo({ className, variante = 'auto' }: LogoProps) {
   return (
     <span
       role="img"
-      aria-label={`Dimension Work – Dimension Solaire, ${CLAIM[sprache]}`}
+      aria-label={`Dimension Work – Dimension Solaire, ${ALT[sprache]}`}
       className={cn('inline-flex items-center gap-2', className)}
     >
       <img src="./icon.svg" alt="" className="aspect-square h-full w-auto shrink-0" />
