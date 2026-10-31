@@ -39,11 +39,6 @@ export function NameZelle({
   )
 }
 
-/** Zeile unter dem Namen aus mehreren Teilen, getrennt mit «·»; leere Teile fallen weg. */
-export function unterzeile(...teile: (string | null | undefined | false)[]): string {
-  return teile.filter(Boolean).join(' · ')
-}
-
 /** Datum «21.10.2026»; leer wird «–». */
 export function DatumZelle({ wert, className }: { wert: string | Date | null | undefined; className?: string }) {
   return <span className={cn(ZIFFERN, className)}>{wert ? formatDatum(wert) : '–'}</span>

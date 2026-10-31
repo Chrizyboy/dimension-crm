@@ -1,16 +1,16 @@
-import { FileText, Plus, Search } from 'lucide-react'
+import { FileText, Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { useUi } from '@/stores/ui'
 import { useHandbuch } from '../hooks/useHandbuch'
 import { passt, sortiere } from '../lib/handbuch'
 import type { HandbuchEintrag } from '../types'
 import { ProzessDialog } from './ProzessDialog'
 import { ProzessZeile } from './ProzessZeile'
+import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 
 /**
  * Prozesse (V233 Helpdesk › Prozesse): unsere Abläufe als PDF, immer die aktuelle Version, ein Klick öffnet.
@@ -37,22 +37,13 @@ export function Prozesse({ admin }: { admin: boolean }) {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <p className="text-muted-foreground max-w-prose text-sm">{t('handbuch.prozesse.intro')}</p>
         <div className="flex flex-wrap items-center gap-2">
-          <div className="relative">
-            <Search
-              className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
-              aria-hidden="true"
-            />
-            <Input
-              type="search"
-              aria-label={t('handbuch.prozesse.suche')}
-              placeholder={t('handbuch.prozesse.suche')}
-              className="w-64 pl-8"
-              value={suche}
-              onChange={(e) => {
-                setSuche(e.target.value)
-              }}
-            />
-          </div>
+          <Suchfeld
+            beschriftung={t('handbuch.prozesse.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
           {admin && (
             <Button
               onClick={() => {

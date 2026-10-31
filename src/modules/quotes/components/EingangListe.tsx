@@ -7,7 +7,7 @@ import { Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/schalter'
-import { formatDatum } from '@/lib/format'
+import { formatDatum, unterzeile } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
@@ -16,7 +16,7 @@ import { useOffertAenderung } from '../hooks/useOfferten'
 import { STATUS_TON } from '../lib/status'
 import { setzeEingangStatus } from '../services/offerten'
 import { EINGANG_STATUS, type Eingang, type EingangStatus } from '../types'
-import { DatumZelle, EinzeilerZelle, NameZelle, NummerZelle, StatusZelle, unterzeile } from '@/components/shared/Zellen'
+import { DatumZelle, EinzeilerZelle, NameZelle, NummerZelle, StatusZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Eingang>()
 

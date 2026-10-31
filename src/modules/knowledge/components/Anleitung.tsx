@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Kbd } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { Karte } from '@/components/ui/karte'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { GRUPPEN } from '@/lib/navigation'
@@ -13,6 +12,7 @@ import { SPRUENGE } from '@/lib/spruenge'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { useKuerzel } from '@/stores/kuerzel'
 import { useUi } from '@/stores/ui'
+import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 
 /**
  * Anleitung (V233 Helpdesk › Anleitung): jeder Bereich, den die Person sehen darf, mit einem Satz, was man
@@ -33,22 +33,13 @@ export function Anleitung() {
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <p className="text-muted-foreground max-w-prose text-sm">{t('handbuch.anleitung.intro')}</p>
-        <div className="relative">
-          <Search
-            className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
-            aria-hidden="true"
-          />
-          <Input
-            type="search"
-            aria-label={t('handbuch.anleitung.suche')}
-            placeholder={t('handbuch.anleitung.suche')}
-            className="w-64 pl-8"
-            value={suche}
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-        </div>
+        <Suchfeld
+          beschriftung={t('handbuch.anleitung.suche')}
+          value={suche}
+          onChange={(e) => {
+            setSuche(e.target.value)
+          }}
+        />
       </div>
 
       <Karte className="flex flex-col gap-3 p-4">

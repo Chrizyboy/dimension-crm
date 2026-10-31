@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { formatDatum } from '@/lib/format'
 import { useProjekte, useStandorte } from '../hooks/useProjekte'
 import { anlageKurz, ortZeile } from '../lib/anzeige'
 import type { Projekt } from '../types'
 import { BauDialog } from './BauDialog'
 import { ProjektKarte } from './ProjektKarte'
+import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 
 const STATUS = ['im_bau', 'auftrag'] as const
 const REIHE: Record<string, number> = { ausstehend: 0, terminiert: 1, ibn: 2, fertig: 3 }
@@ -87,11 +87,8 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
             </h2>
             <p className="text-muted-foreground text-xs">{t('projekte.board.auftraegeHilfe')}</p>
           </div>
-          <Input
-            type="search"
-            className="w-full sm:w-64"
-            aria-label={t('projekte.suche')}
-            placeholder={t('projekte.suche')}
+          <Suchfeld
+            beschriftung={t('projekte.suche')}
             value={suche}
             onChange={(e) => {
               setSuche(e.target.value)
