@@ -5702,7 +5702,8 @@
     "quelle": {
       "simap": "simap",
       "amtsblatt": "Amtsblatt",
-      "hand": "Von Hand"
+      "hand": "Von Hand",
+      "suche": "Dachsuche"
     },
     "feld": {
       "dachflaeche": "Dachfläche",
@@ -5824,6 +5825,16 @@
       "alle_one": "{{count}} zu prüfen",
       "alle_other": "{{count}} zu prüfen",
       "nichts": "Kein Grossprojekt wartet auf einen Entscheid."
+    },
+    "suche": {
+      "titel": "Dachsuche",
+      "aktiv": "Dachsuche aktiv",
+      "an": "Läuft",
+      "aus": "Angehalten",
+      "fortschritt": "Fortschritt der Dachsuche",
+      "text": "Das CRM sucht selbst nach grossen Dächern mit viel Stromverbrauch: Es geht das Gebiet um Muri und Bulle stündlich ein Stück weiter durch (die nächsten Gebiete zuerst), holt grosse Industrie-, Gewerbe-, Spital-, Heim-, Schul- und Sportbauten aus dem Gebäuderegister und prüft das Dach bei sonnendach.ch. Neu in die Liste kommt nur, was genug Punkte hat.",
+      "stand": "{{durchsucht}} von {{gebiete}} Gebieten durchsucht, {{gebaeude}} Gebäude angeschaut, {{treffer}} Treffer in der Liste.",
+      "zuletzt": "Zuletzt gesucht: {{zeit}}"
     }
   },
   "team": {

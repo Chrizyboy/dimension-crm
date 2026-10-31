@@ -56,7 +56,7 @@ export function Anmeldeseite() {
     <div className="bg-background flex min-h-full items-center justify-center px-4 py-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex items-center justify-between">
-          <Logo className="h-9" />
+          <Logo className="h-10 sm:h-12" />
           <div
             role="group"
             aria-label={t('einstellungen.sprache')}

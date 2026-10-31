@@ -77,6 +77,19 @@ test('Grossprojekt erfassen, bewerten, beobachten und bewilligen', async ({ page
   await expect(page).toHaveURL(/#\/sales\?lead=/)
   await page.goto('/#/contracting?ansicht=bewilligt')
   await expect(page.getByRole('cell', { name: new RegExp(titel) })).toBeVisible()
+
+  // Dachsuche: Stand bei den Annahmen, die Administration kann sie anhalten und wieder starten.
+  await page.goto('/#/contracting?ansicht=annahmen')
+  await expect(page.getByRole('heading', { name: 'Dachsuche' })).toBeVisible()
+  await expect(page.getByText(/von [\d'’]+ Gebieten durchsucht/)).toBeVisible()
+  const schalter = page.getByRole('switch', { name: 'Dachsuche aktiv' })
+  await expect(schalter).toBeChecked()
+  expect(await verstoesse(page)).toEqual([])
+  await schalter.click()
+  await expect(schalter).not.toBeChecked()
+  await expect(page.getByText('Angehalten', { exact: true })).toBeVisible()
+  await schalter.click()
+  await expect(schalter).toBeChecked()
 })
 
 test.describe('am Handy', () => {

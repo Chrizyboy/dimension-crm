@@ -10111,8 +10111,15 @@ export type Database = {
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
+      grossprojekt_aus_suche: { Args: { p: Json; p_meldung?: string }; Returns: string }
       grossprojekt_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
       grossprojekt_speichern: { Args: { p: Json }; Returns: string }
+      grossprojekt_suche_kachel_fertig: {
+        Args: { p_gebaeude: number; p_kachel: string; p_kandidaten: number; p_treffer: number }
+        Returns: undefined
+      }
+      grossprojekt_suche_naechste: { Args: { p_anzahl?: number }; Returns: Json }
+      grossprojekt_suche_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_speichern: {

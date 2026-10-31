@@ -12,7 +12,7 @@ import {
   MenueTitel,
   MenueTrenner,
 } from '@/components/ui/menue'
-import { Logo } from '@/components/shared/Logo'
+import { Logo, SIGNET } from '@/components/shared/Logo'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { abmelden } from '@/services/anmeldung'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -33,11 +33,7 @@ export function Kopfzeile() {
   return (
     <header className="bg-surface flex h-12 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
       {/* Am Handy fehlt die Seitenleiste mit dem Logo, deshalb hier das Zeichen. */}
-      {einfach ? (
-        <Logo className="h-8" />
-      ) : (
-        <img src="./icon.svg" alt="Dimension Solaire" className="size-7 md:hidden" />
-      )}
+      {einfach ? <Logo kurz className="h-7" /> : <img src={SIGNET} alt="Dimension Work" className="size-7 md:hidden" />}
 
       {!einfach && (
         <button
