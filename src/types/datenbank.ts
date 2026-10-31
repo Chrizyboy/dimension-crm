@@ -22,6 +22,114 @@ export type Database = {
   }
   public: {
     Tables: {
+      ablage_ordner: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          fehler: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          item_id: string | null
+          offerte_id: string | null
+          pfad: string | null
+          projekt_id: string | null
+          soll: string
+          stand: string | null
+          url: string | null
+          versucht_am: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fehler?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          item_id?: string | null
+          offerte_id?: string | null
+          pfad?: string | null
+          projekt_id?: string | null
+          soll?: string
+          stand?: string | null
+          url?: string | null
+          versucht_am?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fehler?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          item_id?: string | null
+          offerte_id?: string | null
+          pfad?: string | null
+          projekt_id?: string | null
+          soll?: string
+          stand?: string | null
+          url?: string | null
+          versucht_am?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ablage_ordner_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: true
+            referencedRelation: 'offerten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['offerte_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       ablauf_schritte: {
         Row: {
           ablauf_vorlage_id: string
@@ -10194,6 +10302,46 @@ export type Database = {
     }
     Functions: {
       abaninja_abgleich_anwenden: { Args: { p: Json }; Returns: Json }
+      ablage_dateien_offen: {
+        Args: { p_limit?: number }
+        Returns: {
+          ablage_pfad: string
+          id: string
+          name: string
+          ordner: string
+          speicher_pfad: string
+        }[]
+      }
+      ablage_ergebnis: {
+        Args: {
+          p_fehler?: string
+          p_id: string
+          p_item?: string
+          p_ok: boolean
+          p_pfad?: string
+          p_stand?: string
+          p_url?: string
+        }
+        Returns: undefined
+      }
+      ablage_offen: {
+        Args: { p_limit?: number }
+        Returns: {
+          id: string
+          item_id: string
+          jahr_auftrag: number
+          jahr_offerte: number
+          kunde: string
+          nummer: string
+          ort: string
+          pfad: string
+          soll: string
+          stand: string
+          standort: string
+          titel: string
+          url: string
+        }[]
+      }
       aendere_mein_konto: {
         Args: { p_darstellung?: string; p_profil: Json; p_sprache?: string; p_standort_id?: string }
         Returns: undefined

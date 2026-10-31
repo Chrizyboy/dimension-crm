@@ -139,3 +139,19 @@ export interface BetriebStand {
   offerten: number
   import_zuletzt: string | null
 }
+
+/** Eine Regel für den Verkauf: alle gesetzten Bedingungen müssen passen, dann ist «person» (Kürzel) zuständig. */
+export interface VerkaufRegel {
+  sprache?: 'de' | 'fr' | null
+  standort?: string | null
+  region?: number | null
+  produkt?: string | null
+  person: string
+}
+
+/** Einstellung «zustaendigkeiten»: Verkauf nach Regeln, Offerten, Stellvertretung bei Abwesenheit (Kürzel). */
+export interface Zustaendigkeiten {
+  verkauf: VerkaufRegel[]
+  offerten: string | null
+  stellvertretung: Record<string, string>
+}
