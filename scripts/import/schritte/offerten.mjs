@@ -5,6 +5,7 @@
 import { text, zuDatum, zuModulzahl, zuRappen, zuSprache, zuZahl, zuGanzzahl, zuZeitstempel } from '../umwandeln.mjs'
 import { alleLeads, objektVon } from './kunden.mjs'
 import { offerPerson, offerStandort } from '../v233.mjs'
+import { mwstAusVorlage, werkvertragBetrag } from '../entscheide.mjs'
 
 /** @typedef {import('../import-vorlage.mjs').Kontext} Kontext */
 
@@ -100,7 +101,10 @@ export async function importiereOfferten(k) {
   const oIds = await k.schreiber.schreibe('offerten', offerten)
   for (const [id] of projekte) k.ids.offerten.set(id, /** @type {string} */ (oIds.get(`project:${id}`)))
 
-  const auftraege = projekte.filter(([, p]) => AUFTRAG.has(p.statusKey) || zuDatum(p.unterzeichnetAm))
+  // Ein Unterschriftsdatum allein macht einen Auftrag, ausser die Ablage hat den Stand zurückgesetzt (ablage.mjs).
+  const auftraege = projekte.filter(
+    ([, p]) => AUFTRAG.has(p.statusKey) || (zuDatum(p.unterzeichnetAm) && p._statusVorlage === undefined),
+  )
   const pIds = await k.schreiber.schreibe(
     'projekte',
     auftraege.map(([id, p]) => ({
@@ -133,12 +137,25 @@ export async function importiereOfferten(k) {
         checkliste: Object.fromEntries(CHECKLISTE.filter((f) => p[f] !== undefined).map((f) => [f, p[f]])),
         bewilligungen: p.bew ?? {},
         zahlungskonditionen: text(p.zahlKond),
+        // Wieder gewonnen nach einem früheren Lauf: zurück aus dem Papierkorb.
+        geloescht_am: null,
         alt_daten: p,
       },
     })),
   )
   for (const [id] of auftraege) k.ids.projekte.set(id, /** @type {string} */ (pIds.get(`project:${id}`)))
+  // Frühere Importe legten für jetzt nicht mehr gewonnene Offerten ein Projekt an: in den Papierkorb, nie hart löschen.
+  const keinAuftrag = projekte.filter(([id]) => !auftraege.some(([a]) => a === id)).map(([id]) => `project:${id}`)
+  for (let i = 0; i < keinAuftrag.length; i += 200) {
+    const { error } = await k.db
+      .from('projekte')
+      .update({ geloescht_am: new Date().toISOString() })
+      .in('alt_id', keinAuftrag.slice(i, i + 200))
+      .is('geloescht_am', null)
+    if (error) throw new Error(`projekte (kein Auftrag mehr): ${error.message}`)
+  }
 
+  const mwst = mwstAusVorlage(k.sammlung('finset'))
   await k.schreiber
     .schreibe(
       'werkvertraege',
@@ -155,7 +172,7 @@ export async function importiereOfferten(k) {
             kontakt_id: k.ids.kontakte.get(Number(p.kundenNr)),
             firma_id: firma(k, p),
             sprache: zuSprache(p.vertragLang ?? p.lang),
-            betrag_rappen: zuRappen(p.vertragswert) ?? zuRappen(p.angebotswert),
+            betrag_rappen: werkvertragBetrag(p, mwst).betrag,
             status: zuDatum(p.unterzeichnetAm) ? 'unterschrieben' : 'erstellt',
             erstellt_datum: zuDatum(p.werkvertrag?.erstelltAm),
             unterschrieben_am: zuDatum(p.unterzeichnetAm),
@@ -163,6 +180,7 @@ export async function importiereOfferten(k) {
               werkvertrag: p.werkvertrag ?? null,
               unterzeichnetAm: p.unterzeichnetAm ?? null,
               vertragswert: p.vertragswert ?? null,
+              mwst_ergaenzt: werkvertragBetrag(p, mwst).mwstErgaenzt ? mwst : null,
             },
           },
         })),

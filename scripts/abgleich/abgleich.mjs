@@ -3,6 +3,7 @@
 // und prüft die alten Daten auf Plausibilität. Liest nur, schreibt nichts in die Datenbank.
 //
 //   SUPABASE_SERVICE_ROLE_KEY=… npm run import:abgleich -- "CRM-Umzug.zip" [--bericht abgleich.md] [--heute 2026-10-31]
+//     [--ablage sharepoint-adjudications.json]   (gleich wie beim Import, sonst weicht der Stand ab)
 //
 // Gegen die Cloud: SUPABASE_URL=https://….supabase.co dazu. Der Schlüssel gehört nie in Git oder in die App.
 
@@ -10,6 +11,8 @@ import { writeFileSync } from 'node:fs'
 import { createClient } from '@supabase/supabase-js'
 import { leseExport } from '../import/lesen.mjs'
 import { altLeads, altProjekte, ladeNeu } from './laden.mjs'
+import { mwstAusVorlage } from '../import/entscheide.mjs'
+import { korrigiereNachAblage, leseAblage } from '../import/ablage.mjs'
 import { Befunde } from './vergleich.mjs'
 import { pruefeVerkauf } from './pruefe-verkauf.mjs'
 import { pruefeStamm, pruefeUeberzaehlig } from './pruefe-stamm.mjs'
@@ -33,7 +36,10 @@ if (!pfad || !schluessel) {
 
 const db = createClient(url, schluessel, { auth: { persistSession: false } })
 const { daten } = leseExport(pfad)
-const alt = { leads: altLeads(daten), projects: altProjekte(daten) }
+// Erwartet wird der Stand nach der Ablage (Entscheid 14/16B); die Plausibilitätsprüfung sieht ihn auch.
+const ablageDatei = wert('--ablage')
+const korrekturen = ablageDatei ? korrigiereNachAblage(daten.cols.projects ?? {}, leseAblage(ablageDatei)) : []
+const alt = { leads: altLeads(daten), projects: altProjekte(daten), mwst: mwstAusVorlage(daten.cols.finset) }
 console.log(`Export vom ${daten.at}, Ziel ${url}, Stichtag ${heute}`)
 const neu = await ladeNeu(db)
 
@@ -45,10 +51,13 @@ const kennzahlen = await pruefeKennzahlen(b, db, alt, neu, heute)
 const liquiditaet = await pruefeLiquiditaet(b, daten, neu, heute)
 const altdaten = pruefeAltdaten(daten, alt)
 
-writeFileSync(berichtDatei, alsMarkdown({ daten, url, heute, befunde: b, kennzahlen, liquiditaet, altdaten }))
+writeFileSync(
+  berichtDatei,
+  alsMarkdown({ daten, url, heute, befunde: b, kennzahlen, liquiditaet, altdaten, korrekturen }),
+)
 writeFileSync(
   berichtDatei.replace(/\.md$/, '') + '.json',
-  JSON.stringify({ befunde: b.liste, kennzahlen, liquiditaet, altdaten }, null, 1),
+  JSON.stringify({ befunde: b.liste, kennzahlen, liquiditaet, altdaten, korrekturen }, null, 1),
 )
 
 const fehler = b.liste.filter((x) => x.art === 'fehler')

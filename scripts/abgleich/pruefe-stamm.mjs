@@ -2,6 +2,7 @@
 
 import { numVal, rappenWieV233 } from '../import/v233.mjs'
 import { nullWieNull } from './vergleich.mjs'
+import { istMesseOhneWunsch } from '../import/entscheide.mjs'
 
 /** @param {unknown} v */
 const t = (v) => (v === null || v === undefined ? '' : String(v).trim())
@@ -161,6 +162,12 @@ export function pruefeStamm(b, daten, neu) {
     b.vergleiche('Spesen', id, 'Person', s.uid, neu.nachId.personen.get(n.person_id)?.kuerzel)
   }
 
+  // Leads, die nach Entscheid 13/15B nur Kontakt sind: ihre Einträge hängen am Kontakt statt am Lead.
+  const nurKontakt = new Set(
+    Object.entries(daten.cols.leads ?? {})
+      .filter(([, l]) => istMesseOhneWunsch(l))
+      .map(([nr]) => nr),
+  )
   for (const [id, a] of c('activities')) {
     const n = neu.nachAltId.aktivitaeten.get(`activity:${id}`)
     if (!b.vergleiche('Zeitachse', id, 'vorhanden', true, !!n) || !n) continue
@@ -175,7 +182,7 @@ export function pruefeStamm(b, daten, neu) {
       'Zeitachse',
       id,
       'Lead',
-      t(a.leadId) || null,
+      nurKontakt.has(t(a.leadId)) ? null : t(a.leadId) || null,
       neu.nachId.verkaufschancen.get(n.verkaufschance_id)?.nummer ?? null,
     )
     b.vergleiche('Zeitachse', id, 'Text', a.text, n.text)

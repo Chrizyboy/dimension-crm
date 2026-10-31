@@ -18,9 +18,10 @@ const chf = (r) =>
  *   daten: import('../import/lesen.mjs').VorlageDaten, url: string, heute: string,
  *   befunde: import('./vergleich.mjs').Befunde, kennzahlen: Record<string, any>[],
  *   liquiditaet: Record<string, any>[], altdaten: import('./plausibel.mjs').Auffaelligkeit[],
+ *   korrekturen: import('../import/ablage.mjs').Korrektur[],
  * }} x
  */
-export function alsMarkdown({ daten, url, heute, befunde, kennzahlen, liquiditaet, altdaten }) {
+export function alsMarkdown({ daten, url, heute, befunde, kennzahlen, liquiditaet, altdaten, korrekturen }) {
   const fehler = befunde.liste.filter((b) => b.art === 'fehler')
   const hinweise = befunde.liste.filter((b) => b.art !== 'fehler')
   const z = [`# Abgleich altes CRM (V233) gegen Dimension Work`, '']
@@ -29,6 +30,12 @@ export function alsMarkdown({ daten, url, heute, befunde, kennzahlen, liquiditae
   for (const [bereich, n] of befunde.geprueft)
     z.push(`| ${bereich} | ${n} | ${fehler.filter((f) => f.bereich === bereich).length} |`)
   z.push('', `Auffälligkeiten in den alten Daten: ${altdaten.length}`, '')
+  z.push(
+    korrekturen.length
+      ? `Stand «gewonnen» nach SharePoint Adjudications korrigiert: ${korrekturen.length} Offerten (Liste unten). Erwartet wird der korrigierte Stand.`
+      : 'Ohne Ablage-Liste (--ablage): Stand «gewonnen» wie im alten CRM.',
+    '',
+  )
 
   /** @type {Map<string, import('./vergleich.mjs').Befund[]>} */
   const gruppen = new Map()
@@ -47,20 +54,29 @@ export function alsMarkdown({ daten, url, heute, befunde, kennzahlen, liquiditae
     '',
     '## Kennzahlen (Zeitraum · Spalte)',
     '',
-    '| Zeitraum | Spalte | Kennzahl | alt | neu | nur alt | nur neu |',
-    '| --- | --- | --- | ---: | ---: | --- | --- |',
+    '| Zeitraum | Spalte | Kennzahl | alt (V233) | erwartet | neu | nur alt | nur neu |',
+    '| --- | --- | --- | ---: | ---: | ---: | --- | --- |',
   )
+  const stimmt = (/** @type {Record<string, any>} */ k) =>
+    (k.erwartet ?? k.alt) === k.neu && !k.fehlen?.length && !k.zuviel?.length
   for (const k of kennzahlen) {
     const geld = /wert/i.test(k.kennzahl)
-    if (k.alt === k.neu && !k.fehlen?.length && !k.zuviel?.length) continue
+    if (stimmt(k)) continue
+    const w = (/** @type {unknown} */ v) => (geld ? chf(/** @type {number} */ (v)) : zeige(v))
     z.push(
-      `| ${k.zeitraum} | ${k.spalte} | ${k.kennzahl} | ${geld ? chf(k.alt) : zeige(k.alt)} | ${geld ? chf(k.neu) : zeige(k.neu)} | ${zeige(k.fehlen?.join(', '))} | ${zeige(k.zuviel?.join(', '))} |`,
+      `| ${k.zeitraum} | ${k.spalte} | ${k.kennzahl} | ${w(k.alt)} | ${w(k.erwartet ?? k.alt)} | ${w(k.neu)} | ${zeige(k.fehlen?.join(', '))} | ${zeige(k.zuviel?.join(', '))} |`,
     )
   }
-  z.push(
-    '',
-    `Alle anderen ${kennzahlen.filter((k) => k.alt === k.neu && !k.fehlen?.length && !k.zuviel?.length).length} Kennzahl-Zellen stimmen (Zahl und Datensätze).`,
-  )
+  z.push('', `Alle anderen ${kennzahlen.filter(stimmt).length} Kennzahl-Zellen stimmen (Zahl und Datensätze).`)
+  if (korrekturen.length)
+    z.push(
+      '',
+      '## Stand nach SharePoint Adjudications',
+      '',
+      '| Offerte | Stand alt | Stand neu | Grund |',
+      '| --- | --- | --- | --- |',
+      ...korrekturen.map((x) => `| ${x.nr} | ${x.vorher || '(leer)'} | ${x.nachher} | ${x.grund} |`),
+    )
 
   z.push(
     '',

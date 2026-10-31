@@ -3,6 +3,7 @@
 
 import { leadEntryDate, leadStandort, numVal, offerPerson, offerStandort, rappenWieV233, WON } from '../import/v233.mjs'
 import { nullWieNull, ortszeit } from './vergleich.mjs'
+import { festeQuelle, istMesseOhneWunsch, werkvertragBetrag } from '../import/entscheide.mjs'
 
 /** V233-Status eines Leads → Stufe im neuen CRM (unabhängig von der Tabelle auswahlwerte aufgeschrieben). */
 const STUFE = {
@@ -34,7 +35,7 @@ const vorname = (p) => (p ? String(p.name).split(' ')[0] : null)
 
 /**
  * @param {import('./vergleich.mjs').Befunde} b
- * @param {{ leads: Record<string, any>[], projects: Record<string, any>[] }} alt
+ * @param {{ leads: Record<string, any>[], projects: Record<string, any>[], mwst: number }} alt
  * @param {import('./laden.mjs').Neu} neu
  */
 export function pruefeVerkauf(b, alt, neu) {
@@ -52,8 +53,15 @@ export function pruefeVerkauf(b, alt, neu) {
   for (const l of alt.leads) {
     const n = neu.nachAltId.verkaufschancen.get(`lead:${l.id}`)
     const nr = l.id
+    if (istMesseOhneWunsch(l)) {
+      // Entscheid 13/15B: nur Kontakt, kein (sichtbarer) Lead.
+      b.vergleiche('Leads', nr, 'nur Kontakt (Messe ohne Beratungswunsch)', true, !n || !!n.geloescht_am)
+      continue
+    }
     if (!b.vergleiche('Leads', nr, 'vorhanden', true, !!n)) continue
     const v = /** @type {Record<string, any>} */ (n)
+    const quelle = festeQuelle(l)
+    if (quelle) b.vergleiche('Leads', nr, 'Quelle', quelle, v.quelle, { grund: 'Ausschreibung (Monitor) oder Messe' })
     b.vergleiche('Leads', nr, 'Nummer', l.id, v.nummer)
     b.vergleiche('Leads', nr, 'Stand', STUFE[/** @type {keyof typeof STUFE} */ (l.status)] ?? l.status, v.stufe)
     b.vergleiche('Leads', nr, 'im Papierkorb', !!l._papierkorb, !!v.geloescht_am)
@@ -96,6 +104,17 @@ export function pruefeVerkauf(b, alt, neu) {
         neu: k?.telefon ?? null,
         art: 'hinweis',
         grund: 'Kontakt hat ein anderes Telefon aus einem neueren Datensatz',
+      })
+    const ln = l.vorname != null || l.nachname != null ? `${t(l.vorname)} ${t(l.nachname)}` : t(l.name)
+    if (ln.trim() && !gleicherName(ln, k))
+      b.melde({
+        bereich: 'Leads',
+        datensatz: nr,
+        feld: 'Name (Kontakt)',
+        alt: ln.trim(),
+        neu: kontaktName(k),
+        art: 'hinweis',
+        grund: 'Kontakt trägt den Namen aus einem neueren Datensatz derselben Kundennummer',
       })
     if (l.messe?.einwilligung === true)
       b.vergleiche('Leads', nr, 'Einwilligung Werbung (Messe)', true, !!k?.einwilligung?.datum, {
@@ -150,6 +169,17 @@ export function pruefeVerkauf(b, alt, neu) {
     )
     const k = kontakt(x.kontakt_id)
     b.vergleiche('Offerten', nr, 'Kundennummer', Number(p.kundenNr) || null, k?.kundennummer ?? null)
+    const pn = `${t(p.vornameMO)} ${t(p.nameMO)}`.trim() || t(p.projektname)
+    if (pn && !gleicherName(pn, k))
+      b.melde({
+        bereich: 'Offerten',
+        datensatz: nr,
+        feld: 'Name (Kontakt)',
+        alt: pn,
+        neu: kontaktName(k),
+        art: 'hinweis',
+        grund: 'Kontakt trägt den Namen aus einem neueren Datensatz derselben Kundennummer',
+      })
     const ob = objekt(x.objekt_id)
     b.vergleiche('Offerten', nr, 'Strasse', p.street, ob?.strasse)
     b.vergleiche('Offerten', nr, 'Ort', p.ort, ob?.ort)
@@ -194,14 +224,11 @@ export function pruefeVerkauf(b, alt, neu) {
     const wv = neu.nachAltId.werkvertraege.get(`project:${p.id}:werkvertrag`)
     if (!wv) continue
     const nr = String(p.nr ?? p.id)
-    // V233 zeigte als Auftragswert «Vertragswert, sonst Angebotswert» (dieser exkl. MWST): siehe Altdaten-Liste.
-    b.vergleiche(
-      'Werkverträge',
-      nr,
-      'Betrag (Rappen)',
-      nullWieNull(rappenWieV233(p.vertragswert) || rappenWieV233(p.angebotswert)),
-      nullWieNull(wv.betrag_rappen),
-    )
+    // Entscheid 11B: Vertragswert, sonst Angebotswert plus MWST (V233 zeigte ihn exkl.).
+    const soll = werkvertragBetrag(p, alt.mwst)
+    b.vergleiche('Werkverträge', nr, 'Betrag (Rappen)', nullWieNull(soll.betrag), nullWieNull(wv.betrag_rappen), {
+      grund: soll.mwstErgaenzt ? `ohne Vertragswert: Angebot plus ${alt.mwst} % MWST` : undefined,
+    })
     b.vergleiche('Werkverträge', nr, 'Unterschrieben am', p.unterzeichnetAm, wv.unterschrieben_am)
     b.vergleiche(
       'Werkverträge',
@@ -215,6 +242,20 @@ export function pruefeVerkauf(b, alt, neu) {
           : null,
     )
   }
+}
+
+/** @param {Record<string, any> | undefined} k */
+const kontaktName = (k) => (k ? [k.firma, k.vorname, k.nachname].filter(Boolean).join(' ') : null)
+/** Gleicher Name, egal in welcher Reihenfolge und Schreibung. @param {string} name @param {Record<string, any> | undefined} k */
+function gleicherName(name, k) {
+  const teile = (/** @type {string | null} */ s) =>
+    (s ?? '').toLowerCase().split(/\s+/).filter(Boolean).sort().join(' ')
+  const n = teile(name)
+  return (
+    n === teile([k?.vorname, k?.nachname].filter(Boolean).join(' ')) ||
+    n === teile(k?.firma ?? '') ||
+    n === teile(kontaktName(k))
+  )
 }
 
 /**

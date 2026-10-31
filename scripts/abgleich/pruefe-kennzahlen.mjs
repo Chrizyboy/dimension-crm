@@ -2,6 +2,7 @@
 // für jeden Zeitraum, je Standort und je Person, mit den Datensätzen hinter jeder Zahl.
 
 import { dashMetrics, dashRange, leadStandort, offerPerson, offerStandort, PERSONS } from '../import/v233.mjs'
+import { istMesseOhneWunsch, werkvertragBetrag } from '../import/entscheide.mjs'
 
 const ZEITRAEUME = /** @type {const} */ (['monat', 'quartal', 'jahr', '12m', 'alle'])
 const ANZAHL = [
@@ -37,14 +38,22 @@ const NAMEN = /** @type {Record<string, string>} */ ({
 /**
  * @param {import('./vergleich.mjs').Befunde} b
  * @param {import('@supabase/supabase-js').SupabaseClient} db
- * @param {{ leads: Record<string, any>[], projects: Record<string, any>[] }} alt
+ * @param {{ leads: Record<string, any>[], projects: Record<string, any>[], mwst: number }} alt
  * @param {import('./laden.mjs').Neu} neu
  * @param {string} heute
  * @returns {Promise<Record<string, any>[]>} Tabelle für den Bericht
  */
 export async function pruefeKennzahlen(b, db, alt, neu, heute) {
-  // Für V233 zählen nur Leads ausserhalb des Papierkorbs.
-  const st = { leads: alt.leads.filter((l) => !l._papierkorb), projects: alt.projects }
+  // Für V233 zählen nur Leads ausserhalb des Papierkorbs. Messe-Teilnahmen ohne Beratungswunsch sind
+  // nach Entscheid 13/15B keine Leads mehr: so erwartet, nicht als Abweichung gezählt.
+  const st = {
+    leads: alt.leads.filter((l) => !l._papierkorb && !istMesseOhneWunsch(l)),
+    projects: alt.projects,
+  }
+  const projektNachId = new Map(alt.projects.map((p) => [String(p.id), p]))
+  // Entscheid 11B: ohne Vertragswert zählt der Angebotswert plus MWST (V233 zeigte ihn exkl.).
+  const auftragswert = (/** @type {string[]} */ ids) =>
+    ids.reduce((s, id) => s + (werkvertragBetrag(projektNachId.get(id) ?? {}, alt.mwst).betrag ?? 0), 0)
   const altNr = (/** @type {string} */ art, /** @type {string} */ id) => {
     const tabelle = art === 'lead' ? 'verkaufschancen' : art === 'offerte' ? 'offerten' : 'projekte'
     const a = neu.nachId[tabelle]?.get(id)?.alt_id ?? `neu:${id}`
@@ -112,10 +121,10 @@ export async function pruefeKennzahlen(b, db, alt, neu, heute) {
         ['quote', quote(n)],
       ])) {
         const altWert = /** @type {number | null} */ (a[/** @type {keyof typeof a} */ (k)])
-        tabelle.push({ zeitraum: z, spalte, kennzahl: NAMEN[k], alt: altWert, neu: neuWert })
-        b.vergleiche('Kennzahlen', `${z} · ${spalte}`, NAMEN[k] ?? k, altWert, neuWert, {
-          grund:
-            k === 'auftragswert' ? 'neu: ohne Vertragswert zählt der Angebotswert inkl. MWST (V233: exkl.)' : undefined,
+        const erwartet = k === 'auftragswert' ? auftragswert(a.angenommen) : altWert
+        tabelle.push({ zeitraum: z, spalte, kennzahl: NAMEN[k], alt: altWert, erwartet, neu: neuWert })
+        b.vergleiche('Kennzahlen', `${z} · ${spalte}`, NAMEN[k] ?? k, erwartet, neuWert, {
+          grund: k === 'auftragswert' ? `V233 zeigte ${altWert} (Angebotswert exkl. MWST)` : undefined,
         })
       }
     }

@@ -3,6 +3,7 @@
 import { text, zuDatum, zuGanzzahl, zuJaNein, zuOrtszeit, zuZeitstempel } from '../umwandeln.mjs'
 import { alleLeads, objektVon } from './kunden.mjs'
 import { leadStandort } from '../v233.mjs'
+import { festeQuelle, istMesseOhneWunsch } from '../entscheide.mjs'
 
 /** @typedef {import('../import-vorlage.mjs').Kontext} Kontext */
 
@@ -20,7 +21,29 @@ function region(k, tour) {
  * @param {Kontext} k
  */
 export async function importiereVerkauf(k) {
-  const leads = alleLeads(k)
+  // Messe-Teilnahmen ohne Beratungswunsch bleiben Kontakte (Entscheid 13/15B), siehe kunden.mjs.
+  // Im Zählbericht gelten sie als übernommen (als Kontakt).
+  const leads = []
+  /** @type {string[]} */
+  const nurKontakt = []
+  for (const x of alleLeads(k)) {
+    if (!istMesseOhneWunsch(x.lead)) leads.push(x)
+    else {
+      nurKontakt.push(`lead:${x.nummer}`)
+      const kontakt = k.ids.kontakte.get(Number(x.lead.kundenNr))
+      if (kontakt) k.schreiber.merke(x.sammlung, x.schluessel, 'kontakte', kontakt)
+    }
+  }
+  // Ein früherer Import (Probe-Import) hatte sie als Lead angelegt: in den Papierkorb, nie hart löschen.
+  if (nurKontakt.length) {
+    const { error } = await k.db
+      .from('verkaufschancen')
+      .update({ geloescht_am: new Date().toISOString() })
+      .in('alt_id', nurKontakt)
+      .is('geloescht_am', null)
+    if (error) throw new Error(`verkaufschancen (Messe ohne Wunsch): ${error.message}`)
+    k.hinweis(`${nurKontakt.length} Messe-Teilnahmen ohne Beratungswunsch nur als Kontakt übernommen (kein Lead).`)
+  }
   const zeilen = leads.map(({ nummer, lead: l, geloescht_am, sammlung, schluessel }) => {
     const outlook = Object.fromEntries(Object.entries(l).filter(([f]) => f.startsWith('ol')))
     const bestaetigt = Object.fromEntries(Object.entries(l).filter(([f]) => f.startsWith('confirmed')))
@@ -33,7 +56,7 @@ export async function importiereVerkauf(k) {
         kontakt_id: k.ids.kontakte.get(Number(l.kundenNr)),
         objekt_id: objektVon(k, l),
         stufe: k.zuordner.streng('verkaufsstufe', l.status, `${sammlung}/${schluessel}`, 'offen'),
-        quelle: k.zuordner.locker('quelle', l.src),
+        quelle: festeQuelle(l) ?? k.zuordner.locker('quelle', l.src),
         eingang_am: zuDatum(l.rec) ?? zuDatum(l.createdAt),
         zustaendig: text(l.zu),
         erstkontakt_standort: text(l.erst),
