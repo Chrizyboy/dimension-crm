@@ -1,4 +1,4 @@
-// Namen und Pfade der automatischen Dateiablage (Entscheid 0030). Reine Funktionen ohne Microsoft,
+// Namen und Pfade der automatischen Dateiablage (Entscheid 0031). Reine Funktionen ohne Microsoft,
 // damit sie sich ohne Netz prüfen lassen; die Arbeit mit SharePoint macht ablage.ts.
 
 import { sichererName } from './sharepoint.ts'

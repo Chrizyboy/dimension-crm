@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from './supabase'
 
-/** Ordner einer Offerte oder eines Projekts in SharePoint (automatische Dateiablage, Entscheid 0030). */
+/** Ordner einer Offerte oder eines Projekts in SharePoint (automatische Dateiablage, Entscheid 0031). */
 export interface AblageOrdner {
   soll: 'offerte' | 'auftrag' | 'verloren'
   stand: 'offerte' | 'auftrag' | 'verloren' | null

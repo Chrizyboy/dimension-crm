@@ -1,4 +1,4 @@
-// Automatische Dateiablage in SharePoint (Entscheid 0030): Ordner einer Offerte anlegen (mit Unterordnern),
+// Automatische Dateiablage in SharePoint (Entscheid 0031): Ordner einer Offerte anlegen (mit Unterordnern),
 // bei Annahme zu den Aufträgen und bei Verlust ins Archiv verschieben, Dateien aus dem CRM einordnen.
 // Läuft im Zeitplan mit der Microsoft-Verbindung einer Person; was zu tun ist, sagt die Datenbank.
 

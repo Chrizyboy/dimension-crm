@@ -1,4 +1,4 @@
-# 0031 Zuständigkeiten und automatische Lead-Zuteilung
+# 0032 Zuständigkeiten und automatische Lead-Zuteilung
 
 Stand: 31.10.2026, Chris: Filipe macht den Verkauf für alles Französischsprachige, Loris für alles
 Deutschsprachige; Offerten macht Andy, Chris unterstützt; alles muss änderbar sein. Vorher gewählt:

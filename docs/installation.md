@@ -55,7 +55,7 @@ Wer zweimal mit derselben Nummer startet, bekommt die Meldung «Version gibt es 
 ## Am PC installieren
 
 1. [Releases](https://github.com/Chrizyboy/dimension-crm/releases/latest) öffnen,
-   `Dimension CRM_<version>_x64-setup.exe` herunterladen und starten. Keine Administratorrechte nötig.
+   `Dimension Work_<version>_x64-setup.exe` herunterladen und starten. Keine Administratorrechte nötig.
 2. Windows zeigt eventuell «Der Computer wurde durch Windows geschützt» (die App ist noch nicht mit einem
    Firmenzertifikat signiert): **Weitere Informationen › Trotzdem ausführen**. Das kommt nur bei der ersten
    Installation; Updates laufen danach ohne Rückfrage.
@@ -63,7 +63,7 @@ Wer zweimal mit derselben Nummer startet, bekommt die Meldung «Version gibt es 
 4. In «Mein Konto › Diese App» lässt sich einschalten, dass das CRM mit Windows startet.
 
 Für die Verteilung über Intune oder ein Skript gibt es zusätzlich das MSI:
-`msiexec /i "Dimension CRM_<version>_x64_de-DE.msi" /qn` (installiert für alle Personen am PC; Updates
+`msiexec /i "Dimension Work_<version>_x64_de-DE.msi" /qn` (installiert für alle Personen am PC; Updates
 brauchen dann Administratorrechte, deshalb für Einzel-PCs lieber die `setup.exe`).
 
 ## Am Handy

@@ -16,7 +16,7 @@ const ARTEN = ['offerten', 'auftraege', 'verloren'] as const
 
 /**
  * Einstellungen › Verbindungen › Dateiablage: Ein/Aus, Bibliothek, Ordnername, Pfade je Standort und die
- * Unterordner. Die Arbeit in SharePoint macht der Zeitplan alle 5 Minuten (Entscheid 0030).
+ * Unterordner. Die Arbeit in SharePoint macht der Zeitplan alle 5 Minuten (Entscheid 0031).
  */
 export function AblageEinstellungen() {
   const stand = useAblageStand()

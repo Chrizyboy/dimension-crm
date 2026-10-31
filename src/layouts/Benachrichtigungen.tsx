@@ -1,13 +1,14 @@
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Bell, CheckCheck, CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react'
 import { Popover as PopoverPrimitive } from 'radix-ui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { formatRelativ } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { useBenachrichtigungsListe } from '@/hooks/useBenachrichtigungsListe'
+import { zeigeSystemmeldungen } from '@/services/systemmeldung'
 import { zaehleUngelesen, type Benachrichtigung, type MeldungsArt } from '@/stores/benachrichtigungen'
 import { useUi } from '@/stores/ui'
 
@@ -86,6 +87,14 @@ export function Glocke() {
   const [offen, setOffen] = useState(false)
   const { liste, alleGelesen } = useBenachrichtigungsListe()
   const ungelesen = zaehleUngelesen(liste)
+  const sprache = useUi((z) => z.sprache)
+  useEffect(() => {
+    void zeigeSystemmeldungen(
+      liste
+        .filter((b) => b.popup && !b.gelesen)
+        .map((b) => ({ id: b.id, titel: b.titel[sprache], ...(b.text ? { text: b.text[sprache] } : {}) })),
+    )
+  }, [liste, sprache])
 
   return (
     <PopoverPrimitive.Root open={offen} onOpenChange={setOffen}>

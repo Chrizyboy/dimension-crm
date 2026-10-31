@@ -1,4 +1,4 @@
--- Prüft die automatische Dateiablage (Entscheid 0030): aus = nichts passiert; ein = neue Offerte bekommt einen
+-- Prüft die automatische Dateiablage (Entscheid 0031): aus = nichts passiert; ein = neue Offerte bekommt einen
 -- Ordner, Annahme/Verlust ändern das Ziel, Projekt hängt sich an, alte Offerten bleiben aussen vor; Ergebnis
 -- verschiebt Pfade der Dateien mit; Dateien gehen in die Ablage statt ins Kunden-Backup; Rechte.
 -- Ausführen: npm run db:test

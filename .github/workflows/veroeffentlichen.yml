@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v__VERSION__
-          releaseName: Dimension CRM __VERSION__
+          releaseName: Dimension Work __VERSION__
           releaseBody: ${{ steps.v.outputs.notizen }}
           releaseDraft: false
           prerelease: false

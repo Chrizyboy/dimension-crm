@@ -30,7 +30,7 @@ Ein Konto für die ganze Firma: verbunden wird einmal durch eine Person mit Admi
 1. Instagram-Konto in den Einstellungen auf **Geschäftskonto** stellen und mit der Facebook-Seite verknüpfen
    (Instagram › Einstellungen › Konto › Mit Facebook-Seite verbinden).
 2. https://developers.facebook.com › **Meine Apps** › **App erstellen** › Typ **Business**, Name z. B.
-   «Dimension CRM», Business-Portfolio von Dimension Solaire wählen.
+   «Dimension Work», Business-Portfolio von Dimension Solaire wählen.
 3. Produkt **Facebook Login for Business** hinzufügen. Unter Einstellungen › **Gültige OAuth-Redirect-URIs** die
    Rückruf-Adresse von oben eintragen.
 4. Unter App-Einstellungen › Allgemein **App-ID** und **App-Geheimcode** kopieren (nur für Schritt 1.2).
