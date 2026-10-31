@@ -94,6 +94,6 @@ Schwelle: «einfach alles, was interessant ist». Ansprechperson bei uns für Gr
   (Kürzel «chris»), in der Akte änderbar (`grossprojekt_verantwortlich_setzen`). Diese Person bekommt die Glocke für neue
   starke Treffer (zusätzlich zu Andy, der bewilligt) und die Aufgaben aus den Schritten.
 
-**Folgen:** Neue Migrationen `20261110000200` und `20261110000300`, Zeitplan neu hochladen, kein neues Secret (die KI
+**Folgen:** Neue Migrationen `20261110000200` und `20261110001000`, Zeitplan neu hochladen, kein neues Secret (die KI
 nutzt `ANTHROPIC_API_KEY`). Wer Leads und Offerten übernimmt (Filipe Französisch, Loris Deutsch, Offerten Andy), gehört
 zur Lead-Zuteilung und ist hier nicht geregelt.
