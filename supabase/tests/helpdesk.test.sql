@@ -48,8 +48,9 @@ select ok((select not (einschaetzung ? 'anweisung') from public.rueckmeldungen w
   'unbekannte Felder werden nicht übernommen');
 select is((select an || ' ' || status from public.ausgangskorb where schluessel = 'helpdesk_sms:' || current_setting('test.m')),
   '+41761234567 freigegeben', 'SMS an Chris'' Handy, freigegeben');
-select ok((select length(text) <= 160 from public.ausgangskorb where schluessel = 'helpdesk_sms:' || current_setting('test.m')),
-  'SMS passt in eine Nachricht');
+select ok((select length(text) <= 306 and text like '%Empfehlung: erledigen.' || E'\n' || 'https://crm.test/%' from public.ausgangskorb
+             where schluessel = 'helpdesk_sms:' || current_setting('test.m')),
+  'SMS mit ganzem Link, höchstens zwei Teile');
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b2' and popup),
   1, 'Glocke mit Pop-up für Chris');
 select is((public.helpdesk_einschaetzen(current_setting('test.m')::uuid, '{"kurz": "a", "was": "b", "empfehlung": "nicht"}', null)

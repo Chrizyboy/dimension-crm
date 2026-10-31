@@ -5197,7 +5197,7 @@
       "dateien": "Captures d’écran ou fichiers",
       "dateienHinweis": "Une capture d’écran aide le plus.",
       "intro": "Tes signalements et les réponses de l’administration.",
-      "introAdmin": "Tous les signalements des collaborateurs. Définir le statut et répondre ; la personne voit la réponse ici et dans la cloche.",
+      "introAdmin": "Tous les signalements de l’équipe. Le CRM examine chaque signalement et rédige une évaluation ; la décision se prend avec « Règle-le » ou « Non ». La personne voit la réponse ici, dans la cloche et par e-mail.",
       "filter": "Filtrer les signalements",
       "filterWert": {
         "offen": "Ouverts",

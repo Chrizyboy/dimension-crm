@@ -186,10 +186,12 @@ begin
   insert into public.ausgangskorb (kanal, art, an, text, absender_person_id, sprache, bezug_tabelle, bezug_id, schluessel,
                                    automatisch, status, freigegeben_am)
   values ('sms', 'helpdesk', mobil,
-          left(intern.meldung_nr(m.nummer) || coalesce(' (' || von || ')', '') || ': ' || (e ->> 'kurz')
-               || '. Empfehlung: ' || case when e ->> 'empfehlung' = 'erledigen' then 'erledigen' else 'nicht umsetzen' end
-               || '. ', 160 - length(coalesce(p_link, '')))
-          || coalesce(p_link, ''),
+          -- Höchstens zwei SMS-Teile (306 Zeichen): Text gekürzt, der Link bleibt immer ganz.
+          left(intern.meldung_nr(m.nummer) || coalesce(' (' || von || ')', '') || ': '
+               || rtrim(e ->> 'kurz', '. ') || '. Empfehlung: '
+               || case when e ->> 'empfehlung' = 'erledigen' then 'erledigen' else 'nicht umsetzen' end || '.',
+               300 - length(coalesce(p_link, '')))
+          || coalesce(E'\n' || p_link, ''),
           ent, 'de', 'rueckmeldungen', m.id, 'helpdesk_sms:' || m.id, true, 'freigegeben', now())
   on conflict do nothing
   returning id into sms_id;

@@ -5197,7 +5197,7 @@
       "dateien": "Bildschirmfotos oder Dateien",
       "dateienHinweis": "Ein Bildschirmfoto hilft am meisten.",
       "intro": "Deine Meldungen und die Antworten der Administration.",
-      "introAdmin": "Alle Meldungen der Mitarbeitenden. Status setzen und antworten; die meldende Person sieht die Antwort hier und in der Glocke.",
+      "introAdmin": "Alle Meldungen der Mitarbeitenden. Das CRM prüft jede Meldung und schreibt eine Einschätzung; entschieden wird mit «Erledige es» oder «Nicht». Die meldende Person sieht die Antwort hier, in der Glocke und per Mail.",
       "filter": "Meldungen filtern",
       "filterWert": {
         "offen": "Offen",
