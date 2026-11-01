@@ -497,3 +497,7 @@ verify_jwt = false
 # Helpdesk: Claude bearbeitet Meldungen ohne Supabase-Login; die Funktion prüft selbst HELPDESK_SCHLUESSEL.
 [functions.helpdesk]
 verify_jwt = false
+
+# Anmeldemail (Send Email Hook): Supabase Auth ruft signiert auf, kein Login. Prüft ANMELDEMAIL_HOOK_SECRET selbst.
+[functions.anmeldemail]
+verify_jwt = false
