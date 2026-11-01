@@ -5,17 +5,19 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { useAuswahl } from '@/hooks/useAuswahl'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useFaelle } from '../hooks/useService'
 import { FALL_FILTER, type FallFilter } from '../types'
 import { fallSpalten } from './fallSpalten'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
-/** Liste der Service-Fälle mit Filter (offen, hoch, Garantie, erledigt, alle) und Suche. */
+/** Liste der Service-Fälle mit Filter (offen, meine, dringend, Garantie, erledigt, alle) und Suche. */
 export function FallListe({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
   const { t } = useTranslation()
   const [filter, setFilter] = useState<FallFilter>('offen')
   const [suche, setSuche] = useState('')
-  const liste = useFaelle(filter)
+  const ichId = useAnmeldung((z) => z.ich?.id ?? null)
+  const liste = useFaelle(filter, ichId)
   const kat = useAuswahl('servicekategorie')
   const prio = useAuswahl('prioritaet')
   const status = useAuswahl('servicestatus')
@@ -29,7 +31,7 @@ export function FallListe({ aktiveId, onOeffnen }: { aktiveId: string | null; on
   const daten = useMemo(() => {
     const s = suche.trim().toLowerCase()
     return (liste.data ?? []).filter(
-      (f) => !s || `${f.nummer} ${f.titel} ${f.kunde} ${f.ort ?? ''}`.toLowerCase().includes(s),
+      (f) => !s || `${f.nummer} ${f.titel} ${f.kunde} ${f.ort ?? ''} ${f.person ?? ''}`.toLowerCase().includes(s),
     )
   }, [liste.data, suche])
 

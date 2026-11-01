@@ -2817,6 +2817,7 @@
     "garantie": "Garantie",
     "filterwert": {
       "offen": "Offen",
+      "meine": "Meine",
       "hoch": "Dringend",
       "garantie": "Garantie",
       "erledigt": "Erledigt",
@@ -2832,7 +2833,9 @@
       "kategorie": "Kategorie",
       "prio": "Priorität",
       "status": "Stand",
-      "termin": "Termin"
+      "termin": "Termin",
+      "zustaendig": "Zuständig",
+      "offenSeit": "Offen seit"
     },
     "feld": {
       "kunde": "Kunde",
@@ -2907,7 +2910,10 @@
       "gutschrift": "Gutschrift CHF",
       "notiz": "Notiz",
       "eingeschicktAm": "eingeschickt {{datum}}"
-    }
+    },
+    "niemand": "niemand",
+    "tage_one": "{{count}} Tag",
+    "tage_other": "{{count}} Tage"
   },
   "wartung": {
     "titel": "Wartungsverträge",

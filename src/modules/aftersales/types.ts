@@ -5,7 +5,7 @@ export const REITER = ['faelle', 'anlagen'] as const
 export type Reiter = (typeof REITER)[number]
 
 /** Filter der Fall-Liste. */
-export const FALL_FILTER = ['offen', 'hoch', 'garantie', 'erledigt', 'alle'] as const
+export const FALL_FILTER = ['offen', 'meine', 'hoch', 'garantie', 'erledigt', 'alle'] as const
 export type FallFilter = (typeof FALL_FILTER)[number]
 
 export const KATEGORIEN = [

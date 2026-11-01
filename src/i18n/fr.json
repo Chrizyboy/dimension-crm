@@ -2817,6 +2817,7 @@
     "garantie": "Garantie",
     "filterwert": {
       "offen": "Ouverts",
+      "meine": "Les miens",
       "hoch": "Urgents",
       "garantie": "Garantie",
       "erledigt": "Terminés",
@@ -2832,7 +2833,9 @@
       "kategorie": "Catégorie",
       "prio": "Priorité",
       "status": "État",
-      "termin": "Rendez-vous"
+      "termin": "Rendez-vous",
+      "zustaendig": "Responsable",
+      "offenSeit": "Ouvert depuis"
     },
     "feld": {
       "kunde": "Client",
@@ -2907,7 +2910,10 @@
       "gutschrift": "Note de crédit CHF",
       "notiz": "Remarque",
       "eingeschicktAm": "envoyé le {{datum}}"
-    }
+    },
+    "niemand": "personne",
+    "tage_one": "{{count}} jour",
+    "tage_other": "{{count}} jours"
   },
   "wartung": {
     "titel": "Contrats d’entretien",

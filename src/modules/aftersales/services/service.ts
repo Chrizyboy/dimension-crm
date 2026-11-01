@@ -35,10 +35,12 @@ function alsFall({ kontakt, anlage, projekt, person, verlauf, ...f }: FallRoh): 
   }
 }
 
-/** Service-Fälle nach Filter, neueste zuerst. */
-export async function ladeFaelle(filter: FallFilter): Promise<ServiceFall[]> {
+/** Service-Fälle nach Filter, neueste zuerst. «meine» braucht die eigene Person (offene Fälle, für die man zuständig ist). */
+export async function ladeFaelle(filter: FallFilter, ichId?: string | null): Promise<ServiceFall[]> {
   let q = db().from('service_faelle').select(FALL_FELDER).is('geloescht_am', null)
   if (filter === 'offen') q = q.neq('status', 'erledigt')
+  if (filter === 'meine')
+    q = q.neq('status', 'erledigt').eq('person_id', ichId ?? '00000000-0000-0000-0000-000000000000')
   if (filter === 'hoch') q = q.neq('status', 'erledigt').eq('prioritaet', 'hoch')
   if (filter === 'garantie') q = q.eq('garantie', true)
   if (filter === 'erledigt') q = q.eq('status', 'erledigt')
