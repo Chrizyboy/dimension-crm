@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Einkauf & Material». */
 
 /** Reiter der Seite (#/purchasing?reiter=…). */
-export const REITER = ['bestellungen', 'material', 'lager', 'lieferanten'] as const
+export const REITER = ['bestellungen', 'zubestellen', 'material', 'lager', 'lieferanten'] as const
 export type Reiter = (typeof REITER)[number]
 
 export const BESTELL_FILTER = ['offen', 'entwuerfe', 'ueberfaellig', 'geliefert', 'alle'] as const

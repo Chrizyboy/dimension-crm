@@ -3014,6 +3014,7 @@
     "beschreibung": "Material je Projekt, Bestellungen mit Freigabe und PDF per Mail, Wareneingang und Lager Bulle.",
     "reiter": {
       "bestellungen": "Bestellungen",
+      "zubestellen": "Zu bestellen",
       "material": "Material je Projekt",
       "lager": "Lager",
       "lieferanten": "Lieferanten"
@@ -3239,7 +3240,22 @@
       "unter_one": "{{count}} Artikel unter Mindestmenge",
       "unter_other": "{{count}} Artikel unter Mindestmenge"
     },
-    "abErhalten": "AB erhalten"
+    "abErhalten": "AB erhalten",
+    "zu": {
+      "projekt": "Projekt",
+      "kunde": "Kunde",
+      "baubeginn": "Baubeginn",
+      "bis": "Bestellen bis",
+      "ohneTermin": "ohne Bautermin",
+      "fehlen": "Fehlende Zeilen",
+      "ohneArtikel_one": "({{count}} ohne Artikel)",
+      "ohneArtikel_other": "({{count}} ohne Artikel)",
+      "sammeln": "Sammelbestellung: {{liste}}",
+      "alleVorschlagen": "Für alle vorschlagen",
+      "hinweis": "Baustellen mit fehlendem Material. «Bestellen bis» = Baubeginn minus Lieferfrist.",
+      "leer": "Alles bestellt",
+      "leerText": "Keine Baustelle hat fehlendes Material ohne Bestellung."
+    }
   },
   "baustelle": {
     "titel": "Baustelle & Rapporte",

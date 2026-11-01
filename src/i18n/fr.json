@@ -3014,6 +3014,7 @@
     "beschreibung": "Matériel par projet, commandes avec validation et PDF par e-mail, réception et stock de Bulle.",
     "reiter": {
       "bestellungen": "Commandes",
+      "zubestellen": "À commander",
       "material": "Matériel par projet",
       "lager": "Stock",
       "lieferanten": "Fournisseurs"
@@ -3239,7 +3240,22 @@
       "unter_one": "{{count}} article sous le minimum",
       "unter_other": "{{count}} articles sous le minimum"
     },
-    "abErhalten": "Confirmation reçue"
+    "abErhalten": "Confirmation reçue",
+    "zu": {
+      "projekt": "Projet",
+      "kunde": "Client",
+      "baubeginn": "Début des travaux",
+      "bis": "Commander avant",
+      "ohneTermin": "sans date de chantier",
+      "fehlen": "Lignes manquantes",
+      "ohneArtikel_one": "({{count}} sans article)",
+      "ohneArtikel_other": "({{count}} sans article)",
+      "sammeln": "Commande groupée : {{liste}}",
+      "alleVorschlagen": "Proposer pour tous",
+      "hinweis": "Chantiers avec du matériel manquant. « Commander avant » = début des travaux moins le délai de livraison.",
+      "leer": "Tout est commandé",
+      "leerText": "Aucun chantier n’a de matériel manquant sans commande."
+    }
   },
   "baustelle": {
     "titel": "Chantier & rapports",

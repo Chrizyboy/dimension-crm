@@ -10498,6 +10498,7 @@ export type Database = {
       bestellung_freigeben: { Args: { p_id: string }; Returns: undefined }
       bestellung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       bestellung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      bestellungen_zusammenfassen: { Args: { p_lagerort: string; p_lieferant: string }; Returns: string }
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
       betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
@@ -11048,6 +11049,19 @@ export type Database = {
           meldung: string
           ok: boolean
           zuletzt_am: string
+        }[]
+      }
+      zu_bestellen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          baubeginn: string
+          bestellen_bis: string
+          kunde: string
+          nummer: string
+          ort: string
+          projekt_id: string
+          zeilen_fehlen: number
+          zeilen_ohne_artikel: number
         }[]
       }
     }
