@@ -14,8 +14,9 @@ Wunsch von Chris am 31.10.2026. Entscheid: `docs/entscheidungen/0033-posteingang
    Lauf (Edge Function `zeitplan`, Job `posteingang`; «Jetzt abholen» über `microsoft` › `posteingang_abholen`).
 2. Feste Regeln zuerst (eigene Domain = intern, newsletter@/noreply@ = Werbung, Formular-Anfragen werden Lead),
    dann ordnet die KI den Rest ein (Art, Sprache, dringend, Zusammenfassung, Nummern). Ohne KI: Regel-Rückfall.
-3. Die Datenbank ordnet zu (Nummern, Absender), bestimmt Zuständige (Betreuer der Akte → Liste je Art und Sprache →
-   Postfach), Stellvertretung bei Abwesenheit in Outlook, Frist und doppelte Frist.
+3. Die Datenbank ordnet zu (Nummern, Absender) und bestimmt Zuständige: eigenes Postfach = die Person selbst,
+   Team-Postfach (info@) = wer verteilt (`verteilen`, Davis/Chris). Dazu Stellvertretung bei Abwesenheit, Frist und
+   doppelte Frist.
 4. Eine Antwort in «Gesendet» (gleiche Konversation oder an den Absender) oder über den Ausgangskorb erledigt die Mail
    und misst die Reaktionszeit in Arbeitszeit.
 5. `posteingang_erinnern` (alle 5 Minuten): Vorwarnung, Frist überschritten, doppelte Frist an die Leitung, je einmal.

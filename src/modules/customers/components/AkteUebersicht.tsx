@@ -34,7 +34,7 @@ function Abschnitt({
   return (
     <section className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">{titel}</h3>
+        <h3 className="text-sm font-semibold">{titel}</h3>
         {aktion}
       </div>
       {children}

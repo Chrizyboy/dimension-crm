@@ -89,7 +89,9 @@ export interface PosteingangRegeln {
   feiertage?: string[]
   vorwarnung_min?: number
   arten?: Partial<Record<Art, { frist_min?: number | null; ablegen?: boolean }>>
-  /** Kürzel je Art und Sprache, «standard» für alle anderen. */
+  /** Kürzel, die Mails aus Team-Postfächern verteilen (die erste anwesende ist zuständig). */
+  verteilen?: string[]
+  /** Alte Liste je Art und Sprache; gilt nur noch, wenn niemand verteilt. */
   zustaendig?: Partial<Record<Art | 'standard', { de?: string | null; fr?: string | null }>>
   /** Kürzel → Kürzel der Stellvertretung bei Abwesenheit (Outlook «abwesend»). */
   vertretung?: Record<string, string>

@@ -72,3 +72,8 @@ export function formatRelativ(iso: string, sprache: 'de' | 'fr', jetzt: Date = n
   if (abs < 86_400) return rtf.format(Math.round(sekunden / 3600), 'hour')
   return rtf.format(Math.round(sekunden / 86_400), 'day')
 }
+
+/** Zeile unter einem Namen in Listen aus mehreren Teilen, getrennt mit «·»; leere Teile fallen weg. */
+export function unterzeile(...teile: (string | null | undefined | false)[]): string {
+  return teile.filter(Boolean).join(' · ')
+}

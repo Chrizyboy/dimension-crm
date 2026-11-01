@@ -41,7 +41,10 @@ Schriften: `font-display` (Schibsted Grotesk, Titel), `font-sans` (Public Sans, 
 | `tabelle.tsx`                            | Tabelle, Zahlenspalten rechtsbündig                                                        |
 | `diverses.tsx`                           | Skelett (Ladeanzeige), Tastenkürzel, Trenner, Avatar                                       |
 
-Gemeinsame Bausteine in `src/components/shared/`: `Seitenkopf`, `Leerzustand`, `Fehlerzustand`, `Logo`, `ModulIcon`.
+Gemeinsame Bausteine in `src/components/shared/`: `Seitenkopf`, `Knopfleiste`, `Werkzeugleiste`, `Suchfeld`,
+`Datentabelle`, Listenzellen in `Zellen.tsx` (`NameZelle`, `DatumZelle`, `BetragZelle`, `NummerZelle`,
+`EinzeilerZelle`, `TextZelle`, `StatusZelle`), `AkteAbschnitt`/`Angabe`, `Leerzustand`, `Fehlerzustand`, `Logo`,
+`ModulIcon`. Warum und wie: Entscheid 0031.
 
 ## Meldungen
 
@@ -50,7 +53,10 @@ Gemeinsame Bausteine in `src/components/shared/`: `Seitenkopf`, `Leerzustand`, `
 
 ## Regeln für neue Oberflächen
 
-1. Jede Seite beginnt mit `Seitenkopf`.
-2. Jede Liste hat einen Leerzustand und einen Ladezustand (Skelett), jeder Datenzugriff einen Fehlerzustand mit «Nochmal versuchen».
-3. Gefährliche Aktionen (löschen, senden) nutzen `variant="danger"` und einen Bestätigungsdialog.
-4. Texte nur über `src/i18n/de.json` und `fr.json`.
+1. Jede Seite beginnt mit `Seitenkopf`; mehrere Knöpfe dort mit der Hauptaktion zuletzt (am Handy bleibt nur sie offen).
+1. Über jeder Liste die `Werkzeugleiste` mit `Suchfeld` (oben links), Filter darunter. Datum, Betrag, Nummer und
+   Status nur über die Zellen aus `Zellen.tsx`, damit nichts umbricht.
+1. Seitenblätter nur `breite="normal"` oder `"breit"`, Angaben in Akten nur mit `Angabe`.
+1. Jede Liste hat einen Leerzustand und einen Ladezustand (Skelett), jeder Datenzugriff einen Fehlerzustand mit «Nochmal versuchen».
+1. Gefährliche Aktionen (löschen, senden) nutzen `variant="danger"` und einen Bestätigungsdialog.
+1. Texte nur über `src/i18n/de.json` und `fr.json`.

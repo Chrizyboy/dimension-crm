@@ -95,7 +95,6 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[40rem]"
         titel={
           r
             ? `${r.nummer || t('baustelle.rapport.neu')} · ${t(`baustelle.art.${r.art}`)}`
@@ -111,7 +110,7 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-1.5 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={offen ? 'warnung' : 'ok'} punkt>
                 {t(offen ? 'baustelle.rapport.offen' : 'baustelle.rapport.abgeschlossen')}
               </Badge>

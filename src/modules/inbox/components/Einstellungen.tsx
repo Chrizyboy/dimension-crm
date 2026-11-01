@@ -13,11 +13,11 @@ import { speichereRegeln } from '../services/posteingang'
 import { FRIST_ARTEN, type PosteingangRegeln, type Person } from '../types'
 
 const KEINE = '–'
-const ZEILEN = ['standard', 'anfrage', 'stoerung', 'kunde', 'rechnung', 'amt', 'lieferant'] as const
 
 /**
- * Einstellungen (nur Administration): ein/aus, Arbeitszeit, Antwortfrist je Art, wer je Art und Sprache zuständig
- * ist, Stellvertretung bei Abwesenheit und wer bei doppelter Frist die Glocke bekommt.
+ * Einstellungen (nur Administration): ein/aus, Arbeitszeit, Antwortfrist je Art, wer Mails aus Team-Postfächern
+ * verteilt (eigene Postfächer bearbeitet jede Person selbst), Stellvertretung bei Abwesenheit und wer bei doppelter
+ * Frist die Glocke bekommt.
  */
 export function Einstellungen() {
   const regeln = useRegeln().data
@@ -36,7 +36,7 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
   const [fristen, setFristen] = useState<Record<string, string>>(
     Object.fromEntries(FRIST_ARTEN.map((a) => [a, stundenText(regeln.arten?.[a]?.frist_min)])),
   )
-  const [zustaendig, setZustaendig] = useState(regeln.zustaendig ?? {})
+  const [verteilen, setVerteilen] = useState<string[]>(regeln.verteilen ?? [])
   const [vertretung, setVertretung] = useState<Record<string, string>>(regeln.vertretung ?? {})
   const [eskalation, setEskalation] = useState<string[]>(regeln.eskalation ?? [])
   const [fehler, setFehler] = useState<Record<string, string>>({})
@@ -62,7 +62,7 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
           feiertage: regeln.feiertage ?? [],
           vorwarnung_min: Number(vorwarnung),
           arten,
-          zustaendig,
+          verteilen,
           vertretung: Object.fromEntries(Object.entries(vertretung).filter(([, v]) => v && v !== KEINE)),
           eskalation,
         }),
@@ -146,26 +146,11 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
 
       <Karte>
         <KarteKopf>
-          <KarteTitel>{t('posteingang.einst.zustaendig')}</KarteTitel>
+          <KarteTitel>{t('posteingang.einst.verteilen')}</KarteTitel>
         </KarteKopf>
         <KarteInhalt className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-xs">{t('posteingang.einst.zustaendigHinweis')}</p>
-          <div className="grid grid-cols-[minmax(6rem,10rem)_1fr_1fr] items-center gap-2 text-sm">
-            <span />
-            <span className="text-muted-foreground text-xs">{t('posteingang.einst.deutsch')}</span>
-            <span className="text-muted-foreground text-xs">{t('posteingang.einst.franzoesisch')}</span>
-            {ZEILEN.map((z) => (
-              <Zeile
-                key={z}
-                titel={z === 'standard' ? t('posteingang.einst.standard') : t(`posteingang.art.${z}`)}
-                wert={zustaendig[z] ?? {}}
-                wahl={wahl}
-                onChange={(w) => {
-                  setZustaendig({ ...zustaendig, [z]: w })
-                }}
-              />
-            ))}
-          </div>
+          <p className="text-muted-foreground text-xs">{t('posteingang.einst.verteilenHinweis')}</p>
+          <PersonenWahl personen={personen} gewaehlt={verteilen} onChange={setVerteilen} />
         </KarteInhalt>
       </Karte>
 
@@ -197,17 +182,7 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
           </KarteKopf>
           <KarteInhalt className="flex flex-col gap-2">
             <p className="text-muted-foreground text-xs">{t('posteingang.einst.eskalationHinweis')}</p>
-            {personen.map((p) => (
-              <label key={p.id} className="flex items-center gap-2 text-sm">
-                <Checkbox
-                  checked={eskalation.includes(p.kuerzel)}
-                  onCheckedChange={(c) => {
-                    setEskalation(c === true ? [...eskalation, p.kuerzel] : eskalation.filter((k) => k !== p.kuerzel))
-                  }}
-                />
-                {p.name}
-              </label>
-            ))}
+            <PersonenWahl personen={personen} gewaehlt={eskalation} onChange={setEskalation} />
           </KarteInhalt>
         </Karte>
       </div>
@@ -220,39 +195,25 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
   )
 }
 
-/** Eine Zeile der Zuständigkeit: Deutsch und Französisch. */
-function Zeile({
-  titel,
-  wert,
-  wahl,
+/** Personen zum Ankreuzen (Kürzel), in der Reihenfolge des Ankreuzens. */
+function PersonenWahl({
+  personen,
+  gewaehlt,
   onChange,
 }: {
-  titel: string
-  wert: { de?: string | null; fr?: string | null }
-  wahl: { wert: string; text: string }[]
-  onChange: (w: { de: string | null; fr: string | null }) => void
+  personen: Person[]
+  gewaehlt: string[]
+  onChange: (kuerzel: string[]) => void
 }) {
-  const { t } = useTranslation()
-  const nie = (s: string) => (s === KEINE ? null : s)
-  return (
-    <>
-      <span>{titel}</span>
-      <Auswahl
-        aria-label={`${titel} ${t('posteingang.einst.deutsch')}`}
-        value={wert.de ?? KEINE}
-        optionen={wahl}
-        onValueChange={(v) => {
-          onChange({ de: nie(v), fr: wert.fr ?? null })
+  return personen.map((p) => (
+    <label key={p.id} className="flex items-center gap-2 text-sm">
+      <Checkbox
+        checked={gewaehlt.includes(p.kuerzel)}
+        onCheckedChange={(c) => {
+          onChange(c === true ? [...gewaehlt, p.kuerzel] : gewaehlt.filter((k) => k !== p.kuerzel))
         }}
       />
-      <Auswahl
-        aria-label={`${titel} ${t('posteingang.einst.franzoesisch')}`}
-        value={wert.fr ?? KEINE}
-        optionen={wahl}
-        onValueChange={(v) => {
-          onChange({ de: wert.de ?? null, fr: nie(v) })
-        }}
-      />
-    </>
-  )
+      {p.name}
+    </label>
+  ))
 }

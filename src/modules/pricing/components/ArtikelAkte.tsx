@@ -78,7 +78,6 @@ export default function ArtikelAkte({
         {...(a
           ? { beschreibung: [a.gruppe, a.artikelnummer, kategorien.text(a.kategorie)].filter(Boolean).join(' · ') }
           : {})}
-        className="md:w-[36rem]"
       >
         {!a ? (
           <p className="text-muted-foreground text-sm">{t('preise.akte.nichtMehr')}</p>

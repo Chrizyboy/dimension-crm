@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
-import { Input } from '@/components/ui/input'
 import { useProjekte } from '../hooks/useProjekte'
 import type { ProjektStatus } from '../types'
 import { projektSpalten } from './projektSpalten'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 const ALLE: ProjektStatus[] = ['auftrag', 'im_bau', 'abgeschlossen']
 
@@ -27,7 +27,17 @@ export function ProjektListe({ aktiveId, onOeffnen }: { aktiveId: string | null;
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('projekte.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      >
         <Filterchips
           beschriftung={t('projekte.spalte.status')}
           optionen={ALLE.map((s) => ({
@@ -38,17 +48,7 @@ export function ProjektListe({ aktiveId, onOeffnen }: { aktiveId: string | null;
           gewaehlt={status}
           onChange={setStatus}
         />
-        <Input
-          type="search"
-          className="w-full sm:w-64"
-          aria-label={t('projekte.suche')}
-          placeholder={t('projekte.suche')}
-          value={suche}
-          onChange={(e) => {
-            setSuche(e.target.value)
-          }}
-        />
-      </div>
+      </Werkzeugleiste>
       {liste.error ? (
         <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
       ) : (

@@ -1,10 +1,11 @@
 import { CopyCheck } from 'lucide-react'
 import type { TFunction } from 'i18next'
-import { formatDatum, formatTelefon } from '@/lib/format'
+import { formatTelefon } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import type { Kontaktzeile } from '@/types/kontakt'
 import { StandBadge } from './StandBadge'
+import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Kontaktzeile>()
 
@@ -16,7 +17,7 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
   return spalte.columns([
     spalte.accessor('kundennummer', {
       header: t('kunden.spalte.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{formatKundennummer(c.getValue())}</span>,
+      cell: (c) => <NummerZelle>{formatKundennummer(c.getValue())}</NummerZelle>,
       meta: { breite: 'w-20', nurBreit: true },
     }),
     spalte.accessor('name', {
@@ -39,7 +40,7 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
     }),
     spalte.accessor('plz', {
       header: t('kunden.spalte.plz'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() ?? '–'}</span>,
+      cell: (c) => <NummerZelle>{c.getValue() ?? '–'}</NummerZelle>,
       meta: { nurBreit: true, breite: 'w-16' },
     }),
     spalte.accessor('ort', {
@@ -72,9 +73,7 @@ export function kundenSpalten(t: TFunction): Spalten<Kontaktzeile> {
       sortDescFirst: true,
       cell: (c) => {
         const wert = c.getValue()
-        return (
-          <span className="text-muted-foreground zahlen font-mono text-[12px]">{wert ? formatDatum(wert) : '–'}</span>
-        )
+        return <DatumZelle wert={wert} className="text-muted-foreground" />
       },
       meta: { nurBreit: true, breite: 'w-28' },
     }),

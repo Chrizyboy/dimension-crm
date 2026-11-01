@@ -100,7 +100,6 @@ export function MailAkte({ id, onSchliessen }: { id: string; onSchliessen: () =>
       >
         <DialogInhalt
           art="seite"
-          className="md:w-[38rem]"
           titel={m ? m.betreff || t('posteingang.ohneBetreff') : t('posteingang.akte.titel')}
           {...(m
             ? {

@@ -98,7 +98,7 @@ export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; on
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[42rem]"
+        breite="breit"
         titel={p.id ? t('marketing.post.bearbeiten') : t('marketing.post.neu')}
         beschreibung={t(`marketing.post.status.${p.status}`)}
         fuss={

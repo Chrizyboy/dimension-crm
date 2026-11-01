@@ -66,7 +66,6 @@ export function PersonAkte({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[32rem]"
         titel={person.name}
         beschreibung={sprache === 'fr' ? person.rolle_fr : person.rolle_de}
         {...(darfAendern

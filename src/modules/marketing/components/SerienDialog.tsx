@@ -101,7 +101,6 @@ export function SerienDialog({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[40rem]"
         titel={t(`marketing.serien.titel.${art}`)}
         beschreibung={t('marketing.serien.info', {
           anzahl: r.liste.length,
