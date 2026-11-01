@@ -1961,7 +1961,9 @@
     "handbuch_nur_entscheider": "Über diese Meldung entscheidet eine andere Person.",
     "handbuch_entscheid_ungueltig": "Bitte «Erledige es» oder «Nicht» wählen.",
     "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
-    "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration."
+    "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration.",
+    "einstellungen_kein_recht": "Diese Einstellung darf nur die Administration ändern.",
+    "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
