@@ -3559,6 +3559,14 @@
       "uhrzeit": "Merci de saisir une heure comme 07:30.",
       "pause": "Pause entre 0 et 600 minutes.",
       "stoppVorStart": "La fin doit être après le début."
+    },
+    "senden": {
+      "knopf": "Envoyer au client",
+      "titel": "Rapport {{nummer}} au client",
+      "pdf": "Création du PDF …",
+      "beschreibung": "Le PDF avec signature et photos est joint. L’envoi passe par la boîte d’envoi depuis ta messagerie.",
+      "betreff": "Votre rapport {{nummer}} ({{art}} du {{datum}})",
+      "text": "Bonjour\n\nVous trouverez en annexe le rapport {{nummer}} de notre intervention du {{datum}}. Nous restons volontiers à votre disposition.\n\nMeilleures salutations\nDimension Solaire"
     }
   },
   "unterschrift": {

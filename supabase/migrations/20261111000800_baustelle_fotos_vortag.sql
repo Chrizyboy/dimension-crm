@@ -3,6 +3,7 @@
 --    Die Liste ist Daten in einstellungen.baustelle, die Kategorie steht am Dokument.
 -- 2. «Stopp vergessen?»: läuft eine Zeit länger als eingestellt (Standard 10 Std.), bekommt die Person eine Glocke.
 -- 3. Am Vortag ab 16:00: SMS an den Kunden für Montage und Service-Termin (über den Ausgangskorb, mit Freigabe).
+-- 4. Service- oder Wartungs-Rapport abgeschlossen: Aufgabe «Rapport an Kunde senden» (PDF und Mail mit einem Klick).
 
 alter table public.dokumente add column if not exists kategorie text;
 comment on column public.dokumente.kategorie is 'Art des Fotos im Rapport (z. B. vorher, typenschild), für die Pflichtfotos.';
@@ -255,5 +256,15 @@ insert into public.automationen (vorlage, reihenfolge, name_de, name_fr, beschre
   {"art": "sms", "absender": ["zustaendig", "rolle:innendienst", "rolle:admin"],
    "text": {"de": "Dimension Solaire: Morgen kommt unser Techniker zu Ihnen ({Fall}). Bei Verhinderung bitte kurz melden. Danke!",
             "fr": "Dimension Solaire : notre technicien passera chez vous demain ({Fall}). En cas d’empêchement, merci de nous prévenir."}}
+ ]$j$),
+('rapport_kunde', 240,
+ 'Rapport abgeschlossen: PDF an den Kunden',
+ 'Rapport clôturé : PDF au client',
+ 'Ist ein Service- oder Wartungs-Rapport abgeschlossen, bekommt der Innendienst eine Aufgabe, das Rapport-PDF zu senden (in der Akte «An Kunde senden»: PDF und Mail sind vorbereitet).',
+ 'Quand un rapport de service ou d’entretien est clôturé, le service interne reçoit une tâche pour envoyer le PDF (dans le dossier « Envoyer au client » : PDF et e-mail sont préparés).',
+ true, 'rapport.abgeschlossen', '[{"feld": "rapport.art", "op": "in", "wert": ["service", "wartung"]}]', $j$[
+  {"art": "aufgabe", "an": ["rolle:innendienst", "rolle:admin"], "faellig_tage": 1,
+   "titel": {"de": "Rapport {Rapport} an den Kunden senden", "fr": "Envoyer le rapport {Rapport} au client"},
+   "text": {"de": "{Name}: in der Akte «An Kunde senden».", "fr": "{Name} : dans le dossier « Envoyer au client »."}}
  ]$j$)
 on conflict (vorlage) do nothing;

@@ -3559,6 +3559,14 @@
       "uhrzeit": "Bitte eine Uhrzeit wie 07:30 eingeben.",
       "pause": "Pause zwischen 0 und 600 Minuten.",
       "stoppVorStart": "Stopp muss nach dem Start liegen."
+    },
+    "senden": {
+      "knopf": "An Kunde senden",
+      "titel": "Rapport {{nummer}} an den Kunden",
+      "pdf": "PDF wird erstellt …",
+      "beschreibung": "Das PDF mit Unterschrift und Fotos ist angehängt. Gesendet wird über den Ausgangskorb aus deinem Postfach.",
+      "betreff": "Ihr Rapport {{nummer}} ({{art}} vom {{datum}})",
+      "text": "Guten Tag\n\nIm Anhang finden Sie den Rapport {{nummer}} zu unserem Einsatz vom {{datum}}. Bei Fragen sind wir gerne für Sie da.\n\nFreundliche Grüsse\nDimension Solaire"
     }
   },
   "unterschrift": {
