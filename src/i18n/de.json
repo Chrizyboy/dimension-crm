@@ -2799,6 +2799,18 @@
         "zweck": "Einmalvergütung Pronovo",
         "hinweis": "Diese Angaben dienen zur Anmeldung der Einmalvergütung bei Pronovo. Die Anmeldung erfolgt online; kantonale oder kommunale Förderungen separat prüfen."
       }
+    },
+    "blocker": {
+      "bewilligung": "Bewilligung spät",
+      "material": "Material bestellen",
+      "frist": "Frist vorbei",
+      "filter": "Baustellen filtern",
+      "filterwert": {
+        "alle": "Alle",
+        "blocker": "Mit Blocker",
+        "bewilligung": "Bewilligung",
+        "material": "Material"
+      }
     }
   },
   "kundeWahl": {
@@ -4446,7 +4458,9 @@
       "rapport_abgeschlossen": "Rapport abgeschlossen",
       "bestellung_ohne_bestaetigung": "Bestellung ohne Bestätigung",
       "bestellung_ueberfaellig": "Lieferung überfällig",
-      "bestellung_teilgeliefert": "Teillieferung eingegangen"
+      "bestellung_teilgeliefert": "Teillieferung eingegangen",
+      "projekt_frist_ueberfaellig": "Frist im Fahrplan vorbei",
+      "projekt_material_faellig": "Material bestellen fällig"
     },
     "ereignisHilfe": {
       "lead_neu": "Sobald ein Lead erfasst ist (von Hand, Website, Telefon). Der Import der Vorlage löst nichts aus.",
@@ -4465,7 +4479,9 @@
       "rapport_abgeschlossen": "Wenn ein Rapport mit Unterschrift abgeschlossen ist (Montage, Service, Wartung, IBN).",
       "bestellung_ohne_bestaetigung": "Wenn eine bestellte Lieferung nach einigen Tagen (Standard 3) noch keine Auftragsbestätigung hat.",
       "bestellung_ueberfaellig": "Wenn der Liefertermin vorbei ist und die Ware noch nicht ganz da ist; pro Liefertermin einmal.",
-      "bestellung_teilgeliefert": "Wenn beim Wareneingang nur ein Teil gekommen ist; pro Tag einmal."
+      "bestellung_teilgeliefert": "Wenn beim Wareneingang nur ein Teil gekommen ist; pro Tag einmal.",
+      "projekt_frist_ueberfaellig": "Wenn die Frist eines Schritts vorbei und er nicht erledigt ist; eingereichte Gesuche zählen nicht (die überwacht «Gesuch eingereicht»).",
+      "projekt_material_faellig": "Wenn «bestellen bis» (Baubeginn minus Lieferfrist aus Einstellungen › Einkauf) erreicht und das Material noch nicht bestellt ist."
     },
     "aktion": {
       "aufgabe": "Aufgabe erstellen",

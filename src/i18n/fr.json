@@ -2799,6 +2799,18 @@
         "zweck": "Rétribution unique Pronovo",
         "hinweis": "Ces données servent à annoncer la rétribution unique auprès de Pronovo. L’annonce se fait en ligne ; vérifier séparément les subventions cantonales ou communales."
       }
+    },
+    "blocker": {
+      "bewilligung": "Autorisation en retard",
+      "material": "Commander le matériel",
+      "frist": "Délai dépassé",
+      "filter": "Filtrer les chantiers",
+      "filterwert": {
+        "alle": "Tous",
+        "blocker": "Avec blocage",
+        "bewilligung": "Autorisation",
+        "material": "Matériel"
+      }
     }
   },
   "kundeWahl": {
@@ -4446,7 +4458,9 @@
       "rapport_abgeschlossen": "Rapport terminé",
       "bestellung_ohne_bestaetigung": "Commande sans confirmation",
       "bestellung_ueberfaellig": "Livraison en retard",
-      "bestellung_teilgeliefert": "Livraison partielle reçue"
+      "bestellung_teilgeliefert": "Livraison partielle reçue",
+      "projekt_frist_ueberfaellig": "Délai du planning dépassé",
+      "projekt_material_faellig": "Commande de matériel due"
     },
     "ereignisHilfe": {
       "lead_neu": "Dès qu’un lead est saisi (à la main, site web, téléphone). L’import de l’ancien CRM ne déclenche rien.",
@@ -4465,7 +4479,9 @@
       "rapport_abgeschlossen": "Quand un rapport est terminé avec signature (montage, service, entretien, mise en service).",
       "bestellung_ohne_bestaetigung": "Quand une commande n’a toujours pas de confirmation après quelques jours (3 par défaut).",
       "bestellung_ueberfaellig": "Quand la date de livraison est passée et que tout n’est pas arrivé ; une fois par date.",
-      "bestellung_teilgeliefert": "Quand seule une partie est arrivée à la réception ; une fois par jour."
+      "bestellung_teilgeliefert": "Quand seule une partie est arrivée à la réception ; une fois par jour.",
+      "projekt_frist_ueberfaellig": "Quand le délai d’une étape est dépassé sans qu’elle soit faite ; les demandes déposées ne comptent pas (suivies par « Demande déposée »).",
+      "projekt_material_faellig": "Quand la date « commander avant » (début des travaux moins le délai de livraison des réglages Achats) est atteinte et que le matériel n’est pas commandé."
     },
     "aktion": {
       "aufgabe": "Créer une tâche",
