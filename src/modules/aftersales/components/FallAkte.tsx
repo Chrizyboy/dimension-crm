@@ -17,6 +17,7 @@ import { tonVonFarbe } from '@/lib/kontakt'
 import { dokumentAdresse } from '@/services/dokumente'
 import { useAktion } from '../hooks/useAktion'
 import { useFall, usePersonen } from '../hooks/useService'
+import { AnlageKopf } from './AnlageKopf'
 import { GarantieAbschnitt } from './GarantieAbschnitt'
 import { anhangHochladen, aufgabeZumFall, fallNotiz, fallSpeichern } from '../services/service'
 import { KATEGORIEN, PRIORITAETEN, STATUS, type FallEingabe } from '../types'
@@ -123,6 +124,7 @@ export function FallAkte({ id, onSchliessen }: { id: string; onSchliessen: () =>
                 bezug_id: f.id,
               }}
             />
+            <AnlageKopf anlageId={f.anlage_id} />
             <AkteAbschnitt titel={t('service.akte.angaben')}>
               <dl>
                 <Angabe label={t('service.feld.kunde')}>

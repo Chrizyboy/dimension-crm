@@ -33,6 +33,10 @@ export const useKundenAnlagen = (kontaktId: string | null) =>
   })
 
 /** Aktive Personen. */
+/** Eine Anlage (null = keine gewählt). */
+export const useAnlage = (id: string | null) =>
+  useQuery({ queryKey: ['service', 'anlage', id], enabled: an && !!id, queryFn: () => s.ladeAnlage(id ?? '') })
+
 export const usePersonen = () =>
   useQuery({ queryKey: ['service', 'personen'], enabled: an, queryFn: s.ladePersonen, staleTime: 10 * 60_000 })
 

@@ -2860,7 +2860,8 @@
       "notiz": "Notiz zum Verlauf",
       "notizSpeichern": "Notiz speichern",
       "anhaenge": "Anhänge",
-      "hochladen": "Datei hochladen"
+      "hochladen": "Datei hochladen",
+      "anlage": "Anlage"
     },
     "anlagen": {
       "ansicht": "Anlagen",
@@ -2917,6 +2918,15 @@
     "garantieHinweis": {
       "anlage": "Anlage hat Garantie bis {{bis}}, als Garantiefall vorgeschlagen.",
       "komponenten": "Noch in Garantie: {{liste}}. Als Garantiefall vorgeschlagen."
+    },
+    "anlage": {
+      "adresse": "Adresse",
+      "ibn": "Inbetriebnahme",
+      "garantie": "Garantie bis",
+      "inGarantie": "in Garantie",
+      "monitoring": "Monitoring",
+      "oeffnen": "öffnen",
+      "garantieBis": "Garantie bis {{datum}}"
     }
   },
   "wartung": {

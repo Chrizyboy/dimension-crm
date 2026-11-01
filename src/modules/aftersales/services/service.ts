@@ -189,6 +189,13 @@ export async function ladeKundenAnlagen(kontaktId: string): Promise<Anlage[]> {
   return (data as unknown as AnlageRoh[]).map(alsAnlage)
 }
 
+/** Eine Anlage, z. B. für den Kopf in der Akte eines Service-Falls. */
+export async function ladeAnlage(id: string): Promise<Anlage | null> {
+  const { data, error } = await db().from('anlagen').select(ANLAGE_FELDER).eq('id', id).maybeSingle()
+  if (error) throw error
+  return data ? alsAnlage(data as unknown as AnlageRoh) : null
+}
+
 /** Anlage-Daten ändern. */
 export async function anlageSpeichern(
   id: string,
