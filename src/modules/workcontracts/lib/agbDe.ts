@@ -1,6 +1,6 @@
 /**
  * AGB der Dimension Solaire (20 Punkte), Wortlaut der Vorlage Muri 2026 (Deutsch). Steht nach dem Vertrag,
- * zweispaltig. Änderungen am Wortlaut nur nach Rücksprache mit Chris (Entscheid 0031).
+ * zweispaltig. Änderungen am Wortlaut nur nach Rücksprache mit Chris (Entscheid 0034).
  */
 export const AGB_DE: readonly (readonly [string, readonly string[]])[] = [
   [
@@ -114,7 +114,7 @@ export const AGB_DE: readonly (readonly [string, readonly string[]])[] = [
       '15.2. Der Kunde kann verlangen, dass die Mängel behoben werden (Nachbesserung). Die Dimension Solaire und der Kunde vereinbaren dazu eine angemessene Frist. Können die Mängel innerhalb dieser Frist nicht behoben werden, kann der Kunde die Mängel auf Kosten der Dimension Solaire durch einen Dritten beheben lassen oder einen Preisabschlag verlangen.',
       '15.3. Er kann nur vom Vertrag zurücktreten, wenn die Annahme des Werks unzumutbar ist und die Entfernung des Werks für die Dimension Solaire keine unverhältnismässigen Nachteile mit sich bringt. In dem Fall schuldet er keine Vergütung, bereits bezahlte Vergütungen erhält er zurück. Der Unternehmer muss das Werk innert angemessener Frist entfernen, ansonsten kann der Kunde es auf Kosten des Unternehmers entfernen lassen.',
       '15.4. Es besteht eine Rügefrist von 2 Jahren ab dem Tag der Abnahme. Entdeckt der Kunde einen Mangel, zeigt ihn aber nicht rechtzeitig an, so hat er den dadurch verursachten Schaden selbst zu tragen.',
-      '15.5. Mängel, die der Kunde erst nach Ablauf der ersten 2 Jahre nach Abnahme entdeckt, sind verdeckte Mängel. Die Dimension Solaire haftet dafür während weiterer 3 Jahre nach Ablauf der Rügefrist nach Absatz 15.4 bzw. bis 5 Jahre nach Abnahme, aber nur, wenn der Kunde sie innert 7 Kalendertagen nach Entdeckung schriftlich angezeigt hat.',
+      '15.5. Mängel, die der Kunde erst nach Ablauf der ersten 2 Jahre nach Abnahme entdeckt, sind verdeckte Mängel. Die Dimension Solaire haftet dafür während weiterer 3 Jahre nach Ablauf der Rügefrist nach Absatz 15.4 bzw. bis 5 Jahre nach Abnahme, aber nur, wenn der Kunde sie innert 60 Tagen nach Entdeckung schriftlich angezeigt hat.',
       '15.6. Bei einer Abnahme ohne Prüfung haftet die Dimension Solaire nicht für verdeckte Mängel, die bei einer Abnahme mit Prüfung entdeckt worden wären.',
       '15.7. Die Beweislast für einen verdeckten Mangel liegt beim Kunden.',
     ],

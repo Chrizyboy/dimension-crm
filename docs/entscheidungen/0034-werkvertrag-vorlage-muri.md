@@ -1,4 +1,4 @@
-# 0031 – Werkvertrag nach Vorlage Muri, mit Anzahlungsrechnung
+# 0034 – Werkvertrag nach Vorlage Muri, mit Anzahlungsrechnung
 
 **Datum:** 31.10.2026 · **Entschieden von:** Chris
 
@@ -33,11 +33,10 @@ und gefielen Chris («perfekt»). Das CRM druckte bisher einen eigenen Vertrag m
 - Damit Module sich nicht importieren, liegen Laden, PDF und Ablage der Rechnung in `src/services/` (`rechnungsdaten`,
   `rechnungPdf`, `zahlteil`), Typen in `src/types/rechnung.ts`, QR-Hilfen in `src/lib/rechnung.ts`.
 
-## Offen
+## Weitere Punkte
 
-- AGB 15.5 verlangt die Anzeige verdeckter Mängel «innert 7 Kalendertagen»; seit 1.1.2026 gilt für Bauwerke eine
-  Rügefrist von mindestens 60 Tagen (Art. 367 Abs. 1bis, 370 Abs. 4 OR), kürzere Fristen sind unwirksam. Wortlaut
-  vorerst unverändert wie in der Vorlage, Chris entscheidet.
+- AGB 15.5: verdeckte Mängel sind innert 60 Tagen nach Entdeckung anzuzeigen (vorher 7 Kalendertage), weil seit
+  1.1.2026 für Bauwerke eine Rügefrist von mindestens 60 Tagen gilt (Art. 367 Abs. 1bis, 370 Abs. 4 OR). Chris, 1.11.2026.
 - Unterschriften liegen nur im privaten Speicher, nie im Repo.
 
 ## Nebenbei behoben
