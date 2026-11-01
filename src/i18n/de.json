@@ -3457,7 +3457,9 @@
       "verrechnungFehlt": "Bitte die Verrechnung wählen.",
       "grundFehlt": "Bitte den Grund angeben.",
       "unterschriftFehlt": "Es fehlen Name oder Unterschrift.",
-      "fotosFehlen": "Pflichtfotos fehlen: {{liste}}"
+      "fotosFehlen": "Pflichtfotos fehlen: {{liste}}",
+      "fotosWerbung": "Kunde erlaubt Fotos für Werbung",
+      "fotosWerbungHinweis": "Ohne Namen und Adresse. Nach der Inbetriebnahme entsteht ein Referenz-Post als Entwurf."
     },
     "neu": {
       "knopf": "Neuer Rapport",
@@ -4473,6 +4475,10 @@
       "grund": "Grund (freiwillig)",
       "datum": "Datum der Einwilligung",
       "quelle": "Nachweis (z. B. Formular Messe, Mail vom …)"
+    },
+    "nachruest": {
+      "hinweis": "Vorschlag Nachrüstung «{{merkmal}}»: {{anzahl}} Kunden passen, der Mail-Entwurf ist bereit. Vor dem Senden prüfen und anpassen.",
+      "knopf": "Alle wählen und Mail-Entwurf öffnen"
     }
   },
   "automationen": {

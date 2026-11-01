@@ -6552,6 +6552,7 @@ export type Database = {
           erstellt_am: string
           erstellt_von: string | null
           fotos: string[]
+          fotos_werbung: boolean
           geaendert_am: string
           geloescht_am: string | null
           id: string
@@ -6580,6 +6581,7 @@ export type Database = {
           erstellt_am?: string
           erstellt_von?: string | null
           fotos?: string[]
+          fotos_werbung?: boolean
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
@@ -6607,6 +6609,7 @@ export type Database = {
           erstellt_am?: string
           erstellt_von?: string | null
           fotos?: string[]
+          fotos_werbung?: boolean
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
@@ -10548,6 +10551,7 @@ export type Database = {
       grossprojekt_vorrat_freigeben: { Args: Record<PropertyKey, never>; Returns: number }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
+      handbuch_pruefen: { Args: Record<PropertyKey, never>; Returns: number }
       handbuch_speichern: {
         Args: {
           p_art: string

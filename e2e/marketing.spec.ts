@@ -42,6 +42,11 @@ test('Marketing: alle Reiter ohne Verstösse', async ({ page }) => {
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
+
+  // Vorschlag «Nachrüstung» aus der Glocke: Hinweis mit fertigem Mail-Entwurf (Modul-Prüfung 34B)
+  await page.goto('/#/marketing?ansicht=anschreiben&anlage=ohne_batterie')
+  await expect(page.getByTestId('nachruest-vorschlag')).toContainText('Ohne Batterie')
+  expect(await verstoesse(page)).toEqual([])
 })
 
 test('Kunden anschreiben: Einwilligung, Serien-Mail, abmelden und wieder anmelden', async ({ page }) => {

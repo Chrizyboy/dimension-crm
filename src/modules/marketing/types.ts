@@ -67,6 +67,10 @@ export interface MarketingVorlagen {
   mail: Zweisprachig<Textvorlage>
   abmelden: Zweisprachig<string>
   newsletter_max_woerter: number
+  /** Fertige Mail-Entwürfe für die Nachrüst-Zielgruppen (Modul-Prüfung 34B). */
+  nachruest?: Partial<Record<Exclude<ZielFilter['anlage'], ''>, Zweisprachig<Textvorlage>>>
+  /** Text des Referenz-Posts nach der IBN mit {Ort} und {Anlage}. */
+  referenz_post?: Zweisprachig<string>
   social: {
     themen: string[]
     regeln: Partial<Record<Netzwerk, string>>

@@ -3457,7 +3457,9 @@
       "verrechnungFehlt": "Merci de choisir la facturation.",
       "grundFehlt": "Merci d’indiquer le motif.",
       "unterschriftFehlt": "Il manque le nom ou la signature.",
-      "fotosFehlen": "Photos obligatoires manquantes : {{liste}}"
+      "fotosFehlen": "Photos obligatoires manquantes : {{liste}}",
+      "fotosWerbung": "Le client autorise les photos pour la publicité",
+      "fotosWerbungHinweis": "Sans nom ni adresse. Après la mise en service, un post de référence est préparé en brouillon."
     },
     "neu": {
       "knopf": "Nouveau rapport",
@@ -4473,6 +4475,10 @@
       "grund": "Motif (facultatif)",
       "datum": "Date du consentement",
       "quelle": "Preuve (p. ex. formulaire salon, e-mail du …)"
+    },
+    "nachruest": {
+      "hinweis": "Proposition de rééquipement «{{merkmal}}» : {{anzahl}} clients correspondent, le brouillon d’e-mail est prêt. À vérifier et adapter avant l’envoi.",
+      "knopf": "Tout sélectionner et ouvrir le brouillon"
     }
   },
   "automationen": {

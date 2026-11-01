@@ -29,6 +29,7 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
   const [grund, setGrund] = useState('')
   const [fertig, setFertig] = useState(r.montage_fertig)
   const [erledigt, setErledigt] = useState(true)
+  const [werbung, setWerbung] = useState(false)
   const [verrechnung, setVerrechnung] = useState<Verrechnung | null>(r.verrechnung)
   const [laeuft, setLaeuft] = useState(false)
   const sprache = useUi((z) => z.sprache)
@@ -55,6 +56,7 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
         verrechnung,
         ...(r.art === 'montage' ? { montage_fertig: fertig } : {}),
         ...(r.art === 'service' ? { fall_erledigt: erledigt } : {}),
+        ...(werbung ? { fotos_werbung: true } : {}),
       })
       await qc.invalidateQueries({ queryKey: ['baustelle'] })
       melde('ok', { de: 'Rapport abgeschlossen', fr: 'Rapport clôturé' })
@@ -100,6 +102,15 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
             <label className="flex items-center justify-between gap-3 text-sm">
               {t('baustelle.abschluss.fallErledigt')}
               <Switch checked={erledigt} onCheckedChange={setErledigt} />
+            </label>
+          )}
+          {(r.art === 'montage' || r.art === 'ibn') && (
+            <label className="flex items-center justify-between gap-3 text-sm">
+              <span className="flex flex-col">
+                {t('baustelle.abschluss.fotosWerbung')}
+                <span className="text-muted-foreground text-xs">{t('baustelle.abschluss.fotosWerbungHinweis')}</span>
+              </span>
+              <Switch checked={werbung} onCheckedChange={setWerbung} />
             </label>
           )}
           {(r.art === 'service' || r.art === 'wartung') && (
