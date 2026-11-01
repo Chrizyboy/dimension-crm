@@ -118,6 +118,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Service (Modul-Prüfung 22A): dringende Fälle ohne Reaktion melden, nur intern (Glocke).
+  ergebnis.service_eskalation = await job('service_eskalation', 15, async () => {
+    const n = await dienst.rpc<number>('service_eskalieren', {})
+    return `${n} ${n === 1 ? 'Fall' : 'Fälle'} gemeldet`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
