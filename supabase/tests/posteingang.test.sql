@@ -19,7 +19,7 @@ insert into public.personen (id, kuerzel, name, email, auth_user_id, rolle, rech
    '00000000-0000-0000-0000-0000000018a3', 'admin', '{admin}');
 update public.integrationen set einstellungen = einstellungen || '{"eigene_domains": ["dimension-solaire.ch"]}'
  where dienst = 'microsoft';
-update public.einstellungen set wert = wert || '{"zustaendig": {"standard": {"de": "pe_anna", "fr": "pe_ben"}},
+update public.einstellungen set wert = wert || '{"verteilen": ["pe_ben", "pe_anna"],
   "vertretung": {"pe_ben": "pe_anna"}, "eskalation": ["pe_chef"]}'::jsonb
  where schluessel = 'posteingang';
 
@@ -74,36 +74,34 @@ select is((select projekt_id from public.posteingang where kennung = '<pe1@x>'),
   'Projekt über die Nummer gefunden (Gross-/Kleinschreibung egal)');
 select is((select kontakt_id from public.posteingang where kennung = '<pe1@x>'), (select id from t where name = 'kunde'),
   'Kunde aus dem Projekt');
-select is((select zustaendig_id from public.posteingang where kennung = '<pe1@x>'), '00000000-0000-0000-0000-0000000018b2'::uuid,
-  'zuständig ist die Projektleitung');
+select is((select zustaendig_id from public.posteingang where kennung = '<pe1@x>'), '00000000-0000-0000-0000-0000000018b1'::uuid,
+  'eigenes Postfach: zuständig ist die Person selbst, nicht die Projektleitung');
 select is((select stand || '/' || sichtbar from public.posteingang where kennung = '<pe1@x>'), 'offen/team',
   'Störung: offen und fürs Team sichtbar');
 select is((select frist_am from public.posteingang where kennung = '<pe1@x>'), '2026-11-02 11:00+01'::timestamptz,
   'Störung: 2 Arbeitsstunden');
-select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b2'
+select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b1'
   and titel_de = 'Störung gemeldet'), 1, 'Störung meldet sich gleich mit der Glocke');
 
--- Einordnen nach Sprache und Stellvertretung (Ben ist laut Outlook abwesend)
+-- Eigenes Postfach bleibt bei der Person, auch auf Französisch (Ben ist laut Outlook abwesend)
 insert into public.kalender_eintraege (person_id, beginn, ende, anzeige_als, quelle)
 values ('00000000-0000-0000-0000-0000000018b2', now() - interval '1 hour', now() + interval '1 day', 'oof', 'outlook');
 select public.posteingang_sortieren((select id from public.posteingang where kennung = '<pe5@x>'),
   '{"art": "anfrage", "sprache": "fr", "antwort_noetig": true, "zusammenfassung": "Veut une offre"}');
-select is((select zustaendig_id::text || '/' || vertretung_fuer::text from public.posteingang where kennung = '<pe5@x>'),
-  '00000000-0000-0000-0000-0000000018b1/00000000-0000-0000-0000-0000000018b2', 'Französisch → Ben, abwesend → Anna');
+select is((select zustaendig_id::text || '/' || coalesce(vertretung_fuer::text, '-') from public.posteingang
+  where kennung = '<pe5@x>'), '00000000-0000-0000-0000-0000000018b1/-', 'Französisch im eigenen Postfach → Anna selbst');
 select is((select frist_am from public.posteingang where kennung = '<pe5@x>'), '2026-11-02 13:00+01'::timestamptz,
   'Anfrage: 4 Arbeitsstunden');
 
--- Ohne eigene Regel im Posteingang: Anfragen gehen an den Verkauf nach Sprache (einstellungen.zustaendigkeiten)
-update public.einstellungen set wert = wert #- '{zustaendig,standard,de}' where schluessel = 'posteingang';
-update public.einstellungen set wert = wert || '{"verkauf": [{"sprache": "de", "person": "pe_chef"}]}'::jsonb
- where schluessel = 'zustaendigkeiten';
-select public.posteingang_aufnehmen('00000000-0000-0000-0000-0000000018b1', 'me', $j$[
+-- Team-Postfach (info@): verteilt Ben, der ist abwesend → Stellvertretung Anna; Glocke an alle, die verteilen
+select public.posteingang_aufnehmen('00000000-0000-0000-0000-0000000018b1', 'info@dimension-solaire.ch', $j$[
   {"kennung": "<pe6@x>", "outlook_id": "o6", "eingang_am": "2026-11-02T09:00:00+01:00", "von": "neu.pe@gmail.com",
    "betreff": "Offerte Solaranlage"}]$j$);
 select public.posteingang_sortieren((select id from public.posteingang where kennung = '<pe6@x>'),
   '{"art": "anfrage", "sprache": "de", "antwort_noetig": true, "zusammenfassung": "Will eine Offerte"}');
-select is((select zustaendig_id from public.posteingang where kennung = '<pe6@x>'), '00000000-0000-0000-0000-0000000018b3'::uuid,
-  'Deutsche Anfrage ohne eigene Regel → Verkauf Deutsch aus den Zuständigkeiten');
+select is((select zustaendig_id::text || '/' || vertretung_fuer::text from public.posteingang where kennung = '<pe6@x>'),
+  '00000000-0000-0000-0000-0000000018b1/00000000-0000-0000-0000-0000000018b2',
+  'info@: verteilen Ben (abwesend) → Anna; Glocke an beide');
 
 -- Beantwortet: gesendete Mail im gleichen Verlauf (auch direkt aus Outlook)
 select is(public.posteingang_antworten('[{"konversation": "k1", "von": "pe-ben@dimension-solaire.ch",
