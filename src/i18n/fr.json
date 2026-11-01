@@ -4398,7 +4398,13 @@
       "projekt_schritt_erledigt": "Étape de projet terminée",
       "wartung_faellig": "Maintenance due",
       "rechnung_ueberfaellig": "Facture en retard",
-      "zeit_monatlich": "Chaque mois"
+      "zeit_monatlich": "Chaque mois",
+      "service_neu": "Nouveau cas de service",
+      "service_erledigt": "Cas de service terminé",
+      "rapport_abgeschlossen": "Rapport terminé",
+      "bestellung_ohne_bestaetigung": "Commande sans confirmation",
+      "bestellung_ueberfaellig": "Livraison en retard",
+      "bestellung_teilgeliefert": "Livraison partielle reçue"
     },
     "ereignisHilfe": {
       "lead_neu": "Dès qu’un lead est saisi (à la main, site web, téléphone). L’import de l’ancien CRM ne déclenche rien.",
@@ -4411,7 +4417,13 @@
       "projekt_schritt_erledigt": "Quand une étape du planning est terminée (contrat, montage, mise en service …).",
       "wartung_faellig": "Quand la prochaine maintenance entre dans le délai d’avance (paramètres).",
       "rechnung_ueberfaellig": "Quand une facture reste ouverte au-delà du délai de grâce ; ensuite une fois par niveau de rappel.",
-      "zeit_monatlich": "En début de mois, une fois par mois."
+      "zeit_monatlich": "En début de mois, une fois par mois.",
+      "service_neu": "Dès qu’un cas de service est saisi. Les cas repris de l’ancien CRM ne déclenchent rien.",
+      "service_erledigt": "Quand un cas de service passe à « terminé ».",
+      "rapport_abgeschlossen": "Quand un rapport est terminé avec signature (montage, service, entretien, mise en service).",
+      "bestellung_ohne_bestaetigung": "Quand une commande n’a toujours pas de confirmation après quelques jours (3 par défaut).",
+      "bestellung_ueberfaellig": "Quand la date de livraison est passée et que tout n’est pas arrivé ; une fois par date.",
+      "bestellung_teilgeliefert": "Quand seule une partie est arrivée à la réception ; une fois par jour."
     },
     "aktion": {
       "aufgabe": "Créer une tâche",
@@ -4493,7 +4505,18 @@
       "kontakt_sprache": "Client : langue",
       "kontakt_email": "Client : e-mail",
       "kontakt_hat_wartungsvertrag": "Client : a un contrat de maintenance",
-      "zustaendig_id": "Personne responsable"
+      "zustaendig_id": "Personne responsable",
+      "service_kategorie": "Service : catégorie",
+      "service_prioritaet": "Service : priorité",
+      "service_status": "Service : état",
+      "service_garantie": "Service : garantie",
+      "rapport_art": "Rapport : type",
+      "rapport_verrechnung": "Rapport : facturation",
+      "bestellung_status": "Commande : état",
+      "bestellung_lieferant": "Commande : fournisseur",
+      "bestellung_tage_seit_bestellt": "Commande : jours depuis la commande",
+      "bestellung_tage_ueberfaellig": "Commande : jours de retard",
+      "kontakt_telefon": "Contact : téléphone"
     },
     "op": {
       "=": "est",
@@ -4551,7 +4574,10 @@
       "neu_verbinden": "Reconnecter le compte Microsoft",
       "anmeldung": "Connexion au service expirée",
       "bedingungen_ok": "Toutes les conditions sont remplies",
-      "pruefen_ok": "Toujours utile, on continue"
+      "pruefen_ok": "Toujours utile, on continue",
+      "nicht_verrechenbar": "Pas payant, pas de projet de facture",
+      "schon_verrechnet": "Déjà facturé",
+      "rapport_nicht_verrechenbar": "Rapport non facturable"
     },
     "empfaenger": {
       "zustaendig": "Personne responsable",

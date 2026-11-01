@@ -4398,7 +4398,13 @@
       "projekt_schritt_erledigt": "Projekt-Schritt erledigt",
       "wartung_faellig": "Wartung fällig",
       "rechnung_ueberfaellig": "Rechnung überfällig",
-      "zeit_monatlich": "Jeden Monat"
+      "zeit_monatlich": "Jeden Monat",
+      "service_neu": "Neuer Service-Fall",
+      "service_erledigt": "Service-Fall erledigt",
+      "rapport_abgeschlossen": "Rapport abgeschlossen",
+      "bestellung_ohne_bestaetigung": "Bestellung ohne Bestätigung",
+      "bestellung_ueberfaellig": "Lieferung überfällig",
+      "bestellung_teilgeliefert": "Teillieferung eingegangen"
     },
     "ereignisHilfe": {
       "lead_neu": "Sobald ein Lead erfasst ist (von Hand, Website, Telefon). Der Import der Vorlage löst nichts aus.",
@@ -4411,7 +4417,13 @@
       "projekt_schritt_erledigt": "Wenn ein Schritt im Fahrplan erledigt ist (Vertrag, Montage, IBN …).",
       "wartung_faellig": "Wenn die nächste Wartung in die Vorlaufzeit kommt (Einstellungen).",
       "rechnung_ueberfaellig": "Wenn eine Rechnung länger als die Karenzfrist offen ist; danach je Mahnstufe einmal.",
-      "zeit_monatlich": "Am Monatsanfang, einmal pro Monat."
+      "zeit_monatlich": "Am Monatsanfang, einmal pro Monat.",
+      "service_neu": "Sobald ein Service-Fall erfasst ist. Übernommene Fälle aus der Vorlage lösen nichts aus.",
+      "service_erledigt": "Wenn ein Service-Fall auf «erledigt» gesetzt wird.",
+      "rapport_abgeschlossen": "Wenn ein Rapport mit Unterschrift abgeschlossen ist (Montage, Service, Wartung, IBN).",
+      "bestellung_ohne_bestaetigung": "Wenn eine bestellte Lieferung nach einigen Tagen (Standard 3) noch keine Auftragsbestätigung hat.",
+      "bestellung_ueberfaellig": "Wenn der Liefertermin vorbei ist und die Ware noch nicht ganz da ist; pro Liefertermin einmal.",
+      "bestellung_teilgeliefert": "Wenn beim Wareneingang nur ein Teil gekommen ist; pro Tag einmal."
     },
     "aktion": {
       "aufgabe": "Aufgabe erstellen",
@@ -4493,7 +4505,18 @@
       "kontakt_sprache": "Kunde: Sprache",
       "kontakt_email": "Kunde: E-Mail",
       "kontakt_hat_wartungsvertrag": "Kunde: hat Wartungsvertrag",
-      "zustaendig_id": "Zuständige Person"
+      "zustaendig_id": "Zuständige Person",
+      "service_kategorie": "Service: Kategorie",
+      "service_prioritaet": "Service: Priorität",
+      "service_status": "Service: Stand",
+      "service_garantie": "Service: Garantie",
+      "rapport_art": "Rapport: Art",
+      "rapport_verrechnung": "Rapport: Verrechnung",
+      "bestellung_status": "Bestellung: Stand",
+      "bestellung_lieferant": "Bestellung: Lieferant",
+      "bestellung_tage_seit_bestellt": "Bestellung: Tage seit bestellt",
+      "bestellung_tage_ueberfaellig": "Bestellung: Tage überfällig",
+      "kontakt_telefon": "Kontakt: Telefon"
     },
     "op": {
       "=": "ist",
@@ -4551,7 +4574,10 @@
       "neu_verbinden": "Microsoft-Konto neu verbinden",
       "anmeldung": "Anmeldung beim Dienst abgelaufen",
       "bedingungen_ok": "Alle Bedingungen erfüllt",
-      "pruefen_ok": "Noch nötig, es geht weiter"
+      "pruefen_ok": "Noch nötig, es geht weiter",
+      "nicht_verrechenbar": "Nicht kostenpflichtig, kein Rechnungsentwurf",
+      "schon_verrechnet": "Schon verrechnet",
+      "rapport_nicht_verrechenbar": "Rapport ist nicht verrechenbar"
     },
     "empfaenger": {
       "zustaendig": "Zuständige Person",
