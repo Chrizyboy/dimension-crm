@@ -3621,7 +3621,8 @@
     "reiter": {
       "rechnungen": "Factures",
       "verrechnen": "À facturer",
-      "firmen": "Sociétés & réglages"
+      "firmen": "Sociétés & réglages",
+      "heute": "À vérifier"
     },
     "filter": "Filtrer les factures",
     "filterwert": {
@@ -3821,6 +3822,26 @@
       "Jahr": "an",
       "Stk": "pce",
       "h": "h"
+    },
+    "heute": {
+      "leer": "Rien à vérifier aujourd’hui",
+      "leerText": "Les brouillons, relances et nouveaux paiements apparaissent ici dès que le CRM les a préparés.",
+      "zahlEntwuerfe_one": "{{count}} brouillon prêt",
+      "zahlEntwuerfe_other": "{{count}} brouillons prêts",
+      "zahlMahnungen_one": "{{count}} relance en attente",
+      "zahlMahnungen_other": "{{count}} relances en attente",
+      "zahlZahlungen_one": "{{count}} paiement (14 jours)",
+      "zahlZahlungen_other": "{{count}} paiements (14 jours)",
+      "entwuerfe": "Brouillons à émettre",
+      "mahnungen": "Relances à valider",
+      "zahlungen": "Paiements des 14 derniers jours",
+      "keineEntwuerfe": "Aucun brouillon.",
+      "keineMahnungen": "Aucune relance en attente.",
+      "keineZahlungen": "Aucun nouveau paiement.",
+      "seit": "depuis le {{datum}}",
+      "fehler": "Échec de l’envoi",
+      "alleFreigeben_one": "Valider la relance",
+      "alleFreigeben_other": "Valider les {{count}}"
     }
   },
   "spesen": {
@@ -4152,6 +4173,10 @@
       "nichts": "Rien à payer cette semaine.",
       "weitere_one": "+ {{count}} autre cette semaine",
       "weitere_other": "+ {{count}} autres cette semaine"
+    },
+    "reserve": {
+      "knapp": "Juste en semaine {{kw}} : solde {{stand}}, {{fehlt}} sous la réserve.",
+      "vorschlag": "Suggestion : émettre plus tôt ou relancer « {{titel}} » ({{betrag}})."
     }
   },
   "marketing": {

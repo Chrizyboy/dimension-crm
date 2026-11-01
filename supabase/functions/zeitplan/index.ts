@@ -28,6 +28,7 @@ import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
+import { abgleichDaten } from '../_shared/abaninja.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
@@ -127,6 +128,24 @@ Deno.serve(async (req) => {
   // Baustelle (Modul-Prüfung 23A): Zeiten, die zu lange laufen, der Person melden («Stopp vergessen?»), nur Glocke.
   ergebnis.zeiten_vergessen = await job('zeiten_vergessen', 60, async () => {
     const n = await dienst.rpc<number>('zeiten_vergessen_melden', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Abgleich AbaNinja jede Nacht (Modul-Prüfung 25A): einmal in der Stunde ab 02:00 Zürich, Änderungen der letzten
+  // drei Tage (deckt einen ausgefallenen Lauf ab). Zahlungen und Lieferantenrechnungen setzt die Datenbank.
+  if (ein.abaninja) {
+    ergebnis.abaninja_abgleich = await job('abaninja_abgleich', 60, async () => {
+      const stunde = Number(new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric' }).format(new Date()))
+      if (stunde !== 2) return 'wartet auf die Nacht'
+      const seit = new Date(Date.now() - 3 * 86_400_000).toISOString()
+      const r = await dienst.rpc<Record<string, number>>('abaninja_abgleich_anwenden', { p: await abgleichDaten(seit) })
+      return `${r.zahlungen ?? 0} Zahlungen, ${r.belege_neu ?? 0} Lieferantenrechnungen neu`
+    })
+  }
+
+  // Finanzen (Modul-Prüfung 25A): Mahnlauf montags und Spesen am Monatsanfang als Glocke an die Buchhaltung.
+  ergebnis.finanzen_erinnern = await job('finanzen_erinnern', 60, async () => {
+    const n = await dienst.rpc<number>('finanzen_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
   })
 

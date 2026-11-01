@@ -8732,6 +8732,7 @@ export type Database = {
           projekt_id: string
           rechnung_am: string | null
           rechnung_nr: string | null
+          reihenfolge: number
         }
         ComputedFields: never
         Insert: {
@@ -8752,6 +8753,7 @@ export type Database = {
           projekt_id: string
           rechnung_am?: string | null
           rechnung_nr?: string | null
+          reihenfolge?: number
         }
         Update: {
           abaninja_id?: string | null
@@ -8771,6 +8773,7 @@ export type Database = {
           projekt_id?: string
           rechnung_am?: string | null
           rechnung_nr?: string | null
+          reihenfolge?: number
         }
         Relationships: [
           {
@@ -10513,6 +10516,7 @@ export type Database = {
         Returns: undefined
       }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
+      finanzen_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
@@ -10825,6 +10829,7 @@ export type Database = {
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      rechnungen_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       ressource_eintrag_erfassen: {
         Args: {
           p_art: string

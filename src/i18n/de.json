@@ -3621,7 +3621,8 @@
     "reiter": {
       "rechnungen": "Rechnungen",
       "verrechnen": "Zu verrechnen",
-      "firmen": "Firmen & Einstellungen"
+      "firmen": "Firmen & Einstellungen",
+      "heute": "Heute prüfen"
     },
     "filter": "Rechnungen filtern",
     "filterwert": {
@@ -3821,6 +3822,26 @@
       "Jahr": "Jahr",
       "Stk": "Stk.",
       "h": "h"
+    },
+    "heute": {
+      "leer": "Heute ist nichts zu prüfen",
+      "leerText": "Entwürfe, Mahnungen und neue Zahlungen erscheinen hier, sobald das CRM sie vorbereitet hat.",
+      "zahlEntwuerfe_one": "{{count}} Entwurf bereit",
+      "zahlEntwuerfe_other": "{{count}} Entwürfe bereit",
+      "zahlMahnungen_one": "{{count}} Mahnung wartet",
+      "zahlMahnungen_other": "{{count}} Mahnungen warten",
+      "zahlZahlungen_one": "{{count}} Zahlung (14 Tage)",
+      "zahlZahlungen_other": "{{count}} Zahlungen (14 Tage)",
+      "entwuerfe": "Entwürfe zum Stellen",
+      "mahnungen": "Mahnungen zur Freigabe",
+      "zahlungen": "Zahlungen der letzten 14 Tage",
+      "keineEntwuerfe": "Keine Entwürfe.",
+      "keineMahnungen": "Keine Mahnungen warten.",
+      "keineZahlungen": "Keine neuen Zahlungen.",
+      "seit": "seit {{datum}}",
+      "fehler": "Senden fehlgeschlagen",
+      "alleFreigeben_one": "Mahnung freigeben",
+      "alleFreigeben_other": "Alle {{count}} freigeben"
     }
   },
   "spesen": {
@@ -4152,6 +4173,10 @@
       "nichts": "Diese Woche nichts fällig.",
       "weitere_one": "+ {{count}} weitere diese Woche",
       "weitere_other": "+ {{count}} weitere diese Woche"
+    },
+    "reserve": {
+      "knapp": "Knapp in KW {{kw}}: Stand {{stand}}, {{fehlt}} unter der Reserve.",
+      "vorschlag": "Vorschlag: «{{titel}}» ({{betrag}}) früher stellen oder nachfassen."
     }
   },
   "marketing": {
