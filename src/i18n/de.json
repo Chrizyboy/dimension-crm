@@ -2913,7 +2913,11 @@
     },
     "niemand": "niemand",
     "tage_one": "{{count}} Tag",
-    "tage_other": "{{count}} Tage"
+    "tage_other": "{{count}} Tage",
+    "garantieHinweis": {
+      "anlage": "Anlage hat Garantie bis {{bis}}, als Garantiefall vorgeschlagen.",
+      "komponenten": "Noch in Garantie: {{liste}}. Als Garantiefall vorgeschlagen."
+    }
   },
   "wartung": {
     "titel": "Wartungsverträge",

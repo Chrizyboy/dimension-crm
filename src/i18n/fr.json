@@ -2913,7 +2913,11 @@
     },
     "niemand": "personne",
     "tage_one": "{{count}} jour",
-    "tage_other": "{{count}} jours"
+    "tage_other": "{{count}} jours",
+    "garantieHinweis": {
+      "anlage": "Installation sous garantie jusqu’au {{bis}}, proposée comme cas de garantie.",
+      "komponenten": "Encore sous garantie : {{liste}}. Proposé comme cas de garantie."
+    }
   },
   "wartung": {
     "titel": "Contrats d’entretien",

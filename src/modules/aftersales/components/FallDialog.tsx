@@ -9,6 +9,8 @@ import { Input, Textarea } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/schalter'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useAktion } from '../hooks/useAktion'
+import { garantieAm } from '../lib/garantie'
+import { formatDatum } from '@/lib/format'
 import { useKundenAnlagen, usePersonen } from '../hooks/useService'
 import { fallSchema } from '../schema'
 import { fallSpeichern } from '../services/service'
@@ -43,15 +45,25 @@ export function FallDialog({
     beschreibung: vorlage?.beschreibung ?? '',
     kategorie: 'stoerung',
     prioritaet: 'normal',
-    garantie: false,
+    garantie: null as boolean | null,
     anlage_id: '',
     person_id: '',
     termin_am: '',
   })
   const [fehler, setFehler] = useState<Partial<Record<string, string>>>({})
 
+  // Fall aus einem Anruf: Kunde über die Telefonnummer gefunden, hat er nur eine Anlage, gilt sie als gewählt.
+  const nurEine = anlagen.data?.length === 1 ? anlagen.data[0] : undefined
+  const anlageId = w.anlage_id || nurEine?.id || ''
+  const garantie = garantieAm(
+    (anlagen.data ?? []).find((a) => a.id === anlageId),
+    new Date().toISOString().slice(0, 10),
+  )
+  // Hat die Anlage noch Garantie, ist «Garantiefall» vorgeschlagen, bis die Person das Häkchen selbst setzt.
+  const garantieFall = w.garantie ?? garantie !== null
+
   async function speichern() {
-    const g = fallSchema.safeParse({ ...w, kontakt_id: kunde?.id ?? '' })
+    const g = fallSchema.safeParse({ ...w, anlage_id: anlageId, garantie: garantieFall, kontakt_id: kunde?.id ?? '' })
     if (!g.success) {
       setFehler(Object.fromEntries(g.error.issues.map((i) => [String(i.path[0]), t(i.message)])))
       return
@@ -120,7 +132,7 @@ export function FallDialog({
               <Feld id="sf-anlage" label={t('service.feld.anlage')}>
                 <Auswahl
                   id="sf-anlage"
-                  value={w.anlage_id}
+                  value={anlageId}
                   onValueChange={(v) => {
                     setW({ ...w, anlage_id: v })
                   }}
@@ -132,6 +144,17 @@ export function FallDialog({
                   }))}
                 />
               </Feld>
+              {garantie && (
+                <p className="text-info mt-1 text-xs" data-testid="sf-garantie-hinweis">
+                  {garantie.anlage
+                    ? t('service.garantieHinweis.anlage', { bis: formatDatum(garantie.anlage) })
+                    : t('service.garantieHinweis.komponenten', {
+                        liste: garantie.komponenten
+                          .map((k) => `${k.art} (${k.hersteller}) ${formatDatum(k.bis)}`)
+                          .join(', '),
+                      })}
+                </p>
+              )}
             </div>
           )}
           <div className="sm:col-span-2">
@@ -155,7 +178,7 @@ export function FallDialog({
               id="sf-kat"
               value={w.kategorie}
               onValueChange={(v) => {
-                setW({ ...w, kategorie: v, garantie: v === 'garantie' || w.garantie })
+                setW({ ...w, kategorie: v, garantie: v === 'garantie' ? true : w.garantie })
               }}
               optionen={KATEGORIEN.map((k) => ({ wert: k, text: kat.text(k) }))}
             />
@@ -192,7 +215,7 @@ export function FallDialog({
           </Feld>
           <label className="flex items-center gap-2 text-sm sm:col-span-2">
             <Checkbox
-              checked={w.garantie}
+              checked={garantieFall}
               onCheckedChange={(c) => {
                 setW({ ...w, garantie: c === true })
               }}
