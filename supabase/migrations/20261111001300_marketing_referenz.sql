@@ -95,7 +95,9 @@ begin
   return v_id;
 end
 $$;
-revoke execute on function intern.referenz_post_entwurf(uuid) from public, anon, authenticated;
+-- Läuft aus rapport_abschliessen (Rechte der Person am Handy); legt nur unter den Bedingungen oben einen Entwurf an.
+revoke execute on function intern.referenz_post_entwurf(uuid) from public, anon;
+grant execute on function intern.referenz_post_entwurf(uuid) to authenticated;
 
 CREATE OR REPLACE FUNCTION public.rapport_abschliessen(p_id uuid, p jsonb DEFAULT '{}'::jsonb)
  RETURNS void

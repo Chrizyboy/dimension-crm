@@ -18,6 +18,7 @@
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
+//  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
@@ -30,6 +31,7 @@ import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
+import { bewertungenEinschaetzen } from '../_shared/bewertung.ts'
 import { guthaben } from '../_shared/aspsms.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
@@ -177,6 +179,9 @@ Deno.serve(async (req) => {
     const n = await dienst.rpc<number>('dienste_pruefen', { p_extern: extern })
     return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}`
   })
+
+  // Empfehlung und Bewertung (Modul-Prüfung 32A): KI schätzt fällige Anfragen ein, gesendet wird nur nach Freigabe.
+  ergebnis.bewertungen = await job('bewertungen', 60, () => bewertungenEinschaetzen())
 
   // Mein Tag (Modul-Prüfung 27A): alte Freigaben im Ausgangskorb (werktags) und «Woche in Zahlen» (montags), nur Glocke.
   ergebnis.tag_erinnern = await job('tag_erinnern', 60, async () => {

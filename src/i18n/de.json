@@ -1963,7 +1963,11 @@
     "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
     "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration.",
     "einstellungen_kein_recht": "Diese Einstellung darf nur die Administration ändern.",
-    "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration."
+    "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration.",
+    "empfehlung_werbesperre": "Der Kunde hat eine Werbesperre. Keine Anfrage senden.",
+    "empfehlung_nicht_bereit": "Diese Anfrage ist nicht mehr offen.",
+    "empfehlung_kein_bewertungslink": "Es ist kein Google-Bewertungslink eingetragen (Automationen › Einstellungen).",
+    "empfehlung_kein_recht": "Dafür fehlt das Recht."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -4188,7 +4192,8 @@
       "anschreiben": "Kunden anschreiben",
       "social": "Social Media",
       "newsletter": "Newsletter",
-      "vorlagen": "Vorlagen"
+      "vorlagen": "Vorlagen",
+      "empfehlungen": "Empfehlungen"
     },
     "gruppe": {
       "interessent": "Interessent",
@@ -4479,6 +4484,41 @@
     "nachruest": {
       "hinweis": "Vorschlag Nachrüstung «{{merkmal}}»: {{anzahl}} Kunden passen, der Mail-Entwurf ist bereit. Vor dem Senden prüfen und anpassen.",
       "knopf": "Alle wählen und Mail-Entwurf öffnen"
+    },
+    "empfehlung": {
+      "anfragen": "Bitte um Google-Bewertung",
+      "anfragenHinweis": "Nach der Inbetriebnahme schätzt die KI ein, ob der Kunde zufrieden ist. Jede Anfrage einzeln senden; sie enthält den Bewertungs-Link und den persönlichen Empfehlungs-Link.",
+      "keineAnfragen": "Keine Anfragen",
+      "keineAnfragenText": "Nach jeder Inbetriebnahme erscheint hier eine Anfrage, sobald sie fällig ist.",
+      "einschaetzung": {
+        "zufrieden": "KI: zufrieden",
+        "unklar": "KI: unklar",
+        "unzufrieden": "KI: unzufrieden"
+      },
+      "status": {
+        "pruefen": "KI prüft",
+        "bereit": "Bereit",
+        "gesendet": "Gesendet",
+        "verworfen": "Nicht gesendet"
+      },
+      "werbesperre": "Werbesperre",
+      "ohneKi": "Ohne KI eingeschätzt: bitte selbst kurz prüfen.",
+      "gesendetVon": "Freigegeben von {{name}} am {{datum}}",
+      "senden": "Anfrage senden",
+      "trotzdemSenden": "Trotzdem senden",
+      "nichtSenden": "Nicht senden",
+      "liste": "Kunden werben Kunden",
+      "listeHinweis": "Leads mit Empfehlungs-Code. Die Gutschrift entsteht erst, wenn der neue Kunde den Werkvertrag unterschreibt; Betrag unter Einstellungen «empfehlung».",
+      "keineEmpfehlungen": "Noch keine Empfehlungen",
+      "keineEmpfehlungenText": "Kommt ein Lead mit Empfehlungs-Code (EMP-…), erscheint er hier.",
+      "vonAn": "{{von}} empfiehlt {{an}}",
+      "stand": {
+        "lead": "Lead",
+        "auftrag": "Gutschrift offen",
+        "ausbezahlt": "Gutschrift erledigt",
+        "verfallen": "Verfallen"
+      },
+      "ausbezahlt": "Gutschrift erledigt"
     }
   },
   "automationen": {

@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Marketing» (Phase 11, Entscheid 0022). */
 
 /** Reiter der Seite (#/marketing?ansicht=…). */
-export const ANSICHTEN = ['anschreiben', 'social', 'newsletter', 'vorlagen'] as const
+export const ANSICHTEN = ['anschreiben', 'social', 'newsletter', 'empfehlungen', 'vorlagen'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 export type Sprache = 'de' | 'fr'
@@ -174,4 +174,44 @@ export interface Referenzanlage {
   wechselrichter: string | null
   batterie: string | null
   datum: string | null
+}
+
+/** KI-Einschätzung der Zufriedenheit vor der Bitte um eine Google-Bewertung. */
+export type Einschaetzung = 'zufrieden' | 'unklar' | 'unzufrieden'
+
+/** Bewertungsanfrage nach der IBN (Sicht `bewertungsanfragen_liste`). */
+export interface Bewertungsanfrage {
+  id: string
+  status: 'pruefen' | 'bereit' | 'gesendet' | 'verworfen'
+  faellig_am: string
+  einschaetzung: Einschaetzung | null
+  grund: string | null
+  ohne_ki: boolean
+  entschieden_am: string | null
+  entschieden_von: string | null
+  verworfen_grund: string | null
+  kontakt_id: string
+  projekt_id: string | null
+  kunde: string | null
+  email: string | null
+  werbesperre: boolean
+  projekt_nummer: string | null
+  ort: string | null
+}
+
+/** Empfehlung eines Kunden (Sicht `empfehlungen_liste`). */
+export interface Empfehlung {
+  id: string
+  status: 'lead' | 'auftrag' | 'ausbezahlt' | 'verfallen'
+  gutschrift_rappen: number | null
+  gutschrift_am: string | null
+  ausbezahlt_am: string | null
+  erstellt_am: string
+  empfehler_id: string
+  empfehler: string | null
+  verkaufschance_id: string | null
+  lead_nummer: string | null
+  neukunde: string | null
+  projekt_id: string | null
+  projekt_nummer: string | null
 }

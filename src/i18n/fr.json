@@ -1963,7 +1963,11 @@
     "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
     "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider.",
     "einstellungen_kein_recht": "Seule l’administration peut modifier ce réglage.",
-    "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne."
+    "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne.",
+    "empfehlung_werbesperre": "Le client a un blocage publicitaire. Ne pas envoyer de demande.",
+    "empfehlung_nicht_bereit": "Cette demande n’est plus ouverte.",
+    "empfehlung_kein_bewertungslink": "Aucun lien d’avis Google n’est saisi (Automatisations › Réglages).",
+    "empfehlung_kein_recht": "Droit manquant."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -4188,7 +4192,8 @@
       "anschreiben": "Écrire aux clients",
       "social": "Réseaux sociaux",
       "newsletter": "Newsletter",
-      "vorlagen": "Modèles"
+      "vorlagen": "Modèles",
+      "empfehlungen": "Recommandations"
     },
     "gruppe": {
       "interessent": "Intéressé",
@@ -4479,6 +4484,41 @@
     "nachruest": {
       "hinweis": "Proposition de rééquipement «{{merkmal}}» : {{anzahl}} clients correspondent, le brouillon d’e-mail est prêt. À vérifier et adapter avant l’envoi.",
       "knopf": "Tout sélectionner et ouvrir le brouillon"
+    },
+    "empfehlung": {
+      "anfragen": "Demande d’avis Google",
+      "anfragenHinweis": "Après la mise en service, l’IA estime si le client est satisfait. Envoyer chaque demande individuellement ; elle contient le lien d’avis et le lien de recommandation personnel.",
+      "keineAnfragen": "Aucune demande",
+      "keineAnfragenText": "Après chaque mise en service, une demande apparaît ici dès qu’elle est due.",
+      "einschaetzung": {
+        "zufrieden": "IA : satisfait",
+        "unklar": "IA : incertain",
+        "unzufrieden": "IA : insatisfait"
+      },
+      "status": {
+        "pruefen": "L’IA vérifie",
+        "bereit": "Prête",
+        "gesendet": "Envoyée",
+        "verworfen": "Non envoyée"
+      },
+      "werbesperre": "Blocage publicitaire",
+      "ohneKi": "Estimé sans IA : merci de vérifier vous-même.",
+      "gesendetVon": "Validée par {{name}} le {{datum}}",
+      "senden": "Envoyer la demande",
+      "trotzdemSenden": "Envoyer quand même",
+      "nichtSenden": "Ne pas envoyer",
+      "liste": "Clients parrains",
+      "listeHinweis": "Leads avec code de recommandation. L’avoir n’est créé que lorsque le nouveau client signe le contrat ; montant dans le réglage «empfehlung».",
+      "keineEmpfehlungen": "Pas encore de recommandations",
+      "keineEmpfehlungenText": "Dès qu’un lead arrive avec un code (EMP-…), il apparaît ici.",
+      "vonAn": "{{von}} recommande {{an}}",
+      "stand": {
+        "lead": "Lead",
+        "auftrag": "Avoir ouvert",
+        "ausbezahlt": "Avoir réglé",
+        "verfallen": "Expiré"
+      },
+      "ausbezahlt": "Avoir réglé"
     }
   },
   "automationen": {
