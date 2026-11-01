@@ -57,6 +57,20 @@ export async function importiereOfferten(k) {
     k.ids.offertNr.set(id, nr)
   }
 
+  // Von Hand getauschte Nummern (ablage.mjs korrigiereNummern): Ein früherer Lauf hat die alten Nummern
+  // gespeichert. Erst frei machen, sonst verletzt das Update die Eindeutigkeit, solange beide noch die alte tragen.
+  const getauscht = projekte.filter(([, p]) => p._nrVorlage !== undefined).map(([id]) => id)
+  for (const tabelle of ['offerten', 'projekte', 'werkvertraege']) {
+    for (const id of getauscht) {
+      const altId = tabelle === 'werkvertraege' ? `project:${id}:werkvertrag` : `project:${id}`
+      const { error } = await k.db
+        .from(tabelle)
+        .update({ nummer: `tausch-${id}` })
+        .eq('alt_id', altId)
+      if (error) throw new Error(`${tabelle} (Nummer tauschen): ${error.message}`)
+    }
+  }
+
   // «Verantwortlich» rechnete V233 bei jedem Anzeigen aus (offerPerson): nur von Hand Gewähltes war gespeichert.
   // Das neue CRM speichert die Person, deshalb wird hier dieselbe Regel einmal angewendet.
   const leads = alleLeads(k).map(({ nummer, lead }) => ({ ...lead, id: nummer }))
