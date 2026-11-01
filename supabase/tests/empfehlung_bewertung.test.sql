@@ -2,9 +2,12 @@
 -- Werbesperre) und das Empfehlungsprogramm (Code im Lead, Gutschrift erst mit unterschriebenem Werkvertrag,
 -- Dankes-Mail wartet auf Freigabe). Modul-Prüfung 32A. Ausführen: npm run db:test
 begin;
-select plan(14);
+select plan(16);
 
-update public.einstellungen set wert = wert || '{"bewertung_link": "https://g.page/r/beispiel/review"}' where schluessel = 'automationen';
+update public.einstellungen set wert = wert || '{"bewertung_link": "https://g.page/r/beispiel/review", "bewertung_link_fr": "https://g.page/r/exemple/review"}'
+ where schluessel = 'automationen';
+select is(intern.bewertung_link('fr'), 'https://g.page/r/exemple/review', 'Romandie: eigener Link');
+select is(intern.bewertung_link('de'), 'https://g.page/r/beispiel/review', 'Deutschschweiz');
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000044a1', 'p44-vk@test.local');
 insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte, sprache) values
   ('00000000-0000-0000-0000-0000000044b1', 'p44_vk', 'Vreni Verkauf', '00000000-0000-0000-0000-0000000044a1', 'verkauf', '{}', 'de');

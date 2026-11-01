@@ -4888,8 +4888,9 @@
       "wartung_vorlauf_tage_hilfe": "Autant de jours avant la prochaine maintenance, elle est considérée comme due.",
       "rechnung_karenz_tage": "Facture : délai de grâce (jours)",
       "rechnung_karenz_tage_hilfe": "Autant de jours après l’échéance, une facture est considérée en retard.",
-      "bewertung_link": "Lien pour les avis",
-      "bewertung_link_hilfe": "P. ex. avis Google ; apparaît dans la variable {Bewertungslink}.",
+      "bewertung_link": "Lien pour les avis (Suisse alémanique)",
+      "bewertung_link_fr": "Lien pour les avis (Romandie)",
+      "bewertung_link_hilfe": "P. ex. avis Google ; apparaît dans la variable {Bewertungslink}. Les clients francophones reçoivent le lien de la Romandie.",
       "linkFalsch": "Merci de saisir une adresse avec https://."
     }
   },

@@ -4888,8 +4888,9 @@
       "wartung_vorlauf_tage_hilfe": "So viele Tage vor der nächsten Wartung gilt sie als fällig.",
       "rechnung_karenz_tage": "Rechnung: Karenzfrist (Tage)",
       "rechnung_karenz_tage_hilfe": "So viele Tage nach der Fälligkeit gilt eine Rechnung als überfällig.",
-      "bewertung_link": "Link für Bewertungen",
-      "bewertung_link_hilfe": "Z. B. Google-Bewertung; erscheint im Platzhalter {Bewertungslink}.",
+      "bewertung_link": "Link für Bewertungen (Deutschschweiz)",
+      "bewertung_link_fr": "Link für Bewertungen (Romandie)",
+      "bewertung_link_hilfe": "Z. B. Google-Bewertung; erscheint im Platzhalter {Bewertungslink}. Kunden mit Sprache Französisch bekommen den Link der Romandie.",
       "linkFalsch": "Bitte eine Adresse mit https:// eingeben."
     }
   },
