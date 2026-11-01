@@ -3,7 +3,7 @@
 // und prüft die alten Daten auf Plausibilität. Liest nur, schreibt nichts in die Datenbank.
 //
 //   SUPABASE_SERVICE_ROLE_KEY=… npm run import:abgleich -- "CRM-Umzug.zip" [--bericht abgleich.md] [--heute 2026-10-31]
-//     [--ablage sharepoint-adjudications.json] [--gebaut-bis 2024] [--korrekturen korrekturen.json]   (gleich wie beim Import, sonst weicht der Stand ab)
+//     [--ablage sharepoint-adjudications.json] [--gebaut-bis 2025] [--korrekturen korrekturen.json]   (gleich wie beim Import, sonst weicht der Stand ab)
 //
 // Gegen die Cloud: SUPABASE_URL=https://….supabase.co dazu. Der Schlüssel gehört nie in Git oder in die App.
 

@@ -15,10 +15,11 @@ import { readFileSync } from 'node:fs'
 const GEWONNEN = ['closed', 'construction', 'done']
 
 /**
- * Bis zu diesem Ablage-Jahr gilt ein Auftrag als gebaut (Chris 1.11.2026: «2024 natürlich schon gebaut»).
+ * Bis zu diesem Ablage-Jahr gilt ein Auftrag als gebaut (Chris 1.11.2026: «2024 natürlich schon gebaut»,
+ * Frage 20A: auch die Ordner «A 2025»).
  * Er bleibt im CRM, aber abgeschlossen statt bei den geplanten Projekten. Mit --gebaut-bis änderbar.
  */
-export const GEBAUT_BIS = 2024
+export const GEBAUT_BIS = 2025
 
 /** Unterordner, die im laufenden Jahr «fertig gebaut» heissen (Bulle «2. FINI», Muri «Fertig», Abschlussarbeiten). */
 const FERTIG = /fini|fertig|abschluss|clôture|cloture/i

@@ -2,7 +2,7 @@
 // Importiert den Export «Für Web-App» der Vorlage V233 in die Datenbank und erstellt einen Zählbericht.
 //
 //   SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip" [--bericht import-bericht.md]
-//     [--ablage sharepoint-adjudications.json] [--gebaut-bis 2024] [--korrekturen korrekturen.json]   (gewonnen nur mit Ordner in Adjudications, siehe ablage.mjs)
+//     [--ablage sharepoint-adjudications.json] [--gebaut-bis 2025] [--korrekturen korrekturen.json]   (gewonnen nur mit Ordner in Adjudications, siehe ablage.mjs)
 //
 // Wiederholbar: jede Zeile hat eine alt_id; ein zweiter Lauf aktualisiert statt zu verdoppeln.
 // Standardmässig nur gegen die lokale Datenbank; der echte Umzug (Phase 16) braucht --umzug.
