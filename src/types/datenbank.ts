@@ -2199,6 +2199,7 @@ export type Database = {
           hochgeladen_am: string | null
           hochgeladen_von: string | null
           id: string
+          kategorie: string | null
           mime_typ: string | null
           name: string
           ordner: string | null
@@ -2222,6 +2223,7 @@ export type Database = {
           hochgeladen_am?: string | null
           hochgeladen_von?: string | null
           id?: string
+          kategorie?: string | null
           mime_typ?: string | null
           name: string
           ordner?: string | null
@@ -2244,6 +2246,7 @@ export type Database = {
           hochgeladen_am?: string | null
           hochgeladen_von?: string | null
           id?: string
+          kategorie?: string | null
           mime_typ?: string | null
           name?: string
           ordner?: string | null
@@ -8805,6 +8808,7 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          erinnert_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           exportiert_am: string | null
@@ -8827,6 +8831,7 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           exportiert_am?: string | null
@@ -8848,6 +8853,7 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           exportiert_am?: string | null
@@ -11040,6 +11046,7 @@ export type Database = {
       zeit_stoppen: { Args: { p: Json }; Returns: undefined }
       zeiten_exportieren: { Args: { p_ids: string[] }; Returns: string }
       zeiten_pruefen: { Args: { p_ids: string[] }; Returns: number }
+      zeiten_vergessen_melden: { Args: Record<PropertyKey, never>; Returns: number }
       zeitplan_ergebnis: { Args: { p_job: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       zeitplan_faellig: { Args: { p_job: string; p_minuten: number }; Returns: boolean }
       zeitplan_laeufe: {

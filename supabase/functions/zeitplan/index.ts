@@ -124,6 +124,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Fall' : 'Fälle'} gemeldet`
   })
 
+  // Baustelle (Modul-Prüfung 23A): Zeiten, die zu lange laufen, der Person melden («Stopp vergessen?»), nur Glocke.
+  ergebnis.zeiten_vergessen = await job('zeiten_vergessen', 60, async () => {
+    const n = await dienst.rpc<number>('zeiten_vergessen_melden', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})

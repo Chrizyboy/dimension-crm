@@ -118,7 +118,12 @@ export async function nachtragErfassen(rapportId: string, n: NachtragEingabe): P
 }
 
 /** Foto oder Unterschrift (Bild) als Dokument des Rapports ablegen. */
-export async function bildAblegen(rapportId: string, blob: Blob, ordner: 'fotos' | 'unterschrift'): Promise<string> {
+export async function bildAblegen(
+  rapportId: string,
+  blob: Blob,
+  ordner: 'fotos' | 'unterschrift',
+  kategorie?: string,
+): Promise<string> {
   const id = crypto.randomUUID()
   const endung = blob.type === 'image/png' ? 'png' : 'jpg'
   const name = `${ordner === 'fotos' ? 'Foto' : 'Unterschrift'}-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}.${endung}`
@@ -126,7 +131,15 @@ export async function bildAblegen(rapportId: string, blob: Blob, ordner: 'fotos'
     art: 'datei',
     blob,
     pfad: `rapporte/${rapportId}/${id}.${endung}`,
-    dokument: { id, name, mime_typ: blob.type, ordner, bezug_tabelle: 'rapporte', bezug_id: rapportId },
+    dokument: {
+      id,
+      name,
+      mime_typ: blob.type,
+      ordner,
+      bezug_tabelle: 'rapporte',
+      bezug_id: rapportId,
+      ...(kategorie ? { kategorie } : {}),
+    },
     bezug: rapportId,
     erstellt: jetzt(),
   })

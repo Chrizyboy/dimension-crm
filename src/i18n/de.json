@@ -3403,7 +3403,8 @@
     "foto": {
       "titel": "Fotos",
       "aufnehmen": "Foto aufnehmen",
-      "wartet": "Wartet auf Netz"
+      "wartet": "Wartet auf Netz",
+      "pflicht": "Pflichtfotos"
     },
     "ibn": {
       "titel": "Prüfpunkte IBN"
@@ -3454,7 +3455,8 @@
       "arbeitenFehlen": "Bitte zuerst die ausgeführten Arbeiten eintragen.",
       "verrechnungFehlt": "Bitte die Verrechnung wählen.",
       "grundFehlt": "Bitte den Grund angeben.",
-      "unterschriftFehlt": "Es fehlen Name oder Unterschrift."
+      "unterschriftFehlt": "Es fehlen Name oder Unterschrift.",
+      "fotosFehlen": "Pflichtfotos fehlen: {{liste}}"
     },
     "neu": {
       "knopf": "Neuer Rapport",
@@ -4460,7 +4462,9 @@
       "bestellung_ueberfaellig": "Lieferung überfällig",
       "bestellung_teilgeliefert": "Teillieferung eingegangen",
       "projekt_frist_ueberfaellig": "Frist im Fahrplan vorbei",
-      "projekt_material_faellig": "Material bestellen fällig"
+      "projekt_material_faellig": "Material bestellen fällig",
+      "einsatz_morgen": "Montage morgen",
+      "service_termin_morgen": "Service-Termin morgen"
     },
     "ereignisHilfe": {
       "lead_neu": "Sobald ein Lead erfasst ist (von Hand, Website, Telefon). Der Import der Vorlage löst nichts aus.",
@@ -4481,7 +4485,9 @@
       "bestellung_ueberfaellig": "Wenn der Liefertermin vorbei ist und die Ware noch nicht ganz da ist; pro Liefertermin einmal.",
       "bestellung_teilgeliefert": "Wenn beim Wareneingang nur ein Teil gekommen ist; pro Tag einmal.",
       "projekt_frist_ueberfaellig": "Wenn die Frist eines Schritts vorbei und er nicht erledigt ist; eingereichte Gesuche zählen nicht (die überwacht «Gesuch eingereicht»).",
-      "projekt_material_faellig": "Wenn «bestellen bis» (Baubeginn minus Lieferfrist aus Einstellungen › Einkauf) erreicht und das Material noch nicht bestellt ist."
+      "projekt_material_faellig": "Wenn «bestellen bis» (Baubeginn minus Lieferfrist aus Einstellungen › Einkauf) erreicht und das Material noch nicht bestellt ist.",
+      "einsatz_morgen": "Am Vortag einer geplanten Montage, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00).",
+      "service_termin_morgen": "Am Vortag eines Service- oder Wartungstermins, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00)."
     },
     "aktion": {
       "aufgabe": "Aufgabe erstellen",

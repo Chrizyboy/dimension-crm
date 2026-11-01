@@ -5,8 +5,10 @@ import type {
   Nachtrag,
   NachtragFilter,
   ProjektTreffer,
+  Pflichtfoto,
   Pruefpunkt,
   Rapport,
+  RapportArt,
   RapportBild,
   RapportFilter,
   Zeit,
@@ -67,7 +69,7 @@ export async function ladeRapporte(filter: RapportFilter): Promise<Rapport[]> {
 export async function ladeBilder(rapportId: string): Promise<RapportBild[]> {
   const { data, error } = await db()
     .from('dokumente')
-    .select('id, name, ordner, speicher_pfad')
+    .select('id, name, ordner, speicher_pfad, kategorie')
     .eq('bezug_tabelle', 'rapporte')
     .eq('bezug_id', rapportId)
     .is('geloescht_am', null)
@@ -101,6 +103,13 @@ export async function ladeZeiten(von: string, bis: string, person?: string | nul
   const { data, error } = await q.order('start')
   if (error) throw error
   return data as unknown as Zeit[]
+}
+
+/** Pflichtfotos je Rapport-Art (Einstellungen › Baustelle). */
+export async function ladePflichtfotos(): Promise<Partial<Record<RapportArt, Pflichtfoto[]>>> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'baustelle').maybeSingle()
+  if (error) throw error
+  return (data?.wert as { pflichtfotos?: unknown } | null)?.pflichtfotos ?? {}
 }
 
 /** Prüfpunkte des IBN-Protokolls (Einstellungen). */

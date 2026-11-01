@@ -196,6 +196,13 @@ export interface Nachtrag {
   erstellt_am: string
 }
 
+/** Ein Pflichtfoto je Rapport-Art (Liste in `einstellungen.baustelle.pflichtfotos`). */
+export interface Pflichtfoto {
+  schluessel: string
+  de: string
+  fr: string
+}
+
 /** Prüfpunkt des IBN-Protokolls (Liste in `einstellungen.ibn_pruefpunkte`). */
 export interface Pruefpunkt {
   schluessel: string
@@ -210,6 +217,8 @@ export interface RapportBild {
   id: string
   name: string
   ordner: string
+  /** Pflichtfoto-Kategorie (z. B. «vorher», «typenschild»), sonst null. */
+  kategorie: string | null
   speicher_pfad: string | null
   lokal: boolean
 }

@@ -22,9 +22,9 @@ insert into public.kontakte (id, art, kontaktart, vorname, nachname, email, tele
   ('00000000-0000-0000-0000-0000000012c1', 'person', 'privat', 'Ruth', 'Rechnung', 'ruth@beispiel.test', '+41790001201', 'de', true);
 
 -- Katalog und Vorlagen
-select is(jsonb_array_length(public.automation_katalog() -> 'ereignisse'), 19, 'Katalog kennt 19 Auslöser (11 aus Phase 12, 6 für Service, Rapport, Bestellung, 2 für Projekte)');
-select is((select count(*)::int from public.automationen where vorlage is not null and geloescht_am is null), 21,
-  '10 Vorlagen aus dem Auftrag, Meilenstein-Meldung, 6 für Service, Rapport und Bestellung, 4 für Projekte');
+select is(jsonb_array_length(public.automation_katalog() -> 'ereignisse'), 21, 'Katalog kennt 21 Auslöser (11 aus Phase 12, 6 für Service, Rapport, Bestellung, 4 für Projekte und Termine)');
+select is((select count(*)::int from public.automationen where vorlage is not null and geloescht_am is null), 23,
+  '10 Vorlagen aus dem Auftrag, Meilenstein-Meldung, 6 für Service, Rapport und Bestellung, 4 für Projekte, 2 SMS am Vortag');
 select is((select count(*)::int from public.automationen where vorlage is not null and modus <> 'freigabe'), 0,
   'alle Vorlagen stehen auf «mit Freigabe»');
 

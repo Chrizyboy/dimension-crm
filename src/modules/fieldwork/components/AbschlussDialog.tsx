@@ -9,7 +9,10 @@ import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
 import { melde } from '@/services/meldungen'
+import { useBilder, usePflichtfotos } from '../hooks/useBaustelle'
+import { fehlendePflichtfotos, pflichtFuer } from '../lib/pflichtfotos'
 import { rapportAbschliessen } from '../services/monteur'
+import { useUi } from '@/stores/ui'
 import type { Rapport, Verrechnung } from '../types'
 import { VerrechnungWahl } from './VerrechnungWahl'
 
@@ -28,14 +31,21 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
   const [erledigt, setErledigt] = useState(true)
   const [verrechnung, setVerrechnung] = useState<Verrechnung | null>(r.verrechnung)
   const [laeuft, setLaeuft] = useState(false)
+  const sprache = useUi((z) => z.sprache)
+  const bilder = useBilder(r.id)
+  const fotosFehlen = fehlendePflichtfotos(pflichtFuer(usePflichtfotos().data, r.art), bilder.data ?? [])
 
   const fehlt = !r.arbeiten?.trim()
     ? t('baustelle.abschluss.arbeitenFehlen')
-    : (r.art === 'service' || r.art === 'wartung') && !verrechnung
-      ? t('baustelle.abschluss.verrechnungFehlt')
-      : ohne
-        ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
-        : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
+    : fotosFehlen.length > 0
+      ? t('baustelle.abschluss.fotosFehlen', {
+          liste: fotosFehlen.map((p) => (sprache === 'fr' ? p.fr : p.de)).join(', '),
+        })
+      : (r.art === 'service' || r.art === 'wartung') && !verrechnung
+        ? t('baustelle.abschluss.verrechnungFehlt')
+        : ohne
+          ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
+          : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
 
   async function abschliessen() {
     setLaeuft(true)

@@ -3403,7 +3403,8 @@
     "foto": {
       "titel": "Photos",
       "aufnehmen": "Prendre une photo",
-      "wartet": "Attend le réseau"
+      "wartet": "Attend le réseau",
+      "pflicht": "Photos obligatoires"
     },
     "ibn": {
       "titel": "Points de contrôle MES"
@@ -3454,7 +3455,8 @@
       "arbeitenFehlen": "Merci d’abord de saisir les travaux effectués.",
       "verrechnungFehlt": "Merci de choisir la facturation.",
       "grundFehlt": "Merci d’indiquer le motif.",
-      "unterschriftFehlt": "Il manque le nom ou la signature."
+      "unterschriftFehlt": "Il manque le nom ou la signature.",
+      "fotosFehlen": "Photos obligatoires manquantes : {{liste}}"
     },
     "neu": {
       "knopf": "Nouveau rapport",
@@ -4460,7 +4462,9 @@
       "bestellung_ueberfaellig": "Livraison en retard",
       "bestellung_teilgeliefert": "Livraison partielle reçue",
       "projekt_frist_ueberfaellig": "Délai du planning dépassé",
-      "projekt_material_faellig": "Commande de matériel due"
+      "projekt_material_faellig": "Commande de matériel due",
+      "einsatz_morgen": "Montage demain",
+      "service_termin_morgen": "Intervention demain"
     },
     "ereignisHilfe": {
       "lead_neu": "Dès qu’un lead est saisi (à la main, site web, téléphone). L’import de l’ancien CRM ne déclenche rien.",
@@ -4481,7 +4485,9 @@
       "bestellung_ueberfaellig": "Quand la date de livraison est passée et que tout n’est pas arrivé ; une fois par date.",
       "bestellung_teilgeliefert": "Quand seule une partie est arrivée à la réception ; une fois par jour.",
       "projekt_frist_ueberfaellig": "Quand le délai d’une étape est dépassé sans qu’elle soit faite ; les demandes déposées ne comptent pas (suivies par « Demande déposée »).",
-      "projekt_material_faellig": "Quand la date « commander avant » (début des travaux moins le délai de livraison des réglages Achats) est atteinte et que le matériel n’est pas commandé."
+      "projekt_material_faellig": "Quand la date « commander avant » (début des travaux moins le délai de livraison des réglages Achats) est atteinte et que le matériel n’est pas commandé.",
+      "einsatz_morgen": "La veille d’un montage planifié, dès l’heure du rappel SMS (16h par défaut).",
+      "service_termin_morgen": "La veille d’une intervention de service ou d’entretien, dès l’heure du rappel SMS (16h par défaut)."
     },
     "aktion": {
       "aufgabe": "Créer une tâche",

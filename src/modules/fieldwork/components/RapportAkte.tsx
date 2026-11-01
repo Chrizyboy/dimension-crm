@@ -145,7 +145,7 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
                 />
               </AkteAbschnitt>
             )}
-            <FotoAbschnitt rapportId={r.id} offen={offen} />
+            <FotoAbschnitt rapportId={r.id} art={r.art} offen={offen} />
             {r.art !== 'ibn' && <NachtragAbschnitt rapportId={r.id} offen={offen} />}
             <AkteAbschnitt titel={t('baustelle.rapport.notizIntern')} offen={Boolean(r.notiz_intern)}>
               <Textarea

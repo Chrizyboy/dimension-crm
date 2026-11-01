@@ -40,7 +40,15 @@ export type Auftrag =
       art: 'datei'
       blob: Blob
       pfad: string
-      dokument: { id: string; name: string; mime_typ: string; ordner: string; bezug_tabelle: string; bezug_id: string }
+      dokument: {
+        id: string
+        name: string
+        mime_typ: string
+        ordner: string
+        bezug_tabelle: string
+        bezug_id: string
+        kategorie?: string
+      }
     })
 
 interface Stand {
