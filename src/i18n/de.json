@@ -5153,6 +5153,7 @@
       "termine": "Termine heute und morgen",
       "aufgaben": "Aufgaben",
       "vergeben": "Von mir vergeben",
+      "freigaben": "Wartet auf deine Freigabe",
       "nachfassen": "Offerten nachfassen",
       "neue_leads": "Neue Anfragen",
       "wiedervorlagen": "Wiedervorlagen",
@@ -5178,7 +5179,8 @@
       "zahlung": "Zahlung",
       "fall": "Fall",
       "kontrolle": "Kontrolle",
-      "wartung": "Wartung"
+      "wartung": "Wartung",
+      "freigabe": "Freigabe"
     },
     "heute": "heute",
     "morgen": "morgen",
@@ -5213,7 +5215,8 @@
     "reiter": {
       "verkauf": "Verkauf",
       "pipeline": "Pipeline pro Region",
-      "betrieb": "Aufträge und Auslastung"
+      "betrieb": "Aufträge und Auslastung",
+      "abwicklung": "Abwicklung"
     },
     "zeitraum": {
       "titel": "Zeitraum",
@@ -5355,6 +5358,19 @@
         "auftrag": "Auftrag",
         "im_bau": "im Bau",
         "abgeschlossen": "abgeschlossen"
+      }
+    },
+    "abwicklung": {
+      "hinweis": "Wie schnell und sauber laufen die Aufträge? Grün heisst Ziel erreicht, rot heisst darüber. Ziele unter Einstellungen.",
+      "ziel": "Ziel",
+      "tage_one": "{{count}} Tag",
+      "tage_other": "{{count}} Tage",
+      "zeile": {
+        "ibn": "Inbetriebnahmen im Zeitraum",
+        "dauer_vertrag_ibn": "Ø Vertrag bis Inbetriebnahme",
+        "fristen_ueberfaellig": "Fristen überfällig (aktuell)",
+        "material_spaet": "Material zu spät bestellt (aktuell)",
+        "faelle_dauer": "Ø Service-Fall bis erledigt"
       }
     }
   },

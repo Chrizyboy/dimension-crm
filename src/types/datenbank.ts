@@ -10596,6 +10596,7 @@ export type Database = {
           schluessel: string
           stand: string
           standort: string
+          tage: number
         }[]
       }
       kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
@@ -11027,6 +11028,7 @@ export type Database = {
       spesen_auszahlen: { Args: { p_datum?: string; p_ids: string[] }; Returns: number }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }

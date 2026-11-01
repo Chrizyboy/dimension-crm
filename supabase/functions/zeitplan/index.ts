@@ -151,6 +151,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
   })
 
+  // Mein Tag (Modul-Prüfung 27A): alte Freigaben im Ausgangskorb (werktags) und «Woche in Zahlen» (montags), nur Glocke.
+  ergebnis.tag_erinnern = await job('tag_erinnern', 60, async () => {
+    const n = await dienst.rpc<number>('tag_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})

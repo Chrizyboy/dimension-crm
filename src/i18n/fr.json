@@ -5153,6 +5153,7 @@
       "termine": "Rendez-vous aujourd’hui et demain",
       "aufgaben": "Tâches",
       "vergeben": "Confiées par moi",
+      "freigaben": "En attente de ta validation",
       "nachfassen": "Offres à relancer",
       "neue_leads": "Nouvelles demandes",
       "wiedervorlagen": "Rappels",
@@ -5178,7 +5179,8 @@
       "zahlung": "Paiement",
       "fall": "Cas",
       "kontrolle": "Contrôle",
-      "wartung": "Entretien"
+      "wartung": "Entretien",
+      "freigabe": "Validation"
     },
     "heute": "aujourd’hui",
     "morgen": "demain",
@@ -5213,7 +5215,8 @@
     "reiter": {
       "verkauf": "Vente",
       "pipeline": "Pipeline par région",
-      "betrieb": "Commandes et charge"
+      "betrieb": "Commandes et charge",
+      "abwicklung": "Exécution"
     },
     "zeitraum": {
       "titel": "Période",
@@ -5355,6 +5358,19 @@
         "auftrag": "Commande",
         "im_bau": "en chantier",
         "abgeschlossen": "terminé"
+      }
+    },
+    "abwicklung": {
+      "hinweis": "Les commandes avancent-elles vite et bien ? Vert = objectif atteint, rouge = dépassé. Objectifs dans les réglages.",
+      "ziel": "Objectif",
+      "tage_one": "{{count}} jour",
+      "tage_other": "{{count}} jours",
+      "zeile": {
+        "ibn": "Mises en service sur la période",
+        "dauer_vertrag_ibn": "Ø contrat jusqu’à la mise en service",
+        "fristen_ueberfaellig": "Délais dépassés (actuel)",
+        "material_spaet": "Matériel commandé trop tard (actuel)",
+        "faelle_dauer": "Ø cas SAV jusqu’à la clôture"
       }
     }
   },
