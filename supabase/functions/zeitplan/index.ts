@@ -135,7 +135,9 @@ Deno.serve(async (req) => {
   // drei Tage (deckt einen ausgefallenen Lauf ab). Zahlungen und Lieferantenrechnungen setzt die Datenbank.
   if (ein.abaninja) {
     ergebnis.abaninja_abgleich = await job('abaninja_abgleich', 60, async () => {
-      const stunde = Number(new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric' }).format(new Date()))
+      const stunde = Number(
+        new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric' }).format(new Date()),
+      )
       if (stunde !== 2) return 'wartet auf die Nacht'
       const seit = new Date(Date.now() - 3 * 86_400_000).toISOString()
       const r = await dienst.rpc<Record<string, number>>('abaninja_abgleich_anwenden', { p: await abgleichDaten(seit) })
