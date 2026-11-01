@@ -26,10 +26,10 @@ insert into public.kontakte (id, art, kontaktart, vorname, nachname, telefon, sp
   ('00000000-0000-0000-0000-0000000038c1', 'person', 'privat', 'Tom', 'Beispiel', '+41760000000', 'de');
 insert into public.projekte (id, nummer, kontakt_id, titel) values
   ('00000000-0000-0000-0000-0000000038a1', 'P9381', '00000000-0000-0000-0000-0000000038c1', 'PV Vortag');
-insert into public.einsaetze (id, projekt_id, von, bis) values
-  ('00000000-0000-0000-0000-0000000038e1', '00000000-0000-0000-0000-0000000038a1',
+insert into public.einsaetze (id, projekt_id, art, von, bis) values
+  ('00000000-0000-0000-0000-0000000038e1', '00000000-0000-0000-0000-0000000038a1', 'intern',
    (now() at time zone 'Europe/Zurich')::date + 1, (now() at time zone 'Europe/Zurich')::date + 2),
-  ('00000000-0000-0000-0000-0000000038e2', '00000000-0000-0000-0000-0000000038a1',
+  ('00000000-0000-0000-0000-0000000038e2', '00000000-0000-0000-0000-0000000038a1', 'intern',
    (now() at time zone 'Europe/Zurich')::date + 5, (now() at time zone 'Europe/Zurich')::date + 6);
 insert into public.service_faelle (id, nummer, kontakt_id, titel, termin_am) values
   ('00000000-0000-0000-0000-0000000038f1', 'S9381', '00000000-0000-0000-0000-0000000038c1', 'Zähler prüfen',

@@ -3281,7 +3281,8 @@
       "tag": "Mein Tag",
       "rapporte": "Rapporte",
       "zeiten": "Zeiten",
-      "nachtraege": "Nachträge"
+      "nachtraege": "Nachträge",
+      "wochenplan": "Wochenplan"
     },
     "rapportFilter": {
       "offen": "Offen",
@@ -3567,6 +3568,40 @@
       "beschreibung": "Das PDF mit Unterschrift und Fotos ist angehängt. Gesendet wird über den Ausgangskorb aus deinem Postfach.",
       "betreff": "Ihr Rapport {{nummer}} ({{art}} vom {{datum}})",
       "text": "Guten Tag\n\nIm Anhang finden Sie den Rapport {{nummer}} zu unserem Einsatz vom {{datum}}. Bei Fragen sind wir gerne für Sie da.\n\nFreundliche Grüsse\nDimension Solaire"
+    },
+    "woche": {
+      "titel": "Wochenplan je Person",
+      "zurueck": "Woche zurück",
+      "weiter": "Woche weiter",
+      "heute": "Diese Woche",
+      "konflikte_one": "{{count}} Konflikt",
+      "konflikte_other": "{{count}} Konflikte",
+      "auslastung": "Auslastung {{prozent}} %",
+      "typ": {
+        "montage": "Montage",
+        "service": "Service",
+        "wartung": "Wartung"
+      },
+      "person": "Person",
+      "sub": "Subunternehmer",
+      "leer": "Niemand im Plan",
+      "abwesend": "Abwesend ({{art}})",
+      "halbtag": "halber Tag",
+      "konflikt": {
+        "abwesend": "Abwesend, aber eingeplant",
+        "doppelt": "Zwei Orte am selben Tag",
+        "kurs": "Kurs/Ausweis abgelaufen"
+      },
+      "tag": {
+        "0": "So",
+        "1": "Mo",
+        "2": "Di",
+        "3": "Mi",
+        "4": "Do",
+        "5": "Fr",
+        "6": "Sa"
+      },
+      "hilfe": "Ziehen auf einen anderen Tag oder eine andere Person verschiebt den Einsatz bzw. den Service-Termin. Gestrichelt = voraussichtlich (noch nicht fest). Klick öffnet Projekt oder Fall."
     }
   },
   "unterschrift": {

@@ -10,6 +10,7 @@ comment on column public.dokumente.kategorie is 'Art des Fotos im Rapport (z. B.
 
 insert into public.einstellungen (schluessel, wert) values ('baustelle', $j${
   "stopp_vergessen_stunden": 10,
+  "wochenplan_rollen": ["montage", "monteur", "projektleitung"],
   "pflichtfotos": {
     "service": [{"schluessel": "vorher", "de": "Vorher", "fr": "Avant"},
                 {"schluessel": "nachher", "de": "Nachher", "fr": "Après"},
@@ -140,7 +141,7 @@ begin
       select 'projekte', e2.projekt_id, e2.id || ':' || e2.von,
              jsonb_build_object('einsatz_id', e2.id, 'von', e2.von, 'schritt_de', 'Montage', 'schritt_fr', 'Montage')
         from public.einsaetze e2 join public.projekte p on p.id = e2.projekt_id
-       where e = 'einsatz.morgen' and e2.geloescht_am is null and p.geloescht_am is null
+       where e = 'einsatz.morgen' and e2.geloescht_am is null and e2.art <> 'geplant' and p.geloescht_am is null
          and p.status not in ('abgeschlossen', 'storniert') and e2.von = heute + 1
          and (now() at time zone 'Europe/Zurich')::time >= coalesce(
                (select (wert ->> 'uhrzeit')::time from public.einstellungen where schluessel = 'sms_erinnerung'), '16:00')

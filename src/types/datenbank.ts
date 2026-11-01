@@ -10508,6 +10508,10 @@ export type Database = {
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
       betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
+      einsatz_verschieben: {
+        Args: { p_id: string; p_tage: number; p_von_person?: string; p_zu_person?: string }
+        Returns: undefined
+      }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -10859,6 +10863,7 @@ export type Database = {
       seriennummern_erfassen: { Args: { p: Json; p_bestellung: string }; Returns: number }
       service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_termin_verschieben: { Args: { p_datum: string; p_id: string; p_person?: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
@@ -11023,6 +11028,7 @@ export type Database = {
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
       werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
+      wochenplan: { Args: { p_bis: string; p_von: string }; Returns: Json }
       zahlungsplan_berechnen: {
         Args: { p_baubeginn?: string; p_kondition: string; p_sprache: string; p_unterzeichnet: string; p_wert: number }
         Returns: {

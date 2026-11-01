@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Baustelle & Rapporte». */
 
 /** Reiter der Seite (#/fieldwork?reiter=…). «tag» ist die Handy-Ansicht der Monteure. */
-export const REITER = ['tag', 'rapporte', 'zeiten', 'nachtraege'] as const
+export const REITER = ['tag', 'wochenplan', 'rapporte', 'zeiten', 'nachtraege'] as const
 export type Reiter = (typeof REITER)[number]
 
 export const RAPPORT_ARTEN = ['montage', 'service', 'wartung', 'ibn'] as const

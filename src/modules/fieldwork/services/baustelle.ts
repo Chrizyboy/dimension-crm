@@ -14,6 +14,7 @@ import type {
   Zeit,
   ZeitArt,
 } from '../types'
+import type { Wochenplan } from '../lib/wochenplan'
 
 /**
  * Datenzugriff für Baustelle & Rapporte. Die Regeln (wer darf was, was folgt aus dem Abschluss) liegen in
@@ -220,5 +221,33 @@ export async function zeitSpeichern(p: {
   notiz?: string | null
 }): Promise<void> {
   const { error } = await db().rpc('zeit_speichern', { p })
+  if (error) throw error
+}
+
+/** Wochenplan je Person im Zeitraum (Einsätze, Service, Abwesenheiten, abgelaufene Kurse). */
+export async function ladeWochenplan(von: string, bis: string): Promise<Wochenplan> {
+  const { data, error } = await db().rpc('wochenplan', { p_von: von, p_bis: bis })
+  if (error) throw error
+  return data as unknown as Wochenplan
+}
+
+/** Einsatz im Wochenplan um Tage verschieben und auf Wunsch eine Person durch eine andere ersetzen. */
+export async function einsatzVerschieben(id: string, tage: number, vonPerson: string | null, zuPerson: string | null) {
+  const { error } = await db().rpc('einsatz_verschieben', {
+    p_id: id,
+    p_tage: tage,
+    ...(vonPerson ? { p_von_person: vonPerson } : {}),
+    ...(zuPerson ? { p_zu_person: zuPerson } : {}),
+  })
+  if (error) throw error
+}
+
+/** Service-Termin auf einen anderen Tag (gleiche Uhrzeit) und auf Wunsch zu einer anderen Person legen. */
+export async function serviceTerminVerschieben(id: string, datum: string, person: string | null) {
+  const { error } = await db().rpc('service_termin_verschieben', {
+    p_id: id,
+    p_datum: datum,
+    ...(person ? { p_person: person } : {}),
+  })
   if (error) throw error
 }

@@ -3281,7 +3281,8 @@
       "tag": "Ma journée",
       "rapporte": "Rapports",
       "zeiten": "Temps",
-      "nachtraege": "Avenants"
+      "nachtraege": "Avenants",
+      "wochenplan": "Planning"
     },
     "rapportFilter": {
       "offen": "Ouverts",
@@ -3567,6 +3568,40 @@
       "beschreibung": "Le PDF avec signature et photos est joint. L’envoi passe par la boîte d’envoi depuis ta messagerie.",
       "betreff": "Votre rapport {{nummer}} ({{art}} du {{datum}})",
       "text": "Bonjour\n\nVous trouverez en annexe le rapport {{nummer}} de notre intervention du {{datum}}. Nous restons volontiers à votre disposition.\n\nMeilleures salutations\nDimension Solaire"
+    },
+    "woche": {
+      "titel": "Planning hebdomadaire par personne",
+      "zurueck": "Semaine précédente",
+      "weiter": "Semaine suivante",
+      "heute": "Cette semaine",
+      "konflikte_one": "{{count}} conflit",
+      "konflikte_other": "{{count}} conflits",
+      "auslastung": "Charge {{prozent}} %",
+      "typ": {
+        "montage": "Montage",
+        "service": "Service",
+        "wartung": "Entretien"
+      },
+      "person": "Personne",
+      "sub": "Sous-traitant",
+      "leer": "Personne dans le planning",
+      "abwesend": "Absent ({{art}})",
+      "halbtag": "demi-journée",
+      "konflikt": {
+        "abwesend": "Absent mais planifié",
+        "doppelt": "Deux lieux le même jour",
+        "kurs": "Cours/permis échu"
+      },
+      "tag": {
+        "0": "Di",
+        "1": "Lu",
+        "2": "Ma",
+        "3": "Me",
+        "4": "Je",
+        "5": "Ve",
+        "6": "Sa"
+      },
+      "hilfe": "Glisser vers un autre jour ou une autre personne déplace l’intervention ou le rendez-vous de service. Pointillé = provisoire (pas encore fixé). Un clic ouvre le projet ou le cas."
     }
   },
   "unterschrift": {

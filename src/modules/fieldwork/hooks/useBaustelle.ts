@@ -106,6 +106,10 @@ export const useBilder = (rapportId: string) => {
   })
 }
 
+/** Wochenplan je Person (nur mit Netz, fürs Büro). */
+export const useWochenplan = (von: string, bis: string) =>
+  useQuery({ queryKey: ['baustelle', 'wochenplan', von, bis], enabled: an, queryFn: () => b.ladeWochenplan(von, bis) })
+
 /** Pflichtfotos je Rapport-Art; auch ohne Netz aus der Ablage. */
 export const usePflichtfotos = () =>
   useQuery({
