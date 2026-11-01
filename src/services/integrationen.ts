@@ -131,6 +131,14 @@ export const microsoft = {
   terminEintragen: (e: { verkaufschance_id: string; betreff?: string; text?: string; kunde_einladen: boolean }) =>
     rufeFunktion<{ outlook: Record<string, unknown> }>('microsoft', 'termin_eintragen', e),
   terminAbsagen: (verkaufschance_id: string) => rufeFunktion('microsoft', 'termin_absagen', { verkaufschance_id }),
+  /** Posteingang jetzt holen (sonst alle 5 Minuten) und neue Mails einordnen. */
+  posteingangAbholen: () =>
+    rufeFunktion<{ neu: number; beantwortet: number; ohne_zugriff: string[]; eingeordnet: string }>(
+      'microsoft',
+      'posteingang_abholen',
+    ),
+  /** Ganzer Text einer Mail im Posteingang, aus Outlook gelesen. */
+  posteingangText: (id: string) => rufeFunktion<{ text: string }>('microsoft', 'posteingang_text', { id }),
   sharepointSichern: (dokument_ids?: string[]) =>
     rufeFunktion<{ gesichert: number; fehler: number }>(
       'microsoft',

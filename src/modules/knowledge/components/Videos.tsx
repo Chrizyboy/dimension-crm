@@ -1,10 +1,9 @@
-import { Plus, Search, Video } from 'lucide-react'
+import { Plus, Video } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
-import { Input } from '@/components/ui/input'
 import { useUi } from '@/stores/ui'
 import { useHandbuch } from '../hooks/useHandbuch'
 import { passt, sortiere } from '../lib/handbuch'
@@ -12,6 +11,7 @@ import type { HandbuchEintrag } from '../types'
 import { VideoAbspielen } from './VideoAbspielen'
 import { VideoDialog } from './VideoDialog'
 import { VideoKarte } from './VideoKarte'
+import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 
 /**
  * Videos (V219): kurze Erklärvideos zum CRM, abspielen direkt im CRM. Die Administration legt neue an,
@@ -39,22 +39,13 @@ export function Videos({ admin }: { admin: boolean }) {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <p className="text-muted-foreground max-w-prose text-sm">{t('handbuch.videos.intro')}</p>
         <div className="flex flex-wrap items-center gap-2">
-          <div className="relative">
-            <Search
-              className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
-              aria-hidden="true"
-            />
-            <Input
-              type="search"
-              aria-label={t('handbuch.videos.suche')}
-              placeholder={t('handbuch.videos.suche')}
-              className="w-64 pl-8"
-              value={suche}
-              onChange={(e) => {
-                setSuche(e.target.value)
-              }}
-            />
-          </div>
+          <Suchfeld
+            beschriftung={t('handbuch.videos.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
           {admin && (
             <Button
               onClick={() => {

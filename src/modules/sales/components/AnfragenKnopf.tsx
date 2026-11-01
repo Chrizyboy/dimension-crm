@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { FileUp, Inbox, MailPlus, Sparkles } from 'lucide-react'
-import { lazy, Suspense, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KiMailLesen } from '@/components/shared/ki/KiMailLesen'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/u
 import { meldeIntegrationsFehler, microsoft, type AnfragenErgebnis } from '@/services/integrationen'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { melde } from '@/services/meldungen'
+import { mailVerknuepfen, mailVolltext, mailVorlage } from '@/services/posteingang'
 import { supabase } from '@/services/supabase'
 import { VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
 import { leadAusMail } from '../lib/kiLead'
@@ -37,8 +38,16 @@ function zusammenfassung(r: AnfragenErgebnis): { de: string; fr: string } {
  * «Anfragen holen» (V78, V233 sgSearch/lpImport/mxImport): Anfragen von solar-guide.ch, der Landingpage
  * und der Messe-App aus Outlook abholen, oder eine gespeicherte Mail (.eml) einlesen. Der Server
  * erkennt Dubletten; dieselbe Mail legt nie zweimal einen Lead an. Läuft zusätzlich alle 5 Minuten.
+ * Mit `ausMail` (aus dem Posteingang) öffnet sich gleich «Mail mit KI lesen» mit dieser Mail; der neue Lead wird
+ * danach mit der Mail verknüpft.
  */
-export function AnfragenKnopf() {
+export function AnfragenKnopf({
+  ausMail = null,
+  onAusMailFertig,
+}: {
+  ausMail?: string | null
+  onAusMailFertig?: (lead: string | null) => void
+} = {}) {
   const { t } = useTranslation()
   const qc = useQueryClient()
   const datei = useRef<HTMLInputElement>(null)
@@ -49,6 +58,35 @@ export function AnfragenKnopf() {
   const interesse = useAuswahl('interesse')
   const gebaeudeart = useAuswahl('gebaeudeart')
   const dachform = useAuswahl('dachform')
+  const [mailText, setMailText] = useState<string | null>(null)
+  const fertig = useRef(onAusMailFertig)
+  useEffect(() => {
+    fertig.current = onAusMailFertig
+  })
+
+  // Aus dem Posteingang: Mail laden und gleich mit der KI lesen lassen.
+  useEffect(() => {
+    if (!ausMail) return
+    // Objekt statt Variable: der Abbruch beim Verlassen wird erst nach dem await gelesen.
+    const lauf = { weg: false }
+    const abgebrochen = () => lauf.weg
+    void (async () => {
+      const v = await mailVorlage(ausMail).catch(() => null)
+      if (abgebrochen()) return
+      if (!v) {
+        melde('info', { de: 'Diese Mail ist nicht mehr da.', fr: 'Cet e-mail n’existe plus.' })
+        fertig.current?.(null)
+        return
+      }
+      const text = await mailVolltext(v)
+      if (abgebrochen()) return
+      setMailText(`Von: ${[v.von_name, v.von_email].filter(Boolean).join(' ')}\nBetreff: ${v.betreff}\n\n${text}`)
+      setKiOffen(true)
+    })()
+    return () => {
+      lauf.weg = true
+    }
+  }, [ausMail])
 
   async function mache(f: () => Promise<AnfragenErgebnis>) {
     setLaeuft(true)
@@ -120,8 +158,13 @@ export function AnfragenKnopf() {
       />
       {kiOffen && (
         <KiMailLesen
+          {...(mailText ? { startText: mailText } : {})}
           onSchliessen={() => {
             setKiOffen(false)
+            if (ausMail && !vorlage) {
+              setMailText(null)
+              onAusMailFertig?.(null)
+            }
           }}
           onLead={(r) => {
             const werte = (a: ReturnType<typeof useAuswahl>) => a.werte.map((x) => x.schluessel)
@@ -142,6 +185,12 @@ export function AnfragenKnopf() {
             vorlage={vorlage}
             onSchliessen={(id) => {
               setVorlage(null)
+              if (ausMail) {
+                setMailText(null)
+                if (id) void mailVerknuepfen(ausMail, { verkaufschance_id: id }).catch(() => undefined)
+                onAusMailFertig?.(id ?? null)
+                return
+              }
               if (id) void navigate({ to: '/sales', search: { lead: id } })
             }}
           />

@@ -53,7 +53,7 @@ export function Protokoll({ automationId, onAutomation }: Props) {
       cell: (c) => (
         <span className="flex min-w-0 flex-col">
           <span className="line-clamp-2 font-medium">{c.getValue() || t('automationen.protokoll.ohneTitel')}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs">{name(c.row.original.automation_id)}</span>
+          <span className="text-muted-foreground truncate text-xs">{name(c.row.original.automation_id)}</span>
         </span>
       ),
     }),

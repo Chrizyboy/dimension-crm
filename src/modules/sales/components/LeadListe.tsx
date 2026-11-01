@@ -132,20 +132,18 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
       </div>
 
       {art === 'tabelle' ? (
-        <div className="bg-surface overflow-hidden rounded-xl border">
-          <Datentabelle
-            beschriftung={t('verkauf.liste.tabelle')}
-            daten={geschaefte}
-            spalten={spalten}
-            kennung={(g) => g.id}
-            aktiveId={aktiveId}
-            onOeffnen={(g) => {
-              onOeffnen(g.id)
-            }}
-            sortierung={[{ id: 'datum', desc: true }]}
-            leer={<Leerzustand icon={SearchX} titel={t('verkauf.keineTreffer')} text={t('verkauf.keineTrefferText')} />}
-          />
-        </div>
+        <Datentabelle
+          beschriftung={t('verkauf.liste.tabelle')}
+          daten={geschaefte}
+          spalten={spalten}
+          kennung={(g) => g.id}
+          aktiveId={aktiveId}
+          onOeffnen={(g) => {
+            onOeffnen(g.id)
+          }}
+          sortierung={[{ id: 'datum', desc: true }]}
+          leer={<Leerzustand icon={SearchX} titel={t('verkauf.keineTreffer')} text={t('verkauf.keineTrefferText')} />}
+        />
       ) : (
         abschnitte.map((a) => {
           const offen = !(zu[a.id] ?? a.zu)

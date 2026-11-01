@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
-import { ANSICHTEN, KiSeite, type Ansicht } from '@/modules/ai'
+import { KeinZugriff } from '@/layouts/KeinZugriff'
+import { darfModul } from '@/lib/rechte'
+import { ANSICHTEN, KiSeite, meta, type Ansicht } from '@/modules/ai'
+import { useAnmeldung } from '@/stores/anmeldung'
 
 const GUELTIG = new Set<string>(ANSICHTEN)
 
@@ -11,6 +14,9 @@ export const Route = createFileRoute('/ai')({
   component: function AiSeite() {
     const { ansicht } = Route.useSearch()
     const navigate = Route.useNavigate()
+    const ich = useAnmeldung((z) => z.ich)
+    // Wie bei den anderen Bereichen: ohne «KI-Assistent» in der Rolle (z. B. Montage) kein Zugang über die Adresse.
+    if (!darfModul(meta, ich)) return <KeinZugriff />
     return (
       <Suspense>
         <KiSeite

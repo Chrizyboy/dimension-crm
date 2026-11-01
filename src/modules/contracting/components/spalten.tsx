@@ -26,7 +26,7 @@ export function grossprojektSpalten(t: TFunction): Spalten<Grossprojekt> {
         return (
           <span className="flex max-w-[28rem] min-w-0 flex-col">
             <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-            <span className="text-muted-foreground line-clamp-2 text-xs">
+            <span className="text-muted-foreground truncate text-xs">
               {[
                 g.gemeinde,
                 g.fahrzeit_min != null ? t('grossprojekte.fahrzeit', { min: g.fahrzeit_min }) : null,

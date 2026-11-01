@@ -139,7 +139,6 @@ export function GrossprojektAkte({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[34rem]"
         titel={g ? g.titel : t('grossprojekte.akte.titel')}
         {...(g
           ? {
@@ -152,7 +151,7 @@ export function GrossprojektAkte({
           <p className="text-muted-foreground py-6 text-sm">{t('grossprojekte.akte.weg')}</p>
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-2 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <PunkteMarke g={g} t={t} />
               {g.art && <Badge ton="marke">{t(`grossprojekte.art.${g.art}`)}</Badge>}
               <Badge ton={STAND_TON[g.stand]} punkt>

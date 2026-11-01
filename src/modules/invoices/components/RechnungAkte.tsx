@@ -141,7 +141,7 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[44rem]"
+        breite="breit"
         titel={r ? `${r.nummer ?? t('rechnungen.entwurf')} · ${r.kunde}` : t('rechnungen.akte.titel')}
         {...(r ? { beschreibung: r.titel, fuss } : {})}
       >
@@ -151,7 +151,7 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
           <Skelett className="h-80" />
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap gap-1.5 pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={statusTon(r)} punkt>
                 {r.ueberfaellig ? t('rechnungen.ueberfaellig') : t(`rechnungen.status.${r.status}`)}
               </Badge>

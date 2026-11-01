@@ -1,6 +1,6 @@
 /**
  * AGB der Dimension Solaire (20 Punkte), Wortlaut der Vorlage Muri 2026 (Französisch, getreue Übersetzung). Steht nach dem Vertrag,
- * zweispaltig. Änderungen am Wortlaut nur nach Rücksprache mit Chris (Entscheid 0031).
+ * zweispaltig. Änderungen am Wortlaut nur nach Rücksprache mit Chris (Entscheid 0034).
  */
 export const AGB_FR: readonly (readonly [string, readonly string[]])[] = [
   [
@@ -114,7 +114,7 @@ export const AGB_FR: readonly (readonly [string, readonly string[]])[] = [
       '15.2. Le client peut exiger l’élimination des défauts (réfection). Dimension Solaire et le client conviennent à cet effet d’un délai raisonnable. Si les défauts ne peuvent être éliminés dans ce délai, le client peut faire éliminer les défauts par un tiers aux frais de Dimension Solaire ou exiger une réduction de prix.',
       '15.3. Il ne peut se départir du contrat que si l’acceptation de l’ouvrage ne peut équitablement être exigée et que l’enlèvement de l’ouvrage n’entraîne pas d’inconvénients disproportionnés pour Dimension Solaire. Dans ce cas, il ne doit aucune rémunération et les montants déjà payés lui sont remboursés. L’entrepreneur doit enlever l’ouvrage dans un délai raisonnable, faute de quoi le client peut le faire enlever aux frais de l’entrepreneur.',
       '15.4. Le délai pour signaler les défauts est de 2 ans dès le jour de la réception. Si le client découvre un défaut mais ne le signale pas à temps, il supporte lui-même le dommage qui en résulte.',
-      '15.5. Les défauts que le client ne découvre qu’après l’expiration des 2 premières années suivant la réception sont des défauts cachés. Dimension Solaire en répond pendant 3 années supplémentaires après l’expiration du délai selon le ch. 15.4, soit jusqu’à 5 ans après la réception, mais seulement si le client les a signalés par écrit dans les 7 jours civils suivant leur découverte.',
+      '15.5. Les défauts que le client ne découvre qu’après l’expiration des 2 premières années suivant la réception sont des défauts cachés. Dimension Solaire en répond pendant 3 années supplémentaires après l’expiration du délai selon le ch. 15.4, soit jusqu’à 5 ans après la réception, mais seulement si le client les a signalés par écrit dans les 60 jours suivant leur découverte.',
       '15.6. En cas de réception sans vérification, Dimension Solaire ne répond pas des défauts cachés qui auraient été découverts lors d’une réception avec vérification.',
       '15.7. La preuve d’un défaut caché incombe au client.',
     ],

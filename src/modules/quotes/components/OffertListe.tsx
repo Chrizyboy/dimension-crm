@@ -5,13 +5,14 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { useAuswahl } from '@/hooks/useAuswahl'
-import { formatChf, formatDatum } from '@/lib/format'
+import { formatChf } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
 import { spaltenHelfer } from '@/lib/tabelle'
 import { inListe } from '../lib/suche'
 import { OFFERT_STAENDE } from '../lib/status'
 import type { Offerte } from '../types'
 import { NachfassChip, OffertStand } from './OffertStand'
+import { DatumZelle, EinzeilerZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Offerte>()
 
@@ -39,7 +40,7 @@ export default function OffertListe({
   const spalten = spalte.columns([
     spalte.accessor('nummer', {
       header: t('offerten.spalte.nr'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue()}</span>,
+      cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
       sortFn: (a, b) => a.original.nummer.localeCompare(b.original.nummer, 'de-CH', { numeric: true }),
       // Am Handy steht die Nummer unter dem Namen.
       meta: { breite: 'w-20', nurBreit: true },
@@ -50,7 +51,7 @@ export default function OffertListe({
       cell: (c) => (
         <span className="flex max-w-[16rem] min-w-0 flex-col">
           <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-          <span className="text-muted-foreground line-clamp-2 text-xs">
+          <span className="text-muted-foreground truncate text-xs">
             <span className="zahlen font-mono md:hidden">{c.row.original.nummer} · </span>
             {[c.row.original.titel, c.row.original.betragRappen ? formatChf(c.row.original.betragRappen) : null]
               .filter(Boolean)
@@ -61,21 +62,21 @@ export default function OffertListe({
     }),
     spalte.accessor('ort', {
       header: t('offerten.spalte.ort'),
-      cell: (c) => [c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–',
+      cell: (c) => (
+        <EinzeilerZelle>{[c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–'}</EinzeilerZelle>
+      ),
       meta: { nurBreit: true },
     }),
     spalte.accessor((o) => o.angebotAm ?? '', {
       id: 'datum',
       header: t('offerten.spalte.datum'),
       sortDescFirst: true,
-      cell: (c) => (
-        <span className="zahlen font-mono text-[13px]">{c.getValue() ? formatDatum(c.getValue()) : '–'}</span>
-      ),
+      cell: (c) => <DatumZelle wert={c.getValue()} />,
       meta: { nurBreit: true, breite: 'w-28' },
     }),
     spalte.accessor('kundennummer', {
       header: t('offerten.spalte.kunde'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{formatKundennummer(c.getValue())}</span>,
+      cell: (c) => <NummerZelle>{formatKundennummer(c.getValue())}</NummerZelle>,
       meta: { nurBreit: true, breite: 'w-20' },
     }),
     spalte.accessor((o) => o.faelligAm ?? '9999', {

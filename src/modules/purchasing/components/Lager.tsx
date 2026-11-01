@@ -6,7 +6,6 @@ import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { spaltenHelfer } from '@/lib/tabelle'
 import { melde } from '@/services/meldungen'
 import { useAktion } from '../hooks/useAktion'
@@ -15,6 +14,7 @@ import { formatMenge } from '../lib/anzeige'
 import { nachbestellen } from '../services/lager'
 import type { LagerZeile } from '../types'
 import { LagerBuchenDialog } from './LagerBuchenDialog'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 const FILTER = ['alle', 'unter', 'reserviert'] as const
 type Filter = (typeof FILTER)[number]
@@ -42,7 +42,7 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
           cell: (c) => (
             <span className="flex max-w-[24rem] min-w-0 flex-col">
               <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-              <span className="text-muted-foreground line-clamp-2 text-xs">{c.row.original.artikelnummer}</span>
+              <span className="text-muted-foreground truncate text-xs">{c.row.original.artikelnummer}</span>
             </span>
           ),
         }),
@@ -105,7 +105,33 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('einkauf.lager.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+        rechts={
+          <>
+            <Button variant="secondary" laedt={laeuft} disabled={unter.length === 0} onClick={auffuellen}>
+              <ListPlus />
+              {t('einkauf.lager.nachbestellen')}
+            </Button>
+            <Button
+              onClick={() => {
+                setBuchen('neu')
+              }}
+            >
+              <Plus />
+              {t('einkauf.lager.buchen')}
+            </Button>
+          </>
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('einkauf.filter')}
@@ -119,31 +145,7 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
             if (f) setFilter(f as Filter)
           }}
         />
-        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
-          <Input
-            type="search"
-            className="w-full sm:w-56"
-            aria-label={t('einkauf.lager.suche')}
-            placeholder={t('einkauf.lager.suche')}
-            value={suche}
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-          <Button variant="secondary" laedt={laeuft} disabled={unter.length === 0} onClick={auffuellen}>
-            <ListPlus />
-            {t('einkauf.lager.nachbestellen')}
-          </Button>
-          <Button
-            onClick={() => {
-              setBuchen('neu')
-            }}
-          >
-            <Plus />
-            {t('einkauf.lager.buchen')}
-          </Button>
-        </div>
-      </div>
+      </Werkzeugleiste>
       {lager.error ? (
         <Fehlerzustand details={String(lager.error)} onNochmal={() => void lager.refetch()} />
       ) : (

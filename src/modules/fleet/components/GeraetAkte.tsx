@@ -43,7 +43,6 @@ export function GeraetAkte({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[32rem]"
         titel={g ? g.bezeichnung : t('fuhrpark.akte.geraet')}
         {...(g
           ? {

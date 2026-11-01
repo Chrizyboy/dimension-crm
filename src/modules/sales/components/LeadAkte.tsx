@@ -15,6 +15,7 @@ import { useLeadAkte, VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
 import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import { ladeGeschaeft } from '../services/geschaefte'
 import type { Geschaeft } from '../types'
+import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { KiKnopf } from '@/components/shared/ki/KiKnopf'
 import { KiLeadBewertung } from '@/components/shared/ki/KiLeadBewertung'
@@ -74,7 +75,6 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
         {...(g
           ? { beschreibung: [g.nummer, formatKundennummer(g.kundennummer), g.ort].filter(Boolean).join(' · ') }
           : {})}
-        className="md:w-[34rem]"
       >
         {einzeln.isError ? (
           <Fehlerzustand details={String(einzeln.error)} onNochmal={() => void einzeln.refetch()} />
@@ -89,7 +89,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
           )
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-2 pb-3">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={tonVonFarbe(staende.finde(g.stand)?.farbe)} punkt>
                 {staende.text(g.stand)}
               </Badge>
@@ -98,7 +98,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
               )}
               {g.werbesperre && <Badge ton="warnung">{t('verkauf.akte.werbesperre')}</Badge>}
             </div>
-            <div className="flex flex-wrap gap-2 border-b pb-3">
+            <Knopfleiste haupt="erste" className="border-b pb-3">
               {g.verkaufschanceId && (
                 <Button
                   size="sm"
@@ -188,7 +188,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                   ...(g.offerteId ? { offerte_id: g.offerteId } : {}),
                 }}
               />
-            </div>
+            </Knopfleiste>
 
             {g.verkaufschanceId && g.stand === 'termin' && g.terminAm && akte.details.isSuccess && (
               <OutlookTermin verkaufschanceId={g.verkaufschanceId} outlook={akte.details.data.outlook} />

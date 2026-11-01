@@ -115,7 +115,7 @@ export function NewsletterEditor({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[42rem]"
+        breite="breit"
         titel={id ? thema : t('marketing.newsletter.neu')}
         beschreibung={t('marketing.newsletter.ablauf')}
         fuss={

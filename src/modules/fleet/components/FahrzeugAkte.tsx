@@ -40,7 +40,6 @@ export function FahrzeugAkte({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[32rem]"
         titel={f ? `${f.bezeichnung} · ${f.kennzeichen}` : t('fuhrpark.akte.fahrzeug')}
         {...(f
           ? {

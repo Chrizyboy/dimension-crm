@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { cn } from '@/lib/utils'
 
 interface SeitenkopfProps {
@@ -11,7 +12,10 @@ interface SeitenkopfProps {
   className?: string
 }
 
-/** Kopf jeder Ansicht: immer gleiche Höhe, Titel links, Aktionen rechts (am Handy darunter). */
+/**
+ * Kopf jeder Ansicht: immer gleiche Höhe, Titel links, Aktionen rechts. Am Handy stehen die Aktionen darunter,
+ * nur die Hauptaktion offen, der Rest unter «Mehr» (siehe `Knopfleiste`).
+ */
 export function Seitenkopf({ titel, beschreibung, ueber, aktionen, className }: SeitenkopfProps) {
   return (
     <header className={cn('flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between', className)}>
@@ -20,7 +24,7 @@ export function Seitenkopf({ titel, beschreibung, ueber, aktionen, className }: 
         <h1 className="text-2xl font-semibold">{titel}</h1>
         {beschreibung && <p className="text-muted-foreground max-w-2xl text-sm">{beschreibung}</p>}
       </div>
-      {aktionen && <div className="flex shrink-0 flex-wrap gap-2">{aktionen}</div>}
+      {aktionen && <Knopfleiste className="shrink-0 sm:justify-end">{aktionen}</Knopfleiste>}
     </header>
   )
 }

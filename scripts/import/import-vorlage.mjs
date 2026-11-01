@@ -2,7 +2,7 @@
 // Importiert den Export «Für Web-App» der Vorlage V233 in die Datenbank und erstellt einen Zählbericht.
 //
 //   SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip" [--bericht import-bericht.md]
-//     [--ablage sharepoint-adjudications.json]   (gewonnen nur mit Ordner in Adjudications, siehe ablage.mjs)
+//     [--ablage sharepoint-adjudications.json] [--gebaut-bis 2025] [--korrekturen korrekturen.json]   (gewonnen nur mit Ordner in Adjudications, siehe ablage.mjs)
 //
 // Wiederholbar: jede Zeile hat eine alt_id; ein zweiter Lauf aktualisiert statt zu verdoppeln.
 // Standardmässig nur gegen die lokale Datenbank; der echte Umzug (Phase 16) braucht --umzug.
@@ -14,7 +14,8 @@ import { Schreiber } from './schreiber.mjs'
 import { Zuordner } from './zuordner.mjs'
 import { erstelleBericht, alsMarkdown } from './bericht.mjs'
 import { text } from './umwandeln.mjs'
-import { korrigiereNachAblage, leseAblage } from './ablage.mjs'
+import { ergaenzeAusVertraegen, fuegeNachtraegeEin } from './nachtraege.mjs'
+import { GEBAUT_BIS, korrigiereNachAblage, korrigiereNummern, leseAblage, leseKorrekturen } from './ablage.mjs'
 import { ladeStammdaten, importiereOrganisation } from './schritte/organisation.mjs'
 import { importierePreise } from './schritte/preise.mjs'
 import { importiereKunden } from './schritte/kunden.mjs'
@@ -71,8 +72,22 @@ console.log(
 
 /** @type {string[]} */
 const hinweise = []
+const korrekturDatei = wert('--korrekturen')
+if (korrekturDatei) {
+  const korr = leseKorrekturen(korrekturDatei)
+  for (const x of korrigiereNummern(daten.cols.projects ?? {}, korr.nummern))
+    hinweise.push(`Offerte ${x.vorher}: Nummer → ${x.nachher} (${x.grund})`)
+  hinweise.push(
+    ...fuegeNachtraegeEin(daten, korr.neue),
+    ...ergaenzeAusVertraegen(daten.cols.projects ?? {}, korr.vertraege),
+  )
+}
 if (ablageDatei) {
-  const korrekturen = korrigiereNachAblage(daten.cols.projects ?? {}, leseAblage(ablageDatei))
+  const korrekturen = korrigiereNachAblage(
+    daten.cols.projects ?? {},
+    leseAblage(ablageDatei),
+    Number(wert('--gebaut-bis')) || GEBAUT_BIS,
+  )
   for (const x of korrekturen)
     hinweise.push(`Offerte ${x.nr}: Stand ${x.vorher || '(leer)'} → ${x.nachher} (${x.grund})`)
   console.log(`Ablage SharePoint: ${korrekturen.length} Offerten mit korrigiertem Stand`)

@@ -4,6 +4,7 @@ import { formatTelefon } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import type { Kontaktzeile } from '@/types/kontakt'
+import { EinzeilerZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Kontaktzeile>()
 
@@ -12,7 +13,7 @@ export function adressbuchSpalten(t: TFunction, kontaktart: (schluessel: string)
   return spalte.columns([
     spalte.accessor('kundennummer', {
       header: t('kunden.spalte.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{formatKundennummer(c.getValue())}</span>,
+      cell: (c) => <NummerZelle>{formatKundennummer(c.getValue())}</NummerZelle>,
       meta: { breite: 'w-20' },
     }),
     spalte.accessor('name', {
@@ -26,7 +27,9 @@ export function adressbuchSpalten(t: TFunction, kontaktart: (schluessel: string)
     }),
     spalte.accessor('ort', {
       header: t('kunden.spalte.ort'),
-      cell: (c) => [c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–',
+      cell: (c) => (
+        <EinzeilerZelle>{[c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–'}</EinzeilerZelle>
+      ),
       meta: { nurBreit: true },
     }),
     spalte.accessor((k) => k.telefon ?? '', {

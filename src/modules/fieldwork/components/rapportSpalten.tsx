@@ -1,10 +1,10 @@
 import type { TFunction } from 'i18next'
 import { Camera } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { formatDatum } from '@/lib/format'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import { dauerText } from '../lib/zeit'
 import type { Rapport } from '../types'
+import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Rapport>()
 
@@ -13,12 +13,12 @@ export function rapportSpalten(t: TFunction): Spalten<Rapport> {
   return spalte.columns([
     spalte.accessor('nummer', {
       header: t('baustelle.spalte.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-xs">{c.getValue()}</span>,
+      cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
       meta: { breite: 'w-20' },
     }),
     spalte.accessor('datum', {
       header: t('baustelle.spalte.datum'),
-      cell: (c) => <span className="zahlen">{formatDatum(c.getValue())}</span>,
+      cell: (c) => <DatumZelle wert={c.getValue()} />,
     }),
     spalte.accessor('art', {
       header: t('baustelle.spalte.art'),
@@ -34,7 +34,7 @@ export function rapportSpalten(t: TFunction): Spalten<Rapport> {
         return (
           <span className="flex max-w-[22rem] min-w-0 flex-col">
             <span className="line-clamp-2 font-medium">{c.getValue() || '–'}</span>
-            <span className="text-muted-foreground line-clamp-2 text-xs">
+            <span className="text-muted-foreground truncate text-xs">
               {[r.projekt_nummer ?? r.service_nummer, r.objekt_ort].filter(Boolean).join(' · ')}
             </span>
           </span>

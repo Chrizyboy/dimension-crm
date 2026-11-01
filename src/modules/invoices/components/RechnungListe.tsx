@@ -5,13 +5,13 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { herunterladen } from '@/lib/datei'
 import { formatChf } from '@/lib/format'
 import { useRechnungen } from '../hooks/useRechnungen'
 import { heuteZuerich, rechnungenCsv } from '../lib/rechnung'
 import { RECHNUNG_FILTER, type RechnungFilter } from '../types'
 import { rechnungSpalten } from './rechnungSpalten'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 /** Liste der Rechnungen mit Filtern (offen, überfällig, Entwürfe, bezahlt, alle), Suche und «Liste exportieren». */
 export function RechnungListe({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
@@ -48,7 +48,25 @@ export function RechnungListe({ aktiveId, onOeffnen }: { aktiveId: string | null
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('rechnungen.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+        rechts={
+          <>
+            <Button variant="secondary" disabled={daten.length === 0} onClick={exportieren}>
+              <Download />
+              {t('rechnungen.export')}
+            </Button>
+          </>
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('rechnungen.filter')}
@@ -58,23 +76,7 @@ export function RechnungListe({ aktiveId, onOeffnen }: { aktiveId: string | null
             if (f) setFilter(f as RechnungFilter)
           }}
         />
-        <div className="flex w-full items-center gap-2 sm:w-auto">
-          <Input
-            type="search"
-            className="w-full sm:w-64"
-            aria-label={t('rechnungen.suche')}
-            placeholder={t('rechnungen.suche')}
-            value={suche}
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-          <Button variant="secondary" disabled={daten.length === 0} onClick={exportieren}>
-            <Download />
-            {t('rechnungen.export')}
-          </Button>
-        </div>
-      </div>
+      </Werkzeugleiste>
       {offen > 0 && (
         <p className="text-muted-foreground text-sm">
           {t('rechnungen.summeOffen', { betrag: formatChf(offen, { mitWaehrung: true }) })}
