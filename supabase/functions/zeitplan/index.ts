@@ -17,6 +17,7 @@
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
@@ -28,7 +29,8 @@ import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
-import { abgleichDaten } from '../_shared/abaninja.ts'
+import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
+import { guthaben } from '../_shared/aspsms.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
@@ -149,6 +151,31 @@ Deno.serve(async (req) => {
   ergebnis.finanzen_erinnern = await job('finanzen_erinnern', 60, async () => {
     const n = await dienst.rpc<number>('finanzen_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Dienst-Wächter (Modul-Prüfung 28A): SMS und AbaNinja hier messen, den Rest prüft die Datenbank. Ein Fehler
+  // beim Messen ist selbst ein Befund (Glocke), kein Fehler des Jobs.
+  ergebnis.waechter = await job('waechter', 60, async () => {
+    const extern: Record<string, { ok: boolean; credits?: number; meldung?: string }> = {}
+    const code = (f: unknown) =>
+      f instanceof DienstFehler ? f.code : f instanceof Error ? f.message.slice(0, 80) : 'fehler'
+    if (ein.sms) {
+      try {
+        extern.sms = { ok: true, credits: await guthaben() }
+      } catch (f) {
+        extern.sms = { ok: false, meldung: code(f) }
+      }
+    }
+    if (ein.abaninja) {
+      try {
+        await abaTesten()
+        extern.abaninja = { ok: true }
+      } catch (f) {
+        extern.abaninja = { ok: false, meldung: code(f) }
+      }
+    }
+    const n = await dienst.rpc<number>('dienste_pruefen', { p_extern: extern })
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}`
   })
 
   // Mein Tag (Modul-Prüfung 27A): alte Freigaben im Ausgangskorb (werktags) und «Woche in Zahlen» (montags), nur Glocke.

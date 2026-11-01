@@ -10510,6 +10510,8 @@ export type Database = {
       bestellungen_zusammenfassen: { Args: { p_lagerort: string; p_lieferant: string }; Returns: string }
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
       betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
+      dienste_pruefen: { Args: { p_extern?: Json }; Returns: number }
+      dienste_zustand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       einsatz_verschieben: {
         Args: { p_id: string; p_tage: number; p_von_person?: string; p_zu_person?: string }
@@ -10768,6 +10770,7 @@ export type Database = {
         Returns: undefined
       }
       offerte_zurueck: { Args: { p_grund: string; p_offerte: string; p_ziel: string }; Returns: undefined }
+      personal_checklisten: { Args: Record<PropertyKey, never>; Returns: number }
       plz_auskunft: {
         Args: { p_plz: string }
         Returns: {

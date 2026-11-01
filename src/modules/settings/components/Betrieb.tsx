@@ -10,6 +10,7 @@ import { microsoftVerfuegbar } from '@/services/anmeldung'
 import { useVerbindungsStatus } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
 import { pruefpunkte, type Pruefpunkt } from '../lib/betrieb'
+import { DiensteZustand } from './DiensteZustand'
 import { ladeBetrieb } from '../services/sicherung'
 
 const ICON = { ok: CircleCheck, offen: CircleDashed, fehlt: CircleAlert } as const
@@ -46,21 +47,24 @@ export function Betrieb() {
   const offen = punkte.filter((p) => p.stand !== 'ok').length
 
   return (
-    <Karte className="overflow-hidden">
-      <KarteKopf className="flex flex-col items-start gap-1 text-left">
-        <KarteTitel>{t('betrieb.titel')}</KarteTitel>
-        <p className="text-muted-foreground text-sm" role="status">
-          {offen === 0 ? t('betrieb.allesBereit') : t('betrieb.offen', { count: offen })}
-        </p>
-      </KarteKopf>
-      <KarteInhalt className="p-0">
-        <ul className="divide-y">
-          {punkte.map((p) => (
-            <Zeile key={p.id} p={p} />
-          ))}
-        </ul>
-      </KarteInhalt>
-    </Karte>
+    <div className="flex flex-col gap-4">
+      <Karte className="overflow-hidden">
+        <KarteKopf className="flex flex-col items-start gap-1 text-left">
+          <KarteTitel>{t('betrieb.titel')}</KarteTitel>
+          <p className="text-muted-foreground text-sm" role="status">
+            {offen === 0 ? t('betrieb.allesBereit') : t('betrieb.offen', { count: offen })}
+          </p>
+        </KarteKopf>
+        <KarteInhalt className="p-0">
+          <ul className="divide-y">
+            {punkte.map((p) => (
+              <Zeile key={p.id} p={p} />
+            ))}
+          </ul>
+        </KarteInhalt>
+      </Karte>
+      {an && <DiensteZustand />}
+    </div>
   )
 }
 

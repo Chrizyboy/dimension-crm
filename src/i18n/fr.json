@@ -5720,6 +5720,32 @@
         "ok": "Configuré.",
         "offen": "Facultatif. Définir la clé comme secret (docs/ki.md)."
       }
+    },
+    "dienste": {
+      "titel": "État des services",
+      "allesOk": "Tout fonctionne. Le contrôle passe chaque heure et signale les pannes dans la cloche.",
+      "gestoert_one": "{{count}} service perturbé. L’administration a reçu une notification.",
+      "gestoert_other": "{{count}} services perturbés. L’administration a reçu une notification.",
+      "stand": {
+        "ok": "fonctionne",
+        "gestoert": "perturbé",
+        "offen": "pas encore vérifié"
+      },
+      "zuletzt": "Dernière fois {{zeit}}",
+      "nie": "Jamais exécuté ni vérifié",
+      "zeitplan": "Planificateur (e-mails, SMS, automatisations)",
+      "sicherung": "Sauvegarde",
+      "job": "Tâche planifiée «{{job}}»",
+      "microsoft": "Microsoft · {{name}}",
+      "neuVerbinden": "Connexion expirée : la personne doit se reconnecter sous Mon compte.",
+      "guthaben": "Crédit {{anzahl}} SMS",
+      "dienst": {
+        "sms": "SMS (ASPSMS)",
+        "abaninja": "AbaNinja",
+        "meta": "Meta (Facebook, Instagram)",
+        "linkedin": "LinkedIn",
+        "canva": "Canva"
+      }
     }
   },
   "fuhrpark": {
