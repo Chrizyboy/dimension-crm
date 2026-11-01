@@ -144,6 +144,20 @@
       "verbinden": "Mit Microsoft verbinden",
       "testen": "Verbindung prüfen",
       "trennen": "Trennen"
+    },
+    "unterschrift": {
+      "titel": "Meine Unterschrift",
+      "text": "Für Dokumente, die du aus dem CRM unterschreibst (z. B. Werkverträge). Nur du siehst und verwendest sie.",
+      "bild": "Deine Unterschrift",
+      "keine": "Noch keine Unterschrift hinterlegt.",
+      "zeichnen": "Zeichnen",
+      "hochladen": "Bild hochladen",
+      "entfernen": "Entfernen",
+      "zeichnenTitel": "Unterschrift zeichnen",
+      "zeichnenText": "Mit Maus, Finger oder Stift in der weissen Fläche unterschreiben.",
+      "neu": "Neu beginnen",
+      "uebernehmen": "Übernehmen",
+      "flaeche": "Fläche zum Unterschreiben"
     }
   },
   "fehler": {
@@ -1463,11 +1477,10 @@
     "akte": {
       "titel": "Werkvertrag",
       "nichtMehr": "Diesen Werkvertrag gibt es nicht (mehr).",
-      "drucken": "Drucken / PDF",
+      "drucken": "PDF ansehen",
       "versendet": "Versendet",
       "unterschrieben": "Unterschrieben",
       "reaktivieren": "Wieder aktivieren",
-      "neuErstellen": "Neu erstellen",
       "offerte": "Offerte",
       "stornieren": "Stornieren",
       "angaben": "Angaben",
@@ -1481,7 +1494,12 @@
       "unterschriebenAm": "Unterschrieben am",
       "notiz": "Notiz",
       "zahlungsplan": "Zahlungsplan",
-      "text": "Vertragstext"
+      "senden": "An Kunden senden",
+      "bearbeiten": "Bearbeiten",
+      "imVertrag": "Im Vertrag",
+      "anzahlungsrechnung": "Anzahlungsrechnung",
+      "rechnungNr": "Nr. {{nummer}}",
+      "nochKeine": "noch keine"
     },
     "plan": {
       "keiner": "Noch kein Zahlungsplan",
@@ -1503,8 +1521,63 @@
       "wertHinweis": "Offerte CHF {{betrag}} exkl. + {{satz}} % MWST",
       "datum": "Unterzeichnet am",
       "mitVertrag": "Werkvertrag erstellen",
-      "spaeter": "Anzahlungsrechnung in AbaNinja folgt mit Phase 8, der Bautermin mit Phase 9.",
-      "pflicht": "Bitte Standort, Vertragswert und Datum angeben."
+      "pflicht": "Bitte Standort, Vertragswert und Datum angeben.",
+      "zahlung": "Zahlungsbedingung",
+      "anzahlung": "Anzahlung in CHF",
+      "anzahlungHinweis": "Bei Unterzeichnung fällig, der Rest nach Inbetriebnahme",
+      "anzahlungFehlt": "Bitte den Betrag der Anzahlung angeben.",
+      "imVertrag": "Im Vertrag",
+      "bearbeiten": "Werkvertrag bearbeiten",
+      "speichern": "Speichern",
+      "raten": "Raten",
+      "rateText": "Bezeichnung Rate {{nr}}",
+      "rateProzent": "Prozent Rate {{nr}}",
+      "rateHinzu": "Rate hinzufügen",
+      "rateEntfernen": "Rate {{nr}} entfernen",
+      "ratenSumme": "Zusammen {{summe}} % – es müssen genau 100 % sein.",
+      "ratenHinweis": "Die erste Rate ist die Anzahlung (fällig 10 Tage nach Unterzeichnung)."
+    },
+    "felder": {
+      "gegenstand": "Gegenstand (Zeile unter den Parteien)",
+      "material": "Material",
+      "materialLeer": "gemäss Offerte",
+      "beginn": "Baubeginn",
+      "fertig": "Fertigstellung & Inbetriebnahme",
+      "nachAbsprache": "nach Absprache",
+      "optionen": "Optionale Leistungen (im Vertrag angekreuzt)",
+      "monitoring": "Energiemessung / Monitoring",
+      "wartung": "Wartungsvertrag",
+      "batterie": "Batteriespeicher (aus der Offerte)",
+      "divers": "Diverses"
+    },
+    "senden": {
+      "titel": "Werkvertrag an Kunden senden",
+      "keineMail": "keine E-Mail-Adresse",
+      "weiter": "Mail vorbereiten",
+      "vertrag": "Werkvertrag mit AGB als PDF ({{sprache}})",
+      "rechnung": "Anzahlungsrechnung {{betrag}} mit QR-Zahlteil",
+      "grund": {
+        "neu": "Wird beim Vorbereiten gestellt (Nummer, Fälligkeit). Gesendet wird erst im nächsten Schritt.",
+        "vorhanden": "Die Rechnung gibt es schon im CRM, sie wird beigelegt.",
+        "keinRecht": "Rechnungen stellen braucht das Recht «Finanzen».",
+        "schonVerrechnet": "Schon verrechnet (z. B. in AbaNinja) {{nummer}}: bitte jene Rechnung von Hand anhängen.",
+        "keinPlan": "Noch kein Zahlungsplan."
+      },
+      "mitUnterschrift": "Mit meiner Unterschrift unterschreiben",
+      "unterschriftHinweis": "Deine Unterschrift steht im Kasten «Unterschrift Dimension Solaire», dein Name darunter.",
+      "keineUnterschrift": "Noch keine Unterschrift hinterlegt: unter Mein Konto › Meine Unterschrift. Ohne sie bleibt der Kasten leer."
+    },
+    "einstellung": {
+      "titel": "Einstellungen",
+      "beschreibung": "Gilt für alle neuen Werkverträge (nur Administration).",
+      "unterzeichner": "Unterschreibt für Dimension Solaire",
+      "ansprechperson": "Ansprechperson im Vertrag",
+      "email": "E-Mail im Vertrag",
+      "adresse": "Adresse im Vertrag",
+      "konditionPv": "Vorschlag Zahlung bei PV",
+      "konditionBatterie": "Vorschlag Zahlung bei Batterie",
+      "telefon_de": "Telefon im deutschen Vertrag",
+      "telefon_fr": "Telefon im französischen Vertrag"
     }
   },
   "preise": {
@@ -1873,6 +1946,18 @@
     "grossprojekt_schon_lead": "Daraus ist schon ein Lead entstanden. Bitte dort weiterarbeiten.",
     "grossprojekt_entscheid_unbekannt": "Diesen Entscheid gibt es nicht.",
     "grossprojekt_nur_ablauf": "Stand und Entscheid ändern nur die Knöpfe unten in der Akte.",
+    "posteingang_kein_recht": "Dafür fehlt dir das Recht (nur Administration).",
+    "posteingang_nicht_gefunden": "Diese Mail gibt es nicht mehr oder du darfst sie nicht sehen.",
+    "posteingang_person_fehlt": "Bitte eine aktive Person wählen.",
+    "posteingang_art_unbekannt": "Diese Art gibt es nicht.",
+    "posteingang_aktion_unbekannt": "Das geht mit dieser Mail nicht.",
+    "auftrag_anzahlung_fehlt": "Bitte den Betrag der Anzahlung angeben.",
+    "werkvertrag_anzahlung_verrechnet": "Die Anzahlung ist schon verrechnet oder bezahlt (z. B. in AbaNinja).",
+    "werkvertrag_kein_zahlungsplan": "Zu diesem Vertrag gibt es noch keinen Zahlungsplan.",
+    "werkvertrag_storniert": "Der Werkvertrag ist storniert.",
+    "auftrag_raten_summe": "Die Raten müssen zusammen genau 100 % ergeben.",
+    "auftrag_raten_text": "Bitte jeder Rate eine Bezeichnung geben.",
+    "auftrag_raten_fehlen": "Bitte 1 bis 6 Raten angeben.",
     "handbuch_nur_entscheider": "Über diese Meldung entscheidet eine andere Person.",
     "handbuch_entscheid_ungueltig": "Bitte «Erledige es» oder «Nicht» wählen.",
     "handbuch_schon_abgeschlossen": "Diese Meldung ist schon abgeschlossen.",
@@ -2101,7 +2186,9 @@
     },
     "werkvertrag": {
       "betreff": "Ihr Werkvertrag {{nummer}} von Dimension Solaire",
-      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire",
+      "betreffMitRechnung": "Ihr Werkvertrag {{nummer}} und die Anzahlungsrechnung von Dimension Solaire",
+      "textMitRechnung": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag und die Anzahlungsrechnung über {{betrag}}. Bitte senden Sie uns den Werkvertrag unterschrieben zurück und überweisen Sie die Anzahlung mit dem QR-Zahlteil. Nach Eingang der Anzahlung bestellen wir das Material und vereinbaren mit Ihnen den Montagetermin.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
@@ -5867,9 +5954,62 @@
       "an": "Läuft",
       "aus": "Angehalten",
       "fortschritt": "Fortschritt der Dachsuche",
-      "text": "Das CRM sucht selbst nach grossen Dächern mit viel Stromverbrauch: Es geht das Gebiet um Muri und Bulle stündlich ein Stück weiter durch (die nächsten Gebiete zuerst), holt grosse Industrie-, Gewerbe-, Spital-, Heim-, Schul- und Sportbauten aus dem Gebäuderegister und prüft das Dach bei sonnendach.ch. Neu in die Liste kommt nur, was genug Punkte hat.",
+      "text": "Das CRM sucht selbst nach grossen Dächern mit viel Stromverbrauch: Es geht alle Regionen von Muri und Bulle stündlich ein Stück weiter durch (die nächsten Gebiete zuerst), holt grosse Industrie-, Gewerbe-, Spital-, Heim-, Schul- und Sportbauten aus dem Gebäuderegister und prüft das Dach bei sonnendach.ch. Was interessant ist, kommt in den Vorrat; pro Woche gibt das CRM die besten in die Liste und recherchiert dazu Eigentümer und Ansprechperson.",
       "stand": "{{durchsucht}} von {{gebiete}} Gebieten durchsucht, {{gebaeude}} Gebäude angeschaut, {{treffer}} Treffer in der Liste.",
-      "zuletzt": "Zuletzt gesucht: {{zeit}}"
+      "zuletzt": "Zuletzt gesucht: {{zeit}}",
+      "woche": "Diese Woche {{diese}} von {{pro}} neuen Grossprojekten, {{vorrat}} gute Treffer warten im Vorrat (pro Woche kommen nur die besten in die Liste)."
+    },
+    "recherche": {
+      "titel": "Eigentümer und Ansprechperson",
+      "wartet": "Die Recherche folgt innert einer halben Stunde: Das CRM sucht im Web (Handelsregister, Firmenwebsite, Gemeinde) nach Eigentümer und Ansprechperson.",
+      "laeuft": "Das CRM recherchiert gerade …",
+      "fehler": "Die Recherche hat nicht geklappt. Du kannst sie nochmals anstossen.",
+      "keine": "Noch keine Recherche.",
+      "starten": "Recherchieren",
+      "neu": "Neu recherchieren",
+      "angestossen": "Recherche angestossen",
+      "vorschlag": "Vorschlag der KI vom {{datum}}. Bitte prüfen, bevor du etwas übernimmst; das Eigentum im Grundbuch bestätigen.",
+      "eigentuemer": "Eigentümer",
+      "unbekannt": "Nicht gefunden",
+      "nutzer": "Nutzt das Gebäude",
+      "sicherheit": {
+        "hoch": "sicher",
+        "mittel": "wahrscheinlich",
+        "tief": "unsicher"
+      },
+      "alsBauherr": "Als Bauherrschaft übernehmen",
+      "personen": "Ansprechpersonen",
+      "keinePersonen": "Keine Ansprechperson gefunden.",
+      "uebernehmen": "Übernehmen",
+      "uebernommen": "Übernommen",
+      "ansprechperson": "Ansprechperson",
+      "schritte": "Nächste Schritte",
+      "inTagen_one": "in {{count}} Tag",
+      "inTagen_other": "in {{count}} Tagen",
+      "alsAufgaben": "Als Aufgaben anlegen",
+      "aufgabenAngelegt": "Aufgaben angelegt",
+      "quellen": "Quellen",
+      "quelle": "Quelle"
+    },
+    "gebiet": {
+      "titel": "Suchgebiet und Grössen",
+      "text": "Standard sind alle Regionen von dimension-solaire.ch. Ein Gebiet ist eine PLZ als Mitte mit Radius. Es gibt keine harte Schwelle: Was die Mindestgrösse erreicht, kommt in den Vorrat, und die Punkte (Dach, Verbrauch, Heizung, Eigentümer) bestimmen, welche pro Woche in die Liste kommen.",
+      "pro_woche": "Neue pro Woche",
+      "ab_punkte": "In den Vorrat ab Punkten",
+      "min_dach_m2": "Dach mindestens (m²)",
+      "min_grundflaeche_m2": "Grundfläche mindestens (m²)",
+      "gebiete": "Gebiete ({{n}})",
+      "aktiv": "{{name}} durchsuchen",
+      "name": "Name des Gebiets",
+      "plz": "PLZ der Mitte",
+      "radius": "Radius in km",
+      "entfernen": "{{name}} entfernen",
+      "neu": "Gebiet hinzufügen"
+    },
+    "verantwortlich": {
+      "label": "Verantwortlich bei uns",
+      "standard": "Verantwortlich für neue Grossprojekte",
+      "niemand": "Niemand"
     }
   },
   "team": {
@@ -5937,6 +6077,174 @@
       "notizHinweis": "Die Person sieht diese Notiz nicht."
     }
   },
+  "posteingang": {
+    "titel": "Posteingang",
+    "beschreibung": "Alle Mails aus info@ und euren Postfächern, eingeordnet und der Akte zugeordnet. Wer wartet auf uns, und bis wann antworten wir?",
+    "holen": "Jetzt abholen",
+    "reiter": {
+      "eingang": "Posteingang",
+      "auswertung": "Reaktionszeit",
+      "einstellungen": "Einstellungen"
+    },
+    "filter": "Welche Mails",
+    "artFilter": "Art",
+    "alleArten": "Alle Arten",
+    "ansicht": {
+      "warten": "Wartet auf uns",
+      "neu": "Alle offenen",
+      "meine": "Meine",
+      "erledigt": "Erledigt",
+      "abgelegt": "Werbung & Intern"
+    },
+    "leer": {
+      "warten": "Niemand wartet auf eine Antwort",
+      "neu": "Keine offenen Mails",
+      "meine": "Dir ist gerade nichts zugeteilt",
+      "erledigt": "In den letzten 14 Tagen nichts erledigt",
+      "abgelegt": "Nichts abgelegt",
+      "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort."
+    },
+    "art": {
+      "anfrage": "Neue Anfrage",
+      "stoerung": "Störung",
+      "kunde": "Kunde",
+      "rechnung": "Rechnung & Zahlung",
+      "lieferant": "Lieferant",
+      "amt": "Amt & Netzbetreiber",
+      "monitor": "Ausschreibung",
+      "sonstiges": "Sonstiges",
+      "intern": "Intern",
+      "werbung": "Werbung & Newsletter",
+      "privat": "Privat"
+    },
+    "spalte": {
+      "mail": "Mail",
+      "art": "Art",
+      "zustaendig": "Zuständig",
+      "frist": "Antwort",
+      "eingang": "Eingang"
+    },
+    "dringend": "Dringend",
+    "anhang": "Mit Anhang",
+    "ohneBetreff": "(ohne Betreff)",
+    "wirdEingeordnet": "wird eingeordnet",
+    "fuer": "für {{name}}",
+    "vertretung": "vertritt {{name}}, abwesend",
+    "frist": {
+      "ueber": "wartet seit {{dauer}}",
+      "noch": "noch {{dauer}}",
+      "heute": "bis {{zeit}}",
+      "morgen": "bis morgen {{zeit}}",
+      "bis": "bis {{datum}} {{zeit}}",
+      "beantwortetNach": "beantwortet nach {{dauer}}",
+      "beantwortet": "beantwortet",
+      "automatisch": "automatisch übernommen",
+      "erledigt": "erledigt",
+      "abgelegt": "abgelegt",
+      "neu": "wird eingeordnet",
+      "info": "zur Kenntnis"
+    },
+    "zahl": {
+      "warten_one": "Kunde wartet auf Antwort",
+      "warten_other": "Kunden warten auf Antwort",
+      "ueber_one": "{{count}} über der Frist",
+      "ueber_other": "{{count}} über der Frist",
+      "reaktion": "Reaktionszeit heute (Mitte, Arbeitszeit)",
+      "abgelegt": "Werbung & Intern still abgelegt (14 Tage)"
+    },
+    "akte": {
+      "titel": "Mail",
+      "weg": "Diese Mail gibt es nicht mehr oder du darfst sie nicht sehen.",
+      "oeffnen": "Wieder öffnen",
+      "weitergeben": "Weitergeben",
+      "erledigt": "Erledigt ohne Antwort",
+      "antworten": "Antworten",
+      "persoenlich": "persönliches Postfach",
+      "kurz": "Kurz gesagt",
+      "ohneKi": "Ohne KI eingeordnet. Bitte Art prüfen.",
+      "zugeordnet": "Zugeordnet",
+      "kundeZuordnen": "Kunde zuordnen",
+      "zuordnen": "Zuordnen",
+      "entwurf": "Entwurf",
+      "niemand": "noch niemand",
+      "leadAnlegen": "Lead anlegen",
+      "fallEroeffnen": "Service-Fall eröffnen",
+      "outlook": "In Outlook öffnen",
+      "mail": "Mail",
+      "laedt": "Text wird aus Outlook geladen …",
+      "nurVorschau": "Der ganze Text kommt aus Outlook. Ohne Microsoft-Verbindung steht hier nur der Anfang."
+    },
+    "feld": {
+      "kunde": "Kunde",
+      "lead": "Lead",
+      "offerte": "Offerte",
+      "projekt": "Projekt",
+      "fall": "Service-Fall",
+      "rechnung": "Rechnung",
+      "bestellung": "Bestellung",
+      "art": "Art",
+      "zustaendig": "Zuständig",
+      "erledigt": "Erledigt",
+      "betreff": "Betreff"
+    },
+    "weitergeben": {
+      "titel": "Mail weitergeben",
+      "text": "Die Person bekommt die Glocke. Die Antwortfrist bleibt gleich.",
+      "knopf": "Weitergeben",
+      "wer": "Person wählen"
+    },
+    "auswertung": {
+      "wochen": "Reaktionszeit je Woche",
+      "personen": "Pro Person, letzte 7 Tage",
+      "person": "Person",
+      "anzahl": "Mails",
+      "mitte": "Mitte",
+      "inFrist": "In Frist",
+      "kw": "KW ",
+      "leer": "Noch keine beantworteten Mails mit Frist.",
+      "hinweis": "Mitte der Arbeitszeit bis zur Antwort und Anteil in der Frist. Es zählen nur Mails, die eine Antwort brauchten."
+    },
+    "einst": {
+      "allgemein": "Allgemein",
+      "aktiv": "Posteingang eingeschaltet (holt alle 5 Minuten)",
+      "von": "Arbeitszeit von",
+      "bis": "Arbeitszeit bis",
+      "vorwarnung": "Vorwarnung (Minuten vor der Frist)",
+      "arbeitszeitHinweis": "Fristen laufen nur Montag bis Freitag in dieser Zeit, Feiertage zählen nicht.",
+      "fristen": "Antwortfrist je Art",
+      "stunden": "Arbeitsstunden, leer = keine Antwort nötig",
+      "keine": "keine",
+      "zustaendig": "Wer ist zuständig",
+      "zustaendigHinweis": "Wer einen Kunden, ein Projekt oder einen Service-Fall betreut, bekommt dessen Mails immer selbst. Diese Liste gilt für alle anderen, getrennt nach Sprache der Mail.",
+      "standard": "Alle anderen",
+      "deutsch": "Deutsch",
+      "franzoesisch": "Französisch",
+      "niemand": "–",
+      "vertretung": "Stellvertretung bei Abwesenheit",
+      "vertretungHinweis": "Steht jemand in Outlook auf «abwesend», gehen neue Mails an die Stellvertretung.",
+      "vertretungFuer": "Stellvertretung für {{name}}",
+      "eskalation": "Glocke bei doppelter Frist",
+      "eskalationHinweis": "Wartet ein Kunde doppelt so lange wie vorgesehen, bekommen diese Personen die Glocke. Niemand gewählt = Administration."
+    },
+    "pruefung": {
+      "uhrzeit": "Bitte als Zeit eingeben, z. B. 07:30.",
+      "stunden": "Bitte Stunden als Zahl eingeben, z. B. 4 oder 0,5.",
+      "minuten": "Bitte Minuten als Zahl eingeben.",
+      "zeitraum": "«bis» muss nach «von» liegen."
+    },
+    "heute": {
+      "titel": "Kunden warten auf deine Antwort",
+      "team": "Kunden warten auf Antwort",
+      "alle_one": "{{count}} offen",
+      "alle_other": "{{count}} offen",
+      "nichts": "Niemand wartet auf eine Antwort."
+    },
+    "uebergabe": {
+      "laedt": "Mail wird geladen …",
+      "fehlt": "Diese Mail ist nicht mehr da.",
+      "verknuepft": "Mit der Mail im Posteingang verknüpft"
+    }
+  },
   "einfach": {
     "titel": "Hallo {{name}}",
     "text": "Arbeitszeit per Knopfdruck, Spesen mit Belegfoto und dein Plan.",
@@ -5965,5 +6273,57 @@
   "knopfleiste": {
     "mehr": "Mehr",
     "weniger": "Weniger"
+  },
+  "ablage": {
+    "titel": "Dateiablage in SharePoint",
+    "zweck": "Dimension Work legt den Ordner jeder neuen Offerte selbst an (mit den Unterordnern), verschiebt ihn bei Annahme zu den Aufträgen und bei Verlust ins Archiv und legt Dateien aus dem CRM in den passenden Unterordner. Ältere Ordner bleiben, wie sie sind.",
+    "aktiv": "Automatische Ablage eingeschaltet",
+    "seit": "für Offerten ab {{datum}}",
+    "fertig_one": "{{count}} Ordner am Platz",
+    "fertig_other": "{{count}} Ordner am Platz",
+    "wartend_one": "{{count}} wartet",
+    "wartend_other": "{{count}} warten",
+    "mitFehler_one": "{{count}} mit Fehler",
+    "mitFehler_other": "{{count}} mit Fehler",
+    "bibliothek": "Bibliothek",
+    "name": "Ordnername",
+    "nameHinweis": "Platzhalter: {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offerten",
+      "auftraege": "Aufträge",
+      "verloren": "Verloren"
+    },
+    "unterordner": "Unterordner (werden in jedem neuen Ordner angelegt)",
+    "oeffnen": "Ordner in SharePoint",
+    "wirdAngelegt": "Ordner wird angelegt",
+    "wirdVerschoben": "Ordner (wird verschoben)",
+    "fehler": "Ordner: Fehler",
+    "person": "Microsoft-Verbindung von (Kürzel)",
+    "personHinweis": "Diese Person braucht Zugriff auf die Bibliothek und muss mit Microsoft verbunden sein."
+  },
+  "zust": {
+    "reiter": "Zuständigkeiten",
+    "titel": "Wer ist zuständig?",
+    "zweck": "Neue Leads, auch von der Webseite, bekommen die Person automatisch nach diesen Regeln; Aufgabe und Glocke gehen direkt an sie. Neue Offerten gehen an die Person für Offerten. Ist jemand abwesend, übernimmt die Stellvertretung. Im Lead und in der Offerte lässt sich die Person jederzeit ändern.",
+    "verkauf": "Verkauf: neue Leads",
+    "verkaufHinweis": "Alle gewählten Bedingungen müssen passen. Genauere Regeln (mehr Bedingungen) gelten zuerst.",
+    "sprache": "Sprache",
+    "standort": "Standort",
+    "region": "Region",
+    "produkt": "Produkt",
+    "person": "Person",
+    "alle": "Alle",
+    "produkte": {
+      "pv": "Photovoltaik",
+      "batterie": "Batterie",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "regelNeu": "Regel hinzufügen",
+    "regelWeg": "Regel entfernen",
+    "offerten": "Offerten erstellen",
+    "stellvertretung": "Stellvertretung bei Abwesenheit",
+    "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
+    "vertretungFuer": "Stellvertretung für {{name}}"
   }
 }

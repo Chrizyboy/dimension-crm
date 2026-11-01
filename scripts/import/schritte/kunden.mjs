@@ -102,6 +102,29 @@ export function baueKontakt(nr, quellen) {
       quellen.some((q) => q.art === 'projekt' && q.datensatz.lang === 'fr') ? 'fr' : 'de',
     ),
     werbesperre: quellen.some((q) => q.datensatz.keineWerbung === true),
+    einwilligung: einwilligungAusMesse(quellen),
+  }
+}
+
+/**
+ * Einwilligung für Werbung aus dem Messe-Formular der Vorlage (leads.messe), die erste erteilte gilt.
+ * Format wie im neuen CRM: {quelle, datum, kanal} (revDSG), dazu Anlass und Formular zur Nachvollziehbarkeit.
+ * @param {Quelle[]} quellen
+ */
+export function einwilligungAusMesse(quellen) {
+  const erteilt = quellen
+    .filter((q) => q.art === 'lead' && q.datensatz.messe?.einwilligung === true)
+    .map((q) => /** @type {Record<string, any>} */ (q.datensatz.messe))
+    .sort((a, b) => String(a.at ?? '').localeCompare(String(b.at ?? '')))
+  const m = erteilt[0]
+  if (!m) return null
+  return {
+    quelle: 'messe',
+    datum: String(m.at ?? '').slice(0, 10) || null,
+    kanal: text(m.kanal),
+    anlass: text(m.event),
+    formular: text(m.herkunft) ?? text(m.formular),
+    erfasst_von: text(m.by),
   }
 }
 

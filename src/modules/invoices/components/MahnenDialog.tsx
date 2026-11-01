@@ -9,7 +9,7 @@ import { meldeFehler } from '@/services/fehler'
 import { useAktion } from '../hooks/useAktion'
 import { heuteZuerich, pdfZeigen, plusTage } from '../lib/rechnung'
 import { mahnen } from '../services/rechnungen'
-import { rechnungPdf } from '../services/rechnungPdf'
+import { rechnungPdf } from '@/services/rechnungPdf'
 import type { RechnungVoll } from '../types'
 
 /**

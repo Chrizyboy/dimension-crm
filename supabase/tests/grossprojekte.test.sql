@@ -46,9 +46,9 @@ with n as (insert into public.grossprojekte (titel, quell_url, plz, nutzung, dac
 select is((select ausschluss from public.grossprojekte where id = (select id from t where name = 'schloss')), 'geschuetzt',
   'geschütztes Gebäude ausgeschlossen');
 with n as (insert into public.grossprojekte (titel, quell_url, plz, nutzung, dachflaeche_m2) values
-  ('Genf', 'x', '1200', 'gewerbe', 2000) returning id) insert into t select 'genf', id from n;
+  ('St. Moritz', 'x', '7500', 'gewerbe', 2000) returning id) insert into t select 'genf', id from n;
 select is((select ausschluss from public.grossprojekte where id = (select id from t where name = 'genf')), 'fahrzeit',
-  'mehr als 60 Minuten: ausgeschlossen');
+  'mehr als 2 Stunden Fahrt: ausgeschlossen');
 update public.grossprojekte set heizung = 'gas', heizung_jahr = extract(year from current_date)::int - 3
  where id = (select id from t where name = 'gross');
 select cmp_ok((select (d ->> 'punkte')::int from public.grossprojekte g, jsonb_array_elements(g.punkte_details) d

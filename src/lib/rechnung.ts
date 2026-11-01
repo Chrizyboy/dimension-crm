@@ -1,8 +1,14 @@
 /**
+ * Gemeinsame Rechnungs-Hilfen für Rechnungen und Werkverträge (Anzahlungsrechnung).
+ *
  * Swiss QR-Code (Zahlteil der QR-Rechnung, Implementation Guidelines 2.3, «SPC 0200»). Nur der Rückfall,
  * wenn die Rechnung nicht aus AbaNinja kommt (Entscheid 0009): normale IBAN ohne Referenz («NON»), die
  * Rechnungsnummer als Mitteilung. Adressen strukturiert («S»), wie seit November 2025 verlangt.
  */
+
+/** Zeilenbetrag einer Rechnungsposition in Rappen (Menge × Preis, auf Rappen gerundet). */
+export const zeilenBetrag = (p: { menge: number; preis_rappen: number }) =>
+  Math.round((p.menge || 0) * (p.preis_rappen || 0))
 
 /** Adresse für den QR-Code. */
 export interface QrAdresse {

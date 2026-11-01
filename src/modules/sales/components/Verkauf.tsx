@@ -32,7 +32,9 @@ export interface VerkaufProps {
   /** Offenes Geschäft aus der Adresse (?lead=…). */
   leadId: string | null
   neu: boolean
-  onAdresse: (a: { ansicht?: VerkaufAnsicht; lead?: string | null; neu?: boolean }) => void
+  /** Mail aus dem Posteingang, aus der ein Lead entstehen soll (?ausMail=…). */
+  ausMail?: string | null
+  onAdresse: (a: { ansicht?: VerkaufAnsicht; lead?: string | null; neu?: boolean; ausMail?: string | null }) => void
 }
 
 /** Ansichten mit der gemeinsamen Filterleiste; Route, Tour und Kalender haben ihre eigene Auswahl. */
@@ -42,7 +44,7 @@ const MIT_FILTER = new Set<VerkaufAnsicht>(['pipeline', 'liste', 'regionen'])
  * «Anfragen & Leads» (V233 Leads, Pipeline, Tagesroute, Tour planen, Kalender, Regionen, Monatsbericht).
  * Alle Ansichten arbeiten mit denselben Geschäften; ein Klick öffnet überall die Lead-Akte.
  */
-export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProps) {
+export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdresse }: VerkaufProps) {
   const { t } = useTranslation()
   const geschaefte = useGeschaefte()
   const [filter, setFilter] = useState<VerkaufFilter>(LEERER_FILTER)
@@ -103,7 +105,12 @@ export default function Verkauf({ ansicht, leadId, neu, onAdresse }: VerkaufProp
         beschreibung={t('verkauf.beschreibung')}
         aktionen={
           <>
-            <AnfragenKnopf />
+            <AnfragenKnopf
+              ausMail={ausMail}
+              onAusMailFertig={(lead) => {
+                onAdresse({ ausMail: null, ...(lead ? { lead } : {}) })
+              }}
+            />
             <Button
               variant="secondary"
               onClick={() => {

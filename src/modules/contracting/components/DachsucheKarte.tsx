@@ -12,8 +12,8 @@ import { zahl } from '../lib/anzeige'
 import { setzeSucheAktiv } from '../services/grossprojekte'
 
 /**
- * Stand der Dachsuche: Der Zeitplan geht das Gebiet um Muri und Bulle stündlich ein Stück weiter durch, die nächsten
- * Gebiete zuerst. Hier sieht man, wie weit er ist; die Administration kann die Suche anhalten.
+ * Stand der Dachsuche: Der Zeitplan geht die Regionen von Muri und Bulle stündlich ein Stück weiter durch, die nächsten
+ * Gebiete zuerst; pro Woche kommen nur die besten Treffer aus dem Vorrat in die Liste. Hier sieht man, wie weit er ist; die Administration kann die Suche anhalten.
  */
 export function DachsucheKarte() {
   const { t } = useTranslation()
@@ -76,6 +76,9 @@ export function DachsucheKarte() {
                 gebaeude: zahl(s.gebaeude),
                 treffer: s.treffer,
               })}
+            </p>
+            <p className="zahlen">
+              {t('grossprojekte.suche.woche', { diese: s.diese_woche, pro: s.pro_woche, vorrat: zahl(s.vorrat) })}
             </p>
             {s.zuletzt && (
               <p className="text-muted-foreground text-xs">

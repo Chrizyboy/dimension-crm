@@ -85,14 +85,14 @@ select public.offerte_status_setzen((select vc from t7), 'offeriert');
 select throws_ok(format($$ select public.offerte_entscheiden(%L, 'vertagt', jsonb_build_object('datum', current_date + 21)) $$,
   (select o from t7)), 'stand.grund_fehlt', 'Vertagen braucht einen Grund');
 
--- Auftrag erstellen (V232): Zahlungsplan 50/30/20 auf 5 Rappen, Summe exakt
+-- Auftrag erstellen (V232): Zahlungsplan 50/30/20 auf ganze Franken (Entscheid 0030), Summe exakt
 select lives_ok(format($$ select public.auftrag_erstellen(%L, '{"vertragswert_rappen": 3784523, "kondition": "normal", "unterzeichnet_am": "2026-10-21"}') $$,
   (select o from t7)), 'Auftrag erstellen');
 select is((select sum(z.betrag_rappen)::bigint from public.zahlungsplan z join public.projekte p on p.id = z.projekt_id
             where p.offerte_id = (select o from t7) and z.geloescht_am is null), 3784523::bigint, 'Zahlungsplan ergibt genau den Vertragswert');
 select results_eq(format($$ select z.betrag_rappen from public.zahlungsplan z join public.projekte p on p.id = z.projekt_id
             where p.offerte_id = %L and z.geloescht_am is null order by z.faellig_am nulls last, z.betrag_rappen desc $$, (select o from t7)),
-  array[1892260::bigint, 1135355::bigint, 756908::bigint], 'Tranchen auf 5 Rappen, die letzte nimmt den Rest');
+  array[1892300::bigint, 1135400::bigint, 756823::bigint], 'Tranchen auf ganze Franken, die letzte nimmt den Rest');
 select is((select faellig_am from public.zahlungsplan z join public.projekte p on p.id = z.projekt_id
             where p.offerte_id = (select o from t7) and z.bezeichnung like 'Anzahlung%' and z.geloescht_am is null),
   '2026-10-31'::date, 'Anzahlung fällig 10 Tage nach Unterzeichnung');

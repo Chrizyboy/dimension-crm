@@ -1,6 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type { Database, Json } from '@/types/datenbank'
 import type { Eingang, EingangStatus, EturnityMeldung, Offerte, OffertVersion, Wirtschaftlichkeit } from '../types'
+import { alleSeiten } from '@/services/seiten'
 
 type OffertZeile = Database['public']['Views']['offerten_liste']['Row']
 type EingangZeile = Database['public']['Views']['offerten_eingang']['Row']
@@ -127,8 +128,9 @@ export function eingangAusZeile(z: EingangZeile): Eingang {
 
 /** Alle Offerten (Muri, Bulle, Nachfassen). Gefiltert wird in der App, damit Reiter und Suche sofort reagieren. */
 export async function ladeOfferten(): Promise<Offerte[]> {
-  const { data, error } = await db().from('offerten_liste').select('*').order('nummer', { ascending: false })
-  if (error) throw error
+  const data = await alleSeiten((von, bis) =>
+    db().from('offerten_liste').select('*').order('nummer', { ascending: false }).order('id').range(von, bis),
+  )
   return data.map(offerteAusZeile)
 }
 

@@ -9,20 +9,28 @@
 //  * anfragen     alle 5 Minuten  solar-guide, Landingpage, Messe aus den Postfächern (V78)
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
+//  * posteingang  alle 5 Minuten  alle Mails holen, «beantwortet» erkennen, mit KI einordnen (Phase 18)
+//  * posteingang_erinnern alle 5 Min.  Antwortfristen: Glocke an Zuständige, bei doppelter Frist an die Leitung
+//  * ablage       alle 5 Minuten  Offert-Ordner in SharePoint anlegen/verschieben, Dateien einordnen (Entscheid 0031)
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
-//  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
+//  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
+//                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
+//  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
 
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { dachsuche } from '../_shared/dachsuche.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
+import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
+import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
+import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
 import { kiEntwuerfeAbarbeiten } from '../_shared/ki_automation.ts'
 import { kiEingerichtet } from '../_shared/ki_rahmen.ts'
 import { dienst } from '../_shared/datenbank.ts'
@@ -110,14 +118,28 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
+  ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
+    const n = await dienst.rpc<number>('posteingang_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
   // Grossprojekte (Phase 8c): erst Gebäudedaten holen, dann einige Gebiete nach grossen Dächern durchsuchen, zuletzt
   // starke Treffer melden (nur Glocke), damit auch die neuen aus der Dachsuche gleich in der Glocke stehen.
   ergebnis.grossprojekte = await job('grossprojekte', 60, async () => {
     const angereichert = await grossprojekteAnreichern(20)
     const gesucht = await dachsuche()
+    // Pro Woche nur die besten aus dem Vorrat in die Liste (einstellungen.grossprojekte.suche.pro_woche).
+    const frei = await dienst.rpc<number>('grossprojekt_vorrat_freigeben', {})
     const r = await dienst.rpc<{ wieder: number; gemeldet: number }>('grossprojekte_melden', {})
-    return `${angereichert}, ${gesucht}, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
+    return `${angereichert}, ${gesucht}, ${frei} freigegeben, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
   })
+
+  // Recherche zu neuen Grossprojekten (Eigentümer, Ansprechperson, nächste Schritte); eine pro halbe Stunde, weil die
+  // Websuche bis zu zwei Minuten dauert. Ohne Schlüssel bleibt sie in der Warteschlange.
+  if (kiEingerichtet()) {
+    ergebnis.grossprojekte_recherche = await job('grossprojekte_recherche', 30, () => grossprojekteRecherchieren(1))
+  }
 
   // KI-Entwürfe (Phase 13): ersetzt den Vorlagentext wartender Mails; ohne Schlüssel bleibt die Vorlage.
   if (kiEingerichtet()) {
@@ -198,6 +220,23 @@ Deno.serve(async (req) => {
         return n
       })
     })
+    // Nach «anfragen», damit Formular-Anfragen schon ihren Lead haben.
+    ergebnis.posteingang = await job('posteingang', 5, async () => {
+      let mitTeam = true
+      let neu = 0
+      let beantwortet = 0
+      const meldung = await fuerAlle(async (id) => {
+        const r = await posteingangAbholen(id, s, mitTeam)
+        mitTeam = false // Team-Postfächer nur einmal pro Lauf lesen
+        neu += r.neu
+        beantwortet += r.beantwortet
+        return r.neu
+      })
+      return `${meldung}; ${neu} neu, ${beantwortet} beantwortet; ${await posteingangEinordnen(15)}`
+    })
+
+    // Ablage vor der Sicherung: Dateien von Offerten und Projekten gehören in deren Ordner, nicht ins Kunden-Backup.
+    ergebnis.ablage = await job('ablage', 5, () => ablageAbarbeiten(s))
     ergebnis.sicherung = await job('sicherung', 30, async () => {
       const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
       if (!p) return 'keine verbundene Person'

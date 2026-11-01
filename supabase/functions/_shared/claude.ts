@@ -23,6 +23,8 @@ export interface KiAnfrage {
   maxTokens: number
   /** Wie gründlich die KI nachdenkt (kostet Ausgabe-Tokens). */
   aufwand?: 'low' | 'medium' | 'high'
+  /** Werkzeuge des Servers von Anthropic, z. B. die Websuche. Nicht zusammen mit «schema» (Quellenangaben). */
+  werkzeuge?: Record<string, unknown>[]
 }
 
 /** Verbrauch eines Aufrufs in Tokens. */
@@ -39,6 +41,8 @@ export interface KiAntwort {
   json: unknown
   nutzung: Nutzung
   modell: string
+  /** Zahl der Websuchen (kosten zusätzlich, siehe «websuche_usd_je_1000»). */
+  websuchen: number
 }
 
 /** Preise eines Modells in USD je Million Tokens. */
@@ -74,14 +78,22 @@ function block(t: Teil): Record<string, unknown> {
   return { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: t.base64 } }
 }
 
-/** Baut den Inhalt der Anfrage (ohne Schlüssel); getrennt, damit Tests ihn prüfen können. */
-export function anfrageInhalt(a: KiAnfrage): Record<string, unknown> {
+/**
+ * Baut den Inhalt der Anfrage (ohne Schlüssel); getrennt, damit Tests ihn prüfen können. «bisher» ist die Antwort
+ * einer pausierten Runde (pause_turn): Sie geht unverändert als Antwort des Assistenten mit, dann macht der Server
+ * dort weiter.
+ */
+export function anfrageInhalt(a: KiAnfrage, bisher?: unknown[]): Record<string, unknown> {
   return {
     model: a.modell,
     max_tokens: a.maxTokens,
     // Der Systemtext (Regeln, Firmenstil) ist bei jedem Aufruf gleich: zwischenspeichern spart Kosten.
     system: [{ type: 'text', text: a.system, cache_control: { type: 'ephemeral' } }],
-    messages: [{ role: 'user', content: a.teile.map(block) }],
+    messages: [
+      { role: 'user', content: a.teile.map(block) },
+      ...(bisher ? [{ role: 'assistant', content: bisher }] : []),
+    ],
+    ...(a.werkzeuge?.length ? { tools: a.werkzeuge } : {}),
     output_config: {
       effort: a.aufwand ?? 'low',
       ...(a.schema ? { format: { type: 'json_schema', schema: a.schema } } : {}),
@@ -99,6 +111,7 @@ interface RohAntwort {
     output_tokens?: number
     cache_read_input_tokens?: number
     cache_creation_input_tokens?: number
+    server_tool_use?: { web_search_requests?: number }
   }
   error?: { type?: string }
 }
@@ -127,44 +140,68 @@ export class KiFehler extends DienstFehler {
   }
 }
 
+/** Höchstens so oft eine pausierte Runde (pause_turn, z. B. viele Websuchen) fortsetzen. */
+const FORTSETZUNGEN = 3
+
+function plus(a: Nutzung, b: Nutzung): Nutzung {
+  return {
+    ein: a.ein + b.ein,
+    aus: a.aus + b.aus,
+    cacheLesen: a.cacheLesen + b.cacheLesen,
+    cacheSchreiben: a.cacheSchreiben + b.cacheSchreiben,
+  }
+}
+
 /** Fragt Claude. Wirft DienstFehler mit kurzem Code (ki_abgelehnt, ki_zu_lang, ki_antwort, ki_dienst …). */
 export async function frageClaude(a: KiAnfrage): Promise<KiAntwort> {
   const basis = env('ANTHROPIC_URL') ?? 'https://api.anthropic.com'
-  const res = await rufe(
-    `${basis}/v1/messages`,
-    {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': brauche('ANTHROPIC_API_KEY'),
-        'anthropic-version': API_VERSION,
-        ...(mitErsatzmodell(a.modell) ? { 'anthropic-beta': 'server-side-fallback-2026-07-01' } : {}),
+  let bisher: unknown[] | undefined
+  let summe: Nutzung = { ein: 0, aus: 0, cacheLesen: 0, cacheSchreiben: 0 }
+  let websuchen = 0
+  let r: RohAntwort = {}
+  for (let runde = 0; ; runde++) {
+    const res = await rufe(
+      `${basis}/v1/messages`,
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-api-key': brauche('ANTHROPIC_API_KEY'),
+          'anthropic-version': API_VERSION,
+          ...(mitErsatzmodell(a.modell) ? { 'anthropic-beta': 'server-side-fallback-2026-07-01' } : {}),
+        },
+        body: JSON.stringify(anfrageInhalt(a, bisher)),
       },
-      body: JSON.stringify(anfrageInhalt(a)),
-    },
-    // Lesen ist gefahrlos wiederholbar (429, 5xx, 529 «überlastet»); Denken braucht Zeit.
-    { versuche: 2, zeitlimitMs: 120_000, backoffMs: 1500 },
-  )
-  const r = (await leseJson<RohAntwort>(res)) ?? {}
-  if (!res.ok) {
-    const typ = r.error?.type ?? ''
-    const code =
-      res.status === 401 || res.status === 403
-        ? 'ki_schluessel'
-        : res.status === 429
-          ? 'ki_ueberlastet'
-          : res.status === 413 || typ === 'request_too_large'
-            ? 'ki_zu_gross'
-            : res.status >= 500
-              ? 'ki_dienst'
-              : 'ki_anfrage'
-    throw new DienstFehler(code, res.status, `Claude ${res.status}`)
+      // Lesen ist gefahrlos wiederholbar (429, 5xx, 529 «überlastet»); Denken und Suchen brauchen Zeit.
+      { versuche: 2, zeitlimitMs: a.werkzeuge?.length ? 240_000 : 120_000, backoffMs: 1500 },
+    )
+    r = (await leseJson<RohAntwort>(res)) ?? {}
+    if (!res.ok) {
+      const typ = r.error?.type ?? ''
+      const code =
+        res.status === 401 || res.status === 403
+          ? 'ki_schluessel'
+          : res.status === 429
+            ? 'ki_ueberlastet'
+            : res.status === 413 || typ === 'request_too_large'
+              ? 'ki_zu_gross'
+              : res.status >= 500
+                ? 'ki_dienst'
+                : 'ki_anfrage'
+      throw new DienstFehler(code, res.status, `Claude ${res.status}`)
+    }
+    summe = plus(summe, nutzungAus(r))
+    websuchen += r.usage?.server_tool_use?.web_search_requests ?? 0
+    // Der Server hat seine Runde mit Werkzeugen unterbrochen: Antwort mitschicken, er macht dort weiter.
+    if (r.stop_reason !== 'pause_turn' || runde >= FORTSETZUNGEN) break
+    bisher = r.content ?? []
   }
-  const nutzung = nutzungAus(r)
+  const nutzung = summe
   const modell = r.model ?? a.modell
   // Ablehnung zuerst prüfen: der Inhalt passt dann nicht zum Schema.
   if (r.stop_reason === 'refusal') throw new KiFehler('ki_abgelehnt', 422, nutzung, modell)
-  if (r.stop_reason === 'max_tokens') throw new KiFehler('ki_zu_lang', 422, nutzung, modell)
+  if (r.stop_reason === 'max_tokens' || r.stop_reason === 'pause_turn')
+    throw new KiFehler('ki_zu_lang', 422, nutzung, modell)
   const text = (r.content ?? [])
     .filter((b) => b.type === 'text')
     .map((b) => b.text ?? '')
@@ -178,5 +215,5 @@ export async function frageClaude(a: KiAnfrage): Promise<KiAntwort> {
       throw new KiFehler('ki_antwort', 502, nutzung, modell)
     }
   }
-  return { text, json, nutzung, modell }
+  return { text, json, nutzung, modell, websuchen }
 }

@@ -20,6 +20,7 @@ import { kontoAusProfil, kontoSchema, type KontoEingabe } from '../schema'
 import { speichereMeinKonto } from '../services/benutzer'
 import { AppKarte } from './AppKarte'
 import { MicrosoftKarte } from './MicrosoftKarte'
+import { UnterschriftKarte } from './UnterschriftKarte'
 
 /** Felder je Abschnitt, in der Reihenfolge der Vorlage. Telefonnummern im Schweizer Format. */
 const ABSCHNITTE: { titel: string; felder: { name: keyof KontoEingabe; typ?: string; platzhalter?: string }[] }[] = [
@@ -75,6 +76,7 @@ export default function MeinKonto({
   return (
     <KontoFormular key={ich.id} ich={ich}>
       <MicrosoftKarte {...(microsoft ? { ergebnis: microsoft } : {})} onErgebnisGelesen={onMicrosoftGelesen} />
+      <UnterschriftKarte personId={ich.id} />
       <AppKarte />
     </KontoFormular>
   )

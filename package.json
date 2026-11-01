@@ -28,6 +28,7 @@
     "db:reset": "supabase db reset",
     "db:test": "supabase test db",
     "import:vorlage": "node scripts/import/import-vorlage.mjs",
+    "import:abgleich": "node scripts/abgleich/abgleich.mjs",
     "integrationen:pruefen": "node scripts/integrationen/pruefen.mjs",
     "ausschreibungen:pruefen": "node scripts/ausschreibungen/pruefen.mjs",
     "grossprojekte:pruefen": "node scripts/grossprojekte/pruefen.mjs",

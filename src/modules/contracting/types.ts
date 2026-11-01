@@ -109,6 +109,38 @@ export interface Grossprojekt {
   erstellt_am: string
   standort: string | null
   entschieden_von: string | null
+  recherche: Recherche | null
+  recherche_stand: 'wartet' | 'laeuft' | 'fertig' | 'fehler' | null
+  recherche_am: string | null
+  ansprechperson: Ansprechperson | null
+  /** Wer bei uns das Grossprojekt betreut (Standard Chris, änderbar). */
+  verantwortlich_id: string | null
+}
+
+/** Eine Ansprechperson (aus der Recherche vorgeschlagen oder übernommen). */
+export interface Ansprechperson {
+  name: string
+  funktion?: string | null
+  firma?: string | null
+  telefon?: string | null
+  email?: string | null
+  quelle?: string | null
+}
+
+/** Vorschlag der KI-Recherche: Eigentümer, Ansprechpersonen, nächste Schritte, Quellen. Nie ungeprüft übernommen. */
+export interface Recherche {
+  zusammenfassung?: string
+  eigentuemer?: {
+    name: string | null
+    art: BauherrArt
+    sicherheit: 'hoch' | 'mittel' | 'tief'
+    begruendung: string
+    quelle: string | null
+  }
+  nutzer?: string | null
+  ansprechpersonen?: Ansprechperson[]
+  naechste_schritte?: { titel: string; text: string; in_tagen: number }[]
+  quellen?: { titel: string; url: string }[]
 }
 
 /** Eintrag im Verlauf. */
@@ -138,7 +170,37 @@ export interface GrossprojektRegeln {
     chf_pro_kw_waerme?: number
     laufzeit_waerme_jahre?: number
   }
-  suche?: { aktiv?: boolean; min_dach_m2?: number; min_grundflaeche_m2?: number; ab_punkte?: number }
+  /** Kürzel der Person, die neue Grossprojekte betreut. */
+  verantwortlich?: string[]
+  suche?: SucheRegeln
+}
+
+/** Ein Suchgebiet: PLZ als Mitte und Radius (oder alte Form mit Koordinaten e/n in LV95). */
+export interface Suchgebiet {
+  name: string
+  plz?: string
+  e?: number
+  n?: number
+  radius_km: number
+  standort?: 'muri' | 'bulle'
+  aktiv?: boolean
+}
+
+/** Regeln der Dachsuche (einstellungen.grossprojekte.suche). */
+export interface SucheRegeln {
+  aktiv?: boolean
+  zentren?: Suchgebiet[]
+  min_dach_m2?: number
+  min_grundflaeche_m2?: number
+  ab_punkte?: number
+  pro_woche?: number
+}
+
+/** Eine Person für «verantwortlich». */
+export interface PersonKurz {
+  id: string
+  kuerzel: string
+  name: string
 }
 
 /** Stand der Dachsuche (grossprojekt_suche_stand). */
@@ -148,5 +210,9 @@ export interface SucheStand {
   durchsucht: number
   gebaeude: number
   treffer: number
+  /** Gefunden und bewertet, aber noch nicht in der Liste (pro Woche nur die besten). */
+  vorrat: number
+  pro_woche: number
+  diese_woche: number
   zuletzt: string | null
 }

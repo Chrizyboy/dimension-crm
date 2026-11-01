@@ -1,15 +1,14 @@
 import type { TFunction } from 'i18next'
 import { formatChf, formatDatum } from '@/lib/format'
-import { ibanPruefen } from '../lib/qr'
-import { zeilenBetrag } from '../lib/rechnung'
-import type { RechnungVoll } from '../types'
-import { db } from './rechnungen'
+import { ibanPruefen, zeilenBetrag } from '@/lib/rechnung'
+import type { RechnungVoll } from '@/types/rechnung'
 import { sicher, zahlteilZeichnen } from './zahlteil'
 
 /**
  * Rechnung oder Mahnung als PDF (A4) in der Sprache des Kunden, mit QR-Zahlteil, wenn die Firma eine
  * gültige IBAN hat. Rückfall zu AbaNinja (Entscheid 0009): dort entsteht die QR-Rechnung im Normalfall.
- * pdf-lib wird erst hier geladen, nicht mit der App.
+ * pdf-lib wird erst hier geladen, nicht mit der App. Gemeinsam für Rechnungen und Werkverträge
+ * (Anzahlungsrechnung mit dem Vertrag), darum in src/services.
  */
 
 const NAVY = [0.063, 0.149, 0.247] as const
@@ -176,34 +175,4 @@ export async function rechnungPdf(r: RechnungVoll, t: TFunction, mahnstufe = 0):
     })
   }
   return doc.save()
-}
-
-/** PDF hochladen und bei der Rechnung ablegen; gibt Dokument-ID und Dateiname zurück. */
-export async function rechnungPdfAblegen(
-  r: RechnungVoll,
-  bytes: Uint8Array,
-  mahnstufe = 0,
-): Promise<{ id: string; name: string }> {
-  const name = `${r.nummer ?? 'Entwurf'}${mahnstufe ? `-Mahnung-${String(mahnstufe)}` : ''}.pdf`
-  const pfad = `rechnungen/${r.id}/${String(Date.now())}-${name}`
-  const datei = new Blob([bytes as BlobPart], { type: 'application/pdf' })
-  const hoch = await db().storage.from('dokumente').upload(pfad, datei, { contentType: 'application/pdf' })
-  if (hoch.error) throw hoch.error
-  const { data, error } = await db()
-    .from('dokumente')
-    .insert({
-      name,
-      mime_typ: 'application/pdf',
-      bytes: bytes.byteLength,
-      ordner: 'rechnungen',
-      speicher: 'intern',
-      speicher_pfad: pfad,
-      bezug_tabelle: 'rechnungen',
-      bezug_id: r.id,
-    })
-    .select('id')
-    .single()
-  if (error) throw error
-  if (!mahnstufe) await db().from('rechnungen').update({ dokument_id: data.id }).eq('id', r.id)
-  return { id: data.id, name }
 }

@@ -18,6 +18,7 @@ import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { MailDialog } from '@/components/shared/MailDialog'
+import { AblageLink } from '@/components/shared/AblageLink'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -98,6 +99,7 @@ export default function OffertAkte({
                   {t('offerten.akte.werkvertrag')}: {wvStatus.text(o.werkvertragStatus)}
                 </Badge>
               )}
+              <AblageLink offerteId={o.id} />
             </div>
             <Knopfleiste haupt="erste" className="border-b pb-3">
               {versendet && (

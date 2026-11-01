@@ -17,6 +17,8 @@ export interface KiEinstellung {
   person_limit_rappen: number | null
   funktionen: Record<string, string>
   stil: { de: string; fr: string }
+  /** Preis der Websuche in USD je 1000 Suchen (kommt zu den Tokens dazu). */
+  websuche_usd_je_1000: number
 }
 
 /** Ist der Schlüssel als Secret hinterlegt? (Ohne ihn zeigt die App «noch nicht eingerichtet».) */
@@ -39,6 +41,7 @@ export async function kiEinstellung(): Promise<KiEinstellung> {
     person_limit_rappen: w.person_limit_rappen ?? null,
     funktionen: w.funktionen ?? {},
     stil: { de: w.stil?.de ?? '', fr: w.stil?.fr ?? '' },
+    websuche_usd_je_1000: typeof w.websuche_usd_je_1000 === 'number' ? w.websuche_usd_je_1000 : 10,
   }
 }
 
@@ -89,6 +92,14 @@ export async function persoenlicherStil(personId: string, name: string): Promise
         .join('\n\n')
   }
   return t
+}
+
+/** Kosten der Websuchen in Tausendstel-Rappen (USD je 1000 Suchen × Kurs). */
+export function websucheMillirappen(
+  anzahl: number,
+  e: Pick<KiEinstellung, 'websuche_usd_je_1000' | 'usd_chf'>,
+): number {
+  return Math.round((anzahl / 1000) * e.websuche_usd_je_1000 * e.usd_chf * 100 * 1000)
 }
 
 /** Für das Protokoll: wer, wozu, worauf bezogen. */
@@ -153,7 +164,7 @@ export async function kiAufruf(
       true,
       null,
       r.nutzung,
-      kostenMillirappen(r.nutzung, preis, e.usd_chf),
+      kostenMillirappen(r.nutzung, preis, e.usd_chf) + websucheMillirappen(r.websuchen, e),
       Date.now() - start,
     )
     return r

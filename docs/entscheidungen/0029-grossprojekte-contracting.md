@@ -62,3 +62,38 @@ Grossprojekte machen.» Meldungen von simap und Amtsblatt reichen dafür nicht: 
 hört der Lauf auf und macht in der nächsten Stunde weiter. Feldnamen des Registers für Lage und Adresse (`gkode`,
 `gkodn`, `garea`, `strname`, `deinr`, `dplz4`, `ggdename`, `lparz`) und `limit`/`offset` beim Identify sind beim ersten
 echten Lauf zu bestätigen; `npm run grossprojekte:pruefen` prüft die Suche gegen den Ersatz-Server.
+
+## Nachtrag 31.10.2026: 10 pro Woche, Recherche, Gebiet, verantwortlich
+
+**Kontext:** Chris: «10 pro Woche reichen, aber es muss auch immer herausgefunden werden, wem es gehört und wer
+Ansprechpartner ist, und Schritte vorschlagen.» Gebiet: «alle unsere Regionen» (www.dimension-solaire.ch/de/regionen/).
+Schwelle: «einfach alles, was interessant ist». Ansprechperson bei uns für Grossprojekte ist Chris, änderbar.
+
+**Entscheid:**
+
+- **Vorrat und 10 pro Woche:** Die Dachsuche legt Treffer in `intern.gp_suchvorrat` (`grossprojekt_in_vorrat`, gleiche
+  Prüfung auf Doppelte wie bisher). Der Zeitplan gibt mit `grossprojekt_vorrat_freigeben` die Treffer mit den meisten
+  Punkten frei, bis `suche.pro_woche` (10) neue Grossprojekte in dieser Woche (Montag, Zürcher Zeit) erreicht sind.
+  Alle neuen ausser von Hand Erfassten zählen mit; Treffer aus Ausschreibungen werden nie gebremst.
+- **Keine harte Schwelle:** In den Vorrat kommt ab `suche.ab_punkte` 35 (vorher 50 direkt in die Liste), Dach ab 300 m²,
+  Grundfläche ab 500 m²; die Punkte entscheiden, welche 10 pro Woche kommen. Alles in Annahmen › Suchgebiet einstellbar.
+- **Gebiet = Regionen der Website:** 18 Gebiete als PLZ mit Radius (`suche.zentren`, `plz` + `radius_km`, einzeln
+  ausschaltbar): Freiamt, Aarau, Baden, Luzern, Zug, Zürich, Winterthur; Greyerzerland, Freiburg, Lausanne/Riviera,
+  Yverdon, Genf, Neuenburg, Jura, Berner Jura/Biel, Martigny, Sion, Visp. Die Mitte rechnet `intern.lv95` aus
+  `plz_verzeichnis` (Näherung swisstopo). Rund 4'700 Kacheln, 10 pro Stunde: einmal durch in etwa 20 Tagen, die nahen
+  zuerst. `fahrzeit_max` 120 Minuten (vorher 60), damit Genf und das Wallis nicht ausgeschlossen werden.
+- **Recherche durch die KI:** Jedes neue Grossprojekt wartet (`recherche_stand`). Der Zeitplan (Job
+  `grossprojekte_recherche`, alle 30 Minuten, eines pro Lauf) sucht mit der Websuche der Claude API (Handelsregister,
+  Firmenwebsite, Gemeinde) nach Eigentümer, Nutzer und Ansprechperson und schreibt Notizen mit Quellen; ein zweiter
+  Aufruf ordnet sie in ein festes Schema (`_shared/gp_recherche.ts`). Nur berufliche, öffentliche Kontaktdaten; bei
+  Privatpersonen keine. Übernommen wird erst per Klick (Bauherrschaft, Ansprechperson, Schritte als Aufgaben); das
+  Eigentum bestätigt ein Mensch im Grundbuch. Stufe `einstellungen.ki.funktionen.grossprojekt_recherche`, Kosten im
+  Tageslimit, Websuche mit `websuche_usd_je_1000` (10 USD je 1000 Suchen, bis 8 pro Recherche), etwa CHF 0.30 je
+  Grossprojekt. Limit erreicht oder KI aus: zurück in die Warteschlange.
+- **Verantwortlich bei uns:** `grossprojekte.verantwortlich_id`, Standard aus `einstellungen.grossprojekte.verantwortlich`
+  (Kürzel «chris»), in der Akte änderbar (`grossprojekt_verantwortlich_setzen`). Diese Person bekommt die Glocke für neue
+  starke Treffer (zusätzlich zu Andy, der bewilligt) und die Aufgaben aus den Schritten.
+
+**Folgen:** Neue Migrationen `20261110000200` und `20261110001000`, Zeitplan neu hochladen, kein neues Secret (die KI
+nutzt `ANTHROPIC_API_KEY`). Wer Leads und Offerten übernimmt (Filipe Französisch, Loris Deutsch, Offerten Andy), gehört
+zur Lead-Zuteilung und ist hier nicht geregelt.

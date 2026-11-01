@@ -2,7 +2,7 @@ import type { TFunction } from 'i18next'
 import type { PDFFont, PDFPage } from 'pdf-lib'
 import qrcode from 'qrcode-generator'
 import { formatChf } from '@/lib/format'
-import { ibanAnzeige, qrInhalt, type QrAdresse } from '../lib/qr'
+import { ibanAnzeige, qrInhalt, type QrAdresse } from '@/lib/rechnung'
 
 const MM = 72 / 25.4
 
@@ -10,7 +10,7 @@ const MM = 72 / 25.4
 export function sicher(text: string): string {
   return text
     .replace(/[\u2010-\u2013\u2212]/g, '-')
-    .replace(/[^\u0020-\u007e\u00a0-\u00ff\u2018-\u201e\u2020\u2022\u2026\u20ac]/g, '?')
+    .replace(/[^\u0020-\u007e\u00a0-\u00ff\u0152\u0153\u2018-\u201e\u2020\u2022\u2026\u20ac]/g, '?')
 }
 
 /** QR-Matrix; der Inhalt wird als UTF-8-Bytes übergeben (Swiss QR verlangt UTF-8, die Bibliothek nur Latin-1). */

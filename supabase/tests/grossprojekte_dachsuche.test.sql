@@ -6,6 +6,8 @@ begin;
 select plan(14);
 
 create temporary table t (name text primary key, id uuid) on commit drop;
+-- Fester Massstab, damit der Test nicht von der aktuellen Einstellung abhängt (Standard seit 31.10.2026: ab 35 Punkten).
+update public.einstellungen set wert = jsonb_set(wert, '{suche,ab_punkte}', '50') where schluessel = 'grossprojekte';
 
 -- Gebiete
 select cmp_ok((select count(*)::int from intern.gp_kacheln()), '>', 1000, 'Gebiete um Muri und Bulle (2 × 2 km, 30 km Umkreis)');

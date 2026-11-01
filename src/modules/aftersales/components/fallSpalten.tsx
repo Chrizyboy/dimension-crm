@@ -29,12 +29,14 @@ export function fallSpalten(t: TFunction, auswahl: Text): Spalten<ServiceFall> {
         </span>
       ),
     }),
-    spalte.accessor((f) => auswahl('servicekategorie', f.kategorie).text, {
+    // Text erst beim Zeichnen holen: Die Tabelle merkt sich Zugriffswerte, bis die Daten wechseln. Kommt die
+    // Auswahlliste nach den Fällen, bliebe sonst der Schlüssel («stoerung») statt «Störung» stehen.
+    spalte.accessor('kategorie', {
       id: 'kategorie',
       header: t('service.spalte.kategorie'),
       cell: (c) => (
         <span className="flex flex-wrap gap-1">
-          {c.getValue()}
+          {auswahl('servicekategorie', c.getValue()).text}
           {c.row.original.garantie && <Badge ton="info">{t('service.garantie')}</Badge>}
         </span>
       ),

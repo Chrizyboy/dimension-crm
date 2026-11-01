@@ -1,6 +1,15 @@
 import { rufeFunktion } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
-import type { Grossprojekt, GrossprojektRegeln, SucheStand, Vermerk } from '../types'
+import type {
+  Ansprechperson,
+  Grossprojekt,
+  GrossprojektRegeln,
+  PersonKurz,
+  Recherche,
+  SucheRegeln,
+  SucheStand,
+  Vermerk,
+} from '../types'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -8,7 +17,7 @@ function db() {
 }
 
 const FELDER =
-  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
+  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
 
 type Roh = Omit<Grossprojekt, 'standort' | 'entschieden_von'> & {
   standort: { name: string } | null
@@ -66,7 +75,10 @@ export async function speichereAnnahmen(werte: Pick<GrossprojektRegeln, 'annahme
   if (error) throw error
   const alt = data.wert as GrossprojektRegeln
   const neu = { ...alt, melden_ab: werte.melden_ab, annahmen: { ...alt.annahmen, ...werte.annahmen } }
-  const r = await db().from('einstellungen').update({ wert: neu }).eq('schluessel', 'grossprojekte')
+  const r = await db()
+    .from('einstellungen')
+    .update({ wert: neu as never })
+    .eq('schluessel', 'grossprojekte')
   if (r.error) throw r.error
 }
 
@@ -112,7 +124,78 @@ export async function setzeSucheAktiv(aktiv: boolean): Promise<void> {
   const alt = data.wert as GrossprojektRegeln
   const r = await db()
     .from('einstellungen')
-    .update({ wert: { ...alt, suche: { ...alt.suche, aktiv } } })
+    .update({ wert: { ...alt, suche: { ...alt.suche, aktiv } } as never })
     .eq('schluessel', 'grossprojekte')
   if (r.error) throw r.error
+}
+
+/**
+ * Regeln der Dachsuche ändern (Gebiete, Mindestgrössen, Punkte, pro Woche) und wer neue Grossprojekte betreut. Nur
+ * die Administration; die Datenbank prüft das (Trigger einstellung_schuetzen).
+ */
+export async function speichereSuche(suche: SucheRegeln, verantwortlich?: string): Promise<void> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'grossprojekte').single()
+  if (error) throw error
+  const alt = data.wert as GrossprojektRegeln
+  const neu: GrossprojektRegeln = {
+    ...alt,
+    suche: { ...alt.suche, ...suche },
+    ...(verantwortlich ? { verantwortlich: [verantwortlich] } : {}),
+  }
+  const r = await db()
+    .from('einstellungen')
+    .update({ wert: neu as never })
+    .eq('schluessel', 'grossprojekte')
+  if (r.error) throw r.error
+}
+
+/** Aktive Personen für «verantwortlich». */
+export async function ladePersonen(): Promise<PersonKurz[]> {
+  const { data, error } = await db()
+    .from('personen')
+    .select('id, kuerzel, name')
+    .eq('aktiv', true)
+    .is('geloescht_am', null)
+    .order('name')
+  if (error) throw error
+  return data
+}
+
+/** Wer bei uns das Grossprojekt betreut. */
+export async function verantwortlichSetzen(id: string, person: string): Promise<void> {
+  const { error } = await db().rpc('grossprojekt_verantwortlich_setzen', { p_id: id, p_person: person })
+  if (error) throw error
+}
+
+/** Recherche (neu) anstossen; der Zeitplan macht sie innert einer halben Stunde. */
+export async function rechercheAnfordern(id: string): Promise<void> {
+  const { error } = await db().rpc('grossprojekt_recherche_anfordern', { p_id: id })
+  if (error) throw error
+}
+
+/** Vorschlag übernehmen: Eigentümer als Bauherrschaft und/oder eine Ansprechperson. */
+export async function rechercheUebernehmen(
+  id: string,
+  werte: { bauherr?: string | null; bauherr_art?: string | null; ansprechperson?: Ansprechperson | null },
+): Promise<void> {
+  const { error } = await db().rpc('grossprojekt_recherche_uebernehmen', {
+    p_id: id,
+    p_bauherr: werte.bauherr ?? '',
+    p_bauherr_art: werte.bauherr_art ?? '',
+    p_ansprechperson: (werte.ansprechperson ?? null) as never,
+  })
+  if (error) throw error
+}
+
+/** Vorgeschlagene Schritte als Aufgaben für mich anlegen; gibt die Zahl zurück. */
+export async function schritteAlsAufgaben(
+  id: string,
+  schritte: NonNullable<Recherche['naechste_schritte']>,
+): Promise<number> {
+  const { data, error } = await db().rpc('grossprojekt_schritte_als_aufgaben', {
+    p_id: id,
+    p_schritte: schritte as never,
+  })
+  if (error) throw error
+  return data
 }

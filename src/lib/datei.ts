@@ -9,3 +9,12 @@ export function herunterladen(inhalt: BlobPart, name: string, typ: string): void
     URL.revokeObjectURL(a.href)
   }, 10_000)
 }
+
+/** PDF in neuem Fenster öffnen, ohne es abzulegen. */
+export function pdfZeigen(bytes: Uint8Array): void {
+  const adresse = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'application/pdf' }))
+  window.open(adresse, '_blank', 'noopener')
+  setTimeout(() => {
+    URL.revokeObjectURL(adresse)
+  }, 60_000)
+}

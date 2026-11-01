@@ -21,6 +21,7 @@ import { EinladungDialog } from './EinladungDialog'
 import { PersonDialog } from './PersonDialog'
 import { RollenDialog } from './RollenDialog'
 import { Verbindungen } from './Verbindungen'
+import { Zustaendigkeiten } from './Zustaendigkeiten'
 
 /**
  * Einstellungen > Benutzer und Rollen (nur Administration).
@@ -80,6 +81,7 @@ export default function Benutzerverwaltung({
             <span className="zahlen text-muted-foreground ml-1">{liste.length}</span>
           </ReiterKnopf>
           <ReiterKnopf value="rollen">{t('benutzer.reiterRollen')}</ReiterKnopf>
+          <ReiterKnopf value="zustaendigkeiten">{t('zust.reiter')}</ReiterKnopf>
           <ReiterKnopf value="verbindungen">{t('verbindungen.reiter')}</ReiterKnopf>
           <ReiterKnopf value="sicherung">{t('sicherung.reiter')}</ReiterKnopf>
           <ReiterKnopf value="betrieb">{t('betrieb.reiter')}</ReiterKnopf>
@@ -144,6 +146,10 @@ export default function Benutzerverwaltung({
               </button>
             )
           })}
+        </ReiterInhalt>
+
+        <ReiterInhalt value="zustaendigkeiten">
+          <Zustaendigkeiten personen={liste} standorte={standorte.data ?? []} />
         </ReiterInhalt>
 
         <ReiterInhalt value="verbindungen">

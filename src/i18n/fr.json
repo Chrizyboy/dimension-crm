@@ -144,6 +144,20 @@
       "verbinden": "Se connecter avec Microsoft",
       "testen": "Vérifier la connexion",
       "trennen": "Déconnecter"
+    },
+    "unterschrift": {
+      "titel": "Ma signature",
+      "text": "Pour les documents que tu signes depuis le CRM (p. ex. contrats d’entreprise). Personne d’autre ne la voit ni ne l’utilise.",
+      "bild": "Ta signature",
+      "keine": "Aucune signature enregistrée.",
+      "zeichnen": "Dessiner",
+      "hochladen": "Téléverser une image",
+      "entfernen": "Supprimer",
+      "zeichnenTitel": "Dessiner la signature",
+      "zeichnenText": "Signe dans la zone blanche avec la souris, le doigt ou un stylet.",
+      "neu": "Recommencer",
+      "uebernehmen": "Utiliser",
+      "flaeche": "Zone de signature"
     }
   },
   "fehler": {
@@ -1463,11 +1477,10 @@
     "akte": {
       "titel": "Contrat",
       "nichtMehr": "Ce contrat n’existe pas (ou plus).",
-      "drucken": "Imprimer / PDF",
+      "drucken": "Voir le PDF",
       "versendet": "Envoyé",
       "unterschrieben": "Signé",
       "reaktivieren": "Réactiver",
-      "neuErstellen": "Établir à nouveau",
       "offerte": "Offre",
       "stornieren": "Annuler",
       "angaben": "Données",
@@ -1481,7 +1494,12 @@
       "unterschriebenAm": "Signé le",
       "notiz": "Note",
       "zahlungsplan": "Échéancier",
-      "text": "Texte du contrat"
+      "senden": "Envoyer au client",
+      "bearbeiten": "Modifier",
+      "imVertrag": "Dans le contrat",
+      "anzahlungsrechnung": "Facture d’acompte",
+      "rechnungNr": "N° {{nummer}}",
+      "nochKeine": "pas encore"
     },
     "plan": {
       "keiner": "Pas encore d’échéancier",
@@ -1503,8 +1521,63 @@
       "wertHinweis": "Offre CHF {{betrag}} hors TVA + {{satz}} % TVA",
       "datum": "Signé le",
       "mitVertrag": "Établir le contrat d’entreprise",
-      "spaeter": "La facture d’acompte dans AbaNinja suit avec la phase 8, la date des travaux avec la phase 9.",
-      "pflicht": "Merci d’indiquer le site, la valeur du contrat et la date."
+      "pflicht": "Merci d’indiquer le site, la valeur du contrat et la date.",
+      "zahlung": "Conditions de paiement",
+      "anzahlung": "Acompte en CHF",
+      "anzahlungHinweis": "Dû à la signature, le solde après la mise en service",
+      "anzahlungFehlt": "Veuillez indiquer le montant de l’acompte.",
+      "imVertrag": "Dans le contrat",
+      "bearbeiten": "Modifier le contrat d’entreprise",
+      "speichern": "Enregistrer",
+      "raten": "Échéances",
+      "rateText": "Libellé échéance {{nr}}",
+      "rateProzent": "Pourcentage échéance {{nr}}",
+      "rateHinzu": "Ajouter une échéance",
+      "rateEntfernen": "Supprimer l’échéance {{nr}}",
+      "ratenSumme": "Total {{summe}} % – il faut exactement 100 %.",
+      "ratenHinweis": "La première échéance est l’acompte (payable 10 jours après la signature)."
+    },
+    "felder": {
+      "gegenstand": "Objet (ligne sous les parties)",
+      "material": "Matériel",
+      "materialLeer": "selon l’offre",
+      "beginn": "Début des travaux",
+      "fertig": "Achèvement & mise en service",
+      "nachAbsprache": "à convenir",
+      "optionen": "Prestations optionnelles (cochées dans le contrat)",
+      "monitoring": "Mesure d’énergie / monitoring",
+      "wartung": "Contrat de maintenance",
+      "batterie": "Batterie (selon l’offre)",
+      "divers": "Divers"
+    },
+    "senden": {
+      "titel": "Envoyer le contrat au client",
+      "keineMail": "pas d’adresse e-mail",
+      "weiter": "Préparer l’e-mail",
+      "vertrag": "Contrat d’entreprise avec CG en PDF ({{sprache}})",
+      "rechnung": "Facture d’acompte {{betrag}} avec QR-facture",
+      "grund": {
+        "neu": "Sera émise lors de la préparation (numéro, échéance). L’envoi se fait à l’étape suivante.",
+        "vorhanden": "La facture existe déjà dans le CRM, elle est jointe.",
+        "keinRecht": "Émettre des factures nécessite le droit «Finances».",
+        "schonVerrechnet": "Déjà facturé (p. ex. dans AbaNinja) {{nummer}} : veuillez joindre cette facture à la main.",
+        "keinPlan": "Pas encore d’échéancier."
+      },
+      "mitUnterschrift": "Signer avec ma signature",
+      "unterschriftHinweis": "Ta signature figure dans la case « Signature Dimension Solaire », ton nom en dessous.",
+      "keineUnterschrift": "Aucune signature enregistrée : sous Mon compte › Ma signature. Sans elle, la case reste vide."
+    },
+    "einstellung": {
+      "titel": "Réglages",
+      "beschreibung": "S’applique à tous les nouveaux contrats (administration seulement).",
+      "unterzeichner": "Signe pour Dimension Solaire",
+      "ansprechperson": "Interlocuteur dans le contrat",
+      "email": "E-mail dans le contrat",
+      "adresse": "Adresse dans le contrat",
+      "konditionPv": "Paiement proposé pour le PV",
+      "konditionBatterie": "Paiement proposé pour batterie",
+      "telefon_de": "Téléphone (contrat allemand)",
+      "telefon_fr": "Téléphone (contrat français)"
     }
   },
   "preise": {
@@ -1873,6 +1946,18 @@
     "grossprojekt_schon_lead": "Un lead en est déjà issu. Merci de continuer là-bas.",
     "grossprojekt_entscheid_unbekannt": "Cette décision n’existe pas.",
     "grossprojekt_nur_ablauf": "État et décision se modifient uniquement avec les boutons en bas du dossier.",
+    "posteingang_kein_recht": "Tu n’as pas le droit (administration uniquement).",
+    "posteingang_nicht_gefunden": "Cet e-mail n’existe plus ou tu n’as pas le droit de le voir.",
+    "posteingang_person_fehlt": "Merci de choisir une personne active.",
+    "posteingang_art_unbekannt": "Ce type n’existe pas.",
+    "posteingang_aktion_unbekannt": "Ce n’est pas possible avec cet e-mail.",
+    "auftrag_anzahlung_fehlt": "Veuillez indiquer le montant de l’acompte.",
+    "werkvertrag_anzahlung_verrechnet": "L’acompte est déjà facturé ou payé (p. ex. dans AbaNinja).",
+    "werkvertrag_kein_zahlungsplan": "Ce contrat n’a pas encore d’échéancier.",
+    "werkvertrag_storniert": "Le contrat est annulé.",
+    "auftrag_raten_summe": "Les échéances doivent totaliser exactement 100 %.",
+    "auftrag_raten_text": "Merci de donner un libellé à chaque échéance.",
+    "auftrag_raten_fehlen": "Merci d’indiquer 1 à 6 échéances.",
     "handbuch_nur_entscheider": "Une autre personne décide de ce signalement.",
     "handbuch_entscheid_ungueltig": "Choisis « Règle-le » ou « Non ».",
     "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
@@ -2101,7 +2186,9 @@
     },
     "werkvertrag": {
       "betreff": "Votre contrat d'entreprise {{nummer}} de Dimension Solaire",
-      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire",
+      "betreffMitRechnung": "Votre contrat d'entreprise {{nummer}} et la facture d'acompte de Dimension Solaire",
+      "textMitRechnung": "Bonjour\n\nMerci pour votre commande. Vous trouverez en pièce jointe le contrat d'entreprise et la facture d'acompte de {{betrag}}. Merci de nous retourner le contrat signé et de régler l'acompte avec la QR-facture. Dès réception de l'acompte, nous commandons le matériel et convenons avec vous de la date de montage.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
@@ -5867,9 +5954,62 @@
       "an": "Active",
       "aus": "Suspendue",
       "fortschritt": "Avancement de la recherche",
-      "text": "Le CRM cherche lui-même de grandes toitures avec une forte consommation : chaque heure, il avance dans la région autour de Muri et Bulle (les zones proches d’abord), reprend du registre des bâtiments les grands bâtiments industriels, commerciaux, hôpitaux, EMS, écoles et salles de sport et vérifie la toiture sur sonnendach.ch. Seuls les bâtiments avec assez de points entrent dans la liste.",
+      "text": "Le CRM cherche lui-même de grandes toitures à forte consommation d’électricité : chaque heure, il parcourt un peu plus loin toutes les régions de Muri et Bulle (les plus proches d’abord), récupère dans le registre des bâtiments les grands bâtiments industriels, artisanaux, hôpitaux, homes, écoles et halles de sport et vérifie la toiture sur toitsolaire.ch. Ce qui est intéressant entre dans la réserve ; chaque semaine, le CRM met les meilleurs dans la liste et recherche propriétaire et interlocuteur.",
       "stand": "{{durchsucht}} zones sur {{gebiete}} parcourues, {{gebaeude}} bâtiments examinés, {{treffer}} résultats dans la liste.",
-      "zuletzt": "Dernière recherche : {{zeit}}"
+      "zuletzt": "Dernière recherche : {{zeit}}",
+      "woche": "Cette semaine {{diese}} sur {{pro}} nouveaux grands projets, {{vorrat}} bons résultats en réserve (chaque semaine, seuls les meilleurs entrent dans la liste)."
+    },
+    "recherche": {
+      "titel": "Propriétaire et interlocuteur",
+      "wartet": "La recherche suit dans la demi-heure : le CRM cherche sur le web (registre du commerce, site de l'entreprise, commune) le propriétaire et l'interlocuteur.",
+      "laeuft": "Le CRM effectue la recherche …",
+      "fehler": "La recherche n'a pas abouti. Vous pouvez la relancer.",
+      "keine": "Pas encore de recherche.",
+      "starten": "Rechercher",
+      "neu": "Relancer la recherche",
+      "angestossen": "Recherche lancée",
+      "vorschlag": "Proposition de l'IA du {{datum}}. Vérifiez avant de reprendre quoi que ce soit ; confirmer la propriété au registre foncier.",
+      "eigentuemer": "Propriétaire",
+      "unbekannt": "Non trouvé",
+      "nutzer": "Utilise le bâtiment",
+      "sicherheit": {
+        "hoch": "sûr",
+        "mittel": "probable",
+        "tief": "incertain"
+      },
+      "alsBauherr": "Reprendre comme maître d'ouvrage",
+      "personen": "Interlocuteurs",
+      "keinePersonen": "Aucun interlocuteur trouvé.",
+      "uebernehmen": "Reprendre",
+      "uebernommen": "Repris",
+      "ansprechperson": "Interlocuteur",
+      "schritte": "Prochaines étapes",
+      "inTagen_one": "dans {{count}} jour",
+      "inTagen_other": "dans {{count}} jours",
+      "alsAufgaben": "Créer comme tâches",
+      "aufgabenAngelegt": "Tâches créées",
+      "quellen": "Sources",
+      "quelle": "Source"
+    },
+    "gebiet": {
+      "titel": "Zone de recherche et tailles",
+      "text": "Par défaut, toutes les régions de dimension-solaire.ch. Une zone est un NPA comme centre avec un rayon. Pas de seuil strict : ce qui atteint la taille minimale entre dans la réserve, et les points (toiture, consommation, chauffage, propriétaire) décident lesquels entrent chaque semaine dans la liste.",
+      "pro_woche": "Nouveaux par semaine",
+      "ab_punkte": "Dans la réserve dès (points)",
+      "min_dach_m2": "Toiture au moins (m²)",
+      "min_grundflaeche_m2": "Surface au sol au moins (m²)",
+      "gebiete": "Zones ({{n}})",
+      "aktiv": "Parcourir {{name}}",
+      "name": "Nom de la zone",
+      "plz": "NPA du centre",
+      "radius": "Rayon en km",
+      "entfernen": "Retirer {{name}}",
+      "neu": "Ajouter une zone"
+    },
+    "verantwortlich": {
+      "label": "Responsable chez nous",
+      "standard": "Responsable des nouveaux grands projets",
+      "niemand": "Personne"
     }
   },
   "team": {
@@ -5937,6 +6077,174 @@
       "notizHinweis": "La personne ne voit pas cette note."
     }
   },
+  "posteingang": {
+    "titel": "Boîte de réception",
+    "beschreibung": "Tous les e-mails d’info@ et de vos boîtes, triés et rattachés au bon dossier. Qui attend une réponse, et jusqu’à quand répondons-nous ?",
+    "holen": "Relever maintenant",
+    "reiter": {
+      "eingang": "Boîte de réception",
+      "auswertung": "Délai de réponse",
+      "einstellungen": "Paramètres"
+    },
+    "filter": "Quels e-mails",
+    "artFilter": "Type",
+    "alleArten": "Tous les types",
+    "ansicht": {
+      "warten": "En attente de nous",
+      "neu": "Tous ouverts",
+      "meine": "Les miens",
+      "erledigt": "Terminés",
+      "abgelegt": "Publicité & interne"
+    },
+    "leer": {
+      "warten": "Personne n’attend de réponse",
+      "neu": "Aucun e-mail ouvert",
+      "meine": "Rien ne t’est attribué pour l’instant",
+      "erledigt": "Rien de terminé ces 14 derniers jours",
+      "abgelegt": "Rien de classé",
+      "text": "Les nouveaux e-mails arrivent d’Outlook toutes les 5 minutes. « Relever maintenant » les récupère tout de suite."
+    },
+    "art": {
+      "anfrage": "Nouvelle demande",
+      "stoerung": "Panne",
+      "kunde": "Client",
+      "rechnung": "Facture & paiement",
+      "lieferant": "Fournisseur",
+      "amt": "Autorité & GRD",
+      "monitor": "Appel d’offres",
+      "sonstiges": "Divers",
+      "intern": "Interne",
+      "werbung": "Publicité & newsletter",
+      "privat": "Privé"
+    },
+    "spalte": {
+      "mail": "E-mail",
+      "art": "Type",
+      "zustaendig": "Responsable",
+      "frist": "Réponse",
+      "eingang": "Reçu"
+    },
+    "dringend": "Urgent",
+    "anhang": "Avec pièce jointe",
+    "ohneBetreff": "(sans objet)",
+    "wirdEingeordnet": "en cours de tri",
+    "fuer": "pour {{name}}",
+    "vertretung": "remplace {{name}}, absent·e",
+    "frist": {
+      "ueber": "attend depuis {{dauer}}",
+      "noch": "encore {{dauer}}",
+      "heute": "jusqu’à {{zeit}}",
+      "morgen": "jusqu’à demain {{zeit}}",
+      "bis": "jusqu’au {{datum}} {{zeit}}",
+      "beantwortetNach": "répondu après {{dauer}}",
+      "beantwortet": "répondu",
+      "automatisch": "repris automatiquement",
+      "erledigt": "terminé",
+      "abgelegt": "classé",
+      "neu": "en cours de tri",
+      "info": "pour info"
+    },
+    "zahl": {
+      "warten_one": "client attend une réponse",
+      "warten_other": "clients attendent une réponse",
+      "ueber_one": "{{count}} hors délai",
+      "ueber_other": "{{count}} hors délai",
+      "reaktion": "Délai de réponse aujourd’hui (médiane, heures de travail)",
+      "abgelegt": "Publicité & interne classés (14 jours)"
+    },
+    "akte": {
+      "titel": "E-mail",
+      "weg": "Cet e-mail n’existe plus ou tu n’as pas le droit de le voir.",
+      "oeffnen": "Rouvrir",
+      "weitergeben": "Transmettre",
+      "erledigt": "Terminé sans réponse",
+      "antworten": "Répondre",
+      "persoenlich": "boîte personnelle",
+      "kurz": "En bref",
+      "ohneKi": "Trié sans IA. Merci de vérifier le type.",
+      "zugeordnet": "Rattaché à",
+      "kundeZuordnen": "Associer un client",
+      "zuordnen": "Associer",
+      "entwurf": "Brouillon",
+      "niemand": "personne encore",
+      "leadAnlegen": "Créer un lead",
+      "fallEroeffnen": "Ouvrir un cas de service",
+      "outlook": "Ouvrir dans Outlook",
+      "mail": "E-mail",
+      "laedt": "Chargement du texte depuis Outlook …",
+      "nurVorschau": "Le texte complet vient d’Outlook. Sans connexion Microsoft, seul le début s’affiche."
+    },
+    "feld": {
+      "kunde": "Client",
+      "lead": "Lead",
+      "offerte": "Offre",
+      "projekt": "Projet",
+      "fall": "Cas de service",
+      "rechnung": "Facture",
+      "bestellung": "Commande",
+      "art": "Type",
+      "zustaendig": "Responsable",
+      "erledigt": "Terminé",
+      "betreff": "Objet"
+    },
+    "weitergeben": {
+      "titel": "Transmettre l’e-mail",
+      "text": "La personne reçoit une notification. Le délai de réponse reste le même.",
+      "knopf": "Transmettre",
+      "wer": "Choisir une personne"
+    },
+    "auswertung": {
+      "wochen": "Délai de réponse par semaine",
+      "personen": "Par personne, 7 derniers jours",
+      "person": "Personne",
+      "anzahl": "E-mails",
+      "mitte": "Médiane",
+      "inFrist": "Dans le délai",
+      "kw": "S. ",
+      "leer": "Pas encore d’e-mails répondus avec délai.",
+      "hinweis": "Médiane du temps de travail jusqu’à la réponse et part dans le délai. Seuls les e-mails qui demandaient une réponse comptent."
+    },
+    "einst": {
+      "allgemein": "Général",
+      "aktiv": "Boîte de réception activée (relève toutes les 5 minutes)",
+      "von": "Heures de travail de",
+      "bis": "Heures de travail à",
+      "vorwarnung": "Préavis (minutes avant le délai)",
+      "arbeitszeitHinweis": "Les délais ne courent que du lundi au vendredi pendant ces heures, jours fériés exclus.",
+      "fristen": "Délai de réponse par type",
+      "stunden": "Heures de travail, vide = pas de réponse nécessaire",
+      "keine": "aucun",
+      "zustaendig": "Qui est responsable",
+      "zustaendigHinweis": "Qui suit un client, un projet ou un cas de service reçoit toujours ses e-mails. Cette liste vaut pour tous les autres, selon la langue de l’e-mail.",
+      "standard": "Tous les autres",
+      "deutsch": "Allemand",
+      "franzoesisch": "Français",
+      "niemand": "–",
+      "vertretung": "Remplacement en cas d’absence",
+      "vertretungHinweis": "Si quelqu’un est « absent » dans Outlook, les nouveaux e-mails vont à son remplaçant.",
+      "vertretungFuer": "Remplaçant de {{name}}",
+      "eskalation": "Notification au double du délai",
+      "eskalationHinweis": "Si un client attend deux fois plus longtemps que prévu, ces personnes reçoivent une notification. Personne = administration."
+    },
+    "pruefung": {
+      "uhrzeit": "Merci de saisir une heure, p. ex. 07:30.",
+      "stunden": "Merci de saisir des heures en chiffres, p. ex. 4 ou 0,5.",
+      "minuten": "Merci de saisir des minutes en chiffres.",
+      "zeitraum": "« à » doit être après « de »."
+    },
+    "heute": {
+      "titel": "Des clients attendent ta réponse",
+      "team": "Des clients attendent une réponse",
+      "alle_one": "{{count}} ouvert",
+      "alle_other": "{{count}} ouverts",
+      "nichts": "Personne n’attend de réponse."
+    },
+    "uebergabe": {
+      "laedt": "Chargement de l’e-mail …",
+      "fehlt": "Cet e-mail n’existe plus.",
+      "verknuepft": "Lié à l’e-mail dans la boîte de réception"
+    }
+  },
   "einfach": {
     "titel": "Bonjour {{name}}",
     "text": "Temps de travail d’un clic, frais avec photo du justificatif et ton planning.",
@@ -5965,5 +6273,57 @@
   "knopfleiste": {
     "mehr": "Plus",
     "weniger": "Moins"
+  },
+  "ablage": {
+    "titel": "Classement dans SharePoint",
+    "zweck": "Dimension Work crée lui-même le dossier de chaque nouvelle offre (avec les sous-dossiers), le déplace vers les adjudications à l'acceptation et vers les archives en cas de perte, et range les fichiers du CRM dans le bon sous-dossier. Les anciens dossiers restent tels quels.",
+    "aktiv": "Classement automatique activé",
+    "seit": "pour les offres dès le {{datum}}",
+    "fertig_one": "{{count}} dossier en place",
+    "fertig_other": "{{count}} dossiers en place",
+    "wartend_one": "{{count}} en attente",
+    "wartend_other": "{{count}} en attente",
+    "mitFehler_one": "{{count}} en erreur",
+    "mitFehler_other": "{{count}} en erreur",
+    "bibliothek": "Bibliothèque",
+    "name": "Nom du dossier",
+    "nameHinweis": "Variables : {nummer}, {kunde}, {ort}, {titel}",
+    "pfad": {
+      "offerten": "Offres",
+      "auftraege": "Adjudications",
+      "verloren": "Perdus"
+    },
+    "unterordner": "Sous-dossiers (créés dans chaque nouveau dossier)",
+    "oeffnen": "Dossier dans SharePoint",
+    "wirdAngelegt": "Dossier en création",
+    "wirdVerschoben": "Dossier (en déplacement)",
+    "fehler": "Dossier : erreur",
+    "person": "Connexion Microsoft de (abréviation)",
+    "personHinweis": "Cette personne doit avoir accès à la bibliothèque et être connectée à Microsoft."
+  },
+  "zust": {
+    "reiter": "Responsabilités",
+    "titel": "Qui est responsable ?",
+    "zweck": "Les nouveaux leads, y compris ceux du site web, reçoivent automatiquement la personne selon ces règles ; la tâche et la cloche lui arrivent directement. Les nouvelles offres vont à la personne responsable des offres. En cas d'absence, le remplaçant prend le relais. Dans le lead et l'offre, la personne peut être changée à tout moment.",
+    "verkauf": "Vente : nouveaux leads",
+    "verkaufHinweis": "Toutes les conditions choisies doivent correspondre. Les règles plus précises (plus de conditions) passent en premier.",
+    "sprache": "Langue",
+    "standort": "Site",
+    "region": "Région",
+    "produkt": "Produit",
+    "person": "Personne",
+    "alle": "Tous",
+    "produkte": {
+      "pv": "Photovoltaïque",
+      "batterie": "Batterie",
+      "wallbox": "Borne de recharge",
+      "waermepumpe": "Pompe à chaleur"
+    },
+    "regelNeu": "Ajouter une règle",
+    "regelWeg": "Supprimer la règle",
+    "offerten": "Établir les offres",
+    "stellvertretung": "Remplacement en cas d'absence",
+    "stellvertretungHinweis": "S'applique quand quelqu'un est inscrit dans les absences (vacances, maladie …).",
+    "vertretungFuer": "Remplaçant de {{name}}"
   }
 }

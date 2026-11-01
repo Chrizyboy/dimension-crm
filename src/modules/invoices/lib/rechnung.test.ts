@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Rechnung } from '../types'
-import { ibanAnzeige, ibanPruefen, qrInhalt, strasseTeilen } from './qr'
+import { ibanAnzeige, ibanPruefen, qrInhalt, strasseTeilen } from '@/lib/rechnung'
 import { mahnbar, plusTage, rechnungenCsv, summen } from './rechnung'
 
 describe('Summen wie in der Datenbank', () => {

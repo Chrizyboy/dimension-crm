@@ -1,8 +1,8 @@
 // Dachsuche für den Grossprojekt-Monitor (Phase 8c): Der Zeitplan geht das Gebiet um die Standorte Kachel für Kachel
 // durch (die nächsten zuerst, siehe grossprojekt_suche_naechste). Pro Kachel holt er alle Gebäude aus dem
 // Gebäuderegister, behält die grossen mit viel Stromverbrauch (Gebäudeklasse und Grundfläche aus den Einstellungen)
-// und fragt für diese das Dach bei sonnendach.ch ab. Ob ein Gebäude ins CRM kommt (Punkte, schon bekannt), entscheidet
-// die Datenbank in grossprojekt_aus_suche. Die Antworten des Bundes sind Daten (Regel 7).
+// und fragt für diese das Dach bei sonnendach.ch ab. Ob ein Gebäude in den Vorrat kommt (Punkte, schon bekannt), entscheidet
+// die Datenbank in grossprojekt_in_vorrat; in die Liste kommen pro Woche nur die besten. Die Antworten des Bundes sind Daten (Regel 7).
 
 import { dienst } from './datenbank.ts'
 import { dachZusammenfassen, GeoAdmin, gwrFelder, istDienstAusfall, type GwrGebaeude } from './gebaeude.ts'
@@ -107,11 +107,9 @@ export async function kachelDurchsuchen(k: Kachel, r: SucheRegeln, geo = new Geo
     const dach = dachZusammenfassen(await geo.dach(g.gkode ?? 0, g.gkodn ?? 0))
     if ((dach.dachflaeche_m2 ?? 0) < r.min_dach_m2) continue
     const meldung = `Dachsuche: Dach ${tausender(dach.dachflaeche_m2 ?? 0)} m² geeignet, Gebäuderegister EGID ${g.egid ?? '–'}`
-    const id = await dienst.rpc<string | null>('grossprojekt_aus_suche', {
-      p: sucheFelder(g, dach),
-      p_meldung: meldung,
-    })
-    if (id) treffer++
+    // Erst in den Vorrat: der Zeitplan gibt pro Woche nur die besten frei (grossprojekt_vorrat_freigeben).
+    const neu = await dienst.rpc<boolean>('grossprojekt_in_vorrat', { p: sucheFelder(g, dach), p_meldung: meldung })
+    if (neu) treffer++
   }
   await dienst.rpc('grossprojekt_suche_kachel_fertig', {
     p_kachel: k.kachel,
@@ -146,5 +144,5 @@ export async function dachsuche(geo = new GeoAdmin()): Promise<string> {
       throw f
     }
   }
-  return `Dachsuche: ${n} Gebiete, ${treffer} neu`
+  return `Dachsuche: ${n} Gebiete, ${treffer} in den Vorrat`
 }
