@@ -1961,7 +1961,9 @@
     "handbuch_nur_entscheider": "Une autre personne décide de ce signalement.",
     "handbuch_entscheid_ungueltig": "Choisis « Règle-le » ou « Non ».",
     "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
-    "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider."
+    "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider.",
+    "einstellungen_kein_recht": "Seule l’administration peut modifier ce réglage.",
+    "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
