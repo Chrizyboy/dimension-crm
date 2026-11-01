@@ -5,12 +5,12 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { formatDatum } from '@/lib/format'
 import { spaltenHelfer } from '@/lib/tabelle'
 import { useMaterialProjekte } from '../hooks/useEinkauf'
 import type { MaterialProjekt } from '../types'
 import { MaterialAkte } from './MaterialAkte'
+import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
+import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 type Zeile = MaterialProjekt & { zeilen: number; fehlt: number }
 const FILTER = ['fehlt', 'mitListe', 'alle'] as const
@@ -39,7 +39,7 @@ export function MaterialProjekte({
       spalte.columns([
         spalte.accessor('nummer', {
           header: t('einkauf.spalte.projekt'),
-          cell: (c) => <span className="zahlen font-mono text-xs whitespace-nowrap">{c.getValue()}</span>,
+          cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
           meta: { breite: 'w-24' },
         }),
         spalte.accessor('kunde', {
@@ -47,7 +47,7 @@ export function MaterialProjekte({
           cell: (c) => (
             <span className="flex max-w-[22rem] min-w-0 flex-col">
               <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-              <span className="text-muted-foreground line-clamp-2 text-xs">
+              <span className="text-muted-foreground truncate text-xs">
                 {[c.row.original.ort, c.row.original.titel].filter(Boolean).join(' · ')}
               </span>
             </span>
@@ -56,7 +56,7 @@ export function MaterialProjekte({
         spalte.accessor((p) => p.baubeginn ?? '9999', {
           id: 'baubeginn',
           header: t('einkauf.spalte.baubeginn'),
-          cell: (c) => (c.row.original.baubeginn ? formatDatum(c.row.original.baubeginn) : '–'),
+          cell: (c) => <DatumZelle wert={c.row.original.baubeginn} />,
         }),
         spalte.accessor((p) => (p.zeilen === 0 ? -1 : p.fehlt), {
           id: 'material',
@@ -83,7 +83,17 @@ export function MaterialProjekte({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('einkauf.projektSuche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      >
         <Filterchips
           einzeln
           beschriftung={t('einkauf.filter')}
@@ -93,17 +103,7 @@ export function MaterialProjekte({
             if (f) setFilter(f as Filter)
           }}
         />
-        <Input
-          type="search"
-          className="w-full sm:w-64"
-          aria-label={t('einkauf.projektSuche')}
-          placeholder={t('einkauf.projektSuche')}
-          value={suche}
-          onChange={(e) => {
-            setSuche(e.target.value)
-          }}
-        />
-      </div>
+      </Werkzeugleiste>
       {liste.error ? (
         <Fehlerzustand details={String(liste.error)} onNochmal={() => void liste.refetch()} />
       ) : (

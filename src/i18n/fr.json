@@ -6270,6 +6270,10 @@
       "halbtag": "demi-journée"
     }
   },
+  "knopfleiste": {
+    "mehr": "Plus",
+    "weniger": "Moins"
+  },
   "ablage": {
     "titel": "Classement dans SharePoint",
     "zweck": "Dimension Work crée lui-même le dossier de chaque nouvelle offre (avec les sous-dossiers), le déplace vers les adjudications à l'acceptation et vers les archives en cas de perte, et range les fichiers du CRM dans le bon sous-dossier. Les anciens dossiers restent tels quels.",

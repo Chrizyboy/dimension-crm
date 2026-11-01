@@ -23,12 +23,7 @@ export function DetailDialog({ detail, onSchliessen }: { detail: Detail; onSchli
         if (!o) onSchliessen()
       }}
     >
-      <DialogInhalt
-        art="seite"
-        titel={detail.titel}
-        beschreibung={t('kz.detail.anzahl', { count: zeilen.length })}
-        className="md:w-[40rem]"
-      >
+      <DialogInhalt art="seite" titel={detail.titel} beschreibung={t('kz.detail.anzahl', { count: zeilen.length })}>
         {zeilen.length === 0 ? (
           <p className="text-muted-foreground text-sm">{t('kz.detail.leer')}</p>
         ) : (

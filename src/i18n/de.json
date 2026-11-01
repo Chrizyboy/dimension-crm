@@ -6270,6 +6270,10 @@
       "halbtag": "halber Tag"
     }
   },
+  "knopfleiste": {
+    "mehr": "Mehr",
+    "weniger": "Weniger"
+  },
   "ablage": {
     "titel": "Dateiablage in SharePoint",
     "zweck": "Dimension Work legt den Ordner jeder neuen Offerte selbst an (mit den Unterordnern), verschiebt ihn bei Annahme zu den Aufträgen und bei Verlust ins Archiv und legt Dateien aus dem CRM in den passenden Unterordner. Ältere Ordner bleiben, wie sie sind.",

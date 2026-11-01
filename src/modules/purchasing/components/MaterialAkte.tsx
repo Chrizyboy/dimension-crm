@@ -96,7 +96,7 @@ export function MaterialAkte({
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[46rem]"
+        breite="breit"
         titel={projekt ? `${projekt.nummer} · ${projekt.kunde}` : t('einkauf.material.titel')}
         beschreibung={[
           projekt?.ort,

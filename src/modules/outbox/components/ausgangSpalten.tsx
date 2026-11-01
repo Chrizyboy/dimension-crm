@@ -25,7 +25,7 @@ export function ausgangSpalten(t: TFunction): Spalten<AusgangEintrag> {
       cell: (c) => (
         <span className="flex max-w-[9.5rem] min-w-0 flex-col sm:max-w-[15rem]">
           <span className="line-clamp-2 font-medium">{c.row.original.kunde ?? c.getValue()}</span>
-          {c.row.original.kunde && <span className="text-muted-foreground line-clamp-2 text-xs">{c.getValue()}</span>}
+          {c.row.original.kunde && <span className="text-muted-foreground truncate text-xs">{c.getValue()}</span>}
         </span>
       ),
     }),

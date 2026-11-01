@@ -55,7 +55,7 @@ export function AutomationEditor({ start, katalog, onSchliessen }: Props) {
     >
       <DialogInhalt
         art="seite"
-        className="md:w-[46rem]"
+        breite="breit"
         titel={e.id ? e.name_de || t('automationen.neu') : t('automationen.neu')}
         beschreibung={t('automationen.editor.beschreibung')}
         fuss={

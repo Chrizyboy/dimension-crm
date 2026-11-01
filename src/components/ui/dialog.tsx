@@ -15,6 +15,11 @@ interface DialogInhaltProps extends ComponentProps<typeof DialogPrimitive.Conten
   fuss?: ReactNode
   /** «seite» öffnet von rechts (Detailansicht), am Handy immer von unten. */
   art?: 'mitte' | 'seite'
+  /**
+   * Breite des Seitenblatts am PC, überall nur diese zwei (Chris 31.10.2026: einheitlich statt acht Breiten):
+   * «normal» 40 rem für Akten, «breit» 48 rem für Akten mit Tabellen oder Editoren.
+   */
+  breite?: 'normal' | 'breit'
 }
 
 /**
@@ -26,6 +31,7 @@ export function DialogInhalt({
   beschreibung,
   fuss,
   art = 'mitte',
+  breite = 'normal',
   className,
   children,
   ...props
@@ -40,7 +46,8 @@ export function DialogInhalt({
           art === 'mitte' &&
             'top-1/2 left-1/2 max-h-[85vh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border',
           art === 'seite' &&
-            'inset-x-0 bottom-0 max-h-[90vh] rounded-t-xl border-t md:inset-y-0 md:right-0 md:left-auto md:max-h-none md:w-[28rem] md:rounded-none md:border-t-0 md:border-l',
+            'inset-x-0 bottom-0 max-h-[90vh] rounded-t-xl border-t md:inset-y-0 md:right-0 md:left-auto md:max-h-none md:w-[40rem] md:max-w-[calc(100vw-4rem)] md:rounded-none md:border-t-0 md:border-l',
+          art === 'seite' && breite === 'breit' && 'md:w-[48rem]',
           className,
         )}
         {...props}

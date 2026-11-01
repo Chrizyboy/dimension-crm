@@ -2,6 +2,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { FileText, Hand, MessageCircleQuestion, Send, ShieldCheck, Users } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -71,13 +72,12 @@ export default function EingangAkte({
                 .join(' · '),
             }
           : {})}
-        className="md:w-[34rem]"
       >
         {!e ? (
           <p className="text-muted-foreground text-sm">{t('offerten.eingang.nichtMehr')}</p>
         ) : (
           <div className="flex flex-col">
-            <div className="flex flex-wrap items-center gap-2 pb-3">
+            <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={STATUS_TON[e.status]} punkt>
                 {t(`offerten.status.${e.status}`)}
               </Badge>
@@ -88,7 +88,7 @@ export default function EingangAkte({
                 {t('offerten.eingang.andere', { name: e.von, seit: e.seit ? formatRelativ(e.seit, sprache) : '' })}
               </p>
             )}
-            <div className="flex flex-wrap gap-2 border-b pb-3">
+            <Knopfleiste haupt="erste" className="border-b pb-3">
               <Button size="sm" laedt={bearbeiten.isPending} onClick={() => void nimm()}>
                 <Hand />
                 {t(andere ? 'offerten.eingang.uebernehmen' : 'offerten.eingang.bearbeiten')}
@@ -145,7 +145,7 @@ export default function EingangAkte({
                 <Users />
                 {t('offerten.akte.lead')}
               </Button>
-            </div>
+            </Knopfleiste>
             <AkteAbschnitt titel={t('offerten.eingang.angaben')}>
               <dl>
                 <Angabe label={t('offerten.spalte.termin')}>

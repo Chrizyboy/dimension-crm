@@ -1,10 +1,10 @@
 import type { TFunction } from 'i18next'
 import { Badge } from '@/components/ui/badge'
-import { formatChf, formatDatum } from '@/lib/format'
 import { tonVonFarbe } from '@/lib/kontakt'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import type { Auswahlwert } from '@/types/kontakt'
 import type { Geschaeft } from '../types'
+import { BetragZelle, DatumZelle, EinzeilerZelle, NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Geschaeft>()
 
@@ -18,7 +18,7 @@ export function geschaeftSpalten(
   return spalte.columns([
     spalte.accessor('nummer', {
       header: t('verkauf.spalteListe.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue()}</span>,
+      cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
       meta: { breite: 'w-24', nurBreit: true },
     }),
     spalte.accessor('name', {
@@ -34,7 +34,9 @@ export function geschaeftSpalten(
     spalte.accessor((g) => g.ort ?? '', {
       id: 'ort',
       header: t('verkauf.spalteListe.ort'),
-      cell: (c) => [c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–',
+      cell: (c) => (
+        <EinzeilerZelle>{[c.row.original.plz, c.getValue()].filter(Boolean).join(' ') || '–'}</EinzeilerZelle>
+      ),
       meta: { nurBreit: true, breite: 'min-w-44' },
     }),
     spalte.accessor('standRang', {
@@ -49,14 +51,14 @@ export function geschaeftSpalten(
       id: 'wert',
       header: t('verkauf.spalteListe.wert'),
       sortDescFirst: true,
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() ? formatChf(c.getValue()) : '–'}</span>,
+      cell: (c) => <BetragZelle rappen={c.getValue() || null} />,
       meta: { zahl: true, nurBreit: true },
     }),
     spalte.accessor((g) => g.kwp ?? 0, {
       id: 'kwp',
       header: 'kWp',
       sortDescFirst: true,
-      cell: (c) => <span className="zahlen font-mono text-[13px]">{c.getValue() || '–'}</span>,
+      cell: (c) => <NummerZelle>{c.getValue() || '–'}</NummerZelle>,
       meta: { zahl: true, nurBreit: true },
     }),
     spalte.accessor((g) => g.quelle ?? '', {
@@ -75,11 +77,7 @@ export function geschaeftSpalten(
       id: 'datum',
       header: t('verkauf.spalteListe.datum'),
       sortDescFirst: true,
-      cell: (c) => (
-        <span className="zahlen text-muted-foreground font-mono text-[12px]">
-          {c.getValue() ? formatDatum(c.getValue()) : '–'}
-        </span>
-      ),
+      cell: (c) => <DatumZelle wert={c.getValue()} className="text-muted-foreground" />,
       meta: { breite: 'w-28', nurBreit: true },
     }),
   ])

@@ -5,6 +5,7 @@ import { tonVonFarbe } from '@/lib/kontakt'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import { formatMenge } from '../lib/anzeige'
 import type { Bestellung } from '../types'
+import { NummerZelle } from '@/components/shared/Zellen'
 
 const spalte = spaltenHelfer<Bestellung>()
 type Text = (wert: string) => { text: string; farbe: string | null }
@@ -14,7 +15,7 @@ export function bestellSpalten(t: TFunction, status: Text): Spalten<Bestellung> 
   return spalte.columns([
     spalte.accessor('nummer', {
       header: t('einkauf.spalte.nummer'),
-      cell: (c) => <span className="zahlen font-mono text-xs">{c.getValue()}</span>,
+      cell: (c) => <NummerZelle>{c.getValue()}</NummerZelle>,
       // Am Handy steht die Nummer in der Zeile darunter.
       meta: { breite: 'w-20', nurBreit: true },
     }),
@@ -26,7 +27,7 @@ export function bestellSpalten(t: TFunction, status: Text): Spalten<Bestellung> 
         return (
           <span className="flex max-w-[22rem] min-w-0 flex-col">
             <span className="line-clamp-2 font-medium">{c.getValue()}</span>
-            <span className="text-muted-foreground line-clamp-2 text-xs">
+            <span className="text-muted-foreground truncate text-xs">
               <span className="zahlen font-mono md:hidden">{b.nummer} · </span>
               {bezug}
             </span>

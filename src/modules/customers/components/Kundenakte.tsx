@@ -105,7 +105,7 @@ export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: Kunde
           if (!o) onSchliessen()
         }}
       >
-        <DialogInhalt art="seite" titel={titel} beschreibung={beschreibung} className="md:w-[46rem]">
+        <DialogInhalt art="seite" titel={titel} beschreibung={beschreibung} breite="breit">
           {kopf.isError || akte.isError ? (
             <Fehlerzustand
               details={String(kopf.error ?? akte.error)}
