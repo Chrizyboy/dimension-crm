@@ -3097,7 +3097,8 @@
       "geliefertAm": "Livrée le",
       "stornoGrund": "Motif",
       "notiz": "Remarque",
-      "notizPlatzhalter": "Remarque pour le fournisseur (figure dans le PDF)"
+      "notizPlatzhalter": "Remarque pour le fournisseur (figure dans le PDF)",
+      "bestaetigtAm": "Confirmée le"
     },
     "pos": {
       "bezeichnung": "Article",
@@ -3115,7 +3116,10 @@
       "datum": "Livrée le",
       "offen": "Reste {{offen}} sur {{bestellt}} {{einheit}}",
       "mengeVon": "Quantité livrée {{name}}",
-      "buchen": "Enregistrer la réception"
+      "buchen": "Enregistrer la réception",
+      "snErfassen": "Saisir les numéros de série",
+      "snVon": "Numéros de série de {{name}}",
+      "snPlatzhalter": "Un par ligne ou séparés par une virgule ; reportés sur l’installation à la mise en service"
     },
     "storno": {
       "titel": "Annuler la commande {{nummer}}",
@@ -3234,7 +3238,8 @@
       "freigegeben": "À envoyer",
       "unter_one": "{{count}} article sous le minimum",
       "unter_other": "{{count}} articles sous le minimum"
-    }
+    },
+    "abErhalten": "Confirmation reçue"
   },
   "baustelle": {
     "titel": "Chantier & rapports",

@@ -3097,7 +3097,8 @@
       "geliefertAm": "Geliefert am",
       "stornoGrund": "Grund",
       "notiz": "Notiz",
-      "notizPlatzhalter": "Hinweis für den Lieferanten (steht im PDF)"
+      "notizPlatzhalter": "Hinweis für den Lieferanten (steht im PDF)",
+      "bestaetigtAm": "Bestätigt am"
     },
     "pos": {
       "bezeichnung": "Artikel",
@@ -3115,7 +3116,10 @@
       "datum": "Geliefert am",
       "offen": "Offen {{offen}} von {{bestellt}} {{einheit}}",
       "mengeVon": "Gelieferte Menge {{name}}",
-      "buchen": "Wareneingang buchen"
+      "buchen": "Wareneingang buchen",
+      "snErfassen": "Seriennummern erfassen",
+      "snVon": "Seriennummern von {{name}}",
+      "snPlatzhalter": "Eine pro Zeile oder mit Komma getrennt; gehen mit der IBN an die Anlage"
     },
     "storno": {
       "titel": "Bestellung {{nummer}} stornieren",
@@ -3234,7 +3238,8 @@
       "freigegeben": "Senden",
       "unter_one": "{{count}} Artikel unter Mindestmenge",
       "unter_other": "{{count}} Artikel unter Mindestmenge"
-    }
+    },
+    "abErhalten": "AB erhalten"
   },
   "baustelle": {
     "titel": "Baustelle & Rapporte",

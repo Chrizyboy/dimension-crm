@@ -1974,6 +1974,7 @@ export type Database = {
           menge: number
           projekt_material_id: string | null
           reihenfolge: number
+          seriennummern: string[]
         }
         ComputedFields: never
         Insert: {
@@ -1994,6 +1995,7 @@ export type Database = {
           menge: number
           projekt_material_id?: string | null
           reihenfolge?: number
+          seriennummern?: string[]
         }
         Update: {
           alt_daten?: Json | null
@@ -2013,6 +2015,7 @@ export type Database = {
           menge?: number
           projekt_material_id?: string | null
           reihenfolge?: number
+          seriennummern?: string[]
         }
         Relationships: [
           {
@@ -2063,6 +2066,7 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          bestaetigt_am: string | null
           bestellt_am: string | null
           erstellt_am: string
           erstellt_von: string | null
@@ -2086,6 +2090,7 @@ export type Database = {
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          bestaetigt_am?: string | null
           bestellt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -2108,6 +2113,7 @@ export type Database = {
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          bestaetigt_am?: string | null
           bestellt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -6011,6 +6017,7 @@ export type Database = {
           quelle: string
           reihenfolge: number
           reserviert: number
+          seriennummern: string[]
         }
         ComputedFields: never
         Insert: {
@@ -6031,6 +6038,7 @@ export type Database = {
           quelle?: string
           reihenfolge?: number
           reserviert?: number
+          seriennummern?: string[]
         }
         Update: {
           alt_daten?: Json | null
@@ -6050,6 +6058,7 @@ export type Database = {
           quelle?: string
           reihenfolge?: number
           reserviert?: number
+          seriennummern?: string[]
         }
         Relationships: [
           {
@@ -7359,6 +7368,7 @@ export type Database = {
           erledigt_am: string | null
           erstellt_am: string
           erstellt_von: string | null
+          eskalation: number
           garantie: boolean | null
           geaendert_am: string
           geloescht_am: string | null
@@ -7369,6 +7379,7 @@ export type Database = {
           person_id: string | null
           prioritaet: string | null
           projekt_id: string | null
+          reaktion_am: string | null
           status: string
           termin_am: string | null
           titel: string
@@ -7383,6 +7394,7 @@ export type Database = {
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          eskalation?: number
           garantie?: boolean | null
           geaendert_am?: string
           geloescht_am?: string | null
@@ -7393,6 +7405,7 @@ export type Database = {
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
+          reaktion_am?: string | null
           status?: string
           termin_am?: string | null
           titel: string
@@ -7406,6 +7419,7 @@ export type Database = {
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          eskalation?: number
           garantie?: boolean | null
           geaendert_am?: string
           geloescht_am?: string | null
@@ -7416,6 +7430,7 @@ export type Database = {
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
+          reaktion_am?: string | null
           status?: string
           termin_am?: string | null
           titel?: string
@@ -8933,6 +8948,7 @@ export type Database = {
       }
       bestellungen_liste: {
         Row: {
+          bestaetigt_am: string | null
           bestellt_am: string | null
           email_bestellung: string | null
           erstellt_am: string | null
@@ -10833,6 +10849,8 @@ export type Database = {
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
+      seriennummern_erfassen: { Args: { p: Json; p_bestellung: string }; Returns: number }
+      service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }

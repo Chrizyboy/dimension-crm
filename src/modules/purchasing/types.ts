@@ -31,6 +31,8 @@ export interface Bestellung {
   lagerort_adresse: string | null
   liefertermin: string | null
   bestellt_am: string | null
+  /** Auftragsbestätigung des Lieferanten erhalten (stoppt die Nachfrage). */
+  bestaetigt_am: string | null
   geliefert_am: string | null
   freigegeben_am: string | null
   freigegeben_von: string | null
