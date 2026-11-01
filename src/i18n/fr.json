@@ -6214,17 +6214,14 @@
       "fristen": "Délai de réponse par type",
       "stunden": "Heures de travail, vide = pas de réponse nécessaire",
       "keine": "aucun",
-      "zustaendig": "Qui est responsable",
-      "zustaendigHinweis": "Qui suit un client, un projet ou un cas de service reçoit toujours ses e-mails. Cette liste vaut pour tous les autres, selon la langue de l’e-mail.",
-      "standard": "Tous les autres",
-      "deutsch": "Allemand",
-      "franzoesisch": "Français",
       "niemand": "–",
       "vertretung": "Remplacement en cas d’absence",
       "vertretungHinweis": "Si quelqu’un est « absent » dans Outlook, les nouveaux e-mails vont à son remplaçant.",
       "vertretungFuer": "Remplaçant de {{name}}",
       "eskalation": "Notification au double du délai",
-      "eskalationHinweis": "Si un client attend deux fois plus longtemps que prévu, ces personnes reçoivent une notification. Personne = administration."
+      "eskalationHinweis": "Si un client attend deux fois plus longtemps que prévu, ces personnes reçoivent une notification. Personne = administration.",
+      "verteilen": "Qui répartit les e-mails d’info@",
+      "verteilenHinweis": "Chaque personne traite les e-mails de sa propre boîte. Les e-mails des boîtes d’équipe comme info@ vont à la première personne cochée présente, toutes les personnes cochées reçoivent la cloche. Elles transmettent l’e-mail à la bonne personne avec « Transmettre »."
     },
     "pruefung": {
       "uhrzeit": "Merci de saisir une heure, p. ex. 07:30.",

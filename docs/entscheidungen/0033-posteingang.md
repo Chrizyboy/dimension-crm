@@ -21,14 +21,18 @@ gelassen oder warten gelassen werden». Konzept mit Vorschau am 31.10.2026, Chri
   Rechnung 10 h (1 Arbeitstag), Amt 20 h; Lieferant, Ausschreibung, Sonstiges ohne Frist; dringend höchstens wie Störung.
   Erinnerung einmal je Stufe in der Glocke: Vorwarnung (30 Min.), überschritten, doppelte Frist an die Leitung
   (`eskalation`, sonst Administration). Keine Mail.
-- **Zuständig:** wer Fall, Projekt oder Lead betreut, sonst Liste je Art und Sprache (DE/FR), sonst die Person des
-  Postfachs. Steht jemand in Outlook auf «abwesend», geht die Mail an die Stellvertretung.
+- **Zuständig** (Chris 1.11.2026: «jeder bearbeitet seine eigenen Mails»): Mails im persönlichen Postfach gehören der
+  Person selbst. Mails aus Team-Postfächern (info@) verteilen Davis oder Chris (`verteilen`); zuständig ist die erste
+  anwesende, die Glocke bekommen alle, die verteilen; sie geben die Mail mit «Weitergeben» weiter. Keine automatische
+  Zuteilung nach Sprache. Steht jemand in Outlook oder im CRM auf «abwesend», geht die Mail an die Stellvertretung.
+  Glocke bei doppelter Frist: Chris und Loris (`eskalation`). Migration 20261110001100.
 - **Erledigt** durch eine Antwort in «Gesendet» (gleiche Konversation oder an den Absender), über den Ausgangskorb
   (Trigger) oder von Hand; Reaktionszeit in Arbeitsminuten für die Auswertung (Mitte, Anteil in der Frist).
 - **Nichts geht ungefragt hinaus:** «Antworten» öffnet den KI-Entwurf im Mail-Fenster, gesendet wird erst nach Klick.
 - Einstellungen in `einstellungen.posteingang`, ändern nur Administration (eigener Trigger, ersetzt
   `intern.einstellung_schuetzen` nicht).
 
-**Folgen:** Chris trägt nach dem Go-live Zuständige je Sprache und die Leitung für die doppelte Frist ein. Ohne
+**Folgen:** Die Kürzel in `verteilen` und `eskalation` (davis, chris, loris) müssen zu den Personen passen; sonst unter
+Posteingang › Einstellungen ankreuzen. Ohne
 Microsoft-Verbindung einer Person bleiben ihre persönlichen Mails draussen; Team-Postfächer brauchen die Berechtigung
 in Exchange.

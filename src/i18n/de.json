@@ -6214,17 +6214,14 @@
       "fristen": "Antwortfrist je Art",
       "stunden": "Arbeitsstunden, leer = keine Antwort nötig",
       "keine": "keine",
-      "zustaendig": "Wer ist zuständig",
-      "zustaendigHinweis": "Wer einen Kunden, ein Projekt oder einen Service-Fall betreut, bekommt dessen Mails immer selbst. Diese Liste gilt für alle anderen, getrennt nach Sprache der Mail.",
-      "standard": "Alle anderen",
-      "deutsch": "Deutsch",
-      "franzoesisch": "Französisch",
       "niemand": "–",
       "vertretung": "Stellvertretung bei Abwesenheit",
       "vertretungHinweis": "Steht jemand in Outlook auf «abwesend», gehen neue Mails an die Stellvertretung.",
       "vertretungFuer": "Stellvertretung für {{name}}",
       "eskalation": "Glocke bei doppelter Frist",
-      "eskalationHinweis": "Wartet ein Kunde doppelt so lange wie vorgesehen, bekommen diese Personen die Glocke. Niemand gewählt = Administration."
+      "eskalationHinweis": "Wartet ein Kunde doppelt so lange wie vorgesehen, bekommen diese Personen die Glocke. Niemand gewählt = Administration.",
+      "verteilen": "Wer verteilt Mails aus info@",
+      "verteilenHinweis": "Mails im eigenen Postfach bearbeitet jede Person selbst. Mails aus Team-Postfächern wie info@ gehen an die erste angekreuzte Person, die da ist, alle Angekreuzten bekommen die Glocke. Sie geben die Mail mit «Weitergeben» an die richtige Person."
     },
     "pruefung": {
       "uhrzeit": "Bitte als Zeit eingeben, z. B. 07:30.",
