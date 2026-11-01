@@ -3108,7 +3108,8 @@
       "ek": "Prix d’achat (CHF)",
       "mengeVon": "Quantité {{name}}",
       "ekVon": "Prix d’achat {{name}}",
-      "entfernen": "Retirer {{name}}"
+      "entfernen": "Retirer {{name}}",
+      "guenstiger": "Moins cher chez {{lieferant}} : CHF {{preis}} (économie CHF {{total}})"
     },
     "eingang": {
       "titel": "Réception {{nummer}}",

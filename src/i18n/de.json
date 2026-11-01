@@ -3108,7 +3108,8 @@
       "ek": "EK (CHF)",
       "mengeVon": "Menge {{name}}",
       "ekVon": "Einkaufspreis {{name}}",
-      "entfernen": "{{name}} entfernen"
+      "entfernen": "{{name}} entfernen",
+      "guenstiger": "Günstiger bei {{lieferant}}: CHF {{preis}} (spart CHF {{total}})"
     },
     "eingang": {
       "titel": "Wareneingang {{nummer}}",
