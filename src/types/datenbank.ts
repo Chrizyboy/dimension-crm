@@ -5671,9 +5671,12 @@ export type Database = {
           notfall_name: string | null
           notfall_telefon: string | null
           notiz: string | null
+          ort: string | null
           pensum: number | null
           person_id: string
+          plz: string | null
           schuhgroesse: string | null
+          strasse: string | null
           telefon_privat: string | null
         }
         ComputedFields: never
@@ -5692,9 +5695,12 @@ export type Database = {
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: string | null
+          ort?: string | null
           pensum?: number | null
           person_id: string
+          plz?: string | null
           schuhgroesse?: string | null
+          strasse?: string | null
           telefon_privat?: string | null
         }
         Update: {
@@ -5712,9 +5718,12 @@ export type Database = {
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: string | null
+          ort?: string | null
           pensum?: number | null
           person_id?: string
+          plz?: string | null
           schuhgroesse?: string | null
+          strasse?: string | null
           telefon_privat?: string | null
         }
         Relationships: [
@@ -10062,9 +10071,12 @@ export type Database = {
           notfall_name: string | null
           notfall_telefon: string | null
           notiz: string | null
+          ort: string | null
           pensum: number | null
           person_id: string | null
+          plz: string | null
           schuhgroesse: string | null
+          strasse: string | null
           telefon_privat: string | null
         }
         ComputedFields: never
@@ -10078,9 +10090,12 @@ export type Database = {
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: never
+          ort?: string | null
           pensum?: number | null
           person_id?: string | null
+          plz?: string | null
           schuhgroesse?: string | null
+          strasse?: string | null
           telefon_privat?: string | null
         }
         Update: {
@@ -10093,9 +10108,12 @@ export type Database = {
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: never
+          ort?: string | null
           pensum?: number | null
           person_id?: string | null
+          plz?: string | null
           schuhgroesse?: string | null
+          strasse?: string | null
           telefon_privat?: string | null
         }
         Relationships: [
@@ -11001,6 +11019,15 @@ export type Database = {
           kanton: string
           quelle: string
           relevant: number
+        }[]
+      }
+      aussendienst_heim: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          ort: string
+          person_id: string
+          plz: string
+          strasse: string
         }[]
       }
       automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }

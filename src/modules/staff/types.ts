@@ -36,6 +36,9 @@ export interface PersonalAkte {
   notfall_telefon: string | null
   kleidergroesse: string | null
   schuhgroesse: string | null
+  strasse: string | null
+  plz: string | null
+  ort: string | null
   notiz: string | null
 }
 

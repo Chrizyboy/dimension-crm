@@ -11,6 +11,9 @@ import type { PersonalAkte } from '../types'
 
 type Text = Exclude<keyof PersonalAkte, 'id' | 'person_id' | 'pensum'>
 const PERSON: Text[] = [
+  'strasse',
+  'plz',
+  'ort',
   'geburtsdatum',
   'telefon_privat',
   'notfall_name',
@@ -22,7 +25,7 @@ const ADMIN: Text[] = ['eintritt', 'austritt']
 const DATUM = new Set<Text>(['geburtsdatum', 'eintritt', 'austritt'])
 
 /**
- * Personal-Akte bearbeiten: Notfallkontakt, Grössen für Arbeitskleider und Geburtsdatum füllt jede Person selbst;
+ * Personal-Akte bearbeiten: Privatadresse, Notfallkontakt, Grössen für Arbeitskleider und Geburtsdatum füllt jede Person selbst;
  * Eintritt, Austritt, Pensum und die Notiz nur die Administration (die Datenbank hält das ein). Lohn bleibt in AbaNinja.
  */
 export function AkteDialog({
@@ -47,6 +50,7 @@ export function AkteDialog({
   const pensumZahl = pensum.trim() === '' ? null : Number(pensum)
   const gueltig = akteSchema.safeParse({
     pensum: pensumZahl,
+    plz: w.plz.trim() || null,
     eintritt: w.eintritt || null,
     austritt: w.austritt || null,
   }).success

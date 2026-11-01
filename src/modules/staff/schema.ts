@@ -7,10 +7,14 @@ export const ausweisSchema = z
   .object({ art: z.string().min(1), erworben_am: datum.nullable(), gueltig_bis: datum.nullable() })
   .refine((a) => !a.erworben_am || !a.gueltig_bis || a.gueltig_bis >= a.erworben_am, { path: ['gueltig_bis'] })
 
-/** Personal-Akte: Pensum 1–100 %, Austritt nicht vor Eintritt. */
+/** Personal-Akte: Pensum 1–100 %, PLZ vierstellig, Austritt nicht vor Eintritt. */
 export const akteSchema = z
   .object({
     pensum: z.number().int().min(1).max(100).nullable(),
+    plz: z
+      .string()
+      .regex(/^\d{4}$/)
+      .nullable(),
     eintritt: datum.nullable(),
     austritt: datum.nullable(),
   })

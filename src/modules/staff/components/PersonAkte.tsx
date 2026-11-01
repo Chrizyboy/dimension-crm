@@ -163,6 +163,9 @@ export function PersonAkte({
             ) : (
               <>
                 <dl>
+                  <Angabe label={t('team.akte.adresse')}>
+                    {[a?.strasse, [a?.plz, a?.ort].filter(Boolean).join(' ')].filter(Boolean).join(', ') || '–'}
+                  </Angabe>
                   <Angabe label={t('team.akte.notfall')}>
                     {a?.notfall_name
                       ? `${a.notfall_name}${a.notfall_telefon ? `, ${formatTelefon(a.notfall_telefon)}` : ''}`
