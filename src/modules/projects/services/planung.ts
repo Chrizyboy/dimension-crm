@@ -73,3 +73,33 @@ export async function abwesenheitEntfernen(id: string): Promise<void> {
   const { error } = await db().from('abwesenheiten').update({ geloescht_am: new Date().toISOString() }).eq('id', id)
   if (error) throw error
 }
+
+/**
+ * Einen Einsatz direkt im Zeitplan ändern (Ziehen): lädt alle Einsätze des Projekts, ersetzt den einen und
+ * speichert über `projekt_zeitplan_speichern`. Bau-Status bleibt, Material wird nicht mitgeschickt (bleibt).
+ */
+export async function einsatzAendern(
+  projektId: string,
+  bauStatus: string,
+  einsatzId: string,
+  aendern: (e: Einsatz) => Einsatz,
+): Promise<void> {
+  const alle = await ladeProjektEinsaetze(projektId)
+  const einsaetze = alle.map((e) => {
+    const x = e.id === einsatzId ? aendern(e) : e
+    return {
+      id: x.id,
+      art: x.art,
+      von: x.von,
+      bis: x.bis,
+      personen: x.personen,
+      subunternehmer_id: x.subunternehmer_id,
+      notiz: x.notiz,
+    }
+  })
+  const { error } = await db().rpc('projekt_zeitplan_speichern', {
+    p_id: projektId,
+    p: { einsaetze, bau_status: bauStatus } as never,
+  })
+  if (error) throw error
+}

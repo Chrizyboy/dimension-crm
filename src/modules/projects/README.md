@@ -8,7 +8,7 @@
 
 1. Ein Auftrag (Werkvertrag) erscheint unter «Aufträge ohne Bautermin». «Bautermin» übernimmt ihn in den Bau: ohne Datum (ausstehend), mit Datum (fixiert, Einsatz Team intern) oder in der Vergangenheit (gilt als gebaut). Jede Übernahme lässt sich rückgängig machen.
 2. Der **Fahrplan** zeigt sechs Phasen. Bewilligungen (Gemeinde, Netzbetreiber, IA, SiNa, Abnahme, Pronovo) und die Checkliste Elektriker sind markierte Schritte darin. Automatische Schritte folgen aus Vertrag, Einsätzen und Zahlungsplan.
-3. Im **Zeitplan** werden Einsätze geplant (intern, extern mit Subunternehmer, voraussichtlich), mit Personen und Warnung bei Abwesenheit. «IBN durchgeführt» schliesst das Projekt ab und legt die Anlage an.
+3. Im **Zeitplan** werden Einsätze geplant (intern, extern mit Subunternehmer, voraussichtlich), mit Personen. Am PC Sicht Baustellen oder Team, 2/6/13 Wochen, Balken ziehen zum Verschieben, «Zu planen» rechts; am Handy eine Woche als Liste nach Tagen. Konflikte (abwesend, doppelt eingeplant) rot. Entscheid 0035. «IBN durchgeführt» schliesst das Projekt ab und legt die Anlage an.
 4. Gesuche (TAG, Gemeinde, Förderung) als vorausgefüllte Datenblätter aus der Akte.
 
 ## Daten
