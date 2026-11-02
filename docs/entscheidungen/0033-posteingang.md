@@ -36,3 +36,19 @@ gelassen oder warten gelassen werden». Konzept mit Vorschau am 31.10.2026, Chri
 Posteingang › Einstellungen ankreuzen. Ohne
 Microsoft-Verbindung einer Person bleiben ihre persönlichen Mails draussen; Team-Postfächer brauchen die Berechtigung
 in Exchange.
+
+## Nachtrag 2.11.2026: ältere Mails nachholen
+
+**Wunsch (Chris):** Die alten Mails müssen auch in den Posteingang, bei allen.
+
+**Entscheid:** Der Zeitplan (Job `posteingang_nachholen`, alle 2 Minuten, höchstens 40 Sekunden) holt rückwärts Seite
+um Seite die Mails der letzten `einstellungen.posteingang.nachholen_monate` Monate (Standard 12) aus jedem persönlichen
+Postfach, sobald die Person Microsoft verbunden hat, und aus info@/Team-Postfächern. Stand je Postfach und Ordner in
+`intern.posteingang_nachholen`; mehr Monate eintragen = holt einfach weiter zurück.
+
+- Eingang kommt als Archiv: `erledigt` mit Grund `archiv` (Werbung/Intern `abgelegt`), ohne Frist, ohne Glocke, ohne
+  KI. So bleiben «Wartet auf uns», Kopfzahlen und Reaktionszeit sauber, und es entstehen keine KI-Kosten.
+- Zuordnung über die Absender-Adresse (Kunde) und Nummern im Betreff (`intern.pe_nummern` → `intern.pe_zuordnen`).
+- Sichtbar wie entschieden: eigenes Postfach nur die Person selbst, Team-Postfächer alle.
+- Eingang und Gesendetes gehen zusätzlich in den Kundenverlauf (`mails_vermerken`, ohne Doppelte).
+- In der App: Ansicht «Ältere» mit Suche (lädt vom Server, höchstens 200), Stand unter Posteingang › Einstellungen.
