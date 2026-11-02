@@ -6,6 +6,7 @@
 import { dienst } from '../_shared/datenbank.ts'
 import { starte } from '../_shared/funktion.ts'
 import { kiEingerichtet, kiEinstellung } from '../_shared/ki_rahmen.ts'
+import { auftragsbestaetigung } from './einkauf.ts'
 import { briefing, leadBewertung, zusammenfassung } from './bewerten.ts'
 import { beleg, luftbild, mailErkennen, notiz, offertePdf } from './lesen.ts'
 import { entwurf, marketingText, monatsbericht, social, stilLernen } from './texte.ts'
@@ -36,4 +37,5 @@ starte({
   zusammenfassung: { recht: 'basis', f: zusammenfassung },
   lead_bewertung: { recht: 'basis', f: leadBewertung },
   briefing: { recht: 'basis', f: briefing },
+  auftragsbestaetigung: { recht: 'preise', f: auftragsbestaetigung },
 })

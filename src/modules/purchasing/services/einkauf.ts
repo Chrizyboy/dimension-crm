@@ -49,7 +49,7 @@ export async function ladeKennzahlen(): Promise<Map<string, LieferantKennzahl>> 
 export async function darfFreigeben(totalRappen: number | null): Promise<boolean> {
   const { data, error } = await db().rpc('einkauf_darf_freigeben', { p_total_rappen: totalRappen ?? 0 })
   if (error) throw error
-  return Boolean(data)
+  return data
 }
 
 /** Entwurf zur Freigabe vorlegen (Glocke an die Freigebenden). */
@@ -78,7 +78,7 @@ export async function abErfassen(id: string, ab: AbAngaben): Promise<number> {
 export async function ladeRechnungen(id: string): Promise<RechnungVorschlag[]> {
   const { data, error } = await db().rpc('bestellung_rechnungen', { p_id: id })
   if (error) throw error
-  return data as unknown as RechnungVorschlag[]
+  return data
 }
 
 /** Lieferantenrechnung zuordnen und auf Wunsch als geprüft markieren. */
@@ -94,5 +94,5 @@ export async function rechnungSpeichern(
 export async function ladeMails(id: string): Promise<BestellMail[]> {
   const { data, error } = await db().rpc('bestellung_mails', { p_id: id })
   if (error) throw error
-  return data as unknown as BestellMail[]
+  return data
 }

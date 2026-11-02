@@ -26,6 +26,7 @@ export function WareneingangDialog({
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
   const [datum, setDatum] = useState(() => inTagen(new Date(), 0))
+  const [lieferschein, setLieferschein] = useState('')
   const offen = positionen.filter((p) => p.geliefert_menge < p.menge)
   const [mengen, setMengen] = useState(() =>
     Object.fromEntries(offen.map((p) => [p.id, formatMenge(p.menge - p.geliefert_menge)])),
@@ -40,6 +41,7 @@ export function WareneingangDialog({
         b.id,
         datum,
         eingabe.filter((e) => e.menge > 0),
+        lieferschein.trim() || undefined,
       )
     })
     if (!ok) return
@@ -83,6 +85,16 @@ export function WareneingangDialog({
               value={datum}
               onChange={(e) => {
                 setDatum(e.target.value)
+              }}
+            />
+          </Feld>
+          <Feld id="we-lieferschein" label={t('einkauf.eingang.lieferschein')}>
+            <Input
+              id="we-lieferschein"
+              className="w-60"
+              value={lieferschein}
+              onChange={(e) => {
+                setLieferschein(e.target.value)
               }}
             />
           </Feld>

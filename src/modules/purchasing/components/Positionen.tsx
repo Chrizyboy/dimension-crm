@@ -95,7 +95,14 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
                       }}
                     />
                   ) : (
-                    `${formatMenge(p.menge)} ${p.einheit}`
+                    <>
+                      {formatMenge(p.menge)} {p.einheit}
+                      {p.ab_menge != null && p.ab_menge !== p.menge && (
+                        <span className="text-warn block text-xs">
+                          {t('einkauf.pos.abMenge', { menge: formatMenge(p.ab_menge) })}
+                        </span>
+                      )}
+                    </>
                   )}
                 </Zelle>
                 {mitLieferung && <Zelle zahl>{formatMenge(p.geliefert_menge)}</Zelle>}
@@ -115,7 +122,14 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
                   ) : p.ek_rappen === null ? (
                     '–'
                   ) : (
-                    formatChf(p.ek_rappen)
+                    <>
+                      {formatChf(p.ek_rappen)}
+                      {p.ab_ek_rappen != null && p.ab_ek_rappen !== p.ek_rappen && (
+                        <span className="text-warn block text-xs">
+                          {t('einkauf.pos.abEk', { ek: formatChf(p.ab_ek_rappen) })}
+                        </span>
+                      )}
+                    </>
                   )}
                 </Zelle>
                 {entwurf && (

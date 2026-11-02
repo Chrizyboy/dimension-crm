@@ -126,6 +126,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
   })
 
+  // Einkauf (Entscheid 0039): fehlende Auftragsbestätigung, gefährdete Montage, «bestellen bis» – nur Glocke.
+  ergebnis.einkauf = await job('einkauf', 60, async () => {
+    const n = await dienst.rpc<number>('einkauf_melden', {})
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'} Einkauf`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})

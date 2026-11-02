@@ -10,7 +10,8 @@ import { useAktion } from '../hooks/useAktion'
 import { lieferantSpeichern } from '../services/lager'
 import { lieferantSchema } from '../schema'
 import type { Lieferant } from '../types'
-import { KonditionenFelder, konditionenAus, konditionenZuDaten } from './KonditionenFelder'
+import { konditionenAus, konditionenZuDaten } from '../lib/konditionen'
+import { KonditionenFelder } from './KonditionenFelder'
 
 /** Lieferant anlegen oder ändern. Inaktive Lieferanten bekommen keine Bestellvorschläge mehr. */
 export function LieferantDialog({
