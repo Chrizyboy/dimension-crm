@@ -7846,76 +7846,144 @@ export type Database = {
       }
       spesen: {
         Row: {
+          abgelehnt_grund: string | null
           alt_daten: Json | null
           alt_id: string | null
+          art: string
           ausbezahlt_am: string | null
+          ausbezahlt_mit: string | null
           ausbezahlt_von: string | null
+          auszahlung_id: string | null
           beleg_id: string | null
           betrag_rappen: number
+          bezahlt_mit: string
           datum: string
           erstellt_am: string
           erstellt_von: string | null
           geaendert_am: string
           geloescht_am: string | null
+          geprueft_am: string | null
+          geprueft_von: string | null
           id: string
           kategorie: string
+          km: number | null
+          km_satz_rappen: number | null
           mail: Json | null
+          mwst_rappen: number | null
+          mwst_satz: number | null
           notiz: string | null
           person_id: string | null
+          personen: number | null
+          projekt_id: string | null
+          rueckfrage: string | null
+          rueckfrage_am: string | null
           status: string
           storniert_am: string | null
           storniert_grund: string | null
           storniert_von: string | null
+          strecke: string | null
+          verlauf: NonNullable<Json>
+          waehrung: string
           zweck: string | null
         }
         ComputedFields: never
         Insert: {
+          abgelehnt_grund?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
+          art?: string
           ausbezahlt_am?: string | null
+          ausbezahlt_mit?: string | null
           ausbezahlt_von?: string | null
+          auszahlung_id?: string | null
           beleg_id?: string | null
           betrag_rappen: number
+          bezahlt_mit?: string
           datum: string
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          geprueft_am?: string | null
+          geprueft_von?: string | null
           id?: string
           kategorie: string
+          km?: number | null
+          km_satz_rappen?: number | null
           mail?: Json | null
+          mwst_rappen?: number | null
+          mwst_satz?: number | null
           notiz?: string | null
           person_id?: string | null
+          personen?: number | null
+          projekt_id?: string | null
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
           status?: string
           storniert_am?: string | null
           storniert_grund?: string | null
           storniert_von?: string | null
+          strecke?: string | null
+          verlauf?: NonNullable<Json>
+          waehrung?: string
           zweck?: string | null
         }
         Update: {
+          abgelehnt_grund?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
+          art?: string
           ausbezahlt_am?: string | null
+          ausbezahlt_mit?: string | null
           ausbezahlt_von?: string | null
+          auszahlung_id?: string | null
           beleg_id?: string | null
           betrag_rappen?: number
+          bezahlt_mit?: string
           datum?: string
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          geprueft_am?: string | null
+          geprueft_von?: string | null
           id?: string
           kategorie?: string
+          km?: number | null
+          km_satz_rappen?: number | null
           mail?: Json | null
+          mwst_rappen?: number | null
+          mwst_satz?: number | null
           notiz?: string | null
           person_id?: string | null
+          personen?: number | null
+          projekt_id?: string | null
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
           status?: string
           storniert_am?: string | null
           storniert_grund?: string | null
           storniert_von?: string | null
+          strecke?: string | null
+          verlauf?: NonNullable<Json>
+          waehrung?: string
           zweck?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen_liste'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'spesen_beleg_id_fkey'
             columns: ['beleg_id']
@@ -7930,7 +7998,87 @@ export type Database = {
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
         ]
+      }
+      spesen_auszahlungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anzahl: number
+          art: string
+          datum: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          notiz: string | null
+          personen: number
+          titel: string
+          total_rappen: number
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzahl?: number
+          art: string
+          datum: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          notiz?: string | null
+          personen?: number
+          titel: string
+          total_rappen?: number
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzahl?: number
+          art?: string
+          datum?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          notiz?: string | null
+          personen?: number
+          titel?: string
+          total_rappen?: number
+        }
+        Relationships: []
       }
       standorte: {
         Row: {
@@ -10069,29 +10217,103 @@ export type Database = {
           },
         ]
       }
-      spesen_liste: {
+      spesen_auszahlungen_liste: {
         Row: {
-          ausbezahlt_am: string | null
-          ausbezahlt_von: string | null
-          beleg_id: string | null
-          beleg_name: string | null
-          betrag_rappen: number | null
+          anzahl: number | null
+          art: string | null
           datum: string | null
           erstellt_am: string | null
           id: string | null
+          notiz: string | null
+          personen: number | null
+          titel: string | null
+          total_rappen: number | null
+        }
+        ComputedFields: never
+        Insert: {
+          anzahl?: number | null
+          art?: string | null
+          datum?: string | null
+          erstellt_am?: string | null
+          id?: string | null
+          notiz?: string | null
+          personen?: number | null
+          titel?: string | null
+          total_rappen?: number | null
+        }
+        Update: {
+          anzahl?: number | null
+          art?: string | null
+          datum?: string | null
+          erstellt_am?: string | null
+          id?: string | null
+          notiz?: string | null
+          personen?: number | null
+          titel?: string | null
+          total_rappen?: number | null
+        }
+        Relationships: []
+      }
+      spesen_liste: {
+        Row: {
+          abgelehnt_grund: string | null
+          art: string | null
+          ausbezahlt_am: string | null
+          ausbezahlt_mit: string | null
+          ausbezahlt_von: string | null
+          auszahlung_id: string | null
+          beleg_id: string | null
+          beleg_name: string | null
+          beleg_typ: string | null
+          betrag_rappen: number | null
+          bezahlt_mit: string | null
+          datum: string | null
+          erstellt_am: string | null
+          geprueft_am: string | null
+          geprueft_von: string | null
+          hinweise: string[] | null
+          id: string | null
           kategorie: string | null
+          km: number | null
+          km_satz_rappen: number | null
+          konto: string | null
           kuerzel: string | null
+          mwst_rappen: number | null
+          mwst_satz: number | null
           notiz: string | null
           person: string | null
           person_id: string | null
+          personen: number | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          projekt_titel: string | null
+          rueckfrage: string | null
+          rueckfrage_am: string | null
           status: string | null
           storniert_am: string | null
           storniert_grund: string | null
           storniert_von: string | null
+          strecke: string | null
+          verlauf: Json | null
+          waehrung: string | null
           zweck: string | null
         }
         ComputedFields: never
         Relationships: [
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen_liste'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'spesen_beleg_id_fkey'
             columns: ['beleg_id']
@@ -10104,6 +10326,34 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
             referencedColumns: ['id']
           },
         ]
@@ -11110,7 +11360,22 @@ export type Database = {
           sprache: string
         }[]
       }
+      spesen_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       spesen_auszahlen: { Args: { p_datum?: string; p_ids: string[] }; Returns: number }
+      spesen_auszahlung: {
+        Args: { p_art?: string; p_datum?: string; p_ids: string[]; p_titel?: string }
+        Returns: string
+      }
+      spesen_geprueft: { Args: { p_ids: string[] }; Returns: number }
+      spesen_projekte: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          nummer: string
+          titel: string
+        }[]
+      }
+      spesen_rueckfrage: { Args: { p_id: string; p_text: string }; Returns: undefined }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }

@@ -262,4 +262,9 @@ export interface KiBeleg {
   kategorie: string | null
   zweck: string | null
   bemerkung: string | null
+  /** MWST-Satz in Prozent und MWST-Betrag in Rappen, wenn auf dem Beleg ausgewiesen. */
+  mwst_satz?: number | null
+  mwst_rappen?: number | null
+  /** Anzahl Personen (Essen), wenn ersichtlich. */
+  personen?: number | null
 }
