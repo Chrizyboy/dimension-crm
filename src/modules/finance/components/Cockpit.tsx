@@ -65,7 +65,7 @@ export function Cockpit({
       label: t('finanzen.cockpit.tiefster', { wochen: v.wochen.length }),
       wert: v.tiefste ? formatChf(v.tiefste.ende, { mitWaehrung: true }) : '–',
       klein: v.tiefste
-        ? `${t('finanzen.kw', { kw: v.tiefste.kw })}${v.tiefste.ende < reserve ? ` · ${t('finanzen.cockpit.unterReserve')}` : ''}`
+        ? `${t('finanzen.kw', { kw: v.tiefste.kw })}${reserve > 0 && v.tiefste.ende < reserve ? ` · ${t('finanzen.cockpit.unterReserve')}` : ''}`
         : '',
       schlecht: Boolean(v.tiefste && v.tiefste.ende < reserve),
     },

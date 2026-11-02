@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zeile, Zelle } from '@/components/ui/tabelle'
 import { formatChf, formatDatum } from '@/lib/format'
+import { heuteZuerich } from '../lib/datum'
 import type { Finanzdaten } from '../types'
 import type { FinanzFenster } from './Fenster'
 
@@ -14,9 +15,11 @@ import type { FinanzFenster } from './Fenster'
 export function MwstListe({ daten, onFenster }: { daten: Finanzdaten; onFenster: (f: FinanzFenster) => void }) {
   const { t } = useTranslation()
   const firma = (id: string) => daten.firmen.find((f) => f.id === id)?.name ?? ''
-  const zeilen = [...daten.mwst].sort(
-    (a, b) => b.bis.localeCompare(a.bis) || firma(a.firma_id).localeCompare(firma(b.firma_id)),
-  )
+  // Künftige Perioden haben noch nichts; sie erscheinen, sobald sie beginnen.
+  const heute = heuteZuerich()
+  const zeilen = daten.mwst
+    .filter((m) => m.von <= heute)
+    .sort((a, b) => b.bis.localeCompare(a.bis) || firma(a.firma_id).localeCompare(firma(b.firma_id)))
   return (
     <Karte>
       <KarteKopf>
