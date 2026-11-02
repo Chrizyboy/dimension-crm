@@ -10,6 +10,7 @@ const FARBE = {
   extern: { background: '#f7931e', color: '#10263f' },
   geplant: { background: '#fff', color: '#10263f', border: '1px dashed #10263f' },
   abwesend: { background: '#e3e7ed', color: '#4a5568' },
+  service: { background: '#e8f1fb', color: '#0b4a8a', border: '1px solid #0b4a8a' },
 }
 
 /**
