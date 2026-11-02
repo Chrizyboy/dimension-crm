@@ -6217,6 +6217,16 @@
     "dateien": {
       "hochladen": "Ajouter un fichier",
       "leer": "Pas encore de documents."
+    },
+    "etikett": {
+      "knopf_one": "Imprimer l’étiquette QR",
+      "knopf_other": "Imprimer {{count}} étiquettes QR",
+      "einzeln": "Imprimer l’étiquette QR",
+      "fuss": "Scanner = fiche"
+    },
+    "schnell": {
+      "nehmen": "Je le prends",
+      "zurueck": "Retour au dépôt"
     }
   },
   "grossprojekte": {

@@ -12,6 +12,7 @@ import { useFahrzeuge, useGeraete } from '../hooks/useRessourcen'
 import { ANSICHTEN, type Ansicht, type Belegung, type Schaden } from '../types'
 import { Belegungsplan } from './Belegungsplan'
 import { EintragDialog } from './EintragDialog'
+import { EtikettenKnopf } from './EtikettenKnopf'
 import { Erledigen } from './Erledigen'
 import { FahrzeugDialog } from './FahrzeugDialog'
 import { FahrzeugListe } from './FahrzeugListe'
@@ -61,8 +62,10 @@ export default function Fuhrpark({
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const [fenster, setFenster] = useState<Fenster>(null)
-  const fahrzeug = useFahrzeuge().data?.find((f) => f.id === fahrzeugId) ?? null
-  const geraet = useGeraete().data?.find((g) => g.id === geraetId) ?? null
+  const alleFahrzeuge = useFahrzeuge().data ?? []
+  const alleGeraete = useGeraete().data ?? []
+  const fahrzeug = alleFahrzeuge.find((f) => f.id === fahrzeugId) ?? null
+  const geraet = alleGeraete.find((g) => g.id === geraetId) ?? null
   const zu = () => {
     setFenster(null)
     if (km) onNavigation({ km: false })
@@ -105,14 +108,32 @@ export default function Fuhrpark({
             titel={t('fuhrpark.titel')}
             beschreibung={t('fuhrpark.beschreibung')}
             aktionen={
-              <Button
-                onClick={() => {
-                  setFenster({ art: 'neu' })
-                }}
-              >
-                <Plus />
-                {t(neuGeraet ? 'fuhrpark.geraet.neu' : 'fuhrpark.fahrzeug.neu')}
-              </Button>
+              <>
+                {ansicht === 'geraete' && (
+                  <EtikettenKnopf
+                    sachen={alleGeraete
+                      .filter((g) => !g.ausgemustert_am)
+                      .map((g) => ({ bezug: { geraet: g.id }, titel: g.bezeichnung, nummer: g.inventar_nr }))}
+                  />
+                )}
+                {ansicht === 'fahrzeuge' && (
+                  <EtikettenKnopf
+                    sachen={alleFahrzeuge.map((f) => ({
+                      bezug: { fahrzeug: f.id },
+                      titel: f.bezeichnung,
+                      nummer: f.kennzeichen,
+                    }))}
+                  />
+                )}
+                <Button
+                  onClick={() => {
+                    setFenster({ art: 'neu' })
+                  }}
+                >
+                  <Plus />
+                  {t(neuGeraet ? 'fuhrpark.geraet.neu' : 'fuhrpark.fahrzeug.neu')}
+                </Button>
+              </>
             }
           />
           <Reiter

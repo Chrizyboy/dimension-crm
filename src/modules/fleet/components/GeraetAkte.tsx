@@ -1,4 +1,4 @@
-import { ArrowRightLeft, CalendarPlus, CircleAlert, Pencil, Plus } from 'lucide-react'
+import { ArrowRightLeft, CalendarPlus, CircleAlert, Hand, Pencil, Plus, Undo2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Badge } from '@/components/ui/badge'
@@ -6,11 +6,15 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatChf, formatDatum } from '@/lib/format'
+import { useAnmeldung } from '@/stores/anmeldung'
+import { useAktion } from '../hooks/useAktion'
 import { useGeraete, useNamen } from '../hooks/useRessourcen'
 import { fristStand, heuteZuerich, tageBis } from '../lib/fristen'
+import { uebergeben } from '../services/ressourcen'
 import type { Schaden } from '../types'
 import { BelegungBox, SchaedenBox } from './AkteListen'
 import { DateienBox } from './DateienBox'
+import { EtikettenKnopf } from './EtikettenKnopf'
 import type { AkteAktion } from './FahrzeugSeite'
 import { FristBadge } from './FristBadge'
 import { ZUSTAND_TON } from './geraetSpalten'
@@ -36,6 +40,12 @@ export function GeraetAkte({
   const art = useAuswahl('geraeteart')
   const g = useGeraete().data?.find((x) => x.id === id)
   const heute = heuteZuerich()
+  const ich = useAnmeldung((z) => z.ich)
+  const { laeuft, aus } = useAktion()
+  // Nach dem Scannen am Handy: ein Klick nimmt das Gerät oder bringt es zurück, ohne Formular.
+  const schnell = (an: string | null) => {
+    void aus(() => uebergeben({ geraet: id }, an, null, ''), { de: 'Übergeben', fr: 'Remis' })
+  }
   const wo = g?.person_id
     ? namen.person(g.person_id)
     : g?.fahrzeug_id
@@ -71,6 +81,32 @@ export function GeraetAkte({
                 .join(' · '),
               fuss: (
                 <div className="flex flex-wrap justify-end gap-2">
+                  <EtikettenKnopf
+                    nurIcon
+                    sachen={[{ bezug: { geraet: g.id }, titel: g.bezeichnung, nummer: g.inventar_nr }]}
+                  />
+                  {ich && g.person_id !== ich.id && !g.ausgemustert_am && (
+                    <Button
+                      laedt={laeuft}
+                      onClick={() => {
+                        schnell(ich.id)
+                      }}
+                    >
+                      <Hand />
+                      {t('fuhrpark.schnell.nehmen')}
+                    </Button>
+                  )}
+                  {ich && g.person_id === ich.id && (
+                    <Button
+                      laedt={laeuft}
+                      onClick={() => {
+                        schnell(null)
+                      }}
+                    >
+                      <Undo2 />
+                      {t('fuhrpark.schnell.zurueck')}
+                    </Button>
+                  )}
                   {knopf('uebergeben', ArrowRightLeft)}
                   {knopf('reservieren', CalendarPlus)}
                   {knopf('schaden', CircleAlert)}

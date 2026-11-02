@@ -6217,6 +6217,16 @@
     "dateien": {
       "hochladen": "Datei hinzufügen",
       "leer": "Noch keine Dokumente."
+    },
+    "etikett": {
+      "knopf_one": "QR-Etikett drucken",
+      "knopf_other": "{{count}} QR-Etiketten drucken",
+      "einzeln": "QR-Etikett drucken",
+      "fuss": "Scannen = Akte"
+    },
+    "schnell": {
+      "nehmen": "Nehme ich",
+      "zurueck": "Zurück ins Lager"
     }
   },
   "grossprojekte": {
