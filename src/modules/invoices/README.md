@@ -5,7 +5,7 @@ Wartungsverträgen oder frei erstellen, stellen, als Entwurf an AbaNinja geben o
 Mail senden, Zahlungen erfassen und mahnen (Stufe 1–3). Dazu die Firmenangaben je Standort.
 
 Freigegeben von Chris am 21.10.2026 (ERP-Lückenanalyse, Entscheid 0009), gebaut in Phase **10**, Entscheid 0021.
-Ausgebaut für alle Rollen am 2.11.2026 (Entscheid 0039): Übersicht, Mahnlauf mit Freigabe, «Verrechnen auslösen»
+Ausgebaut für alle Rollen am 2.11.2026 (Entscheid 0040): Übersicht, Mahnlauf mit Freigabe, «Verrechnen auslösen»
 durch die Projektleitung, Zahlungsstand für Projektleitung und Verkauf, Eingangsrechnungen mit Visum.
 
 ## Reiter (`#/invoices?reiter=…&rechnung=…&eingang=…`)

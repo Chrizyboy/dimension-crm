@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import type { Abwesenheit, Einsatz, Person, Projekt } from '../types'
+import type { Abwesenheit, Einsatz, Person, Projekt, ServiceTermin } from '../types'
 import {
   baustellenSicht,
   einsatzKonflikte,
+  serviceBalken,
   spurenVerteilen,
   tagImEinsatz,
   teamSicht,
@@ -102,5 +103,42 @@ describe('Zeitplan-Ansicht', () => {
 
   it('zählt Tag im Einsatz nur an Werktagen', () => {
     expect(tagImEinsatz({ von: '2026-11-05', bis: '2026-11-09' }, '2026-11-09')).toEqual({ nr: 3, von: 3 })
+  })
+
+  it('zeigt Service-Termine in der Team-Zeile, mit Konflikt bei Baustelle am selben Tag', () => {
+    const termin: ServiceTermin = {
+      id: 's1',
+      nummer: 'S014',
+      titel: 'Wechselrichter aus',
+      datum: '2026-11-03',
+      termin_am: '2026-11-03T07:30:00Z',
+      dauer_minuten: 120,
+      personen: ['marco', 'luca'],
+      kunde: 'Landi',
+      ort: 'Waltenschwil',
+      auswirkung: 'steht',
+    }
+    const bau = einsatz('a', '2026-11-02', '2026-11-04', ['marco'])
+    const b = serviceBalken(termin, [bau], [], (id) => id.toUpperCase(), 'x')
+    expect(b.art).toBe('service')
+    expect(b.konflikt).toEqual([{ kuerzel: 'MARCO', grund: 'doppelt' }])
+    const personen = [
+      { id: 'marco', kuerzel: 'MK', name: 'Marco', rolle: 'verkauf' },
+      { id: 'luca', kuerzel: 'LB', name: 'Luca', rolle: 'verkauf' },
+    ] as Person[]
+    const team = teamSicht({
+      projekte: [projekt({})],
+      einsaetze: [],
+      abwesend: [],
+      personen,
+      subunternehmer: [],
+      service: [termin],
+      passt: () => true,
+      abwesendText: () => '',
+    })
+    expect(team[0]?.zeilen.map((z) => [z.titel, z.balken[0]?.text])).toEqual([
+      ['Marco', '08:30 Landi'],
+      ['Luca', '08:30 Landi'],
+    ])
   })
 })
