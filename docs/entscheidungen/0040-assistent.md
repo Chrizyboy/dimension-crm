@@ -30,6 +30,6 @@ eigenständig.
 
 ## Folgen
 
-- Migration `20261110005300_assistent.sql`, Test `supabase/tests/assistent.test.sql`.
+- Migration `20261112004000_assistent.sql`, Test `supabase/tests/assistent.test.sql`.
 - Edge Function `ki` neu veröffentlichen (`npx supabase functions deploy ki`).
 - Neue Tabellen im Katalog: Eintrag in `KATALOG` (Felder und Fremdschlüssel), sonst nichts.
