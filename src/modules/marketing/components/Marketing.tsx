@@ -6,6 +6,7 @@ import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/
 import { supabase } from '@/services/supabase'
 import type { Ansicht, ZielFilter } from '../types'
 import { Anschreiben } from './Anschreiben'
+import { Empfehlungen } from './Empfehlungen'
 import { NewsletterSeite } from './NewsletterSeite'
 import { Social } from './Social'
 import { Vorlagen } from './Vorlagen'
@@ -45,6 +46,7 @@ export default function Marketing({
           <ReiterKnopf value="anschreiben">{t('marketing.ansicht.anschreiben')}</ReiterKnopf>
           <ReiterKnopf value="social">{t('marketing.ansicht.social')}</ReiterKnopf>
           <ReiterKnopf value="newsletter">{t('marketing.ansicht.newsletter')}</ReiterKnopf>
+          <ReiterKnopf value="empfehlungen">{t('marketing.ansicht.empfehlungen')}</ReiterKnopf>
           <ReiterKnopf value="vorlagen">{t('marketing.ansicht.vorlagen')}</ReiterKnopf>
         </ReiterListe>
         <ReiterInhalt value="anschreiben" className="pt-4">
@@ -55,6 +57,9 @@ export default function Marketing({
         </ReiterInhalt>
         <ReiterInhalt value="newsletter" className="pt-4">
           {ansicht === 'newsletter' && <NewsletterSeite />}
+        </ReiterInhalt>
+        <ReiterInhalt value="empfehlungen" className="pt-4">
+          <Empfehlungen />
         </ReiterInhalt>
         <ReiterInhalt value="vorlagen" className="pt-4">
           {ansicht === 'vorlagen' && <Vorlagen />}

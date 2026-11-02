@@ -9,7 +9,10 @@ import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
 import { melde } from '@/services/meldungen'
+import { useBilder, usePflichtfotos } from '../hooks/useBaustelle'
+import { fehlendePflichtfotos, pflichtFuer } from '../lib/pflichtfotos'
 import { rapportAbschliessen } from '../services/monteur'
+import { useUi } from '@/stores/ui'
 import type { Rapport, Verrechnung } from '../types'
 import { VerrechnungWahl } from './VerrechnungWahl'
 
@@ -26,16 +29,24 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
   const [grund, setGrund] = useState('')
   const [fertig, setFertig] = useState(r.montage_fertig)
   const [erledigt, setErledigt] = useState(true)
+  const [werbung, setWerbung] = useState(false)
   const [verrechnung, setVerrechnung] = useState<Verrechnung | null>(r.verrechnung)
   const [laeuft, setLaeuft] = useState(false)
+  const sprache = useUi((z) => z.sprache)
+  const bilder = useBilder(r.id)
+  const fotosFehlen = fehlendePflichtfotos(pflichtFuer(usePflichtfotos().data, r.art), bilder.data ?? [])
 
   const fehlt = !r.arbeiten?.trim()
     ? t('baustelle.abschluss.arbeitenFehlen')
-    : (r.art === 'service' || r.art === 'wartung') && !verrechnung
-      ? t('baustelle.abschluss.verrechnungFehlt')
-      : ohne
-        ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
-        : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
+    : fotosFehlen.length > 0
+      ? t('baustelle.abschluss.fotosFehlen', {
+          liste: fotosFehlen.map((p) => (sprache === 'fr' ? p.fr : p.de)).join(', '),
+        })
+      : (r.art === 'service' || r.art === 'wartung') && !verrechnung
+        ? t('baustelle.abschluss.verrechnungFehlt')
+        : ohne
+          ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
+          : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
 
   async function abschliessen() {
     setLaeuft(true)
@@ -45,6 +56,7 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
         verrechnung,
         ...(r.art === 'montage' ? { montage_fertig: fertig } : {}),
         ...(r.art === 'service' ? { fall_erledigt: erledigt } : {}),
+        ...(werbung ? { fotos_werbung: true } : {}),
       })
       await qc.invalidateQueries({ queryKey: ['baustelle'] })
       melde('ok', { de: 'Rapport abgeschlossen', fr: 'Rapport clôturé' })
@@ -90,6 +102,15 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
             <label className="flex items-center justify-between gap-3 text-sm">
               {t('baustelle.abschluss.fallErledigt')}
               <Switch checked={erledigt} onCheckedChange={setErledigt} />
+            </label>
+          )}
+          {(r.art === 'montage' || r.art === 'ibn') && (
+            <label className="flex items-center justify-between gap-3 text-sm">
+              <span className="flex flex-col">
+                {t('baustelle.abschluss.fotosWerbung')}
+                <span className="text-muted-foreground text-xs">{t('baustelle.abschluss.fotosWerbungHinweis')}</span>
+              </span>
+              <Switch checked={werbung} onCheckedChange={setWerbung} />
             </label>
           )}
           {(r.art === 'service' || r.art === 'wartung') && (
