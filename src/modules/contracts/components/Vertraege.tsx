@@ -8,9 +8,11 @@ import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { supabase } from '@/services/supabase'
-import { useVertraege } from '../hooks/useVertraege'
+import { useKatalog, useVertraege } from '../hooks/useVertraege'
 import { inTagen } from '../lib/anzeige'
+import { filtere, kennzahlen } from '../lib/liste'
 import { FILTER, type Filter } from '../types'
+import { KopfZahlen } from './KopfZahlen'
 import { VertragAkte } from './VertragAkte'
 import { VertragDialog } from './VertragDialog'
 import { vertragSpalten } from './vertragSpalten'
@@ -32,18 +34,30 @@ export default function Vertraege({
   const [filter, setFilter] = useState<Filter>('aktiv')
   const [suche, setSuche] = useState('')
   const [neu, setNeu] = useState(false)
-  const liste = useVertraege(filter, inTagen(heute, 30))
+  // Alle Verträge einmal laden (wenige hundert), Filter und Kopfzahlen rechnet die Liste.
+  const liste = useVertraege('alle', inTagen(heute, 30), inTagen(heute, 30))
+  const katalog = useKatalog().data ?? undefined
   const status = useAuswahl('wartungsstatus')
+  const iso = inTagen(heute, 0)
+  const b = katalog?.bedingungen
   const spalten = useMemo(
-    () => vertragSpalten(t, (w) => ({ text: status.text(w), farbe: status.finde(w)?.farbe ?? null }), heute),
-    [t, status, heute],
+    () => vertragSpalten(t, (w) => ({ text: status.text(w), farbe: status.finde(w)?.farbe ?? null }), heute, katalog),
+    [t, status, heute, katalog],
   )
+  const zahlen = useMemo(() => kennzahlen(liste.data ?? [], iso, b?.rechnung_vorlauf_tage), [liste.data, iso, b])
   const daten = useMemo(() => {
     const s = suche.trim().toLowerCase()
-    return (liste.data ?? []).filter(
-      (v) => !s || `${v.nummer ?? ''} ${v.kunde} ${v.ort ?? ''} ${v.projekt ?? ''}`.toLowerCase().includes(s),
+    return filtere(liste.data ?? [], filter, iso, {
+      vorlauf: b?.rechnung_vorlauf_tage ?? 30,
+      kuendigung: b?.kuendigung_monate ?? 3,
+    }).filter(
+      (v) =>
+        !s ||
+        `${v.nummer ?? ''} ${v.kunde} ${v.ort ?? ''} ${v.projekt ?? ''} ${v.wechselrichter ?? ''} ${v.paket ?? ''}`
+          .toLowerCase()
+          .includes(s),
     )
-  }, [liste.data, suche])
+  }, [liste.data, suche, filter, iso, b])
 
   if (!supabase) {
     return (
@@ -69,6 +83,7 @@ export default function Vertraege({
           </Button>
         }
       />
+      {liste.data && <KopfZahlen zahlen={zahlen} onFilter={setFilter} />}
       <Werkzeugleiste
         suche={
           <Suchfeld

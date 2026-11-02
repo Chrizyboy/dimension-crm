@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { ImagePlus, ShieldCheck, ShieldOff } from 'lucide-react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Filterchips } from '@/components/shared/Filterchips'
 import { KundeWahl, type GewaehlterKunde } from '@/components/shared/KundeWahl'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
@@ -8,22 +10,28 @@ import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/schalter'
 import { useAuswahl } from '@/hooks/useAuswahl'
-import { useAktion } from '../hooks/useAktion'
-import { garantieAm } from '../lib/garantie'
 import { formatDatum } from '@/lib/format'
+import { useAktion } from '../hooks/useAktion'
 import { useKundenAnlagen, usePersonen } from '../hooks/useService'
+import { laufendeGarantien } from '../lib/garantie'
 import { fallSchema } from '../schema'
-import { fallSpeichern } from '../services/service'
-import { KATEGORIEN, PRIORITAETEN } from '../types'
+import { anhangHochladen, fallSpeichern } from '../services/service'
+import { AUSWIRKUNGEN, KATEGORIEN, PRIORITAETEN } from '../types'
 
 /** Vorbelegung, z. B. aus einer Mail im Posteingang. */
 export interface FallVorlage {
   titel: string
   beschreibung: string
   kunde: GewaehlterKunde | null
+  quelle?: string
 }
 
-/** Neuen Service-Fall erfassen: Kunde, Anlage, worum es geht, wie dringend, wer kümmert sich. */
+const QUELLEN = ['anruf', 'mail', 'hand'] as const
+
+/**
+ * Neuen Service-Fall erfassen, wie am Telefon: Kunde und Anlage (Garantie wird sofort geprüft), was los ist und
+ * wie schlimm, wer vor Ort öffnet, wer sich kümmert, Termin, Fotos. Die Reaktionszeit setzt die Datenbank.
+ */
 export function FallDialog({
   vorlage = null,
   onSchliessen,
@@ -37,7 +45,12 @@ export function FallDialog({
   const { laeuft, aus } = useAktion()
   const kat = useAuswahl('servicekategorie')
   const prio = useAuswahl('prioritaet')
+  const wirkung = useAuswahl('serviceauswirkung')
+  const quelle = useAuswahl('servicequelle')
+  const komp = useAuswahl('komponente')
   const personen = usePersonen()
+  const datei = useRef<HTMLInputElement>(null)
+  const [fotos, setFotos] = useState<File[]>([])
   const [kunde, setKunde] = useState<GewaehlterKunde | null>(vorlage?.kunde ?? null)
   const anlagen = useKundenAnlagen(kunde?.id ?? null)
   const [w, setW] = useState({
@@ -45,49 +58,93 @@ export function FallDialog({
     beschreibung: vorlage?.beschreibung ?? '',
     kategorie: 'stoerung',
     prioritaet: 'normal',
-    garantie: null as boolean | null,
+    garantie: false,
     anlage_id: '',
     person_id: '',
     termin_am: '',
+    quelle: vorlage?.quelle ?? (vorlage ? 'mail' : 'anruf'),
+    auswirkung: '',
+    komponente: '',
+    fehlercode: '',
+    vor_ort_name: '',
+    vor_ort_telefon: '',
+    zugang: '',
   })
+  const [garantieVonHand, setGarantieVonHand] = useState(false)
   const [fehler, setFehler] = useState<Partial<Record<string, string>>>({})
-
-  // Fall aus einem Anruf: Kunde über die Telefonnummer gefunden, hat er nur eine Anlage, gilt sie als gewählt.
-  const nurEine = anlagen.data?.length === 1 ? anlagen.data[0] : undefined
-  const anlageId = w.anlage_id || nurEine?.id || ''
-  const garantie = garantieAm(
-    (anlagen.data ?? []).find((a) => a.id === anlageId),
-    new Date().toISOString().slice(0, 10),
-  )
-  // Hat die Anlage noch Garantie, ist «Garantiefall» vorgeschlagen, bis die Person das Häkchen selbst setzt.
-  const garantieFall = w.garantie ?? garantie !== null
+  const anlage =
+    (anlagen.data ?? []).find((a) => a.id === w.anlage_id) ?? (anlagen.data?.length === 1 ? anlagen.data[0] : undefined)
+  const garantien = laufendeGarantien(anlage, w.komponente || null)
+  const garantie = garantieVonHand ? w.garantie : garantien.length > 0
+  const setze = (teil: Partial<typeof w>) => {
+    setW((alt) => ({ ...alt, ...teil }))
+  }
 
   async function speichern() {
-    const g = fallSchema.safeParse({ ...w, anlage_id: anlageId, garantie: garantieFall, kontakt_id: kunde?.id ?? '' })
+    const g = fallSchema.safeParse({ ...w, garantie, anlage_id: anlage?.id ?? '', kontakt_id: kunde?.id ?? '' })
     if (!g.success) {
       setFehler(Object.fromEntries(g.error.issues.map((i) => [String(i.path[0]), t(i.message)])))
       return
     }
+    const d = g.data
     let id = ''
     const ok = await aus(
       async () => {
         id = await fallSpeichern({
-          titel: g.data.titel,
-          beschreibung: g.data.beschreibung || null,
-          kategorie: g.data.kategorie,
-          prioritaet: g.data.prioritaet,
-          garantie: g.data.garantie,
-          status: 'neu',
-          kontakt_id: g.data.kontakt_id,
-          anlage_id: g.data.anlage_id || null,
-          person_id: g.data.person_id || null,
-          termin_am: g.data.termin_am || null,
+          titel: d.titel,
+          beschreibung: d.beschreibung || null,
+          kategorie: d.kategorie,
+          prioritaet: d.auswirkung === 'steht' ? 'hoch' : d.prioritaet,
+          garantie: d.garantie,
+          status: d.termin_am ? 'termin' : 'neu',
+          kontakt_id: d.kontakt_id,
+          anlage_id: d.anlage_id || null,
+          objekt_id: d.anlage_id ? null : (kunde?.objektId ?? null),
+          person_id: d.person_id || null,
+          termin_am: d.termin_am ? new Date(d.termin_am).toISOString() : null,
+          quelle: d.quelle,
+          auswirkung: d.auswirkung || null,
+          komponente: d.komponente || null,
+          fehlercode: d.fehlercode || null,
+          vor_ort_name: d.vor_ort_name || null,
+          vor_ort_telefon: d.vor_ort_telefon || null,
+          zugang: d.zugang || null,
         })
+        for (const f of fotos) await anhangHochladen(id, f)
       },
       { de: 'Fall erfasst', fr: 'Cas saisi' },
     )
     if (ok) onErfasst(id)
   }
+
+  const feld = (name: keyof typeof w, label: string, typ = 'text') => (
+    <Feld id={`sf-${name}`} label={label}>
+      <Input
+        id={`sf-${name}`}
+        type={typ}
+        value={String(w[name])}
+        onChange={(e) => {
+          setze({ [name]: e.target.value })
+        }}
+      />
+    </Feld>
+  )
+  const wahl = (
+    name: 'kategorie' | 'prioritaet' | 'komponente' | 'person_id',
+    label: string,
+    optionen: { wert: string; text: string }[],
+  ) => (
+    <Feld id={`sf-${name}`} label={label}>
+      <Auswahl
+        id={`sf-${name}`}
+        value={w[name]}
+        onValueChange={(v) => {
+          setze({ [name]: v })
+        }}
+        optionen={optionen}
+      />
+    </Feld>
+  )
 
   return (
     <Dialog
@@ -98,6 +155,7 @@ export function FallDialog({
     >
       <DialogInhalt
         titel={t('service.neu')}
+        className="sm:max-w-2xl"
         fuss={
           <>
             <Button variant="ghost" onClick={onSchliessen}>
@@ -111,6 +169,17 @@ export function FallDialog({
       >
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="sm:col-span-2">
+            <Filterchips
+              einzeln
+              beschriftung={t('service.feld.quelle')}
+              optionen={QUELLEN.map((q) => ({ wert: q, text: quelle.text(q) }))}
+              gewaehlt={[w.quelle]}
+              onChange={([q]) => {
+                if (q) setze({ quelle: q })
+              }}
+            />
+          </div>
+          <div className="sm:col-span-2">
             <Feld
               id="sf-kunde"
               label={t('service.feld.kunde')}
@@ -122,19 +191,19 @@ export function FallDialog({
                 wert={kunde}
                 onWahl={(k) => {
                   setKunde(k)
-                  setW({ ...w, anlage_id: '' })
+                  setze({ anlage_id: '' })
                 }}
               />
             </Feld>
           </div>
-          {kunde && (anlagen.data ?? []).length > 0 && (
+          {kunde && (anlagen.data ?? []).length > 1 && (
             <div className="sm:col-span-2">
               <Feld id="sf-anlage" label={t('service.feld.anlage')}>
                 <Auswahl
                   id="sf-anlage"
-                  value={anlageId}
+                  value={w.anlage_id}
                   onValueChange={(v) => {
-                    setW({ ...w, anlage_id: v })
+                    setze({ anlage_id: v })
                   }}
                   optionen={(anlagen.data ?? []).map((a) => ({
                     wert: a.id,
@@ -144,17 +213,41 @@ export function FallDialog({
                   }))}
                 />
               </Feld>
-              {garantie && (
-                <p className="text-info mt-1 text-xs" data-testid="sf-garantie-hinweis">
-                  {garantie.anlage
-                    ? t('service.garantieHinweis.anlage', { bis: formatDatum(garantie.anlage) })
-                    : t('service.garantieHinweis.komponenten', {
-                        liste: garantie.komponenten
-                          .map((k) => `${k.art} (${k.hersteller}) ${formatDatum(k.bis)}`)
-                          .join(', '),
-                      })}
-                </p>
+            </div>
+          )}
+          {kunde && (
+            <div
+              className={`flex items-start gap-2 rounded-md p-2 text-sm sm:col-span-2 ${garantien.length > 0 ? 'bg-ok-soft text-ok' : 'bg-muted text-muted-foreground'}`}
+            >
+              {garantien.length > 0 ? (
+                <ShieldCheck className="mt-0.5 size-4" aria-hidden="true" />
+              ) : (
+                <ShieldOff className="mt-0.5 size-4" aria-hidden="true" />
               )}
+              <span className="flex-1">
+                {!anlage
+                  ? t('service.dialog.keineAnlage')
+                  : garantien.length > 0
+                    ? t('service.dialog.garantieLaeuft', {
+                        liste: garantien
+                          .map(
+                            (g) =>
+                              `${g.art ? komp.text(g.art) : t('service.garantieCheck.montage')} ${t('service.dialog.bis')} ${formatDatum(g.bis)}`,
+                          )
+                          .join(', '),
+                      })
+                    : t('service.dialog.garantieAbgelaufen')}
+              </span>
+              <label className="flex items-center gap-1.5 whitespace-nowrap">
+                <Checkbox
+                  checked={garantie}
+                  onCheckedChange={(c) => {
+                    setGarantieVonHand(true)
+                    setze({ garantie: c === true })
+                  }}
+                />
+                {t('service.feld.garantieFall')}
+              </label>
             </div>
           )}
           <div className="sm:col-span-2">
@@ -168,71 +261,81 @@ export function FallDialog({
                 id="sf-titel"
                 value={w.titel}
                 onChange={(e) => {
-                  setW({ ...w, titel: e.target.value })
+                  setze({ titel: e.target.value })
                 }}
               />
             </Feld>
           </div>
-          <Feld id="sf-kat" label={t('service.feld.kategorie')}>
-            <Auswahl
-              id="sf-kat"
-              value={w.kategorie}
-              onValueChange={(v) => {
-                setW({ ...w, kategorie: v, garantie: v === 'garantie' ? true : w.garantie })
-              }}
-              optionen={KATEGORIEN.map((k) => ({ wert: k, text: kat.text(k) }))}
-            />
-          </Feld>
-          <Feld id="sf-prio" label={t('service.feld.prioritaet')}>
-            <Auswahl
-              id="sf-prio"
-              value={w.prioritaet}
-              onValueChange={(v) => {
-                setW({ ...w, prioritaet: v })
-              }}
-              optionen={PRIORITAETEN.map((p) => ({ wert: p, text: prio.text(p) }))}
-            />
-          </Feld>
-          <Feld id="sf-person" label={t('service.feld.zustaendig')}>
-            <Auswahl
-              id="sf-person"
-              value={w.person_id}
-              onValueChange={(v) => {
-                setW({ ...w, person_id: v })
-              }}
-              optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
-            />
-          </Feld>
-          <Feld id="sf-termin" label={t('service.feld.termin')}>
-            <Input
-              id="sf-termin"
-              type="date"
-              value={w.termin_am}
-              onChange={(e) => {
-                setW({ ...w, termin_am: e.target.value })
+          <div className="sm:col-span-2">
+            <Filterchips
+              einzeln
+              beschriftung={t('service.feld.auswirkung')}
+              optionen={AUSWIRKUNGEN.map((a) => ({ wert: a, text: wirkung.text(a) }))}
+              gewaehlt={w.auswirkung ? [w.auswirkung] : []}
+              onChange={([a]) => {
+                setze({ auswirkung: a ?? '', ...(a === 'steht' ? { prioritaet: 'hoch' } : {}) })
               }}
             />
-          </Feld>
-          <label className="flex items-center gap-2 text-sm sm:col-span-2">
-            <Checkbox
-              checked={garantieFall}
-              onCheckedChange={(c) => {
-                setW({ ...w, garantie: c === true })
-              }}
-            />
-            {t('service.feld.garantieFall')}
-          </label>
+          </div>
+          {wahl(
+            'kategorie',
+            t('service.feld.kategorie'),
+            KATEGORIEN.map((k) => ({ wert: k, text: kat.text(k) })),
+          )}
+          {wahl(
+            'komponente',
+            t('service.feld.komponente'),
+            komp.werte.map((k) => ({ wert: k.schluessel, text: komp.text(k.schluessel) })),
+          )}
+          {feld('fehlercode', t('service.feld.fehlercode'))}
+          {wahl(
+            'prioritaet',
+            t('service.feld.prioritaet'),
+            PRIORITAETEN.map((p) => ({ wert: p, text: prio.text(p) })),
+          )}
+          {feld('vor_ort_name', t('service.feld.vorOrtName'))}
+          {feld('vor_ort_telefon', t('service.feld.vorOrtTelefon'), 'tel')}
+          <div className="sm:col-span-2">{feld('zugang', t('service.feld.zugang'))}</div>
+          {wahl(
+            'person_id',
+            t('service.feld.zustaendig'),
+            (personen.data ?? []).map((p) => ({ wert: p.id, text: p.name })),
+          )}
+          {feld('termin_am', t('service.feld.termin'), 'datetime-local')}
           <div className="sm:col-span-2">
             <Feld id="sf-text" label={t('service.feld.beschreibung')}>
               <Textarea
                 id="sf-text"
-                rows={4}
+                rows={3}
                 value={w.beschreibung}
                 onChange={(e) => {
-                  setW({ ...w, beschreibung: e.target.value })
+                  setze({ beschreibung: e.target.value })
                 }}
               />
             </Feld>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 sm:col-span-2">
+            <input
+              ref={datei}
+              type="file"
+              multiple
+              accept="image/*,application/pdf"
+              hidden
+              aria-label={t('service.akte.hochladen')}
+              onChange={(e) => {
+                setFotos((alt) => [...alt, ...(e.target.files ?? [])])
+                e.target.value = ''
+              }}
+            />
+            <Button variant="secondary" size="sm" onClick={() => datei.current?.click()}>
+              <ImagePlus />
+              {t('service.dialog.fotos')}
+            </Button>
+            {fotos.map((f) => (
+              <span key={f.name} className="bg-muted rounded px-2 py-0.5 text-xs">
+                {f.name}
+              </span>
+            ))}
           </div>
         </div>
       </DialogInhalt>

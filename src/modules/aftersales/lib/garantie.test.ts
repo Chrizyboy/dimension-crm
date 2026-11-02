@@ -1,29 +1,31 @@
 import { describe, expect, it } from 'vitest'
-import { garantieAm } from './garantie'
+import { laufendeGarantien } from './garantie'
 
-const k = (art: string, bis: string | null) => ({
-  art,
-  hersteller: 'H',
-  modell: '',
-  anzahl: 1,
-  seriennummer: '',
-  garantie_bis: bis,
-})
+const anlage = {
+  garantie_bis: '2025-06-21',
+  komponenten: [
+    {
+      art: 'wechselrichter',
+      hersteller: 'Huawei',
+      modell: '',
+      anzahl: 1,
+      seriennummer: '',
+      garantie_bis: '2031-03-14',
+    },
+    { art: 'batterie', hersteller: 'BYD', modell: '', anzahl: 1, seriennummer: '', garantie_bis: '2026-01-01' },
+  ],
+}
 
-describe('garantieAm', () => {
-  it('ganze Anlage noch in Garantie', () => {
-    expect(garantieAm({ garantie_bis: '2028-05-01', komponenten: [] }, '2026-11-10')?.anlage).toBe('2028-05-01')
+describe('laufendeGarantien', () => {
+  it('nimmt nur, was am Tag noch läuft', () => {
+    expect(laufendeGarantien(anlage, null, '2026-11-02')).toEqual([
+      { art: 'wechselrichter', hersteller: 'Huawei', bis: '2031-03-14' },
+    ])
   })
-  it('nur eine Komponente noch in Garantie', () => {
-    const g = garantieAm(
-      { garantie_bis: '2025-01-01', komponenten: [k('wechselrichter', '2031-03-01'), k('module', '2024-01-01')] },
-      '2026-11-10',
-    )
-    expect(g?.anlage).toBeNull()
-    expect(g?.komponenten.map((x) => x.art)).toEqual(['wechselrichter'])
+  it('filtert nach Komponente, Montage zählt immer', () => {
+    expect(laufendeGarantien(anlage, 'batterie', '2025-01-01').map((g) => g.art)).toEqual([null, 'batterie'])
   })
-  it('nichts mehr in Garantie', () => {
-    expect(garantieAm({ garantie_bis: '2025-01-01', komponenten: [k('module', null)] }, '2026-11-10')).toBeNull()
-    expect(garantieAm(null, '2026-11-10')).toBeNull()
+  it('ohne Anlage keine Garantie', () => {
+    expect(laufendeGarantien(null, null)).toEqual([])
   })
 })

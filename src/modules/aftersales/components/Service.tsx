@@ -9,14 +9,14 @@ import { mailVerknuepfen, mailVorlage } from '@/services/posteingang'
 import { supabase } from '@/services/supabase'
 import { REITER, type Reiter as ReiterTyp } from '../types'
 import { AnlagenListe } from './AnlagenListe'
-import { FallAkte } from './FallAkte'
 import { FallDialog, type FallVorlage } from './FallDialog'
-import { FallListe } from './FallListe'
+import { FallSeite } from './FallSeite'
+import { Leitstand } from './Leitstand'
 
 /**
- * Service & Garantie (V233 «Service»): Fälle S001 … mit Kategorie, Priorität, Stand, Garantie, Verlauf und
- * Anhängen; dazu die Anlage-Daten aller gebauten Anlagen. Offener Fall in der Adresse (#/aftersales?fall=…).
- * Mit «ausMail» (aus dem Posteingang) öffnet sich «Neuer Fall» mit Kunde, Titel und Beschreibung aus der Mail.
+ * Service & Garantie: Leitstand mit allen offenen Fällen (Board nach Arbeitsschritt oder Liste) und die Anlagen.
+ * Ein offener Fall (#/aftersales?fall=…) füllt die ganze Seite (Fall-Akte). Mit «ausMail» (aus dem Posteingang)
+ * öffnet sich «Neuer Fall» mit Kunde, Titel und Beschreibung aus der Mail.
  */
 export default function Service({
   reiter,
@@ -64,8 +64,40 @@ export default function Service({
     )
   }
 
+  const dialog = neu && (
+    <FallDialog
+      vorlage={vorlage}
+      onSchliessen={() => {
+        setNeu(false)
+        setVorlage(null)
+        if (ausMail) onNavigation({ fall: null })
+      }}
+      onErfasst={(id) => {
+        setNeu(false)
+        setVorlage(null)
+        if (ausMail) void mailVerknuepfen(ausMail, { service_fall_id: id }).catch(() => undefined)
+        onNavigation({ reiter: 'faelle', fall: id })
+      }}
+    />
+  )
+
+  if (fallId) {
+    return (
+      <div className="mx-auto flex w-full max-w-[110rem] flex-col gap-4 px-4 py-6 sm:px-6">
+        <FallSeite
+          key={fallId}
+          id={fallId}
+          onZurueck={() => {
+            onNavigation({ fall: null })
+          }}
+        />
+        {dialog}
+      </div>
+    )
+  }
+
   return (
-    <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
+    <div className="mx-auto flex w-full max-w-[110rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf
         titel={t('service.titel')}
         beschreibung={t('service.beschreibung')}
@@ -94,7 +126,7 @@ export default function Service({
           ))}
         </ReiterListe>
         <ReiterInhalt value="faelle" className="pt-4">
-          <FallListe
+          <Leitstand
             aktiveId={fallId}
             onOeffnen={(id) => {
               onNavigation({ fall: id })
@@ -105,31 +137,7 @@ export default function Service({
           <AnlagenListe />
         </ReiterInhalt>
       </Reiter>
-      {fallId && (
-        <FallAkte
-          key={fallId}
-          id={fallId}
-          onSchliessen={() => {
-            onNavigation({ fall: null })
-          }}
-        />
-      )}
-      {neu && (
-        <FallDialog
-          vorlage={vorlage}
-          onSchliessen={() => {
-            setNeu(false)
-            setVorlage(null)
-            if (ausMail) onNavigation({ fall: null })
-          }}
-          onErfasst={(id) => {
-            setNeu(false)
-            setVorlage(null)
-            if (ausMail) void mailVerknuepfen(ausMail, { service_fall_id: id }).catch(() => undefined)
-            onNavigation({ reiter: 'faelle', fall: id })
-          }}
-        />
-      )}
+      {dialog}
     </div>
   )
 }

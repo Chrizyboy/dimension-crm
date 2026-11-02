@@ -10,6 +10,7 @@
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
 //  * posteingang  alle 5 Minuten  alle Mails holen, «beantwortet» erkennen, mit KI einordnen (Phase 18)
+//  * posteingang_nachholen alle 2 Min.  ältere Mails rückwärts als Archiv (nachholen_monate), bis alles da ist
 //  * posteingang_erinnern alle 5 Min.  Antwortfristen: Glocke an Zuständige, bei doppelter Frist an die Leitung
 //  * ablage       alle 5 Minuten  Offert-Ordner in SharePoint anlegen/verschieben, Dateien einordnen (Entscheid 0031)
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
@@ -37,6 +38,7 @@ import { guthaben } from '../_shared/aspsms.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
+import { posteingangNachholen } from '../_shared/posteingang_nachholen.ts'
 import { kiEntwuerfeAbarbeiten } from '../_shared/ki_automation.ts'
 import { kiEingerichtet } from '../_shared/ki_rahmen.ts'
 import { dienst } from '../_shared/datenbank.ts'
@@ -196,6 +198,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
   })
 
+  // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung = await job('wartung', 720, async () => {
+    const n = await dienst.rpc<number>('wartung_jahreslauf', {})
+    return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
@@ -311,6 +319,21 @@ Deno.serve(async (req) => {
         return r.neu
       })
       return `${meldung}; ${neu} neu, ${beantwortet} beantwortet; ${await posteingangEinordnen(15)}`
+    })
+    // Ältere Mails: höchstens 40 Sekunden pro Lauf, gleich verteilt, damit jede Person vorankommt.
+    ergebnis.posteingang_nachholen = await job('posteingang_nachholen', 2, async () => {
+      const personen = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
+      const proPerson = 40_000 / Math.max(1, personen.length)
+      let neu = 0
+      let fehler = 0
+      for (const p of personen) {
+        try {
+          neu += await posteingangNachholen(p.person_id, s, true, Date.now() + proPerson)
+        } catch {
+          fehler++
+        }
+      }
+      return `${neu} ältere Mails${fehler ? `, ${fehler} Fehler` : ''}`
     })
 
     // Ablage vor der Sicherung: Dateien von Offerten und Projekten gehören in deren Ordner, nicht ins Kunden-Backup.

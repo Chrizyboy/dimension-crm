@@ -6,12 +6,8 @@ import type { FallFilter } from '../types'
 const an = Boolean(supabase)
 
 /** Service-Fälle nach Filter. */
-export const useFaelle = (filter: FallFilter, ichId?: string | null) =>
-  useQuery({
-    queryKey: ['service', 'faelle', filter, filter === 'meine' ? ichId : null],
-    enabled: an,
-    queryFn: () => s.ladeFaelle(filter, ichId),
-  })
+export const useFaelle = (filter: FallFilter) =>
+  useQuery({ queryKey: ['service', 'faelle', filter], enabled: an, queryFn: () => s.ladeFaelle(filter) })
 
 /** Ein Fall mit Anhängen. */
 export function useFall(id: string) {
@@ -33,10 +29,6 @@ export const useKundenAnlagen = (kontaktId: string | null) =>
   })
 
 /** Aktive Personen. */
-/** Eine Anlage (null = keine gewählt). */
-export const useAnlage = (id: string | null) =>
-  useQuery({ queryKey: ['service', 'anlage', id], enabled: an && !!id, queryFn: () => s.ladeAnlage(id ?? '') })
-
 export const usePersonen = () =>
   useQuery({ queryKey: ['service', 'personen'], enabled: an, queryFn: s.ladePersonen, staleTime: 10 * 60_000 })
 

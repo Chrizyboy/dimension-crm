@@ -23,8 +23,29 @@ Dashboard → _Authentication_ → _Emails_:
 
 - _Magic Link_ und _Confirm signup_: Inhalt aus `supabase/templates/anmeldecode.html` (zeigt den Code).
 - _Invite user_: Inhalt aus `supabase/templates/einladung.html`.
-- _SMTP_: eigener Absender (z. B. `crm@dimension-solaire.ch` über Microsoft 365). Der eingebaute Versand von Supabase ist nur für Tests gedacht und stark begrenzt.
+- Absender: siehe Abschnitt 3a. Der eingebaute Versand von Supabase ist nur für Tests gedacht und stark begrenzt.
 - _URL Configuration_: Site URL auf die Adresse der App setzen.
+
+## 3a. Absender noreply@ über Microsoft 365 (Entscheid Chris 01.11.2026)
+
+Codes und Einladungen gehen nicht über SMTP, sondern über die Edge Function `anmeldemail` (Send Email Hook) und
+Microsoft Graph aus dem freigegebenen Postfach `noreply@dimension-solaire.ch`. Grund: SMTP mit Passwort sperrt
+Microsoft Ende 2026, und ein freigegebenes Postfach hat kein Passwort. Die Vorlagen in `supabase/templates/` gelten
+dann nur noch lokal (Mailpit); den Text im Betrieb baut `supabase/functions/_shared/anmeldemail.ts`.
+
+1. Entra → App-Registrierung «Dimension Work» → _API-Berechtigungen_ → _Berechtigung hinzufügen_ → _Microsoft Graph_ →
+   _Anwendungsberechtigungen_ → `Mail.Send` → _Administratorzustimmung erteilen_.
+2. Empfohlen: die App in Exchange auf das Postfach noreply@ beschränken (RBAC für Anwendungen, Rolle
+   «Application Mail.Send» mit Bereich nur noreply@). Sonst dürfte die App aus jedem Postfach senden.
+3. Funktion hochladen (`npx supabase functions deploy anmeldemail`, macht auch `cloud-aktualisieren.ps1`).
+4. Supabase-Dashboard → _Authentication_ → _Hooks_ → _Send Email_ → Typ _HTTPS_, URL
+   `https://<projekt>.supabase.co/functions/v1/anmeldemail`, _Generate secret_. Das Geheimnis kopieren und unter
+   _Edge Functions_ → _Secrets_ als `ANMELDEMAIL_HOOK_SECRET` speichern. Danach den Hook einschalten.
+5. Test: auf der Anmeldeseite einen Code anfordern. Kommt keiner, Hook ausschalten (dann sendet wieder Supabase)
+   und unter _Edge Functions_ → _anmeldemail_ → _Logs_ nachsehen.
+
+Wichtig: Danach in der Cloud kein `supabase config push` mehr, sonst schaltet die lokale `config.toml` den Hook
+wieder aus. Der Hook ist lokal bewusst aus, damit die Browser-Tests weiter Mailpit lesen.
 
 ## 4. Edge Function «einladen»
 
