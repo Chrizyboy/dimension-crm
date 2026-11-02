@@ -344,7 +344,9 @@
     "bereicheWieRolle_other": "Désactivé : affiche les {{count}} domaines du rôle.",
     "bereicheWieRolle_one": "Désactivé : affiche le domaine du rôle.",
     "bereicheAlle": "Désactivé : affiche tous les domaines, comme le rôle.",
-    "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie."
+    "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie.",
+    "kurzzeichen": "Initiales",
+    "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}."
   },
   "rechte": {
     "basis": "Données de base",
