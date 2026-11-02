@@ -36,6 +36,7 @@ if (existsSync(ziel)) {
 }
 
 const typ = id.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase())
+const heute = new Date()
 const ersetzungen = {
   __MODUL__: id,
   __TITEL__: titel,
@@ -47,6 +48,9 @@ const ersetzungen = {
   __PHASE_WERT__: /^\d+$/.test(phase) ? phase : `'${phase}'`,
   __TYP__: typ,
   __TYP_KLEIN__: typ.charAt(0).toLowerCase() + typ.slice(1),
+  // Für das Handbuch-Kapitel (Entscheid 0043): «Stand» und erster Eintrag unter «Neu».
+  __HEUTE__: heute.toISOString().slice(0, 10),
+  __HEUTE_CH__: heute.toISOString().slice(0, 10).split('-').reverse().join('.'),
 }
 
 cpSync(join(root, 'docs', 'modul-vorlage'), ziel, { recursive: true })

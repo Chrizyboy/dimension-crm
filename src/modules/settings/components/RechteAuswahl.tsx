@@ -4,7 +4,7 @@ import { Switch } from '@/components/ui/schalter'
 import type { Recht } from '@/types/anmeldung'
 
 /** Rechte, die man einzeln geben kann. «basis» hat jede aktive Person ohnehin. */
-const WAEHLBAR: readonly Exclude<Recht, 'basis'>[] = ['preise', 'finanzen', 'admin']
+const WAEHLBAR: readonly Exclude<Recht, 'basis'>[] = ['preise', 'finanzen', 'planung', 'admin']
 
 interface RechteAuswahlProps {
   id: string
@@ -14,7 +14,7 @@ interface RechteAuswahlProps {
   vonRolle?: string[]
 }
 
-/** Schalter für die Zusatzrechte Einkaufspreise, Finanzen und Administration. */
+/** Schalter für die Zusatzrechte Einkaufspreise, Finanzen, Planung und Administration. */
 export function RechteAuswahl({ id, wert, onChange, vonRolle = [] }: RechteAuswahlProps) {
   const { t } = useTranslation()
   return (

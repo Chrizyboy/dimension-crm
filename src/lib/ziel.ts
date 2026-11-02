@@ -17,6 +17,7 @@ export function zielVon(tabelle: string | null | undefined, id: string | null | 
     fahrzeuge: `/fleet?fahrzeug=${id}`,
     geraete: `/fleet?ansicht=geraete&geraet=${id}`,
     qualifikationen: '/staff',
+    personen: `/staff?person=${id}`,
   }
   return pfad[tabelle] ?? null
 }

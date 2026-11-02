@@ -30,6 +30,7 @@ export const STAND_TON: Record<Grossprojekt['stand'], Ton> = {
 /** Passt ein Grossprojekt in den Reiter? «Alle» zeigt alles ausser dem Papierkorb. */
 export function inAnsicht(g: Pick<Grossprojekt, 'stand'>, a: Ansicht): boolean {
   if (a === 'alle' || a === 'annahmen') return true
+  if (a === 'pipeline') return g.stand === 'bewilligt'
   return g.stand === a
 }
 
