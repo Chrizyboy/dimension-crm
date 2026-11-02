@@ -13,10 +13,22 @@ import { RECHNUNG_FILTER, type RechnungFilter } from '../types'
 import { rechnungSpalten } from './rechnungSpalten'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
-/** Liste der Rechnungen mit Filtern (offen, überfällig, Entwürfe, bezahlt, alle), Suche und «Liste exportieren». */
-export function RechnungListe({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
+/**
+ * Liste der Rechnungen mit Filtern (offen, überfällig, gemahnt, nicht versendet, Mahnsperre, Entwürfe, bezahlt,
+ * alle), Suche und «Liste exportieren». Der Filter kommt von der Seite, damit die Übersicht ihn setzen kann.
+ */
+export function RechnungListe({
+  aktiveId,
+  onOeffnen,
+  filter,
+  onFilter: setFilter,
+}: {
+  aktiveId: string | null
+  onOeffnen: (id: string) => void
+  filter: RechnungFilter
+  onFilter: (f: RechnungFilter) => void
+}) {
   const { t, i18n } = useTranslation()
-  const [filter, setFilter] = useState<RechnungFilter>('offen')
   const [suche, setSuche] = useState('')
   const liste = useRechnungen(filter)
   const spalten = useMemo(() => rechnungSpalten(t), [t])

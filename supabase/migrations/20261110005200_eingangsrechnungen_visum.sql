@@ -262,7 +262,14 @@ select e.id, e.quelle, e.lieferant, e.nummer, e.datum, e.faellig_am, e.betrag_ra
        e.visum_pl_person_id, pl.name as visum_pl_person, e.visum_pl_von, vpl.name as visum_pl_von_name, e.visum_pl_am,
        e.visum_pl_bemerkung, e.visum_gl_noetig, e.visum_gl_von, vgl.name as visum_gl_von_name, e.visum_gl_am,
        e.visum_gl_bemerkung, ab.name as abgelehnt_von_name, e.abgelehnt_grund, e.bezahlt_am, e.erstellt_am,
-       e.status in ('neu', 'visum_pl', 'visum_gl', 'bereit') and e.faellig_am < (now() at time zone 'Europe/Zurich')::date as ueberfaellig
+       e.status in ('neu', 'visum_pl', 'visum_gl', 'bereit') and e.faellig_am < (now() at time zone 'Europe/Zurich')::date as ueberfaellig,
+       -- Wartet auf mein Visum? (gleiche Regeln wie eingang_visieren, Vier-Augen beim Zweitvisum)
+       coalesce(case e.status
+         when 'visum_pl' then e.visum_pl_person_id = (select intern.meine_person_id())
+                              or (select intern.meine_person_id()) = any (intern.visum_gl_personen())
+         when 'visum_gl' then (select intern.meine_person_id()) = any (intern.visum_gl_personen())
+                              and e.visum_pl_von is distinct from (select intern.meine_person_id())
+         else false end, false) as ich_visiere
   from public.eingangsrechnungen e
   left join public.projekte p on p.id = e.projekt_id
   left join public.kontakte k on k.id = p.kontakt_id

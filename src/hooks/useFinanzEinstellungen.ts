@@ -15,6 +15,8 @@ export interface FinanzEinstellungen {
   mahnfrist_tage: number
   buchhaltung_email: string | null
   spesen_kategorien: SpesenKategorie[]
+  /** Eingangsrechnungen: ab diesem Betrag braucht es das Zweitvisum der Geschäftsleitung. */
+  eingang?: { visum_gl_ab_rappen?: number }
 }
 
 const STANDARD: FinanzEinstellungen = {

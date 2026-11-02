@@ -13,8 +13,9 @@ import { heuteZuerich, plusTage } from '../lib/rechnung'
 import { entwurfAnlegen } from '../services/rechnungen'
 
 /**
- * Was zu verrechnen ist: Tranchen aus dem Zahlungsplan ohne Rechnung (V233 «geplant», fällige zuerst) und
- * abgeschlossene, kostenpflichtige Service-Rapporte. Ein Klick legt den Entwurf an und öffnet ihn.
+ * Was zu verrechnen ist: Tranchen aus dem Zahlungsplan ohne Rechnung (V233 «geplant», fällige zuerst) mit
+ * Meilenstein und wer ihn auslöst, und abgeschlossene, kostenpflichtige Service-Rapporte. Normal löst die
+ * Projektleitung aus (dann liegt schon ein Entwurf vor); die Buchhaltung kann hier jederzeit selbst anlegen.
  */
 export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void }) {
   const { t } = useTranslation()
@@ -67,6 +68,24 @@ export function ZuVerrechnen({ onRechnung }: { onRechnung: (id: string) => void 
                 </Zelle>
                 <Zelle>
                   {z.bezeichnung}
+                  <span className="mt-0.5 flex flex-wrap items-center gap-1">
+                    <Badge ton={z.meilenstein.erreicht ? 'ok' : 'neutral'} punkt>
+                      {t(`rechnungen.verrechnen.meilenstein.${z.meilenstein.grund}`)} ·{' '}
+                      {z.meilenstein.erreicht ? t('rechnungen.verrechnen.erreicht') : t('rechnungen.verrechnen.offen')}
+                    </Badge>
+                    {z.verrechnen_ausgeloest_am ? (
+                      <span className="text-muted-foreground text-xs">
+                        {t('rechnungen.verrechnen.ausgeloest', { wer: z.ausgeloest_von ?? '–' })}
+                      </span>
+                    ) : (
+                      z.meilenstein.erreicht &&
+                      z.projektleiter && (
+                        <span className="text-muted-foreground text-xs">
+                          {t('rechnungen.verrechnen.wartetPl', { wer: z.projektleiter })}
+                        </span>
+                      )
+                    )}
+                  </span>
                   {/* Am Handy steht die Fälligkeit unter der Tranche. */}
                   <span className="text-muted-foreground block text-xs md:hidden">
                     {z.faellig_am ? formatDatum(z.faellig_am) : t('rechnungen.verrechnen.nachBau')}

@@ -20,10 +20,13 @@ import type { RechnungVoll } from '../types'
 export function RechnungSenden({
   rechnung: r,
   mahnstufe = 0,
+  erinnerung = false,
   onSchliessen,
 }: {
   rechnung: RechnungVoll
   mahnstufe?: number
+  /** Zahlungserinnerung (vor der 1. Mahnung): Mail mit der Rechnung, Art «zahlungserinnerung». */
+  erinnerung?: boolean
   onSchliessen: () => void
 }) {
   const { t, i18n } = useTranslation()
@@ -45,9 +48,11 @@ export function RechnungSenden({
     onSchliessen()
   }, [ablage.error, onSchliessen])
 
-  const titel = mahnstufe
-    ? t('rechnungen.senden.mahnungTitel', { nummer: r.nummer })
-    : t('rechnungen.senden.titel', { nummer: r.nummer })
+  const titel =
+    mahnstufe || erinnerung
+      ? t('rechnungen.senden.mahnungTitel', { nummer: r.nummer })
+      : t('rechnungen.senden.titel', { nummer: r.nummer })
+  const art = mahnstufe ? 'mahnung' : erinnerung ? 'erinnerung' : null
   if (!pdf) {
     return (
       <Dialog open>
@@ -60,7 +65,7 @@ export function RechnungSenden({
   const werte = {
     nummer: r.nummer ?? '',
     titel: r.titel,
-    betrag: formatChf(r.total_rappen - r.bezahlt_rappen, { mitWaehrung: true }),
+    betrag: formatChf(r.offen_rappen, { mitWaehrung: true }),
     faellig: r.faellig_am ? formatDatum(r.faellig_am) : '',
     frist: r.mahnfrist ? formatDatum(r.mahnfrist) : '',
     stufe: mahnstufe,
@@ -71,15 +76,15 @@ export function RechnungSenden({
       beschreibung={t('rechnungen.senden.beschreibung')}
       vorlage={{
         an: r.empfaenger.email ?? '',
-        betreff: ts(mahnstufe ? 'rechnungen.mailtext.mahnungBetreff' : 'rechnungen.mailtext.betreff', werte),
-        text: ts(mahnstufe ? 'rechnungen.mailtext.mahnungText' : 'rechnungen.mailtext.text', werte),
+        betreff: ts(`rechnungen.mailtext.${art ?? ''}${art ? 'Betreff' : 'betreff'}`, werte),
+        text: ts(`rechnungen.mailtext.${art ?? ''}${art ? 'Text' : 'text'}`, werte),
         sprache: r.sprache,
-        art: mahnstufe ? 'mahnung' : 'rechnung',
+        art: mahnstufe ? 'mahnung' : erinnerung ? 'zahlungserinnerung' : 'rechnung',
         kontakt_id: r.kontakt_id,
         ...(r.projekt_id ? { projekt_id: r.projekt_id } : {}),
         bezug_tabelle: 'rechnungen',
         bezug_id: r.id,
-        schluessel: `rechnung:${r.id}:${String(mahnstufe)}`,
+        schluessel: erinnerung ? `erinnerung:${r.id}` : `rechnung:${r.id}:${String(mahnstufe)}`,
       }}
       dateien={[{ ...pdf, vorgewaehlt: true }]}
       onSchliessen={() => {

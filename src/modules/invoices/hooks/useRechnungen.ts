@@ -1,7 +1,10 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import * as r from '../services/rechnungen'
-import type { RechnungFilter } from '../types'
+import * as akte from '../services/akte'
+import * as e from '../services/eingang'
+import * as m from '../services/mahnlauf'
+import type { EingangFilter, RechnungFilter } from '../types'
 
 const an = Boolean(supabase)
 
@@ -18,15 +21,52 @@ export const useRechnung = (id: string) =>
   useQuery({ queryKey: ['rechnungen', 'eine', id], enabled: an, queryFn: () => r.ladeRechnung(id) })
 
 /** Was zu verrechnen ist: Tranchen ohne Rechnung und kostenpflichtige Rapporte. */
-export const useZuVerrechnen = () =>
+export const useZuVerrechnen = (aktiv = true) =>
   useQuery({
     queryKey: ['rechnungen', 'verrechnen'],
-    enabled: an,
+    enabled: an && aktiv,
     queryFn: async () => {
       const [tranchen, rapporte] = await Promise.all([r.ladeTranchen(), r.ladeOffeneRapporte()])
       return { tranchen, rapporte }
     },
   })
+
+/** Kennzahlen und «Heute zu tun» der Buchhaltung. */
+export const useUebersicht = (aktiv = true) =>
+  useQuery({ queryKey: ['rechnungen', 'uebersicht'], enabled: an && aktiv, queryFn: m.ladeUebersicht })
+
+/** Vorschlag des Mahnlaufs. */
+export const useMahnlauf = (aktiv = true) =>
+  useQuery({ queryKey: ['rechnungen', 'mahnlauf'], enabled: an && aktiv, queryFn: m.ladeMahnlauf })
+
+/** Darf ich Mahnungen freigeben? (nur Chris) */
+export const useDarfMahnen = () =>
+  useQuery({
+    queryKey: ['rechnungen', 'darf-mahnen'],
+    enabled: an,
+    queryFn: m.darfMahnungFreigeben,
+    staleTime: 300_000,
+  })
+
+/** Zahlungsstand meiner (oder aller) Projekte. */
+export const useZahlungsstand = (alle: boolean) =>
+  useQuery({ queryKey: ['rechnungen', 'projekte', alle], enabled: an, queryFn: () => m.ladeZahlungsstand(alle) })
+
+/** Verlauf einer Rechnung. */
+export const useVerlauf = (id: string) =>
+  useQuery({ queryKey: ['rechnungen', 'verlauf', id], enabled: an, queryFn: () => akte.ladeVerlauf(id) })
+
+/** Eingangsrechnungen nach Filter. */
+export const useEingang = (filter: EingangFilter, aktiv = true) =>
+  useQuery({ queryKey: ['rechnungen', 'eingang', filter], enabled: an && aktiv, queryFn: () => e.ladeEingang(filter) })
+
+/** Eine Eingangsrechnung für die Akte. */
+export const useEingangEine = (id: string) =>
+  useQuery({ queryKey: ['rechnungen', 'eingang-eine', id], enabled: an, queryFn: () => e.ladeEingangEine(id) })
+
+/** Vergleich einer Eingangsrechnung mit der Bestellung. */
+export const useVergleich = (id: string) =>
+  useQuery({ queryKey: ['rechnungen', 'eingang-vergleich', id], enabled: an, queryFn: () => e.ladeVergleich(id) })
 
 export const useFirmen = () => useQuery({ queryKey: ['rechnungen', 'firmen'], enabled: an, queryFn: r.ladeFirmen })
 

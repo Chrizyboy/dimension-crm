@@ -78,7 +78,9 @@ export async function rechnungPdf(r: RechnungVoll, t: TFunction, mahnstufe = 0):
   // Empfänger im Fenster rechts (Couvert C5/6 mit Fenster rechts)
   y = 700
   const e = r.empfaenger
-  for (const [i, z] of [e.name, e.strasse, [e.plz, e.ort].filter(Boolean).join(' ')].filter(Boolean).entries()) {
+  for (const [i, z] of [e.name, e.zusatz, e.strasse, [e.plz, e.ort].filter(Boolean).join(' ')]
+    .filter(Boolean)
+    .entries()) {
     text(z ?? '', 330, { fett: i === 0 })
     y -= 13
   }
@@ -96,6 +98,7 @@ export async function rechnungPdf(r: RechnungVoll, t: TFunction, mahnstufe = 0):
     ],
     ...(r.kundennummer ? [[t('rechnungen.pdf.kundennummer'), String(r.kundennummer)] as [string, string]] : []),
     ...(r.projekt_nummer ? [[t('rechnungen.pdf.projekt'), r.projekt_nummer] as [string, string]] : []),
+    ...(r.kunden_referenz ? [[t('rechnungen.pdf.referenz'), r.kunden_referenz] as [string, string]] : []),
     ...(f.mwst_nr ? [[t('rechnungen.pdf.mwstNr'), f.mwst_nr] as [string, string]] : []),
   ]
   for (const [l, w] of angaben) {

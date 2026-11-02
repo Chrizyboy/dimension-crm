@@ -54,6 +54,33 @@ export interface Rechnung {
   firma_id: string
   firma: string
   erstellt_am: string
+  /** Abweichende Rechnungsadresse (Verwaltung, Buchhaltung des Kunden). */
+  rechnung_an: RechnungAn | null
+  kunden_referenz: string | null
+  versandweg: 'mail' | 'post'
+  mahnsperre_bis: string | null
+  mahnsperre_grund: string | null
+  zusage_bis: string | null
+  erinnert_am: string | null
+  ausgebucht_rappen: number
+  ausgebucht_art: 'rundung' | 'skonto' | 'kulanz' | 'verlust' | null
+  ausgebucht_grund: string | null
+  /** Gestellt und an AbaNinja oder per Mail gesendet (nur bei offenen Rechnungen gesetzt). */
+  versendet: boolean | null
+  tage_ueberfaellig: number | null
+  projekt_titel: string | null
+  projektleiter_id: string | null
+  projektleiter: string | null
+}
+
+/** Abweichende Rechnungsadresse; leere Felder nimmt die Rechnung vom Kunden. */
+export interface RechnungAn {
+  name?: string
+  zusatz?: string
+  strasse?: string
+  plz?: string
+  ort?: string
+  email?: string
 }
 
 /** Rechnende Firma (Standort) mit den Angaben für Rechnung und QR-Zahlteil. */
@@ -77,6 +104,8 @@ export interface Firma {
 /** Empfänger mit Adresse (aus dem neuesten Objekt des Kunden). */
 export interface Empfaenger {
   name: string
+  /** z. B. «Buchhaltung» bei abweichender Rechnungsadresse. */
+  zusatz?: string | null
   anrede: string | null
   strasse: string | null
   plz: string | null

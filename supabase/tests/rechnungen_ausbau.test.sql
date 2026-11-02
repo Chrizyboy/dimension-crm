@@ -4,7 +4,7 @@
 -- Projektleitung, Eingangsrechnungen mit Erst- und Zweitvisum (vier Augen), Übernahme aus dem AbaNinja-Abgleich.
 -- Ausführen: npm run db:test
 begin;
-select plan(30);
+select plan(33);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000051a1', 're-bh@test.local'),
@@ -65,7 +65,7 @@ select lives_ok(format('select public.ausgang_freigeben(array[%L]::uuid[])', (se
   'Freigabe-Person gibt die Erinnerung frei');
 reset role;
 update public.ausgangskorb set status = 'gesendet', gesendet_am = now() where id = (select id from t_r where name = 'ag');
-select is((select erinnert_am from public.rechnungen where id = (select id from t_r where name = 'anz')), current_date,
+select is((select erinnert_am from public.rechnungen where id = (select id from t_r where name = 'anz')), (now() at time zone 'Europe/Zurich')::date,
   'gesendete Erinnerung: Datum gemerkt, Stufe bleibt 0');
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000051a1", "role": "authenticated"}', true);
@@ -121,11 +121,14 @@ select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-000000
 select is((select count(*)::int from public.eingangsrechnungen_liste where id = (select id from t_r where name = 'ein')), 0,
   'anderer Projektleiter sieht die Rechnung nicht');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000051a2", "role": "authenticated"}', true);
+select ok((select ich_visiere from public.eingangsrechnungen_liste where id = (select id from t_r where name = 'ein')), 'Projektleiter sieht: wartet auf mein Visum');
 select is(public.eingang_visieren((select id from t_r where name = 'ein'), true, 'Fracht prüfen'), 'visum_gl',
   'Erstvisum durch den Projektleiter, weiter zur GL');
+select ok(not (select ich_visiere from public.eingangsrechnungen_liste where id = (select id from t_r where name = 'ein')), 'nach dem Erstvisum nicht mehr meins (Vier-Augen)');
 select throws_ok(format('select public.eingang_visieren(%L, true, null)', (select id from t_r where name = 'ein')),
   'P0001', 'finanzen.vier_augen', 'Zweitvisum nicht durch dieselbe Person');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000051a4", "role": "authenticated"}', true);
+select ok((select ich_visiere from public.eingangsrechnungen_liste where id = (select id from t_r where name = 'ein')), 'GL sieht: wartet auf mein Zweitvisum');
 select is(public.eingang_visieren((select id from t_r where name = 'ein'), true, null), 'bereit', 'Zweitvisum der GL: bereit');
 
 -- Aus dem Abgleich mit AbaNinja (Kreditor-Zahlung) entsteht eine Eingangsrechnung

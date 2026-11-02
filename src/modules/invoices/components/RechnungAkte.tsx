@@ -1,4 +1,18 @@
-import { Ban, BellRing, CheckCircle2, FileText, Mail, Send, Trash2, Wallet } from 'lucide-react'
+import {
+  Ban,
+  BellRing,
+  CheckCircle2,
+  CircleSlash,
+  FileText,
+  Handshake,
+  Mail,
+  MoreHorizontal,
+  PauseCircle,
+  PencilLine,
+  Send,
+  Trash2,
+  Wallet,
+} from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -6,28 +20,43 @@ import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
+import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/ui/menue'
 import { Skelett } from '@/components/ui/diverses'
 import { useFinanzEinstellungen } from '@/hooks/useFinanzEinstellungen'
 import { formatChf, formatDatum } from '@/lib/format'
 import { useVerbindungsStatus } from '@/services/integrationen'
 import { meldeFehler } from '@/services/fehler'
 import { useAktion } from '../hooks/useAktion'
-import { useRechnung } from '../hooks/useRechnungen'
+import { useDarfMahnen, useRechnung } from '../hooks/useRechnungen'
 import { heuteZuerich, mahnbar, pdfZeigen } from '../lib/rechnung'
 import { anAbaninja, stellen, zahlungEntfernen } from '../services/rechnungen'
 import { rechnungPdf } from '@/services/rechnungPdf'
+import type { RechnungVoll } from '../types'
+import { AngabenDialog, AusbuchenDialog, SperreDialog } from './AkteDialoge'
 import { MahnenDialog } from './MahnenDialog'
 import { PositionenEditor } from './PositionenEditor'
 import { RechnungSenden } from './RechnungSenden'
 import { statusTon } from './status'
 import { StornoDialog } from './StornoDialog'
+import { Schritte, Verlauf } from './Verlauf'
 import { ZahlungDialog } from './ZahlungDialog'
 
-type Fenster = 'zahlung' | 'mahnen' | 'storno' | 'senden' | { mahnung: number } | null
+type Fenster =
+  | 'zahlung'
+  | 'mahnen'
+  | 'storno'
+  | 'senden'
+  | 'angaben'
+  | 'sperre'
+  | 'zusage'
+  | 'ausbuchen'
+  | { mahnung: number; vorschau: RechnungVoll }
+  | null
 
 /**
- * Akte einer Rechnung: Stand, Angaben, Positionen (im Entwurf bearbeitbar), Zahlungen und die Schritte je Stand:
- * Entwurf → Stellen → an AbaNinja oder als PDF per Mail → Zahlung (von Hand oder Abgleich) → Mahnen.
+ * Akte einer Rechnung: Schritte, Stand, Angaben (Rechnungsadresse, Referenz, Versand), Positionen (im Entwurf
+ * bearbeitbar), Zahlungen und Verlauf. Je Stand: Entwurf → Stellen → an AbaNinja oder per Mail → Zahlung (von
+ * Hand oder Abgleich) → Erinnerung/Mahnung (nur Freigabe-Person). Dazu Mahnsperre, Zusage und Ausbuchen.
  */
 export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: () => void }) {
   const { t, i18n } = useTranslation()
@@ -35,6 +64,7 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
   const einstellungen = useFinanzEinstellungen()
   const verbindungen = useVerbindungsStatus()
   const { laeuft, aus } = useAktion()
+  const darfMahnen = useDarfMahnen().data === true
   const [fenster, setFenster] = useState<Fenster>(null)
   const [pdfLaeuft, setPdfLaeuft] = useState(false)
   const r = daten.data
@@ -82,7 +112,56 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
           {t('rechnungen.akte.stellen')}
         </Button>
       )}
-      {gestellt && mahnbar(r, heuteZuerich()) && (
+      <Menue>
+        <MenueAusloeser asChild>
+          <Button variant="ghost" aria-label={t('rechnungen.akte.mehr')}>
+            <MoreHorizontal />
+          </Button>
+        </MenueAusloeser>
+        <MenueInhalt align="end">
+          {r.status !== 'storniert' && (
+            <MenueEintrag
+              onSelect={() => {
+                setFenster('angaben')
+              }}
+            >
+              <PencilLine />
+              {t('rechnungen.akte.angabenAendern')}
+            </MenueEintrag>
+          )}
+          {gestellt && (
+            <MenueEintrag
+              onSelect={() => {
+                setFenster('sperre')
+              }}
+            >
+              <PauseCircle />
+              {t('rechnungen.akte.mahnsperre')}
+            </MenueEintrag>
+          )}
+          {gestellt && (
+            <MenueEintrag
+              onSelect={() => {
+                setFenster('zusage')
+              }}
+            >
+              <Handshake />
+              {t('rechnungen.akte.zusage')}
+            </MenueEintrag>
+          )}
+          {gestellt && r.offen_rappen > 0 && (
+            <MenueEintrag
+              onSelect={() => {
+                setFenster('ausbuchen')
+              }}
+            >
+              <CircleSlash />
+              {t('rechnungen.akte.ausbuchen')}
+            </MenueEintrag>
+          )}
+        </MenueInhalt>
+      </Menue>
+      {gestellt && darfMahnen && mahnbar(r, heuteZuerich()) && (
         <Button
           variant="secondary"
           onClick={() => {
@@ -158,7 +237,12 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
               <Badge ton="neutral">{t(`rechnungen.art.${r.art}`)}</Badge>
               {r.mahnstufe > 0 && <Badge ton="kritisch">{t('rechnungen.mahnstufeKurz', { stufe: r.mahnstufe })}</Badge>}
               {r.abaninja_uuid && <Badge ton="info">AbaNinja: {r.abaninja_status ?? '–'}</Badge>}
+              {gestellt && r.versendet === false && !r.abaninja_uuid && (
+                <Badge ton="warnung">{t('rechnungen.akte.versendetNein')}</Badge>
+              )}
             </div>
+            <Schritte r={r} />
+            <Hinweise r={r} />
             {r.status === 'storniert' && r.storniert_grund && (
               <p className="bg-muted rounded-md p-3 text-sm">
                 {t('rechnungen.akte.storniertGrund', { grund: r.storniert_grund })}
@@ -172,7 +256,29 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
                     <span className="text-muted-foreground"> · {[r.empfaenger.plz, r.empfaenger.ort].join(' ')}</span>
                   )}
                 </Angabe>
-                <Angabe label={t('rechnungen.spalte.projekt')}>{r.projekt_nummer ?? '–'}</Angabe>
+                {r.rechnung_an?.name && (
+                  <Angabe label={t('rechnungen.akte.rechnungAn')}>
+                    {[
+                      r.empfaenger.name,
+                      r.empfaenger.zusatz,
+                      r.empfaenger.strasse,
+                      [r.empfaenger.plz, r.empfaenger.ort].filter(Boolean).join(' '),
+                    ]
+                      .filter(Boolean)
+                      .join(', ')}
+                  </Angabe>
+                )}
+                <Angabe label={t('rechnungen.spalte.projekt')}>
+                  {[r.projekt_nummer, r.projekt_titel].filter(Boolean).join(' · ') || '–'}
+                </Angabe>
+                {r.projektleiter && <Angabe label={t('rechnungen.akte.projektleiter')}>{r.projektleiter}</Angabe>}
+                {r.kunden_referenz && <Angabe label={t('rechnungen.akte.referenz')}>{r.kunden_referenz}</Angabe>}
+                <Angabe label={t('rechnungen.akte.versandweg')}>
+                  {t(`rechnungen.akte.versand.${r.versandweg}`)}
+                  {r.empfaenger.email && r.versandweg === 'mail' && (
+                    <span className="text-muted-foreground"> · {r.empfaenger.email}</span>
+                  )}
+                </Angabe>
                 <Angabe label={t('rechnungen.akte.firma')}>{r.firma_daten.name}</Angabe>
                 <Angabe label={t('rechnungen.spalte.datum')}>{r.datum ? formatDatum(r.datum) : '–'}</Angabe>
                 <Angabe label={t('rechnungen.spalte.faellig')}>
@@ -229,6 +335,7 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
                 )}
               </AkteAbschnitt>
             )}
+            <Verlauf id={r.id} darfSchreiben={r.status !== 'storniert'} />
           </div>
         )}
         {r && fenster === 'zahlung' && <ZahlungDialog rechnung={r} onSchliessen={zu} />}
@@ -240,16 +347,54 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
             rechnung={r}
             mahnfristTage={einstellungen.mahnfrist_tage}
             onSchliessen={zu}
-            onGemahnt={(stufe) => {
-              setFenster({ mahnung: stufe })
+            onGemahnt={(stufe, vorschau) => {
+              setFenster({ mahnung: stufe, vorschau })
             }}
           />
         )}
         {r && fenster === 'senden' && <RechnungSenden rechnung={r} onSchliessen={zu} />}
-        {r && typeof fenster === 'object' && fenster && r.mahnstufe === fenster.mahnung && (
-          <RechnungSenden rechnung={r} mahnstufe={fenster.mahnung} onSchliessen={zu} />
+        {r && typeof fenster === 'object' && fenster && (
+          <RechnungSenden
+            rechnung={fenster.vorschau}
+            mahnstufe={fenster.mahnung}
+            erinnerung={fenster.mahnung === 0}
+            onSchliessen={zu}
+          />
         )}
+        {r && fenster === 'angaben' && <AngabenDialog rechnung={r} onSchliessen={zu} />}
+        {r && (fenster === 'sperre' || fenster === 'zusage') && (
+          <SperreDialog rechnung={r} art={fenster} onSchliessen={zu} />
+        )}
+        {r && fenster === 'ausbuchen' && <AusbuchenDialog rechnung={r} onSchliessen={zu} />}
       </DialogInhalt>
     </Dialog>
+  )
+}
+
+/** Mahnsperre, Zusage, Erinnerung und Ausgebuchtes als kurze Hinweise über den Angaben. */
+function Hinweise({ r }: { r: RechnungVoll }) {
+  const { t } = useTranslation()
+  const heute = heuteZuerich()
+  const zeilen = [
+    r.mahnsperre_bis && r.mahnsperre_bis >= heute
+      ? t('rechnungen.akte.mahnsperreBis', { datum: formatDatum(r.mahnsperre_bis), grund: r.mahnsperre_grund ?? '' })
+      : null,
+    r.zusage_bis && r.zusage_bis >= heute ? t('rechnungen.akte.zusageBis', { datum: formatDatum(r.zusage_bis) }) : null,
+    r.erinnert_am && r.mahnstufe === 0 ? t('rechnungen.akte.erinnert', { datum: formatDatum(r.erinnert_am) }) : null,
+    r.ausgebucht_rappen > 0
+      ? t('rechnungen.akte.ausgebucht', {
+          betrag: formatChf(r.ausgebucht_rappen, { mitWaehrung: true }),
+          art: t(`rechnungen.ausbuchen.arten.${r.ausgebucht_art ?? 'rundung'}`),
+          grund: r.ausgebucht_grund ?? '',
+        })
+      : null,
+  ].filter((z): z is string => Boolean(z))
+  if (zeilen.length === 0) return null
+  return (
+    <ul className="bg-muted mb-1 flex flex-col gap-0.5 rounded-md p-3 text-sm">
+      {zeilen.map((z) => (
+        <li key={z}>{z}</li>
+      ))}
+    </ul>
   )
 }
