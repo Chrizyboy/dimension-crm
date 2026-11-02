@@ -5,35 +5,50 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
+import { formatChf, parseChf } from '@/lib/format'
 import { feldFehler } from '@/lib/formular'
+import { useRegeln } from '../hooks/useSubmission'
 import { BRAUCHT } from '../lib/entscheide'
 import { entscheidSchema, type EntscheidFormular } from '../schema'
+import type { Dossier } from '../types'
+
+const heute = () => new Date().toISOString().slice(0, 10)
 
 /**
- * Fragt die Angaben zu einem Entscheid ab: Grund bei «nicht teilnehmen», Datum bei «später», Form der
- * Eingabe, Auslöser beim Beobachten. Gibt die Angaben an onOk weiter.
+ * Fragt die Angaben zu einem Entscheid ab: No-Go-Grund bei «nicht teilnehmen», Datum bei «später», Form und
+ * Betrag der Eingabe, Gewinner und Betrag bei Absage, Grund ohne Öffnungsprotokoll, Auslöser beim Beobachten.
+ * Gibt die Angaben so an onOk weiter, wie die Datenbank sie erwartet (Beträge in Rappen).
  */
 export function EntscheidDialog({
   entscheid,
   titel,
   laeuft,
+  dossier,
   onOk,
   onAbbrechen,
 }: {
   entscheid: string
   titel: string
   laeuft: boolean
+  dossier?: Dossier
   onOk: (angaben: Record<string, string>) => void
   onAbbrechen: () => void
 }) {
   const { t } = useTranslation()
+  const nogoGruende = useRegeln().data?.nogo_gruende ?? []
   const felder = BRAUCHT[entscheid] ?? []
+  const protokoll = (dossier?.anbieter_anzahl ?? 0) > 0
   const [w, setW] = useState<EntscheidFormular>({
     entscheid,
     grund: '',
-    datum: entscheid === 'eingereicht' ? new Date().toISOString().slice(0, 10) : '',
+    datum: ['eingereicht', 'zuschlag', 'absage'].includes(entscheid) ? heute() : '',
     form: '',
     ausloeser: entscheid === 'beobachten' ? 'datum' : '',
+    nogo: '',
+    betrag: entscheid === 'eingereicht' && dossier?.angebot_rappen ? formatChf(dossier.angebot_rappen) : '',
+    gewinner: '',
+    ohne_protokoll: '',
+    protokoll,
   })
   const [fehler, setFehler] = useState<Partial<Record<keyof EntscheidFormular, string>>>({})
   const setze = (f: keyof EntscheidFormular, v: string) => {
@@ -47,9 +62,28 @@ export function EntscheidDialog({
       return
     }
     const angaben: Record<string, string> = {}
-    for (const f of felder) if (g.data[f]) angaben[f] = g.data[f]
+    for (const f of felder) {
+      if (f === 'betrag') {
+        const r = g.data.betrag ? parseChf(g.data.betrag) : null
+        if (r != null) angaben.betrag_rappen = String(r)
+      } else if (f === 'ohne_protokoll') {
+        if (!protokoll && g.data.ohne_protokoll) angaben.ohne_protokoll = g.data.ohne_protokoll
+      } else if (g.data[f]) angaben[f] = g.data[f]
+    }
     onOk(angaben)
   }
+
+  const text = (f: 'grund' | 'gewinner' | 'ohne_protokoll', label: string, pflicht = false, hinweis?: string) => (
+    <Feld id={`as-${f}`} label={label} fehler={fehler[f]} pflicht={pflicht} {...(hinweis ? { hinweis } : {})}>
+      <Input
+        id={`as-${f}`}
+        value={w[f]}
+        onChange={(e) => {
+          setze(f, e.target.value)
+        }}
+      />
+    </Feld>
+  )
 
   return (
     <Dialog
@@ -76,6 +110,22 @@ export function EntscheidDialog({
         }
       >
         <div className="flex flex-col gap-3">
+          {entscheid === 'zuschlag' && (
+            <p className="text-muted-foreground text-sm">{t('ausschreibungen.entscheidHilfe.zuschlag')}</p>
+          )}
+          {felder.includes('nogo') && (
+            <Feld id="as-nogo" label={t('ausschreibungen.feld.nogo')} fehler={fehler.nogo} pflicht>
+              <Auswahl
+                id="as-nogo"
+                value={w.nogo}
+                platzhalter="–"
+                onValueChange={(v) => {
+                  setze('nogo', v)
+                }}
+                optionen={nogoGruende.map((g) => ({ wert: g, text: t(`ausschreibungen.nogo.${g}`) }))}
+              />
+            </Feld>
+          )}
           {felder.includes('ausloeser') && (
             <Feld id="as-ausloeser" label={t('ausschreibungen.feld.ausloeser')}>
               <Auswahl
@@ -119,23 +169,46 @@ export function EntscheidDialog({
               />
             </Feld>
           )}
-          {felder.includes('grund') && (
+          {felder.includes('betrag') && (
             <Feld
-              id="as-grund"
-              label={t('ausschreibungen.feld.grund')}
-              fehler={fehler.grund}
-              pflicht={entscheid !== 'spaeter'}
+              id="as-betrag"
+              label={t(`ausschreibungen.feld.betrag_${entscheid}`)}
+              hinweis={t('ausschreibungen.akte.exklMwst')}
+              fehler={fehler.betrag}
+              pflicht={entscheid === 'eingereicht'}
             >
               <Input
-                id="as-grund"
-                value={w.grund}
-                autoFocus
+                id="as-betrag"
+                inputMode="decimal"
+                value={w.betrag}
+                placeholder="CHF"
                 onChange={(e) => {
-                  setze('grund', e.target.value)
+                  setze('betrag', e.target.value)
                 }}
               />
             </Feld>
           )}
+          {felder.includes('gewinner') &&
+            text(
+              'gewinner',
+              t('ausschreibungen.feld.gewinner'),
+              false,
+              protokoll ? t('ausschreibungen.feld.gewinnerHinweis') : undefined,
+            )}
+          {felder.includes('ohne_protokoll') &&
+            !protokoll &&
+            text(
+              'ohne_protokoll',
+              t('ausschreibungen.feld.ohneProtokoll'),
+              true,
+              t('ausschreibungen.feld.ohneProtokollHinweis'),
+            )}
+          {felder.includes('grund') &&
+            text(
+              'grund',
+              t(entscheid === 'nicht_teilnehmen' ? 'ausschreibungen.feld.grundZusatz' : 'ausschreibungen.feld.grund'),
+              ['verwerfen', 'ablehnen'].includes(entscheid),
+            )}
         </div>
       </DialogInhalt>
     </Dialog>

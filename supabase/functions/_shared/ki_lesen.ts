@@ -194,3 +194,35 @@ export const LUFTBILD_SCHEMA = objekt({
   bemerkung: oderNull(text),
   sicherheit: wahl(['hoch', 'mittel', 'tief']),
 })
+
+/** Eingefügter Text einer Publikation (Amtsblatt, Feuille officielle, Gemeinde-Website): Felder für «Von Hand erfassen». */
+export function publikationTeile(text: string, heute: string): Teil[] {
+  return [
+    { art: 'text', text: daten('publikation', text.slice(0, 15_000)) },
+    {
+      art: 'text',
+      text: `Heute ist ${heute}. AUFGABE: Lies aus der Publikation die Angaben für ein Dossier im Ausschreibungs-Monitor.
+«art»: baugesuch (Baugesuch/demande de permis), ausschreibung (öffentliche Ausschreibung/appel d'offres), zuschlag (Zuschlag/adjudication), planermandat (Auftrag an Planer/Architekt), vorankuendigung (Vorankündigung/avis préalable).
+«titel»: kurz, was gebaut oder beschafft wird (max. 120 Zeichen), in der Sprache der Publikation.
+«beschreibung»: die für Photovoltaik, Wärmepumpe und Elektro wichtigen Angaben in 1–4 Sätzen.
+«frist»: Einsprache- bzw. Eingabefrist als JJJJ-MM-TT; «plz» vierstellig; «kanton» als Kürzel (z. B. AG, FR).
+«bauherr_art»: privat, firma, gemeinde oder landwirtschaft. Unbekanntes ist null.`,
+    },
+  ]
+}
+
+/** Schema der Publikation. */
+export const publikationSchema: Record<string, unknown> = objekt({
+  art: oderNull(wahl(['baugesuch', 'ausschreibung', 'zuschlag', 'planermandat', 'vorankuendigung'])),
+  titel: oderNull(text),
+  beschreibung: oderNull(text),
+  gemeinde: oderNull(text),
+  plz: oderNull(text),
+  kanton: oderNull(text),
+  parzelle: oderNull(text),
+  bauherr: oderNull(text),
+  bauherr_art: oderNull(wahl(['privat', 'firma', 'gemeinde', 'landwirtschaft'])),
+  vergabestelle: oderNull(text),
+  frist: oderNull(text),
+  sprache: oderNull(wahl(['de', 'fr'])),
+})

@@ -17,7 +17,7 @@
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
-//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle, Nachweise
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
@@ -196,9 +196,9 @@ Deno.serve(async (req) => {
   if (faelligesFenster([monitor.pruefen_zeit ?? '07:00'], uhr)) {
     ergebnis.ausschreibungen = await job('ausschreibungen_pruefen', 600, async () => {
       const r = await dienst.rpc<Record<string, number>>('ausschreibungen_pruefen', {})
-      return Object.entries(r)
-        .map(([k, v]) => `${k} ${v}`)
-        .join(', ')
+      // Nachweise (Betreibung, SUVA, AHV …) 30 Tage vor Ablauf als Aufgabe, einmal pro Nachweis.
+      const nachweise = await dienst.rpc<number>('nachweise_melden', {})
+      return [...Object.entries(r), ['nachweise', nachweise] as const].map(([k, v]) => `${k} ${v}`).join(', ')
     })
   }
 

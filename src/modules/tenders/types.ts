@@ -68,6 +68,149 @@ export interface Dossier {
   offerte_id: string | null
   verkaufschance_id: string | null
   erstellt_am: string
+  // Submission (Entscheid 0041)
+  verantwortlich_id: string | null
+  verantwortlich: string | null
+  verfahren: 'offen' | 'selektiv' | 'einladung' | 'freihaendig' | null
+  auftragsart: 'bau' | 'liefer' | 'dienst' | null
+  leistung_kwp: number | null
+  schaetzung_rappen: number | null
+  ausfuehrung_von: string | null
+  ausfuehrung_bis: string | null
+  kriterien: Kriterium[]
+  varianten: boolean | null
+  arge: boolean | null
+  eignung_ref_kwp: number | null
+  frist_oeffnung: string | null
+  zuschlag_erwartet: string | null
+  bindefrist_monate: number | null
+  eingabe_adresse: string | null
+  gng_vorschlag: GngVorschlag | null
+  gng_entscheid: 'go' | 'nogo' | null
+  gng_grund: string | null
+  gng_am: string | null
+  checkliste: Record<string, { am: string; von: string | null }>
+  pruefung_von: string | null
+  pruefung_am: string | null
+  angebot_rappen: number | null
+  rang: number | null
+  anbieter_anzahl: number | null
+  zuschlag_rappen: number | null
+  gewinner: string | null
+  entscheid_datum: string | null
+  beschwerde_bis: string | null
+  debriefing_am: string | null
+  ohne_protokoll: string | null
+  projekt_id: string | null
+}
+
+/** Zuschlagskriterium mit Gewicht in Prozent. */
+export interface Kriterium {
+  name: string
+  gewicht: number
+}
+
+/** Ein Teil des Go/No-Go-Vorschlags. */
+export interface GngTeil {
+  teil: 'thema' | 'groesse' | 'distanz' | 'eignung' | 'quote' | 'nachweise'
+  punkte: number
+  max: number
+  wert?: string | number | null
+  gewonnen?: number
+  entschieden?: number
+  fehlen?: string[]
+  kwp?: number
+}
+
+/** Go/No-Go-Vorschlag der Datenbank (0–100). */
+export interface GngVorschlag {
+  punkte: number
+  empfehlung: 'go' | 'pruefen' | 'nogo'
+  teile: GngTeil[]
+}
+
+/** Eine Zeile des Öffnungsprotokolls. */
+export interface Angebot {
+  id?: string
+  anbieter: string
+  ort: string | null
+  betrag_rappen: number
+  rang?: number | null
+  wir: boolean
+  bemerkung: string | null
+}
+
+/** Eignungsnachweis der Firma. */
+export interface Nachweis {
+  id: string
+  firma_id: string
+  art: string
+  ausgestellt_am: string
+  gueltig_bis: string
+  datei_pfad: string | null
+  notiz: string | null
+}
+
+/** Art eines Nachweises aus der Einstellung. */
+export interface NachweisArt {
+  art: string
+  de: string
+  fr: string
+  monate: number
+}
+
+/** Referenz für Eingaben. */
+export interface Referenz {
+  id: string
+  projekt_id: string | null
+  titel: string
+  ort: string | null
+  leistung_kwp: number | null
+  jahr: number | null
+  gebaeude: string | null
+  auftraggeber: string | null
+  ansprechperson: string | null
+  telefon: string | null
+  sprache: 'de' | 'fr'
+  freigegeben: boolean
+  notiz: string | null
+}
+
+/** Mitbewerber aus den Öffnungsprotokollen. */
+export interface Mitbewerber {
+  anbieter: string
+  orte: string | null
+  submissionen: number
+  erster: number
+  abstand_prozent: number | null
+  rappen_pro_kwp: number | null
+  kantone: string | null
+  zuletzt: string | null
+}
+
+/** Auswertung der Submissionen in einem Zeitraum. */
+export interface Auswertung {
+  gemeldet: number
+  submissionen: number
+  go: number
+  nogo: number
+  eingereicht: number
+  gewonnen: number
+  gewonnen_rappen: number
+  offen_rappen: number
+  abstand_prozent: number | null
+  kantone: { kanton: string; eingereicht: number; gewonnen: number }[]
+  nogo_gruende: { grund: string; anzahl: number }[]
+  anschreiben: number
+  leads: number
+}
+
+/** Punkt der Eingabe-Checkliste aus der Einstellung. */
+export interface ChecklistePunkt {
+  schluessel: string
+  de: string
+  fr: string
+  auto?: 'nachweise' | 'pruefung'
 }
 
 /** Rolle eines Kontakts im Dossier. */
@@ -154,6 +297,11 @@ export interface Tagesbericht {
   quellen_still: number
   darf_bewilligen: boolean
   darf_senden: boolean
+  gng: number
+  pruefung: number
+  eingereicht_rappen: number
+  nachweise_ablauf: number
+  darf_pruefen: boolean
 }
 
 /** Eine Zeile des Trichters. */
@@ -167,8 +315,11 @@ export interface TrichterZeile {
   erfolg: number
 }
 
-/** Reiter der Seite: Andy prüft und bewilligt, Chris sendet, alle sehen Liste, Quellen und Trichter. */
-export const REITER = ['pruefen', 'bewilligen', 'senden', 'alle', 'quellen', 'trichter'] as const
+/**
+ * Reiter der Seite: Leitstand (Board je Spur), Bewilligen (Andy), Senden (Chris), Fristen, Nachweise und
+ * Referenzen, Auswertung mit Mitbewerbern, Quellen und Regeln.
+ */
+export const REITER = ['leitstand', 'bewilligen', 'senden', 'fristen', 'nachweise', 'auswertung', 'quellen'] as const
 export type Reiter = (typeof REITER)[number]
 
 /** Filter der Liste «Alle». */
@@ -189,4 +340,9 @@ export interface MonitorRegeln {
   kantone: string[]
   simap_zeiten: string[]
   amtsblatt_rubriken: string[]
+  nachweise: NachweisArt[]
+  checkliste: ChecklistePunkt[]
+  nogo_gruende: string[]
+  pruefen_ab_rappen: number
+  post_arbeitstage: number
 }

@@ -181,3 +181,17 @@ export async function luftbild(e: Eingabe, ich: Ich) {
   await speichereErgebnis('luftbild', 'verkaufschancen', lead, ich.id, spracheFeld(e), r.json, r.modell)
   return { analyse: r.json }
 }
+
+/** Eingefügte Publikation (Amtsblatt, Gemeinde) für «Von Hand erfassen» auslesen; übernommen wird erst nach Prüfung. */
+export async function publikation(e: Eingabe, ich: Ich) {
+  const text = frei(e, 'text', 15_000)
+  if (!text.trim()) throw new DienstFehler('eingabe', 400, 'text')
+  const cfg = await kiEinstellung()
+  const r = await kiAufruf({ funktion: 'publikation', personId: ich.id }, cfg, {
+    system: L.SYSTEM_LESEN,
+    teile: L.publikationTeile(text, heute()),
+    schema: L.publikationSchema,
+    maxTokens: 1500,
+  })
+  return r.json
+}
