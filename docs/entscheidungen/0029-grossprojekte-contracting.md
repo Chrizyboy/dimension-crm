@@ -97,3 +97,30 @@ Schwelle: «einfach alles, was interessant ist». Ansprechperson bei uns für Gr
 **Folgen:** Neue Migrationen `20261110000200` und `20261110001000`, Zeitplan neu hochladen, kein neues Secret (die KI
 nutzt `ANTHROPIC_API_KEY`). Wer Leads und Offerten übernimmt (Filipe Französisch, Loris Deutsch, Offerten Andy), gehört
 zur Lead-Zuteilung und ist hier nicht geregelt.
+
+## Nachtrag 2.11.2026: Pipeline bis zum Vertrag
+
+**Kontext:** Chris: Das CRM fühle sich «nur nach Fassade an», jedes Modul müsse seinen Zweck ganz erfüllen. Bisher endete
+das Modul beim Bewilligen und gab einen normalen Lead weiter. Contracting mit Youdera dauert aber Monate und braucht
+eigene Schritte (Eigentümer, Besichtigung, Lastgang, Statik, Angebot von Youdera, Vertrag). Neuentwurf als Vorschau:
+https://claude.ai/artifact/Fpvh11MQ2U9Vmjz4tTqJVD.
+
+**Entscheid:**
+
+- **Ein bewilligtes Grossprojekt bleibt im Modul bis zum Vertrag.** Stufen `qualifizieren`, `erstkontakt`,
+  `besichtigung`, `daten`, `angebot`, `vertrag`, dazu `verloren` (mit Grund). Beim Bewilligen beginnt die Stufe von
+  selbst (Trigger `stufe`); ändern nur über `grossprojekt_stufe_setzen` (Vertrag mit Datum und kWp). Der Lead bleibt
+  verknüpft, `grossprojekt_entscheiden` ist unverändert.
+- **Akte pflegen** über `grossprojekt_akte_setzen`: nächster Schritt mit Datum (eines pro Projekt, überfällig = rot),
+  wer entscheidet (`kontakte`), Unterlagen für Youdera (`unterlagen`), eigene Werte für den Rechner (`rechnung`), Stand
+  bei Youdera (`youdera`). Verlauf von Hand mit `grossprojekt_vermerken` (Notiz, Anruf, Mail, Termin).
+- **Daten statt Code:** Wahrscheinlichkeit je Stufe, Liste der Unterlagen und Ziel (Standard 2027: 2'000 kWp) in
+  `einstellungen.grossprojekte.pipeline`.
+- **Oberfläche:** Reiter «Pipeline» (Standard, Kennzahlen + Board), «Zu entscheiden» (Karten mit Eigentümer und
+  Ansprechperson, Tasten J/B/N; Ja übernimmt den gezeigten Eigentümer und bewilligt), Beobachten, Alle, Annahmen.
+  Bewilligte öffnen als ganze Seite (Gebäude, wer entscheidet, nächster Schritt, Verlauf, Rechner, Unterlagen, Youdera).
+- **Rechner in der App** (`lib/rechner.ts`): Ersparnis des Kunden aus Verbrauch, Eigenverbrauch, Strompreis und
+  Contracting-Preis; Vorschläge aus Schätzung und Annahmen, eigene Werte gehen vor.
+
+**Offen (Fragen an Chris):** Verdienst (Bauauftrag, Provision), Ziel 2027, Unterlagen von Youdera, Potenzialanalyse als
+PDF und Dossier an Youdera über den Ausgangskorb (zweiter Schritt).

@@ -1978,7 +1978,11 @@
     "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration.",
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
-    "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis)."
+    "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "grossprojekt_nicht_bewilligt": "Erst nach dem Ja (Bewilligen) gibt es Stufen.",
+    "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
+    "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
+    "grossprojekt_text_fehlt": "Bitte einen Text eingeben."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -6076,11 +6080,12 @@
       "beides": "PV und Wärme"
     },
     "reiter": {
-      "pruefen": "Prüfen",
+      "pruefen": "Zu entscheiden",
       "beobachten": "Beobachten",
       "bewilligt": "Bewilligt",
       "alle": "Alle",
-      "annahmen": "Annahmen"
+      "annahmen": "Annahmen",
+      "pipeline": "Pipeline"
     },
     "leer": {
       "pruefen": "Nichts zu prüfen",
@@ -6362,6 +6367,136 @@
       "label": "Verantwortlich bei uns",
       "standard": "Verantwortlich für neue Grossprojekte",
       "niemand": "Niemand"
+    },
+    "stufe": {
+      "qualifizieren": "Qualifizieren",
+      "erstkontakt": "Erstkontakt",
+      "besichtigung": "Besichtigung",
+      "daten": "Daten & Machbarkeit",
+      "angebot": "Angebot & Verhandlung",
+      "vertrag": "Vertrag",
+      "verloren": "Verloren"
+    },
+    "stufeText": {
+      "qualifizieren": "Eigentümer klären",
+      "erstkontakt": "Gespräch vereinbaren",
+      "besichtigung": "vor Ort",
+      "daten": "Lastgang, Statik, Netz",
+      "angebot": "Angebot Youdera",
+      "vertrag": "unterschrieben"
+    },
+    "pipeline": {
+      "ohneSchritt": "Kein nächster Schritt",
+      "zahl": {
+        "offen": "in der Pipeline ({{n}} Projekte)",
+        "gewichtet": "gewichtet nach Stufe",
+        "ziel": "unterschrieben, Ziel {{jahr}}",
+        "investition": "Investition gewichtet",
+        "ueberfaellig": "nächste Schritte überfällig",
+        "ohneSchritt": "ohne nächsten Schritt"
+      },
+      "leerTitel": "Noch nichts in der Pipeline",
+      "leerText": "Sagst du bei «Zu entscheiden» Ja zu einem Grossprojekt, kommt es hierher und wird bis zum Vertrag begleitet.",
+      "zurAuswahl": "Zu entscheiden",
+      "verlorene": "Verlorene ({{n}})"
+    },
+    "auswahl": {
+      "eigentuemer": "Eigentümer",
+      "unbekannt": "noch unbekannt",
+      "ja": "Ja, angehen",
+      "nein": "Nein …",
+      "tasteJa": "Ja, angehen (in die Pipeline)",
+      "tasteB": "Beobachten",
+      "tasteN": "Nein mit Grund",
+      "tasten": "Tasten:",
+      "leer": "Die nächsten Treffer kommen am Montag aus der Dachsuche, Treffer aus Ausschreibungen sofort.",
+      "woche": "Diese Woche",
+      "anzahl": {
+        "bewilligt": "Ja",
+        "beobachten": "Beobachten",
+        "verworfen": "Nein",
+        "offen": "Noch offen"
+      },
+      "vorrat": "Vorrat: {{n}} Treffer warten. Diese Woche {{woche}} von {{max}} freigegeben."
+    },
+    "projekt": {
+      "verlorenTitel": "Grossprojekt verloren",
+      "verlorenText": "Warum hat es nicht geklappt? Der Grund hilft beim nächsten Mal.",
+      "vertragTitel": "Vertrag unterschrieben",
+      "vertragText": "Datum und Leistung zählen für das Ziel. Danach geht es in Projekte & Montage weiter.",
+      "verloren": "Verloren",
+      "vertrag": "Vertrag eintragen",
+      "vertragAm": "Unterschrieben am",
+      "vertragKwp": "Leistung (kWp)",
+      "unterschrieben": "Unterschrieben {{datum}}",
+      "wieder": "Wieder aufnehmen",
+      "weiter": "Weiter: {{stufe}}",
+      "stufen": "Stufen bis zum Vertrag",
+      "seit": "seit {{datum}}",
+      "schritt": "Nächster Schritt",
+      "ueberfaellig": "überfällig",
+      "schrittText": "Was ist als Nächstes zu tun?",
+      "schrittPlatzhalter": "z. B. Lastgang bei AEW anfordern",
+      "schrittAm": "Bis wann?",
+      "unterlagen": "Unterlagen für Youdera",
+      "youdera": {
+        "angebot": "Angebot da",
+        "gesendet": "Dossier gesendet",
+        "offen": "noch nicht gesendet",
+        "dossierAm": "Dossier gesendet am",
+        "angebotAm": "Angebot erhalten am",
+        "preis": "Preis (Rp./kWh)",
+        "laufzeit": "Laufzeit (Jahre)",
+        "notiz": "Notiz zu Youdera"
+      },
+      "kontakte": "Wer entscheidet",
+      "person": "Person",
+      "keineKontakte": "Noch niemand erfasst. Ohne Entscheider kommt kein Vertrag zustande.",
+      "entfernen": "{{name}} entfernen",
+      "ausRecherche": "{{name}} aus der Recherche übernehmen",
+      "feld": {
+        "name": "Name",
+        "funktion": "Funktion",
+        "telefon": "Telefon",
+        "email": "E-Mail",
+        "rolle": "Rolle"
+      },
+      "parzelleEgid": "Parzelle · EGID"
+    },
+    "rolle": {
+      "entscheider": "Entscheider",
+      "technik": "Technik",
+      "einfluss": "Einfluss",
+      "andere": "Andere"
+    },
+    "rechner": {
+      "titel": "Wirtschaftlichkeit",
+      "kwp": "Leistung (kWp)",
+      "kwh_pro_kwp": "Ertrag (kWh/kWp)",
+      "verbrauch_kwh": "Verbrauch Kunde (kWh/Jahr)",
+      "eigenverbrauch_prozent": "Eigenverbrauch (%)",
+      "strompreis_rp": "Strompreis heute (Rp./kWh)",
+      "preis_rp": "Contracting-Preis (Rp./kWh)",
+      "chf_pro_kwp": "Investition (CHF/kWp)",
+      "heute": "Heute",
+      "mit": "Mit Contracting",
+      "erklaerung": "Stromkosten pro Jahr. {{kwh}} kWh vom eigenen Dach (von {{ertrag}} kWh Ertrag).",
+      "ersparnis": "Kunde spart pro Jahr",
+      "ueberLaufzeit": "über {{jahre}} Jahre",
+      "investition": "Investition (Bauauftrag)",
+      "waerme": "Dazu Wärme: ca. {{kw}} kW, Jahresrate ca. {{rate}}.",
+      "ertrag": "Ertrag sonnendach.ch"
+    },
+    "verlauf": {
+      "notiz": "Notiz",
+      "anruf": "Anruf",
+      "mail": "Mail",
+      "termin": "Termin",
+      "art": "Art des Eintrags",
+      "text": "Was ist passiert?",
+      "platzhalter": "Was ist passiert? Ctrl+Enter hält es fest.",
+      "festhalten": "Festhalten",
+      "stufe": "Stufe: {{stufe}}"
     }
   },
   "team": {

@@ -1978,7 +1978,11 @@
     "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne.",
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
-    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix)."
+    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "grossprojekt_nicht_bewilligt": "Les étapes n'existent qu'après l'approbation.",
+    "grossprojekt_stufe_unbekannt": "Cette étape n'existe pas.",
+    "grossprojekt_ungueltig": "Les données ne sont pas valables.",
+    "grossprojekt_text_fehlt": "Merci de saisir un texte."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -6076,11 +6080,12 @@
       "beides": "PV et chaleur"
     },
     "reiter": {
-      "pruefen": "À examiner",
+      "pruefen": "À décider",
       "beobachten": "En observation",
       "bewilligt": "Approuvés",
       "alle": "Tous",
-      "annahmen": "Hypothèses"
+      "annahmen": "Hypothèses",
+      "pipeline": "Pipeline"
     },
     "leer": {
       "pruefen": "Rien à examiner",
@@ -6362,6 +6367,136 @@
       "label": "Responsable chez nous",
       "standard": "Responsable des nouveaux grands projets",
       "niemand": "Personne"
+    },
+    "stufe": {
+      "qualifizieren": "Qualifier",
+      "erstkontakt": "Premier contact",
+      "besichtigung": "Visite",
+      "daten": "Données & faisabilité",
+      "angebot": "Offre & négociation",
+      "vertrag": "Contrat",
+      "verloren": "Perdu"
+    },
+    "stufeText": {
+      "qualifizieren": "clarifier le propriétaire",
+      "erstkontakt": "fixer un entretien",
+      "besichtigung": "sur place",
+      "daten": "courbe de charge, statique, réseau",
+      "angebot": "offre Youdera",
+      "vertrag": "signé"
+    },
+    "pipeline": {
+      "ohneSchritt": "Pas de prochaine étape",
+      "zahl": {
+        "offen": "dans le pipeline ({{n}} projets)",
+        "gewichtet": "pondéré selon l'étape",
+        "ziel": "signé, objectif {{jahr}}",
+        "investition": "Investissement pondéré",
+        "ueberfaellig": "prochaines étapes en retard",
+        "ohneSchritt": "sans prochaine étape"
+      },
+      "leerTitel": "Rien dans le pipeline",
+      "leerText": "Si tu dis oui à un grand projet sous «À décider», il arrive ici et est suivi jusqu'au contrat.",
+      "zurAuswahl": "À décider",
+      "verlorene": "Perdus ({{n}})"
+    },
+    "auswahl": {
+      "eigentuemer": "Propriétaire",
+      "unbekannt": "encore inconnu",
+      "ja": "Oui, y aller",
+      "nein": "Non …",
+      "tasteJa": "Oui, y aller (dans le pipeline)",
+      "tasteB": "Observer",
+      "tasteN": "Non avec motif",
+      "tasten": "Touches :",
+      "leer": "Les prochains résultats de la recherche de toits arrivent lundi, ceux des appels d'offres tout de suite.",
+      "woche": "Cette semaine",
+      "anzahl": {
+        "bewilligt": "Oui",
+        "beobachten": "Observer",
+        "verworfen": "Non",
+        "offen": "Encore ouverts"
+      },
+      "vorrat": "Réserve : {{n}} résultats en attente. Cette semaine {{woche}} sur {{max}} libérés."
+    },
+    "projekt": {
+      "verlorenTitel": "Grand projet perdu",
+      "verlorenText": "Pourquoi cela n'a-t-il pas marché ? Le motif aide la prochaine fois.",
+      "vertragTitel": "Contrat signé",
+      "vertragText": "La date et la puissance comptent pour l'objectif. Ensuite, la suite se passe dans Projets & montage.",
+      "verloren": "Perdu",
+      "vertrag": "Saisir le contrat",
+      "vertragAm": "Signé le",
+      "vertragKwp": "Puissance (kWc)",
+      "unterschrieben": "Signé le {{datum}}",
+      "wieder": "Reprendre",
+      "weiter": "Suite : {{stufe}}",
+      "stufen": "Étapes jusqu'au contrat",
+      "seit": "depuis le {{datum}}",
+      "schritt": "Prochaine étape",
+      "ueberfaellig": "en retard",
+      "schrittText": "Que faut-il faire ensuite ?",
+      "schrittPlatzhalter": "p. ex. demander la courbe de charge au gestionnaire de réseau",
+      "schrittAm": "Jusqu'à quand ?",
+      "unterlagen": "Documents pour Youdera",
+      "youdera": {
+        "angebot": "Offre reçue",
+        "gesendet": "Dossier envoyé",
+        "offen": "pas encore envoyé",
+        "dossierAm": "Dossier envoyé le",
+        "angebotAm": "Offre reçue le",
+        "preis": "Prix (ct./kWh)",
+        "laufzeit": "Durée (ans)",
+        "notiz": "Note sur Youdera"
+      },
+      "kontakte": "Qui décide",
+      "person": "Personne",
+      "keineKontakte": "Personne n'est encore saisi. Sans décideur, pas de contrat.",
+      "entfernen": "Retirer {{name}}",
+      "ausRecherche": "Reprendre {{name}} de la recherche",
+      "feld": {
+        "name": "Nom",
+        "funktion": "Fonction",
+        "telefon": "Téléphone",
+        "email": "E-mail",
+        "rolle": "Rôle"
+      },
+      "parzelleEgid": "Parcelle · EGID"
+    },
+    "rolle": {
+      "entscheider": "Décideur",
+      "technik": "Technique",
+      "einfluss": "Influence",
+      "andere": "Autre"
+    },
+    "rechner": {
+      "titel": "Rentabilité",
+      "kwp": "Puissance (kWc)",
+      "kwh_pro_kwp": "Rendement (kWh/kWc)",
+      "verbrauch_kwh": "Consommation client (kWh/an)",
+      "eigenverbrauch_prozent": "Autoconsommation (%)",
+      "strompreis_rp": "Prix de l'électricité actuel (ct./kWh)",
+      "preis_rp": "Prix contracting (ct./kWh)",
+      "chf_pro_kwp": "Investissement (CHF/kWc)",
+      "heute": "Aujourd'hui",
+      "mit": "Avec contracting",
+      "erklaerung": "Coûts d'électricité par an. {{kwh}} kWh de son propre toit (sur {{ertrag}} kWh produits).",
+      "ersparnis": "Économie client par an",
+      "ueberLaufzeit": "sur {{jahre}} ans",
+      "investition": "Investissement (mandat de construction)",
+      "waerme": "En plus chaleur : env. {{kw}} kW, annuité env. {{rate}}.",
+      "ertrag": "Rendement toitsolaire.ch"
+    },
+    "verlauf": {
+      "notiz": "Note",
+      "anruf": "Appel",
+      "mail": "E-mail",
+      "termin": "Rendez-vous",
+      "art": "Type d'entrée",
+      "text": "Que s'est-il passé ?",
+      "platzhalter": "Que s'est-il passé ? Ctrl+Entrée enregistre.",
+      "festhalten": "Enregistrer",
+      "stufe": "Étape : {{stufe}}"
     }
   },
   "team": {
