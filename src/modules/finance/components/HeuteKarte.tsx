@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { useFinanzen } from '../hooks/useFinanzen'
 import { heuteZuerich, montag, plusTage } from '../lib/datum'
 import { vorschau } from '../lib/vorschau'
+import { ReserveHinweis } from './ReserveHinweis'
 
 /**
  * Finanzen für die Startseite (V233 «Mein Tag»: Finanzen-Karte, nur mit Recht «finanzen»): Kontostand, tiefster
@@ -49,6 +50,11 @@ export default function HeuteKarte() {
             </dd>
           </div>
         </dl>
+      )}
+      {v && daten.data && (
+        <div className="px-4 pb-3">
+          <ReserveHinweis wochen={v.wochen} reserve={daten.data.einstellungen.reserve_rappen ?? 0} />
+        </div>
       )}
       {faellig.length === 0 ? (
         <p className="text-muted-foreground px-4 py-3 text-sm">{t('finanzen.heute.nichts')}</p>

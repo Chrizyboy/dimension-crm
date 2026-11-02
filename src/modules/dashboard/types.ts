@@ -9,7 +9,7 @@ export const BEREICHE = ['alle', 'muri', 'bulle'] as const
 export type Bereich = (typeof BEREICHE)[number]
 
 /** Reiter der Seite. */
-export const KENNZAHLEN_REITER = ['verkauf', 'pipeline', 'betrieb'] as const
+export const KENNZAHLEN_REITER = ['verkauf', 'pipeline', 'betrieb', 'abwicklung'] as const
 export type KennzahlenReiter = (typeof KENNZAHLEN_REITER)[number]
 
 /** Eine Detail-Zeile aus `kennzahlen_fakten`: jede Zahl auf der Seite ist eine Menge solcher Zeilen. */
@@ -26,6 +26,8 @@ export interface Fakt {
   nummer: string | null
   ort: string | null
   stand: string | null
+  /** Nur Abwicklung: Dauer in Tagen (Vertrag bis IBN, Fall offen) oder wie lange schon überfällig. */
+  tage?: number | null
 }
 
 /** Was hinter einer angeklickten Zahl steht. */
@@ -101,3 +103,8 @@ export interface Betrieb {
   auslastung: Auslastung
   marge?: MargeZeile[]
 }
+
+/** Ziele der Abwicklung (einstellungen.kennzahlen.ziele): Tage bzw. Anzahl, weniger ist besser. */
+export type Ziele = Partial<
+  Record<'dauer_vertrag_ibn' | 'fristen_ueberfaellig' | 'material_spaet' | 'faelle_dauer', number>
+>

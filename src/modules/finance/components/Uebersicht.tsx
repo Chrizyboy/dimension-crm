@@ -11,6 +11,7 @@ import type { Finanzdaten, Szenario } from '../types'
 import { BewegungZeile, type BewegungAktion } from './BewegungZeile'
 import type { Bewegung } from '../types'
 import { Wochenbalken } from './Wochenbalken'
+import { ReserveHinweis } from './ReserveHinweis'
 
 /**
  * Liquidität Woche für Woche (V233 «Finanzen»): Szenario, Balken mit Reserve und jede Woche aufklappbar mit allen
@@ -34,6 +35,7 @@ export function Uebersicht({
   const v = vorschau(daten, heute, szenario)
   return (
     <div className="flex flex-col gap-4">
+      <ReserveHinweis wochen={v.wochen} reserve={reserve} />
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Filterchips
           einzeln

@@ -1,11 +1,11 @@
 # Modul: Finanzen
 
-**Zweck:** Finanzen für Geschäftsleitung und Buchhaltung (Entscheid 0040): Cockpit, Lieferantenrechnungen mit
+**Zweck:** Finanzen für Geschäftsleitung und Buchhaltung (Entscheid 0041): Cockpit, Lieferantenrechnungen mit
 Freigabe, Zahllauf mit zweiter Person, Liquidität Woche für Woche, Projekte & Marge, Konten mit Kontoauszug, MWST und
 Monatsabschluss. Je Gesellschaft (Muri GmbH, Bulle Sàrl) oder beide. Nur mit Recht `finanzen`.
 
 Gebaut in Phase **10** nach dem Inventar der Vorlage V233 (Liquiditätsplanung), Entscheid 0009 (Nachkalkulation),
-0021 und 0040.
+0021 und 0041.
 
 ## Reiter (`#/finance?reiter=…`, alte Namen führen weiter)
 

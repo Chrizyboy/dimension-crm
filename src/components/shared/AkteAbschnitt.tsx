@@ -38,7 +38,10 @@ export function AkteAbschnitt({
             aria-hidden="true"
           />
           {titel}
-          {zusatz && <span className="text-muted-foreground ml-auto text-xs font-normal">{zusatz}</span>}
+          {/* 0 nicht als nackte Zahl hinter den Titel schreiben («Kurse und Ausweise0»), sondern weglassen. */}
+          {zusatz !== undefined && zusatz !== null && zusatz !== false && zusatz !== 0 && zusatz !== '' && (
+            <span className="text-muted-foreground ml-auto text-xs font-normal">{zusatz}</span>
+          )}
         </button>
       </Titel>
       {offen && <div className="pt-3 pl-6">{children}</div>}

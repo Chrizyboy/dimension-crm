@@ -14,7 +14,7 @@ import { BewegungZeile, type BewegungAktion } from './BewegungZeile'
 const datumVon = (z: Zahlung) => z.geplant_am ?? z.faellig_am
 
 /**
- * Lieferantenrechnungen und Zahlungen (V233 «Zahlungen», Entscheid 0040): Prüfschritt (Freigabe,
+ * Lieferantenrechnungen und Zahlungen (V233 «Zahlungen», Entscheid 0041): Prüfschritt (Freigabe,
  * zahlbereit, zu klären) als Filter, Klick auf den Namen öffnet die Akte. Zahlungen (V233): offene nach Dringlichkeit gruppiert (überfällig, diese Woche, nächste Woche, später,
  * ohne Datum), innerhalb nach Betreibung → Mahnung → wichtig, dann Datum. Filter nach Kategorie, «ungeprüft»
  * (aus Excel übernommen) und Suche; bezahlte darunter.

@@ -10,8 +10,13 @@ import { speichereEinstellungen } from '../services/automationen'
 import type { AutomationsEinstellungen } from '../types'
 
 const ZAHLEN = ['termin_gehabt_tage', 'wartung_vorlauf_tage', 'rechnung_karenz_tage'] as const
+const LINKS = ['bewertung_link', 'bewertung_link_fr'] as const
+const falsch = (link: string | undefined) => !!link && !/^https:\/\//.test(link)
 
-/** Einstellungen der Auslöser nach Datum und der Link für Bewertungen (Platzhalter {Bewertungslink}). */
+/**
+ * Einstellungen der Auslöser nach Datum und die Links für Bewertungen (Platzhalter {Bewertungslink}): einer für die
+ * Deutschschweiz, einer für die Romandie. Welcher gilt, entscheidet die Sprache des Kunden (`intern.bewertung_link`).
+ */
 export function Einstellungen() {
   const abfrage = useAutomationsEinstellungen()
   if (!abfrage.data) return <Skelett className="h-64" />
@@ -22,7 +27,7 @@ function Formular({ start }: { start: AutomationsEinstellungen }) {
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
   const [e, setE] = useState(start)
-  const linkFalsch = e.bewertung_link !== '' && !/^https:\/\//.test(e.bewertung_link)
+  const linkFalsch = LINKS.some((k) => falsch(e[k]))
   return (
     <Karte className="flex max-w-2xl flex-col gap-4 p-5">
       {ZAHLEN.map((k) => (
@@ -45,23 +50,26 @@ function Formular({ start }: { start: AutomationsEinstellungen }) {
           />
         </Feld>
       ))}
-      <Feld
-        id="einst-bewertung"
-        label={t('automationen.einstellungen.bewertung_link')}
-        hinweis={t('automationen.einstellungen.bewertung_link_hilfe')}
-        fehler={linkFalsch ? t('automationen.einstellungen.linkFalsch') : undefined}
-      >
-        <Input
-          id="einst-bewertung"
-          type="url"
-          placeholder="https://g.page/r/…"
-          value={e.bewertung_link}
-          aria-invalid={linkFalsch}
-          onChange={(x) => {
-            setE({ ...e, bewertung_link: x.target.value.trim() })
-          }}
-        />
-      </Feld>
+      {LINKS.map((k) => (
+        <Feld
+          key={k}
+          id={`einst-${k}`}
+          label={t(`automationen.einstellungen.${k}`)}
+          hinweis={t('automationen.einstellungen.bewertung_link_hilfe')}
+          fehler={falsch(e[k]) ? t('automationen.einstellungen.linkFalsch') : undefined}
+        >
+          <Input
+            id={`einst-${k}`}
+            type="url"
+            placeholder="https://g.page/r/…"
+            value={e[k] ?? ''}
+            aria-invalid={falsch(e[k])}
+            onChange={(x) => {
+              setE({ ...e, [k]: x.target.value.trim() })
+            }}
+          />
+        </Feld>
+      ))}
       <Button
         className="self-start"
         disabled={laeuft || linkFalsch}

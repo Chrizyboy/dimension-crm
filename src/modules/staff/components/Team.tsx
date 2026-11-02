@@ -12,7 +12,7 @@ import { supabase } from '@/services/supabase'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAusweise, useTeam } from '../hooks/useTeam'
 import { ausweisArten, heuteZuerich, neueste, probleme } from '../lib/matrix'
-import { AkteDialog } from './AkteDialog'
+import { AkteAktion } from './AkteAktion'
 import { AusweisDialog } from './AusweisDialog'
 import { Matrix } from './Matrix'
 import { PersonAkte, type PersonAktion } from './PersonAkte'
@@ -115,7 +115,6 @@ export default function Team({
           arten={arten}
           heute={heute}
           darfAendern={darfAendern}
-          admin={admin}
           onAktion={setAktion}
           onSchliessen={() => {
             onPerson(null)
@@ -132,11 +131,10 @@ export default function Team({
           }}
         />
       )}
-      {offen && aktion && 'akte' in aktion && (
-        <AkteDialog
+      {offen && aktion && !('ausweis' in aktion) && (
+        <AkteAktion
           personId={offen.id}
-          akte={aktion.akte}
-          admin={admin}
+          aktion={aktion}
           onSchliessen={() => {
             setAktion(null)
           }}

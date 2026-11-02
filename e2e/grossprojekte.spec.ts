@@ -3,8 +3,9 @@ import { devices, expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
 // Phase 8c: Grossprojekte für Contracting. Die Administration erfasst ein Schulhaus von Hand, sieht Punkte, Aufschlüsselung
-// und Schätzung, verwirft zuerst ohne Grund (Fehler), stellt es in «Beobachten», holt es zurück und bewilligt: Der Lead
-// entsteht und öffnet sich. Am Handy: Liste und Akte ohne Verstösse gegen die Barrierefreiheit.
+// und Schätzung, verwirft zuerst ohne Grund (Fehler), stellt es in «Beobachten», holt es zurück und bewilligt: Es kommt
+// in die Pipeline (Stufe, nächster Schritt, Verlauf, Rechner). Am Handy: Liste und Akte ohne Verstösse gegen die
+// Barrierefreiheit.
 
 test.describe.configure({ mode: 'serial' })
 brauchtDatenbank()
@@ -77,10 +78,28 @@ test('Grossprojekt erfassen, bewerten, beobachten und bewilligen', async ({ page
   await expect(akte).toContainText('Budget der Gemeinde abwarten')
   await expect(akte.getByText('Beobachten', { exact: true })).toBeVisible()
 
+  // Bewilligen: Das Grossprojekt bleibt hier und öffnet als Projekt-Akte (Pipeline bis zum Vertrag), der Lead ist verknüpft.
   await akte.getByRole('button', { name: 'Bewilligen' }).click()
-  await expect(page).toHaveURL(/#\/sales\?lead=/)
-  await page.goto('/#/contracting?ansicht=bewilligt')
-  await expect(page.getByRole('cell', { name: new RegExp(titel) })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Commune de Test', level: 1 })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Zum Lead' })).toBeVisible()
+  const stufen = page.getByRole('list', { name: 'Stufen bis zum Vertrag' })
+  await expect(stufen.getByRole('button', { name: /Qualifizieren/ })).toHaveAttribute('aria-current', 'step')
+  await page.getByRole('button', { name: 'Weiter: Erstkontakt' }).click()
+  await expect(stufen.getByRole('button', { name: /Erstkontakt/ })).toHaveAttribute('aria-current', 'step')
+  await page.getByLabel('Was ist als Nächstes zu tun?').fill('Gemeindeschreiber anrufen')
+  await page.getByLabel('Bis wann?').fill('2030-01-15')
+  await page.getByRole('button', { name: 'Speichern' }).first().click()
+  await expect(page.getByText('Nächster Schritt: Gemeindeschreiber anrufen (bis 15.01.2030)')).toBeVisible()
+  await page.getByRole('group', { name: 'Art des Eintrags' }).getByRole('button', { name: 'Anruf' }).click()
+  await page.getByLabel('Was ist passiert?').fill('Interessiert, Termin im Januar')
+  await page.getByRole('button', { name: 'Festhalten' }).click()
+  await expect(page.getByText('Interessiert, Termin im Januar')).toBeVisible()
+  await expect(page.getByText('Kunde spart pro Jahr')).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  // In der Pipeline steht es unter «Erstkontakt» mit dem nächsten Schritt.
+  await page.getByRole('button', { name: /^Pipeline/ }).click()
+  const spalte = page.getByRole('region', { name: 'Erstkontakt' })
+  await expect(spalte.getByRole('button', { name: /Commune de Test.*Gemeindeschreiber anrufen/ }).first()).toBeVisible()
 
   // Dachsuche: Stand bei den Annahmen, die Administration kann sie anhalten und wieder starten.
   await page.goto('/#/contracting?ansicht=annahmen')
@@ -108,9 +127,9 @@ test.describe('am Handy', () => {
     await anmelden(page, 'admin@test.local')
     await page.goto('/#/contracting?ansicht=alle')
     await page.getByRole('cell', { name: new RegExp(titel) }).click()
-    const akte = page.getByRole('dialog', { name: titel })
-    await expect(akte).toContainText('Warum es passt')
-    await expect(akte.getByRole('link', { name: 'Zum Lead' })).toBeVisible()
+    // Bewilligt: Projekt-Akte als ganze Seite.
+    await expect(page.getByText('Warum es passt')).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Zum Lead' })).toBeVisible()
     expect(await verstoesse(page)).toEqual([])
   })
 })

@@ -1,4 +1,4 @@
-# 0040 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
+# 0041 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
 
 ## Ausgangslage
 
