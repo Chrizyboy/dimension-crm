@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Toaster } from 'sonner'
 import { TooltipAnbieter } from '@/components/ui/tooltip'
@@ -27,6 +27,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt)
   const darstellung = useUi((z) => z.darstellung)
   const einfach = useAnmeldung((z) => z.ich?.ansicht === 'einfach')
+  // Im Rahmen scrollt nur der Inhalt (main). Ohne Sperre liess sich die ganze Seite in der
+  // Desktop-App weit unter den Rahmen ins Leere scrollen (Rückmeldung Chris, 2.11.2026).
+  useEffect(() => {
+    document.documentElement.classList.add('im-rahmen')
+    return () => {
+      document.documentElement.classList.remove('im-rahmen')
+    }
+  }, [])
 
   return (
     <TooltipAnbieter delayDuration={300}>
