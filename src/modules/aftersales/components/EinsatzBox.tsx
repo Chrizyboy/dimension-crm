@@ -5,21 +5,18 @@ import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatDatumZeit } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { useAktion } from '../hooks/useAktion'
-import { usePersonen } from '../hooks/useService'
 import { dauerText, reaktion } from '../lib/reaktion'
 import { fallSpeichern } from '../services/service'
 import { AUSWIRKUNGEN, KATEGORIEN, PRIORITAETEN, STATUS, type FallEingabe, type ServiceFall } from '../types'
-import { alsLokal } from '../lib/zeit'
 import { Box, FeldInline, Zeile } from './Box'
 
 /**
- * Reaktionszeit, Stand, Termin, Zuständige und die Einordnung (Auswirkung, Priorität, Kategorie, Komponente,
- * Fehlercode). Alles direkt änderbar; die Reaktionszeit rechnet die Datenbank aus Auswirkung und Priorität.
+ * Reaktionszeit, Stand und die Einordnung (Auswirkung, Priorität, Kategorie, Komponente,
+ * Fehlercode). Termin und Team plant die PlanungBox. Alles direkt änderbar; die Reaktionszeit rechnet die Datenbank aus Auswirkung und Priorität.
  */
 export function EinsatzBox({ f }: { f: ServiceFall }) {
   const { t } = useTranslation()
   const { aus } = useAktion()
-  const personen = usePersonen()
   const listen = {
     status: useAuswahl('servicestatus'),
     prioritaet: useAuswahl('prioritaet'),
@@ -64,30 +61,6 @@ export function EinsatzBox({ f }: { f: ServiceFall }) {
       )}
       <dl className="flex flex-col gap-1.5">
         {wahl('status', f.status, STATUS)}
-        <Zeile label={t('service.feld.termin')}>
-          <FeldInline
-            label={t('service.feld.termin')}
-            typ="datetime-local"
-            wert={alsLokal(f.termin_am)}
-            onSpeichern={(w) => {
-              setze({
-                termin_am: w ? new Date(w).toISOString() : null,
-                ...(w && f.status !== 'erledigt' ? { status: 'termin' } : {}),
-              })
-            }}
-          />
-        </Zeile>
-        <Zeile label={t('service.feld.zustaendig')}>
-          <Auswahl
-            aria-label={t('service.feld.zustaendig')}
-            className="h-8"
-            value={f.person_id ?? ''}
-            onValueChange={(v) => {
-              setze({ person_id: v || null })
-            }}
-            optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
-          />
-        </Zeile>
         {wahl('auswirkung', f.auswirkung, AUSWIRKUNGEN)}
         {wahl('prioritaet', f.prioritaet, PRIORITAETEN)}
         {wahl('kategorie', f.kategorie, KATEGORIEN)}
