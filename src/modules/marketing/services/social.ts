@@ -86,7 +86,7 @@ export const jetztVeroeffentlichen = (id: string) =>
 export async function ladeVerbindungen(): Promise<SocialVerbindung[]> {
   const { data, error } = await db().rpc('social_verbindungen')
   if (error) throw error
-  return data as SocialVerbindung[]
+  return data as unknown as SocialVerbindung[]
 }
 
 /** Welche Dienste auf dem Server eingerichtet sind und die Rückruf-Adresse. */
@@ -97,6 +97,16 @@ export const socialStatus = () =>
 export async function verbinden(dienst: SocialVerbindung['dienst'], sprache: 'de' | 'fr') {
   const { adresse } = await rufeFunktion<{ adresse: string }>('social', 'verbinden', { dienst, sprache })
   window.open(adresse, '_blank', 'noopener')
+}
+
+/** Festlegen, welches Konto eines Netzwerks deutsch bzw. französisch ist (nur Admins, prüft die Datenbank). */
+export async function zuordnen(netzwerk: 'facebook' | 'instagram' | 'linkedin', sprache: 'de' | 'fr', konto: string) {
+  const { error } = await db().rpc('social_zuordnung_setzen', {
+    p_netzwerk: netzwerk,
+    p_sprache: sprache,
+    p_konto: konto,
+  })
+  if (error) throw error
 }
 
 /** Verbindung trennen (nur Admins). */

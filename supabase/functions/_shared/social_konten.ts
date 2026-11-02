@@ -1,10 +1,13 @@
-// Verbindungen zu Meta (Facebook-Seite und Instagram), LinkedIn (Firmenseite) und Canva, eine je Dienst für die
+// Verbindungen zu Meta (Facebook-Seiten und Instagram), LinkedIn (Firmenseiten) und Canva, eine je Dienst für die
 // ganze Firma (Entscheid 0022). Eine Person mit Recht «admin» meldet sich einmal an; das Token liegt
-// verschlüsselt im Schema «intern». Adressen über META_URL, LINKEDIN_URL, CANVA_URL … umstellbar (Ersatz-Server).
+// verschlüsselt im Schema «intern». Eine Anmeldung bringt alle Seiten mit, die die Person verwaltet; welche davon
+// deutsch und welche französisch ist, steht in `konto.zuordnung` (Entscheid 0037).
+// Adressen über META_URL, LINKEDIN_URL, CANVA_URL … umstellbar (Ersatz-Server).
 
 import { dienst } from './datenbank.ts'
 import { DienstFehler, leseJson, rufe } from './http.ts'
 import { entschluessle, pkceChallenge, verschluessle, zufall } from './krypto.ts'
+import { sprachVorschlag, type Zuordnung } from './social_text.ts'
 import { brauche, env } from './umgebung.ts'
 
 /** Die drei Dienste. */
@@ -136,17 +139,26 @@ async function metaAbschliessen(code: string) {
     'meta',
   )
   const wunsch = env('META_SEITE_ID')
-  const s = (seiten.data ?? []).find((x) => !wunsch || x.id === wunsch)
-  if (!s) throw new DienstFehler('keine_seite', 404, 'Keine Facebook-Seite')
+  const alle = (seiten.data ?? []).filter((x) => !wunsch || x.id === wunsch)
+  if (!alle.length) throw new DienstFehler('keine_seite', 404, 'Keine Facebook-Seite')
+  const liste = alle.map((x) => ({
+    id: x.id,
+    name: x.name,
+    instagram_id: x.instagram_business_account?.id ?? null,
+    instagram_name: x.instagram_business_account?.username ?? null,
+  }))
+  const mitIg = liste.filter((x) => x.instagram_id)
   return {
-    name: s.name,
+    name: liste.map((x) => x.name).join(', '),
     konto: {
-      seite_id: s.id,
-      seite_name: s.name,
-      instagram_id: s.instagram_business_account?.id ?? null,
-      instagram_name: s.instagram_business_account?.username ?? null,
+      seiten: liste,
+      zuordnung: {
+        facebook: sprachVorschlag(liste),
+        instagram: sprachVorschlag(mitIg.map((x) => ({ id: x.id, name: x.instagram_name ?? x.name }))),
+      },
     },
-    token: s.access_token,
+    // Seiten-Tokens laufen nicht ab; je Seite eines, zusammen verschlüsselt gespeichert.
+    token: JSON.stringify(Object.fromEntries(alle.map((x) => [x.id, x.access_token]))),
     refresh: null,
     ablauf: null,
   }
@@ -160,23 +172,33 @@ async function linkedinAbschliessen(code: string) {
     'LinkedIn-Version': '202409',
     'X-Restli-Protocol-Version': '2.0.0',
   }
-  let org = env('LINKEDIN_ORGANISATION')
-  if (!org) {
+  let urns: string[] = []
+  const fest = env('LINKEDIN_ORGANISATION')
+  if (fest) urns = [fest.startsWith('urn:') ? fest : `urn:li:organization:${fest}`]
+  else {
     const acl = await json<{ elements?: { organization?: string; organizationTarget?: string }[] }>(
       await rufe(`${linkedinBasis()}/rest/organizationAcls?q=roleAssignee&role=ADMINISTRATOR`, { headers: koepfe }),
       'linkedin',
     )
-    const urn = acl.elements?.[0]?.organization ?? acl.elements?.[0]?.organizationTarget
-    org = urn?.split(':').pop()
+    urns = [
+      ...new Set(
+        (acl.elements ?? []).map((e) => e.organization ?? e.organizationTarget).filter((u): u is string => !!u),
+      ),
+    ]
   }
-  if (!org) throw new DienstFehler('keine_seite', 404, 'Keine LinkedIn-Firmenseite')
-  const info = await leseJson<{ localizedName?: string }>(
-    await rufe(`${linkedinBasis()}/rest/organizations/${org}`, { headers: koepfe }).catch(() => new Response('{}')),
+  if (!urns.length) throw new DienstFehler('keine_seite', 404, 'Keine LinkedIn-Firmenseite')
+  const organisationen = await Promise.all(
+    urns.map(async (urn) => {
+      const nr = urn.split(':').pop()!
+      const info = await leseJson<{ localizedName?: string }>(
+        await rufe(`${linkedinBasis()}/rest/organizations/${nr}`, { headers: koepfe }).catch(() => new Response('{}')),
+      )
+      return { id: urn, name: info?.localizedName ?? `LinkedIn ${nr}` }
+    }),
   )
-  const name = info?.localizedName ?? `LinkedIn ${org}`
   return {
-    name,
-    konto: { organisation: `urn:li:organization:${org}` },
+    name: organisationen.map((o) => o.name).join(', '),
+    konto: { organisationen, zuordnung: { linkedin: sprachVorschlag(organisationen) } },
     token: t.access_token!,
     refresh: t.refresh_token ?? null,
     ablauf: ablaufAus(t.expires_in),
@@ -203,6 +225,31 @@ async function canvaAbschliessen(code: string, pruefwert: string) {
   }
 }
 
+/** Gespeicherte Konto-Angaben: wählbare Seiten bzw. Firmenseiten und die Zuordnung zu Deutsch/Französisch. */
+export interface KontoDaten {
+  seiten?: { id: string; name: string; instagram_id: string | null; instagram_name: string | null }[]
+  organisationen?: { id: string; name: string }[]
+  zuordnung?: Zuordnung
+  // Ältere Verbindungen (vor Entscheid 0037): eine Seite bzw. Firmenseite
+  seite_id?: string
+  seite_name?: string
+  instagram_id?: string | null
+  instagram_name?: string | null
+  organisation?: string
+}
+
+/** Beim Neu-Verbinden die von Hand gewählte Zuordnung behalten, soweit die Konten noch da sind. */
+export function zuordnungBehalten(neu: KontoDaten, alt: KontoDaten | undefined): KontoDaten {
+  const ids = new Set([...(neu.seiten ?? []), ...(neu.organisationen ?? [])].map((k) => k.id))
+  const z: Zuordnung = structuredClone(neu.zuordnung ?? {})
+  for (const [netz, sprachen] of Object.entries(alt?.zuordnung ?? {})) {
+    for (const [sprache, id] of Object.entries(sprachen ?? {})) {
+      if (id && ids.has(id)) (z[netz as keyof Zuordnung] ??= {})[sprache as 'de' | 'fr'] = id
+    }
+  }
+  return { ...neu, zuordnung: z }
+}
+
 /** Rückruf nach der Anmeldung: Code einlösen und Verbindung verschlüsselt speichern. */
 export async function socialAbschliessen(zustand: string, code: string): Promise<{ dienst: string; sprache: string }> {
   const [z] = await dienst.rpc<{ dienst: SocialDienst; person_id: string; pruefwert: string; sprache: string }[]>(
@@ -217,10 +264,11 @@ export async function socialAbschliessen(zustand: string, code: string): Promise
         ? await linkedinAbschliessen(code)
         : await canvaAbschliessen(code, z.pruefwert)
   const geheim = brauche('VERBINDUNG_SCHLUESSEL')
+  const [alt] = await dienst.rpc<{ konto: KontoDaten }[]>('social_konto_lesen', { p_dienst: z.dienst })
   await dienst.rpc('social_konto_speichern', {
     p_dienst: z.dienst,
     p_name: v.name,
-    p_konto: v.konto,
+    p_konto: zuordnungBehalten(v.konto as KontoDaten, alt?.konto),
     p_token: await verschluessle(v.token, geheim),
     p_refresh: v.refresh ? await verschluessle(v.refresh, geheim) : null,
     p_ablauf: v.ablauf,
@@ -243,10 +291,11 @@ export function socialTrennen(d: SocialDienst): Promise<unknown> {
 }
 
 /** Gültiger Zugang für einen Dienst: Token und Konto-Angaben; erneuert abgelaufene Tokens mit dem Refresh-Token. */
-export async function socialZugang(d: SocialDienst): Promise<{ token: string; konto: Record<string, string | null> }> {
-  const [v] = await dienst.rpc<
-    { konto: Record<string, string | null>; token: string; refresh: string | null; ablauf: string | null }[]
-  >('social_konto_lesen', { p_dienst: d })
+export async function socialZugang(d: SocialDienst): Promise<{ token: string; konto: KontoDaten }> {
+  const [v] = await dienst.rpc<{ konto: KontoDaten; token: string; refresh: string | null; ablauf: string | null }[]>(
+    'social_konto_lesen',
+    { p_dienst: d },
+  )
   if (!v) throw new DienstFehler('nicht_verbunden', 409, `${d} nicht verbunden`)
   const geheim = brauche('VERBINDUNG_SCHLUESSEL')
   const lesen = (x: string) =>

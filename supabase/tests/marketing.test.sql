@@ -1,10 +1,10 @@
 -- Prüft Phase 11: Zielgruppe (Gruppe, Versandgrund, Sperre), Abmelden in der App und per Link, Serien-Mail über den
 -- Ausgangskorb (abgemeldete und doppelte fallen weg, freigegeben), Newsletter-Empfänger nach Segment und nie zweimal,
 -- Serienbrief im Verlauf, Social-Post-Freigabe (Text, Länge, Bild, Verbindung), Veröffentlichen nur durch den Server,
--- Ergebnis je Netzwerk, Tokens unsichtbar, CI-Stil nur Admin.
+-- Ergebnis je Netzwerk, Tokens unsichtbar, deutsches/französisches Konto wählen nur Admin, CI-Stil nur Admin.
 -- Ausführen: npm run db:test
 begin;
-select plan(30);
+select plan(35);
 
 -- Eigene Ausgangslage: lokale Verbindungen (z. B. aus marketing:pruefen) zählen hier nicht; alles wird zurückgerollt.
 delete from intern.social_konten;
@@ -118,8 +118,24 @@ select public.social_ergebnis('00000000-0000-0000-0000-000000001191', '{"instagr
 select is((select status from public.social_posts where id = '00000000-0000-0000-0000-000000001191'), 'fehler',
   'ein Netzwerk gescheitert: Status Fehler, Instagram bleibt gepostet');
 
--- CI-Stil nur Admin
+-- Deutsches und französisches Konto (Entscheid 0037): wählen nur die Administration, nur verbundene Seiten
+update intern.social_konten set konto = '{"seiten": [{"id": "1", "name": "Dimension Solaire Sàrl", "instagram_id": "11"},
+  {"id": "2", "name": "Dimension Solaire GmbH", "instagram_id": null}], "zuordnung": {"facebook": {"de": "1", "fr": "1"}}}'
+ where dienst = 'meta';
 set local role authenticated;
+select throws_ok($$ select public.social_zuordnung_setzen('facebook', 'de', '2') $$, '42501', 'social.kein_recht',
+  'Verkauf wählt die Konten nicht');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000011a2", "role": "authenticated"}', true);
+select lives_ok($$ select public.social_zuordnung_setzen('facebook', 'de', '2') $$, 'Administration wählt die deutsche Seite');
+select is((select zuordnung -> 'facebook' from public.social_verbindungen() where dienst = 'meta'), '{"de": "2", "fr": "1"}'::jsonb,
+  'Zuordnung gespeichert, Französisch bleibt');
+select throws_ok($$ select public.social_zuordnung_setzen('instagram', 'de', '2') $$, 'P0001', 'social.konto_unbekannt',
+  'Instagram nur mit einer Seite, die ein Instagram-Konto hat');
+select is((select jsonb_array_length(konten) from public.social_verbindungen() where dienst = 'meta'), 2,
+  'App sieht die wählbaren Seiten (ohne Token)');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000011a1", "role": "authenticated"}', true);
+
+-- CI-Stil nur Admin
 select throws_ok($$ update public.einstellungen set wert = jsonb_set(wert, '{social,ci}', '"anders"') where schluessel = 'marketing' $$,
   '42501', 'marketing.ci_nur_admin', 'CI-Stil ändert nur die Administration');
 

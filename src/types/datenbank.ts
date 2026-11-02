@@ -10983,11 +10983,17 @@ export type Database = {
           ablauf: string
           dienst: string
           fehler: string
+          konten: Json
           name: string
           verbunden: boolean
           verbunden_am: string
           von: string
+          zuordnung: Json
         }[]
+      }
+      social_zuordnung_setzen: {
+        Args: { p_konto: string; p_netzwerk: string; p_sprache: string }
+        Returns: undefined
       }
       social_zurueckziehen: { Args: { p_id: string }; Returns: undefined }
       social_zustand_anlegen: {

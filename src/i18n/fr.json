@@ -1963,7 +1963,9 @@
     "handbuch_schon_abgeschlossen": "Ce signalement est déjà clôturé.",
     "handbuch_entscheider_ungueltig": "Seule une personne de l’administration peut décider.",
     "einstellungen_kein_recht": "Seule l’administration peut modifier ce réglage.",
-    "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne."
+    "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne.",
+    "social_kein_recht": "Seule l’administration peut modifier cela.",
+    "social_konto_unbekannt": "Ce compte n’est pas connecté. Merci de le reconnecter."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -4281,8 +4283,8 @@
         "canva": "Canva"
       },
       "wozu": {
-        "meta": "Publications sur la page Facebook et le compte Instagram de Dimension Solaire.",
-        "linkedin": "Publications sur la page entreprise LinkedIn.",
+        "meta": "Publications sur les pages Facebook allemande et française et leurs comptes Instagram.",
+        "linkedin": "Publications sur les pages entreprise LinkedIn allemande et française.",
         "canva": "Créer des images avec le kit de marque et les reprendre dans le CRM."
       },
       "verbundenKurz": "Connecté",
@@ -4294,7 +4296,12 @@
       "erneuern": "Reconnecter",
       "trennen": "Déconnecter",
       "verbunden": "Connecté : {{dienst}}",
-      "fehlgeschlagen": "La connexion a échoué ({{code}})"
+      "fehlgeschlagen": "La connexion a échoué ({{code}})",
+      "sprache": {
+        "de": "Allemand",
+        "fr": "Français"
+      },
+      "keinKonto": "{{netz}} : aucun compte trouvé."
     },
     "newsletter": {
       "zahlen": "Chiffres clés",

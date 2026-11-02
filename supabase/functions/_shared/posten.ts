@@ -4,8 +4,8 @@
 
 import { dienst } from './datenbank.ts'
 import { DienstFehler, leseJson, rufe } from './http.ts'
-import { linkedinBasis, metaBasis, socialUngueltig, socialZugang } from './social_konten.ts'
-import { linkedinText, postText, type Netzwerk, type PostDaten } from './social_text.ts'
+import { linkedinBasis, metaBasis, socialUngueltig, socialZugang, type KontoDaten } from './social_konten.ts'
+import { linkedinText, postZiele, type KontoSprache, type Netzwerk, type PostDaten } from './social_text.ts'
 
 /** Ergebnis je Netzwerk (landet in social_posts.ergebnis). */
 export interface NetzErgebnis {
@@ -13,6 +13,23 @@ export interface NetzErgebnis {
   id?: string
   url?: string
   fehler?: string
+  /** Bei zwei Konten (DE und FR): Ergebnis je Konto; `ok` oben gilt erst, wenn beide gepostet sind. */
+  teile?: Partial<Record<KontoSprache, NetzErgebnis>>
+}
+
+/** Meta-Zugang einer Seite: Seiten-Token und Instagram-Konto (auch für ältere Verbindungen mit nur einer Seite). */
+function metaSeite(token: string, konto: KontoDaten, seite: string) {
+  if (!token.startsWith('{')) return { token, instagram: konto.instagram_id ?? null }
+  const t = (JSON.parse(token) as Record<string, string>)[seite]
+  if (!t) throw new DienstFehler('keine_seite', 409, 'Seite nicht mehr verbunden')
+  return { token: t, instagram: konto.seiten?.find((x) => x.id === seite)?.instagram_id ?? null }
+}
+
+/** Konten eines Netzwerks, aus denen gewählt werden kann (erstes = Standard, wenn nichts zugeordnet ist). */
+function erstesKonto(n: Netzwerk, konto: KontoDaten): string | null {
+  if (n === 'linkedin') return konto.organisationen?.[0]?.id ?? konto.organisation ?? null
+  const seiten = konto.seiten ?? (konto.seite_id ? [{ id: konto.seite_id, instagram_id: konto.instagram_id }] : [])
+  return (n === 'instagram' ? seiten.find((x) => x.instagram_id) : seiten[0])?.id ?? null
 }
 
 interface Bild {
@@ -51,10 +68,9 @@ async function meta<T>(pfad: string, felder: Record<string, string>, methode: 'G
   return daten
 }
 
-async function facebook(text: string, bild: Bild | null): Promise<NetzErgebnis> {
-  const { token, konto } = await socialZugang('meta')
-  const seite = konto.seite_id
-  if (!seite) throw new DienstFehler('keine_seite', 409, 'Keine Seite')
+async function facebook(seite: string, text: string, bild: Bild | null): Promise<NetzErgebnis> {
+  const z = await socialZugang('meta')
+  const { token } = metaSeite(z.token, z.konto, seite)
   const r: { id: string; post_id?: string } = bild
     ? await meta<{ id: string; post_id?: string }>(`/${seite}/photos`, {
         url: await dienst.signiert('dokumente', bild.speicher_pfad),
@@ -66,10 +82,10 @@ async function facebook(text: string, bild: Bild | null): Promise<NetzErgebnis> 
   return { ok: true, id, url: `https://www.facebook.com/${id}` }
 }
 
-async function instagram(text: string, bild: Bild | null): Promise<NetzErgebnis> {
+async function instagram(seite: string, text: string, bild: Bild | null): Promise<NetzErgebnis> {
   if (!bild) throw new DienstFehler('bild_fehlt', 400, 'Instagram braucht ein Bild')
-  const { token, konto } = await socialZugang('meta')
-  const ig = konto.instagram_id
+  const z = await socialZugang('meta')
+  const { token, instagram: ig } = metaSeite(z.token, z.konto, seite)
   if (!ig) throw new DienstFehler('kein_instagram', 409, 'Kein Instagram-Konto an der Seite')
   const behaelter = await meta<{ id: string }>(`/${ig}/media`, {
     image_url: await dienst.signiert('dokumente', bild.speicher_pfad),
@@ -96,10 +112,8 @@ async function instagram(text: string, bild: Bild | null): Promise<NetzErgebnis>
   return { ok: true, id: post.id, ...(link.permalink ? { url: link.permalink } : {}) }
 }
 
-async function linkedin(text: string, bild: Bild | null): Promise<NetzErgebnis> {
-  const { token, konto } = await socialZugang('linkedin')
-  const org = konto.organisation
-  if (!org) throw new DienstFehler('keine_seite', 409, 'Keine Firmenseite')
+async function linkedin(org: string, text: string, bild: Bild | null): Promise<NetzErgebnis> {
+  const { token } = await socialZugang('linkedin')
   const koepfe = {
     Authorization: `Bearer ${token}`,
     'LinkedIn-Version': '202409',
@@ -165,6 +179,46 @@ function fehlerCode(f: unknown): string {
   return m.startsWith('konfiguration:') ? 'nicht_eingerichtet' : 'intern'
 }
 
+/**
+ * Ein Netzwerk posten: an das deutsche, das französische oder (bei «DE + FR» mit zwei Konten) an beide Konten.
+ * Ein Konto, das beim letzten Versuch schon gepostet hat, wird übersprungen.
+ */
+async function netzwerkPosten(p: PostDaten, n: Netzwerk, bild: Bild | null): Promise<NetzErgebnis> {
+  const { konto } = await socialZugang(n === 'linkedin' ? 'linkedin' : 'meta')
+  const ziele = postZiele(p, n, konto.zuordnung ?? {}, erstesKonto(n, konto))
+  if (!ziele.length) throw new DienstFehler(n === 'instagram' ? 'kein_instagram' : 'keine_seite', 409, n)
+  const sende = (z: (typeof ziele)[number]) =>
+    n === 'facebook'
+      ? facebook(z.konto, z.text, bild)
+      : n === 'instagram'
+        ? instagram(z.konto, z.text, bild)
+        : linkedin(z.konto, z.text, bild)
+  const [einziges] = ziele
+  if (ziele.length === 1 && einziges && !einziges.teil) return sende(einziges)
+  const frueher = (p.ergebnis[n] as NetzErgebnis | undefined)?.teile ?? {}
+  const teile: Partial<Record<KontoSprache, NetzErgebnis>> = {}
+  for (const z of ziele) {
+    const teil = z.teil ?? 'de'
+    if (frueher[teil]?.ok) {
+      teile[teil] = frueher[teil]
+      continue
+    }
+    try {
+      teile[teil] = await sende(z)
+    } catch (f) {
+      teile[teil] = { ok: false, fehler: fehlerCode(f) }
+    }
+  }
+  const alle = Object.values(teile)
+  const fehler = alle.find((t) => !t.ok)?.fehler
+  return {
+    ok: !fehler,
+    ...(alle[0]?.url ? { url: alle[0].url } : {}),
+    ...(fehler ? { fehler } : {}),
+    teile,
+  }
+}
+
 /** Einen beanspruchten Post auf allen noch offenen Netzwerken veröffentlichen und das Ergebnis eintragen. */
 export async function postVeroeffentlichen(p: PostDaten): Promise<Partial<Record<Netzwerk, NetzErgebnis>>> {
   const ergebnis: Partial<Record<Netzwerk, NetzErgebnis>> = {}
@@ -178,14 +232,8 @@ export async function postVeroeffentlichen(p: PostDaten): Promise<Partial<Record
   }
   for (const n of p.netzwerke) {
     if (p.ergebnis[n]?.ok) continue
-    const text = postText(p, n)
     try {
-      ergebnis[n] =
-        n === 'facebook'
-          ? await facebook(text, bild)
-          : n === 'instagram'
-            ? await instagram(text, bild)
-            : await linkedin(text, bild)
+      ergebnis[n] = await netzwerkPosten(p, n, bild)
     } catch (f) {
       ergebnis[n] = { ok: false, fehler: fehlerCode(f) }
     }
