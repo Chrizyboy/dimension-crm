@@ -9,7 +9,7 @@ veröffentlichen» starten (docs/installation.md).
 
 - Desktop-App: Die Seite lässt sich nicht mehr unter den Rahmen ins Leere scrollen; es scrollt nur noch der Inhalt.
 - Anmeldung: Beispiel-Adresse heisst jetzt vorname@dimension-solaire.ch.
-- App-Symbol: auf dem Handy ganz orange bis an den Rand (keine schwarzen Ecken mehr), unter Windows abgerundet und in der Taskleiste scharf.
+- App-Symbol: überall das Signet von Dimension Work (oranger Umriss mit Sonne) in Fenster, Taskleiste und Browser-Tab; auf dem Handy randlos auf Dunkelblau (keine schwarzen Ecken mehr).
 
 ## 1.0.0
 
