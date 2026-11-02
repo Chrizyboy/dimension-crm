@@ -2,7 +2,7 @@
 
 **Zweck:** Erfasst Störungen, Reklamationen, Garantiefälle und Kontrollen nach dem Bau und hält die Daten jeder gebauten Anlage fest.
 
-**Stand:** gebaut in Phase **9** (V233: Service V49), neu als Leitstand mit Fall-Akte am 2.11.2026. Entscheide: `docs/entscheidungen/0018-projekte-service-wartung.md`, `0038-service-leitstand.md`.
+**Stand:** gebaut in Phase **9** (V233: Service V49), neu als Leitstand mit Fall-Akte am 2.11.2026. Entscheide: `docs/entscheidungen/0018-projekte-service-wartung.md`, `0038-service-leitstand.md`, `0039-service-einsatz-anlage-handy.md`.
 
 ## So läuft es
 
@@ -10,14 +10,16 @@
 2. **«Neuer Fall»:** Quelle (Anruf, Mail …), Kunde, Anlage mit Garantie-Hinweis, Auswirkung, Komponente, Fehlercode, Vor Ort, Zugang, Termin, Fotos. Nummer S001 …, Reaktionszeit und Checkliste setzt die Datenbank.
 3. **Fall-Akte** (ganze Seite, `?fall=…`): Arbeitsschritte, Verlauf mit Art, Kunde/Ort, Anlage mit Garantie je Komponente, Checkliste, Einsatz, Rapporte und Kosten mit «Rechnung erstellen», frühere Fälle, Mails, Anhänge.
 4. **Website:** Störungsformular → Edge Function `stoerung` → `service_aus_website` (Zuordnung Projektnummer/Adresse/Mail/Telefon, Glocke, Bestätigung im Ausgangskorb). Siehe `docs/website-stoerung.md`.
-5. Reiter «Anlagen»: IBN, Garantie, nächste Kontrolle, Monitoring und Komponenten mit Seriennummer. Anlagen entstehen mit der IBN im Projekt.
+5. **Einsatz planen** (Box «Einsatz» in der Akte): Termin, Dauer, wer leitet, wer mitkommt; Hinweis bei Abwesenheit, Baustelle oder anderem Termin. Erscheint im Zeitplan (Team-Sicht, eigene Zeile) und am Handy aller Eingeteilten.
+6. Reiter «Anlagen» → **Anlage-Akte** (ganze Seite, `?anlage=…`): Kunde, Betrieb, Komponenten mit Seriennummer und Garantie, alle Fälle, Rapporte, Dokumente, Wartungsvertrag. Anlagen entstehen mit der IBN im Projekt.
+7. **Am Handy** («Baustelle», Mein Tag): Auswirkung, Fehler, Ansprechperson, Zugang, Anlage, Seriennummer ändern, Checkliste, «Vor Ort angekommen», auch ohne Netz.
 
 ## Daten
 
 - Besitzt: `service_faelle`, `anlagen`; Einstellungen `einstellungen.service` (Reaktionszeiten, Checklisten, Website-Zuordnung, Verantwortlich, Bestätigung; nur Administration).
 - Schreibt: `aufgaben` (Bezug `service_faelle`), `dokumente` und Speicher `dokumente/service/<fall>/…`, `ausgang` (Bestätigung), `benachrichtigungen`.
 - Liest: `kontakte`, `objekte`, `projekte`, `personen`, `rapporte`, `zeiten`, `rechnungen`, `posteingang`, `wartungsvertraege`, `auswahlwerte`.
-- Abläufe: `service_notiz`, `service_eintrag`, `service_checkliste(_dazu)`, `service_zuordnen`, `service_kunde_aus_meldung`, `service_akte`, `service_leitstand`, `service_aus_website` (nur Server); Trigger `ergaenzen` setzt Projekt, Ort, Priorität, Reaktionszeit, Checkliste, Garantie.
+- Abläufe: `service_notiz`, `service_eintrag`, `service_checkliste(_dazu)`, `service_zuordnen`, `service_kunde_aus_meldung`, `service_akte`, `service_leitstand`, `service_einsatz`, `service_eintrag_handy`, `service_seriennummer`, `anlage_akte`, Sicht `service_termine` (Zeitplan), `service_aus_website` (nur Server); Trigger `ergaenzen` setzt Projekt, Ort, Priorität, Reaktionszeit, Checkliste, Garantie.
 
 ## Abhängigkeiten
 
