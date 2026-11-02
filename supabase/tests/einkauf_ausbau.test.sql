@@ -1,4 +1,4 @@
--- Prüft Einkauf & Material vollständig (Entscheid 0039): Sammelbestellung über Projekte mit Runden auf die
+-- Prüft Einkauf & Material vollständig (Entscheid 0041): Sammelbestellung über Projekte mit Runden auf die
 -- Verpackungseinheit, Freigabegrenze und Vorlegen, Auftragsbestätigung mit Abweichungen, Wareneingang mit
 -- Lieferschein, Materialplan, Rechnungsabgleich mit AbaNinja-Kreditoren, Glocke und geschützte Einstellung.
 -- Ausführen: npm run db:test

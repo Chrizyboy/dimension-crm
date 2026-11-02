@@ -1,4 +1,4 @@
-// Aktion «auftragsbestaetigung» der Edge Function «ki» (Entscheid 0039): liest die Auftragsbestätigung eines
+// Aktion «auftragsbestaetigung» der Edge Function «ki» (Entscheid 0041): liest die Auftragsbestätigung eines
 // Lieferanten (Mailtext oder PDF) und ordnet sie den Positionen der Bestellung zu. Nur ein Vorschlag: die App
 // zeigt Abweichungen zum Prüfen, gespeichert wird erst mit «Übernehmen» (bestellung_ab_erfassen).
 

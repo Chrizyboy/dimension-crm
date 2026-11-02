@@ -15,7 +15,8 @@
     "ausklappen": "Seitenleiste ausklappen",
     "handy": "Schnellnavigation",
     "mehr": "Mehr",
-    "zumInhalt": "Zum Inhalt springen"
+    "zumInhalt": "Zum Inhalt springen",
+    "assistent": "Assistent"
   },
   "start": {
     "titel": "Willkommen im neuen CRM",
@@ -96,7 +97,8 @@
     "neuerLead": "Neuer Lead",
     "neuerKunde": "Neuer Kunde",
     "neuerKontakt": "Neuer Kontakt",
-    "ansicht": "Ansicht wechseln (Reiter von links)"
+    "ansicht": "Ansicht wechseln (Reiter von links)",
+    "assistent": "Assistent öffnen"
   },
   "benachrichtigungen": {
     "titel": "Benachrichtigungen",
@@ -341,7 +343,9 @@
     "bereicheWieRolle_other": "Aus: zeigt die {{count}} Bereiche der Rolle.",
     "bereicheWieRolle_one": "Aus: zeigt den einen Bereich der Rolle.",
     "bereicheAlle": "Aus: zeigt alle Bereiche, wie die Rolle.",
-    "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse."
+    "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse.",
+    "kurzzeichen": "Kurzzeichen",
+    "kurzzeichenHinweis": "Steht in Listen, Planung und auf Dokumenten. Leer lassen für den Vorschlag {{vorschlag}}."
   },
   "rechte": {
     "basis": "Grunddaten",
@@ -1977,9 +1981,16 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+<<<<<<< HEAD
     "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
     "einkauf_rechnung_abweichung": "Die Rechnung weicht deutlich ab. Bitte in der Notiz begründen.",
     "einkauf_rechnung_fehlt": "Bitte eine Lieferantenrechnung wählen oder Nummer und Betrag angeben."
+=======
+    "grossprojekt_nicht_bewilligt": "Erst nach dem Ja (Bewilligen) gibt es Stufen.",
+    "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
+    "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
+    "grossprojekt_text_fehlt": "Bitte einen Text eingeben."
+>>>>>>> origin/main
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2581,7 +2592,8 @@
     "einsatz": {
       "intern": "Intern",
       "extern": "Extern",
-      "geplant": "Voraussichtlich"
+      "geplant": "Voraussichtlich",
+      "service": "Service"
     },
     "stand": {
       "offen": "Offen",
@@ -2748,7 +2760,9 @@
       "subunternehmer": "Subunternehmer",
       "grund_abwesend": "{{wer}} abwesend",
       "grund_doppelt": "{{wer}} doppelt eingeplant",
-      "abwesendAm": "Abwesend: {{namen}}"
+      "abwesendAm": "Abwesend: {{namen}}",
+      "service": "Service-Einsätze",
+      "serviceUnter": "aus Service & Garantie"
     },
     "bewilligungen": {
       "ansicht": "Ansicht",
@@ -3090,6 +3104,52 @@
       "teile": "warten auf Teile",
       "rma": "beim Hersteller (RMA)",
       "verrechnen": "Rapporte zu verrechnen"
+    },
+    "planung": {
+      "titel": "Einsatz",
+      "planen": "Einsatz planen",
+      "aendern": "Ändern",
+      "dialog": "Einsatz planen",
+      "dauer": "Dauer {{dauer}}",
+      "dauerFeld": "Dauer",
+      "ganzerTag": "Ganzer Tag",
+      "leitung": "Leitet den Einsatz",
+      "leitet": "{{name}} (leitet)",
+      "team": "Kommt mit",
+      "ohneTermin": "Noch kein Termin. Der Termin erscheint im Zeitplan und am Handy aller Eingeteilten.",
+      "ohneTerminMit": "Noch kein Termin, zuständig {{name}}.",
+      "entfernen": "Einsatz entfernen",
+      "hinweise": "Hinweise zur Belegung",
+      "belegt": {
+        "abwesend": "{{name}} ist an dem Tag abwesend",
+        "baustelle": "{{name}} ist auf der Baustelle {{was}} eingeteilt",
+        "service": "{{name}} hat schon den Service-Termin {{was}}"
+      }
+    },
+    "anlage": {
+      "zurueck": "Zurück zu den Anlagen",
+      "nichtGefunden": "Diese Anlage gibt es nicht mehr oder du darfst sie nicht sehen.",
+      "offen_one": "{{count}} offener Fall",
+      "offen_other": "{{count}} offene Fälle",
+      "rma_one": "{{count}} beim Hersteller",
+      "rma_other": "{{count}} beim Hersteller",
+      "bearbeiten": "Anlage bearbeiten",
+      "netzbetreiber": "Netzbetreiber",
+      "elektriker": "Elektriker",
+      "betrieb": "Betrieb",
+      "portal": "Portal öffnen",
+      "wartung": "Wartung",
+      "keinVertrag": "Kein Wartungsvertrag.",
+      "vertrag": "Wartungsvertrag",
+      "naechste": "nächste {{datum}}",
+      "keineKomponenten": "Keine Komponenten erfasst. «Anlage bearbeiten» ergänzt sie.",
+      "faelle": "Service-Fälle",
+      "keineFaelle": "Noch kein Service-Fall an dieser Anlage.",
+      "rapporte": "Rapporte",
+      "keineRapporte": "Noch kein Rapport.",
+      "dokumente": "Dokumente",
+      "keineDokumente": "Keine Dokumente am Projekt oder an der Anlage.",
+      "akteOeffnen": "Ganze Anlage-Akte öffnen"
     }
   },
   "wartung": {
@@ -3944,6 +4004,23 @@
       "uhrzeit": "Bitte eine Uhrzeit wie 07:30 eingeben.",
       "pause": "Pause zwischen 0 und 600 Minuten.",
       "stoppVorStart": "Stopp muss nach dem Start liegen."
+    },
+    "service": {
+      "fehler": "Fehler",
+      "dauer": "ca. {{stunden}} h",
+      "vorOrt": "Vor Ort",
+      "angekommen": "Vor Ort angekommen",
+      "ansprechperson": "Ansprechperson vor Ort",
+      "zugang": "Zugang",
+      "anlage": "Anlage",
+      "monitoring": "Monitoring",
+      "checkliste": "Checkliste",
+      "seriennummer": "Seriennummer",
+      "snAendern": "Seriennummer ändern",
+      "aendern": "Ändern",
+      "erfassen": "Erfassen",
+      "speichern": "Speichern",
+      "abbrechen": "Abbrechen"
     }
   },
   "unterschrift": {
@@ -6168,11 +6245,12 @@
       "beides": "PV und Wärme"
     },
     "reiter": {
-      "pruefen": "Prüfen",
+      "pruefen": "Zu entscheiden",
       "beobachten": "Beobachten",
       "bewilligt": "Bewilligt",
       "alle": "Alle",
-      "annahmen": "Annahmen"
+      "annahmen": "Annahmen",
+      "pipeline": "Pipeline"
     },
     "leer": {
       "pruefen": "Nichts zu prüfen",
@@ -6454,6 +6532,136 @@
       "label": "Verantwortlich bei uns",
       "standard": "Verantwortlich für neue Grossprojekte",
       "niemand": "Niemand"
+    },
+    "stufe": {
+      "qualifizieren": "Qualifizieren",
+      "erstkontakt": "Erstkontakt",
+      "besichtigung": "Besichtigung",
+      "daten": "Daten & Machbarkeit",
+      "angebot": "Angebot & Verhandlung",
+      "vertrag": "Vertrag",
+      "verloren": "Verloren"
+    },
+    "stufeText": {
+      "qualifizieren": "Eigentümer klären",
+      "erstkontakt": "Gespräch vereinbaren",
+      "besichtigung": "vor Ort",
+      "daten": "Lastgang, Statik, Netz",
+      "angebot": "Angebot Youdera",
+      "vertrag": "unterschrieben"
+    },
+    "pipeline": {
+      "ohneSchritt": "Kein nächster Schritt",
+      "zahl": {
+        "offen": "in der Pipeline ({{n}} Projekte)",
+        "gewichtet": "gewichtet nach Stufe",
+        "ziel": "unterschrieben, Ziel {{jahr}}",
+        "investition": "Investition gewichtet",
+        "ueberfaellig": "nächste Schritte überfällig",
+        "ohneSchritt": "ohne nächsten Schritt"
+      },
+      "leerTitel": "Noch nichts in der Pipeline",
+      "leerText": "Sagst du bei «Zu entscheiden» Ja zu einem Grossprojekt, kommt es hierher und wird bis zum Vertrag begleitet.",
+      "zurAuswahl": "Zu entscheiden",
+      "verlorene": "Verlorene ({{n}})"
+    },
+    "auswahl": {
+      "eigentuemer": "Eigentümer",
+      "unbekannt": "noch unbekannt",
+      "ja": "Ja, angehen",
+      "nein": "Nein …",
+      "tasteJa": "Ja, angehen (in die Pipeline)",
+      "tasteB": "Beobachten",
+      "tasteN": "Nein mit Grund",
+      "tasten": "Tasten:",
+      "leer": "Die nächsten Treffer kommen am Montag aus der Dachsuche, Treffer aus Ausschreibungen sofort.",
+      "woche": "Diese Woche",
+      "anzahl": {
+        "bewilligt": "Ja",
+        "beobachten": "Beobachten",
+        "verworfen": "Nein",
+        "offen": "Noch offen"
+      },
+      "vorrat": "Vorrat: {{n}} Treffer warten. Diese Woche {{woche}} von {{max}} freigegeben."
+    },
+    "projekt": {
+      "verlorenTitel": "Grossprojekt verloren",
+      "verlorenText": "Warum hat es nicht geklappt? Der Grund hilft beim nächsten Mal.",
+      "vertragTitel": "Vertrag unterschrieben",
+      "vertragText": "Datum und Leistung zählen für das Ziel. Danach geht es in Projekte & Montage weiter.",
+      "verloren": "Verloren",
+      "vertrag": "Vertrag eintragen",
+      "vertragAm": "Unterschrieben am",
+      "vertragKwp": "Leistung (kWp)",
+      "unterschrieben": "Unterschrieben {{datum}}",
+      "wieder": "Wieder aufnehmen",
+      "weiter": "Weiter: {{stufe}}",
+      "stufen": "Stufen bis zum Vertrag",
+      "seit": "seit {{datum}}",
+      "schritt": "Nächster Schritt",
+      "ueberfaellig": "überfällig",
+      "schrittText": "Was ist als Nächstes zu tun?",
+      "schrittPlatzhalter": "z. B. Lastgang bei AEW anfordern",
+      "schrittAm": "Bis wann?",
+      "unterlagen": "Unterlagen für Youdera",
+      "youdera": {
+        "angebot": "Angebot da",
+        "gesendet": "Dossier gesendet",
+        "offen": "noch nicht gesendet",
+        "dossierAm": "Dossier gesendet am",
+        "angebotAm": "Angebot erhalten am",
+        "preis": "Preis (Rp./kWh)",
+        "laufzeit": "Laufzeit (Jahre)",
+        "notiz": "Notiz zu Youdera"
+      },
+      "kontakte": "Wer entscheidet",
+      "person": "Person",
+      "keineKontakte": "Noch niemand erfasst. Ohne Entscheider kommt kein Vertrag zustande.",
+      "entfernen": "{{name}} entfernen",
+      "ausRecherche": "{{name}} aus der Recherche übernehmen",
+      "feld": {
+        "name": "Name",
+        "funktion": "Funktion",
+        "telefon": "Telefon",
+        "email": "E-Mail",
+        "rolle": "Rolle"
+      },
+      "parzelleEgid": "Parzelle · EGID"
+    },
+    "rolle": {
+      "entscheider": "Entscheider",
+      "technik": "Technik",
+      "einfluss": "Einfluss",
+      "andere": "Andere"
+    },
+    "rechner": {
+      "titel": "Wirtschaftlichkeit",
+      "kwp": "Leistung (kWp)",
+      "kwh_pro_kwp": "Ertrag (kWh/kWp)",
+      "verbrauch_kwh": "Verbrauch Kunde (kWh/Jahr)",
+      "eigenverbrauch_prozent": "Eigenverbrauch (%)",
+      "strompreis_rp": "Strompreis heute (Rp./kWh)",
+      "preis_rp": "Contracting-Preis (Rp./kWh)",
+      "chf_pro_kwp": "Investition (CHF/kWp)",
+      "heute": "Heute",
+      "mit": "Mit Contracting",
+      "erklaerung": "Stromkosten pro Jahr. {{kwh}} kWh vom eigenen Dach (von {{ertrag}} kWh Ertrag).",
+      "ersparnis": "Kunde spart pro Jahr",
+      "ueberLaufzeit": "über {{jahre}} Jahre",
+      "investition": "Investition (Bauauftrag)",
+      "waerme": "Dazu Wärme: ca. {{kw}} kW, Jahresrate ca. {{rate}}.",
+      "ertrag": "Ertrag sonnendach.ch"
+    },
+    "verlauf": {
+      "notiz": "Notiz",
+      "anruf": "Anruf",
+      "mail": "Mail",
+      "termin": "Termin",
+      "art": "Art des Eintrags",
+      "text": "Was ist passiert?",
+      "platzhalter": "Was ist passiert? Ctrl+Enter hält es fest.",
+      "festhalten": "Festhalten",
+      "stufe": "Stufe: {{stufe}}"
     }
   },
   "team": {
@@ -6780,5 +6988,186 @@
     "stellvertretung": "Stellvertretung bei Abwesenheit",
     "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
     "vertretungFuer": "Stellvertretung für {{name}}"
+  },
+  "assistent": {
+    "titel": "Assistent",
+    "beschreibung": "Fragen ans CRM, fertige Aufträge, Dokumente lesen und Texte entwerfen. Der Assistent schlägt vor, du entscheidest.",
+    "ueberall": "Überall mit",
+    "textSchreiben": "Text schreiben",
+    "mailLesen": "Mail lesen",
+    "ansicht": {
+      "fragen": "Fragen",
+      "auftraege": "Aufträge",
+      "dokument": "Dokument lesen",
+      "verlauf": "Verlauf",
+      "im_crm": "Im CRM",
+      "kosten": "Kosten",
+      "stil": "Mein Schreibstil",
+      "einstellungen": "Einstellungen",
+      "assistent": "Fragen"
+    },
+    "frageLabel": "Frage an den Assistenten",
+    "fragen": "Fragen",
+    "platzhalter": "Frag z. B. «Welche Offerten über CHF 30'000 warten seit mehr als 2 Wochen?»",
+    "platzhalterBezug": "Frag zum offenen Datensatz, z. B. «Was ist hier noch offen?»",
+    "liest": "Liest die Daten, auf die du Zugriff hast …",
+    "neuesGespraech": "Neues Gespräch",
+    "guteFragen": "Gute Fragen für dich",
+    "letzteGespraeche": "Letzte Gespräche",
+    "nochKeine": "Noch keine Gespräche.",
+    "tabelle": "Antwort als Tabelle",
+    "mehr": "Es gibt mehr Treffer. Frag genauer, um sie einzugrenzen.",
+    "quellen": "Gelesen: {{liste}}. Nur was du sehen darfst.",
+    "aufgabeAnlegen": "Aufgabe anlegen",
+    "mailEntwerfen": "Mail entwerfen",
+    "oeffnen": "Öffnen",
+    "uebernommen": "Übernommen",
+    "mitBezug": "Der Assistent kennt den offenen Datensatz.",
+    "fensterText": "Frag etwas zum CRM, die Antwort kommt mit Links und Vorschlägen.",
+    "auftraegeText": "Fertige Aufträge mit einem Klick. Deine Rolle steht oben. Eigene Aufträge siehst nur du.",
+    "auftragNeu": "Eigener Auftrag",
+    "auftragNeuText": "Eine Frage oder ein Text, den du oft brauchst.",
+    "auftragTitel": "Titel",
+    "auftragArt": "Art",
+    "auftragTextart": "Textart",
+    "auftragAuftrag": "Auftrag an den Assistenten",
+    "auftragHinweis": "So, wie du es einer Kollegin sagen würdest.",
+    "fuerAlle": "Für alle (Firmen-Auftrag)",
+    "artFrage": "Frage",
+    "artText": "Text",
+    "artGespraech": "Gespräch",
+    "artDokument": "Dokument",
+    "ausfuehren": "Ausführen",
+    "entfernen": "Entfernen",
+    "rolle": {
+      "eigene": "Meine Aufträge",
+      "alle": "Für alle",
+      "verkauf": "Verkauf",
+      "innendienst": "Innendienst",
+      "projektleitung": "Projektleitung",
+      "montage": "Montage",
+      "buchhaltung": "Buchhaltung",
+      "admin": "Geschäftsleitung"
+    },
+    "dokumentZiehen": "PDF oder Foto hierher ziehen oder klicken",
+    "dokumentWaehlen": "Dokument wählen",
+    "dokumentArten": "Lieferantenrechnung, Lieferanten-Offerte, Datenblatt, Bewilligung, Netzbetreiber-Antwort, Beleg (bis 5 MB)",
+    "dokumentLiest": "Liest «{{name}}» …",
+    "sicher": "sicher",
+    "pruefen": "prüfen",
+    "gehoertZu": "Gehört wahrscheinlich zu",
+    "naechsterSchritt": "Nächster Schritt",
+    "kopieren": "Angaben kopieren",
+    "zuletztGelesen": "Zuletzt gelesen",
+    "nochKeineDokumente": "Noch keine Dokumente gelesen.",
+    "dokArt": {
+      "lieferantenrechnung": "Lieferantenrechnung",
+      "lieferanten_offerte": "Lieferanten-Offerte",
+      "auftragsbestaetigung": "Auftragsbestätigung",
+      "lieferschein": "Lieferschein",
+      "datenblatt": "Datenblatt",
+      "bewilligung": "Bewilligung",
+      "netzbetreiber": "Netzbetreiber",
+      "kundenmail": "Kundenmail",
+      "vertrag": "Vertrag",
+      "beleg": "Beleg",
+      "plan": "Plan",
+      "sonstiges": "Sonstiges"
+    },
+    "verlaufTitel": "Mein Verlauf",
+    "verlaufText": "Nur für dich sichtbar. Nach 90 Tagen kommt ein Gespräch in den Papierkorb.",
+    "verlaufLeer": "Noch kein Verlauf",
+    "verlaufLeerText": "Stell unter «Fragen» deine erste Frage oder lies ein Dokument.",
+    "imCrmTitel": "Der Assistent im CRM",
+    "imCrmText": "Wo der Assistent mitarbeitet. Aufrufe und Kosten sind deine eigenen in diesem Monat.",
+    "imCrmTextAdmin": "Wo der Assistent mitarbeitet, mit Aufrufen und Kosten aller in diesem Monat. Jede Funktion lässt sich einzeln ausschalten.",
+    "schalter": "{{name}} ein oder aus",
+    "ein": "ein",
+    "aus": "aus",
+    "spalte": {
+      "funktion": "Funktion",
+      "wo": "Wo",
+      "wann": "Wann",
+      "aufrufe": "Aufrufe",
+      "kosten": "Kosten",
+      "ein": "Ein",
+      "was": "Was",
+      "art": "Art",
+      "runden": "Fragen"
+    },
+    "funktion": {
+      "frage": "Fragen ans CRM",
+      "dokument": "Dokumente lesen",
+      "posteingang": "Posteingang einordnen",
+      "grossprojekt_recherche": "Grossprojekte recherchieren"
+    },
+    "wo": {
+      "assistent": "Assistent",
+      "akten": "Akten (Kunde, Lead, Offerte, Projekt, Fall)",
+      "inbox": "Posteingang",
+      "sales": "Anfragen & Leads",
+      "today": "Mein Tag",
+      "quotes": "Offerten",
+      "expenses": "Spesen",
+      "contracting": "Grossprojekte",
+      "automations": "Automationen",
+      "marketing": "Marketing"
+    },
+    "wann": {
+      "klick": "auf Klick",
+      "zeitplan": "im Zeitplan",
+      "taeglich": "einmal am Tag"
+    },
+    "tabellen": {
+      "kontakte": "Kunden",
+      "verkaufschancen": "Leads",
+      "offerten": "Offerten",
+      "projekte": "Projekte",
+      "service_faelle": "Service-Fälle",
+      "rechnungen": "Rechnungen",
+      "wartungsvertraege": "Wartungsverträge",
+      "aufgaben": "Aufgaben",
+      "aktivitaeten": "Verlauf"
+    },
+    "feld": {
+      "nummer": "Nummer",
+      "titel": "Titel",
+      "kunde": "Kunde",
+      "ort": "Ort",
+      "person": "Zuständig",
+      "status": "Stand",
+      "stufe": "Stufe",
+      "betrag_rappen": "Betrag exkl.",
+      "vertragswert_rappen": "Vertragswert",
+      "total_rappen": "Total",
+      "bezahlt_rappen": "Bezahlt",
+      "preis_rappen": "Preis",
+      "angebot_am": "Verschickt",
+      "nachfassen_am": "Nachgefasst",
+      "entscheid_am": "Entscheid",
+      "eingang_am": "Eingang",
+      "termin_am": "Termin",
+      "wiedervorlage_am": "Wiedervorlage",
+      "faellig_am": "Fällig",
+      "datum": "Datum",
+      "baubeginn": "Baubeginn",
+      "unterzeichnet_am": "Unterzeichnet",
+      "naechste_wartung": "Nächste Wartung",
+      "mahnstufe": "Mahnstufe",
+      "leistung_kwp": "kWp",
+      "prioritaet": "Priorität",
+      "quelle": "Quelle",
+      "interesse": "Interesse",
+      "zeitpunkt": "Wann",
+      "text": "Text",
+      "art": "Art",
+      "erstellt_am": "Erstellt",
+      "erledigt_am": "Erledigt",
+      "email": "E-Mail",
+      "telefon": "Telefon",
+      "material_status": "Material",
+      "bau_status": "Bau",
+      "paket": "Paket"
+    }
   }
 }

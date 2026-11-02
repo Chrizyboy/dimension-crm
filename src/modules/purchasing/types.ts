@@ -47,7 +47,7 @@ export interface Bestellung {
   firma_strasse: string | null
   firma_plz: string | null
   firma_ort: string | null
-  // Entscheid 0039
+  // Entscheid 0041
   erwartet_am: string | null
   baubeginn: string | null
   ab_nummer: string | null

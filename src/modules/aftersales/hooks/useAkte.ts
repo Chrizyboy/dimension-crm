@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeAkte, ladeLeitstandzahlen } from '../services/akte'
+import { ladeAkte, ladeAnlageAkte, ladeLeitstandzahlen } from '../services/akte'
 
 const an = Boolean(supabase)
 
@@ -11,3 +11,7 @@ export const useAkte = (id: string) =>
 /** Zahlen des Leitstands (RMA offen, zu verrechnen). */
 export const useLeitstandzahlen = () =>
   useQuery({ queryKey: ['service', 'leitstand'], enabled: an, queryFn: ladeLeitstandzahlen, staleTime: 60_000 })
+
+/** Alles zu einer Anlage (Anlage-Akte). */
+export const useAnlageAkte = (id: string) =>
+  useQuery({ queryKey: ['service', 'anlage', id], enabled: an, queryFn: () => ladeAnlageAkte(id) })

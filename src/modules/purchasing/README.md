@@ -5,7 +5,7 @@
 Lager nur in Bulle (Bestand, Reservierung je Projekt, Mindestmenge); Lagerorte sind Daten.
 
 Freigegeben von Chris am 21.10.2026 (ERP-Lückenanalyse, Entscheid 0009), gebaut in Phase 9a (Entscheid 0019),
-vervollständigt am 2.11.2026 (Entscheid 0039): Leitstand, Bestellen je Lieferant (Sammelbestellung), Materialplan
+vervollständigt am 2.11.2026 (Entscheid 0041): Leitstand, Bestellen je Lieferant (Sammelbestellung), Materialplan
 mit «bestellen bis», Freigabegrenze, Auftragsbestätigung (KI liest Mail/PDF), Lieferung, Rechnungsabgleich.
 
 ## Daten

@@ -1,4 +1,4 @@
--- Einkauf & Material vollständig (Entscheid 0039), Teil 2: Sichten für Leitstand, Materialplan, Bedarf je Lieferant
+-- Einkauf & Material vollständig (Entscheid 0041), Teil 2: Sichten für Leitstand, Materialplan, Bedarf je Lieferant
 -- und Kennzahlen der Lieferanten. Alle Sichten laufen mit den Rechten der aufrufenden Person.
 
 /**
@@ -37,7 +37,7 @@ select b.id, b.nummer, b.status, b.lieferant_id, b.projekt_id, b.lagerort_id, b.
        (select a.status from public.ausgangskorb a where a.bezug_tabelle = 'bestellungen' and a.bezug_id = b.id
            and a.geloescht_am is null order by a.erstellt_am desc limit 1) as mail_status,
        f.name as firma, f.strasse as firma_strasse, f.plz as firma_plz, f.ort as firma_ort,
-       -- neu (Entscheid 0039)
+       -- neu (Entscheid 0041)
        b.erwartet_am, b.baubeginn, b.ab_nummer, b.ab_am, b.ab_termin, b.ab_total_rappen, b.tracking, b.lieferhinweis,
        b.kontakt_vor_ort, b.nachgefragt_am, b.lieferscheine, b.vorgelegt_am, b.bestellt_von,
        bp.name as bestellt_von_name,

@@ -1,4 +1,4 @@
-# 0039 – Einkauf & Material vollständig
+# 0041 – Einkauf & Material vollständig
 
 **Datum:** 02.11.2026 · **Stand:** angenommen (Chris: «jedes Modul einzeln muss seinen Zweck erfüllen»)
 

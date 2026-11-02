@@ -1,4 +1,4 @@
--- Einkauf & Material vollständig (Entscheid 0039), Teil 4: Wareneingang für Sammelbestellungen, Rechnungsabgleich
+-- Einkauf & Material vollständig (Entscheid 0041), Teil 4: Wareneingang für Sammelbestellungen, Rechnungsabgleich
 -- mit den Lieferantenrechnungen aus AbaNinja, Mails zur Bestellung und Meldungen (Glocke) aus dem Zeitplan.
 
 /**

@@ -3,7 +3,7 @@ import { db } from './bestellungen'
 
 /**
  * Datenzugriff für Leitstand, Materialplan, Sammelbestellung, Auftragsbestätigung und Rechnungsabgleich
- * (Entscheid 0039). Die Regeln (Freigabegrenze, Runden auf VE, Abweichungen) liegen in der Datenbank.
+ * (Entscheid 0041). Die Regeln (Freigabegrenze, Runden auf VE, Abweichungen) liegen in der Datenbank.
  */
 
 /** Offener Bedarf aller Projekte und des Lagers, je mit günstigstem Lieferanten. */

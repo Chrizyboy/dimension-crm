@@ -1,4 +1,4 @@
--- Einkauf & Material vollständig (Entscheid 0039), Teil 3: Abläufe. Sammelbestellung über Projekte und Lager,
+-- Einkauf & Material vollständig (Entscheid 0041), Teil 3: Abläufe. Sammelbestellung über Projekte und Lager,
 -- Runden auf Verpackungseinheiten, Freigabe mit Grenze, Auftragsbestätigung, Rechnungsabgleich, Meldungen.
 
 /**

@@ -126,7 +126,7 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
   })
 
-  // Einkauf (Entscheid 0039): fehlende Auftragsbestätigung, gefährdete Montage, «bestellen bis» – nur Glocke.
+  // Einkauf (Entscheid 0041): fehlende Auftragsbestätigung, gefährdete Montage, «bestellen bis» – nur Glocke.
   ergebnis.einkauf = await job('einkauf', 60, async () => {
     const n = await dienst.rpc<number>('einkauf_melden', {})
     return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'} Einkauf`

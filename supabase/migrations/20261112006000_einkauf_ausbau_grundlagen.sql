@@ -1,4 +1,4 @@
--- Einkauf & Material vollständig (2.11.2026, Entscheid 0039): Konditionen der Lieferanten, Verpackungseinheit und
+-- Einkauf & Material vollständig (2.11.2026, Entscheid 0041): Konditionen der Lieferanten, Verpackungseinheit und
 -- Lieferzeit je Preis, Auftragsbestätigung, Rechnungsabgleich, Freigabegrenze und Sammelbestellung über Projekte.
 -- Nur Ergänzungen: bestehende Spalten und Abläufe aus Phase 9a (Entscheid 0019) bleiben.
 
