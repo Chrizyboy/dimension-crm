@@ -77,6 +77,7 @@ Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`pers
 - **`moegliche_dubletten(name, email, telefon, ohne)`**: bis 5 Treffer mit Grund `email`, `telefon` oder `name`.
 - **`kontakt_export(kontakt)`**: alle Daten zur Person als JSON (Auskunft nach revDSG), ohne die Rohdaten aus V233.
 - Ergebnisse von Kontaktversuchen: `auswahlwerte` Liste `kontaktergebnis` (nicht erreicht, Combox, Rückruf, meldet sich, Termin, kein Interesse).
+- **`kontakt_zugehoerigkeiten`** (02.11.2026): Ansprechpersonen, Person (`person_id`) gehört zu Firma oder Haushalt (`firma_id`), mit `funktion`, Merkern `hauptkontakt` (höchstens einer pro Firma, ein neuer verdrängt den alten per Trigger), `unterschreibt`, `rechnungen`, `vor_ort`, Wunsch `bevorzugt` und direkter Nummer/Mail. Sicht `kontakt_zugehoerigkeiten_sicht` mit Namen beider Seiten. Gemeinsam für Adressbuch und Kundenakte, App nur über `src/services/zugehoerigkeiten.ts`.
 
 Zugriffsregeln rufen das Recht als `(select intern.hat_recht('…'))` auf, damit Postgres es einmal pro Abfrage prüft. Neue Tabellen bekommen das über `intern.richte_fachtabelle_ein` automatisch. Siehe Entscheid 0013.
 

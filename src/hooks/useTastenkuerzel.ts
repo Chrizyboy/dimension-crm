@@ -10,7 +10,7 @@ import { useUi } from '@/stores/ui'
 const SPRUNG_MS = 1500
 
 /**
- * Globale Tastenkürzel: Ctrl/Cmd K öffnet die Befehlspalette, Ctrl/Cmd B klappt die Seitenleiste,
+ * Globale Tastenkürzel: Ctrl/Cmd K öffnet die Befehlspalette, Ctrl/Cmd J den Assistenten, Ctrl/Cmd B klappt die Seitenleiste,
  * «?» zeigt alle Kürzel, «G» und dann ein Buchstabe springt in einen Bereich (G T = Mein Tag, G K = Kunden …).
  * Kürzel einer Ansicht (z. B. N = neu) kommen über `useTaste`.
  */
@@ -22,6 +22,11 @@ export function useTastenkuerzel(): void {
       if (istKuerzel(e, 'k')) {
         e.preventDefault()
         ui.setBefehlspalette(!ui.befehlspaletteOffen)
+        return
+      }
+      if (istKuerzel(e, 'j')) {
+        e.preventDefault()
+        ui.setAssistent(!ui.assistentOffen)
         return
       }
       if (istKuerzel(e, 'b')) {

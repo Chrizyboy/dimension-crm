@@ -62,11 +62,12 @@ select public.tag_erinnern(((date_trunc('week', now() at time zone 'Europe/Zuric
 select is((select count(*)::int from public.benachrichtigungen where titel_de like 'Woche in Zahlen:%'
              and person_id = '00000000-0000-0000-0000-0000000041b2'), 1, 'Woche in Zahlen einmal an Admin');
 
--- Kennzahlen Abwicklung: erledigter Service-Fall mit Dauer in Tagen
+-- Kennzahlen Abwicklung: erledigter Service-Fall mit Dauer in Tagen. Die Dauer zählt Zürcher Kalendertage; darum
+-- auch «erledigt am» als Zürcher Datum, sonst fehlt zwischen Mitternacht Zürich und Mitternacht UTC ein Tag.
 insert into public.service_faelle (id, nummer, kontakt_id, titel, status, erledigt_am, erstellt_am) values
   ('00000000-0000-0000-0000-0000000041f1', 'S9411', '00000000-0000-0000-0000-0000000041c1', 'Wechselrichter', 'erledigt',
-   current_date, now() - interval '6 days');
-select is((select tage from public.kennzahlen_fakten(current_date - 30, current_date)
+   (now() at time zone 'Europe/Zurich')::date, now() - interval '6 days');
+select is((select tage from public.kennzahlen_fakten(current_date - 30, current_date + 1)
             where schluessel = 'faelle_dauer' and id = '00000000-0000-0000-0000-0000000041f1'), 6, 'Dauer des Falls in Tagen');
 select ok(not has_function_privilege('authenticated', 'public.tag_erinnern(timestamptz)', 'execute'), 'nur der Zeitplan');
 
