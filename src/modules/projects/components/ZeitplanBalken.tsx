@@ -27,6 +27,7 @@ export function ZeitplanBalken({
   start,
   tage,
   ziehbar,
+  platz = true,
   onOeffnen,
   onZiehen,
 }: {
@@ -34,6 +35,8 @@ export function ZeitplanBalken({
   start: string
   tage: number
   ziehbar: boolean
+  /** Rechts daneben ist frei: ein zu schmaler Balken darf seinen Text dort zeigen. */
+  platz?: boolean
   onOeffnen: (b: PlanBalken) => void
   onZiehen: (b: PlanBalken, tage: number, nurEnde: boolean) => void
 }) {
@@ -47,8 +50,10 @@ export function ZeitplanBalken({
   useLayoutEffect(() => {
     const x = textRef.current
     const knopf = ref.current
-    if (x && knopf) setAussen(knopf.clientWidth < 44 && x.scrollWidth > x.clientWidth + 1)
-  }, [b.text, l?.breite])
+    // Service-Termine liegen oft an Folgetagen: ihr Text steht nur daneben, wenn dort frei ist (ganz im Titel).
+    if (x && knopf)
+      setAussen((b.art === 'service' ? platz : knopf.clientWidth < 44) && x.scrollWidth > x.clientWidth + 1)
+  }, [b.text, b.art, platz, l?.breite])
   if (!l) return null
 
   const runter = (e: PointerEvent<HTMLButtonElement>) => {
