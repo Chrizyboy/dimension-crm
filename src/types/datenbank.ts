@@ -3255,6 +3255,13 @@ export type Database = {
             referencedRelation: 'service_faelle'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'garantiefaelle_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
         ]
       }
       geraete: {
@@ -6053,6 +6060,7 @@ export type Database = {
           geloescht_am: string | null
           id: string
           kuerzel: string
+          kurzzeichen: string | null
           name: string
           profil: NonNullable<Json>
           rechte: string[]
@@ -6077,6 +6085,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           kuerzel: string
+          kurzzeichen?: string | null
           name: string
           profil?: NonNullable<Json>
           rechte?: string[]
@@ -6100,6 +6109,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           kuerzel?: string
+          kurzzeichen?: string | null
           name?: string
           profil?: NonNullable<Json>
           rechte?: string[]
@@ -6465,6 +6475,13 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
           {
@@ -7281,6 +7298,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'rapporte_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'rapporte_wartungsvertrag_id_fkey'
             columns: ['wartungsvertrag_id']
             isOneToOne: false
@@ -7582,6 +7606,13 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
           {
@@ -7977,6 +8008,7 @@ export type Database = {
           auswirkung: string | null
           beschreibung: string | null
           checkliste: NonNullable<Json>
+          dauer_minuten: number | null
           erledigt_am: string | null
           erstellt_am: string
           erstellt_von: string | null
@@ -7999,6 +8031,7 @@ export type Database = {
           quelle: string
           reaktion_bis: string | null
           status: string
+          team: string[]
           termin_am: string | null
           titel: string
           verlauf: NonNullable<Json>
@@ -8015,6 +8048,7 @@ export type Database = {
           auswirkung?: string | null
           beschreibung?: string | null
           checkliste?: NonNullable<Json>
+          dauer_minuten?: number | null
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -8037,6 +8071,7 @@ export type Database = {
           quelle?: string
           reaktion_bis?: string | null
           status?: string
+          team?: string[]
           termin_am?: string | null
           titel: string
           verlauf?: NonNullable<Json>
@@ -8052,6 +8087,7 @@ export type Database = {
           auswirkung?: string | null
           beschreibung?: string | null
           checkliste?: NonNullable<Json>
+          dauer_minuten?: number | null
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -8074,6 +8110,7 @@ export type Database = {
           quelle?: string
           reaktion_bis?: string | null
           status?: string
+          team?: string[]
           termin_am?: string | null
           titel?: string
           verlauf?: NonNullable<Json>
@@ -10833,6 +10870,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'rapporte_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'rapporte_wartungsvertrag_id_fkey'
             columns: ['wartungsvertrag_id']
             isOneToOne: false
@@ -10992,6 +11036,27 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      service_termine: {
+        Row: {
+          auswirkung: string | null
+          datum: string | null
+          dauer_minuten: number | null
+          ende_am: string | null
+          garantie: boolean | null
+          id: string | null
+          kunde: string | null
+          nummer: string | null
+          ort: string | null
+          personen: string[] | null
+          plz: string | null
+          prioritaet: string | null
+          status: string | null
+          termin_am: string | null
+          titel: string | null
+        }
+        ComputedFields: never
+        Relationships: []
       }
       spesen_liste: {
         Row: {
@@ -11397,6 +11462,7 @@ export type Database = {
       }
       anfrage_uebernehmen: { Args: { p: Json }; Returns: Json }
       anfrage_uebersprungen: { Args: { p_kennung: string; p_quelle: string }; Returns: undefined }
+      anlage_akte: { Args: { p_id: string }; Returns: Json }
       anmelde_sprache: { Args: { p_email: string; p_sprache: string }; Returns: undefined }
       anschreiben_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       anschreiben_aendern: { Args: { p_betreff: string; p_id: string; p_text: string }; Returns: undefined }
@@ -11929,9 +11995,18 @@ export type Database = {
       service_aus_website: { Args: { p: Json }; Returns: Json }
       service_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_nr: number }; Returns: undefined }
       service_checkliste_dazu: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_einsatz: {
+        Args: { p_dauer: number; p_id: string; p_person: string; p_team: string[]; p_termin: string }
+        Returns: undefined
+      }
       service_eintrag: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
+      service_eintrag_handy: {
+        Args: { p_am?: string; p_art: string; p_eintrag: string; p_id: string; p_text: string }
+        Returns: undefined
+      }
       service_kunde_aus_meldung: { Args: { p_id: string }; Returns: string }
       service_leitstand: { Args: Record<PropertyKey, never>; Returns: Json }
+      service_seriennummer: { Args: { p_id: string; p_nr: number; p_seriennummer: string }; Returns: undefined }
       service_zuordnen: {
         Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
         Returns: undefined

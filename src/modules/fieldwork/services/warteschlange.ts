@@ -25,6 +25,9 @@ export type RpcName =
   | 'zeit_stoppen'
   | 'zeit_speichern'
   | 'nachtrag_speichern'
+  | 'service_eintrag_handy'
+  | 'service_checkliste'
+  | 'service_seriennummer'
 
 interface Basis {
   nr?: number
