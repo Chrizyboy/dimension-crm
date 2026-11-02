@@ -3977,6 +3977,135 @@ export type Database = {
           },
         ]
       }
+      ki_gespraeche: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          bezug_id: string | null
+          bezug_tabelle: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kosten_millirappen: number
+          nachrichten: NonNullable<Json>
+          person_id: string
+          titel: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bezug_id?: string | null
+          bezug_tabelle?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_millirappen?: number
+          nachrichten?: NonNullable<Json>
+          person_id?: string
+          titel: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bezug_id?: string | null
+          bezug_tabelle?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_millirappen?: number
+          nachrichten?: NonNullable<Json>
+          person_id?: string
+          titel?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ki_gespraeche_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ki_vorlagen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          auftrag: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kundenart: string | null
+          person_id: string | null
+          reihenfolge: number
+          rollen: string[]
+          text_de: string
+          text_fr: string
+          titel_de: string
+          titel_fr: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          auftrag: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kundenart?: string | null
+          person_id?: string | null
+          reihenfolge?: number
+          rollen?: string[]
+          text_de?: string
+          text_fr?: string
+          titel_de: string
+          titel_fr: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          auftrag?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kundenart?: string | null
+          person_id?: string | null
+          reihenfolge?: number
+          rollen?: string[]
+          text_de?: string
+          text_fr?: string
+          titel_de?: string
+          titel_fr?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ki_vorlagen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       kontakt_zugehoerigkeiten: {
         Row: {
           alt_daten: Json | null
