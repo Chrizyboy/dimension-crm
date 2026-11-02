@@ -1,6 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type {
   BudgetZeile,
+  Kampagne,
   GespeicherteZielgruppe,
   KampagnenLead,
   KampagnenZahlen,
@@ -52,12 +53,15 @@ export async function speichereKampagne(k: Partial<Werbekampagne> & { name: stri
     .select('id')
     .single()
   if (error) throw error
-  return (data as { id: string }).id
+  return data.id
 }
 
 /** Kampagne in den Papierkorb. */
 export async function kampagnePapierkorb(id: string) {
-  const { error } = await db().from('marketing_kampagnen').update({ geloescht_am: new Date().toISOString() }).eq('id', id)
+  const { error } = await db()
+    .from('marketing_kampagnen')
+    .update({ geloescht_am: new Date().toISOString() })
+    .eq('id', id)
   if (error) throw error
 }
 
@@ -65,14 +69,14 @@ export async function kampagnePapierkorb(id: string) {
 export async function ladeKampagnenZahlen(): Promise<KampagnenZahlen[]> {
   const { data, error } = await db().rpc('kampagnen_zahlen')
   if (error) throw error
-  return data as unknown as KampagnenZahlen[]
+  return data
 }
 
 /** «Woher kommen die Aufträge?» für ein Jahr. */
 export async function ladeQuellen(jahr: number): Promise<QuellenZeile[]> {
   const { data, error } = await db().rpc('marketing_quellen', { p_jahr: jahr })
   if (error) throw error
-  return data as unknown as QuellenZeile[]
+  return data
 }
 
 /** Budget und Kosten je Kanal (leer ohne Recht). */
@@ -82,7 +86,8 @@ export async function ladeBudget(jahr: number): Promise<BudgetZeile[]> {
   return data as unknown as BudgetZeile[]
 }
 
-const LEAD = 'id, nummer, kontakt_id, kampagne_id, quelle, eingang_am, stufe, tour_person_id, kontakte(vorname, nachname, firma, email), objekte(ort)'
+const LEAD =
+  'id, nummer, kontakt_id, kampagne_id, quelle, eingang_am, stufe, tour_person_id, kontakte(vorname, nachname, firma, email), objekte(ort)'
 
 type LeadRoh = Omit<KampagnenLead, 'name' | 'ort' | 'email'> & {
   kontakte: { vorname: string | null; nachname: string | null; firma: string | null; email: string | null } | null
@@ -97,8 +102,7 @@ const alsLead = (r: LeadRoh): KampagnenLead => ({
   eingang_am: r.eingang_am,
   stufe: r.stufe,
   tour_person_id: r.tour_person_id,
-  name:
-    [r.kontakte?.vorname, r.kontakte?.nachname].filter(Boolean).join(' ') || r.kontakte?.firma || r.nummer,
+  name: [r.kontakte?.vorname, r.kontakte?.nachname].filter(Boolean).join(' ') || r.kontakte?.firma || r.nummer,
   ort: r.objekte?.ort ?? null,
   email: r.kontakte?.email ?? null,
 })
@@ -127,12 +131,20 @@ export async function ladeVersandErgebnisse(ids: string[]): Promise<VersandErgeb
   if (!ids.length) return []
   const { data, error } = await db().rpc('versand_ergebnisse', { p_ids: ids })
   if (error) throw error
-  return data as unknown as VersandErgebnis[]
+  return data
 }
 
 /** Versände (Letzte Aktionen) mit Kampagne und Newsletter, für Akte und Newsletter-Ergebnis. */
 export async function ladeVersaende(): Promise<
-  { id: string; art: string; betreff: string | null; anzahl: number | null; versendet_am: string | null; kampagne_id: string | null; newsletter_id: string | null }[]
+  {
+    id: string
+    art: Kampagne['art']
+    betreff: string | null
+    anzahl: number | null
+    versendet_am: string | null
+    kampagne_id: string | null
+    newsletter_id: string | null
+  }[]
 > {
   const { data, error } = await db()
     .from('kampagnen')
@@ -148,7 +160,7 @@ export async function ladeVersaende(): Promise<
 export async function ladeKostenOffen(): Promise<Kostenbeleg[]> {
   const { data, error } = await db().rpc('marketing_kosten_offen')
   if (error) throw error
-  return data as unknown as Kostenbeleg[]
+  return data
 }
 
 /** Rechnungen einer Kampagne (nur Recht Finanzen sieht sie, sonst leer). */
@@ -160,7 +172,7 @@ export async function ladeKostenDerKampagne(kampagneId: string): Promise<Kostenb
     .is('geloescht_am', null)
     .order('rechnung_am', { ascending: false })
   if (error) throw error
-  return data as unknown as Kostenbeleg[]
+  return data
 }
 
 /** Rechnung zuordnen (Kanal «kein» = keine Werbung). */
@@ -177,7 +189,7 @@ export async function kostenZuordnen(id: string, kampagneId: string | null, kana
 export async function messeLeadSenden(p: Record<string, unknown>): Promise<string> {
   const { data, error } = await db().rpc('messe_lead_erfassen', { p: p as never })
   if (error) throw error
-  return data as string
+  return data
 }
 
 /** Gespeicherte Zielgruppen. */
@@ -199,12 +211,18 @@ export async function speichereZielgruppe(name: string, filter: ZielFilter, besc
 }
 
 export async function zielgruppeGenutzt(id: string) {
-  const { error } = await db().from('marketing_zielgruppen').update({ zuletzt_am: new Date().toISOString() }).eq('id', id)
+  const { error } = await db()
+    .from('marketing_zielgruppen')
+    .update({ zuletzt_am: new Date().toISOString() })
+    .eq('id', id)
   if (error) throw error
 }
 
 export async function zielgruppePapierkorb(id: string) {
-  const { error } = await db().from('marketing_zielgruppen').update({ geloescht_am: new Date().toISOString() }).eq('id', id)
+  const { error } = await db()
+    .from('marketing_zielgruppen')
+    .update({ geloescht_am: new Date().toISOString() })
+    .eq('id', id)
   if (error) throw error
 }
 
@@ -222,8 +240,13 @@ export async function ladeWerbemittel(): Promise<Werbemittel[]> {
 export async function speichereWerbemittel(w: Partial<Werbemittel> & { name: string }) {
   const { id, ...werte } = w
   const q = id
-    ? db().from('werbemittel').update(werte as never).eq('id', id)
-    : db().from('werbemittel').insert(werte as never)
+    ? db()
+        .from('werbemittel')
+        .update(werte as never)
+        .eq('id', id)
+    : db()
+        .from('werbemittel')
+        .insert(werte as never)
   const { error } = await q
   if (error) throw error
 }
@@ -235,7 +258,12 @@ export async function werbemittelPapierkorb(id: string) {
 
 /** Personen für Standdienst und Verantwortlich (aktiv, ohne Montage-Ansicht). */
 export async function ladePersonen(): Promise<{ id: string; name: string; kuerzel: string }[]> {
-  const { data, error } = await db().from('personen').select('id, name, kuerzel').eq('aktiv', true).is('geloescht_am', null).order('name')
+  const { data, error } = await db()
+    .from('personen')
+    .select('id, name, kuerzel')
+    .eq('aktiv', true)
+    .is('geloescht_am', null)
+    .order('name')
   if (error) throw error
-  return data as { id: string; name: string; kuerzel: string }[]
+  return data
 }

@@ -61,7 +61,9 @@ export function KampagneErgebnis({ kampagne }: { kampagne: Werbekampagne }) {
       </ol>
       <p className="text-muted-foreground zahlen text-sm">
         {kampagne.ziel_leads ? t('werbung.ergebnis.ziel', { ist: z?.leads ?? 0, ziel: kampagne.ziel_leads }) : null}{' '}
-        {z?.auftragswert_rappen ? t('werbung.ergebnis.wert', { wert: formatChf(z.auftragswert_rappen, { mitWaehrung: true }) }) : null}{' '}
+        {z?.auftragswert_rappen
+          ? t('werbung.ergebnis.wert', { wert: formatChf(z.auftragswert_rappen, { mitWaehrung: true }) })
+          : null}{' '}
         {z?.kosten_rappen !== null && z?.kosten_rappen !== undefined
           ? t('werbung.ergebnis.kosten', {
               kosten: formatChf(z.kosten_rappen, { mitWaehrung: true }),

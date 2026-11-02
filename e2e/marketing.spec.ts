@@ -35,9 +35,18 @@ test('Marketing: alle Reiter ohne Verstösse', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/marketing')
   await expect(page.getByRole('heading', { name: 'Marketing', level: 1 })).toBeVisible()
-  await expect(page.getByRole('table', { name: 'Zielgruppe' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Heute zu tun' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Social Media', 'Newsletter', 'Vorlagen']) {
+  for (const reiter of [
+    'Kalender',
+    'Kampagnen',
+    'Messen & Events',
+    'Kunden anschreiben',
+    'Social Media',
+    'Newsletter',
+    'Mediathek',
+    'Vorlagen',
+  ]) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -60,7 +69,7 @@ test('Kunden anschreiben: Einwilligung, Serien-Mail, abmelden und wieder anmelde
   await neu.getByRole('button', { name: 'Speichern' }).click()
   await expect(page.getByText('Kontakt angelegt')).toBeVisible()
 
-  await page.goto('/#/marketing')
+  await page.goto('/#/marketing?ansicht=anschreiben')
   await page.getByPlaceholder('Name, Ort, Mail, Kundennummer').fill(nachname)
   const zeile = page.getByRole('row').filter({ hasText: nachname })
   await expect(zeile).toHaveCount(1)
@@ -109,6 +118,40 @@ test('Kunden anschreiben: Einwilligung, Serien-Mail, abmelden und wieder anmelde
   await zeile.getByRole('button', { name: `Aktionen für Wera ${nachname}` }).click()
   await page.getByRole('menuitem', { name: 'Werbung wieder erlauben' }).click()
   await expect(zeile.getByText('Ohne Geschäft')).toBeVisible()
+})
+
+test('Messe: Kampagne anlegen, Lead am Stand erfassen, Lead zählt in der Kampagne', async ({ page }) => {
+  test.slow()
+  await anmelden(page, 'admin@test.local')
+  await page.goto('/#/marketing?ansicht=messen')
+  await page.getByRole('button', { name: 'Neue Messe' }).click()
+  const neu = page.getByRole('dialog', { name: 'Neue Kampagne' })
+  await neu.getByLabel('Name').fill(`Testmesse ${lauf}`)
+  const heute = new Date().toISOString().slice(0, 10)
+  await neu.getByLabel('Start').fill(heute)
+  await neu.getByLabel('Ende').fill(heute)
+  await neu.getByRole('button', { name: 'Speichern' }).click()
+  const akte = page.getByRole('dialog', { name: `Testmesse ${lauf}` })
+  await expect(akte.getByRole('tab', { name: 'Messe' })).toHaveAttribute('aria-selected', 'true')
+  await expect(akte.getByText(/Checkliste \(0 von \d+\)/)).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+
+  await akte.getByRole('button', { name: 'Lead am Stand erfassen' }).click()
+  const erfassen = page.getByRole('dialog', { name: `Lead erfassen: Testmesse ${lauf}` })
+  await erfassen.getByLabel('Vorname').fill('Mia')
+  await erfassen.getByLabel('Nachname').fill(`Messetest${lauf}`)
+  await erfassen.getByLabel('Telefon').fill('+41 79 000 00 00')
+  await erfassen.getByLabel('Wünscht einen Termin').check()
+  expect(await verstoesse(page)).toEqual([])
+  await erfassen.getByRole('button', { name: 'Speichern und nächster' }).click()
+  await expect(page.getByText('Lead gespeichert')).toBeVisible()
+  await page.keyboard.press('Escape')
+  await akte.getByRole('tab', { name: 'Ergebnis' }).click()
+  await expect(akte.getByText(`Mia Messetest${lauf}`)).toBeVisible()
+
+  // Aufräumen: Kampagne in den Papierkorb (der Lead bleibt, wie jeder echte)
+  await akte.getByRole('button', { name: 'In den Papierkorb' }).click()
+  await expect(akte).toBeHidden()
 })
 
 test('Social Media: Post als Entwurf mit Prüfhinweisen, dann in den Papierkorb', async ({ page }) => {

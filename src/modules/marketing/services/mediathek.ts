@@ -14,7 +14,7 @@ function db() {
 export async function ladeFotos(): Promise<MediathekFoto[]> {
   const { data, error } = await db().rpc('mediathek_fotos')
   if (error) throw error
-  return data as unknown as MediathekFoto[]
+  return data
 }
 
 /** Kurz gültige Adressen (10 Minuten) für die Vorschaubilder, in einem Aufruf. */

@@ -4,25 +4,35 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
-import type { Ansicht, ZielFilter } from '../types'
+import { ANSICHTEN, type Ansicht, type ZielFilter } from '../types'
 import { Anschreiben } from './Anschreiben'
+import { Kalender } from './Kalender'
+import { KampagneAkte } from './kampagnen/KampagneAkte'
+import { KampagnenListe } from './kampagnen/KampagnenListe'
+import { Mediathek } from './mediathek/Mediathek'
 import { NewsletterSeite } from './NewsletterSeite'
 import { Social } from './Social'
+import { Uebersicht } from './uebersicht/Uebersicht'
 import { Vorlagen } from './Vorlagen'
 
 /**
- * Marketing (Phase 11): Kunden anschreiben (Serienbrief, Serien-Mail, Adressliste), Social Media (Instagram,
- * Facebook, LinkedIn mit Bild aus Canva), Newsletter und Vorlagen. Alles, was nach aussen geht, braucht eine
- * Freigabe (Regel 6). #/marketing?ansicht=…
+ * Marketing (Phase 11, vollständig Entscheid 0039): Übersicht je Rolle, Kalender, Kampagnen, Messen & Events,
+ * Kunden anschreiben, Social Media, Newsletter, Mediathek und Vorlagen. Alles, was nach aussen geht, braucht eine
+ * Freigabe (Regel 6). #/marketing?ansicht=…&kampagne=…
  */
 export default function Marketing({
   ansicht,
   onAnsicht,
   anlage,
+  kampagne,
+  onKampagne,
 }: {
   ansicht: Ansicht
   onAnsicht: (a: Ansicht) => void
   anlage?: ZielFilter['anlage']
+  /** Offene Kampagnen-Akte («neu» für eine neue). */
+  kampagne?: string
+  onKampagne: (id: string | null) => void
 }) {
   const { t } = useTranslation()
   if (!supabase) {
@@ -31,6 +41,17 @@ export default function Marketing({
         <Leerzustand icon={Megaphone} titel={t('marketing.titel')} text={t('projekte.ohneDatenbank')} />
       </div>
     )
+  }
+  const inhalt: Record<Ansicht, React.ReactNode> = {
+    uebersicht: <Uebersicht onAnsicht={onAnsicht} />,
+    kalender: <Kalender onAnsicht={onAnsicht} />,
+    kampagnen: <KampagnenListe onOeffnen={onKampagne} />,
+    messen: <KampagnenListe nurMessen onOeffnen={onKampagne} />,
+    anschreiben: <Anschreiben {...(anlage ? { anlage } : {})} />,
+    social: <Social />,
+    newsletter: <NewsletterSeite />,
+    mediathek: <Mediathek />,
+    vorlagen: <Vorlagen />,
   }
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
@@ -41,25 +62,30 @@ export default function Marketing({
           onAnsicht(a as Ansicht)
         }}
       >
-        <ReiterListe>
-          <ReiterKnopf value="anschreiben">{t('marketing.ansicht.anschreiben')}</ReiterKnopf>
-          <ReiterKnopf value="social">{t('marketing.ansicht.social')}</ReiterKnopf>
-          <ReiterKnopf value="newsletter">{t('marketing.ansicht.newsletter')}</ReiterKnopf>
-          <ReiterKnopf value="vorlagen">{t('marketing.ansicht.vorlagen')}</ReiterKnopf>
+        <ReiterListe className="wischzeile max-w-full overflow-x-auto">
+          {ANSICHTEN.map((a) => (
+            <ReiterKnopf key={a} value={a}>
+              {t(`marketing.ansicht.${a}`)}
+            </ReiterKnopf>
+          ))}
         </ReiterListe>
-        <ReiterInhalt value="anschreiben" className="pt-4">
-          {ansicht === 'anschreiben' && <Anschreiben {...(anlage ? { anlage } : {})} />}
-        </ReiterInhalt>
-        <ReiterInhalt value="social" className="pt-4">
-          {ansicht === 'social' && <Social />}
-        </ReiterInhalt>
-        <ReiterInhalt value="newsletter" className="pt-4">
-          {ansicht === 'newsletter' && <NewsletterSeite />}
-        </ReiterInhalt>
-        <ReiterInhalt value="vorlagen" className="pt-4">
-          {ansicht === 'vorlagen' && <Vorlagen />}
-        </ReiterInhalt>
+        {ANSICHTEN.map((a) => (
+          <ReiterInhalt key={a} value={a} className="pt-4">
+            {ansicht === a && inhalt[a]}
+          </ReiterInhalt>
+        ))}
       </Reiter>
+      {kampagne && (
+        <KampagneAkte
+          key={kampagne}
+          id={kampagne}
+          {...(kampagne === 'neu' && ansicht === 'messen' ? { vorlage: { art: 'messe' as const } } : {})}
+          onOeffnen={onKampagne}
+          onSchliessen={() => {
+            onKampagne(null)
+          }}
+        />
+      )}
     </div>
   )
 }

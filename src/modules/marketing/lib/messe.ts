@@ -79,7 +79,10 @@ export function alsParameter(l: MesseLead): Record<string, unknown> {
 }
 
 /** Checkliste einer Messe: gespeicherte Punkte, sonst die Vorlage aus den Einstellungen. */
-export function checkliste(gespeichert: Checkpunkt[] | undefined, vorlage: readonly string[] | undefined): Checkpunkt[] {
+export function checkliste(
+  gespeichert: Checkpunkt[] | undefined,
+  vorlage: readonly string[] | undefined,
+): Checkpunkt[] {
   if (gespeichert?.length) return gespeichert
   return (vorlage ?? []).map((text) => ({ text, erledigt: false }))
 }

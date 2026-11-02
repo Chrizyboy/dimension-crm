@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import type { SocialPost, Werbekampagne, Zielkontakt } from '../types'
 import { kalenderEintraege, monatPlus, monatsRaster } from './kalender'
-import { alsParameter, checkliste, messeTage, messeWarteschlange, standdienst, warteschlangeSenden, type MesseLead } from './messe'
+import {
+  alsParameter,
+  checkliste,
+  messeTage,
+  messeWarteschlange,
+  standdienst,
+  warteschlangeSenden,
+  type MesseLead,
+} from './messe'
 import { vorschlaege } from './vorschlaege'
 import { filtern, imPause, LEERER_FILTER } from './zielgruppe'
 
@@ -93,7 +101,17 @@ describe('Vorschläge', () => {
         posts: [post({ geplant_am: '2026-11-10T08:00:00Z', details: { von_hand: true } })],
         kampagnen: [kampagne({ details: { checkliste: [{ text: 'Roll-up', erledigt: false }] } })],
         werbemittel: [
-          { id: 'w', name: 'Flyer PV FR', art: 'flyer', sprache: 'fr', version: null, link: null, bestand: 40, mindestbestand: 200, notiz: null },
+          {
+            id: 'w',
+            name: 'Flyer PV FR',
+            art: 'flyer',
+            sprache: 'fr',
+            version: null,
+            link: null,
+            bestand: 40,
+            mindestbestand: 200,
+            notiz: null,
+          },
         ],
       },
       heute,
@@ -147,7 +165,9 @@ describe('Messe', () => {
     expect(checkliste(undefined, ['Stand gebucht'])).toEqual([{ text: 'Stand gebucht', erledigt: false }])
     const tage = messeTage('2026-11-20', '2026-11-22')
     expect(tage).toEqual(['2026-11-20', '2026-11-21', '2026-11-22'])
-    expect(standdienst([{ tag: '2026-11-21', von: '10:00', bis: '17:00', personen: ['p'] }], tage)[1]?.von).toBe('10:00')
+    expect(standdienst([{ tag: '2026-11-21', von: '10:00', bis: '17:00', personen: ['p'] }], tage)[1]?.von).toBe(
+      '10:00',
+    )
   })
 })
 

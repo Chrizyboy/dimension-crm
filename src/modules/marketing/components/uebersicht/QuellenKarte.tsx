@@ -43,7 +43,9 @@ export function QuellenKarte({ zeilen, jahr }: { zeilen: QuellenZeile[] | undefi
                   </Zelle>
                   <Zelle zahl>{z.auftragswert_rappen ? formatChf(z.auftragswert_rappen) : '–'}</Zelle>
                   {kosten && (
-                    <Zelle zahl>{z.kosten_rappen && z.leads ? formatChf(Math.round(z.kosten_rappen / z.leads)) : '–'}</Zelle>
+                    <Zelle zahl>
+                      {z.kosten_rappen && z.leads ? formatChf(Math.round(z.kosten_rappen / z.leads)) : '–'}
+                    </Zelle>
                   )}
                 </Zeile>
               ))}

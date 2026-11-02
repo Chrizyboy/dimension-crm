@@ -18,9 +18,7 @@ export function KampagneWahl({
   const liste = useWerbekampagnen().data ?? []
   const optionen = [
     { wert: KEINE, text: t('werbung.kampagne.keine') },
-    ...liste
-      .filter((k) => k.status !== 'abgeschlossen' || k.id === wert)
-      .map((k) => ({ wert: k.id, text: k.name })),
+    ...liste.filter((k) => k.status !== 'abgeschlossen' || k.id === wert).map((k) => ({ wert: k.id, text: k.name })),
   ]
   return (
     <Auswahl

@@ -56,7 +56,8 @@ export function vorschlaege(
       })
     const ende = k.ende_am ?? k.start_am
     const nach = -tageBis(ende, heute)
-    if (nach >= 1 && nach <= 7) aus.push({ schluessel: 'messeDanke', werte: { name: k.name }, ansicht: 'messen', ton: 'warnung' })
+    if (nach >= 1 && nach <= 7)
+      aus.push({ schluessel: 'messeDanke', werte: { name: k.name }, ansicht: 'messen', ton: 'warnung' })
   }
   const zahl = new Map(d.zahlen.map((z) => [z.kampagne_id, z]))
   for (const k of d.kampagnen) {
@@ -66,11 +67,17 @@ export function vorschlaege(
   }
   for (const w of d.werbemittel) {
     if (w.bestand !== null && w.mindestbestand !== null && w.bestand < w.mindestbestand)
-      aus.push({ schluessel: 'nachbestellen', werte: { name: w.name, bestand: w.bestand }, ansicht: 'mediathek', ton: 'warnung' })
+      aus.push({
+        schluessel: 'nachbestellen',
+        werte: { name: w.name, bestand: w.bestand },
+        ansicht: 'mediathek',
+        ton: 'warnung',
+      })
   }
   const monat = heute.toISOString().slice(0, 7)
   const postImMonat = d.posts.some((p) => (p.geplant_am ?? p.veroeffentlicht_am ?? '').startsWith(monat))
-  if (d.thema && !postImMonat) aus.push({ schluessel: 'thema', werte: { thema: d.thema }, ansicht: 'social', ton: 'info' })
+  if (d.thema && !postImMonat)
+    aus.push({ schluessel: 'thema', werte: { thema: d.thema }, ansicht: 'social', ton: 'info' })
 
   const rang = { kritisch: 0, warnung: 1, info: 2 }
   return aus.sort((a, b) => rang[a.ton] - rang[b.ton]).slice(0, max)

@@ -48,7 +48,7 @@ export async function speicherePost(p: Partial<SocialPost> & { id?: string }): P
   }
   const { data, error } = await db()
     .from('social_posts')
-    .insert({ ...werte, verfasst_von: p.verfasst_von ?? null })
+    .insert({ ...werte, verfasst_von: p.verfasst_von ?? null, ...(p.status === 'idee' ? { status: 'idee' } : {}) })
     .select('id')
     .single()
   if (error) throw error

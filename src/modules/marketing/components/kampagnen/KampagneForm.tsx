@@ -65,12 +65,13 @@ export function KampagneForm({
   )
 
   async function speichern() {
-    const { id: _id, kennzeichen: _k, ...rest } = k
+    // Kennzeichen setzt die Datenbank, es wird nie aus der App überschrieben
+    const rest = { ...k }
+    delete rest.kennzeichen
     const id = await aus(
       () =>
         speichereKampagne({
           ...rest,
-          ...(k.id ? { id: k.id } : {}),
           name: (k.name ?? '').trim(),
           ...(kostenSichtbar(ich) ? { budget_rappen: parseChf(budget) } : {}),
         }),
@@ -181,8 +182,7 @@ export function KampagneForm({
       {text('notiz', 3)}
       {k.kennzeichen && (
         <p className="bg-muted/40 rounded-md border p-3 text-sm">
-          {t('werbung.kampagne.kennzeichen')}{' '}
-          <code className="zahlen font-semibold break-all">{k.kennzeichen}</code>{' '}
+          {t('werbung.kampagne.kennzeichen')} <code className="zahlen font-semibold break-all">{k.kennzeichen}</code>{' '}
           {t('werbung.kampagne.kennzeichenHinweis')}
         </p>
       )}

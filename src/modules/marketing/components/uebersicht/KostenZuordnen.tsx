@@ -50,7 +50,12 @@ function Beleg({ b }: { b: Kostenbeleg }) {
         >
           {t('werbung.kosten.zuordnen')}
         </Button>
-        <Button size="sm" variant="ghost" disabled={laeuft} onClick={() => void aus(() => kostenZuordnen(b.id, null, 'kein'))}>
+        <Button
+          size="sm"
+          variant="ghost"
+          disabled={laeuft}
+          onClick={() => void aus(() => kostenZuordnen(b.id, null, 'kein'))}
+        >
           {t('werbung.kosten.keineWerbung')}
         </Button>
       </span>

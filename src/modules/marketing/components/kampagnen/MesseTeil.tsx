@@ -128,7 +128,11 @@ export function MesseTeil({ kampagne }: { kampagne: Werbekampagne }) {
                 <Checkbox
                   checked={p.erledigt}
                   onCheckedChange={(c) => {
-                    void setzePunkt(i, { erledigt: c === true, von: ich?.kuerzel ?? null, am: new Date().toISOString() })
+                    void setzePunkt(i, {
+                      erledigt: c === true,
+                      von: ich?.kuerzel ?? null,
+                      am: new Date().toISOString(),
+                    })
                   }}
                 />
                 <span className={p.erledigt ? 'text-muted-foreground line-through' : ''}>{p.text}</span>

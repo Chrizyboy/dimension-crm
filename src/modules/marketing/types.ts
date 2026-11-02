@@ -145,10 +145,7 @@ export const NETZWERKE = ['instagram', 'facebook', 'linkedin'] as const
 export type Netzwerk = (typeof NETZWERKE)[number]
 export type PostSprache = 'de' | 'fr' | 'de_fr'
 export type PostStatus =
-  | 'idee'
-  | 'entwurf'
-  | 'zur_freigabe'
-  | 'geplant' | 'wird_veroeffentlicht' | 'veroeffentlicht' | 'fehler' | 'erledigt'
+  'idee' | 'entwurf' | 'zur_freigabe' | 'geplant' | 'wird_veroeffentlicht' | 'veroeffentlicht' | 'fehler' | 'erledigt'
 export const FORMATE = ['quadrat', 'hoch', 'story', 'quer'] as const
 export type Format = (typeof FORMATE)[number]
 
@@ -201,7 +198,15 @@ export interface Referenzanlage {
 
 /* --- Marketing vollständig (Entscheid 0039) ------------------------------------------------------------- */
 
-export const KAMPAGNEN_ARTEN = ['aktion', 'messe', 'online', 'empfehlung', 'newsletter', 'social', 'gekaufte_leads'] as const
+export const KAMPAGNEN_ARTEN = [
+  'aktion',
+  'messe',
+  'online',
+  'empfehlung',
+  'newsletter',
+  'social',
+  'gekaufte_leads',
+] as const
 export type KampagnenArt = (typeof KAMPAGNEN_ARTEN)[number]
 export const KAMPAGNEN_STATUS = ['idee', 'vorbereitung', 'laeuft', 'abgeschlossen'] as const
 export type KampagnenStatus = (typeof KAMPAGNEN_STATUS)[number]

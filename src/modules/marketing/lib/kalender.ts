@@ -56,7 +56,14 @@ export function kalenderEintraege(d: {
   for (const n of d.newsletter) {
     const datum = tag(n.versendet_am ?? n.geplant_am)
     if (!datum) continue
-    aus.push({ id: `nl-${n.id}`, datum, art: 'mail', text: n.thema, ansicht: 'newsletter', offen: n.status !== 'versendet' })
+    aus.push({
+      id: `nl-${n.id}`,
+      datum,
+      art: 'mail',
+      text: n.thema,
+      ansicht: 'newsletter',
+      offen: n.status !== 'versendet',
+    })
   }
   for (const v of d.versaende) {
     if (v.art === 'newsletter' || v.art === 'adressliste') continue
@@ -72,7 +79,8 @@ export function kalenderEintraege(d: {
     }
   }
   const thema = d.themen?.[String(Number(d.monat.slice(5, 7)))]
-  if (thema) aus.push({ id: `t-${d.monat}`, datum: `${d.monat}-01`, art: 'thema', text: thema[d.sprache], ansicht: 'social' })
+  if (thema)
+    aus.push({ id: `t-${d.monat}`, datum: `${d.monat}-01`, art: 'thema', text: thema[d.sprache], ansicht: 'social' })
   return aus.sort((a, b) => a.datum.localeCompare(b.datum) || a.art.localeCompare(b.art))
 }
 

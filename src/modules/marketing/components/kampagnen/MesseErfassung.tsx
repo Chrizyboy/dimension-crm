@@ -52,7 +52,11 @@ export function MesseErfassung({ kampagne, onSchliessen }: { kampagne: Werbekamp
     return n
   }
   useEffect(() => {
-    void nachsenden()
+    // Beim Öffnen: was ohne Netz im Gerät geblieben ist, jetzt senden
+    void warteschlangeSenden((x) => messeLeadSenden(alsParameter(x))).then((n) => {
+      setWartend(messeWarteschlange.alle().length)
+      if (n) void neuLaden()
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps -- nur beim Öffnen
   }, [])
 
@@ -64,7 +68,10 @@ export function MesseErfassung({ kampagne, onSchliessen }: { kampagne: Werbekamp
     melde(
       offen ? 'warnung' : 'ok',
       offen
-        ? { de: `Ohne Netz: ${String(offen)} Lead(s) im Gerät gespeichert`, fr: `Hors ligne : ${String(offen)} lead(s) gardé(s) sur l’appareil` }
+        ? {
+            de: `Ohne Netz: ${String(offen)} Lead(s) im Gerät gespeichert`,
+            fr: `Hors ligne : ${String(offen)} lead(s) gardé(s) sur l’appareil`,
+          }
         : { de: 'Lead gespeichert', fr: 'Lead enregistré' },
     )
     setL(leer(kampagne))
@@ -108,7 +115,12 @@ export function MesseErfassung({ kampagne, onSchliessen }: { kampagne: Werbekamp
         titel={t('werbung.messe.erfassen', { name: kampagne.name })}
         beschreibung={wartend ? t('werbung.messe.wartend', { anzahl: wartend }) : t('werbung.messe.erfassenInfo')}
         fuss={
-          <Button size="lg" onClick={() => void speichern()} laedt={laeuft} disabled={!l.nachname.trim() || (!l.telefon && !l.email)}>
+          <Button
+            size="lg"
+            onClick={() => void speichern()}
+            laedt={laeuft}
+            disabled={!l.nachname.trim() || (!l.telefon && !l.email)}
+          >
             <Send />
             {t('werbung.messe.speichernNaechster')}
           </Button>
@@ -154,8 +166,20 @@ export function MesseErfassung({ kampagne, onSchliessen }: { kampagne: Werbekamp
               )}
             </div>
           </fieldset>
-          {haken(l.termin, (b) => { setze({ termin: b }) }, t('werbung.messe.termin'))}
-          {haken(l.newsletter, (b) => { setze({ newsletter: b }) }, t('werbung.messe.newsletter'))}
+          {haken(
+            l.termin,
+            (b) => {
+              setze({ termin: b })
+            },
+            t('werbung.messe.termin'),
+          )}
+          {haken(
+            l.newsletter,
+            (b) => {
+              setze({ newsletter: b })
+            },
+            t('werbung.messe.newsletter'),
+          )}
           <Feld id="messe-notiz" label={t('werbung.messe.feld.notiz')}>
             <Textarea
               id="messe-notiz"

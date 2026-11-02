@@ -12,7 +12,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useKampagnenZahlen, useWerbekampagnen } from '../../hooks/useKampagnen'
 import { kostenSichtbar } from '../../lib/rechte'
 import { KAMPAGNEN_STATUS, type KampagnenStatus } from '../../types'
-import { zeitraum } from './KampagneAkte'
+import { zeitraum } from '../../lib/kampagne'
 
 const RANG: Record<KampagnenStatus, number> = { laeuft: 0, vorbereitung: 1, idee: 2, abgeschlossen: 3 }
 
@@ -25,7 +25,8 @@ export function KampagnenListe({
   onOeffnen,
 }: {
   nurMessen?: boolean
-  onOeffnen: (id: string | 'neu') => void
+  /** ID oder «neu». */
+  onOeffnen: (id: string) => void
 }) {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
