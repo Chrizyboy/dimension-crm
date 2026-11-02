@@ -34,7 +34,7 @@ Die Edge Functions `ki` und `zeitplan` neu veröffentlichen: `npx supabase funct
 
 ## 3. Einstellungen im CRM prüfen (Administration)
 
-**KI-Assistent › Einstellungen:**
+**Assistent › Einstellungen** (früher «KI-Assistent»):
 
 - **KI eingeschaltet:** Hauptschalter für alle.
 - **Tageslimit (CHF):** Standard CHF 10.00 pro Tag für alle zusammen. Ist es erreicht, antwortet die KI bis Mitternacht
@@ -89,3 +89,12 @@ bleibt der Vorlagentext stehen.
 
 `npm run ki:pruefen` startet einen Ersatz-Server für die Claude API (`scripts/ki/ersatz-claude.mjs`) und prüft alle
 Funktionen, Limit, Kosten und Rechte gegen die lokale Supabase. Es kostet nichts.
+
+## 5. Assistent prüfen (seit 2.11.2026, Entscheid 0039)
+
+1. **Assistent › Fragen**: «Welche offenen Offerten sind älter als 14 Tage?» eingeben. Nach 5–20 Sekunden kommt eine
+   Antwort mit Tabelle; Nummer und Kunde sind Links in die Akte.
+2. Unter der Antwort einen Vorschlag «Aufgabe anlegen» drücken: die Aufgabe steht unter **Aufgaben**.
+3. In einer Offerte **Ctrl J** drücken und «Was ist hier noch offen?» fragen: der Assistent kennt die Offerte.
+4. **Assistent › Dokument lesen**: ein PDF (z. B. Lieferantenrechnung) hineinziehen.
+5. **Assistent › Im CRM** (Administration): einzelne Funktionen ein- und ausschalten.
