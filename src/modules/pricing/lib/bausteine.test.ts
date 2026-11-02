@@ -3,7 +3,18 @@ import type { Artikel, Leistung } from '../types'
 import { bausteinPositionen } from './bausteine'
 
 const artikel = (id: string, kategorie: string, w: number | null, ek: number): Artikel =>
-  ({ id, name: id, kategorie, leistungW: w, ekRappen: ek, marge: 0.25, skonto: 0.015, einheit: 'Stk', artikelnummer: id, gruppe: null }) as Artikel
+  ({
+    id,
+    name: id,
+    kategorie,
+    leistungW: w,
+    ekRappen: ek,
+    marge: 0.25,
+    skonto: 0.015,
+    einheit: 'Stk',
+    artikelnummer: id,
+    gruppe: null,
+  }) as Artikel
 const montage: Leistung = {
   id: 'l1',
   schluessel: 'montage_pv',

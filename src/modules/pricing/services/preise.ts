@@ -42,9 +42,9 @@ export function artikelAusZeile(z: Zeile): Artikel {
     lieferant: z.lieferant,
     ekStand: z.ek_stand,
     suchtext: z.suchtext ?? '',
-    lagerFrei: Number(z.lager_frei ?? 0),
-    lagerReserviert: Number(z.lager_reserviert ?? 0),
-    lagerUnterwegs: Number(z.lager_unterwegs ?? 0),
+    lagerFrei: z.lager_frei ?? 0,
+    lagerReserviert: z.lager_reserviert ?? 0,
+    lagerUnterwegs: z.lager_unterwegs ?? 0,
     lieferantenAnzahl: z.lieferanten_anzahl,
     garantieJahre: z.garantie_jahre,
   }

@@ -1,4 +1,4 @@
-import { FileSpreadsheet, Tag } from 'lucide-react'
+import { FileSpreadsheet, FileUp, Tag } from 'lucide-react'
 import { Suspense, lazy, useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -10,14 +10,19 @@ import { Skelett } from '@/components/ui/diverses'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
-import { useDarfPreise, usePreisliste } from '../hooks/usePreise'
-import { PREIS_ANSICHTEN, type PreisAnsicht } from '../types'
+import { useDarfPreise, useImporte, usePreisliste, usePreisRegeln } from '../hooks/usePreise'
+import { hinweise } from '../lib/hinweise'
+import { PREIS_ANSICHTEN, type PreisAnsicht, type PreisHinweis } from '../types'
+import { PreisKennzahlen } from './PreisKennzahlen'
 
 const PreisListe = lazy(() => import('./PreisListe'))
 const Kundenansicht = lazy(() => import('./Kundenansicht'))
 const Kalkulation = lazy(() => import('./Kalkulation'))
 const ArtikelAkte = lazy(() => import('./ArtikelAkte'))
 const ExcelImportDialog = lazy(() => import('./ExcelImportDialog'))
+const PreisImportDialog = lazy(() => import('./PreisImportDialog'))
+const Preisaenderungen = lazy(() => import('./Preisaenderungen'))
+const Regeln = lazy(() => import('./Regeln'))
 
 export interface PreiseProps {
   ansicht: PreisAnsicht | null
@@ -25,7 +30,14 @@ export interface PreiseProps {
   artikelId: string | null
   /** Kalkulation zu dieser Offerte (?offerte=…), kommt aus der Offert-Akte. */
   offerteId: string | null
-  onAdresse: (a: { ansicht?: PreisAnsicht; artikel?: string | null; offerte?: string | null }) => void
+  /** Gespeicherte Kalkulation (?kalkulation=…), kommt aus der Glocke (Freigabe). */
+  kalkulationId: string | null
+  onAdresse: (a: {
+    ansicht?: PreisAnsicht
+    artikel?: string | null
+    offerte?: string | null
+    kalkulation?: string | null
+  }) => void
 }
 
 /**
@@ -33,14 +45,17 @@ export interface PreiseProps {
  * und die Kalkulation. Ohne Recht «preise» ist nur die Kundenansicht da (aus Marge und VK liesse sich der
  * Einkauf zurückrechnen); die Datenbank liefert dann auch keine Einkaufspreise.
  */
-export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: PreiseProps) {
+export default function Preise({ ansicht, artikelId, offerteId, kalkulationId, onAdresse }: PreiseProps) {
   const { t } = useTranslation()
   const darf = useDarfPreise()
   const liste = usePreisliste()
   const kategorien = useAuswahl('artikelkategorie')
   const [suche, setSuche] = useState('')
   const [kategorie, setKategorie] = useState<string[]>([])
-  const [importieren, setImportieren] = useState(false)
+  const [importieren, setImportieren] = useState<'excel' | 'datei' | null>(null)
+  const [hinweis, setHinweis] = useState<PreisHinweis | null>(null)
+  const regeln = usePreisRegeln()
+  const importe = useImporte(darf)
   const s = useDeferredValue(suche)
   const ziel: PreisAnsicht = darf ? (ansicht ?? 'liste') : 'kunden'
   const sichtbar = darf ? PREIS_ANSICHTEN : (['kunden'] as const)
@@ -53,7 +68,11 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
     const woerter = s.toLowerCase().split(/\s+/).filter(Boolean)
     return imReiter.filter((a) => woerter.every((w) => a.suchtext.includes(w)))
   }, [imReiter, s])
-  const gefiltert = gefunden.filter((a) => kategorie.length === 0 || kategorie.includes(a.kategorie))
+  const gefiltert = gefunden.filter(
+    (a) =>
+      (kategorie.length === 0 || kategorie.includes(a.kategorie)) &&
+      (ziel !== 'liste' || !hinweis || hinweise(a, regeln.data).includes(hinweis)),
+  )
 
   if (!supabase) {
     return (
@@ -64,25 +83,35 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
   }
 
   const offen = artikelId ? (liste.data ?? []).find((a) => a.id === artikelId) : undefined
-  const mitFilter = ziel !== 'kalkulation'
+  const mitFilter = ziel === 'liste' || ziel === 'archiv' || ziel === 'kunden'
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf
         titel={t('preise.titel')}
         beschreibung={t(darf ? 'preise.beschreibung' : 'preise.beschreibungKunden')}
-        {...(darf && ziel === 'liste'
+        {...(darf && (ziel === 'liste' || ziel === 'aenderungen')
           ? {
               aktionen: (
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setImportieren(true)
-                  }}
-                >
-                  <FileSpreadsheet />
-                  {t('preise.import.knopf')}
-                </Button>
+                <>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setImportieren('excel')
+                    }}
+                  >
+                    <FileSpreadsheet />
+                    {t('preise.import.knopf')}
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setImportieren('datei')
+                    }}
+                  >
+                    <FileUp />
+                    {t('preise.datei.knopf')}
+                  </Button>
+                </>
               ),
             }
           : {})}
@@ -103,6 +132,18 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
           </button>
         ))}
       </nav>
+      {darf && ziel === 'liste' && liste.data && (
+        <PreisKennzahlen
+          artikel={imReiter}
+          regeln={regeln.data}
+          offeneImporte={(importe.data ?? []).filter((i) => i.status === 'offen').length}
+          filter={hinweis}
+          onFilter={setHinweis}
+          onImporte={() => {
+            onAdresse({ ansicht: 'aenderungen' })
+          }}
+        />
+      )}
       {mitFilter && (
         <Suchfeld
           beschriftung={t('preise.suche')}
@@ -141,6 +182,7 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
               alle={liste.data}
               archiv={ziel === 'archiv'}
               aktiveId={artikelId}
+              regeln={regeln.data}
               onOeffnen={(id) => {
                 onAdresse({ artikel: id })
               }}
@@ -151,11 +193,23 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
             <Kalkulation
               artikel={liste.data.filter((a) => a.archiviertAm === null)}
               offerteId={offerteId}
+              kalkulationId={kalkulationId}
               onOfferte={(id) => {
-                onAdresse({ offerte: id })
+                onAdresse({ offerte: id, kalkulation: null })
               }}
             />
           )}
+          {ziel === 'aenderungen' && (
+            <Preisaenderungen
+              onDatei={() => {
+                setImportieren('datei')
+              }}
+              onArtikel={(id) => {
+                onAdresse({ artikel: id })
+              }}
+            />
+          )}
+          {ziel === 'regeln' && <Regeln />}
         </Suspense>
       )}
 
@@ -172,10 +226,18 @@ export default function Preise({ ansicht, artikelId, offerteId, onAdresse }: Pre
             }}
           />
         )}
-        {importieren && (
+        {importieren === 'excel' && (
           <ExcelImportDialog
             onSchliessen={() => {
-              setImportieren(false)
+              setImportieren(null)
+            }}
+          />
+        )}
+        {importieren === 'datei' && (
+          <PreisImportDialog
+            onSchliessen={(fertig) => {
+              setImportieren(null)
+              if (fertig) onAdresse({ ansicht: 'aenderungen' })
             }}
           />
         )}

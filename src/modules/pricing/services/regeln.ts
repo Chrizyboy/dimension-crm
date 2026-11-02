@@ -38,9 +38,7 @@ export async function ladeLeistungen(): Promise<Leistung[]> {
 }
 
 /** Leistung ändern oder neu anlegen (Recht «preise»). */
-export async function speichereLeistung(
-  l: Partial<Omit<Leistung, 'id'>> & { id?: string | undefined },
-): Promise<void> {
+export async function speichereLeistung(l: Partial<Omit<Leistung, 'id'>> & { id?: string | undefined }): Promise<void> {
   const werte = {
     ...(l.schluessel !== undefined ? { schluessel: l.schluessel } : {}),
     ...(l.nameDe !== undefined ? { name_de: l.nameDe } : {}),
@@ -160,4 +158,16 @@ export async function ladeRichtpreis(kwp: number, speicher: boolean) {
     vonRappen: r.von_rappen === null || r.von_rappen === undefined ? null : Number(r.von_rappen),
     bisRappen: r.bis_rappen === null || r.bis_rappen === undefined ? null : Number(r.bis_rappen),
   }
+}
+
+/** Aktive Personen zur Wahl der Freigabe (Geschäftsleitung). */
+export async function ladePersonenKurz(): Promise<{ id: string; name: string }[]> {
+  const { data, error } = await db()
+    .from('personen')
+    .select('id, name')
+    .eq('aktiv', true)
+    .is('geloescht_am', null)
+    .order('name')
+  if (error) throw error
+  return data
 }

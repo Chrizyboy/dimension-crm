@@ -120,7 +120,14 @@ describe('Kalkulation', () => {
 
 describe('Kalkulation mit Leistungen, Varianten und Regeln', () => {
   const modul = pos({ name: 'Aiko 485', wp: 485, menge: 22, ekRappen: 9232 })
-  const speicher = pos({ artikelId: 'sp', name: 'LUNA 10', kategorie: 'batteriespeicher', ekRappen: 415000, marge: 0.18, varianten: ['B'] })
+  const speicher = pos({
+    artikelId: 'sp',
+    name: 'LUNA 10',
+    kategorie: 'batteriespeicher',
+    ekRappen: 415000,
+    marge: 0.18,
+    varianten: ['B'],
+  })
   const montage = pos({
     name: 'Montage PV',
     kategorie: 'dienstleistungen',
@@ -139,7 +146,10 @@ describe('Kalkulation mit Leistungen, Varianten und Regeln', () => {
 
   it('zählt nur Positionen der gewählten Variante', () => {
     const k = { positionen: [modul, speicher, montage], rabattProzent: 0 }
-    expect(summe({ ...k, variante: null }, 8.1).brutto - summe({ ...k, variante: 'A' }, 8.1).brutto).toBeCloseTo(497046, -1)
+    expect(summe({ ...k, variante: null }, 8.1).brutto - summe({ ...k, variante: 'A' }, 8.1).brutto).toBeCloseTo(
+      497046,
+      -1,
+    )
   })
 
   it('rechnet Mengen nach Regel neu', () => {
@@ -150,15 +160,28 @@ describe('Kalkulation mit Leistungen, Varianten und Regeln', () => {
   })
 
   it('verlangt eine Freigabe bei Rabatt über der Grenze oder zu tiefer Marge', () => {
-    const regeln = { kategorien: { batteriespeicher: { marge: 0.18, mindest: 0.12 } }, rabatt_frei_prozent: 8, mindest_db_prozent: 15 }
+    const regeln = {
+      kategorien: { batteriespeicher: { marge: 0.18, mindest: 0.12 } },
+      rabatt_frei_prozent: 8,
+      mindest_db_prozent: 15,
+    }
     const k = { positionen: [modul, speicher, montage], variante: 'B' }
     expect(freigabeGruende({ ...k, rabattProzent: 3 }, regeln, 8.1)).toEqual([])
     expect(freigabeGruende({ ...k, rabattProzent: 9 }, regeln, 8.1)).toEqual(['rabatt'])
-    expect(freigabeGruende({ ...k, rabattProzent: 0, positionen: [{ ...speicher, marge: 0.1 }] }, regeln, 8.1)).toContain('marge')
+    expect(
+      freigabeGruende({ ...k, rabattProzent: 0, positionen: [{ ...speicher, marge: 0.1 }] }, regeln, 8.1),
+    ).toContain('marge')
   })
 
   it('schätzt die Förderung nach Tarif', () => {
-    const f = { name: 'EIV', stand: '2026', grund_rappen: 0, je_kwp_rappen: 36000, bis_kwp: 30, je_kwp_darueber_rappen: 30000 }
+    const f = {
+      name: 'EIV',
+      stand: '2026',
+      grund_rappen: 0,
+      je_kwp_rappen: 36000,
+      bis_kwp: 30,
+      je_kwp_darueber_rappen: 30000,
+    }
     expect(foerderung(10, f)).toBe(360000)
     expect(foerderung(40, f)).toBe(1380000)
   })

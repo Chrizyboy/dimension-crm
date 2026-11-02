@@ -1,15 +1,38 @@
 import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { formatChf, parseChf } from '@/lib/format'
-import { zeile } from '../lib/kalkulation'
+import { cn } from '@/lib/utils'
+import { inVariante, zeile } from '../lib/kalkulation'
 import { leseProzent, prozentText } from '../lib/prozent'
-import type { KalkPosition, Kalkulation } from '../types'
+import type { Artikel, KalkPosition, Kalkulation } from '../types'
 import { PreisFeld } from './PreisFeld'
 
-/** Positionen der Kalkulation: Menge, EK und Marge änderbar, Preis und Total gerechnet (V233 pcLine). */
-export function KalkPositionen({ k, onAendern }: { k: Kalkulation; onAendern: (k: Kalkulation) => void }) {
+/** Varianten einer Position umschalten; alle gewählt = keine Einschränkung, mindestens eine bleibt. */
+function schalte(p: KalkPosition, id: string, alle: string[]): string[] | undefined {
+  const jetzt = p.varianten?.length ? p.varianten : alle
+  const neu = jetzt.includes(id) ? jetzt.filter((x) => x !== id) : [...jetzt, id].sort()
+  if (neu.length === 0) return p.varianten
+  return neu.length === alle.length ? undefined : neu
+}
+
+/**
+ * Positionen der Kalkulation: Menge, EK/Kosten und Marge oder (bei Leistungen) Preis änderbar, Total gerechnet
+ * (V233 pcLine). Mit Varianten: je Position die Varianten, in denen sie gilt; andere Varianten gedimmt.
+ * Lager zeigt, wie viel frei in Bulle liegt.
+ */
+export function KalkPositionen({
+  k,
+  artikel,
+  onAendern,
+}: {
+  k: Kalkulation
+  artikel: Artikel[]
+  onAendern: (k: Kalkulation) => void
+}) {
   const { t } = useTranslation()
+  const ids = (k.varianten ?? []).map((v) => v.id)
   const setze = (p: KalkPosition, w: Partial<KalkPosition>) => {
     onAendern({ ...k, positionen: k.positionen.map((x) => (x.key === p.key ? { ...x, ...w } : x)) })
   }
@@ -22,23 +45,28 @@ export function KalkPositionen({ k, onAendern }: { k: Kalkulation; onAendern: (k
   }
   return (
     <div className="-mx-4 overflow-x-auto px-4">
-      <table className="w-full min-w-[40rem] text-sm">
+      <table className="w-full min-w-[46rem] text-sm">
         <thead>
           <tr className="text-muted-foreground border-b text-left text-xs">
             <th className="py-1.5 font-medium">{t('preise.kalk.position')}</th>
             <th className="py-1.5 text-right font-medium">{t('preise.kalk.menge')}</th>
-            <th className="py-1.5 text-right font-medium">{t('preise.spalte.ek')}</th>
+            <th className="py-1.5 text-right font-medium">{t('preise.kalk.ekKosten')}</th>
             <th className="py-1.5 text-right font-medium">{t('preise.spalte.marge')}</th>
             <th className="py-1.5 text-right font-medium">{t('preise.kalk.preis')}</th>
             <th className="py-1.5 text-right font-medium">{t('preise.kalk.total')}</th>
+            {ids.length > 0 && <th className="py-1.5 pl-2 font-medium">{t('preise.var.spalte')}</th>}
             <th className="w-8" />
           </tr>
         </thead>
         <tbody>
           {k.positionen.map((p) => {
             const z = zeile(p)
+            const a = p.artikelId ? artikel.find((x) => x.id === p.artikelId) : undefined
+            const aus = ids.length > 0 && !inVariante(p, k.variante)
+            const marge =
+              p.preisRappen !== undefined && p.preisRappen > 0 ? (p.preisRappen - p.ekRappen) / p.preisRappen : null
             return (
-              <tr key={p.key} className="border-b last:border-b-0">
+              <tr key={p.key} className={cn('border-b last:border-b-0', aus && 'opacity-50')}>
                 <td className="py-1 pr-2">
                   {p.frei ? (
                     <input
@@ -54,8 +82,16 @@ export function KalkPositionen({ k, onAendern }: { k: Kalkulation; onAendern: (k
                       <span className="line-clamp-2 max-w-[24rem] font-medium" title={p.name}>
                         {p.name}
                       </span>
-                      <span className="text-muted-foreground text-xs">
+                      <span className="text-muted-foreground flex flex-wrap items-center gap-1 text-xs">
                         {[p.gruppe, p.artikelnummer, p.wp ? `${p.wp} Wp` : null].filter(Boolean).join(' · ')}
+                        {p.regel && (
+                          <Badge ton="info">{t(`preise.regel.${p.regel.regel}`, { faktor: p.regel.faktor })}</Badge>
+                        )}
+                        {a && (
+                          <Badge ton={a.lagerFrei >= p.menge ? 'ok' : a.lagerFrei > 0 ? 'warnung' : 'neutral'}>
+                            {t('preise.lager.frei', { n: a.lagerFrei })}
+                          </Badge>
+                        )}
                       </span>
                     </span>
                   )}
@@ -73,7 +109,7 @@ export function KalkPositionen({ k, onAendern }: { k: Kalkulation; onAendern: (k
                 </td>
                 <td className="py-1 text-right">
                   <PreisFeld
-                    label={`${t('preise.spalte.ek')} ${p.name}`}
+                    label={`${t('preise.kalk.ekKosten')} ${p.name}`}
                     wert={formatChf(p.ekRappen)}
                     onSpeichern={(x) => {
                       setze(p, { ekRappen: parseChf(x) ?? 0 })
@@ -81,17 +117,69 @@ export function KalkPositionen({ k, onAendern }: { k: Kalkulation; onAendern: (k
                   />
                 </td>
                 <td className="py-1 text-right">
-                  <PreisFeld
-                    label={`${t('preise.spalte.marge')} ${p.name}`}
-                    className="w-14"
-                    wert={prozentText(p.marge)}
-                    onSpeichern={(x) => {
-                      setze(p, { marge: leseProzent(x) ?? 0 })
-                    }}
-                  />
+                  {p.preisRappen !== undefined ? (
+                    <span className="text-muted-foreground zahlen font-mono text-[13px]">
+                      {marge === null ? '–' : `${Math.round(marge * 1000) / 10}`}
+                    </span>
+                  ) : (
+                    <PreisFeld
+                      label={`${t('preise.spalte.marge')} ${p.name}`}
+                      className="w-14"
+                      wert={prozentText(p.marge)}
+                      onSpeichern={(x) => {
+                        setze(p, { marge: leseProzent(x) ?? 0 })
+                      }}
+                    />
+                  )}
                 </td>
-                <td className="zahlen py-1 text-right font-mono text-[13px]">{formatChf(z.preis)}</td>
+                <td className="py-1 text-right">
+                  {p.preisRappen !== undefined ? (
+                    <PreisFeld
+                      label={`${t('preise.kalk.preis')} ${p.name}`}
+                      wert={formatChf(p.preisRappen)}
+                      onSpeichern={(x) => {
+                        setze(p, { preisRappen: parseChf(x) ?? 0 })
+                      }}
+                    />
+                  ) : (
+                    <span className="zahlen font-mono text-[13px]">{formatChf(z.preis)}</span>
+                  )}
+                </td>
                 <td className="zahlen py-1 text-right font-mono text-[13px] font-medium">{formatChf(z.total)}</td>
+                {ids.length > 0 && (
+                  <td className="py-1 pl-2">
+                    <span className="flex gap-0.5">
+                      {ids.map((id) => {
+                        const an = inVariante(p, id)
+                        return (
+                          <button
+                            key={id}
+                            type="button"
+                            aria-pressed={an}
+                            aria-label={t('preise.var.inVariante', { id, name: p.name })}
+                            onClick={() => {
+                              const v = schalte(p, id, ids)
+                              const ohne = { ...p }
+                              delete ohne.varianten
+                              onAendern({
+                                ...k,
+                                positionen: k.positionen.map((x) =>
+                                  x.key === p.key ? (v ? { ...ohne, varianten: v } : ohne) : x,
+                                ),
+                              })
+                            }}
+                            className={cn(
+                              'focus-visible:ring-ring size-6 rounded text-xs font-semibold outline-none focus-visible:ring-2',
+                              an ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground',
+                            )}
+                          >
+                            {id}
+                          </button>
+                        )
+                      })}
+                    </span>
+                  </td>
+                )}
                 <td className="py-1">
                   <Button
                     size="icon"

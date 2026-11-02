@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { FilePlus2, Printer, RefreshCw, Save, Send, Shapes } from 'lucide-react'
+import { FilePlus2, Printer, Save, Send, Shapes } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -14,21 +14,17 @@ import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
 import { useUi } from '@/stores/ui'
-import { PREIS_SCHLUESSEL, useOffertAuswahl, useVorlagen } from '../hooks/usePreise'
-import {
-  aktualisierePreise,
-  FREIE_POSITIONEN,
-  mitVorlage,
-  neuerSchluessel,
-  summe,
-  werteFuerOfferte,
-} from '../lib/kalkulation'
+import { PREIS_SCHLUESSEL, useOffertAuswahl, usePreisRegeln, useVorlagen } from '../hooks/usePreise'
+import { mitVorlage, summe } from '../lib/kalkulation'
 import { speichereKalkulation, speichereVorlage, uebernimmInOfferte } from '../services/kalkulationen'
 import type { Artikel, Kalkulation } from '../types'
+import { BausteinLeiste } from './BausteinLeiste'
+import { FreigabeKasten } from './FreigabeKasten'
 import { KalkPositionen } from './KalkPositionen'
 import { KalkSummen } from './KalkSummen'
 import { KalkulationDruck } from './KalkulationDruck'
 import { UebernahmeHinweis } from './UebernahmeHinweis'
+import { VariantenLeiste } from './VariantenLeiste'
 
 const KEINE = 'keine'
 
@@ -60,6 +56,7 @@ export function KalkBlatt({
   const qc = useQueryClient()
   const offerten = useOffertAuswahl(true)
   const vorlagen = useVorlagen(true)
+  const regeln = usePreisRegeln()
   const druck = useDrucken()
   const [arbeitet, setArbeitet] = useState(false)
   const [frage, setFrage] = useState<'offerte' | 'vorlage' | 'neu' | null>(null)
@@ -110,8 +107,8 @@ export function KalkBlatt({
     const offerteId = k.offerteId
     const id = await speichern(true)
     if (id)
-      await mit(() => uebernimmInOfferte(offerteId, werteFuerOfferte(k, satz)), 'preise.kalk.inOfferte', {
-        nummer: offerte?.nummer ?? '',
+      await mit(() => uebernimmInOfferte(id), 'preise.kalk.inOfferte', {
+        nummer: offerte?.nummer ?? offerteId,
       })
   }
 
@@ -131,38 +128,6 @@ export function KalkBlatt({
       fehlt ? 'warnung' : 'ok',
       zweisprachig('preise.kalk.vorlageGeladen', { name: v.name, n: v.positionen.length - fehlt, fehlt }),
     )
-  }
-
-  function freie(i: number) {
-    const f = FREIE_POSITIONEN[i]
-    if (!f) return
-    onAendern({
-      ...k,
-      positionen: [
-        ...k.positionen,
-        {
-          key: neuerSchluessel(),
-          artikelId: null,
-          artikelnummer: '',
-          name: f[sprache],
-          kategorie: 'dienstleistungen',
-          gruppe: '',
-          wp: null,
-          einheit: f.einheit,
-          menge: 1,
-          ekRappen: 0,
-          marge: 0.25,
-          skonto: 0,
-          frei: true,
-        },
-      ],
-    })
-  }
-
-  function preiseAktualisieren() {
-    const [positionen, n] = aktualisierePreise(k.positionen, artikel)
-    if (n) onAendern({ ...k, positionen })
-    melde('ok', zweisprachig(n ? 'preise.kalk.aktualisiert' : 'preise.kalk.aktuell', { count: n }))
   }
 
   return (
@@ -204,40 +169,25 @@ export function KalkBlatt({
         </Feld>
       </div>
 
-      <div className="flex flex-wrap items-center gap-1.5">
-        <span className="text-muted-foreground text-xs">{t('preise.kalk.freie')}</span>
-        {FREIE_POSITIONEN.map((f, i) => (
-          <Button
-            key={f.de}
-            size="sm"
-            variant="secondary"
-            onClick={() => {
-              freie(i)
-            }}
-          >
-            + {f[sprache]}
-          </Button>
-        ))}
-        <Button
-          size="sm"
-          variant="ghost"
-          className="ml-auto"
-          disabled={k.positionen.length === 0}
-          onClick={preiseAktualisieren}
-        >
-          <RefreshCw />
-          {t('preise.kalk.preiseAktualisieren')}
-        </Button>
-      </div>
+      <VariantenLeiste k={k} satz={satz} onAendern={onAendern} />
+      <BausteinLeiste k={k} artikel={artikel} sprache={sprache} onAendern={onAendern} />
 
-      <KalkPositionen k={k} onAendern={onAendern} />
+      <KalkPositionen k={k} artikel={artikel} onAendern={onAendern} />
       <KalkSummen
         s={s}
         satz={satz}
+        foerderung={regeln.data?.foerderung}
         rabatt={k.rabattProzent}
         onRabatt={(r) => {
           onAendern({ ...k, rabattProzent: r })
         }}
+      />
+      <FreigabeKasten
+        k={k}
+        regeln={regeln.data}
+        satz={satz}
+        geaendert={geaendert}
+        onSpeichern={() => speichern(true)}
       />
       <Feld id="kalk-notiz" label={t('preise.kalk.notiz')}>
         <Textarea

@@ -6,13 +6,22 @@
 type Zelle = string | number | boolean | Date | null | undefined
 
 /** Felder, die eine Preisliste liefern kann. Pflicht: Name oder Artikelnummer, dazu der Preis. */
-export const IMPORT_FELDER = ['artikelnummer', 'name', 'ek', 'lieferant', 'hersteller', 'einheit', 'leistung_w'] as const
+export const IMPORT_FELDER = [
+  'artikelnummer',
+  'name',
+  'ek',
+  'lieferant',
+  'hersteller',
+  'einheit',
+  'leistung_w',
+] as const
 export type ImportFeld = (typeof IMPORT_FELDER)[number]
 export type Zuordnung = Partial<Record<ImportFeld, number>>
 
 /** Übliche Spaltennamen (DE/FR/EN, Eturnity, Krannich, Solarmarkt, Tritec), klein und ohne Sonderzeichen. */
 const MUSTER: Record<ImportFeld, RegExp> = {
-  artikelnummer: /^(art(ikel)?\s*nr|artikel\s*nummer|artikelnr|art\s*no|sku|article|no\s*article|ref(erence)?|produktnummer|item\s*(no|number)|materialnummer|mpn)/,
+  artikelnummer:
+    /^(art(ikel)?\s*nr|artikel\s*nummer|artikelnr|art\s*no|sku|article|no\s*article|ref(erence)?|produktnummer|item\s*(no|number)|materialnummer|mpn)/,
   name: /^(bezeichnung|artikel\s*bezeichnung|artikelname|name|produkt(name)?|designation|description|beschreibung|libelle|komponente|component|model(l)?)/,
   ek: /(einkauf|^ek\b|^ek\s|netto\s*preis|nettopreis|net\s*price|prix\s*net|^preis|^price|^prix|kosten|cost|unit\s*price)/,
   lieferant: /^(lieferant|supplier|fournisseur|distributor|grosshändler|haendler|händler)/,
@@ -61,7 +70,7 @@ export function leseBetrag(wert: Zelle): number | null {
   if (!s) return null
   // Dezimaltrennzeichen = das letzte Komma oder der letzte Punkt mit 1–2 Ziffern dahinter.
   const m = /[.,](\d{1,2})$/.exec(s)
-  if (m) s = s.slice(0, m.index).replace(/[.,]/g, '') + '.' + m[1]
+  if (m) s = s.slice(0, m.index).replace(/[.,]/g, '') + '.' + (m[1] ?? '')
   else s = s.replace(/[.,]/g, '')
   const n = Number(s)
   return Number.isFinite(n) ? Math.round(n * 100) : null
@@ -115,7 +124,7 @@ export function leseCsv(inhalt: string): string[][] {
   let feld = ''
   let inAnf = false
   for (let i = 0; i < inhalt.length; i++) {
-    const c = inhalt[i]
+    const c = inhalt.charAt(i)
     if (inAnf) {
       if (c === '"' && inhalt[i + 1] === '"') {
         feld += '"'

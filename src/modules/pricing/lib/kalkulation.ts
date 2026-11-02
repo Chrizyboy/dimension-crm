@@ -1,16 +1,6 @@
 import { rundeAuf5Rappen } from '@/lib/format'
 import type { Artikel, KalkPosition, Kalkulation, MengenRegel, PreisRegeln, Preisvorlage } from '../types'
 
-/** Freie Positionen ohne Artikel (V233 PC_FREI), Name in beiden Sprachen und Einheit. */
-export const FREIE_POSITIONEN = [
-  { de: 'Montage', fr: 'Montage', einheit: 'Std.' },
-  { de: 'Elektroinstallation', fr: 'Installation électrique', einheit: 'Std.' },
-  { de: 'Gerüst', fr: 'Échafaudage', einheit: 'pauschal' },
-  { de: 'Planung & Bewilligung', fr: 'Planification & autorisation', einheit: 'pauschal' },
-  { de: 'Transport & Entsorgung', fr: 'Transport & élimination', einheit: 'pauschal' },
-  { de: 'Eigene Position', fr: 'Position libre', einheit: 'Stk' },
-] as const
-
 /** Kurze, eindeutige Kennung einer Position (nur für die Oberfläche). */
 export function neuerSchluessel(): string {
   return `k${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`
@@ -180,7 +170,8 @@ export function anlageDerVariante(positionen: readonly KalkPosition[], variante:
 
 /** Menge nach Regel: fest, je Modul oder je kWp; Stunden und Mengen auf eine Stelle gerundet, Stück ganz. */
 export function mengeAusRegel(r: MengenRegel, anlage: { module: number; kwp: number }, ganz: boolean): number {
-  const roh = r.regel === 'je_modul' ? anlage.module * r.faktor : r.regel === 'je_kwp' ? anlage.kwp * r.faktor : r.faktor
+  const roh =
+    r.regel === 'je_modul' ? anlage.module * r.faktor : r.regel === 'je_kwp' ? anlage.kwp * r.faktor : r.faktor
   return ganz ? Math.ceil(roh - 1e-9) : Math.round(roh * 10) / 10
 }
 

@@ -28,7 +28,12 @@ describe('Preisliste aus Datei', () => {
     expect(k).toBe(2)
     const z = leseZeilen(blatt, k, erkenneSpalten(blatt[k] ?? []))
     expect(z).toHaveLength(2)
-    expect(z[0]).toEqual({ artikelnummer: '6349902', name: 'Huawei LUNA2000-10-S0', ek_rappen: 439000, lieferant: 'Krannich' })
+    expect(z[0]).toEqual({
+      artikelnummer: '6349902',
+      name: 'Huawei LUNA2000-10-S0',
+      ek_rappen: 439000,
+      lieferant: 'Krannich',
+    })
   })
 
   it('liest CSV mit Semikolon und Anführungszeichen', () => {

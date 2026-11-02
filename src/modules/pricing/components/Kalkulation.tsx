@@ -8,7 +8,7 @@ import { KalkBlatt } from './KalkBlatt'
 
 /** Leere Kalkulation, wahlweise schon mit Offerte. */
 function neue(offerteId: string | null = null): KalkulationTyp {
-  return { id: null, titel: '', offerteId, rabattProzent: 0, notiz: '', positionen: [] }
+  return { id: null, titel: '', offerteId, rabattProzent: 0, notiz: '', positionen: [], varianten: [], variante: null }
 }
 
 /**
@@ -19,10 +19,13 @@ function neue(offerteId: string | null = null): KalkulationTyp {
 export default function Kalkulation({
   artikel,
   offerteId,
+  kalkulationId,
   onOfferte,
 }: {
   artikel: Artikel[]
   offerteId: string | null
+  /** Aus der Glocke (Freigabe): diese gespeicherte Kalkulation öffnen. */
+  kalkulationId: string | null
   onOfferte: (id: string | null) => void
 }) {
   const gespeichert = useKalkulationen(true)
@@ -32,7 +35,14 @@ export default function Kalkulation({
   // Für welche Offerte die Adresse schon ausgewertet ist. Wählt man selbst (Liste, Auswahl im Blatt),
   // wird das vorher gesetzt, damit die Adresse die offene Kalkulation nicht ersetzt.
   const [geladenFuer, setGeladenFuer] = useState<string | null>(null)
-  if (offerteId && gespeichert.data && geladenFuer !== offerteId) {
+  if (kalkulationId && gespeichert.data && geladenFuer !== `k:${kalkulationId}`) {
+    const x = gespeichert.data.find((y) => y.id === kalkulationId)
+    setGeladenFuer(`k:${kalkulationId}`)
+    if (x) {
+      setK(x)
+      setGeaendert(false)
+    }
+  } else if (!kalkulationId && offerteId && gespeichert.data && geladenFuer !== offerteId) {
     setGeladenFuer(offerteId)
     setK(gespeichert.data.find((x) => x.offerteId === offerteId) ?? neue(offerteId))
     setGeaendert(false)
@@ -53,7 +63,12 @@ export default function Kalkulation({
       ...k,
       positionen: da
         ? k.positionen.map((p) => (p === da ? { ...p, menge: p.menge + menge } : p))
-        : [...k.positionen, positionAusArtikel(a, menge)],
+        : [
+            ...k.positionen,
+            k.varianten?.length && k.variante
+              ? { ...positionAusArtikel(a, menge), varianten: [k.variante] }
+              : positionAusArtikel(a, menge),
+          ],
     })
   }
 

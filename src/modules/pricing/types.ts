@@ -3,7 +3,14 @@
 export type PreisAnsicht = 'liste' | 'aenderungen' | 'kalkulation' | 'regeln' | 'kunden' | 'archiv'
 
 /** Reiter in der Reihenfolge der Oberfläche. Nur «kunden» ist ohne das Recht «preise» sichtbar. */
-export const PREIS_ANSICHTEN: readonly PreisAnsicht[] = ['liste', 'aenderungen', 'kalkulation', 'regeln', 'kunden', 'archiv']
+export const PREIS_ANSICHTEN: readonly PreisAnsicht[] = [
+  'liste',
+  'aenderungen',
+  'kalkulation',
+  'regeln',
+  'kunden',
+  'archiv',
+]
 
 /** Filter «Handlungsbedarf» über der Preisliste. */
 export type PreisHinweis = 'marge' | 'ekAlt' | 'ohneEk' | 'datenblatt' | 'lager'

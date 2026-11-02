@@ -67,7 +67,12 @@ export function bausteinPositionen(
 function position(
   z: BausteinZeile,
   i: number,
-  p: { wahl: Record<number, string | undefined>; artikel: readonly Artikel[]; leistungen: readonly Leistung[]; sprache: 'de' | 'fr' },
+  p: {
+    wahl: Record<number, string | undefined>
+    artikel: readonly Artikel[]
+    leistungen: readonly Leistung[]
+    sprache: 'de' | 'fr'
+  },
 ): KalkPosition | null {
   if (z.art === 'leistung') {
     const l = p.leistungen.find((x) => x.schluessel === z.leistung)
