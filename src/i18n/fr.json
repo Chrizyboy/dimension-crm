@@ -2546,7 +2546,8 @@
     "module_other": "{{count}} modules",
     "checkliste": "Électricien {{erledigt}}/{{gesamt}}",
     "reiter": {
-      "baustellen": "Chantiers",
+      "leitstand": "Poste de pilotage",
+      "woche": "Ma semaine",
       "zeitplan": "Planning",
       "bewilligungen": "Autorisations",
       "alle": "Tous les projets",
@@ -2841,6 +2842,117 @@
         "zweck": "Rétribution unique Pronovo",
         "hinweis": "Ces données servent à annoncer la rétribution unique auprès de Pronovo. L’annonce se fait en ligne ; vérifier séparément les subventions cantonales ou communales."
       }
+    },
+    "leitstand": {
+      "bau": "Chantier {{datum}}",
+      "suche": "Chercher projet, client, lieu, électricien ou numéro",
+      "ansicht": "Affichage",
+      "board": "Tableau",
+      "liste": "Liste",
+      "filter": "Filtres rapides",
+      "leer": "Rien dans cette phase."
+    },
+    "zahl": {
+      "laufend": "projets en cours",
+      "ohne_termin": "sans date de chantier",
+      "spaet": "bloqués ou en retard",
+      "bewilligung": "autorisation en retard",
+      "material": "matériel manquant pour les 14 prochains jours",
+      "woche": "montages cette semaine",
+      "verrechnen": "tranches dues, non facturées"
+    },
+    "schnell": {
+      "meine": "Les miens",
+      "spaet": "Bloqués",
+      "bewilligung": "Autorisation en retard",
+      "material": "Matériel manquant",
+      "ohne_termin": "Sans date de chantier",
+      "verrechnen": "À facturer"
+    },
+    "hinweis": {
+      "material_fehlt": "{{anzahl}} positions manquent",
+      "bewilligung_spaet": "Autorisation en retard",
+      "zahlung_ueberfaellig": "Paiement en retard de {{tage}} jours",
+      "ohne_termin": "sans date de chantier",
+      "verrechnen": "Tranche due",
+      "nachtraege": "Avenant ouvert",
+      "material_ok": "Matériel complet"
+    },
+    "woche": {
+      "wer": "Projets de qui",
+      "meine": "Mes projets",
+      "alle": "Tous les projets",
+      "seit": "depuis {{tage}} jours",
+      "leer": "Rien d’échu cette semaine",
+      "leerText": "Aucune étape ouverte avec délai et rien de bloqué.",
+      "baustellen": "Chantiers cette semaine",
+      "keineBaustellen": "Aucune intervention cette semaine.",
+      "gruppe": {
+        "ueberfaellig": "En retard et bloqués",
+        "woche": "Cette semaine",
+        "naechste": "Semaine prochaine"
+      },
+      "aufgabe": {
+        "material_fehlt": "Commander le matériel",
+        "zahlung_ueberfaellig": "Relancer le paiement",
+        "ohne_termin": "Fixer la date de chantier",
+        "verrechnen": "Établir la facture"
+      }
+    },
+    "seite": {
+      "leitung": "Chef de projet {{name}}",
+      "verkauf": "Vente {{name}}",
+      "vertrag": "Contrat {{betrag}}",
+      "phasen": "Phases du projet",
+      "schritte": "{{erledigt}} sur {{gesamt}}",
+      "zuTun": "À faire maintenant",
+      "alleSchritte": "Les {{anzahl}} étapes ouvertes",
+      "erledigt": "«{{name}}» terminé",
+      "eingereicht": "déposé le {{datum}}",
+      "verlauf": "Historique",
+      "termine": "Dates",
+      "keineTermine": "Aucune intervention planifiée.",
+      "material": "Matériel",
+      "keinMaterial": "Pas encore de liste de matériel. La reprendre de l’offre dans les achats.",
+      "fehlt": "manque {{menge}}",
+      "unterwegs": "commandé",
+      "da": "en stock",
+      "lieferung": "Dernière livraison attendue",
+      "zumEinkauf": "Ouvrir le matériel dans les achats",
+      "geld": "Argent",
+      "vertragInkl": "Contrat TVA incl.",
+      "offen": "ouvert",
+      "bezahlt": "payé",
+      "gestellt": "facturé {{nummer}}",
+      "entwurf": "Brouillon",
+      "stellen": "facturer maintenant",
+      "spaeter": "plus tard",
+      "zuRechnungen": "Ouvrir «À facturer»",
+      "kalkulation": "Post-calcul",
+      "exkl": "hors TVA",
+      "margeSoll": "Marge prévue",
+      "margeIst": "Marge actuelle",
+      "stundenSollIst": "Heures prévues / saisies",
+      "materialSollIst": "Matériel prévu / réel",
+      "verrechnet": "Facturé",
+      "stunden": "{{stunden}} h"
+    },
+    "verlauf": {
+      "art": {
+        "notiz": "Note",
+        "anruf": "Appel",
+        "mail": "E-mail",
+        "besuch": "Visite",
+        "sms": "SMS",
+        "brief": "Lettre",
+        "aenderung": "Modification"
+      },
+      "artWahl": "Type d’entrée",
+      "eingabe": "Que s’est-il passé ? Avec qui, qu’est-ce qui a été convenu ?",
+      "speichern": "Noter dans l’historique",
+      "leer": "Rien dans l’historique.",
+      "mailVon": "E-mail de {{name}}",
+      "rapport": "Rapport {{nummer}} · {{person}}"
     }
   },
   "kundeWahl": {

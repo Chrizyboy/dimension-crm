@@ -4,12 +4,12 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
-import { useProjekte } from '../hooks/useProjekte'
 import { REITER, type AkteReiter, type Reiter as ReiterTyp } from '../types'
 import { Abwesenheiten } from './Abwesenheiten'
-import { Baustellen } from './Baustellen'
 import { Bewilligungen } from './Bewilligungen'
-import { ProjektAkte } from './ProjektAkte'
+import { Leitstand } from './Leitstand'
+import { MeineWoche } from './MeineWoche'
+import { ProjektSeite } from './ProjektSeite'
 import { ProjektListe } from './ProjektListe'
 import { SubunternehmerListe } from './SubunternehmerListe'
 import { Zeitplan } from './Zeitplan'
@@ -22,9 +22,9 @@ export interface ProjekteNavigation {
 }
 
 /**
- * Projekte & Montage (V233 «Bauplanung»): Baustellen-Board je Standort, Zeitplan, Bewilligungen, alle
- * Projekte, Subunternehmer und Abwesenheiten. Ein Projekt öffnet sich als Akte rechts
- * (#/projects?reiter=zeitplan&projekt=…&akte=fahrplan).
+ * Projekte & Montage (V233 «Bauplanung»), neu gedacht (Entscheid 0039): Leitstand nach Phase, Meine Woche,
+ * Zeitplan, Bewilligungen, alle Projekte, Subunternehmer und Abwesenheiten. Ein Projekt öffnet sich als ganze
+ * Seite (#/projects?projekt=…&akte=fahrplan), «zurück» führt zum Reiter, von dem man kam.
  */
 export default function Projekte({
   reiter,
@@ -38,7 +38,6 @@ export default function Projekte({
   onNavigation: (z: ProjekteNavigation) => void
 }) {
   const { t } = useTranslation()
-  const imBau = useProjekte(['im_bau'])
 
   if (!supabase) {
     return (
@@ -52,8 +51,25 @@ export default function Projekte({
     onNavigation({ projekt: id })
   }
 
+  if (projektId)
+    return (
+      <div className="mx-auto flex w-full max-w-[110rem] flex-col gap-4 px-4 py-6 sm:px-6">
+        <ProjektSeite
+          key={projektId}
+          id={projektId}
+          reiter={akte}
+          onReiter={(a) => {
+            onNavigation({ akte: a })
+          }}
+          onZurueck={() => {
+            oeffnen(null)
+          }}
+        />
+      </div>
+    )
+
   return (
-    <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
+    <div className="mx-auto flex w-full max-w-[110rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf titel={t('projekte.titel')} beschreibung={t('projekte.beschreibung')} />
       <Reiter
         value={reiter}
@@ -65,14 +81,14 @@ export default function Projekte({
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`projekte.reiter.${r}`)}
-              {r === 'baustellen' && imBau.data ? (
-                <span className="text-muted-foreground zahlen ml-1.5 text-xs">{imBau.data.length}</span>
-              ) : null}
             </ReiterKnopf>
           ))}
         </ReiterListe>
-        <ReiterInhalt value="baustellen" className="pt-4">
-          <Baustellen aktiveId={projektId} onOeffnen={oeffnen} />
+        <ReiterInhalt value="leitstand" className="pt-4">
+          <Leitstand aktiveId={projektId} onOeffnen={oeffnen} />
+        </ReiterInhalt>
+        <ReiterInhalt value="woche" className="pt-4">
+          <MeineWoche onOeffnen={oeffnen} />
         </ReiterInhalt>
         <ReiterInhalt value="zeitplan" className="pt-4">
           <Zeitplan />
@@ -90,19 +106,6 @@ export default function Projekte({
           <Abwesenheiten />
         </ReiterInhalt>
       </Reiter>
-      {projektId && (
-        <ProjektAkte
-          key={projektId}
-          id={projektId}
-          reiter={akte}
-          onReiter={(a) => {
-            onNavigation({ akte: a })
-          }}
-          onSchliessen={() => {
-            oeffnen(null)
-          }}
-        />
-      )}
     </div>
   )
 }

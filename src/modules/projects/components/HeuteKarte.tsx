@@ -30,7 +30,7 @@ export default function HeuteKarte() {
     },
     {
       schluessel: 'ohneTermin',
-      reiter: 'baustellen',
+      reiter: 'leitstand',
       ton: 'warnung',
       n: projekte.data.filter((p) => p.status === 'im_bau' && (p.bau_status ?? 'ausstehend') === 'ausstehend').length,
     },

@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import * as pl from '../services/planung'
 import * as s from '../services/projekte'
+import * as le from '../services/leitstand'
 import * as su from '../services/subunternehmer'
 import type { ProjektStatus } from '../types'
 
@@ -67,6 +68,25 @@ export const useSubauftraege = (projektId: string) =>
     queryKey: ['projekte', 'subauftraege', projektId],
     enabled: an,
     queryFn: () => su.ladeSubauftraege(projektId),
+  })
+
+/** Signale aller laufenden Projekte für den Leitstand. */
+export const useSignale = () => useQuery({ queryKey: ['projekte', 'signale'], enabled: an, queryFn: le.ladeSignale })
+
+/** Alles zu einem Projekt für die Akte. */
+export const useAkte = (id: string) =>
+  useQuery({ queryKey: ['projekte', 'akte', id], enabled: an, queryFn: () => le.ladeAkte(id) })
+
+/** Fällige Schritte bis zum Datum (Meine Woche). */
+export const useFaelligeSchritte = (bis: string) =>
+  useQuery({ queryKey: ['projekte', 'faellig', bis], enabled: an, queryFn: () => le.ladeFaelligeSchritte(bis) })
+
+/** Nachkalkulation, nur wenn die Person Preise oder Finanzen sehen darf. */
+export const useNachkalkulation = (id: string, erlaubt: boolean) =>
+  useQuery({
+    queryKey: ['projekte', 'nachkalkulation', id],
+    enabled: an && erlaubt,
+    queryFn: () => le.ladeNachkalkulation(id),
   })
 
 /** Nach einer Änderung alles zu den Projekten neu laden (auch Kunden, deren Stand vom Projekt abhängt). */

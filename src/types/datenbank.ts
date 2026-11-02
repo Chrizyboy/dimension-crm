@@ -118,6 +118,13 @@ export type Database = {
             foreignKeyName: 'ablage_ordner_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: true
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -515,6 +522,13 @@ export type Database = {
             foreignKeyName: 'aktivitaeten_projekt_fk'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'aktivitaeten_projekt_fk'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -680,6 +694,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'anlagen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -1257,6 +1278,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -2167,6 +2195,13 @@ export type Database = {
             foreignKeyName: 'bestellungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -2381,6 +2416,13 @@ export type Database = {
             foreignKeyName: 'einsaetze_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'einsaetze_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -2509,6 +2551,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'erwartete_eingaenge_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -4208,6 +4257,13 @@ export type Database = {
             foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -4399,6 +4455,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'lagerbewegungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -4748,6 +4811,13 @@ export type Database = {
             foreignKeyName: 'material_zahlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'material_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -4845,6 +4915,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -5826,6 +5903,13 @@ export type Database = {
             foreignKeyName: 'posteingang_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -6084,6 +6168,13 @@ export type Database = {
             foreignKeyName: 'projekt_material_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -6176,6 +6267,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_schritte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -6644,6 +6742,13 @@ export type Database = {
             foreignKeyName: 'rapporte_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -6921,6 +7026,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -7546,6 +7658,13 @@ export type Database = {
             foreignKeyName: 'service_faelle_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -8161,6 +8280,13 @@ export type Database = {
             foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -8598,6 +8724,13 @@ export type Database = {
             foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -8779,6 +8912,13 @@ export type Database = {
             foreignKeyName: 'werkvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -8863,6 +9003,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -8973,6 +9120,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -9094,6 +9248,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -9294,6 +9455,13 @@ export type Database = {
             foreignKeyName: 'nachtraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -9406,6 +9574,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -9791,6 +9966,13 @@ export type Database = {
             foreignKeyName: 'projekt_material_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -9799,6 +9981,57 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      projekt_signale: {
+        Row: {
+          letzte_aktivitaet: string | null
+          letzte_lieferung: string | null
+          material_fehlt: number | null
+          material_positionen: number | null
+          nachtraege_offen: number | null
+          naechster_einsatz: string | null
+          offen_faellig_am: string | null
+          offen_rappen: number | null
+          projekt_id: string | null
+          tranchen_faellig_rappen: number | null
+          verantwortlich_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          letzte_aktivitaet?: never
+          letzte_lieferung?: never
+          material_fehlt?: never
+          material_positionen?: never
+          nachtraege_offen?: never
+          naechster_einsatz?: never
+          offen_faellig_am?: never
+          offen_rappen?: never
+          projekt_id?: string | null
+          tranchen_faellig_rappen?: never
+          verantwortlich_id?: string | null
+        }
+        Update: {
+          letzte_aktivitaet?: never
+          letzte_lieferung?: never
+          material_fehlt?: never
+          material_positionen?: never
+          nachtraege_offen?: never
+          naechster_einsatz?: never
+          offen_faellig_am?: never
+          offen_rappen?: never
+          projekt_id?: string | null
+          tranchen_faellig_rappen?: never
+          verantwortlich_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -9885,6 +10118,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -10009,6 +10249,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -10317,6 +10564,13 @@ export type Database = {
             foreignKeyName: 'werkvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -10385,6 +10639,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -10882,11 +11143,13 @@ export type Database = {
         }[]
       }
       preise_importieren: { Args: { p_pruefen?: boolean; p_zeilen: Json }; Returns: Json }
+      projekt_akte: { Args: { p_id: string }; Returns: Json }
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
       projekt_bau_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
       projekt_material_vorschlagen: { Args: { p_projekt: string }; Returns: number }
       projekt_schritt_setzen: { Args: { p: Json; p_projekt: string; p_schluessel: string }; Returns: undefined }
+      projekt_vermerken: { Args: { p_art: string; p_projekt: string; p_text: string }; Returns: string }
       projekt_zeitplan_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       quellen_lauf: {
         Args: {

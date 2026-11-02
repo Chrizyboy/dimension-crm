@@ -1,8 +1,7 @@
 import { ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
-import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
+import { Angabe } from '@/components/shared/AkteAbschnitt'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Input } from '@/components/ui/input'
 import { formatChf, formatDatum, formatTelefon } from '@/lib/format'
@@ -11,14 +10,13 @@ import { useStandorte } from '../hooks/useProjekte'
 import { anlageKurz, ortZeile } from '../lib/anzeige'
 import { projektAendern } from '../services/projekte'
 import type { Projekt } from '../types'
-import { FahrplanBalken } from './FahrplanBalken'
+import { Box } from './AkteBox'
 
 type TextFeld = 'elektriker' | 'architekt'
 
 /**
- * Übersicht der Akte: Kunde und Baustelle, Anlage aus der Offerte, Vertrag, Fahrplan-Stand und die
- * Angaben, die die Bauplanung pflegt (Standort, Elektriker, Architekt, Werktage). Gespeichert wird beim
- * Verlassen des Felds.
+ * Linke Spalte der Akte: Kunde und Baustelle, Anlage aus der Offerte mit Vertrag und die Angaben, die die
+ * Bauplanung pflegt (Standort, Elektriker, Architekt, Werktage). Gespeichert wird beim Verlassen des Felds.
  */
 export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
   const { t } = useTranslation()
@@ -49,16 +47,8 @@ export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
   )
 
   return (
-    <div className="flex flex-col">
-      <div className="pb-3">
-        <FahrplanBalken stand={p.stand} gross />
-      </div>
-      <KiAkteAbschnitt
-        bezug={{ tabelle: 'projekte', id: p.id }}
-        art="auftrag"
-        mail={{ kontakt_id: p.kontakt_id, projekt_id: p.id }}
-      />
-      <AkteAbschnitt titel={t('projekte.akte.kunde')}>
+    <>
+      <Box titel={t('projekte.akte.kunde')}>
         <dl>
           <Angabe label={t('projekte.spalte.kunde')}>
             <a
@@ -88,8 +78,8 @@ export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
           )}
           <Angabe label={t('projekte.feld.sprache')}>{p.sprache.toUpperCase()}</Angabe>
         </dl>
-      </AkteAbschnitt>
-      <AkteAbschnitt titel={t('projekte.akte.anlage')}>
+      </Box>
+      <Box titel={t('projekte.akte.anlage')}>
         <dl>
           <Angabe label={t('projekte.feld.anlage')}>{anlageKurz(p, t) || '–'}</Angabe>
           {p.batterie && <Angabe label={t('projekte.feld.batterie')}>{p.batterie}</Angabe>}
@@ -102,8 +92,8 @@ export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
           <Angabe label={t('projekte.feld.baubeginn')}>{p.baubeginn ? formatDatum(p.baubeginn) : '–'}</Angabe>
           {p.verantwortlich && <Angabe label={t('projekte.feld.verantwortlich')}>{p.verantwortlich}</Angabe>}
         </dl>
-      </AkteAbschnitt>
-      <AkteAbschnitt titel={t('projekte.akte.planung')}>
+      </Box>
+      <Box titel={t('projekte.akte.planung')}>
         <dl>
           <Angabe label={t('projekte.feld.standort')}>
             <Auswahl
@@ -134,7 +124,7 @@ export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
             />
           </Angabe>
         </dl>
-      </AkteAbschnitt>
-    </div>
+      </Box>
+    </>
   )
 }
