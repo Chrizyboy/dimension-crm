@@ -5657,17 +5657,31 @@ export type Database = {
       }
       personal_akten: {
         Row: {
+          ahv_nr: string | null
           alt_daten: Json | null
           alt_id: string | null
           austritt: string | null
+          austrittsgrund: string | null
+          befristet_bis: string | null
+          bewilligung: string | null
+          bewilligung_bis: string | null
           eintritt: string | null
           erstellt_am: string
           erstellt_von: string | null
+          ferientage: number | null
+          funktion: string | null
           geaendert_am: string
           geburtsdatum: string | null
           geloescht_am: string | null
+          hosengroesse: string | null
+          iban: string | null
           id: string
           kleidergroesse: string | null
+          kuendigungsfrist_monate: number | null
+          mail_privat: string | null
+          naechstes_gespraech: string | null
+          nationalitaet: string | null
+          notfall_beziehung: string | null
           notfall_name: string | null
           notfall_telefon: string | null
           notiz: string | null
@@ -5675,23 +5689,43 @@ export type Database = {
           pensum: number | null
           person_id: string
           plz: string | null
+          probezeit_bis: string | null
           schuhgroesse: string | null
           strasse: string | null
           telefon_privat: string | null
+          vertrag_unterschrieben_am: string | null
+          vertragsart: string | null
+          vorgesetzt_id: string | null
+          wochenstunden: number | null
+          zivilstand: string | null
         }
         ComputedFields: never
         Insert: {
+          ahv_nr?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           austritt?: string | null
+          austrittsgrund?: string | null
+          befristet_bis?: string | null
+          bewilligung?: string | null
+          bewilligung_bis?: string | null
           eintritt?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          ferientage?: number | null
+          funktion?: string | null
           geaendert_am?: string
           geburtsdatum?: string | null
           geloescht_am?: string | null
+          hosengroesse?: string | null
+          iban?: string | null
           id?: string
           kleidergroesse?: string | null
+          kuendigungsfrist_monate?: number | null
+          mail_privat?: string | null
+          naechstes_gespraech?: string | null
+          nationalitaet?: string | null
+          notfall_beziehung?: string | null
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: string | null
@@ -5699,22 +5733,42 @@ export type Database = {
           pensum?: number | null
           person_id: string
           plz?: string | null
+          probezeit_bis?: string | null
           schuhgroesse?: string | null
           strasse?: string | null
           telefon_privat?: string | null
+          vertrag_unterschrieben_am?: string | null
+          vertragsart?: string | null
+          vorgesetzt_id?: string | null
+          wochenstunden?: number | null
+          zivilstand?: string | null
         }
         Update: {
+          ahv_nr?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           austritt?: string | null
+          austrittsgrund?: string | null
+          befristet_bis?: string | null
+          bewilligung?: string | null
+          bewilligung_bis?: string | null
           eintritt?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          ferientage?: number | null
+          funktion?: string | null
           geaendert_am?: string
           geburtsdatum?: string | null
           geloescht_am?: string | null
+          hosengroesse?: string | null
+          iban?: string | null
           id?: string
           kleidergroesse?: string | null
+          kuendigungsfrist_monate?: number | null
+          mail_privat?: string | null
+          naechstes_gespraech?: string | null
+          nationalitaet?: string | null
+          notfall_beziehung?: string | null
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: string | null
@@ -5722,9 +5776,15 @@ export type Database = {
           pensum?: number | null
           person_id?: string
           plz?: string | null
+          probezeit_bis?: string | null
           schuhgroesse?: string | null
           strasse?: string | null
           telefon_privat?: string | null
+          vertrag_unterschrieben_am?: string | null
+          vertragsart?: string | null
+          vorgesetzt_id?: string | null
+          wochenstunden?: number | null
+          zivilstand?: string | null
         }
         Relationships: [
           {
@@ -5735,6 +5795,147 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      personal_dokumente: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          datei_pfad: string
+          datum: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          titel: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          datei_pfad: string
+          datum?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id: string
+          titel: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          datei_pfad?: string
+          datum?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          titel?: string
+        }
+        Relationships: []
+      }
+      personal_gespraeche: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          datum: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          gefuehrt_von: string | null
+          geloescht_am: string | null
+          id: string
+          notiz: string | null
+          person_id: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          datum: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          gefuehrt_von?: string | null
+          geloescht_am?: string | null
+          id?: string
+          notiz?: string | null
+          person_id: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          datum?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          gefuehrt_von?: string | null
+          geloescht_am?: string | null
+          id?: string
+          notiz?: string | null
+          person_id?: string
+        }
+        Relationships: []
+      }
+      personal_loehne: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anzahl_loehne: number | null
+          betrag_rappen: number
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gueltig_ab: string
+          id: string
+          lohnart: string
+          notiz: string | null
+          person_id: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzahl_loehne?: number | null
+          betrag_rappen: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_ab: string
+          id?: string
+          lohnart: string
+          notiz?: string | null
+          person_id: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzahl_loehne?: number | null
+          betrag_rappen?: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_ab?: string
+          id?: string
+          lohnart?: string
+          notiz?: string | null
+          person_id?: string
+        }
+        Relationships: []
       }
       personen: {
         Row: {
@@ -10062,12 +10263,26 @@ export type Database = {
       }
       personal_akten_sicht: {
         Row: {
+          ahv_nr: string | null
           austritt: string | null
+          austrittsgrund: string | null
+          befristet_bis: string | null
+          bewilligung: string | null
+          bewilligung_bis: string | null
           eintritt: string | null
+          ferientage: number | null
+          funktion: string | null
           geaendert_am: string | null
           geburtsdatum: string | null
+          hosengroesse: string | null
+          iban: string | null
           id: string | null
           kleidergroesse: string | null
+          kuendigungsfrist_monate: number | null
+          mail_privat: string | null
+          naechstes_gespraech: string | null
+          nationalitaet: string | null
+          notfall_beziehung: string | null
           notfall_name: string | null
           notfall_telefon: string | null
           notiz: string | null
@@ -10075,18 +10290,38 @@ export type Database = {
           pensum: number | null
           person_id: string | null
           plz: string | null
+          probezeit_bis: string | null
           schuhgroesse: string | null
           strasse: string | null
           telefon_privat: string | null
+          vertrag_unterschrieben_am: string | null
+          vertragsart: string | null
+          vorgesetzt_id: string | null
+          wochenstunden: number | null
+          zivilstand: string | null
         }
         ComputedFields: never
         Insert: {
+          ahv_nr?: string | null
           austritt?: string | null
+          austrittsgrund?: string | null
+          befristet_bis?: string | null
+          bewilligung?: string | null
+          bewilligung_bis?: string | null
           eintritt?: string | null
+          ferientage?: number | null
+          funktion?: string | null
           geaendert_am?: string | null
           geburtsdatum?: string | null
+          hosengroesse?: string | null
+          iban?: string | null
           id?: string | null
           kleidergroesse?: string | null
+          kuendigungsfrist_monate?: number | null
+          mail_privat?: string | null
+          naechstes_gespraech?: string | null
+          nationalitaet?: string | null
+          notfall_beziehung?: string | null
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: never
@@ -10094,17 +10329,37 @@ export type Database = {
           pensum?: number | null
           person_id?: string | null
           plz?: string | null
+          probezeit_bis?: string | null
           schuhgroesse?: string | null
           strasse?: string | null
           telefon_privat?: string | null
+          vertrag_unterschrieben_am?: string | null
+          vertragsart?: string | null
+          vorgesetzt_id?: string | null
+          wochenstunden?: number | null
+          zivilstand?: string | null
         }
         Update: {
+          ahv_nr?: string | null
           austritt?: string | null
+          austrittsgrund?: string | null
+          befristet_bis?: string | null
+          bewilligung?: string | null
+          bewilligung_bis?: string | null
           eintritt?: string | null
+          ferientage?: number | null
+          funktion?: string | null
           geaendert_am?: string | null
           geburtsdatum?: string | null
+          hosengroesse?: string | null
+          iban?: string | null
           id?: string | null
           kleidergroesse?: string | null
+          kuendigungsfrist_monate?: number | null
+          mail_privat?: string | null
+          naechstes_gespraech?: string | null
+          nationalitaet?: string | null
+          notfall_beziehung?: string | null
           notfall_name?: string | null
           notfall_telefon?: string | null
           notiz?: never
@@ -10112,9 +10367,15 @@ export type Database = {
           pensum?: number | null
           person_id?: string | null
           plz?: string | null
+          probezeit_bis?: string | null
           schuhgroesse?: string | null
           strasse?: string | null
           telefon_privat?: string | null
+          vertrag_unterschrieben_am?: string | null
+          vertragsart?: string | null
+          vorgesetzt_id?: string | null
+          wochenstunden?: number | null
+          zivilstand?: string | null
         }
         Relationships: [
           {
@@ -11328,7 +11589,20 @@ export type Database = {
         Returns: undefined
       }
       offerte_zurueck: { Args: { p_grund: string; p_offerte: string; p_ziel: string }; Returns: undefined }
+      personal_akte: { Args: { p_person: string }; Returns: Json }
       personal_checklisten: { Args: Record<PropertyKey, never>; Returns: number }
+      personal_fristen_melden: { Args: { p_heute?: string }; Returns: number }
+      personal_gespraech_speichern: {
+        Args: {
+          p_art: string
+          p_datum: string
+          p_id?: string
+          p_naechstes?: string
+          p_notiz?: string
+          p_person: string
+        }
+        Returns: string
+      }
       plz_auskunft: {
         Args: { p_plz: string }
         Returns: {

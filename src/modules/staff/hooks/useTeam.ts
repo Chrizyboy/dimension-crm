@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeAkte, ladeAusweise, ladeTeam } from '../services/personal'
+import { ladeAkte } from '../services/akte'
+import { ladeAusweise, ladeTeam } from '../services/personal'
 
 const mitDb = supabase !== null
 
@@ -11,9 +12,9 @@ export const useTeam = () =>
 /** Alle Ausweise. */
 export const useAusweise = () => useQuery({ queryKey: ['team', 'ausweise'], enabled: mitDb, queryFn: ladeAusweise })
 
-/** Personal-Akte einer Person (nur Administration und die Person selbst bekommen Daten). */
-export const useAkte = (personId: string, aktiv: boolean) =>
-  useQuery({ queryKey: ['team', 'akte', personId], enabled: mitDb && aktiv, queryFn: () => ladeAkte(personId) })
+/** Personal-Akte einer Person (die Datenbank gibt nur, was man sehen darf; sonst null). */
+export const useAkte = (personId: string) =>
+  useQuery({ queryKey: ['team', 'akte', personId], enabled: mitDb, queryFn: () => ladeAkte(personId) })
 
 /** Nach einer Änderung alles neu laden; auch die Fristen unter «Fahrzeuge & Geräte» (Ausweise). */
 export function useNeuLaden() {
