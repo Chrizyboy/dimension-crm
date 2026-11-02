@@ -120,6 +120,20 @@ export interface Einsatz {
   notiz: string | null
 }
 
+/** Service-Termin aus «Service & Garantie» (Sicht service_termine), im Zeitplan neben den Baustellen. */
+export interface ServiceTermin {
+  id: string
+  nummer: string
+  titel: string
+  datum: string
+  termin_am: string
+  dauer_minuten: number
+  personen: string[]
+  kunde: string | null
+  ort: string | null
+  auswirkung: string | null
+}
+
 /** Einsatz im Planungsdialog, noch nicht gespeichert (neu ohne id). */
 export type EinsatzEntwurf = Omit<Einsatz, 'id' | 'projekt_id'> & { id?: string }
 
