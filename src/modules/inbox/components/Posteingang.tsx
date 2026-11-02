@@ -10,13 +10,14 @@ import { meldeIntegrationsFehler } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { supabase } from '@/services/supabase'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useNeuLaden } from '../hooks/usePosteingang'
+import { useBetrachter, useNeuLaden } from '../hooks/usePosteingang'
 import { jetztAbholen } from '../services/posteingang'
 import { REITER, type Ansicht, type Reiter as ReiterTyp } from '../types'
+import { AbsenderRegeln } from './AbsenderRegeln'
+import { Arbeitsplatz } from './Arbeitsplatz'
 import { Auswertung } from './Auswertung'
 import { Einstellungen } from './Einstellungen'
-import { MailAkte } from './MailAkte'
-import { MailListe } from './MailListe'
+import { TeamUebersicht } from './TeamUebersicht'
 
 /** Wohin die Seite springt: Reiter, Filter und offene Mail stehen in der Adresse. */
 export interface PosteingangZiel {
@@ -26,9 +27,9 @@ export interface PosteingangZiel {
 }
 
 /**
- * Posteingang (Phase 18): alle Mails aus info@ und den persönlichen Postfächern, eingeordnet und der Akte
- * zugeordnet, mit zuständiger Person und Antwortfrist in Arbeitszeit. Oben, wer gerade wartet; die Mail öffnet
- * als Seitenpanel (#/inbox?mail=…). Dazu die Reaktionszeit und (nur Administration) die Einstellungen.
+ * Posteingang (Phase 18, Arbeitsplatz seit 2.11.2026): alle Mails aus info@ und den persönlichen Postfächern,
+ * eingeordnet, der Akte zugeordnet, mit zuständiger Person und Antwortfrist in Arbeitszeit. Reiter: Arbeitsplatz
+ * (Liste und Mail nebeneinander), Team (nur wer verteilt), Absender-Regeln, Reaktionszeit, Einstellungen (Administration).
  */
 export default function Posteingang({
   reiter,
@@ -46,6 +47,8 @@ export default function Posteingang({
   const neuLaden = useNeuLaden()
   const [holt, setHolt] = useState(false)
   const admin = hatRecht(ich, 'admin')
+  const { verteile } = useBetrachter()
+  const sichtbar = (r: ReiterTyp) => (r === 'einstellungen' ? admin : r === 'team' ? verteile : true)
 
   if (!supabase) {
     return (
@@ -90,23 +93,31 @@ export default function Posteingang({
         }}
       >
         <ReiterListe>
-          {REITER.filter((r) => r !== 'einstellungen' || admin).map((r) => (
+          {REITER.filter(sichtbar).map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`posteingang.reiter.${r}`)}
             </ReiterKnopf>
           ))}
         </ReiterListe>
         <ReiterInhalt value="eingang" className="pt-4">
-          <MailListe
+          <Arbeitsplatz
             ansicht={ansicht}
-            aktiveId={mailId}
+            mailId={mailId}
             onAnsicht={(a) => {
-              onNavigation({ ansicht: a })
+              onNavigation({ ansicht: a, mail: null })
             }}
-            onOeffnen={(id) => {
+            onMail={(id) => {
               onNavigation({ mail: id })
             }}
           />
+        </ReiterInhalt>
+        {verteile && (
+          <ReiterInhalt value="team" className="pt-4">
+            <TeamUebersicht />
+          </ReiterInhalt>
+        )}
+        <ReiterInhalt value="regeln" className="pt-4">
+          <AbsenderRegeln />
         </ReiterInhalt>
         <ReiterInhalt value="auswertung" className="pt-4">
           <Auswertung />
@@ -117,15 +128,6 @@ export default function Posteingang({
           </ReiterInhalt>
         )}
       </Reiter>
-      {mailId && (
-        <MailAkte
-          key={mailId}
-          id={mailId}
-          onSchliessen={() => {
-            onNavigation({ mail: null })
-          }}
-        />
-      )}
     </div>
   )
 }

@@ -3,10 +3,11 @@ import { devices, expect, test, type Page } from '@playwright/test'
 import { execFileSync } from 'node:child_process'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
-// Phase 18: Posteingang. Zwei erfundene Mails kommen wie vom Server (abholen + einordnen) ins persönliche Postfach der
-// Administration: eine Anfrage und eine Frage eines Kunden. Die Liste zeigt Frist und Art, die Mail-Akte die
-// Zusammenfassung; weitergeben an den Verkauf, «Erledigt ohne Antwort» verschiebt sie unter «Erledigt», «Lead anlegen»
-// führt zu Anfragen & Leads. Am Handy: Liste und Akte ohne Verstösse gegen die Barrierefreiheit.
+// Phase 18 (Arbeitsplatz 2.11.2026): Zwei erfundene Mails kommen wie vom Server (abholen + einordnen) ins persönliche
+// Postfach der Administration: eine Anfrage und eine Frage eines Kunden. «Für mich» zeigt Frist und Art, die Mail
+// öffnet am PC rechts daneben; weitergeben an den Verkauf, Notiz mit @, «Erledigt ohne Antwort» verschiebt sie unter
+// «Erledigt», «Lead anlegen» führt zu Anfragen & Leads, eine Absender-Regel erscheint im Reiter. Am Handy: Liste und
+// Mail als Seitenpanel ohne Verstösse gegen die Barrierefreiheit.
 
 test.describe.configure({ mode: 'serial' })
 brauchtDatenbank()
@@ -68,52 +69,79 @@ test.beforeAll(() => {
   mailEinliefern(frage, `e2e-kunde-${lauf}@beispiel.test`, 'kunde', 'Fragt, wann die Monteure kommen.')
 })
 
-test('Posteingang: Frist sehen, weitergeben, erledigen und Lead anlegen', async ({ page }) => {
-  test.slow()
-  await anmelden(page, 'admin@test.local')
-  await page.goto('/#/inbox')
-  await expect(page.getByRole('heading', { name: 'Posteingang', level: 1 })).toBeVisible()
-  const zeileFrage = page.getByRole('row', { name: new RegExp(frage) })
-  await expect(zeileFrage).toBeVisible()
-  await expect(zeileFrage).toContainText('Kunde')
-  await expect(page.getByRole('row', { name: new RegExp(anfrage) })).toContainText('Neue Anfrage')
-  expect(await verstoesse(page)).toEqual([])
+test.describe('PC', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
 
-  // Akte: Zusammenfassung, weitergeben an den Verkauf
-  await zeileFrage.click()
-  const akte = page.getByRole('dialog', { name: frage })
-  await expect(akte).toContainText('Fragt, wann die Monteure kommen.')
-  expect(await verstoesse(page)).toEqual([])
-  await akte.getByRole('button', { name: 'Weitergeben' }).click()
-  const weiter = page.getByRole('dialog', { name: 'Mail weitergeben' })
-  await weiter.getByRole('combobox').click()
-  await page.getByRole('option', { name: 'Vera Verkauf' }).click()
-  await weiter.getByRole('button', { name: 'Weitergeben' }).click()
-  await expect(weiter).toBeHidden()
-  await expect(akte).toContainText('Vera Verkauf')
+  test('Arbeitsplatz: Frist sehen, weitergeben, Notiz, erledigen und Lead anlegen', async ({ page }) => {
+    test.slow()
+    await anmelden(page, 'admin@test.local')
+    await page.goto('/#/inbox')
+    await expect(page.getByRole('heading', { name: 'Posteingang', level: 1 })).toBeVisible()
+    const liste = page.getByRole('list', { name: 'Für mich' })
+    const zeileFrage = liste.getByRole('listitem').filter({ hasText: frage })
+    await expect(zeileFrage).toBeVisible()
+    await expect(zeileFrage).toContainText('Kunde')
+    await expect(liste.getByRole('listitem').filter({ hasText: anfrage })).toContainText('Neue Anfrage')
+    expect(await verstoesse(page)).toEqual([])
 
-  // Erledigt ohne Antwort → unter «Erledigt»
-  await akte.getByRole('button', { name: 'Erledigt ohne Antwort' }).click()
-  await expect(akte).toBeHidden()
-  await page.getByRole('button', { name: /^Erledigt/ }).click()
-  await page.getByRole('row', { name: new RegExp(frage) }).click()
-  await expect(page.getByRole('dialog', { name: frage }).getByRole('button', { name: 'Wieder öffnen' })).toBeVisible()
-  await page.keyboard.press('Escape')
+    // Mail rechts neben der Liste: Kurzfassung, weitergeben an den Verkauf, interne Notiz
+    await zeileFrage.getByRole('button').click()
+    const mail = page.getByRole('complementary', { name: frage })
+    await expect(mail).toContainText('Fragt, wann die Monteure kommen.')
+    expect(await verstoesse(page)).toEqual([])
+    await mail.getByRole('button', { name: 'Weitergeben' }).click()
+    const weiter = page.getByRole('dialog', { name: 'Mail weitergeben' })
+    await weiter.getByRole('combobox').click()
+    await page.getByRole('option', { name: 'Vera Verkauf' }).click()
+    await weiter.getByRole('button', { name: 'Weitergeben' }).click()
+    await expect(weiter).toBeHidden()
+    await expect(mail).toContainText('Vera Verkauf')
+    await mail.getByRole('textbox', { name: /Notiz fürs Team/ }).fill(`@Vera bitte kurz prüfen ${lauf}`)
+    await mail.getByRole('button', { name: 'Notiz speichern' }).click()
+    await expect(mail).toContainText(`bitte kurz prüfen ${lauf}`)
 
-  // Anfrage → Lead anlegen führt zu Anfragen & Leads mit der Mail
-  await page.goto('/#/inbox?ansicht=neu')
-  await page.getByRole('row', { name: new RegExp(anfrage) }).click()
-  await page.getByRole('dialog', { name: anfrage }).getByRole('link', { name: 'Lead anlegen' }).click()
-  await expect(page).toHaveURL(/#\/sales\?ausMail=/)
+    // Erledigt ohne Antwort → unter «Erledigt», wieder öffnen möglich
+    await mail.getByRole('button', { name: /Erledigt ohne Antwort/ }).click()
+    await expect(page.getByRole('complementary', { name: frage })).toBeHidden()
+    await page
+      .getByRole('navigation', { name: 'Welche Mails' })
+      .getByRole('button', { name: /^Erledigt/ })
+      .click()
+    await page.getByRole('listitem').filter({ hasText: frage }).getByRole('button').click()
+    await expect(
+      page.getByRole('complementary', { name: frage }).getByRole('button', { name: 'Wieder öffnen' }),
+    ).toBeVisible()
+
+    // Anfrage → «Lead anlegen» führt zu Anfragen & Leads mit der Mail
+    await page.goto('/#/inbox')
+    await page.getByRole('listitem').filter({ hasText: anfrage }).getByRole('button').click()
+    await page.getByRole('complementary', { name: anfrage }).getByRole('link', { name: 'Lead anlegen' }).first().click()
+    await expect(page).toHaveURL(/#\/sales\?ausMail=/)
+  })
+
+  test('Absender-Regel aus der Mail und im Reiter Regeln', async ({ page }) => {
+    await anmelden(page, 'admin@test.local')
+    await page.goto('/#/inbox')
+    await page.getByRole('listitem').filter({ hasText: anfrage }).getByRole('button').click()
+    const mail = page.getByRole('complementary', { name: anfrage })
+    await mail.getByRole('button', { name: 'Mehr' }).click()
+    await page.getByRole('menuitem', { name: 'Regel für diesen Absender' }).click()
+    const regel = page.getByRole('dialog', { name: 'Regel für diesen Absender' })
+    await regel.getByRole('button', { name: 'Speichern' }).click()
+    await expect(regel).toBeHidden()
+    await page.getByRole('tab', { name: 'Absender-Regeln' }).click()
+    await expect(page.getByRole('cell', { name: `e2e-${lauf}@beispiel.test` })).toBeVisible()
+    expect(await verstoesse(page)).toEqual([])
+  })
 })
 
 test.describe('Handy', () => {
   const { viewport, userAgent, deviceScaleFactor, isMobile, hasTouch } = devices['Pixel 7']
   test.use({ viewport, userAgent, deviceScaleFactor, isMobile, hasTouch })
 
-  test('Liste und Akte am Handy', async ({ page }) => {
+  test('Liste und Mail am Handy', async ({ page }) => {
     await anmelden(page, 'admin@test.local')
-    await page.goto('/#/inbox?ansicht=neu')
+    await page.goto('/#/inbox?ansicht=warten')
     await expect(page.getByRole('heading', { name: 'Posteingang', level: 1 })).toBeVisible()
     await page.getByText(anfrage).click()
     await expect(page.getByRole('dialog', { name: anfrage })).toBeVisible()

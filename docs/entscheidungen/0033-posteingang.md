@@ -52,3 +52,26 @@ Postfach, sobald die Person Microsoft verbunden hat, und aus info@/Team-Postfäc
 - Sichtbar wie entschieden: eigenes Postfach nur die Person selbst, Team-Postfächer alle.
 - Eingang und Gesendetes gehen zusätzlich in den Kundenverlauf (`mails_vermerken`, ohne Doppelte).
 - In der App: Ansicht «Ältere» mit Suche (lädt vom Server, höchstens 200), Stand unter Posteingang › Einstellungen.
+
+## Nachtrag 2.11.2026: Arbeitsplatz für alle Rollen
+
+**Wunsch (Chris):** Jedes Modul muss seinen Zweck ganz erfüllen, nicht nur Fassade sein. Neuentwurf als Vorschau:
+https://claude.ai/artifact/UkQFbSAL5SnbCKJ5R2aeMT. Fragen P1–P5 als Auswahlkarten; gebaut nach Empfehlung A.
+
+**Entscheid:**
+
+- Der Posteingang ist ein Arbeitsplatz: «Für mich» als Standard, Liste und Mail nebeneinander, nach Erledigt öffnet die
+  nächste Mail. Wer verteilt, hat «Zu verteilen» mit Vorschlag (Regel, Betreuer der Akte, Service, Verkauf nach
+  Zuständigkeiten, sonst `vorschlag` je Art) und den Reiter Team (nur Zahlen, keine fremden Inhalte).
+- **P1:** Die KI liest bei Rechnungen und Auftragsbestätigungen Werte (`posteingang.ki_werte`); übernommen wird nur per
+  Klick (Zahlung mit Recht `finanzen`, Liefertermin mit Recht `preise`).
+- **P2:** Nach der Antwort auf eine Anfrage (oder Mail mit Offerte) wartet die Mail 3 Arbeitstage auf den Kunden
+  (`einstellungen.posteingang.warten`), danach kommt sie mit «Nachfassen» zurück; nur einmal automatisch. Eine neue Mail
+  des Kunden beendet das Warten.
+- **P3:** Interne Notizen je Mail, @Kürzel oder @Vorname gibt eine Glocke; eine erwähnte persönliche Mail wird fürs Team
+  sichtbar.
+- **P4:** Absender-Regeln (`posteingang_regeln`): jede Person fürs eigene Postfach, für info@ nur wer verteilt.
+  Kundenmails werden nie still abgelegt (Regel «ablegen» gilt nur für noch nicht eingeordnete Mails).
+- **P5:** Team-Übersicht für wer verteilt (Chris, Davis) und die Administration.
+- Unterhaltung und Anhänge holt die Edge Function `microsoft` aus Outlook (mit den Rechten der Person); Anhänge kommen
+  nur auf Klick in die Akte (`dokumente`, Speicher `dokumente`).
