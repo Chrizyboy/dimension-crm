@@ -54,6 +54,7 @@ export async function bestellungAendern(
   id: string,
   p: Partial<{
     liefertermin: string | null
+    bestaetigt_am: string | null
     notiz: string | null
     lieferant_id: string
     lagerort_id: string | null
@@ -105,7 +106,25 @@ export async function stornieren(id: string, grund: string): Promise<void> {
   if (error) throw error
 }
 
-/** Wareneingang buchen; gibt den neuen Stand zurück (teilgeliefert oder geliefert). */
+/**
+ * Seriennummern zu Positionen (ersetzt die bisherigen). Sie gehen an die Materialzeile und mit der IBN als
+ * Komponente an die Anlage. Text aus dem Feld: getrennt durch Zeilen, Komma oder Strichpunkt.
+ */
+export async function seriennummernErfassen(id: string, positionen: { id: string; text: string }[]) {
+  const p = positionen.map((x) => ({
+    id: x.id,
+    seriennummern: x.text
+      .split(/[\n,;]+/)
+      .map((s) => s.trim())
+      .filter(Boolean),
+  }))
+  if (p.length === 0) return 0
+  const { data, error } = await db().rpc('seriennummern_erfassen', { p_bestellung: id, p })
+  if (error) throw error
+  return data
+}
+
+/** Wareneingang buchen (mit Lieferschein-Nr.); gibt den neuen Stand zurück (teilgeliefert oder geliefert). */
 export async function wareneingang(
   id: string,
   datum: string,

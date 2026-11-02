@@ -23,7 +23,7 @@ export const Route = createFileRoute('/invoices')({
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const aktiv = reiter ?? 'rechnungen'
+    const aktiv = reiter ?? 'heute'
     return (
       <Suspense>
         <Rechnungen
@@ -34,7 +34,7 @@ export const Route = createFileRoute('/invoices')({
             const id = z.rechnung === undefined ? rechnung : z.rechnung
             void navigate({
               search: {
-                ...(r !== 'rechnungen' ? { reiter: r } : {}),
+                ...(r !== 'heute' ? { reiter: r } : {}),
                 ...(id ? { rechnung: id } : {}),
               },
             })

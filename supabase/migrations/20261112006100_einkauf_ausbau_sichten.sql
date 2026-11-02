@@ -37,6 +37,7 @@ select b.id, b.nummer, b.status, b.lieferant_id, b.projekt_id, b.lagerort_id, b.
        (select a.status from public.ausgangskorb a where a.bezug_tabelle = 'bestellungen' and a.bezug_id = b.id
            and a.geloescht_am is null order by a.erstellt_am desc limit 1) as mail_status,
        f.name as firma, f.strasse as firma_strasse, f.plz as firma_plz, f.ort as firma_ort,
+       b.bestaetigt_am,
        -- neu (Entscheid 0041)
        b.erwartet_am, b.baubeginn, b.ab_nummer, b.ab_am, b.ab_termin, b.ab_total_rappen, b.tracking, b.lieferhinweis,
        b.kontakt_vor_ort, b.nachgefragt_am, b.lieferscheine, b.vorgelegt_am, b.bestellt_von,
@@ -46,7 +47,8 @@ select b.id, b.nummer, b.status, b.lieferant_id, b.projekt_id, b.lagerort_id, b.
        case
          when b.status = 'storniert' then 'storniert'
          when b.status in ('entwurf', 'freigegeben') then 'freigabe'
-         when b.status = 'bestellt' and b.ab_am is null then 'ab_offen'
+         -- AB gilt als da mit erfasster AB oder Knopf «AB erhalten» (bestaetigt_am)
+         when b.status = 'bestellt' and b.ab_am is null and b.bestaetigt_am is null then 'ab_offen'
          when b.status = 'bestellt' then 'unterwegs'
          when b.status = 'teilgeliefert' then 'eingang'
          when b.rechnung_geprueft_am is null then 'rechnung'

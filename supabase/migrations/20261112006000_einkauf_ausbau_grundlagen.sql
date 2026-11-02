@@ -89,7 +89,9 @@ insert into public.einstellungen (schluessel, wert) values ('einkauf', jsonb_bui
   'lieferzeit_tage', 5,
   'ab_erinnern_tage', 3,
   'gefahr_tage', 10
-)) on conflict (schluessel) do nothing;
+)) on conflict (schluessel) do update
+  -- Gibt es die Einstellung schon (z. B. «lieferfrist_tage» für zu_bestellen), bleiben ihre Werte; Neues kommt dazu.
+  set wert = excluded.wert || public.einstellungen.wert;
 
 create or replace function intern.einkauf_einstellung_schuetzen() returns trigger
 language plpgsql security definer set search_path = '' as $$

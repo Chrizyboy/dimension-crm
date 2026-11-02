@@ -1,4 +1,4 @@
-import { PackageCheck, ShoppingCart } from 'lucide-react'
+import { Layers, PackageCheck, ShoppingCart } from 'lucide-react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
@@ -9,9 +9,11 @@ import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte
 import { formatChf, formatDatum } from '@/lib/format'
 import { melde } from '@/services/meldungen'
 import { useAktion } from '../hooks/useAktion'
-import { useBedarf, useLieferanten } from '../hooks/useEinkauf'
+import { useBedarf, useBestellungen, useLieferanten } from '../hooks/useEinkauf'
 import { formatMenge, inTagen } from '../lib/anzeige'
+import { sammelKandidaten } from '../lib/sammel'
 import { sammelbestellung } from '../services/einkauf'
+import { zusammenfassen } from '../services/material'
 import type { Bedarf, Lieferant } from '../types'
 
 /**
@@ -30,6 +32,8 @@ export function Bestellen({
   const { t } = useTranslation()
   const bedarf = useBedarf()
   const lieferanten = useLieferanten()
+  const entwuerfe = useBestellungen('entwuerfe')
+  const sammel = sammelKandidaten(entwuerfe.data ?? [])
   const { laeuft, aus } = useAktion()
   const heute = inTagen(new Date(), 0)
   const gruppen = useMemo(() => {
@@ -46,9 +50,30 @@ export function Bestellen({
 
   if (bedarf.error) return <Fehlerzustand details={String(bedarf.error)} onNochmal={() => void bedarf.refetch()} />
   if (bedarf.isPending) return <Skelett className="h-80" />
+  // Mehrere Entwürfe eines Lieferanten ans Lager (z. B. je Projekt angelegt): zu einer Sammelbestellung zusammenfassen.
+  const zusammen = sammel.length > 0 && (
+    <Button
+      variant="secondary"
+      laedt={laeuft}
+      onClick={() => {
+        void aus(
+          async () => {
+            for (const g of sammel) await zusammenfassen(g.lieferant_id, g.lagerort_id)
+          },
+          { de: 'Sammelbestellungen gebildet', fr: 'Commandes groupées créées' },
+        )
+      }}
+    >
+      <Layers />
+      {t('einkauf.bestellen.zusammenfassen', { liste: sammel.map((g) => g.lieferant).join(', ') })}
+    </Button>
+  )
   if (gruppen.length === 0)
     return (
-      <Leerzustand icon={PackageCheck} titel={t('einkauf.bestellen.leer')} text={t('einkauf.bestellen.leerText')} />
+      <div className="flex flex-col gap-4">
+        {zusammen && <div>{zusammen}</div>}
+        <Leerzustand icon={PackageCheck} titel={t('einkauf.bestellen.leer')} text={t('einkauf.bestellen.leerText')} />
+      </div>
     )
 
   const anlegen = (id: string | null) =>
@@ -66,16 +91,19 @@ export function Bestellen({
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-muted-foreground max-w-3xl text-sm">{t('einkauf.bestellen.hinweis')}</p>
-        <Button
-          laedt={laeuft}
-          variant="secondary"
-          onClick={() => {
-            anlegen(null)
-          }}
-        >
-          <ShoppingCart />
-          {t('einkauf.bestellen.alle')}
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          {zusammen}
+          <Button
+            laedt={laeuft}
+            variant="secondary"
+            onClick={() => {
+              anlegen(null)
+            }}
+          >
+            <ShoppingCart />
+            {t('einkauf.bestellen.alle')}
+          </Button>
+        </div>
       </div>
       {gruppen.map(([id, zeilen]) => (
         <Gruppe

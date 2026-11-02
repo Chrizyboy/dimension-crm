@@ -179,6 +179,8 @@ begin
   update public.bestellungen
      set ab_nummer = coalesce(nullif(trim(p ->> 'nummer'), ''), ab_nummer),
          ab_am = coalesce(nullif(p ->> 'datum', '')::date, ab_am, current_date),
+         -- «AB erhalten» (stoppt auch die Nachfrage-Automation)
+         bestaetigt_am = coalesce(bestaetigt_am, nullif(p ->> 'datum', '')::date, current_date),
          ab_termin = coalesce(nullif(p ->> 'termin', '')::date, ab_termin),
          -- Der bestätigte Termin gilt ab jetzt als Liefertermin (Leitstand, Materialplan, Überfällig).
          liefertermin = coalesce(nullif(p ->> 'termin', '')::date, liefertermin),
