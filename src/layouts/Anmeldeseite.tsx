@@ -118,7 +118,7 @@ export function Anmeldeseite() {
                   onChange={(e) => {
                     setEmail(e.target.value)
                   }}
-                  placeholder="vorname.name@dimension-solaire.ch"
+                  placeholder="vorname@dimension-solaire.ch"
                 />
               </Feld>
             ) : (
