@@ -7355,71 +7355,107 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           anlage_id: string | null
+          auswirkung: string | null
           beschreibung: string | null
+          checkliste: NonNullable<Json>
           erledigt_am: string | null
           erstellt_am: string
           erstellt_von: string | null
+          fehlercode: string | null
           garantie: boolean | null
           geaendert_am: string
           geloescht_am: string | null
           id: string
           kategorie: string | null
+          komponente: string | null
           kontakt_id: string | null
+          meldung: Json | null
           nummer: string
+          objekt_id: string | null
           person_id: string | null
           prioritaet: string | null
           projekt_id: string | null
+          quelle: string
+          reaktion_bis: string | null
           status: string
           termin_am: string | null
           titel: string
           verlauf: NonNullable<Json>
+          vor_ort_name: string | null
+          vor_ort_telefon: string | null
+          zugang: string | null
+          zuordnung: string | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          auswirkung?: string | null
           beschreibung?: string | null
+          checkliste?: NonNullable<Json>
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fehlercode?: string | null
           garantie?: boolean | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           kategorie?: string | null
+          komponente?: string | null
           kontakt_id?: string | null
+          meldung?: Json | null
           nummer: string
+          objekt_id?: string | null
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
+          quelle?: string
+          reaktion_bis?: string | null
           status?: string
           termin_am?: string | null
           titel: string
           verlauf?: NonNullable<Json>
+          vor_ort_name?: string | null
+          vor_ort_telefon?: string | null
+          zugang?: string | null
+          zuordnung?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          auswirkung?: string | null
           beschreibung?: string | null
+          checkliste?: NonNullable<Json>
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fehlercode?: string | null
           garantie?: boolean | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           kategorie?: string | null
+          komponente?: string | null
           kontakt_id?: string | null
+          meldung?: Json | null
           nummer?: string
+          objekt_id?: string | null
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
+          quelle?: string
+          reaktion_bis?: string | null
           status?: string
           termin_am?: string | null
           titel?: string
           verlauf?: NonNullable<Json>
+          vor_ort_name?: string | null
+          vor_ort_telefon?: string | null
+          zugang?: string | null
+          zuordnung?: string | null
         }
         Relationships: [
           {
@@ -7463,6 +7499,27 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['objekt_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'objekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'service_faelle_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'service_faelle_person_id_fkey'
@@ -10886,7 +10943,18 @@ export type Database = {
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
+      service_akte: { Args: { p_id: string }; Returns: Json }
+      service_aus_website: { Args: { p: Json }; Returns: Json }
+      service_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_nr: number }; Returns: undefined }
+      service_checkliste_dazu: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_eintrag: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
+      service_kunde_aus_meldung: { Args: { p_id: string }; Returns: string }
+      service_leitstand: { Args: Record<PropertyKey, never>; Returns: Json }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_zuordnen: {
+        Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
+        Returns: undefined
+      }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }

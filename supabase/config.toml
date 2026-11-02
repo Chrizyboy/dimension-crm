@@ -498,6 +498,10 @@ verify_jwt = false
 [functions.helpdesk]
 verify_jwt = false
 
+# Störungsformular der Website: die Website ruft von Server zu Server auf, kein Login. Prüft STOERUNG_SCHLUESSEL selbst.
+[functions.stoerung]
+verify_jwt = false
+
 # Anmeldemail (Send Email Hook): Supabase Auth ruft signiert auf, kein Login. Prüft ANMELDEMAIL_HOOK_SECRET selbst.
 [functions.anmeldemail]
 verify_jwt = false

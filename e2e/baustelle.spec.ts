@@ -61,14 +61,16 @@ test('Büro: Reiter ohne Verstösse, Service-Termin für den Monteur', async ({ 
   await page.getByRole('option').first().click()
   await page.getByLabel('Worum geht es?').fill(fallTitel)
   await page.getByRole('button', { name: 'Speichern' }).click()
-  const akte = page.getByRole('dialog')
-  await expect(akte.getByText(fallTitel).first()).toBeVisible()
+  // Fall-Akte als ganze Seite.
+  const akte = page.getByRole('main')
+  await expect(akte.getByRole('heading', { level: 1, name: new RegExp(fallTitel) })).toBeVisible()
   await akte.getByLabel('Zuständig').click()
   await page.getByRole('option', { name: 'Mario Montage' }).click()
-  await akte.getByLabel('Termin').fill(heute())
-  await akte.getByLabel('Termin').blur()
-  await akte.getByLabel('Garantiefall', { exact: true }).click()
-  await expect(akte.getByLabel('Garantiefall', { exact: true })).toHaveAttribute('aria-checked', 'true')
+  await akte.getByLabel('Termin', { exact: true }).fill(`${heute()}T09:00`)
+  await akte.getByLabel('Termin', { exact: true }).blur()
+  const garantie = akte.getByRole('switch', { name: 'Garantiefall' })
+  if ((await garantie.getAttribute('aria-checked')) !== 'true') await garantie.click()
+  await expect(garantie).toHaveAttribute('aria-checked', 'true')
 
   // Garantiefall beim Hersteller: Wechselrichter zurück, RMA-Nummer.
   await akte.getByRole('button', { name: 'Garantiefall beim Hersteller' }).click()
@@ -201,11 +203,8 @@ test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ pa
 
   // Der Service-Fall hat den Rapport im Verlauf und ist erledigt.
   await page.goto('/#/aftersales')
-  await page.getByRole('button', { name: 'Alle' }).click()
-  await page
-    .getByPlaceholder(/suchen/)
-    .first()
-    .fill(fallTitel)
+  await page.getByRole('button', { name: 'Liste' }).click()
+  await page.getByRole('searchbox').first().fill(fallTitel)
   await page.getByRole('row').nth(1).click()
-  await expect(page.getByRole('dialog').getByText(/R\d{4}: Wechselrichter geprüft/)).toBeVisible()
+  await expect(page.getByText(/R\d{4}: Wechselrichter geprüft/).first()).toBeVisible()
 })

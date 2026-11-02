@@ -2865,7 +2865,7 @@
       "alle": "Tous"
     },
     "reiter": {
-      "faelle": "Cas",
+      "faelle": "Centrale",
       "anlagen": "Installations"
     },
     "spalte": {
@@ -2886,7 +2886,15 @@
       "termin": "Rendez-vous",
       "garantieFall": "Cas de garantie",
       "beschreibung": "Description",
-      "status": "État"
+      "status": "État",
+      "auswirkung": "Gravité ?",
+      "fehlercode": "Code d’erreur",
+      "komponente": "Composant",
+      "quelle": "Provenance ?",
+      "vorOrtName": "Sur place",
+      "vorOrtTelefon": "Téléphone sur place",
+      "zugang": "Accès",
+      "zugangHinweis": "p. ex. clé, chien, compteur à la cave"
     },
     "akte": {
       "titel": "Cas de service",
@@ -2899,7 +2907,28 @@
       "notiz": "Note pour l’historique",
       "notizSpeichern": "Enregistrer la note",
       "anhaenge": "Pièces jointes",
-      "hochladen": "Téléverser un fichier"
+      "hochladen": "Téléverser un fichier",
+      "anlage": "Installation",
+      "anlageWaehlen": "Choisir l’installation du client",
+      "anrufen": "Appeler",
+      "einsatz": "Intervention et classement",
+      "einsatzort": "Lieu d’intervention",
+      "fruehere": "Cas précédents",
+      "keineAnhaenge": "Pas encore de photos ni de fichiers.",
+      "keineAnlage": "Aucune installation saisie.",
+      "kunde": "Client et lieu",
+      "kundeNeu": "Créer comme nouveau client",
+      "mail": "E-mail",
+      "netzbetreiber": "Gestionnaire de réseau",
+      "oeffnen": "Ouvrir",
+      "ohneKunde": "Aucun client attribué. Rechercher et choisir ou créer à partir de l’annonce.",
+      "projekt": "Projet",
+      "sprache": "Langue",
+      "telefon": "Téléphone",
+      "vertrag": "Contrat d’entretien {{nummer}}, prochain entretien {{naechste}}. Si possible, facturer comme « Inclus dans le contrat ».",
+      "wiederOeffnen": "Rouvrir",
+      "zurueck": "Retour à la centrale",
+      "zustaendigName": "responsable {{name}}"
     },
     "anlagen": {
       "ansicht": "Installations",
@@ -2949,6 +2978,115 @@
       "gutschrift": "Note de crédit CHF",
       "notiz": "Remarque",
       "eingeschicktAm": "envoyé le {{datum}}"
+    },
+    "board": {
+      "eingang": "Entrée",
+      "arbeit": "En cours",
+      "geplant": "Planifié",
+      "teile": "Attente pièces",
+      "erledigt": "Terminé (14 jours)",
+      "leer": "Rien ici"
+    },
+    "checkliste": {
+      "titel": "Liste de contrôle",
+      "dazu": "Ajouter une étape"
+    },
+    "dialog": {
+      "bis": "jusqu’au",
+      "fotos": "Photos ou fichiers",
+      "garantieAbgelaufen": "Aucune garantie en cours trouvée.",
+      "garantieLaeuft": "Garantie en cours : {{liste}}",
+      "keineAnlage": "Aucune installation saisie : vérifier la garantie à la main."
+    },
+    "garantieCheck": {
+      "titel": "Contrôle de garantie",
+      "montage": "Montage",
+      "bis": "jusqu’au {{datum}}",
+      "abgelaufen": "échue le {{datum}}",
+      "keine": "Aucune date de garantie saisie sur l’installation."
+    },
+    "kosten": {
+      "titel": "Rapports et facturation",
+      "entwurf": "Brouillon",
+      "inArbeit": "en cours",
+      "leer": "Pas encore de rapport. Il est établi sur le téléphone lors de l’intervention.",
+      "offen": "ouvert {{betrag}}",
+      "rechnung": "Créer la facture",
+      "stand": {
+        "entwurf": "brouillon",
+        "gestellt": "émise",
+        "teilbezahlt": "payée en partie",
+        "bezahlt": "payée",
+        "storniert": "annulée"
+      }
+    },
+    "leitstand": {
+      "ansicht": "Affichage",
+      "board": "Tableau",
+      "liste": "Liste",
+      "ohneKunde": "sans client",
+      "standAendern": "Changer l’état",
+      "suche": "Cas, client, adresse, téléphone ou code d’erreur",
+      "website": "Site web"
+    },
+    "meldung": {
+      "titel": "Annonce de panne du site web",
+      "name": "Nom",
+      "adresse": "Adresse de l’installation",
+      "projekt": "Numéro de projet",
+      "stoerung": "Type de panne",
+      "text": "Description",
+      "einwilligung": "Consentement",
+      "ja": "oui"
+    },
+    "reaktion": {
+      "bis": "Rendez-vous au plus tard {{zeit}}",
+      "noch": "encore {{dauer}}",
+      "zuSpaet": "{{dauer}} de retard"
+    },
+    "schnell": {
+      "meine": "Les miens",
+      "ueberfaellig": "En retard",
+      "steht": "Installation à l’arrêt",
+      "garantie": "Garantie",
+      "website": "Site web",
+      "ohne_kunde": "Sans client"
+    },
+    "schritte": {
+      "titel": "Étapes",
+      "eingang": "Entrée",
+      "diagnose": "Diagnostic",
+      "geplant": "Rendez-vous",
+      "vorort": "Sur place",
+      "teile": "Pièces / RMA",
+      "abschluss": "Terminé",
+      "verrechnet": "Facturé"
+    },
+    "verlauf": {
+      "art": "Que noter ?",
+      "festhalten": "Noter",
+      "mailEingang": "E-mail",
+      "rapport": "Rapport",
+      "text": "Entrée dans l’historique",
+      "notiz": "Note",
+      "anruf": "Appel",
+      "mail": "E-mail",
+      "sms": "SMS",
+      "system": "Système",
+      "platzhalter": {
+        "notiz": "Que s’est-il passé ? (Ctrl+Entrée)",
+        "anruf": "Avec qui, qu’a-t-on convenu ?",
+        "mail": "Qu’a-t-on écrit ?",
+        "sms": "Qu’a-t-on envoyé ?"
+      }
+    },
+    "zahl": {
+      "offen": "cas ouverts",
+      "ueberfaellig": "délai de réaction dépassé",
+      "woche": "rendez-vous cette semaine",
+      "teile": "attendent des pièces",
+      "rma": "chez le fabricant (RMA)",
+      "verrechnen": "rapports à facturer"
     }
   },
   "wartung": {
