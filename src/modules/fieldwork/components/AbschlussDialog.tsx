@@ -31,7 +31,7 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
   const [laeuft, setLaeuft] = useState(false)
   const [vorbehalte, setVorbehalte] = useState<string[]>([])
   const nachtraege = useRapportNachtraege(r.id)
-  // Unterschrift nur bei der Abnahme und für Nachträge; ein normaler Tagesrapport braucht keine (Entscheid 0040).
+  // Unterschrift nur bei der Abnahme und für Nachträge; ein normaler Tagesrapport braucht keine (Entscheid 0041).
   const mitNachtrag = r.nachtraege_anzahl > 0 || (nachtraege.data?.length ?? 0) > 0
   const brauchtUnterschrift = r.art !== 'montage' || fertig || mitNachtrag
   const schritteHeute = Object.values(r.schritte).some(Boolean)

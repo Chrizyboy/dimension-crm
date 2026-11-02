@@ -5,7 +5,7 @@ Service, Wartung, IBN) mit Arbeiten, Mehrmaterial, Fotos, Prüfpunkten, Nachträ
 Zeiterfassung mit Start/Stopp und Lohn-Export, Anlagedossier. Funktioniert auch ohne Netz.
 
 Freigegeben von Chris am 21.10.2026 (ERP-Lückenanalyse, https://claude.ai/artifact/Q54YPWZzgtFQSSS6PHUnmq),
-gebaut in Phase **9b**, Entscheid 0020; ausgebaut für Montage, Projektleitung und GL am 2.11.2026, Entscheid 0040.
+gebaut in Phase **9b**, Entscheid 0020; ausgebaut für Montage, Projektleitung und GL am 2.11.2026, Entscheid 0041.
 
 ## Reiter (`#/fieldwork?reiter=…&rapport=…&baustelle=…`)
 
