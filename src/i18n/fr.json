@@ -1981,16 +1981,13 @@
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
-<<<<<<< HEAD
-    "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
-    "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
-    "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant."
-=======
     "grossprojekt_nicht_bewilligt": "Les étapes n'existent qu'après l'approbation.",
     "grossprojekt_stufe_unbekannt": "Cette étape n'existe pas.",
     "grossprojekt_ungueltig": "Les données ne sont pas valables.",
-    "grossprojekt_text_fehlt": "Merci de saisir un texte."
->>>>>>> origin/main
+    "grossprojekt_text_fehlt": "Merci de saisir un texte.",
+    "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
+    "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
+    "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
