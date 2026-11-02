@@ -60,6 +60,26 @@ test('Mein Tag: Aufgabe anlegen, vergeben sehen, abhaken; Mail-Vorschau', async 
   await aufgaben.getByRole('checkbox', { name: `«Heute-Test ${lauf}» erledigt` }).click()
   await expect(aufgaben.getByText(`Heute-Test ${lauf}`)).toBeHidden()
 
+  // Verschieben (Ausbau 2.11.2026): eigene Aufgabe auf ein Datum in drei Wochen, sie verschwindet aus «Mein Tag».
+  await page.getByRole('button', { name: 'Aufgabe', exact: true }).click()
+  await page.getByLabel('Was ist zu tun?').fill(`Später ${lauf}`)
+  await page.getByRole('dialog').getByLabel('Fällig').fill('2026-01-02')
+  await page.getByRole('dialog').getByRole('button', { name: 'Speichern' }).click()
+  await expect(aufgaben.getByText(`Später ${lauf}`)).toBeVisible()
+  await aufgaben.getByRole('button', { name: `«Später ${lauf}» verschieben` }).click()
+  await page.getByRole('menuitem', { name: 'Auf ein Datum …' }).click()
+  const spaeter = new Date(Date.now() + 21 * 86_400_000).toISOString().slice(0, 10)
+  await page.getByRole('dialog').getByLabel('Wieder zeigen am').fill(spaeter)
+  await page.getByRole('dialog').getByRole('button', { name: 'Verschieben' }).click()
+  await expect(aufgaben.getByText(`Später ${lauf}`)).toBeHidden()
+
+  // Team heute und Wochenziele (Administration darf Ziele festlegen).
+  await expect(page.getByTestId('tag-team')).toBeVisible()
+  await page.getByTestId('tag-ziele').getByRole('button', { name: 'Ziele festlegen' }).click()
+  await expect(page.getByRole('dialog', { name: 'Ziele festlegen' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  await page.keyboard.press('Escape')
+
   // Übersicht per Mail: Text sichtbar, nichts wird ohne Klick gesendet.
   await page.getByRole('button', { name: 'Übersicht per Mail' }).click()
   const dialog = page.getByRole('dialog', { name: 'Übersicht per Mail an mich' })

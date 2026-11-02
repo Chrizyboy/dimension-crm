@@ -8180,6 +8180,54 @@ export type Database = {
           },
         ]
       }
+      tag_verschoben: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bis: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          schluessel: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bis: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          schluessel: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bis?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          schluessel?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'tag_verschoben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       verkaufschancen: {
         Row: {
           alt_daten: Json | null
@@ -10664,6 +10712,7 @@ export type Database = {
         }[]
       }
       kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
+      kennzahlen_ziele_setzen: { Args: { p_person: string; p_ziele: Json }; Returns: undefined }
       ki_briefing_daten: { Args: Record<PropertyKey, never>; Returns: Json }
       ki_budget: { Args: { p_person: string }; Returns: Json }
       ki_entwuerfe_offen: { Args: { p_limit?: number }; Returns: Json }
@@ -11113,6 +11162,8 @@ export type Database = {
       spesen_auszahlen: { Args: { p_datum?: string; p_ids: string[] }; Returns: number }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      tag_verschieben: { Args: { p_art: string; p_bis: string; p_id: string }; Returns: undefined }
+      team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
