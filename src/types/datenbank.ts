@@ -2908,75 +2908,162 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          anhaengelast_kg: number | null
+          art: string
           ausser_betrieb: boolean
+          ausweis: string | null
           bezeichnung: string
+          erste_inverkehrsetzung: string | null
           erstellt_am: string
           erstellt_von: string | null
+          fahrgestell_nr: string | null
           geaendert_am: string
           geloescht_am: string | null
+          gesamtgewicht_kg: number | null
           id: string
           jahrgang: number | null
+          kaufdatum: string | null
+          kaufpreis_rappen: number | null
           kennzeichen: string
           km_stand: number | null
           km_stand_am: string | null
+          leasing_beginn: string | null
           leasing_bis: string | null
+          leasing_km_jahr: number | null
+          leasing_mehr_km_rappen: number | null
+          leasing_rate_rappen: number | null
+          leasing_vertrag: string | null
+          leasinggeber: string | null
           marke_modell: string | null
           naechste_mfk: string | null
+          naechster_reifenwechsel: string | null
           naechster_service: string | null
           notiz: string | null
+          nutzlast_kg: number | null
           person_id: string | null
+          praemie_rappen: number | null
+          privat_anteil: boolean
+          reifen: string | null
+          schaden_telefon: string | null
+          schluessel: string | null
+          selbstbehalt_rappen: number | null
           service_km: number | null
+          stammnummer: string | null
           standort_id: string | null
+          tankkarte: string | null
+          treibstoff: string | null
+          verkehrssteuer_rappen: number | null
           versicherung: string | null
+          versicherung_deckung: string | null
+          versicherung_police: string | null
+          vignette_bis: string | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anhaengelast_kg?: number | null
+          art?: string
           ausser_betrieb?: boolean
+          ausweis?: string | null
           bezeichnung: string
+          erste_inverkehrsetzung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fahrgestell_nr?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gesamtgewicht_kg?: number | null
           id?: string
           jahrgang?: number | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
           kennzeichen: string
           km_stand?: number | null
           km_stand_am?: string | null
+          leasing_beginn?: string | null
           leasing_bis?: string | null
+          leasing_km_jahr?: number | null
+          leasing_mehr_km_rappen?: number | null
+          leasing_rate_rappen?: number | null
+          leasing_vertrag?: string | null
+          leasinggeber?: string | null
           marke_modell?: string | null
           naechste_mfk?: string | null
+          naechster_reifenwechsel?: string | null
           naechster_service?: string | null
           notiz?: string | null
+          nutzlast_kg?: number | null
           person_id?: string | null
+          praemie_rappen?: number | null
+          privat_anteil?: boolean
+          reifen?: string | null
+          schaden_telefon?: string | null
+          schluessel?: string | null
+          selbstbehalt_rappen?: number | null
           service_km?: number | null
+          stammnummer?: string | null
           standort_id?: string | null
+          tankkarte?: string | null
+          treibstoff?: string | null
+          verkehrssteuer_rappen?: number | null
           versicherung?: string | null
+          versicherung_deckung?: string | null
+          versicherung_police?: string | null
+          vignette_bis?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anhaengelast_kg?: number | null
+          art?: string
           ausser_betrieb?: boolean
+          ausweis?: string | null
           bezeichnung?: string
+          erste_inverkehrsetzung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fahrgestell_nr?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gesamtgewicht_kg?: number | null
           id?: string
           jahrgang?: number | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
           kennzeichen?: string
           km_stand?: number | null
           km_stand_am?: string | null
+          leasing_beginn?: string | null
           leasing_bis?: string | null
+          leasing_km_jahr?: number | null
+          leasing_mehr_km_rappen?: number | null
+          leasing_rate_rappen?: number | null
+          leasing_vertrag?: string | null
+          leasinggeber?: string | null
           marke_modell?: string | null
           naechste_mfk?: string | null
+          naechster_reifenwechsel?: string | null
           naechster_service?: string | null
           notiz?: string | null
+          nutzlast_kg?: number | null
           person_id?: string | null
+          praemie_rappen?: number | null
+          privat_anteil?: boolean
+          reifen?: string | null
+          schaden_telefon?: string | null
+          schluessel?: string | null
+          selbstbehalt_rappen?: number | null
           service_km?: number | null
+          stammnummer?: string | null
           standort_id?: string | null
+          tankkarte?: string | null
+          treibstoff?: string | null
+          verkehrssteuer_rappen?: number | null
           versicherung?: string | null
+          versicherung_deckung?: string | null
+          versicherung_police?: string | null
+          vignette_bis?: string | null
         }
         Relationships: [
           {
@@ -3269,21 +3356,30 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          ausgemustert_am: string | null
+          ausgemustert_grund: string | null
           bezeichnung: string
           erstellt_am: string
           erstellt_von: string | null
           fahrzeug_id: string | null
+          garantie_bis: string | null
           geaendert_am: string
           geloescht_am: string | null
           hersteller: string | null
           id: string
           inventar_nr: string | null
+          kaufdatum: string | null
+          kaufpreis_rappen: number | null
+          lieferant: string | null
           naechste_pruefung: string | null
           notiz: string | null
           person_id: string | null
           pruef_monate: number | null
+          pruefstelle: string | null
           serien_nr: string | null
           standort_id: string | null
+          uebernommen_am: string | null
+          zurueck_bis: string | null
           zustand: string
         }
         ComputedFields: never
@@ -3291,42 +3387,60 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art: string
+          ausgemustert_am?: string | null
+          ausgemustert_grund?: string | null
           bezeichnung: string
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
+          garantie_bis?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           hersteller?: string | null
           id?: string
           inventar_nr?: string | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
+          lieferant?: string | null
           naechste_pruefung?: string | null
           notiz?: string | null
           person_id?: string | null
           pruef_monate?: number | null
+          pruefstelle?: string | null
           serien_nr?: string | null
           standort_id?: string | null
+          uebernommen_am?: string | null
+          zurueck_bis?: string | null
           zustand?: string
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          ausgemustert_am?: string | null
+          ausgemustert_grund?: string | null
           bezeichnung?: string
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
+          garantie_bis?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           hersteller?: string | null
           id?: string
           inventar_nr?: string | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
+          lieferant?: string | null
           naechste_pruefung?: string | null
           notiz?: string | null
           person_id?: string | null
           pruef_monate?: number | null
+          pruefstelle?: string | null
           serien_nr?: string | null
           standort_id?: string | null
+          uebernommen_am?: string | null
+          zurueck_bis?: string | null
           zustand?: string
         }
         Relationships: [
@@ -7994,6 +8108,8 @@ export type Database = {
           datum: string
           dokument_id: string | null
           ergebnis: string | null
+          erledigt_am: string | null
+          erledigung: string | null
           erstellt_am: string
           erstellt_von: string | null
           fahrzeug_id: string | null
@@ -8003,8 +8119,10 @@ export type Database = {
           id: string
           km: number | null
           kosten_rappen: number | null
+          liter: number | null
           naechste_am: string | null
           person_id: string | null
+          stand: string | null
           text: string | null
         }
         ComputedFields: never
@@ -8015,6 +8133,8 @@ export type Database = {
           datum?: string
           dokument_id?: string | null
           ergebnis?: string | null
+          erledigt_am?: string | null
+          erledigung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
@@ -8024,8 +8144,10 @@ export type Database = {
           id?: string
           km?: number | null
           kosten_rappen?: number | null
+          liter?: number | null
           naechste_am?: string | null
           person_id?: string | null
+          stand?: string | null
           text?: string | null
         }
         Update: {
@@ -8035,6 +8157,8 @@ export type Database = {
           datum?: string
           dokument_id?: string | null
           ergebnis?: string | null
+          erledigt_am?: string | null
+          erledigung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
@@ -8044,8 +8168,10 @@ export type Database = {
           id?: string
           km?: number | null
           kosten_rappen?: number | null
+          liter?: number | null
           naechste_am?: string | null
           person_id?: string | null
+          stand?: string | null
           text?: string | null
         }
         Relationships: [
@@ -8075,6 +8201,121 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ressourcen_reservierungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          bis: string
+          einsatz_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          fahrzeug_id: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          geraet_id: string | null
+          id: string
+          person_id: string | null
+          projekt_id: string | null
+          von: string
+          zweck: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bis: string
+          einsatz_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geraet_id?: string | null
+          id?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          von: string
+          zweck?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bis?: string
+          einsatz_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geraet_id?: string | null
+          id?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          von?: string
+          zweck?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ressourcen_reservierungen_einsatz_id_fkey'
+            columns: ['einsatz_id']
+            isOneToOne: false
+            referencedRelation: 'einsaetze'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_fahrzeug_id_fkey'
+            columns: ['fahrzeug_id']
+            isOneToOne: false
+            referencedRelation: 'fahrzeuge'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_geraet_id_fkey'
+            columns: ['geraet_id']
+            isOneToOne: false
+            referencedRelation: 'geraete'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
             referencedColumns: ['id']
           },
         ]
@@ -11579,6 +11820,24 @@ export type Database = {
           },
         ]
       }
+      ressourcen_belegung: {
+        Row: {
+          art: string | null
+          bis: string | null
+          einsatz_id: string | null
+          fahrzeug_id: string | null
+          geraet_id: string | null
+          person_id: string | null
+          projekt: string | null
+          projekt_id: string | null
+          quelle: string | null
+          reservierung_id: string | null
+          von: string | null
+          zweck: string | null
+        }
+        ComputedFields: never
+        Relationships: []
+      }
       service_termine: {
         Row: {
           auswirkung: string | null
@@ -12248,6 +12507,8 @@ export type Database = {
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       finanzen_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
+      fuhrpark_km_erinnern: { Args: { p_heute?: string }; Returns: number }
+      fuhrpark_kosten: { Args: { p_jahr: number }; Returns: Json }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_akte_setzen: { Args: { p: Json; p_id: string }; Returns: undefined }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
@@ -12611,10 +12872,38 @@ export type Database = {
           p_id: string
           p_km?: number
           p_kosten_rappen?: number
+          p_liter?: number
           p_naechste?: string
           p_text?: string
         }
         Returns: string
+      }
+      ressource_reservieren: {
+        Args: {
+          p_art?: string
+          p_bis: string
+          p_einsatz?: string
+          p_fahrzeug: string
+          p_geraet: string
+          p_id: string
+          p_person?: string
+          p_von: string
+          p_zweck?: string
+        }
+        Returns: string
+      }
+      ressource_reservierung_aufheben: {
+        Args: { p_id: string }
+        Returns: undefined
+      }
+      ressource_schaden_setzen: {
+        Args: {
+          p_eintrag: string
+          p_erledigung?: string
+          p_kosten_rappen?: number
+          p_stand: string
+        }
+        Returns: undefined
       }
       ressource_uebergeben: {
         Args: { p_fahrzeug: string; p_geraet: string; p_in_fahrzeug?: string; p_person: string; p_text?: string }
@@ -12623,6 +12912,7 @@ export type Database = {
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
       rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
+        p_zurueck_bis?: string
         Args: {
           p_bereich: string
           p_erwartet: string

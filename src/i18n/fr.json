@@ -6452,7 +6452,10 @@
     "reiter": {
       "fahrzeuge": "Véhicules",
       "geraete": "Appareils",
-      "fristen": "Échéances"
+      "fristen": "Échéances",
+      "erledigen": "À faire",
+      "belegung": "Planning",
+      "kosten": "Coûts"
     },
     "spalte": {
       "fahrzeug": "Véhicule",
@@ -6510,7 +6513,11 @@
         "mfk": "Expertise",
         "service": "Service",
         "pruefung": "Contrôle d'appareil",
-        "ausweis": "Permis échu"
+        "ausweis": "Permis échu",
+        "reifen": "Changement de pneus",
+        "vignette": "Vignette",
+        "leasing": "Fin du leasing",
+        "ausleihe": "Retour d’un appareil prêté"
       }
     },
     "akte": {
@@ -6523,7 +6530,27 @@
       "bearbeiten": "Modifier les données",
       "anBord": "Appareils à bord",
       "verlauf": "Historique",
-      "beiKm": "à {{km}} km"
+      "beiKm": "à {{km}} km",
+      "alleFahrzeuge": "Tous les véhicules",
+      "ausgemustert": "Mis hors service le {{datum}} {{grund}}",
+      "belegung": "Planning",
+      "belegungLeer": "Pas planifié ces prochains jours.",
+      "dokumente": "Documents",
+      "gefahren": "Parcourus depuis le début de l’année contractuelle : {{km}} km",
+      "kalibrierungAbgelaufen": "Étalonnage échu : ne pas utiliser les mesures pour les réceptions.",
+      "kosten": "Coûts {{jahr}}",
+      "leasing": "Leasing",
+      "leasingBalken": "Kilomètres parcourus par rapport à la limite du contrat",
+      "mehrKm": "{{chf}} par km supplémentaire",
+      "nutzlast": "charge utile {{kg}}",
+      "proMonat": "{{chf}} par mois",
+      "prognose": "Prévision année contractuelle : {{km}} km",
+      "schaeden": "Dégâts ouverts",
+      "seitTagen_one": "depuis 1 jour",
+      "seitTagen_other": "depuis {{count}} jours",
+      "ueberLimite": "Environ {{km}} km au-dessus de la limite prévus, soit env. {{chf}} de frais supplémentaires.",
+      "unterLimite": "Probablement sous la limite, pas de km supplémentaires.",
+      "versicherung": "Assurance et impôts"
     },
     "feld": {
       "kennzeichen": "Plaques",
@@ -6545,7 +6572,50 @@
       "serienNr": "N° de série",
       "hersteller": "Fabricant",
       "pruefMonate": "Intervalle de contrôle (mois)",
-      "naechste_pruefung": "Prochain contrôle"
+      "naechste_pruefung": "Prochain contrôle",
+      "art": "Type de véhicule",
+      "treibstoff": "Carburant",
+      "standort_id": "Site",
+      "naechster_reifenwechsel": "Prochain changement de pneus",
+      "vignette_bis": "Vignette valable jusqu’au",
+      "erste_inverkehrsetzung": "1re mise en circulation",
+      "stammnummer": "Numéro matricule",
+      "fahrgestell_nr": "N° de châssis",
+      "gesamtgewicht_kg": "Poids total (kg)",
+      "nutzlast_kg": "Charge utile (kg)",
+      "anhaengelast_kg": "Charge remorquable (kg)",
+      "ausweis": "Permis de conduire requis",
+      "tankkarte": "Carte carburant",
+      "schluessel": "Clés",
+      "reifen": "Pneus",
+      "leasinggeber": "Société de leasing",
+      "leasing_vertrag": "N° contrat de leasing",
+      "leasing_beginn": "Leasing dès",
+      "leasing_rate_rappen": "Mensualité de leasing (CHF)",
+      "leasing_km_jahr": "Kilomètres par an selon contrat",
+      "leasing_mehr_km_rappen": "Prix par km supplémentaire (CHF)",
+      "leasing_rate": "Mensualité",
+      "leasing_zeit": "Durée",
+      "kaufdatum": "Date d’achat",
+      "kaufpreis_rappen": "Prix d’achat (CHF)",
+      "kaufpreis": "Prix d’achat (CHF)",
+      "privat_anteil": "Part privée (véhicule utilisé en privé)",
+      "versicherung_police": "N° de police",
+      "versicherung_deckung": "Couverture",
+      "selbstbehalt_rappen": "Franchise (CHF)",
+      "selbstbehalt": "Franchise",
+      "schaden_telefon": "Numéro sinistres",
+      "praemie_rappen": "Prime annuelle (CHF)",
+      "praemie": "Prime annuelle",
+      "verkehrssteuer_rappen": "Impôt sur les véhicules par an (CHF)",
+      "verkehrssteuer": "Impôt sur les véhicules par an",
+      "ausser_betrieb": "Hors service",
+      "lieferant": "Fournisseur",
+      "pruefstelle": "Organisme de contrôle",
+      "garantie_bis": "Garantie jusqu’au",
+      "zurueck_bis": "Retour au plus tard le",
+      "ausgemustert_am": "Mis hors service le",
+      "ungueltig": "Veuillez vérifier"
     },
     "fahrzeug": {
       "neu": "Saisir un véhicule",
@@ -6561,7 +6631,7 @@
       "knopf": "Saisir une entrée",
       "titel": "Saisir une entrée",
       "text": {
-        "fahrzeug": "Noter expertise, service, kilométrage ou dommage.",
+        "fahrzeug": "Saisir kilomètres, plein, expertise, service, pneus, vignette, coûts ou dégât.",
         "geraet": "Noter contrôle, étalonnage, réparation ou dommage."
       },
       "art": "Quoi",
@@ -6573,13 +6643,16 @@
         "mfk": "Prochaine expertise (selon permis)",
         "service": "Prochain service",
         "pruefung": "Prochain contrôle",
-        "kalibrierung": "Prochain étalonnage"
+        "kalibrierung": "Prochain étalonnage",
+        "reifen": "Prochain changement de pneus",
+        "vignette": "Vignette valable jusqu’au"
       },
       "mfkHinweis": "Figure sur le permis de circulation.",
       "automatisch": "Laisser vide : le CRM la calcule selon l'intervalle.",
       "kosten": "Coût (CHF)",
       "bemerkung": "Remarque",
-      "schadenBeispiel": "Que s'est-il passé ? p. ex. couture du harnais ouverte"
+      "schadenBeispiel": "Que s'est-il passé ? p. ex. couture du harnais ouverte",
+      "liter": "Litres"
     },
     "uebergeben": {
       "knopf": "Remettre",
@@ -6587,7 +6660,9 @@
       "an": "À",
       "anMich": "À moi",
       "inFahrzeug": "Dans le véhicule : {{name}}",
-      "niemand": "Personne attitrée"
+      "niemand": "Personne attitrée",
+      "ausweisFehlt": "Attention : aucun permis valable de cette personne n’est enregistré pour ce véhicule.",
+      "bisHinweis": "Laisser vide si l’appareil reste chez cette personne."
     },
     "verlauf": {
       "leer": "Encore aucune entrée.",
@@ -6598,6 +6673,168 @@
       "alle_one": "{{count}} à venir",
       "alle_other": "{{count}} à venir",
       "nichts": "Aucune échéance dans les 30 prochains jours."
+    },
+    "aktion": {
+      "bearbeiten": "Modifier",
+      "eintrag": "Saisir une entrée",
+      "uebergeben": "Remettre",
+      "reservieren": "Réserver",
+      "schaden": "Signaler un dégât"
+    },
+    "abschnitt": {
+      "grund": "Données de base",
+      "technik": "Technique et permis",
+      "leasing": "Leasing ou achat",
+      "versicherung": "Assurance et impôts",
+      "weiteres": "Divers"
+    },
+    "ja": "Oui",
+    "treibstoff": {
+      "diesel": "Diesel",
+      "benzin": "Essence",
+      "elektro": "Électrique",
+      "hybrid": "Hybride",
+      "gas": "Gaz"
+    },
+    "erledigen": {
+      "titel": {
+        "mfk": "Expertise {{name}}",
+        "service": "Service {{name}}",
+        "pruefung": "Contrôle {{name}}",
+        "reifen": "Changement de pneus {{name}}",
+        "vignette": "Vignette {{name}}",
+        "leasing": "Fin du leasing {{name}}",
+        "ausleihe": "Rapporter {{name}}",
+        "ausweis": "Permis échéant : {{name}}",
+        "service_km": "Service selon kilomètres {{name}}",
+        "schaden": "Dégât {{name}}",
+        "konflikt": "Réservé deux fois : {{name}}",
+        "km_fehlt": "Kilométrage manquant {{name}}",
+        "lange_weg": "{{name}} prêté depuis longtemps"
+      },
+      "zeile": {
+        "frist_one": "{{datum}}, échéance demain",
+        "frist_other": "{{datum}}, échéance dans {{count}} jours",
+        "frist_vorbei_one": "en retard depuis le {{datum}} (1 jour)",
+        "frist_vorbei_other": "en retard depuis le {{datum}} ({{count}} jours)",
+        "service_km_one": "dû à {{bei}} km, encore {{count}} km",
+        "service_km_other": "dû à {{bei}} km, encore {{count}} km",
+        "schaden": "{{stand}} depuis le {{datum}} · {{text}} · {{person}}",
+        "konflikt_one": "dès le {{datum}}, réservé deux fois pendant 1 jour",
+        "konflikt_other": "dès le {{datum}}, réservé deux fois pendant {{count}} jours",
+        "km_fehlt": "pas encore saisi ce mois · {{person}}",
+        "lange_weg_one": "depuis 1 jour chez {{person}}",
+        "lange_weg_other": "depuis {{count}} jours chez {{person}}"
+      },
+      "zahl": {
+        "ueberfaellig": "En retard",
+        "bald": "Dans les 30 prochains jours",
+        "schaeden": "Dégâts ouverts",
+        "konflikte": "Réservations en conflit"
+      },
+      "liste": "Ce qui est en attente",
+      "leer": "Tout est en ordre",
+      "leerText": "Aucune échéance, aucun dégât et aucune double réservation.",
+      "oeffnen": "Ouvrir",
+      "heute": "En route aujourd’hui",
+      "frei": "Libre"
+    },
+    "belegung": {
+      "tag": {
+        "0": "Di",
+        "1": "Lu",
+        "2": "Ma",
+        "3": "Me",
+        "4": "Je",
+        "5": "Ve",
+        "6": "Sa"
+      },
+      "art": {
+        "hand": "Réservé",
+        "werkstatt": "Garage",
+        "einsatz": "Intervention"
+      },
+      "legende": {
+        "einsatz": "Intervention (suit l’équipe)",
+        "hand": "Réservé à la main",
+        "werkstatt": "Garage",
+        "konflikt": "Double réservation"
+      },
+      "folgtTeam": "suit l’équipe",
+      "heute": "Cette semaine",
+      "weiter": "Semaine suivante",
+      "zurueck": "Semaine précédente"
+    },
+    "reservieren": {
+      "knopf": "Réserver",
+      "art": "Type",
+      "aufheben": "Annuler la réservation",
+      "von": "Du",
+      "bis": "Au",
+      "fuer": "Pour",
+      "zweck": "Pour quoi",
+      "zweckBeispiel": "p. ex. chercher du matériel à Bulle"
+    },
+    "schaden": {
+      "stand": {
+        "offen": "Ouvert",
+        "in_arbeit": "En cours",
+        "erledigt": "Réglé"
+      },
+      "titel": "Traiter le dégât",
+      "standLabel": "État",
+      "erledigung": "Ce qui a été fait",
+      "erledigungBeispiel": "p. ex. pare-brise remplacé au garage de Muri",
+      "fotos": "Photos",
+      "fotosHinweis": "Photos du dégât, aussi directement avec l’appareil photo du mobile",
+      "ohneText": "Dégât sans description"
+    },
+    "ausmustern": {
+      "grund": {
+        "defekt": "Défectueux",
+        "verloren": "Perdu",
+        "verkauft": "Vendu",
+        "ersetzt": "Remplacé"
+      },
+      "grundLabel": "Motif"
+    },
+    "kosten": {
+      "chfKm": "CHF/km",
+      "fix": "Assurance et impôt",
+      "jahr": "Année",
+      "keinRecht": "Uniquement avec le droit « Finances »",
+      "keinRechtText": "Les coûts par véhicule sont visibles par la direction et la comptabilité.",
+      "leasing": "Leasing",
+      "leer": "Pas encore de coûts cette année.",
+      "privatanteil": "Part privée",
+      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
+      "privatanteilTitel": "Part privée {{jahr}}",
+      "proFahrzeug": "Coûts par véhicule {{jahr}}",
+      "proKm": "CHF {{chf}} par km ({{km}} km)",
+      "rest": "Entretien et divers",
+      "total": "Total",
+      "treibstoff": "Carburant",
+      "uebrige": "Divers",
+      "unterhalt": "Service, réparations, pneus",
+      "verbrauch": "{{l}} l/100 km",
+      "zahlGeraete": "Valeur des appareils",
+      "zahlProKm": "CHF par km en moyenne",
+      "zahlTotal": "Coûts totaux des véhicules",
+      "zahlUnterhalt": "Entretien"
+    },
+    "dateien": {
+      "hochladen": "Ajouter un fichier",
+      "leer": "Pas encore de documents."
+    },
+    "etikett": {
+      "knopf_one": "Imprimer l’étiquette QR",
+      "knopf_other": "Imprimer {{count}} étiquettes QR",
+      "einzeln": "Imprimer l’étiquette QR",
+      "fuss": "Scanner = fiche"
+    },
+    "schnell": {
+      "nehmen": "Je le prends",
+      "zurueck": "Retour au dépôt"
     }
   },
   "grossprojekte": {

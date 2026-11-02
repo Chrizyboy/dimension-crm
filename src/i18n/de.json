@@ -6452,7 +6452,10 @@
     "reiter": {
       "fahrzeuge": "Fahrzeuge",
       "geraete": "Geräte",
-      "fristen": "Fristen"
+      "fristen": "Fristen",
+      "erledigen": "Zu erledigen",
+      "belegung": "Belegung",
+      "kosten": "Kosten"
     },
     "spalte": {
       "fahrzeug": "Fahrzeug",
@@ -6510,7 +6513,11 @@
         "mfk": "MFK",
         "service": "Service",
         "pruefung": "Geräteprüfung",
-        "ausweis": "Ausweis läuft ab"
+        "ausweis": "Ausweis läuft ab",
+        "reifen": "Reifenwechsel",
+        "vignette": "Vignette",
+        "leasing": "Leasing endet",
+        "ausleihe": "Ausgeliehenes Gerät zurück"
       }
     },
     "akte": {
@@ -6523,7 +6530,27 @@
       "bearbeiten": "Angaben ändern",
       "anBord": "Geräte an Bord",
       "verlauf": "Verlauf",
-      "beiKm": "bei {{km}} km"
+      "beiKm": "bei {{km}} km",
+      "alleFahrzeuge": "Alle Fahrzeuge",
+      "ausgemustert": "Ausgemustert am {{datum}} {{grund}}",
+      "belegung": "Belegung",
+      "belegungLeer": "In den nächsten Tagen nicht verplant.",
+      "dokumente": "Dokumente",
+      "gefahren": "Gefahren seit Vertragsjahr: {{km}} km",
+      "kalibrierungAbgelaufen": "Kalibrierung abgelaufen: Messwerte nicht für Abnahmen verwenden.",
+      "kosten": "Kosten {{jahr}}",
+      "leasing": "Leasing",
+      "leasingBalken": "Gefahrene Kilometer im Vergleich zur Vertragslimite",
+      "mehrKm": "{{chf}} pro Mehr-km",
+      "nutzlast": "Nutzlast {{kg}}",
+      "proMonat": "{{chf}} pro Monat",
+      "prognose": "Prognose Vertragsjahr: {{km}} km",
+      "schaeden": "Offene Schäden",
+      "seitTagen_one": "seit 1 Tag",
+      "seitTagen_other": "seit {{count}} Tagen",
+      "ueberLimite": "Voraussichtlich {{km}} km über der Limite, rund {{chf}} Mehrkosten.",
+      "unterLimite": "Voraussichtlich unter der Limite, keine Mehr-km.",
+      "versicherung": "Versicherung und Steuern"
     },
     "feld": {
       "kennzeichen": "Kennzeichen",
@@ -6545,7 +6572,50 @@
       "serienNr": "Serien-Nr.",
       "hersteller": "Hersteller",
       "pruefMonate": "Prüfintervall (Monate)",
-      "naechste_pruefung": "Nächste Prüfung"
+      "naechste_pruefung": "Nächste Prüfung",
+      "art": "Fahrzeugart",
+      "treibstoff": "Treibstoff",
+      "standort_id": "Standort",
+      "naechster_reifenwechsel": "Nächster Reifenwechsel",
+      "vignette_bis": "Vignette gültig bis",
+      "erste_inverkehrsetzung": "1. Inverkehrsetzung",
+      "stammnummer": "Stammnummer",
+      "fahrgestell_nr": "Fahrgestell-Nr.",
+      "gesamtgewicht_kg": "Gesamtgewicht (kg)",
+      "nutzlast_kg": "Nutzlast (kg)",
+      "anhaengelast_kg": "Anhängelast (kg)",
+      "ausweis": "Nötiger Führerausweis",
+      "tankkarte": "Tankkarte",
+      "schluessel": "Schlüssel",
+      "reifen": "Reifen",
+      "leasinggeber": "Leasinggeber",
+      "leasing_vertrag": "Leasing-Vertrag Nr.",
+      "leasing_beginn": "Leasing ab",
+      "leasing_rate_rappen": "Leasingrate pro Monat (CHF)",
+      "leasing_km_jahr": "Kilometer pro Jahr laut Vertrag",
+      "leasing_mehr_km_rappen": "Preis pro Mehr-km (CHF)",
+      "leasing_rate": "Leasingrate",
+      "leasing_zeit": "Laufzeit",
+      "kaufdatum": "Kaufdatum",
+      "kaufpreis_rappen": "Kaufpreis (CHF)",
+      "kaufpreis": "Kaufpreis (CHF)",
+      "privat_anteil": "Privatanteil (Geschäftsauto privat)",
+      "versicherung_police": "Police-Nr.",
+      "versicherung_deckung": "Deckung",
+      "selbstbehalt_rappen": "Selbstbehalt (CHF)",
+      "selbstbehalt": "Selbstbehalt",
+      "schaden_telefon": "Schadennummer",
+      "praemie_rappen": "Prämie pro Jahr (CHF)",
+      "praemie": "Prämie pro Jahr",
+      "verkehrssteuer_rappen": "Verkehrssteuer pro Jahr (CHF)",
+      "verkehrssteuer": "Verkehrssteuer pro Jahr",
+      "ausser_betrieb": "Ausser Betrieb",
+      "lieferant": "Lieferant",
+      "pruefstelle": "Prüfstelle",
+      "garantie_bis": "Garantie bis",
+      "zurueck_bis": "Zurück bis",
+      "ausgemustert_am": "Ausgemustert am",
+      "ungueltig": "Bitte prüfen"
     },
     "fahrzeug": {
       "neu": "Fahrzeug erfassen",
@@ -6561,7 +6631,7 @@
       "knopf": "Eintrag erfassen",
       "titel": "Eintrag erfassen",
       "text": {
-        "fahrzeug": "MFK, Service, Kilometerstand oder Schaden festhalten.",
+        "fahrzeug": "Kilometer, Tanken, MFK, Service, Reifen, Vignette, Kosten oder Schaden festhalten.",
         "geraet": "Prüfung, Kalibrierung, Reparatur oder Schaden festhalten."
       },
       "art": "Was",
@@ -6573,13 +6643,16 @@
         "mfk": "Nächste MFK (laut Ausweis)",
         "service": "Nächster Service",
         "pruefung": "Nächste Prüfung",
-        "kalibrierung": "Nächste Kalibrierung"
+        "kalibrierung": "Nächste Kalibrierung",
+        "reifen": "Nächster Reifenwechsel",
+        "vignette": "Vignette gültig bis"
       },
       "mfkHinweis": "Steht auf dem Fahrzeugausweis.",
       "automatisch": "Leer lassen: das CRM rechnet sie aus dem Intervall.",
       "kosten": "Kosten (CHF)",
       "bemerkung": "Bemerkung",
-      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen"
+      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen",
+      "liter": "Liter"
     },
     "uebergeben": {
       "knopf": "Übergeben",
@@ -6587,7 +6660,9 @@
       "an": "An",
       "anMich": "An mich",
       "inFahrzeug": "Ins Fahrzeug: {{name}}",
-      "niemand": "Niemand fest zugeteilt"
+      "niemand": "Niemand fest zugeteilt",
+      "ausweisFehlt": "Achtung: Für dieses Fahrzeug ist kein gültiger Führerausweis dieser Person erfasst.",
+      "bisHinweis": "Leer lassen, wenn das Gerät fest bei der Person bleibt."
     },
     "verlauf": {
       "leer": "Noch keine Einträge.",
@@ -6598,6 +6673,168 @@
       "alle_one": "{{count}} anstehend",
       "alle_other": "{{count}} anstehend",
       "nichts": "Keine Frist in den nächsten 30 Tagen."
+    },
+    "aktion": {
+      "bearbeiten": "Angaben ändern",
+      "eintrag": "Eintrag erfassen",
+      "uebergeben": "Übergeben",
+      "reservieren": "Reservieren",
+      "schaden": "Schaden melden"
+    },
+    "abschnitt": {
+      "grund": "Grunddaten",
+      "technik": "Technik und Ausweis",
+      "leasing": "Leasing oder Kauf",
+      "versicherung": "Versicherung und Steuern",
+      "weiteres": "Weiteres"
+    },
+    "ja": "Ja",
+    "treibstoff": {
+      "diesel": "Diesel",
+      "benzin": "Benzin",
+      "elektro": "Elektro",
+      "hybrid": "Hybrid",
+      "gas": "Gas"
+    },
+    "erledigen": {
+      "titel": {
+        "mfk": "MFK {{name}}",
+        "service": "Service {{name}}",
+        "pruefung": "Prüfung {{name}}",
+        "reifen": "Reifenwechsel {{name}}",
+        "vignette": "Vignette {{name}}",
+        "leasing": "Leasing-Ende {{name}}",
+        "ausleihe": "{{name}} zurückbringen",
+        "ausweis": "Ausweis läuft ab: {{name}}",
+        "service_km": "Service nach Kilometern {{name}}",
+        "schaden": "Schaden {{name}}",
+        "konflikt": "Doppelt verplant: {{name}}",
+        "km_fehlt": "Kilometerstand fehlt {{name}}",
+        "lange_weg": "{{name}} lange ausgeliehen"
+      },
+      "zeile": {
+        "frist_one": "{{datum}}, morgen fällig",
+        "frist_other": "{{datum}}, in {{count}} Tagen fällig",
+        "frist_vorbei_one": "seit {{datum}} überfällig (1 Tag)",
+        "frist_vorbei_other": "seit {{datum}} überfällig ({{count}} Tage)",
+        "service_km_one": "fällig bei {{bei}} km, noch {{count}} km",
+        "service_km_other": "fällig bei {{bei}} km, noch {{count}} km",
+        "schaden": "{{stand}} seit {{datum}} · {{text}} · {{person}}",
+        "konflikt_one": "ab {{datum}} an 1 Tag doppelt verplant",
+        "konflikt_other": "ab {{datum}} an {{count}} Tagen doppelt verplant",
+        "km_fehlt": "diesen Monat noch nicht eingetragen · {{person}}",
+        "lange_weg_one": "seit 1 Tag bei {{person}}",
+        "lange_weg_other": "seit {{count}} Tagen bei {{person}}"
+      },
+      "zahl": {
+        "ueberfaellig": "Überfällig",
+        "bald": "In den nächsten 30 Tagen",
+        "schaeden": "Offene Schäden",
+        "konflikte": "Doppelt verplant"
+      },
+      "liste": "Was ansteht",
+      "leer": "Alles erledigt",
+      "leerText": "Keine Frist, kein Schaden und nichts doppelt verplant.",
+      "oeffnen": "Öffnen",
+      "heute": "Heute unterwegs",
+      "frei": "Frei"
+    },
+    "belegung": {
+      "tag": {
+        "0": "So",
+        "1": "Mo",
+        "2": "Di",
+        "3": "Mi",
+        "4": "Do",
+        "5": "Fr",
+        "6": "Sa"
+      },
+      "art": {
+        "hand": "Reserviert",
+        "werkstatt": "Werkstatt",
+        "einsatz": "Einsatz"
+      },
+      "legende": {
+        "einsatz": "Einsatz (folgt dem Team)",
+        "hand": "Von Hand reserviert",
+        "werkstatt": "Werkstatt",
+        "konflikt": "Doppelt verplant"
+      },
+      "folgtTeam": "folgt dem Team",
+      "heute": "Diese Woche",
+      "weiter": "Nächste Woche",
+      "zurueck": "Vorherige Woche"
+    },
+    "reservieren": {
+      "knopf": "Reservieren",
+      "art": "Art",
+      "aufheben": "Reservierung aufheben",
+      "von": "Von",
+      "bis": "Bis",
+      "fuer": "Für",
+      "zweck": "Wofür",
+      "zweckBeispiel": "z. B. Material holen in Bulle"
+    },
+    "schaden": {
+      "stand": {
+        "offen": "Offen",
+        "in_arbeit": "In Arbeit",
+        "erledigt": "Erledigt"
+      },
+      "titel": "Schaden bearbeiten",
+      "standLabel": "Stand",
+      "erledigung": "Was wurde gemacht",
+      "erledigungBeispiel": "z. B. Scheibe in der Garage Muri ersetzt",
+      "fotos": "Fotos",
+      "fotosHinweis": "Fotos vom Schaden, auch direkt mit der Handy-Kamera",
+      "ohneText": "Schaden ohne Beschreibung"
+    },
+    "ausmustern": {
+      "grund": {
+        "defekt": "Defekt",
+        "verloren": "Verloren",
+        "verkauft": "Verkauft",
+        "ersetzt": "Ersetzt"
+      },
+      "grundLabel": "Grund"
+    },
+    "kosten": {
+      "chfKm": "CHF/km",
+      "fix": "Versicherung und Steuer",
+      "jahr": "Jahr",
+      "keinRecht": "Nur mit Recht «Finanzen»",
+      "keinRechtText": "Die Kosten pro Fahrzeug sehen Geschäftsleitung und Buchhaltung.",
+      "leasing": "Leasing",
+      "leer": "Noch keine Kosten in diesem Jahr.",
+      "privatanteil": "Privatanteil",
+      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
+      "privatanteilTitel": "Privatanteil {{jahr}}",
+      "proFahrzeug": "Kosten pro Fahrzeug {{jahr}}",
+      "proKm": "CHF {{chf}} pro km ({{km}} km)",
+      "rest": "Unterhalt und Übriges",
+      "total": "Total",
+      "treibstoff": "Treibstoff",
+      "uebrige": "Übriges",
+      "unterhalt": "Service, Reparaturen, Reifen",
+      "verbrauch": "{{l}} l/100 km",
+      "zahlGeraete": "Wert der Geräte",
+      "zahlProKm": "CHF pro km im Schnitt",
+      "zahlTotal": "Kosten Fahrzeuge total",
+      "zahlUnterhalt": "Unterhalt"
+    },
+    "dateien": {
+      "hochladen": "Datei hinzufügen",
+      "leer": "Noch keine Dokumente."
+    },
+    "etikett": {
+      "knopf_one": "QR-Etikett drucken",
+      "knopf_other": "{{count}} QR-Etiketten drucken",
+      "einzeln": "QR-Etikett drucken",
+      "fuss": "Scannen = Akte"
+    },
+    "schnell": {
+      "nehmen": "Nehme ich",
+      "zurueck": "Zurück ins Lager"
     }
   },
   "grossprojekte": {
