@@ -3133,8 +3133,11 @@ export type Database = {
           heizungsersatz: boolean
           id: string
           kanton: string | null
+          kontakte: NonNullable<Json>
           lage_e: number | null
           lage_n: number | null
+          naechster_schritt: string | null
+          naechster_schritt_am: string | null
           notiz: string | null
           nummer: string | null
           nutzung: string | null
@@ -3148,18 +3151,25 @@ export type Database = {
           recherche: Json | null
           recherche_am: string | null
           recherche_stand: string | null
+          rechnung: NonNullable<Json>
           schaetzung: NonNullable<Json>
           sprache: string
           stand: string
           standort_id: string | null
           strasse: string | null
           stromertrag_kwh: number | null
+          stufe: string | null
+          stufe_seit: string | null
           titel: string
+          unterlagen: NonNullable<Json>
           verantwortlich_id: string | null
           verkaufschance_id: string | null
+          vertrag_am: string | null
+          vertrag_kwp: number | null
           waermeleistung_kw: number | null
           wiedervorlage_am: string | null
           wohnungen: number | null
+          youdera: NonNullable<Json>
         }
         ComputedFields: never
         Insert: {
@@ -3194,8 +3204,11 @@ export type Database = {
           heizungsersatz?: boolean
           id?: string
           kanton?: string | null
+          kontakte?: NonNullable<Json>
           lage_e?: number | null
           lage_n?: number | null
+          naechster_schritt?: string | null
+          naechster_schritt_am?: string | null
           notiz?: string | null
           nummer?: string | null
           nutzung?: string | null
@@ -3209,18 +3222,25 @@ export type Database = {
           recherche?: Json | null
           recherche_am?: string | null
           recherche_stand?: string | null
+          rechnung?: NonNullable<Json>
           schaetzung?: NonNullable<Json>
           sprache?: string
           stand?: string
           standort_id?: string | null
           strasse?: string | null
           stromertrag_kwh?: number | null
+          stufe?: string | null
+          stufe_seit?: string | null
           titel: string
+          unterlagen?: NonNullable<Json>
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
+          vertrag_am?: string | null
+          vertrag_kwp?: number | null
           waermeleistung_kw?: number | null
           wiedervorlage_am?: string | null
           wohnungen?: number | null
+          youdera?: NonNullable<Json>
         }
         Update: {
           alt_daten?: Json | null
@@ -3254,8 +3274,11 @@ export type Database = {
           heizungsersatz?: boolean
           id?: string
           kanton?: string | null
+          kontakte?: NonNullable<Json>
           lage_e?: number | null
           lage_n?: number | null
+          naechster_schritt?: string | null
+          naechster_schritt_am?: string | null
           notiz?: string | null
           nummer?: string | null
           nutzung?: string | null
@@ -3269,18 +3292,25 @@ export type Database = {
           recherche?: Json | null
           recherche_am?: string | null
           recherche_stand?: string | null
+          rechnung?: NonNullable<Json>
           schaetzung?: NonNullable<Json>
           sprache?: string
           stand?: string
           standort_id?: string | null
           strasse?: string | null
           stromertrag_kwh?: number | null
+          stufe?: string | null
+          stufe_seit?: string | null
           titel?: string
+          unterlagen?: NonNullable<Json>
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
+          vertrag_am?: string | null
+          vertrag_kwp?: number | null
           waermeleistung_kw?: number | null
           wiedervorlage_am?: string | null
           wohnungen?: number | null
+          youdera?: NonNullable<Json>
         }
         Relationships: [
           {
@@ -10584,6 +10614,7 @@ export type Database = {
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
+      grossprojekt_akte_setzen: { Args: { p: Json; p_id: string }; Returns: undefined }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
       grossprojekt_aus_suche: { Args: { p: Json; p_meldung?: string }; Returns: string }
       grossprojekt_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
@@ -10601,6 +10632,7 @@ export type Database = {
       grossprojekt_recherche_zurueck: { Args: { p_id: string }; Returns: undefined }
       grossprojekt_schritte_als_aufgaben: { Args: { p_id: string; p_schritte: Json }; Returns: number }
       grossprojekt_speichern: { Args: { p: Json }; Returns: string }
+      grossprojekt_stufe_setzen: { Args: { p_angaben?: Json; p_id: string; p_stufe: string }; Returns: undefined }
       grossprojekt_suche_kachel_fertig: {
         Args: { p_gebaeude: number; p_kachel: string; p_kandidaten: number; p_treffer: number }
         Returns: undefined
@@ -10608,6 +10640,7 @@ export type Database = {
       grossprojekt_suche_naechste: { Args: { p_anzahl?: number }; Returns: Json }
       grossprojekt_suche_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_verantwortlich_setzen: { Args: { p_id: string; p_person: string }; Returns: undefined }
+      grossprojekt_vermerken: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
       grossprojekt_vorrat_freigeben: { Args: Record<PropertyKey, never>; Returns: number }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
