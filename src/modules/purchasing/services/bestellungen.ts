@@ -52,7 +52,13 @@ export async function bestellungAnlegen(e: {
 /** Liefertermin, Notiz oder (im Entwurf) Lieferant und Lieferziel ändern. */
 export async function bestellungAendern(
   id: string,
-  p: Partial<{ liefertermin: string | null; notiz: string | null; lieferant_id: string; lagerort_id: string | null }>,
+  p: Partial<{
+    liefertermin: string | null
+    bestaetigt_am: string | null
+    notiz: string | null
+    lieferant_id: string
+    lagerort_id: string | null
+  }>,
 ): Promise<void> {
   const { error } = await db().from('bestellungen').update(p).eq('id', id)
   if (error) throw error
@@ -97,6 +103,24 @@ export async function stornieren(id: string, grund: string): Promise<void> {
 }
 
 /** Wareneingang buchen; gibt den neuen Stand zurück (teilgeliefert oder geliefert). */
+/**
+ * Seriennummern zu Positionen (ersetzt die bisherigen). Sie gehen an die Materialzeile und mit der IBN als
+ * Komponente an die Anlage. Text aus dem Feld: getrennt durch Zeilen, Komma oder Strichpunkt.
+ */
+export async function seriennummernErfassen(id: string, positionen: { id: string; text: string }[]) {
+  const p = positionen.map((x) => ({
+    id: x.id,
+    seriennummern: x.text
+      .split(/[\n,;]+/)
+      .map((s) => s.trim())
+      .filter(Boolean),
+  }))
+  if (p.length === 0) return 0
+  const { data, error } = await db().rpc('seriennummern_erfassen', { p_bestellung: id, p })
+  if (error) throw error
+  return data
+}
+
 export async function wareneingang(id: string, datum: string, positionen: { id: string; menge: number }[]) {
   const { data, error } = await db().rpc('wareneingang_buchen', { p_id: id, p: { datum, positionen } })
   if (error) throw error

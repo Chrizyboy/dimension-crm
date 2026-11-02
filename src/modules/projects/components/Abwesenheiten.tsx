@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/schalter'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatDatum } from '@/lib/format'
+import { hatRecht } from '@/lib/rechte'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { useAbwesenheiten, usePersonen } from '../hooks/useProjekte'
 import { alsIso, plusTage, werktage } from '../lib/zeitplan'
@@ -20,7 +22,8 @@ import { abwesenheitAnlegen, abwesenheitEntfernen } from '../services/planung'
 /**
  * Abwesenheiten der nächsten drei Monate: im CRM erfasst (Ferien, Krank, Militär …) und aus Outlook
  * («Abwesend» im Kalender, nur der Zeitraum). Sie zählen im Zeitplan bei der Auslastung und warnen beim
- * Einplanen. Outlook-Einträge ändert man in Outlook.
+ * Einplanen. Outlook-Einträge ändert man in Outlook. Für andere erfassen und löschen nur Planung und
+ * Administration (33A, die Datenbank hält das ein); alle anderen nur für sich selbst.
  */
 export function Abwesenheiten() {
   const { t } = useTranslation()
@@ -32,7 +35,11 @@ export function Abwesenheiten() {
   const personen = usePersonen()
   const arten = useAuswahl('abwesenheit')
   const { laeuft, aus } = useAktion()
-  const leer = { person_id: '', art: 'ferien', von: '', bis: '', halbtag: false }
+  const ich = useAnmeldung((z) => z.ich)
+  // Ohne Anmeldung (Vorschau) wie mit Planung, damit die Ansicht vollständig zu sehen ist.
+  const selbst = ich && !hatRecht(ich, 'planung') ? ich.id : null
+  const darf = (personId: string) => selbst === null || personId === selbst
+  const leer = { person_id: selbst ?? '', art: 'ferien', von: '', bis: '', halbtag: false }
   const [w, setW] = useState(leer)
   const [fehler, setFehler] = useState<Partial<Record<string, string>>>({})
   const name = (id: string) => personen.data?.find((p) => p.id === id)?.name ?? '?'
@@ -79,7 +86,7 @@ export function Abwesenheiten() {
             onValueChange={(v) => {
               setW({ ...w, person_id: v })
             }}
-            optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
+            optionen={(personen.data ?? []).filter((p) => darf(p.id)).map((p) => ({ wert: p.id, text: p.name }))}
           />
         </Feld>
         <Feld id="ab-art" label={t('projekte.feld.art')}>
@@ -139,7 +146,9 @@ export function Abwesenheiten() {
                   </span>
                 </span>
                 <Badge>{arten.text(a.art)}</Badge>
-                {a.quelle === 'crm' ? (
+                {a.quelle === 'crm' && !darf(a.person_id) ? (
+                  <span className="min-w-8 shrink-0" />
+                ) : a.quelle === 'crm' ? (
                   <Button
                     variant="ghost"
                     size="icon"
