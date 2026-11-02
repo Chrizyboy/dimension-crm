@@ -9,6 +9,60 @@ export type Verkaufschance = Tabelle<'verkaufschancen'>
 export type Offerte = Tabelle<'offerten'>
 export type Projekt = Tabelle<'projekte'>
 export type Werkvertrag = Tabelle<'werkvertraege'>
+export type Anlage = Tabelle<'anlagen'>
+export type ServiceFall = Pick<
+  Tabelle<'service_faelle'>,
+  | 'id'
+  | 'nummer'
+  | 'titel'
+  | 'status'
+  | 'kategorie'
+  | 'garantie'
+  | 'termin_am'
+  | 'erledigt_am'
+  | 'erstellt_am'
+  | 'anlage_id'
+>
+export type Wartungsvertrag = Pick<
+  Tabelle<'wartungsvertraege'>,
+  | 'id'
+  | 'nummer'
+  | 'paket'
+  | 'status'
+  | 'preis_netto_rappen'
+  | 'naechste_wartung'
+  | 'start_am'
+  | 'laufzeit_jahre'
+  | 'anlage_id'
+>
+export type Rechnungszeile = Pick<
+  Database['public']['Views']['rechnungen_liste']['Row'],
+  | 'id'
+  | 'nummer'
+  | 'titel'
+  | 'status'
+  | 'datum'
+  | 'faellig_am'
+  | 'total_rappen'
+  | 'offen_rappen'
+  | 'bezahlt_rappen'
+  | 'bezahlt_am'
+  | 'mahnstufe'
+  | 'ueberfaellig'
+>
+export type Aufgabe = Pick<
+  Tabelle<'aufgaben'>,
+  'id' | 'titel' | 'text' | 'faellig_am' | 'person_id' | 'bezug_tabelle' | 'bezug_id'
+>
+/** Mail an oder von der Person, aus Posteingang (`ein`) oder Ausgangskorb (`aus`). */
+export interface Mailzeile {
+  id: string
+  richtung: 'ein' | 'aus'
+  zeitpunkt: string
+  betreff: string
+  wer: string | null
+  status: string | null
+}
 export type Dokument = Pick<
   Tabelle<'dokumente'>,
   | 'id'
@@ -34,6 +88,16 @@ export interface Kundenakte {
   projekte: Projekt[]
   werkvertraege: Werkvertrag[]
   dokumente: Dokument[]
+}
+
+/** Was nach dem Verkauf am Kontakt hängt: Anlagen, Service, Wartung, Rechnungen, Aufgaben, Mails. */
+export interface Nachverkauf {
+  anlagen: Anlage[]
+  serviceFaelle: ServiceFall[]
+  wartungsvertraege: Wartungsvertrag[]
+  rechnungen: Rechnungszeile[]
+  aufgaben: Aufgabe[]
+  mails: Mailzeile[]
 }
 
 /** Ein Eintrag der Zeitachse, wie ihn `kunden_zeitachse` liefert. */
