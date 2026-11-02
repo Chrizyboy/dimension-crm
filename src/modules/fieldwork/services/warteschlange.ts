@@ -1,3 +1,4 @@
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { create } from 'zustand'
 import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { meldeFehler } from '@/services/fehler'
@@ -25,6 +26,9 @@ export type RpcName =
   | 'zeit_stoppen'
   | 'zeit_speichern'
   | 'nachtrag_speichern'
+  | 'zeit_team_starten'
+  | 'zeit_team_stoppen'
+  | 'meldung_erfassen'
 
 interface Basis {
   nr?: number
@@ -40,7 +44,15 @@ export type Auftrag =
       art: 'datei'
       blob: Blob
       pfad: string
-      dokument: { id: string; name: string; mime_typ: string; ordner: string; bezug_tabelle: string; bezug_id: string }
+      dokument: {
+        id: string
+        name: string
+        mime_typ: string
+        ordner: string
+        bezug_tabelle: string
+        bezug_id: string
+        kategorie?: string | null
+      }
     })
 
 interface Stand {
@@ -70,7 +82,8 @@ async function ausfuehren(a: Auftrag): Promise<void> {
   }
   const hoch = await supabase.storage.from('dokumente').upload(a.pfad, a.blob, { contentType: a.dokument.mime_typ })
   if (hoch.error && !istSchonDa(hoch.error)) throw hoch.error
-  const { error } = await supabase
+  // «kategorie» (Pflichtfoto) ist neu (Entscheid 0039) und fehlt noch in den erzeugten Typen.
+  const { error } = await (supabase as unknown as SupabaseClient)
     .from('dokumente')
     .insert({ ...a.dokument, bytes: a.blob.size, speicher: 'intern', speicher_pfad: a.pfad })
   if (error && !istSchonDa(error)) throw error

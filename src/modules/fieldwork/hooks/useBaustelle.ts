@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { supabase } from '@/services/supabase'
 import { istNetzFehler } from '../lib/netz'
 import * as b from '../services/baustelle'
+import { ladeInfos } from '../services/leitung'
 import { ABLAGE_TAG, ablageNachtraege, ablageRapport } from '../services/monteur'
 import { ablageLesen } from '../services/speicher'
 import { mitAblage, offeneDateien, useWarteschlange } from '../services/warteschlange'
@@ -11,6 +12,17 @@ import type { MeinTag, Nachtrag, NachtragEingabe, NachtragFilter, Rapport, Rappo
 const an = Boolean(supabase)
 // Ansichten mit Ablage am Gerät laufen auch ohne Netz (networkMode «always»), sonst würde React Query sie anhalten.
 
+/**
+ * Tagesplan mit den Zusätzen je Einsatz (Schritte, Pflichtfotos, Team mit IDs). Fehlen die Zusätze (z. B. ältere
+ * Datenbank), bleibt der Tagesplan trotzdem nutzbar.
+ */
+async function tagMitInfos(von: string, bis: string, person?: string | null): Promise<MeinTag> {
+  const t = await b.ladeTag(von, bis, person)
+  const ids = t.eintraege.filter((e) => e.typ === 'einsatz').map((e) => e.id)
+  const infos = await ladeInfos(ids).catch(() => ({}) as Record<string, never>)
+  return { ...t, eintraege: t.eintraege.map((e) => ({ ...e, info: e.typ === 'einsatz' ? (infos[e.id] ?? null) : null })) }
+}
+
 /** Tagesplan; für die eigene Person mit Ablage am Gerät (funktioniert ohne Netz). */
 export const useTag = (von: string, bis: string, person: string | null) =>
   useQuery({
@@ -18,10 +30,10 @@ export const useTag = (von: string, bis: string, person: string | null) =>
     networkMode: 'always',
     enabled: an,
     queryFn: async (): Promise<MeinTag> => {
-      if (person) return b.ladeTag(von, bis, person)
+      if (person) return tagMitInfos(von, bis, person)
       const t = await mitAblage(ABLAGE_TAG, async () => ({
         schluessel: `${von}:${bis}`,
-        daten: await b.ladeTag(von, bis),
+        daten: await tagMitInfos(von, bis),
       }))
       return t.daten
     },
