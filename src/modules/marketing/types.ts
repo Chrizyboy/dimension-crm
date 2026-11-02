@@ -72,7 +72,7 @@ export interface Textvorlage {
 }
 
 /** Einstellung «marketing»: Vorlagen für Brief, Mail, Abmelde-Satz und Social Media. */
-export interface MarketingVorlagen {
+export interface MarketingVorlagen extends MarketingPlanung {
   absender: Zweisprachig<string>
   ort: Zweisprachig<string>
   brief: Zweisprachig<Textvorlage>

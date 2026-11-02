@@ -2,6 +2,7 @@ import { FileDown, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/schalter'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
@@ -10,10 +11,11 @@ import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { serienbriefPdf } from '../lib/serienbrief'
-import { empfaenger, fuellen } from '../lib/zielgruppe'
+import { empfaenger, fuellen, imPause } from '../lib/zielgruppe'
 import { marketingMitKi, textDa } from '../lib/kiTexte'
 import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 import { abmeldeLink, senden, speichereVorlagen, vermerken } from '../services/marketing'
+import { KampagneWahl } from './kampagnen/KampagneWahl'
 import type { MarketingVorlagen, Sprache, Textvorlage, Zielkontakt } from '../types'
 
 /**
@@ -26,21 +28,36 @@ export function SerienDialog({
   auswahl,
   vorlagen,
   onSchliessen,
+  kampagneId = null,
+  texteStart,
+  werbepause = true,
 }: {
   art: 'brief' | 'mail'
   auswahl: Zielkontakt[]
   vorlagen: MarketingVorlagen
   onSchliessen: () => void
+  /** Kampagne, zu der der Versand gehört (Ergebnis und Leads der Antworten). */
+  kampagneId?: string | null
+  /** Texte statt der Vorlage, z. B. Dankes-Mail nach der Messe. */
+  texteStart?: Record<Sprache, Textvorlage>
+  /** Wer kürzlich angeschrieben wurde, bekommt nichts (Einstellung werbepause_tage); aus für Antworten an Besucher. */
+  werbepause?: boolean
 }) {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const { laeuft, aus } = useAktion()
-  const r = empfaenger(auswahl, art)
+  const [kampagne, setKampagne] = useState<string | null>(kampagneId)
+  const [pauseAn, setPauseAn] = useState(werbepause && art === 'mail')
+  const ruhe = imPause(auswahl, pauseAn ? (vorlagen.werbepause_tage ?? 0) : 0)
+  const r = empfaenger(
+    auswahl.filter((k) => !ruhe.has(k.id)),
+    art,
+  )
   // Ohne Empfänger trotzdem die Texte zeigen (Sprachen der Auswahl), damit man die Vorlage bearbeiten kann.
   const basis = r.liste.length ? r.liste : auswahl
   const gefunden = (['de', 'fr'] as const).filter((s) => basis.some((k) => k.sprache === s))
   const sprachen = gefunden.length ? gefunden : (['de'] as const)
-  const [texte, setTexte] = useState<Record<Sprache, Textvorlage>>(vorlagen[art])
+  const [texte, setTexte] = useState<Record<Sprache, Textvorlage>>(texteStart ?? vorlagen[art])
   const [absender, setAbsender] = useState(vorlagen.absender)
   const unterschrift = ich?.name ?? 'Dimension Solaire'
 
@@ -72,6 +89,7 @@ export function SerienDialog({
     const e = await aus(() =>
       senden({
         art: 'serienmail',
+        ...(kampagne ? { kampagne_id: kampagne } : {}),
         betreff: texte[sprachen[0]].betreff,
         mails: r.liste.map((k) => ({
           kontakt_id: k.id,
@@ -137,9 +155,27 @@ export function SerienDialog({
             </p>
           )}
           {art === 'mail' && (
-            <p className="text-muted-foreground text-sm">
-              {t('marketing.serien.mailHinweis', { absender: ich?.email ?? '' })}
-            </p>
+            <>
+              <p className="text-muted-foreground text-sm">
+                {t('marketing.serien.mailHinweis', { absender: ich?.email ?? '' })}
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Feld id="serien-kampagne" label={t('werbung.kampagne.gehoertZu')}>
+                  <KampagneWahl id="serien-kampagne" wert={kampagne} onWert={setKampagne} />
+                </Feld>
+                {(vorlagen.werbepause_tage ?? 0) > 0 && (
+                  <label className="flex items-center gap-2 self-end pb-1.5 text-sm">
+                    <Checkbox
+                      checked={pauseAn}
+                      onCheckedChange={(c) => {
+                        setPauseAn(c === true)
+                      }}
+                    />
+                    {t('werbung.pause.beachten', { tage: vorlagen.werbepause_tage, anzahl: ruhe.size })}
+                  </label>
+                )}
+              </div>
+            </>
           )}
           <KiWunschZeile
             hatText={textDa(texte, sprachen)}
