@@ -23,7 +23,7 @@
 
 ## Ordner
 
-- `components/` – Liste, Akte, Auftrag-Dialog (Zahlung, Angaben im Vertrag), Senden, Status, Einstellungen
+- `components/` – Liste, «Neuer Werkvertrag» (Offerte wählen: `OfferteWahl`, Daten aus `offerten_liste` ohne `werkvertrag_id`), Akte, Auftrag-Dialog (Zahlung, Angaben im Vertrag), Senden, Status, Einstellungen
 - `hooks/`, `services/` – Laden und Speichern
 - `lib/` – Vertragsinhalt und AGB (DE/FR), Zahlungsplan (mit Tests), Status
 - `services/vertragPdf.ts` – PDF nach Vorlage Muri

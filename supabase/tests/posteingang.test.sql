@@ -110,7 +110,8 @@ select is((select stand || '/' || erledigt_grund || '/' || reaktion_minuten || '
   from public.posteingang where kennung = '<pe1@x>'),
   'erledigt/beantwortet/60/00000000-0000-0000-0000-0000000018b2', 'erledigt mit Reaktionszeit und Person');
 
--- Erinnern: Vorwarnung, Frist um, doppelte Frist an die Leitung (je einmal)
+-- Erinnern: Vorwarnung, Frist um, doppelte Frist an die Leitung (je einmal). Gezählt nur die Glocken dieser
+-- Mail: die Testmails haben feste Eingangsdaten, ab dem 2.11.2026 läuft auch die Frist der anderen ab.
 update public.posteingang set frist_am = now() + interval '10 minutes', eskalation_am = now() + interval '2 hours'
  where kennung = '<pe5@x>';
 select public.posteingang_erinnern();
@@ -119,10 +120,12 @@ update public.posteingang set frist_am = now() - interval '1 minute' where kennu
 select public.posteingang_erinnern();
 select public.posteingang_erinnern();
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b1'
+  and ziel = '/inbox?mail=' || (select id from public.posteingang where kennung = '<pe5@x>')
   and titel_de = 'Antwortfrist überschritten'), 1, 'Frist um: einmal Glocke');
 update public.posteingang set eskalation_am = now() - interval '1 minute' where kennung = '<pe5@x>';
 select public.posteingang_erinnern();
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b3'
+  and ziel = '/inbox?mail=' || (select id from public.posteingang where kennung = '<pe5@x>')
   and titel_de = 'Kunde wartet doppelt so lange wie vorgesehen'), 1, 'doppelte Frist: Glocke an die Leitung');
 
 -- Beantwortet aus dem Ausgangskorb

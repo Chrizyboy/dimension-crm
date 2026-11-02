@@ -129,7 +129,14 @@ test('Werkvertrag 70/30 erstellen und mit Anzahlungsrechnung in den Ausgangskorb
     p_status: 'bearbeitung',
   })) as string
 
-  await page.goto(`/#/workcontracts?auftrag=${offerte}`)
+  // «Neuer Werkvertrag» oben in der Liste: Offerte suchen und wählen, dann das Formular
+  await page.goto('/#/workcontracts')
+  await page.getByRole('button', { name: 'Neuer Werkvertrag' }).click()
+  const wahl = page.getByRole('dialog', { name: 'Neuer Werkvertrag' })
+  await wahl.getByLabel('Offerte suchen').fill(`Werkvertrag${lauf}`)
+  expect(await verstoesse(page)).toEqual([])
+  await wahl.getByRole('button', { name: new RegExp(`Werkvertrag${lauf}`) }).click()
+  await expect(page).toHaveURL(new RegExp(`auftrag=${offerte}`))
   const d = page.getByRole('dialog', { name: 'Auftrag erstellen' })
   await d.getByLabel('Vertragswert inkl. MWST').fill("10'000.01")
   await d.getByRole('button', { name: '70 / 30', exact: true }).click()
