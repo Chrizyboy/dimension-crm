@@ -148,5 +148,7 @@ export function tabelleVon(art: Fakt['art']): string {
     projekt: 'projekte',
     zahlung: 'projekte',
     fall: 'service_faelle',
+    rechnung: 'rechnungen',
+    wartung: 'wartungsvertraege',
   }[art]
 }

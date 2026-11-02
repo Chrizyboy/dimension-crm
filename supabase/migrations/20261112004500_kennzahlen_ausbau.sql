@@ -1,4 +1,4 @@
--- Kennzahlen vollständig (02.11.2026, Entscheid 0039): Ziele je Firma und Person, Prognose aus fester Wahrscheinlichkeit
+-- Kennzahlen vollständig (02.11.2026, Entscheid 0040): Ziele je Firma und Person, Prognose aus fester Wahrscheinlichkeit
 -- je Stand, Durchlaufzeiten, kWp und Produkte, Umsatz aus gestellten Rechnungen, Service und Wartung, Monatsbericht.
 -- Wie `kennzahlen_fakten` liefert `kennzahlen_zusatz` Einzelzeilen statt Summen: die App zählt sie und zeigt hinter
 -- jeder Zahl genau diese Zeilen. Alles mit den Rechten der lesenden Person (Rechnungen sieht nur, wer sie lesen darf).

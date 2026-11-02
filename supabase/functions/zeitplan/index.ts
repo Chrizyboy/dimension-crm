@@ -121,7 +121,7 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
-  // Monatsbericht der Kennzahlen (Entscheid 0039): am 1. eine Glocke für die Geschäftsleitung, nur intern.
+  // Monatsbericht der Kennzahlen (Entscheid 0040): am 1. eine Glocke für die Geschäftsleitung, nur intern.
   ergebnis.monatsbericht = await job('monatsbericht', 60, async () => {
     const n = await dienst.rpc<number>('kennzahlen_monatsbericht_melden', {})
     return n ? `${n} gemeldet` : 'nicht fällig'
