@@ -23,7 +23,8 @@ export const ABLAGE_TAG = 'tag'
 export const ablageRapport = (id: string) => `rapport:${id}`
 export const ablageNachtraege = (id: string) => `nachtraege:${id}`
 
-const tagAendern = (f: (t: MeinTag) => MeinTag) =>
+/** Tagesplan in der Ablage am Gerät ändern (bevor der Server die Änderung kennt). */
+export const tagAendern = (f: (t: MeinTag) => MeinTag) =>
   ablageAendern<{ schluessel: string; daten: MeinTag }>(ABLAGE_TAG, (alt) =>
     alt ? { ...alt, daten: f(alt.daten) } : undefined,
   )

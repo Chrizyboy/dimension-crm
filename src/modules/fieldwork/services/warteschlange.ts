@@ -29,6 +29,9 @@ export type RpcName =
   | 'zeit_team_starten'
   | 'zeit_team_stoppen'
   | 'meldung_erfassen'
+  | 'service_eintrag_handy'
+  | 'service_checkliste'
+  | 'service_seriennummer'
 
 interface Basis {
   nr?: number
