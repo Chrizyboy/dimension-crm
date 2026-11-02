@@ -2,7 +2,7 @@
 -- Mein Tag für das Team), Eintrag vom Handy nur einmal pro ID, Seriennummer vor Ort, Anlage-Akte.
 -- Ausführen: npm run db:test
 begin;
-select plan(14);
+select plan(15);
 
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000029a1', 'se-an@test.local'),
   ('00000000-0000-0000-0000-0000000029a2', 'se-mo@test.local');
@@ -49,6 +49,8 @@ select is((select count(*)::int from public.service_faelle f, jsonb_array_elemen
             where f.id = '00000000-0000-0000-0000-0000000029e1' and v ->> 'art' = 'besuch'), 1, 'Angekommen nur einmal');
 select is((select v ->> 'text' from public.service_faelle f, jsonb_array_elements(f.verlauf) v
             where f.id = '00000000-0000-0000-0000-0000000029e1' and v ->> 'art' = 'besuch'), 'Vor Ort angekommen', 'Standardtext');
+
+select lives_ok($$ select public.service_checkliste('00000000-0000-0000-0000-0000000029e1', 0, true) $$, 'Monteur hakt am Handy ab');
 
 -- Seriennummer vor Ort
 select public.service_seriennummer('00000000-0000-0000-0000-0000000029e1', 0, 'NEU-2');

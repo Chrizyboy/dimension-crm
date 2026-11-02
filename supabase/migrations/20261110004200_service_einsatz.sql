@@ -200,7 +200,7 @@ begin
         select jsonb_build_object(
           'typ', 'service', 'id', f.id, 'von', (f.termin_am at time zone 'Europe/Zurich')::date,
           'bis', (f.termin_am at time zone 'Europe/Zurich')::date,
-          'zeit', to_char(f.termin_am at time zone 'Europe/Zurich', 'HH24:MI'), 'notiz', concat_ws(E'\n', f.beschreibung, 'Vor Ort: ' || nullif(concat_ws(', ', f.vor_ort_name, f.vor_ort_telefon), ''), 'Zugang: ' || f.zugang),
+          'zeit', to_char(f.termin_am at time zone 'Europe/Zurich', 'HH24:MI'), 'notiz', f.beschreibung,
           'service', jsonb_build_object('id', f.id, 'nummer', f.nummer, 'titel', f.titel, 'garantie', f.garantie,
                                         'prioritaet', f.prioritaet, 'kategorie', f.kategorie, 'auswirkung', f.auswirkung,
                                         'komponente', f.komponente, 'fehlercode', f.fehlercode, 'dauer_minuten', f.dauer_minuten,

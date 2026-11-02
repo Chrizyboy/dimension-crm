@@ -3834,6 +3834,23 @@
       "uhrzeit": "Merci de saisir une heure comme 07:30.",
       "pause": "Pause entre 0 et 600 minutes.",
       "stoppVorStart": "La fin doit être après le début."
+    },
+    "service": {
+      "fehler": "Erreur",
+      "dauer": "env. {{stunden}} h",
+      "vorOrt": "Sur place",
+      "angekommen": "Arrivé sur place",
+      "ansprechperson": "Personne de contact sur place",
+      "zugang": "Accès",
+      "anlage": "Installation",
+      "monitoring": "Monitoring",
+      "checkliste": "Checklist",
+      "seriennummer": "Numéro de série",
+      "snAendern": "Modifier le numéro de série",
+      "aendern": "Modifier",
+      "erfassen": "Saisir",
+      "speichern": "Enregistrer",
+      "abbrechen": "Annuler"
     }
   },
   "unterschrift": {
