@@ -27,7 +27,7 @@ export async function ladeBestellung(id: string): Promise<{ bestellung: Bestellu
     db()
       .from('bestellpositionen')
       .select(
-        'id, bestellung_id, artikel_id, projekt_material_id, bezeichnung, artikelnummer, menge, einheit, ek_rappen, geliefert_menge, reihenfolge',
+        'id, bestellung_id, artikel_id, projekt_material_id, bezeichnung, artikelnummer, menge, einheit, ek_rappen, geliefert_menge, reihenfolge, ab_menge, ab_ek_rappen',
       )
       .eq('bestellung_id', id)
       .is('geloescht_am', null)
@@ -52,7 +52,16 @@ export async function bestellungAnlegen(e: {
 /** Liefertermin, Notiz oder (im Entwurf) Lieferant und Lieferziel ändern. */
 export async function bestellungAendern(
   id: string,
-  p: Partial<{ liefertermin: string | null; notiz: string | null; lieferant_id: string; lagerort_id: string | null }>,
+  p: Partial<{
+    liefertermin: string | null
+    notiz: string | null
+    lieferant_id: string
+    lagerort_id: string | null
+    tracking: string | null
+    lieferhinweis: string | null
+    kontakt_vor_ort: string | null
+    nachgefragt_am: string | null
+  }>,
 ): Promise<void> {
   const { error } = await db().from('bestellungen').update(p).eq('id', id)
   if (error) throw error
@@ -60,7 +69,7 @@ export async function bestellungAendern(
 
 /** Position anlegen oder ändern (nur im Entwurf). */
 export async function positionSpeichern(
-  p: Omit<Position, 'id' | 'geliefert_menge' | 'projekt_material_id'> & { id?: string },
+  p: Omit<Position, 'id' | 'geliefert_menge' | 'projekt_material_id' | 'ab_menge' | 'ab_ek_rappen'> & { id?: string },
 ): Promise<void> {
   const { id, ...felder } = p
   const { error } = id
@@ -97,8 +106,16 @@ export async function stornieren(id: string, grund: string): Promise<void> {
 }
 
 /** Wareneingang buchen; gibt den neuen Stand zurück (teilgeliefert oder geliefert). */
-export async function wareneingang(id: string, datum: string, positionen: { id: string; menge: number }[]) {
-  const { data, error } = await db().rpc('wareneingang_buchen', { p_id: id, p: { datum, positionen } })
+export async function wareneingang(
+  id: string,
+  datum: string,
+  positionen: { id: string; menge: number }[],
+  lieferschein?: string,
+) {
+  const { data, error } = await db().rpc('wareneingang_buchen', {
+    p_id: id,
+    p: { datum, positionen, ...(lieferschein ? { lieferschein } : {}) },
+  })
   if (error) throw error
   return data
 }
