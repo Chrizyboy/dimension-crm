@@ -12,7 +12,10 @@ import { NEU, type Entwurf } from '../lib/entwurf'
 import { AutomationEditor } from './AutomationEditor'
 import { AutomationsListe } from './AutomationsListe'
 import { Einstellungen } from './Einstellungen'
+import { Geplant } from './Geplant'
 import { Protokoll } from './Protokoll'
+import { Schutzregeln } from './Schutzregeln'
+import { Uebersicht } from './Uebersicht'
 
 interface Props {
   ansicht: Ansicht
@@ -23,7 +26,7 @@ interface Props {
 /**
  * Automationen (Phase 12): Abläufe «wenn … dann …», die der Server alle paar Minuten abarbeitet.
  * Was nach aussen geht, landet als Entwurf im Ausgangskorb, ausser eine Automation steht auf «automatisch».
- * #/automations?ansicht=protokoll&automation=…
+ * Start ist die Übersicht (Entscheid 0039). #/automations?ansicht=protokoll&automation=…
  */
 export default function Automationen({ ansicht, automationId, onAdresse }: Props) {
   const { t } = useTranslation()
@@ -64,10 +67,15 @@ export default function Automationen({ ansicht, automationId, onAdresse }: Props
         }}
       >
         <ReiterListe>
+          <ReiterKnopf value="uebersicht">{t('automationen.ansicht.uebersicht')}</ReiterKnopf>
           <ReiterKnopf value="liste">{t('automationen.ansicht.liste')}</ReiterKnopf>
+          <ReiterKnopf value="geplant">{t('automationen.ansicht.geplant')}</ReiterKnopf>
           <ReiterKnopf value="protokoll">{t('automationen.ansicht.protokoll')}</ReiterKnopf>
           <ReiterKnopf value="einstellungen">{t('automationen.ansicht.einstellungen')}</ReiterKnopf>
         </ReiterListe>
+        <ReiterInhalt value="uebersicht" className="pt-4">
+          {ansicht === 'uebersicht' && <Uebersicht onAdresse={onAdresse} />}
+        </ReiterInhalt>
         <ReiterInhalt value="liste" className="pt-4">
           {ansicht === 'liste' && (
             <AutomationsListe
@@ -80,6 +88,9 @@ export default function Automationen({ ansicht, automationId, onAdresse }: Props
             />
           )}
         </ReiterInhalt>
+        <ReiterInhalt value="geplant" className="pt-4">
+          {ansicht === 'geplant' && <Geplant />}
+        </ReiterInhalt>
         <ReiterInhalt value="protokoll" className="pt-4">
           {ansicht === 'protokoll' && (
             <Protokoll
@@ -91,7 +102,12 @@ export default function Automationen({ ansicht, automationId, onAdresse }: Props
           )}
         </ReiterInhalt>
         <ReiterInhalt value="einstellungen" className="pt-4">
-          {ansicht === 'einstellungen' && <Einstellungen />}
+          {ansicht === 'einstellungen' && (
+            <div className="flex flex-col gap-4">
+              <Schutzregeln />
+              <Einstellungen />
+            </div>
+          )}
         </ReiterInhalt>
       </Reiter>
       {bearbeiten && katalog.data && (

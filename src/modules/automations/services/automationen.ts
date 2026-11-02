@@ -100,11 +100,15 @@ export async function ladeEinstellungen(): Promise<AutomationsEinstellungen> {
   return data.wert as unknown as AutomationsEinstellungen
 }
 
-/** Einstellungen speichern (nur Administration, prüft RLS). */
-export async function speichereEinstellungen(e: AutomationsEinstellungen): Promise<void> {
+/**
+ * Einstellungen speichern (nur Administration, prüft RLS). Nur die übergebenen Teile ändern sich: zwei Formulare
+ * (Auslöser, Schutzregeln) teilen sich den Eintrag, keins soll die Änderung des anderen überschreiben.
+ */
+export async function speichereEinstellungen(e: Partial<AutomationsEinstellungen>): Promise<void> {
+  const jetzt = await ladeEinstellungen()
   const { error } = await db()
     .from('einstellungen')
-    .update({ wert: e as never })
+    .update({ wert: { ...jetzt, ...e } as never })
     .eq('schluessel', 'automationen')
   if (error) throw error
 }
