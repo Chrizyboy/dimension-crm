@@ -5484,13 +5484,16 @@
   },
   "handbuch": {
     "titel": "Handbuch",
-    "beschreibung": "Anleitung zu jedem Bereich, unsere Prozesse, Erklärvideos und deine Meldungen an die Administration.",
+    "beschreibung": "Wie alles funktioniert: ein Kapitel pro Bereich, Schritt für Schritt. Dazu unsere Prozesse, Videos und deine Meldungen.",
     "reiter": {
-      "anleitung": "Anleitung",
       "prozesse": "Prozesse",
       "videos": "Videos",
       "meldungen": "Meldungen",
-      "start": "Erste Schritte"
+      "start": "Erste Schritte",
+      "fuerdich": "Für dich",
+      "kapitel": "Kapitel",
+      "begriffe": "Begriffe A–Z",
+      "neu": "Neu"
     },
     "nichtsGefunden": "Nichts gefunden",
     "titelFeld": "Titel",
@@ -5622,14 +5625,13 @@
       "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
     "anleitung": {
-      "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
-      "suche": "In der Anleitung suchen",
       "schneller": "So geht es schneller",
       "tippSuche": "Bereich, Kontakt oder Aktion suchen",
       "tippSprung": "Springen, z. B. zu den Kunden",
       "tippNeu": "Neuer Eintrag in Listen",
       "tippFilter": "In Listen ins Suchfeld",
-      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)"
+      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)",
+      "tippHilfe": "Hilfe zum Bereich, in dem du gerade bist"
     },
     "fehler": {
       "titel": "Bitte einen Titel eintragen.",
@@ -5694,6 +5696,55 @@
           ]
         }
       ]
+    },
+    "bereichFeld": "Bereich",
+    "bereichHinweis": "Erscheint im Kapitel dieses Bereichs und in der Hilfe (F1).",
+    "keinBereich": "Kein Bereich (nur hier)",
+    "kapitel": {
+      "intro": "Zu jedem Bereich ein ganzes Kapitel: wofür, Schritt für Schritt, Stände, was automatisch läuft, Regeln und häufige Fragen.",
+      "alleBereiche": "Auch andere Bereiche zeigen",
+      "anleitungen_one": "{{count}} Anleitung",
+      "anleitungen_other": "{{count}} Anleitungen",
+      "stand": "Stand {{datum}}",
+      "inhalt": "Inhalt des Kapitels",
+      "alle": "Alle Kapitel",
+      "oeffnen": "{{bereich}} öffnen",
+      "drucken": "Drucken / PDF",
+      "melden": "Stimmt etwas nicht? Melden",
+      "fehlt": "Zu diesem Bereich gibt es noch kein Kapitel",
+      "fehltText": "Melde es, dann wird es ergänzt.",
+      "unterlagen": "Prozesse und Videos zu diesem Bereich",
+      "prozess": "Prozess · PDF · V{{version}}",
+      "video": "Video · {{dauer}}"
+    },
+    "fuerDich": {
+      "titel": "Dein Arbeitstag: {{rolle}}",
+      "rolle": "Rolle",
+      "neu": "Neu für dich",
+      "hilfeTitel": "Hilfe, wo du gerade bist",
+      "hilfeText1": "In jedem Bereich zeigt",
+      "hilfeText2": "oder das Fragezeichen oben rechts das passende Kapitel daneben, ohne die Arbeit zu verlassen."
+    },
+    "begriffe": {
+      "intro": "Was die Wörter im CRM bedeuten, von A bis Z.",
+      "suche": "Begriff suchen"
+    },
+    "neu": {
+      "leer": "Noch keine Neuigkeiten",
+      "ungesehenSr": "ungelesene Neuigkeiten:"
+    },
+    "suche": {
+      "feld": "Im Handbuch suchen",
+      "beispiel": "z. B. «Offerte senden», «Rabatt», «IBN»",
+      "kuerzel": "Im Handbuch suchen",
+      "anleitungen": "In den Kapiteln",
+      "mehr": "Begriffe, Prozesse und Videos",
+      "leerText": "Versuche ein anderes Wort oder melde, was fehlt."
+    },
+    "hilfe": {
+      "knopf": "Hilfe zu diesem Bereich (F1)",
+      "titel": "Hilfe · {{bereich}}",
+      "ganz": "Ganzes Kapitel"
     }
   },
   "update": {
