@@ -13,7 +13,8 @@ insert into public.kontakte (id, art, kontaktart, vorname, nachname) values
   ('00000000-0000-0000-0000-0000000030c1', 'person', 'privat', 'Lea', 'Beispiel');
 insert into public.objekte (kontakt_id, ort) values ('00000000-0000-0000-0000-0000000030c1', 'Riaz');
 
--- Vor dem Start (aktiv_seit 2.11.2026) bzw. aus: keine Ordner
+-- Aus: keine Ordner. Ausdrücklich ausschalten, weil die Ablage seit dem Start am 2.11.2026 ab Werk an ist.
+update public.einstellungen set wert = wert || '{"aktiv": false}'::jsonb where schluessel = 'ablage';
 insert into public.offerten (id, nummer, kontakt_id, sprache) values
   ('00000000-0000-0000-0000-0000000030d0', 'T30-0', '00000000-0000-0000-0000-0000000030c1', 'fr');
 select is((select count(*)::int from public.ablage_ordner), 0, 'Ablage aus: kein Ordner');
