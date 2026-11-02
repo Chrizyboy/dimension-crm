@@ -44,15 +44,15 @@ test('Automationen: Vorlagen, Reiter und Editor ohne Verstösse', async ({ page 
   await expect(
     page.getByTestId('automation').filter({ hasText: 'Neuer Lead: prüfen, zuteilen, Erstkontakt' }),
   ).toBeVisible()
-  expect(await page.getByTestId('automation').count()).toBeGreaterThanOrEqual(15)
-  await page.getByRole('searchbox', { name: 'Automation suchen' }).fill('Garantie')
+  expect(await page.getByTestId('automation').count()).toBeGreaterThanOrEqual(30)
+  await page.getByRole('searchbox', { name: 'Automation suchen' }).fill('Jahresgruss')
   await expect(page.getByTestId('automation')).toHaveCount(1)
   await page.getByRole('searchbox', { name: 'Automation suchen' }).fill('')
   expect(await verstoesse(page)).toEqual([])
 
   await page
     .getByTestId('automation')
-    .filter({ hasText: 'Gesuch eingereicht' })
+    .filter({ has: page.getByText('Gesuch eingereicht: Frist überwachen', { exact: true }) })
     .getByRole('button', { name: 'Bearbeiten' })
     .click()
   const editor = page.getByRole('dialog', { name: 'Gesuch eingereicht: Frist überwachen' })

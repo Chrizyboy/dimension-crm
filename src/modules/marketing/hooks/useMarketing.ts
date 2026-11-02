@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
+import { ladeBewertungsanfragen, ladeEmpfehlungen } from '../services/empfehlung'
 import { ladeKampagnen, ladeNewsletter, ladeVorlagen, ladeZielgruppe } from '../services/marketing'
 import { ladePosts, ladeReferenzanlagen, ladeVerbindungen, socialStatus } from '../services/social'
 
@@ -56,3 +57,14 @@ export function useMarketingNeuLaden() {
       qc.invalidateQueries({ queryKey: ['einstellungen', 'marketing'] }),
     ])
 }
+
+/** Bewertungsanfragen und Empfehlungen (Reiter «Empfehlungen»). */
+export const useEmpfehlungen = () =>
+  useQuery({
+    queryKey: ['marketing', 'empfehlungen'],
+    queryFn: async () => {
+      const [anfragen, empfehlungen] = await Promise.all([ladeBewertungsanfragen(), ladeEmpfehlungen()])
+      return { anfragen, empfehlungen }
+    },
+    enabled: supabase !== null,
+  })

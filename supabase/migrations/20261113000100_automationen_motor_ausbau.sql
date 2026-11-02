@@ -1,4 +1,4 @@
--- Automationen vollständig (Chris 2.11.2026, Entscheid 0041): der Motor kennt Versandfenster, Kontakt-Pause,
+-- Automationen vollständig (Chris 2.11.2026, Entscheid 0044): der Motor kennt Versandfenster, Kontakt-Pause,
 -- Wartezeiten in Arbeitstagen, einen «sonst»-Zweig beim Prüfen, Ersatz-Aufgabe ohne Mail-Adresse, die neuen Aktionen
 -- «Wiedervorlage» und «Notiz», von Hand gestoppte Läufe (mit Grund) und das Wiederholen eines einzelnen Schritts.
 -- Nur intern.automation_lauf_weiter wird neu gefasst; automation_aktion, _kontext, _katalog bleiben unberührt,

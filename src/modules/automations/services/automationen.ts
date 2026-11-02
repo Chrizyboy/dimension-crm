@@ -25,7 +25,7 @@ export async function ladeAutomationen(): Promise<Automation[]> {
   return data as unknown as Automation[]
 }
 
-/** Bausteine für den Editor: der Katalog und die Auslöser/Aktionen des Ausbaus (Entscheid 0041). */
+/** Bausteine für den Editor: der Katalog und die Auslöser/Aktionen des Ausbaus (Entscheid 0044). */
 export async function ladeKatalog(): Promise<Katalog> {
   const [grund, ausbau] = await Promise.all([db().rpc('automation_katalog'), db().rpc('automation_katalog_ausbau')])
   if (grund.error) throw grund.error

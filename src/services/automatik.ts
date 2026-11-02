@@ -6,7 +6,7 @@ import { melde } from './meldungen'
 import { supabase } from './supabase'
 
 /**
- * Was Automationen für einen Datensatz geplant haben, und die Knöpfe dazu (Entscheid 0041). Gemeinsamer Dienst,
+ * Was Automationen für einen Datensatz geplant haben, und die Knöpfe dazu (Entscheid 0044). Gemeinsamer Dienst,
  * weil Akten (Lead, Offerte, Projekt), Aufgaben und das Modul «Automationen» ihn brauchen. Rechte prüft die
  * Datenbank: stoppen und verschieben dürfen Administration, Geschäftsleitung und die zuständige Person.
  */

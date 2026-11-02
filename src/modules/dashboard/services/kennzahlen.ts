@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabase'
-import type { Betrieb, Fakt, PipelineZeile } from '../types'
+import type { Betrieb, Fakt, PipelineZeile, Ziele } from '../types'
 import { alleSeiten } from '@/services/seiten'
 
 /** Datenzugriff «Kennzahlen». Gezählt wird in der Datenbank-Sicht der Person (RLS), gerechnet in der App. */
@@ -37,6 +37,13 @@ export async function ladeQuellenKosten(): Promise<Record<string, number>> {
   if (error) throw error
   const wert = data?.wert as { quellen_kosten_rappen?: Record<string, number> } | null
   return wert?.quellen_kosten_rappen ?? {}
+}
+
+/** Einstellung «kennzahlen»: Ziele der Abwicklung. */
+export async function ladeZiele(): Promise<Ziele> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'kennzahlen').maybeSingle()
+  if (error) throw error
+  return (data?.wert as { ziele?: Ziele } | null)?.ziele ?? {}
 }
 
 /** Kosten pro Lead setzen; null entfernt sie. */

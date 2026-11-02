@@ -1,4 +1,4 @@
-# 0041 Automationen vollständig: Schutz für Kunden, Sicht für alle Rollen
+# 0044 Automationen vollständig: Schutz für Kunden, Sicht für alle Rollen
 
 Datum: 02.11.2026 · Entscheid von Chris (Pop-up-Karten im Thread «Automationen vollständig machen»)
 

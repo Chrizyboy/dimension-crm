@@ -139,7 +139,10 @@ export interface AutomationsEinstellungen {
   wartung_vorlauf_tage: number
   rechnung_karenz_tage: number
   termin_gehabt_tage: number
+  /** Google-Bewertung Deutschschweiz (und Rückfall). */
   bewertung_link: string
+  /** Google-Bewertung Romandie, für Kunden mit Sprache Französisch. */
+  bewertung_link_fr?: string
   versandfenster?: Versandfenster
   kontakt_pause_tage?: number
   lead_ohne_kontakt_tage?: number

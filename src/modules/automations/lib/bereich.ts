@@ -12,6 +12,10 @@ const VORSILBE: Record<string, Bereich> = {
   anlage: 'service',
   garantie: 'service',
   wartung: 'service',
+  service: 'service',
+  einsatz: 'projekte',
+  rapport: 'projekte',
+  bestellung: 'projekte',
   rechnung: 'finanzen',
   zeit: 'marketing',
 }

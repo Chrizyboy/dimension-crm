@@ -9,7 +9,7 @@
 - `automationen` (Regeln als Daten; 15 Vorlagen mit `vorlage`, eigene ohne), Papierkorb über `geloescht_am`.
 - `automation_laeufe` (nur lesen; `protokoll` als Liste von Schritten), `einstellungen.automationen`.
 - Funktionen: `automation_katalog()` + `automation_katalog_ausbau()` (Auslöser, Felder, Aktionen, Empfänger, Platzhalter), `automation_lauf_abbrechen`.
-- Entscheid 0041: `automation_uebersicht`, `automation_kennzahlen`, `automation_geplant`, `automation_probelauf`, `automation_aenderungen`, `automation_lauf_stoppen/fortsetzen/verschieben/jetzt`, `automation_schritt_wiederholen`. Schutzregeln (Versandfenster, Kontakt-Pause, Feiertage) in `einstellungen.automationen`, je Automation `versandfenster`/`kontakt_pause_tage`.
+- Entscheid 0044: `automation_uebersicht`, `automation_kennzahlen`, `automation_geplant`, `automation_probelauf`, `automation_aenderungen`, `automation_lauf_stoppen/fortsetzen/verschieben/jetzt`, `automation_schritt_wiederholen`. Schutzregeln (Versandfenster, Kontakt-Pause, Feiertage) in `einstellungen.automationen`, je Automation `versandfenster`/`kontakt_pause_tage`.
 - Der Motor selbst läuft in der Datenbank und im Zeitplan, nie in der App (siehe `docs/datenmodell.md`).
 
 ## Abhängigkeiten

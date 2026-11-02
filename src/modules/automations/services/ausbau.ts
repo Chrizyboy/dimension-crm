@@ -2,7 +2,7 @@ import { supabase } from '@/services/supabase'
 import type { Aenderung, Automation, Geplant, Kennzahl, Lauf, Probelauf, Uebersicht } from '../types'
 
 /**
- * Datenzugriff für Übersicht, Geplant, Probelauf und Änderungen (Entscheid 0041). Rechte prüft die Datenbank:
+ * Datenzugriff für Übersicht, Geplant, Probelauf und Änderungen (Entscheid 0044). Rechte prüft die Datenbank:
  * Übersicht, Kennzahlen, Probelauf nur Administration/GL; Läufe steuern auch die zuständige Person.
  */
 function db() {

@@ -10,6 +10,8 @@ describe('bereichVon', () => {
     expect(bereichVon('auftrag.erstellt')).toBe('projekte')
     expect(bereichVon('garantie.laeuft_ab')).toBe('service')
     expect(bereichVon('rechnung.bezahlt')).toBe('finanzen')
+    expect(bereichVon('service.neu')).toBe('service')
+    expect(bereichVon('bestellung.ueberfaellig')).toBe('projekte')
     expect(bereichVon('zeit.monatlich')).toBe('marketing')
     expect(bereichVon('unbekannt')).toBe('marketing')
   })
