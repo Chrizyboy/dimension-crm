@@ -1,5 +1,5 @@
--- Prüft «Finanzen vollständig» (Entscheid 0039): Gesellschaft und Prüfschritt neuer Lieferantenrechnungen,
--- Visum nur durch die Projektleitung des Projekts (ohne Recht finanzen), Freigabe der Buchhaltung, Zahllauf mit
+-- Prüft «Finanzen vollständig» (Entscheid 0040): Gesellschaft und Prüfschritt neuer Lieferantenrechnungen,
+-- «geprüft» (Visum der Eingangsrechnung) macht zahlbereit, Freigabe der Buchhaltung, Zahllauf mit
 -- zweiter Person, Kontoauszug ohne Doppelte und mit erkannter Zahlung, MWST-Schätzung, Marge, Monatsabschluss.
 -- Ausführen: npm run db:test
 begin;
@@ -22,42 +22,39 @@ insert into public.projekte (id, nummer, kontakt_id, status, standort_id, vertra
   ('00000000-0000-0000-0000-0000000039e1', '939001', '00000000-0000-0000-0000-0000000039c1', 'im_bau',
    (select id from public.standorte where kuerzel = 'muri'), 5405000, '00000000-0000-0000-0000-0000000039b3');
 
--- Neue Lieferantenrechnung wie aus dem AbaNinja-Abgleich: mit Projekt → Visum, Gesellschaft vom Projekt.
+-- Neue Lieferantenrechnung wie aus dem AbaNinja-Abgleich: wartet auf Freigabe, Gesellschaft vom Projekt.
 insert into public.kreditor_zahlungen (id, firma, text, betrag_rappen, faellig_am, status, quelle, projekt_id, offen_rappen, rechnung_am) values
   ('00000000-0000-0000-0000-0000000039d1', 'Krannich Solar AG', 'Module 939001', 1932000, current_date + 10, 'offen', 'abaninja',
    '00000000-0000-0000-0000-0000000039e1', 1932000, current_date),
-  ('00000000-0000-0000-0000-0000000039d2', 'Swisscom', 'Telefon', 68420, current_date + 5, 'offen', 'abaninja', null, 68420, current_date);
-select is((select pruefung from public.kreditor_zahlungen where id = '00000000-0000-0000-0000-0000000039d1'), 'visum',
-  'Rechnung mit Projekt wartet auf das Visum der Projektleitung');
+  ('00000000-0000-0000-0000-0000000039d2', 'Swisscom', 'Telefon', 68420, current_date + 5, 'offen', 'abaninja', null, 68420, current_date),
+  ('00000000-0000-0000-0000-0000000039d3', 'Elektro Huber', 'Kabel', 120000, current_date + 20, 'offen', 'abaninja', null, 120000, current_date);
+select is((select pruefung from public.kreditor_zahlungen where id = '00000000-0000-0000-0000-0000000039d1'), 'freigabe',
+  'neue Rechnung aus AbaNinja wartet auf die Freigabe');
 select is((select pruefung from public.kreditor_zahlungen where id = '00000000-0000-0000-0000-0000000039d2'), 'freigabe',
-  'Rechnung ohne Projekt geht direkt zur Buchhaltung');
+  'auch ohne Projekt zuerst zur Freigabe');
 select is((select firma_id from public.kreditor_zahlungen where id = '00000000-0000-0000-0000-0000000039d1'),
   (select firma_id from public.standorte where kuerzel = 'muri'), 'Gesellschaft aus dem Standort des Projekts');
-select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000039b3'), 1,
-  'Projektleitung bekommt eine Glocke');
+update public.kreditor_zahlungen set geprueft = true where id = '00000000-0000-0000-0000-0000000039d3';
+select is((select pruefung from public.kreditor_zahlungen where id = '00000000-0000-0000-0000-0000000039d3'), 'bereit',
+  'geprüft (Visum der Eingangsrechnung) macht zahlbereit');
 
 set local role authenticated;
 
--- Verkauf: sieht nichts und darf kein Visum geben.
+-- Verkauf: sieht nichts und darf nichts freigeben.
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a4", "role": "authenticated"}', true);
-select is((select count(*)::int from public.kreditor_visum_liste()), 0, 'Verkauf sieht keine Rechnungen zum Visum');
-select throws_ok($$ select public.kreditor_visum('00000000-0000-0000-0000-0000000039d1', true) $$,
-  'P0001', 'finanzen.kein_recht', 'Visum nur durch die Projektleitung des Projekts');
-
--- Projektleitung: sieht nur ihre Rechnung, Nein braucht einen Grund.
-select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a3", "role": "authenticated"}', true);
-select is((select array_agg(lieferant) from public.kreditor_visum_liste()), array['Krannich Solar AG'],
-  'Projektleitung sieht die Rechnung ihres Projekts');
 select is((select count(*)::int from public.kreditor_zahlungen), 0, 'ohne Recht finanzen keine Tabelle der Zahlungen');
-select throws_ok($$ select public.kreditor_visum('00000000-0000-0000-0000-0000000039d1', false, ' ') $$,
-  'P0001', 'finanzen.grund_fehlt', '«Stimmt nicht» braucht einen Grund');
-select lives_ok($$ select public.kreditor_visum('00000000-0000-0000-0000-0000000039d1', true, 'Menge stimmt') $$,
-  'Projektleitung gibt das Visum');
+select throws_ok($$ select public.kreditor_pruefung('00000000-0000-0000-0000-0000000039d1', 'bereit') $$,
+  'P0001', 'finanzen.kein_recht', 'Freigabe nur mit Recht finanzen');
+select is((select count(*)::int from public.zahllaeufe), 0, 'Verkauf sieht keine Zahlläufe');
+select is((select count(*)::int from public.finanz_konten), 0, 'Verkauf sieht keine Konten');
+select throws_ok($$ select public.kreditor_pruefung('00000000-0000-0000-0000-0000000039d1', 'visum') $$,
+  'P0001', 'finanzen.kein_recht', 'auch ein unbekannter Schritt scheitert ohne Recht');
+select is((select count(*)::int from public.mwst_abrechnungen), 0, 'Verkauf sieht keine MWST');
 
 -- Buchhaltung: freigeben, Zahllauf vorbereiten.
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a1", "role": "authenticated"}', true);
-select is((select pruefung || '|' || visum_notiz from public.kreditor_zahlungen where id = '00000000-0000-0000-0000-0000000039d1'),
-  'freigabe|Menge stimmt', 'nach dem Visum wartet die Rechnung auf die Buchhaltung');
+select throws_ok($$ select public.kreditor_pruefung('00000000-0000-0000-0000-0000000039d1', 'visum') $$,
+  'P0001', 'finanzen.schritt_falsch', 'Visum ist kein Schritt der Finanzen');
 select throws_ok($$ select public.zahllauf_anlegen((select id from public.firmen where kuerzel = 'gmbh'), null, current_date,
   array['00000000-0000-0000-0000-0000000039d1']::uuid[]) $$,
   'P0001', 'finanzen.zahllauf_ungueltig', 'nicht freigegebene Rechnung kommt in keinen Zahllauf');

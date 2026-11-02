@@ -11,12 +11,13 @@ import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { useAktion } from '../hooks/useAktion'
 import { useProjekte } from '../hooks/useFinanzen'
-import { pruefungSetzen, visumGeben } from '../services/ablaeufe'
+import { pruefungSetzen } from '../services/ablaeufe'
 import type { Finanzdaten, Pruefung, Zahlung } from '../types'
 
 /**
- * Akte einer Lieferantenrechnung als Seitenblatt: Angaben, Vergleich mit der Bestellung, Ablauf (Visum der
- * Projektleitung → Freigabe Buchhaltung → Zahllauf → bezahlt) und die Schritte, die gerade möglich sind.
+ * Akte einer Lieferantenrechnung als Seitenblatt: Angaben, Vergleich mit der Bestellung, Ablauf (geprüft bzw.
+ * Visum der Eingangsrechnung → Freigabe → Zahllauf → bezahlt) und die Schritte, die gerade möglich sind.
+ * Das Visum der Projektleitung läuft unter «Rechnungen › Eingangsrechnungen»; danach ist die Zahlung hier frei.
  */
 export function KreditorAkte({
   zahlung: z,
@@ -54,19 +55,13 @@ export function KreditorAkte({
   const ablauf: { fertig: boolean; aktiv: boolean; text: string }[] = [
     { fertig: true, aktiv: false, text: t(`finanzen.lief.quelle.${z.quelle === 'abaninja' ? 'abaninja' : 'hand'}`) },
     {
-      fertig: Boolean(z.visum_am),
-      aktiv: z.pruefung === 'visum',
-      text: z.visum_am
-        ? t('finanzen.lief.visumVon', { person: person(z.visum_von), datum: formatDatum(z.visum_am.slice(0, 10)) })
-        : z.projekt_id
-          ? t('finanzen.lief.visumOffen')
-          : t('finanzen.lief.visumOhneProjekt'),
-    },
-    {
       fertig: z.pruefung === 'bereit' || z.status === 'bezahlt',
       aktiv: z.pruefung === 'freigabe',
       text: z.freigabe_am
-        ? t('finanzen.lief.freigabeVon', { person: person(z.freigabe_von), datum: formatDatum(z.freigabe_am.slice(0, 10)) })
+        ? t('finanzen.lief.freigabeVon', {
+            person: person(z.freigabe_von),
+            datum: formatDatum(z.freigabe_am.slice(0, 10)),
+          })
         : t('finanzen.lief.freigabeOffen'),
     },
     {
@@ -83,7 +78,12 @@ export function KreditorAkte({
   const offen = z.status === 'offen' && !z.zahllauf_id
 
   return (
-    <Dialog open onOpenChange={(o) => !o && onSchliessen()}>
+    <Dialog
+      open
+      onOpenChange={(o) => {
+        if (!o) onSchliessen()
+      }}
+    >
       <DialogInhalt
         art="seite"
         titel={z.firma ?? '–'}
@@ -95,12 +95,16 @@ export function KreditorAkte({
           <div className="flex flex-wrap gap-1.5 py-2">
             {z.pruefung && <Badge ton="info">{t(`finanzen.pruefung.${z.pruefung}`)}</Badge>}
             {z.status === 'bezahlt' && <Badge ton="ok">{t('finanzen.bezahlt')}</Badge>}
-            {z.prioritaet && z.prioritaet !== 'normal' && <Badge ton="kritisch">{t(`finanzen.prio.${z.prioritaet}`)}</Badge>}
+            {z.prioritaet && z.prioritaet !== 'normal' && (
+              <Badge ton="kritisch">{t(`finanzen.prio.${z.prioritaet}`)}</Badge>
+            )}
           </div>
           <AkteAbschnitt titel={t('finanzen.lief.angaben')}>
             <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
               <Angabe label={t('finanzen.lief.betrag')}>{formatChf(betrag, { mitWaehrung: true })}</Angabe>
-              <Angabe label={t('finanzen.lief.offen')}>{formatChf(z.offen_rappen ?? betrag, { mitWaehrung: true })}</Angabe>
+              <Angabe label={t('finanzen.lief.offen')}>
+                {formatChf(z.offen_rappen ?? betrag, { mitWaehrung: true })}
+              </Angabe>
               <Angabe label={t('finanzen.faelligAm')}>{z.faellig_am ? formatDatum(z.faellig_am) : '–'}</Angabe>
               <Angabe label={t('finanzen.lief.skonto')}>
                 {z.skonto_prozent
@@ -129,7 +133,8 @@ export function KreditorAkte({
                   nummer: bestellung.nummer,
                   bestellt: formatChf(Math.round((bestellung.total_rappen ?? 0) * (1 + mwst / 100))),
                   rechnung: formatChf(betrag),
-                  abweichung: abweichung === null ? '–' : `${abweichung >= 0 ? '+' : '−'}${formatChf(Math.abs(abweichung))}`,
+                  abweichung:
+                    abweichung === null ? '–' : `${abweichung >= 0 ? '+' : '−'}${formatChf(Math.abs(abweichung))}`,
                 })}
               </p>
             </AkteAbschnitt>
@@ -150,7 +155,6 @@ export function KreditorAkte({
                 </li>
               ))}
             </ol>
-            {z.visum_notiz && <p className="text-muted-foreground mt-2 text-sm">«{z.visum_notiz}»</p>}
             {z.notiz && <p className="text-muted-foreground mt-2 text-sm whitespace-pre-line">{z.notiz}</p>}
           </AkteAbschnitt>
           {frage && (
@@ -165,10 +169,23 @@ export function KreditorAkte({
                 }}
               />
               <div className="flex gap-2">
-                <Button size="sm" laedt={laeuft} disabled={!grund.trim()} onClick={() => schritt(frage, grund)}>
+                <Button
+                  size="sm"
+                  laedt={laeuft}
+                  disabled={!grund.trim()}
+                  onClick={() => {
+                    schritt(frage, grund)
+                  }}
+                >
                   {t(`finanzen.lief.knopf.${frage}`)}
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => setFrage(null)}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    setFrage(null)
+                  }}
+                >
                   <X />
                   {t('allgemein.abbrechen')}
                 </Button>
@@ -176,37 +193,42 @@ export function KreditorAkte({
             </div>
           )}
           <div className="flex flex-wrap gap-2 py-4">
-            {offen && z.pruefung === 'visum' && (
+            {offen && z.pruefung === 'freigabe' && (
               <Button
                 laedt={laeuft}
-                onClick={() => void aus(() => visumGeben(z.id, true, null), { de: 'Visum gegeben', fr: 'Visé' })}
+                onClick={() => {
+                  schritt('bereit')
+                }}
               >
-                {t('finanzen.lief.knopf.visumSelbst')}
-              </Button>
-            )}
-            {offen && z.pruefung === 'freigabe' && (
-              <Button laedt={laeuft} onClick={() => schritt('bereit')}>
                 {t('finanzen.lief.knopf.freigeben')}
               </Button>
             )}
             {offen && (z.pruefung === 'klaeren' || z.pruefung === 'zurueckgehalten') && (
-              <>
-                <Button laedt={laeuft} onClick={() => schritt('bereit')}>
-                  {t('finanzen.lief.knopf.freigeben')}
-                </Button>
-                {z.projekt_id && (
-                  <Button variant="secondary" laedt={laeuft} onClick={() => schritt('visum')}>
-                    {t('finanzen.lief.knopf.zumVisum')}
-                  </Button>
-                )}
-              </>
+              <Button
+                laedt={laeuft}
+                onClick={() => {
+                  schritt('bereit')
+                }}
+              >
+                {t('finanzen.lief.knopf.freigeben')}
+              </Button>
             )}
             {offen && z.pruefung !== 'klaeren' && z.pruefung !== 'zurueckgehalten' && (
               <>
-                <Button variant="secondary" onClick={() => setFrage('klaeren')}>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setFrage('klaeren')
+                  }}
+                >
                   {t('finanzen.lief.knopf.klaeren')}
                 </Button>
-                <Button variant="secondary" onClick={() => setFrage('zurueckgehalten')}>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setFrage('zurueckgehalten')
+                  }}
+                >
                   {t('finanzen.lief.knopf.zurueckgehalten')}
                 </Button>
               </>

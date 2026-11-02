@@ -27,7 +27,19 @@ const daten = (x: Partial<Finanzdaten>): Finanzdaten =>
   ({
     zahlungen: [],
     zahllaeufe: [],
-    konten: [{ id: 'k', firma_id: F, name: 'UBS', iban: null, stand_rappen: 1, stand_am: HEUTE, reihenfolge: 0, aktiv: true, notiz: null }],
+    konten: [
+      {
+        id: 'k',
+        firma_id: F,
+        name: 'UBS',
+        iban: null,
+        stand_rappen: 1,
+        stand_am: HEUTE,
+        reihenfolge: 0,
+        aktiv: true,
+        notiz: null,
+      },
+    ],
     mwst: [],
     firmen: [{ id: F, kuerzel: 'gmbh', name: 'Muri GmbH' }],
     ...x,
@@ -38,7 +50,19 @@ describe('Heute zu tun', () => {
     const l = heuteZuTun(
       daten({
         zahlungen: [z({ skonto_bis: '2026-11-03', skonto_rappen: 2000 }), z({ pruefung: 'freigabe' })],
-        konten: [{ id: 'k', firma_id: F, name: 'BCF', iban: null, stand_rappen: 1, stand_am: '2026-10-20', reihenfolge: 0, aktiv: true, notiz: null }],
+        konten: [
+          {
+            id: 'k',
+            firma_id: F,
+            name: 'BCF',
+            iban: null,
+            stand_rappen: 1,
+            stand_am: '2026-10-20',
+            reihenfolge: 0,
+            aktiv: true,
+            notiz: null,
+          },
+        ],
       }),
       HEUTE,
       null,
@@ -50,12 +74,27 @@ describe('Heute zu tun', () => {
   it('Zahllauf: wer vorbereitet hat, wartet; die anderen geben frei', () => {
     const d = daten({
       zahllaeufe: [
-        { id: 'zl', firma_id: F, konto_id: null, ausfuehren_am: '2026-11-06', status: 'zur_freigabe', vorbereitet_von: 'erich', freigegeben_von: null, freigegeben_am: null, erledigt_am: null, erstellt_am: HEUTE, notiz: null },
+        {
+          id: 'zl',
+          firma_id: F,
+          konto_id: null,
+          ausfuehren_am: '2026-11-06',
+          status: 'zur_freigabe',
+          vorbereitet_von: 'erich',
+          freigegeben_von: null,
+          freigegeben_am: null,
+          erledigt_am: null,
+          erstellt_am: HEUTE,
+          notiz: null,
+        },
       ],
       zahlungen: [z({ zahllauf_id: 'zl' })],
     })
     expect(heuteZuTun(d, HEUTE, 'erich')[0]?.schluessel).toBe('zahllaufWartet')
-    expect(heuteZuTun(d, HEUTE, 'chris')[0]).toMatchObject({ schluessel: 'zahllaufFreigeben', werte: { count: 1, betrag: 100_000 } })
+    expect(heuteZuTun(d, HEUTE, 'chris')[0]).toMatchObject({
+      schluessel: 'zahllaufFreigeben',
+      werte: { count: 1, betrag: 100_000 },
+    })
   })
 })
 
@@ -82,7 +121,10 @@ describe('Kundenrechnungen nach Alter', () => {
   it('teilt nach Tagen über der Fälligkeit', () => {
     const r = (faellig_am: string | null, offen_rappen: number) =>
       ({ id: faellig_am ?? 'x', faellig_am, offen_rappen }) as Finanzdaten['rechnungen'][number]
-    const s = nachAlter([r(null, 1), r('2026-11-10', 2), r('2026-10-20', 4), r('2026-09-20', 8), r('2026-08-01', 16)], HEUTE)
+    const s = nachAlter(
+      [r(null, 1), r('2026-11-10', 2), r('2026-10-20', 4), r('2026-09-20', 8), r('2026-08-01', 16)],
+      HEUTE,
+    )
     expect(s.map((x) => x.rappen)).toEqual([3, 4, 8, 16])
   })
 })

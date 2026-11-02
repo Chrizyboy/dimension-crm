@@ -14,7 +14,7 @@ import { BewegungZeile, type BewegungAktion } from './BewegungZeile'
 const datumVon = (z: Zahlung) => z.geplant_am ?? z.faellig_am
 
 /**
- * Lieferantenrechnungen und Zahlungen (V233 «Zahlungen», Entscheid 0039): Prüfschritt (Visum, Freigabe,
+ * Lieferantenrechnungen und Zahlungen (V233 «Zahlungen», Entscheid 0040): Prüfschritt (Freigabe,
  * zahlbereit, zu klären) als Filter, Klick auf den Namen öffnet die Akte. Zahlungen (V233): offene nach Dringlichkeit gruppiert (überfällig, diese Woche, nächste Woche, später,
  * ohne Datum), innerhalb nach Betreibung → Mahnung → wichtig, dann Datum. Filter nach Kategorie, «ungeprüft»
  * (aus Excel übernommen) und Suche; bezahlte darunter.
@@ -122,16 +122,17 @@ export function Zahlungen({
       <Filterchips
         einzeln
         beschriftung={t('finanzen.lief.schritt')}
-        optionen={(['alle', 'visum', 'freigabe', 'bereit', 'zahllauf', 'klaeren', 'zurueckgehalten'] as const).map((w) => ({
-          wert: w,
-          text: w === 'alle' ? t('finanzen.alle') : w === 'zahllauf' ? t('finanzen.zl.imZahllauf') : t(`finanzen.pruefung.${w}`),
-          anzahl:
-            w === 'alle'
-              ? undefined
-              : daten.zahlungen.filter(
+        optionen={(['alle', 'freigabe', 'bereit', 'zahllauf', 'klaeren', 'zurueckgehalten'] as const).map((w) =>
+          w === 'alle'
+            ? { wert: w, text: t('finanzen.alle') }
+            : {
+                wert: w,
+                text: w === 'zahllauf' ? t('finanzen.zl.imZahllauf') : t(`finanzen.pruefung.${w}`),
+                anzahl: daten.zahlungen.filter(
                   (z) => z.status === 'offen' && (w === 'zahllauf' ? Boolean(z.zahllauf_id) : z.pruefung === w),
                 ).length,
-        }))}
+              },
+        )}
         gewaehlt={[schritt]}
         onChange={([k]) => {
           if (k) setSchritt(k)

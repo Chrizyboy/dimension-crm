@@ -47,7 +47,9 @@ export function Zahllauf({ daten, onNeu }: { daten: Finanzdaten; onNeu: () => vo
             <span className="text-muted-foreground text-xs">
               {[
                 konto,
-                t('finanzen.zl.vorbereitet', { person: z.vorbereitet_von ? (daten.personen[z.vorbereitet_von] ?? '–') : '–' }),
+                t('finanzen.zl.vorbereitet', {
+                  person: z.vorbereitet_von ? (daten.personen[z.vorbereitet_von] ?? '–') : '–',
+                }),
                 z.freigegeben_von
                   ? t('finanzen.zl.freigegebenVon', { person: daten.personen[z.freigegeben_von] ?? '–' })
                   : null,
@@ -79,17 +81,30 @@ export function Zahllauf({ daten, onNeu }: { daten: Finanzdaten; onNeu: () => vo
                 laedt={laeuft}
                 disabled={z.vorbereitet_von === ich?.id}
                 title={z.vorbereitet_von === ich?.id ? t('finanzen.zl.vierAugen') : undefined}
-                onClick={() => schritt(z, 'freigeben')}
+                onClick={() => {
+                  schritt(z, 'freigeben')
+                }}
               >
                 {t('finanzen.zl.freigeben')}
               </Button>
             )}
             {z.status === 'freigegeben' && (
-              <Button laedt={laeuft} onClick={() => schritt(z, 'erledigt')}>
+              <Button
+                laedt={laeuft}
+                onClick={() => {
+                  schritt(z, 'erledigt')
+                }}
+              >
                 {t('finanzen.zl.ausgefuehrt')}
               </Button>
             )}
-            <Button variant="secondary" laedt={laeuft} onClick={() => schritt(z, 'verwerfen')}>
+            <Button
+              variant="secondary"
+              laedt={laeuft}
+              onClick={() => {
+                schritt(z, 'verwerfen')
+              }}
+            >
               {t('finanzen.zl.verwerfen')}
             </Button>
           </div>
@@ -117,7 +132,9 @@ export function Zahllauf({ daten, onNeu }: { daten: Finanzdaten; onNeu: () => vo
       )}
       {alt.length > 0 && (
         <details className="bg-surface rounded-lg border px-4 py-2">
-          <summary className="cursor-pointer text-sm font-medium">{t('finanzen.zl.erledigte', { count: alt.length })}</summary>
+          <summary className="cursor-pointer text-sm font-medium">
+            {t('finanzen.zl.erledigte', { count: alt.length })}
+          </summary>
           <ul className="divide-y text-sm">
             {alt.map((z) => (
               <li key={z.id} className="flex justify-between gap-2 py-1.5">

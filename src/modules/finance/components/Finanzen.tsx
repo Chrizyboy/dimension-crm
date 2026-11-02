@@ -1,6 +1,7 @@
 import { Eye, EyeOff, Landmark } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
@@ -8,27 +9,29 @@ import { Skelett } from '@/components/ui/diverses'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useFinanzen } from '../hooks/useFinanzen'
-import { REITER, type Reiter as ReiterTyp } from '../types'
-import { Bank } from './Bank'
+import { fuerFirma, reserveFuer } from '../lib/firma'
+import { REITER, type Bewegung, type Reiter as ReiterTyp } from '../types'
+import { Abschluss } from './Abschluss'
 import type { BewegungAktion } from './BewegungZeile'
-import { Eingaenge } from './Eingaenge'
+import { Cockpit } from './Cockpit'
 import { Fenster, type FinanzFenster } from './Fenster'
-import { Fixkosten } from './Fixkosten'
-import { Material } from './Material'
-import { Nachkalkulation } from './Nachkalkulation'
-import { Uebersicht } from './Uebersicht'
+import { Liquiditaet } from './Liquiditaet'
+import { Marge } from './Marge'
+import { Zahllauf } from './Zahllauf'
 import { Zahlungen } from './Zahlungen'
-import type { Bewegung } from '../types'
 
 /**
- * Finanzen (nur mit Recht «finanzen»): Liquidität Woche für Woche, Zahlungen mit Dringlichkeit, Material je
- * Baustelle, Fixkosten, erwartete Eingänge, Kontostand und Nachkalkulation. #/finance?reiter=…
+ * Finanzen für Geschäftsleitung und Buchhaltung (nur mit Recht «finanzen», Entscheid 0040): Cockpit,
+ * Lieferantenrechnungen mit Freigabe, Zahllauf mit zweiter Person, Liquidität, Projekte & Marge sowie
+ * Konten, MWST und Monatsabschluss. Oben die Wahl der Gesellschaft (Muri GmbH, Bulle Sàrl oder beide).
+ * #/finance?reiter=…
  */
 export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onReiter: (r: ReiterTyp) => void }) {
   const { t } = useTranslation()
   const daten = useFinanzen()
   const [fenster, setFenster] = useState<FinanzFenster>(null)
   const [lohnZeigen, setLohnZeigen] = useState(false)
+  const [firma, setFirma] = useState<string | null>(null)
 
   if (!supabase) {
     return (
@@ -38,9 +41,16 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
     )
   }
   const aktion = (b: Bewegung, a: BewegungAktion) => {
+    if (b.quelle === 'mwst') {
+      const [f, p] = b.id.split('|')
+      if (f && p) setFenster({ art: 'mwst', firma: f, periode: p })
+      return
+    }
     setFenster({ art: 'aktion', b, a })
   }
-  const d = daten.data
+  const alle = daten.data
+  const d = alle ? fuerFirma(alle, firma) : undefined
+  const reserve = alle ? reserveFuer(alle, firma) : 0
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
@@ -59,6 +69,20 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
           </Button>
         }
       />
+      {alle && alle.firmen.length > 1 && (
+        <Filterchips
+          einzeln
+          beschriftung={t('finanzen.gesellschaft')}
+          optionen={[
+            { wert: 'beide', text: t('finanzen.firmaWahl.beide') },
+            ...alle.firmen.map((f) => ({ wert: f.id, text: f.name })),
+          ]}
+          gewaehlt={[firma ?? 'beide']}
+          onChange={([f]) => {
+            if (f) setFirma(f === 'beide' ? null : f)
+          }}
+        />
+      )}
       <Reiter
         value={reiter}
         onValueChange={(r) => {
@@ -74,14 +98,14 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
         </ReiterListe>
         {daten.error ? (
           <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} className="mt-4" />
-        ) : !d ? (
+        ) : !d || !alle ? (
           <Skelett className="mt-4 h-96" />
         ) : (
           <>
-            <ReiterInhalt value="uebersicht" className="pt-4">
-              <Uebersicht daten={d} lohnZeigen={lohnZeigen} onAktion={aktion} onReiter={onReiter} />
+            <ReiterInhalt value="cockpit" className="pt-4">
+              <Cockpit daten={d} reserve={reserve} onReiter={onReiter} />
             </ReiterInhalt>
-            <ReiterInhalt value="zahlungen" className="pt-4">
+            <ReiterInhalt value="lieferanten" className="pt-4">
               <Zahlungen
                 daten={d}
                 lohnZeigen={lohnZeigen}
@@ -90,45 +114,37 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
                   setFenster({ art: 'zahlung', id: null })
                 }}
                 onZahllauf={() => {
-                  setFenster({ art: 'zahllauf' })
+                  setFenster({ art: 'zahllauf', firma })
                 }}
               />
             </ReiterInhalt>
-            <ReiterInhalt value="material" className="pt-4">
-              <Material
+            <ReiterInhalt value="zahllauf" className="pt-4">
+              <Zahllauf
                 daten={d}
-                onBearbeiten={(m) => {
-                  setFenster({ art: 'material', id: m?.id ?? null })
-                }}
-              />
-            </ReiterInhalt>
-            <ReiterInhalt value="fixkosten" className="pt-4">
-              <Fixkosten
-                daten={d}
-                lohnZeigen={lohnZeigen}
-                onBearbeiten={(f) => {
-                  setFenster({ art: 'fix', id: f?.id ?? null })
-                }}
-              />
-            </ReiterInhalt>
-            <ReiterInhalt value="eingaenge" className="pt-4">
-              <Eingaenge
-                daten={d}
-                onAktion={aktion}
                 onNeu={() => {
-                  setFenster({ art: 'eingang', id: null })
+                  setFenster({ art: 'zahllauf', firma })
                 }}
               />
             </ReiterInhalt>
-            <ReiterInhalt value="bank" className="pt-4">
-              <Bank daten={d} />
+            <ReiterInhalt value="liquiditaet" className="pt-4">
+              <Liquiditaet
+                daten={d}
+                reserve={reserve}
+                lohnZeigen={lohnZeigen}
+                onAktion={aktion}
+                onFenster={setFenster}
+              />
             </ReiterInhalt>
-            <ReiterInhalt value="nachkalkulation" className="pt-4">
-              <Nachkalkulation daten={d} />
+            <ReiterInhalt value="marge" className="pt-4">
+              <Marge daten={d} firmaId={firma} />
             </ReiterInhalt>
+            <ReiterInhalt value="abschluss" className="pt-4">
+              <Abschluss daten={d} onFenster={setFenster} />
+            </ReiterInhalt>
+            {/* Dialoge sehen immer alle Daten, damit eine Änderung der Gesellschaft im Formular möglich bleibt. */}
             <Fenster
               fenster={fenster}
-              daten={d}
+              daten={alle}
               onSchliessen={() => {
                 setFenster(null)
               }}

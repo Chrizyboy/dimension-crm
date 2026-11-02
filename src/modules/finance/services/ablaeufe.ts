@@ -3,7 +3,7 @@ import type { CamtBuchung } from '../lib/camt'
 import type { Pruefung } from '../types'
 
 /**
- * Abläufe der Finanzen, deren Regeln in der Datenbank liegen (Entscheid 0039): Visum und Freigabe der
+ * Abläufe der Finanzen, deren Regeln in der Datenbank liegen (Entscheid 0040): Freigabe der
  * Lieferantenrechnungen, Zahllauf mit zweiter Person, Kontoauszug, MWST, Marge, Monatsabschluss.
  */
 function db() {
@@ -11,38 +11,13 @@ function db() {
   return supabase
 }
 
-/** Rechnung, die auf mein Visum wartet (Projektleitung, ohne Finanzzahlen). */
-export interface VisumRechnung {
-  id: string
-  lieferant: string
-  rechnung_nr: string | null
-  rechnung_am: string | null
-  betrag_rappen: number | null
-  faellig_am: string | null
-  text: string | null
-  projekt_id: string
-  projekt_nummer: string
-  projekt_titel: string | null
-  bestellung_nummer: string | null
-  bestellung_rappen: number | null
-}
-
-/** Rechnungen meiner Projekte, die auf das Visum warten. */
-export async function ladeVisum(): Promise<VisumRechnung[]> {
-  const { data, error } = await db().rpc('kreditor_visum_liste')
-  if (error) throw error
-  return data as VisumRechnung[]
-}
-
-/** Visum: stimmt oder stimmt nicht (dann mit Grund). */
-export async function visumGeben(id: string, ok: boolean, notiz: string | null): Promise<void> {
-  const { error } = await db().rpc('kreditor_visum', { p_id: id, p_ok: ok, p_notiz: notiz ?? undefined })
-  if (error) throw error
-}
-
-/** Prüfschritt setzen (Buchhaltung): freigeben, zurückhalten, zu klären, zurück zum Visum. */
+/** Prüfschritt setzen (Buchhaltung): freigeben, zurückhalten, zu klären, wieder zur Freigabe. */
 export async function pruefungSetzen(id: string, schritt: Pruefung, notiz?: string): Promise<void> {
-  const { error } = await db().rpc('kreditor_pruefung', { p_id: id, p_schritt: schritt, p_notiz: notiz })
+  const { error } = await db().rpc('kreditor_pruefung', {
+    p_id: id,
+    p_schritt: schritt,
+    ...(notiz ? { p_notiz: notiz } : {}),
+  })
   if (error) throw error
 }
 
@@ -56,10 +31,11 @@ export async function zahllaufAnlegen(p: {
 }): Promise<string> {
   const { data, error } = await db().rpc('zahllauf_anlegen', {
     p_firma: p.firma,
-    p_konto: p.konto ?? undefined,
     p_datum: p.datum,
     p_ids: p.ids,
-    p_notiz: p.notiz,
+    // Ohne Konto ist erlaubt (null); die erzeugten Typen kennen das nicht.
+    p_konto: p.konto as string,
+    ...(p.notiz ? { p_notiz: p.notiz } : {}),
   })
   if (error) throw error
   return data
@@ -67,9 +43,9 @@ export async function zahllaufAnlegen(p: {
 
 /** Zahllauf freigeben, verwerfen oder als ausgeführt melden. */
 export async function zahllaufSchritt(id: string, schritt: 'freigeben' | 'verwerfen' | 'erledigt'): Promise<void> {
-  const fn = ({ freigeben: 'zahllauf_freigeben', verwerfen: 'zahllauf_verwerfen', erledigt: 'zahllauf_erledigt' } as const)[
-    schritt
-  ]
+  const fn = (
+    { freigeben: 'zahllauf_freigeben', verwerfen: 'zahllauf_verwerfen', erledigt: 'zahllauf_erledigt' } as const
+  )[schritt]
   const { error } = await db().rpc(fn, { p_id: id })
   if (error) throw error
 }
@@ -101,9 +77,10 @@ export async function auszugEinlesen(
 ): Promise<{ neu: number; bezahlt: number }> {
   const { data, error } = await db().rpc('kontoauszug_einlesen', {
     p_konto: konto,
-    p_stand_rappen: stand_rappen ?? undefined,
-    p_stand_am: stand_am ?? undefined,
     p_buchungen: buchungen as never,
+    // Auszug ohne Schlusssaldo: null lässt den Stand des Kontos, wie er ist.
+    p_stand_rappen: stand_rappen as number,
+    p_stand_am: stand_am as string,
   })
   if (error) throw error
   return data as { neu: number; bezahlt: number }

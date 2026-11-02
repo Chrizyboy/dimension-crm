@@ -14,14 +14,15 @@ const offenBetrag = (z: Zahlung) => z.offen_rappen ?? z.betrag_rappen ?? 0
 
 /**
  * Was Buchhaltung und Geschäftsleitung heute erledigen sollten, das Dringendste zuerst: Skonto läuft ab, Betreibung
- * droht, Freigaben, Zahllauf wartet, Visum zu lange offen, Kontostand alt, MWST fällig, Posten ohne Gesellschaft.
+ * droht, Freigaben, Zahllauf wartet, Kontostand alt, MWST fällig, Posten ohne Gesellschaft.
  */
 export function heuteZuTun(d: Finanzdaten, heute: string, ichId: string | null): ZuTun[] {
   const liste: ZuTun[] = []
   const offen = d.zahlungen.filter((z) => z.status === 'offen')
 
   const skonto = offen.filter(
-    (z) => z.skonto_bis && z.skonto_rappen && z.skonto_bis >= heute && z.skonto_bis <= plusTage(heute, 2) && !z.zahllauf_id,
+    (z) =>
+      z.skonto_bis && z.skonto_rappen && z.skonto_bis >= heute && z.skonto_bis <= plusTage(heute, 2) && !z.zahllauf_id,
   )
   if (skonto.length)
     liste.push({
@@ -62,14 +63,15 @@ export function heuteZuTun(d: Finanzdaten, heute: string, ichId: string | null):
   }
   const freigegeben = d.zahllaeufe.filter((x) => x.status === 'freigegeben' && x.ausfuehren_am <= heute)
   if (freigegeben.length)
-    liste.push({ schluessel: 'zahllaufAusfuehren', werte: { count: freigegeben.length }, ton: 'warnung', reiter: 'zahllauf' })
-  const visumAlt = offen.filter(
-    (z) => z.pruefung === 'visum' && Boolean(z.erstellt_am) && (z.erstellt_am ?? '').slice(0, 10) < plusTage(heute, -5),
-  )
-  if (visumAlt.length)
-    liste.push({ schluessel: 'visumAlt', werte: { count: visumAlt.length }, ton: 'warnung', reiter: 'lieferanten' })
+    liste.push({
+      schluessel: 'zahllaufAusfuehren',
+      werte: { count: freigegeben.length },
+      ton: 'warnung',
+      reiter: 'zahllauf',
+    })
   const klaeren = offen.filter((z) => z.pruefung === 'klaeren')
-  if (klaeren.length) liste.push({ schluessel: 'klaeren', werte: { count: klaeren.length }, ton: 'warnung', reiter: 'lieferanten' })
+  if (klaeren.length)
+    liste.push({ schluessel: 'klaeren', werte: { count: klaeren.length }, ton: 'warnung', reiter: 'lieferanten' })
   for (const k of d.konten.filter((x) => x.aktiv)) {
     if (!k.stand_am || k.stand_am < plusTage(heute, -4))
       liste.push({

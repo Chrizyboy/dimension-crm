@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeAbschluss, ladeBuchungen, ladeMarge, ladeVisum } from '../services/ablaeufe'
+import { ladeAbschluss, ladeBuchungen, ladeMarge } from '../services/ablaeufe'
 import { ladeFinanzen, ladeNachkalkulation, ladeProjekte } from '../services/finanzen'
 
 const an = supabase !== null
@@ -26,10 +26,6 @@ export function useNeuLaden() {
   const qc = useQueryClient()
   return () => qc.invalidateQueries({ queryKey: ['finanzen'] })
 }
-
-/** Rechnungen, die auf mein Visum warten (Projektleitung; leer für alle anderen). */
-export const useVisum = () =>
-  useQuery({ queryKey: ['finanzen', 'visum'], enabled: an, staleTime: 60_000, queryFn: ladeVisum })
 
 /** Marge aller Projekte. */
 export const useMarge = (aktiv = true) =>

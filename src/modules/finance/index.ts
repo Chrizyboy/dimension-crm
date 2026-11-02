@@ -10,8 +10,8 @@ export const meta: ModulMeta = {
   id: 'finance',
   titel: { de: 'Finanzen', fr: 'Finances' },
   untertitel: {
-    de: 'Liquidität Woche für Woche, Zahlungen, Fixkosten und Nachkalkulation',
-    fr: 'Liquidités semaine par semaine, paiements, frais fixes et post-calcul',
+    de: 'Cockpit, Lieferantenrechnungen, Zahllauf, Liquidität, Marge, MWST und Monatsabschluss',
+    fr: 'Cockpit, factures fournisseurs, ordre de paiement, liquidités, marge, TVA et clôture mensuelle',
   },
   pfad: '/finance',
   icon: 'landmark',
@@ -26,5 +26,5 @@ export const Finanzen = lazy(() => import('./components/Finanzen'))
 /** Karte für die Startseite: Kontostand, tiefster Stand, diese Woche fällig. */
 export const FinanzenHeute = lazy(() => import('./components/HeuteKarte'))
 
-export { REITER } from './types'
+export { ALTE_REITER, REITER } from './types'
 export type * from './types'

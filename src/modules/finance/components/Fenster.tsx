@@ -72,9 +72,7 @@ export function Fenster({
   }
   if (fenster.art === 'akte') {
     const z = finde(daten.zahlungen, fenster.id)
-    return z ? (
-      <AkteMitBearbeiten zahlung={z} daten={daten} onSchliessen={onSchliessen} />
-    ) : null
+    return z ? <AkteMitBearbeiten zahlung={z} daten={daten} onSchliessen={onSchliessen} /> : null
   }
   if (fenster.art === 'zahlung')
     return <ZahlungDialog zahlung={finde(daten.zahlungen, fenster.id)} daten={daten} onSchliessen={onSchliessen} />

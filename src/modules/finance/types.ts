@@ -69,9 +69,6 @@ export interface Zahlung {
   bezahlt_am: string | null
   firma_id: string | null
   pruefung: Pruefung | null
-  visum_von: string | null
-  visum_am: string | null
-  visum_notiz: string | null
   freigabe_von: string | null
   freigabe_am: string | null
   skonto_prozent: number | null
@@ -84,8 +81,8 @@ export interface Zahlung {
   erstellt_am?: string
 }
 
-/** Prüfschritt einer Lieferantenrechnung: Visum Projektleitung → Freigabe Buchhaltung → zahlbereit. */
-export const PRUEFUNGEN = ['visum', 'freigabe', 'bereit', 'klaeren', 'zurueckgehalten'] as const
+/** Prüfschritt einer Lieferantenrechnung: Freigabe (oder Visum der Eingangsrechnung) → zahlbereit. */
+export const PRUEFUNGEN = ['freigabe', 'bereit', 'klaeren', 'zurueckgehalten'] as const
 export type Pruefung = (typeof PRUEFUNGEN)[number]
 
 /** Eine Material-Position einer Baustelle. Beträge in Franken (wie aus V233 übernommen), MWST je Position. */
@@ -217,7 +214,7 @@ export interface Finanzdaten {
   zahllaeufe: Zahllauf[]
   /** Bestellungen, auf die Lieferantenrechnungen zeigen (Vergleich Betrag). */
   bestellungen: Record<string, { nummer: string; total_rappen: number | null; bestellt_am: string | null }>
-  /** Namen der Personen (Visum, Freigabe). */
+  /** Namen der Personen (Freigabe, Zahllauf). */
   personen: Record<string, string>
 }
 

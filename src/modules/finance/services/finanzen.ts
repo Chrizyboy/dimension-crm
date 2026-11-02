@@ -10,6 +10,7 @@ import type {
   MaterialPosition,
   MwstZeile,
   OffeneRechnung,
+  Zahlung,
   OffeneTranche,
   Zahllauf,
 } from '../types'
@@ -34,12 +35,7 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
     db().from('firmen').select('id, kuerzel, name').is('geloescht_am', null).order('kuerzel'),
     db().from('finanz_projekt_firma').select('projekt_id, firma_id'),
     db().rpc('mwst_schaetzung', { p_von: plusTage(heute, -200), p_bis: plusTage(heute, 200) }),
-    db()
-      .from('zahllaeufe')
-      .select('*')
-      .is('geloescht_am', null)
-      .order('ausfuehren_am', { ascending: false })
-      .limit(60),
+    db().from('zahllaeufe').select('*').is('geloescht_am', null).order('ausfuehren_am', { ascending: false }).limit(60),
     db().from('personen').select('id, name').is('geloescht_am', null),
   ])
   for (const x of [ko, fi, pf, mw, zl, pe]) if (x.error) throw x.error
@@ -52,7 +48,9 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
       .from('rechnungen_liste')
       .select('id, nummer, kunde, projekt_nummer, titel, offen_rappen, faellig_am, firma_id, projekt_id')
       .in('status', ['gestellt', 'teilbezahlt']),
-    db().from('offene_tranchen').select('id, kunde, projekt_nummer, bezeichnung, betrag_rappen, faellig_am, projekt_id'),
+    db()
+      .from('offene_tranchen')
+      .select('id, kunde, projekt_nummer, bezeichnung, betrag_rappen, faellig_am, projekt_id'),
     db().from('finanz_einstellungen').select('wert').eq('schluessel', EINSTELLUNG).maybeSingle(),
   ])
   for (const x of [z, m, f, e, r, t, s]) if (x.error) throw x.error
@@ -85,7 +83,7 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
       be.data.map((b) => [b.id, { nummer: b.nummer, total_rappen: b.total_rappen, bestellt_am: b.bestellt_am }]),
     ),
     personen: Object.fromEntries((pe.data ?? []).map((p) => [p.id, p.name])),
-    zahlungen: z.data ?? [],
+    zahlungen: (z.data ?? []) as Zahlung[],
     material: (m.data ?? []).map((x) => ({
       ...x,
       positionen: x.positionen as unknown as MaterialPosition[],

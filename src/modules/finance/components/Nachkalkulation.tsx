@@ -18,11 +18,11 @@ import type { Finanzdaten } from '../types'
  * oder Bestellungen, Zeiten zum internen Stundensatz, Nachträgen und Rechnungen. Lieferantenrechnungen ohne
  * Projekt lassen sich hier zuordnen.
  */
-export function Nachkalkulation({ daten }: { daten: Finanzdaten }) {
+export function Nachkalkulation({ daten, start = null }: { daten: Finanzdaten; start?: string | null }) {
   const { t } = useTranslation()
   const projekte = useProjekte()
   const [suche, setSuche] = useState('')
-  const [projektId, setProjektId] = useState<string | null>(null)
+  const [projektId, setProjektId] = useState<string | null>(start)
   const nk = useNachkalkulation(projektId)
   const { laeuft, aus } = useAktion()
   const s = suche.trim().toLowerCase()

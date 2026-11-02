@@ -12,7 +12,12 @@ const PRIO_TON = { normal: 'neutral', wichtig: 'info', mahnung: 'warnung', betre
 const PROB_TON = { sicher: 'ok', wahrscheinlich: 'info', unsicher: 'neutral', aus: 'neutral' } as const
 
 /** Welche Schritte es je Herkunft gibt (wie V233). */
-const PRUEF_TON = { visum: 'warnung', freigabe: 'info', bereit: 'ok', klaeren: 'kritisch', zurueckgehalten: 'neutral' } as const
+const PRUEF_TON = {
+  freigabe: 'info',
+  bereit: 'ok',
+  klaeren: 'kritisch',
+  zurueckgehalten: 'neutral',
+} as const
 
 const AKTIONEN: Record<Bewegung['quelle'], BewegungAktion[]> = {
   zahlung: ['bezahlt', 'planen', 'bearbeiten'],

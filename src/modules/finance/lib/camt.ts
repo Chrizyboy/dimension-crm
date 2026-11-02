@@ -31,7 +31,7 @@ const erstes = (e: Element | Document | undefined, ...pfad: string[]): Element |
   }
   return x as Element | undefined
 }
-const text = (e: Element | Document | undefined, ...pfad: string[]) => erstes(e, ...pfad)?.textContent?.trim() ?? ''
+const text = (e: Element | Document | undefined, ...pfad: string[]) => erstes(e, ...pfad)?.textContent.trim() ?? ''
 const rappenAus = (s: string) => Math.round(Number(s) * 100)
 
 /** Liest eine camt.053-Datei. Wirft einen verständlichen Fehler, wenn es keine ist. */

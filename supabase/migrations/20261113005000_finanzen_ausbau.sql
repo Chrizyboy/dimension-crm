@@ -1,5 +1,6 @@
--- Finanzen vollständig (Entscheid 0039): Gesellschaften getrennt, Konten mit Kontoauszug, Lieferantenrechnungen mit
--- Visum der Projektleitung und Freigabe der Buchhaltung, Zahllauf mit Freigabe durch eine zweite Person,
+-- Finanzen vollständig (Entscheid 0040): Gesellschaften getrennt, Konten mit Kontoauszug, Lieferantenrechnungen mit
+-- Freigabe der Buchhaltung (das Visum der Projektleitung gehört zu den Eingangsrechnungen, Thread «Rechnungen»),
+-- Zahllauf mit Freigabe durch eine zweite Person,
 -- MWST-Schätzung je Quartal, Marge über alle Projekte und Monatsabschluss. Buchhaltung bleibt in AbaNinja.
 
 -- Gesellschaft an allen Planposten -------------------------------------------------------------------------------
@@ -19,10 +20,7 @@ update public.fixkosten f set firma_id = (select s.firma_id from public.standort
 
 -- Lieferantenrechnungen: Prüfung, Skonto, Zahlungsdaten -----------------------------------------------------------
 alter table public.kreditor_zahlungen
-  add column if not exists pruefung text check (pruefung in ('visum', 'freigabe', 'bereit', 'klaeren', 'zurueckgehalten')),
-  add column if not exists visum_von uuid references public.personen (id),
-  add column if not exists visum_am timestamptz,
-  add column if not exists visum_notiz text,
+  add column if not exists pruefung text check (pruefung in ('freigabe', 'bereit', 'klaeren', 'zurueckgehalten')),
   add column if not exists freigabe_von uuid references public.personen (id),
   add column if not exists freigabe_am timestamptz,
   add column if not exists skonto_prozent numeric(5, 2),
@@ -40,7 +38,6 @@ update public.kreditor_zahlungen set pruefung = 'bereit' where pruefung is null;
 create or replace function intern.kreditor_vorbereiten() returns trigger
 language plpgsql security definer set search_path = '' as $$
 declare
-  v_pl uuid;
   v_text text := coalesce(new.text, '') || ' ' || coalesce(new.rechnung_nr, '') || ' ' || coalesce(new.referenz, '');
 begin
   if new.firma_id is null and new.projekt_id is not null then
@@ -57,12 +54,17 @@ begin
     having count(*) = 1;
   end if;
   if tg_op = 'INSERT' and new.pruefung is null then
-    if new.quelle = 'abaninja' and new.status = 'offen' then
-      select verantwortlich_id into v_pl from public.projekte where id = new.projekt_id;
-      new.pruefung := case when v_pl is not null then 'visum' else 'freigabe' end;
+    -- Neue Rechnungen aus AbaNinja zahlt erst, wer sie geprüft hat; Eingangsrechnungen mit Visum setzen «bereit».
+    if new.quelle = 'abaninja' and new.status = 'offen' and not coalesce(new.geprueft, false) then
+      new.pruefung := 'freigabe';
     else
       new.pruefung := 'bereit';
     end if;
+  end if;
+  -- «Geprüft» kommt vom Visum der Eingangsrechnung (oder von Hand): dann ist die Rechnung zahlbereit.
+  if tg_op = 'UPDATE' and new.geprueft and not old.geprueft and new.pruefung = 'freigabe' then
+    new.pruefung := 'bereit';
+    new.freigabe_am := now();
   end if;
   if new.skonto_prozent is not null and new.betrag_rappen is not null then
     new.skonto_rappen := round(new.betrag_rappen * new.skonto_prozent / 100);
@@ -73,83 +75,17 @@ begin
 end
 $$;
 drop trigger if exists vorbereiten on public.kreditor_zahlungen;
-create trigger vorbereiten before insert or update of projekt_id, lieferant_id, skonto_prozent, betrag_rappen, text, referenz
+create trigger vorbereiten before insert or update of projekt_id, lieferant_id, skonto_prozent, betrag_rappen, text, referenz, geprueft
   on public.kreditor_zahlungen for each row execute function intern.kreditor_vorbereiten();
 
-/** Projektleitung bekommt eine Glocke, sobald eine Rechnung ihres Projekts auf das Visum wartet. */
-create or replace function intern.kreditor_visum_melden() returns trigger
-language plpgsql security definer set search_path = '' as $$
-declare
-  v_pl uuid;
-  v_nr text;
-begin
-  if new.pruefung = 'visum' and (tg_op = 'INSERT' or old.pruefung is distinct from 'visum') then
-    select verantwortlich_id, nummer into v_pl, v_nr from public.projekte where id = new.projekt_id;
-    if v_pl is not null then
-      insert into public.benachrichtigungen (person_id, art, titel_de, titel_fr, text_de, text_fr, ziel)
-      values (v_pl, 'info', 'Lieferantenrechnung prüfen', 'Facture fournisseur à viser',
-              new.firma || ' · Projekt ' || coalesce(v_nr, ''), new.firma || ' · projet ' || coalesce(v_nr, ''), '/today');
-    end if;
-  end if;
-  return null;
-end
-$$;
-drop trigger if exists visum_melden on public.kreditor_zahlungen;
-create trigger visum_melden after insert or update of pruefung on public.kreditor_zahlungen
-  for each row execute function intern.kreditor_visum_melden();
-
-/**
- * Rechnungen, die auf mein Visum warten (Projektleitung, ohne Recht «finanzen»): nur Rechnungen meiner Projekte,
- * mit der Bestellung zum Vergleich, ohne Marge oder andere Finanzzahlen.
- */
-create or replace function public.kreditor_visum_liste() returns table (
-  id uuid, lieferant text, rechnung_nr text, rechnung_am date, betrag_rappen bigint, faellig_am date, text text,
-  projekt_id uuid, projekt_nummer text, projekt_titel text, bestellung_nummer text, bestellung_rappen bigint)
-language sql stable security definer set search_path = '' as $$
-  select k.id, k.firma, k.rechnung_nr, k.rechnung_am, k.betrag_rappen, k.faellig_am, k.text,
-         p.id, p.nummer, p.titel, b.nummer, b.total_rappen
-    from public.kreditor_zahlungen k
-    join public.projekte p on p.id = k.projekt_id
-    left join public.bestellungen b on b.id = k.bestellung_id
-   where k.geloescht_am is null and k.pruefung = 'visum' and k.status = 'offen'
-     and (p.verantwortlich_id = intern.meine_person_id() or intern.hat_recht('finanzen'))
-   order by k.faellig_am nulls last
-$$;
-grant execute on function public.kreditor_visum_liste() to authenticated;
-
-/** Visum der Projektleitung: stimmt (→ Freigabe Buchhaltung) oder stimmt nicht (→ zu klären, mit Grund). */
-create or replace function public.kreditor_visum(p_id uuid, p_ok boolean, p_notiz text default null) returns void
-language plpgsql security definer set search_path = '' as $$
-declare
-  k public.kreditor_zahlungen;
-  v_pl uuid;
-begin
-  select * into k from public.kreditor_zahlungen where id = p_id and geloescht_am is null for update;
-  if not found then raise exception using errcode = 'P0002', message = 'stand.unbekannt'; end if;
-  select verantwortlich_id into v_pl from public.projekte where id = k.projekt_id;
-  if not (intern.hat_recht('finanzen') or (v_pl is not null and v_pl = intern.meine_person_id())) then
-    raise exception using errcode = 'P0001', message = 'finanzen.kein_recht';
-  end if;
-  if k.pruefung is distinct from 'visum' then raise exception using errcode = 'P0001', message = 'finanzen.schritt_falsch'; end if;
-  if not p_ok and nullif(trim(coalesce(p_notiz, '')), '') is null then
-    raise exception using errcode = 'P0001', message = 'finanzen.grund_fehlt';
-  end if;
-  update public.kreditor_zahlungen
-     set pruefung = case when p_ok then 'freigabe' else 'klaeren' end,
-         visum_von = intern.meine_person_id(), visum_am = now(), visum_notiz = nullif(trim(coalesce(p_notiz, '')), '')
-   where id = p_id;
-end
-$$;
-grant execute on function public.kreditor_visum(uuid, boolean, text) to authenticated;
-
-/** Prüfschritt setzen (Buchhaltung): freigeben, zurückhalten, zu klären, wieder zum Visum. */
+/** Prüfschritt setzen (Buchhaltung): freigeben, zurückhalten, zu klären, wieder zur Freigabe. */
 create or replace function public.kreditor_pruefung(p_id uuid, p_schritt text, p_notiz text default null) returns void
 language plpgsql security invoker set search_path = '' as $$
 declare
   k public.kreditor_zahlungen;
 begin
   if not intern.hat_recht('finanzen') then raise exception using errcode = 'P0001', message = 'finanzen.kein_recht'; end if;
-  if p_schritt not in ('visum', 'freigabe', 'bereit', 'klaeren', 'zurueckgehalten') then
+  if p_schritt not in ('freigabe', 'bereit', 'klaeren', 'zurueckgehalten') then
     raise exception using errcode = 'P0001', message = 'finanzen.schritt_falsch';
   end if;
   select * into k from public.kreditor_zahlungen where id = p_id and geloescht_am is null for update;
@@ -157,9 +93,6 @@ begin
   if k.zahllauf_id is not null then raise exception using errcode = 'P0001', message = 'finanzen.im_zahllauf'; end if;
   if p_schritt in ('klaeren', 'zurueckgehalten') and nullif(trim(coalesce(p_notiz, '')), '') is null then
     raise exception using errcode = 'P0001', message = 'finanzen.grund_fehlt';
-  end if;
-  if p_schritt = 'visum' and k.projekt_id is null then
-    raise exception using errcode = 'P0001', message = 'finanzen.projekt_fehlt';
   end if;
   update public.kreditor_zahlungen set pruefung = p_schritt,
          freigabe_von = case when p_schritt = 'bereit' then intern.meine_person_id() else freigabe_von end,
@@ -514,7 +447,7 @@ begin
     'ohne_firma', (select count(*) from public.kreditor_zahlungen where geloescht_am is null and status = 'offen'
                      and firma_id is null),
     'pruefung_offen', (select count(*) from public.kreditor_zahlungen where geloescht_am is null and status = 'offen'
-                         and pruefung in ('visum', 'freigabe', 'klaeren') and rechnung_am <= v_bis),
+                         and pruefung in ('freigabe', 'klaeren') and rechnung_am <= v_bis),
     'spesen_offen', (select count(*) from public.spesen where geloescht_am is null and status in ('eingereicht', 'genehmigt')
                        and datum <= v_bis),
     'tranchen_offen', (select count(*) from public.offene_tranchen where faellig_am <= v_bis),

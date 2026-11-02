@@ -51,15 +51,20 @@ export function ZahllaufNeuDialog({
   const reserve = reserveFuer(daten, firma)
 
   const anlegen = () =>
-    void aus(
-      () => zahllaufAnlegen({ firma, konto: konto || null, datum, ids: gewaehlt.map((k) => k.z.id) }),
-      { de: 'Zahllauf zur Freigabe bereit', fr: 'Paiement groupé prêt à valider' },
-    ).then((ok) => {
+    void aus(() => zahllaufAnlegen({ firma, konto: konto || null, datum, ids: gewaehlt.map((k) => k.z.id) }), {
+      de: 'Zahllauf zur Freigabe bereit',
+      fr: 'Paiement groupé prêt à valider',
+    }).then((ok) => {
       if (ok) onSchliessen()
     })
 
   return (
-    <Dialog open onOpenChange={(o) => !o && onSchliessen()}>
+    <Dialog
+      open
+      onOpenChange={(o) => {
+        if (!o) onSchliessen()
+      }}
+    >
       <DialogInhalt
         art="seite"
         breite="breit"
@@ -133,7 +138,9 @@ export function ZahllaufNeuDialog({
                       {[
                         k.z.rechnung_nr,
                         k.z.faellig_am ? t('finanzen.faelligKurz', { datum: formatDatum(k.z.faellig_am) }) : null,
-                        k.mitSkonto ? t('finanzen.zl.skontoAbzug', { betrag: formatChf(k.z.skonto_rappen ?? 0) }) : null,
+                        k.mitSkonto
+                          ? t('finanzen.zl.skontoAbzug', { betrag: formatChf(k.z.skonto_rappen ?? 0) })
+                          : null,
                         k.z.prioritaet && k.z.prioritaet !== 'normal' ? t(`finanzen.prio.${k.z.prioritaet}`) : null,
                       ]
                         .filter(Boolean)

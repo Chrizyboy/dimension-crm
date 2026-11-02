@@ -4328,9 +4328,6 @@ export type Database = {
           skonto_rappen: number | null
           status: string
           text: string | null
-          visum_am: string | null
-          visum_notiz: string | null
-          visum_von: string | null
           zahllauf_id: string | null
         }
         ComputedFields: never
@@ -4372,9 +4369,6 @@ export type Database = {
           skonto_rappen?: number | null
           status?: string
           text?: string | null
-          visum_am?: string | null
-          visum_notiz?: string | null
-          visum_von?: string | null
           zahllauf_id?: string | null
         }
         Update: {
@@ -4415,9 +4409,6 @@ export type Database = {
           skonto_rappen?: number | null
           status?: string
           text?: string | null
-          visum_am?: string | null
-          visum_notiz?: string | null
-          visum_von?: string | null
           zahllauf_id?: string | null
         }
         Relationships: [
@@ -4503,13 +4494,6 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'kreditor_zahlungen_visum_von_fkey'
-            columns: ['visum_von']
-            isOneToOne: false
-            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -11362,24 +11346,6 @@ export type Database = {
         Returns: Json
       }
       kreditor_pruefung: { Args: { p_id: string; p_notiz?: string; p_schritt: string }; Returns: undefined }
-      kreditor_visum: { Args: { p_id: string; p_notiz?: string; p_ok: boolean }; Returns: undefined }
-      kreditor_visum_liste: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          bestellung_nummer: string
-          bestellung_rappen: number
-          betrag_rappen: number
-          faellig_am: string
-          id: string
-          lieferant: string
-          projekt_id: string
-          projekt_nummer: string
-          projekt_titel: string
-          rechnung_am: string
-          rechnung_nr: string
-          text: string
-        }[]
-      }
       kunden_zeitachse: {
         Args: { p_kontakt: string }
         Returns: {

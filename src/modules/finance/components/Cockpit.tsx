@@ -76,22 +76,37 @@ export function Cockpit({
     },
     {
       label: t('finanzen.cockpit.lieferanten'),
-      wert: formatChf(lieferanten.reduce((s, z) => s + betrag(z), 0), { mitWaehrung: true }),
+      wert: formatChf(
+        lieferanten.reduce((s, z) => s + betrag(z), 0),
+        { mitWaehrung: true },
+      ),
       klein: t('finanzen.cockpit.faellig7', {
         betrag: formatChf(
-          lieferanten.filter((z) => !z.faellig_am || z.faellig_am <= plusTage(heute, 7)).reduce((s, z) => s + betrag(z), 0),
+          lieferanten
+            .filter((z) => !z.faellig_am || z.faellig_am <= plusTage(heute, 7))
+            .reduce((s, z) => s + betrag(z), 0),
         ),
       }),
     },
     {
-      label: naechsteMwst[0] ? t('finanzen.cockpit.mwst', { periode: naechsteMwst[0].periode }) : t('finanzen.cockpit.mwstLeer'),
+      label: naechsteMwst[0]
+        ? t('finanzen.cockpit.mwst', { periode: naechsteMwst[0].periode })
+        : t('finanzen.cockpit.mwstLeer'),
       wert: naechsteMwst.length
-        ? formatChf(naechsteMwst.reduce((s, m) => s + m.zahllast_rappen, 0), { mitWaehrung: true })
+        ? formatChf(
+            naechsteMwst.reduce((s, m) => s + m.zahllast_rappen, 0),
+            { mitWaehrung: true },
+          )
         : '–',
       klein: naechsteMwst[0]
-        ? t(naechsteMwst.every((m) => m.verbindlich) ? 'finanzen.cockpit.mwstFaellig' : 'finanzen.cockpit.mwstGeschaetzt', {
-            datum: formatDatum(naechsteMwst[0].faellig_am),
-          })
+        ? t(
+            naechsteMwst.every((m) => m.verbindlich)
+              ? 'finanzen.cockpit.mwstFaellig'
+              : 'finanzen.cockpit.mwstGeschaetzt',
+            {
+              datum: formatDatum(naechsteMwst[0].faellig_am),
+            },
+          )
         : '',
     },
   ]
@@ -135,7 +150,8 @@ export function Cockpit({
                   <span className="min-w-0 flex-1 text-sm">
                     {t(`finanzen.zuTun.${a.schluessel}`, {
                       ...a.werte,
-                      betrag: typeof a.werte.betrag === 'number' ? formatChf(a.werte.betrag, { mitWaehrung: true }) : '',
+                      betrag:
+                        typeof a.werte.betrag === 'number' ? formatChf(a.werte.betrag, { mitWaehrung: true }) : '',
                       datum: typeof a.werte.datum === 'string' && a.werte.datum ? formatDatum(a.werte.datum) : '',
                     })}
                   </span>
@@ -184,11 +200,15 @@ export function Cockpit({
           </KarteKopf>
           <dl className="grid grid-cols-2 gap-3 px-4 pb-4 text-sm">
             <div>
-              <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.tranchen', { count: daten.tranchen.length })}</dt>
+              <dt className="text-muted-foreground text-xs">
+                {t('finanzen.cockpit.tranchen', { count: daten.tranchen.length })}
+              </dt>
               <dd className="zahlen font-semibold">{formatChf(tranchen, { mitWaehrung: true })}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.rechnungenOffen', { count: daten.rechnungen.length })}</dt>
+              <dt className="text-muted-foreground text-xs">
+                {t('finanzen.cockpit.rechnungenOffen', { count: daten.rechnungen.length })}
+              </dt>
               <dd className="zahlen font-semibold">{formatChf(debitoren, { mitWaehrung: true })}</dd>
             </div>
             <div>
@@ -200,7 +220,7 @@ export function Cockpit({
             <div>
               <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.pruefungOffen')}</dt>
               <dd className="zahlen font-semibold">
-                {offen.filter((z) => z.pruefung === 'visum' || z.pruefung === 'freigabe' || z.pruefung === 'klaeren').length}
+                {offen.filter((z) => z.pruefung === 'freigabe' || z.pruefung === 'klaeren').length}
               </dd>
             </div>
           </dl>
