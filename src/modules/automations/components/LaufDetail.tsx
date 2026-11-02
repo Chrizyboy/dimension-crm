@@ -1,12 +1,14 @@
-import { CircleStop, ListChecks, Play, type LucideIcon } from 'lucide-react'
+import { CircleStop, ListChecks, Play, RotateCcw, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { formatDatumZeit } from '@/lib/format'
 import { zielVon } from '@/lib/ziel'
+import { useLaufSteuerung } from '@/services/automatik'
 import { useAktion } from '../hooks/useAutomationen'
 import { OFFEN, STAND_TON } from '../lib/anzeige'
+import { schrittWiederholen } from '../services/ausbau'
 import { laufAbbrechen } from '../services/automationen'
 import type { Automation, Lauf, ProtokollEintrag } from '../types'
 import { AKTION_ICON } from './symbole'
@@ -39,6 +41,10 @@ export function LaufDetail({
 }) {
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
+  const steuerung = useLaufSteuerung()
+  const zuEnde = ['fertig', 'fehler', 'uebersprungen'].includes(lauf.stand)
+  // Nur der letzte Eintrag je Schritt zählt: wurde er schon wiederholt und ging, gibt es nichts mehr zu tun.
+  const letzter = new Map(lauf.protokoll.map((e) => [e.nr, e]))
   const bezug = zielVon(lauf.tabelle, lauf.bezug_id)
   const artText = (e: ProtokollEintrag) =>
     e.art === 'bedingungen' || e.art === 'ende'
@@ -56,7 +62,19 @@ export function LaufDetail({
         titel={lauf.titel ?? t('automationen.protokoll.ohneTitel')}
         beschreibung={automation?.name_de ?? ''}
         fuss={
-          OFFEN.includes(lauf.stand) ? (
+          lauf.stand === 'gestoppt' ? (
+            <Button
+              disabled={steuerung.laeuft}
+              onClick={() => {
+                void steuerung.fortsetzen(lauf.id).then((ok) => {
+                  if (ok) onSchliessen()
+                })
+              }}
+            >
+              <Play />
+              {t('automatik.fortsetzen')}
+            </Button>
+          ) : OFFEN.includes(lauf.stand) ? (
             <Button
               variant="secondary"
               disabled={laeuft}
@@ -87,6 +105,11 @@ export function LaufDetail({
             )}
             {bezug && <ZielLink ziel={bezug}>{t('automationen.protokoll.bezugOeffnen')}</ZielLink>}
           </div>
+          {lauf.stand === 'gestoppt' && lauf.gestoppt_grund && (
+            <p className="bg-warn-soft rounded-lg px-3 py-2 text-sm">
+              {t('automatik.grundIst', { grund: lauf.gestoppt_grund })}
+            </p>
+          )}
           <ol className="flex flex-col gap-0" data-testid="protokoll">
             {lauf.protokoll.map((e, i) => {
               const Icon = symbol(e.art)
@@ -108,6 +131,26 @@ export function LaufDetail({
                     )}
                     <span className="text-muted-foreground text-xs">{formatDatumZeit(e.zeit)}</span>
                     {e.ziel && <ZielLink ziel={e.ziel}>{t('automationen.protokoll.oeffnen')}</ZielLink>}
+                    {zuEnde &&
+                      e.nr > 0 &&
+                      letzter.get(e.nr) === e &&
+                      (e.ergebnis === 'fehler' || e.ergebnis === 'uebersprungen') && (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="self-start"
+                          disabled={laeuft}
+                          onClick={() =>
+                            void aus(() => schrittWiederholen(lauf.id, e.nr), {
+                              de: 'Schritt wird wiederholt',
+                              fr: 'Étape relancée',
+                            }).then(onSchliessen)
+                          }
+                        >
+                          <RotateCcw />
+                          {t('automationen.uebersicht.wiederholen')}
+                        </Button>
+                      )}
                   </div>
                 </li>
               )

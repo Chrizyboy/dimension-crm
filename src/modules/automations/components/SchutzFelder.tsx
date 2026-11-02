@@ -16,13 +16,20 @@ export function SchutzFelder({ e, onChange }: { e: Entwurf; onChange: (teil: Par
         <Auswahl
           id="auto-fenster"
           value={e.versandfenster?.immer ? 'immer' : 'standard'}
-          optionen={(['standard', 'immer'] as const).map((w) => ({ wert: w, text: t(`automationen.schutz.wahl.${w}`) }))}
+          optionen={(['standard', 'immer'] as const).map((w) => ({
+            wert: w,
+            text: t(`automationen.schutz.wahl.${w}`),
+          }))}
           onValueChange={(w) => {
             onChange({ versandfenster: w === 'immer' ? { immer: true } : null })
           }}
         />
       </Feld>
-      <Feld id="auto-pause" label={t('automationen.schutz.kontakt_pause_tage')} hinweis={t('automationen.schutz.pauseLeer')}>
+      <Feld
+        id="auto-pause"
+        label={t('automationen.schutz.kontakt_pause_tage')}
+        hinweis={t('automationen.schutz.pauseLeer')}
+      >
         <Input
           id="auto-pause"
           type="number"

@@ -5,7 +5,10 @@
 export function feiertageLesen(text: string): { daten: string[]; falsch: string[] } {
   const daten = new Set<string>()
   const falsch: string[] = []
-  for (const teil of text.split(/[\n,;]+/).map((x) => x.trim()).filter(Boolean)) {
+  for (const teil of text
+    .split(/[\n,;]+/)
+    .map((x) => x.trim())
+    .filter(Boolean)) {
     const ch = /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.exec(teil)
     const iso = ch ? `${ch[3]}-${(ch[2] ?? '').padStart(2, '0')}-${(ch[1] ?? '').padStart(2, '0')}` : teil
     const d = new Date(`${iso}T12:00:00Z`)

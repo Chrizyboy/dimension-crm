@@ -66,16 +66,42 @@ function Formular({ start }: { start: AutomationsEinstellungen }) {
           </div>
           <div className="flex flex-wrap items-end gap-3">
             <Feld id="schutz-von" label={t('automationen.schutz.von')}>
-              <Input id="schutz-von" type="time" className="w-28" value={f.von ?? ''} onChange={(e) => { setF({ ...f, von: e.target.value }) }} />
+              <Input
+                id="schutz-von"
+                type="time"
+                className="w-28"
+                value={f.von ?? ''}
+                onChange={(e) => {
+                  setF({ ...f, von: e.target.value })
+                }}
+              />
             </Feld>
-            <Feld id="schutz-bis" label={t('automationen.schutz.bis')} fehler={zeitFalsch ? t('automationen.schutz.zeitFalsch') : undefined}>
-              <Input id="schutz-bis" type="time" className="w-28" value={f.bis ?? ''} aria-invalid={zeitFalsch} onChange={(e) => { setF({ ...f, bis: e.target.value }) }} />
+            <Feld
+              id="schutz-bis"
+              label={t('automationen.schutz.bis')}
+              fehler={zeitFalsch ? t('automationen.schutz.zeitFalsch') : undefined}
+            >
+              <Input
+                id="schutz-bis"
+                type="time"
+                className="w-28"
+                value={f.bis ?? ''}
+                aria-invalid={zeitFalsch}
+                onChange={(e) => {
+                  setF({ ...f, bis: e.target.value })
+                }}
+              />
             </Feld>
           </div>
           <p className="text-muted-foreground text-xs">{t('automationen.schutz.fensterHilfe')}</p>
         </fieldset>
         {ZAHLEN.map((k) => (
-          <Feld key={k} id={`schutz-${k}`} label={t(`automationen.schutz.${k}`)} hinweis={t(`automationen.schutz.${k}_hilfe`)}>
+          <Feld
+            key={k}
+            id={`schutz-${k}`}
+            label={t(`automationen.schutz.${k}`)}
+            hinweis={t(`automationen.schutz.${k}_hilfe`)}
+          >
             <Input
               id={`schutz-${k}`}
               type="number"
@@ -93,7 +119,11 @@ function Formular({ start }: { start: AutomationsEinstellungen }) {
           id="schutz-feiertage"
           label={t('automationen.schutz.feiertage')}
           hinweis={t('automationen.schutz.feiertageHilfe', { count: gelesen.daten.length })}
-          fehler={gelesen.falsch.length ? t('automationen.schutz.feiertageFalsch', { liste: gelesen.falsch.join(', ') }) : undefined}
+          fehler={
+            gelesen.falsch.length
+              ? t('automationen.schutz.feiertageFalsch', { liste: gelesen.falsch.join(', ') })
+              : undefined
+          }
         >
           <Textarea
             id="schutz-feiertage"
