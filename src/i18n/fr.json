@@ -4286,25 +4286,34 @@
   },
   "spesen": {
     "titel": "Frais",
-    "beschreibung": "Photographier les justificatifs, saisir les frais et les envoyer à la comptabilité.",
+    "beschreibung": "Photographier les justificatifs ou saisir des kilomètres. La comptabilité vérifie et verse avec le salaire.",
     "neu": "Saisir des frais",
     "filter": "État",
     "filterwert": {
       "offen": "Ouverts",
-      "ausbezahlt": "Payés",
+      "ausbezahlt": "Versés",
       "storniert": "Annulés",
-      "alle": "Tous"
+      "alle": "Tous",
+      "firmenkarte": "Carte d’entreprise",
+      "abgelehnt": "Refusés"
     },
     "status": {
-      "eingereicht": "Ouvert",
-      "ausbezahlt": "Payé",
-      "storniert": "Annulé"
+      "eingereicht": "Envoyé",
+      "ausbezahlt": "Versé",
+      "storniert": "Retiré",
+      "rueckfrage": "Question",
+      "geprueft": "Vérifié",
+      "abgelehnt": "Refusé",
+      "verbucht": "Comptabilisé"
     },
     "ausbezahltAm": "Payé le {{datum}}",
     "ansicht": {
       "meine": "Mes frais",
       "alle": "Tous les frais",
-      "kategorien": "Catégories"
+      "kategorien": "Règles",
+      "pruefen": "Vérifier",
+      "auszahlen": "Verser",
+      "auswertung": "Analyse"
     },
     "spalte": {
       "datum": "Date",
@@ -4313,13 +4322,14 @@
       "kategorie": "Catégorie",
       "beleg": "Justificatif",
       "betrag": "Montant CHF",
-      "status": "État"
+      "status": "État",
+      "projekt": "Projet"
     },
     "alleWaehlen": "Choisir tous les ouverts",
     "waehlen": "Choisir « {{zweck}} »",
     "belegAnsehen": "Voir",
     "ohneBeleg": "Sans justificatif",
-    "stornieren": "Annuler",
+    "stornieren": "Retirer",
     "summe": "Somme {{betrag}}",
     "anzahl_one": "{{count}} frais",
     "anzahl_other": "{{count}} frais",
@@ -4330,7 +4340,7 @@
     "leerText": "Avec « Saisir des frais », photographier un justificatif et saisir le montant.",
     "erfassen": {
       "titel": "Saisir des frais",
-      "text": "Photographier le justificatif ou choisir un fichier. Les frais sont les vôtres et vont à la comptabilité.",
+      "text": "D’abord photographier le justificatif : la KI remplit les champs, tu vérifies et enregistres.",
       "speichern": "Enregistrer",
       "kategorieWaehlen": "Choisir la catégorie",
       "zweckBeispiel": "p. ex. parking rendez-vous client Fribourg",
@@ -4338,20 +4348,60 @@
       "foto": "Photo",
       "datei": "Choisir un fichier",
       "belegEntfernen": "Retirer le justificatif",
-      "belegHinweis": "Les photos sont réduites. Sans justificatif, les frais restent marqués en jaune."
+      "belegHinweis": "Les photos sont réduites. Sans justificatif, la comptabilité reçoit une remarque.",
+      "aendern": "Modifier les frais",
+      "rueckfrage": "Question de la comptabilité : «{{text}}». Après l’enregistrement, les frais retournent à la comptabilité.",
+      "speichernWeiter": "Enregistrer et suivant",
+      "art": "Type de frais",
+      "belegErsetzen": "Remplacer le justificatif",
+      "bezahltMit": "Payé avec",
+      "firmenkarteHinweis": "Carte d’entreprise : pas de versement, la comptabilité a seulement besoin du justificatif.",
+      "km": "Kilomètres",
+      "kmRechnung": "× CHF {{satz}} par km = {{betrag}}",
+      "mwst": "TVA",
+      "mwstUnbekannt": "non indiquée",
+      "ohneMwst": "sans TVA",
+      "ohneProjekt": "sans projet (taper numéro ou client)",
+      "personen": "Personnes",
+      "projektHinweis": "Les coûts apparaissent dans le post-calcul.",
+      "strecke": "Trajet",
+      "streckeBeispiel": "p. ex. Bulle – Romont aller-retour"
     },
     "storno": {
       "titel": "Annuler les frais",
       "grund": "Motif"
     },
     "auszahlen": {
-      "titel_one": "Marquer {{count}} frais comme payé",
-      "titel_other": "Marquer {{count}} frais comme payés",
-      "text": "Total {{betrag}}. Ensuite, ils ne peuvent plus être modifiés.",
-      "datum": "Payé le",
-      "knopf": "Marquer comme payés",
-      "knopfAuswahl_one": "{{count}} payé",
-      "knopfAuswahl_other": "{{count}} payés"
+      "titel_one": "Verser {{count}} frais",
+      "titel_other": "Verser {{count}} frais",
+      "text": "Total {{betrag}} pour {{personen}} personnes. Ensuite les frais sont figés et chaque personne reçoit une notification.",
+      "datum": "Versé le",
+      "knopf": "Créer le versement",
+      "knopfAuswahl_one": "Verser {{count}}",
+      "knopfAuswahl_other": "Verser {{count}}",
+      "art": "Versement",
+      "lohn": "Avec le salaire",
+      "ueberweisung": "Virement",
+      "titelFeld": "Titre",
+      "titelHinweis": "Vide = «Lohn November 2026» selon la date et le type.",
+      "kachelOffen_one": "vérifiés, à verser ({{count}} · {{personen}} personnes)",
+      "kachelOffen_other": "vérifiés, à verser ({{count}} · {{personen}} personnes)",
+      "kachelVorsteuer": "dont TVA (impôt préalable)",
+      "kachelPruefen": "encore à vérifier",
+      "kachelFirmenkarte": "carte d’entreprise, à vérifier",
+      "leer": "Rien à verser",
+      "leerText": "Les frais vérifiés payés avec son argent apparaissent ici par personne.",
+      "jePerson": "Par personne",
+      "anzahl": "Frais",
+      "km": "Kilomètres",
+      "personWaehlen": "Verser à {{person}}",
+      "pdf": "Décompte PDF",
+      "vorschau": "Brouillon",
+      "csvName": "a-verser",
+      "laeufe": "Versements précédents",
+      "keineLaeufe": "Aucun versement créé.",
+      "personen_one": "{{count}} personne",
+      "personen_other": "{{count}} personnes"
     },
     "mail": {
       "knopf_one": "{{count}} à la comptabilité",
@@ -4371,15 +4421,123 @@
       "fr": "Français",
       "entfernen": "Retirer la catégorie",
       "neu": "Catégorie",
-      "hinweis": "Une catégorie retirée reste visible sur les anciens frais."
+      "hinweis": "Une catégorie supprimée reste visible sur les anciens frais. La norme vaut par personne (repas) ou par justificatif ; compte selon le plan comptable PME."
     },
     "heute": {
-      "meine_one": "{{count}} frais personnel ouvert",
-      "meine_other": "{{count}} frais personnels ouverts",
-      "alle_one": "{{count}} frais attend le paiement",
-      "alle_other": "{{count}} frais attendent le paiement",
+      "meine_one": "{{count}} de tes frais en cours",
+      "meine_other": "{{count}} de tes frais en cours",
+      "alle_one": "{{count}} frais à verser",
+      "alle_other": "{{count}} frais à verser",
       "oeffnen": "Ouvrir",
-      "nichts": "Aucun frais ouvert."
+      "nichts": "Aucun frais ouvert.",
+      "rueckfrage_one": "{{count}} question sur tes frais",
+      "rueckfrage_other": "{{count}} questions sur tes frais",
+      "pruefen_one": "{{count}} frais à vérifier",
+      "pruefen_other": "{{count}} frais à vérifier"
+    },
+    "kilometerErfassen": "Saisir des kilomètres",
+    "aendern": "Modifier «{{zweck}}»",
+    "konto": "Compte",
+    "verlauf": "Historique",
+    "kmZeile": "{{km}} km × {{satz}}",
+    "mwstZeile": "TVA {{satz}} %",
+    "leerTextAlle": "Aucun frais pour ce filtre.",
+    "hinweis": {
+      "doppelt": "doublon ?",
+      "ohne_beleg": "sans justificatif",
+      "alt": "envoyé tard",
+      "richtwert": "au-dessus de la norme",
+      "waehrung": "devise étrangère"
+    },
+    "art": {
+      "beleg": "Justificatif",
+      "kilometer": "Kilomètres voiture privée"
+    },
+    "bezahlt": {
+      "eigen": "Mon argent",
+      "firmenkarte": "Carte d’entreprise"
+    },
+    "grund": {
+      "storno": {
+        "titel": "Retirer les frais",
+        "feld": "Motif",
+        "hinweis": "Les frais restent visibles, barrés.",
+        "knopf": "Retirer"
+      },
+      "rueckfrage": {
+        "titel": "Question à la personne",
+        "feld": "Question",
+        "hinweis": "La personne reçoit une notification et répond en modifiant les frais.",
+        "knopf": "Question"
+      },
+      "ablehnen": {
+        "titel": "Refuser les frais",
+        "feld": "Motif",
+        "hinweis": "La personne reçoit une notification. Les frais refusés sont figés.",
+        "knopf": "Refuser"
+      }
+    },
+    "meine": {
+      "wirdAusbezahlt_one": "vérifiés, seront versés ({{count}})",
+      "wirdAusbezahlt_other": "vérifiés, seront versés ({{count}})",
+      "beiBuchhaltung_one": "à la comptabilité ({{count}})",
+      "beiBuchhaltung_other": "à la comptabilité ({{count}})",
+      "rueckfragen": "Questions pour toi",
+      "jahr": "versés cette année",
+      "jahrLetzte": "versés cette année, dernier versement le {{datum}} ({{mit}})",
+      "rueckfrageZu": "Question sur «{{zweck}}» du {{datum}} :",
+      "beantworten": "Répondre"
+    },
+    "pruefen": {
+      "leer": "Tout est vérifié",
+      "leerText": "Les nouveaux frais apparaissent ici dès qu’ils sont envoyés.",
+      "alleOhneHinweis_one": "Vérifier {{count}} sans remarque",
+      "alleOhneHinweis_other": "Vérifier les {{count}} sans remarque",
+      "alleOhneHinweis_zero": "Aucun sans remarque",
+      "position": "{{nr}} sur {{von}}",
+      "tasten": "J/K pour naviguer, P pour vérifier",
+      "tasteWeiter": "Frais suivants",
+      "tasteZurueck": "Frais précédents",
+      "tastePruefen": "Vérifier les frais",
+      "geprueft": "Vérifié",
+      "aendern": "Modifier",
+      "belegAlt": "Justificatif de «{{zweck}}»",
+      "neuesFenster": "Ouvrir dans une nouvelle fenêtre",
+      "kilometerOhneBeleg": "Les kilomètres n’ont pas besoin de justificatif.",
+      "richtwertText": "Au-dessus de la norme de la catégorie. Merci de vérifier la note et le nombre de personnes."
+    },
+    "auswertung": {
+      "jahr": "Année",
+      "total_one": "Frais {{jahr}} ({{count}} justificatif)",
+      "total_other": "Frais {{jahr}} ({{count}} justificatifs)",
+      "proMonat": "par mois (moyenne)",
+      "aufProjekte": "imputés à des projets",
+      "firmenkarte": "avec carte d’entreprise",
+      "nachMonat": "Par mois",
+      "nachKategorie": "Par catégorie",
+      "nachPerson": "Par personne",
+      "nachProjekt": "Par projet"
+    },
+    "regeln": {
+      "titel": "Règles",
+      "kmSatz": "Indemnité km CHF",
+      "kmSatzHinweis": "Par km avec la voiture privée.",
+      "tage": "Envoyer dans les jours",
+      "tageHinweis": "Les frais envoyés plus tard reçoivent une remarque.",
+      "auszahlung": "Versement habituel",
+      "richtwert": "Norme CHF",
+      "belegAb": "Justificatif dès CHF",
+      "kmKategorie": "Kilomètres : montant = km × indemnité, sans justificatif ni TVA."
+    },
+    "pdf": {
+      "titel": "Décompte de frais",
+      "mwst": "TVA",
+      "betrag": "CHF",
+      "total": "Total",
+      "vorsteuer": "TVA incluse (impôt préalable) :",
+      "unterschriftPerson": "Date, signature collaborateur/trice",
+      "unterschriftBuchhaltung": "Vérifié comptabilité",
+      "datei": "Decompte de frais"
     }
   },
   "finanzen": {
@@ -7381,7 +7539,8 @@
     "spesen": {
       "erfassen": "Saisir des frais",
       "keine": "Aucun frais saisi.",
-      "offen": "Ouvert {{betrag}}"
+      "offen": "Ouvert {{betrag}}",
+      "wirdAusbezahlt": "{{betrag}} sont vérifiés et seront versés."
     },
     "plan": {
       "titel": "Mon planning",
