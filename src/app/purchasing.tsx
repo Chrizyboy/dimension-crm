@@ -26,7 +26,7 @@ export const Route = createFileRoute('/purchasing')({
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
     // Ein Projekt (Materialliste) gehört zum Reiter «Material», auch wenn es per Link geöffnet wird.
-    const aktiv = reiter ?? (projekt ? 'material' : 'bestellungen')
+    const aktiv = reiter ?? (projekt ? 'material' : 'leitstand')
     return (
       <Suspense>
         <Einkauf
@@ -39,7 +39,7 @@ export const Route = createFileRoute('/purchasing')({
             const p = z.projekt === undefined ? projekt : z.projekt
             void navigate({
               search: {
-                ...(r !== 'bestellungen' ? { reiter: r } : {}),
+                ...(r !== 'leitstand' ? { reiter: r } : {}),
                 ...(b ? { bestellung: b } : {}),
                 ...(p && r === 'material' ? { projekt: p } : {}),
               },

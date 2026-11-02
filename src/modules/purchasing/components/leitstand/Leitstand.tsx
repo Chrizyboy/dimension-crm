@@ -22,10 +22,12 @@ export function Leitstand({
   onBestellung,
   onBestellen,
   onMaterialplan,
+  onListe,
 }: {
   onBestellung: (id: string) => void
   onBestellen: (lieferantId: string | null) => void
   onMaterialplan: () => void
+  onListe: () => void
 }) {
   const { t } = useTranslation()
   const liste = useBestellungen('alle')
@@ -57,12 +59,12 @@ export function Leitstand({
         onBestellen(null)
       },
     },
-    { zahl: String(kz.freigabe), text: t('einkauf.ls.kz.freigabe'), klick: () => {} },
+    { zahl: String(kz.freigabe), text: t('einkauf.ls.kz.freigabe'), klick: onListe },
     {
       zahl: String(kz.abOffen),
       text: t('einkauf.ls.kz.abOffen'),
       ...(kz.abOffen ? { ton: 'warn' as const } : {}),
-      klick: () => {},
+      klick: onListe,
     },
     {
       zahl: String(kz.gefaehrdet),
@@ -75,7 +77,7 @@ export function Leitstand({
       text: t('einkauf.ls.kz.baustellen'),
       klick: onMaterialplan,
     },
-    { zahl: `CHF ${formatChf(kz.offenRappen)}`, text: t('einkauf.ls.kz.offen'), klick: () => {} },
+    { zahl: `CHF ${formatChf(kz.offenRappen)}`, text: t('einkauf.ls.kz.offen'), klick: onListe },
   ]
 
   return (
