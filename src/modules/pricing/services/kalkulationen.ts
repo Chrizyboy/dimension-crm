@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabase'
 import type { Json } from '@/types/datenbank'
-import type { KalkPosition, Kalkulation, Preisvorlage } from '../types'
+import type { Freigabe, KalkPosition, Kalkulation, Preisvorlage, Variante } from '../types'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -17,7 +17,9 @@ export async function ladeKalkulationen(): Promise<
 > {
   const { data, error } = await db()
     .from('kalkulationen')
-    .select('id, titel, offerte_id, rabatt, notiz, positionen, total_rappen, geaendert_am, offerten(nummer)')
+    .select(
+      'id, titel, offerte_id, rabatt, notiz, positionen, varianten, variante, freigabe, total_rappen, geaendert_am, offerten(nummer)',
+    )
     .is('geloescht_am', null)
     .order('geaendert_am', { ascending: false })
   if (error) throw error
@@ -28,6 +30,9 @@ export async function ladeKalkulationen(): Promise<
     rabattProzent: k.rabatt ?? 0,
     notiz: k.notiz ?? '',
     positionen: positionenAus(k.positionen),
+    varianten: Array.isArray(k.varianten) ? (k.varianten as unknown as Variante[]) : [],
+    variante: k.variante,
+    freigabe: (k.freigabe ?? null) as Freigabe | null,
     geaendertAm: k.geaendert_am,
     totalRappen: k.total_rappen,
     offerteNummer: k.offerten?.nummer ?? null,
@@ -45,6 +50,8 @@ export async function speichereKalkulation(
     rabatt: k.rabattProzent,
     notiz: k.notiz,
     positionen: k.positionen as unknown as NonNullable<Json>,
+    varianten: (k.varianten ?? []) as unknown as NonNullable<Json>,
+    variante: k.varianten?.length ? (k.variante ?? k.varianten[0]?.id ?? null) : null,
     leistung_kwp: s.kwp || null,
     netto_rappen: s.netto,
     total_rappen: s.total,
@@ -114,12 +121,36 @@ export async function ladeOffertAuswahl(): Promise<{ id: string; nummer: string;
   return data.map((o) => ({ id: o.id ?? '', nummer: o.nummer ?? '', name: o.name ?? '' }))
 }
 
-/** «In Offerte übernehmen»: Betrag exkl. MWST, kWp, Module, Wechselrichter und Batterie. */
-export async function uebernimmInOfferte(offerteId: string, werte: Record<string, unknown>) {
-  const { error } = await db().rpc('offerte_werte_setzen', {
-    p_offerte: offerteId,
-    p: werte as Json,
-    p_quelle: 'kalkulation',
-  })
+/**
+ * «In Offerte übernehmen» (gespeicherte Kalkulation, gewählte Variante): Betrag exkl. MWST, kWp, Module,
+ * Wechselrichter und Batterie. Die Datenbank prüft vorher die Freigabe (Rabatt, Marge).
+ */
+export async function uebernimmInOfferte(kalkulationId: string) {
+  const { error } = await db().rpc('kalkulation_in_offerte', { p_kalk: kalkulationId })
+  if (error) throw error
+}
+
+/** Stand der Freigabe einer gespeicherten Kalkulation. */
+export async function pruefeFreigabe(kalkulationId: string) {
+  const { data, error } = await db().rpc('kalkulation_freigabe_pruefen', { p_kalk: kalkulationId })
+  if (error) throw error
+  const r = (data ?? {}) as Record<string, unknown>
+  return {
+    noetig: r.noetig === true,
+    freigegeben: r.freigegeben === true,
+    gruende: Array.isArray(r.gruende) ? (r.gruende as string[]) : [],
+    status: (r.status as string | null) ?? null,
+  }
+}
+
+/** Freigabe bei der Geschäftsleitung anfragen (Glocke). */
+export async function frageFreigabe(kalkulationId: string, notiz: string) {
+  const { error } = await db().rpc('kalkulation_freigabe_anfragen', { p_kalk: kalkulationId, p_notiz: notiz })
+  if (error) throw error
+}
+
+/** Freigeben oder ablehnen (nur Geschäftsleitung); Ablehnen braucht einen Grund. */
+export async function entscheideFreigabe(kalkulationId: string, ok: boolean, grund: string) {
+  const { error } = await db().rpc('kalkulation_freigeben', { p_kalk: kalkulationId, p_ok: ok, p_grund: grund })
   if (error) throw error
 }
