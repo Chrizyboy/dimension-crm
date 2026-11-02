@@ -3333,7 +3333,7 @@
   },
   "einkauf": {
     "titel": "Achats & matériel",
-    "beschreibung": "Matériel par projet, commandes avec validation et PDF par e-mail, réception et stock de Bulle.",
+    "beschreibung": "Commander à temps et de façon groupée ce dont les chantiers ont besoin, contrôler confirmation, livraison et facture. Stock de Bulle.",
     "reiter": {
       "bestellungen": "Commandes",
       "material": "Plan matériel",

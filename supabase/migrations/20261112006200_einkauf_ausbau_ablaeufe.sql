@@ -180,6 +180,8 @@ begin
      set ab_nummer = coalesce(nullif(trim(p ->> 'nummer'), ''), ab_nummer),
          ab_am = coalesce(nullif(p ->> 'datum', '')::date, ab_am, current_date),
          ab_termin = coalesce(nullif(p ->> 'termin', '')::date, ab_termin),
+         -- Der bestätigte Termin gilt ab jetzt als Liefertermin (Leitstand, Materialplan, Überfällig).
+         liefertermin = coalesce(nullif(p ->> 'termin', '')::date, liefertermin),
          ab_total_rappen = coalesce(nullif(p ->> 'total_rappen', '')::bigint, ab_total_rappen),
          status = case when status = 'freigegeben' then 'bestellt' else status end,
          bestellt_am = coalesce(bestellt_am, current_date)

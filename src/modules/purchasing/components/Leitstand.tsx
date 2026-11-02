@@ -108,7 +108,7 @@ export function Leitstand({
         tabIndex={0}
         role="region"
         aria-label={t('einkauf.ls.tafel')}
-        className="focus-visible:ring-ring grid auto-cols-[minmax(15rem,1fr)] grid-flow-col gap-3 overflow-x-auto rounded-lg pb-2 outline-none focus-visible:ring-2"
+        className="focus-visible:ring-ring grid auto-cols-[minmax(11.5rem,1fr)] grid-flow-col gap-3 overflow-x-auto rounded-lg pb-2 outline-none focus-visible:ring-2"
       >
         <Spalte titel={t('einkauf.ls.spalte.zuBestellen')} anzahl={gruppen.length}>
           {gruppen.map((g) => (
