@@ -5,7 +5,7 @@
 -- «finanzen» nur mit Recht «finanzen», Liquidität (finanz_einstellungen, Zahlungen) nur für die Buchhaltung.
 -- Ausführen: npm run db:test
 begin;
-select plan(43);
+select plan(44);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000010a1', 'p10-bh@test.local'),
@@ -111,9 +111,14 @@ select is((select art || '|' || jsonb_array_length(positionen) || '|' || total_r
 select public.rechnung_stellen((select id from t_r where name = 'sch'));
 select is((select status from public.nachtraege where id = '00000000-0000-0000-0000-000000001091'), 'verrechnet', 'Nachtrag verrechnet');
 
--- Mahnen
+-- Mahnen (per Post von Hand; seit 2.11.2026 nur die Freigabe-Person, erst Erinnerung, dann Stufe 1–3)
+reset role;
+update public.einstellungen set wert = jsonb_set(wert, '{mahnlauf,freigabe_person_ids}', '["00000000-0000-0000-0000-0000000010b1"]')
+ where schluessel = 'finanzen';
+set local role authenticated;
 select throws_ok($$ select public.rechnung_mahnen((select id from t_r where name = 'sch')) $$, 'P0001', 'finanzen.nicht_ueberfaellig',
   'nicht fällige Rechnung wird nicht gemahnt');
+select is(public.rechnung_mahnen((select id from t_r where name = 'mon')), 0, 'zuerst die Zahlungserinnerung');
 select public.rechnung_mahnen((select id from t_r where name = 'mon'));
 select public.rechnung_mahnen((select id from t_r where name = 'mon'));
 select is(public.rechnung_mahnen((select id from t_r where name = 'mon')), 3, 'Mahnstufe 3');
