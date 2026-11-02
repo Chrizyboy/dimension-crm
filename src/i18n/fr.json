@@ -5794,13 +5794,16 @@
   },
   "handbuch": {
     "titel": "Manuel",
-    "beschreibung": "Mode d’emploi de chaque domaine, nos processus, des vidéos explicatives et tes signalements à l’administration.",
+    "beschreibung": "Comment tout fonctionne : un chapitre par domaine, étape par étape. Avec nos processus, vidéos et tes signalements.",
     "reiter": {
-      "anleitung": "Mode d’emploi",
       "prozesse": "Processus",
       "videos": "Vidéos",
       "meldungen": "Signalements",
-      "start": "Premiers pas"
+      "start": "Premiers pas",
+      "fuerdich": "Pour toi",
+      "kapitel": "Chapitres",
+      "begriffe": "Termes A–Z",
+      "neu": "Nouveautés"
     },
     "nichtsGefunden": "Aucun résultat",
     "titelFeld": "Titre",
@@ -5932,14 +5935,13 @@
       "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
     "anleitung": {
-      "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
-      "suche": "Chercher dans le mode d’emploi",
       "schneller": "Pour aller plus vite",
       "tippSuche": "Chercher un domaine, un contact ou une action",
       "tippSprung": "Aller à, p. ex. aux clients",
       "tippNeu": "Nouvelle entrée dans les listes",
       "tippFilter": "Dans les listes, aller au champ de recherche",
-      "alleKuerzel": "Afficher tous les raccourcis (?)"
+      "alleKuerzel": "Afficher tous les raccourcis (?)",
+      "tippHilfe": "Aide pour le domaine où tu te trouves"
     },
     "fehler": {
       "titel": "Saisis un titre.",
@@ -6004,6 +6006,55 @@
           ]
         }
       ]
+    },
+    "bereichFeld": "Domaine",
+    "bereichHinweis": "Apparaît dans le chapitre de ce domaine et dans l’aide (F1).",
+    "keinBereich": "Aucun domaine (seulement ici)",
+    "kapitel": {
+      "intro": "Un chapitre complet par domaine : à quoi il sert, étape par étape, statuts, ce qui est automatique, règles et questions fréquentes.",
+      "alleBereiche": "Afficher aussi les autres domaines",
+      "anleitungen_one": "{{count}} guide",
+      "anleitungen_other": "{{count}} guides",
+      "stand": "État au {{datum}}",
+      "inhalt": "Contenu du chapitre",
+      "alle": "Tous les chapitres",
+      "oeffnen": "Ouvrir {{bereich}}",
+      "drucken": "Imprimer / PDF",
+      "melden": "Quelque chose ne joue pas ? Signaler",
+      "fehlt": "Ce domaine n’a pas encore de chapitre",
+      "fehltText": "Signale-le, il sera complété.",
+      "unterlagen": "Processus et vidéos de ce domaine",
+      "prozess": "Processus · PDF · V{{version}}",
+      "video": "Vidéo · {{dauer}}"
+    },
+    "fuerDich": {
+      "titel": "Ta journée : {{rolle}}",
+      "rolle": "Rôle",
+      "neu": "Nouveau pour toi",
+      "hilfeTitel": "De l’aide là où tu es",
+      "hilfeText1": "Dans chaque domaine,",
+      "hilfeText2": "ou le point d’interrogation en haut à droite affiche le bon chapitre à côté, sans quitter ton travail."
+    },
+    "begriffe": {
+      "intro": "Ce que signifient les mots du CRM, de A à Z.",
+      "suche": "Chercher un terme"
+    },
+    "neu": {
+      "leer": "Pas encore de nouveautés",
+      "ungesehenSr": "nouveautés non lues :"
+    },
+    "suche": {
+      "feld": "Chercher dans le manuel",
+      "beispiel": "p. ex. « envoyer l’offre », « rabais », « MES »",
+      "kuerzel": "Chercher dans le manuel",
+      "anleitungen": "Dans les chapitres",
+      "mehr": "Termes, processus et vidéos",
+      "leerText": "Essaie un autre mot ou signale ce qui manque."
+    },
+    "hilfe": {
+      "knopf": "Aide pour ce domaine (F1)",
+      "titel": "Aide · {{bereich}}",
+      "ganz": "Chapitre complet"
     }
   },
   "update": {

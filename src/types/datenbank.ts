@@ -3669,6 +3669,7 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          bereich: string | null
           beschreibung_de: string | null
           beschreibung_fr: string | null
           datei_de_id: string | null
@@ -3693,6 +3694,7 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art: string
+          bereich?: string | null
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
           datei_de_id?: string | null
@@ -3716,6 +3718,7 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          bereich?: string | null
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
           datei_de_id?: string | null
@@ -12025,6 +12028,7 @@ export type Database = {
       grossprojekt_vermerken: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
       grossprojekt_vorrat_freigeben: { Args: Record<PropertyKey, never>; Returns: number }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
+      handbuch_bereich_setzen: { Args: { p_bereich: string; p_id: string }; Returns: undefined }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_pruefen: { Args: Record<PropertyKey, never>; Returns: number }
       handbuch_speichern: {
