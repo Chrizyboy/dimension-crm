@@ -1289,6 +1289,66 @@ export type Database = {
           },
         ]
       }
+      ausschreibung_angebote: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anbieter: string
+          ausschreibung_id: string
+          bemerkung: string | null
+          betrag_rappen: number
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          ort: string | null
+          rang: number | null
+          wir: boolean
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter: string
+          ausschreibung_id: string
+          bemerkung?: string | null
+          betrag_rappen: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          rang?: number | null
+          wir?: boolean
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter?: string
+          ausschreibung_id?: string
+          bemerkung?: string | null
+          betrag_rappen?: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          rang?: number | null
+          wir?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ausschreibung_angebote_ausschreibung_id_fkey'
+            columns: ['ausschreibung_id']
+            isOneToOne: false
+            referencedRelation: 'ausschreibungen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       ausschreibung_kontakte: {
         Row: {
           alt_daten: Json | null
@@ -1409,7 +1469,13 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          anbieter_anzahl: number | null
+          angebot_rappen: number | null
+          arge: boolean | null
           art: string
+          auftragsart: string | null
+          ausfuehrung_bis: string | null
+          ausfuehrung_von: string | null
           ausloeser: string | null
           ausloeser_am: string | null
           bauherr: string | null
@@ -1417,9 +1483,16 @@ export type Database = {
           begruendung: string | null
           beobachten_seit: string | null
           beschreibung: string | null
+          beschwerde_bis: string | null
+          bindefrist_monate: number | null
+          checkliste: NonNullable<Json>
+          debriefing_am: string | null
+          eignung_ref_kwp: number | null
+          eingabe_adresse: string | null
           eingereicht_am: string | null
           eingereicht_form: string | null
           entscheid_am: string | null
+          entscheid_datum: string | null
           entscheid_von: string | null
           erstellt_am: string
           erstellt_von: string | null
@@ -1428,41 +1501,67 @@ export type Database = {
           frist_begehung: string | null
           frist_eingabe: string | null
           frist_fragen: string | null
+          frist_oeffnung: string | null
           geaendert_am: string
           geloescht_am: string | null
           gemeinde: string | null
+          gewinner: string | null
+          gng_am: string | null
+          gng_entscheid: string | null
+          gng_grund: string | null
+          gng_von: string | null
+          gng_vorschlag: Json | null
           grund: string | null
           haupt_id: string | null
           id: string
           kanton: string | null
           kontaktsperre_bis: string | null
           korrigiert_am: string | null
+          kriterien: NonNullable<Json>
+          leistung_kwp: number | null
           nummer: string | null
           offerte_id: string | null
+          ohne_protokoll: string | null
           parzelle: string | null
           plz: string | null
           prioritaet: string | null
+          projekt_id: string | null
+          pruefung_am: string | null
+          pruefung_von: string | null
           publiziert_am: string | null
           punkte: number
           quell_id: string | null
           quell_url: string | null
           quelle: string
+          rang: number | null
           rohdaten: Json | null
+          schaetzung_rappen: number | null
           sprache: string
           spur: string
           standort_id: string | null
           status: string
           titel: string
+          varianten: boolean | null
+          verantwortlich_id: string | null
+          verfahren: string | null
           vergabestelle: string | null
           vergabestelle_kontakt_id: string | null
           verkaufschance_id: string | null
           wiedervorlage_am: string | null
+          zuschlag_erwartet: string | null
+          zuschlag_rappen: number | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anbieter_anzahl?: number | null
+          angebot_rappen?: number | null
+          arge?: boolean | null
           art: string
+          auftragsart?: string | null
+          ausfuehrung_bis?: string | null
+          ausfuehrung_von?: string | null
           ausloeser?: string | null
           ausloeser_am?: string | null
           bauherr?: string | null
@@ -1470,9 +1569,16 @@ export type Database = {
           begruendung?: string | null
           beobachten_seit?: string | null
           beschreibung?: string | null
+          beschwerde_bis?: string | null
+          bindefrist_monate?: number | null
+          checkliste?: NonNullable<Json>
+          debriefing_am?: string | null
+          eignung_ref_kwp?: number | null
+          eingabe_adresse?: string | null
           eingereicht_am?: string | null
           eingereicht_form?: string | null
           entscheid_am?: string | null
+          entscheid_datum?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -1481,40 +1587,66 @@ export type Database = {
           frist_begehung?: string | null
           frist_eingabe?: string | null
           frist_fragen?: string | null
+          frist_oeffnung?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           gemeinde?: string | null
+          gewinner?: string | null
+          gng_am?: string | null
+          gng_entscheid?: string | null
+          gng_grund?: string | null
+          gng_von?: string | null
+          gng_vorschlag?: Json | null
           grund?: string | null
           haupt_id?: string | null
           id?: string
           kanton?: string | null
           kontaktsperre_bis?: string | null
           korrigiert_am?: string | null
+          kriterien?: NonNullable<Json>
+          leistung_kwp?: number | null
           nummer?: string | null
           offerte_id?: string | null
+          ohne_protokoll?: string | null
           parzelle?: string | null
           plz?: string | null
           prioritaet?: string | null
+          projekt_id?: string | null
+          pruefung_am?: string | null
+          pruefung_von?: string | null
           publiziert_am?: string | null
           punkte?: number
           quell_id?: string | null
           quell_url?: string | null
           quelle: string
+          rang?: number | null
           rohdaten?: Json | null
+          schaetzung_rappen?: number | null
           sprache?: string
           spur: string
           standort_id?: string | null
           status?: string
           titel: string
+          varianten?: boolean | null
+          verantwortlich_id?: string | null
+          verfahren?: string | null
           vergabestelle?: string | null
           vergabestelle_kontakt_id?: string | null
           verkaufschance_id?: string | null
           wiedervorlage_am?: string | null
+          zuschlag_erwartet?: string | null
+          zuschlag_rappen?: number | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anbieter_anzahl?: number | null
+          angebot_rappen?: number | null
+          arge?: boolean | null
           art?: string
+          auftragsart?: string | null
+          ausfuehrung_bis?: string | null
+          ausfuehrung_von?: string | null
           ausloeser?: string | null
           ausloeser_am?: string | null
           bauherr?: string | null
@@ -1522,9 +1654,16 @@ export type Database = {
           begruendung?: string | null
           beobachten_seit?: string | null
           beschreibung?: string | null
+          beschwerde_bis?: string | null
+          bindefrist_monate?: number | null
+          checkliste?: NonNullable<Json>
+          debriefing_am?: string | null
+          eignung_ref_kwp?: number | null
+          eingabe_adresse?: string | null
           eingereicht_am?: string | null
           eingereicht_form?: string | null
           entscheid_am?: string | null
+          entscheid_datum?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -1533,40 +1672,67 @@ export type Database = {
           frist_begehung?: string | null
           frist_eingabe?: string | null
           frist_fragen?: string | null
+          frist_oeffnung?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           gemeinde?: string | null
+          gewinner?: string | null
+          gng_am?: string | null
+          gng_entscheid?: string | null
+          gng_grund?: string | null
+          gng_von?: string | null
+          gng_vorschlag?: Json | null
           grund?: string | null
           haupt_id?: string | null
           id?: string
           kanton?: string | null
           kontaktsperre_bis?: string | null
           korrigiert_am?: string | null
+          kriterien?: NonNullable<Json>
+          leistung_kwp?: number | null
           nummer?: string | null
           offerte_id?: string | null
+          ohne_protokoll?: string | null
           parzelle?: string | null
           plz?: string | null
           prioritaet?: string | null
+          projekt_id?: string | null
+          pruefung_am?: string | null
+          pruefung_von?: string | null
           publiziert_am?: string | null
           punkte?: number
           quell_id?: string | null
           quell_url?: string | null
           quelle?: string
+          rang?: number | null
           rohdaten?: Json | null
+          schaetzung_rappen?: number | null
           sprache?: string
           spur?: string
           standort_id?: string | null
           status?: string
           titel?: string
+          varianten?: boolean | null
+          verantwortlich_id?: string | null
+          verfahren?: string | null
           vergabestelle?: string | null
           vergabestelle_kontakt_id?: string | null
           verkaufschance_id?: string | null
           wiedervorlage_am?: string | null
+          zuschlag_erwartet?: string | null
+          zuschlag_rappen?: number | null
         }
         Relationships: [
           {
             foreignKeyName: 'ausschreibungen_entscheid_von_fkey'
             columns: ['entscheid_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_gng_von_fkey'
+            columns: ['gng_von']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
@@ -1600,10 +1766,52 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_pruefung_von_fkey'
+            columns: ['pruefung_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'ausschreibungen_standort_id_fkey'
             columns: ['standort_id']
             isOneToOne: false
             referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -2801,6 +3009,63 @@ export type Database = {
           zahlungsfrist_tage?: number
         }
         Relationships: []
+      }
+      firmen_nachweise: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          ausgestellt_am: string
+          datei_pfad: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          firma_id: string
+          geaendert_am: string
+          geloescht_am: string | null
+          gueltig_bis: string
+          id: string
+          notiz: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          ausgestellt_am: string
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis: string
+          id?: string
+          notiz?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          ausgestellt_am?: string
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id?: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string
+          id?: string
+          notiz?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'firmen_nachweise_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'firmen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       fixkosten: {
         Row: {
@@ -7992,6 +8257,102 @@ export type Database = {
           },
         ]
       }
+      submission_referenzen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          ansprechperson: string | null
+          auftraggeber: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          freigegeben: boolean
+          geaendert_am: string
+          gebaeude: string | null
+          geloescht_am: string | null
+          id: string
+          jahr: number | null
+          leistung_kwp: number | null
+          notiz: string | null
+          ort: string | null
+          projekt_id: string | null
+          sprache: string
+          telefon: string | null
+          titel: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ansprechperson?: string | null
+          auftraggeber?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          freigegeben?: boolean
+          geaendert_am?: string
+          gebaeude?: string | null
+          geloescht_am?: string | null
+          id?: string
+          jahr?: number | null
+          leistung_kwp?: number | null
+          notiz?: string | null
+          ort?: string | null
+          projekt_id?: string | null
+          sprache?: string
+          telefon?: string | null
+          titel: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ansprechperson?: string | null
+          auftraggeber?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          freigegeben?: boolean
+          geaendert_am?: string
+          gebaeude?: string | null
+          geloescht_am?: string | null
+          id?: string
+          jahr?: number | null
+          leistung_kwp?: number | null
+          notiz?: string | null
+          ort?: string | null
+          projekt_id?: string | null
+          sprache?: string
+          telefon?: string | null
+          titel?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       subunternehmer: {
         Row: {
           aktiv: boolean
@@ -10542,6 +10903,21 @@ export type Database = {
       ausschreibung_einlesen: { Args: { p: Json }; Returns: Json }
       ausschreibung_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
       ausschreibung_erfassen: { Args: { p: Json }; Returns: string }
+      ausschreibung_gng: { Args: { p_id: string }; Returns: Json }
+      ausschreibung_mitbewerber: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          abstand_prozent: number
+          anbieter: string
+          erster: number
+          kantone: string
+          orte: string
+          rappen_pro_kwp: number
+          submissionen: number
+          zuletzt: string
+        }[]
+      }
+      ausschreibungen_auswertung: { Args: { p_bis: string; p_von: string }; Returns: Json }
       ausschreibungen_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_ids: string[] }; Returns: number }
       ausschreibungen_pruefen: { Args: Record<PropertyKey, never>; Returns: Json }
       ausschreibungen_tagesbericht: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -10582,6 +10958,7 @@ export type Database = {
       betrieb_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
+      firmen_nachweis_speichern: { Args: { p: Json }; Returns: string }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
@@ -10805,6 +11182,7 @@ export type Database = {
       nachkalkulation: { Args: { p_projekt: string }; Returns: Json }
       nachtrag_speichern: { Args: { p: Json }; Returns: string }
       nachtrag_status: { Args: { p_grund?: string; p_id: string; p_status: string }; Returns: undefined }
+      nachweise_melden: { Args: Record<PropertyKey, never>; Returns: number }
       newsletter_empfaenger_fuer: {
         Args: { p_newsletter: string }
         Returns: {
@@ -10908,6 +11286,18 @@ export type Database = {
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      referenzen_vorschlaege: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          auftraggeber: string
+          jahr: number
+          leistung_kwp: number
+          ort: string
+          projekt_id: string
+          sprache: string
+          titel: string
+        }[]
+      }
       ressource_eintrag_erfassen: {
         Args: {
           p_art: string
@@ -11113,6 +11503,10 @@ export type Database = {
       spesen_auszahlen: { Args: { p_datum?: string; p_ids: string[] }; Returns: number }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      submission_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_schluessel: string }; Returns: Json }
+      submission_protokoll: { Args: { p_id: string; p_zeilen: Json }; Returns: number }
+      submission_pruefen: { Args: { p_id: string }; Returns: undefined }
+      submission_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
