@@ -283,3 +283,48 @@ export interface Belegung {
   grund: 'abwesend' | 'baustelle' | 'service'
   text: string
 }
+
+/** Anlage-Akte (anlage_akte): alles zu einer gebauten Anlage in einer Abfrage. */
+export interface AnlageAkte {
+  anlage: (Omit<Anlage, 'kunde' | 'adresse' | 'projekt' | 'kontakt_id'> & { komponenten: Komponente[] }) | null
+  kunde: { id: string; name: string; telefon: string | null; email: string | null; sprache: string } | null
+  ort: {
+    strasse: string | null
+    plz: string | null
+    ort: string | null
+    kanton: string | null
+    netzbetreiber: string | null
+  } | null
+  projekt: { id: string; nummer: string; titel: string | null; elektriker: string | null } | null
+  vertraege: {
+    id: string
+    nummer: string | null
+    status: string | null
+    naechste_wartung: string | null
+    letzte_wartung: string | null
+    preis_rappen: number | null
+    rhythmus_monate: number | null
+  }[]
+  faelle: {
+    id: string
+    nummer: string
+    titel: string
+    status: string
+    kategorie: string | null
+    komponente: string | null
+    garantie: boolean | null
+    erstellt_am: string
+    erledigt_am: string | null
+  }[]
+  rapporte: { id: string; nummer: string | null; art: string; datum: string; abgeschlossen_am: string | null }[]
+  dokumente: {
+    id: string
+    name: string
+    mime_typ: string | null
+    ordner: string | null
+    speicher_pfad: string | null
+    sharepoint_url: string | null
+    hochgeladen_am: string | null
+  }[]
+  rma_offen: number
+}

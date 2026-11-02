@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabase'
-import type { Akte, Belegung, Leitstandzahlen, VerlaufArt } from '../types'
+import type { Akte, AnlageAkte, Belegung, Leitstandzahlen, VerlaufArt } from '../types'
 
 /** Datenzugriff für die Fall-Akte und den Leitstand (Abläufe in der Datenbank, service_*). */
 function db() {
@@ -119,4 +119,28 @@ export async function ladeBelegung(datum: string, ohneFall: string): Promise<Bel
   for (const t of srv.data)
     for (const p of t.personen ?? []) b.push({ person_id: p, grund: 'service', text: t.nummer ?? '' })
   return b
+}
+
+/** Anlage-Akte: Komponenten, Kunde, Ort, Projekt, Wartungsverträge, Fälle, Rapporte, Dokumente. */
+export async function ladeAnlageAkte(id: string): Promise<AnlageAkte> {
+  const { data, error } = await db().rpc('anlage_akte', { p_id: id })
+  if (error) throw error
+  const a = (data ?? {}) as Partial<AnlageAkte>
+  return {
+    anlage: a.anlage ? { ...a.anlage, komponenten: liste(a.anlage.komponenten) } : null,
+    kunde: a.kunde ?? null,
+    ort: a.ort ?? null,
+    projekt: a.projekt ?? null,
+    vertraege: liste(a.vertraege),
+    faelle: liste(a.faelle),
+    rapporte: liste(a.rapporte),
+    dokumente: liste(a.dokumente),
+    rma_offen: a.rma_offen ?? 0,
+  }
+}
+
+/** Seriennummer einer Komponente vor Ort ändern (alte Nummer bleibt im Verlauf des Falls). */
+export async function seriennummerSetzen(fallId: string, nr: number, seriennummer: string): Promise<void> {
+  const { error } = await db().rpc('service_seriennummer', { p_id: fallId, p_nr: nr, p_seriennummer: seriennummer })
+  if (error) throw error
 }

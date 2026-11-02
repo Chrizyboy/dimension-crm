@@ -24,6 +24,8 @@ export interface FallVorlage {
   beschreibung: string
   kunde: GewaehlterKunde | null
   quelle?: string
+  /** Anlage vorwählen (aus der Anlage-Akte). */
+  anlageId?: string
 }
 
 const QUELLEN = ['anruf', 'mail', 'hand'] as const
@@ -59,7 +61,7 @@ export function FallDialog({
     kategorie: 'stoerung',
     prioritaet: 'normal',
     garantie: false,
-    anlage_id: '',
+    anlage_id: vorlage?.anlageId ?? '',
     person_id: '',
     termin_am: '',
     quelle: vorlage?.quelle ?? (vorlage ? 'mail' : 'anruf'),

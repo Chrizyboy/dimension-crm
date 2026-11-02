@@ -3111,6 +3111,31 @@
         "baustelle": "{{name}} ist auf der Baustelle {{was}} eingeteilt",
         "service": "{{name}} hat schon den Service-Termin {{was}}"
       }
+    },
+    "anlage": {
+      "zurueck": "Zurück zu den Anlagen",
+      "nichtGefunden": "Diese Anlage gibt es nicht mehr oder du darfst sie nicht sehen.",
+      "offen_one": "{{count}} offener Fall",
+      "offen_other": "{{count}} offene Fälle",
+      "rma_one": "{{count}} beim Hersteller",
+      "rma_other": "{{count}} beim Hersteller",
+      "bearbeiten": "Anlage bearbeiten",
+      "netzbetreiber": "Netzbetreiber",
+      "elektriker": "Elektriker",
+      "betrieb": "Betrieb",
+      "portal": "Portal öffnen",
+      "wartung": "Wartung",
+      "keinVertrag": "Kein Wartungsvertrag.",
+      "vertrag": "Wartungsvertrag",
+      "naechste": "nächste {{datum}}",
+      "keineKomponenten": "Keine Komponenten erfasst. «Anlage bearbeiten» ergänzt sie.",
+      "faelle": "Service-Fälle",
+      "keineFaelle": "Noch kein Service-Fall an dieser Anlage.",
+      "rapporte": "Rapporte",
+      "keineRapporte": "Noch kein Rapport.",
+      "dokumente": "Dokumente",
+      "keineDokumente": "Keine Dokumente am Projekt oder an der Anlage.",
+      "akteOeffnen": "Ganze Anlage-Akte öffnen"
     }
   },
   "wartung": {
