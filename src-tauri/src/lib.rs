@@ -19,7 +19,8 @@ pub fn run() {
             }))
             // Fenstergrösse und -position werden gemerkt.
             .plugin(tauri_plugin_window_state::Builder::default().build())
-            // Optional mit Windows starten (Schalter folgt in den Einstellungen).
+            // Mit Windows starten: beim ersten Start eingeschaltet (Wunsch Chris, 2.11.2026), danach gilt der
+            // Schalter in «Mein Konto».
             .plugin(tauri_plugin_autostart::init(
                 tauri_plugin_autostart::MacosLauncher::LaunchAgent,
                 None,
@@ -33,6 +34,8 @@ pub fn run() {
     builder
         .plugin(tauri_plugin_notification::init())
         .setup(|app| {
+            #[cfg(desktop)]
+            autostart_beim_ersten_start(app);
             if cfg!(debug_assertions) {
                 app.handle().plugin(
                     tauri_plugin_log::Builder::default()
@@ -44,4 +47,22 @@ pub fn run() {
         })
         .run(tauri::generate_context!())
         .expect("Die App konnte nicht gestartet werden");
+}
+
+/// Schaltet «Mit Windows starten» einmalig ein. Eine Merk-Datei im App-Ordner sorgt dafür, dass ein
+/// späteres Ausschalten in «Mein Konto» nicht beim nächsten Start wieder überschrieben wird.
+#[cfg(desktop)]
+fn autostart_beim_ersten_start(app: &tauri::App) {
+    use tauri_plugin_autostart::ManagerExt;
+    let Ok(ordner) = app.path().app_config_dir() else {
+        return;
+    };
+    let merker = ordner.join("autostart-eingerichtet");
+    if merker.exists() {
+        return;
+    }
+    if app.autolaunch().enable().is_ok() {
+        let _ = std::fs::create_dir_all(&ordner);
+        let _ = std::fs::write(&merker, b"1");
+    }
 }

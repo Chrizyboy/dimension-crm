@@ -65,6 +65,11 @@ export function AnlageBox({ f, akte }: { f: ServiceFall; akte: Akte | undefined 
                 </a>
               </Zeile>
             )}
+            {f.anlage_id && (
+              <a href={`#/aftersales?anlage=${f.anlage_id}`} className="text-accent-ink mt-1 text-sm underline">
+                {t('service.anlage.akteOeffnen')}
+              </a>
+            )}
             {a.notiz && <p className="bg-muted/60 rounded-md p-2 text-xs whitespace-pre-wrap">{a.notiz}</p>}
           </dl>
         ) : (kundenAnlagen.data ?? []).length > 0 ? (

@@ -64,6 +64,43 @@ const ANTWORTEN: Record<string, unknown> = {
     kandidaten: [],
     mail: { von: 'Erika Ersatz <erika@ersatz.test>', betreff: 'Solaranlage', text: 'Guten Tag …', datum: '' },
   },
+  frage: {
+    gespraech_id: '00000000-0000-4000-8000-000000000039',
+    kosten_millirappen: 3200,
+    runde: {
+      frage: 'Welche Offerten über CHF 30000 warten?',
+      antwort: 'Eine Offerte wartet seit 31 Tagen und wurde nie nachgefasst.',
+      tabelle: {
+        tabelle: 'offerten',
+        spalten: ['nummer', 'kunde', 'betrag_rappen', 'angebot_am'],
+        zeilen: [
+          {
+            id: '00000000-0000-4000-8000-000000000391',
+            kontakt_id: '00000000-0000-4000-8000-000000000392',
+            nummer: 'OF-2026-0412',
+            kunde: 'Lea Beispiel',
+            betrag_rappen: 3895000,
+            angebot_am: '2026-10-02',
+          },
+        ],
+        mehr: false,
+      },
+      vorschlaege: [
+        {
+          art: 'aufgabe',
+          titel: 'Lea Beispiel anrufen',
+          begruendung: 'Seit 31 Tagen offen.',
+          tabelle: 'offerten',
+          id: '00000000-0000-4000-8000-000000000391',
+          faellig_am: '2026-11-03',
+          kundenart: null,
+          wunsch: null,
+        },
+      ],
+      quellen: ['offerten'],
+      am: new Date().toISOString(),
+    },
+  },
   beleg: {
     datum: '2026-10-20',
     betrag_rappen: 4250,
@@ -122,12 +159,20 @@ test('KI-Seite: Briefing, Reiter ohne Verstösse', async ({ page }) => {
   await kiErsetzen(page)
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/ai')
-  await expect(page.getByRole('heading', { name: 'KI-Assistent', level: 1 })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Assistent', level: 1 })).toBeVisible()
   const briefing = page.getByTestId('ki-briefing')
   await expect(briefing.getByText('Guten Morgen Anna')).toBeVisible()
   await expect(briefing.getByRole('link', { name: /Offerte nachfassen/ })).toHaveAttribute('href', /#\/tasks/)
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Kosten', 'Mein Schreibstil', 'Einstellungen']) {
+  for (const reiter of [
+    'Aufträge',
+    'Dokument lesen',
+    'Verlauf',
+    'Im CRM',
+    'Kosten',
+    'Mein Schreibstil',
+    'Einstellungen',
+  ]) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -139,7 +184,7 @@ test('Assistent: Entwurf, überarbeiten, weiter zur Mail', async ({ page }) => {
   const auftraege = await kiErsetzen(page)
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/ai')
-  await page.getByRole('button', { name: 'Öffnen' }).first().click()
+  await page.getByRole('button', { name: 'Text schreiben' }).click()
   const d = page.getByRole('dialog', { name: 'Mit KI schreiben' })
   await d.getByLabel('Was soll drinstehen?').fill('Nachfragen, ob Fragen offen sind')
   await d.getByRole('button', { name: 'Entwurf schreiben' }).click()
@@ -154,6 +199,30 @@ test('Assistent: Entwurf, überarbeiten, weiter zur Mail', async ({ page }) => {
   const mail = page.getByRole('dialog', { name: 'Mail prüfen und senden' })
   await expect(mail.getByLabel('Text')).toHaveValue(/Kurz nachgefragt/)
   await expect(mail.getByRole('button', { name: 'Senden' })).toBeVisible()
+  await page.keyboard.press('Escape')
+})
+
+test('Fragen ans CRM: Antwort mit Tabelle aus echten Werten und Vorschlag', async ({ page }) => {
+  const auftraege = await kiErsetzen(page)
+  await anmelden(page, 'admin@test.local')
+  await page.goto('/#/ai')
+  await page.getByLabel('Frage an den Assistenten').fill('Welche Offerten über CHF 30000 warten?')
+  await page.keyboard.press('Enter')
+  await expect(page.getByText('Eine Offerte wartet seit 31 Tagen')).toBeVisible()
+  await expect(page.getByRole('cell', { name: "CHF 38'950.00" })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'OF-2026-0412' })).toHaveAttribute('href', /#\/quotes\?offerte=/)
+  await expect(page.getByRole('button', { name: 'Aufgabe anlegen' })).toBeVisible()
+  expect(auftraege.find((a) => a.aktion === 'frage')?.eingabe.frage).toBe('Welche Offerten über CHF 30000 warten?')
+  expect(await verstoesse(page)).toEqual([])
+})
+
+test('Ctrl J öffnet den Assistenten mit dem offenen Datensatz', async ({ page }) => {
+  await kiErsetzen(page)
+  await anmelden(page, 'admin@test.local')
+  await page.goto('/#/today')
+  await page.keyboard.press('Control+j')
+  const d = page.getByRole('dialog', { name: 'Assistent' })
+  await expect(d.getByLabel('Frage an den Assistenten')).toBeVisible()
   await page.keyboard.press('Escape')
 })
 

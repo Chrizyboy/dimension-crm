@@ -6,6 +6,7 @@ import { Karte } from '@/components/ui/karte'
 import { formatTelefon } from '@/lib/format'
 import { adressText, naviLink, telLink } from '../lib/links'
 import type { RapportArt, TagEintrag } from '../types'
+import { ServiceVorOrt } from './ServiceVorOrt'
 
 /** Ein Einsatz oder Service-Termin im Tagesplan, mit allem, was man auf dem Weg zur Baustelle braucht. */
 export function TagKarte({
@@ -98,6 +99,8 @@ export function TagKarte({
           </div>
         )}
       </dl>
+
+      {e.typ === 'service' && e.service && <ServiceVorOrt s={e.service} aktiv={aktiv} />}
 
       {rapporte.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
