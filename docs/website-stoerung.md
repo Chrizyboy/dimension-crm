@@ -18,20 +18,20 @@ Der Browser ruft die Edge Function **nie** direkt auf: der Schlüssel liegt nur 
 - Optional Kopf `Idempotency-Key: <uuid>`: dieselbe Meldung zweimal gibt keinen zweiten Fall.
 - Körper JSON (auch `application/x-www-form-urlencoded` oder `multipart/form-data`), höchstens 64 kB.
 
-| Feld                            | Pflicht | Inhalt                                                      |
-| ------------------------------- | ------- | ----------------------------------------------------------- |
-| `name`                          | ja      | Vor- und Nachname                                           |
-| `email`                         | ja      | E-Mail                                                      |
-| `phone`                         | ja      | Telefon, mindestens 9 Ziffern                               |
-| `address`                       | ja      | Adresse der Anlage («Strasse Nr, PLZ Ort»)                  |
-| `project`                       | nein    | Projektnummer, falls bekannt                                |
-| `problem`                       | ja      | Art der Störung, Text der gewählten Option (DE oder FR)     |
-| `message`                       | nein    | Beschreibung                                                |
-| `consent`                       | ja      | `true` / `"on"`                                             |
-| `consentText`, `consentVersion` | nein    | Wortlaut und Fassung der Einwilligung (wird mitgespeichert) |
-| `lang`                          | nein    | `de` oder `fr` (Sprache der Eingangsbestätigung)            |
-| `page`                          | nein    | Seite, von der gesendet wurde                               |
-| `website`, `elapsedMs`          | nein    | Honeypot und Ausfüllzeit: gefüllt bzw. unter 2,5 s = Spam   |
+| Feld                            | Pflicht | Inhalt                                                           |
+| ------------------------------- | ------- | ---------------------------------------------------------------- |
+| `name`                          | ja      | Vor- und Nachname                                                |
+| `email`                         | ja      | E-Mail                                                           |
+| `phone`                         | ja      | Telefon, mindestens 9 Ziffern                                    |
+| `address`                       | ja      | Adresse der Anlage («Strasse Nr, PLZ Ort»)                       |
+| `project`                       | nein    | Projektnummer, falls bekannt                                     |
+| `problem`                       | ja      | Art der Störung, Text der gewählten Option (DE oder FR)          |
+| `message`                       | nein    | Beschreibung                                                     |
+| `consent`                       | ja      | `true` / `"on"`                                                  |
+| `consentText`, `consentVersion` | nein    | Wortlaut und Fassung der Einwilligung (wird mitgespeichert)      |
+| `lang`                          | nein    | `de` oder `fr` (Sprache der Eingangsbestätigung)                 |
+| `page`                          | nein    | Seite, von der gesendet wurde                                    |
+| `website`                       | nein    | Honeypot: gefüllt = Spam (die Website filtert Spam schon selbst) |
 
 ## Antworten
 
@@ -56,6 +56,8 @@ Der Browser ruft die Edge Function **nie** direkt auf: der Schlüssel liegt nur 
 ## Einrichten
 
 1. Schlüssel erzeugen (`openssl rand -hex 32`) und als Secret setzen: `npx supabase secrets set STOERUNG_SCHLUESSEL=…`
-2. `npx supabase functions deploy stoerung` (läuft ohne Supabase-Login, `verify_jwt = false`).
-3. Im Backend der Website dieselbe Variable setzen und bei `type=service` die Felder oben weiterleiten.
+2. `npx supabase functions deploy stoerung --no-verify-jwt` (läuft ohne Supabase-Login).
+3. Auf dem Webserver (Infomaniak-Panel oder `.env` neben `server.mjs`) `STOERUNG_URL` und `STOERUNG_SCHLUESSEL` setzen
+   und die Website neu starten. Die Weiterleitung steckt im Repository `dimension-solaire-website`
+   (`stoerungAnCrm` im Lead-Handler, Lead-ID als Idempotency-Key); Mails an info@ laufen unverändert weiter.
 4. Probe: Formular mit Projektnummer eines Testprojekts senden → Fall im Leitstand, Glocke, Mail im Ausgangskorb.

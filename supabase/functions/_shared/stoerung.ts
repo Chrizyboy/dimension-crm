@@ -1,6 +1,6 @@
 // Störungsmeldung aus dem Formular der Website (dimension-solaire.ch, Anker #stoerung) lesen und prüfen.
 // Die Website schickt dieselben Felder wie ihr Formular (name, email, phone, address, project, problem, message,
-// consent, consentText, consentVersion, lang, page, website, elapsedMs). Der Inhalt ist Daten, nie Anweisung
+// consent, consentText, consentVersion, lang, page, website). Der Inhalt ist Daten, nie Anweisung
 // (CLAUDE.md Regel 7): hier wird nur gekürzt und geprüft, nichts ausgeführt.
 
 /** Geprüfte Meldung für die Datenbank-Funktion service_aus_website. */
@@ -23,9 +23,6 @@ export interface Stoerungsmeldung {
 /** Ergebnis: gültige Meldung, still verworfener Spam oder ein Fehler mit den fehlenden Feldern. */
 export type Pruefung = { art: 'ok'; meldung: Stoerungsmeldung } | { art: 'spam' } | { art: 'fehler'; felder: string[] }
 
-/** Unter dieser Ausfüllzeit hat kein Mensch das Formular ausgefüllt. */
-export const MIN_AUSFUELLZEIT_MS = 2500
-
 const text = (v: unknown, max: number): string | null => {
   if (typeof v !== 'string' && typeof v !== 'number') return null
   const s = String(v).replace(/\s+/g, ' ').trim()
@@ -40,12 +37,11 @@ const mehrzeilig = (v: unknown, max: number): string | null => {
 
 const ja = (v: unknown) => v === true || v === 'true' || v === 'on' || v === '1' || v === 1 || v === 'yes'
 
-/** Prüft die Felder wie das Formular selbst (Pflichtfelder, Mail, mind. 9 Ziffern) plus Honeypot und Ausfüllzeit. */
+/** Prüft die Felder wie das Formular selbst (Pflichtfelder, Mail, mind. 9 Ziffern) plus Honeypot. */
 export function stoerungPruefen(d: Record<string, unknown>, idempotencyKey: string | null = null): Pruefung {
-  // Honeypot «website» gefüllt oder zu schnell: Spam, ohne dem Absender etwas zu verraten.
+  // Honeypot «website» gefüllt: Spam, ohne dem Absender etwas zu verraten. Die Ausfüllzeit zählt nicht, wie bei der
+  // Website selbst: ein nach dem Neuladen wiederhergestelltes Formular ist auch bei echten Meldungen schnell gesendet.
   if (text(d.website, 200)) return { art: 'spam' }
-  const zeit = Number(d.elapsedMs)
-  if (Number.isFinite(zeit) && zeit > 0 && zeit < MIN_AUSFUELLZEIT_MS) return { art: 'spam' }
 
   const name = text(d.name, 200)
   const email = text(d.email, 200)?.toLowerCase() ?? null

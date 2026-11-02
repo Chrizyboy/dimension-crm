@@ -31,9 +31,9 @@ describe('stoerungPruefen', () => {
     expect(p.meldung.idempotency_key).toBe('3f1c2a9e-1111-4222-8333-444455556666')
   })
 
-  it('verwirft Spam still: Honeypot gefüllt oder zu schnell ausgefüllt', () => {
+  it('verwirft Spam still bei gefülltem Honeypot, schnelles Ausfüllen ist erlaubt', () => {
     expect(stoerungPruefen({ ...GUT, website: 'http://spam' }).art).toBe('spam')
-    expect(stoerungPruefen({ ...GUT, elapsedMs: 900 }).art).toBe('spam')
+    expect(stoerungPruefen({ ...GUT, elapsedMs: 900 }).art).toBe('ok')
   })
 
   it('meldet fehlende Pflichtfelder wie das Formular', () => {
