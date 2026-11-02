@@ -18,11 +18,13 @@ export function alleNeuigkeiten(kapitel: Kapitel[], nur?: ReadonlySet<string>): 
 const GESEHEN = 'handbuch.neuGesehen'
 
 /** Datum (JJJJ-MM-TT) der zuletzt angeschauten Neuigkeiten in diesem Browser; ohne Speicher leer. */
-export function neuGesehen(): string {
+export function neuGesehen(heute: Date = new Date()): string {
+  // Wer den Reiter nie geöffnet hat, zählt nur die letzten 7 Tage; sonst stünde beim ersten Mal eine Zahl wie 50.
+  const vorEinerWoche = new Date(heute.getTime() - 7 * 86_400_000).toISOString().slice(0, 10)
   try {
-    return localStorage.getItem(GESEHEN) ?? ''
+    return localStorage.getItem(GESEHEN) ?? vorEinerWoche
   } catch {
-    return ''
+    return vorEinerWoche
   }
 }
 

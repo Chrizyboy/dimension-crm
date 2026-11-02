@@ -3,7 +3,7 @@ import type { Sprache } from '@/types/modul'
 /**
  * Lädt die Handbuch-Kapitel der Bereiche. Jedes Modul trägt sein Kapitel selbst mit
  * (`src/modules/<id>/handbuch.de.md` und `.fr.md`), damit wer einen Bereich ändert, das Kapitel im selben Schritt
- * nachführt (Entscheid 0039). Geladen wird erst beim Öffnen, damit die App nicht grösser startet.
+ * nachführt (Entscheid 0043). Geladen wird erst beim Öffnen, damit die App nicht grösser startet.
  */
 const DATEIEN = import.meta.glob<string>('../modules/*/handbuch.*.md', { query: '?raw', import: 'default' })
 

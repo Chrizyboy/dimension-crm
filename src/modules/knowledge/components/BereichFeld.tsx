@@ -8,7 +8,7 @@ const KEINER = 'keiner'
 
 /**
  * Bereich eines Prozesses oder Videos: dann erscheint er im Kapitel dieses Bereichs und in der Hilfe (F1).
- * «Kein Bereich» = nur im eigenen Reiter (Entscheid 0039).
+ * «Kein Bereich» = nur im eigenen Reiter (Entscheid 0043).
  */
 export function BereichFeld({
   id,

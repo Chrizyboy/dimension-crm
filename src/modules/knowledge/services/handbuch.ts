@@ -88,7 +88,7 @@ export async function speichereEintrag(e: HandbuchEingabe, video?: VideoAngaben)
     ...(bild ? { p_vorschaubild_id: bild } : {}),
   })
   if (error) throw error
-  // Bereich getrennt setzen, damit «handbuch_speichern» gleich bleibt (Entscheid 0039).
+  // Bereich getrennt setzen, damit «handbuch_speichern» gleich bleibt (Entscheid 0043).
   const bereich = await db().rpc('handbuch_bereich_setzen', { p_id: data, p_bereich: e.bereich ?? '' })
   if (bereich.error) throw bereich.error
   return data

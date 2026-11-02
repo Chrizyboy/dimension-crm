@@ -9,7 +9,7 @@ import { oeffneDatei } from './Oeffnen'
 import { VideoAbspielen } from './VideoAbspielen'
 
 /**
- * Prozesse (PDF) und Videos, die die Administration diesem Bereich zugeordnet hat (Entscheid 0039).
+ * Prozesse (PDF) und Videos, die die Administration diesem Bereich zugeordnet hat (Entscheid 0043).
  * Ohne Zuordnung zeigt das Kapitel nichts, die Einträge bleiben in ihren Reitern.
  */
 export function Unterlagen({ bereich, kompakt = false }: { bereich: string; kompakt?: boolean }) {

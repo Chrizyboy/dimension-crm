@@ -1,4 +1,4 @@
--- Prüft Entscheid 0039: Prozesse und Videos einem Bereich zuordnen, nur Administration; leer hebt die Zuordnung auf,
+-- Prüft Entscheid 0043: Prozesse und Videos einem Bereich zuordnen, nur Administration; leer hebt die Zuordnung auf,
 -- ungültige Namen lehnt die Tabelle ab.
 -- Ausführen: npm run db:test
 begin;

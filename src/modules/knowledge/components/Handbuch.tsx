@@ -49,7 +49,7 @@ interface Props {
 }
 
 /**
- * Handbuch (V233 Helpdesk, Entscheid 0039): «Für dich» je Rolle, ein ganzes Kapitel pro Bereich, Erste Schritte,
+ * Handbuch (V233 Helpdesk, Entscheid 0043): «Für dich» je Rolle, ein ganzes Kapitel pro Bereich, Erste Schritte,
  * Prozesse (PDF), Videos, Begriffe, Neuigkeiten und Meldungen. Suche über alles. #/knowledge?ansicht=…&kapitel=…
  */
 export default function Handbuch({ ansicht, kapitel, stelle, meldung, neu, onAdresse }: Props) {

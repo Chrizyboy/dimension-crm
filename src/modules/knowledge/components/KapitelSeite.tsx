@@ -74,13 +74,14 @@ export function KapitelSeite({
               e.preventDefault()
               document.getElementById(`stelle-${a.schluessel}`)?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="hover:bg-muted rounded-md px-2 py-1 text-sm"
+            className="hover:bg-muted hidden rounded-md px-2 py-1 text-sm lg:block"
           >
             {a.titel}
             {a.unter.length > 0 && <span className="text-muted-foreground"> ({a.unter.length})</span>}
           </a>
         ))}
-        <div className="mt-3 flex flex-col gap-2 border-t pt-3">
+        {/* Am Handy nur Zurück und die zwei Knöpfe, damit der Text gleich sichtbar ist. */}
+        <div className="flex flex-wrap gap-2 lg:mt-3 lg:flex-col lg:flex-nowrap lg:border-t lg:pt-3">
           {modul && (
             <a href={`#${modul.pfad}`} className={buttonVariants()}>
               <ExternalLink />

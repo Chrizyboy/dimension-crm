@@ -2,13 +2,23 @@ import { describe, expect, it } from 'vitest'
 import { leseKapitel, neuigkeiten, PFLICHT_ABSCHNITTE, type Kapitel } from './kapitel'
 
 /**
- * Wächter für das Handbuch (Entscheid 0039): Jeder Bereich trägt sein Kapitel in DE und FR, beide gleich gebaut.
+ * Wächter für das Handbuch (Entscheid 0043): Jeder Bereich trägt sein Kapitel in DE und FR, beide gleich gebaut.
  * Ändert jemand einen Bereich und vergisst das Kapitel nicht ganz, fällt zumindest eine fehlende Sprache, ein
  * fehlender Abschnitt oder ein toter Link hier auf.
  */
-const TEXTE = import.meta.glob<string>('/src/modules/*/handbuch.*.md', { query: '?raw', import: 'default', eager: true })
-const MODULE = Object.keys(import.meta.glob('/src/modules/*/index.ts')).map((p) => /modules\/([^/]+)\//.exec(p)?.[1] ?? '')
-const INHALT = import.meta.glob<string>('/src/modules/knowledge/inhalt/*.md', { query: '?raw', import: 'default', eager: true })
+const TEXTE = import.meta.glob<string>('/src/modules/*/handbuch.*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})
+const MODULE = Object.keys(import.meta.glob('/src/modules/*/index.ts')).map(
+  (p) => /modules\/([^/]+)\//.exec(p)?.[1] ?? '',
+)
+const INHALT = import.meta.glob<string>('/src/modules/knowledge/inhalt/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})
 
 const ROLLEN = new Set([
   'verkauf',
@@ -94,7 +104,10 @@ describe('Rollen-Wege und Begriffe', () => {
     const kde = leseKapitel(name, de ?? '')
     const kfr = leseKapitel(name, fr ?? '')
     const plan = (k: Kapitel) =>
-      k.abschnitte.map((a) => [a.schluessel, a.bloecke.reduce((n, b) => n + (b.art === 'liste' ? b.punkte.length : 1), 0)])
+      k.abschnitte.map((a) => [
+        a.schluessel,
+        a.bloecke.reduce((n, b) => n + (b.art === 'liste' ? b.punkte.length : 1), 0),
+      ])
     expect(plan(kfr)).toEqual(plan(kde))
     for (const ziel of [...links(kde), ...links(kfr)]) expect(MODULE).toContain(ziel)
   })

@@ -1,4 +1,4 @@
--- Handbuch: Prozesse und Videos einem Bereich zuordnen (Entscheid 0039).
+-- Handbuch: Prozesse und Videos einem Bereich zuordnen (Entscheid 0043).
 -- Dann erscheinen sie im Kapitel des Bereichs und in der Hilfe (F1). Leer = nur in ihrem eigenen Reiter.
 alter table public.handbuch_eintraege add column bereich text
   check (bereich is null or bereich ~ '^[a-z][a-z0-9-]*$');
