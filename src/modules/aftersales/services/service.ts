@@ -23,7 +23,7 @@ const kundeName = (k: Kontakt) =>
 
 const FALL_FELDER =
   'id, nummer, titel, beschreibung, kategorie, prioritaet, status, garantie, termin_am, erledigt_am, erstellt_am, kontakt_id, anlage_id, projekt_id, person_id, verlauf, ' +
-  'quelle, auswirkung, reaktion_bis, objekt_id, vor_ort_name, vor_ort_telefon, zugang, komponente, fehlercode, checkliste, meldung, zuordnung, ' +
+  'quelle, auswirkung, reaktion_bis, objekt_id, vor_ort_name, vor_ort_telefon, zugang, komponente, fehlercode, checkliste, meldung, zuordnung, team, dauer_minuten, ' +
   'kontakt:kontakte(vorname, nachname, firma, sprache), anlage:anlagen(leistung_kwp), einsatzort:objekte(strasse, plz, ort), ' +
   'projekt:projekte(nummer), person:personen(name)'
 
