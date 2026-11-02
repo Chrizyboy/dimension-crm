@@ -99,9 +99,10 @@ test('Kennzahlen: Kacheln, Klick auf eine Zahl, Reiter Pipeline und Betrieb', as
 
   await page
     .getByTestId('kz-kacheln')
-    .getByRole('button', { name: /Offerten gesendet/ })
+    .getByRole('button', { name: /Angenommen/ })
     .click()
-  const detail = page.getByRole('dialog', { name: 'Offerten gesendet' })
+  // «Angenommen» hat in den Testdaten immer Einträge mit Betrag (gesendete Offerten nicht).
+  const detail = page.getByRole('dialog', { name: 'Angenommen' })
   await expect(detail).toBeVisible()
   await expect(detail.getByText('Total')).toBeVisible()
   await page.keyboard.press('Escape')
@@ -115,5 +116,11 @@ test('Kennzahlen: Kacheln, Klick auf eine Zahl, Reiter Pipeline und Betrieb', as
   await expect(page.getByTestId('kz-auftragsbestand')).toBeVisible()
   await expect(page.getByTestId('kz-auslastung')).toBeVisible()
   await expect(page.getByTestId('kz-marge')).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+
+  await page.getByRole('tab', { name: 'Abwicklung' }).click()
+  const abwicklung = page.getByTestId('kz-abwicklung')
+  await expect(abwicklung.getByText('Ø Service-Fall bis erledigt')).toBeVisible()
+  await expect(abwicklung.getByText('≤ 90 Tage')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 })

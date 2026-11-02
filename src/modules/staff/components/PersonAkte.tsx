@@ -1,24 +1,36 @@
 import { Lock, Paperclip, Pencil, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Skelett } from '@/components/ui/diverses'
 import { useAuswahl } from '@/hooks/useAuswahl'
-import { formatDatum, formatTelefon } from '@/lib/format'
+import { formatDatum } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { useUi } from '@/stores/ui'
 import { useAkte } from '../hooks/useTeam'
+import { akteFristen } from '../lib/akte'
 import { istPflicht, zellenStand } from '../lib/matrix'
 import { dateiAdresse } from '../services/personal'
-import type { AusweisArt, Mitglied, PersonalAkte, Qualifikation } from '../types'
+import type { AusweisArt, Gespraech, Lohn, Mitglied, Qualifikation } from '../types'
+import { AkteAnstellung } from './AkteAnstellung'
+import { AkteGespraeche } from './AkteGespraeche'
+import { AktePersoenlich } from './AktePersoenlich'
 import { ZellenBadge } from './ZellenBadge'
 
-export type PersonAktion = { ausweis: Qualifikation | null; art?: string } | { akte: PersonalAkte | null }
+/** Was im Seitenpanel angestossen wird: Ausweis, Teil der Akte, Lohn, Gespräch oder Dokument. */
+export type PersonAktion =
+  | { ausweis: Qualifikation | null; art?: string }
+  | { akte: 'anstellung' | 'persoenlich' }
+  | { lohn: Lohn | null }
+  | { gespraech: Gespraech | null }
+  | { dokument: true }
 
 /**
  * Person als Seitenpanel: Kurse und Ausweise (fehlende Pflicht zuerst, mit Bestätigung als Datei) und die
- * Personal-Akte. Die Akte sehen nur die Administration und die Person selbst; für alle anderen steht ein Hinweis.
+ * Personal-Akte mit Fristen, Anstellung, Lohn, Persönlichem, Gesprächen und Dokumenten. Was davon erscheint,
+ * entscheidet die Datenbank (Recht «personal», die Person selbst, Vorgesetzte); alle anderen sehen einen Hinweis.
  */
 export function PersonAkte({
   person,
@@ -26,7 +38,6 @@ export function PersonAkte({
   arten,
   heute,
   darfAendern,
-  admin,
   onAktion,
   onSchliessen,
 }: {
@@ -35,16 +46,15 @@ export function PersonAkte({
   arten: AusweisArt[]
   heute: string
   darfAendern: boolean
-  admin: boolean
   onAktion: (a: PersonAktion) => void
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const quali = useAuswahl('qualifikation')
-  const akte = useAkte(person.id, darfAendern)
+  const akte = useAkte(person.id)
   const fehlend = arten.filter((a) => istPflicht(a, person.rolle) && !ausweise.some((q) => q.art === a.schluessel))
-  const a = akte.data
+  const fristen = akte.data ? akteFristen(akte.data.akte, heute) : []
 
   async function oeffnen(pfad: string) {
     const fenster = window.open('', '_blank')
@@ -152,58 +162,40 @@ export function PersonAkte({
               )}
             </ul>
           </AkteAbschnitt>
-          <AkteAbschnitt titel={t('team.akte.titel')}>
-            {!darfAendern ? (
-              <p className="text-muted-foreground flex items-center gap-2 text-sm">
-                <Lock className="size-4" aria-hidden="true" />
-                {t('team.akte.privat')}
-              </p>
-            ) : akte.isPending ? (
-              <Skelett className="h-32" />
-            ) : (
-              <>
-                <dl>
-                  <Angabe label={t('team.akte.notfall')}>
-                    {a?.notfall_name
-                      ? `${a.notfall_name}${a.notfall_telefon ? `, ${formatTelefon(a.notfall_telefon)}` : ''}`
-                      : '–'}
-                  </Angabe>
-                  <Angabe label={t('team.akte.telefon_privat')}>
-                    {a?.telefon_privat ? formatTelefon(a.telefon_privat) : '–'}
-                  </Angabe>
-                  <Angabe label={t('team.akte.geburtsdatum')}>
-                    {a?.geburtsdatum ? formatDatum(a.geburtsdatum) : '–'}
-                  </Angabe>
-                  <Angabe label={t('team.akte.groessen')}>
-                    {[a?.kleidergroesse, a?.schuhgroesse ? t('team.akte.schuh', { groesse: a.schuhgroesse }) : null]
-                      .filter(Boolean)
-                      .join(' · ') || '–'}
-                  </Angabe>
-                  <Angabe label={t('team.akte.eintritt')}>
-                    {[
-                      a?.eintritt ? formatDatum(a.eintritt) : null,
-                      a?.pensum ? `${String(a.pensum)} %` : null,
-                      a?.austritt ? t('team.akte.bis', { datum: formatDatum(a.austritt) }) : null,
-                    ]
-                      .filter(Boolean)
-                      .join(' · ') || '–'}
-                  </Angabe>
-                  {admin && <Angabe label={t('team.akte.notiz')}>{a?.notiz ?? '–'}</Angabe>}
-                </dl>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="mt-1"
-                  onClick={() => {
-                    onAktion({ akte: a ?? null })
-                  }}
-                >
-                  <Pencil />
-                  {t('allgemein.bearbeiten')}
-                </Button>
-              </>
-            )}
-          </AkteAbschnitt>
+          {akte.isPending ? (
+            <Skelett className="mt-3 h-32" />
+          ) : !akte.data ? (
+            <p className="text-muted-foreground flex items-center gap-2 py-3 text-sm">
+              <Lock className="size-4" aria-hidden="true" />
+              {t('team.akte.privat')}
+            </p>
+          ) : (
+            <>
+              {fristen.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 py-3">
+                  {fristen.map((f) => (
+                    <Badge
+                      key={f.art}
+                      ton={
+                        f.stand === 'vorbei' && f.art !== 'probezeit'
+                          ? 'kritisch'
+                          : f.stand === 'bald'
+                            ? 'warnung'
+                            : f.art === 'probezeit'
+                              ? 'ok'
+                              : 'neutral'
+                      }
+                    >
+                      {t(`team.frist.${f.art}${f.stand === 'vorbei' ? 'Vorbei' : ''}`, { datum: formatDatum(f.datum) })}
+                    </Badge>
+                  ))}
+                </div>
+              )}
+              <AkteAnstellung daten={akte.data} onAktion={onAktion} />
+              <AktePersoenlich daten={akte.data} onAktion={onAktion} />
+              <AkteGespraeche daten={akte.data} onAktion={onAktion} onDatei={(p) => void oeffnen(p)} />
+            </>
+          )}
         </div>
       </DialogInhalt>
     </Dialog>

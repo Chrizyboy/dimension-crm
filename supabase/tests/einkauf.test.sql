@@ -45,12 +45,12 @@ grant all on t_b to authenticated;
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000a9a1", "role": "authenticated"}', true);
 
--- Materialliste
-select is(public.projekt_material_vorschlagen('00000000-0000-0000-0000-00000000a9e1'), 2,
+-- Materialliste: entsteht seit der Modul-Prüfung (24A) schon beim Anlegen des Auftrags
+select is((select count(*)::int from public.projekt_material where projekt_id = '00000000-0000-0000-0000-00000000a9e1'), 2,
   'Materialliste aus der Kalkulation, ohne Dienstleistungen');
 select throws_ok($$ select public.projekt_material_vorschlagen('00000000-0000-0000-0000-00000000a9e1') $$,
   'P0001', 'einkauf.material_schon_da', 'zweiter Vorschlag überschreibt nichts');
-select is(public.projekt_material_vorschlagen('00000000-0000-0000-0000-00000000a9e2'), 2,
+select is((select count(*)::int from public.projekt_material where projekt_id = '00000000-0000-0000-0000-00000000a9e2'), 2,
   'ohne Kalkulation: Module und Wechselrichter aus der Offerte');
 select is((select artikel_id from public.projekt_material where projekt_id = '00000000-0000-0000-0000-00000000a9e2' and quelle = 'offerte'
             and artikel_id is not null), '00000000-0000-0000-0000-00000000a903'::uuid, 'Wechselrichter-Text findet den Artikel');

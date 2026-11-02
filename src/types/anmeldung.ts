@@ -1,7 +1,7 @@
 import type { Sprache, Zweisprachig } from './modul'
 
 /** Rechte, die die Datenbank kennt (RLS). «basis» hat jede aktive Person. */
-export type Recht = 'basis' | 'preise' | 'finanzen' | 'admin'
+export type Recht = 'basis' | 'preise' | 'finanzen' | 'planung' | 'admin'
 
 /** Was die Datenbank nach der Anmeldung über die eigene Person liefert (public.meine_anmeldung). */
 export interface MeineAnmeldung {

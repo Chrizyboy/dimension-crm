@@ -59,8 +59,8 @@ export async function ladeZiele(): Promise<{
   ])
   if (p.error) throw p.error
   if (e.error) throw e.error
-  const wert = (e.data?.wert ?? {}) as { ziele?: Record<string, Partial<Record<ZielSchluessel, number>>> }
-  return { personen: p.data, ziele: wert.ziele ?? {} }
+  const wert = (e.data?.wert ?? {}) as { ziele_personen?: Record<string, Partial<Record<ZielSchluessel, number>>> }
+  return { personen: p.data, ziele: wert.ziele_personen ?? {} }
 }
 
 /** Wochenziele einer Person speichern (`kennzahlen_ziele_setzen`, nur Administration oder Recht «finanzen»). */

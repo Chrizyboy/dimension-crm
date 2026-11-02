@@ -55,6 +55,7 @@ export const TAG_LISTEN = [
   'termine',
   'aufgaben',
   'vergeben',
+  'freigaben',
   'nachfassen',
   'neue_leads',
   'wiedervorlagen',
@@ -62,7 +63,6 @@ export const TAG_LISTEN = [
   'zahlungen',
   'service',
   'kontrollen',
-  'freigaben',
 ] as const
 export type TagListeName = (typeof TAG_LISTEN)[number]
 

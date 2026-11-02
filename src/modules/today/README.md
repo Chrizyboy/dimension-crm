@@ -2,7 +2,7 @@
 
 **Zweck:** Zeigt jeder Person beim Öffnen, was heute ansteht: Termine heute und morgen, Aufgaben (für mich und von mir vergeben), Offerten nachfassen, neue Anfragen, Wiedervorlagen, Fristen, Zahlungen, Service-Fälle, Kontrollen und Wartungen (V233 «Heute»).
 
-**Stand:** Phase 14, ausgebaut 2.11.2026 (Entscheid 0039): Verschieben je Zeile, Gründe, Freigaben, Wochenziele,
+**Stand:** Phase 14, ausgebaut 2.11.2026 (Entscheid 0041): Verschieben je Zeile, Gründe, Freigaben, Wochenziele,
 Team heute. Startseite der App (`#/today`, `/` leitet um).
 
 ## Daten

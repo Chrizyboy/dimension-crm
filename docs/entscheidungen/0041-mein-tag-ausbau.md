@@ -1,4 +1,4 @@
-# 0039 – «Mein Tag» ausbauen: handeln statt nur anzeigen (2.11.2026)
+# 0041 – «Mein Tag» ausbauen: handeln statt nur anzeigen (2.11.2026)
 
 ## Ausgangslage
 
@@ -15,7 +15,7 @@ abhaken nichts direkt erledigen, und jede Rolle sah fast dasselbe. Neuentwurf al
   (`tag_verschoben`); die Stand-Regeln im Verkauf (`setze_stand`) bleiben unberührt.
 - **Gründe:** «seit 14 Tagen ohne Antwort» (Nachfassen), «Anfrage seit 2 Tagen offen», «Von Andy» (Aufgabe).
 - **Wartet auf deine Freigabe:** eigene Mails/SMS/Briefe im Ausgangskorb (Status «wartet»).
-- **M3 A, Wochenziele je Person** in `einstellungen.kennzahlen.ziele` (Neue Anfragen, Besichtigungen, Offerten pro
+- **M3 A, Wochenziele je Person** in `einstellungen.kennzahlen.ziele_personen` (Neue Anfragen, Besichtigungen, Offerten pro
   Woche; Aufträge pro Monat), gezählt aus `kennzahlen_fakten`, damit Zahl und Kennzahlen übereinstimmen. Setzen nur
   Administration oder Recht «finanzen» (`intern.darf_ziele_setzen`, Trigger `ziele_schuetzen`); wenn die Rolle
   Geschäftsleitung kommt, dort ergänzen.

@@ -1,4 +1,4 @@
--- «Mein Tag» ausbauen (2.11.2026, Entscheid 0039): Chris fand die Startseite «nur Fassade».
+-- «Mein Tag» ausbauen (2.11.2026, Entscheid 0041): Chris fand die Startseite «nur Fassade».
 -- Die Karten nach Bereich bleiben (M1 B), dazu kommt:
 --  1. Verschieben (M2 A): jede Zeile auf morgen, nächste Woche oder ein Datum. Aufgaben ändern ihr Fälligkeitsdatum,
 --     alles andere (Nachfassen, Lead, Frist …) wird nur für mich ausgeblendet; die Stand-Regeln im Verkauf
@@ -77,8 +77,8 @@ language sql immutable set search_path = '' as $$
 $$;
 
 -- 4. Wochenziele je Person ----------------------------------------------------------------------------------
-update public.einstellungen set wert = wert || '{"ziele": {}}'::jsonb
- where schluessel = 'kennzahlen' and not wert ? 'ziele';
+update public.einstellungen set wert = wert || '{"ziele_personen": {}}'::jsonb
+ where schluessel = 'kennzahlen' and not wert ? 'ziele_personen';
 
 /** Wer Ziele setzen darf: Administration oder Recht «finanzen» (Geschäftsleitung, bis die Rolle GL kommt). */
 create or replace function intern.darf_ziele_setzen() returns boolean
@@ -91,8 +91,8 @@ create or replace function intern.ziele_schuetzen() returns trigger
 language plpgsql security definer set search_path = '' as $$
 begin
   if new.schluessel = 'kennzahlen' and auth.uid() is not null and coalesce(auth.role(), '') <> 'service_role'
-     and (tg_op = 'INSERT' or new.wert -> 'ziele' is distinct from old.wert -> 'ziele')
-     and coalesce(new.wert -> 'ziele', '{}') <> '{}' and not intern.darf_ziele_setzen() then
+     and (tg_op = 'INSERT' or new.wert -> 'ziele_personen' is distinct from old.wert -> 'ziele_personen')
+     and coalesce(new.wert -> 'ziele_personen', '{}') <> '{}' and not intern.darf_ziele_setzen() then
     raise exception using errcode = '42501', message = 'tag.ziele_kein_recht';
   end if;
   return new;
@@ -130,8 +130,8 @@ begin
     if (v #>> '{}')::numeric > 0 then sauber := sauber || jsonb_build_object(k, v); end if;
   end loop;
   update public.einstellungen
-     set wert = jsonb_set(wert, '{ziele}', case when sauber = '{}' then coalesce(wert -> 'ziele', '{}') - p_person::text
-                                                 else coalesce(wert -> 'ziele', '{}') || jsonb_build_object(p_person::text, sauber) end)
+     set wert = jsonb_set(wert, '{ziele_personen}', case when sauber = '{}' then coalesce(wert -> 'ziele_personen', '{}') - p_person::text
+                                                 else coalesce(wert -> 'ziele_personen', '{}') || jsonb_build_object(p_person::text, sauber) end)
    where schluessel = 'kennzahlen';
 end
 $$;
@@ -142,7 +142,7 @@ grant execute on function public.kennzahlen_ziele_setzen(uuid, jsonb) to authent
 create or replace function intern.meine_ziele(p_ich uuid, p_heute date) returns jsonb
 language plpgsql stable set search_path = '' as $$
 declare
-  ziele jsonb := (select e.wert -> 'ziele' -> p_ich::text from public.einstellungen e where e.schluessel = 'kennzahlen');
+  ziele jsonb := (select e.wert -> 'ziele_personen' -> p_ich::text from public.einstellungen e where e.schluessel = 'kennzahlen');
   wo date := p_heute - (extract(isodow from p_heute)::int - 1);
   mo date := date_trunc('month', p_heute)::date;
   r jsonb := '[]';
@@ -386,15 +386,21 @@ begin
            and (p.verantwortlich_id = ich or (p.verantwortlich_id is null and admin))
       ) x), '[]'), weg));
 
-  -- Wartet auf meine Freigabe: eigene Mails, SMS und Briefe im Ausgangskorb (Klick = Freigabe, Regel 6).
+  -- Wartet auf meine Freigabe (wie 20261111001100, Modul-Prüfung 27A): in meinem Namen, ohne Absender die
+  -- Administration; dazu der Kanal für den Grund und «Verschieben» bleibt hier aus (Klick = Freigabe, Regel 6).
   r := r || jsonb_build_object(
     'freigaben', intern.tag_liste(coalesce((
       select jsonb_agg(intern.tag_zeile('freigabe', (a.erstellt_am at time zone 'Europe/Zurich')::date, null,
-                                        coalesce(nullif(a.betreff, ''), a.an), a.an, null, 'ausgangskorb', a.id,
-                                        jsonb_build_object('kanal', a.kanal))
+                                        coalesce(nullif(a.betreff, ''), left(a.text, 60), a.an), a.an, null,
+                                        'ausgangskorb', a.id,
+                                        jsonb_build_object('ueberfaellig', a.erstellt_am < now() - make_interval(days => coalesce(
+                                          ((select e.wert from public.einstellungen e where e.schluessel = 'automationen')
+                                            ->> 'freigabe_erinnern_tage')::int, 2)),
+                                                           'status', a.status, 'kanal', a.kanal))
                        order by a.erstellt_am)
         from public.ausgangskorb a
-       where a.geloescht_am is null and a.status = 'wartet' and a.absender_person_id = ich), '[]')),
+       where a.geloescht_am is null and a.status in ('wartet', 'fehler')
+         and (a.absender_person_id = ich or (a.absender_person_id is null and admin))), '[]'), 30),
     'ziele', intern.meine_ziele(ich, heute));
   return r;
 end
