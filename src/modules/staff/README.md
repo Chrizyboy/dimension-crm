@@ -9,7 +9,7 @@ Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028. Für alle sichtbar 
 
 - Übersicht als Tabelle Person × Ausweis: «fehlt» (Pflicht für die Rolle), gelb (läuft in 60 Tagen ab), rot
   (abgelaufen). Filter «Handlungsbedarf». «Meine Akte» öffnet die eigene Person.
-- Person als Seitenpanel: Kurse und Ausweise mit Bestätigung (Foto/PDF) und die Personal-Akte (Entscheid 0037):
+- Person als Seitenpanel: Kurse und Ausweise mit Bestätigung (Foto/PDF) und die Personal-Akte (Entscheid 0039):
   Fristen als Marken oben, Anstellung, Lohn zur Info, Persönlich, Arbeitskleider und Ausrüstung, Gespräche,
   Dokumente, Notiz. Was erscheint, liefert `personal_akte()` je nach Sicht: Recht «personal» alles, die Person
   selbst ohne Lohn und Notiz, Vorgesetzte nur Anstellung, Gespräche, nicht vertrauliche Dokumente und Notfall.
