@@ -19,6 +19,7 @@
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
 //  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
@@ -118,6 +119,12 @@ Deno.serve(async (req) => {
   ergebnis.fristen = await job('fristen', 60, async () => {
     const n = await dienst.rpc<number>('fristen_melden', {})
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
+  ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
+    const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
   })
 
   // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
