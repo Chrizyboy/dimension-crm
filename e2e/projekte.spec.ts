@@ -67,17 +67,24 @@ test('Service-Fall erfassen, Notiz, erledigen', async ({ page }) => {
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('button', { name: 'Speichern' }).click()
 
-  const akte = page.getByRole('dialog')
-  await expect(akte.getByText(`Wechselrichter meldet Fehler ${lauf}`).first()).toBeVisible()
-  await expect(akte.getByText(/^S\d{3,} · /).first()).toBeVisible()
-  await akte.getByLabel('Notiz zum Verlauf').fill('Fernzugriff geprüft')
-  await akte.getByRole('button', { name: 'Notiz speichern' }).click()
-  await expect(akte.getByText('Fernzugriff geprüft')).toBeVisible()
+  // Die Fall-Akte füllt die ganze Seite: Nummer und Titel als Überschrift, Arbeitsschritte, Verlauf.
+  const kopf = page.getByRole('heading', {
+    level: 1,
+    name: new RegExp(`S\\d{3,}.*Wechselrichter meldet Fehler ${lauf}`),
+  })
+  await expect(kopf).toBeVisible()
+  await expect(page.getByRole('list', { name: 'Arbeitsschritte' })).toBeVisible()
+  await page.getByRole('button', { name: 'Anruf' }).click()
+  await page.getByLabel('Eintrag im Verlauf').fill('Fernzugriff geprüft')
+  await page.getByRole('button', { name: 'Festhalten' }).click()
+  await expect(page.getByText('Fernzugriff geprüft')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  await akte.getByRole('button', { name: 'Erledigt' }).click()
-  await expect(akte.getByText(/Erledigt am/)).toBeVisible()
+  await page.getByRole('button', { name: 'Erledigt', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Wieder öffnen' })).toBeVisible()
 
-  await page.keyboard.press('Escape')
+  await page.getByRole('button', { name: 'Zurück zum Leitstand' }).click()
+  await expect(page.getByRole('region', { name: 'Board' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
   await page.getByRole('tab', { name: 'Anlagen' }).click()
   expect(await verstoesse(page)).toEqual([])
 })
