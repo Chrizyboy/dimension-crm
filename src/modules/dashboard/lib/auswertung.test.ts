@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Fakt } from '../types'
-import { nachBereich, nachPerson, quellen, quote, zelle } from './auswertung'
+import { ABWICKLUNG, nachBereich, nachPerson, quellen, quote, schnittTage, zelle, zielErreicht } from './auswertung'
 import { alleFaecher, balken, fachText, kalenderwoche, vonBis } from './zeitraum'
 
 const f = (schluessel: string, extra: Partial<Fakt> = {}): Fakt => ({
@@ -107,5 +107,24 @@ describe('Auswertung', () => {
       kosten_auftrag_rappen: 34_000,
     })
     expect(z[1]?.kosten_lead_rappen).toBeNull()
+  })
+})
+
+describe('Abwicklung', () => {
+  it('rechnet den Schnitt der Tage und lässt Zeilen ohne Tage weg', () => {
+    const ibn = [f('ibn', { tage: 80 }), f('ibn', { tage: 101 }), f('ibn', { tage: null })]
+    expect(schnittTage(ibn)).toBe(91)
+    expect(schnittTage([])).toBeNull()
+    const dauer = ABWICKLUNG.find((z) => z.id === 'dauer_vertrag_ibn')
+    const anzahl = ABWICKLUNG.find((z) => z.id === 'ibn')
+    expect(dauer && zelle(ibn, dauer).wert).toBe(91)
+    expect(anzahl && zelle(ibn, anzahl).wert).toBe(3)
+  })
+
+  it('vergleicht mit dem Ziel: weniger ist besser', () => {
+    expect(zielErreicht(90, 90)).toBe(true)
+    expect(zielErreicht(91, 90)).toBe(false)
+    expect(zielErreicht(null, 90)).toBeNull()
+    expect(zielErreicht(3, undefined)).toBeNull()
   })
 })

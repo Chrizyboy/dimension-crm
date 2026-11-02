@@ -20,23 +20,17 @@ export const einladungSchema = z.object({
 })
 export type EinladungEingabe = z.infer<typeof einladungSchema>
 
-/** Felder aus «Mein Konto», wie in der Vorlage (V181). Alle freiwillig. */
+/**
+ * Felder aus «Mein Konto», wie in der Vorlage (V181). Alle freiwillig. Privatadresse, Notfallkontakt und Pensum
+ * stehen seit 33A in der Personal-Akte (nur die Person und die Administration sehen sie).
+ */
 export const kontoSchema = z.object({
   position: z.string().trim().max(80),
   funktion: z.string().trim().max(120),
-  pensum: z.string().trim().max(20),
   tage: z.string().trim().max(80),
   direkt: z.string().trim().max(30),
   mobil: z.string().trim().max(30),
   sprachen: z.string().trim().max(80),
-  strasse: z.string().trim().max(120),
-  plz: z
-    .string()
-    .trim()
-    .regex(/^(\d{4})?$/, 'pruefung.plz'),
-  ort: z.string().trim().max(80),
-  notfallName: z.string().trim().max(80),
-  notfallTel: z.string().trim().max(30),
   routeStart: z.string().trim().max(160),
 })
 export type KontoEingabe = z.infer<typeof kontoSchema>
@@ -45,16 +39,10 @@ export type KontoEingabe = z.infer<typeof kontoSchema>
 export const LEERES_KONTO: KontoEingabe = {
   position: '',
   funktion: '',
-  pensum: '',
   tage: '',
   direkt: '',
   mobil: '',
   sprachen: '',
-  strasse: '',
-  plz: '',
-  ort: '',
-  notfallName: '',
-  notfallTel: '',
   routeStart: '',
 }
 

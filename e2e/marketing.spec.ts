@@ -37,11 +37,16 @@ test('Marketing: alle Reiter ohne Verstösse', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Marketing', level: 1 })).toBeVisible()
   await expect(page.getByRole('table', { name: 'Zielgruppe' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Social Media', 'Newsletter', 'Vorlagen']) {
+  for (const reiter of ['Social Media', 'Newsletter', 'Empfehlungen', 'Vorlagen']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
+
+  // Vorschlag «Nachrüstung» aus der Glocke: Hinweis mit fertigem Mail-Entwurf (Modul-Prüfung 34B)
+  await page.goto('/#/marketing?ansicht=anschreiben&anlage=ohne_batterie')
+  await expect(page.getByTestId('nachruest-vorschlag')).toContainText('Ohne Batterie')
+  expect(await verstoesse(page)).toEqual([])
 })
 
 test('Kunden anschreiben: Einwilligung, Serien-Mail, abmelden und wieder anmelden', async ({ page }) => {

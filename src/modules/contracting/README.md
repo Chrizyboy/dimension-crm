@@ -17,7 +17,10 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
    Erfassen und sonst stündlich.
 3. Die Datenbank rechnet Punkte und Schätzung bei jedem Speichern neu (`intern.gp_bewerten`).
 4. Starke Treffer meldet die Glocke einmal; die Karte auf «Mein Tag» zeigt die besten.
-5. Andy bewilligt (Lead entsteht), beobachtet (Wiedervorlage) oder verwirft (mit Grund).
+5. Andy bewilligt (Lead entsteht), beobachtet (Wiedervorlage) oder verwirft (mit Grund); schnell im Reiter
+   «Zu entscheiden» mit den Tasten J/B/N.
+6. Bewilligte bleiben bis zum Vertrag hier (Pipeline, Nachtrag 2.11.2026): Stufen, nächster Schritt, wer entscheidet,
+   Verlauf, Rechner, Unterlagen und Stand bei Youdera in der Projekt-Akte (ganze Seite).
 
 ## Daten
 

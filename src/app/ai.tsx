@@ -6,23 +6,37 @@ import { ANSICHTEN, KiSeite, meta, type Ansicht } from '@/modules/ai'
 import { useAnmeldung } from '@/stores/anmeldung'
 
 const GUELTIG = new Set<string>(ANSICHTEN)
+const UUID = /^[0-9a-f-]{36}$/i
 
-/** KI-Assistent: Reiter in der Adresse (#/ai?ansicht=kosten). Einstellungen sieht nur die Administration. */
+interface Suche {
+  ansicht?: Ansicht
+  gespraech?: string
+}
+
+/** Assistent: Reiter und offenes Gespräch in der Adresse (#/ai?ansicht=verlauf, #/ai?gespraech=…). */
 export const Route = createFileRoute('/ai')({
-  validateSearch: (s: Record<string, unknown>): { ansicht?: Ansicht } =>
-    typeof s.ansicht === 'string' && GUELTIG.has(s.ansicht) ? { ansicht: s.ansicht as Ansicht } : {},
+  validateSearch: (s: Record<string, unknown>): Suche => ({
+    ...(typeof s.ansicht === 'string' && GUELTIG.has(s.ansicht) ? { ansicht: s.ansicht as Ansicht } : {}),
+    ...(typeof s.gespraech === 'string' && UUID.test(s.gespraech) ? { gespraech: s.gespraech } : {}),
+  }),
   component: function AiSeite() {
-    const { ansicht } = Route.useSearch()
+    const { ansicht, gespraech } = Route.useSearch()
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
-    // Wie bei den anderen Bereichen: ohne «KI-Assistent» in der Rolle (z. B. Montage) kein Zugang über die Adresse.
+    // Wie bei den anderen Bereichen: ohne «Assistent» in der Rolle (z. B. Montage) kein Zugang über die Adresse.
     if (!darfModul(meta, ich)) return <KeinZugriff />
     return (
       <Suspense>
         <KiSeite
-          ansicht={ansicht ?? 'assistent'}
-          onAnsicht={(a) => {
-            void navigate({ search: a === 'assistent' ? {} : { ansicht: a } })
+          ansicht={ansicht ?? 'fragen'}
+          gespraech={gespraech ?? null}
+          onAnsicht={(a, g) => {
+            void navigate({
+              search: {
+                ...(a === 'fragen' ? {} : { ansicht: a }),
+                ...(a === 'fragen' && g ? { gespraech: g } : {}),
+              },
+            })
           }}
         />
       </Suspense>

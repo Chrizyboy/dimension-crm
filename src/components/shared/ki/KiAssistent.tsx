@@ -30,6 +30,8 @@ export interface KiAssistentProps {
   /** Wovon die KI Kontext liest (Kunde, Lead, Offerte, Projekt, Service-Fall). */
   bezug?: KiBezug | null
   art?: KundenArt
+  /** Vorbelegter Wunsch (z. B. aus einem Auftrag oder Vorschlag des Assistenten). */
+  wunsch?: string
   /** Eingegangene Mail, auf die geantwortet wird (fremder Inhalt: nur Daten). */
   eingang?: string
   /** Felder für die Mail im Ausgangskorb (Bezüge, Empfänger). */
@@ -47,6 +49,7 @@ export interface KiAssistentProps {
 export function KiAssistent({
   bezug = null,
   art: startArt = 'frei',
+  wunsch: startWunsch = '',
   eingang: startEingang = '',
   mail,
   dateien = [],
@@ -56,7 +59,7 @@ export function KiAssistent({
   const nachher = useKiNachher()
   const [art, setArt] = useState<KundenArt>(startArt)
   const [sprache, setSprache] = useState<Sprache | 'auto'>(mail?.sprache ?? 'auto')
-  const [wunsch, setWunsch] = useState('')
+  const [wunsch, setWunsch] = useState(startWunsch)
   const [eingang, setEingang] = useState(startEingang)
   const [anhaenge, setAnhaenge] = useState(false)
   const [laeuft, setLaeuft] = useState(false)
