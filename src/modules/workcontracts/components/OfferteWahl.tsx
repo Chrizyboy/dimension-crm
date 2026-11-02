@@ -47,7 +47,11 @@ export default function OfferteWahl({
         if (!offen) onSchliessen()
       }}
     >
-      <DialogInhalt titel={t('werkvertraege.neu.titel')} beschreibung={t('werkvertraege.neu.text')}>
+      <DialogInhalt
+        className="max-w-2xl"
+        titel={t('werkvertraege.neu.titel')}
+        beschreibung={t('werkvertraege.neu.text')}
+      >
         <div className="flex flex-col gap-3">
           <Suchfeld
             beschriftung={t('werkvertraege.neu.suche')}
