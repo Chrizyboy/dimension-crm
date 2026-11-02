@@ -3940,6 +3940,141 @@ export type Database = {
           },
         ]
       }
+      kontakt_zugehoerigkeiten: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bevorzugt: string | null
+          email_direkt: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          firma_id: string
+          funktion: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          hauptkontakt: boolean
+          id: string
+          person_id: string
+          rechnungen: boolean
+          reihenfolge: number
+          telefon_direkt: string | null
+          unterschreibt: boolean
+          vor_ort: boolean
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bevorzugt?: string | null
+          email_direkt?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id: string
+          funktion?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hauptkontakt?: boolean
+          id?: string
+          person_id: string
+          rechnungen?: boolean
+          reihenfolge?: number
+          telefon_direkt?: string | null
+          unterschreibt?: boolean
+          vor_ort?: boolean
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bevorzugt?: string | null
+          email_direkt?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id?: string
+          funktion?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hauptkontakt?: boolean
+          id?: string
+          person_id?: string
+          rechnungen?: boolean
+          reihenfolge?: number
+          telefon_direkt?: string | null
+          unterschreibt?: boolean
+          vor_ort?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
       kontakte: {
         Row: {
           abaninja_abgeglichen_am: string | null
@@ -9124,6 +9259,103 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: []
+      }
+      kontakt_zugehoerigkeiten_sicht: {
+        Row: {
+          bevorzugt: string | null
+          email: string | null
+          email_direkt: string | null
+          firma_art: string | null
+          firma_id: string | null
+          firma_kontaktart: string | null
+          firma_name: string | null
+          funktion: string | null
+          hauptkontakt: boolean | null
+          id: string | null
+          person_anrede: string | null
+          person_id: string | null
+          person_name: string | null
+          person_sprache: string | null
+          rechnungen: boolean | null
+          reihenfolge: number | null
+          telefon: string | null
+          telefon_direkt: string | null
+          unterschreibt: boolean | null
+          vor_ort: boolean | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
       }
       kunden_uebersicht: {
         Row: {
