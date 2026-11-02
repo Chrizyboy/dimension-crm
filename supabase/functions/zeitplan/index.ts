@@ -120,6 +120,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung = await job('wartung', 720, async () => {
+    const n = await dienst.rpc<number>('wartung_jahreslauf', {})
+    return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
