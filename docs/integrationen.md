@@ -99,6 +99,10 @@ prüfen, ob Beträge und Zuordnung stimmen.
 3. Absender `DimSolaire` (höchstens 11 Zeichen) in Einstellungen › Verbindungen; bei ASPSMS freischalten lassen.
 4. «Jetzt testen» zeigt das Guthaben.
 
+**Technik:** ASPSMS (json.aspsms.com) bietet nur TLS 1.2 mit älteren CBC-Verfahren an. Die Edge Functions (Deno)
+lehnen das ab, darum geht jeder ASPSMS-Aufruf über die Datenbank (pg_net, `sms_anfrage`/`sms_antwort`, nur
+service_role). Bietet ASPSMS später moderne Verfahren (AES-GCM) an, kann der Umweg wieder weg.
+
 Die SMS-Liste in «Anfragen & Leads › SMS für morgen» sendet nur auf Knopfdruck. «Automatisch ab 16 Uhr» kann
 nur die Administration einschalten (Regel 6: nach aussen nur mit Freigabe, ausser ausdrücklich automatisch).
 
