@@ -9,6 +9,7 @@ import { mailVerknuepfen, mailVorlage } from '@/services/posteingang'
 import { supabase } from '@/services/supabase'
 import { REITER, type Reiter as ReiterTyp } from '../types'
 import { AnlagenListe } from './AnlagenListe'
+import { AnlageSeite } from './AnlageSeite'
 import { FallDialog, type FallVorlage } from './FallDialog'
 import { FallSeite } from './FallSeite'
 import { Leitstand } from './Leitstand'
@@ -21,13 +22,16 @@ import { Leitstand } from './Leitstand'
 export default function Service({
   reiter,
   fallId,
+  anlageId = null,
   ausMail = null,
   onNavigation,
 }: {
   reiter: ReiterTyp
   fallId: string | null
+  /** Offene Anlage-Akte (#/aftersales?anlage=…). */
+  anlageId?: string | null
   ausMail?: string | null
-  onNavigation: (z: { reiter?: ReiterTyp; fall?: string | null }) => void
+  onNavigation: (z: { reiter?: ReiterTyp; fall?: string | null; anlage?: string | null }) => void
 }) {
   const { t } = useTranslation()
   const [neu, setNeu] = useState(false)
@@ -80,6 +84,23 @@ export default function Service({
       }}
     />
   )
+
+  if (anlageId && !fallId) {
+    return (
+      <div className="mx-auto flex w-full max-w-[110rem] flex-col gap-4 px-4 py-6 sm:px-6">
+        <AnlageSeite
+          key={anlageId}
+          id={anlageId}
+          onZurueck={() => {
+            onNavigation({ reiter: 'anlagen', anlage: null })
+          }}
+          onFall={(id) => {
+            onNavigation({ fall: id, anlage: null })
+          }}
+        />
+      </div>
+    )
+  }
 
   if (fallId) {
     return (
@@ -134,7 +155,11 @@ export default function Service({
           />
         </ReiterInhalt>
         <ReiterInhalt value="anlagen" className="pt-4">
-          <AnlagenListe />
+          <AnlagenListe
+            onOeffnen={(id) => {
+              onNavigation({ anlage: id })
+            }}
+          />
         </ReiterInhalt>
       </Reiter>
       {dialog}
