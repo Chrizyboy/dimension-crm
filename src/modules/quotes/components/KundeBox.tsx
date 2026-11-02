@@ -25,7 +25,7 @@ export function KundeBox({ o }: { o: Offerte }) {
         <Zeile label={t('offerten.seite.termin')}>
           {o.terminAm
             ? [o.terminAm.slice(0, 10).split('-').reverse().join('.'), o.verkaufPersonName].filter(Boolean).join(' · ')
-            : t('offerten.vorrat.richt')}
+            : null}
         </Zeile>
       </dl>
     </Box>

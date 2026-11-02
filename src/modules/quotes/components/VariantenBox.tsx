@@ -84,7 +84,7 @@ export function VariantenBox({ o }: { o: Offerte }) {
                 key={v.k}
                 className={cn('flex flex-col gap-1 rounded-lg border p-2.5', gewaehlt && 'border-ok border-2')}
               >
-                <span className="flex items-center justify-between gap-2">
+                <span className="flex flex-col items-start gap-1">
                   <span className="font-semibold">
                     {v.k} · {v.titel}
                   </span>

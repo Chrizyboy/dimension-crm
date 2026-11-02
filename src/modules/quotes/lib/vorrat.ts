@@ -83,7 +83,8 @@ export function vorratKarten(
     karten.push({
       schluessel: `l:${e.id}`,
       phase,
-      ziel: { lead: e.id },
+      // Wartet die Offerte auf eine Freigabe, öffnet die Karte die Offert-Akte (dort ist «Freigeben»).
+      ziel: o?.freigabeGrund ? { offerte: o.id } : { lead: e.id },
       nummer: e.offerteNummer,
       name: e.name,
       ort: e.ort,

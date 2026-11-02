@@ -1505,8 +1505,8 @@
       "kurz": "{{p}} %"
     },
     "freigabe": {
-      "noetig_rabatt": "Validation nécessaire : rabais au-dessus du seuil",
-      "noetig_marge": "Validation nécessaire : marge trop basse",
+      "noetig_rabatt": "Validation : rabais",
+      "noetig_marge": "Validation : marge trop basse",
       "text": "dès {{rabatt}} % de rabais ou sous {{marge}} % de marge, une deuxième personne valide",
       "knopf": "Valider",
       "erteilt": "Validée par {{name}} le {{datum}}"
@@ -1573,7 +1573,9 @@
       "sprache": "Langue",
       "sprache_de": "Allemand",
       "sprache_fr": "Français",
-      "termin": "Visite sur place"
+      "termin": "Visite sur place",
+      "gueltig": "valable jusqu'au {{datum}}",
+      "abgelaufen": "échue le {{datum}}"
     },
     "unterlagen": {
       "titel": "Documents",
@@ -1594,7 +1596,9 @@
       "feldBetrag": "Montant HT",
       "entfernen": "Supprimer la variante {{k}}",
       "neu": "Ajouter une variante",
-      "vorschlagA": "Comme offert"
+      "vorschlagA": "Comme offert",
+      "bearbeiten": "Modifier les variantes",
+      "erfassen": "Saisir des variantes"
     }
   },
   "werkvertraege": {

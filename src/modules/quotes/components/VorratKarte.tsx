@@ -74,7 +74,7 @@ export function VorratKarte({ k, onOeffnen }: { k: Karte; onOeffnen: (k: Karte) 
         </span>
       )}
       {(k.hinweis || k.chance !== null) && (
-        <span className="flex flex-wrap gap-1">
+        <span className="flex min-w-0 flex-wrap gap-1 [&>*]:max-w-full [&>*]:whitespace-normal">
           {k.hinweis && <HinweisBadge h={k.hinweis} />}
           {k.chance !== null && <Badge>{t('offerten.chance.kurz', { p: k.chance })}</Badge>}
         </span>

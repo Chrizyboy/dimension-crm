@@ -1505,8 +1505,8 @@
       "kurz": "{{p}} %"
     },
     "freigabe": {
-      "noetig_rabatt": "Freigabe nötig: Rabatt über der Schwelle",
-      "noetig_marge": "Freigabe nötig: Marge zu tief",
+      "noetig_rabatt": "Freigabe: Rabatt",
+      "noetig_marge": "Freigabe: Marge zu tief",
       "text": "ab {{rabatt}} % Rabatt oder unter {{marge}} % Marge gibt eine zweite Person frei",
       "knopf": "Freigeben",
       "erteilt": "Freigegeben von {{name}} am {{datum}}"
@@ -1573,7 +1573,9 @@
       "sprache": "Sprache",
       "sprache_de": "Deutsch",
       "sprache_fr": "Französisch",
-      "termin": "Termin vor Ort"
+      "termin": "Termin vor Ort",
+      "gueltig": "gültig bis {{datum}}",
+      "abgelaufen": "abgelaufen am {{datum}}"
     },
     "unterlagen": {
       "titel": "Unterlagen",
@@ -1594,7 +1596,9 @@
       "feldBetrag": "Betrag exkl. MWST",
       "entfernen": "Variante {{k}} entfernen",
       "neu": "Variante hinzufügen",
-      "vorschlagA": "Wie offeriert"
+      "vorschlagA": "Wie offeriert",
+      "bearbeiten": "Varianten bearbeiten",
+      "erfassen": "Varianten erfassen"
     }
   },
   "werkvertraege": {

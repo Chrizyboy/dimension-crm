@@ -111,7 +111,7 @@ export default function Arbeitsvorrat({
             <section
               key={p}
               aria-label={t(`offerten.phase.${p}`)}
-              className="bg-muted/50 flex w-64 shrink-0 flex-col rounded-xl border"
+              className="bg-muted/50 flex min-w-52 flex-1 basis-0 flex-col rounded-xl border"
             >
               <header className="flex flex-col border-b px-3 py-2">
                 <span className="flex items-center justify-between gap-2">

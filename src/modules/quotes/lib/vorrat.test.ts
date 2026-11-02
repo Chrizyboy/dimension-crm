@@ -125,6 +125,7 @@ describe('vorratKarten', () => {
     expect(karten).toHaveLength(1)
     expect(karten[0]?.phase).toBe('pruefen')
     expect(karten[0]?.hinweis).toEqual({ art: 'freigabe', grund: 'rabatt' })
+    expect(karten[0]?.ziel).toEqual({ offerte: 'o2' })
   })
 
   it('fällige Offerte zeigt «nachfassen», alte Gewonnene und Verlorene fallen weg', () => {
