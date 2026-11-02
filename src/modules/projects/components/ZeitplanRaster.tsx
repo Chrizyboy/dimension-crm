@@ -8,6 +8,12 @@ import type { PlanBalken, PlanGruppe, PlanZeile } from '../lib/zeitplanAnsicht'
 import type { Projekt } from '../types'
 import { SPUR, ZeitplanBalken } from './ZeitplanBalken'
 
+/** Ist rechts vom Balken (drei Tage, gleiche Spur) frei, damit der Text daneben stehen kann? */
+function platzDanach(b: PlanBalken, alle: PlanBalken[]): boolean {
+  const bis = alsIso(plusTage(alsDatum(b.bis), 3))
+  return !alle.some((o) => o !== b && o.spur === b.spur && o.von > b.bis && o.von <= bis)
+}
+
 /** Auslastung einer Woche mit der Zahl verfügbarer Monteure (Team ohne Abwesende). */
 export type Auslastung = WochenAuslastung & { verfuegbar: number }
 
@@ -146,8 +152,11 @@ export function ZeitplanRaster({
                       start={start}
                       tage={tage}
                       ziehbar={Boolean(b.einsatz && b.projekt?.bau_status && b.projekt.bau_status !== 'fertig')}
+                      platz={platzDanach(b, z.balken)}
                       onOeffnen={(x) => {
-                        if (x.projekt) onOeffnen(x.projekt)
+                        // Service-Termine öffnen den Fall in «Service & Garantie» (dort wird auch geplant).
+                        if (x.service) window.location.hash = `#/aftersales?fall=${x.service.id}`
+                        else if (x.projekt) onOeffnen(x.projekt)
                       }}
                       onZiehen={onZiehen}
                     />
