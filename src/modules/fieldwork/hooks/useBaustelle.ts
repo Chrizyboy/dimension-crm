@@ -114,6 +114,16 @@ export const usePruefpunkte = () =>
     queryFn: () => mitAblage('pruefpunkte', b.ladePruefpunkte),
   })
 
+/** Prüfpunkte und Vorjahr einer Inspektion, mit Kopie am Gerät (die Inspektion läuft auch ohne Netz). */
+export const useWartungPruefung = (vertragId: string | null) =>
+  useQuery({
+    queryKey: ['baustelle', 'wartung', vertragId],
+    networkMode: 'always',
+    enabled: an && Boolean(vertragId),
+    staleTime: 10 * 60_000,
+    queryFn: () => mitAblage(`wartung-${vertragId ?? ''}`, () => b.ladeWartungPruefung(vertragId ?? '')),
+  })
+
 export const useRapporte = (filter: RapportFilter) =>
   useQuery({ queryKey: ['baustelle', 'rapporte', filter], enabled: an, queryFn: () => b.ladeRapporte(filter) })
 

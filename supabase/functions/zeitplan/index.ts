@@ -121,6 +121,10 @@ Deno.serve(async (req) => {
   })
 
   // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung_ankuendigung = await job('wartung_ankuendigung', 60, async () => {
+    const n = await dienst.rpc<number>('wartung_ankuendigungen', {})
+    return `${n} ${n === 1 ? 'Ankündigung' : 'Ankündigungen'} im Ausgangskorb`
+  })
   ergebnis.wartung = await job('wartung', 720, async () => {
     const n = await dienst.rpc<number>('wartung_jahreslauf', {})
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`

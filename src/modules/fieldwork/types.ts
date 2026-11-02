@@ -37,9 +37,9 @@ export interface RapportKurz {
   abgeschlossen_am: string | null
 }
 
-/** Ein Eintrag im Tagesplan: Einsatz auf einer Baustelle oder Service-Termin. */
+/** Ein Eintrag im Tagesplan: Einsatz auf einer Baustelle, Service-Termin oder Inspektion (Wartungsvertrag). */
 export interface TagEintrag {
-  typ: 'einsatz' | 'service'
+  typ: 'einsatz' | 'service' | 'wartung'
   id: string
   von: string
   bis: string
@@ -57,6 +57,8 @@ export interface TagEintrag {
   team: string[]
   material: { zeilen: number; fehlt: number } | null
   rapporte: RapportKurz[]
+  /** Inspektion aus einem Wartungsvertrag: Paket entscheidet über die Messungen, «bis» ist das Ende des Zeitfensters. */
+  wartung?: { id: string; nummer: string | null; paket: string | null; kwp: number | null; bis: string | null }
   service?: {
     id: string
     nummer: string
@@ -229,13 +231,31 @@ export interface Nachtrag {
   erstellt_am: string
 }
 
-/** Prüfpunkt des IBN-Protokolls (Liste in `einstellungen.ibn_pruefpunkte`). */
+/**
+ * Prüfpunkt des IBN-Protokolls (`einstellungen.ibn_pruefpunkte`) oder der Inspektion (`wartung_pakete.pruefpunkte`);
+ * `nur_messung` gilt nur für Pakete mit Messungen (Premium).
+ */
 export interface Pruefpunkt {
   schluessel: string
   de: string
   fr: string
   art: 'ja_nein' | 'wert'
   einheit?: string
+  nur_messung?: boolean
+}
+
+/** Werte der letzten Inspektion (oder des IBN-Protokolls) für den Vergleich am Handy. */
+export interface Vorjahr {
+  datum: string
+  quelle: 'wartung' | 'ibn'
+  werte: Record<string, string | boolean | null>
+}
+
+/** Was die Inspektion am Handy braucht: Prüfpunkte des Pakets, Vorjahr und ab wie viel Prozent eine Abweichung auffällt. */
+export interface WartungPruefung {
+  punkte: Pruefpunkt[]
+  vorjahr: Vorjahr | null
+  abweichung_prozent: number
 }
 
 /** Foto oder Unterschrift eines Rapports; «lokal» = noch in der Warteschlange am Handy. */
