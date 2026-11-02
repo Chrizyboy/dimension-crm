@@ -19,6 +19,7 @@
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * monatsbericht stündlich      am 1. des Monats Glocke «Monatsbericht» an die Geschäftsleitung (Kennzahlen)
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
 //  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
@@ -118,6 +119,12 @@ Deno.serve(async (req) => {
   ergebnis.fristen = await job('fristen', 60, async () => {
     const n = await dienst.rpc<number>('fristen_melden', {})
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Monatsbericht der Kennzahlen (Entscheid 0039): am 1. eine Glocke für die Geschäftsleitung, nur intern.
+  ergebnis.monatsbericht = await job('monatsbericht', 60, async () => {
+    const n = await dienst.rpc<number>('kennzahlen_monatsbericht_melden', {})
+    return n ? `${n} gemeldet` : 'nicht fällig'
   })
 
   // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
