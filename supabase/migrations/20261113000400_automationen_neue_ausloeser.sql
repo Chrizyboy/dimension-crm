@@ -1,4 +1,4 @@
--- Automationen vollständig (Entscheid 0039): vier neue Auslöser nach Datum, die Nachfass-Folge 3/10/21 und
+-- Automationen vollständig (Entscheid 0041): vier neue Auslöser nach Datum, die Nachfass-Folge 3/10/21 und
 -- Vorlagen dazu. Die Durchsicht läuft getrennt von intern.automationen_durchsehen (die parallel ausgebaut wird):
 -- automationen_abarbeiten ruft beide auf. Wie überall gilt «nur Neues»: der Bestand beim ersten Durchsehen ist Basis.
 --  * lead.ohne_kontakt      Lead offen, seit N Arbeitstagen kein Anruf, keine Mail, kein Besuch (einmal je Lücke)

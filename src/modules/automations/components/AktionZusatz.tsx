@@ -6,7 +6,7 @@ import type { AktionsFelder } from '../lib/anzeige'
 import type { Aktion } from '../types'
 
 /**
- * Zusätze einer Aktion (Entscheid 0039): Arbeitstage statt Kalendertage, was «Prüfen» bei «nicht mehr nötig» tut,
+ * Zusätze einer Aktion (Entscheid 0041): Arbeitstage statt Kalendertage, was «Prüfen» bei «nicht mehr nötig» tut,
  * und eine Anruf-Aufgabe, wenn Mail oder Handynummer fehlt. Eigene Datei, damit AktionFelder klein bleibt.
  */
 export function AktionZusatz({

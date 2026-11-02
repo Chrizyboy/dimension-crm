@@ -1,4 +1,4 @@
--- Prüft den Ausbau der Automationen (Entscheid 0039): Arbeitstage und Versandfenster mit Feiertagen, Kontakt-Pause,
+-- Prüft den Ausbau der Automationen (Entscheid 0041): Arbeitstage und Versandfenster mit Feiertagen, Kontakt-Pause,
 -- «sonst überspringen», Ersatz-Aufgabe ohne Mail-Adresse, Wiedervorlage und Notiz, Stoppen nur mit Grund und nur
 -- durch Berechtigte, Fortsetzen, Verschieben, Wiederholen eines Schritts, geplante Schritte je Datensatz, «Warum?»,
 -- Übersicht und Probelauf nur Administration, neuer Auslöser «Lead ohne Kontakt» (nur Neues).

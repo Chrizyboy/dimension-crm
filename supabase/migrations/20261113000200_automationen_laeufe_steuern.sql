@@ -1,4 +1,4 @@
--- Automationen vollständig (Entscheid 0039): Läufe für einen einzelnen Datensatz stoppen, fortsetzen, verschieben,
+-- Automationen vollständig (Entscheid 0041): Läufe für einen einzelnen Datensatz stoppen, fortsetzen, verschieben,
 -- sofort ausführen und einen Schritt wiederholen; geplante Schritte je Datensatz für die Akten; «Warum?» bei Aufgaben.
 -- Stoppen/Verschieben dürfen Administration, Geschäftsleitung und die zuständige Person (Chris 2.11.2026).
 

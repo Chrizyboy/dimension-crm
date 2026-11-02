@@ -1,4 +1,4 @@
--- Automationen vollständig (Entscheid 0039): Übersicht (läuft der Motor, was wurde erledigt, was braucht
+-- Automationen vollständig (Entscheid 0041): Übersicht (läuft der Motor, was wurde erledigt, was braucht
 -- Aufmerksamkeit), Kennzahlen je Automation, Änderungsverlauf und der Probelauf mit einem echten Datensatz
 -- (rechnet alles aus, legt aber nichts an und sendet nichts). Nur Administration und Geschäftsleitung.
 

@@ -26,7 +26,7 @@ interface Props {
 /**
  * Automationen (Phase 12): Abläufe «wenn … dann …», die der Server alle paar Minuten abarbeitet.
  * Was nach aussen geht, landet als Entwurf im Ausgangskorb, ausser eine Automation steht auf «automatisch».
- * Start ist die Übersicht (Entscheid 0039). #/automations?ansicht=protokoll&automation=…
+ * Start ist die Übersicht (Entscheid 0041). #/automations?ansicht=protokoll&automation=…
  */
 export default function Automationen({ ansicht, automationId, onAdresse }: Props) {
   const { t } = useTranslation()
