@@ -1988,11 +1988,21 @@
     "empfehlung_nicht_bereit": "Diese Anfrage ist nicht mehr offen.",
     "empfehlung_kein_bewertungslink": "Es ist kein Google-Bewertungslink eingetragen (Automationen › Einstellungen).",
     "empfehlung_kein_recht": "Dafür fehlt das Recht.",
-    "team_kein_recht": "Dafür fehlt dir das Recht (Personal-Akte).",
+    "team_kein_recht": "Nur Administration und Geschäftsleitung.",
     "team_gespraech_naechstes": "Das nächste Gespräch muss nach diesem liegen.",
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "kurs_kein_recht": "Dafür fehlt dir das Recht.",
+    "kurs_titel_fehlt": "Bitte einen Titel eingeben.",
+    "kurs_niemand": "Bitte mindestens eine Person wählen.",
+    "kurs_stand": "In diesem Stand nicht möglich.",
+    "kurs_nicht_gefunden": "Kurs nicht gefunden.",
+    "kurs_abgeschlossen": "Der Kurs ist abgeschlossen.",
+    "kurs_grenze": "Über deiner Bewilligungsgrenze: das bewilligt die Geschäftsleitung.",
+    "kurs_datum_fehlt": "Für «angemeldet» braucht es ein Datum.",
+    "team_gueltigkeit": "Gültigkeit 1 bis 600 Monate.",
+    "team_text_fehlt": "Bitte Bezeichnung Deutsch und Französisch eingeben.",
     "grossprojekt_nicht_bewilligt": "Erst nach dem Ja (Bewilligen) gibt es Stufen.",
     "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
     "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
@@ -6012,13 +6022,16 @@
   },
   "handbuch": {
     "titel": "Handbuch",
-    "beschreibung": "Anleitung zu jedem Bereich, unsere Prozesse, Erklärvideos und deine Meldungen an die Administration.",
+    "beschreibung": "Wie alles funktioniert: ein Kapitel pro Bereich, Schritt für Schritt. Dazu unsere Prozesse, Videos und deine Meldungen.",
     "reiter": {
-      "anleitung": "Anleitung",
       "prozesse": "Prozesse",
       "videos": "Videos",
       "meldungen": "Meldungen",
-      "start": "Erste Schritte"
+      "start": "Erste Schritte",
+      "fuerdich": "Für dich",
+      "kapitel": "Kapitel",
+      "begriffe": "Begriffe A–Z",
+      "neu": "Neu"
     },
     "nichtsGefunden": "Nichts gefunden",
     "titelFeld": "Titel",
@@ -6150,14 +6163,13 @@
       "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
     "anleitung": {
-      "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
-      "suche": "In der Anleitung suchen",
       "schneller": "So geht es schneller",
       "tippSuche": "Bereich, Kontakt oder Aktion suchen",
       "tippSprung": "Springen, z. B. zu den Kunden",
       "tippNeu": "Neuer Eintrag in Listen",
       "tippFilter": "In Listen ins Suchfeld",
-      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)"
+      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)",
+      "tippHilfe": "Hilfe zum Bereich, in dem du gerade bist"
     },
     "fehler": {
       "titel": "Bitte einen Titel eintragen.",
@@ -6222,6 +6234,55 @@
           ]
         }
       ]
+    },
+    "bereichFeld": "Bereich",
+    "bereichHinweis": "Erscheint im Kapitel dieses Bereichs und in der Hilfe (F1).",
+    "keinBereich": "Kein Bereich (nur hier)",
+    "kapitel": {
+      "intro": "Zu jedem Bereich ein ganzes Kapitel: wofür, Schritt für Schritt, Stände, was automatisch läuft, Regeln und häufige Fragen.",
+      "alleBereiche": "Auch andere Bereiche zeigen",
+      "anleitungen_one": "{{count}} Anleitung",
+      "anleitungen_other": "{{count}} Anleitungen",
+      "stand": "Stand {{datum}}",
+      "inhalt": "Inhalt des Kapitels",
+      "alle": "Alle Kapitel",
+      "oeffnen": "{{bereich}} öffnen",
+      "drucken": "Drucken / PDF",
+      "melden": "Stimmt etwas nicht? Melden",
+      "fehlt": "Zu diesem Bereich gibt es noch kein Kapitel",
+      "fehltText": "Melde es, dann wird es ergänzt.",
+      "unterlagen": "Prozesse und Videos zu diesem Bereich",
+      "prozess": "Prozess · PDF · V{{version}}",
+      "video": "Video · {{dauer}}"
+    },
+    "fuerDich": {
+      "titel": "Dein Arbeitstag: {{rolle}}",
+      "rolle": "Rolle",
+      "neu": "Neu für dich",
+      "hilfeTitel": "Hilfe, wo du gerade bist",
+      "hilfeText1": "In jedem Bereich zeigt",
+      "hilfeText2": "oder das Fragezeichen oben rechts das passende Kapitel daneben, ohne die Arbeit zu verlassen."
+    },
+    "begriffe": {
+      "intro": "Was die Wörter im CRM bedeuten, von A bis Z.",
+      "suche": "Begriff suchen"
+    },
+    "neu": {
+      "leer": "Noch keine Neuigkeiten",
+      "ungesehenSr": "ungelesene Neuigkeiten:"
+    },
+    "suche": {
+      "feld": "Im Handbuch suchen",
+      "beispiel": "z. B. «Offerte senden», «Rabatt», «IBN»",
+      "kuerzel": "Im Handbuch suchen",
+      "anleitungen": "In den Kapiteln",
+      "mehr": "Begriffe, Prozesse und Videos",
+      "leerText": "Versuche ein anderes Wort oder melde, was fehlt."
+    },
+    "hilfe": {
+      "knopf": "Hilfe zu diesem Bereich (F1)",
+      "titel": "Hilfe · {{bereich}}",
+      "ganz": "Ganzes Kapitel"
     }
   },
   "update": {
@@ -6983,24 +7044,32 @@
   },
   "team": {
     "titel": "Team & Ausweise",
-    "beschreibung": "Wer darf was: Kurse und Ausweise aller Personen, dazu die eigene Personal-Akte.",
+    "beschreibung": "Wer ist heute wo, wer darf was: Team, Kurse und Ausweise, dazu die Personal-Akte.",
     "meineAkte": "Meine Akte",
     "filter": "Filter",
     "filterwert": {
       "alle": "Alle",
-      "probleme": "Handlungsbedarf"
+      "probleme": "Handlungsbedarf",
+      "da": "Heute da",
+      "pflicht": "Mit Pflicht"
     },
     "matrix": "Übersicht: wer darf was",
     "spalte": {
-      "person": "Person"
+      "person": "Person",
+      "heute": "Heute",
+      "telefon": "Telefon",
+      "vorgesetzt": "Vorgesetzt",
+      "ausweise": "Ausweise"
     },
     "zelle": {
       "fehlt": "fehlt",
       "abgelaufen": "abgelaufen",
       "bis": "bis {{datum}}",
-      "ja": "ja"
+      "ja": "ja",
+      "kursAm": "Kurs {{datum}}",
+      "kurs": "Kurs gebucht"
     },
-    "legende": "«fehlt» = Pflicht für die Rolle (Einstellung in der Liste «Kurse und Ausweise»). Gelb = läuft in 60 Tagen ab.",
+    "legende": "Rot = Pflicht für die Rolle fehlt oder ist abgelaufen. Gelb = läuft in 60 Tagen ab. Blau = Kurs gebucht. Pflicht je Rolle im Reiter «Anforderungen».",
     "leer": "Keine Personen",
     "leerText": "Niemand hat in diesem Filter Handlungsbedarf.",
     "ausweise": "Kurse und Ausweise",
@@ -7034,7 +7103,7 @@
       "anstellung": "Anstellung",
       "anstellungBearbeiten": "Anstellung bearbeiten",
       "persoenlich": "Persönlich",
-      "kleider": "Arbeitskleider und Ausrüstung",
+      "kleider": "Arbeitskleider",
       "vorgesetzt": "Vorgesetzt",
       "vorgesetzt_id": "Vorgesetzt",
       "funktion": "Funktion",
@@ -7155,6 +7224,130 @@
       "bewilligungVorbei": "Bewilligung abgelaufen ({{datum}})",
       "gespraech": "Gespräch am {{datum}}",
       "gespraechVorbei": "Gespräch fällig seit {{datum}}"
+    },
+    "heute": {
+      "da": "da",
+      "grundBis": "{{grund}} bis {{datum}}",
+      "abwesendBis": "abwesend bis {{datum}}",
+      "kurs": "im Kurs",
+      "baustelleIn": "Baustelle {{ort}}",
+      "baustelle": "auf der Baustelle",
+      "serviceUm": "Service {{zeit}}",
+      "service": "Service-Termin"
+    },
+    "suchen": "Name, Funktion, Telefon",
+    "reiter": {
+      "team": "Team",
+      "ausweise": "Ausweise",
+      "kurse": "Kurse",
+      "anforderungen": "Anforderungen"
+    },
+    "ohneStandort": "Ohne Standort",
+    "allesGueltig": "alles gültig",
+    "summe": "Gültig",
+    "summeVon": "{{ok}} von {{von}}",
+    "vorschlag": {
+      "titel_one": "{{art}} fehlt oder läuft ab bei 1 Person:",
+      "titel_other": "{{art}} fehlt oder läuft ab bei {{count}} Personen:",
+      "planen_one": "Kurs planen",
+      "planen_other": "Kurs für {{count}} planen"
+    },
+    "mail": "Mail",
+    "seit": "seit {{datum}}",
+    "kopieren": "{{was}} kopieren",
+    "panel": {
+      "ausweise": "Ausweise",
+      "kurse": "Kurse",
+      "ausruestung": "Ausrüstung",
+      "akte": "Personal-Akte"
+    },
+    "ausruestung": {
+      "leer": "Kein Fahrzeug und kein Gerät zugeteilt.",
+      "mfk": "MFK {{datum}}",
+      "pruefung": "Prüfung {{datum}}"
+    },
+    "anforderung": {
+      "text": "Welche Ausweise je Rolle Pflicht sind und wie lange sie gelten. Ein Häkchen speichert sofort. Fehlt jemandem eine Pflicht, erscheint sie rot in der Übersicht und als Vorschlag «Kurs planen».",
+      "ausweis": "Kurs oder Ausweis",
+      "gueltig": "Gültig (Monate)",
+      "monateFuer": "Gültigkeit in Monaten für {{art}}",
+      "unbefristet": "unbefristet",
+      "pflichtFuer": "{{art}} Pflicht für {{rolle}}",
+      "monateHinweis": "Leer = unbefristet. Die Erinnerung kommt 60 Tage vor Ablauf als Aufgabe und in der Glocke.",
+      "textDe": "Bezeichnung Deutsch",
+      "textFr": "Bezeichnung Französisch",
+      "neu": "Kurs oder Ausweis hinzufügen"
+    },
+    "kurs": {
+      "stand": {
+        "beantragt": "beantragt",
+        "bewilligt": "bewilligt",
+        "angemeldet": "angemeldet",
+        "besucht": "besucht",
+        "abgesagt": "abgesagt"
+      },
+      "kennzahl": {
+        "geplant": "Kurse geplant",
+        "antraege": "Anträge warten",
+        "kostenBudget": "Kurskosten {{jahr}}, Budget {{budget}}",
+        "kosten": "Kurskosten {{jahr}}",
+        "tage": "Kurstage {{jahr}} im Team"
+      },
+      "tage_one": "{{count}} Tag",
+      "tage_other": "{{count}} Tage",
+      "filter": {
+        "offen": "Offen",
+        "antraege": "Anträge",
+        "meine": "Meine"
+      },
+      "jahrZurueck": "Jahr zurück",
+      "jahrVor": "Nächstes Jahr",
+      "leer": "Keine Kurse",
+      "leerText": "Plane einen Kurs oder beantrage eine Weiterbildung.",
+      "titel": "Kurs",
+      "datum": "Datum",
+      "wer": "Wer",
+      "anbieterOrt": "Anbieter, Ort",
+      "kosten": "Kosten",
+      "standTitel": "Stand",
+      "ergibt": "ergibt «{{art}}»",
+      "weiterbildung": "Weiterbildung ohne Ausweis",
+      "vereinbarungBis": "Vereinbarung bis {{datum}}",
+      "ohneDatum": "Datum offen",
+      "wartetAufDich": "wartet auf dich",
+      "ohneBudget": "Kein Budget für dieses Jahr eingetragen (Einstellungen › team).",
+      "neu": "Kurs planen",
+      "beantragen": "Kurs beantragen",
+      "neuText": "Mit Datum ist der Kurs angemeldet und der Tag in der Einsatzplanung gesperrt.",
+      "beantragenText": "Deine vorgesetzte Person bekommt den Antrag in der Glocke, bei höheren Kosten die Geschäftsleitung.",
+      "ablehnen": "Ablehnen",
+      "absagen": "Absagen",
+      "bewilligen": "Bewilligen",
+      "speichernAls": {
+        "beantragt": "Beantragen",
+        "bewilligt": "Speichern (bewilligt)",
+        "angemeldet": "Speichern (angemeldet)"
+      },
+      "grund": "Grund: {{grund}}",
+      "absageGrund": "Grund (geht an die Betroffenen)",
+      "absageBestaetigen": "Absagen",
+      "werDabei": "Wer war dabei? Sie bekommen den Ausweis eingetragen.",
+      "besucht": "Als besucht abschliessen",
+      "art": "Ergibt den Ausweis",
+      "artHinweis": "Nach dem Kurs trägt das CRM den Ausweis mit «gültig bis» ein.",
+      "von": "Datum (erster Tag)",
+      "vonHinweis": "Mit Datum: angemeldet",
+      "bis": "Bis (letzter Tag)",
+      "bisHinweis": "Leer bei einem Tag",
+      "anbieter": "Anbieter",
+      "ort": "Ort",
+      "kostenChf": "Kosten (CHF)",
+      "vereinbarung": "Rückzahlung bei Kündigung (CHF)",
+      "vereinbarungHinweis": "Weiterbildungsvereinbarung, nimmt bis «Bindung bis» linear ab",
+      "bindungBis": "Bindung bis",
+      "notiz": "Notiz",
+      "rueckzahlungOffen": "Offen aus Weiterbildungsvereinbarung: {{betrag}} (bei Kündigung heute)",
+      "keineFuerPerson": "Keine Kurse in diesem Jahr."
     }
   },
   "posteingang": {
