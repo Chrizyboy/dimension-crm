@@ -34,18 +34,8 @@ interface BenachrichtigungsZustand {
 /** Mehr hebt das Gerät nicht auf; Meldungen der Automationen liegen in der Datenbank (siehe useBenachrichtigungsListe). */
 const MAX_EINTRAEGE = 50
 
-const WILLKOMMEN: Benachrichtigung = {
-  id: 'willkommen-phase-2',
-  art: 'info',
-  titel: { de: 'Neues Design ist da', fr: 'Le nouveau design est là' },
-  text: {
-    de: 'Alle Bausteine des CRM auf einer Seite ansehen.',
-    fr: 'Voir tous les éléments du CRM sur une seule page.',
-  },
-  zeit: '2026-10-21T15:00:00.000Z',
-  gelesen: false,
-  ziel: '/design',
-}
+/** Alte Begrüssung, die zur Design-Seite führte; wird beim Laden entfernt. */
+const ALTE_BEGRUESSUNG = 'willkommen-phase-2'
 
 /**
  * Lokaler Teil des Posteingangs (Glocke oben rechts): Meldungen, die nur dieses Gerät betreffen.
@@ -54,7 +44,7 @@ const WILLKOMMEN: Benachrichtigung = {
 export const useBenachrichtigungen = create<BenachrichtigungsZustand>()(
   persist(
     (set) => ({
-      liste: [WILLKOMMEN],
+      liste: [],
       hinzufuegen: (b) => {
         const neu: Benachrichtigung = { ...b, id: crypto.randomUUID(), zeit: new Date().toISOString(), gelesen: false }
         set((z) => ({ liste: [neu, ...z.liste].slice(0, MAX_EINTRAEGE) }))
@@ -69,7 +59,14 @@ export const useBenachrichtigungen = create<BenachrichtigungsZustand>()(
         set((z) => ({ liste: z.liste.filter((b) => b.id !== id) }))
       },
     }),
-    { name: 'dimension-benachrichtigungen' },
+    {
+      name: 'dimension-benachrichtigungen',
+      version: 1,
+      migrate: (alt) => {
+        const z = alt as { liste?: Benachrichtigung[] } | undefined
+        return { liste: (z?.liste ?? []).filter((b) => b.id !== ALTE_BEGRUESSUNG) } as BenachrichtigungsZustand
+      },
+    },
   ),
 )
 

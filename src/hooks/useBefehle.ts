@@ -80,14 +80,19 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       ...sprungTasten(m.id),
       ausfuehren: gehe(m.pfad),
     })),
-    {
-      id: 'design',
-      titel: t('befehle.design'),
-      gruppe: 'gehe-zu',
-      icon: Palette,
-      stichworte: ['design', 'bausteine', 'composants'],
-      ausfuehren: gehe('/design'),
-    },
+    // Design-System nur beim Entwickeln; im Betrieb bleibt #/design per Adresse erreichbar.
+    ...(import.meta.env.DEV
+      ? [
+          {
+            id: 'design',
+            titel: t('befehle.design'),
+            gruppe: 'gehe-zu',
+            icon: Palette,
+            stichworte: ['design', 'bausteine', 'composants'],
+            ausfuehren: gehe('/design'),
+          } satisfies Befehl,
+        ]
+      : []),
   ]
 
   const verkauf = sichtbar.some((m) => m.id === 'sales')
