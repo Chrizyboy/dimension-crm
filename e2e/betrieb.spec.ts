@@ -54,7 +54,11 @@ test('Betrieb und «Diese App»', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/settings?reiter=betrieb')
   await expect(page.getByRole('heading', { name: 'Bereit für das Team?' })).toBeVisible()
-  await expect(page.getByRole('listitem').filter({ hasText: 'Datensicherung' })).toBeVisible()
+  // «Datensicherung» steht in beiden Karten: Bereit für das Team? und Zustand der Dienste (28A).
+  await expect(page.getByRole('listitem').filter({ hasText: 'Datensicherung' })).toHaveCount(2)
+  const dienste = page.getByTestId('dienste-zustand')
+  await expect(dienste.getByRole('heading', { name: 'Zustand der Dienste' })).toBeVisible()
+  await expect(dienste.getByText('Zeitplan (Mails, SMS, Automationen)')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await page.goto('/#/konto')

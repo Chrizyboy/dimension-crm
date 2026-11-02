@@ -15,6 +15,7 @@ export type TagArt =
   | 'fall'
   | 'kontrolle'
   | 'wartung'
+  | 'freigabe'
 
 /** Eine Zeile in einer Karte: was, wann und wohin ein Klick führt. */
 export interface TagZeile {
@@ -46,6 +47,7 @@ export const TAG_LISTEN = [
   'termine',
   'aufgaben',
   'vergeben',
+  'freigaben',
   'nachfassen',
   'neue_leads',
   'wiedervorlagen',
