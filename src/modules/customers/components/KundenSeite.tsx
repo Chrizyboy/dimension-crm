@@ -6,6 +6,8 @@ import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { formatKundennummer } from '@/lib/kontakt'
+import { hatRecht } from '@/lib/rechte'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useKundenakte, useNachverkauf } from '../hooks/useKunden'
 import { akteZahlen } from '../lib/kennzahlen'
 import { naechsterSchritt } from '../lib/naechsterSchritt'
@@ -44,6 +46,11 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
   const k = kopf.data
   const a = akte.data
   const heute = heuteIso()
+  // Rechnungen liest nur, wer das Recht «finanzen» hat (RLS); sonst sagen wir das, statt «keine» zu zeigen.
+  const finanzen = hatRecht(
+    useAnmeldung((z) => z.ich),
+    'finanzen',
+  )
 
   if (kopf.isError || akte.isError || nach.isError) {
     return (
@@ -100,7 +107,7 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
         />
       </div>
 
-      {n ? <AkteZahlenLeiste z={akteZahlen(a, n, heute)} /> : <Skelett className="h-16 w-full" />}
+      {n ? <AkteZahlenLeiste z={akteZahlen(a, n, heute)} finanzen={finanzen} /> : <Skelett className="h-16 w-full" />}
 
       <div className="grid items-start gap-4 lg:grid-cols-2 2xl:grid-cols-[22rem_minmax(0,1fr)_24rem]">
         <div className="flex min-w-0 flex-col gap-4">
@@ -162,7 +169,7 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
           <GeschaefteBox akte={a} />
           {n && <AnlagenBox anlagen={n.anlagen} objekte={a.objekte} heute={heute} />}
           {n && <ServiceBox faelle={n.serviceFaelle} vertraege={n.wartungsvertraege} heute={heute} />}
-          {n && <RechnungenBox rechnungen={n.rechnungen} />}
+          {n && <RechnungenBox rechnungen={n.rechnungen} finanzen={finanzen} />}
           <Box titel={t('akte.reiter.dokumente')} rechts={<span className="zahlen">{a.dokumente.length}</span>}>
             <AkteDokumente dokumente={a.dokumente} />
           </Box>

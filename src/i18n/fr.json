@@ -630,7 +630,9 @@
       "service": "Prochain RDV: service",
       "wartung": "Prochain entretien",
       "baubeginn": "Prochain RDV: début des travaux"
-    }
+    },
+    "nurFinanzen": "Seules les personnes avec le droit «Finances» voient les factures.",
+    "nurBuchhaltung": "comptabilité seulement"
   },
   "kontakt": {
     "neuTitel": "Nouveau contact",

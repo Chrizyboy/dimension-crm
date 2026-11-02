@@ -16,7 +16,7 @@ const TON = {
  * Rechnungen des Kunden mit Stand, Fälligkeit, Mahnstufe und wann bezahlt wurde. Ohne Recht auf Rechnungen
  * liefert die Datenbank keine Zeilen; dann steht hier «keine Rechnungen».
  */
-export function RechnungenBox({ rechnungen }: { rechnungen: Rechnungszeile[] }) {
+export function RechnungenBox({ rechnungen, finanzen }: { rechnungen: Rechnungszeile[]; finanzen: boolean }) {
   const { t } = useTranslation()
   return (
     <Box
@@ -27,7 +27,9 @@ export function RechnungenBox({ rechnungen }: { rechnungen: Rechnungszeile[] }) 
         </a>
       }
     >
-      {rechnungen.length === 0 ? (
+      {!finanzen ? (
+        <Leer>{t('kundenseite.nurFinanzen')}</Leer>
+      ) : rechnungen.length === 0 ? (
         <Leer>{t('kundenseite.keineRechnung')}</Leer>
       ) : (
         rechnungen.slice(0, 12).map((r) => {
@@ -46,7 +48,9 @@ export function RechnungenBox({ rechnungen }: { rechnungen: Rechnungszeile[] }) 
               {[
                 chfOderLeer(r.total_rappen),
                 st === 'bezahlt'
-                  ? t('kundenseite.bezahltAm', { datum: datumOderLeer(r.bezahlt_am) })
+                  ? r.bezahlt_am
+                    ? t('kundenseite.bezahltAm', { datum: datumOderLeer(r.bezahlt_am) })
+                    : ''
                   : r.faellig_am
                     ? t('kundenseite.faelligAm', { datum: datumOderLeer(r.faellig_am) })
                     : '',

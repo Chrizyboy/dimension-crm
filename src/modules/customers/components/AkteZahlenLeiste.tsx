@@ -18,7 +18,7 @@ function Zahl({ label, wert, warnung = false }: { label: string; wert: string; w
  * Die Kundenakte auf einen Blick: seit wann, wie viel, was offen ist, welche Anlagen und was als Nächstes ansteht.
  * Gerechnet in `akteZahlen` aus denselben Zeilen wie die Boxen darunter.
  */
-export function AkteZahlenLeiste({ z }: { z: AkteZahlen }) {
+export function AkteZahlenLeiste({ z, finanzen }: { z: AkteZahlen; finanzen: boolean }) {
   const { t } = useTranslation()
   const termin = z.naechsterTermin
   return (
@@ -34,7 +34,13 @@ export function AkteZahlenLeiste({ z }: { z: AkteZahlen }) {
             ? t('kundenseite.zahl.offenUeberfaellig', { count: z.ueberfaellig })
             : t('kundenseite.zahl.offen')
         }
-        wert={z.offenRappen ? formatChf(z.offenRappen, { mitWaehrung: true }) : ''}
+        wert={
+          !finanzen
+            ? t('kundenseite.nurBuchhaltung')
+            : z.offenRappen
+              ? formatChf(z.offenRappen, { mitWaehrung: true })
+              : ''
+        }
         warnung={z.offenRappen > 0}
       />
       <Zahl label={t('kundenseite.zahl.anlagen')} wert={z.kwp ? `${String(z.kwp)} kWp` : ''} />

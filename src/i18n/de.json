@@ -630,7 +630,9 @@
       "service": "Nächster Termin: Service",
       "wartung": "Nächste Wartung",
       "baubeginn": "Nächster Termin: Baubeginn"
-    }
+    },
+    "nurFinanzen": "Rechnungen sieht nur, wer das Recht «Finanzen» hat.",
+    "nurBuchhaltung": "nur Buchhaltung"
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",

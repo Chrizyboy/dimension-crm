@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDrucken } from '@/hooks/useDrucken'
 import { formatKundennummer } from '@/lib/kontakt'
 import { meldeFehler } from '@/services/fehler'
@@ -30,6 +30,15 @@ export function useAkteAktionen(id: string, kopf: Kontaktzeile | null | undefine
   const [offen, setOffen] = useState<OffenerDialog>(null)
   const druck = useDrucken()
   const papierkorb = useKontaktAenderung((rein: boolean) => setzePapierkorb(id, rein))
+
+  // Verschwindet die Akte (z. B. nach «In den Papierkorb»), solange Menü oder Dialog noch ausblenden, räumt Radix die
+  // Klicksperre am body nicht mehr weg und nichts ist mehr anklickbar. Darum beim Verlassen selbst freigeben.
+  useEffect(
+    () => () => {
+      document.body.style.pointerEvents = ''
+    },
+    [],
+  )
 
   async function exportieren() {
     try {
