@@ -1976,7 +1976,9 @@
     "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration.",
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
-    "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis)."
+    "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "projekte_text_fehlt": "Bitte zuerst etwas eintragen.",
+    "projekte_art_unbekannt": "Diese Art von Eintrag gibt es nicht."
   },
   "ausgang": {
     "titel": "Ausgangskorb",

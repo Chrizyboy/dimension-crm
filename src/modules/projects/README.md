@@ -6,14 +6,15 @@
 
 ## So läuft es
 
-1. Ein Auftrag (Werkvertrag) erscheint unter «Aufträge ohne Bautermin». «Bautermin» übernimmt ihn in den Bau: ohne Datum (ausstehend), mit Datum (fixiert, Einsatz Team intern) oder in der Vergangenheit (gilt als gebaut). Jede Übernahme lässt sich rückgängig machen.
+0. **Leitstand** (Entscheid 0039): alle laufenden Projekte nach Phase, jede Karte sagt, was blockiert oder fehlt. **Meine Woche** zeigt der Projektleitung, was diese und nächste Woche fällig ist. Ein Projekt öffnet sich als **ganze Seite** mit «Jetzt zu tun», Verlauf, Terminen, Material, Geld und Nachkalkulation.
+1. Ein Auftrag (Werkvertrag) erscheint im Leitstand in der Spalte «Auftrag» (Filter «Ohne Bautermin»). «Bautermin» übernimmt ihn in den Bau: ohne Datum (ausstehend), mit Datum (fixiert, Einsatz Team intern) oder in der Vergangenheit (gilt als gebaut). Jede Übernahme lässt sich rückgängig machen.
 2. Der **Fahrplan** zeigt sechs Phasen. Bewilligungen (Gemeinde, Netzbetreiber, IA, SiNa, Abnahme, Pronovo) und die Checkliste Elektriker sind markierte Schritte darin. Automatische Schritte folgen aus Vertrag, Einsätzen und Zahlungsplan.
 3. Im **Zeitplan** werden Einsätze geplant (intern, extern mit Subunternehmer, voraussichtlich), mit Personen. Am PC Sicht Baustellen oder Team, 2/6/13 Wochen, Balken ziehen zum Verschieben, «Zu planen» rechts; am Handy eine Woche als Liste nach Tagen. Konflikte (abwesend, doppelt eingeplant) rot. Entscheid 0035. «IBN durchgeführt» schliesst das Projekt ab und legt die Anlage an.
 4. Gesuche (TAG, Gemeinde, Förderung) als vorausgefüllte Datenblätter aus der Akte.
 
 ## Daten
 
-- Liest/schreibt: `projekte`, `projekt_schritte`, `einsaetze`, `abwesenheiten`, `subunternehmer`, `subunternehmer_auftraege`; Sichten `projekt_fahrplan`, `projekt_stand`, `abwesenheiten_alle`.
+- Liest/schreibt: `projekte`, `aktivitaeten` (über `projekt_vermerken`), `projekt_schritte`, `einsaetze`, `abwesenheiten`, `subunternehmer`, `subunternehmer_auftraege`; Sichten `projekt_fahrplan`, `projekt_stand`, `projekt_signale`, `abwesenheiten_alle`; Akte über `projekt_akte()`, Nachkalkulation über `nachkalkulation()`.
 - Liest: `ablauf_schritte`, `standorte`, `personen`, `zahlungsplan` (über die Sichten), `kontakte`, `objekte`, `offerten`.
 - Abläufe in der Datenbank: `projekt_schritt_setzen`, `projekt_bau_planen`, `projekt_bau_zuruecknehmen`, `projekt_bau_rueckgaengig`, `projekt_zeitplan_speichern`.
 
@@ -29,7 +30,7 @@
 
 ## Ordner
 
-- `components/` – Seite, Board, Zeitplan, Bewilligungen, Akte, Subunternehmer, Abwesenheiten, Drucke, Startseiten-Karte
+- `components/` – Seite, Leitstand, Meine Woche, Projekt-Seite (`Akte*`), Zeitplan, Bewilligungen, Akte, Subunternehmer, Abwesenheiten, Drucke, Startseiten-Karte
 - `hooks/` – Daten laden (`useProjekte`), Änderungen mit Fehlermeldung (`useAktion`)
 - `services/` – Projekte, Planung, Subunternehmer
 - `lib/` – Fahrplan-Anzeige, Wochen und Auslastung (mit Tests)

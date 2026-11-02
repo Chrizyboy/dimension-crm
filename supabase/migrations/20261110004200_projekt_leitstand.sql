@@ -95,7 +95,7 @@ declare
   v_kontakt uuid;
 begin
   if nullif(trim(p_text), '') is null then raise exception using errcode = 'P0001', message = 'projekte.text_fehlt'; end if;
-  if p_art not in ('notiz', 'anruf', 'mail', 'besuch') then raise exception using errcode = 'P0001', message = 'projekte.art_unbekannt'; end if;
+  if p_art not in ('notiz', 'anruf', 'mail', 'besuch', 'sms') then raise exception using errcode = 'P0001', message = 'projekte.art_unbekannt'; end if;
   select kontakt_id into v_kontakt from public.projekte where id = p_projekt and geloescht_am is null;
   if not found then raise exception using errcode = 'P0002', message = 'stand.unbekannt'; end if;
   insert into public.aktivitaeten (art, text, person_id, kontakt_id, projekt_id)

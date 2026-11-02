@@ -183,7 +183,7 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
             <section
               key={ph}
               aria-label={t(`projekte.phase.${ph}`)}
-              className="bg-muted/50 flex w-72 shrink-0 flex-col rounded-xl border"
+              className="bg-muted/50 flex min-w-60 flex-1 basis-0 flex-col rounded-xl border"
             >
               <header className="flex items-center justify-between gap-2 border-b px-3 py-2">
                 <h2 className="text-sm font-semibold">{t(`projekte.phase.${ph}`)}</h2>

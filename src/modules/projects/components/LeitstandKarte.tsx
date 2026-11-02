@@ -49,7 +49,7 @@ export function LeitstandKarte({
             : t('projekte.baubeginnOffen')}
           {p.verantwortlich ? ` · ${p.verantwortlich}` : ''}
         </span>
-        <span className="zahlen font-mono">{p.nummer}</span>
+        <span className="zahlen shrink-0 font-mono whitespace-nowrap">{p.nummer}</span>
       </span>
       <span className="line-clamp-2 text-sm font-semibold">{p.kunde}</span>
       <span className="text-muted-foreground line-clamp-2 text-xs">

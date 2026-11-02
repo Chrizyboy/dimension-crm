@@ -1976,7 +1976,9 @@
     "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne.",
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
-    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix)."
+    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "projekte_text_fehlt": "Veuillez d’abord saisir un texte.",
+    "projekte_art_unbekannt": "Ce type d’entrée n’existe pas."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",

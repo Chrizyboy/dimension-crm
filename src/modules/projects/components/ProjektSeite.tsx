@@ -47,11 +47,11 @@ export function ProjektSeite({
     <div className="flex flex-col gap-4">
       <SeiteKopf p={p} akte={a} hinweise={h} onZurueck={onZurueck} />
       <Phasen p={p} />
-      <div className="grid items-start gap-4 lg:grid-cols-2 2xl:grid-cols-[20rem_minmax(0,1fr)_22rem]">
+      <div className="grid items-start gap-4 lg:grid-cols-2 2xl:grid-cols-[23rem_minmax(0,1fr)_23rem]">
         <div className="flex min-w-0 flex-col gap-4">
           <AkteUebersicht key={p.id + String(p.werktage) + (p.elektriker ?? '')} projekt={p} />
         </div>
-        <div className="flex min-w-0 flex-col gap-4 lg:order-last lg:col-span-2 2xl:order-none 2xl:col-span-1">
+        <div className="order-first flex min-w-0 flex-col gap-4 lg:order-last lg:col-span-2 2xl:order-none 2xl:col-span-1">
           <Reiter
             value={reiter}
             onValueChange={(r) => {
