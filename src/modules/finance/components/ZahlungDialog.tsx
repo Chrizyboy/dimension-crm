@@ -3,7 +3,7 @@ import { formatChf, parseChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { useProjekte } from '../hooks/useFinanzen'
 import { inPapierkorb, zahlungSpeichern } from '../services/finanzen'
-import { PRIORITAETEN, ZAHLUNG_KATEGORIEN, type Zahlung } from '../types'
+import { PRIORITAETEN, ZAHLUNG_KATEGORIEN, type Finanzdaten, type Zahlung } from '../types'
 import { EintragDialog } from './EintragDialog'
 
 const KEIN = '-'
@@ -12,7 +12,15 @@ const KEIN = '-'
  * Zahlung erfassen oder ändern (V233 «+ Zahlung»): Firma, Betrag, fällig, geplant, Dringlichkeit bis
  * «Betreibung droht», Projekt (für die Nachkalkulation). Speichern gilt als geprüft (Daten aus Excel).
  */
-export function ZahlungDialog({ zahlung: z, onSchliessen }: { zahlung: Zahlung | null; onSchliessen: () => void }) {
+export function ZahlungDialog({
+  zahlung: z,
+  daten,
+  onSchliessen,
+}: {
+  zahlung: Zahlung | null
+  daten: Finanzdaten
+  onSchliessen: () => void
+}) {
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
   const projekte = useProjekte()
@@ -33,6 +41,11 @@ export function ZahlungDialog({ zahlung: z, onSchliessen }: { zahlung: Zahlung |
           prioritaet: w.prioritaet || 'normal',
           projekt_id: w.projekt && w.projekt !== KEIN ? w.projekt : null,
           notiz: w.notiz?.trim() || null,
+          firma_id: w.gesellschaft && w.gesellschaft !== KEIN ? w.gesellschaft : null,
+          skonto_prozent: w.skonto_prozent ? Number(w.skonto_prozent.replace(',', '.')) || null : null,
+          skonto_bis: w.skonto_bis || null,
+          iban: w.iban?.replace(/\s/g, '').toUpperCase() || null,
+          referenz: w.referenz?.replace(/\s/g, '') || null,
           geprueft: true,
         }),
       { de: 'Gespeichert', fr: 'Enregistré' },
@@ -67,6 +80,11 @@ export function ZahlungDialog({ zahlung: z, onSchliessen }: { zahlung: Zahlung |
         prioritaet: z?.prioritaet ?? 'normal',
         projekt: z?.projekt_id ?? KEIN,
         notiz: z?.notiz ?? '',
+        gesellschaft: z?.firma_id ?? (daten.firmen.length === 1 ? (daten.firmen[0]?.id ?? KEIN) : KEIN),
+        skonto_prozent: z?.skonto_prozent ? String(z.skonto_prozent) : '',
+        skonto_bis: z?.skonto_bis ?? '',
+        iban: z?.iban ?? '',
+        referenz: z?.referenz ?? '',
       }}
       felder={[
         { name: 'firma', label: t('finanzen.firma'), art: 'text', pflicht: true },
@@ -102,6 +120,19 @@ export function ZahlungDialog({ zahlung: z, onSchliessen }: { zahlung: Zahlung |
             })),
           ],
         },
+        {
+          name: 'gesellschaft',
+          label: t('finanzen.firmaWahl.titel'),
+          art: 'auswahl',
+          optionen: [
+            { wert: KEIN, text: t('finanzen.firmaWahl.ohne') },
+            ...daten.firmen.map((f) => ({ wert: f.id, text: f.name })),
+          ],
+        },
+        { name: 'skonto_prozent', label: t('finanzen.lief.skontoProzent'), art: 'zahl' },
+        { name: 'skonto_bis', label: t('finanzen.lief.skontoBisFeld'), art: 'datum' },
+        { name: 'iban', label: t('finanzen.lief.iban'), art: 'text' },
+        { name: 'referenz', label: t('finanzen.lief.referenz'), art: 'text' },
         { name: 'notiz', label: t('finanzen.notiz'), art: 'notiz' },
       ]}
     />

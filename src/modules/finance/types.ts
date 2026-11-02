@@ -81,6 +81,7 @@ export interface Zahlung {
   referenz: string | null
   bestellung_id: string | null
   zahllauf_id: string | null
+  erstellt_am?: string
 }
 
 /** Prüfschritt einer Lieferantenrechnung: Visum Projektleitung → Freigabe Buchhaltung → zahlbereit. */
@@ -293,6 +294,10 @@ export interface Bewegung {
   geplant: boolean
   spaet: boolean
   lohn: boolean
+  /** Lieferantenrechnung: Prüfschritt, Skonto-Frist und ob sie schon in einem Zahllauf ist. */
+  pruefung?: Pruefung | null
+  skontoBis?: string | null
+  imZahllauf?: boolean
 }
 
 export interface Woche {

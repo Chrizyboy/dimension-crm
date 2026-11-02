@@ -69,6 +69,9 @@ export function bewegungen(d: Finanzdaten, heute: string): Bewegung[] {
       faellig: z.faellig_am,
       geplant: Boolean(z.geplant_am),
       lohn: z.kategorie === 'Lohn',
+      pruefung: z.pruefung,
+      skontoBis: z.skonto_bis,
+      imZahllauf: Boolean(z.zahllauf_id),
     })
   }
 

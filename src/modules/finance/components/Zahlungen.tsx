@@ -14,7 +14,8 @@ import { BewegungZeile, type BewegungAktion } from './BewegungZeile'
 const datumVon = (z: Zahlung) => z.geplant_am ?? z.faellig_am
 
 /**
- * Zahlungen (V233): offene nach Dringlichkeit gruppiert (überfällig, diese Woche, nächste Woche, später,
+ * Lieferantenrechnungen und Zahlungen (V233 «Zahlungen», Entscheid 0039): Prüfschritt (Visum, Freigabe,
+ * zahlbereit, zu klären) als Filter, Klick auf den Namen öffnet die Akte. Zahlungen (V233): offene nach Dringlichkeit gruppiert (überfällig, diese Woche, nächste Woche, später,
  * ohne Datum), innerhalb nach Betreibung → Mahnung → wichtig, dann Datum. Filter nach Kategorie, «ungeprüft»
  * (aus Excel übernommen) und Suche; bezahlte darunter.
  */
@@ -33,6 +34,7 @@ export function Zahlungen({
 }) {
   const { t } = useTranslation()
   const [kategorie, setKategorie] = useState('alle')
+  const [schritt, setSchritt] = useState<string>('alle')
   const [suche, setSuche] = useState('')
   const heute = heuteZuerich()
   const w0 = plusTage(montag(heute), 6)
@@ -41,6 +43,7 @@ export function Zahlungen({
   const { offen, bezahlt, kategorien } = useMemo(() => {
     const s = suche.trim().toLowerCase()
     const passt = (z: Zahlung) =>
+      (schritt === 'alle' || (schritt === 'zahllauf' ? Boolean(z.zahllauf_id) : z.pruefung === schritt)) &&
       (kategorie === 'alle' ||
         (kategorie === 'ungeprueft'
           ? z.quelle === 'excel' && !z.geprueft
@@ -59,7 +62,7 @@ export function Zahlungen({
         .sort((a, b) => (b.bezahlt_am ?? '').localeCompare(a.bezahlt_am ?? '')),
       kategorien: [...new Set(daten.zahlungen.map((z) => z.kategorie ?? 'Sonstiges'))].sort(),
     }
-  }, [daten.zahlungen, kategorie, suche])
+  }, [daten.zahlungen, kategorie, suche, schritt])
 
   // Dieselben Zeilen wie in der Vorschau (gleiche Schritte), nur für die Zahlungen dieser Liste.
   const zeilen = useMemo(() => {
@@ -116,6 +119,24 @@ export function Zahlungen({
           </Button>
         </div>
       </div>
+      <Filterchips
+        einzeln
+        beschriftung={t('finanzen.lief.schritt')}
+        optionen={(['alle', 'visum', 'freigabe', 'bereit', 'zahllauf', 'klaeren', 'zurueckgehalten'] as const).map((w) => ({
+          wert: w,
+          text: w === 'alle' ? t('finanzen.alle') : w === 'zahllauf' ? t('finanzen.zl.imZahllauf') : t(`finanzen.pruefung.${w}`),
+          anzahl:
+            w === 'alle'
+              ? undefined
+              : daten.zahlungen.filter(
+                  (z) => z.status === 'offen' && (w === 'zahllauf' ? Boolean(z.zahllauf_id) : z.pruefung === w),
+                ).length,
+        }))}
+        gewaehlt={[schritt]}
+        onChange={([k]) => {
+          if (k) setSchritt(k)
+        }}
+      />
       <Filterchips
         einzeln
         beschriftung={t('finanzen.kategorie')}

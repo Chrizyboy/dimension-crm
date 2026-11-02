@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
@@ -9,14 +10,17 @@ import {
   zahlungenBezahlt,
   zahlungenPlanen,
 } from '../services/finanzen'
-import type { Bewegung, Finanzdaten } from '../types'
+import type { Bewegung, Finanzdaten, Zahlung } from '../types'
 import { AnpassenDialog } from './AnpassenDialog'
 import type { BewegungAktion } from './BewegungZeile'
 import { DatumDialog } from './DatumDialog'
 import { EingangDialog } from './EingangDialog'
 import { FixkostenDialog } from './FixkostenDialog'
 import { MaterialDialog } from './MaterialDialog'
-import { ZahllaufDialog } from './ZahllaufDialog'
+import { KreditorAkte } from './KreditorAkte'
+import { KontoDialog } from './KontoDialog'
+import { MwstDialog } from './MwstDialog'
+import { ZahllaufNeuDialog } from './ZahllaufNeuDialog'
 import { ZahlungDialog } from './ZahlungDialog'
 
 /** Welcher Dialog offen ist. */
@@ -26,7 +30,10 @@ export type FinanzFenster =
   | { art: 'fix'; id: string | null }
   | { art: 'eingang'; id: string | null }
   | { art: 'aktion'; b: Bewegung; a: BewegungAktion }
-  | { art: 'zahllauf' }
+  | { art: 'zahllauf'; firma: string | null }
+  | { art: 'akte'; id: string }
+  | { art: 'konto'; id: string | null; firma: string | null }
+  | { art: 'mwst'; firma: string; periode: string }
   | null
 
 /**
@@ -48,9 +55,29 @@ export function Fenster({
   const finde = <T extends { id: string }>(l: T[], id: string | null) =>
     id ? (l.find((x) => x.id === id) ?? null) : null
 
-  if (fenster.art === 'zahllauf') return <ZahllaufDialog daten={daten} onSchliessen={onSchliessen} />
+  if (fenster.art === 'zahllauf')
+    return <ZahllaufNeuDialog daten={daten} firma={fenster.firma} onSchliessen={onSchliessen} />
+  if (fenster.art === 'konto')
+    return (
+      <KontoDialog
+        konto={finde(daten.konten, fenster.id)}
+        firma={fenster.firma}
+        daten={daten}
+        onSchliessen={onSchliessen}
+      />
+    )
+  if (fenster.art === 'mwst') {
+    const zeile = daten.mwst.find((m) => m.firma_id === fenster.firma && m.periode === fenster.periode)
+    return zeile ? <MwstDialog zeile={zeile} daten={daten} onSchliessen={onSchliessen} /> : null
+  }
+  if (fenster.art === 'akte') {
+    const z = finde(daten.zahlungen, fenster.id)
+    return z ? (
+      <AkteMitBearbeiten zahlung={z} daten={daten} onSchliessen={onSchliessen} />
+    ) : null
+  }
   if (fenster.art === 'zahlung')
-    return <ZahlungDialog zahlung={finde(daten.zahlungen, fenster.id)} onSchliessen={onSchliessen} />
+    return <ZahlungDialog zahlung={finde(daten.zahlungen, fenster.id)} daten={daten} onSchliessen={onSchliessen} />
   if (fenster.art === 'material')
     return <MaterialDialog material={finde(daten.material, fenster.id)} onSchliessen={onSchliessen} />
   if (fenster.art === 'fix')
@@ -60,8 +87,10 @@ export function Fenster({
 
   const { b, a } = fenster
   if (a === 'bearbeiten') {
-    if (b.quelle === 'zahlung')
-      return <ZahlungDialog zahlung={finde(daten.zahlungen, b.id)} onSchliessen={onSchliessen} />
+    if (b.quelle === 'zahlung') {
+      const z = finde(daten.zahlungen, b.id)
+      return z ? <AkteMitBearbeiten zahlung={z} daten={daten} onSchliessen={onSchliessen} /> : null
+    }
     if (b.quelle === 'material')
       return <MaterialDialog material={finde(daten.material, b.id)} onSchliessen={onSchliessen} />
     if (b.quelle === 'eingang')
@@ -126,6 +155,30 @@ export function Fenster({
       leerErlaubt={a === 'planen' && b.quelle === 'zahlung'}
       laeuft={laeuft}
       onOk={ausfuehren}
+      onSchliessen={onSchliessen}
+    />
+  )
+}
+
+/** Akte einer Lieferantenrechnung; «Bearbeiten» wechselt ins Formular. */
+function AkteMitBearbeiten({
+  zahlung,
+  daten,
+  onSchliessen,
+}: {
+  zahlung: Zahlung
+  daten: Finanzdaten
+  onSchliessen: () => void
+}) {
+  const [bearbeiten, setBearbeiten] = useState(false)
+  if (bearbeiten) return <ZahlungDialog zahlung={zahlung} daten={daten} onSchliessen={onSchliessen} />
+  return (
+    <KreditorAkte
+      zahlung={zahlung}
+      daten={daten}
+      onBearbeiten={() => {
+        setBearbeiten(true)
+      }}
       onSchliessen={onSchliessen}
     />
   )

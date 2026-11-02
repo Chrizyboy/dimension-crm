@@ -12,6 +12,8 @@ const PRIO_TON = { normal: 'neutral', wichtig: 'info', mahnung: 'warnung', betre
 const PROB_TON = { sicher: 'ok', wahrscheinlich: 'info', unsicher: 'neutral', aus: 'neutral' } as const
 
 /** Welche Schritte es je Herkunft gibt (wie V233). */
+const PRUEF_TON = { visum: 'warnung', freigabe: 'info', bereit: 'ok', klaeren: 'kritisch', zurueckgehalten: 'neutral' } as const
+
 const AKTIONEN: Record<Bewegung['quelle'], BewegungAktion[]> = {
   zahlung: ['bezahlt', 'planen', 'bearbeiten'],
   material: ['bezahlt', 'planen', 'bearbeiten'],
@@ -19,6 +21,7 @@ const AKTIONEN: Record<Bewegung['quelle'], BewegungAktion[]> = {
   rechnung: ['anpassen'],
   tranche: ['anpassen'],
   eingang: ['eingegangen', 'bearbeiten'],
+  mwst: [],
 }
 const ICON = {
   bezahlt: Check,
@@ -46,13 +49,30 @@ export function BewegungZeile({
   return (
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-sm">
       <span className="flex min-w-0 flex-1 basis-56 flex-col">
-        <span className="line-clamp-2 font-medium">{b.titel}</span>
+        {b.quelle === 'zahlung' ? (
+          <button
+            type="button"
+            className="line-clamp-2 text-left font-medium hover:underline"
+            onClick={() => {
+              onAktion(b, 'bearbeiten')
+            }}
+          >
+            {b.titel}
+          </button>
+        ) : (
+          <span className="line-clamp-2 font-medium">{b.titel}</span>
+        )}
         <span className="text-muted-foreground flex min-w-0 flex-wrap items-center gap-1 text-xs">
           <span>{t(`finanzen.quelle.${b.quelle}`)}</span>
           {b.zusatz && <span className="line-clamp-2">· {b.zusatz}</span>}
           {b.prioritaet !== 'normal' && (
             <Badge ton={PRIO_TON[b.prioritaet]}>{t(`finanzen.prio.${b.prioritaet}`)}</Badge>
           )}
+          {b.pruefung && b.pruefung !== 'bereit' && (
+            <Badge ton={PRUEF_TON[b.pruefung]}>{t(`finanzen.pruefung.${b.pruefung}`)}</Badge>
+          )}
+          {b.imZahllauf && <Badge ton="info">{t('finanzen.zl.imZahllauf')}</Badge>}
+          {b.skontoBis && <Badge ton="ok">{t('finanzen.lief.skontoBis', { datum: formatDatum(b.skontoBis) })}</Badge>}
           {b.richtung > 0 && (
             <Badge ton={PROB_TON[b.wahrscheinlichkeit]}>{t(`finanzen.prob.${b.wahrscheinlichkeit}`)}</Badge>
           )}
