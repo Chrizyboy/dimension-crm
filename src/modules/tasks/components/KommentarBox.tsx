@@ -42,7 +42,7 @@ export function KommentarBox({ aufgabeId, personen }: { aufgabeId: string; perso
         const name = person?.name ?? '–'
         return (
           <div key={k.id} className="flex gap-2 text-sm">
-            <Avatar name={name} zeichen={person?.kurzzeichen} />
+            <Avatar name={name} zeichen={person?.kurzzeichen ?? null} />
             <div className="min-w-0">
               <p className="whitespace-pre-line">{k.text}</p>
               <p className="text-muted-foreground text-xs">

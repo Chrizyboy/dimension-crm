@@ -11119,7 +11119,7 @@ export type Database = {
           abwesend: boolean
           erledigt_7: number
           heute: number
-          kuerzel: string
+          kurzzeichen: string
           name: string
           offen: number
           person_id: string
