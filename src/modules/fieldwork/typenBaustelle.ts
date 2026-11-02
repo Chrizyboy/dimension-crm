@@ -1,4 +1,4 @@
-/** Typen für den Ausbau am Handy (Schritte, Team, Seriennummern, Meldungen), Entscheid 0039. */
+/** Typen für den Ausbau am Handy (Schritte, Team, Seriennummern, Meldungen), Entscheid 0040. */
 /** Arbeitsschritt oder Pflichtfoto aus `einstellungen.baustelle` (je Projektart). */
 export interface Schritt {
   schluessel: string
@@ -64,5 +64,10 @@ export interface MeldungEingabe {
 /** Einstellungen der Baustelle (nur Teile, die die App braucht). */
 export interface BaustellenEinstellung {
   sicherheit: Schritt[]
-  zeiten?: { woche_soll_h?: number; pausen?: { ab_h: number; min: number }[]; max_tag_h?: number; saldo_warnung_h?: number }
+  zeiten?: {
+    woche_soll_h?: number
+    pausen?: { ab_h: number; min: number }[]
+    max_tag_h?: number
+    saldo_warnung_h?: number
+  }
 }

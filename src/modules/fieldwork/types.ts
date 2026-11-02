@@ -4,12 +4,20 @@ import type { BaustellenInfo, Seriennummer, Sicherheit } from './typenBaustelle'
 export * from './typenBaustelle'
 export * from './typenLeitung'
 
-
 /**
  * Reiter der Seite (#/fieldwork?reiter=…). «tag» ist die Handy-Ansicht der Monteure; «heute», «baustellen»,
  * «meldungen» und «auswertung» sind für Projektleitung und GL (Recht preise).
  */
-export const REITER = ['tag', 'heute', 'baustellen', 'rapporte', 'zeiten', 'nachtraege', 'meldungen', 'auswertung'] as const
+export const REITER = [
+  'tag',
+  'heute',
+  'baustellen',
+  'rapporte',
+  'zeiten',
+  'nachtraege',
+  'meldungen',
+  'auswertung',
+] as const
 /** Reiter nur mit Recht «preise». */
 export const REITER_LEITUNG: readonly Reiter[] = ['heute', 'baustellen', 'meldungen', 'auswertung']
 export type Reiter = (typeof REITER)[number]
@@ -295,4 +303,3 @@ export interface NachtragEingabe {
   stunden: number | null
   material: MaterialZeile[]
 }
-

@@ -13,7 +13,7 @@ import type {
 import { db } from './baustelle'
 
 /**
- * Datenzugriff für den Ausbau (Entscheid 0039): Baustellen heute, Akte, Mappe, Wochenblatt, Auswertung, Meldungen.
+ * Datenzugriff für den Ausbau (Entscheid 0040): Baustellen heute, Akte, Mappe, Wochenblatt, Auswertung, Meldungen.
  * Die Funktionen sind neu in der Datenbank; die erzeugten Typen (`npm run db:typen`) folgen mit dem nächsten
  * Lauf an der lokalen Datenbank. Bis dahin ruft dieser Baustein sie ohne Typprüfung der Namen auf, damit die
  * parallel laufenden Module nicht alle an derselben erzeugten Datei ändern.

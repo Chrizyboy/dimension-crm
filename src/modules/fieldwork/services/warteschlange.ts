@@ -85,7 +85,7 @@ async function ausfuehren(a: Auftrag): Promise<void> {
   }
   const hoch = await supabase.storage.from('dokumente').upload(a.pfad, a.blob, { contentType: a.dokument.mime_typ })
   if (hoch.error && !istSchonDa(hoch.error)) throw hoch.error
-  // «kategorie» (Pflichtfoto) ist neu (Entscheid 0039) und fehlt noch in den erzeugten Typen.
+  // «kategorie» (Pflichtfoto) ist neu (Entscheid 0040) und fehlt noch in den erzeugten Typen.
   const { error } = await (supabase as unknown as SupabaseClient)
     .from('dokumente')
     .insert({ ...a.dokument, bytes: a.blob.size, speicher: 'intern', speicher_pfad: a.pfad })

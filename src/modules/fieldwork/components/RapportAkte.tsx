@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { CheckCircle2, FileText, FolderArchive, Undo2 } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, FileText, FolderArchive, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -14,6 +14,7 @@ import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { useRapport } from '../hooks/useBaustelle'
+import { useRapportInfo } from '../hooks/useLeitung'
 import { adressText } from '../lib/links'
 import { rapportOeffnen } from '../services/baustelle'
 import { eingabeAnwenden, rapportAendern } from '../services/monteur'
@@ -23,11 +24,16 @@ import { AbschlussDialog } from './AbschlussDialog'
 import { ArbeitenAbschnitt } from './ArbeitenAbschnitt'
 import { DossierDialog } from './DossierDialog'
 import { FotoAbschnitt } from './FotoAbschnitt'
+import { MeldungDialog } from './MeldungDialog'
 import { NachtragAbschnitt } from './NachtragAbschnitt'
 import { PruefAbschnitt } from './PruefAbschnitt'
 import { RapportPdfKnopf } from './RapportPdfKnopf'
 import { RapportZeit } from './RapportZeit'
+import { SchritteAbschnitt } from './SchritteAbschnitt'
+import { SeriennummernAbschnitt } from './SeriennummernAbschnitt'
+import { TeamZeitAbschnitt } from './TeamZeitAbschnitt'
 import { VerrechnungWahl } from './VerrechnungWahl'
+import { VisumLeiste } from './VisumLeiste'
 
 /**
  * Ein Rapport für alles (Montage, Service, Wartung, IBN): Zeit, Arbeiten, Mehrmaterial, Fotos, Nachträge,
@@ -40,8 +46,10 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const daten = useRapport(id)
   const ich = useAnmeldung((z) => z.ich)
   const { laeuft, aus } = useAktion()
-  const [dialog, setDialog] = useState<'abschluss' | 'dossier' | null>(null)
+  const [dialog, setDialog] = useState<'abschluss' | 'dossier' | 'melden' | null>(null)
   const r = daten.data
+  const info = useRapportInfo(r?.einsatz_id ?? null).data ?? null
+  const montage = r?.art === 'montage' && info
   const offen = Boolean(r && !r.abgeschlossen_am)
 
   const aendern = (e: RapportEingabe) => {
@@ -69,6 +77,17 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
         <Button variant="ghost" laedt={laeuft} onClick={() => void aus(() => rapportOeffnen(r.id))}>
           <Undo2 />
           {t('baustelle.rapport.wiederOeffnen')}
+        </Button>
+      )}
+      {offen && r.projekt_id && (
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setDialog('melden')
+          }}
+        >
+          <AlertTriangle />
+          {t('baustelle.meldung.knopf')}
         </Button>
       )}
       {offen && (
@@ -117,6 +136,17 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
               {r.verrechnung && <Badge ton="info">{t(`baustelle.verrechnung.${r.verrechnung}`)}</Badge>}
               {r.montage_fertig && <Badge ton="ok">{t('baustelle.rapport.montageFertig')}</Badge>}
             </div>
+            <VisumLeiste rapport={r} />
+            {r.vorbehalte.length > 0 && (
+              <div className="bg-warn-soft mb-3 rounded-md p-3 text-sm">
+                <p className="font-medium">{t('baustelle.abschluss.vorbehalte')}</p>
+                <ul className="list-disc pl-5">
+                  {r.vorbehalte.map((v) => (
+                    <li key={v.text}>{v.text}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <dl>
               <Angabe label={t('baustelle.rapport.datum')}>{formatDatum(r.datum)}</Angabe>
               <Angabe label={t('baustelle.rapport.adresse')}>
@@ -132,6 +162,8 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
               )}
             </dl>
             <RapportZeit rapport={r} offen={offen} />
+            {info && <TeamZeitAbschnitt rapport={r} team={info.team} offen={offen} />}
+            {montage && <SchritteAbschnitt rapport={r} info={info} offen={offen} onAendern={aendern} />}
             <ArbeitenAbschnitt rapport={r} offen={offen} onAendern={aendern} />
             {r.art === 'ibn' && <PruefAbschnitt rapport={r} offen={offen} onAendern={aendern} />}
             {(r.art === 'service' || r.art === 'wartung') && (
@@ -145,7 +177,14 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
                 />
               </AkteAbschnitt>
             )}
-            <FotoAbschnitt rapportId={r.id} offen={offen} />
+            <FotoAbschnitt
+              rapportId={r.id}
+              offen={offen}
+              {...(montage ? { pflicht: info.fotos, da: info.fotos_da } : {})}
+            />
+            {(r.art === 'montage' || r.art === 'ibn') && (
+              <SeriennummernAbschnitt rapport={r} offen={offen} onAendern={aendern} />
+            )}
             {r.art !== 'ibn' && <NachtragAbschnitt rapportId={r.id} offen={offen} />}
             <AkteAbschnitt titel={t('baustelle.rapport.notizIntern')} offen={Boolean(r.notiz_intern)}>
               <Textarea
@@ -167,6 +206,15 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
         {r && dialog === 'abschluss' && (
           <AbschlussDialog
             rapport={r}
+            onSchliessen={() => {
+              setDialog(null)
+            }}
+          />
+        )}
+        {r && dialog === 'melden' && (
+          <MeldungDialog
+            projektId={r.projekt_id}
+            rapportId={r.id}
             onSchliessen={() => {
               setDialog(null)
             }}

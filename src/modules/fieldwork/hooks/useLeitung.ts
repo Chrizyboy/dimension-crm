@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import * as l from '../services/leitung'
 import { mitAblage } from '../services/warteschlange'
+import type { BaustellenInfo, MeinTag } from '../types'
 
 const an = Boolean(supabase)
 
@@ -25,7 +26,12 @@ export const useEinstellung = () =>
   })
 
 export const useHeute = (tag?: string) =>
-  useQuery({ queryKey: ['baustelle', 'heute', tag], enabled: an, refetchInterval: 120_000, queryFn: () => l.ladeHeute(tag) })
+  useQuery({
+    queryKey: ['baustelle', 'heute', tag],
+    enabled: an,
+    refetchInterval: 120_000,
+    queryFn: () => l.ladeHeute(tag),
+  })
 
 export const useBaustellen = () =>
   useQuery({ queryKey: ['baustelle', 'baustellen'], enabled: an, queryFn: () => l.ladeBaustellen() })
@@ -41,3 +47,24 @@ export const useAuswertung = (von: string, bis: string) =>
 
 export const useMeldungen = (nurOffen: boolean) =>
   useQuery({ queryKey: ['baustelle', 'meldungen', nurOffen], enabled: an, queryFn: () => l.ladeMeldungen(nurOffen) })
+
+/**
+ * Zusätze (Schritte, Pflichtfotos, Team) zum Einsatz eines Rapports. Zuerst aus dem Tagesplan am Gerät (geht ohne
+ * Netz), sonst aus der Datenbank. Rapporte ohne Einsatz (Service, Wartung) haben keine.
+ */
+export function useRapportInfo(einsatz: string | null) {
+  const qc = useQueryClient()
+  return useQuery({
+    queryKey: ['baustelle', 'info', einsatz],
+    networkMode: 'always',
+    enabled: an && Boolean(einsatz),
+    queryFn: async (): Promise<BaustellenInfo | null> => {
+      for (const [, t] of qc.getQueriesData<MeinTag>({ queryKey: ['baustelle', 'tag'] })) {
+        const e = t?.eintraege.find((x) => x.typ === 'einsatz' && x.id === einsatz)
+        if (e?.info) return e.info
+      }
+      const r = await mitAblage(`info:${einsatz ?? ''}`, () => l.ladeInfos([einsatz ?? '']))
+      return r[einsatz ?? ''] ?? null
+    },
+  })
+}

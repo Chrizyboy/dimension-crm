@@ -190,7 +190,13 @@ export async function teamStoppen(rapportId: string, pause_min: number, personen
 
 /** Problem von der Baustelle melden, mit Fotos; geht an die Projektleitung, auch ohne Netz (später). */
 export async function meldungErfassen(m: MeldungEingabe, fotos: Blob[]): Promise<void> {
-  await einreihen({ art: 'rpc', name: 'meldung_erfassen', args: { p: m }, bezug: m.rapport_id ?? m.id, erstellt: jetzt() })
+  await einreihen({
+    art: 'rpc',
+    name: 'meldung_erfassen',
+    args: { p: m },
+    bezug: m.rapport_id ?? m.id,
+    erstellt: jetzt(),
+  })
   for (const f of fotos) {
     await bildAblegen(m.id, f, 'fotos', { bezug: { tabelle: 'baustellen_meldungen', id: m.id } })
   }

@@ -20,7 +20,10 @@ async function tagMitInfos(von: string, bis: string, person?: string | null): Pr
   const t = await b.ladeTag(von, bis, person)
   const ids = t.eintraege.filter((e) => e.typ === 'einsatz').map((e) => e.id)
   const infos = await ladeInfos(ids).catch(() => ({}) as Record<string, never>)
-  return { ...t, eintraege: t.eintraege.map((e) => ({ ...e, info: e.typ === 'einsatz' ? (infos[e.id] ?? null) : null })) }
+  return {
+    ...t,
+    eintraege: t.eintraege.map((e) => ({ ...e, info: e.typ === 'einsatz' ? (infos[e.id] ?? null) : null })),
+  }
 }
 
 /** Tagesplan; für die eigene Person mit Ablage am Gerät (funktioniert ohne Netz). */

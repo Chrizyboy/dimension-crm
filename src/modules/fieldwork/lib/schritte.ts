@@ -25,7 +25,11 @@ export function fehlendeFotos(pflicht: readonly Schritt[], da: Iterable<string>)
 }
 
 /** Text des Rapports aus den heute erledigten Schritten, in der Sprache der Person. */
-export function schritteText(schritte: readonly Schritt[], heute: Record<string, boolean>, sprache: 'de' | 'fr'): string {
+export function schritteText(
+  schritte: readonly Schritt[],
+  heute: Record<string, boolean>,
+  sprache: 'de' | 'fr',
+): string {
   return schritte
     .filter((s) => heute[s.schluessel])
     .map((s) => s[sprache])

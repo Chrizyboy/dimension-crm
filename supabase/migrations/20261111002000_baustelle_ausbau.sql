@@ -1,4 +1,4 @@
--- Baustelle & Rapporte vollständig (Entscheid 0039, Neuentwurf vom 2.11.2026).
+-- Baustelle & Rapporte vollständig (Entscheid 0040, Neuentwurf vom 2.11.2026).
 -- Montage am Handy: Arbeitsschritte je Projektart, Sicherheits-Check, Teamzeiten, Pflichtfotos, Seriennummern,
 -- Meldungen von der Baustelle, Abnahme am letzten Tag. Projektleitung: Baustellen heute, Baustellen-Akte,
 -- Rapporte visieren, Wochenblatt der Zeiten. GL: Auswertung Soll/Ist.
