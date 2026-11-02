@@ -1,19 +1,23 @@
-import { Trash2 } from 'lucide-react'
+import { Copy, Trash2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
-import { Input, Textarea } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
 import { useAktion } from '../hooks/useAutomationen'
 import { gehtNachAussen, tabelleVon } from '../lib/anzeige'
 import { automationInPapierkorb, speichereAutomation } from '../services/automationen'
 import type { Entwurf } from '../lib/entwurf'
 import type { Katalog, Modus } from '../types'
+import { AenderungenListe } from './AenderungenListe'
 import { AktionenEditor } from './AktionenEditor'
 import { BedingungenEditor } from './BedingungenEditor'
+import { Lesesatz } from './Lesesatz'
+import { NamenFelder } from './NamenFelder'
+import { ProbelaufPanel } from './ProbelaufPanel'
+import { SchutzFelder } from './SchutzFelder'
 
 interface Props {
   start: Entwurf | null
@@ -80,6 +84,27 @@ export function AutomationEditor({ start, katalog, onSchliessen }: Props) {
                 {t(wegFragen ? 'automationen.editor.wirklichWeg' : 'automationen.editor.weg')}
               </Button>
             )}
+            {e.id && (
+              <Button
+                variant="ghost"
+                disabled={laeuft}
+                onClick={() => {
+                  const kopie: Entwurf = {
+                    ...e,
+                    aktiv: false,
+                    vorlage: null,
+                    name_de: `${e.name_de} (Kopie)`,
+                    name_fr: `${e.name_fr} (copie)`,
+                  }
+                  delete kopie.id
+                  setE(kopie)
+                  setWegFragen(false)
+                }}
+              >
+                <Copy />
+                {t('automationen.editor.duplizieren')}
+              </Button>
+            )}
             <span className="ml-auto" />
             <Button variant="ghost" onClick={onSchliessen}>
               {t('allgemein.abbrechen')}
@@ -91,46 +116,8 @@ export function AutomationEditor({ start, katalog, onSchliessen }: Props) {
         }
       >
         <div className="flex flex-col gap-5">
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Feld id="auto-name-de" label={t('automationen.editor.nameDe')} pflicht>
-              <Input
-                id="auto-name-de"
-                value={e.name_de}
-                onChange={(x) => {
-                  setze({ name_de: x.target.value })
-                }}
-              />
-            </Feld>
-            <Feld id="auto-name-fr" label={t('automationen.editor.nameFr')}>
-              <Input
-                id="auto-name-fr"
-                value={e.name_fr}
-                onChange={(x) => {
-                  setze({ name_fr: x.target.value })
-                }}
-              />
-            </Feld>
-            <Feld id="auto-besch-de" label={t('automationen.editor.beschreibungDe')}>
-              <Textarea
-                id="auto-besch-de"
-                className="min-h-14"
-                value={e.beschreibung_de ?? ''}
-                onChange={(x) => {
-                  setze({ beschreibung_de: x.target.value })
-                }}
-              />
-            </Feld>
-            <Feld id="auto-besch-fr" label={t('automationen.editor.beschreibungFr')}>
-              <Textarea
-                id="auto-besch-fr"
-                className="min-h-14"
-                value={e.beschreibung_fr ?? ''}
-                onChange={(x) => {
-                  setze({ beschreibung_fr: x.target.value })
-                }}
-              />
-            </Feld>
-          </div>
+          <Lesesatz e={e} katalog={katalog} />
+          <NamenFelder e={e} onChange={setze} />
 
           <Abschnitt nr={1} titel={t('automationen.editor.wenn')}>
             <Auswahl
@@ -212,6 +199,20 @@ export function AutomationEditor({ start, katalog, onSchliessen }: Props) {
               {t('automationen.editor.aktiv')}
             </label>
           </div>
+
+          <Abschnitt nr={4} titel={t('automationen.editor.schutz')}>
+            <SchutzFelder e={e} onChange={setze} />
+          </Abschnitt>
+
+          <Abschnitt nr={5} titel={t('automationen.editor.probelauf')}>
+            <ProbelaufPanel entwurf={e} tabelle={tabelleVon(katalog, e.ausloeser)} />
+          </Abschnitt>
+
+          {e.id && (
+            <Abschnitt nr={6} titel={t('automationen.editor.aenderungen')}>
+              <AenderungenListe id={e.id} />
+            </Abschnitt>
+          )}
         </div>
       </DialogInhalt>
     </Dialog>
