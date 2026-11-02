@@ -64,5 +64,8 @@ export async function setzeAutostart(an: boolean): Promise<void> {
   await (an ? enable() : disable())
 }
 
-/** Seite mit dem Installer der neusten Version (für die Web-App: «Desktop-App herunterladen»). */
-export const DOWNLOAD_SEITE = 'https://github.com/Chrizyboy/dimension-crm/releases/latest'
+/**
+ * Eigene Download-Seite (public/download/) mit Knopf auf den Installer der neusten Version und Anleitung
+ * DE/FR. Für die Web-App: «Desktop-App herunterladen».
+ */
+export const DOWNLOAD_SEITE = 'https://chrizyboy.github.io/dimension-crm/download/'
