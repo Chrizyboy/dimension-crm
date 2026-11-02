@@ -214,14 +214,6 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
         </Karte>
 
         <div className="flex min-w-0 flex-col gap-4 lg:order-last lg:col-span-2 2xl:order-none 2xl:col-span-1">
-          {g.kommentarKunde && (
-            <Karte
-              className="bg-muted/40 p-3 text-sm whitespace-pre-wrap"
-              aria-label={t('verkauf.akte.kommentarKunde')}
-            >
-              {g.kommentarKunde}
-            </Karte>
-          )}
           {g.verkaufschanceId && g.stand === 'termin' && g.terminAm && akte.details.isSuccess && (
             <OutlookTermin verkaufschanceId={g.verkaufschanceId} outlook={akte.details.data.outlook} />
           )}

@@ -1217,7 +1217,8 @@
         "wiedervorlage": "Reprise",
         "liegt": "En attente depuis",
         "offerteInArbeit": "Offre en cours depuis"
-      }
+      },
+      "stunden": "depuis {{h}} h {{m}} min"
     },
     "naechster": {
       "titel": "Prochaine étape",

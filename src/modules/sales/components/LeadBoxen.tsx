@@ -96,6 +96,9 @@ export function DachBox({ g }: { g: Geschaeft }) {
   )
 }
 
+/** Ein Richtpreis ist eine Grössenordnung: inkl. MWST auf 100 Franken gerundet. */
+const aufHundert = (rappen: number) => Math.round(rappen / 10_000) * 10_000
+
 /** Richtpreis aus Dach und Interesse. Nur intern (Chris 2.11.2026): er geht nie an den Kunden. */
 export function RichtpreisBox({ g }: { g: Geschaeft }) {
   const { t } = useTranslation()
@@ -128,8 +131,8 @@ export function RichtpreisBox({ g }: { g: Geschaeft }) {
           </dl>
           <div className="flex flex-col gap-0.5 border-t pt-2">
             <span className="zahlen text-lg font-semibold">
-              {formatChf(mitMwst(r.vonRappen, satz), { mitWaehrung: true })} –{' '}
-              {formatChf(mitMwst(r.bisRappen, satz), { mitWaehrung: true })}
+              {formatChf(aufHundert(mitMwst(r.vonRappen, satz)), { mitWaehrung: true })} –{' '}
+              {formatChf(aufHundert(mitMwst(r.bisRappen, satz)), { mitWaehrung: true })}
             </span>
             <span className="text-muted-foreground text-xs">{t('verkauf.richtpreis.inkl', { satz })}</span>
             {r.foerderungRappen > 0 && (

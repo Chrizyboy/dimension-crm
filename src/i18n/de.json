@@ -1217,7 +1217,8 @@
         "wiedervorlage": "Wiedervorlage",
         "liegt": "Liegt seit",
         "offerteInArbeit": "Offerte in Arbeit seit"
-      }
+      },
+      "stunden": "seit {{h}} Std. {{m}} Min."
     },
     "naechster": {
       "titel": "Nächster Schritt",

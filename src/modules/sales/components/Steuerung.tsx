@@ -56,7 +56,7 @@ function Tafel({ titel, zeilen, name }: { titel: string; zeilen: SteuerZeile[]; 
               <Zelle zahl>{prozent(z.termin, z.leads)}</Zelle>
               <Zelle zahl>{prozent(z.offerte, z.leads)}</Zelle>
               <Zelle zahl>
-                {z.gewonnen} · {prozent(z.gewonnen, z.leads)}
+                {z.gewonnen} ({prozent(z.gewonnen, z.leads)})
               </Zelle>
               <Zelle zahl>{z.gewonnenRappen ? formatChf(z.gewonnenRappen) : '–'}</Zelle>
             </Zeile>

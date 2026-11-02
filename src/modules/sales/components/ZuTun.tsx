@@ -1,5 +1,6 @@
 import { AlarmClock, CalendarClock, Inbox, Phone, PhoneCall, Wallet } from 'lucide-react'
 import { Suspense, lazy, useMemo, useState } from 'react'
+import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
@@ -17,6 +18,12 @@ import { gehoertZu, zuTun, type ZuTunEintrag } from '../lib/zutun'
 import type { Geschaeft } from '../types'
 
 const KontaktErfassenDialog = lazy(() => import('./KontaktErfassenDialog'))
+
+/** «seit 12 Min.» oder ab einer Stunde «seit 2 Std. 30 Min.» (Arbeitszeit). */
+function dauer(min: number, t: TFunction): string {
+  if (min < 60) return t('verkauf.zutun.minuten', { count: min })
+  return t('verkauf.zutun.stunden', { h: Math.floor(min / 60), m: min % 60 })
+}
 
 function Kennzahl({ icon: Icon, wert, text, ton }: { icon: typeof Phone; wert: string; text: string; ton?: string }) {
   return (
@@ -42,10 +49,11 @@ function Zeile({
 }) {
   const { t } = useTranslation()
   const interessen = useAuswahl('interesse')
+  const quellen = useAuswahl('quelle')
   const { g } = e
   const wann =
     e.art === 'anrufen'
-      ? t('verkauf.zutun.minuten', { count: e.minuten ?? 0 })
+      ? dauer(e.minuten ?? 0, t)
       : e.wann
         ? e.art === 'termin'
           ? `${formatDatum(e.wann)} ${new Date(e.wann).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })}`
@@ -72,7 +80,7 @@ function Zeile({
           {[
             [g.plz, g.ort].filter(Boolean).join(' '),
             g.interesse.map((i) => interessen.text(i)).join(', '),
-            g.herkunft.formular ? t('verkauf.zutun.website') : g.quelle,
+            g.herkunft.formular ? t('verkauf.zutun.website') : g.quelle ? quellen.text(g.quelle) : null,
           ]
             .filter(Boolean)
             .join(' · ')}
