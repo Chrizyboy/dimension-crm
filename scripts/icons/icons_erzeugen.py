@@ -1,13 +1,16 @@
 """Erzeugt alle App-Icons (Handy/PWA und Windows/Tauri) aus einer Zeichnung.
 
-Warum ein eigenes Skript statt `tauri icon`: Das Logo von Dimension Solaire hat
-schräg abgeschnittene Ecken. Als App-Icon füllt iOS diese durchsichtigen Ecken
-schwarz, und Windows zeigt die Kanten unruhig. Darum hier:
+Das App-Symbol ist das gewählte Signet von «Dimension Work» (Entwurf 8, Chris
+31.10./02.11.2026): oranges Achteck als Umriss mit oranger Sonne, wie
+`public/logo/icon-umriss.svg`.
 
-- Handy (apple-touch-icon, Manifest): ganzes Quadrat orange, ohne Transparenz.
-  iOS und Android runden selbst ab. Die Sonne liegt in der sicheren Zone (maskable).
-- Windows (Taskleiste, Titelleiste, Startmenü): abgerundetes Quadrat wie andere
-  Windows-Apps. Für 16/20/24 px eine vereinfachte Sonne, sonst wird sie zu Brei.
+Warum ein eigenes Skript statt `tauri icon`:
+- Handy (apple-touch-icon, Manifest): iOS füllt durchsichtige Stellen schwarz.
+  Darum randlos dunkelblau (Farbe der App) mit dem Signet in der Mitte, in der
+  sicheren Zone (maskable). iOS und Android runden selbst ab.
+- Windows (Fenster, Taskleiste, Favicon): Signet auf durchsichtigem Grund. Für
+  kleine Grössen ist der Umriss dicker und die Sonne einfacher, sonst verschwimmt
+  der dünne Umriss (16 px Titelleiste).
 
 Aufruf (aus dem Projektordner): python3 scripts/icons/icons_erzeugen.py
 Braucht Pillow (pip install pillow).
@@ -19,7 +22,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ORANGE = (239, 124, 0, 255)  # #EF7C00, Farbe aus dem Logo
-WEISS = (255, 255, 255, 255)
+DUNKELBLAU = (2, 34, 79, 255)  # #02224F, theme_color der App
+LEER = (0, 0, 0, 0)
 UEBERABTASTUNG = 8  # gross zeichnen, dann verkleinern = glatte Kanten
 
 WURZEL = Path(__file__).resolve().parents[2]
@@ -27,62 +31,72 @@ PUBLIC = WURZEL / "public"
 TAURI = WURZEL / "src-tauri" / "icons"
 
 
-def sonne(zeichnen, mitte, durchmesser, einfach=False):
-    """Zeichnet die Sonne (Ring, 8 grosse und 8 kleine Punkte) wie in icon.svg.
+def achteck(d):
+    """Umriss aus icon-umriss.svg (Einheit 112), um d nach aussen versetzt."""
+    s2 = d * math.sqrt(2)
+    oben, rechts, unten, links = -d, 112 + d, 112 + d, -d
+    tl = 26 - s2  # Gerade x + y = tl
+    br = 196 + s2  # Gerade x + y = br
+    return [
+        (tl - oben, oben),
+        (rechts, oben),
+        (rechts, br - rechts),
+        (br - unten, unten),
+        (links, unten),
+        (links, tl - links),
+    ]
 
-    Masse aus icon.svg (Einheit 112): Ring r=10 Strich 6, innere Punkte r=7 im
-    Abstand 22.6, äussere r=5.2 im Abstand 37.6. Äusserster Rand 42.8.
+
+def signet(z, x0, y0, groesse, grund, klein=False, winzig=False):
+    """Zeichnet das Signet in ein Quadrat (x0, y0, groesse) auf Grund `grund`.
+
+    Die Zeichnung belegt die Einheiten -h..112+h, h = halbe Strichbreite.
     """
-    k = durchmesser / 2 / 42.8
-    cx, cy = mitte
-    if einfach:
-        # Kleine Grössen: nur Ring und 8 Punkte, etwas kräftiger.
-        k = durchmesser / 2 / 30.5
-        ring_r, ring_s, punkt_r, abstand = 9.5 * k, 7 * k, 6.5 * k, 24 * k
-        punkte = [(abstand, punkt_r)]
+    h = 9 if klein else 4  # halbe Strichbreite (SVG: 8)
+    k = groesse / (112 + 2 * h)
+
+    def p(x, y):
+        return (x0 + (x + h) * k, y0 + (y + h) * k)
+
+    z.polygon([p(*e) for e in achteck(h)], fill=ORANGE)
+    z.polygon([p(*e) for e in achteck(-h)], fill=grund)
+
+    def kreis(cx, cy, r, farbe):
+        mx, my = p(cx, cy)
+        z.ellipse((mx - r * k, my - r * k, mx + r * k, my + r * k), fill=farbe)
+
+    if winzig:
+        # 16-20 px: nur Ring und 4 Punkte, mehr lässt sich nicht unterscheiden.
+        punkte, ring_r, ring_s, strahlen = [(33, 9)], 13, 11, 4
+    elif klein:
+        # Ring und 8 Punkte, kräftig, damit es mit 24/32 px noch eine Sonne ist.
+        punkte, ring_r, ring_s, strahlen = [(25, 7.5)], 10.5, 8, 8
     else:
-        ring_r, ring_s = 10 * k, 6 * k
-        punkte = [(22.6 * k, 7 * k), (37.6 * k, 5.2 * k)]
-    for i in range(8):
-        winkel = math.radians(-90 + i * 45)
+        punkte, ring_r, ring_s, strahlen = [(22.6, 7), (37.6, 5.2)], 10, 6, 8
+    for i in range(strahlen):
+        w = math.radians(-90 + i * 360 / strahlen)
         for abstand, r in punkte:
-            x = cx + abstand * math.cos(winkel)
-            y = cy + abstand * math.sin(winkel)
-            zeichnen.ellipse((x - r, y - r, x + r, y + r), fill=WEISS)
-    aussen = ring_r + ring_s / 2
-    innen = ring_r - ring_s / 2
-    zeichnen.ellipse((cx - aussen, cy - aussen, cx + aussen, cy + aussen), fill=WEISS)
-    zeichnen.ellipse((cx - innen, cy - innen, cx + innen, cy + innen), fill=ORANGE)
+            kreis(56 + abstand * math.cos(w), 56 + abstand * math.sin(w), r, ORANGE)
+    kreis(56, 56, ring_r + ring_s / 2, ORANGE)
+    kreis(56, 56, ring_r - ring_s / 2, grund)
 
 
-def icon(groesse, form, sonne_anteil, einfach=False):
-    """Ein Icon: form 'quadrat' (randlos, Handy) oder 'rund' (Windows)."""
+def zeichne(groesse, grund, anteil, klein=False):
+    """Ein Icon in Pixelgrösse `groesse`, Signet mit Anteil `anteil` der Fläche."""
     g = groesse * UEBERABTASTUNG
-    bild = Image.new("RGBA", (g, g), (0, 0, 0, 0))
-    z = ImageDraw.Draw(bild)
-    if form == "quadrat":
-        z.rectangle((0, 0, g, g), fill=ORANGE)
-    else:
-        rand = round(g * 0.03)
-        z.rounded_rectangle((rand, rand, g - rand - 1, g - rand - 1), radius=g * 0.22, fill=ORANGE)
-    sonne(z, (g / 2, g / 2), g * sonne_anteil, einfach)
-    bild = bild.resize((groesse, groesse), Image.LANCZOS)
-    if form == "quadrat":
-        bild = bild.convert("RGB")  # keine Transparenz, sonst füllt iOS schwarz
-    return bild
+    bild = Image.new("RGBA", (g, g), grund)
+    s = g * anteil
+    signet(ImageDraw.Draw(bild), (g - s) / 2, (g - s) / 2, s, grund, klein, winzig=groesse <= 20)
+    return bild.resize((groesse, groesse), Image.LANCZOS)
 
 
 def handy(groesse):
-    # 68 % passt noch in die sichere Zone von Android (Kreis mit 80 % Durchmesser).
-    return icon(groesse, "quadrat", 0.68)
+    # 60 % passt in die sichere Zone von Android (Kreis mit 80 % Durchmesser).
+    return zeichne(groesse, DUNKELBLAU, 0.60).convert("RGB")
 
 
 def windows(groesse):
-    if groesse <= 24:
-        return icon(groesse, "rund", 0.78, einfach=True)
-    if groesse <= 48:
-        return icon(groesse, "rund", 0.80)
-    return icon(groesse, "rund", 0.74)
+    return zeichne(groesse, LEER, 1.0 if groesse <= 32 else 0.94, klein=groesse <= 32)
 
 
 def main():
@@ -117,7 +131,7 @@ def main():
     bilder = [windows(g) for g in groessen]
     bilder[-1].save(TAURI / "icon.ico", sizes=[(g, g) for g in groessen], append_images=bilder[:-1])
 
-    # macOS (der Vollständigkeit halber, Tauri verlangt die Datei)
+    # macOS (Tauri verlangt die Datei)
     windows(1024).save(TAURI / "icon.icns")
 
 

@@ -30,6 +30,14 @@ export const useBewilligungen = () =>
 export const useEinsaetze = (von: string, bis: string) =>
   useQuery({ queryKey: ['projekte', 'einsaetze', von, bis], enabled: an, queryFn: () => pl.ladeEinsaetze(von, bis) })
 
+/** Service-Termine im Zeitraum. */
+export const useServiceTermine = (von: string, bis: string) =>
+  useQuery({
+    queryKey: ['projekte', 'service', von, bis],
+    enabled: an,
+    queryFn: () => pl.ladeServiceTermine(von, bis),
+  })
+
 /** Einsätze eines Projekts. */
 export const useProjektEinsaetze = (id: string) =>
   useQuery({

@@ -44,9 +44,18 @@ export function initialen(name: string): string {
 
 /**
  * Rundes Kürzel für Personen. Die Farbe ergibt sich fest aus dem Namen,
- * damit dieselbe Person überall gleich aussieht.
+ * damit dieselbe Person überall gleich aussieht. Mit `zeichen` steht das gespeicherte Kurzzeichen darin,
+ * sonst die Initialen aus dem Namen.
  */
-export function Avatar({ name, className }: { name: string; className?: string }) {
+export function Avatar({
+  name,
+  zeichen,
+  className,
+}: {
+  name: string
+  zeichen?: string | null
+  className?: string | undefined
+}) {
   let summe = 0
   for (const zeichen of name) summe += zeichen.charCodeAt(0)
   const farbe = AVATAR_FARBEN[summe % AVATAR_FARBEN.length]
@@ -60,7 +69,7 @@ export function Avatar({ name, className }: { name: string; className?: string }
       title={name}
       aria-label={name}
     >
-      {initialen(name)}
+      {zeichen || initialen(name)}
     </span>
   )
 }

@@ -1,4 +1,4 @@
--- Projekte neu (2.11.2026, Entscheid 0039): Leitstand und Projekt-Akte als ganze Seite.
+-- Projekte neu (2.11.2026, Entscheid 0040): Leitstand und Projekt-Akte als ganze Seite.
 -- Keine neuen Tabellen: alles, was ein Projekt betrifft, liegt schon in anderen Bereichen (Material, Einsätze,
 -- Zahlungsplan, Rechnungen, Nachträge, Rapporte, Mails, Verlauf). Die Akte holt es in einer Abfrage, der Leitstand
 -- bekommt je Projekt die Signale, die zeigen, worauf es wartet.
@@ -38,7 +38,7 @@ language sql stable security invoker set search_path = '' as $$
     'verkauf', (select pe.name from public.verkaufschancen v join public.personen pe on pe.id = v.tour_person_id
                  where v.id = p.verkaufschance_id),
     'einsaetze', coalesce((select jsonb_agg(jsonb_build_object('id', e.id, 'art', e.art, 'von', e.von, 'bis', e.bis, 'notiz', e.notiz,
-                                  'personen', (select coalesce(jsonb_agg(pe.kuerzel order by pe.kuerzel), '[]') from public.personen pe where pe.id = any (e.personen)),
+                                  'personen', (select coalesce(jsonb_agg(coalesce(pe.kurzzeichen, pe.kuerzel) order by pe.kurzzeichen), '[]') from public.personen pe where pe.id = any (e.personen)),
                                   'subunternehmer', (select s.name from public.subunternehmer s where s.id = e.subunternehmer_id))
                                   order by e.von)
                              from public.einsaetze e where e.projekt_id = p.id and e.geloescht_am is null), '[]'),

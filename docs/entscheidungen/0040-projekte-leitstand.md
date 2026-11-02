@@ -1,4 +1,4 @@
-# 0039 – Projekte neu: Leitstand, Meine Woche, Projekt-Akte als ganze Seite (2.11.2026)
+# 0040 – Projekte neu: Leitstand, Meine Woche, Projekt-Akte als ganze Seite (2.11.2026)
 
 ## Ausgangslage
 

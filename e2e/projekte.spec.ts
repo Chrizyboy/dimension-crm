@@ -101,6 +101,21 @@ test('Service-Fall erfassen, Notiz, erledigen', async ({ page }) => {
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('tab', { name: 'Anlagen' }).click()
   expect(await verstoesse(page)).toEqual([])
+  // Anlage-Akte als ganze Seite (nur wenn die Testdatenbank schon eine Anlage hat, z. B. aus der IBN).
+  const zeile = page.getByRole('row').nth(1)
+  if (
+    await zeile
+      .getByRole('cell')
+      .first()
+      .isVisible()
+      .catch(() => false)
+  ) {
+    await zeile.click()
+    await expect(page.getByRole('button', { name: 'Zurück zu den Anlagen' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: 'Komponenten' })).toBeVisible()
+    expect(await verstoesse(page)).toEqual([])
+    await page.getByRole('button', { name: 'Zurück zu den Anlagen' }).click()
+  }
 })
 
 test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {

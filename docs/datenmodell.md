@@ -67,6 +67,8 @@ Danach `npm run db:typen`, damit die App die neuen Spalten kennt.
 
 Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`personen.rechte`). `admin` schliesst alle anderen ein. Die Datenbank prüft das mit `intern.hat_recht()`. Sichtbare Bereiche: `personen.bereiche`, sonst `rollen.bereiche`, sonst alle; sie steuern nur die Menüs. Das `aenderungsprotokoll` zeigt einen Eintrag nur, wer die betroffene Tabelle lesen darf (`intern.tabellen_leserecht`). Siehe Entscheid 0012.
 
+**Kurzzeichen** (2.11.2026): `personen.kurzzeichen` («CR», «LP») ist die Anzeige in Listen, Planung und auf Dokumenten, 1–4 Zeichen, gross, eindeutig unter den nicht gelöschten Personen. Leer gesetzt füllt der Trigger `kurzzeichen` den Vorschlag aus dem Namen (`intern.kurzzeichen_vorschlag`, gleiche Regel in `src/lib/kurzzeichen.ts`); ein Namenswechsel ändert es nicht. Anzeigen nur mit `Kurzzeichen` aus `src/components/shared/`. `personen.kuerzel` bleibt der technische Schlüssel («andreas»), über den Zuständigkeiten und Regeln Personen finden.
+
 ## Kunden und Kontakte (Phase 5)
 
 - **`kunden_uebersicht`** (Ansicht, `security_invoker`, also mit den Rechten der lesenden Person): ein Kontakt pro Zeile mit erstem Gebäude, Stand, letztem Kontakt, Anzahl Offerten und Projekte, `moegliche_dublette` und `suchtext`/`telefon_ziffern` für die Suche. Kunden, Adressbuch und Ctrl K lesen sie.
@@ -75,6 +77,7 @@ Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`pers
 - **`moegliche_dubletten(name, email, telefon, ohne)`**: bis 5 Treffer mit Grund `email`, `telefon` oder `name`.
 - **`kontakt_export(kontakt)`**: alle Daten zur Person als JSON (Auskunft nach revDSG), ohne die Rohdaten aus V233.
 - Ergebnisse von Kontaktversuchen: `auswahlwerte` Liste `kontaktergebnis` (nicht erreicht, Combox, Rückruf, meldet sich, Termin, kein Interesse).
+- **`kontakt_zugehoerigkeiten`** (02.11.2026): Ansprechpersonen, Person (`person_id`) gehört zu Firma oder Haushalt (`firma_id`), mit `funktion`, Merkern `hauptkontakt` (höchstens einer pro Firma, ein neuer verdrängt den alten per Trigger), `unterschreibt`, `rechnungen`, `vor_ort`, Wunsch `bevorzugt` und direkter Nummer/Mail. Sicht `kontakt_zugehoerigkeiten_sicht` mit Namen beider Seiten. Gemeinsam für Adressbuch und Kundenakte, App nur über `src/services/zugehoerigkeiten.ts`.
 
 Zugriffsregeln rufen das Recht als `(select intern.hat_recht('…'))` auf, damit Postgres es einmal pro Abfrage prüft. Neue Tabellen bekommen das über `intern.richte_fachtabelle_ein` automatisch. Siehe Entscheid 0013.
 
