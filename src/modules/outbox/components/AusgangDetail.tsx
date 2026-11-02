@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useTaste } from '@/hooks/useTaste'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { feldFehler } from '@/lib/formular'
 import { ausgangJetztSenden } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
@@ -33,6 +34,7 @@ export function AusgangDetail({
   imPanel?: boolean
 }) {
   const { t } = useTranslation()
+  const ichName = useAnmeldung((z) => z.ich?.name ?? null)
   const akte = useAusgangAkte(e.id)
   const { laeuft, ausfuehren, freigebenUndSenden } = useAusgangAktionen()
   const offen = e.status === 'wartet' || e.status === 'fehler'
@@ -68,7 +70,7 @@ export function AusgangDetail({
     () => {
       senden(null)
     },
-    offen && e.darf_freigeben && !laeuft,
+    e.status === 'wartet' && e.darf_freigeben && !laeuft,
     t('ausgang.kuerzel.freigeben'),
   )
   useTaste(
@@ -159,9 +161,11 @@ export function AusgangDetail({
         {offen ? (
           <DetailFuss
             darf={e.darf_freigeben}
+            mitFreigabe={e.status === 'wartet'}
             laeuft={laeuft}
             bearbeiten={bearbeiten}
-            vorbereitetVon={e.vorbereitet_von}
+            // «Zurück an» nur, wenn jemand anderes vorbereitet hat; an sich selbst zurückschicken hilft nicht.
+            vorbereitetVon={e.vorbereitet_von === ichName ? null : e.vorbereitet_von}
             onBearbeiten={() => {
               setBearbeiten(true)
             }}

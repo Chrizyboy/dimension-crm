@@ -29,7 +29,7 @@ export function AusgangListe({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="flex flex-col" role="list" aria-label={t('ausgang.titel')}>
+    <div className="flex flex-col">
       {gruppen.map((g) => {
         const alleGewaehlt = g.eintraege.every((e) => gewaehlt.has(e.id))
         return (
@@ -65,20 +65,22 @@ export function AusgangListe({
                 </Button>
               )}
             </div>
-            {g.eintraege.map((e) => (
-              <Zeile
-                key={e.id}
-                e={e}
-                aktiv={e.id === aktiveId}
-                gewaehlt={gewaehlt.has(e.id)}
-                onOeffnen={() => {
-                  onOeffnen(e.id)
-                }}
-                onWahl={(an) => {
-                  onWahl([e.id], an)
-                }}
-              />
-            ))}
+            <div role="list" aria-label={gruppenTitel(g, t)} className="flex flex-col">
+              {g.eintraege.map((e) => (
+                <Zeile
+                  key={e.id}
+                  e={e}
+                  aktiv={e.id === aktiveId}
+                  gewaehlt={gewaehlt.has(e.id)}
+                  onOeffnen={() => {
+                    onOeffnen(e.id)
+                  }}
+                  onWahl={(an) => {
+                    onWahl([e.id], an)
+                  }}
+                />
+              ))}
+            </div>
           </section>
         )
       })}

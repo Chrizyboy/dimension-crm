@@ -56,13 +56,16 @@ export function wartetStunden(e: Pick<AusgangEintrag, 'erstellt_am' | 'zurueck_a
   return Math.max(0, Math.floor((jetzt.getTime() - ab) / 3_600_000))
 }
 
-/** Ab so vielen gleichen Einträgen (gleiche Art, gleicher Bezug oder gleicher Tag) zeigt die Liste eine Serie. */
+/** Ab so vielen gleichen Einträgen (gleiche Kampagne oder automatisch gleiche Art am gleichen Tag) zeigt die Liste eine Serie. */
 export const SERIE_AB = 3
 
-function serieSchluessel(e: AusgangEintrag): string {
-  // Serien-Mails und Newsletter tragen die Kampagne als Bezug; Mahnläufe usw. entstehen am selben Tag.
+function serieSchluessel(e: AusgangEintrag): string | null {
+  // Serien-Mails und Newsletter tragen die Kampagne als Bezug; Mahnläufe usw. entstehen automatisch am selben Tag.
+  // Von Hand vorbereitete Einzelmails (z. B. Offerten an verschiedene Kunden) sind nie eine Serie: jede braucht
+  // ihren eigenen Blick.
   if (e.bezug_tabelle === 'kampagnen' && e.bezug_id) return `${e.art}:${e.bezug_id}`
-  return `${e.art}:${e.erstellt_am.slice(0, 10)}`
+  if (e.automatisch) return `${e.art}:${e.erstellt_am.slice(0, 10)}`
+  return null
 }
 
 /**
@@ -74,6 +77,7 @@ export function gruppiere(liste: AusgangEintrag[], jetzt = new Date()): AusgangG
   for (const e of liste) {
     if (e.status !== 'wartet' || e.zurueck_am) continue
     const s = serieSchluessel(e)
+    if (!s) continue
     serien.set(s, [...(serien.get(s) ?? []), e])
   }
   const inSerie = new Set<string>()

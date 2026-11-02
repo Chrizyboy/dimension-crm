@@ -69,14 +69,21 @@ describe('Ausgangskorb-Anzeige', () => {
     expect(imOrdner(eintrag({ status: 'fehler' }), 'fehler', jetzt)).toBe(true)
   })
 
-  it('Gruppen: drei gleiche wartende werden eine Serie, der Rest nach Alter', () => {
-    const mahnungen = [1, 2, 3].map(() => eintrag({ art: 'mahnung', erstellt_am: '2026-11-02T06:00:00Z' }))
+  it('Gruppen: drei gleiche automatische werden eine Serie, der Rest nach Alter', () => {
+    const mahnungen = [1, 2, 3].map(() =>
+      eintrag({ art: 'mahnung', automatisch: true, erstellt_am: '2026-11-02T06:00:00Z' }),
+    )
     const alt = eintrag({ erstellt_am: '2026-10-30T09:00:00Z' })
     const gestern = eintrag({ erstellt_am: '2026-11-01T12:00:00' })
     const g = gruppiere([...mahnungen, alt, gestern, eintrag({})], jetzt)
     expect(g.map((x) => x.schluessel)).toEqual(['serie:mahnung:2026-11-02', 'heute', 'gestern', 'aelter'])
     expect(g[0]?.serie).toBe(true)
     expect(g[0]?.eintraege).toHaveLength(3)
+  })
+
+  it('Gruppen: von Hand vorbereitete Offerten sind nie eine Serie', () => {
+    const offerten = [1, 2, 3].map(() => eintrag({ art: 'offerte', erstellt_am: '2026-11-02T06:00:00Z' }))
+    expect(gruppiere(offerten, jetzt).some((g) => g.serie)).toBe(false)
   })
 
   it('Gruppen: Newsletter derselben Kampagne bleiben zusammen, auch über Tage', () => {

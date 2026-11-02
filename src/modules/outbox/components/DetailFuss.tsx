@@ -19,6 +19,7 @@ type Form =
  */
 export function DetailFuss({
   darf,
+  mitFreigabe = true,
   laeuft,
   bearbeiten,
   vorbereitetVon,
@@ -28,6 +29,8 @@ export function DetailFuss({
   onZurueck,
 }: {
   darf: boolean
+  /** Bei Fehlern sendet der Lösungskasten oben nochmals; hier dann nur Nebenaktionen. */
+  mitFreigabe?: boolean
   laeuft: boolean
   bearbeiten: boolean
   vorbereitetVon: string | null
@@ -206,50 +209,54 @@ export function DetailFuss({
             </Button>
           )}
         </Knopfleiste>
-        <div className="flex items-center gap-2">
-          <Menue>
-            <MenueAusloeser asChild>
-              <Button variant="secondary" disabled={laeuft || !darf}>
-                <CalendarClock />
-                {t('ausgang.spaeter')}
-                <ChevronDown />
-              </Button>
-            </MenueAusloeser>
-            <MenueInhalt align="end">
-              {zeiten.map((z) => (
+        {mitFreigabe && (
+          <div className="flex items-center gap-2">
+            <Menue>
+              <MenueAusloeser asChild>
+                <Button variant="secondary" disabled={laeuft || !darf}>
+                  <CalendarClock />
+                  {t('ausgang.spaeter')}
+                  <ChevronDown />
+                </Button>
+              </MenueAusloeser>
+              <MenueInhalt align="end">
+                {zeiten.map((z) => (
+                  <MenueEintrag
+                    key={z.schluessel}
+                    onSelect={() => {
+                      onFreigeben(z.zeit)
+                    }}
+                  >
+                    {t(`ausgang.zeit.${z.schluessel}`)}
+                    <span className="text-muted-foreground ml-auto pl-4 text-xs">
+                      {zeitpunkt(z.zeit.toISOString())}
+                    </span>
+                  </MenueEintrag>
+                ))}
+                <MenueTrenner />
                 <MenueEintrag
-                  key={z.schluessel}
                   onSelect={() => {
-                    onFreigeben(z.zeit)
+                    setForm({ art: 'zeit', wert: '' })
                   }}
                 >
-                  {t(`ausgang.zeit.${z.schluessel}`)}
-                  <span className="text-muted-foreground ml-auto pl-4 text-xs">{zeitpunkt(z.zeit.toISOString())}</span>
+                  {t('ausgang.eigeneZeit')}
                 </MenueEintrag>
-              ))}
-              <MenueTrenner />
-              <MenueEintrag
-                onSelect={() => {
-                  setForm({ art: 'zeit', wert: '' })
-                }}
-              >
-                {t('ausgang.eigeneZeit')}
-              </MenueEintrag>
-            </MenueInhalt>
-          </Menue>
-          <Button
-            variant="accent"
-            laedt={laeuft}
-            disabled={!darf}
-            onClick={() => {
-              onFreigeben(null)
-            }}
-          >
-            <Send />
-            {t('ausgang.freigebenSenden')}
-            <Kbd className="max-sm:hidden">F</Kbd>
-          </Button>
-        </div>
+              </MenueInhalt>
+            </Menue>
+            <Button
+              variant="accent"
+              laedt={laeuft}
+              disabled={!darf}
+              onClick={() => {
+                onFreigeben(null)
+              }}
+            >
+              <Send />
+              {t('ausgang.freigebenSenden')}
+              <Kbd className="max-sm:hidden">F</Kbd>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

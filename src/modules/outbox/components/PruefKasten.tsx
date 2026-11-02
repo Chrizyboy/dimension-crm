@@ -38,7 +38,7 @@ export function PruefKasten({
   const k = kontext
   return (
     <div className="flex min-w-0 flex-col gap-3">
-      {pruefungen.length > 0 && (
+      {pruefungen.length > 0 && (e.status === 'wartet' || e.status === 'fehler') && (
         <section className="flex flex-col gap-2 rounded-lg border p-3">
           <h3 className="text-sm font-semibold">{t('ausgang.geprueft')}</h3>
           <ul className="flex flex-col gap-1.5 text-[13px]">

@@ -126,7 +126,7 @@ export default function Ausgangskorb({
           )
         }
       />
-      <div className="bg-surface grid min-h-[36rem] overflow-hidden rounded-xl border sm:grid-cols-[13rem_minmax(0,1fr)] xl:grid-cols-[13rem_minmax(20rem,26rem)_minmax(0,1fr)]">
+      <div className="bg-surface grid min-h-[36rem] overflow-hidden rounded-xl border sm:grid-cols-[13rem_minmax(0,1fr)] xl:grid-cols-[13rem_minmax(18rem,23rem)_minmax(0,1fr)]">
         <aside className="bg-surface-2 border-b p-2 sm:border-r sm:border-b-0">
           <OrdnerLeiste
             gewaehlt={ordner}
