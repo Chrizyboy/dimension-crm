@@ -341,7 +341,9 @@
     "bereicheWieRolle_other": "Désactivé : affiche les {{count}} domaines du rôle.",
     "bereicheWieRolle_one": "Désactivé : affiche le domaine du rôle.",
     "bereicheAlle": "Désactivé : affiche tous les domaines, comme le rôle.",
-    "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie."
+    "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie.",
+    "kurzzeichen": "Initiales",
+    "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}."
   },
   "rechte": {
     "basis": "Données de base",
@@ -2725,7 +2727,8 @@
     "einsatz": {
       "intern": "Interne",
       "extern": "Externe",
-      "geplant": "Prévisionnel"
+      "geplant": "Prévisionnel",
+      "service": "Service"
     },
     "stand": {
       "offen": "Ouvert",
@@ -2892,7 +2895,9 @@
       "subunternehmer": "Sous-traitants",
       "grund_abwesend": "{{wer}} absent",
       "grund_doppelt": "{{wer}} planifié deux fois",
-      "abwesendAm": "Absents : {{namen}}"
+      "abwesendAm": "Absents : {{namen}}",
+      "service": "Interventions de service",
+      "serviceUnter": "depuis Service & garantie"
     },
     "bewilligungen": {
       "ansicht": "Vue",
@@ -3234,6 +3239,52 @@
       "teile": "attendent des pièces",
       "rma": "chez le fabricant (RMA)",
       "verrechnen": "rapports à facturer"
+    },
+    "planung": {
+      "titel": "Intervention",
+      "planen": "Planifier",
+      "aendern": "Modifier",
+      "dialog": "Planifier l’intervention",
+      "dauer": "Durée {{dauer}}",
+      "dauerFeld": "Durée",
+      "ganzerTag": "Journée entière",
+      "leitung": "Responsable sur place",
+      "leitet": "{{name}} (responsable)",
+      "team": "Accompagné de",
+      "ohneTermin": "Pas encore de rendez-vous. Il apparaîtra dans le planning et sur le mobile de toutes les personnes prévues.",
+      "ohneTerminMit": "Pas encore de rendez-vous, responsable {{name}}.",
+      "entfernen": "Retirer l’intervention",
+      "hinweise": "Disponibilités",
+      "belegt": {
+        "abwesend": "{{name}} est absent·e ce jour-là",
+        "baustelle": "{{name}} est prévu·e sur le chantier {{was}}",
+        "service": "{{name}} a déjà l’intervention {{was}}"
+      }
+    },
+    "anlage": {
+      "zurueck": "Retour aux installations",
+      "nichtGefunden": "Cette installation n’existe plus ou vous n’y avez pas accès.",
+      "offen_one": "{{count}} cas ouvert",
+      "offen_other": "{{count}} cas ouverts",
+      "rma_one": "{{count}} chez le fabricant",
+      "rma_other": "{{count}} chez le fabricant",
+      "bearbeiten": "Modifier l’installation",
+      "netzbetreiber": "Gestionnaire de réseau",
+      "elektriker": "Électricien",
+      "betrieb": "Exploitation",
+      "portal": "Ouvrir le portail",
+      "wartung": "Entretien",
+      "keinVertrag": "Pas de contrat d’entretien.",
+      "vertrag": "Contrat d’entretien",
+      "naechste": "prochain {{datum}}",
+      "keineKomponenten": "Aucun composant saisi. « Modifier l’installation » permet de les ajouter.",
+      "faelle": "Cas de service",
+      "keineFaelle": "Aucun cas de service sur cette installation.",
+      "rapporte": "Rapports",
+      "keineRapporte": "Aucun rapport.",
+      "dokumente": "Documents",
+      "keineDokumente": "Aucun document sur le projet ou l’installation.",
+      "akteOeffnen": "Ouvrir le dossier complet de l’installation"
     }
   },
   "wartung": {
@@ -3932,6 +3983,23 @@
       "uhrzeit": "Merci de saisir une heure comme 07:30.",
       "pause": "Pause entre 0 et 600 minutes.",
       "stoppVorStart": "La fin doit être après le début."
+    },
+    "service": {
+      "fehler": "Erreur",
+      "dauer": "env. {{stunden}} h",
+      "vorOrt": "Sur place",
+      "angekommen": "Arrivé sur place",
+      "ansprechperson": "Personne de contact sur place",
+      "zugang": "Accès",
+      "anlage": "Installation",
+      "monitoring": "Monitoring",
+      "checkliste": "Checklist",
+      "seriennummer": "Numéro de série",
+      "snAendern": "Modifier le numéro de série",
+      "aendern": "Modifier",
+      "erfassen": "Saisir",
+      "speichern": "Enregistrer",
+      "abbrechen": "Annuler"
     }
   },
   "unterschrift": {

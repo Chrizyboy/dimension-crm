@@ -7,6 +7,7 @@ import { Trenner } from '@/components/ui/diverses'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld, Label } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
+import { kurzzeichenBereinigt, kurzzeichenVorschlag } from '@/lib/kurzzeichen'
 import { Switch } from '@/components/ui/schalter'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
@@ -25,19 +26,23 @@ interface PersonDialogProps {
   rollen: Rolle[]
   standorte: Standort[]
   module: readonly ModulMeta[]
+  /** Kurzzeichen der anderen Personen, für den Vorschlag im leeren Feld. */
+  vergeben: readonly string[]
 }
 
 /**
  * Seitenblatt zum Bearbeiten einer Person: Rolle, Zusatzrechte, sichtbare Bereiche, aktiv.
  * Die Liste setzt `key` auf die Person, damit der Entwurf bei jeder neuen Person frisch beginnt.
  */
-export function PersonDialog({ person, status, onSchliessen, rollen, standorte, module }: PersonDialogProps) {
+export function PersonDialog({ person, status, onSchliessen, rollen, standorte, module, vergeben }: PersonDialogProps) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const [entwurf, setEntwurf] = useState<Person | null>(person)
   const speichern = useBenutzerAenderung((p: Person) =>
     speicherePerson(p.id, {
       name: p.name,
+      // Leer: die Datenbank setzt den Vorschlag aus dem Namen.
+      kurzzeichen: p.kurzzeichen || null,
       rolle: p.rolle,
       rechte: p.rechte,
       bereiche: p.bereiche,
@@ -50,6 +55,7 @@ export function PersonDialog({ person, status, onSchliessen, rollen, standorte, 
 
   if (!entwurf) return null
   const rolle = rollen.find((r) => r.schluessel === entwurf.rolle)
+  const vorschlag = kurzzeichenVorschlag(entwurf.name, vergeben)
   const eigeneBereiche = entwurf.bereiche.length > 0
   const setze = (aenderung: Partial<Person>) => {
     setEntwurf({ ...entwurf, ...aenderung })
@@ -63,16 +69,22 @@ export function PersonDialog({ person, status, onSchliessen, rollen, standorte, 
       onSchliessen()
     } catch (f) {
       meldeFehler(f, 'person-speichern')
-      // Die Datenbank verhindert, dass die letzte Admin-Person ihr Recht verliert.
-      const letzter = f instanceof Object && 'code' in f && f.code === 'P0001'
+      // Die Datenbank verhindert, dass die letzte Admin-Person ihr Recht verliert, und doppelte Kurzzeichen.
+      const code = f instanceof Object && 'code' in f ? f.code : null
+      const letzter = code === 'P0001'
       melde(
         'kritisch',
-        letzter
+        code === '23505'
           ? {
-              de: 'Mindestens eine Person braucht Administrationsrechte',
-              fr: 'Au moins une personne doit rester administratrice',
+              de: `Kurzzeichen ${entwurf.kurzzeichen ?? ''} hat schon jemand anderes`,
+              fr: `Les initiales ${entwurf.kurzzeichen ?? ''} sont déjà utilisées`,
             }
-          : { de: 'Nicht gespeichert', fr: 'Non enregistré' },
+          : letzter
+            ? {
+                de: 'Mindestens eine Person braucht Administrationsrechte',
+                fr: 'Au moins une personne doit rester administratrice',
+              }
+            : { de: 'Nicht gespeichert', fr: 'Non enregistré' },
       )
     }
   }
@@ -117,15 +129,34 @@ export function PersonDialog({ person, status, onSchliessen, rollen, standorte, 
         }
       >
         <div className="flex flex-col gap-5">
-          <Feld id="person-name" label={t('benutzer.name')}>
-            <Input
-              id="person-name"
-              value={entwurf.name}
-              onChange={(e) => {
-                setze({ name: e.target.value })
-              }}
-            />
-          </Feld>
+          <div className="grid gap-4 sm:grid-cols-[3fr_1fr]">
+            <Feld id="person-name" label={t('benutzer.name')}>
+              <Input
+                id="person-name"
+                value={entwurf.name}
+                onChange={(e) => {
+                  setze({ name: e.target.value })
+                }}
+              />
+            </Feld>
+            <Feld
+              id="person-kurzzeichen"
+              label={t('benutzer.kurzzeichen')}
+              hinweis={t('benutzer.kurzzeichenHinweis', { vorschlag: vorschlag || '–' })}
+            >
+              <Input
+                id="person-kurzzeichen"
+                value={entwurf.kurzzeichen ?? ''}
+                placeholder={vorschlag}
+                maxLength={4}
+                autoComplete="off"
+                className="uppercase"
+                onChange={(e) => {
+                  setze({ kurzzeichen: kurzzeichenBereinigt(e.target.value) })
+                }}
+              />
+            </Feld>
+          </div>
           <div className="grid gap-4 sm:grid-cols-[3fr_2fr]">
             <Feld
               id="person-rolle"
