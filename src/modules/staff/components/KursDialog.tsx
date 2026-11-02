@@ -100,13 +100,9 @@ export function KursDialog({
     if (ok) onSchliessen()
   }
   // Ohne Planungsrecht immer ein Antrag; mit Datum direkt «angemeldet», sonst «bewilligt» (bei Planenden).
-  const zielStand: KursEingabe['stand'] = !planer
-    ? 'beantragt'
-    : von
-      ? 'angemeldet'
-      : k?.stand === 'beantragt'
-        ? 'beantragt'
-        : 'bewilligt'
+  // Ein offener Antrag bleibt beim Speichern ein Antrag; bewilligt wird nur mit «Bewilligen».
+  const zielStand: KursEingabe['stand'] =
+    !planer || k?.stand === 'beantragt' ? 'beantragt' : von ? 'angemeldet' : 'bewilligt'
 
   return (
     <Dialog
@@ -156,7 +152,7 @@ export function KursDialog({
                   }).then(fertig)
                 }
               >
-                {t(`team.kurs.speichernAls.${zielStand}`)}
+                {k && zielStand === 'beantragt' ? t('allgemein.speichern') : t(`team.kurs.speichernAls.${zielStand}`)}
               </Button>
             )}
           </>
@@ -240,7 +236,7 @@ export function KursDialog({
             <Feld
               id="kurs-art"
               label={t('team.kurs.art')}
-              hinweis={t('team.kurs.artHinweis')}
+              {...(art !== OHNE ? { hinweis: t('team.kurs.artHinweis') } : {})}
               className="sm:col-span-2"
             >
               <Auswahl
