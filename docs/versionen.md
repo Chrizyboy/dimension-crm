@@ -5,6 +5,13 @@ Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nic
 Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
 veröffentlichen» starten (docs/installation.md).
 
+## 1.0.0
+
+- Start von Dimension Work für das ganze Team: Kunden, Anfragen, Offerten, Projekte, Baustelle, Rechnungen und alles Weitere an einem Ort, am PC und am Handy.
+- Neu dabei: Posteingang mit Antwortfristen, Dateiablage in SharePoint, Werkvertrag nach Vorlage Muri und feste Zuständigkeiten für Leads.
+- Anmeldung mit dem Microsoft-Firmenkonto oder mit einem Code per Mail (von noreply@dimension-solaire.ch).
+- Etwas stimmt nicht? Oben rechts «?» › «Fehler melden».
+
 ## 0.17.0
 
 - Neu «Fahrzeuge & Geräte»: MFK, Service und Kilometer der Fahrzeuge, Prüftermine von Absturzsicherungen, Leitern und Messgeräten, wer was hat. Am Handy: Eintrag erfassen und «An mich» übergeben.
