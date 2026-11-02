@@ -6125,7 +6125,8 @@
       "neu": "Alle offenen",
       "meine": "Meine",
       "erledigt": "Erledigt",
-      "abgelegt": "Werbung & Intern"
+      "abgelegt": "Werbung & Intern",
+      "aeltere": "Ältere"
     },
     "leer": {
       "warten": "Niemand wartet auf eine Antwort",
@@ -6133,7 +6134,8 @@
       "meine": "Dir ist gerade nichts zugeteilt",
       "erledigt": "In den letzten 14 Tagen nichts erledigt",
       "abgelegt": "Nichts abgelegt",
-      "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort."
+      "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort.",
+      "aeltere": "Keine älteren Mails gefunden"
     },
     "art": {
       "anfrage": "Neue Anfrage",
@@ -6173,7 +6175,8 @@
       "erledigt": "erledigt",
       "abgelegt": "abgelegt",
       "neu": "wird eingeordnet",
-      "info": "zur Kenntnis"
+      "info": "zur Kenntnis",
+      "archiv": "älter, übernommen"
     },
     "zahl": {
       "warten_one": "Kunde wartet auf Antwort",
@@ -6271,6 +6274,17 @@
       "laedt": "Mail wird geladen …",
       "fehlt": "Diese Mail ist nicht mehr da.",
       "verknuepft": "Mit der Mail im Posteingang verknüpft"
+    },
+    "suche": "In älteren Mails suchen",
+    "nachholen": {
+      "titel": "Ältere Mails",
+      "hinweis": "Ältere Mails aus jedem persönlichen Postfach (sobald die Person Microsoft verbunden hat) und aus info@ kommen im Hintergrund nach, als «erledigt» ohne Frist. Sie zählen nicht bei «Wartet auf uns» und nicht bei der Reaktionszeit. Mails mit Kunden kommen auch in den Kundenverlauf.",
+      "monate": "Monate zurück",
+      "ungueltig": "Zahl von 0 bis 60",
+      "inbox": "Eingang",
+      "sentitems": "Gesendet",
+      "fertig": "fertig, {{anzahl}} Mails",
+      "laeuft": "läuft, bis {{datum}}, {{anzahl}} Mails"
     }
   },
   "einfach": {

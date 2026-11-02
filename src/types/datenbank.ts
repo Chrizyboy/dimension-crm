@@ -10753,6 +10753,20 @@ export type Database = {
       posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
       posteingang_auswertung: { Args: { p_wochen?: number }; Returns: Json }
       posteingang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      posteingang_nachholen: {
+        Args: {
+          p_bis: string
+          p_ende: boolean
+          p_mails: Json
+          p_ordner: string
+          p_person: string
+          p_postfach: string
+          p_schluessel: string
+        }
+        Returns: number
+      }
+      posteingang_nachholen_stand: { Args: { p_ordner: string; p_schluessel: string }; Returns: Json }
+      posteingang_nachholen_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
       posteingang_seit: { Args: Record<PropertyKey, never>; Returns: string }
       posteingang_setzen: { Args: { p?: Json; p_aktion: string; p_id: string }; Returns: undefined }
       posteingang_sortieren: { Args: { p: Json; p_id: string }; Returns: undefined }
