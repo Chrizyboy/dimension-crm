@@ -1,4 +1,4 @@
-import type { Abwesenheit, Einsatz, EinsatzArt, Person, Projekt, Subunternehmer } from '../types'
+import type { Abwesenheit, Einsatz, EinsatzArt, Person, Projekt, ServiceTermin, Subunternehmer } from '../types'
 import { alsDatum, alsIso, plusTage, ueberschneidet } from './zeitplan'
 
 /**
@@ -8,7 +8,7 @@ import { alsDatum, alsIso, plusTage, ueberschneidet } from './zeitplan'
  */
 
 /** Was ein Balken zeigt: ein Einsatz oder eine Abwesenheit (nur in der Team-Sicht). */
-export type BalkenArt = EinsatzArt | 'abwesend'
+export type BalkenArt = EinsatzArt | 'abwesend' | 'service'
 
 /** Eine Person mit Konflikt in einem Einsatz und der Grund. */
 export interface Konflikt {
@@ -26,6 +26,8 @@ export interface PlanBalken {
   text: string
   projekt: Projekt | null
   einsatz: Einsatz | null
+  /** Service-Termin (nur Art «service»): öffnet den Fall statt der Baustelle. */
+  service?: ServiceTermin
   /** Personen mit Konflikt: abwesend oder am selben Tag auf einer anderen Baustelle. */
   konflikt: Konflikt[]
   /** Spur innerhalb der Zeile, wenn sich Balken überlappen (0 = oben). */
@@ -92,6 +94,46 @@ interface Eingabe {
   abwesend: Abwesenheit[]
   personen: Person[]
   subunternehmer: Subunternehmer[]
+  /** Service-Termine (Team-Sicht und Handy), optional. */
+  service?: ServiceTermin[]
+}
+
+/** Uhrzeit eines Termins in Schweizer Zeit («08:30»). */
+export function terminZeit(iso: string): string {
+  return new Date(iso).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Zurich' })
+}
+
+/**
+ * Ein Service-Termin als Balken (ein Tag). Konflikt, wenn eine eingeteilte Person an dem Tag abwesend ist oder
+ * auf einer Baustelle steht (fester Einsatz, nicht «voraussichtlich»).
+ */
+export function serviceBalken(
+  s: ServiceTermin,
+  einsaetze: Einsatz[],
+  abwesend: Abwesenheit[],
+  kuerzel: (id: string) => string,
+  text: string,
+): PlanBalken {
+  const tag = { von: s.datum, bis: s.datum }
+  const konflikt = s.personen.flatMap((p): Konflikt[] => {
+    if (abwesend.some((a) => a.person_id === p && ueberschneidet(a, tag)))
+      return [{ kuerzel: kuerzel(p), grund: 'abwesend' }]
+    if (einsaetze.some((e) => e.art !== 'geplant' && e.personen.includes(p) && ueberschneidet(e, tag)))
+      return [{ kuerzel: kuerzel(p), grund: 'doppelt' }]
+    return []
+  })
+  return {
+    id: `srv-${s.id}`,
+    art: 'service',
+    von: s.datum,
+    bis: s.datum,
+    text,
+    projekt: null,
+    einsatz: null,
+    service: s,
+    konflikt,
+    spur: 0,
+  }
 }
 
 function helfer({ projekte, einsaetze, abwesend, personen, subunternehmer }: Eingabe) {
@@ -154,8 +196,14 @@ export function teamSicht(
     return p ? e.passt(p) : false
   })
   const titel = (x: Einsatz) => h.projekt(x.projekt_id)?.kunde ?? ''
+  const service = e.service ?? []
   const team: PlanZeile[] = e.personen
-    .filter((p) => MONTAGE_ROLLEN.has(p.rolle ?? '') || einsaetze.some((x) => x.personen.includes(p.id)))
+    .filter(
+      (p) =>
+        MONTAGE_ROLLEN.has(p.rolle ?? '') ||
+        einsaetze.some((x) => x.personen.includes(p.id)) ||
+        service.some((x) => x.personen.includes(p.id)),
+    )
     .map((p) => {
       const balken = [
         // In der Zeile einer Person zählt nur ihr eigener Konflikt, nicht der eines Kollegen im selben Einsatz.
@@ -163,6 +211,18 @@ export function teamSicht(
           .filter((x) => x.personen.includes(p.id))
           .map((x) => {
             const b = h.balken(x, titel(x))
+            return { ...b, konflikt: b.konflikt.filter((k) => k.kuerzel === p.kuerzel) }
+          }),
+        ...service
+          .filter((x) => x.personen.includes(p.id))
+          .map((x) => {
+            const b = serviceBalken(
+              x,
+              e.einsaetze,
+              e.abwesend,
+              h.kuerzel,
+              `${terminZeit(x.termin_am)} ${x.kunde ?? x.nummer}`,
+            )
             return { ...b, konflikt: b.konflikt.filter((k) => k.kuerzel === p.kuerzel) }
           }),
         ...e.abwesend

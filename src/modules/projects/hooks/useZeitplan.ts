@@ -4,7 +4,17 @@ import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatDatum } from '@/lib/format'
 import { melde } from '@/services/meldungen'
 import { alsDatum, alsIso, auslastung, plusTage, wochen as wochenAb } from '../lib/zeitplan'
-import { baustellenSicht, teamSicht, verschoben, zuPlanen, type PlanBalken } from '../lib/zeitplanAnsicht'
+import {
+  baustellenSicht,
+  serviceBalken,
+  spurenVerteilen,
+  teamSicht,
+  terminZeit,
+  verschoben,
+  zuPlanen,
+  type PlanBalken,
+  type PlanGruppe,
+} from '../lib/zeitplanAnsicht'
 import { einsatzAendern } from '../services/planung'
 import type { Projekt } from '../types'
 import { useAktion } from './useAktion'
@@ -13,6 +23,7 @@ import {
   useEinsaetze,
   usePersonen,
   useProjekte,
+  useServiceTermine,
   useStandorte,
   useSubunternehmer,
 } from './useProjekte'
@@ -45,6 +56,7 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
   const personen = usePersonen()
   const standorte = useStandorte()
   const subs = useSubunternehmer()
+  const termine = useServiceTermine(von, ende)
 
   const daten = useMemo(() => {
     const e = (einsaetze.data ?? []).map((x) => ({ ...x, ...vorschau[x.id] }))
@@ -60,9 +72,42 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
       abwesend: abwesend.data ?? [],
       personen: personen.data ?? [],
       subunternehmer: subs.data ?? [],
+      service: termine.data ?? [],
       passt,
     }
-    const baustellen = baustellenSicht({ ...eingabe, standorte: standorte.data ?? [] })
+    const kuerzel = (id: string) => personen.data?.find((x) => x.id === id)?.kuerzel ?? '?'
+    // Service-Einsätze: in der Baustellen-Sicht als eigene Zeile, am Handy als Karten; Text = Zeit und Team.
+    const service = (termine.data ?? [])
+      .filter((x) => !wort || `${x.kunde ?? ''} ${x.ort ?? ''} ${x.nummer}`.toLowerCase().includes(wort))
+      .map((x) =>
+        serviceBalken(
+          x,
+          e,
+          abwesend.data ?? [],
+          kuerzel,
+          `${terminZeit(x.termin_am)} ${x.personen.map(kuerzel).join(' ')}`,
+        ),
+      )
+    const serviceGruppe: PlanGruppe[] =
+      service.length > 0
+        ? [
+            {
+              id: 'service',
+              titel: t('projekte.zeitplan.service'),
+              zeilen: [
+                {
+                  id: 'service',
+                  titel: t('projekte.zeitplan.service'),
+                  unter: t('projekte.zeitplan.serviceUnter'),
+                  projekt: null,
+                  balken: service,
+                  spuren: spurenVerteilen(service),
+                },
+              ],
+            },
+          ]
+        : []
+    const baustellen = [...baustellenSicht({ ...eingabe, standorte: standorte.data ?? [] }), ...serviceGruppe]
     const gruppen =
       f.sicht === 'team'
         ? teamSicht({
@@ -84,8 +129,21 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
         g.zeilen.flatMap((z) => z.balken.filter((b) => b.konflikt.length > 0).map((b) => b.id)),
       ),
     ).size
-    return { gruppen, baustellen, last, konflikte, offen: zuPlanen(p).filter(passt) }
-  }, [einsaetze.data, projekte.data, abwesend.data, personen.data, subs.data, standorte.data, vorschau, f, w, t, arten])
+    return { gruppen, baustellen, service, last, konflikte, offen: zuPlanen(p).filter(passt) }
+  }, [
+    einsaetze.data,
+    projekte.data,
+    abwesend.data,
+    personen.data,
+    subs.data,
+    standorte.data,
+    termine.data,
+    vorschau,
+    f,
+    w,
+    t,
+    arten,
+  ])
 
   /** Einsatz verschieben oder verlängern, mit «Rückgängig» in der Meldung. */
   function ziehen(b: PlanBalken, tage: number, nurEnde: boolean) {
@@ -130,7 +188,7 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
     projekte: projekte.data ?? [],
     laedt: projekte.isPending || einsaetze.isPending || standorte.isPending,
     fehler: projekte.error ?? einsaetze.error,
-    nochmal: () => void Promise.all([projekte.refetch(), einsaetze.refetch()]),
+    nochmal: () => void Promise.all([projekte.refetch(), einsaetze.refetch(), termine.refetch()]),
     ziehen,
   }
 }
