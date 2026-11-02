@@ -1,4 +1,4 @@
--- Prüft den Ausbau Baustelle & Rapporte (Entscheid 0041): Schritte je Projektart, Tagesrapport ohne Unterschrift,
+-- Prüft den Ausbau Baustelle & Rapporte (Entscheid 0044): Schritte je Projektart, Tagesrapport ohne Unterschrift,
 -- Abnahme mit Unterschrift und Vorbehalt, Teamzeiten, Meldungen mit Aufgabe und Glocke, Seriennummern in die
 -- Anlage, Visieren mit Rückfrage, Soll-Stunden, Baustellen heute, Wochenblatt, Auswertung, Mappe.
 -- Ausführen: npm run db:test

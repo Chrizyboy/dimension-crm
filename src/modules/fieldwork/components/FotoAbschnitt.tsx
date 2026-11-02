@@ -28,7 +28,7 @@ export function FotoAbschnitt({
   art: RapportArt
   offen: boolean
   /**
-   * Montage mit Einsatz: Pflichtfotos der ganzen Baustelle je Projektart (Entscheid 0041) und was an früheren
+   * Montage mit Einsatz: Pflichtfotos der ganzen Baustelle je Projektart (Entscheid 0044) und was an früheren
    * Tagen schon fotografiert wurde; sie müssen erst bis zur Abnahme da sein.
    */
   baustelle?: { pflicht: Pflichtfoto[]; da: string[] }
