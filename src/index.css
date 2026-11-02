@@ -171,14 +171,6 @@ body,
   height: 100%;
 }
 
-/* App-Rahmen: nur der Inhalt scrollt, nie die ganze Seite (Drucken bleibt frei). */
-@media screen {
-  html.im-rahmen,
-  html.im-rahmen body {
-    overflow: hidden;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
