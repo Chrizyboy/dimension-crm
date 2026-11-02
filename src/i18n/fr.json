@@ -1578,6 +1578,16 @@
       "konditionBatterie": "Paiement proposé pour batterie",
       "telefon_de": "Téléphone (contrat allemand)",
       "telefon_fr": "Téléphone (contrat français)"
+    },
+    "neu": {
+      "knopf": "Nouveau contrat",
+      "titel": "Nouveau contrat d'entreprise",
+      "text": "Pour quelle offre ? Les offres acceptées sans contrat figurent en haut. Une offre encore ouverte passe à « Acceptée » à la création.",
+      "suche": "Rechercher une offre",
+      "sucheHinweis": "Nom, n°, lieu …",
+      "liste": "Offres sans contrat d'entreprise",
+      "leer": "Aucune offre correspondante sans contrat.",
+      "exkl": "HT"
     }
   },
   "preise": {

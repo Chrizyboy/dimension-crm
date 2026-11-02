@@ -1578,6 +1578,16 @@
       "konditionBatterie": "Vorschlag Zahlung bei Batterie",
       "telefon_de": "Telefon im deutschen Vertrag",
       "telefon_fr": "Telefon im französischen Vertrag"
+    },
+    "neu": {
+      "knopf": "Neuer Werkvertrag",
+      "titel": "Neuer Werkvertrag",
+      "text": "Für welche Offerte? Angenommene Offerten ohne Vertrag stehen zuoberst. Eine noch offene Offerte wird beim Erstellen auf «Angenommen» gesetzt.",
+      "suche": "Offerte suchen",
+      "sucheHinweis": "Name, Nr., Ort …",
+      "liste": "Offerten ohne Werkvertrag",
+      "leer": "Keine passende Offerte ohne Werkvertrag.",
+      "exkl": "exkl. MWST"
     }
   },
   "preise": {
