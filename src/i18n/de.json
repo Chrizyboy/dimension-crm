@@ -4967,7 +4967,7 @@
   },
   "aufgaben": {
     "titel": "Aufgaben",
-    "beschreibung": "Was wer bis wann erledigt. Viele kommen aus Automationen; ein Klick öffnet den Datensatz.",
+    "beschreibung": "Dein Arbeitsvorrat: was bis wann zu tun ist. Viele kommen aus Automationen; ein Klick öffnet die Aufgabe.",
     "neu": "Neue Aufgabe",
     "erledigt": "Erledigt",
     "erledigtSetzen": "«{{titel}}» erledigt",
@@ -5006,14 +5006,107 @@
       "titel": "Was ist zu tun?",
       "text": "Notiz",
       "faellig": "Fällig am",
-      "person": "Für wen"
+      "person": "Für wen",
+      "wiederholung": "Wiederholen",
+      "textPlatzhalter": "Beschreibung …"
     },
     "fehler": {
       "titel": "Bitte einen Titel eingeben.",
       "datum": "Bitte ein gültiges Datum wählen.",
       "person": "Bitte eine Person wählen."
     },
-    "neuKurz": "Aufgabe"
+    "neuKurz": "Aufgabe",
+    "vonPerson": "Aufgaben von {{name}}",
+    "ansicht": "Ansicht",
+    "ansichten": {
+      "meine": "Meine",
+      "vergeben": "Vergeben",
+      "vertretung": "Vertretung",
+      "alle": "Alle",
+      "team": "Team",
+      "erledigt": "Erledigt"
+    },
+    "suchen": "Aufgaben suchen",
+    "filtern": "Filtern",
+    "anzahl_one": "{{count}} Aufgabe",
+    "anzahl_other": "{{count}} Aufgaben",
+    "schnellfilter": {
+      "wichtig": "Wichtig",
+      "automation": "Aus Automation",
+      "mit_bezug": "Mit Datensatz"
+    },
+    "leerVertretung": "Niemand zu vertreten",
+    "kuerzelNeu": "Neue Aufgabe",
+    "morgen": "Morgen",
+    "naechsteWoche": "Nächste Woche",
+    "morgenVerschieben": "Auf den nächsten Arbeitstag",
+    "morgenVerschiebenFuer": "«{{titel}}» auf den nächsten Arbeitstag",
+    "wichtig": "Wichtig",
+    "vertretungFuer": "Vertretung für {{name}}",
+    "schritteZahl": "{{fertig}}/{{schritte}} Schritte",
+    "gruppe": {
+      "ueberfaellig": "Überfällig",
+      "heute": "Heute",
+      "morgen": "Morgen",
+      "woche": "Diese Woche",
+      "spaeter": "Später",
+      "ohne": "Ohne Datum"
+    },
+    "herkunft": {
+      "automation": "Automation",
+      "monitor": "Monitor",
+      "frist": "Frist",
+      "system": "System",
+      "selbst": "Selbst",
+      "person": "Vergeben",
+      "ki": "KI-Vorschlag",
+      "posteingang": "Posteingang"
+    },
+    "wiederholung": {
+      "nie": "Nie",
+      "woche": "Jede Woche",
+      "monat": "Jeden Monat",
+      "quartal": "Jedes Quartal",
+      "jahr": "Jedes Jahr"
+    },
+    "schnell": {
+      "beschriftung": "Neue Aufgabe schnell erfassen",
+      "platzhalter": "Neue Aufgabe … z. B. «Offerte Baumann nachfassen morgen @AM !»",
+      "mehr": "Mehr",
+      "enter": "Enter legt an",
+      "personUnbekannt": "«@{{wer}}» unbekannt"
+    },
+    "akte": {
+      "beschreibung": "Aufgabe",
+      "weg": "Aufgabe nicht gefunden",
+      "wegText": "Sie wurde gelöscht oder ist für dich nicht sichtbar.",
+      "erledigen": "Erledigt …",
+      "erledigtBestaetigen": "Erledigt",
+      "notizErledigt": "Was kam heraus? (freiwillig, steht auch im Verlauf des Datensatzes)",
+      "notizWeiter": "Notiz für die Person (freiwillig)",
+      "weitergeben": "Weitergeben",
+      "weitergebenAn": "An wen?",
+      "wiederOeffnen": "Wieder öffnen",
+      "vertretungHinweis": "Die Person ist abwesend, du vertrittst sie.",
+      "herkunft": "Herkunft",
+      "teilschritte": "Teilschritte",
+      "schrittNeu": "Teilschritt hinzufügen (Enter)",
+      "schrittEntfernen": "«{{text}}» entfernen",
+      "verlauf": "Verlauf",
+      "kommentar": "Kommentar",
+      "kommentarPlatzhalter": "Kommentar … mit @LP die Person benachrichtigen",
+      "kommentieren": "Kommentieren",
+      "loeschen": "In den Papierkorb"
+    },
+    "team": {
+      "offen": "Offen",
+      "erledigt7": "Erledigt 7 Tage",
+      "last": "Last",
+      "abwesend": "Abwesend",
+      "niemand": "Nicht zugeteilt",
+      "leer": "Keine offenen Aufgaben im Team",
+      "leerText": "Alles ist verteilt und erledigt."
+    }
   },
   "ki": {
     "knopf": "Mit KI schreiben",
