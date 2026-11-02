@@ -119,11 +119,14 @@ update public.posteingang set frist_am = now() - interval '1 minute' where kennu
 select public.posteingang_erinnern();
 select public.posteingang_erinnern();
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b1'
-  and titel_de = 'Antwortfrist überschritten'), 1, 'Frist um: einmal Glocke');
+  and titel_de = 'Antwortfrist überschritten'
+  -- nur die Mail dieses Falls: andere Test-Mails vom 2.11.2026 laufen ab dann nach echter Uhr ebenfalls ab
+  and ziel = '/inbox?mail=' || (select id from public.posteingang where kennung = '<pe5@x>')), 1, 'Frist um: einmal Glocke');
 update public.posteingang set eskalation_am = now() - interval '1 minute' where kennung = '<pe5@x>';
 select public.posteingang_erinnern();
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b3'
-  and titel_de = 'Kunde wartet doppelt so lange wie vorgesehen'), 1, 'doppelte Frist: Glocke an die Leitung');
+  and titel_de = 'Kunde wartet doppelt so lange wie vorgesehen'
+  and ziel = '/inbox?mail=' || (select id from public.posteingang where kennung = '<pe5@x>')), 1, 'doppelte Frist: Glocke an die Leitung');
 
 -- Beantwortet aus dem Ausgangskorb
 with a as (insert into public.ausgangskorb (kanal, an, betreff, text, status, bezug_tabelle, bezug_id)
