@@ -16,6 +16,7 @@ import { GarantieAbschnitt } from './GarantieAbschnitt'
 import { GarantieCheck } from './GarantieCheck'
 import { KostenBox } from './KostenBox'
 import { KundeBox } from './KundeBox'
+import { PlanungBox } from './PlanungBox'
 import { VerlaufBox } from './VerlaufBox'
 
 /**
@@ -61,6 +62,7 @@ export function FallSeite({ id, onZurueck }: { id: string; onZurueck: () => void
           </Karte>
         </div>
         <div className="flex min-w-0 flex-col gap-4">
+          <PlanungBox f={f} />
           <EinsatzBox f={f} />
           <GarantieCheck f={f} akte={a} />
           <ChecklisteBox f={f} />

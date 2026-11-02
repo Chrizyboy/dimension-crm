@@ -8,21 +8,24 @@ import { useAnmeldung } from '@/stores/anmeldung'
 interface Suche {
   reiter?: Reiter
   fall?: string
+  /** Offene Anlage-Akte. */
+  anlage?: string
   /** Service-Fall aus einer Mail im Posteingang eröffnen. */
   ausMail?: string
 }
 
 const GUELTIG = new Set<string>(REITER)
 
-/** Service & Garantie: Reiter und offener Fall in der Adresse (#/aftersales?fall=…). */
+/** Service & Garantie: Reiter, offener Fall und offene Anlage in der Adresse (#/aftersales?fall=… / ?anlage=…). */
 export const Route = createFileRoute('/aftersales')({
   validateSearch: (s: Record<string, unknown>): Suche => ({
     ...(typeof s.reiter === 'string' && GUELTIG.has(s.reiter) ? { reiter: s.reiter as Reiter } : {}),
     ...(typeof s.fall === 'string' && s.fall ? { fall: s.fall } : {}),
+    ...(typeof s.anlage === 'string' && s.anlage ? { anlage: s.anlage } : {}),
     ...(typeof s.ausMail === 'string' && s.ausMail ? { ausMail: s.ausMail } : {}),
   }),
   component: function ServiceSeite() {
-    const { reiter, fall, ausMail } = Route.useSearch()
+    const { reiter, fall, anlage, ausMail } = Route.useSearch()
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
@@ -31,12 +34,20 @@ export const Route = createFileRoute('/aftersales')({
         <Service
           reiter={reiter ?? 'faelle'}
           fallId={fall ?? null}
+          anlageId={anlage ?? null}
           ausMail={ausMail ?? null}
           onNavigation={(z) => {
             const r = z.reiter ?? reiter ?? 'faelle'
             const f = z.fall === undefined ? fall : z.fall
+            const a = z.anlage === undefined ? anlage : z.anlage
             // Jede Navigation schliesst die Übernahme aus dem Posteingang ab (Fall erfasst oder abgebrochen).
-            void navigate({ search: { ...(r !== 'faelle' ? { reiter: r } : {}), ...(f ? { fall: f } : {}) } })
+            void navigate({
+              search: {
+                ...(r !== 'faelle' ? { reiter: r } : {}),
+                ...(f ? { fall: f } : {}),
+                ...(a ? { anlage: a } : {}),
+              },
+            })
           }}
         />
       </Suspense>
