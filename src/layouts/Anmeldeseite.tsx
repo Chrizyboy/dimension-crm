@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Karte } from '@/components/ui/karte'
+import { useOberflaeche } from '@/hooks/useOberflaeche'
 import {
   anmeldenMitMicrosoft,
   microsoftVerfuegbar,
@@ -35,6 +36,8 @@ function MicrosoftZeichen() {
 export function Anmeldeseite() {
   const { t } = useTranslation()
   const { sprache, setSprache } = useUi()
+  // Die Anmeldeseite liegt ausserhalb des App-Rahmens: ohne das hier blieb sie nach DE/FR in der alten Sprache.
+  useOberflaeche()
   const microsoft = useQuery({ queryKey: ['microsoft-verfuegbar'], queryFn: microsoftVerfuegbar, staleTime: Infinity })
   const [schritt, setSchritt] = useState<'email' | 'code'>('email')
   const [email, setEmail] = useState('')

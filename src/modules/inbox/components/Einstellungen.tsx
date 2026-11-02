@@ -11,13 +11,14 @@ import { usePersonen, useRegeln } from '../hooks/usePosteingang'
 import { minutenAus, regelnSchema, stundenText } from '../schema'
 import { speichereRegeln } from '../services/posteingang'
 import { FRIST_ARTEN, type PosteingangRegeln, type Person } from '../types'
+import { NachholenKarte } from './NachholenKarte'
 
 const KEINE = '–'
 
 /**
  * Einstellungen (nur Administration): ein/aus, Arbeitszeit, Antwortfrist je Art, wer Mails aus Team-Postfächern
  * verteilt (eigene Postfächer bearbeitet jede Person selbst), Stellvertretung bei Abwesenheit und wer bei doppelter
- * Frist die Glocke bekommt.
+ * Frist die Glocke bekommt. Dazu, wie weit ältere Mails nachgeholt werden (eigener Knopf).
  */
 export function Einstellungen() {
   const regeln = useRegeln().data
@@ -186,6 +187,7 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
           </KarteInhalt>
         </Karte>
       </div>
+      <NachholenKarte regeln={regeln} />
       <div className="flex justify-end">
         <Button laedt={laeuft} onClick={() => void speichern()}>
           {t('allgemein.speichern')}

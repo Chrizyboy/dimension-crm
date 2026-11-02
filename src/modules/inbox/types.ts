@@ -36,7 +36,8 @@ export const REITER = ['eingang', 'auswertung', 'einstellungen'] as const
 export type Reiter = (typeof REITER)[number]
 
 /** Filter der Liste. */
-export const ANSICHTEN = ['warten', 'neu', 'meine', 'erledigt', 'abgelegt'] as const
+/** «aeltere»: Archiv vor den letzten 14 Tagen, mit Suche, eigens vom Server geladen. */
+export const ANSICHTEN = ['warten', 'neu', 'meine', 'erledigt', 'abgelegt', 'aeltere'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 /** Eine Mail im Posteingang, wie die Liste sie lädt. */
@@ -60,7 +61,7 @@ export interface Mail {
   frist_am: string | null
   eskalation_am: string | null
   erledigt_am: string | null
-  erledigt_grund: 'beantwortet' | 'hand' | 'automatisch' | null
+  erledigt_grund: 'beantwortet' | 'hand' | 'automatisch' | 'archiv' | null
   reaktion_minuten: number | null
   zustaendig_id: string | null
   zustaendig: string | null
@@ -97,6 +98,17 @@ export interface PosteingangRegeln {
   vertretung?: Record<string, string>
   /** Kürzel, die bei doppelter Frist die Glocke bekommen; leer = Administration. */
   eskalation?: string[]
+  /** Wie viele Monate ältere Mails nachgeholt werden (0 = keine). */
+  nachholen_monate?: number
+}
+
+/** Stand des Nachholens je Postfach und Ordner (posteingang_nachholen_uebersicht). */
+export interface NachholenStand {
+  postfach: string
+  ordner: 'inbox' | 'sentitems'
+  bis: string
+  anzahl: number
+  fertig: boolean
 }
 
 /** Person zur Auswahl (Zuständig, Weitergeben). */

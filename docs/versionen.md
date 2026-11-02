@@ -5,6 +5,12 @@ Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nic
 Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
 veröffentlichen» starten (docs/installation.md).
 
+## 1.0.1
+
+- Desktop-App: Die Seite lässt sich nicht mehr unter den Rahmen ins Leere scrollen; es scrollt nur noch der Inhalt.
+- Anmeldung: Beispiel-Adresse heisst jetzt vorname@dimension-solaire.ch.
+- App-Symbol: auf dem Handy ganz orange bis an den Rand (keine schwarzen Ecken mehr), unter Windows abgerundet und in der Taskleiste scharf.
+
 ## 1.0.0
 
 - Start von Dimension Work für das ganze Team: Kunden, Anfragen, Offerten, Projekte, Baustelle, Rechnungen und alles Weitere an einem Ort, am PC und am Handy.

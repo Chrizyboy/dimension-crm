@@ -43,7 +43,7 @@ export default defineConfig({
     VitePWA({
       disable: isTauri,
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg', 'logo/*.png'],
+      includeAssets: ['icon.svg', 'apple-touch-icon.png', 'logo/*.png'],
       // Die Download-Seite ist eine eigene Seite, nicht die App: der Service Worker darf sie nicht
       // durch die App ersetzen, sonst sieht man dort nach einem Besuch der Web-App nur noch das CRM.
       workbox: { navigateFallbackDenylist: [/\/download\//] },
@@ -57,8 +57,8 @@ export default defineConfig({
         display: 'standalone',
         start_url: './',
         icons: [
-          { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
           { src: 'icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },

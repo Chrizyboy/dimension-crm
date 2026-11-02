@@ -6125,7 +6125,8 @@
       "neu": "Tous ouverts",
       "meine": "Les miens",
       "erledigt": "Terminés",
-      "abgelegt": "Publicité & interne"
+      "abgelegt": "Publicité & interne",
+      "aeltere": "Plus anciens"
     },
     "leer": {
       "warten": "Personne n’attend de réponse",
@@ -6133,7 +6134,8 @@
       "meine": "Rien ne t’est attribué pour l’instant",
       "erledigt": "Rien de terminé ces 14 derniers jours",
       "abgelegt": "Rien de classé",
-      "text": "Les nouveaux e-mails arrivent d’Outlook toutes les 5 minutes. « Relever maintenant » les récupère tout de suite."
+      "text": "Les nouveaux e-mails arrivent d’Outlook toutes les 5 minutes. « Relever maintenant » les récupère tout de suite.",
+      "aeltere": "Aucun e-mail plus ancien trouvé"
     },
     "art": {
       "anfrage": "Nouvelle demande",
@@ -6173,7 +6175,8 @@
       "erledigt": "terminé",
       "abgelegt": "classé",
       "neu": "en cours de tri",
-      "info": "pour info"
+      "info": "pour info",
+      "archiv": "ancien, repris"
     },
     "zahl": {
       "warten_one": "client attend une réponse",
@@ -6271,6 +6274,17 @@
       "laedt": "Chargement de l’e-mail …",
       "fehlt": "Cet e-mail n’existe plus.",
       "verknuepft": "Lié à l’e-mail dans la boîte de réception"
+    },
+    "suche": "Chercher dans les anciens e-mails",
+    "nachholen": {
+      "titel": "Anciens e-mails",
+      "hinweis": "Les anciens e-mails de chaque boîte personnelle (dès que la personne a connecté Microsoft) et d’info@ sont repris en arrière-plan, comme «traités» sans délai. Ils ne comptent ni dans «Attend une réponse» ni dans le temps de réaction. Les e-mails avec des clients vont aussi dans l’historique client.",
+      "monate": "Mois en arrière",
+      "ungueltig": "Nombre de 0 à 60",
+      "inbox": "Réception",
+      "sentitems": "Envoyés",
+      "fertig": "terminé, {{anzahl}} e-mails",
+      "laeuft": "en cours, jusqu’au {{datum}}, {{anzahl}} e-mails"
     }
   },
   "einfach": {
