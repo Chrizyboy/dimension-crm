@@ -21,7 +21,7 @@ export async function ladeUebersicht(): Promise<Uebersicht> {
 export async function ladeKennzahlen(): Promise<Kennzahl[]> {
   const { data, error } = await db().rpc('automation_kennzahlen')
   if (error) throw error
-  return data as unknown as Kennzahl[]
+  return data
 }
 
 /** Alle geplanten Schritte (ohne Bezug) oder die eines Datensatzes. */
@@ -35,7 +35,7 @@ export async function ladeGeplant(tabelle?: string, id?: string): Promise<Geplan
 export async function ladeAenderungen(id: string): Promise<Aenderung[]> {
   const { data, error } = await db().rpc('automation_aenderungen', { p_id: id })
   if (error) throw error
-  return data as unknown as Aenderung[]
+  return data
 }
 
 /** Neueste Datensätze zur Tabelle des Auslösers (für den Probelauf). */

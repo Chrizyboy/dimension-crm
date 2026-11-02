@@ -1976,7 +1976,15 @@
     "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne.",
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
-    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix)."
+    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "automation_grund_fehlt": "Veuillez indiquer un motif.",
+    "automation_lauf_zu_ende": "Cette exécution est déjà terminée.",
+    "automation_nicht_gestoppt": "Cette exécution n’est pas arrêtée.",
+    "automation_wartet_nicht": "Reporter n’est possible que tant que l’exécution attend ou est arrêtée.",
+    "automation_lauf_offen": "Relancer n’est possible qu’une fois l’exécution terminée.",
+    "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
+    "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
+    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus)."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -4643,7 +4651,9 @@
     "ansicht": {
       "liste": "Automatisations",
       "protokoll": "Journal",
-      "einstellungen": "Paramètres"
+      "einstellungen": "Paramètres",
+      "uebersicht": "Vue d’ensemble",
+      "geplant": "Planifié"
     },
     "aus": "Désactivée",
     "mitFreigabe": "Avec validation",
@@ -4680,7 +4690,11 @@
       "projekt_schritt_erledigt": "Étape de projet terminée",
       "wartung_faellig": "Maintenance due",
       "rechnung_ueberfaellig": "Facture en retard",
-      "zeit_monatlich": "Chaque mois"
+      "zeit_monatlich": "Chaque mois",
+      "lead_ohne_kontakt": "Lead sans contact",
+      "anlage_jahrestag": "Anniversaire de l’installation",
+      "rechnung_bezahlt": "Facture payée",
+      "garantie_laeuft_ab": "La garantie expire"
     },
     "ereignisHilfe": {
       "lead_neu": "Dès qu’un lead est saisi (à la main, site web, téléphone). L’import de l’ancien CRM ne déclenche rien.",
@@ -4693,7 +4707,11 @@
       "projekt_schritt_erledigt": "Quand une étape du planning est terminée (contrat, montage, mise en service …).",
       "wartung_faellig": "Quand la prochaine maintenance entre dans le délai d’avance (paramètres).",
       "rechnung_ueberfaellig": "Quand une facture reste ouverte au-delà du délai de grâce ; ensuite une fois par niveau de rappel.",
-      "zeit_monatlich": "En début de mois, une fois par mois."
+      "zeit_monatlich": "En début de mois, une fois par mois.",
+      "lead_ohne_kontakt": "Quand un lead ouvert reste autant de jours ouvrables sans appel, e-mail ni rendez-vous (règles de protection). Les rappels comptent dès leur date.",
+      "anlage_jahrestag": "Chaque année au jour de la mise en service, une fois par an.",
+      "rechnung_bezahlt": "Quand une facture est entièrement payée (rapprochement AbaNinja ou à la main).",
+      "garantie_laeuft_ab": "Quand la garantie d’une installation entre dans le préavis (règles de protection), une fois par garantie."
     },
     "aktion": {
       "aufgabe": "Créer une tâche",
@@ -4709,7 +4727,9 @@
       "zielgruppe": "Signaler un groupe cible",
       "outlook_termin": "Rendez-vous dans Outlook",
       "sharepoint_ordner": "Dossier SharePoint",
-      "abaninja_kunde": "Client dans AbaNinja"
+      "abaninja_kunde": "Client dans AbaNinja",
+      "wiedervorlage": "Fixer un rappel",
+      "notiz": "Note dans l’historique"
     },
     "aktionKurz": {
       "aufgabe": "Tâche",
@@ -4725,7 +4745,9 @@
       "zielgruppe": "Groupe cible",
       "outlook_termin": "Outlook",
       "sharepoint_ordner": "SharePoint",
-      "abaninja_kunde": "AbaNinja"
+      "abaninja_kunde": "AbaNinja",
+      "wiedervorlage": "Rappel",
+      "notiz": "Note"
     },
     "aktionHilfe": {
       "aufgabe": "La tâche apparaît sous « Tâches » chez la première personne de la liste qui existe.",
@@ -4741,7 +4763,9 @@
       "zielgruppe": "Compte les clients avec ce critère et envoie un lien vers « Écrire aux clients ».",
       "outlook_termin": "Inscrit le rendez-vous dans l’Outlook de la personne responsable (sans invitation au client).",
       "sharepoint_ordner": "Crée le dossier client « K0123 Nom » avec ses sous-dossiers s’il n’existe pas encore.",
-      "abaninja_kunde": "Relie le client à AbaNinja ou l’y crée."
+      "abaninja_kunde": "Relie le client à AbaNinja ou l’y crée.",
+      "wiedervorlage": "Met le lead en rappel ; il réapparaît à la date dans la liste de la vente.",
+      "notiz": "Écrit dans l’historique du client, pour que chacun voie ce qui s’est passé automatiquement."
     },
     "feld": {
       "lead_quelle": "Lead : source",
@@ -4833,7 +4857,23 @@
       "neu_verbinden": "Reconnecter le compte Microsoft",
       "anmeldung": "Connexion au service expirée",
       "bedingungen_ok": "Toutes les conditions sont remplies",
-      "pruefen_ok": "Toujours utile, on continue"
+      "pruefen_ok": "Toujours utile, on continue",
+      "versandfenster": "Attend la plage d’envoi : {{bis}}",
+      "kontakt_pause": "Pause de contact, part le {{bis}}",
+      "naechster_uebersprungen": "Plus nécessaire, étape suivante sautée",
+      "gestoppt": "Arrêté pour ce cas par {{von}} : {{grund}}",
+      "fortgesetzt": "Repris par {{von}}",
+      "verschoben": "Reporté par {{von}} au {{bis}}",
+      "wiedervorlage": "Rappel le {{am}}",
+      "notiz": "Note dans l’historique",
+      "kein_lead": "Pas de lead associé",
+      "probe_versandfenster": "Hors plage d’envoi : part seulement à l’heure indiquée",
+      "probe_keine_mail": "Pas d’adresse e-mail : serait sauté",
+      "probe_kein_telefon": "Pas de numéro de mobile : serait sauté",
+      "probe_werbesperre": "Le client ne veut pas de publicité : serait sauté",
+      "probe_kein_empfaenger": "Personne trouvée pour le recevoir",
+      "probe_abwesend": "La personne est absente ce jour-là (vérifier la suppléance)",
+      "probe_erst_dann": "Sera vérifié seulement à ce moment ; aujourd’hui c’est le cas"
     },
     "empfaenger": {
       "zustaendig": "Personne responsable",
@@ -4872,7 +4912,8 @@
       "fertig": "Terminé",
       "uebersprungen": "Ignoré",
       "fehler": "Erreur",
-      "abgebrochen": "Arrêté"
+      "abgebrochen": "Arrêté",
+      "gestoppt": "Arrêté"
     },
     "ergebnis": {
       "ok": "Fait",
@@ -4883,7 +4924,10 @@
     },
     "schritt": {
       "bedingungen": "Conditions vérifiées",
-      "ende": "Fin"
+      "ende": "Fin",
+      "gestoppt": "Arrêté",
+      "fortgesetzt": "Repris",
+      "verschoben": "Reporté"
     },
     "editor": {
       "beschreibung": "Quand … (déclencheur), seulement si … (conditions), alors … (actions dans l’ordre).",
@@ -4927,7 +4971,19 @@
       "modus": "Ce qui part à l’extérieur",
       "aktiv": "Activée",
       "weg": "Mettre à la corbeille",
-      "wirklichWeg": "Vraiment à la corbeille ?"
+      "wirklichWeg": "Vraiment à la corbeille ?",
+      "arbeitstage": "En jours ouvrables (sans week-end ni jours fériés)",
+      "ersatzMail": "Sans adresse e-mail : tâche d’appel au lieu de l’e-mail",
+      "ersatzSms": "Sans numéro de mobile : tâche d’appel au lieu du SMS",
+      "sonstWas": "Si plus nécessaire",
+      "sonstArt": {
+        "ende": "Terminer l’exécution",
+        "ueberspringen": "Sauter seulement l’étape suivante"
+      },
+      "schutz": "Protection des clients",
+      "probelauf": "Essai",
+      "aenderungen": "Modifications",
+      "duplizieren": "Dupliquer"
     },
     "protokoll": {
       "zeit": "Démarré",
@@ -4943,7 +4999,8 @@
         "offen": "En cours",
         "fertig": "Terminées",
         "uebersprungen": "Ignorées",
-        "fehler": "Erreurs"
+        "fehler": "Erreurs",
+        "gestoppt": "Arrêtés"
       },
       "leerTitel": "Aucune exécution",
       "leerText": "Dès que quelque chose se passe, chaque exécution apparaît ici avec ses étapes.",
@@ -4963,6 +5020,173 @@
       "bewertung_link": "Lien pour les avis",
       "bewertung_link_hilfe": "P. ex. avis Google ; apparaît dans la variable {Bewertungslink}.",
       "linkFalsch": "Merci de saisir une adresse avec https://."
+    },
+    "bereich": {
+      "verkauf": "Vente",
+      "offerten": "Offres",
+      "projekte": "Projets",
+      "service": "Service et installations",
+      "finanzen": "Finances",
+      "marketing": "Marketing et autres"
+    },
+    "liste": {
+      "suche": "Rechercher une automatisation",
+      "filterTitel": "Filtrer les automatisations",
+      "keine": "Aucune automatisation ne correspond au filtre.",
+      "zuletzt": "dernière {{zeit}}",
+      "filter": {
+        "alle": "Toutes",
+        "aktiv": "Activées",
+        "aus": "Désactivées",
+        "fehler": "Avec erreurs",
+        "aussen": "Va aux clients"
+      }
+    },
+    "uebersicht": {
+      "motorOk": "Le moteur tourne",
+      "motorStill": "Le moteur est arrêté",
+      "motorZuletzt": "dernière fois {{zeit}}",
+      "motorNie": "jamais exécuté",
+      "aktivVon": "{{aktiv}} sur {{alle}} activées",
+      "wartend_one": "{{count}} exécution en attente",
+      "wartend_other": "{{count}} exécutions en attente",
+      "erledigt": "Fait cette semaine",
+      "gespart": "env. {{dauer}} de travail manuel économisé",
+      "wirkung": {
+        "aufgabe_one": "{{count}} tâche",
+        "aufgabe_other": "{{count}} tâches",
+        "mail_one": "{{count}} e-mail",
+        "mail_other": "{{count}} e-mails",
+        "sms_one": "{{count}} SMS",
+        "sms_other": "{{count}} SMS",
+        "benachrichtigt_one": "{{count}} notification",
+        "benachrichtigt_other": "{{count}} notifications",
+        "rechnung_entwurf_one": "{{count}} projet de facture",
+        "rechnung_entwurf_other": "{{count}} projets de facture",
+        "wiedervorlage_one": "{{count}} rappel",
+        "wiedervorlage_other": "{{count}} rappels"
+      },
+      "mailsWartend": "En attente de validation",
+      "mailsAlt_one": "{{count}} attend depuis plus de 2 jours",
+      "mailsAlt_other": "{{count}} attendent depuis plus de 2 jours",
+      "mailsFreigegeben_one": "{{count}} validé cette semaine",
+      "mailsFreigegeben_other": "{{count}} validés cette semaine",
+      "zumAusgang": "Vers la corbeille de sortie",
+      "rechnungen": "Projets de facture ouverts",
+      "rechnungenHilfe": "préparés par les automatisations, pas encore émis",
+      "probleme": "Problèmes (7 jours)",
+      "vorwoche_one": "Semaine précédente {{count}}",
+      "vorwoche_other": "Semaine précédente {{count}}",
+      "zumProtokoll": "Vers le journal",
+      "aufmerksamkeit": "Demande de l’attention",
+      "siebenTage": "7 derniers jours",
+      "allesGut": "Tout est en ordre : aucune erreur ni adresse manquante.",
+      "beheben": "Corriger",
+      "wiederholen": "Relancer",
+      "naechste": "Prochaines 24 heures",
+      "alleGeplant": "Tout le planifié",
+      "nichtsGeplant": "Rien de planifié dans les prochaines 24 heures.",
+      "ausgeschaltet": "Désactivées",
+      "ausVon": "par {{von}}, {{zeit}}",
+      "ausSeit": "depuis {{zeit}}"
+    },
+    "geplant": {
+      "wann": "Quand",
+      "fuer": "Pour",
+      "knoepfe": "Actions",
+      "suche": "Rechercher client, offre, texte",
+      "filterTitel": "Filtrer le planifié",
+      "leerTitel": "Rien de planifié",
+      "leerText": "Dès qu’une automatisation attend, vous voyez ici ce qu’elle fera ensuite.",
+      "filter": {
+        "alle": "Tout",
+        "heute": "Aujourd’hui",
+        "woche": "7 jours",
+        "aussen": "Aux clients",
+        "gestoppt": "Arrêtés"
+      }
+    },
+    "lesesatz": {
+      "wenn": "Si « {{ausloeser}} »",
+      "bedingungen_one": "et {{count}} condition est remplie",
+      "bedingungen_other": "et {{count}} conditions sont remplies",
+      "sofort": "{{was}} immédiatement",
+      "nachTagen_one": "{{was}} après {{count}} jour",
+      "nachTagen_other": "{{was}} après {{count}} jours",
+      "nachArbeitstagen_one": "{{was}} après {{count}} jour ouvrable",
+      "nachArbeitstagen_other": "{{was}} après {{count}} jours ouvrables",
+      "freigabe": "Les e-mails et SMS attendent une validation.",
+      "automatisch": "Les e-mails et SMS partent sans clic.",
+      "fenster": "Messages aux clients seulement dans la plage d’envoi."
+    },
+    "probe": {
+      "datensatz": "Enregistrement pour l’essai",
+      "keinDatensatz": "Aucun enregistrement",
+      "starten": "Essai",
+      "hinweis": "Calcule l’automatisation pour cet enregistrement, telle qu’elle est dans l’éditeur. Rien n’est créé ni envoyé.",
+      "ohneTabelle": "Ce déclencheur n’a pas d’enregistrement, un essai n’est pas possible.",
+      "an": "à {{an}}",
+      "personen": "pour {{personen}}",
+      "faellig": "échéance le {{am}}"
+    },
+    "schutz": {
+      "titel": "Protection des clients",
+      "text": "S’applique à toutes les automatisations qui envoient des e-mails ou SMS aux clients. Une automatisation peut le régler autrement dans l’éditeur.",
+      "fenster": "Plage d’envoi",
+      "von": "De",
+      "bis": "À",
+      "zeitFalsch": "« À » doit être après « De ».",
+      "fensterHilfe": "En dehors, le message attend le prochain moment autorisé. Le SMS la veille d’un rendez-vous est exclu.",
+      "tag": {
+        "1": "Lu",
+        "2": "Ma",
+        "3": "Me",
+        "4": "Je",
+        "5": "Ve",
+        "6": "Sa",
+        "7": "Di"
+      },
+      "kontakt_pause_tage": "Pause de contact (jours)",
+      "kontakt_pause_tage_hilfe": "Au plus un message automatique par client pendant autant de jours. Les rappels de paiement ne comptent pas.",
+      "lead_ohne_kontakt_tage": "Lead sans contact après (jours ouvrables)",
+      "lead_ohne_kontakt_tage_hilfe": "Déclencheur « Lead sans contact » : aussi longtemps sans appel, e-mail ni rendez-vous.",
+      "garantie_vorlauf_tage": "Garantie : préavis (jours)",
+      "garantie_vorlauf_tage_hilfe": "Autant de jours avant la fin de la garantie, « La garantie expire » se déclenche.",
+      "feiertage": "Jours fériés",
+      "feiertageHilfe_one": "{{count}} jour férié, une date par ligne (p. ex. 25.12.2026). Ne compte pas comme jour ouvrable.",
+      "feiertageHilfe_other": "{{count}} jours fériés, une date par ligne (p. ex. 25.12.2026). Ne comptent pas comme jours ouvrables.",
+      "feiertageFalsch": "Illisible : {{liste}}",
+      "jeAutomation": "Standard des règles de protection (paramètres) ou à tout moment.",
+      "wahl": {
+        "standard": "Comme dans les règles de protection",
+        "immer": "Envoyer à tout moment"
+      },
+      "pauseLeer": "Vide = comme dans les règles de protection, 0 = pas de pause."
+    },
+    "aenderungen": {
+      "keine": "Aucune modification pour l’instant.",
+      "aktion": {
+        "erstellt": "créée",
+        "geaendert": "modifiée",
+        "geloescht": "supprimée",
+        "papierkorb": "mise à la corbeille",
+        "wiederhergestellt": "restaurée"
+      },
+      "feld": {
+        "aktiv": "activée/désactivée",
+        "modus": "Mode",
+        "aktionen": "Actions",
+        "bedingungen": "Conditions",
+        "ausloeser": "Déclencheur",
+        "name_de": "Nom DE",
+        "name_fr": "Nom",
+        "beschreibung_de": "Description DE",
+        "beschreibung_fr": "Description",
+        "versandfenster": "Plage d’envoi",
+        "kontakt_pause_tage": "Pause de contact",
+        "reihenfolge": "Ordre",
+        "geloescht_am": "Corbeille"
+      }
     }
   },
   "aufgaben": {
@@ -6620,5 +6844,38 @@
     "stellvertretung": "Remplacement en cas d'absence",
     "stellvertretungHinweis": "S'applique quand quelqu'un est inscrit dans les absences (vacances, maladie …).",
     "vertretungFuer": "Remplaçant de {{name}}"
+  },
+  "automatik": {
+    "titel": "Planifié automatiquement",
+    "anzahl_one": "{{count}} étape",
+    "anzahl_other": "{{count}} étapes",
+    "hinweis": "Le client a déjà appelé ? Arrêter ou reporter ici pour ce cas.",
+    "schrittVon": "Étape {{schritt}} sur {{schritte}}",
+    "gestopptAm": "En pause",
+    "grundIst": "Motif : {{grund}}",
+    "plus7": "+7 jours",
+    "jetzt": "Maintenant",
+    "stoppenKurz": "Arrêter",
+    "stoppen": "Arrêter pour ce cas",
+    "stoppenFall": "Arrêter pour ce cas",
+    "stoppenTitel": "Arrêter « {{name}} »",
+    "stoppenText": "Uniquement pour cet enregistrement. L’automatisation continue pour tous les autres. Reprise possible à tout moment.",
+    "grund": "Motif",
+    "grundHinweis": "Figure dans l’historique du client, pour que chacun sache pourquoi plus rien n’arrive.",
+    "grundBeispiel": "p. ex. le client se manifeste lui-même après les vacances",
+    "fortsetzen": "Reprendre",
+    "gestoppt": "Arrêté pour ce cas",
+    "fortgesetzt": "Reprend",
+    "verschoben_one": "Reporté de {{count}} jour",
+    "verschoben_other": "Reporté de {{count}} jours",
+    "jetztOk": "S’exécute dans la minute (la plage d’envoi reste valable)",
+    "fehler": "Cela n’a pas fonctionné. Veuillez réessayer.",
+    "warum": "Pourquoi ?",
+    "warumTitel": "D’où vient cette tâche ?",
+    "warumSatz": "L’automatisation « {{name}} » l’a créée, déclenchée par « {{ausloeser}} » le {{zeit}}.",
+    "fuer": "Pour :",
+    "datensatzOeffnen": "Ouvrir l’enregistrement",
+    "warumHinweis": "Si la règle ne convient pas en général, signalez-le à l’administration. Elle peut adapter l’automatisation.",
+    "warumUnbekannt": "Cette tâche ne provient pas d’une automatisation que vous pouvez voir."
   }
 }

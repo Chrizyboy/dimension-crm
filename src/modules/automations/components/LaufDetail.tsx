@@ -25,7 +25,7 @@ const ERGEBNIS_TON = {
 
 function symbol(art: string): LucideIcon {
   if (art === 'bedingungen') return ListChecks
-  if (art === 'ende') return CircleStop
+  if (art === 'ende' || art === 'gestoppt') return CircleStop
   return (AKTION_ICON as Partial<Record<string, LucideIcon>>)[art] ?? Play
 }
 
@@ -47,7 +47,7 @@ export function LaufDetail({
   const letzter = new Map(lauf.protokoll.map((e) => [e.nr, e]))
   const bezug = zielVon(lauf.tabelle, lauf.bezug_id)
   const artText = (e: ProtokollEintrag) =>
-    e.art === 'bedingungen' || e.art === 'ende'
+    ['bedingungen', 'ende', 'gestoppt', 'fortgesetzt', 'verschoben'].includes(e.art)
       ? t(`automationen.schritt.${e.art}`)
       : t(`automationen.aktion.${e.art}`, { defaultValue: e.art })
   return (

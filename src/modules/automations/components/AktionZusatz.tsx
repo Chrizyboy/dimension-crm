@@ -22,10 +22,11 @@ export function AktionZusatz({
 }) {
   const { t } = useTranslation()
   const schalte = (k: 'arbeitstage' | 'ersatz_aufgabe', an: boolean) => {
+    // Feld weglassen statt «false» speichern, damit gespeicherte Automationen schlank bleiben.
     const neu: Aktion = { ...a }
-    if (an) neu[k] = true
-    else delete neu[k]
-    onChange(neu)
+    if (k === 'arbeitstage') delete neu.arbeitstage
+    else delete neu.ersatz_aufgabe
+    onChange(an ? { ...neu, [k]: true } : neu)
   }
   return (
     <>
