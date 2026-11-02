@@ -54,7 +54,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             id="inhalt"
             tabIndex={-1}
             className={cn(
-              'min-h-0 flex-1 overflow-y-auto outline-none',
+              // relative: Absolut platzierte Elemente (z. B. sr-only-Texte) bleiben im Scrollbereich,
+              // sonst verlängern sie die ganze Seite und das Fenster scrollt mit.
+              'relative min-h-0 flex-1 overflow-y-auto outline-none',
               einfach
                 ? 'pb-[env(safe-area-inset-bottom,0px)]'
                 : 'pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] md:pb-0',
