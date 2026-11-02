@@ -5450,6 +5450,7 @@ export type Database = {
           geloescht_am: string | null
           id: string
           kuerzel: string
+          kurzzeichen: string | null
           name: string
           profil: NonNullable<Json>
           rechte: string[]
@@ -5474,6 +5475,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           kuerzel: string
+          kurzzeichen?: string | null
           name: string
           profil?: NonNullable<Json>
           rechte?: string[]
@@ -5497,6 +5499,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           kuerzel?: string
+          kurzzeichen?: string | null
           name?: string
           profil?: NonNullable<Json>
           rechte?: string[]
