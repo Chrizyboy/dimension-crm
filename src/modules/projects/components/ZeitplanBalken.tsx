@@ -9,12 +9,13 @@ import { konfliktText, type BalkenArt, type PlanBalken } from '../lib/zeitplanAn
 /** Höhe einer Spur in Pixel (Balken 28 px + Abstand), gilt auch für die Zeilenhöhe im Raster. */
 export const SPUR = 34
 
-/** Farben je Art: intern dunkelblau, extern orange, voraussichtlich gestrichelt, abwesend schraffiert. */
+/** Farben je Art: intern dunkelblau, extern orange, voraussichtlich gestrichelt, abwesend schraffiert, Service blau umrandet. */
 const FARBE: Record<BalkenArt, string> = {
   intern: 'bg-primary text-primary-foreground',
   extern: 'bg-accent text-accent-foreground',
   geplant: 'border-primary text-foreground border border-dashed bg-surface',
   abwesend: 'bg-muted text-muted-foreground schraffur',
+  service: 'bg-info-soft text-info border border-info',
 }
 
 /**

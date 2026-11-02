@@ -2578,7 +2578,8 @@
     "einsatz": {
       "intern": "Intern",
       "extern": "Extern",
-      "geplant": "Voraussichtlich"
+      "geplant": "Voraussichtlich",
+      "service": "Service"
     },
     "stand": {
       "offen": "Offen",
@@ -2745,7 +2746,9 @@
       "subunternehmer": "Subunternehmer",
       "grund_abwesend": "{{wer}} abwesend",
       "grund_doppelt": "{{wer}} doppelt eingeplant",
-      "abwesendAm": "Abwesend: {{namen}}"
+      "abwesendAm": "Abwesend: {{namen}}",
+      "service": "Service-Einsätze",
+      "serviceUnter": "aus Service & Garantie"
     },
     "bewilligungen": {
       "ansicht": "Ansicht",

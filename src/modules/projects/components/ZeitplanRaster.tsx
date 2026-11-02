@@ -147,7 +147,9 @@ export function ZeitplanRaster({
                       tage={tage}
                       ziehbar={Boolean(b.einsatz && b.projekt?.bau_status && b.projekt.bau_status !== 'fertig')}
                       onOeffnen={(x) => {
-                        if (x.projekt) onOeffnen(x.projekt)
+                        // Service-Termine öffnen den Fall in «Service & Garantie» (dort wird auch geplant).
+                        if (x.service) window.location.hash = `#/aftersales?fall=${x.service.id}`
+                        else if (x.projekt) onOeffnen(x.projekt)
                       }}
                       onZiehen={onZiehen}
                     />

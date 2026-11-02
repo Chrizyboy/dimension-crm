@@ -2578,7 +2578,8 @@
     "einsatz": {
       "intern": "Interne",
       "extern": "Externe",
-      "geplant": "Prévisionnel"
+      "geplant": "Prévisionnel",
+      "service": "Service"
     },
     "stand": {
       "offen": "Ouvert",
@@ -2745,7 +2746,9 @@
       "subunternehmer": "Sous-traitants",
       "grund_abwesend": "{{wer}} absent",
       "grund_doppelt": "{{wer}} planifié deux fois",
-      "abwesendAm": "Absents : {{namen}}"
+      "abwesendAm": "Absents : {{namen}}",
+      "service": "Interventions de service",
+      "serviceUnter": "depuis Service & garantie"
     },
     "bewilligungen": {
       "ansicht": "Vue",
