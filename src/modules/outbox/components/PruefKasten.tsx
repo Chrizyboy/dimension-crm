@@ -46,7 +46,10 @@ export function PruefKasten({
               const Icon = STUFE_ICON[p.stufe]
               return (
                 <li key={p.code} className="grid grid-cols-[1rem_minmax(0,1fr)] gap-2">
-                  <Icon className={`${STUFE_FARBE[p.stufe]} mt-0.5 size-4`} aria-label={t(`ausgang.stufe.${p.stufe}`)} />
+                  <Icon
+                    className={`${STUFE_FARBE[p.stufe]} mt-0.5 size-4`}
+                    aria-label={t(`ausgang.stufe.${p.stufe}`)}
+                  />
                   <span>{t(`ausgang.pruefung.${p.code}`, { wert: wertText(p, t) })}</span>
                 </li>
               )
@@ -85,7 +88,9 @@ export function PruefKasten({
               <Zeile label={t('ausgang.bezug.rechnung')} href={`#/invoices?rechnung=${k.rechnung.id}`}>
                 {k.rechnung.nummer}
                 {k.rechnung.total_rappen !== null ? ` · ${formatChf(k.rechnung.total_rappen)}` : ''}
-                {k.rechnung.faellig_am ? ` · ${t('ausgang.faellig', { datum: formatDatum(k.rechnung.faellig_am) })}` : ''}
+                {k.rechnung.faellig_am
+                  ? ` · ${t('ausgang.faellig', { datum: formatDatum(k.rechnung.faellig_am) })}`
+                  : ''}
               </Zeile>
             )}
           </dl>
@@ -102,7 +107,9 @@ export function PruefKasten({
             {k.verlauf.map((v, i) => (
               <li key={i} className="flex justify-between gap-2">
                 <span className="min-w-0">
-                  <span className="text-muted-foreground">{v.richtung === 'ein' ? '↩ ' : v.richtung === 'aus' ? '→ ' : '· '}</span>
+                  <span className="text-muted-foreground">
+                    {v.richtung === 'ein' ? '↩ ' : v.richtung === 'aus' ? '→ ' : '· '}
+                  </span>
                   {v.text || t(`ausgang.verlaufArt.${v.art}`, { defaultValue: v.art })}
                   {v.person ? <span className="text-muted-foreground"> · {v.person}</span> : null}
                 </span>

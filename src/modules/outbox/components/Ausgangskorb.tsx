@@ -46,7 +46,8 @@ export default function Ausgangskorb({
   const alle = useMemo(() => liste.data ?? [], [liste.data])
   const zaehler = useMemo(() => {
     const z: Partial<Record<AusgangOrdner, number>> = {}
-    for (const o of AUSGANG_ORDNER) if (o !== 'gesendet' && o !== 'verworfen') z[o] = alle.filter((e) => imOrdner(e, o)).length
+    for (const o of AUSGANG_ORDNER)
+      if (o !== 'gesendet' && o !== 'verworfen') z[o] = alle.filter((e) => imOrdner(e, o)).length
     return z
   }, [alle])
   const sichtbar = useMemo(() => {
@@ -66,8 +67,22 @@ export default function Ausgangskorb({
     const n = reihenfolge[Math.min(reihenfolge.length - 1, Math.max(0, i + schritt))] ?? reihenfolge[0]
     if (n) onNavigation({ eintrag: n.id })
   }
-  useTaste('j', () => { blaettern(1) }, true, t('ausgang.kuerzel.naechste'))
-  useTaste('k', () => { blaettern(-1) }, true, t('ausgang.kuerzel.vorige'))
+  useTaste(
+    'j',
+    () => {
+      blaettern(1)
+    },
+    true,
+    t('ausgang.kuerzel.naechste'),
+  )
+  useTaste(
+    'k',
+    () => {
+      blaettern(-1)
+    },
+    true,
+    t('ausgang.kuerzel.vorige'),
+  )
 
   if (!supabase) {
     return (
@@ -92,7 +107,9 @@ export default function Ausgangskorb({
     }
   }
 
-  const schliessen = () => { onNavigation({ eintrag: null }) }
+  const schliessen = () => {
+    onNavigation({ eintrag: null })
+  }
   const detail = offen && <AusgangDetail key={offen.id} eintrag={offen} onSchliessen={schliessen} imPanel={!breit} />
 
   return (
@@ -135,12 +152,24 @@ export default function Ausgangskorb({
               <AuswahlLeiste
                 auswahl={auswahl}
                 laeuft={laeuft}
-                onLeeren={() => { setGewaehlt(new Set()) }}
+                onLeeren={() => {
+                  setGewaehlt(new Set())
+                }}
                 onFreigeben={(sendeAb) => {
-                  void freigebenUndSenden(auswahl.filter((e) => e.darf_freigeben).map((e) => e.id), sendeAb).then(() => { setGewaehlt(new Set()) })
+                  void freigebenUndSenden(
+                    auswahl.filter((e) => e.darf_freigeben).map((e) => e.id),
+                    sendeAb,
+                  ).then(() => {
+                    setGewaehlt(new Set())
+                  })
                 }}
                 onVerwerfen={(grund) => {
-                  void verwerfenMehrere(auswahl.map((e) => e.id), grund).then(() => { setGewaehlt(new Set()) })
+                  void verwerfenMehrere(
+                    auswahl.map((e) => e.id),
+                    grund,
+                  ).then(() => {
+                    setGewaehlt(new Set())
+                  })
                 }}
               />
             )}
@@ -157,7 +186,9 @@ export default function Ausgangskorb({
                 gruppen={gruppen}
                 aktiveId={offenId}
                 gewaehlt={gewaehlt}
-                onOeffnen={(id) => { onNavigation({ eintrag: id }) }}
+                onOeffnen={(id) => {
+                  onNavigation({ eintrag: id })
+                }}
                 onWahl={(ids, an) => {
                   const n = new Set(gewaehlt)
                   ids.forEach((id) => (an ? n.add(id) : n.delete(id)))
@@ -170,14 +201,29 @@ export default function Ausgangskorb({
         {breit && (
           <section className="hidden min-w-0 flex-col xl:flex" aria-live="polite">
             {detail || (
-              <Leerzustand icon={Send} titel={t('ausgang.nichtsOffen')} text={t('ausgang.nichtsOffenText')} className="m-auto" />
+              <Leerzustand
+                icon={Send}
+                titel={t('ausgang.nichtsOffen')}
+                text={t('ausgang.nichtsOffenText')}
+                className="m-auto"
+              />
             )}
           </section>
         )}
       </div>
       {!breit && offen && (
-        <Dialog open onOpenChange={(o) => { if (!o) schliessen() }}>
-          <DialogInhalt art="seite" breite="breit" titel={t(`ausgang.titel${offen.kanal === 'sms' ? 'Sms' : offen.kanal === 'brief' ? 'Brief' : 'Mail'}`)} className="[&>div:nth-of-type(2)]:p-0">
+        <Dialog
+          open
+          onOpenChange={(o) => {
+            if (!o) schliessen()
+          }}
+        >
+          <DialogInhalt
+            art="seite"
+            breite="breit"
+            titel={t(`ausgang.titel${offen.kanal === 'sms' ? 'Sms' : offen.kanal === 'brief' ? 'Brief' : 'Mail'}`)}
+            className="[&>div:nth-of-type(2)]:p-0"
+          >
             {detail}
           </DialogInhalt>
         </Dialog>

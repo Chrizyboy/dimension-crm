@@ -9,12 +9,6 @@ import { supabase } from '@/services/supabase'
 import type { AusgangAenderung } from '../schema'
 import type { AusgangEintrag } from '../types'
 
-/** HTML einer Mail als reiner Text (nie als HTML anzeigen: fremde Inhalte sind Daten). */
-export function alsText(html: string): string {
-  const d = new DOMParser().parseFromString(html.replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>/gi, '\n\n'), 'text/html')
-  return d.body.textContent.trim()
-}
-
 /** Anhang in neuem Fenster öffnen (SharePoint oder kurzlebiger Link auf den Speicher). */
 async function anhangOeffnen(id: string) {
   try {
@@ -49,21 +43,51 @@ export function MailInhalt({
     <div className="flex min-w-0 flex-col gap-3">
       {bearbeiten ? (
         <div className="flex flex-col gap-3">
-          <Feld id="ausgang-an" label={e.kanal === 'brief' ? t('ausgang.postadresse') : t('ausgang.an')} fehler={fehler.an} pflicht>
+          <Feld
+            id="ausgang-an"
+            label={e.kanal === 'brief' ? t('ausgang.postadresse') : t('ausgang.an')}
+            fehler={fehler.an}
+            pflicht
+          >
             {e.kanal === 'brief' ? (
-              <Textarea id="ausgang-an" rows={4} value={w.an} onChange={(x) => { onAenderung({ ...w, an: x.target.value }) }} />
+              <Textarea
+                id="ausgang-an"
+                rows={4}
+                value={w.an}
+                onChange={(x) => {
+                  onAenderung({ ...w, an: x.target.value })
+                }}
+              />
             ) : (
-              <Input id="ausgang-an" value={w.an} onChange={(x) => { onAenderung({ ...w, an: x.target.value }) }} />
+              <Input
+                id="ausgang-an"
+                value={w.an}
+                onChange={(x) => {
+                  onAenderung({ ...w, an: x.target.value })
+                }}
+              />
             )}
           </Feld>
           {e.kanal === 'mail' && (
             <Feld id="ausgang-cc" label={t('ausgang.cc')}>
-              <Input id="ausgang-cc" value={w.cc} onChange={(x) => { onAenderung({ ...w, cc: x.target.value }) }} />
+              <Input
+                id="ausgang-cc"
+                value={w.cc}
+                onChange={(x) => {
+                  onAenderung({ ...w, cc: x.target.value })
+                }}
+              />
             </Feld>
           )}
           {e.kanal !== 'sms' && (
             <Feld id="ausgang-betreff" label={t('ausgang.betreff')} fehler={fehler.betreff} pflicht>
-              <Input id="ausgang-betreff" value={w.betreff} onChange={(x) => { onAenderung({ ...w, betreff: x.target.value }) }} />
+              <Input
+                id="ausgang-betreff"
+                value={w.betreff}
+                onChange={(x) => {
+                  onAenderung({ ...w, betreff: x.target.value })
+                }}
+              />
             </Feld>
           )}
           <Feld id="ausgang-text" label={t('ausgang.text')} fehler={fehler.text} pflicht={e.kanal !== 'brief'}>
@@ -78,14 +102,22 @@ export function MailInhalt({
           </Feld>
           {e.kanal === 'sms' && (
             <p className="text-muted-foreground text-xs">
-              {t('ausgang.zeichen', { count: w.text.length })} · {t('ausgang.smsTeile', { count: Math.max(1, Math.ceil(w.text.length / 153)) })}
+              {t('ausgang.zeichen', { count: w.text.length })} ·{' '}
+              {t('ausgang.smsTeile', { count: Math.max(1, Math.ceil(w.text.length / 153)) })}
             </p>
           )}
           {e.ki_status === 'fertig' && e.ki_auftrag?.vorlage_text && (
             <details className="text-xs">
               <summary className="text-muted-foreground cursor-pointer">{t('ki.ausgang.vorlageZeigen')}</summary>
               <p className="bg-muted/60 mt-2 rounded-md p-3 whitespace-pre-wrap">{e.ki_auftrag.vorlage_text}</p>
-              <Button size="sm" variant="ghost" className="mt-1" onClick={() => { onAenderung({ ...w, text: e.ki_auftrag?.vorlage_text ?? w.text }) }}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="mt-1"
+                onClick={() => {
+                  onAenderung({ ...w, text: e.ki_auftrag?.vorlage_text ?? w.text })
+                }}
+              >
                 {t('ki.ausgang.vorlageNehmen')}
               </Button>
             </details>
@@ -100,7 +132,9 @@ export function MailInhalt({
                 <dd className="break-words">{e.absender ?? t('ausgang.system')}</dd>
               </>
             )}
-            <dt className="text-muted-foreground">{e.kanal === 'brief' ? t('ausgang.postadresse') : t('ausgang.an')}</dt>
+            <dt className="text-muted-foreground">
+              {e.kanal === 'brief' ? t('ausgang.postadresse') : t('ausgang.an')}
+            </dt>
             <dd className="break-words whitespace-pre-line">{w.an}</dd>
             {w.cc && (
               <>

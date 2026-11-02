@@ -26,7 +26,9 @@ export function FehlerLoesung({
   const loesung = fehlerLoesung(e)
   return (
     <div role="alert" className="bg-bad-soft flex flex-col gap-2 rounded-lg p-3 text-sm">
-      <p className="text-bad font-semibold">{e.fehler ? fehlerText(new Error(e.fehler)) : t('ausgang.status.fehler')}</p>
+      <p className="text-bad font-semibold">
+        {e.fehler ? fehlerText(new Error(e.fehler)) : t('ausgang.status.fehler')}
+      </p>
       <p>{t(`ausgang.loesung.${loesung}`, { name: e.absender ?? '' })}</p>
       <div className="flex flex-wrap gap-2">
         {loesung === 'outlook' && (

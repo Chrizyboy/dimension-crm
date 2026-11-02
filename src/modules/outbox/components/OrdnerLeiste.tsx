@@ -17,7 +17,11 @@ const ICON: Record<AusgangOrdner, LucideIcon> = {
 }
 
 /** Wo die Trennlinie mit Überschrift steht (Zu tun, Unterwegs, Archiv). */
-const ABSCHNITT: Partial<Record<AusgangOrdner, string>> = { fuer_mich: 'zuTun', geplant: 'unterwegs', gesendet: 'archiv' }
+const ABSCHNITT: Partial<Record<AusgangOrdner, string>> = {
+  fuer_mich: 'zuTun',
+  geplant: 'unterwegs',
+  gesendet: 'archiv',
+}
 
 /**
  * Ordner der Werkbank: links als Liste (PC), am Handy als wischbare Chips. Zähler nur bei offenen Ordnern;
@@ -78,7 +82,11 @@ export function OrdnerLeiste({
                   <span
                     className={cn(
                       'zahlen text-xs',
-                      o === 'fuer_mich' ? 'text-accent-ink font-bold' : o === 'fehler' ? 'text-bad font-bold' : 'text-muted-foreground',
+                      o === 'fuer_mich'
+                        ? 'text-accent-ink font-bold'
+                        : o === 'fehler'
+                          ? 'text-bad font-bold'
+                          : 'text-muted-foreground',
                     )}
                   >
                     {n}

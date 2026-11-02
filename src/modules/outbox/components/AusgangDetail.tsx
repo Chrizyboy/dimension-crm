@@ -9,13 +9,13 @@ import { ausgangJetztSenden } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { useAusgangAkte } from '../hooks/useAusgang'
 import { useAusgangAktionen } from '../hooks/useAusgangAktionen'
-import { STATUS_TON, zeitpunkt } from '../lib/anzeige'
+import { alsText, STATUS_TON, zeitpunkt } from '../lib/anzeige'
 import { aenderungSchema, type AusgangAenderung } from '../schema'
 import { absenderIch, aendern, alsGesendet, ruecklauf, verwerfen, zurueckAn, zurueckholen } from '../services/ausgang'
 import type { AusgangEintrag } from '../types'
 import { DetailFuss } from './DetailFuss'
 import { FehlerLoesung } from './FehlerLoesung'
-import { alsText, MailInhalt } from './MailInhalt'
+import { MailInhalt } from './MailInhalt'
 import { PruefKasten } from './PruefKasten'
 
 /**
@@ -63,15 +63,31 @@ export function AusgangDetail({
     })()
   }
 
-  useTaste('f', () => { senden(null) }, offen && e.darf_freigeben && !laeuft, t('ausgang.kuerzel.freigeben'))
-  useTaste('e', () => { setBearbeiten(true) }, offen && !bearbeiten, t('ausgang.kuerzel.bearbeiten'))
+  useTaste(
+    'f',
+    () => {
+      senden(null)
+    },
+    offen && e.darf_freigeben && !laeuft,
+    t('ausgang.kuerzel.freigeben'),
+  )
+  useTaste(
+    'e',
+    () => {
+      setBearbeiten(true)
+    },
+    offen && !bearbeiten,
+    t('ausgang.kuerzel.bearbeiten'),
+  )
 
   return (
     <article className="flex min-h-0 flex-1 flex-col" aria-label={e.betreff ?? e.an}>
       <header className="flex items-start justify-between gap-3 border-b px-4 py-3">
         <div className="flex min-w-0 flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-1.5">
-            <Badge ton={STATUS_TON[e.status]} punkt>{t(`ausgang.status.${e.status}`)}</Badge>
+            <Badge ton={STATUS_TON[e.status]} punkt>
+              {t(`ausgang.status.${e.status}`)}
+            </Badge>
             <Badge>{t(`ausgang.art.${e.art}`, { defaultValue: e.art })}</Badge>
             {e.automatisch && <Badge ton="info">{t('ausgang.automatisch')}</Badge>}
             {e.ki_status && e.ki_status !== 'uebersprungen' && (
@@ -84,7 +100,8 @@ export function AusgangDetail({
           <h2 className="font-display text-base font-semibold break-words">{e.betreff ?? e.kunde ?? e.an}</h2>
           <p className="text-muted-foreground text-xs">
             {t('ausgang.herkunft', { name: e.vorbereitet_von ?? t('ausgang.system'), zeit: zeitpunkt(e.erstellt_am) })}
-            {e.freigegeben_am && ` · ${t('ausgang.freigegebenVon', { name: e.freigegeben_durch ?? t('ausgang.automatisch'), zeit: zeitpunkt(e.freigegeben_am) })}`}
+            {e.freigegeben_am &&
+              ` · ${t('ausgang.freigegebenVon', { name: e.freigegeben_durch ?? t('ausgang.automatisch'), zeit: zeitpunkt(e.freigegeben_am) })}`}
             {e.gesendet_am && ` · ${t('ausgang.gesendetUm', { zeit: zeitpunkt(e.gesendet_am) })}`}
             {e.sende_ab && e.status !== 'gesendet' && ` · ${t('ausgang.geplantFuer', { zeit: zeitpunkt(e.sende_ab) })}`}
           </p>
@@ -100,16 +117,29 @@ export function AusgangDetail({
         <div className="flex min-w-0 flex-col gap-3">
           {e.zurueck_am && e.status === 'wartet' && (
             <p className="bg-info-soft rounded-lg p-3 text-sm">
-              <span className="font-semibold">{t('ausgang.zurueckVon', { name: e.zurueck_von ?? '' })}:</span> {e.zurueck_notiz}
+              <span className="font-semibold">{t('ausgang.zurueckVon', { name: e.zurueck_von ?? '' })}:</span>{' '}
+              {e.zurueck_notiz}
             </p>
           )}
           {e.status === 'fehler' && (
             <FehlerLoesung
               e={e}
               laeuft={laeuft}
-              onNochmal={() => { senden(null) }}
-              onAlsGesendet={() => void ausfuehren(async () => { await alsGesendet(e.id); melde('ok', { de: 'Als gesendet vermerkt', fr: 'Marqué comme envoyé' }) })}
-              onAbsenderIch={() => void ausfuehren(async () => { await absenderIch(e.id); melde('ok', { de: 'Geht jetzt aus deinem Outlook', fr: 'Part maintenant de ton Outlook' }) })}
+              onNochmal={() => {
+                senden(null)
+              }}
+              onAlsGesendet={() =>
+                void ausfuehren(async () => {
+                  await alsGesendet(e.id)
+                  melde('ok', { de: 'Als gesendet vermerkt', fr: 'Marqué comme envoyé' })
+                })
+              }
+              onAbsenderIch={() =>
+                void ausfuehren(async () => {
+                  await absenderIch(e.id)
+                  melde('ok', { de: 'Geht jetzt aus deinem Outlook', fr: 'Part maintenant de ton Outlook' })
+                })
+              }
             />
           )}
           {e.status === 'verworfen' && (
@@ -117,7 +147,9 @@ export function AusgangDetail({
               {t('ausgang.verworfenVon', { name: e.verworfen_von ?? '–' })}: {e.verworfen_grund ?? '–'}
             </p>
           )}
-          {offen && !e.darf_freigeben && <p className="bg-warn-soft rounded-lg p-3 text-sm">{t('ausgang.keinRecht')}</p>}
+          {offen && !e.darf_freigeben && (
+            <p className="bg-warn-soft rounded-lg p-3 text-sm">{t('ausgang.keinRecht')}</p>
+          )}
           <MailInhalt e={e} w={w} bearbeiten={offen && bearbeiten} fehler={fehler} onAenderung={setW} />
         </div>
         <PruefKasten e={e} pruefungen={akte.pruefungen} kontext={akte.kontext} laedt={akte.laedt} />
@@ -130,47 +162,87 @@ export function AusgangDetail({
             laeuft={laeuft}
             bearbeiten={bearbeiten}
             vorbereitetVon={e.vorbereitet_von}
-            onBearbeiten={() => { setBearbeiten(true) }}
+            onBearbeiten={() => {
+              setBearbeiten(true)
+            }}
             onFreigeben={senden}
-            onVerwerfen={(grund) => void ausfuehren(async () => {
-              await verwerfen(e.id, grund)
-              melde('ok', { de: 'Wird nicht gesendet', fr: 'Ne sera pas envoyé' })
-              onSchliessen()
-            })}
-            onZurueck={(notiz) => void ausfuehren(async () => {
-              await zurueckAn(e.id, notiz)
-              melde('ok', { de: `Zurück an ${e.vorbereitet_von ?? ''}`, fr: `Renvoyé à ${e.vorbereitet_von ?? ''}` })
-              onSchliessen()
-            })}
+            onVerwerfen={(grund) =>
+              void ausfuehren(async () => {
+                await verwerfen(e.id, grund)
+                melde('ok', { de: 'Wird nicht gesendet', fr: 'Ne sera pas envoyé' })
+                onSchliessen()
+              })
+            }
+            onZurueck={(notiz) =>
+              void ausfuehren(async () => {
+                await zurueckAn(e.id, notiz)
+                melde('ok', { de: `Zurück an ${e.vorbereitet_von ?? ''}`, fr: `Renvoyé à ${e.vorbereitet_von ?? ''}` })
+                onSchliessen()
+              })
+            }
           />
         ) : e.status === 'freigegeben' && e.kanal === 'brief' ? (
           <div className="flex justify-end">
-            <Button laedt={laeuft} onClick={() => void ausfuehren(async () => { await alsGesendet(e.id) })}>
+            <Button
+              laedt={laeuft}
+              onClick={() =>
+                void ausfuehren(async () => {
+                  await alsGesendet(e.id)
+                })
+              }
+            >
               <CheckCheck />
               {t('ausgang.brief.versendet')}
             </Button>
           </div>
         ) : e.status === 'freigegeben' ? (
           <div className="flex flex-wrap justify-end gap-2">
-            <Button variant="secondary" laedt={laeuft} onClick={() => void ausfuehren(async () => { await zurueckholen([e.id]) })}>
+            <Button
+              variant="secondary"
+              laedt={laeuft}
+              onClick={() =>
+                void ausfuehren(async () => {
+                  await zurueckholen([e.id])
+                })
+              }
+            >
               <Undo2 />
               {t('ausgang.zurueckholen')}
             </Button>
-            <Button laedt={laeuft} onClick={() => void ausfuehren(async () => { await ausgangJetztSenden() })}>
+            <Button
+              laedt={laeuft}
+              onClick={() =>
+                void ausfuehren(async () => {
+                  await ausgangJetztSenden()
+                })
+              }
+            >
               <Send />
               {t('ausgang.jetztSenden')}
             </Button>
           </div>
         ) : e.kanal === 'brief' && e.status === 'gesendet' ? (
           <div className="flex justify-end">
-            <Button variant={e.ruecklauf_am ? 'secondary' : 'primary'} laedt={laeuft} onClick={() => void ausfuehren(async () => { await ruecklauf(e.id, !e.ruecklauf_am) })}>
+            <Button
+              variant={e.ruecklauf_am ? 'secondary' : 'primary'}
+              laedt={laeuft}
+              onClick={() =>
+                void ausfuehren(async () => {
+                  await ruecklauf(e.id, !e.ruecklauf_am)
+                })
+              }
+            >
               <CheckCheck />
               {t(e.ruecklauf_am ? 'ausgang.brief.ruecklaufNein' : 'ausgang.brief.ruecklaufJa')}
             </Button>
           </div>
         ) : (
           <p className="text-muted-foreground text-xs">
-            {e.antwort_am ? t('ausgang.antwortAm', { zeit: zeitpunkt(e.antwort_am) }) : e.status === 'gesendet' ? t('ausgang.nochKeineAntwort') : ''}
+            {e.antwort_am
+              ? t('ausgang.antwortAm', { zeit: zeitpunkt(e.antwort_am) })
+              : e.status === 'gesendet'
+                ? t('ausgang.nochKeineAntwort')
+                : ''}
           </p>
         )}
       </footer>

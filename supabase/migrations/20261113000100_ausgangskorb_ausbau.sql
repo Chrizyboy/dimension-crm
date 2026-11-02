@@ -1,4 +1,4 @@
--- Ausgangskorb vollständig (2.11.2026, Entscheid 0039): Werkbank «Für mich», Prüfungen vor dem Senden, Zusammenhang,
+-- Ausgangskorb vollständig (2.11.2026, Entscheid 0041): Werkbank «Für mich», Prüfungen vor dem Senden, Zusammenhang,
 -- mehrere auf einmal freigeben, später senden, kurzes «Rückgängig», «Zurück an …» mit Notiz, Fehler mit Lösung,
 -- Briefe als eigener Kanal und eine Glocke, wenn etwas zu lange wartet.
 -- Wer welche Art freigeben darf, steht in einstellungen.ausgang_freigabe (Art → Recht). Erzwungen wird das vom Trigger

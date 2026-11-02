@@ -81,7 +81,12 @@ describe('Ausgangskorb-Anzeige', () => {
 
   it('Gruppen: Newsletter derselben Kampagne bleiben zusammen, auch über Tage', () => {
     const nl = [1, 2, 3].map((i) =>
-      eintrag({ art: 'newsletter', bezug_tabelle: 'kampagnen', bezug_id: 'k1', erstellt_am: `2026-10-2${i}T08:00:00Z` }),
+      eintrag({
+        art: 'newsletter',
+        bezug_tabelle: 'kampagnen',
+        bezug_id: 'k1',
+        erstellt_am: `2026-10-2${i}T08:00:00Z`,
+      }),
     )
     expect(gruppiere(nl, jetzt)[0]?.schluessel).toBe('serie:newsletter:k1')
   })

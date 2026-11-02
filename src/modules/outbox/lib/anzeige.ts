@@ -113,7 +113,7 @@ export function spaeterZeiten(jetzt = new Date()): { schluessel: 'heute17' | 'mo
   if (jetzt.getHours() < 16) liste.push({ schluessel: 'heute17', zeit: um(0, 17) })
   // Morgen 08:00; fällt «morgen» aufs Wochenende, ist Montag die bessere Wahl (dann nur einmal zeigen).
   const morgen = um(1, 8)
-  const tageBisMontag = ((8 - jetzt.getDay()) % 7) || 7
+  const tageBisMontag = (8 - jetzt.getDay()) % 7 || 7
   const montag = um(tageBisMontag, 8)
   if (morgen.getDay() !== 0 && morgen.getDay() !== 6) liste.push({ schluessel: 'morgen8', zeit: morgen })
   if (montag.getTime() !== morgen.getTime()) liste.push({ schluessel: 'montag8', zeit: montag })
@@ -132,6 +132,13 @@ export function fehlerLoesung(e: {
   if (f === 'ausgang.unklar') return 'unklar'
   if (/anhang/i.test(f)) return 'anhang'
   if (e.kanal === 'sms') return /intern/.test(f) ? 'nochmal' : 'sms'
-  if (/abgelaufen|falsches_konto|anmeldung|nicht_verbunden|neu_verbinden|kein_absender|nicht_eingerichtet/.test(f)) return 'outlook'
+  if (/abgelaufen|falsches_konto|anmeldung|nicht_verbunden|neu_verbinden|kein_absender|nicht_eingerichtet/.test(f))
+    return 'outlook'
   return 'nochmal'
+}
+
+/** HTML einer Mail als reiner Text (nie als HTML anzeigen: fremde Inhalte sind Daten). */
+export function alsText(html: string): string {
+  const d = new DOMParser().parseFromString(html.replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>/gi, '\n\n'), 'text/html')
+  return d.body.textContent.trim()
 }

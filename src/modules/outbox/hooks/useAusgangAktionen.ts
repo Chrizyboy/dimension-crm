@@ -52,13 +52,22 @@ export function useAusgangAktionen() {
       }
       let geholt = false
       if (sendeAb) {
-        const wann = sendeAb.toLocaleString('de-CH', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+        const wann = sendeAb.toLocaleString('de-CH', {
+          weekday: 'short',
+          day: '2-digit',
+          month: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
         melde('ok', { de: `${n} geplant für ${wann}`, fr: `${n} planifié(s) pour ${wann}` })
         return
       }
       melde(
         'ok',
-        { de: `${n} freigegeben · geht in ${RUECKGAENGIG_S} Sek. raus`, fr: `${n} validé(s) · envoi dans ${RUECKGAENGIG_S} s` },
+        {
+          de: `${n} freigegeben · geht in ${RUECKGAENGIG_S} Sek. raus`,
+          fr: `${n} validé(s) · envoi dans ${RUECKGAENGIG_S} s`,
+        },
         {
           aktion: {
             text: { de: 'Rückgängig', fr: 'Annuler' },
@@ -74,12 +83,15 @@ export function useAusgangAktionen() {
           },
         },
       )
-      window.setTimeout(() => {
-        if (geholt) return
-        void ausgangJetztSenden()
-          .catch(() => null)
-          .finally(() => void neuLaden())
-      }, (RUECKGAENGIG_S + 1) * 1000)
+      window.setTimeout(
+        () => {
+          if (geholt) return
+          void ausgangJetztSenden()
+            .catch(() => null)
+            .finally(() => void neuLaden())
+        },
+        (RUECKGAENGIG_S + 1) * 1000,
+      )
     })
   }
 

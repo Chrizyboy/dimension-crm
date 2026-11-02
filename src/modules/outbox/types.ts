@@ -80,11 +80,30 @@ export interface AusgangPruefung {
 
 /** Zusammenhang eines Eintrags (aus `ausgang_kontext`). */
 export interface AusgangKontext {
-  kunde: { id: string; nummer: string | null; name: string | null; sprache: string | null; telefon: string | null; email: string | null } | null
+  kunde: {
+    id: string
+    nummer: string | null
+    name: string | null
+    sprache: string | null
+    telefon: string | null
+    email: string | null
+  } | null
   lead: { id: string; nummer: string | null; stufe: string | null } | null
-  offerte: { id: string; nummer: string | null; titel: string | null; betrag_rappen: number | null; status: string | null } | null
+  offerte: {
+    id: string
+    nummer: string | null
+    titel: string | null
+    betrag_rappen: number | null
+    status: string | null
+  } | null
   projekt: { id: string; nummer: string | null; titel: string | null } | null
-  rechnung: { id: string; nummer: string | null; total_rappen: number | null; faellig_am: string | null; mahnstufe: number | null } | null
+  rechnung: {
+    id: string
+    nummer: string | null
+    total_rappen: number | null
+    faellig_am: string | null
+    mahnstufe: number | null
+  } | null
   verlauf: { art: string; richtung: string | null; zeitpunkt: string; text: string; person: string | null }[]
 }
 

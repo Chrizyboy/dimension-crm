@@ -36,7 +36,12 @@ export async function ladeWoche(): Promise<{ gesendet: number; antworten: number
     .gte('gesendet_am', seit)
     .limit(2000)
   if (error) throw error
-  const zeilen = data as { erstellt_am: string; freigegeben_am: string | null; automatisch: boolean; antwort_am: string | null }[]
+  const zeilen = data as {
+    erstellt_am: string
+    freigegeben_am: string | null
+    automatisch: boolean
+    antwort_am: string | null
+  }[]
   // Wartezeit nur, wo ein Mensch freigegeben hat und nicht gleich beim Erstellen («Senden» im Mail-Fenster).
   const warten = zeilen
     .filter((z) => !z.automatisch && z.freigegeben_am)

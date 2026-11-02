@@ -87,7 +87,11 @@ export function AusgangListe({
 }
 
 function gruppenTitel(g: AusgangGruppe, t: TFunction): string {
-  if (g.serie) return t('ausgang.serie', { art: t(`ausgang.art.${g.titel}`, { defaultValue: g.titel }), count: g.eintraege.length })
+  if (g.serie)
+    return t('ausgang.serie', {
+      art: t(`ausgang.art.${g.titel}`, { defaultValue: g.titel }),
+      count: g.eintraege.length,
+    })
   return t(`ausgang.gruppe.${g.titel}`)
 }
 
@@ -153,7 +157,9 @@ function Zeile({
               {t('ausgang.status.fehler')}
             </Badge>
           )}
-          {e.zurueck_am && e.status === 'wartet' && <Badge ton="info">{t('ausgang.zurueckVon', { name: e.zurueck_von ?? '' })}</Badge>}
+          {e.zurueck_am && e.status === 'wartet' && (
+            <Badge ton="info">{t('ausgang.zurueckVon', { name: e.zurueck_von ?? '' })}</Badge>
+          )}
           {offen && stunden >= 24 && <Badge ton="warnung">{t('ausgang.seitStunden', { count: stunden })}</Badge>}
           {geplant && <Badge ton="info">{t('ausgang.geplantFuer', { zeit: zeitpunkt(e.sende_ab ?? '') })}</Badge>}
           {e.anhaenge.length > 0 && (
@@ -186,7 +192,9 @@ function Zeile({
             </Badge>
           )}
           {offen && !e.darf_freigeben && <Badge>{t('ausgang.nichtMeins')}</Badge>}
-          {e.vorbereitet_von && offen && <span className="text-muted-foreground text-xs">{t('ausgang.von', { name: e.vorbereitet_von })}</span>}
+          {e.vorbereitet_von && offen && (
+            <span className="text-muted-foreground text-xs">{t('ausgang.von', { name: e.vorbereitet_von })}</span>
+          )}
         </span>
       </button>
     </div>
