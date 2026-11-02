@@ -10539,7 +10539,7 @@ export type Database = {
         Returns: Json
       }
       helpdesk_einschaetzen: { Args: { p: Json; p_id: string; p_link: string }; Returns: Json }
-      helpdesk_einstellen: { Args: { p_person_id: string; p_sms: boolean }; Returns: undefined }
+      helpdesk_einstellen: { Args: { p_personen: string[]; p_sms: boolean }; Returns: undefined }
       helpdesk_offen: { Args: Record<PropertyKey, never>; Returns: Json }
       helpdesk_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }

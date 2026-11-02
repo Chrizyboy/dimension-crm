@@ -78,10 +78,9 @@ export async function ladeHelpdeskStand(): Promise<HelpdeskStand> {
   return data as unknown as HelpdeskStand
 }
 
-/** Entscheidende Person und SMS festlegen (nur Administration). */
-export async function helpdeskEinstellen(personId: string | null, sms: boolean): Promise<void> {
-  // null = niemand bestimmt; die erzeugten Typen kennen bei Parametern kein null.
-  const { error } = await db().rpc('helpdesk_einstellen', { p_person_id: personId as string, p_sms: sms })
+/** Entscheidende Personen und SMS festlegen (nur Administration); leere Liste = niemand bestimmt. */
+export async function helpdeskEinstellen(personen: string[], sms: boolean): Promise<void> {
+  const { error } = await db().rpc('helpdesk_einstellen', { p_personen: personen, p_sms: sms })
   if (error) throw error
 }
 
