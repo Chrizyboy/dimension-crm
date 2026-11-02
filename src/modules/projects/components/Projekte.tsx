@@ -22,7 +22,7 @@ export interface ProjekteNavigation {
 }
 
 /**
- * Projekte & Montage (V233 «Bauplanung»), neu gedacht (Entscheid 0040): Leitstand nach Phase, Meine Woche,
+ * Projekte & Montage (V233 «Bauplanung»), neu gedacht (Entscheid 0041): Leitstand nach Phase, Meine Woche,
  * Zeitplan, Bewilligungen, alle Projekte, Subunternehmer und Abwesenheiten. Ein Projekt öffnet sich als ganze
  * Seite (#/projects?projekt=…&akte=fahrplan), «zurück» führt zum Reiter, von dem man kam.
  */

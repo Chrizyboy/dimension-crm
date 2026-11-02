@@ -41,7 +41,7 @@ test('Automationen: Vorlagen, Reiter und Editor ohne Verstösse', async ({ page 
 
   await page
     .getByTestId('automation')
-    .filter({ hasText: 'Gesuch eingereicht' })
+    .filter({ has: page.getByText('Gesuch eingereicht: Frist überwachen', { exact: true }) })
     .getByRole('button', { name: 'Bearbeiten' })
     .click()
   const editor = page.getByRole('dialog', { name: 'Gesuch eingereicht: Frist überwachen' })

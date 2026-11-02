@@ -11,6 +11,7 @@ import { Bestellungen } from './Bestellungen'
 import { Lager } from './Lager'
 import { Lieferanten } from './Lieferanten'
 import { MaterialProjekte } from './MaterialProjekte'
+import { ZuBestellen } from './ZuBestellen'
 
 /** Navigation der Seite: Reiter, offene Bestellung und gewähltes Projekt stehen in der Adresse. */
 export interface EinkaufNavigation {
@@ -75,6 +76,13 @@ export default function Einkauf({
         </ReiterListe>
         <ReiterInhalt value="bestellungen" className="pt-4">
           <Bestellungen aktiveId={bestellungId} onOeffnen={oeffnen} />
+        </ReiterInhalt>
+        <ReiterInhalt value="zubestellen" className="pt-4">
+          <ZuBestellen
+            onProjekt={(p) => {
+              onNavigation({ reiter: 'material', projekt: p, bestellung: null })
+            }}
+          />
         </ReiterInhalt>
         <ReiterInhalt value="material" className="pt-4">
           <MaterialProjekte

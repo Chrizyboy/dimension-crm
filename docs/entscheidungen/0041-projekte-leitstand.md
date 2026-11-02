@@ -1,4 +1,4 @@
-# 0040 – Projekte neu: Leitstand, Meine Woche, Projekt-Akte als ganze Seite (2.11.2026)
+# 0041 – Projekte neu: Leitstand, Meine Woche, Projekt-Akte als ganze Seite (2.11.2026)
 
 ## Ausgangslage
 
@@ -31,3 +31,7 @@ Entwurf mit Beispieldaten: https://claude.ai/artifact/GXLAokpEoDtBmnpGXxNss8
   Bautermin als Hauptknopf der Akte). Alte Adressen mit `reiter=baustellen` öffnen den Leitstand.
 - Schritt 2 nach Chris' Antworten: Kunde bei Meilensteinen informieren, Mängelliste je Projekt, Beteiligte
   (Elektriker, Gerüst, Netzbetreiber) als Kontakte mit Rolle; danach GL-Übersicht und Baustellen-Mappe am Handy.
+
+## Nachtrag: Blocker aus dem Reiter «Baustellen»
+
+Die Blocker «Material nicht bestellt» (Baubeginn minus Lieferfrist aus `einstellungen.einkauf`) und «Frist vorbei» aus `lib/blocker.ts` erscheinen jetzt als Hinweise auf den Leitstand-Karten, in «Meine Woche» und in der Akte. So bleiben Karte und Glocke gleich, auch ohne den alten Reiter.

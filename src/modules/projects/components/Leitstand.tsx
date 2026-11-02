@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { formatChf } from '@/lib/format'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useProjekte, useSignale, useStandorte } from '../hooks/useProjekte'
+import { useLieferfrist, useProjekte, useSignale, useStandorte } from '../hooks/useProjekte'
 import { hinweise, heuteIso, nachPhase, nochOffen, trifft, woche } from '../lib/leitstand'
 import { PHASEN, SCHNELLFILTER, type Projekt, type Schnellfilter, type Signale } from '../types'
 import { Kennzahlen } from './Kennzahlen'
@@ -27,6 +27,7 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
   const ich = useAnmeldung((z) => z.ich?.id ?? null)
   const projekte = useProjekte([...STATUS])
   const signale = useSignale()
+  const lieferfrist = useLieferfrist().data
   const standorte = useStandorte()
   const [ansicht, setAnsicht] = useState<'board' | 'liste'>('board')
   const [filter, setFilter] = useState<Schnellfilter[]>([])
@@ -40,7 +41,7 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
     const s = suche.trim().toLowerCase()
     return laufend.filter(
       (p) =>
-        filter.every((f) => trifft(p, sig.get(p.id), f, ich, heute)) &&
+        filter.every((f) => trifft(p, sig.get(p.id), f, ich, heute, lieferfrist)) &&
         (orte.length === 0 || (p.standort_id != null && orte.includes(p.standort_id))) &&
         (!s ||
           [p.nummer, p.kunde, p.ort, p.plz, p.strasse, p.elektriker, p.verantwortlich]
@@ -48,15 +49,16 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
             .toLowerCase()
             .includes(s)),
     )
-  }, [laufend, filter, orte, suche, sig, ich, heute])
-  const spalten = useMemo(() => nachPhase(daten, sig, heute), [daten, sig, heute])
+  }, [laufend, filter, orte, suche, sig, ich, heute, lieferfrist])
+  const spalten = useMemo(() => nachPhase(daten, sig, heute, lieferfrist), [daten, sig, heute, lieferfrist])
   const tabelle = useMemo(() => projektSpalten(t), [t])
 
   if (projekte.error)
     return <Fehlerzustand details={String(projekte.error)} onNochmal={() => void projekte.refetch()} />
 
   const aktiv = laufend.filter((p) => p.status !== 'abgeschlossen')
-  const zaehle = (f: Schnellfilter) => laufend.filter((p) => trifft(p, sig.get(p.id), f, ich, heute)).length
+  const zaehle = (f: Schnellfilter) =>
+    laufend.filter((p) => trifft(p, sig.get(p.id), f, ich, heute, lieferfrist)).length
   const w = woche(heute)
   const nur = (f: Schnellfilter) => () => {
     setFilter(filter.length === 1 && filter[0] === f ? [] : [f])
@@ -197,7 +199,7 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
                     <LeitstandKarte
                       key={p.id}
                       p={p}
-                      hinweise={hinweise(p, sig.get(p.id), heute)}
+                      hinweise={hinweise(p, sig.get(p.id), heute, lieferfrist)}
                       aktiv={p.id === aktiveId}
                       onOeffnen={() => {
                         onOeffnen(p.id)

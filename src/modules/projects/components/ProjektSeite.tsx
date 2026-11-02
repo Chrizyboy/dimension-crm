@@ -4,7 +4,7 @@ import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Karte } from '@/components/ui/karte'
 import { Skelett } from '@/components/ui/diverses'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
-import { useAkte, useProjekt, useSignale } from '../hooks/useProjekte'
+import { useAkte, useLieferfrist, useProjekt, useSignale } from '../hooks/useProjekte'
 import { heuteIso, hinweise } from '../lib/leitstand'
 import { AKTE_REITER, type AkteReiter } from '../types'
 import { AkteFahrplan } from './AkteFahrplan'
@@ -37,11 +37,12 @@ export function ProjektSeite({
   const { projekt, fahrplan } = useProjekt(id)
   const akte = useAkte(id)
   const signale = useSignale()
+  const lieferfrist = useLieferfrist().data
   const p = projekt.data
   if (projekt.error) return <Fehlerzustand details={String(projekt.error)} onNochmal={() => void projekt.refetch()} />
   if (!p) return <Skelett className="h-[32rem]" />
   const a = akte.data
-  const h = hinweise(p, signale.data?.get(p.id), heuteIso())
+  const h = hinweise(p, signale.data?.get(p.id), heuteIso(), lieferfrist)
 
   return (
     <div className="flex flex-col gap-4">

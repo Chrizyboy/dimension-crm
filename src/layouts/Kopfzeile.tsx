@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Check, Languages, LogOut, Monitor, Moon, Search, Sun, UserRound } from 'lucide-react'
+import { Check, Languages, LogOut, Monitor, Moon, Search, Sparkles, Sun, UserRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Avatar, Kbd } from '@/components/ui/diverses'
 import {
@@ -13,17 +13,19 @@ import {
   MenueTrenner,
 } from '@/components/ui/menue'
 import { Logo, SIGNET } from '@/components/shared/Logo'
+import { darfModul } from '@/lib/rechte'
 import { kuerzelText } from '@/lib/tastenkuerzel'
+import { meta as assistentMeta } from '@/modules/ai'
 import { abmelden } from '@/services/anmeldung'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
 import { UpdateKnopf } from './Aktualisierung'
 import { Glocke } from './Benachrichtigungen'
 
-/** Obere Leiste: Suche/Befehlspalette, Sprache, Benachrichtigungen, Konto-Menü. */
+/** Obere Leiste: Suche/Befehlspalette, Assistent (Ctrl J), Sprache, Benachrichtigungen, Konto-Menü. */
 export function Kopfzeile() {
   const { t } = useTranslation()
-  const { sprache, darstellung, setSprache, setDarstellung, setBefehlspalette } = useUi()
+  const { sprache, darstellung, setSprache, setDarstellung, setBefehlspalette, setAssistent } = useUi()
   const ich = useAnmeldung((z) => z.ich)
   const navigate = useNavigate()
   const name = ich?.name ?? t('konto.vorschau')
@@ -50,6 +52,19 @@ export function Kopfzeile() {
       )}
 
       <div className="ml-auto flex items-center gap-1">
+        {!einfach && ich && darfModul(assistentMeta, ich) && (
+          <button
+            type="button"
+            onClick={() => {
+              setAssistent(true)
+            }}
+            title={`${t('nav.assistent')} (${kuerzelText('j')})`}
+            className="text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:ring-ring flex h-8 items-center gap-1.5 rounded-md px-2 text-sm outline-none focus-visible:ring-2"
+          >
+            <Sparkles className="text-accent size-4" aria-hidden="true" />
+            <span className="hidden lg:inline">{t('nav.assistent')}</span>
+          </button>
+        )}
         <div
           role="group"
           aria-label={t('einstellungen.sprache')}

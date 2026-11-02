@@ -58,6 +58,10 @@ export const useAbwesenheiten = (von: string, bis: string) =>
 export const usePersonen = () =>
   useQuery({ queryKey: ['projekte', 'personen'], enabled: an, queryFn: pl.ladePersonen, staleTime: 10 * 60_000 })
 
+/** Lieferfrist aus den Einstellungen Einkauf (für den Material-Blocker). */
+export const useLieferfrist = () =>
+  useQuery({ queryKey: ['projekte', 'lieferfrist'], enabled: an, queryFn: s.ladeLieferfrist, staleTime: 30 * 60_000 })
+
 /** Standorte Muri und Bulle. */
 export const useStandorte = () =>
   useQuery({ queryKey: ['projekte', 'standorte'], enabled: an, queryFn: s.ladeStandorte, staleTime: 30 * 60_000 })

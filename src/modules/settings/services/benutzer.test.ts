@@ -46,14 +46,16 @@ describe('Stand einer Person', () => {
 
 describe('Mein Konto', () => {
   it('übernimmt das Profil aus der Vorlage und ignoriert fremde Felder', () => {
-    const werte = kontoAusProfil({ mobil: '+41 76 123 45 67', pensum: 80, updatedBy: 'chris' })
+    const werte = kontoAusProfil({ mobil: '+41 76 123 45 67', tage: 4, updatedBy: 'chris' })
     expect(werte.mobil).toBe('+41 76 123 45 67')
-    expect(werte.pensum).toBe('80')
+    expect(werte.tage).toBe('4')
     expect(werte).not.toHaveProperty('updatedBy')
   })
 
-  it('prüft die PLZ (4 Ziffern oder leer)', () => {
-    expect(kontoSchema.safeParse({ ...kontoAusProfil({}), plz: '5630' }).success).toBe(true)
-    expect(kontoSchema.safeParse({ ...kontoAusProfil({}), plz: '563' }).success).toBe(false)
+  it('schickt Privates nicht mehr mit (steht in der Personal-Akte)', () => {
+    const werte = kontoAusProfil({ strasse: 'Feldweg 3', plz: '5630', notfallName: 'Paul', pensum: 80 })
+    expect(Object.keys(werte)).not.toContain('strasse')
+    expect(Object.keys(werte)).not.toContain('pensum')
+    expect(kontoSchema.safeParse(werte).success).toBe(true)
   })
 })

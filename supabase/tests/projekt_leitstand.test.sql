@@ -1,4 +1,4 @@
--- Prüft Leitstand und Projekt-Akte (Entscheid 0040): Signale je Projekt (fällige Tranche, offene Nachträge,
+-- Prüft Leitstand und Projekt-Akte (Entscheid 0041): Signale je Projekt (fällige Tranche, offene Nachträge,
 -- nächster Einsatz), die Akte in einer Abfrage und Einträge im Verlauf.
 -- Ausführen: npm run db:test
 begin;

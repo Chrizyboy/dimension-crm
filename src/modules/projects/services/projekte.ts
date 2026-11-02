@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabase'
 import type { FahrplanSchritt, Projekt, ProjektStatus, SchrittStand, Standort } from '../types'
+import { LIEFERFRIST_STANDARD } from '../lib/blocker'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -220,4 +221,12 @@ export async function ladeAblaeufe(): Promise<{ id: string; schluessel: string; 
     .eq('aktiv', true)
   if (error) throw error
   return data
+}
+
+/** Lieferfrist in Tagen aus den Einstellungen Einkauf (für «Material bestellen bis»). */
+export async function ladeLieferfrist(): Promise<number> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'einkauf').maybeSingle()
+  if (error) throw error
+  const tage = Number((data?.wert as { lieferfrist_tage?: unknown } | null)?.lieferfrist_tage)
+  return Number.isFinite(tage) && tage >= 0 ? tage : LIEFERFRIST_STANDARD
 }

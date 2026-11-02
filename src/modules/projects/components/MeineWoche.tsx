@@ -8,7 +8,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { formatDatum } from '@/lib/format'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
-import { useEinsaetze, useFaelligeSchritte, useProjekte, useSignale } from '../hooks/useProjekte'
+import { useEinsaetze, useFaelligeSchritte, useLieferfrist, useProjekte, useSignale } from '../hooks/useProjekte'
 import { heuteIso, hinweise, nochOffen, tageBis, woche } from '../lib/leitstand'
 import type { Projekt } from '../types'
 import { Box, Zeile } from './AkteBox'
@@ -40,6 +40,7 @@ export function MeineWoche({ onOeffnen }: { onOeffnen: (id: string) => void }) {
   const naechste = woche(new Date(Date.parse(`${w.bis}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10))
   const projekte = useProjekte([...STATUS])
   const signale = useSignale()
+  const lieferfrist = useLieferfrist().data
   const schritte = useFaelligeSchritte(naechste.bis)
   const einsaetze = useEinsaetze(w.von, w.bis)
   const hatEigene = (projekte.data ?? []).some((p) => p.verantwortlich_id === ich && p.status !== 'abgeschlossen')
@@ -70,8 +71,13 @@ export function MeineWoche({ onOeffnen }: { onOeffnen: (id: string) => void }) {
       })
     }
     for (const p of meine.values()) {
-      for (const h of hinweise(p, signale.data?.get(p.id), heute)) {
-        if (!['material_fehlt', 'zahlung_ueberfaellig', 'ohne_termin', 'verrechnen'].includes(h.schluessel)) continue
+      for (const h of hinweise(p, signale.data?.get(p.id), heute, lieferfrist)) {
+        if (
+          !['material_fehlt', 'material_bestellen', 'zahlung_ueberfaellig', 'ohne_termin', 'verrechnen'].includes(
+            h.schluessel,
+          )
+        )
+          continue
         if (h.schluessel === 'ohne_termin' && p.status !== 'auftrag') continue
         liste.push({
           id: `${p.id}:${h.schluessel}`,
@@ -84,7 +90,7 @@ export function MeineWoche({ onOeffnen }: { onOeffnen: (id: string) => void }) {
       }
     }
     return liste
-  }, [schritte.data, signale.data, meine, sprache, t, heute, w.bis])
+  }, [schritte.data, signale.data, meine, sprache, t, heute, w.bis, lieferfrist])
 
   if (projekte.error || schritte.error)
     return (

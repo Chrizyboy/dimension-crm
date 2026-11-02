@@ -6,7 +6,7 @@
 
 ## So läuft es
 
-0. **Leitstand** (Entscheid 0040): alle laufenden Projekte nach Phase, jede Karte sagt, was blockiert oder fehlt. **Meine Woche** zeigt der Projektleitung, was diese und nächste Woche fällig ist. Ein Projekt öffnet sich als **ganze Seite** mit «Jetzt zu tun», Verlauf, Terminen, Material, Geld und Nachkalkulation.
+0. **Leitstand** (Entscheid 0041): alle laufenden Projekte nach Phase, jede Karte sagt, was blockiert oder fehlt. **Meine Woche** zeigt der Projektleitung, was diese und nächste Woche fällig ist. Ein Projekt öffnet sich als **ganze Seite** mit «Jetzt zu tun», Verlauf, Terminen, Material, Geld und Nachkalkulation.
 1. Ein Auftrag (Werkvertrag) erscheint im Leitstand in der Spalte «Auftrag» (Filter «Ohne Bautermin»). «Bautermin» übernimmt ihn in den Bau: ohne Datum (ausstehend), mit Datum (fixiert, Einsatz Team intern) oder in der Vergangenheit (gilt als gebaut). Jede Übernahme lässt sich rückgängig machen.
 2. Der **Fahrplan** zeigt sechs Phasen. Bewilligungen (Gemeinde, Netzbetreiber, IA, SiNa, Abnahme, Pronovo) und die Checkliste Elektriker sind markierte Schritte darin. Automatische Schritte folgen aus Vertrag, Einsätzen und Zahlungsplan.
 3. Im **Zeitplan** werden Einsätze geplant (intern, extern mit Subunternehmer, voraussichtlich), mit Personen. Am PC Sicht Baustellen oder Team, 2/6/13 Wochen, Balken ziehen zum Verschieben, «Zu planen» rechts; am Handy eine Woche als Liste nach Tagen. Konflikte (abwesend, doppelt eingeplant) rot. Entscheid 0035. «IBN durchgeführt» schliesst das Projekt ab und legt die Anlage an.

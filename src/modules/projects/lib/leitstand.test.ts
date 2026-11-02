@@ -12,7 +12,15 @@ const phasen = (offen: string): PhasenStand[] =>
   }))
 
 const projekt = (x: Partial<Projekt>): Projekt =>
-  ({ id: 'p1', status: 'im_bau', bau_status: 'terminiert', baubeginn: '2026-11-11', stand: null, ...x }) as Projekt
+  ({
+    id: 'p1',
+    status: 'im_bau',
+    bau_status: 'terminiert',
+    baubeginn: '2026-11-11',
+    material_status: 'bestellt',
+    stand: null,
+    ...x,
+  }) as Projekt
 
 const signale = (x: Partial<Signale>): Signale => ({
   projekt_id: 'p1',
@@ -70,6 +78,11 @@ describe('hinweise', () => {
       'verrechnen',
       'material_ok',
     ])
+  })
+  it('meldet nicht bestelltes Material ab «bestellen bis» und vorbeigegangene Fristen', () => {
+    const p = projekt({ material_status: null, stand: stand('vorb', { spaet: true }) })
+    expect(hinweise(p, undefined, heute).map((h) => h.schluessel)).toEqual(['material_bestellen', 'frist'])
+    expect(hinweise(p, undefined, heute, 5).map((h) => h.schluessel)).toEqual(['frist'])
   })
   it('meldet überfällige Rechnungen mit Tagen', () => {
     const s = signale({ offen_rappen: 500, offen_faellig_am: '2026-10-20' })
