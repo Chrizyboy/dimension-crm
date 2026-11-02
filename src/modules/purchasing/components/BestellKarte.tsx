@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import type { Bestellung } from '../../types'
+import type { Bestellung } from '../types'
 
 /** Karte einer Bestellung im Leitstand: Nummer, Lieferant, Projekte, Termin und was als Nächstes ansteht. */
 export function BestellKarte({

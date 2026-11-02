@@ -37,7 +37,7 @@ mit «bestellen bis», Freigabegrenze, Auftragsbestätigung (KI liest Mail/PDF),
 ## Ordner
 
 - `components/` – Seite mit sechs Reitern (Leitstand, Materialplan, Bestellen, Bestellungen, Lager, Lieferanten),
-  Bestell-Akte (`akte/`: Schritte, AB, Lieferung, Rechnung, Mails), Leitstand (`leitstand/`), Startseiten-Karte
+  Bestell-Akte (Schritte, AB, Lieferung, Rechnung, Mails), Leitstand, Startseiten-Karte
 - `hooks/` – Daten laden (`useEinkauf`), Aktionen mit Fehlermeldung (`useAktion`)
 - `services/` – Bestellungen, Material, Lager und Lieferanten, Bestell-PDF
 - `lib/anzeige.ts` – Mengen anzeigen und lesen (mit Tests); `lib/leitstand.ts` – Spalten und Kopfzahlen (mit Tests)

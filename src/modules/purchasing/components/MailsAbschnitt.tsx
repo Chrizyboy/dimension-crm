@@ -2,7 +2,7 @@ import { Paperclip } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { formatDatumZeit } from '@/lib/format'
-import { useBestellMails } from '../../hooks/useEinkauf'
+import { useBestellMails } from '../hooks/useEinkauf'
 
 /** Mails im Posteingang zu dieser Bestellung (Bestellnummer im Betreff oder vom Lieferanten). */
 export function MailsAbschnitt({ id }: { id: string }) {

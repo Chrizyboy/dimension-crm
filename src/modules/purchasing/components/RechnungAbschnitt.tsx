@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/input'
 import { formatChf, formatDatum, formatDatumZeit } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { useAktion } from '../../hooks/useAktion'
-import { useRechnungen } from '../../hooks/useEinkauf'
-import { rechnungSpeichern } from '../../services/einkauf'
-import type { Bestellung } from '../../types'
+import { useAktion } from '../hooks/useAktion'
+import { useRechnungen } from '../hooks/useEinkauf'
+import { rechnungSpeichern } from '../services/einkauf'
+import type { Bestellung } from '../types'
 
 /**
  * Rechnungsabgleich: die Lieferantenrechnung aus AbaNinja (Kreditoren) zur Bestellung zuordnen und prüfen.

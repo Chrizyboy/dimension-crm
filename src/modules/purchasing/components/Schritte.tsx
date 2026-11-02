@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
-import type { Schritt } from '../../types'
+import type { Schritt } from '../types'
 
 const FOLGE = ['freigabe', 'ab_offen', 'unterwegs', 'eingang', 'rechnung', 'fertig'] as const
 

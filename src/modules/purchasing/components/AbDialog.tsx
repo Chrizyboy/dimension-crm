@@ -10,11 +10,11 @@ import { meldeIntegrationsFehler } from '@/services/integrationen'
 import { kiDatei, rufeKi } from '@/services/ki'
 import { melde } from '@/services/meldungen'
 import { mailVolltext, mailVorlage } from '@/services/posteingang'
-import { useAktion } from '../../hooks/useAktion'
-import { useBestellMails } from '../../hooks/useEinkauf'
-import { alsZahl, formatMenge } from '../../lib/anzeige'
-import { abErfassen } from '../../services/einkauf'
-import type { Bestellung, Position } from '../../types'
+import { useAktion } from '../hooks/useAktion'
+import { useBestellMails } from '../hooks/useEinkauf'
+import { alsZahl, formatMenge } from '../lib/anzeige'
+import { abErfassen } from '../services/einkauf'
+import type { Bestellung, Position } from '../types'
 
 interface KiAb {
   nummer: string | null
