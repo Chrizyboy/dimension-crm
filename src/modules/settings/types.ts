@@ -8,6 +8,7 @@ export type Person = Pick<
   Tables<'personen'>,
   | 'id'
   | 'kuerzel'
+  | 'kurzzeichen'
   | 'name'
   | 'email'
   | 'rolle'
@@ -154,4 +155,21 @@ export interface Zustaendigkeiten {
   verkauf: VerkaufRegel[]
   offerten: string | null
   stellvertretung: Record<string, string>
+}
+
+/** Ein Dienst im Zustand: ok (null = noch nie geprüft), wann zuletzt, was die letzte Meldung war. */
+export interface DienstZeile {
+  ok: boolean | null
+  zuletzt: string | null
+  meldung?: string | null
+}
+
+/** Zustand aller Dienste (dienste_zustand), vom Dienst-Wächter stündlich nachgeführt. */
+export interface DiensteZustand {
+  zeitplan: DienstZeile
+  sicherung: DienstZeile
+  jobs: { job: string; zuletzt: string | null; meldung: string | null }[]
+  microsoft: (DienstZeile & { name: string })[]
+  integrationen: (DienstZeile & { dienst: string })[]
+  sms_mindestens: number
 }

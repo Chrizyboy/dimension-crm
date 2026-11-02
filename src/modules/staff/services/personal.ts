@@ -1,12 +1,12 @@
 import { verkleinern } from '@/lib/bild'
 import { supabase } from '@/services/supabase'
-import type { Mitglied, PersonalAkte, Qualifikation } from '../types'
+import type { Mitglied, Qualifikation } from '../types'
 
 /**
  * Datenzugriff für Team, Ausweise und Personal-Akte. Wer was sehen und ändern darf, prüft die Datenbank:
  * Ausweise lesen alle, ändern die Administration oder die Person selbst; die Akte nur diese beiden.
  */
-function db() {
+export function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
   return supabase
 }
@@ -74,19 +74,4 @@ export async function dateiAdresse(pfad: string): Promise<string> {
   const { data, error } = await db().storage.from('personal').createSignedUrl(pfad, 300)
   if (error) throw error
   return data.signedUrl
-}
-
-/** Personal-Akte einer Person (null, wenn noch keine oder nicht sichtbar). */
-export async function ladeAkte(personId: string): Promise<PersonalAkte | null> {
-  const { data, error } = await db().from('personal_akten_sicht').select('*').eq('person_id', personId).maybeSingle()
-  if (error) throw error
-  return data as PersonalAkte | null
-}
-
-/** Personal-Akte speichern: anlegen beim ersten Mal, sonst ändern. Felder der Administration schützt die Datenbank. */
-export async function akteSpeichern(a: Omit<PersonalAkte, 'id'>, id: string | null): Promise<void> {
-  const { error } = id
-    ? await db().from('personal_akten').update(a).eq('id', id)
-    : await db().from('personal_akten').insert(a)
-  if (error) throw error
 }

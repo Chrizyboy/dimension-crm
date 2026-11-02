@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabase'
-import type { Abwesenheit, Einsatz, EinsatzEntwurf, Person } from '../types'
+import type { Abwesenheit, Einsatz, EinsatzEntwurf, Person, ServiceTermin } from '../types'
 
 /** Zeitplan: Einsätze, Personen und Abwesenheiten. */
 function db() {
@@ -18,6 +18,18 @@ export async function ladeEinsaetze(von: string, bis: string): Promise<Einsatz[]
     .order('von')
   if (error) throw error
   return data as Einsatz[]
+}
+
+/** Service-Termine im Zeitraum (geplant in «Service & Garantie»), für Team-Sicht und Handy. */
+export async function ladeServiceTermine(von: string, bis: string): Promise<ServiceTermin[]> {
+  const { data, error } = await db()
+    .from('service_termine')
+    .select('id, nummer, titel, datum, termin_am, dauer_minuten, personen, kunde, ort, auswirkung')
+    .gte('datum', von)
+    .lte('datum', bis)
+    .order('termin_am')
+  if (error) throw error
+  return data as ServiceTermin[]
 }
 
 /** Alle Einsätze eines Projekts (Planungsdialog). */

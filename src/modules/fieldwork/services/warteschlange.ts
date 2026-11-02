@@ -25,6 +25,9 @@ export type RpcName =
   | 'zeit_stoppen'
   | 'zeit_speichern'
   | 'nachtrag_speichern'
+  | 'service_eintrag_handy'
+  | 'service_checkliste'
+  | 'service_seriennummer'
 
 interface Basis {
   nr?: number
@@ -40,7 +43,15 @@ export type Auftrag =
       art: 'datei'
       blob: Blob
       pfad: string
-      dokument: { id: string; name: string; mime_typ: string; ordner: string; bezug_tabelle: string; bezug_id: string }
+      dokument: {
+        id: string
+        name: string
+        mime_typ: string
+        ordner: string
+        bezug_tabelle: string
+        bezug_id: string
+        kategorie?: string
+      }
     })
 
 interface Stand {

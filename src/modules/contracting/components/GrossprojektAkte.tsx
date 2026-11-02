@@ -1,5 +1,4 @@
 import { Check, Eye, ExternalLink, MapPin, Pencil, RefreshCw, RotateCcw, X } from 'lucide-react'
-import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -46,7 +45,6 @@ export function GrossprojektAkte({
   const ich = useAnmeldung((z) => z.ich)
   const regeln = useRegeln().data
   const { laeuft, aus } = useAktion()
-  const navigate = useNavigate()
   const neuLaden = useNeuLaden()
   const [holt, setHolt] = useState(false)
   const g = useGrossprojekte().data?.find((x) => x.id === id)
@@ -67,16 +65,9 @@ export function GrossprojektAkte({
     }
   }
 
-  // Nach dem Bewilligen gleich zum neuen Lead, damit der Verkauf dort weitermacht.
+  // Nach dem Bewilligen bleibt das Grossprojekt hier: Die Seite wechselt zur Projekt-Akte (Pipeline bis zum Vertrag).
   async function bewilligen(x: Grossprojekt) {
-    const ergebnis: { lead: string | null } = { lead: null }
-    const ok = await aus(
-      async () => {
-        ergebnis.lead = await entscheiden(x.id, 'bewilligen')
-      },
-      { de: 'Bewilligt: Lead angelegt', fr: 'Approuvé : lead créé' },
-    )
-    if (ok && ergebnis.lead) void navigate({ to: '/sales', search: { lead: ergebnis.lead } })
+    await aus(() => entscheiden(x.id, 'bewilligen'), { de: 'In der Pipeline', fr: 'Dans le pipeline' })
   }
 
   const fuss = (x: Grossprojekt) => {

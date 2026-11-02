@@ -29,6 +29,14 @@ export const useBewilligungen = () =>
 export const useEinsaetze = (von: string, bis: string) =>
   useQuery({ queryKey: ['projekte', 'einsaetze', von, bis], enabled: an, queryFn: () => pl.ladeEinsaetze(von, bis) })
 
+/** Service-Termine im Zeitraum. */
+export const useServiceTermine = (von: string, bis: string) =>
+  useQuery({
+    queryKey: ['projekte', 'service', von, bis],
+    enabled: an,
+    queryFn: () => pl.ladeServiceTermine(von, bis),
+  })
+
 /** Einsätze eines Projekts. */
 export const useProjektEinsaetze = (id: string) =>
   useQuery({
@@ -48,6 +56,10 @@ export const useAbwesenheiten = (von: string, bis: string) =>
 /** Aktive Personen (ändern sich selten). */
 export const usePersonen = () =>
   useQuery({ queryKey: ['projekte', 'personen'], enabled: an, queryFn: pl.ladePersonen, staleTime: 10 * 60_000 })
+
+/** Lieferfrist aus den Einstellungen Einkauf (für den Material-Blocker). */
+export const useLieferfrist = () =>
+  useQuery({ queryKey: ['projekte', 'lieferfrist'], enabled: an, queryFn: s.ladeLieferfrist, staleTime: 30 * 60_000 })
 
 /** Standorte Muri und Bulle. */
 export const useStandorte = () =>
