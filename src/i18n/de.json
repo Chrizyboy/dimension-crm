@@ -1980,7 +1980,7 @@
   },
   "ausgang": {
     "titel": "Ausgangskorb",
-    "beschreibung": "Alles, was das CRM per Mail oder SMS verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
+    "beschreibung": "Alles, was das CRM per Mail, SMS oder Brief verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
     "ohneDatenbank": "Der Ausgangskorb braucht die Datenbank. In der Vorschau ohne Datenbank ist er leer.",
     "filter": "Anzeigen",
     "filterwert": {
@@ -2028,7 +2028,18 @@
       "bestellung": "Bestellung",
       "serienmail": "Serien-Mail",
       "newsletter": "Newsletter",
-      "zahlungserinnerung": "Zahlungserinnerung"
+      "zahlungserinnerung": "Zahlungserinnerung",
+      "service_bestaetigung": "Service: Eingangsbestätigung",
+      "rechnung": "Rechnung",
+      "anzahlung": "Anzahlungsrechnung",
+      "teilzahlung": "Teilrechnung",
+      "schluss": "Schlussrechnung",
+      "spesen": "Spesen",
+      "subunternehmer": "Subunternehmer",
+      "tagesuebersicht": "Tagesübersicht",
+      "anlagedossier": "Anlagedossier",
+      "baugesuch": "Baugesuch",
+      "brief": "Brief"
     },
     "titelMail": "Mail prüfen",
     "titelSms": "SMS prüfen",
@@ -2055,7 +2066,188 @@
     "grund": "Grund",
     "grundFrage": "Warum wird das nicht gesendet?",
     "automatisch": "Automatisch",
-    "verwerfenJa": "Ja, nicht senden"
+    "verwerfenJa": "Ja, nicht senden",
+    "ordnerTitel": "Ordner",
+    "ordner": {
+      "fuer_mich": "Für mich zur Freigabe",
+      "fehler": "Fehler",
+      "zurueck": "Zurückgeschickt",
+      "team": "Ganzes Team",
+      "geplant": "Geplant",
+      "unterwegs": "Wird gesendet",
+      "gesendet": "Gesendet",
+      "verworfen": "Nicht gesendet"
+    },
+    "abschnitt": {
+      "zuTun": "Zu tun",
+      "unterwegs": "Unterwegs",
+      "archiv": "Archiv"
+    },
+    "leerOrdner": {
+      "fuer_mich": "Nichts wartet auf dich",
+      "fehler": "Keine Fehler",
+      "zurueck": "Nichts zurückgeschickt",
+      "team": "Im Team wartet nichts",
+      "geplant": "Nichts geplant",
+      "unterwegs": "Gerade ist nichts unterwegs",
+      "gesendet": "Noch nichts gesendet",
+      "verworfen": "Nichts verworfen"
+    },
+    "gruppe": {
+      "heute": "Heute",
+      "gestern": "Gestern",
+      "aelter": "Älter"
+    },
+    "serie_one": "{{art}} · {{count}} Nachricht",
+    "serie_other": "Serie {{art}} · {{count}} Nachrichten",
+    "serieAlle_one": "{{count}} wählen",
+    "serieAlle_other": "Alle {{count}} wählen",
+    "serieWaehlen": "Ganze Serie wählen",
+    "waehlen": "{{name}} wählen",
+    "kanal": {
+      "mail": "Mail",
+      "sms": "SMS",
+      "brief": "Brief"
+    },
+    "titelBrief": "Brief prüfen",
+    "ohneBetreff": "(ohne Betreff)",
+    "zurueckVon": "Zurück von {{name}}",
+    "seitStunden_one": "seit {{count}} Std.",
+    "seitStunden_other": "seit {{count}} Std.",
+    "geplantFuer": "geplant {{zeit}}",
+    "kiText": "KI-Text",
+    "antwort": "Antwort erhalten",
+    "nichtMeins": "Freigabe durch andere",
+    "von": "von {{name}}",
+    "vonFeld": "Von",
+    "brief": {
+      "offen": "Rücklauf offen",
+      "zurueck": "Rücklauf erhalten",
+      "versendet": "Gedruckt und versendet",
+      "ruecklaufJa": "Unterschrieben zurück",
+      "ruecklaufNein": "Rücklauf zurücksetzen"
+    },
+    "suchen": "Empfänger, Kunde, Betreff …",
+    "nichtsOffen": "Nichts geöffnet",
+    "nichtsOffenText": "Wähle links eine Nachricht. Mit J und K blätterst du, mit F gibst du frei.",
+    "auswahl_one": "{{count}} gewählt",
+    "auswahl_other": "{{count}} gewählt",
+    "auswahlLeeren": "Auswahl aufheben",
+    "auswahlOhneRecht_one": "{{count}} davon darfst du nicht freigeben, sie bleiben liegen.",
+    "auswahlOhneRecht_other": "{{count}} davon darfst du nicht freigeben, sie bleiben liegen.",
+    "freigebenAnzahl_one": "{{count}} freigeben",
+    "freigebenAnzahl_other": "{{count}} freigeben",
+    "spaeter": "Später senden",
+    "zeit": {
+      "heute17": "Heute 17:00",
+      "morgen8": "Morgen 08:00",
+      "montag8": "Montag 08:00"
+    },
+    "eigeneZeit": "Eigene Zeit …",
+    "eigeneZeitEinzeln": "Eigene Zeit: in der einzelnen Nachricht",
+    "planen": "Freigeben und planen",
+    "verwerfGrund": {
+      "erledigt": "Schon erledigt",
+      "telefoniert": "Telefonisch geklärt",
+      "falsch": "Inhalt falsch",
+      "doppelt": "Doppelt",
+      "veraltet": "Nicht mehr aktuell",
+      "anderes": "Anderer Grund …"
+    },
+    "zurueckAn": "Zurück an {{name}}",
+    "zurueckFrage": "Was soll {{name}} ändern?",
+    "zurueckBeispiel": "z. B. Bitte Speicher-Variante beilegen",
+    "zurueckSenden": "Zurückschicken",
+    "zurueckholen": "Zurückholen",
+    "bearbeiten": "Ändern",
+    "postadresse": "Postadresse",
+    "anhang": "Anhang",
+    "soSiehtEsAus": "So sieht es der Empfänger",
+    "smsTeile_one": "{{count}} SMS",
+    "smsTeile_other": "{{count}} SMS",
+    "herkunft": "vorbereitet von {{name}} am {{zeit}}",
+    "freigegebenVon": "freigegeben von {{name}} am {{zeit}}",
+    "gesendetUm": "gesendet {{zeit}}",
+    "verworfenVon": "Nicht gesendet ({{name}})",
+    "keinRecht": "Diese Art gibt eine andere Person frei. Du kannst sie ansehen, zurückschicken oder nicht senden.",
+    "antwortAm": "Antwort erhalten am {{zeit}}",
+    "nochKeineAntwort": "Noch keine Antwort erhalten.",
+    "geprueft": "Vor dem Senden geprüft",
+    "stufe": {
+      "ok": "in Ordnung",
+      "warnung": "Hinweis",
+      "fehler": "Problem"
+    },
+    "pruefung": {
+      "outlook_ok": "Outlook von {{wert}} ist verbunden",
+      "outlook_fehlt": "Outlook von {{wert}} ist nicht verbunden: so geht die Mail nicht raus",
+      "werbung_ok": "Kunde hat keine Werbesperre",
+      "werbesperre": "Kunde will keine Werbung (Werbesperre)",
+      "sprache_ok": "Sprache passt zum Kunden ({{wert}})",
+      "sprache_anders": "Kunde spricht {{wert}}, die Nachricht ist in einer anderen Sprache",
+      "anhaenge_ok": "Anhänge vorhanden ({{wert}})",
+      "anhang_fehlt": "Ein Anhang fehlt oder ist im Papierkorb",
+      "kuerzlich": "Gleiche Art ging am {{wert}} schon an diese Adresse",
+      "sms_lang": "Text ist lang: wird als {{wert}} SMS verrechnet",
+      "veraltet": "Geplante Zeit {{wert}} ist schon vorbei: noch aktuell?",
+      "kein_recht": "Freigabe nur mit Recht «{{wert}}»"
+    },
+    "recht": {
+      "admin": "Administration",
+      "finanzen": "Finanzen",
+      "preise": "Preise",
+      "planung": "Planung",
+      "basis": "Basis"
+    },
+    "gehoertZu": "Gehört zu",
+    "bezug": {
+      "kunde": "Kunde",
+      "lead": "Lead",
+      "offerte": "Offerte",
+      "projekt": "Projekt",
+      "rechnung": "Rechnung"
+    },
+    "faellig": "fällig {{datum}}",
+    "danachOfferte": "Nach dem Senden steht die Offerte auf «versendet».",
+    "letzteNachrichten": "Letzte Nachrichten",
+    "verlaufArt": {
+      "mail": "Mail",
+      "sms": "SMS",
+      "anruf": "Anruf",
+      "notiz": "Notiz",
+      "termin": "Termin",
+      "brief": "Brief"
+    },
+    "loesung": {
+      "outlook": "Die Microsoft-Verbindung von {{name}} fehlt oder ist abgelaufen. {{name}} verbindet unter «Mein Konto» neu, oder du sendest aus deinem Outlook.",
+      "sms": "Der SMS-Dienst hat abgelehnt (Zugang oder Guthaben). Unter Einstellungen › Verbindungen prüfen, dann nochmals senden.",
+      "unklar": "Unklar, ob die Nachricht angekommen ist. Schau in Outlook unter «Gesendete Elemente». Ist sie dort, markiere sie als gesendet, sonst nochmals senden.",
+      "anhang": "Ein Anhang ist zu gross oder fehlt. Anhang prüfen, dann nochmals senden.",
+      "nochmal": "Beim Senden ging etwas schief. Meist hilft nochmals senden."
+    },
+    "loesungKnopf": {
+      "verbinden": "Zu «Mein Konto»",
+      "ausMeinem": "Aus meinem Outlook senden",
+      "alsGesendet": "In Outlook gefunden: als gesendet markieren",
+      "nochmal": "Nochmals senden"
+    },
+    "woche": {
+      "gesendet": "gesendet (7 Tage)",
+      "wartezeit": "Ø bis zur Freigabe",
+      "antworten": "Antworten"
+    },
+    "heute": {
+      "titel": "Wartet auf deine Freigabe",
+      "alle_one": "{{count}} offen",
+      "alle_other": "Alle {{count}}"
+    },
+    "kuerzel": {
+      "freigeben": "Freigeben und senden",
+      "bearbeiten": "Nachricht ändern",
+      "verwerfen": "Nicht senden",
+      "naechste": "Nächste Nachricht",
+      "vorige": "Vorige Nachricht"
+    }
   },
   "integration": {
     "fehler": {

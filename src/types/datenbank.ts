@@ -796,6 +796,13 @@ export type Database = {
             foreignKeyName: 'anschreiben_ausgang_id_fkey'
             columns: ['ausgang_id']
             isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'anschreiben_ausgang_id_fkey'
+            columns: ['ausgang_id']
+            isOneToOne: false
             referencedRelation: 'ausgangskorb'
             referencedColumns: ['id']
           },
@@ -1071,6 +1078,7 @@ export type Database = {
           bezug_id: string | null
           bezug_tabelle: string | null
           cc: string | null
+          erinnert_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           extern_id: string | null
@@ -1088,6 +1096,8 @@ export type Database = {
           kontakt_id: string | null
           offerte_id: string | null
           projekt_id: string | null
+          rueckgaengig_bis: string | null
+          ruecklauf_am: string | null
           schluessel: string | null
           sende_ab: string | null
           sprache: string
@@ -1096,6 +1106,11 @@ export type Database = {
           verkaufschance_id: string | null
           versuche: number
           verworfen_grund: string | null
+          verworfen_von: string | null
+          zurueck_am: string | null
+          zurueck_an: string | null
+          zurueck_notiz: string | null
+          zurueck_von: string | null
         }
         ComputedFields: never
         Insert: {
@@ -1110,6 +1125,7 @@ export type Database = {
           bezug_id?: string | null
           bezug_tabelle?: string | null
           cc?: string | null
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           extern_id?: string | null
@@ -1127,6 +1143,8 @@ export type Database = {
           kontakt_id?: string | null
           offerte_id?: string | null
           projekt_id?: string | null
+          rueckgaengig_bis?: string | null
+          ruecklauf_am?: string | null
           schluessel?: string | null
           sende_ab?: string | null
           sprache?: string
@@ -1135,6 +1153,11 @@ export type Database = {
           verkaufschance_id?: string | null
           versuche?: number
           verworfen_grund?: string | null
+          verworfen_von?: string | null
+          zurueck_am?: string | null
+          zurueck_an?: string | null
+          zurueck_notiz?: string | null
+          zurueck_von?: string | null
         }
         Update: {
           absender_person_id?: string | null
@@ -1148,6 +1171,7 @@ export type Database = {
           bezug_id?: string | null
           bezug_tabelle?: string | null
           cc?: string | null
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           extern_id?: string | null
@@ -1165,6 +1189,8 @@ export type Database = {
           kontakt_id?: string | null
           offerte_id?: string | null
           projekt_id?: string | null
+          rueckgaengig_bis?: string | null
+          ruecklauf_am?: string | null
           schluessel?: string | null
           sende_ab?: string | null
           sprache?: string
@@ -1173,6 +1199,11 @@ export type Database = {
           verkaufschance_id?: string | null
           versuche?: number
           verworfen_grund?: string | null
+          verworfen_von?: string | null
+          zurueck_am?: string | null
+          zurueck_an?: string | null
+          zurueck_notiz?: string | null
+          zurueck_von?: string | null
         }
         Relationships: [
           {
@@ -1285,6 +1316,27 @@ export type Database = {
             columns: ['verkaufschance_id']
             isOneToOne: false
             referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verworfen_von_fkey'
+            columns: ['verworfen_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_zurueck_an_fkey'
+            columns: ['zurueck_an']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_zurueck_von_fkey'
+            columns: ['zurueck_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -9027,6 +9079,159 @@ export type Database = {
         ComputedFields: never
         Relationships: []
       }
+      ausgang_ansicht: {
+        Row: {
+          absender: string | null
+          absender_person_id: string | null
+          an: string | null
+          anhaenge: Json | null
+          antwort_am: string | null
+          art: string | null
+          automatisch: boolean | null
+          betreff: string | null
+          bezug_id: string | null
+          bezug_tabelle: string | null
+          cc: string | null
+          darf_freigeben: boolean | null
+          erstellt_am: string | null
+          fehler: string | null
+          freigegeben_am: string | null
+          freigegeben_durch: string | null
+          fuer_mich: boolean | null
+          gesendet_am: string | null
+          html: string | null
+          id: string | null
+          kanal: string | null
+          ki_auftrag: Json | null
+          ki_status: string | null
+          kontakt_id: string | null
+          kunde: string | null
+          offerte_id: string | null
+          projekt_id: string | null
+          rueckgaengig_bis: string | null
+          ruecklauf_am: string | null
+          sende_ab: string | null
+          sprache: string | null
+          status: string | null
+          text: string | null
+          verkaufschance_id: string | null
+          verworfen_grund: string | null
+          verworfen_von: string | null
+          vorbereitet_von: string | null
+          zurueck_am: string | null
+          zurueck_an: string | null
+          zurueck_notiz: string | null
+          zurueck_von: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'ausgangskorb_absender_person_id_fkey'
+            columns: ['absender_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['offerte_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       bestellungen_liste: {
         Row: {
           bestellt_am: string | null
@@ -10484,13 +10689,16 @@ export type Database = {
       artikel_archivieren: { Args: { p_artikel: string; p_grund: string; p_nachfolger?: string }; Returns: undefined }
       artikel_preis_setzen: { Args: { p: Json; p_artikel: string }; Returns: undefined }
       auftrag_erstellen: { Args: { p: Json; p_offerte: string }; Returns: string }
+      ausgang_absender_ich: { Args: { p_id: string }; Returns: undefined }
       ausgang_aendern: { Args: { p: Json; p_id: string }; Returns: undefined }
+      ausgang_als_gesendet: { Args: { p_id: string }; Returns: undefined }
       ausgang_anlegen: { Args: { p: Json }; Returns: string }
       ausgang_ergebnis: {
         Args: { p_extern_id: string; p_id: string; p_meldung: string; p_ok: boolean }
         Returns: undefined
       }
-      ausgang_freigeben: { Args: { p_ids: string[] }; Returns: number }
+      ausgang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      ausgang_freigeben: { Args: { p_ids: string[]; p_sende_ab?: string; p_warten_s?: number }; Returns: number }
       ausgang_holen: {
         Args: { p_limit?: number }
         Returns: {
@@ -10505,6 +10713,7 @@ export type Database = {
           bezug_id: string | null
           bezug_tabelle: string | null
           cc: string | null
+          erinnert_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           extern_id: string | null
@@ -10522,6 +10731,8 @@ export type Database = {
           kontakt_id: string | null
           offerte_id: string | null
           projekt_id: string | null
+          rueckgaengig_bis: string | null
+          ruecklauf_am: string | null
           schluessel: string | null
           sende_ab: string | null
           sprache: string
@@ -10530,6 +10741,11 @@ export type Database = {
           verkaufschance_id: string | null
           versuche: number
           verworfen_grund: string | null
+          verworfen_von: string | null
+          zurueck_am: string | null
+          zurueck_an: string | null
+          zurueck_notiz: string | null
+          zurueck_von: string | null
         }[]
         SetofOptions: {
           from: '*'
@@ -10538,7 +10754,13 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      ausgang_kontext: { Args: { p_id: string }; Returns: Json }
+      ausgang_planen: { Args: { p_ids: string[]; p_sende_ab: string }; Returns: number }
+      ausgang_pruefen: { Args: { p_id: string }; Returns: Json }
+      ausgang_ruecklauf: { Args: { p_id: string; p_zurueck?: boolean }; Returns: undefined }
       ausgang_verwerfen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      ausgang_zurueck: { Args: { p_an?: string; p_id: string; p_notiz: string }; Returns: string }
+      ausgang_zurueckholen: { Args: { p_ids: string[] }; Returns: number }
       ausschreibung_einlesen: { Args: { p: Json }; Returns: Json }
       ausschreibung_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
       ausschreibung_erfassen: { Args: { p: Json }; Returns: string }

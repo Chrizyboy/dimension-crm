@@ -1,309 +1,179 @@
-import { Ban, Send, Sparkles } from 'lucide-react'
+import { CheckCheck, Send, Sparkles, Undo2, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogInhalt } from '@/components/ui/dialog'
-import { Feld } from '@/components/ui/feld'
-import { Input, Textarea } from '@/components/ui/input'
+import { useTaste } from '@/hooks/useTaste'
 import { feldFehler } from '@/lib/formular'
-import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
-import { meldeFehler } from '@/services/fehler'
-import { ausgangJetztSenden, fehlerText, meldeIntegrationsFehler } from '@/services/integrationen'
+import { ausgangJetztSenden } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
+import { useAusgangAkte } from '../hooks/useAusgang'
+import { useAusgangAktionen } from '../hooks/useAusgangAktionen'
 import { STATUS_TON, zeitpunkt } from '../lib/anzeige'
 import { aenderungSchema, type AusgangAenderung } from '../schema'
-import { aendern, freigeben, verwerfen } from '../services/ausgang'
+import { absenderIch, aendern, alsGesendet, ruecklauf, verwerfen, zurueckAn, zurueckholen } from '../services/ausgang'
 import type { AusgangEintrag } from '../types'
-
-/** HTML einer Mail als reiner Text (nie als HTML anzeigen: fremde Inhalte sind Daten). */
-function alsText(html: string): string {
-  const d = new DOMParser().parseFromString(html.replace(/<br\s*\/?>/gi, '\n'), 'text/html')
-  return d.body.textContent.trim()
-}
+import { DetailFuss } from './DetailFuss'
+import { FehlerLoesung } from './FehlerLoesung'
+import { alsText, MailInhalt } from './MailInhalt'
+import { PruefKasten } from './PruefKasten'
 
 /**
- * Ein Eintrag im Ausgangskorb als Seitenblatt: lesen, vor der Freigabe ändern, freigeben und senden
- * oder verwerfen. Senden heisst immer: ein Mensch hat den Text gesehen (Regel 6).
+ * Akte eines Eintrags in der Werkbank: Kopf mit Stand und Herkunft, Inhalt so wie ihn der Kunde bekommt, daneben
+ * Prüfungen und Zusammenhang, unten die Aktionen. Senden heisst immer: ein Mensch hat den Text gesehen (Regel 6).
  */
 export function AusgangDetail({
-  eintrag,
+  eintrag: e,
   onSchliessen,
-  onGeaendert,
+  imPanel = false,
 }: {
   eintrag: AusgangEintrag
   onSchliessen: () => void
-  onGeaendert: () => void
+  /** Im Seitenpanel (schmaler Bildschirm) schliesst das Panel selbst. */
+  imPanel?: boolean
 }) {
   const { t } = useTranslation()
-  const offen = eintrag.status === 'wartet' || eintrag.status === 'fehler'
-  const [w, setW] = useState<AusgangAenderung>({
-    kanal: eintrag.kanal,
-    an: eintrag.an,
-    cc: eintrag.cc ?? '',
-    betreff: eintrag.betreff ?? '',
-    text: eintrag.text ?? (eintrag.html ? alsText(eintrag.html) : ''),
-  })
-  const [fehler, setFehler] = useState<Partial<Record<keyof AusgangAenderung, string>>>({})
-  const [grund, setGrund] = useState<string | null>(null)
-  const [laeuft, setLaeuft] = useState(false)
-
-  async function ausfuehren(f: () => Promise<void>) {
-    setLaeuft(true)
-    try {
-      await f()
-      onGeaendert()
-    } catch (e) {
-      const s = fachFehlerSchluessel(e)
-      if (s) melde('kritisch', zweisprachig(s))
-      else if (e instanceof Error && e.name === 'IntegrationsFehler') meldeIntegrationsFehler(e)
-      else {
-        meldeFehler(e, 'ausgang')
-        melde('kritisch', { de: 'Nicht gespeichert', fr: 'Non enregistré' })
-      }
-    } finally {
-      setLaeuft(false)
-    }
+  const akte = useAusgangAkte(e.id)
+  const { laeuft, ausfuehren, freigebenUndSenden } = useAusgangAktionen()
+  const offen = e.status === 'wartet' || e.status === 'fehler'
+  const original: AusgangAenderung = {
+    kanal: e.kanal,
+    an: e.an,
+    cc: e.cc ?? '',
+    betreff: e.betreff ?? '',
+    text: e.text ?? (e.html ? alsText(e.html) : ''),
   }
+  const [w, setW] = useState<AusgangAenderung>(original)
+  const [bearbeiten, setBearbeiten] = useState(false)
+  const [fehler, setFehler] = useState<Partial<Record<keyof AusgangAenderung, string>>>({})
+  const geaendert = (['an', 'cc', 'betreff', 'text'] as const).some((k) => w[k] !== original[k])
 
-  const geaendert =
-    w.an !== eintrag.an ||
-    w.cc !== (eintrag.cc ?? '') ||
-    w.betreff !== (eintrag.betreff ?? '') ||
-    w.text !== (eintrag.text ?? '')
-
-  function senden() {
+  /** Prüfen, Änderungen speichern, dann freigeben (mit «Rückgängig») oder für später planen. */
+  function senden(sendeAb: Date | null) {
     const g = aenderungSchema.safeParse(w)
     if (!g.success) {
       setFehler(feldFehler(g.error.issues, t))
+      setBearbeiten(true)
       return
     }
     setFehler({})
-    void ausfuehren(async () => {
-      if (geaendert) await aendern(eintrag.id, g.data)
-      await freigeben([eintrag.id])
-      const r = await ausgangJetztSenden().catch(() => null)
-      melde(
-        r && r.fehler === 0 ? 'ok' : 'info',
-        r && r.fehler === 0
-          ? { de: 'Gesendet', fr: 'Envoyé' }
-          : { de: 'Freigegeben – wird in Kürze gesendet', fr: 'Approuvé – envoi sous peu' },
-      )
-      onSchliessen()
-    })
+    void (async () => {
+      if (geaendert && !(await ausfuehren(() => aendern(e.id, g.data)))) return
+      if (await freigebenUndSenden([e.id], sendeAb)) onSchliessen()
+    })()
   }
 
-  const fuss = offen ? (
-    <>
-      <Button
-        variant="ghost"
-        onClick={() => {
-          setGrund('')
-        }}
-        disabled={laeuft}
-      >
-        <Ban />
-        {t('ausgang.verwerfen')}
-      </Button>
-      <Button onClick={senden} laedt={laeuft}>
-        <Send />
-        {t('ausgang.freigebenSenden')}
-      </Button>
-    </>
-  ) : eintrag.status === 'freigegeben' ? (
-    <Button
-      laedt={laeuft}
-      onClick={() =>
-        void ausfuehren(async () => {
-          await ausgangJetztSenden()
-        })
-      }
-    >
-      <Send />
-      {t('ausgang.jetztSenden')}
-    </Button>
-  ) : undefined
+  useTaste('f', () => { senden(null) }, offen && e.darf_freigeben && !laeuft, t('ausgang.kuerzel.freigeben'))
+  useTaste('e', () => { setBearbeiten(true) }, offen && !bearbeiten, t('ausgang.kuerzel.bearbeiten'))
 
   return (
-    <Dialog
-      open
-      onOpenChange={(o) => {
-        if (!o) onSchliessen()
-      }}
-    >
-      <DialogInhalt
-        art="seite"
-        titel={eintrag.kanal === 'sms' ? t('ausgang.titelSms') : t('ausgang.titelMail')}
-        beschreibung={eintrag.kunde ?? eintrag.an}
-        {...(fuss ? { fuss } : {})}
-      >
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge ton={STATUS_TON[eintrag.status]} punkt>
-              {t(`ausgang.status.${eintrag.status}`)}
-            </Badge>
-            {eintrag.automatisch && <Badge ton="info">{t('ausgang.automatisch')}</Badge>}
-            {eintrag.ki_status && eintrag.ki_status !== 'uebersprungen' && (
-              <Badge
-                ton={eintrag.ki_status === 'fertig' ? 'marke' : eintrag.ki_status === 'fehler' ? 'warnung' : 'info'}
-              >
+    <article className="flex min-h-0 flex-1 flex-col" aria-label={e.betreff ?? e.an}>
+      <header className="flex items-start justify-between gap-3 border-b px-4 py-3">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Badge ton={STATUS_TON[e.status]} punkt>{t(`ausgang.status.${e.status}`)}</Badge>
+            <Badge>{t(`ausgang.art.${e.art}`, { defaultValue: e.art })}</Badge>
+            {e.automatisch && <Badge ton="info">{t('ausgang.automatisch')}</Badge>}
+            {e.ki_status && e.ki_status !== 'uebersprungen' && (
+              <Badge ton={e.ki_status === 'fertig' ? 'marke' : e.ki_status === 'fehler' ? 'warnung' : 'info'}>
                 <Sparkles />
-                {t(`ki.ausgang.${eintrag.ki_status}`)}
+                {t(`ki.ausgang.${e.ki_status}`)}
               </Badge>
             )}
-            <Badge>{t(`ausgang.art.${eintrag.art}`, { defaultValue: eintrag.art })}</Badge>
           </div>
-          {eintrag.status === 'fehler' && eintrag.fehler && (
-            <p role="alert" className="bg-bad-soft text-bad rounded-md p-3 text-sm">
-              {fehlerText(new Error(eintrag.fehler))}
+          <h2 className="font-display text-base font-semibold break-words">{e.betreff ?? e.kunde ?? e.an}</h2>
+          <p className="text-muted-foreground text-xs">
+            {t('ausgang.herkunft', { name: e.vorbereitet_von ?? t('ausgang.system'), zeit: zeitpunkt(e.erstellt_am) })}
+            {e.freigegeben_am && ` · ${t('ausgang.freigegebenVon', { name: e.freigegeben_durch ?? t('ausgang.automatisch'), zeit: zeitpunkt(e.freigegeben_am) })}`}
+            {e.gesendet_am && ` · ${t('ausgang.gesendetUm', { zeit: zeitpunkt(e.gesendet_am) })}`}
+            {e.sende_ab && e.status !== 'gesendet' && ` · ${t('ausgang.geplantFuer', { zeit: zeitpunkt(e.sende_ab) })}`}
+          </p>
+        </div>
+        {!imPanel && (
+          <Button variant="ghost" size="icon" aria-label={t('allgemein.schliessen')} onClick={onSchliessen}>
+            <X />
+          </Button>
+        )}
+      </header>
+
+      <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto px-4 py-4 2xl:grid-cols-[minmax(0,1fr)_17rem]">
+        <div className="flex min-w-0 flex-col gap-3">
+          {e.zurueck_am && e.status === 'wartet' && (
+            <p className="bg-info-soft rounded-lg p-3 text-sm">
+              <span className="font-semibold">{t('ausgang.zurueckVon', { name: e.zurueck_von ?? '' })}:</span> {e.zurueck_notiz}
             </p>
           )}
-
-          {offen ? (
-            <div className="flex flex-col gap-3">
-              <Feld id="ausgang-an" label={t('ausgang.an')} fehler={fehler.an} pflicht>
-                <Input
-                  id="ausgang-an"
-                  value={w.an}
-                  onChange={(e) => {
-                    setW({ ...w, an: e.target.value })
-                  }}
-                />
-              </Feld>
-              {eintrag.kanal === 'mail' && (
-                <>
-                  <Feld id="ausgang-cc" label={t('ausgang.cc')}>
-                    <Input
-                      id="ausgang-cc"
-                      value={w.cc}
-                      onChange={(e) => {
-                        setW({ ...w, cc: e.target.value })
-                      }}
-                    />
-                  </Feld>
-                  <Feld id="ausgang-betreff" label={t('ausgang.betreff')} fehler={fehler.betreff} pflicht>
-                    <Input
-                      id="ausgang-betreff"
-                      value={w.betreff}
-                      onChange={(e) => {
-                        setW({ ...w, betreff: e.target.value })
-                      }}
-                    />
-                  </Feld>
-                </>
-              )}
-              <Feld id="ausgang-text" label={t('ausgang.text')} fehler={fehler.text} pflicht>
-                <Textarea
-                  id="ausgang-text"
-                  rows={eintrag.kanal === 'sms' ? 4 : 10}
-                  value={w.text}
-                  onChange={(e) => {
-                    setW({ ...w, text: e.target.value })
-                  }}
-                />
-              </Feld>
-              {eintrag.kanal === 'sms' && (
-                <p className="text-muted-foreground text-xs">{t('ausgang.zeichen', { count: w.text.length })}</p>
-              )}
-              {eintrag.ki_status === 'wartet' && (
-                <p className="text-muted-foreground text-xs">{t('ki.ausgang.wartetHinweis')}</p>
-              )}
-              {eintrag.ki_status === 'fertig' && eintrag.ki_auftrag?.vorlage_text && (
-                <details className="text-xs">
-                  <summary className="text-muted-foreground cursor-pointer">{t('ki.ausgang.vorlageZeigen')}</summary>
-                  <p className="bg-muted/60 mt-2 rounded-md p-3 whitespace-pre-wrap">
-                    {eintrag.ki_auftrag.vorlage_text}
-                  </p>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="mt-1"
-                    onClick={() => {
-                      setW({ ...w, text: eintrag.ki_auftrag?.vorlage_text ?? w.text })
-                    }}
-                  >
-                    {t('ki.ausgang.vorlageNehmen')}
-                  </Button>
-                </details>
-              )}
-            </div>
-          ) : (
-            <AkteAbschnitt titel={t('ausgang.inhalt')}>
-              <dl>
-                <Angabe label={t('ausgang.an')}>{eintrag.an}</Angabe>
-                {eintrag.cc && <Angabe label={t('ausgang.cc')}>{eintrag.cc}</Angabe>}
-                {eintrag.betreff && <Angabe label={t('ausgang.betreff')}>{eintrag.betreff}</Angabe>}
-              </dl>
-              <p className="bg-muted/60 rounded-md p-3 text-sm whitespace-pre-wrap">{w.text}</p>
-            </AkteAbschnitt>
+          {e.status === 'fehler' && (
+            <FehlerLoesung
+              e={e}
+              laeuft={laeuft}
+              onNochmal={() => { senden(null) }}
+              onAlsGesendet={() => void ausfuehren(async () => { await alsGesendet(e.id); melde('ok', { de: 'Als gesendet vermerkt', fr: 'Marqué comme envoyé' }) })}
+              onAbsenderIch={() => void ausfuehren(async () => { await absenderIch(e.id); melde('ok', { de: 'Geht jetzt aus deinem Outlook', fr: 'Part maintenant de ton Outlook' }) })}
+            />
           )}
-
-          {eintrag.anhaenge.length > 0 && (
-            <AkteAbschnitt titel={t('ausgang.anhaenge')}>
-              <ul className="text-sm">
-                {eintrag.anhaenge.map((a) => (
-                  <li key={a.dokument_id}>{a.name ?? a.dokument_id}</li>
-                ))}
-              </ul>
-            </AkteAbschnitt>
+          {e.status === 'verworfen' && (
+            <p className="bg-muted rounded-lg p-3 text-sm">
+              {t('ausgang.verworfenVon', { name: e.verworfen_von ?? '–' })}: {e.verworfen_grund ?? '–'}
+            </p>
           )}
-
-          <AkteAbschnitt titel={t('ausgang.ablauf')}>
-            <dl>
-              <Angabe label={t('ausgang.erstellt')}>{zeitpunkt(eintrag.erstellt_am)}</Angabe>
-              <Angabe label={t('ausgang.absender')}>{eintrag.absender ?? t('ausgang.system')}</Angabe>
-              {eintrag.freigegeben_am && (
-                <Angabe label={t('ausgang.freigegeben')}>
-                  {zeitpunkt(eintrag.freigegeben_am)} · {eintrag.freigegeben_durch ?? t('ausgang.automatisch')}
-                </Angabe>
-              )}
-              {eintrag.gesendet_am && <Angabe label={t('ausgang.gesendet')}>{zeitpunkt(eintrag.gesendet_am)}</Angabe>}
-              {eintrag.verworfen_grund && <Angabe label={t('ausgang.grund')}>{eintrag.verworfen_grund}</Angabe>}
-            </dl>
-          </AkteAbschnitt>
-
-          {grund !== null && (
-            <div className="flex flex-col gap-2 rounded-lg border p-3">
-              <Feld id="ausgang-grund" label={t('ausgang.grundFrage')}>
-                <Input
-                  id="ausgang-grund"
-                  value={grund}
-                  onChange={(e) => {
-                    setGrund(e.target.value)
-                  }}
-                  autoFocus
-                />
-              </Feld>
-              <div className="flex justify-end gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setGrund(null)
-                  }}
-                >
-                  {t('allgemein.abbrechen')}
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  laedt={laeuft}
-                  onClick={() =>
-                    void ausfuehren(async () => {
-                      await verwerfen(eintrag.id, grund)
-                      melde('ok', { de: 'Verworfen – wird nicht gesendet', fr: 'Rejeté – ne sera pas envoyé' })
-                      onSchliessen()
-                    })
-                  }
-                >
-                  {t('ausgang.verwerfenJa')}
-                </Button>
-              </div>
-            </div>
-          )}
+          {offen && !e.darf_freigeben && <p className="bg-warn-soft rounded-lg p-3 text-sm">{t('ausgang.keinRecht')}</p>}
+          <MailInhalt e={e} w={w} bearbeiten={offen && bearbeiten} fehler={fehler} onAenderung={setW} />
         </div>
-      </DialogInhalt>
-    </Dialog>
+        <PruefKasten e={e} pruefungen={akte.pruefungen} kontext={akte.kontext} laedt={akte.laedt} />
+      </div>
+
+      <footer className="bg-surface-2 border-t px-4 py-3">
+        {offen ? (
+          <DetailFuss
+            darf={e.darf_freigeben}
+            laeuft={laeuft}
+            bearbeiten={bearbeiten}
+            vorbereitetVon={e.vorbereitet_von}
+            onBearbeiten={() => { setBearbeiten(true) }}
+            onFreigeben={senden}
+            onVerwerfen={(grund) => void ausfuehren(async () => {
+              await verwerfen(e.id, grund)
+              melde('ok', { de: 'Wird nicht gesendet', fr: 'Ne sera pas envoyé' })
+              onSchliessen()
+            })}
+            onZurueck={(notiz) => void ausfuehren(async () => {
+              await zurueckAn(e.id, notiz)
+              melde('ok', { de: `Zurück an ${e.vorbereitet_von ?? ''}`, fr: `Renvoyé à ${e.vorbereitet_von ?? ''}` })
+              onSchliessen()
+            })}
+          />
+        ) : e.status === 'freigegeben' && e.kanal === 'brief' ? (
+          <div className="flex justify-end">
+            <Button laedt={laeuft} onClick={() => void ausfuehren(async () => { await alsGesendet(e.id) })}>
+              <CheckCheck />
+              {t('ausgang.brief.versendet')}
+            </Button>
+          </div>
+        ) : e.status === 'freigegeben' ? (
+          <div className="flex flex-wrap justify-end gap-2">
+            <Button variant="secondary" laedt={laeuft} onClick={() => void ausfuehren(async () => { await zurueckholen([e.id]) })}>
+              <Undo2 />
+              {t('ausgang.zurueckholen')}
+            </Button>
+            <Button laedt={laeuft} onClick={() => void ausfuehren(async () => { await ausgangJetztSenden() })}>
+              <Send />
+              {t('ausgang.jetztSenden')}
+            </Button>
+          </div>
+        ) : e.kanal === 'brief' && e.status === 'gesendet' ? (
+          <div className="flex justify-end">
+            <Button variant={e.ruecklauf_am ? 'secondary' : 'primary'} laedt={laeuft} onClick={() => void ausfuehren(async () => { await ruecklauf(e.id, !e.ruecklauf_am) })}>
+              <CheckCheck />
+              {t(e.ruecklauf_am ? 'ausgang.brief.ruecklaufNein' : 'ausgang.brief.ruecklaufJa')}
+            </Button>
+          </div>
+        ) : (
+          <p className="text-muted-foreground text-xs">
+            {e.antwort_am ? t('ausgang.antwortAm', { zeit: zeitpunkt(e.antwort_am) }) : e.status === 'gesendet' ? t('ausgang.nochKeineAntwort') : ''}
+          </p>
+        )}
+      </footer>
+    </article>
   )
 }
