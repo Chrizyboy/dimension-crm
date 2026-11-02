@@ -64,7 +64,40 @@ export interface TagEintrag {
     garantie: boolean | null
     prioritaet: string | null
     kategorie: string | null
+    auswirkung?: string | null
+    komponente?: string | null
+    fehlercode?: string | null
+    dauer_minuten?: number | null
+    vor_ort_name?: string | null
+    vor_ort_telefon?: string | null
+    zugang?: string | null
+    checkliste?: ServiceSchritt[]
+    /** Schon «Vor Ort angekommen» gemeldet (Verlauf des Falls). */
+    angekommen?: boolean
+    anlage?: {
+      id: string
+      leistung_kwp: number | null
+      komponenten: ServiceKomponente[]
+      monitoring: { hersteller?: string | null; link?: string | null } | null
+    } | null
   }
+}
+
+/** Schritt der Service-Checkliste (Texte DE/FR aus den Einstellungen). */
+export interface ServiceSchritt {
+  de: string
+  fr: string
+  erledigt_am: string | null
+  person_id: string | null
+}
+
+/** Komponente der Anlage mit Seriennummer (am Handy änderbar, z. B. nach Tausch). */
+export interface ServiceKomponente {
+  art?: string | null
+  hersteller?: string | null
+  modell?: string | null
+  anzahl?: number | null
+  seriennummer?: string | null
 }
 
 /** Die laufende Zeit der Person (Start gedrückt, Stopp noch nicht). */

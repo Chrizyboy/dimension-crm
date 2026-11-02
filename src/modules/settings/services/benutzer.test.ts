@@ -6,6 +6,7 @@ import { statusVon } from './benutzer'
 const p = (teil: Partial<Person>): Person => ({
   id: '1',
   kuerzel: 'nora',
+  kurzzeichen: 'NO',
   name: 'Nora',
   email: 'nora@test.local',
   rolle: 'montage',
