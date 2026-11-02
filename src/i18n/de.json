@@ -583,6 +583,66 @@
     "mailsAusOutlook": "Mails aus Outlook laden",
     "projektOeffnen": "In «Projekte & Montage» öffnen"
   },
+  "kundenseite": {
+    "zurueck": "Zurück zu den Kunden",
+    "verlauf": "Verlauf",
+    "aufgaben": "Offene Aufgaben",
+    "zuAufgaben": "Alle Aufgaben",
+    "keineAufgabe": "Keine offenen Aufgaben.",
+    "neueAufgabe": "Neue Aufgabe für mich, Enter speichert",
+    "erledigen": "«{{titel}}» erledigt",
+    "anlagen": "Anlagen",
+    "anlage": "Anlage",
+    "ausIbn": "aus der Inbetriebnahme",
+    "keineAnlage": "Noch keine Anlage in Betrieb.",
+    "ibn": "IBN {{datum}}",
+    "garantieBis": "Garantie bis {{datum}}",
+    "garantieAbgelaufen": "Garantie abgelaufen",
+    "service": "Service und Wartung",
+    "zumService": "Zum Service",
+    "keinService": "Kein Wartungsvertrag und keine Service-Fälle.",
+    "wartungsvertrag": "Wartungsvertrag",
+    "wartungFaellig": "Wartung fällig",
+    "proJahr": "{{betrag}} pro Jahr exkl. MWST",
+    "naechsteWartung": "nächste Wartung {{datum}}",
+    "offeneFaelle": "Offene Fälle",
+    "erledigteFaelle": "Erledigte Fälle",
+    "garantie": "Garantie",
+    "erledigtAm": "erledigt {{datum}}",
+    "rechnungen": "Rechnungen und Zahlungen",
+    "zuRechnungen": "Zu den Rechnungen",
+    "keineRechnung": "Keine Rechnungen.",
+    "ueberfaellig": "Überfällig",
+    "bezahltAm": "bezahlt {{datum}}",
+    "faelligAm": "fällig {{datum}}",
+    "mahnstufe_one": "{{count}}. Mahnung",
+    "mahnstufe_other": "{{count}}. Mahnung",
+    "laufend": "Laufend",
+    "abgeschlossen": "Abgeschlossen",
+    "alleAngaben": "Alle Angaben",
+    "baubeginn": "Baubeginn {{datum}}",
+    "zahl": {
+      "seit": "Kunde seit",
+      "auftraege": "Aufträge total",
+      "offen": "Offen",
+      "offenUeberfaellig_one": "Offen, {{count}} überfällig",
+      "offenUeberfaellig_other": "Offen, {{count}} überfällig",
+      "anlagen": "Anlagen",
+      "service": "Service",
+      "serviceOffen_one": "{{count}} Fall offen",
+      "serviceOffen_other": "{{count}} Fälle offen",
+      "keinService": "nichts offen",
+      "termin": "Nächster Termin"
+    },
+    "termin": {
+      "besichtigung": "Nächster Termin: Besichtigung",
+      "service": "Nächster Termin: Service",
+      "wartung": "Nächste Wartung",
+      "baubeginn": "Nächster Termin: Baubeginn"
+    },
+    "nurFinanzen": "Rechnungen sieht nur, wer das Recht «Finanzen» hat.",
+    "nurBuchhaltung": "nur Buchhaltung"
+  },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
     "bearbeitenTitel": "Kontakt bearbeiten",
@@ -632,6 +692,7 @@
     "filter": "Zeitachse filtern",
     "filter_alle": "Alle",
     "filter_kontakte": "Kontakte",
+    "filter_mails": "Mails",
     "filter_geschaeft": "Geschäft",
     "filter_dokumente": "Dokumente",
     "filter_aenderungen": "Änderungen",
@@ -653,7 +714,9 @@
       "baubeginn": "Baubeginn {{nummer}}",
       "service": "Service",
       "dokument": "Dokument",
-      "aenderung": "Daten geändert"
+      "aenderung": "Daten geändert",
+      "mail_ein": "Mail erhalten",
+      "mail_aus": "Mail gesendet"
     },
     "feld": {
       "vorname": "Vorname",
@@ -4451,25 +4514,34 @@
   },
   "spesen": {
     "titel": "Spesen",
-    "beschreibung": "Belege fotografieren, Spesen erfassen und an die Buchhaltung senden.",
+    "beschreibung": "Belege fotografieren oder Kilometer erfassen. Die Buchhaltung prüft und zahlt mit dem Lohn aus.",
     "neu": "Spese erfassen",
     "filter": "Stand",
     "filterwert": {
       "offen": "Offen",
       "ausbezahlt": "Ausbezahlt",
       "storniert": "Storniert",
-      "alle": "Alle"
+      "alle": "Alle",
+      "firmenkarte": "Firmenkarte",
+      "abgelehnt": "Abgelehnt"
     },
     "status": {
-      "eingereicht": "Offen",
+      "eingereicht": "Eingereicht",
       "ausbezahlt": "Ausbezahlt",
-      "storniert": "Storniert"
+      "storniert": "Zurückgezogen",
+      "rueckfrage": "Rückfrage",
+      "geprueft": "Geprüft",
+      "abgelehnt": "Abgelehnt",
+      "verbucht": "Verbucht"
     },
     "ausbezahltAm": "Ausbezahlt {{datum}}",
     "ansicht": {
       "meine": "Meine Spesen",
       "alle": "Alle Spesen",
-      "kategorien": "Kategorien"
+      "kategorien": "Regeln",
+      "pruefen": "Prüfen",
+      "auszahlen": "Auszahlen",
+      "auswertung": "Auswertung"
     },
     "spalte": {
       "datum": "Datum",
@@ -4478,13 +4550,14 @@
       "kategorie": "Kategorie",
       "beleg": "Beleg",
       "betrag": "Betrag CHF",
-      "status": "Stand"
+      "status": "Stand",
+      "projekt": "Projekt"
     },
     "alleWaehlen": "Alle offenen wählen",
     "waehlen": "«{{zweck}}» wählen",
     "belegAnsehen": "Ansehen",
     "ohneBeleg": "Ohne Beleg",
-    "stornieren": "Stornieren",
+    "stornieren": "Zurückziehen",
     "summe": "Summe {{betrag}}",
     "anzahl_one": "{{count}} Spese",
     "anzahl_other": "{{count}} Spesen",
@@ -4495,7 +4568,7 @@
     "leerText": "Mit «Spese erfassen» einen Beleg fotografieren und den Betrag eintragen.",
     "erfassen": {
       "titel": "Spese erfassen",
-      "text": "Beleg fotografieren oder als Datei wählen. Die Spese gehört dir und geht an die Buchhaltung.",
+      "text": "Zuerst den Beleg fotografieren: die KI füllt die Felder, du prüfst und speicherst.",
       "speichern": "Speichern",
       "kategorieWaehlen": "Kategorie wählen",
       "zweckBeispiel": "z. B. Parkhaus Kundentermin Freiburg",
@@ -4503,20 +4576,60 @@
       "foto": "Foto",
       "datei": "Datei wählen",
       "belegEntfernen": "Beleg entfernen",
-      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bleibt die Spese gelb markiert."
+      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bekommt die Buchhaltung einen Hinweis.",
+      "aendern": "Spese ändern",
+      "rueckfrage": "Rückfrage der Buchhaltung: «{{text}}». Nach dem Speichern geht die Spese zurück an die Buchhaltung.",
+      "speichernWeiter": "Speichern und nächste",
+      "art": "Art der Spese",
+      "belegErsetzen": "Beleg ersetzen",
+      "bezahltMit": "Bezahlt mit",
+      "firmenkarteHinweis": "Firmenkarte: wird nicht ausbezahlt, die Buchhaltung braucht nur den Beleg.",
+      "km": "Kilometer",
+      "kmRechnung": "× CHF {{satz}} pro km = {{betrag}}",
+      "mwst": "MWST",
+      "mwstUnbekannt": "nicht ausgewiesen",
+      "ohneMwst": "ohne MWST",
+      "ohneProjekt": "ohne Projekt (Nummer oder Kunde tippen)",
+      "personen": "Personen",
+      "projektHinweis": "Kosten erscheinen in der Nachkalkulation.",
+      "strecke": "Strecke",
+      "streckeBeispiel": "z. B. Bulle – Romont und zurück"
     },
     "storno": {
       "titel": "Spese stornieren",
       "grund": "Grund"
     },
     "auszahlen": {
-      "titel_one": "{{count}} Spese als ausbezahlt markieren",
-      "titel_other": "{{count}} Spesen als ausbezahlt markieren",
-      "text": "Total {{betrag}}. Danach lassen sie sich nicht mehr ändern.",
+      "titel_one": "{{count}} Spese auszahlen",
+      "titel_other": "{{count}} Spesen auszahlen",
+      "text": "Total {{betrag}} an {{personen}} Personen. Danach sind die Spesen fest und jede Person bekommt eine Glocke.",
       "datum": "Ausbezahlt am",
-      "knopf": "Als ausbezahlt markieren",
-      "knopfAuswahl_one": "{{count}} ausbezahlt",
-      "knopfAuswahl_other": "{{count}} ausbezahlt"
+      "knopf": "Auszahlung erstellen",
+      "knopfAuswahl_one": "{{count}} auszahlen",
+      "knopfAuswahl_other": "{{count}} auszahlen",
+      "art": "Auszahlung",
+      "lohn": "Mit dem Lohn",
+      "ueberweisung": "Überweisung",
+      "titelFeld": "Titel",
+      "titelHinweis": "Leer = «Lohn November 2026» nach Datum und Art.",
+      "kachelOffen_one": "geprüft, auszuzahlen ({{count}} · {{personen}} Personen)",
+      "kachelOffen_other": "geprüft, auszuzahlen ({{count}} · {{personen}} Personen)",
+      "kachelVorsteuer": "davon Vorsteuer (MWST)",
+      "kachelPruefen": "noch zu prüfen",
+      "kachelFirmenkarte": "Firmenkarte, noch zu prüfen",
+      "leer": "Nichts auszuzahlen",
+      "leerText": "Geprüfte Spesen mit eigenem Geld erscheinen hier je Person.",
+      "jePerson": "Je Person",
+      "anzahl": "Spesen",
+      "km": "Kilometer",
+      "personWaehlen": "{{person}} auszahlen",
+      "pdf": "Abrechnung PDF",
+      "vorschau": "Entwurf",
+      "csvName": "auszuzahlen",
+      "laeufe": "Bisherige Auszahlungen",
+      "keineLaeufe": "Noch keine Auszahlung erstellt.",
+      "personen_one": "{{count}} Person",
+      "personen_other": "{{count}} Personen"
     },
     "mail": {
       "knopf_one": "{{count}} an die Buchhaltung",
@@ -4536,15 +4649,123 @@
       "fr": "Französisch",
       "entfernen": "Kategorie entfernen",
       "neu": "Kategorie",
-      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar."
+      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar. Richtwert gilt je Person (Essen) oder je Beleg; Konto nach Kontenplan KMU."
     },
     "heute": {
-      "meine_one": "{{count}} eigene Spese offen",
-      "meine_other": "{{count}} eigene Spesen offen",
+      "meine_one": "{{count}} eigene Spese unterwegs",
+      "meine_other": "{{count}} eigene Spesen unterwegs",
       "alle_one": "{{count}} Spese wartet auf Auszahlung",
       "alle_other": "{{count}} Spesen warten auf Auszahlung",
       "oeffnen": "Öffnen",
-      "nichts": "Keine offenen Spesen."
+      "nichts": "Keine offenen Spesen.",
+      "rueckfrage_one": "{{count}} Rückfrage zu deinen Spesen",
+      "rueckfrage_other": "{{count}} Rückfragen zu deinen Spesen",
+      "pruefen_one": "{{count}} Spese zu prüfen",
+      "pruefen_other": "{{count}} Spesen zu prüfen"
+    },
+    "kilometerErfassen": "Kilometer erfassen",
+    "aendern": "«{{zweck}}» ändern",
+    "konto": "Konto",
+    "verlauf": "Verlauf",
+    "kmZeile": "{{km}} km × {{satz}}",
+    "mwstZeile": "MWST {{satz}} %",
+    "leerTextAlle": "Für diesen Filter gibt es keine Spesen.",
+    "hinweis": {
+      "doppelt": "doppelt?",
+      "ohne_beleg": "ohne Beleg",
+      "alt": "spät eingereicht",
+      "richtwert": "über Richtwert",
+      "waehrung": "fremde Währung"
+    },
+    "art": {
+      "beleg": "Beleg",
+      "kilometer": "Kilometer Privatauto"
+    },
+    "bezahlt": {
+      "eigen": "Eigenes Geld",
+      "firmenkarte": "Firmenkarte"
+    },
+    "grund": {
+      "storno": {
+        "titel": "Spese zurückziehen",
+        "feld": "Grund",
+        "hinweis": "Die Spese bleibt durchgestrichen sichtbar.",
+        "knopf": "Zurückziehen"
+      },
+      "rueckfrage": {
+        "titel": "Rückfrage an die Person",
+        "feld": "Frage",
+        "hinweis": "Die Person bekommt eine Glocke und antwortet, indem sie die Spese ändert.",
+        "knopf": "Rückfrage"
+      },
+      "ablehnen": {
+        "titel": "Spese ablehnen",
+        "feld": "Grund",
+        "hinweis": "Die Person bekommt eine Glocke. Abgelehnte Spesen sind fest.",
+        "knopf": "Ablehnen"
+      }
+    },
+    "meine": {
+      "wirdAusbezahlt_one": "geprüft, wird ausbezahlt ({{count}})",
+      "wirdAusbezahlt_other": "geprüft, wird ausbezahlt ({{count}})",
+      "beiBuchhaltung_one": "bei der Buchhaltung ({{count}})",
+      "beiBuchhaltung_other": "bei der Buchhaltung ({{count}})",
+      "rueckfragen": "Rückfragen an dich",
+      "jahr": "ausbezahlt dieses Jahr",
+      "jahrLetzte": "ausbezahlt dieses Jahr, zuletzt {{datum}} ({{mit}})",
+      "rueckfrageZu": "Rückfrage zu «{{zweck}}» vom {{datum}}:",
+      "beantworten": "Beantworten"
+    },
+    "pruefen": {
+      "leer": "Alles geprüft",
+      "leerText": "Neue Spesen erscheinen hier, sobald jemand eine einreicht.",
+      "alleOhneHinweis_one": "{{count}} ohne Hinweis prüfen",
+      "alleOhneHinweis_other": "Alle {{count}} ohne Hinweis prüfen",
+      "alleOhneHinweis_zero": "Keine ohne Hinweis",
+      "position": "{{nr}} von {{von}}",
+      "tasten": "J/K blättern, P prüfen",
+      "tasteWeiter": "Nächste Spese",
+      "tasteZurueck": "Vorherige Spese",
+      "tastePruefen": "Spese prüfen",
+      "geprueft": "Geprüft",
+      "aendern": "Ändern",
+      "belegAlt": "Beleg zu «{{zweck}}»",
+      "neuesFenster": "In neuem Fenster öffnen",
+      "kilometerOhneBeleg": "Kilometer brauchen keinen Beleg.",
+      "richtwertText": "Über dem Richtwert der Kategorie. Bitte Notiz und Anzahl Personen prüfen."
+    },
+    "auswertung": {
+      "jahr": "Jahr",
+      "total_one": "Spesen {{jahr}} ({{count}} Beleg)",
+      "total_other": "Spesen {{jahr}} ({{count}} Belege)",
+      "proMonat": "pro Monat (Schnitt)",
+      "aufProjekte": "auf Projekte gebucht",
+      "firmenkarte": "mit Firmenkarte",
+      "nachMonat": "Nach Monat",
+      "nachKategorie": "Nach Kategorie",
+      "nachPerson": "Nach Person",
+      "nachProjekt": "Nach Projekt"
+    },
+    "regeln": {
+      "titel": "Regeln",
+      "kmSatz": "Kilometer-Ansatz CHF",
+      "kmSatzHinweis": "Pro km mit dem Privatauto.",
+      "tage": "Einreichen innert Tagen",
+      "tageHinweis": "Später eingereichte bekommen einen Hinweis.",
+      "auszahlung": "Auszahlung normalerweise",
+      "richtwert": "Richtwert CHF",
+      "belegAb": "Beleg ab CHF",
+      "kmKategorie": "Kilometer: Betrag = km × Ansatz, ohne Beleg und ohne MWST."
+    },
+    "pdf": {
+      "titel": "Spesenabrechnung",
+      "mwst": "MWST",
+      "betrag": "CHF",
+      "total": "Total",
+      "vorsteuer": "Darin enthaltene MWST (Vorsteuer):",
+      "unterschriftPerson": "Datum, Unterschrift Mitarbeiter/in",
+      "unterschriftBuchhaltung": "Geprüft Buchhaltung",
+      "datei": "Spesenabrechnung"
     }
   },
   "finanzen": {
@@ -6459,7 +6680,10 @@
     "reiter": {
       "fahrzeuge": "Fahrzeuge",
       "geraete": "Geräte",
-      "fristen": "Fristen"
+      "fristen": "Fristen",
+      "erledigen": "Zu erledigen",
+      "belegung": "Belegung",
+      "kosten": "Kosten"
     },
     "spalte": {
       "fahrzeug": "Fahrzeug",
@@ -6517,7 +6741,11 @@
         "mfk": "MFK",
         "service": "Service",
         "pruefung": "Geräteprüfung",
-        "ausweis": "Ausweis läuft ab"
+        "ausweis": "Ausweis läuft ab",
+        "reifen": "Reifenwechsel",
+        "vignette": "Vignette",
+        "leasing": "Leasing endet",
+        "ausleihe": "Ausgeliehenes Gerät zurück"
       }
     },
     "akte": {
@@ -6530,7 +6758,27 @@
       "bearbeiten": "Angaben ändern",
       "anBord": "Geräte an Bord",
       "verlauf": "Verlauf",
-      "beiKm": "bei {{km}} km"
+      "beiKm": "bei {{km}} km",
+      "alleFahrzeuge": "Alle Fahrzeuge",
+      "ausgemustert": "Ausgemustert am {{datum}} {{grund}}",
+      "belegung": "Belegung",
+      "belegungLeer": "In den nächsten Tagen nicht verplant.",
+      "dokumente": "Dokumente",
+      "gefahren": "Gefahren seit Vertragsjahr: {{km}} km",
+      "kalibrierungAbgelaufen": "Kalibrierung abgelaufen: Messwerte nicht für Abnahmen verwenden.",
+      "kosten": "Kosten {{jahr}}",
+      "leasing": "Leasing",
+      "leasingBalken": "Gefahrene Kilometer im Vergleich zur Vertragslimite",
+      "mehrKm": "{{chf}} pro Mehr-km",
+      "nutzlast": "Nutzlast {{kg}}",
+      "proMonat": "{{chf}} pro Monat",
+      "prognose": "Prognose Vertragsjahr: {{km}} km",
+      "schaeden": "Offene Schäden",
+      "seitTagen_one": "seit 1 Tag",
+      "seitTagen_other": "seit {{count}} Tagen",
+      "ueberLimite": "Voraussichtlich {{km}} km über der Limite, rund {{chf}} Mehrkosten.",
+      "unterLimite": "Voraussichtlich unter der Limite, keine Mehr-km.",
+      "versicherung": "Versicherung und Steuern"
     },
     "feld": {
       "kennzeichen": "Kennzeichen",
@@ -6552,7 +6800,50 @@
       "serienNr": "Serien-Nr.",
       "hersteller": "Hersteller",
       "pruefMonate": "Prüfintervall (Monate)",
-      "naechste_pruefung": "Nächste Prüfung"
+      "naechste_pruefung": "Nächste Prüfung",
+      "art": "Fahrzeugart",
+      "treibstoff": "Treibstoff",
+      "standort_id": "Standort",
+      "naechster_reifenwechsel": "Nächster Reifenwechsel",
+      "vignette_bis": "Vignette gültig bis",
+      "erste_inverkehrsetzung": "1. Inverkehrsetzung",
+      "stammnummer": "Stammnummer",
+      "fahrgestell_nr": "Fahrgestell-Nr.",
+      "gesamtgewicht_kg": "Gesamtgewicht (kg)",
+      "nutzlast_kg": "Nutzlast (kg)",
+      "anhaengelast_kg": "Anhängelast (kg)",
+      "ausweis": "Nötiger Führerausweis",
+      "tankkarte": "Tankkarte",
+      "schluessel": "Schlüssel",
+      "reifen": "Reifen",
+      "leasinggeber": "Leasinggeber",
+      "leasing_vertrag": "Leasing-Vertrag Nr.",
+      "leasing_beginn": "Leasing ab",
+      "leasing_rate_rappen": "Leasingrate pro Monat (CHF)",
+      "leasing_km_jahr": "Kilometer pro Jahr laut Vertrag",
+      "leasing_mehr_km_rappen": "Preis pro Mehr-km (CHF)",
+      "leasing_rate": "Leasingrate",
+      "leasing_zeit": "Laufzeit",
+      "kaufdatum": "Kaufdatum",
+      "kaufpreis_rappen": "Kaufpreis (CHF)",
+      "kaufpreis": "Kaufpreis (CHF)",
+      "privat_anteil": "Privatanteil (Geschäftsauto privat)",
+      "versicherung_police": "Police-Nr.",
+      "versicherung_deckung": "Deckung",
+      "selbstbehalt_rappen": "Selbstbehalt (CHF)",
+      "selbstbehalt": "Selbstbehalt",
+      "schaden_telefon": "Schadennummer",
+      "praemie_rappen": "Prämie pro Jahr (CHF)",
+      "praemie": "Prämie pro Jahr",
+      "verkehrssteuer_rappen": "Verkehrssteuer pro Jahr (CHF)",
+      "verkehrssteuer": "Verkehrssteuer pro Jahr",
+      "ausser_betrieb": "Ausser Betrieb",
+      "lieferant": "Lieferant",
+      "pruefstelle": "Prüfstelle",
+      "garantie_bis": "Garantie bis",
+      "zurueck_bis": "Zurück bis",
+      "ausgemustert_am": "Ausgemustert am",
+      "ungueltig": "Bitte prüfen"
     },
     "fahrzeug": {
       "neu": "Fahrzeug erfassen",
@@ -6568,7 +6859,7 @@
       "knopf": "Eintrag erfassen",
       "titel": "Eintrag erfassen",
       "text": {
-        "fahrzeug": "MFK, Service, Kilometerstand oder Schaden festhalten.",
+        "fahrzeug": "Kilometer, Tanken, MFK, Service, Reifen, Vignette, Kosten oder Schaden festhalten.",
         "geraet": "Prüfung, Kalibrierung, Reparatur oder Schaden festhalten."
       },
       "art": "Was",
@@ -6580,13 +6871,16 @@
         "mfk": "Nächste MFK (laut Ausweis)",
         "service": "Nächster Service",
         "pruefung": "Nächste Prüfung",
-        "kalibrierung": "Nächste Kalibrierung"
+        "kalibrierung": "Nächste Kalibrierung",
+        "reifen": "Nächster Reifenwechsel",
+        "vignette": "Vignette gültig bis"
       },
       "mfkHinweis": "Steht auf dem Fahrzeugausweis.",
       "automatisch": "Leer lassen: das CRM rechnet sie aus dem Intervall.",
       "kosten": "Kosten (CHF)",
       "bemerkung": "Bemerkung",
-      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen"
+      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen",
+      "liter": "Liter"
     },
     "uebergeben": {
       "knopf": "Übergeben",
@@ -6594,7 +6888,9 @@
       "an": "An",
       "anMich": "An mich",
       "inFahrzeug": "Ins Fahrzeug: {{name}}",
-      "niemand": "Niemand fest zugeteilt"
+      "niemand": "Niemand fest zugeteilt",
+      "ausweisFehlt": "Achtung: Für dieses Fahrzeug ist kein gültiger Führerausweis dieser Person erfasst.",
+      "bisHinweis": "Leer lassen, wenn das Gerät fest bei der Person bleibt."
     },
     "verlauf": {
       "leer": "Noch keine Einträge.",
@@ -6605,6 +6901,168 @@
       "alle_one": "{{count}} anstehend",
       "alle_other": "{{count}} anstehend",
       "nichts": "Keine Frist in den nächsten 30 Tagen."
+    },
+    "aktion": {
+      "bearbeiten": "Angaben ändern",
+      "eintrag": "Eintrag erfassen",
+      "uebergeben": "Übergeben",
+      "reservieren": "Reservieren",
+      "schaden": "Schaden melden"
+    },
+    "abschnitt": {
+      "grund": "Grunddaten",
+      "technik": "Technik und Ausweis",
+      "leasing": "Leasing oder Kauf",
+      "versicherung": "Versicherung und Steuern",
+      "weiteres": "Weiteres"
+    },
+    "ja": "Ja",
+    "treibstoff": {
+      "diesel": "Diesel",
+      "benzin": "Benzin",
+      "elektro": "Elektro",
+      "hybrid": "Hybrid",
+      "gas": "Gas"
+    },
+    "erledigen": {
+      "titel": {
+        "mfk": "MFK {{name}}",
+        "service": "Service {{name}}",
+        "pruefung": "Prüfung {{name}}",
+        "reifen": "Reifenwechsel {{name}}",
+        "vignette": "Vignette {{name}}",
+        "leasing": "Leasing-Ende {{name}}",
+        "ausleihe": "{{name}} zurückbringen",
+        "ausweis": "Ausweis läuft ab: {{name}}",
+        "service_km": "Service nach Kilometern {{name}}",
+        "schaden": "Schaden {{name}}",
+        "konflikt": "Doppelt verplant: {{name}}",
+        "km_fehlt": "Kilometerstand fehlt {{name}}",
+        "lange_weg": "{{name}} lange ausgeliehen"
+      },
+      "zeile": {
+        "frist_one": "{{datum}}, morgen fällig",
+        "frist_other": "{{datum}}, in {{count}} Tagen fällig",
+        "frist_vorbei_one": "seit {{datum}} überfällig (1 Tag)",
+        "frist_vorbei_other": "seit {{datum}} überfällig ({{count}} Tage)",
+        "service_km_one": "fällig bei {{bei}} km, noch {{count}} km",
+        "service_km_other": "fällig bei {{bei}} km, noch {{count}} km",
+        "schaden": "{{stand}} seit {{datum}} · {{text}} · {{person}}",
+        "konflikt_one": "ab {{datum}} an 1 Tag doppelt verplant",
+        "konflikt_other": "ab {{datum}} an {{count}} Tagen doppelt verplant",
+        "km_fehlt": "diesen Monat noch nicht eingetragen · {{person}}",
+        "lange_weg_one": "seit 1 Tag bei {{person}}",
+        "lange_weg_other": "seit {{count}} Tagen bei {{person}}"
+      },
+      "zahl": {
+        "ueberfaellig": "Überfällig",
+        "bald": "In den nächsten 30 Tagen",
+        "schaeden": "Offene Schäden",
+        "konflikte": "Doppelt verplant"
+      },
+      "liste": "Was ansteht",
+      "leer": "Alles erledigt",
+      "leerText": "Keine Frist, kein Schaden und nichts doppelt verplant.",
+      "oeffnen": "Öffnen",
+      "heute": "Heute unterwegs",
+      "frei": "Frei"
+    },
+    "belegung": {
+      "tag": {
+        "0": "So",
+        "1": "Mo",
+        "2": "Di",
+        "3": "Mi",
+        "4": "Do",
+        "5": "Fr",
+        "6": "Sa"
+      },
+      "art": {
+        "hand": "Reserviert",
+        "werkstatt": "Werkstatt",
+        "einsatz": "Einsatz"
+      },
+      "legende": {
+        "einsatz": "Einsatz (folgt dem Team)",
+        "hand": "Von Hand reserviert",
+        "werkstatt": "Werkstatt",
+        "konflikt": "Doppelt verplant"
+      },
+      "folgtTeam": "folgt dem Team",
+      "heute": "Diese Woche",
+      "weiter": "Nächste Woche",
+      "zurueck": "Vorherige Woche"
+    },
+    "reservieren": {
+      "knopf": "Reservieren",
+      "art": "Art",
+      "aufheben": "Reservierung aufheben",
+      "von": "Von",
+      "bis": "Bis",
+      "fuer": "Für",
+      "zweck": "Wofür",
+      "zweckBeispiel": "z. B. Material holen in Bulle"
+    },
+    "schaden": {
+      "stand": {
+        "offen": "Offen",
+        "in_arbeit": "In Arbeit",
+        "erledigt": "Erledigt"
+      },
+      "titel": "Schaden bearbeiten",
+      "standLabel": "Stand",
+      "erledigung": "Was wurde gemacht",
+      "erledigungBeispiel": "z. B. Scheibe in der Garage Muri ersetzt",
+      "fotos": "Fotos",
+      "fotosHinweis": "Fotos vom Schaden, auch direkt mit der Handy-Kamera",
+      "ohneText": "Schaden ohne Beschreibung"
+    },
+    "ausmustern": {
+      "grund": {
+        "defekt": "Defekt",
+        "verloren": "Verloren",
+        "verkauft": "Verkauft",
+        "ersetzt": "Ersetzt"
+      },
+      "grundLabel": "Grund"
+    },
+    "kosten": {
+      "chfKm": "CHF/km",
+      "fix": "Versicherung und Steuer",
+      "jahr": "Jahr",
+      "keinRecht": "Nur mit Recht «Finanzen»",
+      "keinRechtText": "Die Kosten pro Fahrzeug sehen Geschäftsleitung und Buchhaltung.",
+      "leasing": "Leasing",
+      "leer": "Noch keine Kosten in diesem Jahr.",
+      "privatanteil": "Privatanteil",
+      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
+      "privatanteilTitel": "Privatanteil {{jahr}}",
+      "proFahrzeug": "Kosten pro Fahrzeug {{jahr}}",
+      "proKm": "CHF {{chf}} pro km ({{km}} km)",
+      "rest": "Unterhalt und Übriges",
+      "total": "Total",
+      "treibstoff": "Treibstoff",
+      "uebrige": "Übriges",
+      "unterhalt": "Service, Reparaturen, Reifen",
+      "verbrauch": "{{l}} l/100 km",
+      "zahlGeraete": "Wert der Geräte",
+      "zahlProKm": "CHF pro km im Schnitt",
+      "zahlTotal": "Kosten Fahrzeuge total",
+      "zahlUnterhalt": "Unterhalt"
+    },
+    "dateien": {
+      "hochladen": "Datei hinzufügen",
+      "leer": "Noch keine Dokumente."
+    },
+    "etikett": {
+      "knopf_one": "QR-Etikett drucken",
+      "knopf_other": "{{count}} QR-Etiketten drucken",
+      "einzeln": "QR-Etikett drucken",
+      "fuss": "Scannen = Akte"
+    },
+    "schnell": {
+      "nehmen": "Nehme ich",
+      "zurueck": "Zurück ins Lager"
     }
   },
   "grossprojekte": {
@@ -7546,7 +8004,8 @@
     "spesen": {
       "erfassen": "Spese erfassen",
       "keine": "Noch keine Spesen erfasst.",
-      "offen": "Offen {{betrag}}"
+      "offen": "Offen {{betrag}}",
+      "wirdAusbezahlt": "{{betrag}} sind geprüft und werden ausbezahlt."
     },
     "plan": {
       "titel": "Mein Plan",
