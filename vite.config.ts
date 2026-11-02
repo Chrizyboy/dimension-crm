@@ -44,6 +44,9 @@ export default defineConfig({
       disable: isTauri,
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg', 'logo/*.png'],
+      // Die Download-Seite ist eine eigene Seite, nicht die App: der Service Worker darf sie nicht
+      // durch die App ersetzen, sonst sieht man dort nach einem Besuch der Web-App nur noch das CRM.
+      workbox: { navigateFallbackDenylist: [/\/download\//] },
       manifest: {
         name: 'Dimension Work',
         short_name: 'Dimension',

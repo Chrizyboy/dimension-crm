@@ -37,9 +37,29 @@ Die Variablen sind öffentlich (sie stehen in jeder App); geschützt sind die Da
 Regeln in der Datenbank.
 
 Repository › **Settings › Pages › Source: GitHub Actions**. Damit wird die Web-App unter
-`https://chrizyboy.github.io/dimension-crm/` erreichbar (eigene Adresse wie `crm.dimension-solaire.ch` später
-möglich: Pages › Custom domain). Diese Adresse als `APP_URL` (Supabase-Secret) und bei Supabase › Authentication
-› URL Configuration als Site URL eintragen.
+`https://chrizyboy.github.io/dimension-crm/` erreichbar. Diese Adresse als `APP_URL` (Supabase-Secret) und bei
+Supabase › Authentication › URL Configuration als Site URL eintragen.
+
+### Eigene Adresse `work.dimension-solaire.ch`
+
+1. Beim Anbieter der Domain `dimension-solaire.ch` einen DNS-Eintrag anlegen: Typ **CNAME**, Name **work**,
+   Ziel **chrizyboy.github.io** (mit oder ohne Punkt am Ende, je nach Anbieter).
+2. GitHub › Repository › **Settings › Pages › Custom domain**: `work.dimension-solaire.ch` eintragen, «Save».
+   Warten, bis der DNS-Check grün ist, dann **Enforce HTTPS** einschalten (das Zertifikat kann bis 1 Stunde
+   brauchen). Eine `CNAME`-Datei im Repository braucht es nicht, weil Pages über die Action veröffentlicht.
+3. Supabase › Authentication › URL Configuration: **Site URL** `https://work.dimension-solaire.ch`, bei
+   **Redirect URLs** `https://work.dimension-solaire.ch/**` ergänzen (die alte github.io-Adresse darf bleiben).
+4. Supabase › Edge Functions › Secrets: `APP_URL` auf `https://work.dimension-solaire.ch` setzen.
+
+Die alte Adresse `chrizyboy.github.io/dimension-crm` leitet GitHub danach von selbst auf die neue um. Microsoft
+(Entra) ist nicht betroffen: Die Rücksprünge gehen an Supabase, nicht an die Web-App.
+
+### Download-Seite für das Team
+
+Unter `…/download/` (z. B. `https://work.dimension-solaire.ch/download/`) liegt eine einfache Seite DE/FR mit
+dem Knopf «Für Windows herunterladen» (holt immer den Installer der neusten Version), dem Link für das Handy und
+der Anleitung unten. Quelle: `public/download/`. Diesen Link an die Mitarbeitenden schicken statt den Link auf
+GitHub.
 
 ## Neue Version veröffentlichen
 
@@ -54,8 +74,9 @@ Wer zweimal mit derselben Nummer startet, bekommt die Meldung «Version gibt es 
 
 ## Am PC installieren
 
-1. [Releases](https://github.com/Chrizyboy/dimension-crm/releases/latest) öffnen,
-   `Dimension Work_<version>_x64-setup.exe` herunterladen und starten. Keine Administratorrechte nötig.
+1. Die Download-Seite (`…/download/`, siehe oben) öffnen und «Für Windows herunterladen» klicken, oder unter
+   [Releases](https://github.com/Chrizyboy/dimension-crm/releases/latest) `Dimension Work_<version>_x64-setup.exe`
+   herunterladen. Datei starten. Keine Administratorrechte nötig.
 2. Windows zeigt eventuell «Der Computer wurde durch Windows geschützt» (die App ist noch nicht mit einem
    Firmenzertifikat signiert): **Weitere Informationen › Trotzdem ausführen**. Das kommt nur bei der ersten
    Installation; Updates laufen danach ohne Rückfrage.
