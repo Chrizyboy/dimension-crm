@@ -7,6 +7,7 @@ veröffentlichen» starten (docs/installation.md).
 
 ## 1.0.1
 
+- Desktop-App startet ab jetzt automatisch mit Windows (ausschalten unter «Mein Konto» › «Mit Windows starten»).
 - Desktop-App: Die Seite lässt sich nicht mehr unter den Rahmen ins Leere scrollen; es scrollt nur noch der Inhalt.
 - Anmeldung: Beispiel-Adresse heisst jetzt vorname@dimension-solaire.ch.
 - App-Symbol: überall das Signet von Dimension Work (oranger Umriss mit Sonne) in Fenster, Taskleiste und Browser-Tab; auf dem Handy randlos auf Dunkelblau (keine schwarzen Ecken mehr).
