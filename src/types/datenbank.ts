@@ -8348,10 +8348,17 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           anlage_id: string | null
+          anlage_kwp: number | null
+          anlage_ort: string | null
+          bestandsaufnahme: string
           erstellt_am: string
           erstellt_von: string | null
+          fremdanlage: boolean
           geaendert_am: string
+          gekuendigt_am: string | null
+          gekuendigt_per: string | null
           geloescht_am: string | null
+          ibn_jahr: number | null
           id: string
           kontakt_id: string
           laufzeit_jahre: number
@@ -8361,23 +8368,36 @@ export type Database = {
           notiz: string | null
           nummer: string | null
           offerte_id: string | null
+          paket: string | null
+          preis_netto_rappen: number | null
           preis_rappen: number | null
           projekt_id: string | null
           rhythmus_monate: number | null
+          speicher_kwh: number | null
           sprache: string | null
           start_am: string | null
           status: string
+          tarif_netto_rappen: number | null
           verlauf: NonNullable<Json>
+          verrechnet_bis: string | null
+          wechselrichter: string | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          anlage_kwp?: number | null
+          anlage_ort?: string | null
+          bestandsaufnahme?: string
           erstellt_am?: string
           erstellt_von?: string | null
+          fremdanlage?: boolean
           geaendert_am?: string
+          gekuendigt_am?: string | null
+          gekuendigt_per?: string | null
           geloescht_am?: string | null
+          ibn_jahr?: number | null
           id?: string
           kontakt_id: string
           laufzeit_jahre?: number
@@ -8387,22 +8407,35 @@ export type Database = {
           notiz?: string | null
           nummer?: string | null
           offerte_id?: string | null
+          paket?: string | null
+          preis_netto_rappen?: number | null
           preis_rappen?: number | null
           projekt_id?: string | null
           rhythmus_monate?: number | null
+          speicher_kwh?: number | null
           sprache?: string | null
           start_am?: string | null
           status?: string
+          tarif_netto_rappen?: number | null
           verlauf?: NonNullable<Json>
+          verrechnet_bis?: string | null
+          wechselrichter?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          anlage_kwp?: number | null
+          anlage_ort?: string | null
+          bestandsaufnahme?: string
           erstellt_am?: string
           erstellt_von?: string | null
+          fremdanlage?: boolean
           geaendert_am?: string
+          gekuendigt_am?: string | null
+          gekuendigt_per?: string | null
           geloescht_am?: string | null
+          ibn_jahr?: number | null
           id?: string
           kontakt_id?: string
           laufzeit_jahre?: number
@@ -8412,13 +8445,19 @@ export type Database = {
           notiz?: string | null
           nummer?: string | null
           offerte_id?: string | null
+          paket?: string | null
+          preis_netto_rappen?: number | null
           preis_rappen?: number | null
           projekt_id?: string | null
           rhythmus_monate?: number | null
+          speicher_kwh?: number | null
           sprache?: string | null
           start_am?: string | null
           status?: string
+          tarif_netto_rappen?: number | null
           verlauf?: NonNullable<Json>
+          verrechnet_bis?: string | null
+          wechselrichter?: string | null
         }
         Relationships: [
           {
@@ -11010,6 +11049,12 @@ export type Database = {
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
+      wartung_jahreslauf: { Args: Record<PropertyKey, never>; Returns: number }
+      wartung_kuendigen: { Args: { p_am?: string; p_id: string }; Returns: string }
+      wartung_kuendigung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      wartung_laeuft_bis: { Args: { p_jahre: number; p_start: string; p_stichtag?: string }; Returns: string }
+      wartung_rechnung_erstellen: { Args: { p_id: string }; Returns: string }
+      wartung_tarif: { Args: { p_kwp: number; p_paket: string }; Returns: number }
       werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       zahlungsplan_berechnen: {

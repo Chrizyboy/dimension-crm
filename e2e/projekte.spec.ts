@@ -89,15 +89,19 @@ test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {
   await page.getByRole('button', { name: 'Neuer Vertrag' }).click()
   await testkunde(page)
   await page.getByLabel('Vertragsbeginn').fill('2026-01-15')
-  await page.getByLabel(/Preis pro Jahr/).fill('480.00')
-  // Die üblichen Leistungen sind vorgewählt.
-  await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(5)
+  // Pakete der Website: Premium bei 42 kWp kostet CHF 690.00 exkl. MWST; tiefer = Rabatt.
+  await page.getByLabel('Leistung (kWp)').fill('42')
+  await page.getByRole('button', { name: /Premium/ }).click()
+  const preis = page.getByLabel('Jahrespreis exkl. MWST (CHF)')
+  await expect(preis).toHaveValue('690.00')
+  await preis.fill('621.00')
+  await expect(page.getByText('10 % Rabatt', { exact: true })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('button', { name: 'Speichern' }).click()
 
   const akte = page.getByRole('dialog')
   await expect(akte.getByText('Nächste Wartung 15.01.2027')).toBeVisible()
-  await expect(akte.getByText('CHF 480.00')).toBeVisible()
+  await expect(akte.getByText(/CHF 621\.00/)).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await akte.getByRole('button', { name: 'Wartung erledigt' }).click()
   const erledigt = page.getByRole('dialog', { name: 'Wartung erledigt' })

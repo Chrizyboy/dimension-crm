@@ -1,5 +1,14 @@
 import { supabase } from '@/services/supabase'
-import type { Filter, Leistung, Vertrag, VertragEingabe, Wartung } from '../types'
+import type {
+  Filter,
+  Katalog,
+  KundenAnlage,
+  Leistung,
+  Vertrag,
+  VertragEingabe,
+  VertragRechnung,
+  Wartung,
+} from '../types'
 
 /** Datenzugriff für Wartungsverträge. */
 function db() {
@@ -8,11 +17,17 @@ function db() {
 }
 
 const FELDER =
-  'id, nummer, status, kontakt_id, projekt_id, anlage_id, start_am, laufzeit_jahre, rhythmus_monate, preis_rappen, leistungen, letzte_wartung, naechste_wartung, sprache, notiz, verlauf, ' +
-  'kontakt:kontakte(vorname, nachname, firma, sprache, objekte(strasse, plz, ort)), projekt:projekte(nummer)'
+  'id, nummer, status, kontakt_id, projekt_id, anlage_id, paket, anlage_kwp, speicher_kwh, ibn_jahr, wechselrichter, anlage_ort, ' +
+  'fremdanlage, start_am, laufzeit_jahre, rhythmus_monate, preis_rappen, preis_netto_rappen, tarif_netto_rappen, bestandsaufnahme, ' +
+  'leistungen, letzte_wartung, naechste_wartung, gekuendigt_am, gekuendigt_per, verrechnet_bis, sprache, notiz, verlauf, ' +
+  'kontakt:kontakte(vorname, nachname, firma, sprache, telefon, objekte(strasse, plz, ort)), projekt:projekte(nummer)'
 
-interface Roh extends Omit<Vertrag, 'kunde' | 'adresse' | 'ort' | 'projekt' | 'leistungen' | 'verlauf' | 'sprache'> {
+interface Roh extends Omit<
+  Vertrag,
+  'kunde' | 'telefon' | 'adresse' | 'ort' | 'projekt' | 'leistungen' | 'verlauf' | 'sprache' | 'bestandsaufnahme'
+> {
   sprache: string | null
+  bestandsaufnahme: string
   leistungen: unknown
   verlauf: unknown
   kontakt: {
@@ -20,17 +35,20 @@ interface Roh extends Omit<Vertrag, 'kunde' | 'adresse' | 'ort' | 'projekt' | 'l
     nachname: string | null
     firma: string | null
     sprache: string | null
+    telefon: string | null
     objekte: { strasse: string | null; plz: string | null; ort: string | null }[]
   } | null
   projekt: { nummer: string } | null
 }
 
-function alsVertrag({ kontakt: k, projekt, leistungen, verlauf, sprache, ...v }: Roh): Vertrag {
+function alsVertrag({ kontakt: k, projekt, leistungen, verlauf, sprache, bestandsaufnahme, ...v }: Roh): Vertrag {
   const o = k?.objekte[0]
   const name = k ? k.firma?.trim() || [k.vorname, k.nachname].filter(Boolean).join(' ') || '–' : '–'
   return {
     ...v,
     sprache: (sprache ?? k?.sprache) === 'fr' ? 'fr' : 'de',
+    bestandsaufnahme: bestandsaufnahme as Vertrag['bestandsaufnahme'],
+    telefon: k?.telefon ?? null,
     leistungen: Array.isArray(leistungen) ? (leistungen as Leistung[]) : [],
     verlauf: Array.isArray(verlauf) ? (verlauf as Wartung[]) : [],
     kunde: name,
@@ -40,14 +58,28 @@ function alsVertrag({ kontakt: k, projekt, leistungen, verlauf, sprache, ...v }:
   }
 }
 
-/** Verträge nach Filter; fällig = aktiv und nächste Wartung in den nächsten 30 Tagen oder vorbei. */
-export async function ladeVertraege(filter: Filter, bis: string): Promise<Vertrag[]> {
+/**
+ * Verträge nach Filter. `bis` = heute + 30 Tage (fällig), `rechnungBis` = heute + Vorlauf der Jahresrechnung.
+ * «Kündbar bald» rechnet die Liste selbst (Ablauf hängt vom Stichtag ab).
+ */
+export async function ladeVertraege(filter: Filter, bis: string, rechnungBis: string): Promise<Vertrag[]> {
   let q = db().from('wartungsvertraege').select(FELDER).is('geloescht_am', null)
-  if (filter !== 'alle') q = q.eq('status', 'aktiv')
+  if (filter === 'aktiv' || filter === 'faellig' || filter === 'kuendbar') q = q.eq('status', 'aktiv')
+  if (filter === 'gekuendigt') q = q.eq('status', 'gekuendigt')
+  if (filter === 'rechnung') q = q.in('status', ['aktiv', 'gekuendigt']).not('paket', 'is', null)
   if (filter === 'faellig') q = q.lte('naechste_wartung', bis)
   const { data, error } = await q.order('naechste_wartung', { nullsFirst: false })
   if (error) throw error
-  return (data as unknown as Roh[]).map(alsVertrag)
+  const liste = (data as unknown as Roh[]).map(alsVertrag)
+  return filter === 'rechnung'
+    ? liste.filter((v) => v.start_am && (v.verrechnet_bis ? naechsterTag(v.verrechnet_bis) : v.start_am) <= rechnungBis)
+    : liste
+}
+
+function naechsterTag(iso: string): string {
+  const [j, m, t] = iso.split('-').map(Number)
+  const d = new Date(j ?? 1970, (m ?? 1) - 1, (t ?? 1) + 1)
+  return `${String(d.getFullYear())}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 /** Ein Vertrag für die Akte. */
@@ -71,21 +103,91 @@ export async function vertragSpeichern(e: VertragEingabe, id?: string): Promise<
 }
 
 /** Wartung durchgeführt; gibt die nächste Wartung zurück. */
-export async function wartungErledigt(id: string, am: string, notiz: string): Promise<string> {
+export async function wartungErledigt(id: string, am: string, notiz: string): Promise<string | null> {
   const { data, error } = await db().rpc('wartung_erledigt', { p_id: id, p_am: am, p_notiz: notiz })
+  if (error) throw error
+  // Essentiel hat keine Inspektionen: dann gibt es keine nächste Wartung.
+  return data || null
+}
+
+/** Pakete, Preise und Bedingungen der Website (Einstellung «wartung_pakete», Regel 8: Daten statt Code). */
+export async function ladeKatalog(): Promise<Katalog | null> {
+  const { data, error } = await db()
+    .from('einstellungen')
+    .select('wert')
+    .eq('schluessel', 'wartung_pakete')
+    .maybeSingle()
+  if (error) throw error
+  return (data?.wert as unknown as Katalog | undefined) ?? null
+}
+
+/** Kündigung erfassen; gibt das Vertragsende zurück. */
+export async function wartungKuendigen(id: string, am: string): Promise<string> {
+  const { data, error } = await db().rpc('wartung_kuendigen', { p_id: id, p_am: am })
   if (error) throw error
   return data
 }
 
-/** Leistungskatalog aus den Einstellungen (Regel 8: Daten statt Code). */
-export async function ladeKatalog(): Promise<Leistung[]> {
-  const { data, error } = await db()
-    .from('einstellungen')
-    .select('wert')
-    .eq('schluessel', 'wartung_leistungen')
-    .maybeSingle()
+/** Kündigung zurücknehmen. */
+export async function kuendigungZuruecknehmen(id: string): Promise<void> {
+  const { error } = await db().rpc('wartung_kuendigung_zuruecknehmen', { p_id: id })
   if (error) throw error
-  return Array.isArray(data?.wert) ? (data.wert as unknown as Leistung[]) : []
+}
+
+/** Jahresrechnung für das nächste Vertragsjahr als Entwurf (Recht finanzen); gibt die Rechnung zurück. */
+export async function jahresrechnungErstellen(id: string): Promise<string> {
+  const { data, error } = await db().rpc('wartung_rechnung_erstellen', { p_id: id })
+  if (error) throw error
+  return data
+}
+
+/** Rechnungen eines Vertrags, neueste zuerst. */
+export async function ladeVertragRechnungen(id: string): Promise<VertragRechnung[]> {
+  const { data, error } = await db()
+    .from('rechnungen')
+    .select('id, nummer, status, datum, total_rappen, titel')
+    .eq('wartungsvertrag_id', id)
+    .is('geloescht_am', null)
+    .order('erstellt_am', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+/** Anlagen eines Kunden (über seine Gebäude) zum Vorfüllen: kWp, Inbetriebnahme, Wechselrichter. */
+export async function ladeKundenAnlagen(kontaktId: string): Promise<KundenAnlage[]> {
+  const { data, error } = await db()
+    .from('anlagen')
+    .select(
+      'id, projekt_id, leistung_kwp, ibn_am, komponenten, objekt:objekte!inner(kontakt_id, strasse, ort), projekt:projekte(nummer)',
+    )
+    .eq('objekt.kontakt_id', kontaktId)
+    .is('geloescht_am', null)
+  if (error) throw error
+  return (
+    data as unknown as {
+      id: string
+      projekt_id: string | null
+      leistung_kwp: number | null
+      ibn_am: string | null
+      komponenten: unknown
+      objekt: { strasse: string | null; ort: string | null }
+      projekt: { nummer: string } | null
+    }[]
+  ).map((a) => {
+    const teile = Array.isArray(a.komponenten)
+      ? (a.komponenten as { art?: string; hersteller?: string; modell?: string }[])
+      : []
+    const wr = teile.find((k) => k.art === 'wechselrichter')
+    return {
+      id: a.id,
+      projekt_id: a.projekt_id,
+      projekt: a.projekt?.nummer ?? null,
+      kwp: a.leistung_kwp,
+      ibn_jahr: a.ibn_am ? Number(a.ibn_am.slice(0, 4)) : null,
+      wechselrichter: wr ? [wr.hersteller, wr.modell].filter(Boolean).join(' ') || null : null,
+      ort: [a.objekt.strasse, a.objekt.ort].filter(Boolean).join(', '),
+    }
+  })
 }
 
 /** Projekte eines Kunden für die Zuordnung. */
