@@ -1,4 +1,4 @@
-# 0040 – Team & Ausweise vollständig: Team, Kurse, Anforderungen
+# 0041 – Team & Ausweise vollständig: Team, Kurse, Anforderungen
 
 **Datum:** 02.11.2026 · **Entschieden von:** Chris (Fragen 1–6 als Karten; gebaut nach Empfehlung A, bis Chris
 anders entscheidet)

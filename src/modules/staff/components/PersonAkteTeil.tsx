@@ -11,7 +11,7 @@ import { AktePersoenlich } from './AktePersoenlich'
 import type { PersonAktion } from './PersonAkte'
 
 /**
- * Reiter «Personal-Akte» (Entscheid 0039): Fristen als Marken, Anstellung, Persönliches, Gespräche und Dokumente.
+ * Reiter «Personal-Akte» (Entscheid 0040): Fristen als Marken, Anstellung, Persönliches, Gespräche und Dokumente.
  * Was erscheint, entscheidet `personal_akte()`; wer nichts sehen darf, bekommt einen Hinweis.
  */
 export function PersonAkteTeil({

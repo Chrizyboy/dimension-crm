@@ -4,8 +4,8 @@
 sind beantragt, bewilligt, angemeldet, was kosten sie, und die Personal-Akte. Jede Person pflegt ihre eigenen Ausweise
 und beantragt Kurse, Vorgesetzte planen für ihre Mitarbeitenden, Recht «personal» (heute Administration) alles.
 
-Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028; Personal-Akte Entscheid 0039; Team, Kurse und
-Anforderungen Entscheid 0040. Für alle sichtbar (`immer`).
+Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028; Personal-Akte Entscheid 0040; Team, Kurse und
+Anforderungen Entscheid 0041. Für alle sichtbar (`immer`).
 
 ## Ansicht (`#/staff?reiter=…&person=…&kurs=…`)
 
