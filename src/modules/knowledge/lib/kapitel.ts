@@ -198,7 +198,7 @@ export function neuigkeiten(k: Kapitel): Neuigkeit[] {
   return a.bloecke.flatMap((b) =>
     b.art === 'liste'
       ? b.punkte.flatMap((p) => {
-          const m = /^(\d{2})\.(\d{2})\.(\d{4}):\s*(.*)$/.exec(p)
+          const m = /^(\d{2})\.(\d{2})\.(\d{4})\s*:\s*(.*)$/.exec(p)
           return m ? [{ datum: `${m[3] ?? ''}-${m[2] ?? ''}-${m[1] ?? ''}`, text: m[4] ?? '' }] : []
         })
       : [],
