@@ -8,6 +8,7 @@ export type Person = Pick<
   Tables<'personen'>,
   | 'id'
   | 'kuerzel'
+  | 'kurzzeichen'
   | 'name'
   | 'email'
   | 'rolle'

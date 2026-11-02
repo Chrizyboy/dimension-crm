@@ -361,7 +361,7 @@ select
   wv.id as werkvertrag_id, wv.status as werkvertrag_status,
   lower(concat_ws(' ', o.nummer, intern.kontaktname(k), k.email, k.telefon, ob.strasse, ob.plz, ob.ort, pv.ort, o.titel,
                   o.wechselrichter, o.batterie, 'k' || lpad(k.kundennummer::text, 4, '0'))) as suchtext,
-  -- Neu (Entscheid 0039)
+  -- Neu (Entscheid 0040)
   coalesce(o.gueltig_bis, o.angebot_am + coalesce((intern.offerten_cfg() ->> 'gueltig_tage')::int, 30)) as gueltig_bis,
   o.varianten, o.variante, o.chance_prozent, intern.offerte_chance(o) as chance,
   o.entscheid_erwartet, o.konkurrenz, o.rabatt_prozent, o.unterlagen, o.nachfass_schritt, o.nachfass_ergebnis,

@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Offerten». */
 
 /**
- * Die Reiter des Bereichs: Arbeitsvorrat (Board vom Termin bis zum Auftrag, Entscheid 0039) und die Listen aus V233
+ * Die Reiter des Bereichs: Arbeitsvorrat (Board vom Termin bis zum Auftrag, Entscheid 0040) und die Listen aus V233
  * (Neue Offerten · Offerten Muri · Offerten Bulle · Nachfassen · PDF-Import).
  */
 export type OffertAnsicht = 'vorrat' | 'eingang' | 'muri' | 'bulle' | 'nachfassen' | 'import'
@@ -150,7 +150,7 @@ export interface Offerte {
   werkvertragStatus: string | null
   geaendertAm: string | null
   suchtext: string
-  /** Neu (Entscheid 0039) */
+  /** Neu (Entscheid 0040) */
   gueltigBis: string | null
   abgelaufen: boolean
   varianten: OffertVariante[]

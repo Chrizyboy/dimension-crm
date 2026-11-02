@@ -1,4 +1,4 @@
-# 0039 – Offerten vollständig: Arbeitsvorrat, Nachfassen nach Plan, Varianten, Freigabe
+# 0040 – Offerten vollständig: Arbeitsvorrat, Nachfassen nach Plan, Varianten, Freigabe
 
 **Datum:** 2.11.2026 · **Stand:** angenommen (Schritt 1)
 
