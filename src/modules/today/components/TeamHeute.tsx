@@ -45,7 +45,7 @@ export function TeamHeute() {
           {t('tag.teamHeute.titel')}
         </KarteTitel>
       </KarteKopf>
-      <ul className="grid gap-2 px-4 pb-4 sm:grid-cols-2">
+      <ul className="grid gap-2 px-4 pt-3 pb-4 sm:grid-cols-2">
         {team.data.map((p) => (
           <li key={p.id} className="bg-surface-2 flex min-w-0 flex-col gap-0.5 rounded-md border px-3 py-2 text-sm">
             <span className="flex items-center justify-between gap-2">

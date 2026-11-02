@@ -21,7 +21,8 @@ export function Verschieben({ titel, heute, onWahl }: { titel: string; heute: st
 
   return (
     <>
-      <Menue>
+      {/* modal={false}: Sonst bleibt nach «Auf ein Datum …» die Seite für Klicks gesperrt (Menü öffnet Dialog). */}
+      <Menue modal={false}>
         <MenueAusloeser asChild>
           <button
             type="button"

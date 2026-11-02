@@ -37,7 +37,7 @@ export function ZieleKarte({ ziele, darfSetzen }: { ziele: MeineZiele | null; da
         )}
       </KarteKopf>
       {ziele ? (
-        <ul className="flex flex-col gap-3 px-4 pb-4">
+        <ul className="flex flex-col gap-3 px-4 pt-3 pb-4">
           {ziele.zeilen.map((z) => {
             const prozent = zielProzent(z.ist, z.ziel)
             const betrag = z.schluessel === 'auftrag_monat_rappen'
@@ -46,7 +46,9 @@ export function ZieleKarte({ ziele, darfSetzen }: { ziele: MeineZiele | null; da
                 <span className="flex justify-between gap-2">
                   <span>{t(`tag.ziele.${z.schluessel}`)}</span>
                   <span className="zahlen font-mono text-xs font-medium">
-                    {betrag ? `${formatChf(z.ist)} / ${formatChf(z.ziel)}` : `${String(z.ist)} / ${String(z.ziel)}`}
+                    {betrag
+                      ? `${formatChf(z.ist)} / ${formatChf(z.ziel, { mitWaehrung: true })}`
+                      : `${String(z.ist)} / ${String(z.ziel)}`}
                   </span>
                 </span>
                 <span
