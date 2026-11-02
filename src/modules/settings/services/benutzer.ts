@@ -13,7 +13,7 @@ export async function ladePersonen(): Promise<Person[]> {
   const { data, error } = await db()
     .from('personen')
     .select(
-      'id, kuerzel, name, email, rolle, rechte, bereiche, aktiv, sprache, standort_id, zuletzt_aktiv, auth_user_id, profil',
+      'id, kuerzel, kurzzeichen, name, email, rolle, rechte, bereiche, aktiv, sprache, standort_id, zuletzt_aktiv, auth_user_id, profil',
     )
     .is('geloescht_am', null)
     .order('aktiv', { ascending: false })
@@ -72,10 +72,12 @@ export function statusVon(person: Person, einladungen: Einladung[], jetzt = new 
   return offen ? 'eingeladen' : 'bereit'
 }
 
-/** Ändert Rolle, Zusatzrechte, Bereiche, Standort oder aktiv. Nur Admins (RLS). */
+/** Ändert Name, Kurzzeichen, Rolle, Zusatzrechte, Bereiche, Standort oder aktiv. Nur Admins (RLS). Leeres Kurzzeichen = Vorschlag der Datenbank. */
 export async function speicherePerson(
   id: string,
-  aenderung: Partial<Pick<Person, 'name' | 'rolle' | 'rechte' | 'bereiche' | 'standort_id' | 'aktiv' | 'sprache'>>,
+  aenderung: Partial<
+    Pick<Person, 'name' | 'kurzzeichen' | 'rolle' | 'rechte' | 'bereiche' | 'standort_id' | 'aktiv' | 'sprache'>
+  >,
 ): Promise<void> {
   const { error } = await db().from('personen').update(aenderung).eq('id', id)
   if (error) throw error

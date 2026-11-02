@@ -67,6 +67,8 @@ Danach `npm run db:typen`, damit die App die neuen Spalten kennt.
 
 Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`personen.rechte`). `admin` schliesst alle anderen ein. Die Datenbank prüft das mit `intern.hat_recht()`. Sichtbare Bereiche: `personen.bereiche`, sonst `rollen.bereiche`, sonst alle; sie steuern nur die Menüs. Das `aenderungsprotokoll` zeigt einen Eintrag nur, wer die betroffene Tabelle lesen darf (`intern.tabellen_leserecht`). Siehe Entscheid 0012.
 
+**Kurzzeichen** (2.11.2026): `personen.kurzzeichen` («CR», «LP») ist die Anzeige in Listen, Planung und auf Dokumenten, 1–4 Zeichen, gross, eindeutig unter den nicht gelöschten Personen. Leer gesetzt füllt der Trigger `kurzzeichen` den Vorschlag aus dem Namen (`intern.kurzzeichen_vorschlag`, gleiche Regel in `src/lib/kurzzeichen.ts`); ein Namenswechsel ändert es nicht. Anzeigen nur mit `Kurzzeichen` aus `src/components/shared/`. `personen.kuerzel` bleibt der technische Schlüssel («andreas»), über den Zuständigkeiten und Regeln Personen finden.
+
 ## Kunden und Kontakte (Phase 5)
 
 - **`kunden_uebersicht`** (Ansicht, `security_invoker`, also mit den Rechten der lesenden Person): ein Kontakt pro Zeile mit erstem Gebäude, Stand, letztem Kontakt, Anzahl Offerten und Projekte, `moegliche_dublette` und `suchtext`/`telefon_ziffern` für die Suche. Kunden, Adressbuch und Ctrl K lesen sie.

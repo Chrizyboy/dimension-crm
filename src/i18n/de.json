@@ -341,7 +341,9 @@
     "bereicheWieRolle_other": "Aus: zeigt die {{count}} Bereiche der Rolle.",
     "bereicheWieRolle_one": "Aus: zeigt den einen Bereich der Rolle.",
     "bereicheAlle": "Aus: zeigt alle Bereiche, wie die Rolle.",
-    "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse."
+    "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse.",
+    "kurzzeichen": "Kurzzeichen",
+    "kurzzeichenHinweis": "Steht in Listen, Planung und auf Dokumenten. Leer lassen für den Vorschlag {{vorschlag}}."
   },
   "rechte": {
     "basis": "Grunddaten",
