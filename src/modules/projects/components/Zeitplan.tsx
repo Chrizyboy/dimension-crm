@@ -249,6 +249,10 @@ function Legende() {
         {t('projekte.einsatz.geplant')}
       </span>
       <span className="flex items-center gap-1.5">
+        <span className="bg-info-soft border-info inline-block h-3 w-5 rounded-sm border" />
+        {t('projekte.einsatz.service')}
+      </span>
+      <span className="flex items-center gap-1.5">
         <span className="bg-muted schraffur inline-block h-3 w-5 rounded-sm" /> {t('projekte.zeitplan.abwesendLabel')}
       </span>
       <span className="flex items-center gap-1.5">
