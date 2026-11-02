@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112">
-  <title>Dimension Solaire</title>
-  <path fill="#EF7C00" d="M26 0H112V84L84 112H0V26Z"/>
+  <title>Dimension Work</title>
+  <rect width="112" height="112" rx="24" fill="#EF7C00"/>
   <g fill="#FFFFFF">
     <circle cx="56.00" cy="33.40" r="7"/>
     <circle cx="56.00" cy="18.40" r="5.2"/>
