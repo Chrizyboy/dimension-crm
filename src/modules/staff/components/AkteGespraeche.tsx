@@ -8,7 +8,8 @@ import type { AkteDaten } from '../types'
 import type { PersonAktion } from './PersonAkte'
 
 /**
- * Mitarbeitergespräche (mit Notiz und nächstem Termin, der als Frist in die Glocke kommt) und Dokumente.
+ * Mitarbeitergespräche (mit Notiz und nächstem Termin, der als Frist in die Glocke kommt), Dokumente und am Schluss
+ * die Notiz von GL und Buchhaltung (nur Sicht «personal»).
  * Gespräche erfassen Recht «personal» und Vorgesetzte; Dokumente legen Recht «personal» und die Person selbst ab.
  * Vertrauliche Dokumente (Vertrag, Lohn) liefert die Datenbank Vorgesetzten nicht.
  */
@@ -117,6 +118,11 @@ export function AkteGespraeche({
           </Button>
         )}
       </AkteAbschnitt>
+      {daten.sicht === 'personal' && (
+        <AkteAbschnitt titel={t('team.akte.notiz')} offen={Boolean(daten.akte.notiz)}>
+          <p className="text-sm whitespace-pre-line">{daten.akte.notiz ?? '–'}</p>
+        </AkteAbschnitt>
+      )}
     </>
   )
 }

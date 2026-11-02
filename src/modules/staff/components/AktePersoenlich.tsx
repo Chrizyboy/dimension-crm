@@ -107,11 +107,6 @@ export function AktePersoenlich({ daten, onAktion }: { daten: AkteDaten; onAktio
           </Angabe>
         </dl>
       </AkteAbschnitt>
-      {daten.sicht === 'personal' && (
-        <AkteAbschnitt titel={t('team.akte.notiz')} offen={Boolean(a.notiz)}>
-          <p className="text-sm whitespace-pre-line">{a.notiz ?? '–'}</p>
-        </AkteAbschnitt>
-      )}
     </>
   )
 }

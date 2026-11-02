@@ -40,7 +40,7 @@ export function AkteAnstellung({ daten, onAktion }: { daten: AkteDaten; onAktion
           </Angabe>
           <Angabe label={t('team.akte.eintritt')}>{datum(a.eintritt)}</Angabe>
           <Angabe label={t('team.akte.probezeit_bis')}>{datum(a.probezeit_bis)}</Angabe>
-          <Angabe label={t('team.akte.pensum')}>
+          <Angabe label={t('team.akte.pensumKurz')}>
             {a.pensum
               ? [
                   `${String(a.pensum)} %`,
@@ -50,7 +50,7 @@ export function AkteAnstellung({ daten, onAktion }: { daten: AkteDaten; onAktion
                   .join(' · ')
               : null}
           </Angabe>
-          <Angabe label={t('team.akte.ferientage')}>
+          <Angabe label={t('team.akte.ferien')}>
             {a.ferientage != null ? t('team.akte.tageProJahr', { tage: zahl(a.ferientage) }) : null}
           </Angabe>
           <Angabe label={t('team.akte.kuendigungsfrist')}>

@@ -6384,7 +6384,9 @@
         "iban": "IBAN stimmt nicht (Prüfziffer)",
         "austritt": "Austritt vor Eintritt",
         "eintritt": "Datum fehlt"
-      }
+      },
+      "pensumKurz": "Pensum",
+      "ferien": "Ferien"
     },
     "lohn": {
       "titel": "Lohn",

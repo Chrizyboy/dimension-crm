@@ -6384,7 +6384,9 @@
         "iban": "IBAN incorrect (chiffre de contrôle)",
         "austritt": "Sortie avant l’entrée",
         "eintritt": "Date manquante"
-      }
+      },
+      "pensumKurz": "Taux",
+      "ferien": "Vacances"
     },
     "lohn": {
       "titel": "Salaire",
