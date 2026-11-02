@@ -1721,8 +1721,11 @@ export type Database = {
           erstellt_am: string
           fehler: number
           geaendert_am: string
+          gestoppt_grund: string | null
+          gestoppt_von: string | null
           id: string
           kontakt_id: string | null
+          nur_schritt: number | null
           protokoll: NonNullable<Json>
           schritt: number
           signal_id: number
@@ -1740,8 +1743,11 @@ export type Database = {
           erstellt_am?: string
           fehler?: number
           geaendert_am?: string
+          gestoppt_grund?: string | null
+          gestoppt_von?: string | null
           id?: string
           kontakt_id?: string | null
+          nur_schritt?: number | null
           protokoll?: NonNullable<Json>
           schritt?: number
           signal_id: number
@@ -1758,8 +1764,11 @@ export type Database = {
           erstellt_am?: string
           fehler?: number
           geaendert_am?: string
+          gestoppt_grund?: string | null
+          gestoppt_von?: string | null
           id?: string
           kontakt_id?: string | null
+          nur_schritt?: number | null
           protokoll?: NonNullable<Json>
           schritt?: number
           signal_id?: number
@@ -1774,6 +1783,13 @@ export type Database = {
             columns: ['automation_id']
             isOneToOne: false
             referencedRelation: 'automationen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_gestoppt_von_fkey'
+            columns: ['gestoppt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -1830,10 +1846,12 @@ export type Database = {
           geaendert_am: string
           geloescht_am: string | null
           id: string
+          kontakt_pause_tage: number | null
           modus: string
           name_de: string
           name_fr: string
           reihenfolge: number
+          versandfenster: Json | null
           vorlage: string | null
         }
         ComputedFields: never
@@ -1853,10 +1871,12 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          kontakt_pause_tage?: number | null
           modus?: string
           name_de: string
           name_fr: string
           reihenfolge?: number
+          versandfenster?: Json | null
           vorlage?: string | null
         }
         Update: {
@@ -1875,10 +1895,12 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          kontakt_pause_tage?: number | null
           modus?: string
           name_de?: string
           name_fr?: string
           reihenfolge?: number
+          versandfenster?: Json | null
           vorlage?: string | null
         }
         Relationships: [
@@ -10557,8 +10579,64 @@ export type Database = {
           relevant: number
         }[]
       }
+      automation_aenderungen: {
+        Args: { p_id: string }
+        Returns: {
+          aktion: string
+          felder: string[]
+          person: string
+          zeitpunkt: string
+        }[]
+      }
+      automation_geplant: {
+        Args: { p_id?: string; p_tabelle?: string }
+        Returns: {
+          art: string
+          automation_id: string
+          bezug_id: string
+          darf: boolean
+          grund: string
+          lauf_id: string
+          modus: string
+          nach_aussen: boolean
+          name_de: string
+          name_fr: string
+          schritt: number
+          schritte: number
+          stand: string
+          tabelle: string
+          text_de: string
+          text_fr: string
+          titel: string
+          weiter_am: string
+        }[]
+      }
       automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_katalog_ausbau: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_kennzahlen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          automation_id: string
+          laeufe: number
+          mit_fehler: number
+          wartend: number
+          zuletzt_am: string
+        }[]
+      }
       automation_lauf_abbrechen: { Args: { p_lauf: string }; Returns: boolean }
+      automation_lauf_fortsetzen: { Args: { p_lauf: string }; Returns: undefined }
+      automation_lauf_jetzt: { Args: { p_lauf: string }; Returns: undefined }
+      automation_lauf_stoppen: { Args: { p_grund: string; p_lauf: string }; Returns: undefined }
+      automation_lauf_verschieben: { Args: { p_lauf: string; p_tage: number }; Returns: string }
+      automation_probe_datensaetze: {
+        Args: { p_tabelle: string }
+        Returns: {
+          id: string
+          titel: string
+        }[]
+      }
+      automation_probelauf: { Args: { p: Json; p_id: string; p_tabelle: string }; Returns: Json }
+      automation_schritt_wiederholen: { Args: { p_lauf: string; p_schritt: number }; Returns: undefined }
       automation_server_ergebnis: {
         Args: {
           p_ergebnis: string
@@ -10571,6 +10649,8 @@ export type Database = {
         Returns: undefined
       }
       automation_server_offen: { Args: { p_limit?: number }; Returns: Json }
+      automation_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_warum: { Args: { p_lauf: string }; Returns: Json }
       automationen_abarbeiten: { Args: { p_limit?: number }; Returns: Json }
       benachrichtigung_ausblenden: { Args: { p_id: string }; Returns: undefined }
       benachrichtigungen_gelesen: { Args: { p_ids?: string[] }; Returns: number }
