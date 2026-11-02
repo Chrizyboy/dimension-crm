@@ -107,10 +107,15 @@ export function kurzzeichen(name: string): string {
   return (erste + letzte).toUpperCase()
 }
 
-/** Person zu «@…»: Kurzzeichen («LP», aus dem Namen oder gespeichert), sonst eindeutiger Vorname. */
-export function findePerson<P extends { kuerzel: string; name: string }>(text: string | null, personen: P[]): P | null {
+/** Person zu «@…»: gespeichertes Kurzzeichen («LP»), sonst Kürzel aus dem Namen, sonst eindeutiger Vorname. */
+export function findePerson<P extends { kuerzel: string; kurzzeichen?: string | null; name: string }>(
+  text: string | null,
+  personen: P[],
+): P | null {
   if (!text) return null
   const k = text.toLowerCase()
+  const gespeichert = personen.filter((p) => p.kurzzeichen?.toLowerCase() === k)
+  if (gespeichert.length === 1) return gespeichert[0] ?? null
   const genau = personen.filter((p) => p.kuerzel.toLowerCase() === k || kurzzeichen(p.name).toLowerCase() === k)
   if (genau.length === 1) return genau[0] ?? null
   const vorname = personen.filter((p) => p.name.toLowerCase().split(/\s+/)[0] === k)

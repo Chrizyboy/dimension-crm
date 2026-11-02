@@ -43,7 +43,7 @@ export async function ladeAufgabe(id: string): Promise<Aufgabe | null> {
 export async function ladePersonen(): Promise<Person[]> {
   const { data, error } = await db()
     .from('personen')
-    .select('id, kuerzel, name')
+    .select('id, kuerzel, kurzzeichen, name')
     .eq('aktiv', true)
     .is('geloescht_am', null)
     .order('name')

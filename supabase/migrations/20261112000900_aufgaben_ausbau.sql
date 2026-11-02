@@ -233,7 +233,8 @@ begin
     union select p.id from public.personen p where p.auth_user_id = a.erstellt_von
     union select p.id from public.personen p
            where p.aktiv and p.geloescht_am is null
-             and lower(p.kuerzel) in (select lower(m.treffer[1]) from regexp_matches(new.text, '@([[:alnum:]_.-]+)', 'g') as m(treffer))
+             and exists (select 1 from regexp_matches(new.text, '@([[:alnum:]_.-]+)', 'g') as m(treffer)
+                          where lower(m.treffer[1]) in (lower(p.kurzzeichen), lower(p.kuerzel)))
   loop
     perform intern.aufgabe_glocke(wer, coalesce(von, 'Kommentar') || ': ' || a.titel,
                                   coalesce(von, 'Commentaire') || ' : ' || a.titel, left(new.text, 200), a.id);
@@ -293,10 +294,10 @@ grant execute on function public.aufgabe_erledigen(uuid, text) to authenticated;
 
 /** Team-Sicht (Geschäftsleitung): je Person offen, überfällig, heute, erledigt in 7 Tagen, abwesend. */
 create or replace function public.aufgaben_team() returns table (
-  person_id uuid, name text, kuerzel text, offen int, ueberfaellig int, heute int, erledigt_7 int, abwesend boolean)
+  person_id uuid, name text, kurzzeichen text, offen int, ueberfaellig int, heute int, erledigt_7 int, abwesend boolean)
 language sql stable security definer set search_path = '' as $$
   with t as (select intern.heute_zuerich() as h)
-  select p.id, p.name, p.kuerzel,
+  select p.id, p.name, p.kurzzeichen,
          count(a.id) filter (where a.erledigt_am is null)::int,
          count(a.id) filter (where a.erledigt_am is null and a.faellig_am < t.h)::int,
          count(a.id) filter (where a.erledigt_am is null and a.faellig_am = t.h)::int,
@@ -306,7 +307,7 @@ language sql stable security definer set search_path = '' as $$
     cross join t
     left join public.aufgaben a on a.person_id = p.id and a.geloescht_am is null
    where intern.aufgaben_sieht_alle() and p.aktiv and p.geloescht_am is null
-   group by p.id, p.name, p.kuerzel, t.h
+   group by p.id, p.name, p.kurzzeichen, t.h
   union all
   select null, null, null,
          count(*)::int, count(*) filter (where a.faellig_am < t.h)::int, count(*) filter (where a.faellig_am = t.h)::int,

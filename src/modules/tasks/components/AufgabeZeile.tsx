@@ -153,7 +153,11 @@ export function AufgabeZeile({
           <span className="text-muted-foreground text-xs tabular-nums">{formatDatum(a.erledigt_am)}</span>
         )}
         {zeigePerson && person && (
-          <Avatar name={person.name} className={cn(a.vertretung && 'ring-accent ring-dashed ring-2')} />
+          <Avatar
+            name={person.name}
+            zeichen={person.kurzzeichen}
+            className={cn(a.vertretung && 'ring-accent ring-dashed ring-2')}
+          />
         )}
       </div>
     </li>

@@ -43,10 +43,13 @@ export interface Kommentar {
   erstellt_am: string
 }
 
-/** Person für «Für wen» (Kurzzeichen für die runden Kürzel). */
+/** Person für «Für wen» und die runden Kürzel. */
 export interface Person {
   id: string
+  /** Technischer Schlüssel für Regeln («loris»), nie anzeigen. */
   kuerzel: string
+  /** Anzeige-Kürzel («LP»). */
+  kurzzeichen: string | null
   name: string
 }
 
@@ -54,7 +57,7 @@ export interface Person {
 export interface TeamZeile {
   person_id: string | null
   name: string | null
-  kuerzel: string | null
+  kurzzeichen: string | null
   offen: number
   ueberfaellig: number
   heute: number

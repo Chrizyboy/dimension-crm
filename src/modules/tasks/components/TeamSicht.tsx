@@ -44,7 +44,7 @@ export function TeamSicht({ onPerson }: { onPerson: (id: string) => void }) {
                       if (z.person_id) onPerson(z.person_id)
                     }}
                   >
-                    <Avatar name={z.name ?? ''} />
+                    <Avatar name={z.name ?? ''} zeichen={z.kurzzeichen} />
                     <span className="font-medium">{z.name}</span>
                     {z.abwesend && <Badge ton="warnung">{t('aufgaben.team.abwesend')}</Badge>}
                   </button>

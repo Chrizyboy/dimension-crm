@@ -36,5 +36,5 @@ Projektleitung (Netzbetreiber, Pronovo), Montage am Handy, Buchhaltung (MWST, Ma
 
 Die vier Fragen an Chris (Sichtbarkeit, Vertretung, Notiz im Verlauf, Wiederholung) sind mit der empfohlenen Antwort
 gebaut. Jede Antwort B ist eine Einstellung in `einstellungen.aufgaben` und braucht keinen neuen Code, ausser
-«keine Wiederholung» (Feld ausblenden). Kurzzeichen kommen vorerst aus dem Namen («Loris Pisciotta» → LP), bis der
-Thread «Einstellungen» das gespeicherte Kurzzeichen je Person einführt.
+«keine Wiederholung» (Feld ausblenden). Angezeigt wird `personen.kurzzeichen` («LP»); `@LP` in Kommentaren und der
+Schnelleingabe findet die Person über das Kurzzeichen, den technischen Schlüssel oder den Vornamen.

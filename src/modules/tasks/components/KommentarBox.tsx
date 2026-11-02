@@ -38,10 +38,11 @@ export function KommentarBox({ aufgabeId, personen }: { aufgabeId: string; perso
   return (
     <div className="flex flex-col gap-3">
       {(kommentare.data ?? []).map((k) => {
-        const name = personen.find((p) => p.id === k.person_id)?.name ?? '–'
+        const person = personen.find((p) => p.id === k.person_id)
+        const name = person?.name ?? '–'
         return (
           <div key={k.id} className="flex gap-2 text-sm">
-            <Avatar name={name} />
+            <Avatar name={name} zeichen={person?.kurzzeichen} />
             <div className="min-w-0">
               <p className="whitespace-pre-line">{k.text}</p>
               <p className="text-muted-foreground text-xs">
