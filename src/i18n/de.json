@@ -2852,7 +2852,7 @@
       "alle": "Alle"
     },
     "reiter": {
-      "faelle": "Fälle",
+      "faelle": "Leitstand",
       "anlagen": "Anlagen"
     },
     "spalte": {
@@ -2873,7 +2873,15 @@
       "termin": "Termin",
       "garantieFall": "Garantiefall",
       "beschreibung": "Beschreibung",
-      "status": "Stand"
+      "status": "Stand",
+      "auswirkung": "Wie schlimm?",
+      "fehlercode": "Fehlercode",
+      "komponente": "Komponente",
+      "quelle": "Woher?",
+      "vorOrtName": "Vor Ort",
+      "vorOrtTelefon": "Telefon vor Ort",
+      "zugang": "Zugang",
+      "zugangHinweis": "z. B. Schlüssel, Hund, Zähler im Keller"
     },
     "akte": {
       "titel": "Service-Fall",
@@ -2886,7 +2894,28 @@
       "notiz": "Notiz zum Verlauf",
       "notizSpeichern": "Notiz speichern",
       "anhaenge": "Anhänge",
-      "hochladen": "Datei hochladen"
+      "hochladen": "Datei hochladen",
+      "anlage": "Anlage",
+      "anlageWaehlen": "Anlage des Kunden wählen",
+      "anrufen": "Anrufen",
+      "einsatz": "Einsatz und Einordnung",
+      "einsatzort": "Einsatzort",
+      "fruehere": "Frühere Fälle",
+      "keineAnhaenge": "Noch keine Fotos oder Dateien.",
+      "keineAnlage": "Keine Anlage erfasst.",
+      "kunde": "Kunde und Einsatzort",
+      "kundeNeu": "Als neuen Kunden anlegen",
+      "mail": "Mail",
+      "netzbetreiber": "Netzbetreiber",
+      "oeffnen": "Öffnen",
+      "ohneKunde": "Kein Kunde zugeordnet. Suchen und wählen oder aus der Meldung neu anlegen.",
+      "projekt": "Projekt",
+      "sprache": "Sprache",
+      "telefon": "Telefon",
+      "vertrag": "Wartungsvertrag {{nummer}}, nächste Wartung {{naechste}}. Einsatz wenn möglich als «Im Wartungsvertrag» verrechnen.",
+      "wiederOeffnen": "Wieder öffnen",
+      "zurueck": "Zurück zum Leitstand",
+      "zustaendigName": "zuständig {{name}}"
     },
     "anlagen": {
       "ansicht": "Anlagen",
@@ -2936,6 +2965,115 @@
       "gutschrift": "Gutschrift CHF",
       "notiz": "Notiz",
       "eingeschicktAm": "eingeschickt {{datum}}"
+    },
+    "board": {
+      "eingang": "Eingang",
+      "arbeit": "In Arbeit",
+      "geplant": "Geplant",
+      "teile": "Wartet auf Teile",
+      "erledigt": "Erledigt (14 Tage)",
+      "leer": "Nichts hier"
+    },
+    "checkliste": {
+      "titel": "Checkliste",
+      "dazu": "Eigenen Schritt hinzufügen"
+    },
+    "dialog": {
+      "bis": "bis",
+      "fotos": "Fotos oder Dateien",
+      "garantieAbgelaufen": "Keine laufende Garantie gefunden.",
+      "garantieLaeuft": "Garantie läuft: {{liste}}",
+      "keineAnlage": "Keine Anlage erfasst: Garantie bitte von Hand prüfen."
+    },
+    "garantieCheck": {
+      "titel": "Garantie-Check",
+      "montage": "Montage",
+      "bis": "bis {{datum}}",
+      "abgelaufen": "abgelaufen {{datum}}",
+      "keine": "Keine Garantiedaten an der Anlage erfasst."
+    },
+    "kosten": {
+      "titel": "Rapporte und Verrechnung",
+      "entwurf": "Entwurf",
+      "inArbeit": "in Arbeit",
+      "leer": "Noch kein Rapport. Der Rapport entsteht am Handy beim Einsatz.",
+      "offen": "offen {{betrag}}",
+      "rechnung": "Rechnung erstellen",
+      "stand": {
+        "entwurf": "Entwurf",
+        "gestellt": "gestellt",
+        "teilbezahlt": "teilbezahlt",
+        "bezahlt": "bezahlt",
+        "storniert": "storniert"
+      }
+    },
+    "leitstand": {
+      "ansicht": "Ansicht",
+      "board": "Board",
+      "liste": "Liste",
+      "ohneKunde": "ohne Kunde",
+      "standAendern": "Stand ändern",
+      "suche": "Fall, Kunde, Adresse, Telefon oder Fehlercode",
+      "website": "Website"
+    },
+    "meldung": {
+      "titel": "Störungsmeldung von der Website",
+      "name": "Name",
+      "adresse": "Adresse der Anlage",
+      "projekt": "Projektnummer",
+      "stoerung": "Art der Störung",
+      "text": "Beschreibung",
+      "einwilligung": "Einwilligung",
+      "ja": "ja"
+    },
+    "reaktion": {
+      "bis": "Termin spätestens {{zeit}}",
+      "noch": "noch {{dauer}}",
+      "zuSpaet": "{{dauer}} zu spät"
+    },
+    "schnell": {
+      "meine": "Meine",
+      "ueberfaellig": "Zu spät",
+      "steht": "Anlage steht",
+      "garantie": "Garantie",
+      "website": "Website",
+      "ohne_kunde": "Ohne Kunde"
+    },
+    "schritte": {
+      "titel": "Arbeitsschritte",
+      "eingang": "Eingang",
+      "diagnose": "Diagnose",
+      "geplant": "Termin",
+      "vorort": "Vor Ort",
+      "teile": "Teile / RMA",
+      "abschluss": "Erledigt",
+      "verrechnet": "Verrechnet"
+    },
+    "verlauf": {
+      "art": "Was festhalten?",
+      "festhalten": "Festhalten",
+      "mailEingang": "Mail",
+      "rapport": "Rapport",
+      "text": "Eintrag im Verlauf",
+      "notiz": "Notiz",
+      "anruf": "Anruf",
+      "mail": "Mail",
+      "sms": "SMS",
+      "system": "System",
+      "platzhalter": {
+        "notiz": "Was ist passiert? (Ctrl+Enter)",
+        "anruf": "Mit wem gesprochen, was vereinbart?",
+        "mail": "Was wurde geschrieben?",
+        "sms": "Was wurde geschickt?"
+      }
+    },
+    "zahl": {
+      "offen": "offene Fälle",
+      "ueberfaellig": "Reaktionszeit überschritten",
+      "woche": "Termine diese Woche",
+      "teile": "warten auf Teile",
+      "rma": "beim Hersteller (RMA)",
+      "verrechnen": "Rapporte zu verrechnen"
     }
   },
   "wartung": {
