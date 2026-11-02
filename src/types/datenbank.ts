@@ -2307,6 +2307,13 @@ export type Database = {
             foreignKeyName: 'bewertungsanfragen_ausgang_id_fkey'
             columns: ['ausgang_id']
             isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_ausgang_id_fkey'
+            columns: ['ausgang_id']
+            isOneToOne: false
             referencedRelation: 'ausgangskorb'
             referencedColumns: ['id']
           },
@@ -2700,6 +2707,13 @@ export type Database = {
           verkaufschance_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'empfehlungen_dank_ausgang_id_fkey'
+            columns: ['dank_ausgang_id']
+            isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'empfehlungen_dank_ausgang_id_fkey'
             columns: ['dank_ausgang_id']
@@ -6147,6 +6161,13 @@ export type Database = {
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'personal_akten_vorgesetzt_id_fkey'
+            columns: ['vorgesetzt_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
         ]
       }
       personal_dokumente: {
@@ -6193,7 +6214,15 @@ export type Database = {
           person_id?: string
           titel?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'personal_dokumente_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       personal_gespraeche: {
         Row: {
@@ -6239,7 +6268,22 @@ export type Database = {
           notiz?: string | null
           person_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'personal_gespraeche_gefuehrt_von_fkey'
+            columns: ['gefuehrt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'personal_gespraeche_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       personal_loehne: {
         Row: {
@@ -6288,7 +6332,15 @@ export type Database = {
           notiz?: string | null
           person_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'personal_loehne_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       personen: {
         Row: {
@@ -8270,8 +8322,8 @@ export type Database = {
           person_id: string | null
           prioritaet: string | null
           projekt_id: string | null
-          reaktion_am: string | null
           quelle: string
+          reaktion_am: string | null
           reaktion_bis: string | null
           status: string
           team: string[]
@@ -8310,8 +8362,8 @@ export type Database = {
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
-          reaktion_am?: string | null
           quelle?: string
+          reaktion_am?: string | null
           reaktion_bis?: string | null
           status?: string
           team?: string[]
@@ -8349,8 +8401,8 @@ export type Database = {
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
-          reaktion_am?: string | null
           quelle?: string
+          reaktion_am?: string | null
           reaktion_bis?: string | null
           status?: string
           team?: string[]
@@ -11114,6 +11166,13 @@ export type Database = {
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'personal_akten_vorgesetzt_id_fkey'
+            columns: ['vorgesetzt_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
         ]
       }
       preisliste: {
@@ -12494,9 +12553,6 @@ export type Database = {
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
       seriennummern_erfassen: { Args: { p: Json; p_bestellung: string }; Returns: number }
-      service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
-      service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
-      service_termin_verschieben: { Args: { p_datum: string; p_id: string; p_person?: string }; Returns: undefined }
       service_akte: { Args: { p_id: string }; Returns: Json }
       service_aus_website: { Args: { p: Json }; Returns: Json }
       service_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_nr: number }; Returns: undefined }
@@ -12510,9 +12566,12 @@ export type Database = {
         Args: { p_am?: string; p_art: string; p_eintrag: string; p_id: string; p_text: string }
         Returns: undefined
       }
+      service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
       service_kunde_aus_meldung: { Args: { p_id: string }; Returns: string }
       service_leitstand: { Args: Record<PropertyKey, never>; Returns: Json }
+      service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       service_seriennummer: { Args: { p_id: string; p_nr: number; p_seriennummer: string }; Returns: undefined }
+      service_termin_verschieben: { Args: { p_datum: string; p_id: string; p_person?: string }; Returns: undefined }
       service_zuordnen: {
         Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
         Returns: undefined

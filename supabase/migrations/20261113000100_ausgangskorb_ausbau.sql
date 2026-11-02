@@ -18,11 +18,11 @@ comment on column public.ausgangskorb.rueckgaengig_bis is 'Bis wann eine Freigab
 comment on column public.ausgangskorb.zurueck_an is '«Zurück an …»: wer den Eintrag nochmals ansehen soll (mit Notiz).';
 comment on column public.ausgangskorb.ruecklauf_am is 'Nur Briefe: unterschriebene Antwort ist zurück.';
 
--- Arten, die ein bestimmtes Recht brauchen. Bestehende Werte (z. B. aus PR #45) bleiben, neue kommen dazu.
+-- Arten, die ein bestimmtes Recht brauchen (gleich wie «rechte_nach_golive»). Bestehende Werte bleiben unverändert:
+-- Serien-Mails sendet das Marketing, Bestellungen sind schon über das Recht «preise» in Einkauf geschützt.
 insert into public.einstellungen (schluessel, wert)
-values ('ausgang_freigabe',
-        '{"newsletter": "admin", "serienmail": "admin", "mahnung": "finanzen", "zahlungserinnerung": "finanzen", "bestellung": "preise"}')
-on conflict (schluessel) do update set wert = excluded.wert || public.einstellungen.wert;
+values ('ausgang_freigabe', '{"newsletter": "admin", "mahnung": "finanzen", "zahlungserinnerung": "finanzen"}')
+on conflict (schluessel) do nothing;
 
 /** Name einer Person für die Anzeige. */
 create or replace function intern.ausgang_name(p uuid) returns text
