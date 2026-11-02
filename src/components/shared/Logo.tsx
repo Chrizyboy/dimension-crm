@@ -20,7 +20,8 @@ export const SIGNET = './logo/icon-umriss.svg'
  * oranger Umriss, daneben «DIMENSION WORK» und «by Dimension Solaire». Als Bild, damit die Schrift
  * (Montserrat) überall gleich aussieht, ohne eine Schrift nachzuladen. Drucksachen für Kunden behalten das
  * Firmenlogo (`public/logo/logo-*`), weil sie von Dimension Solaire kommen, nicht von der App. Das App-Symbol
- * (Taskleiste, Startmenü, Favicon) bleibt das gefüllte `icon.svg`, weil der dünne Umriss klein zu schwach wirkt.
+ * (Taskleiste, Startmenü, Favicon) bleibt die gefüllte Sonne auf Orange, weil der dünne Umriss klein zu schwach wirkt;
+ * alle Grössen erzeugt `scripts/icons/icons_erzeugen.py`.
  */
 export function Logo({ className, variante = 'auto', kurz = false }: LogoProps) {
   const sprache = useUi((z) => z.sprache)
