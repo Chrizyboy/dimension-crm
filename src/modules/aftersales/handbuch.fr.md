@@ -63,7 +63,7 @@ Tout ce qui suit la construction : pannes, réclamations, cas de garantie chez l
 ## Automatique {#automatisch}
 
 - Le CRM complète projet, lieu, priorité, délai de réaction, liste de contrôle et garantie à l’enregistrement.
-- Les annonces du formulaire de panne du site deviennent des cas ; le client reçoit une confirmation via la [Corbeille de sortie](kapitel:outbox), les responsables une notification.
+- Les annonces du formulaire de panne du site deviennent des cas ; le client reçoit une confirmation via la [Boîte d’envoi](kapitel:outbox), les responsables une notification.
 - Un cas peut naître directement d’un mail dans la [Boîte de réception](kapitel:inbox).
 - Les installations sont créées avec la mise en service dans le [Projet](kapitel:projects).
 - Les cas urgents et ouverts ainsi que les contrôles dans 30 jours figurent sur [Ma journée](kapitel:today).
@@ -71,7 +71,7 @@ Tout ce qui suit la construction : pannes, réclamations, cas de garantie chez l
 ## Règles {#regeln}
 
 - Seule l’administration règle délais de réaction, listes de contrôle, responsables et textes de confirmation.
-- Ce qui part vers le client passe par la corbeille de sortie.
+- Ce qui part vers le client passe par la boîte d’envoi.
 
 ## Questions fréquentes {#fragen}
 

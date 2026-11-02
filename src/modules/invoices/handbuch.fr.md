@@ -31,7 +31,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 1. Ouvrir le brouillon, **Émettre**. C’est seulement maintenant qu’elle reçoit son numéro (R2026-001 …) et son échéance. Ensuite, elle est figée.
 2. Voie normale : **Vers AbaNinja**. La facture y est en brouillon avec facture QR, l’envoi se fait depuis AbaNinja.
-3. Solution de repli : **Par e-mail**. Le PDF avec section paiement QR est avec le mail dans la [Corbeille de sortie](kapitel:outbox) et ne part qu’après validation.
+3. Solution de repli : **Par e-mail**. Le PDF avec section paiement QR est avec le mail dans la [Boîte d’envoi](kapitel:outbox) et ne part qu’après validation.
 
 ### Saisir un paiement
 
@@ -43,7 +43,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 1. Filtre **En retard**, ouvrir la facture, **Rappel**.
 2. Vérifier le niveau et le nouveau délai, regarder l’**Aperçu**, **Enregistrer le … rappel**.
-3. Envoyer le rappel en PDF par mail via la corbeille de sortie.
+3. Envoyer le rappel en PDF par mail via la boîte d’envoi.
 
 ### Annuler une facture
 
@@ -74,7 +74,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 - Numéro, échéance, état de paiement, niveaux de rappel et annulation sont fixés uniquement par le CRM.
 - Une facture émise n’est pas modifiée, mais annulée puis recréée.
-- L’envoi se fait uniquement via AbaNinja ou la corbeille de sortie avec validation.
+- L’envoi se fait uniquement via AbaNinja ou la boîte d’envoi avec validation.
 - Seules les personnes avec le droit Finances modifient les données des sociétés et les réglages.
 
 ## Questions fréquentes {#fragen}

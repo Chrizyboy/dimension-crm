@@ -30,7 +30,7 @@ Saisir les frais avec photo ou PDF du justificatif, sur le portable directement 
 
 1. Vue **Tous les frais**, filtre **Ouverts**. **Ouverts par personne** montre la somme par personne.
 2. Choisir des lignes ou **Choisir tous les ouverts**.
-3. **… à la comptabilité** : le mail avec liste et justificatifs est dans la [Corbeille de sortie](kapitel:outbox).
+3. **… à la comptabilité** : le mail avec liste et justificatifs est dans la [Boîte d’envoi](kapitel:outbox).
 4. Après le virement, **… payés**, fixer **Payé le**.
 
 ### Gérer les catégories (comptabilité)
