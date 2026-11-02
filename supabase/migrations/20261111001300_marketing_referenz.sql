@@ -5,7 +5,7 @@
 --    nach der Freigabe im Marketing (Regel 6).
 --  * Nachrüst-Mail: fertige Mail-Entwürfe je Merkmal in einstellungen.marketing.nachruest (Serien-Mail).
 
-alter table public.rapporte add column fotos_werbung boolean not null default false;
+alter table public.rapporte add column if not exists fotos_werbung boolean not null default false;
 
 update public.einstellungen set wert = jsonb_build_object(
   'referenz_post', jsonb_build_object(
