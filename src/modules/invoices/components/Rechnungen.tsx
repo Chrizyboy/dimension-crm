@@ -12,11 +12,12 @@ import { supabase } from '@/services/supabase'
 import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
-import { useEingang, useMahnlauf, useZuVerrechnen } from '../hooks/useRechnungen'
+import { useEingang, useHeute, useMahnlauf, useZuVerrechnen } from '../hooks/useRechnungen'
 import { abgleichen } from '../services/rechnungen'
 import { sichtbareReiter, type EntwurfVorgabe, type RechnungFilter, type Reiter as ReiterTyp } from '../types'
 import { EingangListe } from './EingangListe'
 import { Firmen } from './Firmen'
+import { HeutePruefen } from './HeutePruefen'
 import { Mahnlauf } from './Mahnlauf'
 import { MeineProjekte } from './MeineProjekte'
 import { Uebersicht } from './Uebersicht'
@@ -57,6 +58,7 @@ export default function Rechnungen({
   const mahnlauf = useMahnlauf(finanzen)
   const visum = useEingang('meine')
   const bereit = useEingang('bereit', finanzen)
+  const heute = useHeute(finanzen)
   const verbindungen = useVerbindungsStatus()
   const { laeuft, aus } = useAktion()
   const [neu, setNeu] = useState<EntwurfVorgabe | null>(null)
@@ -75,6 +77,7 @@ export default function Rechnungen({
       (zuVerrechnen.data?.rapporte.length ?? 0),
     mahnlauf: mahnlauf.data?.filter((z) => z.aktion === 'senden').length ?? 0,
     eingang: visum.data?.length ?? 0,
+    heute: (heute.data?.entwuerfe.length ?? 0) + (heute.data?.mahnungen.length ?? 0),
   }
   const aktiv = reiterListe.includes(reiter) ? reiter : (reiterListe[0] ?? 'projekte')
   const oeffnen = (id: string | null) => {
@@ -130,6 +133,15 @@ export default function Rechnungen({
             </ReiterKnopf>
           ))}
         </ReiterListe>
+        {finanzen && (
+          <ReiterInhalt value="heute" className="pt-4">
+            <HeutePruefen
+              onRechnung={(id) => {
+                onNavigation({ reiter: 'heute', rechnung: id })
+              }}
+            />
+          </ReiterInhalt>
+        )}
         {finanzen && (
           <ReiterInhalt value="uebersicht" className="pt-4">
             <Uebersicht

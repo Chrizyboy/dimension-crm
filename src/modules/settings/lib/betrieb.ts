@@ -65,3 +65,9 @@ export function pruefpunkte(e: {
     { id: 'ki', stand: ja(d?.ki), werte: {} },
   ]
 }
+
+/** Guthaben aus der Meldung des SMS-Tests («credits:250»), sonst null. */
+export function smsGuthaben(meldung: string | null | undefined): number | null {
+  const m = /^credits:(\d+)/.exec(meldung ?? '')
+  return m ? Number(m[1]) : null
+}

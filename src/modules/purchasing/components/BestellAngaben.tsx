@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { Button } from '@/components/ui/button'
 import { Input, Textarea } from '@/components/ui/input'
 import { formatDatum, formatDatumZeit } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
@@ -63,6 +64,23 @@ export function BestellAngaben({ bestellung: b }: { bestellung: Bestellung }) {
           </Angabe>
         )}
         {b.bestellt_am && <Angabe label={t('einkauf.feld.bestelltAm')}>{formatDatum(b.bestellt_am)}</Angabe>}
+        {(b.bestaetigt_am || b.status === 'bestellt' || b.status === 'teilgeliefert') && (
+          <Angabe label={t('einkauf.feld.bestaetigtAm')}>
+            {b.bestaetigt_am ? (
+              formatDatum(b.bestaetigt_am)
+            ) : (
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => {
+                  void aus(() => bestellungAendern(b.id, { bestaetigt_am: new Date().toISOString().slice(0, 10) }))
+                }}
+              >
+                {t('einkauf.abErhalten')}
+              </Button>
+            )}
+          </Angabe>
+        )}
         {b.geliefert_am && <Angabe label={t('einkauf.feld.geliefertAm')}>{formatDatum(b.geliefert_am)}</Angabe>}
         {b.storniert_grund && <Angabe label={t('einkauf.feld.stornoGrund')}>{b.storniert_grund}</Angabe>}
       </dl>

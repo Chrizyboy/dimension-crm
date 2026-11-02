@@ -27,7 +27,16 @@ export const RECHNUNG_FILTER = [
 export type RechnungFilter = (typeof RECHNUNG_FILTER)[number]
 
 /** Reiter der Seite. Ohne Recht «finanzen» nur «Meine Projekte» und «Eingangsrechnungen» (Visum). */
-export const REITER = ['uebersicht', 'rechnungen', 'verrechnen', 'mahnlauf', 'eingang', 'projekte', 'firmen'] as const
+export const REITER = [
+  'heute',
+  'uebersicht',
+  'rechnungen',
+  'verrechnen',
+  'mahnlauf',
+  'eingang',
+  'projekte',
+  'firmen',
+] as const
 export type Reiter = (typeof REITER)[number]
 export const REITER_OHNE_FINANZEN: readonly Reiter[] = ['projekte', 'eingang']
 

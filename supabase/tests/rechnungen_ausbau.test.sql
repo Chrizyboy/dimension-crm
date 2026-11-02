@@ -15,7 +15,7 @@ insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte, ers
   ('00000000-0000-0000-0000-0000000051b1', 're_bh', 'Bea Buchhaltung', '00000000-0000-0000-0000-0000000051a1', 'buchhaltung', '{}', now() - interval '1 day'),
   ('00000000-0000-0000-0000-0000000051b2', 're_pl', 'Paul Projekt', '00000000-0000-0000-0000-0000000051a2', 'projektleitung', '{}', now()),
   ('00000000-0000-0000-0000-0000000051b3', 're_pl2', 'Petra Projekt', '00000000-0000-0000-0000-0000000051a3', 'projektleitung', '{}', now()),
-  ('00000000-0000-0000-0000-0000000051b4', 're_gl', 'Gina Leitung', '00000000-0000-0000-0000-0000000051a4', 'verkauf', '{}', now());
+  ('00000000-0000-0000-0000-0000000051b4', 're_gl', 'Gina Leitung', '00000000-0000-0000-0000-0000000051a4', 'verkauf', '{finanzen}', now());
 update public.einstellungen
    set wert = jsonb_set(jsonb_set(wert, '{mahnlauf,freigabe_person_ids}', '["00000000-0000-0000-0000-0000000051b4"]'),
                         '{eingang,gl_person_ids}', '["00000000-0000-0000-0000-0000000051b4", "00000000-0000-0000-0000-0000000051b2"]')

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { Suspense, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Toaster } from 'sonner'
 import { TooltipAnbieter } from '@/components/ui/tooltip'
@@ -6,6 +6,7 @@ import { useOberflaeche } from '@/hooks/useOberflaeche'
 import { useTastenkuerzel } from '@/hooks/useTastenkuerzel'
 import { useUpdatePruefung } from '@/hooks/useUpdatePruefung'
 import { cn } from '@/lib/utils'
+import { AssistentFenster } from '@/modules/ai'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { Befehlspalette } from './Befehlspalette'
@@ -27,6 +28,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt)
   const darstellung = useUi((z) => z.darstellung)
   const einfach = useAnmeldung((z) => z.ich?.ansicht === 'einfach')
+  // Erst laden, wenn jemand Ctrl J drückt (spart Startzeit).
+  const assistent = useUi((z) => z.assistentOffen)
 
   return (
     <TooltipAnbieter delayDuration={300}>
@@ -68,6 +71,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
       {!einfach && <HandyNavigation />}
       <Befehlspalette />
+      {assistent && (
+        <Suspense>
+          <AssistentFenster />
+        </Suspense>
+      )}
       <KuerzelHilfe />
       <Toaster
         position="bottom-right"

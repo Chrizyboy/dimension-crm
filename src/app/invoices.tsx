@@ -28,7 +28,7 @@ export const Route = createFileRoute('/invoices')({
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const standard: Reiter = !ich || hatRecht(ich, 'finanzen') ? 'uebersicht' : 'projekte'
+    const standard: Reiter = !ich || hatRecht(ich, 'finanzen') ? 'heute' : 'projekte'
     const aktiv = reiter ?? (eingang ? 'eingang' : standard)
     return (
       <Suspense>

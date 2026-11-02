@@ -94,12 +94,7 @@ language sql stable security definer set search_path = '' as $$
     '{}')
 $$;
 
-/** Personen der Buchhaltung: Recht «finanzen» ausdrücklich in Rolle oder Person (nicht nur über Administration). */
-create or replace function intern.buchhaltung_personen() returns uuid[]
-language sql stable security definer set search_path = '' as $$
-  select coalesce(array_agg(p.id), '{}') from public.personen p left join public.rollen r on r.schluessel = p.rolle
-   where p.aktiv and p.geloescht_am is null and ('finanzen' = any (p.rechte) or 'finanzen' = any (coalesce(r.rechte, '{}')))
-$$;
+-- intern.buchhaltung_personen() kommt aus 20261111001000_finanzen_heute (Rolle buchhaltung oder Recht finanzen).
 
 /** Glocke für mehrere Personen (gleicher Text DE/FR). */
 create or replace function intern.glocke(p_personen uuid[], p_art text, p_titel_de text, p_titel_fr text,

@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
+import * as h from '../services/heute'
 import * as r from '../services/rechnungen'
 import * as akte from '../services/akte'
 import * as e from '../services/eingang'
@@ -67,6 +68,10 @@ export const useEingangEine = (id: string) =>
 /** Vergleich einer Eingangsrechnung mit der Bestellung. */
 export const useVergleich = (id: string) =>
   useQuery({ queryKey: ['rechnungen', 'eingang-vergleich', id], enabled: an, queryFn: () => e.ladeVergleich(id) })
+
+/** «Heute prüfen»: Entwürfe, wartende Mahnungen, neue Zahlungen. */
+export const useHeute = (aktiv = true) =>
+  useQuery({ queryKey: ['rechnungen', 'heute'], enabled: an && aktiv, queryFn: h.ladeHeute })
 
 export const useFirmen = () => useQuery({ queryKey: ['rechnungen', 'firmen'], enabled: an, queryFn: r.ladeFirmen })
 
