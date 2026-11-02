@@ -1,4 +1,4 @@
-// Aktionen des Assistenten (Entscheid 0039): Fragen ans CRM und Dokumente lesen. Beide lesen nur mit dem Login der
+// Aktionen des Assistenten (Entscheid 0040): Fragen ans CRM und Dokumente lesen. Beide lesen nur mit dem Login der
 // Person (RLS), schlagen vor und speichern das Gespräch privat für die Person. Übernommen wird in der App erst nach
 // einem Klick.
 

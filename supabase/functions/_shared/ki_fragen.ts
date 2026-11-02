@@ -1,4 +1,4 @@
-// Fragen ans CRM (Assistent, Entscheid 0039). Die KI schreibt nie SQL: Sie wählt aus einem festen Katalog von
+// Fragen ans CRM (Assistent, Entscheid 0040). Die KI schreibt nie SQL: Sie wählt aus einem festen Katalog von
 // Tabellen, Feldern und Vergleichen, der Server baut daraus eine REST-Abfrage und führt sie mit dem Login der Person
 // aus. So sieht die KI nie mehr als die Person selbst (RLS), und nur lesend. Dieser Teil ist rein (ohne Netz), damit
 // die Tests ihn ohne Datenbank prüfen können.

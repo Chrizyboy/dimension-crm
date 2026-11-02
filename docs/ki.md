@@ -90,7 +90,7 @@ bleibt der Vorlagentext stehen.
 `npm run ki:pruefen` startet einen Ersatz-Server für die Claude API (`scripts/ki/ersatz-claude.mjs`) und prüft alle
 Funktionen, Limit, Kosten und Rechte gegen die lokale Supabase. Es kostet nichts.
 
-## 5. Assistent prüfen (seit 2.11.2026, Entscheid 0039)
+## 5. Assistent prüfen (seit 2.11.2026, Entscheid 0040)
 
 1. **Assistent › Fragen**: «Welche offenen Offerten sind älter als 14 Tage?» eingeben. Nach 5–20 Sekunden kommt eine
    Antwort mit Tabelle; Nummer und Kunde sind Links in die Akte.

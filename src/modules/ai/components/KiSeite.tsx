@@ -30,7 +30,7 @@ interface Props {
 }
 
 /**
- * Assistent (Entscheid 0039): Fragen ans CRM, Aufträge je Rolle, Dokumente lesen, Verlauf, was die KI im CRM tut,
+ * Assistent (Entscheid 0040): Fragen ans CRM, Aufträge je Rolle, Dokumente lesen, Verlauf, was die KI im CRM tut,
  * Kosten, eigener Schreibstil und (Administration) Einstellungen. #/ai?ansicht=…&gespraech=…
  */
 export default function KiSeite({ ansicht, gespraech, onAnsicht }: Props) {

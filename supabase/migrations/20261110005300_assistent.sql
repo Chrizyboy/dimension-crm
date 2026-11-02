@@ -1,4 +1,4 @@
--- Assistent (Ausbau KI-Assistent, Entscheid 0039): Gespräche mit dem Assistenten (privat, 90 Tage), Aufträge als
+-- Assistent (Ausbau KI-Assistent, Entscheid 0040): Gespräche mit dem Assistenten (privat, 90 Tage), Aufträge als
 -- Vorlagen je Rolle (Firma und eigene) und Funktionen einzeln ausschaltbar (einstellungen.ki.aus).
 
 -- Gespräche: Fragen ans CRM und gelesene Dokumente. Nur die Person selbst sieht ihre Gespräche, auch die

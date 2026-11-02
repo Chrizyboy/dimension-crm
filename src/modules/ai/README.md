@@ -4,7 +4,7 @@
 Texte entwerfen, den eigenen Verlauf und Schreibstil sehen, und sehen, wo die KI im CRM mitarbeitet und was sie
 kostet. Die Administration stellt Modelle, Limits, Firmenstil ein und schaltet einzelne Funktionen aus.
 
-**Stand:** Phase 13 (Entscheid 0024), Ausbau 2.11.2026 (Entscheid 0039). Einrichten im Betrieb: `docs/ki.md`.
+**Stand:** Phase 13 (Entscheid 0024), Ausbau 2.11.2026 (Entscheid 0040). Einrichten im Betrieb: `docs/ki.md`.
 
 Die übrigen KI-Funktionen sitzen dort, wo man arbeitet (Akten, Posteingang, Spesen, Marketing …). Ihre Bausteine
 liegen in `src/components/shared/ki/` und `src/services/ki.ts`.
