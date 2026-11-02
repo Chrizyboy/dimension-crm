@@ -111,6 +111,7 @@ export const useBilder = (rapportId: string) => {
             id: a.dokument.id,
             name: a.dokument.name,
             ordner: a.dokument.ordner,
+            kategorie: a.dokument.kategorie ?? null,
             speicher_pfad: null,
             lokal: true,
             url: URL.createObjectURL(a.blob),
@@ -119,6 +120,20 @@ export const useBilder = (rapportId: string) => {
     },
   })
 }
+
+/** Wochenplan je Person (nur mit Netz, fürs Büro). */
+export const useWochenplan = (von: string, bis: string) =>
+  useQuery({ queryKey: ['baustelle', 'wochenplan', von, bis], enabled: an, queryFn: () => b.ladeWochenplan(von, bis) })
+
+/** Pflichtfotos je Rapport-Art; auch ohne Netz aus der Ablage. */
+export const usePflichtfotos = () =>
+  useQuery({
+    queryKey: ['baustelle', 'pflichtfotos'],
+    networkMode: 'always',
+    enabled: an,
+    staleTime: 30 * 60_000,
+    queryFn: () => mitAblage('pflichtfotos', b.ladePflichtfotos),
+  })
 
 export const usePruefpunkte = () =>
   useQuery({

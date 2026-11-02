@@ -26,12 +26,12 @@ export const Route = createFileRoute('/contracting')({
     return (
       <Suspense>
         <Grossprojekte
-          ansicht={suche.ansicht ?? 'pruefen'}
+          ansicht={suche.ansicht ?? 'pipeline'}
           projektId={suche.projekt ?? null}
           onNavigation={(z) => {
-            const a = z.ansicht ?? suche.ansicht ?? 'pruefen'
+            const a = z.ansicht ?? suche.ansicht ?? 'pipeline'
             const p = z.projekt === undefined ? suche.projekt : z.projekt
-            void navigate({ search: { ...(a !== 'pruefen' ? { ansicht: a } : {}), ...(p ? { projekt: p } : {}) } })
+            void navigate({ search: { ...(a !== 'pipeline' ? { ansicht: a } : {}), ...(p ? { projekt: p } : {}) } })
           }}
         />
       </Suspense>

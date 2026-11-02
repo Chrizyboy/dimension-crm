@@ -33,18 +33,18 @@ export function Wochenblatt({ montag }: { montag: string }) {
 
   const text = (w: Warnung) =>
     w.art === 'saldo'
-      ? t('baustelle.woche.w.saldo', { h: w.stunden })
+      ? t('baustelle.wochenblatt.w.saldo', { h: w.stunden })
       : `${formatDatum(w.tag)}: ${
           w.art === 'pause'
-            ? t('baustelle.woche.w.pause', { min: w.fehlt_min })
+            ? t('baustelle.wochenblatt.w.pause', { min: w.fehlt_min })
             : w.art === 'zu_lang'
-              ? t('baustelle.woche.w.zuLang', { h: w.stunden })
-              : t(`baustelle.woche.w.${w.art === 'laeuft' ? 'laeuft' : 'nichtGestempelt'}`)
+              ? t('baustelle.wochenblatt.w.zuLang', { h: w.stunden })
+              : t(`baustelle.wochenblatt.w.${w.art === 'laeuft' ? 'laeuft' : 'nichtGestempelt'}`)
         }`
 
   const zelle = (d: WochenTag) =>
     d.abwesenheit ? (
-      <Badge ton="info">{t(`baustelle.woche.abw.${d.abwesenheit.art}`, d.abwesenheit.art)}</Badge>
+      <Badge ton="info">{t(`baustelle.wochenblatt.abw.${d.abwesenheit.art}`, d.abwesenheit.art)}</Badge>
     ) : d.stunden > 0 ? (
       <span className={d.ungeprueft ? '' : 'text-ok'}>{d.stunden}</span>
     ) : d.einsatz && d.tag < jetzt ? (
@@ -69,22 +69,22 @@ export function Wochenblatt({ montag }: { montag: string }) {
   return (
     <Karte>
       <KarteKopf>
-        <KarteTitel>{t('baustelle.woche.titel')}</KarteTitel>
+        <KarteTitel>{t('baustelle.wochenblatt.titel')}</KarteTitel>
       </KarteKopf>
       <KarteInhalt className="flex flex-col gap-3">
         <div className="overflow-x-auto">
-          <Tabelle aria-label={t('baustelle.woche.titel')}>
+          <Tabelle aria-label={t('baustelle.wochenblatt.titel')}>
             <TabelleKopf>
               <Zeile>
                 <Kopfzelle>{t('baustelle.spalte.person')}</Kopfzelle>
                 {TAGE.map((d) => (
                   <Kopfzelle key={d} className="text-right">
-                    {t(`baustelle.woche.tag.${d}`)}
+                    {t(`baustelle.wochenblatt.tag.${d}`)}
                   </Kopfzelle>
                 ))}
-                <Kopfzelle className="text-right">{t('baustelle.woche.istSoll')}</Kopfzelle>
-                <Kopfzelle className="text-right">{t('baustelle.woche.saldo')}</Kopfzelle>
-                <Kopfzelle>{t('baustelle.woche.stand')}</Kopfzelle>
+                <Kopfzelle className="text-right">{t('baustelle.wochenblatt.istSoll')}</Kopfzelle>
+                <Kopfzelle className="text-right">{t('baustelle.wochenblatt.saldo')}</Kopfzelle>
+                <Kopfzelle>{t('baustelle.wochenblatt.stand')}</Kopfzelle>
               </Zeile>
             </TabelleKopf>
             <TabelleKoerper>
@@ -111,14 +111,14 @@ export function Wochenblatt({ montag }: { montag: string }) {
                     </Zelle>
                     <Zelle>
                       {p.bestaetigt_am ? (
-                        <Badge ton="ok">{t('baustelle.woche.bestaetigt')}</Badge>
+                        <Badge ton="ok">{t('baustelle.wochenblatt.bestaetigt')}</Badge>
                       ) : eigene ? (
                         <Button size="sm" onClick={() => void bestaetigen()}>
                           <CheckCircle2 />
-                          {t('baustelle.woche.bestaetigen')}
+                          {t('baustelle.wochenblatt.bestaetigen')}
                         </Button>
                       ) : (
-                        <Badge ton="neutral">{t('baustelle.woche.offen')}</Badge>
+                        <Badge ton="neutral">{t('baustelle.wochenblatt.offen')}</Badge>
                       )}
                     </Zelle>
                   </Zeile>

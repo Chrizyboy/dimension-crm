@@ -12,6 +12,10 @@ const tag: MeinTag = {
   },
   aufgaben: leer,
   vergeben: { anzahl: 2, zeilen: [] },
+  freigaben: {
+    anzahl: 1,
+    zeilen: [{ art: 'freigabe', datum: '2026-10-24', titel: 'Ihre Offerte', unter: 'tina@beispiel.test' }],
+  },
   nachfassen: {
     anzahl: 12,
     zeilen: Array.from({ length: 12 }, (_, i) => ({
@@ -41,7 +45,7 @@ describe('Mein Tag', () => {
   })
 
   it('zählt ohne «von mir vergeben»', () => {
-    expect(anzahlOffen(tag)).toBe(13)
+    expect(anzahlOffen(tag)).toBe(14)
   })
 
   it('schreibt eine Zeile mit Datum, Zeit und Betrag', () => {

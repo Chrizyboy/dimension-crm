@@ -7,75 +7,71 @@ import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { verkleinern } from '@/lib/bild'
 import { melde } from '@/services/meldungen'
-import { useBilder } from '../hooks/useBaustelle'
+import { useBilder, usePflichtfotos } from '../hooks/useBaustelle'
+import { pflichtFuer } from '../lib/pflichtfotos'
 import { bildAblegen } from '../services/monteur'
-import type { Schritt } from '../types'
+import type { Pflichtfoto, RapportArt } from '../types'
+import { useUi } from '@/stores/ui'
 
-/** Fotos der Baustelle: direkt mit der Kamera, verkleinert, auch ohne Netz (gehen später hoch). */
+/**
+ * Fotos der Baustelle: direkt mit der Kamera, verkleinert, auch ohne Netz (gehen später hoch).
+ * Pflichtfotos der Rapport-Art (Einstellungen › Baustelle) haben je einen eigenen Knopf mit Häkchen,
+ * damit der Monteur sieht, was noch fehlt; ohne sie lässt sich der Rapport nicht abschliessen.
+ */
 export function FotoAbschnitt({
   rapportId,
+  art,
   offen,
-  pflicht = [],
-  da = [],
+  baustelle,
 }: {
   rapportId: string
+  art: RapportArt
   offen: boolean
-  /** Pflichtfotos der Baustelle (Montage) und die Kategorien, die schon da sind. */
-  pflicht?: Schritt[]
-  da?: string[]
+  /**
+   * Montage mit Einsatz: Pflichtfotos der ganzen Baustelle je Projektart (Entscheid 0041) und was an früheren
+   * Tagen schon fotografiert wurde; sie müssen erst bis zur Abnahme da sein.
+   */
+  baustelle?: { pflicht: Pflichtfoto[]; da: string[] }
 }) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  const sprache = useUi((z) => z.sprache)
   const qc = useQueryClient()
   const bilder = useBilder(rapportId)
+  const jeArt = pflichtFuer(usePflichtfotos().data, art)
+  const pflicht = baustelle?.pflicht ?? jeArt
   const eingabe = useRef<HTMLInputElement>(null)
-  const [laedt, setLaedt] = useState(false)
+  // Welche Pflicht-Kategorie die Kamera gerade aufnimmt (null = freies Foto).
   const [kategorie, setKategorie] = useState<string | null>(null)
-  const [neuDa, setNeuDa] = useState<string[]>([])
-  const sprache = i18n.language.startsWith('fr') ? 'fr' : 'de'
-  const vorhanden = new Set([...da, ...neuDa])
+  const [laedt, setLaedt] = useState(false)
   const fotos = (bilder.data ?? []).filter((b) => b.ordner === 'fotos')
+  const da = new Set([...fotos.map((f) => f.kategorie), ...(baustelle?.da ?? [])])
+
+  function aufnehmen(k: string | null) {
+    setKategorie(k)
+    eingabe.current?.click()
+  }
+
+  const titelVon = (k: string | null) => {
+    const p = pflicht.find((x) => x.schluessel === k)
+    return p ? (sprache === 'fr' ? p.fr : p.de) : undefined
+  }
 
   async function hinzufuegen(dateien: FileList | null) {
     if (!dateien?.length) return
     setLaedt(true)
     try {
       for (const d of Array.from(dateien)) await bildAblegen(rapportId, await verkleinern(d), 'fotos', { kategorie })
-      if (kategorie) setNeuDa([...neuDa, kategorie])
       await qc.invalidateQueries({ queryKey: ['baustelle', 'bilder', rapportId] })
     } catch {
       melde('kritisch', { de: 'Foto nicht gespeichert', fr: 'Photo non enregistrée' })
     } finally {
       setLaedt(false)
-      setKategorie(null)
       if (eingabe.current) eingabe.current.value = ''
     }
   }
 
   return (
     <AkteAbschnitt titel={t('baustelle.foto.titel')} zusatz={fotos.length ? String(fotos.length) : undefined}>
-      {pflicht.length > 0 && (
-        <ul className="mb-3 flex flex-wrap gap-1.5" aria-label={t('baustelle.foto.pflicht')}>
-          {pflicht.map((f) => {
-            const ok = vorhanden.has(f.schluessel)
-            return (
-              <li key={f.schluessel}>
-                <Button
-                  size="sm"
-                  variant={ok ? 'ghost' : 'secondary'}
-                  disabled={!offen}
-                  onClick={() => {
-                    setKategorie(f.schluessel)
-                    eingabe.current?.click()
-                  }}
-                >
-                  {ok ? <CheckCircle2 className="text-ok" /> : <Camera />}
-                  {f[sprache]}
-                </Button>
-              </li>
-            )
-          })}
-        </ul>
-      )}
       {bilder.isPending ? (
         <Skelett className="h-20" />
       ) : (
@@ -83,7 +79,7 @@ export function FotoAbschnitt({
           {fotos.map((f) => (
             <li key={f.id} className="bg-muted relative aspect-square overflow-hidden rounded-md">
               {f.url ? (
-                <a href={f.url} target="_blank" rel="noreferrer">
+                <a href={f.url} target="_blank" rel="noreferrer" title={titelVon(f.kategorie)}>
                   <img src={f.url} alt={f.name} className="size-full object-cover" loading="lazy" />
                 </a>
               ) : (
@@ -103,6 +99,36 @@ export function FotoAbschnitt({
           ))}
         </ul>
       )}
+      {pflicht.length > 0 && (
+        <ul className="mt-2 flex flex-wrap gap-2" aria-label={t('baustelle.foto.pflicht')}>
+          {pflicht.map((p) => {
+            const ok = da.has(p.schluessel)
+            const text = sprache === 'fr' ? p.fr : p.de
+            return (
+              <li key={p.schluessel}>
+                {offen ? (
+                  <Button
+                    size="sm"
+                    variant={ok ? 'ghost' : 'secondary'}
+                    laedt={laedt && kategorie === p.schluessel}
+                    onClick={() => {
+                      aufnehmen(p.schluessel)
+                    }}
+                  >
+                    {ok ? <CheckCircle2 className="text-ok" /> : <Camera />}
+                    {text}
+                  </Button>
+                ) : (
+                  <span className="text-muted-foreground inline-flex items-center gap-1 text-xs">
+                    {ok && <CheckCircle2 className="text-ok size-3.5" />}
+                    {text}
+                  </span>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
       {offen && (
         <>
           <input
@@ -119,10 +145,9 @@ export function FotoAbschnitt({
             className="mt-2"
             size="lg"
             variant="secondary"
-            laedt={laedt}
+            laedt={laedt && kategorie === null}
             onClick={() => {
-              setKategorie(null)
-              eingabe.current?.click()
+              aufnehmen(null)
             }}
           >
             <Camera />

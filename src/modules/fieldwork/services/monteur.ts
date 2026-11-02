@@ -215,6 +215,8 @@ export async function rapportAbschliessen(
     montage_fertig?: boolean
     fall_erledigt?: boolean
     vorbehalte?: { text: string }[]
+    /** Kunde erlaubt Fotos für Werbung (ohne Namen): nach der IBN entsteht ein Referenz-Post als Entwurf. */
+    fotos_werbung?: boolean
   },
 ): Promise<void> {
   let unterschrift: Unterschrift | null = null
@@ -228,6 +230,7 @@ export async function rapportAbschliessen(
     ...(a.montage_fertig !== undefined ? { montage_fertig: a.montage_fertig } : {}),
     ...(a.fall_erledigt ? { fall_erledigt: true } : {}),
     ...(a.vorbehalte?.length ? { vorbehalte: a.vorbehalte } : {}),
+    ...(a.fotos_werbung ? { fotos_werbung: true } : {}),
     stopp: jetzt(),
   }
   await einreihen({ art: 'rpc', name: 'rapport_abschliessen', args: { p_id: id, p }, bezug: id, erstellt: jetzt() })

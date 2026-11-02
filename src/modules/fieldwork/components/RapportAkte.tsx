@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { AlertTriangle, CheckCircle2, FileText, FolderArchive, Undo2 } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, FileText, FolderArchive, Send, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -28,6 +28,7 @@ import { MeldungDialog } from './MeldungDialog'
 import { NachtragAbschnitt } from './NachtragAbschnitt'
 import { PruefAbschnitt } from './PruefAbschnitt'
 import { RapportPdfKnopf } from './RapportPdfKnopf'
+import { RapportSenden } from './RapportSenden'
 import { RapportZeit } from './RapportZeit'
 import { SchritteAbschnitt } from './SchritteAbschnitt'
 import { SeriennummernAbschnitt } from './SeriennummernAbschnitt'
@@ -46,7 +47,7 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const daten = useRapport(id)
   const ich = useAnmeldung((z) => z.ich)
   const { laeuft, aus } = useAktion()
-  const [dialog, setDialog] = useState<'abschluss' | 'dossier' | 'melden' | null>(null)
+  const [dialog, setDialog] = useState<'abschluss' | 'dossier' | 'melden' | 'senden' | null>(null)
   const r = daten.data
   const info = useRapportInfo(r?.einsatz_id ?? null).data ?? null
   const montage = r?.art === 'montage' && info
@@ -62,6 +63,17 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
       {/* Im Panel ist der Seitenkopf verdeckt: der Monteur soll auch hier sehen, dass Einträge noch warten. */}
       <Netzstand className="mr-auto" />
       {!offen && <RapportPdfKnopf rapport={r} />}
+      {!offen && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setDialog('senden')
+          }}
+        >
+          <Send />
+          {t('baustelle.senden.knopf')}
+        </Button>
+      )}
       {!offen && r.art === 'ibn' && r.projekt_id && (
         <Button
           variant="secondary"
@@ -179,8 +191,9 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
             )}
             <FotoAbschnitt
               rapportId={r.id}
+              art={r.art}
               offen={offen}
-              {...(montage ? { pflicht: info.fotos, da: info.fotos_da } : {})}
+              {...(montage ? { baustelle: { pflicht: info.fotos, da: info.fotos_da } } : {})}
             />
             {(r.art === 'montage' || r.art === 'ibn') && (
               <SeriennummernAbschnitt rapport={r} offen={offen} onAendern={aendern} />
@@ -202,6 +215,14 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
               </p>
             </AkteAbschnitt>
           </div>
+        )}
+        {r && dialog === 'senden' && (
+          <RapportSenden
+            rapport={r}
+            onSchliessen={() => {
+              setDialog(null)
+            }}
+          />
         )}
         {r && dialog === 'abschluss' && (
           <AbschlussDialog

@@ -9,8 +9,11 @@ import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
 import { melde } from '@/services/meldungen'
-import { useRapportNachtraege } from '../hooks/useBaustelle'
+import { useBilder, usePflichtfotos, useRapportNachtraege } from '../hooks/useBaustelle'
+import { useRapportInfo } from '../hooks/useLeitung'
+import { fehlendePflichtfotos, pflichtFuer } from '../lib/pflichtfotos'
 import { rapportAbschliessen } from '../services/monteur'
+import { useUi } from '@/stores/ui'
 import type { Rapport, Verrechnung } from '../types'
 import { VerrechnungWahl } from './VerrechnungWahl'
 
@@ -27,25 +30,44 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
   const [grund, setGrund] = useState('')
   const [fertig, setFertig] = useState(r.montage_fertig)
   const [erledigt, setErledigt] = useState(true)
+  const [werbung, setWerbung] = useState(false)
   const [verrechnung, setVerrechnung] = useState<Verrechnung | null>(r.verrechnung)
   const [laeuft, setLaeuft] = useState(false)
   const [vorbehalte, setVorbehalte] = useState<string[]>([])
   const nachtraege = useRapportNachtraege(r.id)
+  const info = useRapportInfo(r.einsatz_id).data ?? null
   // Unterschrift nur bei der Abnahme und für Nachträge; ein normaler Tagesrapport braucht keine (Entscheid 0041).
   const mitNachtrag = r.nachtraege_anzahl > 0 || (nachtraege.data?.length ?? 0) > 0
   const brauchtUnterschrift = r.art !== 'montage' || fertig || mitNachtrag
   const schritteHeute = Object.values(r.schritte).some(Boolean)
+  const sprache = useUi((z) => z.sprache)
+  const bilder = useBilder(r.id)
+  const jeArt = pflichtFuer(usePflichtfotos().data, r.art)
+  // Montage mit Einsatz: Pflichtfotos gelten für die ganze Baustelle und erst bei der Abnahme.
+  const fotosFehlen =
+    r.art === 'montage' && info
+      ? fertig
+        ? fehlendePflichtfotos(info.fotos, [
+            ...(bilder.data ?? []),
+            ...info.fotos_da.map((k) => ({ ordner: 'fotos', kategorie: k })),
+          ])
+        : []
+      : fehlendePflichtfotos(jeArt, bilder.data ?? [])
 
   const fehlt =
     !r.arbeiten?.trim() && !schritteHeute
       ? t('baustelle.abschluss.arbeitenFehlen')
-      : (r.art === 'service' || r.art === 'wartung') && !verrechnung
-        ? t('baustelle.abschluss.verrechnungFehlt')
-        : !brauchtUnterschrift
-          ? false
-          : ohne
-            ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
-            : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
+      : fotosFehlen.length > 0
+        ? t('baustelle.abschluss.fotosFehlen', {
+            liste: fotosFehlen.map((p) => (sprache === 'fr' ? p.fr : p.de)).join(', '),
+          })
+        : (r.art === 'service' || r.art === 'wartung') && !verrechnung
+          ? t('baustelle.abschluss.verrechnungFehlt')
+          : !brauchtUnterschrift
+            ? false
+            : ohne
+              ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
+              : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
 
   async function abschliessen() {
     setLaeuft(true)
@@ -62,6 +84,7 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
         verrechnung,
         ...(r.art === 'montage' ? { montage_fertig: fertig } : {}),
         ...(r.art === 'service' ? { fall_erledigt: erledigt } : {}),
+        ...(werbung ? { fotos_werbung: true } : {}),
       })
       await qc.invalidateQueries({ queryKey: ['baustelle'] })
       melde('ok', { de: 'Rapport abgeschlossen', fr: 'Rapport clôturé' })
@@ -107,6 +130,15 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
             <label className="flex items-center justify-between gap-3 text-sm">
               {t('baustelle.abschluss.fallErledigt')}
               <Switch checked={erledigt} onCheckedChange={setErledigt} />
+            </label>
+          )}
+          {(r.art === 'montage' || r.art === 'ibn') && (
+            <label className="flex items-center justify-between gap-3 text-sm">
+              <span className="flex flex-col">
+                {t('baustelle.abschluss.fotosWerbung')}
+                <span className="text-muted-foreground text-xs">{t('baustelle.abschluss.fotosWerbungHinweis')}</span>
+              </span>
+              <Switch checked={werbung} onCheckedChange={setWerbung} />
             </label>
           )}
           {(r.art === 'service' || r.art === 'wartung') && (

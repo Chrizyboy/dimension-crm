@@ -81,7 +81,8 @@ insert into public.einstellungen (schluessel, wert) values ('baustelle', $j${
     "saldo_warnung_h": 50
   }
 }$j$::jsonb)
-on conflict (schluessel) do nothing;
+-- «baustelle» gibt es schon (Pflichtfotos je Rapport-Art, Stopp vergessen, Wochenplan): nur fehlende Teile ergänzen.
+on conflict (schluessel) do update set wert = excluded.wert || public.einstellungen.wert;
 
 /** Baustellen-Einstellungen ändern nur Administration (eigener Trigger, intern.einstellung_schuetzen bleibt unberührt). */
 create or replace function intern.baustelle_einstellung_schuetzen() returns trigger
@@ -454,7 +455,7 @@ $$;
 
 /**
  * Rapport abschliessen (p: unterschrift {name, dokument_id, am} oder ohne_unterschrift (Grund), montage_fertig,
- * verrechnung, fall_erledigt, vorbehalte, stopp). Die Unterschrift des Kunden braucht es bei der Abnahme
+ * verrechnung, fall_erledigt, vorbehalte, fotos_werbung, stopp). Die Unterschrift des Kunden braucht es bei der Abnahme
  * (Montage fertig), bei IBN, Service und Wartung und wenn offene Nachträge am Rapport hängen; ein gewöhnlicher
  * Tagesrapport der Montage geht ohne. Ohne getippten Text gelten die erledigten Schritte als Arbeiten.
  * Laufende Zeiten des Rapports enden. Folgen je Art wie bisher; dazu Seriennummern in die Anlage und bei
@@ -501,7 +502,8 @@ begin
   update public.rapporte set unterschrift_kunde = v_unterschrift, abgeschlossen_am = now(), arbeiten = r.arbeiten,
          montage_fertig = v_fertig,
          verrechnung = coalesce(nullif(p ->> 'verrechnung', ''), verrechnung),
-         vorbehalte = case when p ? 'vorbehalte' then coalesce(p -> 'vorbehalte', '[]') else vorbehalte end
+         vorbehalte = case when p ? 'vorbehalte' then coalesce(p -> 'vorbehalte', '[]') else vorbehalte end,
+         fotos_werbung = coalesce((p ->> 'fotos_werbung')::boolean, fotos_werbung)
    where id = p_id
   returning * into r;
 
@@ -518,6 +520,7 @@ begin
     update public.projekte set bau_vorher = intern.bau_merken(id), status = 'abgeschlossen', bau_status = 'fertig'
      where id = r.projekt_id and coalesce(bau_status, '') <> 'fertig';
     perform intern.anlage_zum_projekt(r.projekt_id, r.datum);
+    perform intern.referenz_post_entwurf(r.projekt_id);  -- Marketing (20261111001300): Referenz-Post als Entwurf
   elsif r.art = 'service' and r.service_fall_id is not null then
     update public.service_faelle
        set verlauf = verlauf || jsonb_build_array(jsonb_build_object('am', now(), 'person_id', intern.meine_person_id(),

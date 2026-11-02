@@ -1,7 +1,7 @@
 import { herunterladen } from '@/lib/datei'
 import { rufeFunktion } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
-import type { BetriebStand, Sicherung, Wiederherstellung } from '../types'
+import type { BetriebStand, DiensteZustand, Sicherung, Wiederherstellung } from '../types'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -53,4 +53,11 @@ export async function ladeBetrieb(): Promise<BetriebStand> {
   const { data, error } = await db().rpc('betrieb_stand')
   if (error) throw error
   return data as unknown as BetriebStand
+}
+
+/** Zustand aller Dienste (Zeitplan, Sicherung, Microsoft je Person, SMS, AbaNinja …), nur Administration. */
+export async function ladeDiensteZustand(): Promise<DiensteZustand> {
+  const { data, error } = await db().rpc('dienste_zustand')
+  if (error) throw error
+  return data as unknown as DiensteZustand
 }
