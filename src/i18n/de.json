@@ -341,7 +341,9 @@
     "bereicheWieRolle_other": "Aus: zeigt die {{count}} Bereiche der Rolle.",
     "bereicheWieRolle_one": "Aus: zeigt den einen Bereich der Rolle.",
     "bereicheAlle": "Aus: zeigt alle Bereiche, wie die Rolle.",
-    "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse."
+    "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse.",
+    "kurzzeichen": "Kurzzeichen",
+    "kurzzeichenHinweis": "Steht in Listen, Planung und auf Dokumenten. Leer lassen für den Vorschlag {{vorschlag}}."
   },
   "rechte": {
     "basis": "Grunddaten",
@@ -2826,7 +2828,8 @@
     "einsatz": {
       "intern": "Intern",
       "extern": "Extern",
-      "geplant": "Voraussichtlich"
+      "geplant": "Voraussichtlich",
+      "service": "Service"
     },
     "stand": {
       "offen": "Offen",
@@ -2993,7 +2996,9 @@
       "subunternehmer": "Subunternehmer",
       "grund_abwesend": "{{wer}} abwesend",
       "grund_doppelt": "{{wer}} doppelt eingeplant",
-      "abwesendAm": "Abwesend: {{namen}}"
+      "abwesendAm": "Abwesend: {{namen}}",
+      "service": "Service-Einsätze",
+      "serviceUnter": "aus Service & Garantie"
     },
     "bewilligungen": {
       "ansicht": "Ansicht",
@@ -3335,6 +3340,52 @@
       "teile": "warten auf Teile",
       "rma": "beim Hersteller (RMA)",
       "verrechnen": "Rapporte zu verrechnen"
+    },
+    "planung": {
+      "titel": "Einsatz",
+      "planen": "Einsatz planen",
+      "aendern": "Ändern",
+      "dialog": "Einsatz planen",
+      "dauer": "Dauer {{dauer}}",
+      "dauerFeld": "Dauer",
+      "ganzerTag": "Ganzer Tag",
+      "leitung": "Leitet den Einsatz",
+      "leitet": "{{name}} (leitet)",
+      "team": "Kommt mit",
+      "ohneTermin": "Noch kein Termin. Der Termin erscheint im Zeitplan und am Handy aller Eingeteilten.",
+      "ohneTerminMit": "Noch kein Termin, zuständig {{name}}.",
+      "entfernen": "Einsatz entfernen",
+      "hinweise": "Hinweise zur Belegung",
+      "belegt": {
+        "abwesend": "{{name}} ist an dem Tag abwesend",
+        "baustelle": "{{name}} ist auf der Baustelle {{was}} eingeteilt",
+        "service": "{{name}} hat schon den Service-Termin {{was}}"
+      }
+    },
+    "anlage": {
+      "zurueck": "Zurück zu den Anlagen",
+      "nichtGefunden": "Diese Anlage gibt es nicht mehr oder du darfst sie nicht sehen.",
+      "offen_one": "{{count}} offener Fall",
+      "offen_other": "{{count}} offene Fälle",
+      "rma_one": "{{count}} beim Hersteller",
+      "rma_other": "{{count}} beim Hersteller",
+      "bearbeiten": "Anlage bearbeiten",
+      "netzbetreiber": "Netzbetreiber",
+      "elektriker": "Elektriker",
+      "betrieb": "Betrieb",
+      "portal": "Portal öffnen",
+      "wartung": "Wartung",
+      "keinVertrag": "Kein Wartungsvertrag.",
+      "vertrag": "Wartungsvertrag",
+      "naechste": "nächste {{datum}}",
+      "keineKomponenten": "Keine Komponenten erfasst. «Anlage bearbeiten» ergänzt sie.",
+      "faelle": "Service-Fälle",
+      "keineFaelle": "Noch kein Service-Fall an dieser Anlage.",
+      "rapporte": "Rapporte",
+      "keineRapporte": "Noch kein Rapport.",
+      "dokumente": "Dokumente",
+      "keineDokumente": "Keine Dokumente am Projekt oder an der Anlage.",
+      "akteOeffnen": "Ganze Anlage-Akte öffnen"
     }
   },
   "wartung": {
@@ -4033,6 +4084,23 @@
       "uhrzeit": "Bitte eine Uhrzeit wie 07:30 eingeben.",
       "pause": "Pause zwischen 0 und 600 Minuten.",
       "stoppVorStart": "Stopp muss nach dem Start liegen."
+    },
+    "service": {
+      "fehler": "Fehler",
+      "dauer": "ca. {{stunden}} h",
+      "vorOrt": "Vor Ort",
+      "angekommen": "Vor Ort angekommen",
+      "ansprechperson": "Ansprechperson vor Ort",
+      "zugang": "Zugang",
+      "anlage": "Anlage",
+      "monitoring": "Monitoring",
+      "checkliste": "Checkliste",
+      "seriennummer": "Seriennummer",
+      "snAendern": "Seriennummer ändern",
+      "aendern": "Ändern",
+      "erfassen": "Erfassen",
+      "speichern": "Speichern",
+      "abbrechen": "Abbrechen"
     }
   },
   "unterschrift": {

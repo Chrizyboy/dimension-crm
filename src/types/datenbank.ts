@@ -2958,6 +2958,13 @@ export type Database = {
             referencedRelation: 'service_faelle'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'garantiefaelle_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
         ]
       }
       geraete: {
@@ -3992,6 +3999,141 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+        ]
+      }
+      kontakt_zugehoerigkeiten: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bevorzugt: string | null
+          email_direkt: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          firma_id: string
+          funktion: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          hauptkontakt: boolean
+          id: string
+          person_id: string
+          rechnungen: boolean
+          reihenfolge: number
+          telefon_direkt: string | null
+          unterschreibt: boolean
+          vor_ort: boolean
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bevorzugt?: string | null
+          email_direkt?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id: string
+          funktion?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hauptkontakt?: boolean
+          id?: string
+          person_id: string
+          rechnungen?: boolean
+          reihenfolge?: number
+          telefon_direkt?: string | null
+          unterschreibt?: boolean
+          vor_ort?: boolean
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bevorzugt?: string | null
+          email_direkt?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id?: string
+          funktion?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          hauptkontakt?: boolean
+          id?: string
+          person_id?: string
+          rechnungen?: boolean
+          reihenfolge?: number
+          telefon_direkt?: string | null
+          unterschreibt?: boolean
+          vor_ort?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
         ]
       }
@@ -5556,6 +5698,7 @@ export type Database = {
           geloescht_am: string | null
           id: string
           kuerzel: string
+          kurzzeichen: string | null
           name: string
           profil: NonNullable<Json>
           rechte: string[]
@@ -5580,6 +5723,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           kuerzel: string
+          kurzzeichen?: string | null
           name: string
           profil?: NonNullable<Json>
           rechte?: string[]
@@ -5603,6 +5747,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           kuerzel?: string
+          kurzzeichen?: string | null
           name?: string
           profil?: NonNullable<Json>
           rechte?: string[]
@@ -5968,6 +6113,13 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
           {
@@ -6918,6 +7070,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'rapporte_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'rapporte_wartungsvertrag_id_fkey'
             columns: ['wartungsvertrag_id']
             isOneToOne: false
@@ -7219,6 +7378,13 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
           {
@@ -7614,6 +7780,7 @@ export type Database = {
           auswirkung: string | null
           beschreibung: string | null
           checkliste: NonNullable<Json>
+          dauer_minuten: number | null
           erledigt_am: string | null
           erstellt_am: string
           erstellt_von: string | null
@@ -7634,6 +7801,7 @@ export type Database = {
           quelle: string
           reaktion_bis: string | null
           status: string
+          team: string[]
           termin_am: string | null
           titel: string
           verlauf: NonNullable<Json>
@@ -7650,6 +7818,7 @@ export type Database = {
           auswirkung?: string | null
           beschreibung?: string | null
           checkliste?: NonNullable<Json>
+          dauer_minuten?: number | null
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -7670,6 +7839,7 @@ export type Database = {
           quelle?: string
           reaktion_bis?: string | null
           status?: string
+          team?: string[]
           termin_am?: string | null
           titel: string
           verlauf?: NonNullable<Json>
@@ -7685,6 +7855,7 @@ export type Database = {
           auswirkung?: string | null
           beschreibung?: string | null
           checkliste?: NonNullable<Json>
+          dauer_minuten?: number | null
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -7705,6 +7876,7 @@ export type Database = {
           quelle?: string
           reaktion_bis?: string | null
           status?: string
+          team?: string[]
           termin_am?: string | null
           titel?: string
           verlauf?: NonNullable<Json>
@@ -9381,6 +9553,103 @@ export type Database = {
         ComputedFields: never
         Relationships: []
       }
+      kontakt_zugehoerigkeiten_sicht: {
+        Row: {
+          bevorzugt: string | null
+          email: string | null
+          email_direkt: string | null
+          firma_art: string | null
+          firma_id: string | null
+          firma_kontaktart: string | null
+          firma_name: string | null
+          funktion: string | null
+          hauptkontakt: boolean | null
+          id: string | null
+          person_anrede: string | null
+          person_id: string | null
+          person_name: string | null
+          person_sprache: string | null
+          rechnungen: boolean | null
+          reihenfolge: number | null
+          telefon: string | null
+          telefon_direkt: string | null
+          unterschreibt: boolean | null
+          vor_ort: boolean | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_zugehoerigkeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
       kunden_uebersicht: {
         Row: {
           anrede: string | null
@@ -10207,6 +10476,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'rapporte_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'rapporte_wartungsvertrag_id_fkey'
             columns: ['wartungsvertrag_id']
             isOneToOne: false
@@ -10366,6 +10642,27 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      service_termine: {
+        Row: {
+          auswirkung: string | null
+          datum: string | null
+          dauer_minuten: number | null
+          ende_am: string | null
+          garantie: boolean | null
+          id: string | null
+          kunde: string | null
+          nummer: string | null
+          ort: string | null
+          personen: string[] | null
+          plz: string | null
+          prioritaet: string | null
+          status: string | null
+          termin_am: string | null
+          titel: string | null
+        }
+        ComputedFields: never
+        Relationships: []
       }
       spesen_liste: {
         Row: {
@@ -10771,6 +11068,7 @@ export type Database = {
       }
       anfrage_uebernehmen: { Args: { p: Json }; Returns: Json }
       anfrage_uebersprungen: { Args: { p_kennung: string; p_quelle: string }; Returns: undefined }
+      anlage_akte: { Args: { p_id: string }; Returns: Json }
       anmelde_sprache: { Args: { p_email: string; p_sprache: string }; Returns: undefined }
       anschreiben_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       anschreiben_aendern: { Args: { p_betreff: string; p_id: string; p_text: string }; Returns: undefined }
@@ -11270,10 +11568,19 @@ export type Database = {
       service_aus_website: { Args: { p: Json }; Returns: Json }
       service_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_nr: number }; Returns: undefined }
       service_checkliste_dazu: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_einsatz: {
+        Args: { p_dauer: number; p_id: string; p_person: string; p_team: string[]; p_termin: string }
+        Returns: undefined
+      }
       service_eintrag: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
+      service_eintrag_handy: {
+        Args: { p_am?: string; p_art: string; p_eintrag: string; p_id: string; p_text: string }
+        Returns: undefined
+      }
       service_kunde_aus_meldung: { Args: { p_id: string }; Returns: string }
       service_leitstand: { Args: Record<PropertyKey, never>; Returns: Json }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_seriennummer: { Args: { p_id: string; p_nr: number; p_seriennummer: string }; Returns: undefined }
       service_zuordnen: {
         Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
         Returns: undefined
