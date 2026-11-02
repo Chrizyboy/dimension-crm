@@ -320,3 +320,101 @@ left join public.auswahlwerte a on a.liste = 'kundenstand' and a.schluessel = s.
 
 grant select on public.verkauf_geschaefte to authenticated;
 revoke all on public.verkauf_geschaefte from anon;
+
+-- Anruf-Ergebnis als Kacheln (Lead-Akte): zwei neue Ergebnisse. «Will zuerst Preis» bestellt die Offerte bei Andy
+-- ohne Besuch, «ungültig» schliesst Spam und falsche Nummern mit Grund ab.
+insert into public.auswahlwerte (liste, schluessel, text_de, text_fr, reihenfolge, farbe, eigenschaften) values
+  ('kontaktergebnis', 'will_preis', 'Will zuerst einen Preis', 'Veut d''abord un prix', 65, 'info', '{}'),
+  ('kontaktergebnis', 'ungueltig', 'Ungültig', 'Invalide', 80, 'neutral', '{}')
+on conflict (liste, schluessel) do nothing;
+
+-- Text der SMS nach «nicht erreicht» (Entwurf im Ausgangskorb, gesendet erst nach Freigabe, Regel 6).
+update public.einstellungen set wert = wert || $j${
+  "sms_nicht_erreicht": {
+    "de": "Guten Tag {name}, wir haben versucht, Sie wegen Ihrer Anfrage bei Dimension Solaire zu erreichen. Wir melden uns wieder, Sie erreichen uns auch unter {telefon}. Freundliche Grüsse, {verkaeufer}",
+    "fr": "Bonjour {name}, nous avons essayé de vous joindre au sujet de votre demande chez Dimension Solaire. Nous vous rappellerons, vous pouvez aussi nous joindre au {telefon}. Meilleures salutations, {verkaeufer}"
+  },
+  "telefon_de": "+41 56 552 11 25",
+  "telefon_fr": "+41 26 919 13 00"
+}$j$::jsonb
+ where schluessel = 'verkauf' and not wert ? 'sms_nicht_erreicht';
+
+/**
+ * Kontakt mit einem Lead erfassen; das Ergebnis führt den Lead nach (V152, erweitert 02.11.2026):
+ * termin → Termin · rueckruf/meldet_sich mit Datum → später · kein_interesse/ungueltig → kein (Grund Pflicht,
+ * auf Wunsch Wiedervorlage) · will_preis → Offerte ohne Besuch (Richtofferte intern) · nicht_erreicht/combox mit
+ * Datum → Rückruf an dem Tag, auf Wunsch SMS-Entwurf in den Ausgangskorb · sonst wird ein neuer Lead «offen».
+ */
+create or replace function public.lead_kontakt_erfassen(
+  p_verkaufschance uuid, p_art text, p_richtung text default null, p_ergebnis text default null,
+  p_text text default null, p_angaben jsonb default '{}'
+) returns uuid
+language plpgsql security invoker set search_path = '' as $$
+declare
+  v public.verkaufschancen;
+  neu uuid;
+  offen boolean;
+  d date := nullif(p_angaben ->> 'datum', '')::date;
+  cfg jsonb := coalesce((select wert from public.einstellungen where schluessel = 'verkauf'), '{}');
+  k public.kontakte;
+  ich public.personen;
+  sms text;
+begin
+  select * into v from public.verkaufschancen where id = p_verkaufschance and geloescht_am is null;
+  if not found then raise exception using errcode = 'P0002', message = 'stand.unbekannt'; end if;
+  offen := v.stufe in ('neu', 'offen', 'warten', 'termin_vereinbart')
+           and not exists (select 1 from public.offerten o where o.verkaufschance_id = v.id and o.geloescht_am is null);
+
+  insert into public.aktivitaeten (art, richtung, ergebnis, text, person_id, kontakt_id, verkaufschance_id, zeitpunkt)
+  values (p_art, p_richtung, nullif(p_ergebnis, ''), nullif(trim(coalesce(p_text, '')), ''), intern.meine_person_id(),
+          v.kontakt_id, v.id, coalesce(nullif(p_angaben ->> 'zeitpunkt', '')::timestamptz, now()))
+  returning id into neu;
+
+  if offen then
+    if p_ergebnis = 'termin' then
+      perform public.setze_stand(v.id, 'termin', p_angaben);
+    elsif p_ergebnis in ('rueckruf', 'meldet_sich') and d is not null then
+      perform public.setze_stand(v.id, 'lead_spaeter', p_angaben);
+    elsif p_ergebnis in ('kein_interesse', 'ungueltig') then
+      perform public.setze_stand(v.id, 'kein', p_angaben);
+      if nullif(p_angaben ->> 'wiedervorlage_am', '') is not null then
+        update public.verkaufschancen set wiedervorlage_am = (p_angaben ->> 'wiedervorlage_am')::date,
+               wiedervorlage_grund = coalesce(p_angaben ->> 'grund', wiedervorlage_grund)
+         where id = v.id;
+      end if;
+    elsif p_ergebnis = 'will_preis' then
+      perform public.setze_stand(v.id, 'offerte', p_angaben || jsonb_build_object('richtofferte', true,
+        'notiz', coalesce(nullif(trim(p_angaben ->> 'notiz'), ''), nullif(trim(coalesce(p_text, '')), ''),
+                          'Kunde will zuerst einen Preis, Offerte ohne Besuch')));
+    elsif p_ergebnis in ('nicht_erreicht', 'combox') and d is not null then
+      update public.verkaufschancen
+         set stufe = case when stufe = 'neu' then 'offen' else stufe end, wiedervorlage_am = d,
+             wiedervorlage_grund = 'Nicht erreicht'
+       where id = v.id;
+    elsif v.stufe = 'neu' then
+      update public.verkaufschancen set stufe = 'offen' where id = v.id;
+    end if;
+  end if;
+
+  -- SMS-Entwurf nach «nicht erreicht»: wartet im Ausgangskorb, bis die Person ihn freigibt.
+  if p_ergebnis in ('nicht_erreicht', 'combox') and coalesce((p_angaben ->> 'sms')::boolean, false) then
+    select * into k from public.kontakte where id = v.kontakt_id;
+    select * into ich from public.personen where id = intern.meine_person_id();
+    sms := cfg -> 'sms_nicht_erreicht' ->> coalesce(nullif(k.sprache, ''), 'de');
+    if sms is not null and nullif(k.telefon, '') is not null and not exists (
+      select 1 from public.ausgangskorb a where a.schluessel = 'nicht_erreicht:' || v.id || ':' || current_date
+         and a.status <> 'verworfen' and a.geloescht_am is null) then
+      sms := replace(replace(replace(sms,
+        '{name}', intern.kontaktname(k)),
+        '{telefon}', coalesce(nullif(ich.profil ->> 'telefon', ''), cfg ->> ('telefon_' || coalesce(k.sprache, 'de')), '')),
+        '{verkaeufer}', coalesce(ich.name, 'Dimension Solaire'));
+      perform public.ausgang_anlegen(jsonb_build_object('kanal', 'sms', 'art', 'nicht_erreicht', 'an', k.telefon,
+        'text', sms, 'sprache', coalesce(k.sprache, 'de'), 'kontakt_id', k.id, 'verkaufschance_id', v.id,
+        'schluessel', 'nicht_erreicht:' || v.id || ':' || current_date));
+    end if;
+  end if;
+  return neu;
+end
+$$;
+revoke execute on function public.lead_kontakt_erfassen(uuid, text, text, text, text, jsonb) from public, anon;
+grant execute on function public.lead_kontakt_erfassen(uuid, text, text, text, text, jsonb) to authenticated;

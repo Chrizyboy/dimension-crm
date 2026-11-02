@@ -16,7 +16,7 @@ interface VerkaufSuche {
 const ANSICHTEN = new Set<string>(VERKAUF_ANSICHTEN)
 
 /**
- * Anfragen & Leads: Pipeline, Liste, Tagesroute, Tour, Kalender, Regionen und Monatsbericht.
+ * Anfragen & Leads: Zu tun, Pipeline, Liste, Tagesroute, Tour, Kalender, Regionen, Monatsbericht und Verkaufssteuerung.
  * Ansicht und offener Lead stehen in der Adresse (#/sales?ansicht=liste&lead=…), «neu» öffnet das Formular,
  * «ausMail» liest eine Mail aus dem Posteingang mit der KI und legt daraus den Lead an.
  */
@@ -32,7 +32,7 @@ export const Route = createFileRoute('/sales')({
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const ziel = ansicht ?? 'pipeline'
+    const ziel = ansicht ?? 'zutun'
     return (
       <Suspense>
         <Verkauf
@@ -44,7 +44,7 @@ export const Route = createFileRoute('/sales')({
             const n = { ansicht: ziel, lead: lead ?? null, neu: false, ausMail: null as string | null, ...a }
             void navigate({
               search: {
-                ...(n.ansicht !== 'pipeline' ? { ansicht: n.ansicht } : {}),
+                ...(n.ansicht !== 'zutun' ? { ansicht: n.ansicht } : {}),
                 ...(n.lead ? { lead: n.lead } : {}),
                 ...(n.neu ? { neu: true } : {}),
                 ...(n.ausMail ? { ausMail: n.ausMail } : {}),

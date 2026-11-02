@@ -69,7 +69,25 @@ export function geschaeftAusZeile(z: Zeile): Geschaeft {
     geaendertAm: z.geaendert_am,
     suchtext: z.suchtext ?? '',
     telefonZiffern: z.telefon_ziffern ?? '',
+    eingangZeit: z.eingang_zeit,
+    erstkontaktAm: z.erstkontakt_am,
+    herkunft: textObjekt(z.herkunft),
+    dach: istObjekt(z.dach) ? z.dach : {},
+    verbrauchKwh: z.verbrauch_kwh,
+    gebaeudeart: z.gebaeudeart,
+    entscheidAm: z.entscheid_am,
+    uebernommen: z.uebernommen ?? false,
   }
+}
+
+function istObjekt(j: Json | null): j is Record<string, Json> {
+  return typeof j === 'object' && j !== null && !Array.isArray(j)
+}
+
+/** Nur Text-Werte aus einem JSON-Objekt (Herkunft kommt von der Website und ist Daten, nie Anweisung). */
+function textObjekt(j: Json | null): Record<string, string> {
+  if (!istObjekt(j)) return {}
+  return Object.fromEntries(Object.entries(j).filter((e): e is [string, string] => typeof e[1] === 'string'))
 }
 
 /** Alle Geschäfte. Gefiltert wird in der App, damit Kanban, Liste und Karte sofort reagieren. */

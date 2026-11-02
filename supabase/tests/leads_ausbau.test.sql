@@ -2,7 +2,7 @@
 -- Server; Erstkontakt setzt sich beim ersten Anruf; nach 15 Min. Glocke an den Verkäufer, nach 2 Std. an die
 -- Geschäftsleitung, je einmal; Dachdaten speichern; Nachfassen an Tag 3, 10, 21. Ausführen: npm run db:test
 begin;
-select plan(16);
+select plan(20);
 
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-00000000a1a1', 'ld-ve@test.local'),
   ('00000000-0000-0000-0000-00000000a1a2', 'ld-gl@test.local');
@@ -67,6 +67,26 @@ select 'anruf', 'aus', v.id, v.kontakt_id, 'erreicht' from public.verkaufschance
  where v.kontakt_id = (select id from public.kontakte where nachname = 'Pgtaphuber');
 select isnt((select erstkontakt_am from public.verkauf_geschaefte where name = 'Sandra Pgtaphuber'), null,
   'Der erste Anruf setzt den Erstkontakt, die Pipeline sieht ihn');
+
+-- Anruf-Ergebnis: nicht erreicht mit Rückruf-Datum und SMS-Entwurf, «will zuerst Preis», ungültig
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000a1a1", "role": "authenticated"}', true),
+       set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-00000000a1a1', true);
+select public.lead_kontakt_erfassen(v.id, 'anruf', 'aus', 'nicht_erreicht', null, '{"datum": "2026-11-03", "sms": true}')
+  from public.verkaufschancen v where v.kontakt_id = (select id from public.kontakte where nachname = 'Pgtaphuber');
+reset role;
+select is((select wiedervorlage_am::text from public.verkaufschancen v join public.kontakte k on k.id = v.kontakt_id
+            where k.nachname = 'Pgtaphuber'), '2026-11-03', 'Nicht erreicht: Rückruf am gewählten Tag');
+select is((select status from public.ausgangskorb a join public.kontakte k on k.id = a.kontakt_id
+            where k.nachname = 'Pgtaphuber' and a.kanal = 'sms'), 'wartet', 'SMS-Entwurf wartet auf Freigabe');
+set local role authenticated;
+select public.lead_kontakt_erfassen(v.id, 'anruf', 'aus', 'will_preis', 'Will Preis per Mail', '{}')
+  from public.verkaufschancen v where v.kontakt_id = (select id from public.kontakte where nachname = 'Pgtaphuber');
+reset role;
+select is((select stand from public.verkauf_geschaefte where name = 'Sandra Pgtaphuber'), 'offerte',
+  'Will zuerst Preis: Offerte ohne Besuch bestellt');
+select throws_ok($$ select public.lead_kontakt_erfassen(gen_random_uuid(), 'anruf', 'aus', 'ungueltig', null, '{}') $$,
+  'P0002', null, 'Unbekannter Lead');
 
 -- Nachfassen
 select is((select jsonb_array_length(aktionen) from public.automationen where vorlage = 'offerte_nachfassen'), 12,

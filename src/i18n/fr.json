@@ -735,7 +735,9 @@
       "tour": "Planifier une tournée",
       "kalender": "Agenda",
       "regionen": "Régions",
-      "bericht": "Rapport mensuel"
+      "bericht": "Rapport mensuel",
+      "zutun": "À faire",
+      "steuerung": "Pilotage"
     },
     "suche": "Nom, lieu, téléphone, L012 …",
     "standort": "Site",
@@ -768,15 +770,18 @@
       "neu": "Nouveau",
       "offen": "Ouvert",
       "spaeter": "Recontacter plus tard",
-      "termin": "Rendez-vous fixé",
+      "termin": "Rendez-vous",
       "nach_termin": "Après rendez-vous",
-      "offerte": "Offre en cours",
+      "offerte": "Offre",
       "offeriert": "Offre envoyée",
       "vertagt": "Reporté",
       "angenommen": "Acceptée",
-      "gewonnen": "Chantier & réalisé",
+      "gewonnen": "Gagné",
       "verloren": "Perdu & pas intéressé",
-      "dossier": "Dossier"
+      "dossier": "Dossier",
+      "kontaktiert": "Contacté",
+      "entscheid": "Décision",
+      "aus": "Perdu & pas intéressé"
     },
     "pipeline": {
       "karte": "Affaire",
@@ -863,7 +868,7 @@
       "nichtGefunden": "Cette affaire est introuvable.",
       "kontaktErfassen": "Saisir un contact",
       "terminVereinbaren": "Fixer un rendez-vous",
-      "richtofferte": "Offre indicative",
+      "richtofferte": "Offre sans visite",
       "terminblatt": "Fiche de visite",
       "kundenakte": "Dossier client",
       "kontakt": "Contact",
@@ -892,7 +897,8 @@
       "dateien": "Fichiers",
       "keinVerlauf": "Aucun contact saisi.",
       "verlaufV233": "Historique de l’ancien CRM",
-      "keineDateien": "Aucun fichier."
+      "keineDateien": "Aucun fichier.",
+      "zurueck": "Retour aux demandes & leads"
     },
     "besichtigung": {
       "datum": "Visité le",
@@ -927,7 +933,12 @@
     },
     "kontakt": {
       "wann": "Quand recontacter",
-      "grundRueckruf": "Rappel convenu"
+      "grundRueckruf": "Rappel convenu",
+      "grundNichtErreicht": "Pas joint",
+      "smsEntwurf": "Préparer un SMS dans la boîte d’envoi (envoyé seulement après validation)",
+      "willPreisHinweis": "Andy reçoit l’offre à établir sans visite. Note brièvement ce que veut le client (toit, consommation, souhaits).",
+      "wiedervorlage_one": "Reprendre dans {{count}} mois",
+      "wiedervorlage_other": "Reprendre dans {{count}} mois"
     },
     "lead": {
       "anrede": "Civilité",
@@ -1165,6 +1176,141 @@
       "eintragen": "Inscrire dans Outlook",
       "aktualisieren": "Mettre à jour dans Outlook",
       "absagen": "Annuler dans Outlook"
+    },
+    "schritte": {
+      "titel": "Étapes de vente",
+      "neu": "Nouveau",
+      "kontaktiert": "Contacté",
+      "termin": "Rendez-vous",
+      "offerte": "Offre",
+      "entscheid": "Décision",
+      "gewonnen": "Gagné"
+    },
+    "zutun": {
+      "website": "Site web",
+      "anrufen": "Appeler",
+      "ergebnis": "Saisir le résultat",
+      "minuten_one": "depuis {{count}} min",
+      "minuten_other": "depuis {{count}} min",
+      "nurMeine": "Seulement mes leads",
+      "jetzt": "Appeler maintenant (objectif : dans les {{minuten}} min)",
+      "jetztLeer": "Toutes les nouvelles demandes ont été appelées.",
+      "heute": "Aujourd’hui",
+      "heuteLeer": "Rien d’échu aujourd’hui.",
+      "woche": "Cette semaine",
+      "wocheLeer": "Rien de prévu cette semaine.",
+      "leer": "Rien à faire",
+      "leerText": "Aucune nouvelle demande, rappel, rendez-vous ou relance.",
+      "zahl": {
+        "anrufen_one": "nouvelle demande sans appel, {{count}} en retard",
+        "anrufen_other": "nouvelles demandes sans appel, {{count}} en retard",
+        "heute": "échu aujourd’hui",
+        "termine": "rendez-vous cette semaine",
+        "offen": "offres ouvertes (CHF)"
+      },
+      "art": {
+        "anrufen": "Nouveau",
+        "rueckruf": "Rappel",
+        "termin": "Rendez-vous",
+        "nachTermin": "Après RDV : commander l’offre",
+        "nachfassen": "Relance",
+        "wiedervorlage": "Reprise",
+        "liegt": "En attente depuis",
+        "offerteInArbeit": "Offre en cours depuis"
+      }
+    },
+    "naechster": {
+      "titel": "Prochaine étape",
+      "anrufen": "Appeler et saisir le résultat.",
+      "anrufenSeit_one": "Appeler maintenant : demande sans appel depuis {{count}} minute de travail.",
+      "anrufenSeit_other": "Appeler maintenant : demande sans appel depuis {{count}} minutes de travail.",
+      "rueckruf": "Rappel le {{datum}}.",
+      "termin": "Fixer un rendez-vous pour la visite.",
+      "besuch": "Visite le {{datum}} avec {{person}}. Ensuite, commander l’offre.",
+      "nachTermin": "Le rendez-vous est passé : noter le résultat et commander l’offre chez Andy.",
+      "offerteBestellen": "Commander l’offre",
+      "offerteInArbeit": "Andy établit l’offre. Dès qu’elle est envoyée, la relance démarre.",
+      "nachfassen": "Relance le {{datum}}. Les e-mails des jours {{tage}} attendent en brouillon dans la boîte d’envoi ; un appel est souvent plus efficace.",
+      "vertagt": "Reporté : {{grund}}",
+      "wiedervorlage": "Reprendre le {{datum}}.",
+      "aus": "Clos : {{grund}}",
+      "gewonnen": "Gagné. La suite se passe dans le projet."
+    },
+    "dach": {
+      "titel": "Toit et bâtiment",
+      "sucht": "Recherche en cours (toitsolaire.ch et registre des bâtiments, toutes les 5 minutes).",
+      "nichts": "Aucune donnée de toit trouvée.",
+      "flaeche": "Surface adaptée",
+      "flaecheWebsite": "Surface (site web)",
+      "ertrag": "Production possible",
+      "eignung": "Aptitude",
+      "heizung": "Chauffage",
+      "baujahr": "Année de construction",
+      "verbrauch": "Consommation",
+      "klasse": {
+        "1": "faible",
+        "2": "moyenne",
+        "3": "bonne",
+        "4": "très bonne",
+        "5": "excellente"
+      }
+    },
+    "richtpreis": {
+      "titel": "Prix indicatif",
+      "intern": "Interne uniquement",
+      "ohneDach": "Puissance encore inconnue : données du toit manquantes.",
+      "inkl": "TVA {{satz}} % incl., fourchette ± selon réglage",
+      "foerderung": "Moins subvention env. {{betrag}}",
+      "besuch": "Plus de {{max}} kWc : sans visite, seulement un ordre de grandeur.",
+      "quelle": {
+        "offerte": "{{kwp}} kWc selon l’offre",
+        "sonnendach": "{{kwp}} kWc selon la surface adaptée (toitsolaire.ch)",
+        "website": "{{kwp}} kWc selon la surface indiquée sur le site"
+      },
+      "posten": {
+        "pv": "Installation solaire",
+        "batterie": "Batterie",
+        "wallbox": "Borne de recharge",
+        "waermepumpe": "Pompe à chaleur"
+      }
+    },
+    "herkunft": {
+      "titel": "Provenance",
+      "eingang": "Réception",
+      "erstkontakt": "Premier contact",
+      "nochNicht": "pas encore",
+      "formular": "Formulaire",
+      "seite": "Page",
+      "kampagne": "Campagne",
+      "kontaktwunsch": "Contact souhaité",
+      "referenz": "Référence site web",
+      "formulare": {
+        "offerte": "Assistant d’offre",
+        "rueckruf": "Rappel",
+        "kontakt": "Formulaire de contact",
+        "report-email": "Résultat du calculateur"
+      }
+    },
+    "steuerung": {
+      "zeitraum": "Période",
+      "tage": "{{n}} derniers jours",
+      "gesamt": "Tous les leads",
+      "alle": "Tous",
+      "proPerson": "Par vendeur",
+      "proQuelle": "Par source",
+      "ohnePerson": "Sans vendeur",
+      "ohneQuelle": "Sans source",
+      "verlust": "Pourquoi perdu",
+      "keinVerlust": "Aucun lead perdu dans la période.",
+      "leads": "Leads",
+      "tempo": "Jusqu’à l’appel",
+      "imTempo": "En {{n}} min",
+      "termin": "RDV",
+      "offerte": "Offre",
+      "gewonnen": "Gagné",
+      "wert": "Valeur commandes",
+      "min": "{{n}} min",
+      "std": "{{n}} h"
     }
   },
   "offerten": {

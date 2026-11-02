@@ -49,15 +49,13 @@ test('Lead anlegen und Kontakt erfassen', async ({ page }) => {
   await expect(dialog.getByText(/Standort Bulle/)).toBeVisible()
   await dialog.getByRole('button', { name: 'Speichern' }).click()
 
-  const akte = page.getByRole('dialog', { name: `Lena ${nachname}` })
-  await expect(akte).toBeVisible()
-  nummer =
-    /L\d+/.exec(
-      (await akte
-        .getByText(/^L\d+ ·/)
-        .first()
-        .textContent()) ?? '',
-    )?.[0] ?? ''
+  // Die Lead-Akte ist eine ganze Seite (02.11.2026): Nummer und Name im Titel, darunter die sechs Schritte.
+  const titel = page.getByRole('heading', { level: 1, name: new RegExp(`Lena ${nachname}`) })
+  await expect(titel).toBeVisible()
+  const akte = page.locator('main')
+  await expect(akte.getByRole('list', { name: 'Verkaufsschritte' })).toBeVisible()
+  await expect(akte.getByText(/Richtpreis/).first()).toBeVisible()
+  nummer = /L\d+/.exec((await titel.textContent()) ?? '')?.[0] ?? ''
   expect(nummer).toMatch(/^L\d+$/)
   await expect(akte.getByText('Lead neu').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
@@ -66,6 +64,7 @@ test('Lead anlegen und Kontakt erfassen', async ({ page }) => {
   const gespraech = page.getByRole('dialog', { name: 'Kontakt erfassen' })
   await gespraech.getByRole('radio', { name: 'Anruf' }).click()
   await gespraech.getByRole('radio', { name: 'Kein Interesse' }).click()
+  await expect(gespraech.getByText(/Wieder vorlegen in 12 Monaten/)).toBeVisible()
   await gespraech.getByLabel(/^Grund/).fill('Hat schon eine Anlage')
   await gespraech.getByLabel('Was wurde besprochen?').fill('Nachbar hat schon gebaut')
   await gespraech.getByRole('button', { name: 'Speichern' }).click()
@@ -79,14 +78,18 @@ test('Ctrl K findet den Lead über die Nummer', async ({ page }) => {
   await page.keyboard.press('Control+k')
   await page.keyboard.type(nummer)
   await page.getByRole('option', { name: new RegExp(`${nummer} · Lena ${nachname}`) }).click()
-  await expect(page.getByRole('dialog', { name: `Lena ${nachname}` })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: new RegExp(`Lena ${nachname}`) })).toBeVisible()
   await expect(page).toHaveURL(/#\/sales\?.*lead=/)
 })
 
-test('Pipeline, Liste, Tagesroute und Monatsbericht ohne Verstösse, hell und dunkel', async ({ page }) => {
+test('Zu tun, Pipeline, Liste, Tagesroute, Monatsbericht und Steuerung ohne Verstösse, hell und dunkel', async ({
+  page,
+}) => {
   await anmelden(page, 'verkauf@test.local')
   for (const [ansicht, text, schema] of [
+    ['zutun', 'Termine diese Woche', 'light'],
     ['pipeline', 'Abgeschlossene zeigen', 'dark'],
+    ['steuerung', 'Pro Verkäufer', 'dark'],
     ['liste', 'Nach Stand', 'dark'],
     ['tagesroute', 'Leads in der Nähe ergänzen', 'light'],
     ['bericht', 'Leads im CRM', 'light'],
