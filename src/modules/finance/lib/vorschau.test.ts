@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Finanzdaten, Zahlung } from '../types'
 import { fixTermine, kalenderwoche, montag } from './datum'
+import { fuerFirma, reserveFuer } from './firma'
 import { bewegungen, materialRappen, rappen, saldo, vorschau, zahllaufVorschlag, zaehlt } from './vorschau'
 
 const HEUTE = '2026-10-22' // Donnerstag, KW 43
@@ -27,6 +28,20 @@ const zahlung = (z: Partial<Zahlung>): Zahlung => ({
   lieferant_id: null,
   offen_rappen: null,
   bezahlt_am: null,
+  firma_id: null,
+  pruefung: 'bereit',
+  visum_von: null,
+  visum_am: null,
+  visum_notiz: null,
+  freigabe_von: null,
+  freigabe_am: null,
+  skonto_prozent: null,
+  skonto_bis: null,
+  skonto_rappen: null,
+  iban: null,
+  referenz: null,
+  bestellung_id: null,
+  zahllauf_id: null,
   ...z,
 })
 
@@ -38,6 +53,13 @@ const leer = (x: Partial<Finanzdaten> = {}): Finanzdaten => ({
   rechnungen: [],
   tranchen: [],
   kundenzahlungen: [],
+  konten: [],
+  firmen: [],
+  projektFirma: {},
+  mwst: [],
+  zahllaeufe: [],
+  bestellungen: {},
+  personen: {},
   einstellungen: { saldo: { betrag_rappen: 5_000_000, datum: '2026-10-20' }, wochen: 6, vorlauf: 5 },
   ...x,
 })
@@ -72,6 +94,7 @@ describe('Bewegungen', () => {
       material: [
         {
           id: 'm1',
+          firma_id: null,
           baustelle: 'Muster',
           projekt_id: null,
           bautermin: '2026-11-10',
@@ -94,6 +117,7 @@ describe('Bewegungen', () => {
   it('Fixkosten fallen weg, wenn der Monat schon als Zahlung erfasst ist', () => {
     const fix = {
       id: 'f1',
+      firma_id: null,
       bezeichnung: 'Miete',
       gruppe: 'Miete',
       detail: null,
@@ -120,10 +144,28 @@ describe('Bewegungen', () => {
     const b = bewegungen(
       leer({
         rechnungen: [
-          { id: 'r', nummer: 'R1', kunde: 'K', projekt_nummer: null, titel: '', offen_rappen: 1000, faellig_am: HEUTE },
+          {
+            id: 'r',
+            nummer: 'R1',
+            kunde: 'K',
+            projekt_nummer: null,
+            titel: '',
+            offen_rappen: 1000,
+            faellig_am: HEUTE,
+            firma_id: null,
+            projekt_id: null,
+          },
         ],
         tranchen: [
-          { id: 't', kunde: 'K', projekt_nummer: null, bezeichnung: 'Schluss', betrag_rappen: 2000, faellig_am: null },
+          {
+            id: 't',
+            kunde: 'K',
+            projekt_nummer: null,
+            bezeichnung: 'Schluss',
+            betrag_rappen: 2000,
+            faellig_am: null,
+            projekt_id: null,
+          },
         ],
       }),
       HEUTE,
@@ -159,6 +201,7 @@ describe('Vorschau', () => {
       eingaenge: [
         {
           id: 'e',
+          firma_id: null,
           kunde: 'K',
           projekt_id: null,
           text: null,
@@ -192,5 +235,58 @@ describe('Vorschau', () => {
       1300,
     )
     expect(ids).toEqual(['b', 'c', 'd'])
+  })
+})
+
+describe('Gesellschaften, Konten und MWST', () => {
+  const muri = 'f-muri'
+  const bulle = 'f-bulle'
+  const d = leer({
+    firmen: [
+      { id: muri, kuerzel: 'gmbh', name: 'Muri GmbH' },
+      { id: bulle, kuerzel: 'sarl', name: 'Bulle Sàrl' },
+    ],
+    konten: [
+      { id: 'k1', firma_id: muri, name: 'UBS', iban: null, stand_rappen: 10_000_000, stand_am: '2026-10-20', reihenfolge: 0, aktiv: true, notiz: null },
+      { id: 'k2', firma_id: bulle, name: 'BCF', iban: null, stand_rappen: 4_000_000, stand_am: '2026-10-15', reihenfolge: 0, aktiv: true, notiz: null },
+    ],
+    zahlungen: [
+      zahlung({ id: 'a', firma_id: muri, betrag_rappen: 100_000, faellig_am: '2026-10-23' }),
+      zahlung({ id: 'b', firma_id: bulle, betrag_rappen: 50_000, faellig_am: '2026-10-23' }),
+    ],
+    tranchen: [
+      { id: 't', kunde: 'K', projekt_nummer: '101', bezeichnung: 'Anzahlung', betrag_rappen: 7000, faellig_am: '2026-10-23', projekt_id: 'p1' },
+    ],
+    projektFirma: { p1: bulle },
+    mwst: [
+      { firma_id: muri, periode: '2026-Q3', von: '2026-07-01', bis: '2026-09-30', faellig_am: '2026-11-29', umsatz_rappen: 0, umsatzsteuer_rappen: 0, vorsteuer_rappen: 0, zahllast_rappen: 300_000, verbindlich: false, bezahlt_am: null },
+      { firma_id: bulle, periode: '2026-Q2', von: '2026-04-01', bis: '2026-06-30', faellig_am: '2026-08-29', umsatz_rappen: 0, umsatzsteuer_rappen: 0, vorsteuer_rappen: 0, zahllast_rappen: 99, verbindlich: true, bezahlt_am: '2026-08-20' },
+    ],
+  })
+
+  it('Kontostand aus den Konten, je Gesellschaft getrennt', () => {
+    expect(saldo(d)).toMatchObject({ bekannt: true, rappen: 14_000_000, seit: '2026-10-15' })
+    expect(saldo(fuerFirma(d, muri)).rappen).toBe(10_000_000)
+    expect(saldo(fuerFirma(d, bulle)).rappen).toBe(4_000_000)
+  })
+
+  it('Posten nur bei ihrer Gesellschaft, Tranchen über das Projekt', () => {
+    const b = fuerFirma(d, bulle)
+    expect(b.zahlungen.map((z) => z.id)).toEqual(['b'])
+    expect(b.tranchen.map((t) => t.id)).toEqual(['t'])
+    expect(fuerFirma(d, muri).tranchen).toEqual([])
+  })
+
+  it('MWST erscheint als Ausgang am Fälligkeitstag, bezahlte nicht', () => {
+    const m = bewegungen(d, HEUTE).filter((x) => x.quelle === 'mwst')
+    expect(m).toHaveLength(1)
+    expect(m[0]).toMatchObject({ richtung: -1, rappen: 300_000, datum: '2026-11-29', titel: 'MWST 2026-Q3' })
+  })
+
+  it('Reserve je Gesellschaft oder zusammen', () => {
+    const e = { ...d, einstellungen: { reserve_je_firma: { [muri]: 5000, [bulle]: 3000 } } }
+    expect(reserveFuer(e, muri)).toBe(5000)
+    expect(reserveFuer(e, null)).toBe(8000)
+    expect(reserveFuer(leer({ einstellungen: { reserve_rappen: 70 } }), null)).toBe(70)
   })
 })

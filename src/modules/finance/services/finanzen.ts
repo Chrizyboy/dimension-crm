@@ -3,12 +3,17 @@ import type { Json, TablesInsert, TablesUpdate } from '@/types/datenbank'
 import type {
   Eingang,
   Finanzdaten,
+  Firma,
   Fixkosten,
+  Konto,
   LiquiditaetEinstellungen,
   MaterialPosition,
+  MwstZeile,
   OffeneRechnung,
   OffeneTranche,
+  Zahllauf,
 } from '../types'
+import { plusTage } from '../lib/datum'
 
 /**
  * Datenzugriff der Finanzen. Alle Tabellen hier liest und ändert nur, wer das Recht «finanzen» hat
@@ -21,8 +26,23 @@ function db() {
 
 const EINSTELLUNG = 'vorlage.main'
 
-/** Alles für Übersicht und Listen in einem Zug. */
+/** Alles für Cockpit, Listen und Liquidität in einem Zug (MWST vom letzten bis zum nächsten Jahr). */
 export async function ladeFinanzen(): Promise<Finanzdaten> {
+  const heute = new Date().toISOString().slice(0, 10)
+  const [ko, fi, pf, mw, zl, pe] = await Promise.all([
+    db().from('finanz_konten').select('*').is('geloescht_am', null).order('reihenfolge').order('name'),
+    db().from('firmen').select('id, kuerzel, name').is('geloescht_am', null).order('kuerzel'),
+    db().from('finanz_projekt_firma').select('projekt_id, firma_id'),
+    db().rpc('mwst_schaetzung', { p_von: plusTage(heute, -200), p_bis: plusTage(heute, 200) }),
+    db()
+      .from('zahllaeufe')
+      .select('*')
+      .is('geloescht_am', null)
+      .order('ausfuehren_am', { ascending: false })
+      .limit(60),
+    db().from('personen').select('id, name').is('geloescht_am', null),
+  ])
+  for (const x of [ko, fi, pf, mw, zl, pe]) if (x.error) throw x.error
   const [z, m, f, e, r, t, s] = await Promise.all([
     db().from('kreditor_zahlungen').select('*').is('geloescht_am', null),
     db().from('material_zahlungen').select('*').is('geloescht_am', null),
@@ -30,9 +50,9 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
     db().from('erwartete_eingaenge').select('*').is('geloescht_am', null),
     db()
       .from('rechnungen_liste')
-      .select('id, nummer, kunde, projekt_nummer, titel, offen_rappen, faellig_am')
+      .select('id, nummer, kunde, projekt_nummer, titel, offen_rappen, faellig_am, firma_id, projekt_id')
       .in('status', ['gestellt', 'teilbezahlt']),
-    db().from('offene_tranchen').select('id, kunde, projekt_nummer, bezeichnung, betrag_rappen, faellig_am'),
+    db().from('offene_tranchen').select('id, kunde, projekt_nummer, bezeichnung, betrag_rappen, faellig_am, projekt_id'),
     db().from('finanz_einstellungen').select('wert').eq('schluessel', EINSTELLUNG).maybeSingle(),
   ])
   for (const x of [z, m, f, e, r, t, s]) if (x.error) throw x.error
@@ -48,7 +68,23 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
     if (k.error) throw k.error
     kundenzahlungen = k.data
   }
+  const bestellIds = [...new Set((z.data ?? []).map((x) => x.bestellung_id).filter((x): x is string => Boolean(x)))]
+  const be = bestellIds.length
+    ? await db().from('bestellungen').select('id, nummer, total_rappen, bestellt_am').in('id', bestellIds)
+    : { data: [], error: null }
+  if (be.error) throw be.error
   return {
+    konten: ko.data as Konto[],
+    firmen: fi.data as Firma[],
+    projektFirma: Object.fromEntries(
+      (pf.data ?? []).filter((x) => x.projekt_id && x.firma_id).map((x) => [x.projekt_id, x.firma_id]),
+    ) as Record<string, string>,
+    mwst: (mw.data ?? []) as unknown as MwstZeile[],
+    zahllaeufe: zl.data as Zahllauf[],
+    bestellungen: Object.fromEntries(
+      be.data.map((b) => [b.id, { nummer: b.nummer, total_rappen: b.total_rappen, bestellt_am: b.bestellt_am }]),
+    ),
+    personen: Object.fromEntries((pe.data ?? []).map((p) => [p.id, p.name])),
     zahlungen: z.data ?? [],
     material: (m.data ?? []).map((x) => ({
       ...x,
