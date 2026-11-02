@@ -1,10 +1,10 @@
 import { Inbox } from 'lucide-react'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
+import { MehrfachFilter } from '@/components/shared/MehrfachFilter'
 import { Leerzustand } from '@/components/shared/Zustaende'
-import { Auswahl } from '@/components/ui/auswahl'
+import { useGemerkterFilter } from '@/hooks/useGemerkterFilter'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { useMails } from '../hooks/usePosteingang'
@@ -32,10 +32,13 @@ export function MailListe({
   const sprache = useUi((z) => z.sprache)
   const ich = useAnmeldung((z) => z.ich)
   const daten = useMails()
-  const [art, setArt] = useState<Art | 'alle'>('alle')
+  // Mehrere Arten zugleich (z. B. Anfrage und Service); gemerkt je Person.
+  const [wahl, setWahl] = useGemerkterFilter<{ arten: Art[] }>('posteingang', { arten: [] })
   const alle = daten.data ?? []
   const inFilter = alle.filter((m) => inAnsicht(m, ansicht, ich?.id ?? null))
-  const liste = sortiere(art === 'alle' ? inFilter : inFilter.filter((m) => m.art === art))
+  const liste = sortiere(
+    wahl.arten.length === 0 ? inFilter : inFilter.filter((m) => m.art !== null && wahl.arten.includes(m.art)),
+  )
   const artenDa = ARTEN.filter((a) => inFilter.some((m) => m.art === a))
 
   return (
@@ -60,17 +63,19 @@ export function MailListe({
             if (a) onAnsicht(a as Ansicht)
           }}
         />
-        <Auswahl
+        <MehrfachFilter
           className="w-full sm:w-48"
-          aria-label={t('posteingang.artFilter')}
-          value={art}
-          onValueChange={(w) => {
-            setArt(w as Art | 'alle')
+          beschriftung={t('posteingang.artFilter')}
+          alleText={t('posteingang.alleArten')}
+          gewaehlt={wahl.arten}
+          onChange={(arten) => {
+            setWahl({ arten: arten as Art[] })
           }}
-          optionen={[
-            { wert: 'alle', text: t('posteingang.alleArten') },
-            ...artenDa.map((a) => ({ wert: a, text: t(`posteingang.art.${a}`) })),
-          ]}
+          optionen={artenDa.map((a) => ({
+            wert: a,
+            text: t(`posteingang.art.${a}`),
+            anzahl: inFilter.filter((m) => m.art === a).length,
+          }))}
         />
       </div>
       <Datentabelle

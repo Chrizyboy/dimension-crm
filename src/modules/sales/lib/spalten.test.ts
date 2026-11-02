@@ -4,9 +4,14 @@ import { testGeschaeft } from './testgeschaeft'
 
 it('blendet abgeschlossene Spalten aus, bis man sie einschaltet', () => {
   const g = [testGeschaeft({ id: 'a', stand: 'verbaut' }), testGeschaeft({ id: 'b', stand: 'lead_neu' })]
-  expect(verteile(g, false).map((s) => s.spalte.id)).not.toContain('gewonnen')
-  const mit = verteile(g, true)
+  expect(verteile(g).map((s) => s.spalte.id)).not.toContain('gewonnen')
+  const mit = verteile(g, [])
   expect(mit.find((s) => s.spalte.id === 'gewonnen')?.karten.map((k) => k.id)).toEqual(['a'])
+})
+
+it('zeigt nur die gewählten Spalten in fester Reihenfolge', () => {
+  const g = [testGeschaeft({ id: 'b', stand: 'lead_neu' })]
+  expect(verteile(g, ['termin', 'neu']).map((s) => s.spalte.id)).toEqual(['neu', 'termin'])
 })
 
 it('legt mehrere Stände in eine Spalte, neueste Bewegung oben', () => {
@@ -15,7 +20,7 @@ it('legt mehrere Stände in eine Spalte, neueste Bewegung oben', () => {
     testGeschaeft({ id: 'neu', stand: 'nachfassen', standDatum: '2026-10-01' }),
   ]
   expect(
-    verteile(g, false)
+    verteile(g)
       .find((s) => s.spalte.id === 'offeriert')
       ?.karten.map((k) => k.id),
   ).toEqual(['neu', 'alt'])

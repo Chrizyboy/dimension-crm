@@ -86,7 +86,7 @@ test('Ctrl K findet den Lead über die Nummer', async ({ page }) => {
 test('Pipeline, Liste, Tagesroute und Monatsbericht ohne Verstösse, hell und dunkel', async ({ page }) => {
   await anmelden(page, 'verkauf@test.local')
   for (const [ansicht, text, schema] of [
-    ['pipeline', 'Abgeschlossene zeigen', 'dark'],
+    ['pipeline', 'Spalten: 9 von 12', 'dark'],
     ['liste', 'Nach Stand', 'dark'],
     ['tagesroute', 'Leads in der Nähe ergänzen', 'light'],
     ['bericht', 'Leads im CRM', 'light'],

@@ -781,10 +781,12 @@
     "pipeline": {
       "karte": "Affaire",
       "standAendern": "Changer le statut",
-      "abgeschlossene": "Afficher les affaires closes",
       "leer": "Rien dans cette colonne",
       "weitere_one": "Afficher {{count}} de plus",
-      "weitere_other": "Afficher {{count}} de plus"
+      "weitere_other": "Afficher {{count}} de plus",
+      "spalten": "Colonnes",
+      "alleSpalten": "Toutes les colonnes",
+      "spaltenAnzahl": "Colonnes : {{anzahl}} sur {{von}}"
     },
     "wechsel": {
       "titel": "Changer le statut : {{name}}",
@@ -6353,5 +6355,12 @@
     "stellvertretung": "Remplacement en cas d'absence",
     "stellvertretungHinweis": "S'applique quand quelqu'un est inscrit dans les absences (vacances, maladie …).",
     "vertretungFuer": "Remplaçant de {{name}}"
+  },
+  "mehrfachFilter": {
+    "alle": "Tous",
+    "nur": "seul",
+    "ausser": "Tous sauf {{wert}}",
+    "suchen": "Rechercher …",
+    "keineTreffer": "Aucun résultat"
   }
 }

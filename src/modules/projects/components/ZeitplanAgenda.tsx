@@ -23,7 +23,7 @@ export function ZeitplanAgenda({
   gruppen,
   abwesend,
   personen,
-  person,
+  wahl,
   onOeffnen,
 }: {
   montag: string
@@ -31,7 +31,8 @@ export function ZeitplanAgenda({
   abwesend: Abwesenheit[]
   personen: Person[]
   /** Nur die Einsätze dieser Person (leer = alle). */
-  person: string
+  /** Gewählte Personen; leer heisst alle. */
+  wahl: readonly string[]
   onOeffnen: (p: Projekt) => void
 }) {
   const { t, i18n } = useTranslation()
@@ -39,7 +40,7 @@ export function ZeitplanAgenda({
   const sprache = i18n.language === 'fr' ? 'fr-CH' : 'de-CH'
   const alle = gruppen
     .flatMap((g) => g.zeilen.flatMap((z) => z.balken))
-    .filter((b) => b.einsatz && (!person || b.einsatz.personen.includes(person)))
+    .filter((b) => b.einsatz && (wahl.length === 0 || b.einsatz.personen.some((id) => wahl.includes(id))))
   const kuerzel = (id: string) => personen.find((p) => p.id === id)?.kuerzel ?? '?'
 
   const tage = Array.from({ length: 7 }, (_, i) => alsIso(plusTage(alsDatum(montag), i)))
@@ -50,7 +51,7 @@ export function ZeitplanAgenda({
         .sort((a, b) => (a.projekt?.kunde ?? '').localeCompare(b.projekt?.kunde ?? '')),
       weg: [
         ...new Set(abwesend.filter((a) => ueberschneidet(a, { von: tag, bis: tag })).map((a) => a.person_id)),
-      ].filter((id) => !person || id === person),
+      ].filter((id) => wahl.length === 0 || wahl.includes(id)),
     }))
     .filter((d) => {
       const wt = alsDatum(d.tag).getDay()

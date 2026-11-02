@@ -781,10 +781,12 @@
     "pipeline": {
       "karte": "Geschäft",
       "standAendern": "Stand ändern",
-      "abgeschlossene": "Abgeschlossene zeigen",
       "leer": "Nichts in dieser Spalte",
       "weitere_one": "{{count}} weiteres zeigen",
-      "weitere_other": "{{count}} weitere zeigen"
+      "weitere_other": "{{count}} weitere zeigen",
+      "spalten": "Spalten",
+      "alleSpalten": "Alle Spalten",
+      "spaltenAnzahl": "Spalten: {{anzahl}} von {{von}}"
     },
     "wechsel": {
       "titel": "Stand ändern: {{name}}",
@@ -6353,5 +6355,12 @@
     "stellvertretung": "Stellvertretung bei Abwesenheit",
     "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
     "vertretungFuer": "Stellvertretung für {{name}}"
+  },
+  "mehrfachFilter": {
+    "alle": "Alle",
+    "nur": "nur",
+    "ausser": "Alle ausser {{wert}}",
+    "suchen": "Suchen …",
+    "keineTreffer": "Nichts gefunden"
   }
 }

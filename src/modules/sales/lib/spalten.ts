@@ -34,9 +34,15 @@ export function zielInSpalte(spalte: PipelineSpalte, g: Pick<Geschaeft, 'offerte
   return spalte.ziel
 }
 
-/** Verteilt die Geschäfte auf die Spalten, neueste Bewegung oben. */
-export function verteile(geschaefte: readonly Geschaeft[], mitAbgeschlossenen: boolean) {
-  const spalten = PIPELINE_SPALTEN.filter((s) => mitAbgeschlossenen || !s.abgeschlossen)
+/** Spalten, die man ohne eigene Wahl sieht: alle offenen, ohne gewonnen, verloren und Dossier. */
+export const STANDARD_SPALTEN: readonly string[] = PIPELINE_SPALTEN.filter((s) => !s.abgeschlossen).map((s) => s.id)
+
+/**
+ * Verteilt die Geschäfte auf die Spalten, neueste Bewegung oben.
+ * `sichtbar`: Spalten, die man sehen will (aus «Spalten»); leer heisst alle.
+ */
+export function verteile(geschaefte: readonly Geschaeft[], sichtbar: readonly string[] = STANDARD_SPALTEN) {
+  const spalten = PIPELINE_SPALTEN.filter((s) => sichtbar.length === 0 || sichtbar.includes(s.id))
   const proStand = new Map<string, Geschaeft[]>()
   for (const g of geschaefte) {
     const liste = proStand.get(g.stand) ?? []
