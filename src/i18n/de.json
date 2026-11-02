@@ -3087,6 +3087,27 @@
       "teile": "warten auf Teile",
       "rma": "beim Hersteller (RMA)",
       "verrechnen": "Rapporte zu verrechnen"
+    },
+    "planung": {
+      "titel": "Einsatz",
+      "planen": "Einsatz planen",
+      "aendern": "Ändern",
+      "dialog": "Einsatz planen",
+      "dauer": "Dauer {{dauer}}",
+      "dauerFeld": "Dauer",
+      "ganzerTag": "Ganzer Tag",
+      "leitung": "Leitet den Einsatz",
+      "leitet": "{{name}} (leitet)",
+      "team": "Kommt mit",
+      "ohneTermin": "Noch kein Termin. Der Termin erscheint im Zeitplan und am Handy aller Eingeteilten.",
+      "ohneTerminMit": "Noch kein Termin, zuständig {{name}}.",
+      "entfernen": "Einsatz entfernen",
+      "hinweise": "Hinweise zur Belegung",
+      "belegt": {
+        "abwesend": "{{name}} ist an dem Tag abwesend",
+        "baustelle": "{{name}} ist auf der Baustelle {{was}} eingeteilt",
+        "service": "{{name}} hat schon den Service-Termin {{was}}"
+      }
     }
   },
   "wartung": {

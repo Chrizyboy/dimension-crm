@@ -3087,6 +3087,27 @@
       "teile": "attendent des pièces",
       "rma": "chez le fabricant (RMA)",
       "verrechnen": "rapports à facturer"
+    },
+    "planung": {
+      "titel": "Intervention",
+      "planen": "Planifier",
+      "aendern": "Modifier",
+      "dialog": "Planifier l’intervention",
+      "dauer": "Durée {{dauer}}",
+      "dauerFeld": "Durée",
+      "ganzerTag": "Journée entière",
+      "leitung": "Responsable sur place",
+      "leitet": "{{name}} (responsable)",
+      "team": "Accompagné de",
+      "ohneTermin": "Pas encore de rendez-vous. Il apparaîtra dans le planning et sur le mobile de toutes les personnes prévues.",
+      "ohneTerminMit": "Pas encore de rendez-vous, responsable {{name}}.",
+      "entfernen": "Retirer l’intervention",
+      "hinweise": "Disponibilités",
+      "belegt": {
+        "abwesend": "{{name}} est absent·e ce jour-là",
+        "baustelle": "{{name}} est prévu·e sur le chantier {{was}}",
+        "service": "{{name}} a déjà l’intervention {{was}}"
+      }
     }
   },
   "wartung": {

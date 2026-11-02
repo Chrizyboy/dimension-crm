@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabase'
-import type { Akte, Leitstandzahlen, VerlaufArt } from '../types'
+import type { Akte, Belegung, Leitstandzahlen, VerlaufArt } from '../types'
 
 /** Datenzugriff für die Fall-Akte und den Leitstand (Abläufe in der Datenbank, service_*). */
 function db() {
@@ -76,4 +76,47 @@ export async function rechnungAusRapport(rapportId: string): Promise<string> {
   const { data, error } = await db().rpc('rechnung_entwurf', { p: { rapport_id: rapportId } as never })
   if (error) throw error
   return data
+}
+
+/** Einsatz planen oder ändern (Termin, Dauer, Leitung, Team); ohne Termin wird er entfernt. */
+export async function einsatzPlanen(
+  id: string,
+  e: { termin_am: string | null; dauer_minuten: number | null; person_id: string | null; team: string[] },
+): Promise<void> {
+  const { error } = await db().rpc('service_einsatz', {
+    p_id: id,
+    p_termin: e.termin_am as string,
+    p_dauer: e.dauer_minuten as number,
+    p_person: e.person_id as string,
+    p_team: e.team,
+  })
+  if (error) throw error
+}
+
+/**
+ * Wer am Tag schon abwesend, auf einer Baustelle oder bei einem anderen Service-Termin ist, damit beim Planen
+ * niemand doppelt eingeteilt wird (nur Hinweis, die Planung bleibt möglich).
+ */
+export async function ladeBelegung(datum: string, ohneFall: string): Promise<Belegung[]> {
+  const [abw, bau, srv] = await Promise.all([
+    db().from('abwesenheiten_alle').select('person_id, art').lte('von', datum).gte('bis', datum),
+    db()
+      .from('einsaetze')
+      .select('personen, projekt:projekte(nummer)')
+      .is('geloescht_am', null)
+      .neq('art', 'geplant')
+      .lte('von', datum)
+      .gte('bis', datum),
+    db().from('service_termine').select('id, nummer, personen').eq('datum', datum).neq('id', ohneFall),
+  ])
+  if (abw.error) throw abw.error
+  if (bau.error) throw bau.error
+  if (srv.error) throw srv.error
+  const b: Belegung[] = []
+  for (const a of abw.data) if (a.person_id) b.push({ person_id: a.person_id, grund: 'abwesend', text: a.art ?? '' })
+  for (const e of bau.data as { personen: string[] | null; projekt: { nummer: string } | null }[])
+    for (const p of e.personen ?? []) b.push({ person_id: p, grund: 'baustelle', text: e.projekt?.nummer ?? '' })
+  for (const t of srv.data)
+    for (const p of t.personen ?? []) b.push({ person_id: p, grund: 'service', text: t.nummer ?? '' })
+  return b
 }

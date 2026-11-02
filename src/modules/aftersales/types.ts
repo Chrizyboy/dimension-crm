@@ -83,6 +83,10 @@ export interface ServiceFall {
   status: string
   garantie: boolean | null
   termin_am: string | null
+  /** Weitere Personen im Einsatz (person_id leitet). */
+  team: string[]
+  /** Geplante Dauer in Minuten; ohne Angabe 2 Stunden. */
+  dauer_minuten: number | null
   erledigt_am: string | null
   erstellt_am: string
   kontakt_id: string | null
@@ -268,4 +272,14 @@ export interface Akte {
 export interface Leitstandzahlen {
   rma_offen: number
   zu_verrechnen: number
+}
+
+/** Wählbare Dauer eines Service-Einsatzes in Minuten (8 Stunden = ganzer Tag). */
+export const DAUERN = [60, 120, 180, 240, 480] as const
+
+/** Belegung einer Person am Tag eines Einsatzes (Hinweis beim Planen). */
+export interface Belegung {
+  person_id: string
+  grund: 'abwesend' | 'baustelle' | 'service'
+  text: string
 }
