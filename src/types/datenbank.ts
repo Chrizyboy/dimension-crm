@@ -266,6 +266,7 @@ export type Database = {
           geloescht_am: string | null
           halbtag: boolean
           id: string
+          kurs_id: string | null
           outlook_id: string | null
           person_id: string
           quelle: string
@@ -283,6 +284,7 @@ export type Database = {
           geloescht_am?: string | null
           halbtag?: boolean
           id?: string
+          kurs_id?: string | null
           outlook_id?: string | null
           person_id: string
           quelle?: string
@@ -299,6 +301,7 @@ export type Database = {
           geloescht_am?: string | null
           halbtag?: boolean
           id?: string
+          kurs_id?: string | null
           outlook_id?: string | null
           person_id?: string
           quelle?: string
@@ -4935,6 +4938,103 @@ export type Database = {
           },
         ]
       }
+      kurse: {
+        Row: {
+          absage_grund: string | null
+          alt_daten: Json | null
+          alt_id: string | null
+          anbieter: string | null
+          art: string | null
+          beantragt_von: string | null
+          besucht_von: string[]
+          bewilligt_am: string | null
+          bewilligt_von: string | null
+          bis: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kosten_rappen: number | null
+          notiz: string | null
+          ort: string | null
+          personen: string[]
+          stand: string
+          titel: string
+          vereinbarung_bis: string | null
+          vereinbarung_rappen: number | null
+          von: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          absage_grund?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter?: string | null
+          art?: string | null
+          beantragt_von?: string | null
+          besucht_von?: string[]
+          bewilligt_am?: string | null
+          bewilligt_von?: string | null
+          bis?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_rappen?: number | null
+          notiz?: string | null
+          ort?: string | null
+          personen?: string[]
+          stand?: string
+          titel: string
+          vereinbarung_bis?: string | null
+          vereinbarung_rappen?: number | null
+          von?: string | null
+        }
+        Update: {
+          absage_grund?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter?: string | null
+          art?: string | null
+          beantragt_von?: string | null
+          besucht_von?: string[]
+          bewilligt_am?: string | null
+          bewilligt_von?: string | null
+          bis?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_rappen?: number | null
+          notiz?: string | null
+          ort?: string | null
+          personen?: string[]
+          stand?: string
+          titel?: string
+          vereinbarung_bis?: string | null
+          vereinbarung_rappen?: number | null
+          von?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'kurse_beantragt_von_fkey'
+            columns: ['beantragt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kurse_bewilligt_von_fkey'
+            columns: ['bewilligt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       lagerbestand: {
         Row: {
           alt_daten: Json | null
@@ -7363,6 +7463,7 @@ export type Database = {
           geloescht_am: string | null
           gueltig_bis: string | null
           id: string
+          kurs_id: string | null
           notiz: string | null
           person_id: string
         }
@@ -7381,6 +7482,7 @@ export type Database = {
           geloescht_am?: string | null
           gueltig_bis?: string | null
           id?: string
+          kurs_id?: string | null
           notiz?: string | null
           person_id: string
         }
@@ -7398,6 +7500,7 @@ export type Database = {
           geloescht_am?: string | null
           gueltig_bis?: string | null
           id?: string
+          kurs_id?: string | null
           notiz?: string | null
           person_id?: string
         }
@@ -12103,6 +12206,7 @@ export type Database = {
           strasse: string
         }[]
       }
+      ausweis_anforderung_speichern: { Args: { p: Json; p_schluessel: string }; Returns: undefined }
       automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }
       automation_lauf_abbrechen: { Args: { p_lauf: string }; Returns: boolean }
       automation_server_ergebnis: {
@@ -12280,6 +12384,12 @@ export type Database = {
           stand_datum: string
         }[]
       }
+      kurs_besucht: { Args: { p_id: string; p_personen?: string[] }; Returns: number }
+      kurs_entscheiden: {
+        Args: { p_bewilligt: boolean; p_grund?: string; p_id: string }
+        Returns: undefined
+      }
+      kurs_speichern: { Args: { p: Json; p_id: string | null }; Returns: string }
       lager_buchen: { Args: { p: Json }; Returns: undefined }
       lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
       lead_anlegen: { Args: { p: Json }; Returns: string }
@@ -12744,6 +12854,8 @@ export type Database = {
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
+      team_kurse: { Args: { p_jahr?: number }; Returns: Json }
+      team_uebersicht: { Args: { p_tag?: string }; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
