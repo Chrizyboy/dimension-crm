@@ -100,6 +100,8 @@ export function MesseTeil({ kampagne }: { kampagne: Werbekampagne }) {
                   />
                 ))}
                 <Input
+                  // neu aufbauen, sobald die Personen geladen sind, sonst bliebe das Feld leer
+                  key={`${d.tag}-${String(personen.length)}-${d.personen.join()}`}
                   aria-label={t('werbung.messe.personen')}
                   placeholder={t('werbung.messe.kuerzelHinweis')}
                   defaultValue={kuerzel(d.personen)}

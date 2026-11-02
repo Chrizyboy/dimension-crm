@@ -25,7 +25,7 @@ import type { Ansicht } from '../../types'
 import { KostenZuordnen } from './KostenZuordnen'
 import { BudgetKarte, QuellenKarte } from './QuellenKarte'
 
-const ARTFARBE = { post: 'info', mail: 'marke', messe: 'warnung', frist: 'neutral', thema: 'ok' } as const
+const ARTFARBE = { post: 'info', mail: 'marke', messe: 'neutral', frist: 'neutral', thema: 'ok' } as const
 
 /**
  * Übersicht je Rolle: was heute zu tun ist (Freigaben für die Administration, Kosten zuordnen für die

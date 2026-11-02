@@ -1,4 +1,4 @@
--- Marketing vollständig (Entscheid 0039), Teil 2: Abläufe. Kampagne am Lead, Zahlen je Kampagne und Quelle,
+-- Marketing vollständig (Entscheid 0042), Teil 2: Abläufe. Kampagne am Lead, Zahlen je Kampagne und Quelle,
 -- Kosten aus den Lieferantenrechnungen, Messe-Leads, Dankes-Mail, Öffnungen und Klicks, Social Media «von Hand»,
 -- Fotos für Werbung, Heizung aus dem Gebäuderegister.
 

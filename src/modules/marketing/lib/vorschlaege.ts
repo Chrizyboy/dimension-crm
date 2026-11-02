@@ -61,7 +61,8 @@ export function vorschlaege(
   }
   const zahl = new Map(d.zahlen.map((z) => [z.kampagne_id, z]))
   for (const k of d.kampagnen) {
-    if (k.status !== 'laeuft' || !k.start_am || k.art === 'messe') continue
+    // Messen, Empfehlungen und gekaufte Leads laufen das ganze Jahr oder haben eigene Hinweise
+    if (k.status !== 'laeuft' || !k.start_am || !['aktion', 'online', 'social', 'newsletter'].includes(k.art)) continue
     if (-tageBis(k.start_am, heute) >= 21 && (zahl.get(k.id)?.leads ?? 0) === 0)
       aus.push({ schluessel: 'ohneLeads', werte: { name: k.name }, ansicht: 'kampagnen', ton: 'info' })
   }

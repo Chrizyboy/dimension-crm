@@ -14,7 +14,7 @@ import type {
 } from '../types'
 
 /**
- * Datenzugriff Kampagnen, Messen, Zielgruppen, Werbemittel und Kosten (Entscheid 0039). Zahlen, Kosten und die
+ * Datenzugriff Kampagnen, Messen, Zielgruppen, Werbemittel und Kosten (Entscheid 0042). Zahlen, Kosten und die
  * Zuordnung der Kampagne zum Lead rechnet die Datenbank (kampagnen_zahlen, marketing_quellen, kampagne_zuordnen).
  */
 function db() {

@@ -1,4 +1,4 @@
--- Marketing vollständig (Entscheid 0039), Teil 3: Versand mit Kampagne, Öffnungen und Klicks, Ergebnis je Versand,
+-- Marketing vollständig (Entscheid 0042), Teil 3: Versand mit Kampagne, Öffnungen und Klicks, Ergebnis je Versand,
 -- Social Media «von Hand» bis Meta und LinkedIn verbunden sind, Fotos für Werbung, Heizung aus dem Gebäuderegister.
 
 /**

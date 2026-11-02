@@ -74,9 +74,9 @@ export function KostenZuordnen({ belege }: { belege: Kostenbeleg[] }) {
     <Karte>
       <KarteKopf>
         <KarteTitel>{t('werbung.kosten.titel', { anzahl: belege.length })}</KarteTitel>
-        <p className="text-muted-foreground text-sm">{t('werbung.kosten.info')}</p>
       </KarteKopf>
       <KarteInhalt className="p-0">
+        <p className="text-muted-foreground px-3 pt-3 text-sm">{t('werbung.kosten.info')}</p>
         <ul className="divide-y">
           {belege.slice(0, 10).map((b) => (
             <Beleg key={b.id} b={b} />

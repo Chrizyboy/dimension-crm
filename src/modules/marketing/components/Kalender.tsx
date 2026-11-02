@@ -12,7 +12,7 @@ import type { Ansicht } from '../types'
 const FARBE: Record<KalenderEintrag['art'], string> = {
   post: 'bg-info-soft text-info',
   mail: 'bg-accent-soft text-accent-ink',
-  messe: 'bg-warn-soft text-warn',
+  messe: 'bg-primary text-primary-foreground',
   frist: 'bg-muted text-muted-foreground',
   thema: 'bg-ok-soft text-ok',
 }
