@@ -23,7 +23,16 @@ const MATERIAL = ['offen', 'bestellt', 'lager'] as const
  * voraussichtlich) tagesgenau, wer dabei ist, dazu Baustellen- und Material-Status. Ist jemand in der Zeit
  * abwesend (CRM oder Outlook), steht es gleich beim Einsatz.
  */
-export function ZeitplanDialog({ projekt, onSchliessen }: { projekt: Projekt; onSchliessen: () => void }) {
+export function ZeitplanDialog({
+  projekt,
+  neuAb,
+  onSchliessen,
+}: {
+  projekt: Projekt
+  /** Gleich einen neuen Einsatz ab diesem Tag anfügen (Klick auf eine leere Stelle im Zeitplan, «Zu planen»). */
+  neuAb?: string
+  onSchliessen: () => void
+}) {
   const { t } = useTranslation()
   const vorhanden = useProjektEinsaetze(projekt.id)
   if (vorhanden.isPending) {
@@ -45,6 +54,7 @@ export function ZeitplanDialog({ projekt, onSchliessen }: { projekt: Projekt; on
         subunternehmer_id: e.subunternehmer_id,
         notiz: e.notiz,
       }))}
+      {...(neuAb ? { neuAb } : {})}
       onSchliessen={onSchliessen}
     />
   )
@@ -82,13 +92,27 @@ function Rahmen({
   )
 }
 
+/** Neuer interner Einsatz ab einem Werktag, so lang wie die geschätzten Werktage des Projekts. */
+function neuerEinsatz(von: string, werktage: number | null): EinsatzEntwurf {
+  return {
+    art: 'intern',
+    von,
+    bis: endeNachWerktagen(von, werktage ?? 1),
+    personen: [],
+    subunternehmer_id: null,
+    notiz: null,
+  }
+}
+
 function Formular({
   projekt,
   anfang,
+  neuAb,
   onSchliessen,
 }: {
   projekt: Projekt
   anfang: EinsatzEntwurf[]
+  neuAb?: string
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
@@ -96,7 +120,9 @@ function Formular({
   const personen = usePersonen()
   const subs = useSubunternehmer()
   const [heute] = useState(() => alsIso(naechsterWerktag(new Date())))
-  const [liste, setListe] = useState<EinsatzEntwurf[]>(anfang)
+  const [liste, setListe] = useState<EinsatzEntwurf[]>(() =>
+    neuAb ? [...anfang, neuerEinsatz(alsIso(naechsterWerktag(new Date(`${neuAb}T12:00`))), projekt.werktage)] : anfang,
+  )
   const [bau, setBau] = useState<string>(projekt.bau_status ?? 'ausstehend')
   const [material, setMaterial] = useState<string>(projekt.material_status ?? 'offen')
   const von = liste.map((e) => e.von).sort()[0] ?? heute
@@ -113,17 +139,7 @@ function Formular({
   const dazu = () => {
     const start = liste.at(-1)?.bis ?? projekt.baubeginn ?? heute
     const v = liste.length ? alsIso(naechsterWerktag(new Date(`${start}T12:00`))) : start
-    setListe([
-      ...liste,
-      {
-        art: 'intern',
-        von: v,
-        bis: endeNachWerktagen(v, projekt.werktage ?? 1),
-        personen: [],
-        subunternehmer_id: null,
-        notiz: null,
-      },
-    ])
+    setListe([...liste, neuerEinsatz(v, projekt.werktage)])
   }
 
   async function speichern() {

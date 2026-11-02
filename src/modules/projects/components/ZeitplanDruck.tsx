@@ -2,20 +2,30 @@ import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
 import { formatDatum } from '@/lib/format'
 import { balken, type Woche } from '../lib/zeitplan'
-import type { ZeitplanGruppe } from './ZeitplanRaster'
+import type { PlanGruppe } from '../lib/zeitplanAnsicht'
 
 /** Papier ist weiss, darum feste Farben wie im Firmen-Logo (dunkelblau, orange). */
 const FARBE = {
   intern: { background: '#10263f', color: '#fff' },
   extern: { background: '#f7931e', color: '#10263f' },
   geplant: { background: '#fff', color: '#10263f', border: '1px dashed #10263f' },
+  abwesend: { background: '#e3e7ed', color: '#4a5568' },
 }
 
 /**
  * Zeitplan zum Drucken oder als PDF (V233 «PDF exportieren»): A4 quer, Wochen als Spalten, Einsätze als
  * tagesgenaue Balken, je Standort ein Block.
  */
-export function ZeitplanDruck({ wochen, gruppen }: { wochen: Woche[]; gruppen: ZeitplanGruppe[] }) {
+export function ZeitplanDruck({
+  wochen,
+  gruppen,
+  spalte,
+}: {
+  wochen: Woche[]
+  gruppen: PlanGruppe[]
+  /** Überschrift der ersten Spalte (Baustelle oder Person). */
+  spalte: string
+}) {
   const { t } = useTranslation()
   const start = wochen[0]?.montag ?? ''
   const tage = wochen.length * 7
@@ -31,7 +41,7 @@ export function ZeitplanDruck({ wochen, gruppen }: { wochen: Woche[]; gruppen: Z
         })}
       </h1>
       <div style={{ display: 'grid', gridTemplateColumns: '42mm 1fr', borderBottom: '1px solid #10263f' }}>
-        <span style={{ fontWeight: 700 }}>{t('projekte.zeitplan.baustelle')}</span>
+        <span style={{ fontWeight: 700 }}>{spalte}</span>
         <span style={{ display: 'flex' }}>
           {wochen.map((w) => (
             <span key={w.montag} style={{ ...zelle, flex: 1, fontWeight: 700 }}>
@@ -41,23 +51,24 @@ export function ZeitplanDruck({ wochen, gruppen }: { wochen: Woche[]; gruppen: Z
         </span>
       </div>
       {gruppen.map((g) => (
-        <section key={g.standort} style={{ breakInside: 'avoid' }}>
-          <p style={{ fontWeight: 700, background: '#eef1f5', padding: '1mm 2mm', margin: '2mm 0 0' }}>{g.standort}</p>
-          {g.zeilen.map(({ projekt: p, einsaetze }) => (
+        <section key={g.id} style={{ breakInside: 'avoid' }}>
+          <p style={{ fontWeight: 700, background: '#eef1f5', padding: '1mm 2mm', margin: '2mm 0 0' }}>{g.titel}</p>
+          {g.zeilen.map((z) => (
             <div
-              key={p.id}
+              key={z.id}
               style={{
                 display: 'grid',
                 gridTemplateColumns: '42mm 1fr',
                 borderBottom: '1px solid #d5dbe3',
-                minHeight: '5mm',
+                minHeight: `${String(z.spuren * 5)}mm`,
               }}
             >
               <span style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', paddingRight: '2mm' }}>
-                {p.kunde} · {p.ort ?? ''}
+                {z.titel}
+                {z.unter ? ` · ${z.unter}` : ''}
               </span>
               <span style={{ position: 'relative' }}>
-                {einsaetze.map((e) => {
+                {z.balken.map((e) => {
                   const l = balken(e.von, e.bis, start, tage)
                   return (
                     l && (
@@ -66,8 +77,8 @@ export function ZeitplanDruck({ wochen, gruppen }: { wochen: Woche[]; gruppen: Z
                         style={{
                           ...FARBE[e.art],
                           position: 'absolute',
-                          top: '0.8mm',
-                          bottom: '0.8mm',
+                          top: `${String(0.8 + e.spur * 5)}mm`,
+                          height: '3.4mm',
                           left: `${l.links}%`,
                           width: `${l.breite}%`,
                           borderRadius: 2,
@@ -78,7 +89,7 @@ export function ZeitplanDruck({ wochen, gruppen }: { wochen: Woche[]; gruppen: Z
                           WebkitPrintColorAdjust: 'exact',
                         }}
                       >
-                        {e.notiz ?? ''}
+                        {e.text}
                       </span>
                     )
                   )
