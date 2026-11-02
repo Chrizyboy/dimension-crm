@@ -24,13 +24,13 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 ### Cocher une tâche
 
 1. Dans la carte **Tâches**, cliquer la case devant la tâche.
-2. La tâche disparaît et est terminée pour tous. Qui te l’a donnée le voit sous **Attribuées par moi**.
+2. La tâche disparaît et est terminée pour tous. Qui te l’a donnée le voit sous **Confiées par moi**.
 
 ### Créer une tâche pour quelqu’un
 
 1. Choisir **+ Tâche** en haut.
 2. Saisir titre, personne et échéance, **Enregistrer**.
-3. La personne la voit sur sa journée, toi sous **Attribuées par moi**. Plus dans le chapitre [Tâches](kapitel:tasks).
+3. La personne la voit sur sa journée, toi sous **Confiées par moi**. Plus dans le chapitre [Tâches](kapitel:tasks).
 
 ### Appeler un client directement
 
@@ -78,4 +78,4 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 ## Nouveautés {#neu}
 
 - 26.10.2026: Statut sous le titre dans les cartes étroites, date plus courte.
-- 24.10.2026: Ma journée est la page d’accueil ; les tâches « Attribuées par moi » ont été ajoutées.
+- 24.10.2026: Ma journée est la page d’accueil ; les tâches « Confiées par moi » ont été ajoutées.
