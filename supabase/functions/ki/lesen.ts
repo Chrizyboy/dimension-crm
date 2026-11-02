@@ -139,8 +139,10 @@ export async function beleg(e: Eingabe, ich: Ich) {
   }
   // MWST nur übernehmen, wenn sie zu den Schweizer Sätzen passt und kleiner als der Betrag ist.
   const satz = typeof j.mwst_satz === 'number' && [2.6, 3.8, 8.1].includes(j.mwst_satz) ? j.mwst_satz : null
-  const mwst = typeof j.mwst_betrag === 'number' && j.mwst_betrag > 0 && (j.betrag ?? 0) > j.mwst_betrag
-    ? Math.round(j.mwst_betrag * 100) : null
+  const mwst =
+    typeof j.mwst_betrag === 'number' && j.mwst_betrag > 0 && (j.betrag ?? 0) > j.mwst_betrag
+      ? Math.round(j.mwst_betrag * 100)
+      : null
   return {
     datum: j.datum && /^\d{4}-\d{2}-\d{2}$/.test(j.datum) ? j.datum : null,
     betrag_rappen: typeof j.betrag === 'number' && j.betrag > 0 ? Math.round(j.betrag * 100) : null,

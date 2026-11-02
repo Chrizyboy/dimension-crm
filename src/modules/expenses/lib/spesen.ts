@@ -166,7 +166,7 @@ export function spesenCsv(
       .map(feld)
       .join(';'),
   )
-  return `﻿${[KOPF[sprache].join(';'), ...zeilen].join('\r\n')}\r\n`
+  return `\uFEFF${[KOPF[sprache].join(';'), ...zeilen].join('\r\n')}\r\n`
 }
 
 /** Text der Mail an die Buchhaltung: eine Zeile je Spese und das Total. */

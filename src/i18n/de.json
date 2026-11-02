@@ -4008,25 +4008,34 @@
   },
   "spesen": {
     "titel": "Spesen",
-    "beschreibung": "Belege fotografieren, Spesen erfassen und an die Buchhaltung senden.",
+    "beschreibung": "Belege fotografieren oder Kilometer erfassen. Die Buchhaltung prüft und zahlt mit dem Lohn aus.",
     "neu": "Spese erfassen",
     "filter": "Stand",
     "filterwert": {
       "offen": "Offen",
       "ausbezahlt": "Ausbezahlt",
       "storniert": "Storniert",
-      "alle": "Alle"
+      "alle": "Alle",
+      "firmenkarte": "Firmenkarte",
+      "abgelehnt": "Abgelehnt"
     },
     "status": {
-      "eingereicht": "Offen",
+      "eingereicht": "Eingereicht",
       "ausbezahlt": "Ausbezahlt",
-      "storniert": "Storniert"
+      "storniert": "Zurückgezogen",
+      "rueckfrage": "Rückfrage",
+      "geprueft": "Geprüft",
+      "abgelehnt": "Abgelehnt",
+      "verbucht": "Verbucht"
     },
     "ausbezahltAm": "Ausbezahlt {{datum}}",
     "ansicht": {
       "meine": "Meine Spesen",
       "alle": "Alle Spesen",
-      "kategorien": "Kategorien"
+      "kategorien": "Regeln",
+      "pruefen": "Prüfen",
+      "auszahlen": "Auszahlen",
+      "auswertung": "Auswertung"
     },
     "spalte": {
       "datum": "Datum",
@@ -4035,13 +4044,14 @@
       "kategorie": "Kategorie",
       "beleg": "Beleg",
       "betrag": "Betrag CHF",
-      "status": "Stand"
+      "status": "Stand",
+      "projekt": "Projekt"
     },
     "alleWaehlen": "Alle offenen wählen",
     "waehlen": "«{{zweck}}» wählen",
     "belegAnsehen": "Ansehen",
     "ohneBeleg": "Ohne Beleg",
-    "stornieren": "Stornieren",
+    "stornieren": "Zurückziehen",
     "summe": "Summe {{betrag}}",
     "anzahl_one": "{{count}} Spese",
     "anzahl_other": "{{count}} Spesen",
@@ -4052,7 +4062,7 @@
     "leerText": "Mit «Spese erfassen» einen Beleg fotografieren und den Betrag eintragen.",
     "erfassen": {
       "titel": "Spese erfassen",
-      "text": "Beleg fotografieren oder als Datei wählen. Die Spese gehört dir und geht an die Buchhaltung.",
+      "text": "Zuerst den Beleg fotografieren: die KI füllt die Felder, du prüfst und speicherst.",
       "speichern": "Speichern",
       "kategorieWaehlen": "Kategorie wählen",
       "zweckBeispiel": "z. B. Parkhaus Kundentermin Freiburg",
@@ -4060,20 +4070,60 @@
       "foto": "Foto",
       "datei": "Datei wählen",
       "belegEntfernen": "Beleg entfernen",
-      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bleibt die Spese gelb markiert."
+      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bekommt die Buchhaltung einen Hinweis.",
+      "aendern": "Spese ändern",
+      "rueckfrage": "Rückfrage der Buchhaltung: «{{text}}». Nach dem Speichern geht die Spese zurück an die Buchhaltung.",
+      "speichernWeiter": "Speichern und nächste",
+      "art": "Art der Spese",
+      "belegErsetzen": "Beleg ersetzen",
+      "bezahltMit": "Bezahlt mit",
+      "firmenkarteHinweis": "Firmenkarte: wird nicht ausbezahlt, die Buchhaltung braucht nur den Beleg.",
+      "km": "Kilometer",
+      "kmRechnung": "× CHF {{satz}} pro km = {{betrag}}",
+      "mwst": "MWST",
+      "mwstUnbekannt": "nicht ausgewiesen",
+      "ohneMwst": "ohne MWST",
+      "ohneProjekt": "ohne Projekt (Nummer oder Kunde tippen)",
+      "personen": "Personen",
+      "projektHinweis": "Kosten erscheinen in der Nachkalkulation.",
+      "strecke": "Strecke",
+      "streckeBeispiel": "z. B. Bulle – Romont und zurück"
     },
     "storno": {
       "titel": "Spese stornieren",
       "grund": "Grund"
     },
     "auszahlen": {
-      "titel_one": "{{count}} Spese als ausbezahlt markieren",
-      "titel_other": "{{count}} Spesen als ausbezahlt markieren",
-      "text": "Total {{betrag}}. Danach lassen sie sich nicht mehr ändern.",
+      "titel_one": "{{count}} Spese auszahlen",
+      "titel_other": "{{count}} Spesen auszahlen",
+      "text": "Total {{betrag}} an {{personen}} Personen. Danach sind die Spesen fest und jede Person bekommt eine Glocke.",
       "datum": "Ausbezahlt am",
-      "knopf": "Als ausbezahlt markieren",
-      "knopfAuswahl_one": "{{count}} ausbezahlt",
-      "knopfAuswahl_other": "{{count}} ausbezahlt"
+      "knopf": "Auszahlung erstellen",
+      "knopfAuswahl_one": "{{count}} auszahlen",
+      "knopfAuswahl_other": "{{count}} auszahlen",
+      "art": "Auszahlung",
+      "lohn": "Mit dem Lohn",
+      "ueberweisung": "Überweisung",
+      "titelFeld": "Titel",
+      "titelHinweis": "Leer = «Lohn November 2026» nach Datum und Art.",
+      "kachelOffen_one": "geprüft, auszuzahlen ({{count}} · {{personen}} Personen)",
+      "kachelOffen_other": "geprüft, auszuzahlen ({{count}} · {{personen}} Personen)",
+      "kachelVorsteuer": "davon Vorsteuer (MWST)",
+      "kachelPruefen": "noch zu prüfen",
+      "kachelFirmenkarte": "Firmenkarte, noch zu prüfen",
+      "leer": "Nichts auszuzahlen",
+      "leerText": "Geprüfte Spesen mit eigenem Geld erscheinen hier je Person.",
+      "jePerson": "Je Person",
+      "anzahl": "Spesen",
+      "km": "Kilometer",
+      "personWaehlen": "{{person}} auszahlen",
+      "pdf": "Abrechnung PDF",
+      "vorschau": "Entwurf",
+      "csvName": "auszuzahlen",
+      "laeufe": "Bisherige Auszahlungen",
+      "keineLaeufe": "Noch keine Auszahlung erstellt.",
+      "personen_one": "{{count}} Person",
+      "personen_other": "{{count}} Personen"
     },
     "mail": {
       "knopf_one": "{{count}} an die Buchhaltung",
@@ -4093,15 +4143,123 @@
       "fr": "Französisch",
       "entfernen": "Kategorie entfernen",
       "neu": "Kategorie",
-      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar."
+      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar. Richtwert gilt je Person (Essen) oder je Beleg; Konto nach Kontenplan KMU."
     },
     "heute": {
-      "meine_one": "{{count}} eigene Spese offen",
-      "meine_other": "{{count}} eigene Spesen offen",
+      "meine_one": "{{count}} eigene Spese unterwegs",
+      "meine_other": "{{count}} eigene Spesen unterwegs",
       "alle_one": "{{count}} Spese wartet auf Auszahlung",
       "alle_other": "{{count}} Spesen warten auf Auszahlung",
       "oeffnen": "Öffnen",
-      "nichts": "Keine offenen Spesen."
+      "nichts": "Keine offenen Spesen.",
+      "rueckfrage_one": "{{count}} Rückfrage zu deinen Spesen",
+      "rueckfrage_other": "{{count}} Rückfragen zu deinen Spesen",
+      "pruefen_one": "{{count}} Spese zu prüfen",
+      "pruefen_other": "{{count}} Spesen zu prüfen"
+    },
+    "kilometerErfassen": "Kilometer erfassen",
+    "aendern": "«{{zweck}}» ändern",
+    "konto": "Konto",
+    "verlauf": "Verlauf",
+    "kmZeile": "{{km}} km × {{satz}}",
+    "mwstZeile": "MWST {{satz}} %",
+    "leerTextAlle": "Für diesen Filter gibt es keine Spesen.",
+    "hinweis": {
+      "doppelt": "doppelt?",
+      "ohne_beleg": "ohne Beleg",
+      "alt": "spät eingereicht",
+      "richtwert": "über Richtwert",
+      "waehrung": "fremde Währung"
+    },
+    "art": {
+      "beleg": "Beleg",
+      "kilometer": "Kilometer Privatauto"
+    },
+    "bezahlt": {
+      "eigen": "Eigenes Geld",
+      "firmenkarte": "Firmenkarte"
+    },
+    "grund": {
+      "storno": {
+        "titel": "Spese zurückziehen",
+        "feld": "Grund",
+        "hinweis": "Die Spese bleibt durchgestrichen sichtbar.",
+        "knopf": "Zurückziehen"
+      },
+      "rueckfrage": {
+        "titel": "Rückfrage an die Person",
+        "feld": "Frage",
+        "hinweis": "Die Person bekommt eine Glocke und antwortet, indem sie die Spese ändert.",
+        "knopf": "Rückfrage"
+      },
+      "ablehnen": {
+        "titel": "Spese ablehnen",
+        "feld": "Grund",
+        "hinweis": "Die Person bekommt eine Glocke. Abgelehnte Spesen sind fest.",
+        "knopf": "Ablehnen"
+      }
+    },
+    "meine": {
+      "wirdAusbezahlt_one": "geprüft, wird ausbezahlt ({{count}})",
+      "wirdAusbezahlt_other": "geprüft, wird ausbezahlt ({{count}})",
+      "beiBuchhaltung_one": "bei der Buchhaltung ({{count}})",
+      "beiBuchhaltung_other": "bei der Buchhaltung ({{count}})",
+      "rueckfragen": "Rückfragen an dich",
+      "jahr": "ausbezahlt dieses Jahr",
+      "jahrLetzte": "ausbezahlt dieses Jahr, zuletzt {{datum}} ({{mit}})",
+      "rueckfrageZu": "Rückfrage zu «{{zweck}}» vom {{datum}}:",
+      "beantworten": "Beantworten"
+    },
+    "pruefen": {
+      "leer": "Alles geprüft",
+      "leerText": "Neue Spesen erscheinen hier, sobald jemand eine einreicht.",
+      "alleOhneHinweis_one": "{{count}} ohne Hinweis prüfen",
+      "alleOhneHinweis_other": "Alle {{count}} ohne Hinweis prüfen",
+      "alleOhneHinweis_zero": "Keine ohne Hinweis",
+      "position": "{{nr}} von {{von}}",
+      "tasten": "J/K blättern, P prüfen",
+      "tasteWeiter": "Nächste Spese",
+      "tasteZurueck": "Vorherige Spese",
+      "tastePruefen": "Spese prüfen",
+      "geprueft": "Geprüft",
+      "aendern": "Ändern",
+      "belegAlt": "Beleg zu «{{zweck}}»",
+      "neuesFenster": "In neuem Fenster öffnen",
+      "kilometerOhneBeleg": "Kilometer brauchen keinen Beleg.",
+      "richtwertText": "Über dem Richtwert der Kategorie. Bitte Notiz und Anzahl Personen prüfen."
+    },
+    "auswertung": {
+      "jahr": "Jahr",
+      "total_one": "Spesen {{jahr}} ({{count}} Beleg)",
+      "total_other": "Spesen {{jahr}} ({{count}} Belege)",
+      "proMonat": "pro Monat (Schnitt)",
+      "aufProjekte": "auf Projekte gebucht",
+      "firmenkarte": "mit Firmenkarte",
+      "nachMonat": "Nach Monat",
+      "nachKategorie": "Nach Kategorie",
+      "nachPerson": "Nach Person",
+      "nachProjekt": "Nach Projekt"
+    },
+    "regeln": {
+      "titel": "Regeln",
+      "kmSatz": "Kilometer-Ansatz CHF",
+      "kmSatzHinweis": "Pro km mit dem Privatauto.",
+      "tage": "Einreichen innert Tagen",
+      "tageHinweis": "Später eingereichte bekommen einen Hinweis.",
+      "auszahlung": "Auszahlung normalerweise",
+      "richtwert": "Richtwert CHF",
+      "belegAb": "Beleg ab CHF",
+      "kmKategorie": "Kilometer: Betrag = km × Ansatz, ohne Beleg und ohne MWST."
+    },
+    "pdf": {
+      "titel": "Spesenabrechnung",
+      "mwst": "MWST",
+      "betrag": "CHF",
+      "total": "Total",
+      "vorsteuer": "Darin enthaltene MWST (Vorsteuer):",
+      "unterschriftPerson": "Datum, Unterschrift Mitarbeiter/in",
+      "unterschriftBuchhaltung": "Geprüft Buchhaltung",
+      "datei": "Spesenabrechnung"
     }
   },
   "finanzen": {
@@ -6557,7 +6715,8 @@
     "spesen": {
       "erfassen": "Spese erfassen",
       "keine": "Noch keine Spesen erfasst.",
-      "offen": "Offen {{betrag}}"
+      "offen": "Offen {{betrag}}",
+      "wirdAusbezahlt": "{{betrag}} sind geprüft und werden ausbezahlt."
     },
     "plan": {
       "titel": "Mein Plan",

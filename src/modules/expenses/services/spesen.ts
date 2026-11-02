@@ -1,5 +1,6 @@
 import { verkleinern } from '@/lib/bild'
 import { dokumentAdresse } from '@/services/dokumente'
+import { meldeFehler } from '@/services/fehler'
 import { supabase } from '@/services/supabase'
 import type { Auszahlung, NeueSpese, Spese, SpesenProjekt } from '../types'
 
@@ -22,7 +23,8 @@ export async function ladeSpesen(personId: string | null): Promise<Spese[]> {
     .order('erstellt_am', { ascending: false })
     .limit(5000)
   if (error) throw error
-  return (data as unknown as Spese[]).map((s) => ({ ...s, hinweise: s.hinweise ?? [], verlauf: s.verlauf ?? [] }))
+  type Roh = Omit<Spese, 'hinweise' | 'verlauf'> & Partial<Pick<Spese, 'hinweise' | 'verlauf'>>
+  return (data as unknown as Roh[]).map((s) => ({ ...s, hinweise: s.hinweise ?? [], verlauf: s.verlauf ?? [] }))
 }
 
 /** Felder der Tabelle aus dem Formular (ohne Beleg). Kilometer-Betrag rechnet die Datenbank. */
@@ -108,6 +110,20 @@ export async function belegAdresse(belegId: string): Promise<string | null> {
   return dokumentAdresse(data)
 }
 
+/** Beleg in einem neuen Fenster öffnen (kurz gültige Adresse). */
+export async function belegZeigen(id: string) {
+  // Fenster sofort öffnen (sonst blockiert der Browser es), dann die kurz gültige Adresse setzen.
+  const fenster = window.open('', '_blank')
+  try {
+    const adresse = await belegAdresse(id)
+    if (adresse && fenster) fenster.location.href = adresse
+    else fenster?.close()
+  } catch (f) {
+    fenster?.close()
+    meldeFehler(f, 'spesen')
+  }
+}
+
 /** Stornieren (zurückziehen) mit Grund; bleibt sichtbar (V233 «Storno statt Löschen»). */
 export async function speseStornieren(id: string, grund: string): Promise<void> {
   const { error } = await db().rpc('spesen_stornieren', { p_id: id, p_grund: grund })
@@ -165,7 +181,7 @@ export async function ladeAuszahlungen(): Promise<Auszahlung[]> {
 export async function ladeProjekte(): Promise<SpesenProjekt[]> {
   const { data, error } = await db().rpc('spesen_projekte')
   if (error) throw error
-  return data as SpesenProjekt[]
+  return data
 }
 
 /** Vermerken, dass die Spesen per Mail an die Buchhaltung gingen (Datum). */

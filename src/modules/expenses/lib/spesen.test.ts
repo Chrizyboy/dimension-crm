@@ -125,12 +125,14 @@ describe('Spesen', () => {
       { kategorie: (k) => k, status: (x) => x, bezahlt: (b) => b },
     )
     expect(csv.startsWith('﻿Datum;Person;Kategorie;Konto')).toBe(true)
-    expect(csv).toContain('20.10.2026;Lea Exemple;Parkieren;6200;"Parkhaus; Bern";P-118;12.50;8.1;0.94;eigen;eingereicht')
+    expect(csv).toContain(
+      '20.10.2026;Lea Exemple;Parkieren;6200;"Parkhaus; Bern";P-118;12.50;8.1;0.94;eigen;eingereicht',
+    )
   })
 
   it('Mail-Text mit Total', () => {
     const text = mailZeilen([testSpese({ betrag_rappen: 1250 }), testSpese({ betrag_rappen: 750 })], (k) => k)
     expect(text).toContain('- 20.10.2026 · Parkieren · Kundentermin · CHF 12.50')
-    expect(text).toContain("Total CHF 20.00")
+    expect(text).toContain('Total CHF 20.00')
   })
 })
