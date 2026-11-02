@@ -83,7 +83,7 @@ export function ProbelaufPanel({ entwurf, tabelle }: { entwurf: Entwurf; tabelle
                   <span className="flex flex-wrap items-center gap-2">
                     <span className="zahlen text-muted-foreground text-xs">{formatDatumZeit(s.wann)}</span>
                     <span className="font-medium">{art}</span>
-                    <Badge ton={TON[s.ergebnis]}>{t(`automationen.ergebnis.${s.ergebnis}`)}</Badge>
+                    <Badge ton={TON[s.ergebnis]}>{t(`automationen.probe.ergebnis.${s.ergebnis}`)}</Badge>
                   </span>
                   {(s.personen || s.an) && (
                     <span className="text-xs">
@@ -97,7 +97,17 @@ export function ProbelaufPanel({ entwurf, tabelle }: { entwurf: Entwurf; tabelle
                   {s.faellig && (
                     <span className="text-xs">{t('automationen.probe.faellig', { am: formatDatum(s.faellig) })}</span>
                   )}
-                  {meldungText(t, zeile) && <span className="text-warn text-xs">{meldungText(t, zeile)}</span>}
+                  {meldungText(t, zeile) && (
+                    <span
+                      className={
+                        s.meldung || s.ergebnis === 'uebersprungen'
+                          ? 'text-warn text-xs'
+                          : 'text-muted-foreground text-xs'
+                      }
+                    >
+                      {meldungText(t, zeile)}
+                    </span>
+                  )}
                 </div>
               </li>
             )

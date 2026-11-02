@@ -5201,7 +5201,14 @@
       "ohneTabelle": "Dieser Auslöser hat keinen Datensatz, ein Probelauf ist nicht möglich.",
       "an": "an {{an}}",
       "personen": "für {{personen}}",
-      "faellig": "fällig am {{am}}"
+      "faellig": "fällig am {{am}}",
+      "ergebnis": {
+        "ok": "Würde laufen",
+        "fehler": "Fehler",
+        "uebersprungen": "Würde übersprungen",
+        "wartet": "Wartet",
+        "server": "Auf dem Server"
+      }
     },
     "schutz": {
       "titel": "Schutz für Kunden",

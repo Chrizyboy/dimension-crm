@@ -5201,7 +5201,14 @@
       "ohneTabelle": "Ce déclencheur n’a pas d’enregistrement, un essai n’est pas possible.",
       "an": "à {{an}}",
       "personen": "pour {{personen}}",
-      "faellig": "échéance le {{am}}"
+      "faellig": "échéance le {{am}}",
+      "ergebnis": {
+        "ok": "S’exécuterait",
+        "fehler": "Erreur",
+        "uebersprungen": "Serait sauté",
+        "wartet": "Attend",
+        "server": "Sur le serveur"
+      }
     },
     "schutz": {
       "titel": "Protection des clients",

@@ -69,7 +69,7 @@ function Formular({ start }: { start: AutomationsEinstellungen }) {
               <Input
                 id="schutz-von"
                 type="time"
-                className="w-28"
+                className="w-36"
                 value={f.von ?? ''}
                 onChange={(e) => {
                   setF({ ...f, von: e.target.value })
@@ -84,7 +84,7 @@ function Formular({ start }: { start: AutomationsEinstellungen }) {
               <Input
                 id="schutz-bis"
                 type="time"
-                className="w-28"
+                className="w-36"
                 value={f.bis ?? ''}
                 aria-invalid={zeitFalsch}
                 onChange={(e) => {
