@@ -10,8 +10,8 @@ export const meta: ModulMeta = {
   id: 'staff',
   titel: { de: 'Team & Ausweise', fr: 'Équipe & certificats' },
   untertitel: {
-    de: 'Wer darf was: Kurse, Ausweise und Personal-Akte',
-    fr: 'Qui peut faire quoi : cours, permis et dossier du personnel',
+    de: 'Wer ist heute wo, wer darf was: Team, Ausweise, Kurse und Personal-Akte',
+    fr: 'Qui est où aujourd’hui, qui peut faire quoi : équipe, permis, cours et dossier du personnel',
   },
   pfad: '/staff',
   icon: 'id-card',
@@ -20,7 +20,8 @@ export const meta: ModulMeta = {
   immer: true,
 }
 
-/** Die Seite: Übersicht «wer darf was» und Person mit Ausweisen und Akte. */
+/** Die Seite: Team, Ausweise, Kurse, Anforderungen und Person mit Ausweisen, Kursen, Ausrüstung und Akte. */
 export const Team = lazy(() => import('./components/Team'))
 
 export type * from './types'
+export { REITER } from './types'
