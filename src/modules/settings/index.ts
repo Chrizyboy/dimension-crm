@@ -14,7 +14,7 @@ export const meta: ModulMeta = {
   icon: 'settings',
   gruppe: 'verwaltung',
   phase: 4,
-  recht: 'admin',
+  recht: ['admin', 'gl'],
 }
 
 /**

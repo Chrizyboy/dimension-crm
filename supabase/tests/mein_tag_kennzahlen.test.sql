@@ -105,11 +105,11 @@ select is((select count(*)::int from fakt where schluessel = 'quelle_offerte' an
 select lives_ok($$ select public.kennzahlen_quellen_kosten('test14', 5000) $$, 'Kosten pro Lead setzen');
 select throws_ok($$ select public.kennzahlen_quellen_kosten('test14', -1) $$, 'P0001', 'kennzahlen.kosten_ungueltig', 'negative Kosten abgelehnt');
 
--- Betrieb: Auftragsbestand, Marge ohne Recht nicht dabei
+-- Betrieb: Auftragsbestand; Marge mit dem Recht «marge» (Verkauf hat es)
 create temp table betrieb on commit drop as select public.kennzahlen_betrieb(current_date - 30, current_date) as b;
 select is((select (x ->> 'rest_rappen')::bigint from betrieb, jsonb_array_elements(b -> 'auftragsbestand') x
             where x ->> 'id' = '00000000-0000-0000-0000-000000001401'), 2100000::bigint, 'Auftragsbestand: Vertrag minus verrechnet');
-select ok((select not (b ? 'marge') from betrieb), 'Marge nur mit Recht preise oder finanzen');
+select ok((select b ? 'marge' from betrieb), 'Verkauf sieht die Marge (Recht «marge»)');
 select is((select (z ->> 'gebucht')::numeric from betrieb, jsonb_array_elements(b -> 'auslastung' -> 'wochen' -> 1 -> 'zellen') z
             where z ->> 'person' = '00000000-0000-0000-0000-0000000014b3'), 3::numeric, 'Auslastung: drei Einsatztage nächste Woche');
 reset role;

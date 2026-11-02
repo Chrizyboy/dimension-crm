@@ -354,13 +354,24 @@
     "basis": "Grunddaten",
     "preise": "Einkaufspreise",
     "finanzen": "Finanzen",
-    "admin": "Administration",
-    "preiseText": "Sieht Einkaufspreise und Margen.",
+    "admin": "Zusatz Administration",
+    "preiseText": "Sieht Einkaufspreise und Kalkulation.",
     "finanzenText": "Sieht Liquidität, Kreditoren und Fixkosten.",
     "planung": "Planung",
-    "planungText": "Trägt Abwesenheiten für alle ein und plant Einsätze.",
-    "adminText": "Verwaltet Benutzer, Rollen und alle Einstellungen.",
-    "ausRolle": "Kommt schon mit der Rolle."
+    "planungText": "Trägt Abwesenheiten für alle ein.",
+    "adminText": "Ändert Einstellungen, Benutzer, Rollen, Automationen und Sicherung. Finanzen und Personal nur mit Geschäftsleitung.",
+    "ausRolle": "Kommt schon mit der Rolle.",
+    "gl": "Zusatz Geschäftsleitung",
+    "glText": "Sieht alles inkl. Finanzen und Personal, arbeitet normal mit, sieht die Einstellungen, ändert das System nicht.",
+    "personal": "Personal",
+    "personalText": "Personal-Akten und Arbeitszeiten aller, Personal-Fristen.",
+    "marge": "Marge",
+    "margeText": "Kennzahlen mit Marge und Auftragsbestand in Franken.",
+    "visum": "Erstvisum",
+    "visumText": "Prüft Rechnungsentwürfe der eigenen Projekte und gibt das Erstvisum.",
+    "zusaetze": "Zusätze",
+    "weitere": "Weitere Rechte",
+    "nurLesen": "Du siehst die Einstellungen nur. Ändern kann die Administration."
   },
   "rollen": {
     "rechte": "Rechte der Rolle",
@@ -1996,7 +2007,9 @@
     "grossprojekt_nicht_bewilligt": "Erst nach dem Ja (Bewilligen) gibt es Stufen.",
     "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
     "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
-    "grossprojekt_text_fehlt": "Bitte einen Text eingeben."
+    "grossprojekt_text_fehlt": "Bitte einen Text eingeben.",
+    "rechnung_visum_kein_recht": "Diese Rechnung visiert die Projektleitung des Projekts oder die Buchhaltung.",
+    "rechnung_visum_nur_entwurf": "Visieren geht nur bei Entwürfen."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -4209,6 +4222,25 @@
       "fehler": "Senden fehlgeschlagen",
       "alleFreigeben_one": "Mahnung freigeben",
       "alleFreigeben_other": "Alle {{count}} freigeben"
+    },
+    "visum": {
+      "titel": "Rechnungen zum Visum",
+      "offen_one": "{{count}} offen",
+      "offen_other": "{{count}} offen",
+      "dialogTitel": "Rechnung prüfen: {{titel}}",
+      "position": "Position",
+      "menge": "Menge",
+      "betrag": "Betrag",
+      "total": "Total",
+      "bemerkung": "Korrektur für die Buchhaltung",
+      "bemerkungText": "Nur ausfüllen, wenn etwas nicht stimmt.",
+      "geben": "Erstvisum geben",
+      "korrektur": "Korrektur melden",
+      "visiert": "visiert {{datum}}",
+      "korrigieren": "Korrektur gemeldet",
+      "akteVisiert": "Erstvisum von {{name}} am {{datum}}.",
+      "akteKorrektur": "Korrektur von {{name}}: {{text}}",
+      "akteOhne": "Noch ohne Erstvisum der Projektleitung."
     }
   },
   "spesen": {

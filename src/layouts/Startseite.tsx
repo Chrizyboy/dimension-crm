@@ -16,6 +16,7 @@ import { PosteingangHeute, meta as posteingangMeta } from '@/modules/inbox'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
+import { VisumHeute } from '@/modules/invoices'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { KiBriefing } from '@/modules/ai'
 import { NeueAufgabeKnopf } from '@/modules/tasks'
@@ -95,6 +96,11 @@ export function Startseite() {
                     </Suspense>
                   )}
                   <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {hatRecht(ich, 'visum') && (
+                      <Suspense>
+                        <VisumHeute />
+                      </Suspense>
+                    )}
                     {karten
                       .filter(([m]) => darfModul(m, ich))
                       .map(([m, Karte]) => (

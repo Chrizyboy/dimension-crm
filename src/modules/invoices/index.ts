@@ -23,5 +23,8 @@ export const meta: ModulMeta = {
 /** Die Seite: Rechnungen, zu verrechnen, Firmenangaben. */
 export const Rechnungen = lazy(() => import('./components/Rechnungen'))
 
+/** Karte «Rechnungen zum Visum» für Mein Tag (Erstvisum der Projektleitung). */
+export const VisumHeute = lazy(() => import('./components/VisumKarte'))
+
 export { REITER } from './types'
 export type * from './types'

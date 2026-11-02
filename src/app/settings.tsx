@@ -8,7 +8,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 
 const REITER = new Set(['personen', 'rollen', 'zustaendigkeiten', 'verbindungen', 'sicherung', 'betrieb'])
 
-/** Einstellungen: Benutzer, Rollen, Zuständigkeiten, Verbindungen, Datensicherung und Betrieb (nur Administration). Reiter in der Adresse (?reiter=…). */
+/** Einstellungen: Benutzer, Rollen, Zuständigkeiten, Verbindungen, Datensicherung und Betrieb (Administration ändert, Geschäftsleitung sieht nur). Reiter in der Adresse (?reiter=…). */
 export const Route = createFileRoute('/settings')({
   validateSearch: (s: Record<string, unknown>): { reiter?: string } =>
     typeof s.reiter === 'string' && REITER.has(s.reiter) && s.reiter !== 'personen' ? { reiter: s.reiter } : {},
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/settings')({
     const { status, ich } = useAnmeldung()
     const { reiter } = Route.useSearch()
     const navigate = Route.useNavigate()
-    if (status === 'angemeldet' && !hatRecht(ich, 'admin')) return <KeinZugriff />
+    if (status === 'angemeldet' && !hatRecht(ich, 'admin') && !hatRecht(ich, 'gl')) return <KeinZugriff />
     return (
       <Suspense>
         <Benutzerverwaltung
