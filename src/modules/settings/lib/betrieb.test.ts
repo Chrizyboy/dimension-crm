@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { BetriebStand } from '../types'
-import { pruefpunkte } from './betrieb'
+import { pruefpunkte, smsGuthaben } from './betrieb'
 
 const jetzt = new Date('2026-11-02T10:00:00Z')
 const bereit: BetriebStand = {
@@ -67,5 +67,13 @@ describe('Betrieb: Prüfpunkte', () => {
       jetzt,
     })
     expect(p.find((x) => x.id === 'personen')).toMatchObject({ stand: 'offen', werte: { ohne: 5 } })
+  })
+})
+
+describe('Zustand der Dienste', () => {
+  it('liest das SMS-Guthaben aus der Meldung des Tests', () => {
+    expect(smsGuthaben('credits:250')).toBe(250)
+    expect(smsGuthaben('nicht_eingerichtet')).toBeNull()
+    expect(smsGuthaben(null)).toBeNull()
   })
 })

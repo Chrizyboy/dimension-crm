@@ -1,4 +1,4 @@
-# 0040 – Fahrzeuge & Geräte vollständig: Akte, Belegung, Schäden, Kosten, QR-Etiketten (2.11.2026)
+# 0041 – Fahrzeuge & Geräte vollständig: Akte, Belegung, Schäden, Kosten, QR-Etiketten (2.11.2026)
 
 ## Ausgangslage
 

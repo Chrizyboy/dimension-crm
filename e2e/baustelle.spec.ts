@@ -49,7 +49,7 @@ test('Büro: Reiter ohne Verstösse, Service-Termin für den Monteur', async ({ 
   await page.goto('/#/fieldwork')
   await expect(page.getByRole('heading', { name: 'Baustelle & Rapporte', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Rapporte', 'Zeiten', 'Nachträge']) {
+  for (const reiter of ['Wochenplan', 'Rapporte', 'Zeiten', 'Nachträge']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -139,6 +139,18 @@ test('Monteur: Rapport am Handy, Funkloch, Unterschrift', async ({ page, context
   await context.setOffline(false)
   await expect(rapport.getByRole('button', { name: /Einträge? warte/ })).toHaveCount(0, { timeout: 20_000 })
   await expect(rapport.getByRole('img', { name: /^Foto-/ })).toHaveCount(2)
+
+  // Pflichtfotos beim Service (Einstellungen › Baustelle): ohne sie lässt sich der Rapport nicht abschliessen.
+  const pflicht = rapport.getByRole('list', { name: 'Pflichtfotos' })
+  for (const [name, farbe] of [
+    ['Vorher', '#888888'],
+    ['Nachher', '#aaaaaa'],
+    ['Typenschild', '#cccccc'],
+  ] as const) {
+    const [wahl] = await Promise.all([page.waitForEvent('filechooser'), pflicht.getByRole('button', { name }).click()])
+    await wahl.setFiles({ name: `${name}.jpg`, mimeType: 'image/jpeg', buffer: await foto(page, farbe) })
+  }
+  await expect(rapport.getByRole('img', { name: /^Foto-/ })).toHaveCount(5)
 
   await rapport.getByRole('button', { name: 'Abschliessen', exact: true }).click()
   const ab = page.getByRole('dialog', { name: 'Rapport abschliessen' })

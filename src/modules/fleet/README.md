@@ -3,7 +3,7 @@
 **Zweck:** Fahrzeuge mit MFK, Service und Kilometerstand, Geräte (Absturzsicherungen, Leitern, Messgeräte …) mit
 Prüftermin und wer sie gerade hat, und alle Fristen an einem Ort. Am Handy: Eintrag erfassen und übergeben.
 
-Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028; vollständig gemacht mit Entscheid 0040.
+Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028; vollständig gemacht mit Entscheid 0041.
 
 ## Ansichten (`#/fleet?ansicht=…`)
 
