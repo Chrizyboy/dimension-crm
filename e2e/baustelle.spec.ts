@@ -49,7 +49,7 @@ test('Büro: Reiter ohne Verstösse, Service-Termin für den Monteur', async ({ 
   await page.goto('/#/fieldwork')
   await expect(page.getByRole('heading', { name: 'Baustelle & Rapporte', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Rapporte', 'Zeiten', 'Nachträge']) {
+  for (const reiter of ['Wochenplan', 'Rapporte', 'Zeiten', 'Nachträge']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -64,10 +64,16 @@ test('Büro: Reiter ohne Verstösse, Service-Termin für den Monteur', async ({ 
   // Fall-Akte als ganze Seite.
   const akte = page.getByRole('main')
   await expect(akte.getByRole('heading', { level: 1, name: new RegExp(fallTitel) })).toBeVisible()
-  await akte.getByLabel('Zuständig').click()
+  // Einsatz planen: Termin, Dauer, wer leitet (erscheint im Zeitplan und am Handy).
+  await akte.getByRole('button', { name: 'Einsatz planen' }).click()
+  const plan = page.getByRole('dialog', { name: 'Einsatz planen' })
+  await plan.getByLabel('Termin', { exact: true }).fill(`${heute()}T09:00`)
+  await plan.getByLabel('Leitet den Einsatz').click()
   await page.getByRole('option', { name: 'Mario Montage' }).click()
-  await akte.getByLabel('Termin', { exact: true }).fill(`${heute()}T09:00`)
-  await akte.getByLabel('Termin', { exact: true }).blur()
+  expect(await verstoesse(page)).toEqual([])
+  await plan.getByRole('button', { name: 'Speichern' }).click()
+  await expect(plan).toBeHidden()
+  await expect(akte.getByText(/Mario Montage/).first()).toBeVisible()
   const garantie = akte.getByRole('switch', { name: 'Garantiefall' })
   if ((await garantie.getAttribute('aria-checked')) !== 'true') await garantie.click()
   await expect(garantie).toHaveAttribute('aria-checked', 'true')
@@ -91,6 +97,9 @@ test('Monteur: Rapport am Handy, Funkloch, Unterschrift', async ({ page, context
   const karte = page.getByRole('group', { name: new RegExp(fallTitel) })
   await expect(karte).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
+  // Vor Ort: «angekommen» geht in den Verlauf des Falls.
+  await karte.getByRole('button', { name: 'Vor Ort angekommen' }).click()
+  await expect(karte.getByText('Vor Ort', { exact: true })).toBeVisible()
   await karte.getByRole('button', { name: 'Service beginnen' }).click()
 
   const rapport = page.getByRole('dialog')
@@ -130,6 +139,18 @@ test('Monteur: Rapport am Handy, Funkloch, Unterschrift', async ({ page, context
   await context.setOffline(false)
   await expect(rapport.getByRole('button', { name: /Einträge? warte/ })).toHaveCount(0, { timeout: 20_000 })
   await expect(rapport.getByRole('img', { name: /^Foto-/ })).toHaveCount(2)
+
+  // Pflichtfotos beim Service (Einstellungen › Baustelle): ohne sie lässt sich der Rapport nicht abschliessen.
+  const pflicht = rapport.getByRole('list', { name: 'Pflichtfotos' })
+  for (const [name, farbe] of [
+    ['Vorher', '#888888'],
+    ['Nachher', '#aaaaaa'],
+    ['Typenschild', '#cccccc'],
+  ] as const) {
+    const [wahl] = await Promise.all([page.waitForEvent('filechooser'), pflicht.getByRole('button', { name }).click()])
+    await wahl.setFiles({ name: `${name}.jpg`, mimeType: 'image/jpeg', buffer: await foto(page, farbe) })
+  }
+  await expect(rapport.getByRole('img', { name: /^Foto-/ })).toHaveCount(5)
 
   await rapport.getByRole('button', { name: 'Abschliessen', exact: true }).click()
   const ab = page.getByRole('dialog', { name: 'Rapport abschliessen' })

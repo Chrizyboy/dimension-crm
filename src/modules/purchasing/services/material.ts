@@ -129,3 +129,62 @@ export async function lieferantenpreis(
   if (error) throw error
   return data
 }
+
+/** Baustelle mit fehlendem Material für den Reiter «Zu bestellen» (Datenbank: zu_bestellen). */
+export interface ZuBestellen {
+  projekt_id: string
+  nummer: string
+  kunde: string | null
+  ort: string | null
+  baubeginn: string | null
+  bestellen_bis: string | null
+  zeilen_fehlen: number
+  zeilen_ohne_artikel: number
+}
+
+/** Alle Baustellen mit fehlendem Material, früheste «bestellen bis» zuerst. */
+export async function ladeZuBestellen(): Promise<ZuBestellen[]> {
+  const { data, error } = await db().rpc('zu_bestellen')
+  if (error) throw error
+  return data
+}
+
+/** Entwürfe eines Lieferanten ans selbe Lager zu einer Sammelbestellung zusammenfassen. */
+export async function zusammenfassen(lieferantId: string, lagerortId: string): Promise<string> {
+  const { data, error } = await db().rpc('bestellungen_zusammenfassen', {
+    p_lieferant: lieferantId,
+    p_lagerort: lagerortId,
+  })
+  if (error) throw error
+  return data
+}
+
+/** Preis eines Artikels bei einem Lieferanten, für den Vergleich in der Bestellung. */
+export interface Vergleichspreis {
+  artikel_id: string
+  lieferant_id: string
+  lieferant: string
+  ek_rappen: number
+}
+
+/** Alle Lieferantenpreise der Artikel (aktive Lieferanten), günstigste zuerst. */
+export async function ladeVergleichspreise(artikelIds: string[]): Promise<Vergleichspreis[]> {
+  if (artikelIds.length === 0) return []
+  const { data, error } = await db()
+    .from('lieferantenpreise')
+    .select('artikel_id, lieferant_id, ek_rappen, lieferant:lieferanten!inner(name, aktiv)')
+    .in('artikel_id', artikelIds)
+    .is('geloescht_am', null)
+    .not('ek_rappen', 'is', null)
+    .eq('lieferant.aktiv', true)
+    .order('ek_rappen')
+  if (error) throw error
+  return (
+    data as unknown as { artikel_id: string; lieferant_id: string; ek_rappen: number; lieferant: { name: string } }[]
+  ).map((z) => ({
+    artikel_id: z.artikel_id,
+    lieferant_id: z.lieferant_id,
+    lieferant: z.lieferant.name,
+    ek_rappen: z.ek_rappen,
+  }))
+}

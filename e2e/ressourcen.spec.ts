@@ -42,7 +42,7 @@ test('Fahrzeug: anlegen, Kilometer und Service erfassen, Papierkorb', async ({ p
 
   // Die Akte öffnet sich gleich.
   const akte = page.getByRole('dialog', { name: new RegExp(`E2E Bus ${kennung}`) })
-  await expect(akte).toContainText('50’000 km')
+  await expect(akte).toContainText(/50['’]000 km/)
   expect(await verstoesse(page)).toEqual([])
 
   await akte.getByRole('button', { name: 'Eintrag erfassen' }).click()
@@ -56,8 +56,8 @@ test('Fahrzeug: anlegen, Kilometer und Service erfassen, Papierkorb', async ({ p
   await dialog.getByLabel('Kosten (CHF)').fill('450')
   await dialog.getByRole('button', { name: 'Speichern' }).click()
   await expect(dialog).toBeHidden()
-  await expect(akte).toContainText('bei 72’000 km')
-  await expect(akte.getByRole('listitem').filter({ hasText: 'Service · 52’000 km' })).toContainText('CHF 450.00')
+  await expect(akte).toContainText(/bei 72['’]000 km/)
+  await expect(akte.getByRole('listitem').filter({ hasText: /Service · 52['’]000 km/ })).toContainText('CHF 450.00')
 
   await akte.getByRole('button', { name: 'Angaben ändern' }).click()
   await page.getByRole('dialog', { name: 'Fahrzeug ändern' }).getByRole('button', { name: 'In den Papierkorb' }).click()

@@ -7,6 +7,7 @@ import {
   ladePipeline,
   ladeQuellenKosten,
   ladeQuellenNamen,
+  ladeZiele,
 } from '../services/kennzahlen'
 
 const mitDb = supabase !== null
@@ -44,3 +45,7 @@ export const usePersonenNamen = () =>
 /** Namen der Lead-Quellen. */
 export const useQuellenNamen = () =>
   useQuery({ queryKey: ['kennzahlen', 'quellen'], queryFn: ladeQuellenNamen, enabled: mitDb, staleTime: 600_000 })
+
+/** Ziele der Abwicklung. */
+export const useZiele = () =>
+  useQuery({ queryKey: ['kennzahlen', 'ziele'], queryFn: ladeZiele, enabled: mitDb, staleTime: 600_000 })

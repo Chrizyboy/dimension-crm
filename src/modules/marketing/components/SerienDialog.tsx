@@ -16,7 +16,7 @@ import { marketingMitKi, textDa } from '../lib/kiTexte'
 import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 import { abmeldeLink, senden, speichereVorlagen, vermerken } from '../services/marketing'
 import { KampagneWahl } from './kampagnen/KampagneWahl'
-import type { MarketingVorlagen, Sprache, Textvorlage, Zielkontakt } from '../types'
+import type { MarketingVorlagen, Sprache, Textvorlage, ZielFilter, Zielkontakt } from '../types'
 
 /**
  * Serienbrief (PDF) oder Serien-E-Mail an die Auswahl (V233). Nur wer Post- bzw. Mail-Adresse hat und nicht
@@ -27,6 +27,7 @@ export function SerienDialog({
   art,
   auswahl,
   vorlagen,
+  nachruest,
   onSchliessen,
   kampagneId = null,
   texteStart,
@@ -35,6 +36,8 @@ export function SerienDialog({
   art: 'brief' | 'mail'
   auswahl: Zielkontakt[]
   vorlagen: MarketingVorlagen
+  /** Mail aus dem Vorschlag «Nachrüstung»: Entwurf dieses Merkmals statt der allgemeinen Vorlage. */
+  nachruest?: Exclude<ZielFilter['anlage'], ''>
   onSchliessen: () => void
   /** Kampagne, zu der der Versand gehört (Ergebnis und Leads der Antworten). */
   kampagneId?: string | null
@@ -57,7 +60,8 @@ export function SerienDialog({
   const basis = r.liste.length ? r.liste : auswahl
   const gefunden = (['de', 'fr'] as const).filter((s) => basis.some((k) => k.sprache === s))
   const sprachen = gefunden.length ? gefunden : (['de'] as const)
-  const [texte, setTexte] = useState<Record<Sprache, Textvorlage>>(texteStart ?? vorlagen[art])
+  const entwurf = art === 'mail' && nachruest ? vorlagen.nachruest?.[nachruest] : undefined
+  const [texte, setTexte] = useState<Record<Sprache, Textvorlage>>(texteStart ?? entwurf ?? vorlagen[art])
   const [absender, setAbsender] = useState(vorlagen.absender)
   const unterschrift = ich?.name ?? 'Dimension Solaire'
 
@@ -133,10 +137,18 @@ export function SerienDialog({
               variant="ghost"
               disabled={laeuft}
               onClick={() =>
-                void aus(() => speichereVorlagen({ ...vorlagen, [art]: texte, absender }), {
-                  de: 'Vorlage gespeichert',
-                  fr: 'Modèle enregistré',
-                })
+                void aus(
+                  () =>
+                    speichereVorlagen(
+                      entwurf && nachruest
+                        ? { ...vorlagen, nachruest: { ...vorlagen.nachruest, [nachruest]: texte }, absender }
+                        : { ...vorlagen, [art]: texte, absender },
+                    ),
+                  {
+                    de: 'Vorlage gespeichert',
+                    fr: 'Modèle enregistré',
+                  },
+                )
               }
             >
               {t('marketing.serien.alsVorlage')}

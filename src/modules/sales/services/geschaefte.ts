@@ -117,28 +117,35 @@ export async function erfasseKontakt(eingabe: {
   if (error) throw error
 }
 
-/** Personen mit Kundenterminen, für «Termin bei», Tagesroute und Kalender. */
+/**
+ * Personen mit Kundenterminen, für «Termin bei», Tagesroute und Kalender. Die Heimadresse steht in der
+ * Personal-Akte; `aussendienst_heim` gibt nur Strasse, PLZ und Ort des Aussendiensts heraus.
+ */
 export async function ladeAussendienst(): Promise<Aussendienst[]> {
-  const { data, error } = await db()
-    .from('personen')
-    .select('id, kuerzel, name, profil, standorte(kuerzel)')
-    .eq('aussendienst', true)
-    .eq('aktiv', true)
-    .is('geloescht_am', null)
-    .order('name')
-  if (error) throw error
-  return data.map((p) => {
+  const [personen, heime] = await Promise.all([
+    db()
+      .from('personen')
+      .select('id, kuerzel, name, profil, standorte(kuerzel)')
+      .eq('aussendienst', true)
+      .eq('aktiv', true)
+      .is('geloescht_am', null)
+      .order('name'),
+    db().rpc('aussendienst_heim'),
+  ])
+  if (personen.error) throw personen.error
+  if (heime.error) throw heime.error
+  const heim = new Map(heime.data.map((h) => [h.person_id, h]))
+  return personen.data.map((p) => {
     const profil = p.profil as Record<string, unknown>
-    const text = (k: string) => (typeof profil[k] === 'string' ? profil[k] : '')
-    const plz = text('plz')
-    const vomProfil = text('standort').toLowerCase()
+    const vomProfil = typeof profil.standort === 'string' ? profil.standort.toLowerCase() : ''
+    const h = heim.get(p.id)
     return {
       id: p.id,
       kuerzel: p.kuerzel,
       name: p.name,
       vorname: p.name.split(' ')[0] ?? p.name,
       standort: standortVon(p.standorte?.kuerzel ?? vomProfil),
-      heim: plz ? { strasse: text('strasse'), plz, ort: text('ort') } : null,
+      heim: h ? { strasse: h.strasse, plz: h.plz, ort: h.ort } : null,
     }
   })
 }

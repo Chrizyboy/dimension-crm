@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
+import * as h from '../services/heute'
 import * as r from '../services/rechnungen'
 import type { RechnungFilter } from '../types'
 
@@ -27,6 +28,9 @@ export const useZuVerrechnen = () =>
       return { tranchen, rapporte }
     },
   })
+
+/** «Heute prüfen»: Entwürfe, wartende Mahnungen, neue Zahlungen. */
+export const useHeute = () => useQuery({ queryKey: ['rechnungen', 'heute'], enabled: an, queryFn: h.ladeHeute })
 
 export const useFirmen = () => useQuery({ queryKey: ['rechnungen', 'firmen'], enabled: an, queryFn: r.ladeFirmen })
 

@@ -58,9 +58,33 @@ export function Anschreiben({ anlage = '' }: { anlage?: ZielFilter['anlage'] }) 
     )
   }
 
+  const nachruest = anlage && vorlagen.data?.nachruest?.[anlage] ? anlage : undefined
+  const waehlbar = liste.filter((k) => !k.werbesperre)
+
   return (
     <div className="flex flex-col gap-4">
       <ZielgruppenLeiste filter={filter} onFilter={setFilter} />
+      {nachruest && (
+        <div
+          className="bg-info-soft flex flex-wrap items-center justify-between gap-3 rounded-lg border px-4 py-3 text-sm"
+          data-testid="nachruest-vorschlag"
+        >
+          <span>
+            {t('marketing.nachruest.hinweis', { anzahl: waehlbar.length, merkmal: t(`marketing.anlage.${nachruest}`) })}
+          </span>
+          <Button
+            size="sm"
+            disabled={waehlbar.length === 0}
+            onClick={() => {
+              setAuswahl(new Set(waehlbar.map((k) => k.id)))
+              setDialog('mail')
+            }}
+          >
+            <Mail />
+            {t('marketing.nachruest.knopf')}
+          </Button>
+        </div>
+      )}
       <ZielFilterLeiste filter={filter} onFilter={setFilter} gruppen={gruppen} kantone={kantone} />
       <div className="bg-surface sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2">
         <div className="flex flex-wrap items-center gap-2 text-sm">
@@ -126,6 +150,7 @@ export function Anschreiben({ anlage = '' }: { anlage?: ZielFilter['anlage'] }) 
           art={dialog}
           auswahl={gewaehlt}
           vorlagen={vorlagen.data}
+          {...(nachruest ? { nachruest } : {})}
           onSchliessen={() => {
             setDialog(null)
           }}

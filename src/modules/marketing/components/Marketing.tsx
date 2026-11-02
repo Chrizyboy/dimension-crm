@@ -10,6 +10,7 @@ import { Kalender } from './Kalender'
 import { KampagneAkte } from './kampagnen/KampagneAkte'
 import { KampagnenListe } from './kampagnen/KampagnenListe'
 import { Mediathek } from './mediathek/Mediathek'
+import { Empfehlungen } from './Empfehlungen'
 import { NewsletterSeite } from './NewsletterSeite'
 import { Social } from './Social'
 import { Uebersicht } from './uebersicht/Uebersicht'
@@ -50,6 +51,7 @@ export default function Marketing({
     anschreiben: <Anschreiben {...(anlage ? { anlage } : {})} />,
     social: <Social />,
     newsletter: <NewsletterSeite />,
+    empfehlungen: <Empfehlungen />,
     mediathek: <Mediathek />,
     vorlagen: <Vorlagen />,
   }

@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Baustelle & Rapporte». */
 
 /** Reiter der Seite (#/fieldwork?reiter=…). «tag» ist die Handy-Ansicht der Monteure. */
-export const REITER = ['tag', 'rapporte', 'zeiten', 'nachtraege'] as const
+export const REITER = ['tag', 'wochenplan', 'rapporte', 'zeiten', 'nachtraege'] as const
 export type Reiter = (typeof REITER)[number]
 
 export const RAPPORT_ARTEN = ['montage', 'service', 'wartung', 'ibn'] as const
@@ -64,7 +64,40 @@ export interface TagEintrag {
     garantie: boolean | null
     prioritaet: string | null
     kategorie: string | null
+    auswirkung?: string | null
+    komponente?: string | null
+    fehlercode?: string | null
+    dauer_minuten?: number | null
+    vor_ort_name?: string | null
+    vor_ort_telefon?: string | null
+    zugang?: string | null
+    checkliste?: ServiceSchritt[]
+    /** Schon «Vor Ort angekommen» gemeldet (Verlauf des Falls). */
+    angekommen?: boolean
+    anlage?: {
+      id: string
+      leistung_kwp: number | null
+      komponenten: ServiceKomponente[]
+      monitoring: { hersteller?: string | null; link?: string | null } | null
+    } | null
   }
+}
+
+/** Schritt der Service-Checkliste (Texte DE/FR aus den Einstellungen). */
+export interface ServiceSchritt {
+  de: string
+  fr: string
+  erledigt_am: string | null
+  person_id: string | null
+}
+
+/** Komponente der Anlage mit Seriennummer (am Handy änderbar, z. B. nach Tausch). */
+export interface ServiceKomponente {
+  art?: string | null
+  hersteller?: string | null
+  modell?: string | null
+  anzahl?: number | null
+  seriennummer?: string | null
 }
 
 /** Die laufende Zeit der Person (Start gedrückt, Stopp noch nicht). */
@@ -196,6 +229,13 @@ export interface Nachtrag {
   erstellt_am: string
 }
 
+/** Ein Pflichtfoto je Rapport-Art (Liste in `einstellungen.baustelle.pflichtfotos`). */
+export interface Pflichtfoto {
+  schluessel: string
+  de: string
+  fr: string
+}
+
 /** Prüfpunkt des IBN-Protokolls (Liste in `einstellungen.ibn_pruefpunkte`). */
 export interface Pruefpunkt {
   schluessel: string
@@ -210,6 +250,8 @@ export interface RapportBild {
   id: string
   name: string
   ordner: string
+  /** Pflichtfoto-Kategorie (z. B. «vorher», «typenschild»), sonst null. */
+  kategorie: string | null
   speicher_pfad: string | null
   lokal: boolean
 }

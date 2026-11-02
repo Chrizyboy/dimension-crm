@@ -34,7 +34,7 @@ test('Rechnungen: Reiter ohne Verstösse, freie Rechnung stellen und bezahlen', 
   await page.goto('/#/invoices')
   await expect(page.getByRole('heading', { name: 'Rechnungen', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Zu verrechnen', 'Firmen & Einstellungen']) {
+  for (const reiter of ['Rechnungen', 'Zu verrechnen', 'Firmen & Einstellungen']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
