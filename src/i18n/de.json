@@ -3616,7 +3616,8 @@
       "rechnungDa": "Rechnung {{nummer}} prüfen",
       "rechnungErwartet": "Rechnung erwartet",
       "tracking": "Tracking",
-      "gefahrHinweis": "Rot: Ware kommt nach der Montage oder ist noch nicht bestellt. Der Materialplan zeigt, welche Baustellen betroffen sind."
+      "gefahrHinweis": "Rot: Ware kommt nach der Montage oder ist noch nicht bestellt. Der Materialplan zeigt, welche Baustellen betroffen sind.",
+      "tafel": "Bestellungen nach Schritt"
     },
     "bestellen": {
       "hinweis": "Was die Baustellen und das Lager brauchen, je Lieferant. Freies im Lager wird zuerst reserviert, der Rest kommt in einen Entwurf, auf Verpackungseinheiten gerundet. Nichts geht weg, bevor jemand freigibt und bestellt.",

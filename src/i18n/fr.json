@@ -3616,7 +3616,8 @@
       "rechnungDa": "Contrôler la facture {{nummer}}",
       "rechnungErwartet": "Facture attendue",
       "tracking": "Suivi",
-      "gefahrHinweis": "En rouge : la marchandise arrive après le montage ou n’est pas encore commandée. Le plan matériel montre les chantiers concernés."
+      "gefahrHinweis": "En rouge : la marchandise arrive après le montage ou n’est pas encore commandée. Le plan matériel montre les chantiers concernés.",
+      "tafel": "Commandes par étape"
     },
     "bestellen": {
       "hinweis": "Ce dont les chantiers et le stock ont besoin, par fournisseur. Le disponible en stock est réservé d’abord, le reste va dans un brouillon, arrondi aux unités d’emballage. Rien ne part avant validation et commande.",

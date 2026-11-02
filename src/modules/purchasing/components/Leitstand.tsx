@@ -103,7 +103,13 @@ export function Leitstand({
           </button>
         ))}
       </div>
-      <div className="grid auto-cols-[minmax(15rem,1fr)] grid-flow-col gap-3 overflow-x-auto pb-2">
+      <div
+        // Mit der Tastatur scrollbar (Tab, dann Pfeiltasten), damit alle Spalten erreichbar sind.
+        tabIndex={0}
+        role="region"
+        aria-label={t('einkauf.ls.tafel')}
+        className="focus-visible:ring-ring grid auto-cols-[minmax(15rem,1fr)] grid-flow-col gap-3 overflow-x-auto rounded-lg pb-2 outline-none focus-visible:ring-2"
+      >
         <Spalte titel={t('einkauf.ls.spalte.zuBestellen')} anzahl={gruppen.length}>
           {gruppen.map((g) => (
             <button
