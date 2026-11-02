@@ -13,7 +13,10 @@ import { Annahmen } from './Annahmen'
 import { EntscheidDialog } from './EntscheidDialog'
 import { GrossprojektAkte, type AkteAktion } from './GrossprojektAkte'
 import { GrossprojektDialog } from './GrossprojektDialog'
+import { Auswahl } from './Auswahl'
 import { GrossprojektListe } from './GrossprojektListe'
+import { Pipeline } from './Pipeline'
+import { ProjektSeite } from './ProjektSeite'
 
 /** Wohin die Seite springt: Reiter und offenes Grossprojekt stehen in der Adresse. */
 export interface GrossprojekteZiel {
@@ -24,9 +27,9 @@ export interface GrossprojekteZiel {
 type Fenster = AkteAktion | 'neu' | null
 
 /**
- * Grossprojekte (Phase 8c): Gebäude und Bauvorhaben, bei denen sich PV- oder Wärme-Contracting lohnen kann, mit
- * Punkten, Schätzung und Entscheid. Alles bleibt im CRM: Liste, Karte auf «Mein Tag», Glocke. Akte als Seitenpanel
- * (#/contracting?projekt=…).
+ * Grossprojekte (Phase 8c, Neuentwurf 2.11.2026): vom Fund bis zum Vertrag. Pipeline der bewilligten Projekte nach
+ * Stufe, «Neu diese Woche» zum schnellen Entscheiden, Beobachten, Alle, Annahmen. Bewilligte öffnen als ganze Seite,
+ * die übrigen als Seitenpanel (#/contracting?projekt=…). Alles bleibt im CRM: Karte auf «Mein Tag», Glocke.
  */
 export default function Grossprojekte({
   ansicht,
@@ -53,11 +56,33 @@ export default function Grossprojekte({
     )
   }
 
-  // Zahl auf dem Reiter: «Prüfen» ohne Ausgeschlossene, wie die Liste.
+  // Bewilligte öffnen als ganze Seite (Arbeit bis zum Vertrag), die anderen als Seitenpanel neben der Liste.
+  if (projekt?.stand === 'bewilligt') {
+    return (
+      <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
+        <ProjektSeite
+          g={projekt}
+          onZurueck={() => {
+            onNavigation({ projekt: null })
+          }}
+        />
+      </div>
+    )
+  }
+
+  // Zahl auf dem Reiter: «Prüfen» ohne Ausgeschlossene, wie die Auswahl; Pipeline nur offene.
   const anzahl = (a: Ansicht) =>
     a === 'annahmen' || a === 'alle'
       ? null
-      : alle.filter((g) => inAnsicht(g, a) && (a !== 'pruefen' || !g.ausschluss)).length
+      : alle.filter(
+          (g) =>
+            inAnsicht(g, a) &&
+            (a !== 'pruefen' || !g.ausschluss) &&
+            (a !== 'pipeline' || (g.stufe !== 'vertrag' && g.stufe !== 'verloren')),
+        ).length
+  const oeffnen = (id: string) => {
+    onNavigation({ projekt: id })
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
@@ -89,15 +114,20 @@ export default function Grossprojekte({
             </ReiterKnopf>
           ))}
         </ReiterListe>
-        {ANSICHTEN.filter((a) => a !== 'annahmen').map((a) => (
+        <ReiterInhalt value="pipeline" className="pt-4">
+          <Pipeline
+            onOeffnen={oeffnen}
+            onNeu={() => {
+              onNavigation({ ansicht: 'pruefen', projekt: null })
+            }}
+          />
+        </ReiterInhalt>
+        <ReiterInhalt value="pruefen" className="pt-4">
+          <Auswahl onOeffnen={oeffnen} />
+        </ReiterInhalt>
+        {(['beobachten', 'alle'] as const).map((a) => (
           <ReiterInhalt key={a} value={a} className="pt-4">
-            <GrossprojektListe
-              ansicht={a}
-              aktiveId={projektId}
-              onOeffnen={(id) => {
-                onNavigation({ projekt: id })
-              }}
-            />
+            <GrossprojektListe ansicht={a} aktiveId={projektId} onOeffnen={oeffnen} />
           </ReiterInhalt>
         ))}
         <ReiterInhalt value="annahmen" className="pt-4">

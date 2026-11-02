@@ -2,6 +2,10 @@ import { rufeFunktion } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
 import type {
   Ansprechperson,
+  Kontakt,
+  RechnungWerte,
+  Stufe,
+  YouderaStand,
   Grossprojekt,
   GrossprojektRegeln,
   PersonKurz,
@@ -17,7 +21,7 @@ function db() {
 }
 
 const FELDER =
-  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
+  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, stufe, stufe_seit, naechster_schritt, naechster_schritt_am, kontakte, unterlagen, rechnung, youdera, vertrag_am, vertrag_kwp, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
 
 type Roh = Omit<Grossprojekt, 'standort' | 'entschieden_von'> & {
   standort: { name: string } | null
@@ -46,15 +50,17 @@ export async function ladeGrossprojekte(): Promise<Grossprojekt[]> {
 export async function ladeVerlauf(id: string): Promise<Vermerk[]> {
   const { data, error } = await db()
     .from('aktivitaeten')
-    .select('id, zeitpunkt, text, person:personen(name)')
+    .select('id, zeitpunkt, text, details, person:personen(name)')
     .eq('grossprojekt_id', id)
     .is('geloescht_am', null)
     .order('zeitpunkt', { ascending: false })
     .limit(100)
   if (error) throw error
-  return (data as unknown as (Omit<Vermerk, 'person'> & { person: { name: string } | null })[]).map((v) => ({
+  type Zeile = Omit<Vermerk, 'person' | 'art'> & { person: { name: string } | null; details: { art?: string } | null }
+  return (data as unknown as Zeile[]).map(({ details, ...v }) => ({
     ...v,
     person: v.person?.name ?? null,
+    art: details?.art ?? null,
   }))
 }
 
@@ -198,4 +204,36 @@ export async function schritteAlsAufgaben(
   })
   if (error) throw error
   return data
+}
+
+/** Stufe der Pipeline setzen («verloren» mit Grund, «vertrag» mit Datum und kWp). Nur bewilligte Grossprojekte. */
+export async function stufeSetzen(
+  id: string,
+  stufe: Stufe,
+  angaben: { grund?: string; datum?: string; kwp?: number } = {},
+): Promise<void> {
+  const { error } = await db().rpc('grossprojekt_stufe_setzen', { p_id: id, p_stufe: stufe, p_angaben: angaben })
+  if (error) throw error
+}
+
+/** Akte pflegen: nur mitgeschickte Felder ändern sich. */
+export async function akteSetzen(
+  id: string,
+  werte: {
+    naechster_schritt?: string | null
+    naechster_schritt_am?: string | null
+    kontakte?: Kontakt[]
+    unterlagen?: Record<string, string>
+    rechnung?: RechnungWerte
+    youdera?: YouderaStand
+  },
+): Promise<void> {
+  const { error } = await db().rpc('grossprojekt_akte_setzen', { p_id: id, p: werte as never })
+  if (error) throw error
+}
+
+/** Eintrag im Verlauf von Hand: Notiz, Anruf, Mail oder Termin. */
+export async function vermerken(id: string, art: string, text: string): Promise<void> {
+  const { error } = await db().rpc('grossprojekt_vermerken', { p_id: id, p_art: art, p_text: text })
+  if (error) throw error
 }
