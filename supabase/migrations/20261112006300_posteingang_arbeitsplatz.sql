@@ -490,7 +490,7 @@ end
 $$;
 
 -- ---------------------------------------------------------------------------------------------------------------
-/** Notiz zu einer Mail; @Kürzel oder @Vorname gibt der erwähnten Person eine Glocke. Gibt die ID zurück. */
+/** Notiz zu einer Mail; @Kurzzeichen (LP), @Kürzel oder @Vorname gibt der erwähnten Person eine Glocke. Gibt die ID zurück. */
 create or replace function public.posteingang_notiz(p_id uuid, p_text text) returns uuid
 language plpgsql security definer set search_path = '' as $$
 declare
@@ -511,7 +511,8 @@ begin
   select coalesce(array_agg(distinct p.id), '{}') into v_erw
     from regexp_matches(v_text, '@([[:alnum:]_.-]+)', 'g') m(t)
     join public.personen p on p.aktiv and p.geloescht_am is null
-     and (lower(p.kuerzel) = lower(m.t[1]) or lower(split_part(p.name, ' ', 1)) = lower(m.t[1]))
+     and (lower(p.kuerzel) = lower(m.t[1]) or lower(p.kurzzeichen) = lower(m.t[1])
+          or lower(split_part(p.name, ' ', 1)) = lower(m.t[1]))
    where p.id <> ich;
   insert into public.posteingang_notizen (posteingang_id, person_id, text, erwaehnt)
   values (p_id, ich, v_text, v_erw) returning id into v_id;
