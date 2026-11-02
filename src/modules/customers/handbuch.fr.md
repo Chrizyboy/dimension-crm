@@ -69,7 +69,7 @@ Tous les ménages et entreprises avec statut, dernier contact et toutes les affa
 
 ### Le client figure deux fois.
 
-Ouvrir les deux et comparer ; mettre le mauvais à la corbeille et poursuivre les affaires chez le bon. En cas de doute, **Signaler une erreur**.
+Ouvrir les deux et comparer ; mettre le mauvais à la corbeille et poursuivre les affaires chez le bon. En cas de doute, **Signaler un problème**.
 
 ### Pourquoi je ne vois pas les factures du client ?
 

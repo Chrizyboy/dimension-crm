@@ -44,7 +44,7 @@ La cocher suffit. Rien n’est supprimé définitivement, pour que l’on sache 
 
 ### Je reçois trop de tâches automatiques.
 
-L’administration règle les règles dans le chapitre [Automatisations](kapitel:automations). Signale-le avec **Signaler une erreur**.
+L’administration règle les règles dans le chapitre [Automatisations](kapitel:automations). Signale-le avec **Signaler un problème**.
 
 ## Nouveautés {#neu}
 

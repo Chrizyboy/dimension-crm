@@ -50,7 +50,7 @@ Qui peut faire quoi : cours et permis de chaque personne (par exemple travail su
 - Seules la personne elle-même et l’administration voient le dossier personnel.
 - La personne ne voit pas la note de l’administration.
 - Salaire et contrats restent dans AbaNinja.
-- L’administration gère dans les [Paramètres](kapitel:settings) quels cours existent et quel rôle les exige (liste « Cours et permis »).
+- Quels cours existent, leur durée de validité et quel rôle les exige figurent dans la liste « Cours et permis » ; seule l’administration la modifie.
 
 ## Questions fréquentes {#fragen}
 

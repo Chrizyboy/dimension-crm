@@ -50,7 +50,7 @@ Wer darf was: Kurse und Ausweise aller Personen (zum Beispiel Arbeiten auf dem D
 - Die Personal-Akte sehen nur die Person selbst und die Administration.
 - Die Notiz der Administration sieht die Person nicht.
 - Lohn und Verträge bleiben in AbaNinja.
-- Welche Kurse es gibt und welche Rolle sie braucht, pflegt die Administration in den [Einstellungen](kapitel:settings) (Liste «Kurse und Ausweise»).
+- Welche Kurse es gibt, wie lange sie gelten und welche Rolle sie braucht, steht in der Auswahlliste «Kurse und Ausweise»; ändern lässt sie nur die Administration.
 
 ## Häufige Fragen {#fragen}
 
