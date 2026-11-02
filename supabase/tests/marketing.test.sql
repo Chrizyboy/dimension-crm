@@ -96,7 +96,7 @@ select throws_ok($$ select public.social_freigeben('00000000-0000-0000-0000-0000
   'P0001', 'social.bild_fehlt', 'Instagram braucht ein Bild');
 update public.social_posts set bilder = '["00000000-0000-0000-0000-000000000001"]' where id = '00000000-0000-0000-0000-000000001191';
 select throws_ok($$ select public.social_freigeben('00000000-0000-0000-0000-000000001191') $$,
-  'P0001', 'social.nicht_verbunden', 'ohne Verbindung keine Freigabe');
+  'P0001', 'social.text_fehlt', 'ohne Verbindung (von Hand) braucht trotzdem jedes Netzwerk Text');
 reset role;
 insert into intern.social_konten (dienst, name, token) values ('meta', 'Dimension Solaire', 'x'), ('linkedin', 'Dimension Solaire', 'y');
 set local role authenticated;

@@ -21,8 +21,8 @@ declare
   n int := 1;
 begin
   if new.kennzeichen is null or new.kennzeichen = '' then
-    v_basis := left(trim(both '-' from regexp_replace(lower(
-      translate(new.name, 'äöüàâéèêëîïôûùçÄÖÜÀÂÉÈÊËÎÏÔÛÙÇ', 'aouaaeeeeiioouucaouaaeeeeiioouuc')), '[^a-z0-9]+', '-', 'g')), 36);
+    v_basis := left(trim(both '-' from regexp_replace(
+      translate(lower(new.name), 'äöüàâéèêëîïôûùç', 'aouaaeeeeiiouuc'), '[^a-z0-9]+', '-', 'g')), 36);
     if length(v_basis) < 2 then v_basis := 'kampagne'; end if;
     v_neu := v_basis;
     while exists (select 1 from public.marketing_kampagnen where kennzeichen = v_neu and id <> new.id) loop
@@ -124,11 +124,11 @@ language sql stable security definer set search_path = '' as $$
          (select count(*) from public.verkaufschancen v where v.kampagne_id = k.id and v.geloescht_am is null)::int,
          (select count(distinct o.id) from public.offerten o join public.verkaufschancen v on v.id = o.verkaufschance_id
            where v.kampagne_id = k.id and o.geloescht_am is null and v.geloescht_am is null)::int,
-         (select count(distinct p.id) from public.projekte p join public.offerten o on o.projekt_id = p.id
+         (select count(distinct p.id) from public.projekte p join public.offerten o on o.id = p.offerte_id
             join public.verkaufschancen v on v.id = o.verkaufschance_id
            where v.kampagne_id = k.id and p.geloescht_am is null and p.unterzeichnet_am is not null)::int,
          (select coalesce(sum(x.vertragswert_rappen), 0) from (
-            select distinct p.id, p.vertragswert_rappen from public.projekte p join public.offerten o on o.projekt_id = p.id
+            select distinct p.id, p.vertragswert_rappen from public.projekte p join public.offerten o on o.id = p.offerte_id
               join public.verkaufschancen v on v.id = o.verkaufschance_id
              where v.kampagne_id = k.id and p.geloescht_am is null and p.unterzeichnet_am is not null) x)::bigint,
          case when intern.marketing_kosten_sichtbar() then intern.kampagne_kosten(k) end
@@ -153,7 +153,7 @@ language sql stable security definer set search_path = '' as $$
   a as (
     select distinct l.quelle, p.id, p.vertragswert_rappen
       from l join public.offerten o on o.verkaufschance_id = l.id and o.geloescht_am is null
-      join public.projekte p on p.id = o.projekt_id and p.geloescht_am is null and p.unterzeichnet_am is not null)
+      join public.projekte p on p.offerte_id = o.id and p.geloescht_am is null and p.unterzeichnet_am is not null)
   select q.quelle,
          (select count(*) from l where l.quelle = q.quelle)::int,
          (select count(*) from a where a.quelle = q.quelle)::int,

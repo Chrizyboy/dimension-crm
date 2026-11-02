@@ -90,7 +90,7 @@ create table public.marketing_ereignisse (
 );
 create index marketing_ereignisse_ausgang_idx on public.marketing_ereignisse (ausgang_id);
 alter table public.marketing_ereignisse enable row level security;
-create policy lesen on public.marketing_ereignisse for select to authenticated using (intern.hat_recht('basis'));
+create policy lesen on public.marketing_ereignisse for select to authenticated using ((select intern.hat_recht('basis')));
 
 -- Einstellungen: Budget je Jahr und Kanal, Saison-Themen je Monat, Checkliste «Messe», Werbe-Pause, Kategorien der
 -- Lieferantenrechnungen, die nach Werbung aussehen. Nur ergänzen, Bestehendes bleibt.
