@@ -31,7 +31,9 @@ export function TeamZeitAbschnitt({
   const von = heute()
   const tag = useTag(von, plusTage(von, 6), null)
   const laufend = tag.data?.laufend?.rapport_id === r.id ? tag.data.laufend : null
-  const stunden = laufend ? (Date.now() - new Date(laufend.start).getTime()) / 3_600_000 : 0
+  // Beim Öffnen gemessen: der Vorschlag muss nicht jede Minute mitlaufen.
+  const [jetzt] = useState(() => Date.now())
+  const stunden = laufend ? (jetzt - new Date(laufend.start).getTime()) / 3_600_000 : 0
   const [pause, setPause] = useState<string | null>(null)
   const [laeuft, setLaeuft] = useState(false)
   const vorschlag = pflichtPause(stunden, 0)

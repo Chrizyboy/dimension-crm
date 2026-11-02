@@ -51,7 +51,10 @@ export function MeldungZeileAnzeige({ m }: { m: MeldungZeile }) {
       {m.erledigt_am ? (
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="text-ok">
-            {t('baustelle.meldung.erledigtVon', { name: m.erledigt_von_name ?? '', am: formatDatumZeit(m.erledigt_am) })}
+            {t('baustelle.meldung.erledigtVon', {
+              name: m.erledigt_von_name ?? '',
+              am: formatDatumZeit(m.erledigt_am),
+            })}
             {m.erledigt_notiz ? `: ${m.erledigt_notiz}` : ''}
           </span>
           <Button size="sm" variant="ghost" laedt={laeuft} onClick={() => void setzen(true)}>

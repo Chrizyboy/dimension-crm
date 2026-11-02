@@ -1976,7 +1976,15 @@
     "ausgang_fremder_absender": "Tu ne peux indiquer que toi-même comme expéditeur. Seule l’administration envoie au nom d’une autre personne.",
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
-    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix)."
+    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "baustelle_nicht_im_team": "Seule l'équipe de l'intervention ou le chef de projet peut pointer pour l'équipe.",
+    "baustelle_meldung_leer": "Veuillez décrire le problème.",
+    "baustelle_meldung_nicht_gefunden": "Signalement introuvable.",
+    "baustelle_woche_montag": "La semaine commence le lundi.",
+    "baustelle_zeit_laeuft": "Un temps tourne encore cette semaine. L'arrêter d'abord, puis confirmer.",
+    "baustelle_soll_negativ": "Les heures prévues ne peuvent pas être négatives.",
+    "baustelle_projekt_nicht_gefunden": "Projet introuvable.",
+    "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -3558,7 +3566,11 @@
       "tag": "Ma journée",
       "rapporte": "Rapports",
       "zeiten": "Temps",
-      "nachtraege": "Avenants"
+      "nachtraege": "Avenants",
+      "heute": "Chantiers du jour",
+      "baustellen": "Chantiers",
+      "meldungen": "Signalements",
+      "auswertung": "Analyse"
     },
     "rapportFilter": {
       "offen": "Ouverts",
@@ -3627,7 +3639,13 @@
         "ibn": "Commencer la MES",
         "service": "Commencer le service",
         "wartung": "Commencer la maintenance"
-      }
+      },
+      "fortschritt": "Avancement",
+      "dran": "Aujourd'hui :",
+      "fotosFehlen": "Photos manquantes : {{liste}}",
+      "pl": "Chef de projet",
+      "meldungenOffen_one": "{{count}} signalement ouvert",
+      "meldungenOffen_other": "{{count}} signalements ouverts"
     },
     "zeit": {
       "titel": "Temps",
@@ -3680,7 +3698,8 @@
     "foto": {
       "titel": "Photos",
       "aufnehmen": "Prendre une photo",
-      "wartet": "Attend le réseau"
+      "wartet": "Attend le réseau",
+      "pflicht": "Photos obligatoires"
     },
     "ibn": {
       "titel": "Points de contrôle MES"
@@ -3731,7 +3750,12 @@
       "arbeitenFehlen": "Merci d’abord de saisir les travaux effectués.",
       "verrechnungFehlt": "Merci de choisir la facturation.",
       "grundFehlt": "Merci d’indiquer le motif.",
-      "unterschriftFehlt": "Il manque le nom ou la signature."
+      "unterschriftFehlt": "Il manque le nom ou la signature.",
+      "ohneNoetig": "Rapport journalier : pas de signature nécessaire. Le client signe à la réception et pour les avenants.",
+      "vorbehalte": "Réserves à la réception",
+      "vorbehalt": "Réserve {{nr}}",
+      "vorbehaltDazu": "Ajouter une réserve",
+      "vorbehalteHinweis": "Chaque réserve devient une tâche pour le chef de projet."
     },
     "neu": {
       "knopf": "Nouveau rapport",
@@ -3851,6 +3875,211 @@
       "erfassen": "Saisir",
       "speichern": "Enregistrer",
       "abbrechen": "Annuler"
+    },
+    "vorlage": {
+      "pv": "PV",
+      "speicher": "Batterie",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Pompe à chaleur"
+    },
+    "diktat": {
+      "start": "Dicter",
+      "stopp": "Arrêter la dictée"
+    },
+    "sicherheit": {
+      "titel": "Contrôle de sécurité",
+      "text": "Avant de commencer : tout cocher, puis le temps démarre pour toutes les personnes cochées à la même heure.",
+      "punkte": "Sécurité",
+      "team": "Qui travaille aujourd'hui ?",
+      "ich": "moi",
+      "fehlt": "Cocher tous les points et choisir au moins une personne.",
+      "starten_one": "Début du travail ({{count}} personne)",
+      "starten_other": "Début du travail pour l'équipe ({{count}})"
+    },
+    "mappe": {
+      "knopf": "Dossier",
+      "titel": "Dossier chantier",
+      "anlage": "Installation et toit",
+      "module": "Modules",
+      "wechselrichter": "Onduleur",
+      "batterie": "Batterie",
+      "dach": "Toit",
+      "material": "Charger le matériel",
+      "fehlt_one": "{{count}} manque",
+      "fehlt_other": "{{count}} manquent",
+      "plaene": "Plans et documents",
+      "kontakte": "Contacts",
+      "meldungen": "Signalements ouverts",
+      "rolle": {
+        "kunde": "Client",
+        "elektriker": "Électricien",
+        "architekt": "Architecte",
+        "projektleitung": "Chef de projet"
+      }
+    },
+    "meldung": {
+      "knopf": "Signaler un problème",
+      "titel": "Signaler un problème",
+      "text": "Le chef de projet reçoit le signalement immédiatement, même s'il part plus tard (sans réseau).",
+      "art": "Type",
+      "arten": {
+        "material": "Matériel",
+        "schaden": "Dégât",
+        "kunde": "Client",
+        "wetter": "Météo",
+        "planung": "Planification",
+        "sicherheit": "Sécurité"
+      },
+      "was": "Que se passe-t-il ?",
+      "platzhalter": "p. ex. 4 modules manquent, tuiles cassées au déchargement …",
+      "foto_one": "Photo ({{count}})",
+      "foto_other": "Photos ({{count}})",
+      "weiter": "Nous pouvons continuer",
+      "steht": "Le chantier est arrêté : le chef de projet reçoit le signalement comme urgent.",
+      "stehtKurz": "Chantier arrêté",
+      "senden": "Signaler",
+      "stand": "État",
+      "offen": "Ouverts",
+      "alle90": "Tous (90 jours)",
+      "leer": "Aucun signalement",
+      "leerText": "Rien d'ouvert sur les chantiers.",
+      "erledigen": "Réglé",
+      "notiz": "Qu'a-t-on fait ? (facultatif)",
+      "erledigtVon": "Réglé par {{name}}, {{am}}",
+      "wieder": "Rouvrir"
+    },
+    "schritte": {
+      "titel": "Étapes de travail",
+      "hinweis": "Cochez ce qui a été terminé aujourd'hui. Le texte du rapport en découle."
+    },
+    "team": {
+      "titel": "Équipe et temps",
+      "check": "Contrôle de sécurité à {{zeit}}",
+      "pause": "Pause (min.)",
+      "feierabend": "Fin de journée pour l'équipe",
+      "pauseHinweis": "Proposition selon la loi sur le travail : dès 5½ h 15 min., dès 7 h 30 min., dès 9 h 60 min."
+    },
+    "sn": {
+      "titel": "Numéros de série",
+      "geraet": "Appareil",
+      "nummer": "Numéro de série",
+      "dazu": "Ajouter",
+      "scannen": "Scanner",
+      "weg": "Retirer le numéro de série {{nummer}}",
+      "art": {
+        "wechselrichter": "Onduleur",
+        "batterie": "Batterie",
+        "modul": "Module",
+        "wallbox": "Wallbox",
+        "waermepumpe": "Pompe à chaleur",
+        "optimierer": "Optimiseur",
+        "zaehler": "Compteur",
+        "andere": "Autre"
+      }
+    },
+    "visum": {
+      "rueckfrage": "Question du chef de projet :",
+      "visiert": "Visé par {{name}}, {{am}}",
+      "visieren": "Viser",
+      "fragen": "Question",
+      "frageText": "Qu'est-ce qui n'est pas clair ?",
+      "senden": "Envoyer",
+      "offen": "Question ouverte",
+      "kurz": "visé"
+    },
+    "leitung": {
+      "k": {
+        "baustellen": "Chantiers du jour",
+        "gestempelt": "Pointés",
+        "meldungen": "Signalements ouverts",
+        "rapporteFehlen": "Rapports manquants",
+        "zeitenPruefen": "Heures à contrôler",
+        "nachtraege": "Avenants ouverts"
+      },
+      "baustellen": "Chantiers",
+      "leer": "Aucun chantier aujourd'hui",
+      "leerText": "Aucune intervention prévue aujourd'hui.",
+      "meldungen": "Signalements",
+      "keineMeldungen": "Aucun signalement ouvert.",
+      "visieren": "À viser",
+      "allesVisiert": "Tous les rapports sont visés.",
+      "nichtGestempelt": "pas pointé",
+      "sollIst": "Réel / prévu",
+      "fotos": "Photos",
+      "heute": "aujourd'hui",
+      "gesternFehlt": "Rapport du dernier jour ouvrable manquant"
+    },
+    "akte": {
+      "titel": "Chantier",
+      "suche": "Numéro, client, lieu",
+      "leer": "Aucun chantier",
+      "leerText": "Rien de prévu ces dernières et prochaines semaines.",
+      "zeitraum": "Dès",
+      "speicher": "avec batterie",
+      "telefon": "Client",
+      "stunden": "Heures",
+      "sollHand": "Prévu à la main",
+      "sollRegel": "Prévu selon règle",
+      "reise": "Trajet {{h}} h",
+      "sollAendern": "Modifier le prévu",
+      "sollStunden": "Heures prévues",
+      "sollLeer": "vide = règle",
+      "speichern": "Enregistrer",
+      "einsaetze": "Interventions",
+      "tagebuch": "Journal de chantier",
+      "keineRapporte": "Pas encore de rapports.",
+      "check": "Contrôle",
+      "vorbehalte_one": "{{count}} réserve",
+      "vorbehalte_other": "{{count}} réserves"
+    },
+    "auswertung": {
+      "zeitraum": "Période",
+      "monat": "30 jours",
+      "quartal": "Trimestre",
+      "jahr": "12 mois",
+      "fertig": "Chantiers terminés",
+      "abweichung": "Réel par rapport au prévu",
+      "hProKwp": "Heures par kWc",
+      "reise": "Part des trajets",
+      "nachtraege": "Avenants",
+      "gleicherTag": "Rapport le jour même",
+      "baustellen": "Chantiers terminés",
+      "abw": "Écart",
+      "leer": "Rien de terminé",
+      "leerText": "Aucun montage terminé durant cette période.",
+      "visiert": "Rapports visés"
+    },
+    "woche": {
+      "titel": "Feuille hebdomadaire",
+      "tag": {
+        "mo": "Lu",
+        "di": "Ma",
+        "mi": "Me",
+        "do": "Je",
+        "fr": "Ve",
+        "sa": "Sa",
+        "so": "Di"
+      },
+      "istSoll": "Réel / prévu",
+      "saldo": "Solde annuel",
+      "stand": "Semaine",
+      "bestaetigt": "confirmée",
+      "bestaetigen": "Confirmer",
+      "offen": "ouverte",
+      "abw": {
+        "ferien": "Vacances",
+        "krank": "Malade",
+        "schule": "École",
+        "militaer": "Militaire",
+        "sonstiges": "Absent"
+      },
+      "w": {
+        "pause": "Pause trop courte de {{min}} min.",
+        "zuLang": "{{h}} h, plus que permis",
+        "nichtGestempelt": "Intervention sans temps",
+        "laeuft": "Le temps tourne encore",
+        "saldo": "Solde {{h}} h"
+      }
     }
   },
   "unterschrift": {

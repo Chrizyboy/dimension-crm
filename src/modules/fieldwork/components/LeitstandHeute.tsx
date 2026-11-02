@@ -30,7 +30,11 @@ export function LeitstandHeute({
   const zahlen: { text: string; wert: string; ton?: 'warnung' | 'kritisch' }[] = [
     { text: t('baustelle.leitung.k.baustellen'), wert: String(k.baustellen) },
     { text: t('baustelle.leitung.k.gestempelt'), wert: `${String(k.gestempelt)}/${String(k.personen)}` },
-    { text: t('baustelle.leitung.k.meldungen'), wert: String(k.meldungen), ...(k.meldungen ? { ton: 'warnung' as const } : {}) },
+    {
+      text: t('baustelle.leitung.k.meldungen'),
+      wert: String(k.meldungen),
+      ...(k.meldungen ? { ton: 'warnung' as const } : {}),
+    },
     {
       text: t('baustelle.leitung.k.rapporteFehlen'),
       wert: String(k.rapporte_fehlen),
@@ -46,7 +50,9 @@ export function LeitstandHeute({
         {zahlen.map((z) => (
           <Karte key={z.text} className="p-3">
             <dt className="text-muted-foreground text-xs">{z.text}</dt>
-            <dd className={`zahlen text-xl font-semibold ${z.ton === 'kritisch' ? 'text-bad' : z.ton === 'warnung' ? 'text-warn' : ''}`}>
+            <dd
+              className={`zahlen text-xl font-semibold ${z.ton === 'kritisch' ? 'text-bad' : z.ton === 'warnung' ? 'text-warn' : ''}`}
+            >
               {z.wert}
             </dd>
           </Karte>
@@ -79,7 +85,9 @@ export function LeitstandHeute({
               <KarteTitel>{t('baustelle.leitung.meldungen')}</KarteTitel>
             </KarteKopf>
             <KarteInhalt className="flex flex-col gap-2">
-              {meldungen.length === 0 && <p className="text-muted-foreground text-sm">{t('baustelle.leitung.keineMeldungen')}</p>}
+              {meldungen.length === 0 && (
+                <p className="text-muted-foreground text-sm">{t('baustelle.leitung.keineMeldungen')}</p>
+              )}
               {meldungen.map((m) => (
                 <MeldungZeileAnzeige key={m.id} m={m} />
               ))}
@@ -90,7 +98,9 @@ export function LeitstandHeute({
               <KarteTitel>{t('baustelle.leitung.visieren')}</KarteTitel>
             </KarteKopf>
             <KarteInhalt className="flex flex-col gap-1">
-              {zu_visieren.length === 0 && <p className="text-muted-foreground text-sm">{t('baustelle.leitung.allesVisiert')}</p>}
+              {zu_visieren.length === 0 && (
+                <p className="text-muted-foreground text-sm">{t('baustelle.leitung.allesVisiert')}</p>
+              )}
               {zu_visieren.map((r) => (
                 <Button
                   key={r.id}

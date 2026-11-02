@@ -3,7 +3,8 @@ import { Badge } from '@/components/ui/badge'
 import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
 import type { BaustelleZeile } from '../types'
-import { Balken, sollTon } from './Balken'
+import { sollTon } from '../lib/auswertung'
+import { Balken } from './Balken'
 
 const spalte = spaltenHelfer<BaustelleZeile>()
 

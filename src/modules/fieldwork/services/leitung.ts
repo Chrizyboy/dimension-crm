@@ -19,9 +19,9 @@ import { db } from './baustelle'
  * parallel laufenden Module nicht alle an derselben erzeugten Datei ändern.
  */
 async function rufe<T>(name: string, args: Record<string, unknown> = {}): Promise<T> {
-  const { data, error } = await (db() as unknown as SupabaseClient).rpc(name, args)
-  if (error) throw error
-  return data as T
+  const antwort = (await (db() as unknown as SupabaseClient).rpc(name, args)) as { data: T; error: Error | null }
+  if (antwort.error) throw antwort.error
+  return antwort.data
 }
 
 /** Zusätze je Einsatz für den Tagesplan am Handy. */

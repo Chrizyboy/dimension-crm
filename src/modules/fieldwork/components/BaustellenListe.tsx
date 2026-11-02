@@ -20,9 +20,17 @@ export function BaustellenListe({ aktiveId, onOeffnen }: { aktiveId: string | nu
 
   return (
     <div className="flex flex-col gap-3">
-      <Werkzeugleiste>
-        <Suchfeld wert={suche} onChange={setSuche} beschriftung={t('baustelle.akte.suche')} />
-      </Werkzeugleiste>
+      <Werkzeugleiste
+        suche={
+          <Suchfeld
+            beschriftung={t('baustelle.akte.suche')}
+            value={suche}
+            onChange={(e) => {
+              setSuche(e.target.value)
+            }}
+          />
+        }
+      />
       <Datentabelle
         daten={daten}
         spalten={spalten}

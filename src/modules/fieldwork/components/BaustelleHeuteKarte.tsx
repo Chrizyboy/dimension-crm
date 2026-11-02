@@ -4,7 +4,8 @@ import { Badge } from '@/components/ui/badge'
 import { Karte } from '@/components/ui/karte'
 import { zuerich } from '../lib/zeit'
 import type { BaustelleHeute } from '../types'
-import { Balken, sollTon } from './Balken'
+import { sollTon } from '../lib/auswertung'
+import { Balken } from './Balken'
 
 /** Eine Baustelle auf «Baustellen heute»: Team mit Stempel-Stand, Fortschritt, Soll/Ist, Fotos, Meldungen. */
 export function BaustelleHeuteKarte({ b, onOeffnen }: { b: BaustelleHeute; onOeffnen: () => void }) {
@@ -41,7 +42,9 @@ export function BaustelleHeuteKarte({ b, onOeffnen }: { b: BaustelleHeute; onOef
             <Clock className="size-3" aria-hidden="true" />
             {t('baustelle.leitung.sollIst')}
           </dt>
-          <dd className={`zahlen text-sm ${ton === 'bad' ? 'text-bad' : ton === 'warn' ? 'text-warn' : 'text-foreground'}`}>
+          <dd
+            className={`zahlen text-sm ${ton === 'bad' ? 'text-bad' : ton === 'warn' ? 'text-warn' : 'text-foreground'}`}
+          >
             {b.ist ?? 0} / {b.soll ?? '–'} h
           </dd>
         </div>

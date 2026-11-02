@@ -27,10 +27,3 @@ export function Balken({
     </div>
   )
 }
-
-/** Ton für Ist gegenüber Soll: bis 100 % gut, bis 115 % Warnung, darüber kritisch. */
-export function sollTon(ist: number | null, soll: number | null): 'ok' | 'warn' | 'bad' | 'primary' {
-  if (!soll || ist == null) return 'primary'
-  const q = ist / soll
-  return q <= 1 ? 'ok' : q <= 1.15 ? 'warn' : 'bad'
-}
