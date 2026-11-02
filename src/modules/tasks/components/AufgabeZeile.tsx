@@ -97,7 +97,14 @@ export function AufgabeZeile({
         className="focus-visible:ring-ring flex min-w-0 flex-1 flex-col gap-0.5 rounded text-left outline-none focus-visible:ring-2"
       >
         <span className={cn('line-clamp-2', a.erledigt_am ? 'text-muted-foreground line-through' : 'font-medium')}>
-          {a.wichtig && !a.erledigt_am && <span className="text-bad mr-1 font-semibold">!</span>}
+          {a.wichtig && !a.erledigt_am && (
+            <>
+              <span className="text-bad mr-1 font-semibold" aria-hidden="true">
+                !
+              </span>
+              <span className="sr-only">{t('aufgaben.wichtig')}: </span>
+            </>
+          )}
           {a.titel}
         </span>
         <span className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs">
