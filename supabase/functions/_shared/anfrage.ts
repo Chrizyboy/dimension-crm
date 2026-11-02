@@ -220,7 +220,8 @@ export function landingpageLesen(html: string, betreff: string): Anfrage | null 
     else if (/^(interesse|intérêt|interet)/.test(k)) r.interesse = v
     else if (/^(eigentum|propriété|propriete)/.test(k)) r.eigentum = v
     else if (/^(bezug zu anfrage|référence|reference)/.test(k)) r.bezug = v
-    else if (!/^(quelle|kampagne|sprache|visitor|zuständig|zustandig|responsable)/.test(k)) details.push(`${l}: ${v}`)
+    else if (/^(kampagne|campagne)/.test(k)) details.push(`Kampagne: ${v}`)
+    else if (!/^(quelle|sprache|visitor|zuständig|zustandig|responsable)/.test(k)) details.push(`${l}: ${v}`)
   }
   if (r.bezug) {
     const teile = r.bezug.split('·').map((x) => x.trim())

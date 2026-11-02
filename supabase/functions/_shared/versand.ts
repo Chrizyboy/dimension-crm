@@ -8,11 +8,15 @@ import { ANHAENGE_GESAMT_MAX, ANHANG_DIREKT_MAX, base64, mailZuOutlook } from '.
 import { smsSenden } from './aspsms.ts'
 import { eingerichtet } from './umgebung.ts'
 import { DienstFehler, rufe, type Bytes } from './http.ts'
+import { marketingHtml, wirdGezaehlt } from './zaehler.ts'
+import { env } from './umgebung.ts'
 
 /** Ein Eintrag aus ausgang_holen (Ausschnitt). */
 interface Ausgang {
   id: string
   kanal: 'mail' | 'sms'
+  art?: string | null
+  sprache?: string | null
   an: string
   cc: string | null
   betreff: string | null
@@ -129,9 +133,22 @@ export async function ausgangAbarbeiten(limit = 10): Promise<{ gesendet: number;
   const [sms] = await dienst.lies<{ einstellungen: { absender?: string } }[]>(
     'integrationen?dienst=eq.sms&select=einstellungen',
   )
+  // Hinweis zum Zählen von Öffnen und Klicks (einstellungen.marketing.datenschutz), nur wenn Werbe-Mails dabei sind.
+  const hinweis: Record<string, string> = {}
+  if (zeilen.some(wirdGezaehlt)) {
+    const [m] = await dienst.lies<{ wert: { datenschutz?: Record<string, string> } }[]>(
+      'einstellungen?schluessel=eq.marketing&select=wert',
+    )
+    Object.assign(hinweis, m?.wert.datenschutz ?? {})
+  }
   let gesendet = 0
   let fehler = 0
-  for (const a of zeilen) {
+  for (const roh of zeilen) {
+    const basis = env('SUPABASE_URL')
+    const a: Ausgang =
+      wirdGezaehlt(roh) && basis
+        ? { ...roh, html: marketingHtml(roh.text ?? '', basis, roh.id, hinweis[roh.sprache === 'fr' ? 'fr' : 'de'] ?? '') }
+        : roh
     const start = Date.now()
     let ok = false
     let meldung: string | null = null

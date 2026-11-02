@@ -3,6 +3,8 @@
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
+//  * social_von_hand alle 5 Min.  Posts ohne Verbindung: Glocke «Jetzt posten» (Entscheid 0039)
+//  * heizung      stündlich       Heizung der Kunden-Gebäude aus dem Gebäuderegister (Entscheid 0039)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
 //  * sms          ab «uhrzeit»    SMS-Erinnerungen für morgen, nur wenn «automatisch» eingeschaltet ist (V172)
@@ -43,6 +45,7 @@ import { eingerichtet, env } from '../_shared/umgebung.ts'
 import { ausgangAbarbeiten } from '../_shared/versand.ts'
 import { postsAbarbeiten } from '../_shared/posten.ts'
 import { socialEingerichtet } from '../_shared/social_konten.ts'
+import { heizungenNachtragen } from '../_shared/heizung.ts'
 import { utcZuZuerich } from '../_shared/outlook.ts'
 
 declare const Deno: { serve(h: (req: Request) => Promise<Response>): unknown }
@@ -162,6 +165,15 @@ Deno.serve(async (req) => {
       return `${r.posts} Posts, ${r.fehler} Fehler`
     })
   }
+
+  // Marketing (Entscheid 0039): Posts ohne Verbindung zum Netzwerk «von Hand» melden (Glocke «Jetzt posten»).
+  ergebnis.social_von_hand = await job('social_von_hand', 5, async () => {
+    const n = await dienst.rpc<number>('social_von_hand_melden', {})
+    return `${n} ${n === 1 ? 'Post' : 'Posts'} gemeldet`
+  })
+
+  // Marketing: Heizung der Kunden-Gebäude aus dem Gebäuderegister (für «Wärmepumpe-Potenzial»), 20 pro Stunde.
+  ergebnis.heizung = await job('heizung', 60, () => heizungenNachtragen(20))
 
   // SMS-Erinnerung für morgen ab der eingestellten Uhrzeit (Ortszeit Zürich); die Datenbank prüft «automatisch».
   const [sms] = await dienst.lies<{ wert: { uhrzeit?: string } }[]>(
