@@ -1583,6 +1583,16 @@
       "konditionBatterie": "Vorschlag Zahlung bei Batterie",
       "telefon_de": "Telefon im deutschen Vertrag",
       "telefon_fr": "Telefon im französischen Vertrag"
+    },
+    "neu": {
+      "knopf": "Neuer Werkvertrag",
+      "titel": "Neuer Werkvertrag",
+      "text": "Für welche Offerte? Angenommene Offerten ohne Vertrag stehen zuoberst. Eine noch offene Offerte wird beim Erstellen auf «Angenommen» gesetzt.",
+      "suche": "Offerte suchen",
+      "sucheHinweis": "Name, Nr., Ort …",
+      "liste": "Offerten ohne Werkvertrag",
+      "leer": "Keine passende Offerte ohne Werkvertrag.",
+      "exkl": "exkl. MWST"
     }
   },
   "preise": {
@@ -1975,7 +1985,10 @@
     "empfehlung_kein_bewertungslink": "Es ist kein Google-Bewertungslink eingetragen (Automationen › Einstellungen).",
     "empfehlung_kein_recht": "Dafür fehlt das Recht.",
     "team_kein_recht": "Dafür fehlt dir das Recht (Personal-Akte).",
-    "team_gespraech_naechstes": "Das nächste Gespräch muss nach diesem liegen."
+    "team_gespraech_naechstes": "Das nächste Gespräch muss nach diesem liegen.",
+    "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
+    "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
+    "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2700,14 +2713,14 @@
       "entfernen": "Einsatz entfernen",
       "abwesend": "Abwesend in dieser Zeit: {{namen}}",
       "abwesendLabel": "Abwesend",
-      "zurueck": "4 Wochen zurück",
-      "vor": "4 Wochen vor",
+      "zurueck": "Zurück",
+      "vor": "Weiter",
       "heute": "Heute",
       "drucken": "Drucken / PDF",
-      "hilfe": "Klick auf eine Baustelle öffnet die Planung.",
+      "hilfe": "Balken ziehen verschiebt den Einsatz, am rechten Rand ändert es das Ende. Klick auf eine leere Stelle plant einen neuen Einsatz. Tasten ← → und T.",
       "baustelle": "Baustelle",
       "kw": "KW {{kw}}",
-      "leer": "Keine Baustelle in diesem Zeitraum.",
+      "leer": "Keine Einsätze in diesem Zeitraum. Neue Baustellen stehen unter «Zu planen».",
       "auslastung": "Auslastung",
       "personen": "Eingeplant",
       "baustellenKurz": "{{n}} B",
@@ -2715,7 +2728,36 @@
       "abwesendKurz": "{{n}} abw.",
       "druckTitel": "Zeitplan Baustellen · KW {{von}}–{{bis}} · Stand {{datum}}",
       "keineEinsaetze": "Noch keine Einsätze geplant.",
-      "bearbeiten": "Zeitplan bearbeiten"
+      "bearbeiten": "Zeitplan bearbeiten",
+      "person": "Person",
+      "suchen": "Baustelle, Ort oder Nummer suchen",
+      "sicht": "Sicht",
+      "sicht_baustellen": "Baustellen",
+      "sicht_team": "Team",
+      "zeitraum": "Zeitraum",
+      "zoom_2": "2 Wochen",
+      "zoom_6": "6 Wochen",
+      "zoom_13": "Quartal",
+      "standort": "Standort",
+      "konflikte_one": "{{count}} Konflikt",
+      "konflikte_other": "{{count}} Konflikte",
+      "konflikt": "Konflikt (abwesend oder doppelt)",
+      "konfliktMit": "Konflikt: {{namen}}",
+      "tageKurz": "T.",
+      "zuPlanen": "Zu planen",
+      "allesGeplant": "Alle Baustellen haben einen Termin.",
+      "werktage": "{{n}} Tage",
+      "seit": "unterschrieben {{datum}}",
+      "tagFrei": "Kein Einsatz.",
+      "tagVon": "Tag {{nr}}/{{von}}",
+      "wocheZurueck": "Woche zurück",
+      "wocheVor": "Woche vor",
+      "allePersonen": "Alle Personen",
+      "team": "Team",
+      "subunternehmer": "Subunternehmer",
+      "grund_abwesend": "{{wer}} abwesend",
+      "grund_doppelt": "{{wer}} doppelt eingeplant",
+      "abwesendAm": "Abwesend: {{namen}}"
     },
     "bewilligungen": {
       "ansicht": "Ansicht",
@@ -2848,7 +2890,7 @@
       "alle": "Alle"
     },
     "reiter": {
-      "faelle": "Fälle",
+      "faelle": "Leitstand",
       "anlagen": "Anlagen"
     },
     "spalte": {
@@ -2871,7 +2913,15 @@
       "termin": "Termin",
       "garantieFall": "Garantiefall",
       "beschreibung": "Beschreibung",
-      "status": "Stand"
+      "status": "Stand",
+      "auswirkung": "Wie schlimm?",
+      "fehlercode": "Fehlercode",
+      "komponente": "Komponente",
+      "quelle": "Woher?",
+      "vorOrtName": "Vor Ort",
+      "vorOrtTelefon": "Telefon vor Ort",
+      "zugang": "Zugang",
+      "zugangHinweis": "z. B. Schlüssel, Hund, Zähler im Keller"
     },
     "akte": {
       "titel": "Service-Fall",
@@ -2885,7 +2935,27 @@
       "notizSpeichern": "Notiz speichern",
       "anhaenge": "Anhänge",
       "hochladen": "Datei hochladen",
-      "anlage": "Anlage"
+      "anlage": "Anlage",
+      "anlageWaehlen": "Anlage des Kunden wählen",
+      "anrufen": "Anrufen",
+      "einsatz": "Einsatz und Einordnung",
+      "einsatzort": "Einsatzort",
+      "fruehere": "Frühere Fälle",
+      "keineAnhaenge": "Noch keine Fotos oder Dateien.",
+      "keineAnlage": "Keine Anlage erfasst.",
+      "kunde": "Kunde und Einsatzort",
+      "kundeNeu": "Als neuen Kunden anlegen",
+      "mail": "Mail",
+      "netzbetreiber": "Netzbetreiber",
+      "oeffnen": "Öffnen",
+      "ohneKunde": "Kein Kunde zugeordnet. Suchen und wählen oder aus der Meldung neu anlegen.",
+      "projekt": "Projekt",
+      "sprache": "Sprache",
+      "telefon": "Telefon",
+      "vertrag": "Wartungsvertrag {{nummer}}, nächste Wartung {{naechste}}. Einsatz wenn möglich als «Im Wartungsvertrag» verrechnen.",
+      "wiederOeffnen": "Wieder öffnen",
+      "zurueck": "Zurück zum Leitstand",
+      "zustaendigName": "zuständig {{name}}"
     },
     "anlagen": {
       "ansicht": "Anlagen",
@@ -2951,11 +3021,120 @@
       "monitoring": "Monitoring",
       "oeffnen": "öffnen",
       "garantieBis": "Garantie bis {{datum}}"
+    },
+    "board": {
+      "eingang": "Eingang",
+      "arbeit": "In Arbeit",
+      "geplant": "Geplant",
+      "teile": "Wartet auf Teile",
+      "erledigt": "Erledigt (14 Tage)",
+      "leer": "Nichts hier"
+    },
+    "checkliste": {
+      "titel": "Checkliste",
+      "dazu": "Eigenen Schritt hinzufügen"
+    },
+    "dialog": {
+      "bis": "bis",
+      "fotos": "Fotos oder Dateien",
+      "garantieAbgelaufen": "Keine laufende Garantie gefunden.",
+      "garantieLaeuft": "Garantie läuft: {{liste}}",
+      "keineAnlage": "Keine Anlage erfasst: Garantie bitte von Hand prüfen."
+    },
+    "garantieCheck": {
+      "titel": "Garantie-Check",
+      "montage": "Montage",
+      "bis": "bis {{datum}}",
+      "abgelaufen": "abgelaufen {{datum}}",
+      "keine": "Keine Garantiedaten an der Anlage erfasst."
+    },
+    "kosten": {
+      "titel": "Rapporte und Verrechnung",
+      "entwurf": "Entwurf",
+      "inArbeit": "in Arbeit",
+      "leer": "Noch kein Rapport. Der Rapport entsteht am Handy beim Einsatz.",
+      "offen": "offen {{betrag}}",
+      "rechnung": "Rechnung erstellen",
+      "stand": {
+        "entwurf": "Entwurf",
+        "gestellt": "gestellt",
+        "teilbezahlt": "teilbezahlt",
+        "bezahlt": "bezahlt",
+        "storniert": "storniert"
+      }
+    },
+    "leitstand": {
+      "ansicht": "Ansicht",
+      "board": "Board",
+      "liste": "Liste",
+      "ohneKunde": "ohne Kunde",
+      "standAendern": "Stand ändern",
+      "suche": "Fall, Kunde, Adresse, Telefon oder Fehlercode",
+      "website": "Website"
+    },
+    "meldung": {
+      "titel": "Störungsmeldung von der Website",
+      "name": "Name",
+      "adresse": "Adresse der Anlage",
+      "projekt": "Projektnummer",
+      "stoerung": "Art der Störung",
+      "text": "Beschreibung",
+      "einwilligung": "Einwilligung",
+      "ja": "ja"
+    },
+    "reaktion": {
+      "bis": "Termin spätestens {{zeit}}",
+      "noch": "noch {{dauer}}",
+      "zuSpaet": "{{dauer}} zu spät"
+    },
+    "schnell": {
+      "meine": "Meine",
+      "ueberfaellig": "Zu spät",
+      "steht": "Anlage steht",
+      "garantie": "Garantie",
+      "website": "Website",
+      "ohne_kunde": "Ohne Kunde"
+    },
+    "schritte": {
+      "titel": "Arbeitsschritte",
+      "eingang": "Eingang",
+      "diagnose": "Diagnose",
+      "geplant": "Termin",
+      "vorort": "Vor Ort",
+      "teile": "Teile / RMA",
+      "abschluss": "Erledigt",
+      "verrechnet": "Verrechnet"
+    },
+    "verlauf": {
+      "art": "Was festhalten?",
+      "festhalten": "Festhalten",
+      "mailEingang": "Mail",
+      "rapport": "Rapport",
+      "text": "Eintrag im Verlauf",
+      "notiz": "Notiz",
+      "anruf": "Anruf",
+      "mail": "Mail",
+      "sms": "SMS",
+      "system": "System",
+      "platzhalter": {
+        "notiz": "Was ist passiert? (Ctrl+Enter)",
+        "anruf": "Mit wem gesprochen, was vereinbart?",
+        "mail": "Was wurde geschrieben?",
+        "sms": "Was wurde geschickt?"
+      }
+    },
+    "zahl": {
+      "offen": "offene Fälle",
+      "ueberfaellig": "Reaktionszeit überschritten",
+      "woche": "Termine diese Woche",
+      "teile": "warten auf Teile",
+      "rma": "beim Hersteller (RMA)",
+      "verrechnen": "Rapporte zu verrechnen"
     }
   },
   "wartung": {
     "titel": "Wartungsverträge",
-    "beschreibung": "Wiederkehrende Wartung mit Leistungen, Rhythmus und Vertrag als PDF.",
+    "beschreibung": "Pakete Essentiel, Comfort und Premium wie auf der Website: Inspektionen, Jahresrechnungen und Laufzeit im Blick.",
     "neu": "Neuer Vertrag",
     "bearbeiten": "Vertrag {{nummer}} bearbeiten",
     "filter": "Verträge",
@@ -2969,29 +3148,46 @@
     "filterwert": {
       "aktiv": "Aktiv",
       "faellig": "Fällig in 30 Tagen",
-      "alle": "Alle"
+      "alle": "Alle",
+      "rechnung": "Rechnung fällig",
+      "kuendbar": "Kündbar in 90 Tagen",
+      "gekuendigt": "Gekündigt"
     },
     "spalte": {
       "nummer": "Nr.",
       "kunde": "Kunde",
       "rhythmus": "Rhythmus",
-      "preis": "Preis pro Jahr",
-      "naechste": "Nächste Wartung",
-      "status": "Stand"
+      "preis": "Jahrespreis exkl. MWST",
+      "naechste": "Nächste Inspektion",
+      "status": "Stand",
+      "paket": "Paket",
+      "anlage": "Anlage",
+      "laufzeit": "Laufzeit",
+      "rechnung": "Nächste Rechnung"
     },
     "feld": {
       "kunde": "Kunde",
       "projekt": "Projekt",
       "start": "Vertragsbeginn",
-      "laufzeit": "Laufzeit (Jahre)",
+      "laufzeit": "Mindestlaufzeit (Jahre)",
       "rhythmus": "Rhythmus",
       "preis": "Preis pro Jahr inkl. MWST (CHF)",
       "sprache": "Sprache des Vertrags",
       "status": "Stand",
       "leistungen": "Leistungen",
       "notiz": "Notiz",
-      "letzte": "Letzte Wartung",
-      "naechste": "Nächste Wartung"
+      "letzte": "Letzte Inspektion",
+      "naechste": "Nächste Inspektion",
+      "anlage": "Anlage",
+      "ohneAnlage": "Von Hand erfassen",
+      "kwp": "Leistung (kWp)",
+      "speicher": "Speicher (kWh)",
+      "ibn": "Inbetriebnahme (Jahr)",
+      "wr": "Wechselrichter (Marke / Modell)",
+      "ort": "Standort der Anlage (falls abweichend)",
+      "fremd": "Fremdanlage (nicht von uns installiert)",
+      "paket": "Paket",
+      "preisNetto": "Jahrespreis exkl. MWST (CHF)"
     },
     "sprache": {
       "de": "Deutsch",
@@ -2999,7 +3195,8 @@
     },
     "pruefung": {
       "betrag": "Bitte einen Betrag wie 480.00 eingeben.",
-      "leistung": "Bitte mindestens eine Leistung wählen."
+      "leistung": "Bitte mindestens eine Leistung wählen.",
+      "zahl": "Bitte eine Zahl wie 11.2 eingeben."
     },
     "akte": {
       "titel": "Wartungsvertrag",
@@ -3008,8 +3205,23 @@
       "erledigt": "Wartung erledigt",
       "naechste": "Nächste Wartung {{datum}}",
       "angaben": "Angaben",
-      "verlauf": "Durchgeführte Wartungen",
-      "keineWartung": "Noch keine Wartung eingetragen."
+      "verlauf": "Verlauf",
+      "keineWartung": "Noch keine Wartung eingetragen.",
+      "kuendigen": "Kündigung erfassen",
+      "zuruecknehmen": "Kündigung zurücknehmen",
+      "rechnung": "Jahresrechnung erstellen",
+      "rechnungen": "Rechnungen",
+      "keineRechnung": "Noch keine Rechnung. Das CRM legt sie {{tage}} Tage vor dem Vertragsjahr als Entwurf an.",
+      "anlage": "Anlage",
+      "kleinreparatur": "Kleinreparaturen bis {{betrag}} pro Jahr inbegriffen",
+      "rabattZusatz": "{{prozent}} % Rabatt auf Regiearbeiten, Reinigung und Thermografie",
+      "verrechnetBis": "verrechnet bis {{datum}}",
+      "telefon": "Telefon",
+      "leistungen": "Leistungen",
+      "inspektionen": "Inspektionen",
+      "keineInspektion": "Dieses Paket hat keine Inspektion vor Ort.",
+      "rechnungErstellt": "Jahresrechnung als Entwurf erstellt",
+      "zurRechnung": "Öffnen"
     },
     "erledigt": {
       "titel": "Wartung erledigt",
@@ -3023,7 +3235,20 @@
       "proJahr": "pro Jahr inkl. MWST",
       "bedingungen": "Der Vertrag verlängert sich jeweils um ein Jahr, wenn er nicht drei Monate vor Ablauf schriftlich gekündigt wird. Material und Arbeiten ausserhalb der aufgeführten Leistungen werden nach Aufwand verrechnet.",
       "unterschriftKunde": "Ort, Datum, Unterschrift Kunde",
-      "unterschriftFirma": "Ort, Datum, Dimension Solaire"
+      "unterschriftFirma": "Ort, Datum, Dimension Solaire",
+      "proJahrExkl": "pro Jahr exkl. MWST",
+      "paket": "Paket",
+      "anlage": "Anlage",
+      "mwst": "MWST {{satz}} %",
+      "inkl": "Total pro Jahr inkl. MWST",
+      "tarif": "Tarif",
+      "rabatt": "Rabatt",
+      "bestand": "Bestandsaufnahme vor Vertragsbeginn (einmalig, exkl. MWST)",
+      "mindest": "Mindestlaufzeit",
+      "bedingungenTitel": "Vertragsbedingungen",
+      "kwp": "{{kwp}} kWp",
+      "kwh": "Speicher {{kwh}} kWh",
+      "ibn": "Inbetriebnahme {{jahr}}"
     },
     "heute": {
       "titel": "Wartungen",
@@ -3031,6 +3256,62 @@
       "nichts": "Keine Wartung in den nächsten 30 Tagen.",
       "mehr_one": "und {{count}} weitere",
       "mehr_other": "und {{count}} weitere"
+    },
+    "kz": {
+      "aktiv": "aktive Verträge",
+      "wiederkehrend": "pro Jahr wiederkehrend, exkl. MWST",
+      "faellig": "Inspektionen fällig in 60 Tagen",
+      "rechnung": "Jahresrechnungen in 30 Tagen",
+      "gekuendigt": "gekündigt, laufen aus"
+    },
+    "paket": {
+      "proJahr": "pro Jahr exkl. MWST",
+      "empfohlen": "empfohlen",
+      "aufAnfrage": "auf Anfrage",
+      "alt": "Eigene Leistungen (älterer Vertrag)",
+      "stufe": "Preise für {{stufe}}",
+      "inspektion_one": "Inspektion jeden Monat",
+      "inspektion_other": "Inspektion alle {{count}} Monate",
+      "keineInspektion": "Fernüberwachung, keine Inspektion vor Ort"
+    },
+    "preis": {
+      "tarif": "Tarif {{paket}}, {{stufe}}",
+      "rabatt": "Rabatt {{prozent}} %",
+      "mwst": "MWST {{satz}} %",
+      "inkl": "Pro Jahr inkl. MWST",
+      "hinweisTarif": "Vorschlag aus dem Tarif der Website. Ein tieferer Preis gilt als Rabatt und steht auf der Rechnung als eigene Zeile.",
+      "hinweisAnfrage": "Über 100 kWp gibt es keinen Tarif: bitte den offerierten Preis eingeben.",
+      "abweichung": "{{prozent}} % Rabatt"
+    },
+    "bedingungen": {
+      "kurz": "Danach verlängert sich der Vertrag jeweils um {{verl}} Jahr, Kündigung {{monate}} Monate vor Ablauf. Rechnung jährlich im Voraus, zahlbar in {{tage}} Tagen. Das CRM legt sie {{vorlauf}} Tage vorher als Entwurf an."
+    },
+    "bestand": {
+      "titel": "Bestandsaufnahme nötig",
+      "text": "Fremdanlage oder älter als {{jahre}} Jahre: vor Vertragsbeginn braucht es die Bestandsaufnahme für {{betrag}} (einmalig, exkl. MWST). Sie kommt auf die erste Jahresrechnung.",
+      "verrechnen": "Verrechnen",
+      "erlassen": "Erlassen",
+      "status": {
+        "verrechnen": "Bestandsaufnahme wird verrechnet",
+        "verrechnet": "Bestandsaufnahme verrechnet",
+        "erlassen": "Bestandsaufnahme erlassen"
+      }
+    },
+    "laufzeit": {
+      "beginn": "Beginn",
+      "mindest": "Mindestlaufzeit bis",
+      "laeuft": "Läuft bis",
+      "kuendbar": "Kündbar bis",
+      "gekuendigt": "Endet am",
+      "eingegangen": "Kündigung vom {{datum}}",
+      "per": "auf {{datum}}"
+    },
+    "kuendigen": {
+      "titel": "Kündigung erfassen",
+      "text": "Der Vertrag endet am ersten Ablauf, der mindestens {{monate}} Monate nach dem Eingang der Kündigung liegt. Bis dahin laufen Inspektionen und Rechnungen weiter.",
+      "am": "Kündigung eingegangen am",
+      "endet": "Der Vertrag endet am {{datum}}.",
+      "gespeichert": "Kündigung erfasst, Ende {{datum}}"
     }
   },
   "einkauf": {
@@ -5564,7 +5845,7 @@
       "umgesetztIn": "umgesetzt in Version {{version}}",
       "beantwortet": "Beantwortet von {{name}}",
       "entscheidet": "Über Meldungen entscheidet",
-      "alleAdmins": "Alle aus der Administration",
+      "alleAdmins": "Niemand gewählt: alle aus der Administration sehen die Einschätzung in der Glocke und können entscheiden.",
       "perSms": "Einschätzung zusätzlich per SMS",
       "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
@@ -6462,7 +6743,8 @@
       "neu": "Alle offenen",
       "meine": "Meine",
       "erledigt": "Erledigt",
-      "abgelegt": "Werbung & Intern"
+      "abgelegt": "Werbung & Intern",
+      "aeltere": "Ältere"
     },
     "leer": {
       "warten": "Niemand wartet auf eine Antwort",
@@ -6470,7 +6752,8 @@
       "meine": "Dir ist gerade nichts zugeteilt",
       "erledigt": "In den letzten 14 Tagen nichts erledigt",
       "abgelegt": "Nichts abgelegt",
-      "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort."
+      "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort.",
+      "aeltere": "Keine älteren Mails gefunden"
     },
     "art": {
       "anfrage": "Neue Anfrage",
@@ -6510,7 +6793,8 @@
       "erledigt": "erledigt",
       "abgelegt": "abgelegt",
       "neu": "wird eingeordnet",
-      "info": "zur Kenntnis"
+      "info": "zur Kenntnis",
+      "archiv": "älter, übernommen"
     },
     "zahl": {
       "warten_one": "Kunde wartet auf Antwort",
@@ -6608,6 +6892,17 @@
       "laedt": "Mail wird geladen …",
       "fehlt": "Diese Mail ist nicht mehr da.",
       "verknuepft": "Mit der Mail im Posteingang verknüpft"
+    },
+    "suche": "In älteren Mails suchen",
+    "nachholen": {
+      "titel": "Ältere Mails",
+      "hinweis": "Ältere Mails aus jedem persönlichen Postfach (sobald die Person Microsoft verbunden hat) und aus info@ kommen im Hintergrund nach, als «erledigt» ohne Frist. Sie zählen nicht bei «Wartet auf uns» und nicht bei der Reaktionszeit. Mails mit Kunden kommen auch in den Kundenverlauf.",
+      "monate": "Monate zurück",
+      "ungueltig": "Zahl von 0 bis 60",
+      "inbox": "Eingang",
+      "sentitems": "Gesendet",
+      "fertig": "fertig, {{anzahl}} Mails",
+      "laeuft": "läuft, bis {{datum}}, {{anzahl}} Mails"
     }
   },
   "einfach": {

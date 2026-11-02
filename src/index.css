@@ -223,6 +223,15 @@ h3 {
   }
 }
 
+/* Abwesenheit im Zeitplan: schraffiert, damit sie sich ohne Farbe von Einsätzen unterscheidet. */
+.schraffur {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 6px,
+    color-mix(in oklab, var(--muted-foreground) 22%, transparent) 6px 8px
+  );
+}
+
 /*
  * Drucken (Kundenblatt): Der Druckbereich hängt direkt am <body> und ist am Bildschirm unsichtbar.
  * Beim Drucken wird alles andere ausgeblendet, damit nur das Blatt auf Papier kommt.

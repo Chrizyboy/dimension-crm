@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#02224F" />
+    <meta name="robots" content="noindex" />
+    <title>Dimension Work herunterladen</title>
+    <link rel="icon" href="../icon.svg" type="image/svg+xml" />
+    <!--
+      Download-Seite für die Mitarbeitenden (…/download/ der Web-App, z. B. https://work.dimension-solaire.ch/download/).
+      Bewusst eine einfache, eigenständige Seite ohne die App: sie muss auch ohne Anmeldung und ohne
+      Service Worker laden. Der Knopf holt den Installer der neusten Version über die GitHub-API,
+      damit hier nie eine Versionsnummer von Hand nachgeführt werden muss.
+    -->
+    <style>
+      :root {
+        --navy: #02224f;
+        --navy-2: #0a3470;
+        --orange: #ef7c00;
+        --orange-hell: #ff9f3d;
+        --text: #ffffff;
+        --text-2: #c9d4e5;
+        --karte: rgba(255, 255, 255, 0.06);
+        --rand: rgba(255, 255, 255, 0.14);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        min-height: 100vh;
+        background: radial-gradient(1200px 600px at 80% -10%, #0d3d80 0%, transparent 60%), var(--navy);
+        color: var(--text);
+        font:
+          16px/1.55 'Segoe UI Variable',
+          'Segoe UI',
+          system-ui,
+          -apple-system,
+          Roboto,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 32px 16px 48px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      header img {
+        height: 36px;
+        width: auto;
+        max-width: 70vw;
+      }
+      .sprache {
+        display: flex;
+        gap: 4px;
+      }
+      .sprache button {
+        background: none;
+        border: 1px solid var(--rand);
+        color: var(--text-2);
+        border-radius: 8px;
+        padding: 4px 10px;
+        font: inherit;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .sprache button[aria-pressed='true'] {
+        color: var(--text);
+        border-color: var(--orange);
+      }
+      h1 {
+        font-size: clamp(30px, 5vw, 44px);
+        line-height: 1.15;
+        margin: 56px 0 12px;
+        letter-spacing: -0.02em;
+      }
+      .einleitung {
+        color: var(--text-2);
+        font-size: 18px;
+        margin: 0 0 36px;
+        max-width: 600px;
+      }
+      .karten {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .karte {
+        background: var(--karte);
+        border: 1px solid var(--rand);
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .karte.haupt {
+        border-color: rgba(239, 124, 0, 0.55);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+      }
+      .karte h2 {
+        margin: 0;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .karte h2 svg {
+        flex: none;
+      }
+      .karte p {
+        margin: 0;
+        color: var(--text-2);
+      }
+      .knopf {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 52px;
+        padding: 0 22px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 17px;
+        text-decoration: none;
+        margin-top: auto;
+        transition:
+          background 0.15s,
+          transform 0.15s;
+      }
+      .knopf:active {
+        transform: translateY(1px);
+      }
+      .knopf.voll {
+        background: var(--orange);
+        color: #1d1300;
+      }
+      .knopf.voll:hover {
+        background: var(--orange-hell);
+      }
+      .knopf.leer {
+        border: 1px solid var(--rand);
+        color: var(--text);
+      }
+      .knopf.leer:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .klein {
+        font-size: 14px;
+        color: var(--text-2);
+      }
+      .klein a {
+        color: var(--text);
+      }
+      h3 {
+        font-size: 18px;
+        margin: 48px 0 16px;
+      }
+      ol.schritte {
+        list-style: none;
+        counter-reset: s;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+      ol.schritte li {
+        counter-increment: s;
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        gap: 14px;
+        align-items: start;
+        background: var(--karte);
+        border: 1px solid var(--rand);
+        border-radius: 12px;
+        padding: 14px 16px;
+      }
+      ol.schritte li::before {
+        content: counter(s);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: rgba(239, 124, 0, 0.16);
+        color: var(--orange-hell);
+        font-weight: 700;
+      }
+      ol.schritte b {
+        color: var(--text);
+      }
+      ol.schritte span {
+        color: var(--text-2);
+      }
+      footer {
+        margin-top: 48px;
+        color: var(--text-2);
+        font-size: 14px;
+      }
+      footer a {
+        color: var(--text);
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @media (max-width: 680px) {
+        main {
+          padding-top: 20px;
+        }
+        h1 {
+          margin-top: 36px;
+        }
+        .karten {
+          grid-template-columns: 1fr;
+        }
+        .handy-zuerst .karte.handy {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../logo/dimension-work-dunkel.png" alt="Dimension Work by Dimension Solaire" />
+        <div class="sprache" role="group" aria-label="Sprache / Langue">
+          <button type="button" data-sprache="de">DE</button>
+          <button type="button" data-sprache="fr">FR</button>
+        </div>
+      </header>
+
+      <h1 data-t="titel">Dimension Work installieren</h1>
+      <p class="einleitung" data-t="einleitung">
+        Unser CRM für Verkauf, Projekte, Service und Baustelle. Am PC als App, auf dem Handy direkt im Browser.
+      </p>
+
+      <div class="karten" id="karten">
+        <section class="karte haupt">
+          <h2>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 5.5 10 4.5v7H3zm8-1.2L21 3v8.5H11zM3 12.5h7v7l-7-1zm8 0h10V21l-10-1.4z" />
+            </svg>
+            <span data-t="pcTitel">Am PC (Windows)</span>
+          </h2>
+          <p data-t="pcText">Die App startet schnell, meldet sich bei neuen Mails und aktualisiert sich selbst.</p>
+          <a class="knopf voll" id="windows" href="https://github.com/Chrizyboy/dimension-crm/releases/latest">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" />
+            </svg>
+            <span data-t="pcKnopf">Für Windows herunterladen</span>
+          </a>
+          <div class="klein" id="version" hidden></div>
+        </section>
+
+        <section class="karte handy">
+          <h2>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <rect x="6" y="2.5" width="12" height="19" rx="2.5" />
+              <path d="M11 18.5h2" />
+            </svg>
+            <span data-t="handyTitel">Auf dem Handy</span>
+          </h2>
+          <p data-t="handyText">
+            Öffnen und «Zum Home-Bildschirm» wählen. Dann ist Dimension Work wie eine App auf dem Handy.
+          </p>
+          <a class="knopf leer" href="../" data-t="handyKnopf">Im Browser öffnen</a>
+          <div class="klein">
+            <span data-t="handyAdresse">Adresse:</span> <b id="adresse">work.dimension-solaire.ch</b>
+          </div>
+        </section>
+      </div>
+
+      <h3 data-t="schritteTitel">So geht’s am PC</h3>
+      <ol class="schritte">
+        <li>
+          <div><b data-t="s1b">Herunterladen</b><br /><span data-t="s1">Oben auf den orangen Knopf klicken.</span></div>
+        </li>
+        <li>
+          <div>
+            <b data-t="s2b">Datei öffnen</b><br />
+            <span data-t="s2">Die heruntergeladene Datei öffnen. Es braucht keine Administratorrechte.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b data-t="s3b">Falls Windows warnt</b><br />
+            <span data-t="s3"
+              >Erscheint «Der Computer wurde durch Windows geschützt»: auf «Weitere Informationen» und dann «Trotzdem
+              ausführen» klicken. Das kommt nur beim ersten Mal.</span
+            >
+          </div>
+        </li>
+        <li>
+          <div>
+            <b data-t="s4b">Anmelden</b><br />
+            <span data-t="s4"
+              >Mit der eigenen Geschäfts-Mail anmelden. Der Code kommt per Mail. Updates installieren sich danach von
+              selbst.</span
+            >
+          </div>
+        </li>
+      </ol>
+
+      <footer data-t="fusszeile">Fragen? Einfach Chris fragen.</footer>
+    </main>
+
+    <script src="./download.js"></script>
+  </body>
+</html>

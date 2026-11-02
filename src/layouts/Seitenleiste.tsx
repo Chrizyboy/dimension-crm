@@ -110,20 +110,22 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
           eingeklappt ? 'px-2' : 'px-3',
         )}
       >
-        {eintrag(
-          'design',
-          <Link
-            to="/design"
-            onClick={onNavigiert}
-            className={cn(LINK, eingeklappt && 'justify-center px-0')}
-            activeProps={AKTIV}
-            aria-label={eingeklappt ? t('befehle.design') : undefined}
-          >
-            <Palette className="text-sidebar-muted size-4 shrink-0" aria-hidden="true" />
-            {!eingeklappt && <span className="truncate">{t('befehle.design')}</span>}
-          </Link>,
-          t('befehle.design'),
-        )}
+        {/* Design-System ist eine Hilfe für die Entwicklung, im Betrieb braucht sie niemand. */}
+        {import.meta.env.DEV &&
+          eintrag(
+            'design',
+            <Link
+              to="/design"
+              onClick={onNavigiert}
+              className={cn(LINK, eingeklappt && 'justify-center px-0')}
+              activeProps={AKTIV}
+              aria-label={eingeklappt ? t('befehle.design') : undefined}
+            >
+              <Palette className="text-sidebar-muted size-4 shrink-0" aria-hidden="true" />
+              {!eingeklappt && <span className="truncate">{t('befehle.design')}</span>}
+            </Link>,
+            t('befehle.design'),
+          )}
         {!imMenue &&
           eintrag(
             'einklappen',

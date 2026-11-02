@@ -7871,77 +7871,113 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           anlage_id: string | null
+          auswirkung: string | null
           beschreibung: string | null
+          checkliste: NonNullable<Json>
           erledigt_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           eskalation: number
+          fehlercode: string | null
           garantie: boolean | null
           geaendert_am: string
           geloescht_am: string | null
           id: string
           kategorie: string | null
+          komponente: string | null
           kontakt_id: string | null
+          meldung: Json | null
           nummer: string
+          objekt_id: string | null
           person_id: string | null
           prioritaet: string | null
           projekt_id: string | null
           reaktion_am: string | null
+          quelle: string
+          reaktion_bis: string | null
           status: string
           termin_am: string | null
           titel: string
           verlauf: NonNullable<Json>
+          vor_ort_name: string | null
+          vor_ort_telefon: string | null
+          zugang: string | null
+          zuordnung: string | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          auswirkung?: string | null
           beschreibung?: string | null
+          checkliste?: NonNullable<Json>
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           eskalation?: number
+          fehlercode?: string | null
           garantie?: boolean | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           kategorie?: string | null
+          komponente?: string | null
           kontakt_id?: string | null
+          meldung?: Json | null
           nummer: string
+          objekt_id?: string | null
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
           reaktion_am?: string | null
+          quelle?: string
+          reaktion_bis?: string | null
           status?: string
           termin_am?: string | null
           titel: string
           verlauf?: NonNullable<Json>
+          vor_ort_name?: string | null
+          vor_ort_telefon?: string | null
+          zugang?: string | null
+          zuordnung?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          auswirkung?: string | null
           beschreibung?: string | null
+          checkliste?: NonNullable<Json>
           erledigt_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           eskalation?: number
+          fehlercode?: string | null
           garantie?: boolean | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           kategorie?: string | null
+          komponente?: string | null
           kontakt_id?: string | null
+          meldung?: Json | null
           nummer?: string
+          objekt_id?: string | null
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
           reaktion_am?: string | null
+          quelle?: string
+          reaktion_bis?: string | null
           status?: string
           termin_am?: string | null
           titel?: string
           verlauf?: NonNullable<Json>
+          vor_ort_name?: string | null
+          vor_ort_telefon?: string | null
+          zugang?: string | null
+          zuordnung?: string | null
         }
         Relationships: [
           {
@@ -7985,6 +8021,27 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['objekt_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'objekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'service_faelle_objekt_id_fkey'
+            columns: ['objekt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['objekt_id']
           },
           {
             foreignKeyName: 'service_faelle_person_id_fkey'
@@ -8908,10 +8965,17 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           anlage_id: string | null
+          anlage_kwp: number | null
+          anlage_ort: string | null
+          bestandsaufnahme: string
           erstellt_am: string
           erstellt_von: string | null
+          fremdanlage: boolean
           geaendert_am: string
+          gekuendigt_am: string | null
+          gekuendigt_per: string | null
           geloescht_am: string | null
+          ibn_jahr: number | null
           id: string
           kontakt_id: string
           laufzeit_jahre: number
@@ -8921,23 +8985,36 @@ export type Database = {
           notiz: string | null
           nummer: string | null
           offerte_id: string | null
+          paket: string | null
+          preis_netto_rappen: number | null
           preis_rappen: number | null
           projekt_id: string | null
           rhythmus_monate: number | null
+          speicher_kwh: number | null
           sprache: string | null
           start_am: string | null
           status: string
+          tarif_netto_rappen: number | null
           verlauf: NonNullable<Json>
+          verrechnet_bis: string | null
+          wechselrichter: string | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          anlage_kwp?: number | null
+          anlage_ort?: string | null
+          bestandsaufnahme?: string
           erstellt_am?: string
           erstellt_von?: string | null
+          fremdanlage?: boolean
           geaendert_am?: string
+          gekuendigt_am?: string | null
+          gekuendigt_per?: string | null
           geloescht_am?: string | null
+          ibn_jahr?: number | null
           id?: string
           kontakt_id: string
           laufzeit_jahre?: number
@@ -8947,22 +9024,35 @@ export type Database = {
           notiz?: string | null
           nummer?: string | null
           offerte_id?: string | null
+          paket?: string | null
+          preis_netto_rappen?: number | null
           preis_rappen?: number | null
           projekt_id?: string | null
           rhythmus_monate?: number | null
+          speicher_kwh?: number | null
           sprache?: string | null
           start_am?: string | null
           status?: string
+          tarif_netto_rappen?: number | null
           verlauf?: NonNullable<Json>
+          verrechnet_bis?: string | null
+          wechselrichter?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           anlage_id?: string | null
+          anlage_kwp?: number | null
+          anlage_ort?: string | null
+          bestandsaufnahme?: string
           erstellt_am?: string
           erstellt_von?: string | null
+          fremdanlage?: boolean
           geaendert_am?: string
+          gekuendigt_am?: string | null
+          gekuendigt_per?: string | null
           geloescht_am?: string | null
+          ibn_jahr?: number | null
           id?: string
           kontakt_id?: string
           laufzeit_jahre?: number
@@ -8972,13 +9062,19 @@ export type Database = {
           notiz?: string | null
           nummer?: string | null
           offerte_id?: string | null
+          paket?: string | null
+          preis_netto_rappen?: number | null
           preis_rappen?: number | null
           projekt_id?: string | null
           rhythmus_monate?: number | null
+          speicher_kwh?: number | null
           sprache?: string | null
           start_am?: string | null
           status?: string
+          tarif_netto_rappen?: number | null
           verlauf?: NonNullable<Json>
+          verrechnet_bis?: string | null
+          wechselrichter?: string | null
         }
         Relationships: [
           {
@@ -11391,7 +11487,7 @@ export type Database = {
         Returns: Json
       }
       helpdesk_einschaetzen: { Args: { p: Json; p_id: string; p_link: string }; Returns: Json }
-      helpdesk_einstellen: { Args: { p_person_id: string; p_sms: boolean }; Returns: undefined }
+      helpdesk_einstellen: { Args: { p_personen: string[]; p_sms: boolean }; Returns: undefined }
       helpdesk_offen: { Args: Record<PropertyKey, never>; Returns: Json }
       helpdesk_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -11620,6 +11716,20 @@ export type Database = {
       posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
       posteingang_auswertung: { Args: { p_wochen?: number }; Returns: Json }
       posteingang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      posteingang_nachholen: {
+        Args: {
+          p_bis: string
+          p_ende: boolean
+          p_mails: Json
+          p_ordner: string
+          p_person: string
+          p_postfach: string
+          p_schluessel: string
+        }
+        Returns: number
+      }
+      posteingang_nachholen_stand: { Args: { p_ordner: string; p_schluessel: string }; Returns: Json }
+      posteingang_nachholen_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
       posteingang_seit: { Args: Record<PropertyKey, never>; Returns: string }
       posteingang_setzen: { Args: { p?: Json; p_aktion: string; p_id: string }; Returns: undefined }
       posteingang_sortieren: { Args: { p: Json; p_id: string }; Returns: undefined }
@@ -11705,6 +11815,17 @@ export type Database = {
       service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
       service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       service_termin_verschieben: { Args: { p_datum: string; p_id: string; p_person?: string }; Returns: undefined }
+      service_akte: { Args: { p_id: string }; Returns: Json }
+      service_aus_website: { Args: { p: Json }; Returns: Json }
+      service_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_nr: number }; Returns: undefined }
+      service_checkliste_dazu: { Args: { p_id: string; p_text: string }; Returns: undefined }
+      service_eintrag: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
+      service_kunde_aus_meldung: { Args: { p_id: string }; Returns: string }
+      service_leitstand: { Args: Record<PropertyKey, never>; Returns: Json }
+      service_zuordnen: {
+        Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
+        Returns: undefined
+      }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
@@ -11868,6 +11989,12 @@ export type Database = {
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
+      wartung_jahreslauf: { Args: Record<PropertyKey, never>; Returns: number }
+      wartung_kuendigen: { Args: { p_am?: string; p_id: string }; Returns: string }
+      wartung_kuendigung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      wartung_laeuft_bis: { Args: { p_jahre: number; p_start: string; p_stichtag?: string }; Returns: string }
+      wartung_rechnung_erstellen: { Args: { p_id: string }; Returns: string }
+      wartung_tarif: { Args: { p_kwp: number; p_paket: string }; Returns: number }
       werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       wochenplan: { Args: { p_bis: string; p_von: string }; Returns: Json }

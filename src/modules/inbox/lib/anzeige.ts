@@ -52,7 +52,11 @@ export function fristInfo(m: Mail, sprache: 'de' | 'fr', jetzt = new Date()): Fr
       return m.reaktion_minuten != null
         ? { ton: 'ok', schluessel: 'beantwortetNach', werte: { dauer: dauer(m.reaktion_minuten, sprache) } }
         : { ton: 'ok', schluessel: 'beantwortet', werte: {} }
-    return { ton: 'neutral', schluessel: m.erledigt_grund === 'automatisch' ? 'automatisch' : 'erledigt', werte: {} }
+    return {
+      ton: 'neutral',
+      schluessel: m.erledigt_grund === 'automatisch' || m.erledigt_grund === 'archiv' ? m.erledigt_grund : 'erledigt',
+      werte: {},
+    }
   }
   if (m.stand === 'abgelegt') return { ton: 'neutral', schluessel: 'abgelegt', werte: {} }
   if (m.stand === 'neu') return { ton: 'neutral', schluessel: 'neu', werte: {} }
@@ -90,6 +94,8 @@ export function inAnsicht(m: Mail, a: Ansicht, ich: string | null): boolean {
       return m.stand === 'erledigt'
     case 'abgelegt':
       return m.stand === 'abgelegt'
+    case 'aeltere':
+      return false // eigene Abfrage (ladeAeltere)
   }
 }
 

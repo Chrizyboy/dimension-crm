@@ -29,6 +29,11 @@ export function montag(d: Date): Date {
   return plusTage(d, -((d.getDay() + 6) % 7))
 }
 
+/** Montag der laufenden Arbeitswoche: am Samstag und Sonntag schon der nächste Montag. */
+export function arbeitsMontag(d: Date): Date {
+  return montag(d.getDay() === 0 || d.getDay() === 6 ? plusTage(d, 2) : d)
+}
+
 /** Kalenderwoche nach ISO 8601. */
 export function kalenderwoche(d: Date): number {
   // Donnerstag derselben Woche bestimmt das Jahr; die Woche ist sein Jahrestag / 7.

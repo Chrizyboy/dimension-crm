@@ -14,4 +14,11 @@ export const fallSchema = z.object({
   anlage_id: z.string(),
   person_id: z.string(),
   termin_am: z.string(),
+  quelle: z.string().min(1),
+  auswirkung: z.string(),
+  komponente: z.string(),
+  fehlercode: z.string().trim().max(100),
+  vor_ort_name: z.string().trim().max(200),
+  vor_ort_telefon: z.string().trim().max(40),
+  zugang: z.string().trim().max(1000),
 })

@@ -1583,6 +1583,16 @@
       "konditionBatterie": "Paiement proposé pour batterie",
       "telefon_de": "Téléphone (contrat allemand)",
       "telefon_fr": "Téléphone (contrat français)"
+    },
+    "neu": {
+      "knopf": "Nouveau contrat",
+      "titel": "Nouveau contrat d'entreprise",
+      "text": "Pour quelle offre ? Les offres acceptées sans contrat figurent en haut. Une offre encore ouverte passe à « Acceptée » à la création.",
+      "suche": "Rechercher une offre",
+      "sucheHinweis": "Nom, n°, lieu …",
+      "liste": "Offres sans contrat d'entreprise",
+      "leer": "Aucune offre correspondante sans contrat.",
+      "exkl": "HT"
     }
   },
   "preise": {
@@ -1975,7 +1985,10 @@
     "empfehlung_kein_bewertungslink": "Aucun lien d’avis Google n’est saisi (Automatisations › Réglages).",
     "empfehlung_kein_recht": "Droit manquant.",
     "team_kein_recht": "Tu n’as pas le droit pour cela (dossier du personnel).",
-    "team_gespraech_naechstes": "Le prochain entretien doit suivre celui-ci."
+    "team_gespraech_naechstes": "Le prochain entretien doit suivre celui-ci.",
+    "wartung_paket_unbekannt": "Cette formule n’existe pas.",
+    "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
+    "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix)."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -2700,14 +2713,14 @@
       "entfernen": "Retirer l’intervention",
       "abwesend": "Absent pendant cette période : {{namen}}",
       "abwesendLabel": "Absent",
-      "zurueck": "4 semaines en arrière",
-      "vor": "4 semaines en avant",
+      "zurueck": "Précédent",
+      "vor": "Suivant",
       "heute": "Aujourd’hui",
       "drucken": "Imprimer / PDF",
-      "hilfe": "Un clic sur un chantier ouvre la planification.",
+      "hilfe": "Glisser une barre déplace l’intervention, le bord droit change la fin. Un clic sur une zone vide planifie une nouvelle intervention. Touches ← → et T.",
       "baustelle": "Chantier",
       "kw": "S {{kw}}",
-      "leer": "Aucun chantier sur cette période.",
+      "leer": "Aucune intervention sur cette période. Les nouveaux chantiers sont sous « À planifier ».",
       "auslastung": "Charge",
       "personen": "Planifiés",
       "baustellenKurz": "{{n}} ch.",
@@ -2715,7 +2728,36 @@
       "abwesendKurz": "{{n}} abs.",
       "druckTitel": "Planning des chantiers · S {{von}}–{{bis}} · état au {{datum}}",
       "keineEinsaetze": "Aucune intervention planifiée.",
-      "bearbeiten": "Modifier le planning"
+      "bearbeiten": "Modifier le planning",
+      "person": "Personne",
+      "suchen": "Chercher chantier, lieu ou numéro",
+      "sicht": "Vue",
+      "sicht_baustellen": "Chantiers",
+      "sicht_team": "Équipe",
+      "zeitraum": "Période",
+      "zoom_2": "2 semaines",
+      "zoom_6": "6 semaines",
+      "zoom_13": "Trimestre",
+      "standort": "Site",
+      "konflikte_one": "{{count}} conflit",
+      "konflikte_other": "{{count}} conflits",
+      "konflikt": "Conflit (absent ou en double)",
+      "konfliktMit": "Conflit : {{namen}}",
+      "tageKurz": "j.",
+      "zuPlanen": "À planifier",
+      "allesGeplant": "Tous les chantiers ont une date.",
+      "werktage": "{{n}} jours",
+      "seit": "signé le {{datum}}",
+      "tagFrei": "Aucune intervention.",
+      "tagVon": "Jour {{nr}}/{{von}}",
+      "wocheZurueck": "Semaine précédente",
+      "wocheVor": "Semaine suivante",
+      "allePersonen": "Toutes les personnes",
+      "team": "Équipe",
+      "subunternehmer": "Sous-traitants",
+      "grund_abwesend": "{{wer}} absent",
+      "grund_doppelt": "{{wer}} planifié deux fois",
+      "abwesendAm": "Absents : {{namen}}"
     },
     "bewilligungen": {
       "ansicht": "Vue",
@@ -2848,7 +2890,7 @@
       "alle": "Tous"
     },
     "reiter": {
-      "faelle": "Cas",
+      "faelle": "Centrale",
       "anlagen": "Installations"
     },
     "spalte": {
@@ -2871,7 +2913,15 @@
       "termin": "Rendez-vous",
       "garantieFall": "Cas de garantie",
       "beschreibung": "Description",
-      "status": "État"
+      "status": "État",
+      "auswirkung": "Gravité ?",
+      "fehlercode": "Code d’erreur",
+      "komponente": "Composant",
+      "quelle": "Provenance ?",
+      "vorOrtName": "Sur place",
+      "vorOrtTelefon": "Téléphone sur place",
+      "zugang": "Accès",
+      "zugangHinweis": "p. ex. clé, chien, compteur à la cave"
     },
     "akte": {
       "titel": "Cas de service",
@@ -2885,7 +2935,27 @@
       "notizSpeichern": "Enregistrer la note",
       "anhaenge": "Pièces jointes",
       "hochladen": "Téléverser un fichier",
-      "anlage": "Installation"
+      "anlage": "Installation",
+      "anlageWaehlen": "Choisir l’installation du client",
+      "anrufen": "Appeler",
+      "einsatz": "Intervention et classement",
+      "einsatzort": "Lieu d’intervention",
+      "fruehere": "Cas précédents",
+      "keineAnhaenge": "Pas encore de photos ni de fichiers.",
+      "keineAnlage": "Aucune installation saisie.",
+      "kunde": "Client et lieu",
+      "kundeNeu": "Créer comme nouveau client",
+      "mail": "E-mail",
+      "netzbetreiber": "Gestionnaire de réseau",
+      "oeffnen": "Ouvrir",
+      "ohneKunde": "Aucun client attribué. Rechercher et choisir ou créer à partir de l’annonce.",
+      "projekt": "Projet",
+      "sprache": "Langue",
+      "telefon": "Téléphone",
+      "vertrag": "Contrat d’entretien {{nummer}}, prochain entretien {{naechste}}. Si possible, facturer comme « Inclus dans le contrat ».",
+      "wiederOeffnen": "Rouvrir",
+      "zurueck": "Retour à la centrale",
+      "zustaendigName": "responsable {{name}}"
     },
     "anlagen": {
       "ansicht": "Installations",
@@ -2951,11 +3021,120 @@
       "monitoring": "Monitoring",
       "oeffnen": "ouvrir",
       "garantieBis": "Garantie jusqu’au {{datum}}"
+    },
+    "board": {
+      "eingang": "Entrée",
+      "arbeit": "En cours",
+      "geplant": "Planifié",
+      "teile": "Attente pièces",
+      "erledigt": "Terminé (14 jours)",
+      "leer": "Rien ici"
+    },
+    "checkliste": {
+      "titel": "Liste de contrôle",
+      "dazu": "Ajouter une étape"
+    },
+    "dialog": {
+      "bis": "jusqu’au",
+      "fotos": "Photos ou fichiers",
+      "garantieAbgelaufen": "Aucune garantie en cours trouvée.",
+      "garantieLaeuft": "Garantie en cours : {{liste}}",
+      "keineAnlage": "Aucune installation saisie : vérifier la garantie à la main."
+    },
+    "garantieCheck": {
+      "titel": "Contrôle de garantie",
+      "montage": "Montage",
+      "bis": "jusqu’au {{datum}}",
+      "abgelaufen": "échue le {{datum}}",
+      "keine": "Aucune date de garantie saisie sur l’installation."
+    },
+    "kosten": {
+      "titel": "Rapports et facturation",
+      "entwurf": "Brouillon",
+      "inArbeit": "en cours",
+      "leer": "Pas encore de rapport. Il est établi sur le téléphone lors de l’intervention.",
+      "offen": "ouvert {{betrag}}",
+      "rechnung": "Créer la facture",
+      "stand": {
+        "entwurf": "brouillon",
+        "gestellt": "émise",
+        "teilbezahlt": "payée en partie",
+        "bezahlt": "payée",
+        "storniert": "annulée"
+      }
+    },
+    "leitstand": {
+      "ansicht": "Affichage",
+      "board": "Tableau",
+      "liste": "Liste",
+      "ohneKunde": "sans client",
+      "standAendern": "Changer l’état",
+      "suche": "Cas, client, adresse, téléphone ou code d’erreur",
+      "website": "Site web"
+    },
+    "meldung": {
+      "titel": "Annonce de panne du site web",
+      "name": "Nom",
+      "adresse": "Adresse de l’installation",
+      "projekt": "Numéro de projet",
+      "stoerung": "Type de panne",
+      "text": "Description",
+      "einwilligung": "Consentement",
+      "ja": "oui"
+    },
+    "reaktion": {
+      "bis": "Rendez-vous au plus tard {{zeit}}",
+      "noch": "encore {{dauer}}",
+      "zuSpaet": "{{dauer}} de retard"
+    },
+    "schnell": {
+      "meine": "Les miens",
+      "ueberfaellig": "En retard",
+      "steht": "Installation à l’arrêt",
+      "garantie": "Garantie",
+      "website": "Site web",
+      "ohne_kunde": "Sans client"
+    },
+    "schritte": {
+      "titel": "Étapes",
+      "eingang": "Entrée",
+      "diagnose": "Diagnostic",
+      "geplant": "Rendez-vous",
+      "vorort": "Sur place",
+      "teile": "Pièces / RMA",
+      "abschluss": "Terminé",
+      "verrechnet": "Facturé"
+    },
+    "verlauf": {
+      "art": "Que noter ?",
+      "festhalten": "Noter",
+      "mailEingang": "E-mail",
+      "rapport": "Rapport",
+      "text": "Entrée dans l’historique",
+      "notiz": "Note",
+      "anruf": "Appel",
+      "mail": "E-mail",
+      "sms": "SMS",
+      "system": "Système",
+      "platzhalter": {
+        "notiz": "Que s’est-il passé ? (Ctrl+Entrée)",
+        "anruf": "Avec qui, qu’a-t-on convenu ?",
+        "mail": "Qu’a-t-on écrit ?",
+        "sms": "Qu’a-t-on envoyé ?"
+      }
+    },
+    "zahl": {
+      "offen": "cas ouverts",
+      "ueberfaellig": "délai de réaction dépassé",
+      "woche": "rendez-vous cette semaine",
+      "teile": "attendent des pièces",
+      "rma": "chez le fabricant (RMA)",
+      "verrechnen": "rapports à facturer"
     }
   },
   "wartung": {
     "titel": "Contrats d’entretien",
-    "beschreibung": "Entretien récurrent avec prestations, rythme et contrat en PDF.",
+    "beschreibung": "Formules Essentiel, Comfort et Premium comme sur le site : inspections, factures annuelles et durée en un coup d’œil.",
     "neu": "Nouveau contrat",
     "bearbeiten": "Modifier le contrat {{nummer}}",
     "filter": "Contrats",
@@ -2969,29 +3148,46 @@
     "filterwert": {
       "aktiv": "Actifs",
       "faellig": "Dus dans 30 jours",
-      "alle": "Tous"
+      "alle": "Tous",
+      "rechnung": "Facture due",
+      "kuendbar": "Résiliable dans 90 jours",
+      "gekuendigt": "Résiliés"
     },
     "spalte": {
       "nummer": "N°",
       "kunde": "Client",
       "rhythmus": "Rythme",
-      "preis": "Prix par an",
-      "naechste": "Prochain entretien",
-      "status": "État"
+      "preis": "Prix annuel hors TVA",
+      "naechste": "Prochaine inspection",
+      "status": "État",
+      "paket": "Formule",
+      "anlage": "Installation",
+      "laufzeit": "Durée",
+      "rechnung": "Prochaine facture"
     },
     "feld": {
       "kunde": "Client",
       "projekt": "Projet",
       "start": "Début du contrat",
-      "laufzeit": "Durée (ans)",
+      "laufzeit": "Durée minimale (ans)",
       "rhythmus": "Rythme",
       "preis": "Prix par an TVA incl. (CHF)",
       "sprache": "Langue du contrat",
       "status": "État",
       "leistungen": "Prestations",
       "notiz": "Note",
-      "letzte": "Dernier entretien",
-      "naechste": "Prochain entretien"
+      "letzte": "Dernière inspection",
+      "naechste": "Prochaine inspection",
+      "anlage": "Installation",
+      "ohneAnlage": "Saisir à la main",
+      "kwp": "Puissance (kWc)",
+      "speicher": "Batterie (kWh)",
+      "ibn": "Mise en service (année)",
+      "wr": "Onduleur (marque / modèle)",
+      "ort": "Lieu de l’installation (si différent)",
+      "fremd": "Installation tierce (pas installée par nous)",
+      "paket": "Formule",
+      "preisNetto": "Prix annuel hors TVA (CHF)"
     },
     "sprache": {
       "de": "Allemand",
@@ -2999,7 +3195,8 @@
     },
     "pruefung": {
       "betrag": "Veuillez saisir un montant comme 480.00.",
-      "leistung": "Veuillez choisir au moins une prestation."
+      "leistung": "Veuillez choisir au moins une prestation.",
+      "zahl": "Veuillez saisir un nombre comme 11.2."
     },
     "akte": {
       "titel": "Contrat d’entretien",
@@ -3008,8 +3205,23 @@
       "erledigt": "Entretien effectué",
       "naechste": "Prochain entretien {{datum}}",
       "angaben": "Informations",
-      "verlauf": "Entretiens effectués",
-      "keineWartung": "Aucun entretien enregistré."
+      "verlauf": "Historique",
+      "keineWartung": "Aucun entretien enregistré.",
+      "kuendigen": "Saisir une résiliation",
+      "zuruecknehmen": "Annuler la résiliation",
+      "rechnung": "Créer la facture annuelle",
+      "rechnungen": "Factures",
+      "keineRechnung": "Pas encore de facture. Le CRM la prépare {{tage}} jours avant l’année contractuelle.",
+      "anlage": "Installation",
+      "kleinreparatur": "Petites réparations jusqu’à {{betrag}} par an incluses",
+      "rabattZusatz": "{{prozent}} % de rabais sur travaux en régie, nettoyage et thermographie",
+      "verrechnetBis": "facturé jusqu’au {{datum}}",
+      "telefon": "Téléphone",
+      "leistungen": "Prestations",
+      "inspektionen": "Inspections",
+      "keineInspektion": "Cette formule ne comprend pas d’inspection sur place.",
+      "rechnungErstellt": "Facture annuelle créée comme brouillon",
+      "zurRechnung": "Ouvrir"
     },
     "erledigt": {
       "titel": "Entretien effectué",
@@ -3023,7 +3235,20 @@
       "proJahr": "par an TVA incl.",
       "bedingungen": "Le contrat est reconduit d’année en année s’il n’est pas résilié par écrit trois mois avant son échéance. Le matériel et les travaux hors des prestations mentionnées sont facturés selon le temps passé.",
       "unterschriftKunde": "Lieu, date, signature du client",
-      "unterschriftFirma": "Lieu, date, Dimension Solaire"
+      "unterschriftFirma": "Lieu, date, Dimension Solaire",
+      "proJahrExkl": "par an hors TVA",
+      "paket": "Formule",
+      "anlage": "Installation",
+      "mwst": "TVA {{satz}} %",
+      "inkl": "Total par an TVA incl.",
+      "tarif": "Tarif",
+      "rabatt": "Rabais",
+      "bestand": "État des lieux avant le début du contrat (unique, hors TVA)",
+      "mindest": "Durée minimale",
+      "bedingungenTitel": "Conditions contractuelles",
+      "kwp": "{{kwp}} kWc",
+      "kwh": "Batterie {{kwh}} kWh",
+      "ibn": "Mise en service {{jahr}}"
     },
     "heute": {
       "titel": "Entretiens",
@@ -3031,6 +3256,62 @@
       "nichts": "Aucun entretien dans les 30 prochains jours.",
       "mehr_one": "et {{count}} autre",
       "mehr_other": "et {{count}} autres"
+    },
+    "kz": {
+      "aktiv": "contrats actifs",
+      "wiederkehrend": "récurrent par an, hors TVA",
+      "faellig": "inspections dues dans 60 jours",
+      "rechnung": "factures annuelles dans 30 jours",
+      "gekuendigt": "résiliés, en fin de contrat"
+    },
+    "paket": {
+      "proJahr": "par an hors TVA",
+      "empfohlen": "recommandé",
+      "aufAnfrage": "sur devis",
+      "alt": "Prestations propres (ancien contrat)",
+      "stufe": "Prix pour {{stufe}}",
+      "inspektion_one": "Inspection chaque mois",
+      "inspektion_other": "Inspection tous les {{count}} mois",
+      "keineInspektion": "Surveillance à distance, sans inspection sur place"
+    },
+    "preis": {
+      "tarif": "Tarif {{paket}}, {{stufe}}",
+      "rabatt": "Rabais {{prozent}} %",
+      "mwst": "TVA {{satz}} %",
+      "inkl": "Par an TVA incl.",
+      "hinweisTarif": "Proposition selon le tarif du site. Un prix plus bas compte comme rabais et figure sur la facture comme ligne séparée.",
+      "hinweisAnfrage": "Au-delà de 100 kWc, il n’y a pas de tarif : veuillez saisir le prix offert.",
+      "abweichung": "{{prozent}} % de rabais"
+    },
+    "bedingungen": {
+      "kurz": "Ensuite, le contrat se renouvelle de {{verl}} an, résiliation {{monate}} mois avant l’échéance. Facture annuelle à l’avance, payable à {{tage}} jours. Le CRM la prépare {{vorlauf}} jours avant comme brouillon."
+    },
+    "bestand": {
+      "titel": "État des lieux nécessaire",
+      "text": "Installation tierce ou de plus de {{jahre}} ans : avant le début du contrat, un état des lieux de {{betrag}} est nécessaire (unique, hors TVA). Il figure sur la première facture annuelle.",
+      "verrechnen": "Facturer",
+      "erlassen": "Offrir",
+      "status": {
+        "verrechnen": "État des lieux à facturer",
+        "verrechnet": "État des lieux facturé",
+        "erlassen": "État des lieux offert"
+      }
+    },
+    "laufzeit": {
+      "beginn": "Début",
+      "mindest": "Durée minimale jusqu’au",
+      "laeuft": "Court jusqu’au",
+      "kuendbar": "Résiliable jusqu’au",
+      "gekuendigt": "Prend fin le",
+      "eingegangen": "Résiliation du {{datum}}",
+      "per": "pour le {{datum}}"
+    },
+    "kuendigen": {
+      "titel": "Saisir une résiliation",
+      "text": "Le contrat prend fin à la première échéance située au moins {{monate}} mois après la réception de la résiliation. Jusque-là, inspections et factures continuent.",
+      "am": "Résiliation reçue le",
+      "endet": "Le contrat prend fin le {{datum}}.",
+      "gespeichert": "Résiliation saisie, fin le {{datum}}"
     }
   },
   "einkauf": {
@@ -5564,7 +5845,7 @@
       "umgesetztIn": "réalisé dans la version {{version}}",
       "beantwortet": "Répondu par {{name}}",
       "entscheidet": "Décide des signalements",
-      "alleAdmins": "Toute l’administration",
+      "alleAdmins": "Personne de choisi : toute l’administration voit l’évaluation dans la cloche et peut décider.",
       "perSms": "Évaluation aussi par SMS",
       "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
@@ -6462,7 +6743,8 @@
       "neu": "Tous ouverts",
       "meine": "Les miens",
       "erledigt": "Terminés",
-      "abgelegt": "Publicité & interne"
+      "abgelegt": "Publicité & interne",
+      "aeltere": "Plus anciens"
     },
     "leer": {
       "warten": "Personne n’attend de réponse",
@@ -6470,7 +6752,8 @@
       "meine": "Rien ne t’est attribué pour l’instant",
       "erledigt": "Rien de terminé ces 14 derniers jours",
       "abgelegt": "Rien de classé",
-      "text": "Les nouveaux e-mails arrivent d’Outlook toutes les 5 minutes. « Relever maintenant » les récupère tout de suite."
+      "text": "Les nouveaux e-mails arrivent d’Outlook toutes les 5 minutes. « Relever maintenant » les récupère tout de suite.",
+      "aeltere": "Aucun e-mail plus ancien trouvé"
     },
     "art": {
       "anfrage": "Nouvelle demande",
@@ -6510,7 +6793,8 @@
       "erledigt": "terminé",
       "abgelegt": "classé",
       "neu": "en cours de tri",
-      "info": "pour info"
+      "info": "pour info",
+      "archiv": "ancien, repris"
     },
     "zahl": {
       "warten_one": "client attend une réponse",
@@ -6608,6 +6892,17 @@
       "laedt": "Chargement de l’e-mail …",
       "fehlt": "Cet e-mail n’existe plus.",
       "verknuepft": "Lié à l’e-mail dans la boîte de réception"
+    },
+    "suche": "Chercher dans les anciens e-mails",
+    "nachholen": {
+      "titel": "Anciens e-mails",
+      "hinweis": "Les anciens e-mails de chaque boîte personnelle (dès que la personne a connecté Microsoft) et d’info@ sont repris en arrière-plan, comme «traités» sans délai. Ils ne comptent ni dans «Attend une réponse» ni dans le temps de réaction. Les e-mails avec des clients vont aussi dans l’historique client.",
+      "monate": "Mois en arrière",
+      "ungueltig": "Nombre de 0 à 60",
+      "inbox": "Réception",
+      "sentitems": "Envoyés",
+      "fertig": "terminé, {{anzahl}} e-mails",
+      "laeuft": "en cours, jusqu’au {{datum}}, {{anzahl}} e-mails"
     }
   },
   "einfach": {

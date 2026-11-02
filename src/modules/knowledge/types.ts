@@ -101,9 +101,9 @@ export interface Einschaetzung {
   empfehlung: 'erledigen' | 'nicht'
 }
 
-/** Wer über Meldungen entscheidet und ob dazu eine SMS kommt (Einstellung «helpdesk»). */
+/** Wer über Meldungen entscheidet (eine oder mehrere Personen) und ob dazu eine SMS kommt (Einstellung «helpdesk»). */
 export interface HelpdeskStand {
-  entscheider_person_id: string | null
+  entscheider_person_ids: string[]
   sms: boolean
   ich_entscheide: boolean
   kandidaten: { id: string; name: string; mobil: boolean }[]
