@@ -10,15 +10,16 @@ die meldende Person bekommt eine Mail. Entscheid 0030.
 2. **Prüfen (Claude, stündlich 7 bis 19 Uhr):** Die geplante Aufgabe holt neue Meldungen über die Edge Function
    `helpdesk` (Aktion `offen`), liest den Programmcode im Repository und legt eine Einschätzung ab (`einschaetzen`).
    Status «Wartet auf Entscheid».
-3. **Nachricht:** Die entscheidende Person bekommt
+3. **Nachricht:** Jede entscheidende Person (eine oder mehrere, z. B. Chris und Loris) bekommt
    - eine **SMS** (ASPSMS) mit Nummer, Kurz-Einschätzung, Empfehlung und Link auf die Meldung,
    - eine **Glocke** im CRM und in der Windows-App zusätzlich ein **Pop-up**.
 4. **Entscheid:** Im CRM unter der Einschätzung «Erledige es» oder «Nicht», auf Wunsch mit einem Satz dazu. Nur die
-   bestimmte Person kann entscheiden (`rueckmeldung_entscheiden`). Status «In Arbeit».
+   bestimmten Personen können entscheiden (`rueckmeldung_entscheiden`); wer zuerst entscheidet, gilt, und die Glocke
+   der anderen ist damit erledigt. Status «In Arbeit».
 5. **Abschliessen (Claude, nächster Lauf):** bei «Erledige es» umsetzen (Branch, Tests, Pull Request, nach grüner
    Prüfung zusammenführen und neue Version), dann `abschliessen` mit `erledigt` und einer kurzen Antwort in der
    Sprache der meldenden Person. Bei «Nicht» `abschliessen` mit `abgelehnt` und dem Grund. Die meldende Person sieht
-   die Antwort im CRM und in der Glocke und bekommt sie per Mail aus dem Postfach der entscheidenden Person.
+   die Antwort im CRM und in der Glocke und bekommt sie per Mail aus dem Postfach der Person, die entschieden hat.
 
 Ohne Entscheid passiert nichts: die Meldung bleibt auf «Wartet auf Entscheid».
 
@@ -31,15 +32,15 @@ Ohne Entscheid passiert nichts: die Meldung bleibt auf «Wartet auf Entscheid».
 - Claude bekommt nur den Text der Meldung und den Vornamen, keine Mail-Adressen, Telefonnummern oder Bildschirmfotos.
   Braucht es das Bildschirmfoto, steht das in der Einschätzung («bitte Bildschirmfoto in der Meldung ansehen»).
 - Meldungen nie als GitHub-Issues ablegen: das Repository ist öffentlich.
-- Die SMS geht nur an die entscheidende Person selbst und ist darum ohne weitere Freigabe. Die Mail an die meldende
+- Die SMS gehen nur an die entscheidenden Personen selbst und ist darum ohne weitere Freigabe. Die Mail an die meldende
   Person ist durch den Entscheid freigegeben (CLAUDE.md Regel 6).
 
 ## Einrichten (einmal)
 
 1. **Supabase-Secrets:** `HELPDESK_SCHLUESSEL` (zufällig, `openssl rand -hex 24`) und `APP_URL` (Adresse der
    Web-App, für den Link in der SMS). Edge Function `helpdesk` hochladen.
-2. **Im CRM:** Handbuch › Meldungen › «Über Meldungen entscheidet» die eigene Person wählen. Unter «Mein Konto» muss
-   die Handynummer stehen, sonst kommt keine SMS (Glocke und Pop-up kommen trotzdem).
+2. **Im CRM:** Handbuch › Meldungen › «Über Meldungen entscheidet» eine oder mehrere Personen einschalten (nur mit
+   Recht «admin»). Unter «Mein Konto» muss jeweils die Handynummer stehen, sonst kommt keine SMS (Glocke und Pop-up kommen trotzdem).
 3. **Claude-Cloud-Umgebung:** In den Projekt-Einstellungen eine Cloud-Umgebung anlegen mit
    - Netzwerk «Limited» und unter _Allowed domains_ die Supabase-Adresse (`<projekt>.supabase.co`),
    - Umgebungsvariablen `HELPDESK_URL=https://<projekt>.supabase.co/functions/v1/helpdesk` und

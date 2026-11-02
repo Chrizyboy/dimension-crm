@@ -5364,7 +5364,7 @@
       "umgesetztIn": "réalisé dans la version {{version}}",
       "beantwortet": "Répondu par {{name}}",
       "entscheidet": "Décide des signalements",
-      "alleAdmins": "Toute l’administration",
+      "alleAdmins": "Personne de choisi : toute l’administration voit l’évaluation dans la cloche et peut décider.",
       "perSms": "Évaluation aussi par SMS",
       "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },

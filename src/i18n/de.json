@@ -5364,7 +5364,7 @@
       "umgesetztIn": "umgesetzt in Version {{version}}",
       "beantwortet": "Beantwortet von {{name}}",
       "entscheidet": "Über Meldungen entscheidet",
-      "alleAdmins": "Alle aus der Administration",
+      "alleAdmins": "Niemand gewählt: alle aus der Administration sehen die Einschätzung in der Glocke und können entscheiden.",
       "perSms": "Einschätzung zusätzlich per SMS",
       "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
