@@ -1,4 +1,4 @@
--- Prüft Ausschreibungen vollständig (Entscheid 0050): Go/No-Go-Vorschlag, No-Go nur mit Grund, Eckdaten und
+-- Prüft Ausschreibungen vollständig (Entscheid 0051): Go/No-Go-Vorschlag, No-Go nur mit Grund, Eckdaten und
 -- Zuschlagskriterien, Checkliste, Prüfung durch eine zweite Person, Eingabe mit Betrag, Öffnungsprotokoll als
 -- Pflicht, Zuschlag legt das Projekt an, Absage mit Beschwerdefrist, Nachweise melden, Mitbewerber, Auswertung.
 -- Ausführen: npm run db:test

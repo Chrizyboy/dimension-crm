@@ -29,5 +29,16 @@ https://claude.ai/artifact/FrRrrRnxUQxQYUYwN9UCoz
 
 - Alte Spesen behalten ihren Stand; `spesen_auszahlen` bleibt für alte Aufrufe und erstellt intern einen Lauf.
 - Import und Wiederherstellen (ohne angemeldete Person) umgehen die Stand-Regeln des Triggers.
-- Später (Schritt 2): Abgleich mit dem Firmenkarten-Auszug, Zahlungsdatei pain.001, Erfassen ohne Netz am Handy,
-  Erinnerung am Monatsende.
+- Später: Erfassen ohne Netz am Handy, Erinnerung am Monatsende. Zahlungsdatei pain.001 entfällt (Auszahlung mit
+  dem Lohn, Chris 3.11.2026).
+
+## Schritt 2: Abgleich Firmenkarte (3.11.2026)
+
+Chris hat alle vier Fragen mit der Empfehlung beantwortet, bei der Firmenkarte «Ja, mit Abgleich».
+
+- Auszug der Karte als CSV einlesen (Spalten über ihre Namen gefunden, DE/FR, Kopfzeile wird gesucht); dieselbe
+  Zeile zweimal eingelesen gibt keine Doppelte (`schluessel`).
+- Automatisch verbunden wird nur, wenn genau eine Firmenkarten-Spese passt (gleicher Betrag, ±3 Tage, gleiche Person)
+  und diese nur zu einer Buchung passt; sonst von Hand. Kommt der Beleg nach dem Auszug, verbindet der Trigger.
+- Person je Kartenende wird gemerkt (`einstellungen.finanzen.spesen.karten`).
+- Fehlende Belege: Glocke an die Person (`firmenkarte_nachfordern`), keine Mail. Ohne Beleg nur mit Grund erledigt.

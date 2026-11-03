@@ -81,7 +81,7 @@ export interface SpesenProjekt {
  * «Meine» sieht jede Person; «Prüfen», «Auszahlen», «Alle», «Auswertung» und «Regeln» nur die Buchhaltung
  * (Recht «finanzen»). «kategorien» bleibt als Adresse gültig und zeigt die Regeln.
  */
-export const ANSICHTEN = ['meine', 'pruefen', 'auszahlen', 'alle', 'auswertung', 'kategorien'] as const
+export const ANSICHTEN = ['meine', 'pruefen', 'auszahlen', 'karte', 'alle', 'auswertung', 'kategorien'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 export type SpesenFilter = 'offen' | 'ausbezahlt' | 'firmenkarte' | 'abgelehnt' | 'alle'

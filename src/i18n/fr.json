@@ -2459,6 +2459,14 @@
     "ausschreibung_kriterien": "Les critères ne sont pas valables.",
     "ausschreibung_kriterien_summe": "Les poids des critères doivent totaliser 100 %.",
     "ausschreibung_art_fehlt": "Merci de choisir un type dans la liste.",
+    "tag_kein_recht": "Pas d'autorisation pour «Ma journée».",
+    "tag_zeile_unbekannt": "Cette ligne ne peut pas être reportée.",
+    "tag_datum_ungueltig": "La date doit être après aujourd'hui et au plus dans un an.",
+    "tag_nicht_meine_aufgabe": "Seules tes tâches ouvertes peuvent être reportées.",
+    "tag_ziele_kein_recht": "Seules l'administration ou la direction peuvent fixer des objectifs.",
+    "tag_person_unbekannt": "Cette personne n'existe pas.",
+    "tag_ziel_unbekannt": "Objectif inconnu.",
+    "tag_ziel_ungueltig": "Les objectifs doivent être des nombres entiers à partir de 0.",
     "kennzahlen_kein_recht": "Seules les personnes avec le droit « Finances » modifient les objectifs et réglages des indicateurs.",
     "kennzahlen_wert_ungueltig": "Une valeur n'est pas valable (pourcentages 0–100, montants non négatifs).",
     "kennzahlen_schluessel_ungueltig": "Ce réglage n'existe pas.",
@@ -2509,7 +2517,9 @@
     "baustelle_zeit_laeuft": "Un temps tourne encore cette semaine. L'arrêter d'abord, puis confirmer.",
     "baustelle_soll_negativ": "Les heures prévues ne peuvent pas être négatives.",
     "baustelle_projekt_nicht_gefunden": "Projet introuvable.",
-    "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire."
+    "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire.",
+    "finanzen_karte_keine_firmenkarte": "Seuls les frais « carte d’entreprise » peuvent être associées à une transaction.",
+    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -4656,6 +4666,7 @@
       "leer": "Aucune intervention ces sept prochains jours",
       "leerText": "La direction de projet planifie les interventions; les rendez-vous de service viennent de « Service & garantie ».",
       "tagVon": "Jour {{nr}} sur {{von}}",
+      "ueberfaellig": "En retard depuis le {{datum}}",
       "team": "Équipe",
       "material": "Matériel",
       "materialFehlt_one": "{{count}} matériel manque encore",
@@ -5429,7 +5440,8 @@
       "kategorien": "Règles",
       "pruefen": "Vérifier",
       "auszahlen": "Verser",
-      "auswertung": "Analyse"
+      "auswertung": "Analyse",
+      "karte": "Carte d’entreprise"
     },
     "spalte": {
       "datum": "Date",
@@ -5654,6 +5666,43 @@
       "unterschriftPerson": "Date, signature collaborateur/trice",
       "unterschriftBuchhaltung": "Vérifié comptabilité",
       "datei": "Decompte de frais"
+    },
+    "karte": {
+      "einlesen": "Importer le relevé",
+      "hinweis": "Relevé de la carte d’entreprise en CSV depuis l’e-banking ou le portail de la carte. Ce qui est déjà importé est ignoré ; si un seul frais « carte d’entreprise » correspond (même montant, ±3 jours), il est associé automatiquement.",
+      "kachelOffen_one": "sans justificatif ({{count}} transaction)",
+      "kachelOffen_other": "sans justificatif ({{count}} transactions)",
+      "kachelVerbunden": "associées à un justificatif",
+      "kachelErledigt": "réglées sans justificatif",
+      "kachelFrei": "frais carte d’entreprise sans transaction",
+      "stand": {
+        "offen": "Sans justificatif",
+        "verbunden": "Associées",
+        "erledigt": "Réglées",
+        "alle": "Toutes"
+      },
+      "nachfordern_one": "Demander le justificatif ({{count}})",
+      "nachfordern_other": "Demander les justificatifs ({{count}})",
+      "buchung": "Transaction",
+      "person": "Carte de",
+      "personWaehlen": "Choisir la personne",
+      "verbinden": "Associer à un frais",
+      "keinBeleg": "Pas encore de frais correspondant",
+      "loesen": "Retirer l’association",
+      "ohneBeleg": "Sans justificatif",
+      "wiederOeffnen": "Rouvrir",
+      "erledigenTitel": "Régler sans justificatif",
+      "erledigen": "Régler",
+      "grund": "Motif",
+      "grundHinweis": "Affiché lors du rapprochement, p. ex. pour la révision.",
+      "grundVorschlag": {
+        "abo": "Abonnement, facture par e-mail",
+        "gebuehr": "Frais de carte",
+        "privat": "Privé, déduit du salaire"
+      },
+      "leer": "Aucun relevé importé",
+      "leerFilter": "Rien dans cette sélection",
+      "leerText": "Importer le relevé de la carte d’entreprise en CSV. Chaque transaction apparaît ensuite ici, avec ou sans justificatif."
     }
   },
   "finanzen": {
@@ -7279,7 +7328,71 @@
     },
     "kennzahlen": "Indicateurs",
     "team": "Équipe et exploitation",
-    "system": "Système et plan de construction"
+    "system": "Système et plan de construction",
+    "warum": {
+      "nachfassen_one": "Sans réponse depuis 1 jour",
+      "nachfassen_other": "Sans réponse depuis {{count}} jours",
+      "lead_one": "Demande ouverte depuis 1 jour",
+      "lead_other": "Demande ouverte depuis {{count}} jours",
+      "lead_zero": "Demande du jour",
+      "nachfassen_zero": "Envoyée aujourd'hui",
+      "von": "De {{name}}",
+      "kanal_mail": "E-mail attend ton clic",
+      "kanal_sms": "SMS attend ton clic",
+      "kanal_brief": "Lettre attend ton clic"
+    },
+    "verschieben": {
+      "knopf": "Reporter «{{titel}}»",
+      "titel": "Reporter",
+      "morgen": "À demain",
+      "naechsteWoche": "À la semaine prochaine (lundi)",
+      "datum": "À une date …",
+      "ok": "Reporter",
+      "bis": "Afficher à nouveau le",
+      "erledigt": "Reporté au {{datum}}",
+      "fehler": "Non reporté"
+    },
+    "ziele": {
+      "titel": "Ma semaine",
+      "festlegen": "Fixer les objectifs",
+      "keine": "Aucun objectif n'est fixé pour toi.",
+      "beschreibung": "Objectifs par personne : nombres par semaine (lundi à dimanche), commandes en montant par mois. Vide = pas d'objectif.",
+      "person": "Personne",
+      "leads_neu": "Nouvelles demandes",
+      "termine": "Visites",
+      "gesendet": "Offres envoyées",
+      "auftrag_monat_rappen": "Commandes du mois",
+      "speichern": "Enregistrer",
+      "gespeichert": "Objectifs enregistrés",
+      "nichtGespeichert": "Objectifs non enregistrés",
+      "ungueltig": "Saisis des nombres entiers ou un montant comme 250'000",
+      "nurVerkauf": "Seulement la vente et les personnes avec objectifs",
+      "allePersonen": "Afficher toutes les personnes"
+    },
+    "teamHeute": {
+      "titel": "L'équipe aujourd'hui",
+      "halbtag": "demi-journée",
+      "abwesend": "absent·e",
+      "baustelle": "Chantier",
+      "kunde": "chez le client",
+      "service": "Service",
+      "da": "présent·e"
+    },
+    "wetter": {
+      "titel": "Météo sur les chantiers",
+      "achtung": "Attention",
+      "keine": "Pas encore de prévision",
+      "regen": "{{mm}} mm",
+      "wind": "vent {{kmh}} km/h",
+      "quelle": "Source : MétéoSuisse, mise à jour chaque heure",
+      "art": {
+        "sonne": "ensoleillé",
+        "wolken": "nuageux",
+        "regen": "pluie",
+        "schnee": "neige",
+        "unbekannt": "pas de prévision"
+      }
+    }
   },
   "kz": {
     "titel": "Indicateurs",
@@ -9416,7 +9529,8 @@
       "aeltere": "Plus anciens",
       "verteilen": "À attribuer",
       "kunde": "En attente du client",
-      "zurueck": "Mis de côté"
+      "zurueck": "Mis de côté",
+      "neu": "Tous ouverts"
     },
     "leer": {
       "warten": "Personne n’attend de réponse",
@@ -9427,7 +9541,8 @@
       "aeltere": "Aucun e-mail plus ancien trouvé",
       "verteilen": "Rien à attribuer",
       "kunde": "Tu n’attends aucun client",
-      "zurueck": "Rien mis de côté"
+      "zurueck": "Rien mis de côté",
+      "neu": "Aucun e-mail ouvert"
     },
     "art": {
       "anfrage": "Nouvelle demande",
