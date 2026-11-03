@@ -13938,6 +13938,9 @@ export type Database = {
       wartung_laeuft_bis: { Args: { p_jahre: number; p_start: string; p_stichtag?: string }; Returns: string }
       wartung_rechnung_erstellen: { Args: { p_id: string }; Returns: string }
       wartung_tarif: { Args: { p_kwp: number; p_paket: string }; Returns: number }
+      wetter_baustellen: { Args: Record<PropertyKey, never>; Returns: Json }
+      wetter_plz: { Args: Record<PropertyKey, never>; Returns: string[] }
+      wetter_speichern: { Args: { p_lauf?: string; p_zeilen: Json }; Returns: number }
       werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       wochenplan: { Args: { p_bis: string; p_von: string }; Returns: Json }

@@ -87,3 +87,15 @@ export function zielProzent(ist: number, ziel: number): number {
   if (ziel <= 0) return 0
   return Math.max(0, Math.min(100, Math.round((ist / ziel) * 100)))
 }
+
+/** Grobe Wetterart für das Symbol, aus den Werten statt aus dem MeteoSwiss-Code (der ist für uns zu fein). */
+export function wetterArt(w: {
+  tmax?: number
+  regen_mm?: number
+  regen_prozent?: number
+}): 'schnee' | 'regen' | 'sonne' | 'wolken' | 'unbekannt' {
+  if (w.tmax === undefined && w.regen_mm === undefined) return 'unbekannt'
+  if ((w.regen_mm ?? 0) >= 1) return (w.tmax ?? 10) <= 1 ? 'schnee' : 'regen'
+  if ((w.regen_prozent ?? 100) < 30 && (w.regen_mm ?? 0) < 0.2) return 'sonne'
+  return 'wolken'
+}

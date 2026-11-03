@@ -1,6 +1,6 @@
 import { mailVorbereiten } from '@/services/ausgang'
 import { supabase } from '@/services/supabase'
-import type { MeinTag, TeamPerson, ZielSchluessel } from '../types'
+import type { BaustellenWetter, MeinTag, TeamPerson, ZielSchluessel } from '../types'
 
 /** Datenzugriff «Mein Tag»: eine Abfrage für die ganze Seite, Aufgaben abhaken, Übersicht per Mail. */
 function db() {
@@ -67,4 +67,11 @@ export async function ladeZiele(): Promise<{
 export async function zieleSpeichern(person: string, ziele: Partial<Record<ZielSchluessel, number>>): Promise<void> {
   const { error } = await db().rpc('kennzahlen_ziele_setzen', { p_person: person, p_ziele: ziele })
   if (error) throw error
+}
+
+/** Meine Baustellen der nächsten Tage mit Wetter von MeteoSwiss (`wetter_baustellen`, M5 A). */
+export async function ladeWetter(): Promise<BaustellenWetter[]> {
+  const { data, error } = await db().rpc('wetter_baustellen')
+  if (error) throw error
+  return (data ?? []) as unknown as BaustellenWetter[]
 }

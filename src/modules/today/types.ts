@@ -98,3 +98,22 @@ export interface TeamPerson {
   halbtag?: boolean
   standort?: string
 }
+
+/** Ein Tag auf einer Baustelle mit Prognose (`wetter_baustellen`); ohne Prognose fehlen die Werte. */
+export interface BaustellenWetter {
+  datum: string
+  projekt_id: string
+  nummer?: string
+  titel?: string
+  ort?: string
+  plz?: string
+  leite_ich?: boolean
+  tmin?: number
+  tmax?: number
+  regen_mm?: number
+  regen_prozent?: number
+  wind_kmh?: number
+  symbol?: number
+  geholt_am?: string
+  achtung?: boolean
+}

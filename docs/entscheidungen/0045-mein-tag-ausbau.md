@@ -22,4 +22,13 @@ abhaken nichts direkt erledigen, und jede Rolle sah fast dasselbe. Neuentwurf al
 - **M4 A, Team heute** für alle (`team_heute`, läuft als Besitzer): Baustelle, beim Kunden, Service, da oder
   abwesend, nie mit Grund der Abwesenheit oder Betreff aus dem Kalender.
 - **M6 B:** Übersicht per Mail bleibt auf Knopfdruck.
-- **M5 A, Wetter** für Montage und Projektleitung: folgt, sobald die Quelle entschieden ist (M7).
+- **M5 A, Wetter** für Montage und Projektleitung, Quelle **M7 B MeteoSwiss Open Data** (gratis, ohne Schlüssel,
+  lokale Prognose je Postleitzahl auf data.geo.admin.ch, STAC-Sammlung `ch.meteoschweiz.ogd-local-forecasting`).
+  Der Zeitplan (Job `wetter`, stündlich) holt nur die Tageswerte für die PLZ der Einsätze der nächsten Tage und
+  der Standorte (`wetter_plz`) und speichert sie in `wetter_prognose` (`wetter_speichern`, nur Server). Die App
+  liest `wetter_baustellen()`: meine Einsätze (Team oder Projektleitung) je Tag mit Prognose und «Achtung».
+  Parameter-Codes, Anzahl Tage und Schwellen (Regen, Wind, Frost, Hitze) in `einstellungen.wetter` (nur
+  Administration), damit ein geänderter Code von MeteoSwiss ohne neue Version passt. Quelle wird auf der Karte
+  genannt (Bedingung von MeteoSwiss). In der Cloud-Sandbox ist data.geo.admin.ch gesperrt; der Abruf ist mit
+  Ersatz-Daten getestet (`_shared/wetter.test.ts`), der echte Abruf zeigt sich nach dem Hochladen unter
+  Einstellungen › Betrieb beim Job «wetter».

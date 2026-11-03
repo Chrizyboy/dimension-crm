@@ -35,6 +35,7 @@ import type { TagListeName, TagZeile } from '../types'
 import { TagesMail } from './TagesMail'
 import { TagKarte } from './TagKarte'
 import { TeamHeute } from './TeamHeute'
+import { WetterKarte } from './WetterKarte'
 import { ZieleKarte } from './ZieleKarte'
 
 /** Karten unter Termine und Aufgaben: Symbol und wohin «Alle anzeigen» führt. Leere Karten bleiben weg. */
@@ -189,6 +190,7 @@ export default function MeinTag({
           <div className="grid items-start gap-4 lg:grid-cols-2">
             <ZieleKarte ziele={d.ziele ?? null} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />
             <TeamHeute />
+            <WetterKarte />
           </div>
 
           {weitere.length > 0 && (

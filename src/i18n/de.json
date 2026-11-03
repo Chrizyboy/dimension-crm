@@ -6454,6 +6454,21 @@
       "kunde": "beim Kunden",
       "service": "Service",
       "da": "da"
+    },
+    "wetter": {
+      "titel": "Wetter auf den Baustellen",
+      "achtung": "Achtung",
+      "keine": "Noch keine Prognose",
+      "regen": "{{mm}} mm",
+      "wind": "{{kmh}} km/h Wind",
+      "quelle": "Quelle: MeteoSchweiz, stündlich aktualisiert",
+      "art": {
+        "sonne": "sonnig",
+        "wolken": "bewölkt",
+        "regen": "Regen",
+        "schnee": "Schnee",
+        "unbekannt": "keine Prognose"
+      }
     }
   },
   "kz": {

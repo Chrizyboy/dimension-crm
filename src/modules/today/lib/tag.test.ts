@@ -8,6 +8,7 @@ import {
   tageszeit,
   verschiebbar,
   vorname,
+  wetterArt,
   warum,
   zeileAlsText,
   zielProzent,
@@ -106,5 +107,15 @@ describe('Verschieben und Gründe (Ausbau 2.11.2026)', () => {
     expect(zielProzent(3, 4)).toBe(75)
     expect(zielProzent(9, 4)).toBe(100)
     expect(zielProzent(1, 0)).toBe(0)
+  })
+})
+
+describe('Wetter auf der Baustelle', () => {
+  it('leitet die Wetterart aus den Werten ab', () => {
+    expect(wetterArt({})).toBe('unbekannt')
+    expect(wetterArt({ tmax: 12, regen_mm: 6 })).toBe('regen')
+    expect(wetterArt({ tmax: 0, regen_mm: 3 })).toBe('schnee')
+    expect(wetterArt({ tmax: 18, regen_mm: 0, regen_prozent: 10 })).toBe('sonne')
+    expect(wetterArt({ tmax: 18, regen_mm: 0.4, regen_prozent: 50 })).toBe('wolken')
   })
 })

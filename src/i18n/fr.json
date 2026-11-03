@@ -6454,6 +6454,21 @@
       "kunde": "chez le client",
       "service": "Service",
       "da": "présent·e"
+    },
+    "wetter": {
+      "titel": "Météo sur les chantiers",
+      "achtung": "Attention",
+      "keine": "Pas encore de prévision",
+      "regen": "{{mm}} mm",
+      "wind": "vent {{kmh}} km/h",
+      "quelle": "Source : MétéoSuisse, mise à jour chaque heure",
+      "art": {
+        "sonne": "ensoleillé",
+        "wolken": "nuageux",
+        "regen": "pluie",
+        "schnee": "neige",
+        "unbekannt": "pas de prévision"
+      }
     }
   },
   "kz": {
