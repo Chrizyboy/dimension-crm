@@ -145,6 +145,15 @@ export const useZeiten = (von: string, bis: string, person: string | null) =>
 export const usePersonen = () =>
   useQuery({ queryKey: ['baustelle', 'personen'], enabled: an, staleTime: 10 * 60_000, queryFn: b.ladePersonen })
 
+/** Mitarbeitende, deren direkte Vorgesetzte ich bin (Personal-Akte): ich sehe ihre Zeiten. */
+export const useMeineMitarbeitenden = () =>
+  useQuery({
+    queryKey: ['baustelle', 'mitarbeitende'],
+    enabled: an,
+    staleTime: 10 * 60_000,
+    queryFn: b.ladeMeineMitarbeitenden,
+  })
+
 /** Nach einer Änderung alles zur Baustelle neu laden (auch Projekte und Service, die davon abhängen). */
 export function useNeuLaden() {
   const qc = useQueryClient()

@@ -81,7 +81,11 @@ function VisumDialog({ r, onSchliessen }: { r: VisumRechnung; onSchliessen: () =
             </tr>
           </tfoot>
         </table>
-        <Feld id="visum-bemerkung" label={t('rechnungen.visum.bemerkung')} hinweis={t('rechnungen.visum.bemerkungText')}>
+        <Feld
+          id="visum-bemerkung"
+          label={t('rechnungen.visum.bemerkung')}
+          hinweis={t('rechnungen.visum.bemerkungText')}
+        >
           <Textarea
             id="visum-bemerkung"
             rows={2}

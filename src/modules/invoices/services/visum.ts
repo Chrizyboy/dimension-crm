@@ -30,6 +30,7 @@ export async function ladeZumVisum(): Promise<VisumRechnung[]> {
 
 /** Erstvisum geben (ohne Bemerkung) oder eine Korrektur an die Buchhaltung melden (mit Bemerkung). */
 export async function visieren(id: string, bemerkung?: string): Promise<void> {
-  const r = await db().rpc('rechnung_visieren', { p_id: id, p_bemerkung: bemerkung?.trim() || undefined })
+  const text = bemerkung?.trim()
+  const r = await db().rpc('rechnung_visieren', text ? { p_id: id, p_bemerkung: text } : { p_id: id })
   if (r.error) throw r.error
 }

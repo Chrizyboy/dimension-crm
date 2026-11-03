@@ -17,7 +17,8 @@ export function hatRecht(anmeldung: MeineAnmeldung | null, recht: Recht): boolea
  */
 export function darfModul(modul: ModulMeta, anmeldung: MeineAnmeldung | null): boolean {
   if (!anmeldung) return true
-  const rechte: readonly Recht[] = modul.recht === undefined ? [] : typeof modul.recht === 'string' ? [modul.recht] : modul.recht
+  const rechte: readonly Recht[] =
+    modul.recht === undefined ? [] : typeof modul.recht === 'string' ? [modul.recht] : modul.recht
   if (rechte.length > 0 && !rechte.some((r) => hatRecht(anmeldung, r))) return false
   if (modul.immer || rechte.includes('admin') || hatRecht(anmeldung, 'gl')) return true
   return anmeldung.bereiche.length === 0 || anmeldung.bereiche.includes(modul.id)

@@ -3,7 +3,15 @@ import type { Sprache } from '@/types/modul'
 import { supabase } from './supabase'
 
 /** Fehlerarten, die die Anmeldeseite verständlich anzeigt. */
-export type Anmeldefehler = 'nicht_freigeschaltet' | 'code_falsch' | 'zu_oft' | 'netzwerk' | 'unbekannt'
+export type Anmeldefehler =
+  | 'nicht_freigeschaltet'
+  | 'code_falsch'
+  | 'zu_oft'
+  | 'netzwerk'
+  | 'unbekannt'
+  | 'link_ungueltig'
+  | 'email_vergeben'
+  | 'email_ungueltig'
 
 /** Übersetzt Fehler von Supabase Auth in eine der bekannten Fehlerarten. */
 export function anmeldefehlerVon(
@@ -33,6 +41,41 @@ export async function sendeAnmeldecode(email: string, sprache: Sprache): Promise
     options: { shouldCreateUser: true, data: { sprache } },
   })
   return error ? anmeldefehlerVon(error) : null
+}
+
+/** Schlüssel des Registrier-Links aus der Adresse (`#/?registrieren=…`), sonst null. */
+export function registrierSchluessel(): string | null {
+  const hash = window.location.hash
+  const frage = hash.indexOf('?')
+  if (frage < 0) return null
+  const wert = new URLSearchParams(hash.slice(frage + 1)).get('registrieren')
+  return wert && /^[a-f0-9]{32,128}$/.test(wert) ? wert : null
+}
+
+/** Vorname und Sprache zum Registrier-Link, oder null, wenn der Link nicht (mehr) gilt. */
+export async function pruefeRegistrierLink(schluessel: string): Promise<{ vorname: string; sprache: Sprache } | null> {
+  if (!supabase) return null
+  const { data, error } = await supabase.rpc('registrier_link_pruefen', { p_schluessel: schluessel })
+  if (error) return null
+  return (data as { vorname: string; sprache: Sprache } | null) ?? null
+}
+
+/**
+ * Registrier-Link einlösen: setzt die private Mailadresse der Person (einmal), danach schickt die Anmeldeseite den
+ * Code an diese Adresse. Der Schlüssel verschwindet aus der Adresse.
+ */
+export async function loeseRegistrierLinkEin(schluessel: string, email: string): Promise<Anmeldefehler | null> {
+  if (!supabase) return 'netzwerk'
+  const { error } = await supabase.rpc('registrier_link_einloesen', { p_schluessel: schluessel, p_email: email })
+  if (error) {
+    const m = error.message
+    if (m === 'registrierung.email_vergeben') return 'email_vergeben'
+    if (m === 'registrierung.email_ungueltig') return 'email_ungueltig'
+    if (m === 'registrierung.link_ungueltig') return 'link_ungueltig'
+    return anmeldefehlerVon(error)
+  }
+  window.history.replaceState(null, '', `${window.location.pathname}#/`)
+  return null
 }
 
 /** Meldet mit dem Code aus der Mail an. */

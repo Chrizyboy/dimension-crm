@@ -308,7 +308,17 @@
       "code_falsch": "Le code est incorrect ou expiré. Demande un nouveau code.",
       "zu_oft": "Trop de tentatives. Réessaie dans une minute.",
       "netzwerk": "Pas de connexion au serveur. Vérifie Internet.",
-      "unbekannt": "La connexion a échoué. Merci de réessayer."
+      "unbekannt": "La connexion a échoué. Merci de réessayer.",
+      "link_ungueltig": "Ce lien n’est plus valable. Demande-en un nouveau.",
+      "email_vergeben": "Cette adresse appartient déjà à une autre personne du CRM.",
+      "email_ungueltig": "Merci de saisir une adresse e-mail valable."
+    },
+    "registrieren": {
+      "titel": "Bienvenue, {{vorname}}",
+      "text": "Saisis ton adresse e-mail. Tu reçois un code pour te connecter.",
+      "ungueltig": "Ce lien n’est plus valable. Demande un nouveau lien ou connecte-toi avec ton adresse e-mail.",
+      "email": "Ton adresse e-mail",
+      "emailHinweis": "Une adresse privée convient aussi. Elle te servira à te connecter."
     }
   },
   "benutzer": {
@@ -348,7 +358,19 @@
     "bereicheAlle": "Désactivé : affiche tous les domaines, comme le rôle.",
     "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie.",
     "kurzzeichen": "Initiales",
-    "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}."
+    "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}.",
+    "link": {
+      "titel": "Lien d’inscription pour {{name}}",
+      "text": "Envoie ce lien par WhatsApp ou SMS. La personne l’ouvre sur son téléphone, saisit son adresse e-mail et la confirme avec le code.",
+      "feld": "Lien",
+      "hinweis": "Le lien est valable 14 jours et une seule fois. Un nouveau lien annule l’ancien.",
+      "kopieren": "Copier le lien",
+      "whatsapp": "Par WhatsApp",
+      "erstellen": "Créer un lien d’inscription",
+      "ohneMail": "Sans e-mail: lien pour le téléphone",
+      "ohneMailText": "Pour les personnes avec une adresse privée (p. ex. montage): elles s’inscrivent elles-mêmes via un lien personnel.",
+      "nachricht": "Salut {{name}}, voici ton accès à Dimension Work. Ouvre le lien sur ton téléphone et saisis ton adresse e-mail: {{adresse}}"
+    }
   },
   "rechte": {
     "basis": "Données de base",
@@ -2009,7 +2031,10 @@
     "grossprojekt_ungueltig": "Les données ne sont pas valables.",
     "grossprojekt_text_fehlt": "Merci de saisir un texte.",
     "rechnung_visum_kein_recht": "Cette facture est visée par la direction du projet ou la comptabilité.",
-    "rechnung_visum_nur_entwurf": "Le visa n’est possible que pour les brouillons."
+    "rechnung_visum_nur_entwurf": "Le visa n’est possible que pour les brouillons.",
+    "registrierung_schon_angemeldet": "Cette personne est déjà connectée et n’a pas besoin de lien.",
+    "registrierung_kein_recht": "Les liens d’inscription sont créés par l’administration.",
+    "registrierung_name_fehlt": "Merci de saisir un nom."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",

@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { Karte } from '@/components/ui/karte'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
+import { hatRecht } from '@/lib/rechte'
 import { supabase } from '@/services/supabase'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import type { ModulMeta } from '@/types/modul'
 import { useBenutzerDaten } from '../hooks/useBenutzer'
@@ -24,7 +26,8 @@ import { Verbindungen } from './Verbindungen'
 import { Zustaendigkeiten } from './Zustaendigkeiten'
 
 /**
- * Einstellungen > Benutzer und Rollen (nur Administration).
+ * Einstellungen > Benutzer und Rollen. Administration ändert, Geschäftsleitung sieht nur (43A): ihr fehlt
+ * «Einladen», ein Hinweis sagt es, und die Datenbank lehnt Änderungen ohne Recht «admin» ab.
  * Wer hier fehlt, kann sich nicht anmelden: Ein Login entsteht nur für erfasste, aktive Personen.
  */
 export default function Benutzerverwaltung({
@@ -43,6 +46,9 @@ export default function Benutzerverwaltung({
   const [einladen, setEinladen] = useState(false)
   const [person, setPerson] = useState<Person | null>(null)
   const [rolle, setRolle] = useState<Rolle | null>(null)
+  // Ohne Anmeldung (Vorschau) wie Administration, damit alles zu sehen ist.
+  const ich = useAnmeldung((z) => z.ich)
+  const nurLesen = ich !== null && !hatRecht(ich, 'admin')
 
   if (!supabase) {
     return (
@@ -62,17 +68,20 @@ export default function Benutzerverwaltung({
         titel={t('benutzer.titel')}
         beschreibung={t('benutzer.beschreibung')}
         aktionen={
-          <Button
-            onClick={() => {
-              setEinladen(true)
-            }}
-            disabled={!rollen.data}
-          >
-            <UserPlus />
-            {t('benutzer.einladen')}
-          </Button>
+          !nurLesen && (
+            <Button
+              onClick={() => {
+                setEinladen(true)
+              }}
+              disabled={!rollen.data}
+            >
+              <UserPlus />
+              {t('benutzer.einladen')}
+            </Button>
+          )
         }
       />
+      {nurLesen && <p className="bg-info-soft text-info rounded-md p-3 text-sm">{t('rechte.nurLesen')}</p>}
 
       <Reiter value={reiter} onValueChange={onReiter} className="flex flex-col gap-4">
         <ReiterListe>

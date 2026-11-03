@@ -20,7 +20,9 @@ interface BereicheAuswahlProps {
 export function BereicheAuswahl({ id, module, wert, onChange }: BereicheAuswahlProps) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
-  const waehlbar = module.filter((m) => !m.immer && !(m.recht === 'admin' || (Array.isArray(m.recht) && m.recht.includes('admin'))))
+  const waehlbar = module.filter(
+    (m) => !m.immer && !(m.recht === 'admin' || (Array.isArray(m.recht) && m.recht.includes('admin'))),
+  )
   return (
     <div className="grid gap-x-4 gap-y-2 sm:grid-cols-2">
       {waehlbar.map((m) => {
@@ -37,7 +39,9 @@ export function BereicheAuswahl({ id, module, wert, onChange }: BereicheAuswahlP
             <Label htmlFor={feld} className="flex min-w-0 items-center gap-1.5 font-normal">
               <ModulIcon name={m.icon} className="text-muted-foreground size-3.5 shrink-0" />
               <span className="truncate">{m.titel[sprache]}</span>
-              {typeof m.recht === 'string' && <span className="text-muted-foreground text-xs">({t(`rechte.${m.recht}`)})</span>}
+              {typeof m.recht === 'string' && (
+                <span className="text-muted-foreground text-xs">({t(`rechte.${m.recht}`)})</span>
+              )}
             </Label>
           </div>
         )
