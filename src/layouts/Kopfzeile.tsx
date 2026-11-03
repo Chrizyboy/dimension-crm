@@ -21,6 +21,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
 import { UpdateKnopf } from './Aktualisierung'
 import { Glocke } from './Benachrichtigungen'
+import { HilfeKnopf } from './HilfeKnopf'
 
 /** Obere Leiste: Suche/Befehlspalette, Assistent (Ctrl J), Sprache, Benachrichtigungen, Konto-Menü. */
 export function Kopfzeile() {
@@ -86,6 +87,7 @@ export function Kopfzeile() {
         </div>
 
         <UpdateKnopf />
+        <HilfeKnopf />
         <Glocke />
 
         <Menue>

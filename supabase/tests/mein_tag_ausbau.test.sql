@@ -1,4 +1,4 @@
--- Prüft den Ausbau von «Mein Tag» (2.11.2026, Entscheid 0041): Verschieben (Aufgabe neu fällig, Nachfassen nur
+-- Prüft den Ausbau von «Mein Tag» (2.11.2026, Entscheid 0045): Verschieben (Aufgabe neu fällig, Nachfassen nur
 -- für mich ausgeblendet), Grund «seit X Tagen», Freigaben im Ausgangskorb, Wochenziele (nur Admin/Finanzen setzen)
 -- und «Team heute» ohne Grund der Abwesenheit.
 -- Ausführen: npm run db:test
