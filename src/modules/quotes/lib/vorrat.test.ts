@@ -1,75 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import type { Eingang, Offerte } from '../types'
+import type { Eingang } from '../types'
+import { offerte } from './testOfferte'
 import { arbeitstageZwischen, vorratKarten, vorratZahlen } from './vorrat'
 
 const heute = '2026-11-02' // Montag
-
-function offerte(x: Partial<Offerte>): Offerte {
-  return {
-    id: 'o1',
-    nummer: '200031',
-    titel: null,
-    status: 'offeriert',
-    stand: 'offeriert',
-    sprache: 'de',
-    standort: 'muri',
-    standortId: null,
-    angebotAm: '2026-10-14',
-    angebotAmFrueher: [],
-    faelligAm: '2026-11-09',
-    betragRappen: 2_735_000,
-    kwp: 11.2,
-    anzahlModule: null,
-    wechselrichter: null,
-    batterie: null,
-    entscheid: null,
-    entscheidAm: null,
-    vertagtGrund: null,
-    verlustgrund: null,
-    nachfassenAm: '2026-11-09',
-    verantwortlichId: null,
-    verantwortlichName: 'Andy',
-    eturnityId: null,
-    versionen: [],
-    wirtschaftlichkeit: null,
-    verkaufschanceId: null,
-    kontaktId: 'k1',
-    kundennummer: 1,
-    name: 'Brunner',
-    telefon: null,
-    email: null,
-    plz: '5630',
-    ort: 'Muri AG',
-    strasse: null,
-    imEingang: false,
-    projektId: null,
-    werkvertragId: null,
-    werkvertragStatus: null,
-    geaendertAm: null,
-    suchtext: '',
-    gueltigBis: null,
-    abgelaufen: false,
-    varianten: [],
-    variante: null,
-    chance: 50,
-    chanceProzent: null,
-    entscheidErwartet: null,
-    konkurrenz: null,
-    rabattProzent: null,
-    unterlagen: {},
-    nachfassSchritt: 0,
-    nachfassErgebnis: 'gesendet',
-    freigabe: null,
-    freigabeGrund: null,
-    phase: 'offeriert',
-    terminAm: null,
-    zurOfferteAm: null,
-    verkaufPersonName: null,
-    eingangStatus: null,
-    rueckfrage: null,
-    ...x,
-  }
-}
 
 function eingang(x: Partial<Eingang>): Eingang {
   return {

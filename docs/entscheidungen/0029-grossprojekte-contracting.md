@@ -124,3 +124,22 @@ https://claude.ai/artifact/Fpvh11MQ2U9Vmjz4tTqJVD.
 
 **Offen (Fragen an Chris):** Verdienst (Bauauftrag, Provision), Ziel 2027, Unterlagen von Youdera, Potenzialanalyse als
 PDF und Dossier an Youdera über den Ausgangskorb (zweiter Schritt).
+
+## Nachtrag 3.11.2026: Potenzialanalyse, Dossier, Besichtigung
+
+**Antworten von Chris:** Ein Grossprojekt bleibt bis zum Vertrag im Modul. Wir verdienen mit «Bauen und warten»
+(Youdera finanziert und besitzt die Anlage). Das Ziel 2027 sind 2 MWp unterschrieben. Die Unterlagen-Liste bleibt wie
+in der Vorschau. Die Potenzialanalyse für den Kunden nennt nur Dimension Solaire.
+
+**Entscheid:**
+
+- Der Rechner zeigt zusätzlich unseren Anteil: Marge am Bau (`annahmen.marge_prozent`) und Wartung pro Jahr
+  (`annahmen.betrieb_prozent` der Investition). Beides kommt nie ins PDF für den Kunden.
+- Die **Potenzialanalyse** ist ein PDF in der Sprache des Kunden, gebaut in der App (`services/potenzialPdf.ts`) aus
+  denselben Zahlen wie der Rechner. Die **Mail an den Kunden** geht über den Ausgangskorb, «Senden» ist die Freigabe.
+  Danach steht sie im Verlauf.
+- Das **Dossier an Youdera** (`services/dossierPdf.ts`) enthält Objekt, Anlage, Verbrauch, Kontakte, Unterlagen und
+  Besichtigung. Es geht an `pipeline.youdera_mail` (Annahmen, nur Administration) und setzt «Dossier gesendet». Fehlt
+  das Einverständnis des Kunden, steht ein Hinweis im Fenster.
+- Die **Besichtigung** ist eine Checkliste in der Akte (Spalte `besichtigung`, Punkte in `pipeline.besichtigung`), mit
+  grossen Knöpfen fürs Handy. «Abschliessen» schreibt das Ergebnis in den Verlauf.
