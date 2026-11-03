@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
 import { formatChf, parseChf } from '@/lib/format'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { usePersonen } from '../hooks/useKampagnen'
@@ -148,7 +149,7 @@ export function KampagneForm({
             id="kampagne-verantwortlich"
             optionen={[
               { wert: NIEMAND, text: '–' },
-              ...personen.map((p) => ({ wert: p.id, text: `${p.name} (${p.kuerzel})` })),
+              ...personen.map((p) => ({ wert: p.id, text: `${p.name} (${kurzzeichenVon(p)})` })),
             ]}
             value={k.verantwortlich_id ?? NIEMAND}
             onValueChange={(p) => {

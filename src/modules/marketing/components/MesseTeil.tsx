@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/schalter'
 import { formatDatum } from '@/lib/format'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { useKampagnenLeads, usePersonen } from '../hooks/useKampagnen'
@@ -38,12 +39,18 @@ export function MesseTeil({ kampagne }: { kampagne: Werbekampagne }) {
     speichern({ checkliste: punkte.map((x, j) => (j === i ? { ...x, ...p } : x)) })
   const setzeDienst = (i: number, d: Partial<Standdienst>) =>
     speichern({ standdienst: dienst.map((x, j) => (j === i ? { ...x, ...d } : x)) })
-  const kuerzel = (ids: string[]) => ids.map((id) => personen.find((p) => p.id === id)?.kuerzel ?? '').join(' ')
+  // Anzeige immer mit dem Kurzzeichen («LP»), nie dem technischen `kuerzel`
+  const zeichen = (ids: string[]) =>
+    ids
+      .map((id) => personen.find((p) => p.id === id))
+      .filter((p) => p !== undefined)
+      .map(kurzzeichenVon)
+      .join(' ')
   const ausKuerzeln = (text: string) =>
     text
       .toUpperCase()
       .split(/[\s,]+/)
-      .map((k) => personen.find((p) => p.kuerzel.toUpperCase() === k)?.id)
+      .map((k) => personen.find((p) => kurzzeichenVon(p).toUpperCase() === k)?.id)
       .filter((x): x is string => Boolean(x))
 
   const besucher = new Set(leads.map((l) => l.kontakt_id))
@@ -104,7 +111,7 @@ export function MesseTeil({ kampagne }: { kampagne: Werbekampagne }) {
                   key={`${d.tag}-${String(personen.length)}-${d.personen.join()}`}
                   aria-label={t('werbung.messe.personen')}
                   placeholder={t('werbung.messe.kuerzelHinweis')}
-                  defaultValue={kuerzel(d.personen)}
+                  defaultValue={zeichen(d.personen)}
                   onBlur={(e) => {
                     const ids = ausKuerzeln(e.target.value)
                     if (ids.join() !== d.personen.join()) void setzeDienst(i, { personen: ids })
@@ -132,7 +139,7 @@ export function MesseTeil({ kampagne }: { kampagne: Werbekampagne }) {
                   onCheckedChange={(c) => {
                     void setzePunkt(i, {
                       erledigt: c === true,
-                      von: ich?.kuerzel ?? null,
+                      von: ich ? kurzzeichenVon(ich) : null,
                       am: new Date().toISOString(),
                     })
                   }}

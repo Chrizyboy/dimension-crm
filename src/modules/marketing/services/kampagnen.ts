@@ -87,7 +87,7 @@ export async function ladeBudget(jahr: number): Promise<BudgetZeile[]> {
 }
 
 const LEAD =
-  'id, nummer, kontakt_id, kampagne_id, quelle, eingang_am, stufe, tour_person_id, kontakte(vorname, nachname, firma, email), objekte(ort)'
+  'id, nummer, kontakt_id, kampagne_id, quelle, eingang_am, stufe, tour_person_id, kontakte!verkaufschancen_kontakt_id_fkey(vorname, nachname, firma, email), objekte(ort)'
 
 type LeadRoh = Omit<KampagnenLead, 'name' | 'ort' | 'email'> & {
   kontakte: { vorname: string | null; nachname: string | null; firma: string | null; email: string | null } | null
@@ -257,10 +257,10 @@ export async function werbemittelPapierkorb(id: string) {
 }
 
 /** Personen für Standdienst und Verantwortlich (aktiv, ohne Montage-Ansicht). */
-export async function ladePersonen(): Promise<{ id: string; name: string; kuerzel: string }[]> {
+export async function ladePersonen(): Promise<{ id: string; name: string; kurzzeichen: string | null }[]> {
   const { data, error } = await db()
     .from('personen')
-    .select('id, name, kuerzel')
+    .select('id, name, kurzzeichen')
     .eq('aktiv', true)
     .is('geloescht_am', null)
     .order('name')
