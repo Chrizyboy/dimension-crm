@@ -7317,13 +7317,18 @@
   },
   "marketing": {
     "titel": "Marketing",
-    "beschreibung": "Kunden anschreiben, Social Media und Newsletter. Was nach aussen geht, gibst du mit einem Klick frei.",
+    "beschreibung": "Kampagnen, Messen, Kunden anschreiben, Social Media und Newsletter mit Ergebnis. Was nach aussen geht, gibst du mit einem Klick frei.",
     "ansicht": {
+      "uebersicht": "Übersicht",
+      "kalender": "Kalender",
+      "kampagnen": "Kampagnen",
+      "messen": "Messen & Events",
       "anschreiben": "Kunden anschreiben",
       "social": "Social Media",
       "newsletter": "Newsletter",
-      "vorlagen": "Vorlagen",
-      "empfehlungen": "Empfehlungen"
+      "empfehlungen": "Empfehlungen",
+      "mediathek": "Mediathek",
+      "vorlagen": "Vorlagen"
     },
     "gruppe": {
       "interessent": "Interessent",
@@ -7349,7 +7354,8 @@
       "ohne_batterie": "Ohne Batterie",
       "ohne_wallbox": "Ohne Wallbox",
       "ohne_waermepumpe": "Ohne Wärmepumpe",
-      "alt": "Anlage ≥ 3 Jahre"
+      "alt": "Anlage ≥ 3 Jahre",
+      "oel_gas": "Öl- oder Gasheizung"
     },
     "filter": {
       "suche": "Name, Ort, Mail, Kundennummer",
@@ -7455,7 +7461,9 @@
         "wird_veroeffentlicht": "Wird veröffentlicht",
         "veroeffentlicht": "Veröffentlicht",
         "fehler": "Fehler",
-        "erledigt": "Erledigt"
+        "erledigt": "Erledigt",
+        "idee": "Idee",
+        "zur_freigabe": "Zur Freigabe"
       },
       "thema": "Thema",
       "idee": "Idee / Inhalt",
@@ -11872,5 +11880,268 @@
     "ausser": "Alle ausser {{wert}}",
     "suchen": "Suchen …",
     "keineTreffer": "Nichts gefunden"
+  },
+  "werbung": {
+    "speichern": "Speichern",
+    "papierkorb": "In den Papierkorb",
+    "oeffnen": "Öffnen",
+    "ok": "OK",
+    "art": {
+      "aktion": "Aktion",
+      "messe": "Messe / Event",
+      "online": "Online-Werbung",
+      "empfehlung": "Empfehlungen",
+      "newsletter": "Newsletter",
+      "social": "Social Media",
+      "gekaufte_leads": "Gekaufte Leads"
+    },
+    "status": {
+      "idee": "Idee",
+      "vorbereitung": "In Vorbereitung",
+      "laeuft": "Läuft",
+      "abgeschlossen": "Abgeschlossen"
+    },
+    "kanal": {
+      "online": "Online",
+      "messe": "Messen",
+      "gekaufte_leads": "Gekaufte Leads",
+      "druck": "Druck und Flyer",
+      "social": "Social Media",
+      "gutschriften": "Gutschriften Empfehlungen",
+      "sonstiges": "Sonstiges"
+    },
+    "sprache": {
+      "de": "Deutsch",
+      "fr": "Französisch",
+      "de_fr": "Deutsch und Französisch"
+    },
+    "ton": {
+      "info": "Tipp",
+      "warnung": "Bald",
+      "kritisch": "Jetzt"
+    },
+    "feld": {
+      "name": "Name",
+      "art": "Art",
+      "status": "Stand",
+      "sprache": "Sprache",
+      "ziel": "Ziel",
+      "start_am": "Start",
+      "ende_am": "Ende",
+      "ziel_leads": "Ziel Leads",
+      "budget": "Budget (CHF)",
+      "verantwortlich": "Verantwortlich",
+      "ort": "Ort",
+      "stand": "Stand-Nummer",
+      "notiz": "Notiz",
+      "zeitraum": "Zeitraum"
+    },
+    "kampagne": {
+      "neu": "Neue Kampagne",
+      "keine": "Keine Kampagne",
+      "gehoertZu": "Gehört zur Kampagne",
+      "kennzeichen": "Kennzeichen:",
+      "kennzeichenHinweis": "Im Website-Formular als «Kampagne» oder im Inserat als «Kampagne: …» angeben, dann ordnet das CRM jede Anfrage dieser Kampagne zu.",
+      "leer": "Keine Kampagnen",
+      "leerText": "Eine Kampagne hat ein Ziel, einen Zeitraum und zeigt, wie viele Leads und Aufträge sie bringt."
+    },
+    "akte": {
+      "ergebnis": "Ergebnis",
+      "messe": "Messe",
+      "angaben": "Angaben"
+    },
+    "ergebnis": {
+      "trichter": "Vom Kontakt zum Auftrag",
+      "erreicht": "Erreicht",
+      "geoeffnet": "Geöffnet",
+      "geklickt": "Geklickt",
+      "leads": "Leads",
+      "offerten": "Offerten",
+      "auftraege": "Aufträge",
+      "auftragswert": "Auftragswert",
+      "kostenKurz": "Kosten",
+      "proLead": "Pro Lead",
+      "ziel": "{{ist}} von {{ziel}} Leads.",
+      "wert": "Auftragswert {{wert}}.",
+      "kosten": "Kosten {{kosten}} von {{budget}} Budget, {{proLead}} pro Lead.",
+      "versaende": "Versände",
+      "versand": "{{gesendet}} gesendet · {{geoeffnet}} geöffnet · {{geklickt}} geklickt · {{leads}} Leads · {{abgemeldet}} abgemeldet",
+      "anzahl": "{{anzahl}} Empfänger",
+      "leadsTitel": "Leads ({{anzahl}})",
+      "keineLeads": "Noch keine Leads aus dieser Kampagne.",
+      "rechnungen": "Rechnungen aus AbaNinja",
+      "keineRechnungen": "Noch keine Rechnung zugeordnet (Übersicht › Kosten zuordnen)."
+    },
+    "messe": {
+      "neu": "Neue Messe",
+      "leer": "Keine Messen",
+      "leerText": "Messen und Events mit Standdienst, Checkliste und Lead-Erfassung am Handy.",
+      "leadErfassen": "Lead am Stand erfassen",
+      "danke": "Dankes-Mail an Besucher ({{anzahl}})",
+      "standdienst": "Standdienst",
+      "ohneDatum": "Erst Start und Ende unter «Angaben» setzen.",
+      "von": "Von",
+      "bis": "Bis",
+      "personen": "Personen",
+      "kuerzelHinweis": "Kürzel, z. B. LP FS",
+      "checkliste": "Checkliste ({{erledigt}} von {{von}})",
+      "erfassen": "Lead erfassen: {{name}}",
+      "erfassenInfo": "Funktioniert auch ohne Netz; der Lead geht mit, sobald wieder Empfang ist.",
+      "wartend": "{{anzahl}} Lead(s) warten im Gerät auf Empfang.",
+      "speichernNaechster": "Speichern und nächster",
+      "sprache": "Sprache",
+      "interesse": "Interesse",
+      "termin": "Wünscht einen Termin",
+      "newsletter": "Newsletter erwünscht (Einwilligung)",
+      "feld": {
+        "vorname": "Vorname",
+        "nachname": "Nachname",
+        "telefon": "Telefon",
+        "email": "E-Mail",
+        "plz": "PLZ",
+        "ort": "Ort",
+        "notiz": "Notiz"
+      }
+    },
+    "kalender": {
+      "zurueck": "Vorheriger Monat",
+      "weiter": "Nächster Monat",
+      "legende": "Legende",
+      "mehr": "+{{anzahl}} weitere",
+      "art": {
+        "post": "Post",
+        "mail": "Mail / Newsletter",
+        "messe": "Messe",
+        "frist": "Kampagnen-Ende",
+        "thema": "Thema des Monats"
+      }
+    },
+    "uebersicht": {
+      "kennzahlen": "Kennzahlen Marketing",
+      "leadsJahr": "Leads {{jahr}}",
+      "auftraegeJahr": "Aufträge {{jahr}}",
+      "laufend": "Laufende Kampagnen",
+      "heute": "Heute zu tun",
+      "nichtsZuTun": "Alles erledigt, nichts Dringendes.",
+      "meineLeads": "Deine Leads aus Marketing",
+      "naechste": "Nächste 14 Tage",
+      "nichtsGeplant": "Nichts geplant.",
+      "quellen": "Woher kommen die Aufträge? ({{jahr}})",
+      "quelle": "Quelle",
+      "ohneQuelle": "Ohne Quelle",
+      "budget": "Budget {{jahr}}",
+      "budgetSumme": "{{kosten}} von {{budget}} ausgegeben"
+    },
+    "vorschlag": {
+      "freigeben": "{{anzahl}} Post(s) warten auf deine Freigabe.",
+      "vonHand": "{{anzahl}} Post(s) jetzt von Hand posten und Link eintragen.",
+      "postFehler": "{{anzahl}} Post(s) mit Fehler beim Veröffentlichen.",
+      "kosten": "{{anzahl}} Rechnung(en) sehen nach Werbung aus: Kampagne zuordnen.",
+      "messe": "{{name}} in {{tage}} Tagen: noch {{offen}} Punkte auf der Checkliste.",
+      "messeDanke": "{{name}} ist vorbei: Dankes-Mail an die Besucher senden.",
+      "ohneLeads": "{{name}} läuft seit drei Wochen ohne Lead: Kennzeichen im Inserat prüfen.",
+      "nachbestellen": "{{name}}: nur noch {{bestand}} an Lager, nachbestellen.",
+      "thema": "Thema des Monats «{{thema}}»: noch kein Post geplant."
+    },
+    "kosten": {
+      "titel": "Kosten zuordnen ({{anzahl}})",
+      "info": "Lieferantenrechnungen aus AbaNinja, die nach Werbung aussehen. Zuordnen zeigt die Kosten in der Kampagne und im Budget.",
+      "kanal": "Kanal",
+      "zuordnen": "Zuordnen",
+      "keineWerbung": "Keine Werbung"
+    },
+    "mediathek": {
+      "fotos": "Fotos aus Rapporten",
+      "filter": "Fotos filtern",
+      "nur": {
+        "erlaubt": "Für Werbung erlaubt",
+        "titel": "Titelbilder",
+        "batterie": "Mit Batterie"
+      },
+      "leer": "Keine Fotos",
+      "leerText": "Fotos kommen aus den Rapporten der Montage; für Werbung nur, wenn der Kunde es erlaubt hat.",
+      "alt": "Anlage in {{ort}}",
+      "erlaubt": "Erlaubt",
+      "nichtErlaubt": "Nicht erlaubt",
+      "batterie": "Batterie",
+      "titelbild": "Als Titelbild markieren",
+      "erlauben": "Erlaubnis eintragen",
+      "entziehen": "Erlaubnis entziehen",
+      "grundErlauben": "Wie hat der Kunde zugestimmt?",
+      "grundEntziehen": "Warum entziehen?"
+    },
+    "mittel": {
+      "titel": "Werbemittel",
+      "neu": "Neues Werbemittel",
+      "leer": "Noch keine Werbemittel erfasst.",
+      "name": "Name",
+      "art": "Art",
+      "version": "Version",
+      "link": "Datei (SharePoint-Link)",
+      "bestand": "Bestand",
+      "mindestbestand": "Mindestbestand",
+      "linkFehler": "Der Link muss mit https:// beginnen.",
+      "knapp": "unter {{min}}",
+      "oeffnen": "Öffnen",
+      "arten": {
+        "flyer": "Flyer",
+        "broschuere": "Broschüre",
+        "rollup": "Roll-up",
+        "logo": "Logo",
+        "vorlage": "Vorlage",
+        "sonstiges": "Sonstiges"
+      }
+    },
+    "social": {
+      "board": "Posts",
+      "idee": "Idee festhalten",
+      "spalteLeer": "Nichts hier.",
+      "spalte": {
+        "ideen": "Ideen",
+        "entwurf": "Entwurf",
+        "freigabe": "Zur Freigabe",
+        "geplant": "Geplant",
+        "veroeffentlicht": "Veröffentlicht"
+      },
+      "vonHand": "von Hand",
+      "zurFreigabe": "Zur Freigabe senden",
+      "gepostet": "Gepostet",
+      "gepostetTitel": "Von Hand gepostet",
+      "gepostetInfo": "Links zu den Beiträgen eintragen (freiwillig). Der Post gilt danach als veröffentlicht.",
+      "linkHinweis": "Link zum Beitrag"
+    },
+    "newsletter": {
+      "ergebnis": "{{geoeffnet}} geöffnet · {{geklickt}} geklickt · {{abgemeldet}} abgemeldet · {{leads}} Leads",
+      "geplant": "Geplant für {{wann}}",
+      "geplantFeld": "Geplant für",
+      "geplantHinweis": "Erscheint im Kalender; gesendet wird erst mit Klick."
+    },
+    "pause": {
+      "beachten": "Werbe-Pause {{tage}} Tage beachten ({{anzahl}} ruhen)"
+    },
+    "zielgruppe": {
+      "titel": "Gespeicherte Zielgruppen",
+      "leer": "keine",
+      "speichern": "Filter als Zielgruppe speichern",
+      "name": "Name der Zielgruppe",
+      "entfernen": "{{name}} entfernen"
+    },
+    "planung": {
+      "titel": "Planung",
+      "nurAdmin": "Die Planung ändert nur die Administration.",
+      "budget": "Budget {{jahr}} je Kanal (CHF)",
+      "themen": "Thema je Monat (DE / FR)",
+      "thema": "Thema Monat {{monat}} {{sprache}}",
+      "checkliste": "Checkliste Messe",
+      "jeZeile": "Ein Punkt pro Zeile",
+      "werbepause": "Werbe-Pause (Tage)",
+      "werbepauseHinweis": "Wer kürzlich angeschrieben wurde, bekommt so lange keine Serien-Mail.",
+      "stichworte": "Stichworte für Werbe-Rechnungen",
+      "stichworteHinweis": "Durch Komma getrennt; Rechnungen mit diesen Wörtern erscheinen unter «Kosten zuordnen».",
+      "danke": "Dankes-Mail Messe, Betreff",
+      "dankeText": "Dankes-Mail Messe, Text",
+      "dankePlatzhalter": "Platzhalter: {Messe}, {Anrede}, {Absender}",
+      "datenschutz": "Hinweis unter gezählten Mails"
+    }
   }
 }

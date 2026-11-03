@@ -16,6 +16,7 @@ import { newsletterPruefen } from '../lib/texte'
 import { fuellen } from '../lib/zielgruppe'
 import { marketingMitKi, textDa } from '../lib/kiTexte'
 import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
+import { KampagneWahl } from './KampagneWahl'
 import { abmeldeLink, ladeEmpfaenger, newsletterPapierkorb, senden, speichereNewsletter } from '../services/marketing'
 import { GRUPPEN, type Gruppe, type Newsletter, type NewsletterSegment, type Sprache } from '../types'
 
@@ -38,6 +39,8 @@ export function NewsletterEditor({
   const { laeuft, aus } = useAktion()
   const [id, setId] = useState(newsletter.id)
   const [thema, setThema] = useState(newsletter.thema ?? '')
+  const [kampagne, setKampagne] = useState<string | null>(newsletter.kampagne_id ?? null)
+  const [geplant, setGeplant] = useState(newsletter.geplant_am ?? '')
   const [segment, setSegment] = useState<NewsletterSegment>(
     newsletter.segment ?? { gruppen: ['kunde'], einzelne: true },
   )
@@ -71,6 +74,8 @@ export function NewsletterEditor({
         betreff_fr: texte.fr.betreff,
         text_de: texte.de.text,
         text_fr: texte.fr.text,
+        kampagne_id: kampagne,
+        geplant_am: geplant || null,
       }),
     )
     if (r) setId(r)
@@ -160,6 +165,26 @@ export function NewsletterEditor({
               }}
             />
           </Feld>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Feld id="nl-kampagne" label={t('werbung.kampagne.gehoertZu')}>
+              <KampagneWahl id="nl-kampagne" wert={kampagne} onWert={setKampagne} />
+            </Feld>
+            <Feld
+              id="nl-geplant"
+              label={t('werbung.newsletter.geplantFeld')}
+              hinweis={t('werbung.newsletter.geplantHinweis')}
+            >
+              <Input
+                id="nl-geplant"
+                type="date"
+                readOnly={fest}
+                value={geplant}
+                onChange={(e) => {
+                  setGeplant(e.target.value)
+                }}
+              />
+            </Feld>
+          </div>
           <section className="flex flex-col gap-2" aria-label={t('marketing.newsletter.zielgruppe')}>
             <h3 className="text-sm font-semibold">{t('marketing.newsletter.zielgruppe')}</h3>
             <Filterchips

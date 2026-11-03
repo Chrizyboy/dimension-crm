@@ -14,10 +14,12 @@ interface Suche {
   ergebnis?: string
   /** Aus der Automation «Nachrüstung»: Filter «Kunden ohne Batterie» usw. vorwählen. */
   anlage?: ZielFilter['anlage']
+  /** Offene Kampagnen-Akte (ID oder «neu»). */
+  kampagne?: string
 }
 
 const GUELTIG = new Set<string>(ANSICHTEN)
-const ANLAGEN = new Set<string>(['ohne_batterie', 'ohne_wallbox', 'ohne_waermepumpe', 'alt'])
+const ANLAGEN = new Set<string>(['ohne_batterie', 'ohne_wallbox', 'ohne_waermepumpe', 'alt', 'oel_gas'])
 
 /** Marketing: Reiter in der Adresse (#/marketing?ansicht=social). */
 export const Route = createFileRoute('/marketing')({
@@ -26,9 +28,10 @@ export const Route = createFileRoute('/marketing')({
     ...(typeof s.verbunden === 'string' ? { verbunden: s.verbunden } : {}),
     ...(typeof s.ergebnis === 'string' ? { ergebnis: s.ergebnis } : {}),
     ...(typeof s.anlage === 'string' && ANLAGEN.has(s.anlage) ? { anlage: s.anlage as ZielFilter['anlage'] } : {}),
+    ...(typeof s.kampagne === 'string' && /^(neu|[0-9a-f-]{36})$/.test(s.kampagne) ? { kampagne: s.kampagne } : {}),
   }),
   component: function MarketingSeite() {
-    const { ansicht, verbunden, ergebnis, anlage } = Route.useSearch()
+    const { ansicht, verbunden, ergebnis, anlage, kampagne } = Route.useSearch()
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     // Nach der Anmeldung bei einem Dienst: Ergebnis einmal melden und aus der Adresse entfernen
@@ -42,10 +45,20 @@ export const Route = createFileRoute('/marketing')({
     return (
       <Suspense>
         <Marketing
-          ansicht={ansicht ?? 'anschreiben'}
+          ansicht={ansicht ?? (anlage ? 'anschreiben' : 'uebersicht')}
           {...(anlage ? { anlage } : {})}
+          {...(kampagne ? { kampagne } : {})}
           onAnsicht={(a) => {
-            void navigate({ search: a === 'anschreiben' ? {} : { ansicht: a } })
+            void navigate({ search: a === 'uebersicht' ? {} : { ansicht: a } })
+          }}
+          onKampagne={(id) => {
+            void navigate({
+              search: (s) => {
+                const rest = { ...s }
+                delete rest.kampagne
+                return id ? { ...rest, kampagne: id } : rest
+              },
+            })
           }}
         />
       </Suspense>

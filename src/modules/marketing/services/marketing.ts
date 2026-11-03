@@ -68,6 +68,7 @@ export async function senden(p: {
   art: 'serienmail' | 'newsletter'
   betreff: string
   newsletter_id?: string
+  kampagne_id?: string | null
   details?: Record<string, unknown>
   mails: SerienMail[]
 }): Promise<{ angelegt: number; uebersprungen: number }> {
@@ -113,7 +114,7 @@ export async function ladeNewsletter(): Promise<Newsletter[]> {
   const { data, error } = await db()
     .from('newsletter')
     .select(
-      'id, thema, segment, betreff_de, betreff_fr, text_de, text_fr, status, versendet_am, versendet_von, anzahl, erstellt_am',
+      'id, thema, segment, betreff_de, betreff_fr, text_de, text_fr, status, versendet_am, versendet_von, anzahl, erstellt_am, kampagne_id, geplant_am',
     )
     .is('geloescht_am', null)
     .order('erstellt_am', { ascending: false })
@@ -130,6 +131,8 @@ export async function speichereNewsletter(n: {
   betreff_fr: string
   text_de: string
   text_fr: string
+  kampagne_id?: string | null
+  geplant_am?: string | null
 }): Promise<string> {
   const werte = { ...n, segment: n.segment as never }
   if (n.id) {
