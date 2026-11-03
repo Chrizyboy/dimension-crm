@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
 // Phase 9a: Einkauf & Material. Alle Reiter ohne Verstösse; ein Testlieferant; eine Bestellung vom Entwurf
-// über Freigabe und «ohne Mail bestellt» bis zum Wareneingang in zwei Teilen; eine zweite Bestellung per Mail
+// über Freigabe, «ohne Mail bestellt» und Auftragsbestätigung bis zum Wareneingang in zwei Teilen mit Lieferschein; eine zweite Bestellung per Mail
 // mit PDF in den Ausgangskorb und danach storniert (die wartende Mail wird dabei verworfen).
 
 test.describe.configure({ mode: 'serial' })
@@ -31,7 +31,7 @@ async function verstoesse(page: Page): Promise<string[]> {
 
 /** Neue Bestellung beim Testlieferanten ans Lager mit einer freien Position; gibt die Akte zurück. */
 async function bestellungMitPosition(page: Page, text: string) {
-  await page.goto('/#/purchasing')
+  await page.goto('/#/purchasing?reiter=bestellungen')
   await page.getByRole('button', { name: 'Neue Bestellung' }).click()
   const neu = page.getByRole('dialog')
   await neu.getByLabel('Lieferant').click()
@@ -53,8 +53,11 @@ test('Einkauf: Reiter ohne Verstösse, Testlieferant anlegen', async ({ page }) 
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/purchasing')
   await expect(page.getByRole('heading', { name: 'Einkauf & Material', level: 1 })).toBeVisible()
+  // Startansicht ist der Leitstand mit Kopfzahlen.
+  await expect(page.getByRole('tab', { name: /Leitstand/ })).toHaveAttribute('aria-selected', 'true')
+  await expect(page.getByText('Montagen in Gefahr')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Material je Projekt', 'Lager', 'Lieferanten']) {
+  for (const reiter of ['Materialplan', 'Bestellen', 'Bestellungen', 'Lager', 'Lieferanten']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -81,12 +84,25 @@ test('Bestellung: freigeben, ohne Mail bestellt, Wareneingang in zwei Teilen', a
   await akte.getByRole('button', { name: 'Ohne Mail bestellt' }).click()
   await expect(akte.getByText('Bestellt', { exact: true }).first()).toBeVisible()
 
+  // Auftragsbestätigung mit tieferer Menge: Abweichung wird markiert.
+  await expect(akte.getByText('AB fehlt').first()).toBeVisible()
+  await akte.getByRole('button', { name: 'AB erfassen' }).click()
+  const ab = page.getByRole('dialog').last()
+  await ab.getByLabel('AB-Nummer').fill(`AB-${lauf}`)
+  await ab.getByLabel(`Bestätigte Menge ${text}`).fill('9')
+  expect(await verstoesse(page), 'AB').toEqual([])
+  await ab.getByRole('button', { name: 'Speichern' }).click()
+  await expect(page.getByText('AB gespeichert, 1 Abweichung(en)').first()).toBeVisible()
+  await expect(akte.getByText('1 Position weicht ab')).toBeVisible()
+
   await akte.getByRole('button', { name: 'Wareneingang' }).click()
   const eingang = page.getByRole('dialog').last()
+  await eingang.getByLabel('Lieferschein-Nr.').fill(`LS-${lauf}`)
   await eingang.getByLabel(`Gelieferte Menge ${text}`).fill('4')
   await eingang.getByRole('button', { name: 'Wareneingang buchen' }).click()
   await expect(page.getByText('Teillieferung gebucht').first()).toBeVisible()
   await expect(akte.getByText('Teilweise geliefert').first()).toBeVisible()
+  await expect(akte.getByText(`LS-${lauf}`)).toBeVisible()
 
   await akte.getByRole('button', { name: 'Wareneingang' }).click()
   await expect(page.getByRole('dialog').last().getByLabel(`Gelieferte Menge ${text}`)).toHaveValue('6')

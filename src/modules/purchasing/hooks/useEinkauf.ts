@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import * as b from '../services/bestellungen'
+import * as e from '../services/einkauf'
 import * as l from '../services/lager'
 import * as m from '../services/material'
 import type { BestellFilter } from '../types'
@@ -47,10 +48,6 @@ export const useLieferanten = () =>
   useQuery({ queryKey: ['einkauf', 'lieferanten'], enabled: an, queryFn: l.ladeLieferanten })
 
 /** Nach einer Änderung alles zum Einkauf neu laden (auch den Fahrplan der Projekte). */
-/** Reiter «Zu bestellen». */
-export const useZuBestellen = () =>
-  useQuery({ queryKey: ['einkauf', 'zubestellen'], enabled: an, queryFn: m.ladeZuBestellen })
-
 export function useNeuLaden() {
   const qc = useQueryClient()
   return async () => {
@@ -60,3 +57,30 @@ export function useNeuLaden() {
     ])
   }
 }
+
+/** Offener Bedarf (Projekte und Lager) für «Bestellen» und den Leitstand. */
+export const useBedarf = () => useQuery({ queryKey: ['einkauf', 'bedarf'], enabled: an, queryFn: e.ladeBedarf })
+
+/** Materialplan der offenen Projekte. */
+export const useMaterialplan = () =>
+  useQuery({ queryKey: ['einkauf', 'materialplan'], enabled: an, queryFn: e.ladeMaterialplan })
+
+/** Kennzahlen je Lieferant. */
+export const useLieferantKennzahlen = () =>
+  useQuery({ queryKey: ['einkauf', 'kennzahlen'], enabled: an, queryFn: e.ladeKennzahlen })
+
+/** Darf ich diese Bestellung selbst freigeben? */
+export const useDarfFreigeben = (total: number | null, aktiv: boolean) =>
+  useQuery({
+    queryKey: ['einkauf', 'darf', total],
+    enabled: an && aktiv,
+    queryFn: () => e.darfFreigeben(total),
+  })
+
+/** Lieferantenrechnungen, die zur Bestellung passen. */
+export const useRechnungen = (id: string, aktiv: boolean) =>
+  useQuery({ queryKey: ['einkauf', 'rechnungen', id], enabled: an && aktiv, queryFn: () => e.ladeRechnungen(id) })
+
+/** Mails zur Bestellung. */
+export const useBestellMails = (id: string) =>
+  useQuery({ queryKey: ['einkauf', 'mails', id], enabled: an, queryFn: () => e.ladeMails(id) })
