@@ -3,8 +3,8 @@
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
-//  * social_von_hand alle 5 Min.  Posts ohne Verbindung: Glocke «Jetzt posten» (Entscheid 0042)
-//  * heizung      stündlich       Heizung der Kunden-Gebäude aus dem Gebäuderegister (Entscheid 0042)
+//  * social_von_hand alle 5 Min.  Posts ohne Verbindung: Glocke «Jetzt posten» (Entscheid 0045)
+//  * heizung      stündlich       Heizung der Kunden-Gebäude aus dem Gebäuderegister (Entscheid 0045)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
 //  * sms          ab «uhrzeit»    SMS-Erinnerungen für morgen, nur wenn «automatisch» eingeschaltet ist (V172)
@@ -23,6 +23,7 @@
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
@@ -129,6 +130,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
+  ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
+    const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
   // Personal-Akte: Probezeit, Befristung, Bewilligung, nächstes Gespräch an GL/Buchhaltung und Vorgesetzte.
   ergebnis.personal_fristen = await job('personal_fristen', 60, async () => {
     const n = await dienst.rpc<number>('personal_fristen_melden', {})
@@ -207,6 +214,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
   })
 
+  // Einkauf (Entscheid 0041): fehlende Auftragsbestätigung, gefährdete Montage, «bestellen bis» – nur Glocke.
+  ergebnis.einkauf = await job('einkauf', 60, async () => {
+    const n = await dienst.rpc<number>('einkauf_melden', {})
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'} Einkauf`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
@@ -244,7 +257,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  // Marketing (Entscheid 0042): Posts ohne Verbindung zum Netzwerk «von Hand» melden (Glocke «Jetzt posten»).
+  // Marketing (Entscheid 0045): Posts ohne Verbindung zum Netzwerk «von Hand» melden (Glocke «Jetzt posten»).
   ergebnis.social_von_hand = await job('social_von_hand', 5, async () => {
     const n = await dienst.rpc<number>('social_von_hand_melden', {})
     return `${n} ${n === 1 ? 'Post' : 'Posts'} gemeldet`

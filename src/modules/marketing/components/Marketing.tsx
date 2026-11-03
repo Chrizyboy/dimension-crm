@@ -17,7 +17,7 @@ import { Uebersicht } from './Uebersicht'
 import { Vorlagen } from './Vorlagen'
 
 /**
- * Marketing (Phase 11, vollständig Entscheid 0042): Übersicht je Rolle, Kalender, Kampagnen, Messen & Events,
+ * Marketing (Phase 11, vollständig Entscheid 0045): Übersicht je Rolle, Kalender, Kampagnen, Messen & Events,
  * Kunden anschreiben, Social Media, Newsletter, Mediathek und Vorlagen. Alles, was nach aussen geht, braucht eine
  * Freigabe (Regel 6). #/marketing?ansicht=…&kampagne=…
  */

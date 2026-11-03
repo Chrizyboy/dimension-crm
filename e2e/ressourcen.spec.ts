@@ -40,9 +40,11 @@ test('Fahrzeug: anlegen, Kilometer und Service erfassen, Papierkorb', async ({ p
   await dialog.getByLabel('Kilometerstand').fill('50000')
   await dialog.getByRole('button', { name: 'Speichern' }).click()
 
-  // Die Akte öffnet sich gleich.
-  const akte = page.getByRole('dialog', { name: new RegExp(`E2E Bus ${kennung}`) })
+  // Die Akte öffnet sich gleich als ganze Seite.
+  await expect(page.getByRole('heading', { name: `E2E Bus ${kennung}`, level: 1 })).toBeVisible()
+  const akte = page.getByRole('main')
   await expect(akte).toContainText(/50['’]000 km/)
+  await expect(akte.getByRole('heading', { name: 'Versicherung und Steuern', level: 2 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await akte.getByRole('button', { name: 'Eintrag erfassen' }).click()
@@ -95,6 +97,12 @@ test.describe('am Handy', () => {
     await eintrag.getByRole('button', { name: 'Speichern' }).click()
     await expect(akte.getByRole('listitem').filter({ hasText: 'Prüfung · In Ordnung' })).toContainText('nächste')
     expect(await verstoesse(page)).toEqual([])
+
+    // Nach dem Scannen des QR-Etiketts: mit einem Klick zurück ins Lager und wieder nehmen.
+    await akte.getByRole('button', { name: 'Zurück ins Lager' }).click()
+    await expect(akte.getByRole('button', { name: 'Nehme ich' })).toBeVisible()
+    await akte.getByRole('button', { name: 'Nehme ich' }).click()
+    await expect(akte.getByRole('button', { name: 'Zurück ins Lager' })).toBeVisible()
 
     await akte.getByRole('button', { name: 'Angaben ändern' }).click()
     await page.getByRole('dialog', { name: 'Gerät ändern' }).getByRole('button', { name: 'In den Papierkorb' }).click()

@@ -8,6 +8,7 @@ import { formatTelefon } from '@/lib/format'
 import { adresseEinzeilig, formatKundennummer } from '@/lib/kontakt'
 import type { Kontaktzeile } from '@/types/kontakt'
 import { datumOderLeer, jsonText } from '../lib/anzeige'
+import { erstesDatum } from '../lib/kennzahlen'
 import { naechsterSchritt } from '../lib/naechsterSchritt'
 import type { Kundenakte, Objekt } from '../types'
 import { AkteAbaninja } from './AkteAbaninja'
@@ -43,7 +44,7 @@ function Abschnitt({
 }
 
 /** Gebäude mit Adresse und den Angaben aus Anfrage und Besichtigung. */
-function Gebaeude({ objekt, onBearbeiten }: { objekt: Objekt; onBearbeiten: () => void }) {
+export function Gebaeude({ objekt, onBearbeiten }: { objekt: Objekt; onBearbeiten: () => void }) {
   const { t } = useTranslation()
   const art = useAuswahl('gebaeudeart')
   const dach = useAuswahl('dachform')
@@ -71,24 +72,41 @@ function Gebaeude({ objekt, onBearbeiten }: { objekt: Objekt; onBearbeiten: () =
   )
 }
 
-/**
- * Seit wann wir die Person kennen: das früheste Datum aus Kontakt, Anfrage und Offerte.
- * Beim Import aus V233 bekam der Kontakt das Importdatum; die Anfrage hat das echte.
- */
-function erstesDatum(akte: Kundenakte): string {
-  const daten = [
-    akte.kontakt.erstellt_am,
-    ...akte.verkaufschancen.map((v) => v.eingang_am ?? v.erstellt_am),
-    ...akte.offerten.map((o) => o.angebot_am ?? o.erstellt_am),
-  ].filter((d): d is string => Boolean(d))
-  return daten.sort().at(0) ?? ''
+/** Kontaktdaten mit Einwilligung, «erfasst seit» und Notiz; auch in der ganzen Kundenseite. */
+export function KontaktAngaben({ kopf, akte }: { kopf: Kontaktzeile; akte: Kundenakte }) {
+  const { t } = useTranslation()
+  const k = akte.kontakt
+  const einwilligung = k.einwilligung && typeof k.einwilligung === 'object' ? k.einwilligung : null
+  return (
+    <>
+      <Angaben>
+        <Angabe label={t('akte.feld.nummer')}>{formatKundennummer(k.kundennummer)}</Angabe>
+        <Angabe label={t('akte.feld.name')}>{[k.anrede, k.vorname, k.nachname].filter(Boolean).join(' ')}</Angabe>
+        {k.firma && <Angabe label={t('akte.feld.firma')}>{k.firma}</Angabe>}
+        <Angabe label={t('akte.feld.telefon')}>{k.telefon && formatTelefon(k.telefon)}</Angabe>
+        <Angabe label={t('akte.feld.email')}>{k.email}</Angabe>
+        <Angabe label={t('akte.feld.adresse')}>{adresseEinzeilig(kopf)}</Angabe>
+        <Angabe label={t('akte.feld.einwilligung')}>
+          {k.werbesperre
+            ? t('akte.werbesperre')
+            : einwilligung
+              ? t('akte.einwilligungJa', {
+                  quelle: jsonText(einwilligung, 'quelle'),
+                  datum: datumOderLeer(jsonText(einwilligung, 'datum')),
+                })
+              : ''}
+        </Angabe>
+        <Angabe label={t('akte.feld.erfasst')}>{datumOderLeer(erstesDatum(akte))}</Angabe>
+      </Angaben>
+      <Notizblock label={t('akte.feld.notiz')} text={k.notiz} />
+    </>
+  )
 }
 
 /** Reiter «Übersicht»: was jetzt zu tun ist, Kontaktdaten, Gebäude und alle Geschäfte. */
 export function AkteUebersicht({ kopf, akte, onAnrufen, onObjekt }: AkteUebersichtProps) {
   const { t } = useTranslation()
   const k = akte.kontakt
-  const einwilligung = k.einwilligung && typeof k.einwilligung === 'object' ? k.einwilligung : null
   return (
     <div className="flex flex-col gap-6">
       <NaechsterSchritt schritt={naechsterSchritt(kopf, akte)} onAnrufen={onAnrufen} />
@@ -101,26 +119,7 @@ export function AkteUebersicht({ kopf, akte, onAnrufen, onObjekt }: AkteUebersic
       </Abschnitt>
 
       <Abschnitt titel={t('akte.kontaktdaten')}>
-        <Angaben>
-          <Angabe label={t('akte.feld.nummer')}>{formatKundennummer(k.kundennummer)}</Angabe>
-          <Angabe label={t('akte.feld.name')}>{[k.anrede, k.vorname, k.nachname].filter(Boolean).join(' ')}</Angabe>
-          {k.firma && <Angabe label={t('akte.feld.firma')}>{k.firma}</Angabe>}
-          <Angabe label={t('akte.feld.telefon')}>{k.telefon && formatTelefon(k.telefon)}</Angabe>
-          <Angabe label={t('akte.feld.email')}>{k.email}</Angabe>
-          <Angabe label={t('akte.feld.adresse')}>{adresseEinzeilig(kopf)}</Angabe>
-          <Angabe label={t('akte.feld.einwilligung')}>
-            {k.werbesperre
-              ? t('akte.werbesperre')
-              : einwilligung
-                ? t('akte.einwilligungJa', {
-                    quelle: jsonText(einwilligung, 'quelle'),
-                    datum: datumOderLeer(jsonText(einwilligung, 'datum')),
-                  })
-                : ''}
-          </Angabe>
-          <Angabe label={t('akte.feld.erfasst')}>{datumOderLeer(erstesDatum(akte))}</Angabe>
-        </Angaben>
-        <Notizblock label={t('akte.feld.notiz')} text={k.notiz} />
+        <KontaktAngaben kopf={kopf} akte={akte} />
       </Abschnitt>
 
       <Abschnitt

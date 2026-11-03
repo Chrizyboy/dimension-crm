@@ -5,19 +5,23 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
+import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
 import { Switch } from '@/components/ui/schalter'
+import { useAuswahl } from '@/hooks/useAuswahl'
 import { useAktion } from '../hooks/useAktion'
 import { useWahl } from '../hooks/useRessourcen'
-import { fahrzeugSchema } from '../schema'
+import { ABSCHNITTE, alsFormular, ausFormular, type FeldDef } from '../lib/fahrzeugFelder'
+import { heuteZuerich } from '../lib/fristen'
 import { entfernen, fahrzeugSpeichern } from '../services/ressourcen'
-import type { Fahrzeug } from '../types'
+import { TREIBSTOFFE, type Fahrzeug } from '../types'
 
 const KEINE = '-'
-const zahl = (s: string) => (s.trim() === '' ? null : Number(s.replace(/['\s]/g, '')))
+const FUEHRERAUSWEIS = /^fuehrerausweis_/
 
 /**
- * Fahrzeug anlegen oder ändern. Die Fristen (MFK, Service) setzt man hier nur beim Anlegen; danach setzen
- * sie die Einträge (MFK erfasst, Service gemacht), damit der Verlauf stimmt.
+ * Fahrzeug anlegen oder ändern, in Abschnitten (Grunddaten, Technik, Leasing und Kauf, Versicherung, Weiteres).
+ * Die Fristen setzt man hier nur beim Anlegen; danach setzen sie die Einträge (MFK erfasst, Service gemacht,
+ * Reifen gewechselt), damit der Verlauf stimmt.
  */
 export function FahrzeugDialog({
   fahrzeug,
@@ -30,90 +34,97 @@ export function FahrzeugDialog({
 }) {
   const { t } = useTranslation()
   const wahl = useWahl().data
+  const arten = useAuswahl('fahrzeugart')
+  const ausweise = useAuswahl('qualifikation')
   const { laeuft, aus } = useAktion()
   const f = fahrzeug
-  const [w, setW] = useState({
-    kennzeichen: f?.kennzeichen ?? '',
-    bezeichnung: f?.bezeichnung ?? '',
-    marke_modell: f?.marke_modell ?? '',
-    jahrgang: f?.jahrgang?.toString() ?? '',
-    km_stand: f?.km_stand?.toString() ?? '',
-    naechste_mfk: f?.naechste_mfk ?? '',
-    naechster_service: f?.naechster_service ?? '',
-    standort_id: f?.standort_id ?? KEINE,
-    leasing_bis: f?.leasing_bis ?? '',
-    versicherung: f?.versicherung ?? '',
-    ausser_betrieb: f?.ausser_betrieb ?? false,
-    notiz: f?.notiz ?? '',
-  })
-  const setze = (teil: Partial<typeof w>) => {
-    setW({ ...w, ...teil })
+  const [w, setW] = useState(() => alsFormular(f))
+  const [abschnitt, setAbschnitt] = useState('grund')
+  const { werte, fehler } = ausFormular(w, !f, heuteZuerich())
+
+  const optionen = (k: FeldDef['k']) => {
+    const mitLeer = (liste: { wert: string; text: string }[]) => [{ wert: KEINE, text: '–' }, ...liste]
+    if (k === 'art') return arten.werte.map((a) => ({ wert: a.schluessel, text: arten.text(a.schluessel) }))
+    if (k === 'treibstoff') return mitLeer(TREIBSTOFFE.map((x) => ({ wert: x, text: t(`fuhrpark.treibstoff.${x}`) })))
+    if (k === 'standort_id') return mitLeer((wahl?.standorte ?? []).map((s) => ({ wert: s.id, text: s.name })))
+    return mitLeer(
+      ausweise.werte
+        .filter((a) => FUEHRERAUSWEIS.test(a.schluessel))
+        .map((a) => ({ wert: a.schluessel, text: ausweise.text(a.schluessel) })),
+    )
   }
-  const gueltig = fahrzeugSchema.safeParse({
-    kennzeichen: w.kennzeichen,
-    bezeichnung: w.bezeichnung,
-    jahrgang: zahl(w.jahrgang),
-    km_stand: zahl(w.km_stand),
-  }).success
+
+  const eingabe = (d: FeldDef) => {
+    const id = `fz-${d.k}`
+    const wert = w[d.k] ?? ''
+    const setze = (v: string) => {
+      setW({ ...w, [d.k]: v })
+    }
+    if (d.art === 'schalter')
+      return (
+        <label key={d.k} className="flex items-center gap-2 text-sm sm:col-span-2">
+          <Switch
+            checked={wert === 'ja'}
+            onCheckedChange={(an) => {
+              setze(an ? 'ja' : '')
+            }}
+          />
+          {t(`fuhrpark.feld.${d.k}`)}
+        </label>
+      )
+    return (
+      <Feld
+        key={d.k}
+        id={id}
+        label={t(`fuhrpark.feld.${d.k}`)}
+        pflicht={d.pflicht ?? false}
+        className={d.breit ? 'sm:col-span-2' : ''}
+        {...(fehler.includes(d.k) && wert !== '' ? { fehler: t('fuhrpark.feld.ungueltig') } : {})}
+      >
+        {d.art === 'auswahl' ? (
+          <Auswahl
+            id={id}
+            value={wert || KEINE}
+            onValueChange={(v) => {
+              setze(v === KEINE ? '' : v)
+            }}
+            optionen={optionen(d.k)}
+          />
+        ) : d.k === 'notiz' ? (
+          <Textarea
+            id={id}
+            rows={3}
+            value={wert}
+            onChange={(e) => {
+              setze(e.target.value)
+            }}
+          />
+        ) : (
+          <Input
+            id={id}
+            type={d.art === 'datum' ? 'date' : 'text'}
+            inputMode={d.art === 'zahl' ? 'numeric' : d.art === 'chf' ? 'decimal' : undefined}
+            placeholder={d.art === 'chf' ? '0.00' : d.k === 'kennzeichen' ? 'AG 123 456' : undefined}
+            value={wert}
+            onChange={(e) => {
+              setze(e.target.value)
+            }}
+          />
+        )}
+      </Feld>
+    )
+  }
 
   async function speichern() {
-    const leer = (s: string) => s.trim() || null
     let id: string | null = null
     const ok = await aus(
       async () => {
-        id = await fahrzeugSpeichern(
-          {
-            kennzeichen: w.kennzeichen.trim().toUpperCase(),
-            bezeichnung: w.bezeichnung.trim(),
-            marke_modell: leer(w.marke_modell),
-            jahrgang: zahl(w.jahrgang),
-            standort_id: w.standort_id === KEINE ? null : w.standort_id,
-            leasing_bis: leer(w.leasing_bis),
-            versicherung: leer(w.versicherung),
-            ausser_betrieb: w.ausser_betrieb,
-            notiz: leer(w.notiz),
-            // Beim Anlegen: Startwerte; später setzen sie die Einträge.
-            ...(f
-              ? {}
-              : {
-                  km_stand: zahl(w.km_stand),
-                  km_stand_am: zahl(w.km_stand) === null ? null : new Date().toISOString().slice(0, 10),
-                  naechste_mfk: leer(w.naechste_mfk),
-                  naechster_service: leer(w.naechster_service),
-                }),
-          },
-          f?.id,
-        )
+        id = await fahrzeugSpeichern(werte, f?.id)
       },
       { de: 'Gespeichert', fr: 'Enregistré' },
     )
     if (ok) onFertig(id)
   }
-
-  const feld = (k: 'kennzeichen' | 'bezeichnung' | 'marke_modell' | 'versicherung', pflicht = false, ph?: string) => (
-    <Feld id={`fz-${k}`} label={t(`fuhrpark.feld.${k}`)} pflicht={pflicht}>
-      <Input
-        id={`fz-${k}`}
-        value={w[k]}
-        {...(ph ? { placeholder: ph } : {})}
-        onChange={(e) => {
-          setze({ [k]: e.target.value })
-        }}
-      />
-    </Feld>
-  )
-  const datum = (k: 'naechste_mfk' | 'naechster_service' | 'leasing_bis') => (
-    <Feld id={`fz-${k}`} label={t(`fuhrpark.feld.${k}`)}>
-      <Input
-        id={`fz-${k}`}
-        type="date"
-        value={w[k]}
-        onChange={(e) => {
-          setze({ [k]: e.target.value })
-        }}
-      />
-    </Feld>
-  )
 
   return (
     <Dialog
@@ -145,79 +156,28 @@ export function FahrzeugDialog({
             <Button variant="ghost" onClick={onSchliessen}>
               {t('allgemein.abbrechen')}
             </Button>
-            <Button onClick={() => void speichern()} laedt={laeuft} disabled={!gueltig}>
+            <Button onClick={() => void speichern()} laedt={laeuft} disabled={fehler.length > 0}>
               {t('allgemein.speichern')}
             </Button>
           </>
         }
       >
-        <div className="grid gap-4 sm:grid-cols-2">
-          {feld('bezeichnung', true, t('fuhrpark.feld.bezeichnungBeispiel'))}
-          {feld('kennzeichen', true, 'AG 123 456')}
-          {feld('marke_modell')}
-          <Feld id="fz-jahrgang" label={t('fuhrpark.feld.jahrgang')}>
-            <Input
-              id="fz-jahrgang"
-              inputMode="numeric"
-              value={w.jahrgang}
-              onChange={(e) => {
-                setze({ jahrgang: e.target.value })
-              }}
-            />
-          </Feld>
-          {!f && (
-            <>
-              <Feld id="fz-km" label={t('fuhrpark.feld.km_stand')}>
-                <Input
-                  id="fz-km"
-                  inputMode="numeric"
-                  value={w.km_stand}
-                  onChange={(e) => {
-                    setze({ km_stand: e.target.value })
-                  }}
-                />
-              </Feld>
-              {datum('naechste_mfk')}
-              {datum('naechster_service')}
-            </>
-          )}
-          <Feld id="fz-standort" label={t('fuhrpark.feld.standort')}>
-            <Auswahl
-              id="fz-standort"
-              value={w.standort_id}
-              onValueChange={(v) => {
-                setze({ standort_id: v })
-              }}
-              optionen={[
-                { wert: KEINE, text: '–' },
-                ...(wahl?.standorte ?? []).map((s) => ({ wert: s.id, text: s.name })),
-              ]}
-            />
-          </Feld>
-          {datum('leasing_bis')}
-          {feld('versicherung')}
-          <Feld id="fz-notiz" label={t('fuhrpark.feld.notiz')} className="sm:col-span-2">
-            <Textarea
-              id="fz-notiz"
-              rows={2}
-              value={w.notiz}
-              onChange={(e) => {
-                setze({ notiz: e.target.value })
-              }}
-            />
-          </Feld>
-          {f && (
-            <label className="flex items-center gap-2 text-sm sm:col-span-2">
-              <Switch
-                checked={w.ausser_betrieb}
-                onCheckedChange={(an) => {
-                  setze({ ausser_betrieb: an })
-                }}
-              />
-              {t('fuhrpark.ausserBetrieb')}
-            </label>
-          )}
-        </div>
+        <Reiter value={abschnitt} onValueChange={setAbschnitt}>
+          <ReiterListe>
+            {ABSCHNITTE.map((a) => (
+              <ReiterKnopf key={a.id} value={a.id}>
+                {t(`fuhrpark.abschnitt.${a.id}`)}
+              </ReiterKnopf>
+            ))}
+          </ReiterListe>
+          {ABSCHNITTE.map((a) => (
+            <ReiterInhalt key={a.id} value={a.id} className="pt-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                {a.felder.filter((d) => !(d.nurNeu && f) && !(d.nurBearbeiten && !f)).map(eingabe)}
+              </div>
+            </ReiterInhalt>
+          ))}
+        </Reiter>
       </DialogInhalt>
     </Dialog>
   )

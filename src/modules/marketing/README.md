@@ -5,7 +5,7 @@ Handy, Kunden gezielt anschreiben, Social-Media-Posts und Newsletter, Fotos und 
 Aufträge kommen und was ein Lead kostet. Alles, was nach aussen geht, gibt eine Person mit einem Klick frei.
 
 Gebaut in Phase **11** nach dem Inventar der Vorlage V233 (Marketing, Social Media, Newsletter), Entscheid 0022;
-vollständig gemacht am 2.11.2026, Entscheid 0042.
+vollständig gemacht am 2.11.2026, Entscheid 0045.
 Einrichten der Dienste: `docs/marketing.md`.
 
 ## Reiter (`#/marketing?ansicht=…`, offene Kampagne `&kampagne=<id>`)
