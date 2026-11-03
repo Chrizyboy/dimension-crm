@@ -637,8 +637,8 @@ begin
     raise exception using message = 'posteingang.nicht_gefunden';
   end if;
   if length(trim(coalesce(p_titel, ''))) = 0 then raise exception using message = 'posteingang.titel_fehlt'; end if;
-  insert into public.aufgaben (titel, faellig_am, person_id, bezug_tabelle, bezug_id)
-  values (left(trim(p_titel), 300), p_faellig, coalesce(p_person, ich), 'posteingang', p_id)
+  insert into public.aufgaben (titel, faellig_am, person_id, bezug_tabelle, bezug_id, quelle)
+  values (left(trim(p_titel), 300), p_faellig, coalesce(p_person, ich), 'posteingang', p_id, 'posteingang')
   returning id into v_id;
   if coalesce(p_person, ich) <> ich then
     insert into public.benachrichtigungen (person_id, art, titel_de, titel_fr, text_de, text_fr, ziel)
