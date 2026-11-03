@@ -11865,7 +11865,10 @@
       "gespeicherte_ansichten": "Gespeicherte Ansicht",
       "rueckmeldungen": "Rückmeldung",
       "kontakt_zugehoerigkeiten": "Ansprechperson",
-      "eingangsrechnungen": "Lieferantenrechnungen"
+      "eingangsrechnungen": "Lieferantenrechnungen",
+      "marketing_kampagnen": "Kampagnen",
+      "marketing_zielgruppen": "Zielgruppen",
+      "werbemittel": "Werbemittel"
     }
   },
   "zugehoerigkeit": {
