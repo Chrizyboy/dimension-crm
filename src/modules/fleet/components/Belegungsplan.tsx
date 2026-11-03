@@ -22,9 +22,9 @@ const FARBE = {
 } as const
 
 /**
- * Belegung als Wochenplan (Mo–Fr): Zeilen sind Fahrzeuge oder Geräte, Felder die Einsätze aus dem Zeitplan
- * (Fahrzeug folgt dem Team), Reservierungen und Werkstatt. Doppelt Belegtes ist rot umrandet. Klick auf einen
- * Einsatz wählt ein anderes Fahrzeug, Klick in ein leeres Feld reserviert.
+ * Belegung als Wochenplan (Mo–Fr): Zeilen sind Fahrzeuge oder Geräte, Felder die Reservierungen (für einen Einsatz,
+ * einen Zweck oder die Werkstatt), immer von Hand (Chris 3.11.2026). Doppelt Belegtes ist rot umrandet. Klick auf
+ * eine Einsatz-Reservierung wählt ein anderes Fahrzeug, Klick in ein leeres Feld reserviert.
  */
 export function Belegungsplan({
   onEinsatz,
