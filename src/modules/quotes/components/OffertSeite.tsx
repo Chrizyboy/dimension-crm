@@ -60,7 +60,8 @@ export default function OffertSeite({ o, onZurueck }: { o: Offerte | null; onZur
           />
           <OffertVerlauf eintraege={akte.verlauf.data} laedt={akte.verlauf.isPending} />
         </div>
-        <div className="flex flex-col gap-4">
+        {/* Am Handy zuerst: was als Nächstes zu tun ist (nachfassen, Chance). */}
+        <div className="order-first flex flex-col gap-4 lg:order-none">
           <NaechsterSchrittBox o={o} />
           <ChanceBox o={o} />
           <OffertAngaben o={o} />

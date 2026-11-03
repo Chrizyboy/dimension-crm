@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -53,6 +53,12 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 1. Offerte öffnen, **Neue Version**, neues PDF hineinziehen und kurz notieren, was geändert wurde.
 2. Alle Versionen bleiben unter **Versionen** sichtbar.
 
+### Auswerten
+
+1. Reiter **Auswertung**: Zeitraum 30, 90 oder 365 Tage wählen.
+2. Oben offeriert, gewonnen, verloren, Abschlussquote und Ø Dauer bis zum Entscheid.
+3. Darunter je Person, **Warum verloren** und **Gegen wen** (aus dem Nachfassen).
+
 ### Eturnity-Meldungen zuordnen
 
 1. Reiter **PDF-Import**: PDFs und Meldungen aus Eturnity, die noch keiner Offerte zugeordnet sind.
@@ -93,6 +99,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
+- 03.11.2026: Reiter Auswertung (Quote, je Person, Verlustgründe, Konkurrenz).
 - 03.11.2026: Arbeitsvorrat als Startansicht, Offerte als ganze Seite, Nachfassen mit Ergebnis nach Plan, Varianten, Freigabe und Chance.
 
 - 31.10.2026: Offerten-Ordner in SharePoint werden selbst angelegt und verschoben.

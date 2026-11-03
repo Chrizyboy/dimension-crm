@@ -7,12 +7,15 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
+import { Checkbox } from '@/components/ui/schalter'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useAussendienst, useVerkaufAenderung } from '../hooks/useVerkauf'
+import { useAussendienst, useVerkaufAenderung, useVerkaufEinstellung } from '../hooks/useVerkauf'
+import { inMonaten, naechsterArbeitstag } from '../lib/arbeitszeit'
+import { VERKAUF_STANDARD } from '../lib/einstellung'
 import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { heuteIso } from '../lib/geschaeft'
 import { erfasseKontakt } from '../services/geschaefte'
@@ -20,17 +23,26 @@ import type { Geschaeft, StandAngaben } from '../types'
 
 const ARTEN = ['anruf', 'mail', 'sms', 'besuch', 'notiz'] as const
 /** Ergebnisse, die den Lead weiterführen (V152); die Liste selbst kommt aus der Datenbank. */
-const MIT_DATUM = new Set(['rueckruf', 'meldet_sich'])
+const MIT_DATUM = new Set(['rueckruf', 'meldet_sich', 'nicht_erreicht', 'combox'])
+/** Nicht erreicht: Rückruf am nächsten Arbeitstag, auf Wunsch SMS-Entwurf (wartet im Ausgangskorb). */
+const NICHT_ERREICHT = new Set(['nicht_erreicht', 'combox'])
+/** Schliesst den Lead ab: Grund ist Pflicht, auf Wunsch Wiedervorlage. */
+const MIT_GRUND = new Set(['kein_interesse', 'ungueltig'])
 
 /**
  * Kontakt mit einem Lead erfassen (V152): Art, Ergebnis und Notiz. Das Ergebnis führt den Lead nach:
- * Termin → «Termin vereinbart», Rückruf mit Datum → «später kontaktieren», kein Interesse → Grund.
+ * Termin → «Termin vereinbart», Rückruf mit Datum → «später kontaktieren», nicht erreicht → Rückruf am nächsten
+ * Arbeitstag (mit SMS-Entwurf), will zuerst Preis → Offerte bei Andy ohne Besuch, kein Interesse/ungültig → Grund
+ * und auf Wunsch Wiedervorlage (Standard 12 Monate). Die Regeln stehen in lead_kontakt_erfassen.
  */
 export default function KontaktErfassenDialog({
   geschaeft,
+  start,
   onSchliessen,
 }: {
   geschaeft: Geschaeft
+  /** Vorgewähltes Ergebnis (aus «Zu tun»). */
+  start?: string
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
@@ -39,9 +51,19 @@ export default function KontaktErfassenDialog({
   const personen = useAussendienst()
   const ich = useAnmeldung((z) => z.ich?.id ?? '')
   const [art, setArt] = useState<string>('anruf')
-  const [ergebnis, setErgebnis] = useState<string>('')
+  const einstellung = useVerkaufEinstellung().data ?? VERKAUF_STANDARD
+  const [ergebnis, setErgebnisRoh] = useState<string>(start ?? '')
   const [text, setText] = useState('')
-  const [datum, setDatum] = useState(heuteIso())
+  const [datum, setDatum] = useState(
+    start && NICHT_ERREICHT.has(start) ? naechsterArbeitstag(heuteIso(), einstellung) : heuteIso(),
+  )
+  const [sms, setSms] = useState(Boolean(geschaeft.telefon))
+  const [wiedervorlage, setWiedervorlage] = useState(true)
+  /** Beim Wechsel auf «nicht erreicht» gleich den nächsten Arbeitstag vorschlagen. */
+  const setErgebnis = (e: string) => {
+    setErgebnisRoh(e)
+    if (NICHT_ERREICHT.has(e)) setDatum(naechsterArbeitstag(heuteIso(), einstellung))
+  }
   const [zeit, setZeit] = useState('09:00')
   const [dauer, setDauer] = useState('60')
   const [person, setPerson] = useState(
@@ -61,9 +83,15 @@ export default function KontaktErfassenDialog({
     }
     if (MIT_DATUM.has(ergebnis) && datum > heuteIso()) {
       angaben.datum = datum
-      angaben.grund = t(`verkauf.kontakt.grundRueckruf`)
+      angaben.grund = t(
+        NICHT_ERREICHT.has(ergebnis) ? 'verkauf.kontakt.grundNichtErreicht' : 'verkauf.kontakt.grundRueckruf',
+      )
     }
-    if (ergebnis === 'kein_interesse') angaben.grund = grund
+    if (NICHT_ERREICHT.has(ergebnis)) angaben.sms = sms
+    if (MIT_GRUND.has(ergebnis)) {
+      angaben.grund = grund
+      if (wiedervorlage) angaben.wiedervorlage_am = inMonaten(heuteIso(), einstellung.verlust_wiedervorlage_monate)
+    }
     try {
       await speichern.mutateAsync({
         verkaufschanceId: geschaeft.verkaufschanceId ?? '',
@@ -205,16 +233,43 @@ export default function KontaktErfassenDialog({
               )}
             </div>
           )}
-          {ergebnis === 'kein_interesse' && (
-            <Feld id="kontakt-grund" label={t('verkauf.wechsel.grund')} pflicht>
-              <Input
-                id="kontakt-grund"
-                value={grund}
-                onChange={(e) => {
-                  setGrund(e.target.value)
+          {NICHT_ERREICHT.has(ergebnis) && geschaeft.telefon && (
+            <label className="flex items-center gap-2 text-sm">
+              <Checkbox
+                checked={sms}
+                onCheckedChange={(c) => {
+                  setSms(c === true)
                 }}
               />
-            </Feld>
+              {t('verkauf.kontakt.smsEntwurf')}
+            </label>
+          )}
+          {ergebnis === 'will_preis' && (
+            <p className="bg-info-soft text-info rounded-md px-3 py-2 text-sm">
+              {t('verkauf.kontakt.willPreisHinweis')}
+            </p>
+          )}
+          {MIT_GRUND.has(ergebnis) && (
+            <>
+              <Feld id="kontakt-grund" label={t('verkauf.wechsel.grund')} pflicht>
+                <Input
+                  id="kontakt-grund"
+                  value={grund}
+                  onChange={(e) => {
+                    setGrund(e.target.value)
+                  }}
+                />
+              </Feld>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={wiedervorlage}
+                  onCheckedChange={(c) => {
+                    setWiedervorlage(c === true)
+                  }}
+                />
+                {t('verkauf.kontakt.wiedervorlage', { count: einstellung.verlust_wiedervorlage_monate })}
+              </label>
+            </>
           )}
           <Feld id="kontakt-text" label={t('aktivitaet.text')}>
             <Textarea
