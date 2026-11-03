@@ -56,7 +56,7 @@ Postfach, sobald die Person Microsoft verbunden hat, und aus info@/Team-Postfäc
 ## Nachtrag 2.11.2026: Arbeitsplatz für alle Rollen
 
 **Wunsch (Chris):** Jedes Modul muss seinen Zweck ganz erfüllen, nicht nur Fassade sein. Neuentwurf als Vorschau:
-https://claude.ai/artifact/UkQFbSAL5SnbCKJ5R2aeMT. Fragen P1–P5 als Auswahlkarten; gebaut nach Empfehlung A.
+https://claude.ai/artifact/UkQFbSAL5SnbCKJ5R2aeMT. Fragen P1–P5 als Auswahlkarten; P1–P4 wie empfohlen (A), P5 Geschäftsleitung.
 
 **Entscheid:**
 
@@ -72,6 +72,7 @@ https://claude.ai/artifact/UkQFbSAL5SnbCKJ5R2aeMT. Fragen P1–P5 als Auswahlkar
   sichtbar.
 - **P4:** Absender-Regeln (`posteingang_regeln`): jede Person fürs eigene Postfach, für info@ nur wer verteilt.
   Kundenmails werden nie still abgelegt (Regel «ablegen» gilt nur für noch nicht eingeordnete Mails).
-- **P5:** Team-Übersicht für wer verteilt (Chris, Davis) und die Administration.
+- **P5 (Chris 3.11.: «Geschäftsleitung»):** Team-Übersicht mit allen Personen nur für die Geschäftsleitung (Recht `gl`,
+  bis zum Rollen-Umbau die Administration); alle anderen sehen nur ihre eigenen Zahlen.
 - Unterhaltung und Anhänge holt die Edge Function `microsoft` aus Outlook (mit den Rechten der Person); Anhänge kommen
   nur auf Klick in die Akte (`dokumente`, Speicher `dokumente`).

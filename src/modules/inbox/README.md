@@ -33,7 +33,7 @@ Wunsch von Chris am 31.10.2026. Entscheid: `docs/entscheidungen/0033-posteingang
   (öffnen oder in die Akte ablegen), interne Notizen mit @Kürzel (Glocke).
 - Erledigt, «auf Kunde warten» (von Hand oder automatisch nach der Antwort, Einstellung `warten`, nur einmal),
   Zurückstellen bis Nachmittag/morgen/Montag/Woche, Aufgabe daraus, Regel für den Absender.
-- Reiter Team (Zahlen je Person, nur wer verteilt), Absender-Regeln, Reaktionszeit, Einstellungen (inkl. Warten und
+- Reiter Team (Zahlen je Person, nur Geschäftsleitung), Absender-Regeln, Reaktionszeit, Einstellungen (inkl. Warten und
   Vorschlag beim Verteilen je Art).
 
 ## Daten

@@ -1,10 +1,10 @@
 -- Prüft den Arbeitsplatz im Posteingang (2.11.2026): Zurückstellen und Zurückholen, «auf Kunde warten» von Hand und
 -- automatisch nach der Antwort, Nachfassen durch die Wiedervorlage (nur einmal automatisch), eine neue Mail des Kunden
 -- beendet das Warten, interne Notiz mit @Kürzel (Glocke, Mail wird fürs Team sichtbar), Absender-Regeln (eigenes
--- Postfach ja, info@ nur wer verteilt, «ablegen» schon beim Aufnehmen), Team-Übersicht nur Zahlen, Zahlung nur mit
+-- Postfach ja, info@ nur wer verteilt, «ablegen» schon beim Aufnehmen), Team-Übersicht nur Zahlen (alle nur Geschäftsleitung), Zahlung nur mit
 -- Recht «finanzen». Ausführen: npm run db:test
 begin;
-select plan(21);
+select plan(22);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000018c1', 'ap-anna@test.local'),
@@ -13,7 +13,7 @@ insert into public.personen (id, kuerzel, name, email, auth_user_id, rolle, rech
   ('00000000-0000-0000-0000-0000000018d1', 'ap_anna', 'Anna Arbeit', 'ap-anna@dimension-solaire.ch',
    '00000000-0000-0000-0000-0000000018c1', 'mitarbeit', '{}'),
   ('00000000-0000-0000-0000-0000000018d2', 'ap_ben', 'Ben Verteiler', 'ap-ben@dimension-solaire.ch',
-   '00000000-0000-0000-0000-0000000018c2', 'mitarbeit', '{}');
+   '00000000-0000-0000-0000-0000000018c2', 'mitarbeit', '{admin}');
 update public.integrationen set einstellungen = einstellungen || '{"eigene_domains": ["dimension-solaire.ch"]}'
  where dienst = 'microsoft';
 update public.einstellungen set wert = wert || '{"verteilen": ["ap_ben"],
@@ -97,11 +97,18 @@ select public.posteingang_aufnehmen('00000000-0000-0000-0000-0000000018d1', 'me'
   '[{"kennung": "<ap4@x>", "outlook_id": "ap4", "konversation": "apk2", "von": "neu.ap@gmail.com", "betreff": "Re: Anfrage AP"}]');
 select is((select warten_bis from public.posteingang where kennung = '<ap2@x>'), null, 'Antwort des Kunden beendet das Warten');
 
--- Team-Übersicht: Ben verteilt und sieht Annas Zahlen
+-- Team-Übersicht: Anna sieht nur sich, Ben (Administration, bis es das Recht «gl» gibt) sieht alle
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000018c1", "role": "authenticated"}', true);
+select is((select array_agg(z ->> 'person_id') from jsonb_array_elements(public.posteingang_team()) z),
+  array['00000000-0000-0000-0000-0000000018d1'], 'ohne Geschäftsleitung nur die eigenen Zahlen');
+reset role;
+select set_config('request.jwt.claims', '', true);
+-- Ben sieht alle
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000018c2", "role": "authenticated"}', true);
 select ok((select (z ->> 'offen')::int >= 1 from jsonb_array_elements(public.posteingang_team()) z
-            where z ->> 'person_id' = '00000000-0000-0000-0000-0000000018d1'), 'Team-Übersicht zeigt Annas offene Mails');
+            where z ->> 'person_id' = '00000000-0000-0000-0000-0000000018d1'), 'Geschäftsleitung sieht Annas offene Mails');
 reset role;
 select set_config('request.jwt.claims', '', true);
 

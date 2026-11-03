@@ -586,13 +586,14 @@ $$;
 
 /**
  * Team-Übersicht: pro Person offen, überfällig, zurückgestellt, wartet auf Kunde, Reaktionszeit (Mitte, 7 Tage),
- * abwesend und Stellvertretung. Nur Zahlen, keine Inhalte. Verteiler und Administration sehen alle, sonst nur sich.
+ * abwesend und Stellvertretung. Nur Zahlen, keine Inhalte. Alle sieht nur die Geschäftsleitung (Recht «gl», Chris
+ * 3.11.2026, Frage P5) und die Administration, sonst jede Person nur sich.
  */
 create or replace function public.posteingang_team() returns jsonb
 language plpgsql stable security definer set search_path = '' as $$
 declare
   ich uuid := intern.meine_person_id();
-  alle boolean := intern.pe_verteile_ich();
+  alle boolean := intern.hat_recht('admin') or intern.hat_recht('gl');
   cfg jsonb := intern.pe_einstellung();
 begin
   if ich is null or not intern.hat_recht('basis') then

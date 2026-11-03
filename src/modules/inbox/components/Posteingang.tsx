@@ -10,7 +10,7 @@ import { meldeIntegrationsFehler } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { supabase } from '@/services/supabase'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useBetrachter, useNeuLaden } from '../hooks/usePosteingang'
+import { useNeuLaden } from '../hooks/usePosteingang'
 import { jetztAbholen } from '../services/posteingang'
 import { REITER, type Ansicht, type Reiter as ReiterTyp } from '../types'
 import { AbsenderRegeln } from './AbsenderRegeln'
@@ -29,7 +29,7 @@ export interface PosteingangZiel {
 /**
  * Posteingang (Phase 18, Arbeitsplatz seit 2.11.2026): alle Mails aus info@ und den persönlichen Postfächern,
  * eingeordnet, der Akte zugeordnet, mit zuständiger Person und Antwortfrist in Arbeitszeit. Reiter: Arbeitsplatz
- * (Liste und Mail nebeneinander), Team (nur wer verteilt), Absender-Regeln, Reaktionszeit, Einstellungen (Administration).
+ * (Liste und Mail nebeneinander), Team (Geschäftsleitung), Absender-Regeln, Reaktionszeit, Einstellungen (Administration).
  */
 export default function Posteingang({
   reiter,
@@ -47,8 +47,8 @@ export default function Posteingang({
   const neuLaden = useNeuLaden()
   const [holt, setHolt] = useState(false)
   const admin = hatRecht(ich, 'admin')
-  const { verteile } = useBetrachter()
-  const sichtbar = (r: ReiterTyp) => (r === 'einstellungen' ? admin : r === 'team' ? verteile : true)
+  // Team-Übersicht nur für die Geschäftsleitung (Chris 3.11.2026, P5); bis es das Recht «gl» gibt, die Administration.
+  const sichtbar = (r: ReiterTyp) => (r === 'einstellungen' || r === 'team' ? admin : true)
 
   if (!supabase) {
     return (
@@ -111,7 +111,7 @@ export default function Posteingang({
             }}
           />
         </ReiterInhalt>
-        {verteile && (
+        {admin && (
           <ReiterInhalt value="team" className="pt-4">
             <TeamUebersicht />
           </ReiterInhalt>
