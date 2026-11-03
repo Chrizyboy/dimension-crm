@@ -1,4 +1,4 @@
-import { ExternalLink, ListPlus, Plus, ShoppingCart, Wand2 } from 'lucide-react'
+import { ClipboardList, ExternalLink, ListPlus, Plus, ShoppingCart, Wand2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
@@ -18,10 +18,12 @@ import type { MaterialProjekt, MaterialZeile } from '../types'
 import { MaterialTabelle } from './MaterialTabelle'
 import { MaterialZeileDialog } from './MaterialZeileDialog'
 import { NeueBestellungDialog } from './NeueBestellungDialog'
+import { RuestlisteDialog } from './RuestlisteDialog'
 
 /**
  * Materialliste eines Projekts: Vorschlag aus Kalkulation oder Offerte, von Hand ergänzen, Deckung je Zeile
- * (Lager, unterwegs, fehlt) und «Bestellvorschlag»: zuerst Lager Bulle reservieren, Rest als Entwürfe.
+ * (Lager, unterwegs, fehlt), «Bestellvorschlag» (zuerst Lager Bulle reservieren, Rest als Entwürfe) und
+ * «Rüstliste» zum Ausgeben an die Baustelle.
  */
 export function MaterialAkte({
   projektId,
@@ -41,6 +43,7 @@ export function MaterialAkte({
   const { laeuft, aus } = useAktion()
   const [zeile, setZeile] = useState<MaterialZeile | 'neu' | null>(null)
   const [neueBestellung, setNeueBestellung] = useState(false)
+  const [ruestliste, setRuestliste] = useState(false)
   const zeilen = material.data ?? []
   const fehlt = zeilen.filter((z) => z.fehlt > 0).length
 
@@ -53,8 +56,19 @@ export function MaterialAkte({
       })
     })
 
+  const titel = projekt ? `${projekt.nummer} · ${projekt.kunde}` : t('einkauf.material.titel')
   const fuss = (
     <>
+      <Button
+        variant="ghost"
+        disabled={!zeilen.some((z) => z.menge > z.entnommen)}
+        onClick={() => {
+          setRuestliste(true)
+        }}
+      >
+        <ClipboardList />
+        {t('einkauf.ruest.knopf')}
+      </Button>
       <Button
         variant="ghost"
         onClick={() => {
@@ -97,7 +111,7 @@ export function MaterialAkte({
       <DialogInhalt
         art="seite"
         breite="breit"
-        titel={projekt ? `${projekt.nummer} · ${projekt.kunde}` : t('einkauf.material.titel')}
+        titel={titel}
         beschreibung={[
           projekt?.ort,
           projekt?.baubeginn ? t('einkauf.material.bau', { datum: formatDatum(projekt.baubeginn) }) : null,
@@ -168,6 +182,15 @@ export function MaterialAkte({
             zeile={zeile === 'neu' ? null : zeile}
             onSchliessen={() => {
               setZeile(null)
+            }}
+          />
+        )}
+        {ruestliste && (
+          <RuestlisteDialog
+            projektId={projektId}
+            titel={titel}
+            onSchliessen={() => {
+              setRuestliste(false)
             }}
           />
         )}

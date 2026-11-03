@@ -2080,7 +2080,9 @@
     "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
     "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
     "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
-    "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant."
+    "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant.",
+    "einkauf_mehr_als_entnommen": "Impossible de retourner plus que ce qui a été sorti pour le projet.",
+    "einkauf_loesung_fehlt": "Merci de choisir une solution (avoir, remplacement, retour ou aucune)."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -3661,13 +3663,16 @@
         "eingang": "Entrée",
         "entnahme": "Sortie",
         "korrektur": "Correction",
-        "inventur": "Inventaire"
+        "inventur": "Inventaire",
+        "rueckgabe": "Retour"
       },
       "filter": {
         "alle": "Tous",
         "unter": "Sous le minimum",
         "reserviert": "Réservés"
-      }
+      },
+      "platz": "Emplacement",
+      "platzHinweis": "Par exemple A-03. La liste de préparation et l’inventaire sont triés ainsi."
     },
     "lieferant": {
       "name": "Nom",
@@ -3858,6 +3863,75 @@
       "titel": "E-mails",
       "keine": "Aucun e-mail pour cette commande dans la boîte de réception.",
       "anhang": "avec pièce jointe"
+    },
+    "inventur": {
+      "knopf": "Inventaire",
+      "titel": "Inventaire du stock",
+      "text": "Saisir le stock compté. Seuls les écarts sont enregistrés ; les champs vides restent inchangés.",
+      "notizVorschlag": "Inventaire {{jahr}}",
+      "soll": "Théorique",
+      "differenz": "Écart",
+      "gezaehltFuer": "Compté : {{name}}",
+      "buchen_one": "Enregistrer {{count}} écart",
+      "buchen_other": "Enregistrer {{count}} écarts"
+    },
+    "ruest": {
+      "knopf": "Liste de préparation",
+      "titel": "Liste de préparation",
+      "text": "Ce qui part encore du stock vers le chantier, par emplacement. Adapter la quantité, imprimer, puis sortir.",
+      "offen": "Restant",
+      "menge": "À sortir",
+      "mengeFuer": "À sortir : {{name}}",
+      "geruestet": "Préparé",
+      "visum": "Préparé par",
+      "drucken": "Imprimer",
+      "ausgeben_one": "Sortir {{count}} position",
+      "ausgeben_other": "Sortir {{count}} positions",
+      "leer": "Rien à préparer",
+      "leerText": "Plus rien n’attend au stock pour ce projet."
+    },
+    "rueck": {
+      "menue": "Retour au stock",
+      "titel": "Retour au stock",
+      "text": "{{name}} : {{menge}} {{einheit}} sorti(s) pour le chantier. Combien revient ?",
+      "notizHinweis": "p. ex. reste après montage",
+      "buchen": "Remettre en stock"
+    },
+    "rek": {
+      "titel": "Réclamations",
+      "leer": "Aucune réclamation. Noter ici la marchandise défectueuse, erronée ou manquante.",
+      "offenZahl_one": "{{count}} ouverte",
+      "offenZahl_other": "{{count}} ouvertes",
+      "erfassen": "Saisir une réclamation",
+      "erfassenText": "Qu’est-ce qui ne va pas ? Le signalement au fournisseur se fait comme d’habitude par téléphone ou e-mail.",
+      "abschliessen": "Réglée",
+      "abschliessenText": "Comment le fournisseur a-t-il réglé le problème ?",
+      "gemeldet": "Signalée au fournisseur",
+      "gemeldetAm": "signalée le {{datum}}",
+      "position": "Position",
+      "ganzeBestellung": "Toute la commande",
+      "grund": "Motif",
+      "beschreibung": "Description",
+      "loesung": "Solution",
+      "antwort": "Réponse du fournisseur",
+      "gruende": {
+        "defekt": "Défectueux",
+        "falsch": "Mauvais article",
+        "fehlt": "Manquant",
+        "zu_viel": "Livré en trop",
+        "anderes": "Autre"
+      },
+      "status": {
+        "offen": "Ouverte",
+        "gemeldet": "Signalée",
+        "erledigt": "Réglée"
+      },
+      "loesungen": {
+        "gutschrift": "Avoir",
+        "ersatz": "Remplacement livré",
+        "ruecksendung": "Renvoyé",
+        "keine": "Aucune"
+      }
     }
   },
   "baustelle": {
