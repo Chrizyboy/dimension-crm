@@ -2523,7 +2523,11 @@
     "projekte_maengel_offen": "Il faut d’abord régler tous les défauts avant la remise.",
     "projekte_rolle_unbekannt": "Ce rôle n’existe pas.",
     "finanzen_karte_keine_firmenkarte": "Seuls les frais « carte d’entreprise » peuvent être associées à une transaction.",
-    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction."
+    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction.",
+    "wartung_termin_ungueltig": "La fin du rendez-vous doit être après le début.",
+    "wartung_kein_termin": "Aucun rendez-vous planifié pour ce contrat.",
+    "wartung_keine_mail": "Le client n’a pas d’adresse e-mail.",
+    "wartung_kein_angebot": "Aucune offre pour cette installation."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -4445,7 +4449,8 @@
       "inspektionen": "Inspections",
       "keineInspektion": "Cette formule ne comprend pas d’inspection sur place.",
       "rechnungErstellt": "Facture annuelle créée comme brouillon",
-      "zurRechnung": "Ouvrir"
+      "zurRechnung": "Ouvrir",
+      "termin": "Rendez-vous {{zeit}}"
     },
     "erledigt": {
       "titel": "Entretien effectué",
@@ -4536,6 +4541,76 @@
       "am": "Résiliation reçue le",
       "endet": "Le contrat prend fin le {{datum}}.",
       "gespeichert": "Résiliation saisie, fin le {{datum}}"
+    },
+    "reiter": {
+      "vertraege": "Contrats",
+      "inspektionen": "Inspections",
+      "ohne": "Sans contrat"
+    },
+    "termin": {
+      "titel": "Planifier l’inspection · {{nummer}}",
+      "tag": "Jour",
+      "von": "De",
+      "bis": "À",
+      "person": "Qui y va",
+      "personWaehlen": "Choisir une personne",
+      "entfernen": "Supprimer le rendez-vous",
+      "ankuendigen": "Annoncer maintenant",
+      "hinweis": "Le CRM prépare l’annonce au client 14 jours avant dans la corbeille de sortie ; vous la validez d’un clic.",
+      "angekuendigt": "Annoncé le {{datum}} (corbeille de sortie)."
+    },
+    "insp": {
+      "titel": "Inspections",
+      "zusammenfassung": "{{offen}} à planifier · {{geplant}} planifiées · {{angekuendigt}} annoncées",
+      "filter": "Filtrer les inspections",
+      "filterwert": {
+        "offen": "Sans rendez-vous",
+        "geplant": "Planifiées",
+        "alle": "Toutes"
+      },
+      "spalte": {
+        "tag": "Rendez-vous / échéance",
+        "person": "Qui",
+        "ankuendigung": "Annonce",
+        "aktion": "Action"
+      },
+      "faellig": "échéance {{datum}}",
+      "angekuendigt": "annoncée",
+      "nochNicht": "pas encore",
+      "planen": "Planifier",
+      "aendern": "Modifier le rendez-vous",
+      "leer": "Rien à planifier",
+      "leerText": "Aucune inspection due dans les 90 prochains jours."
+    },
+    "ohne": {
+      "titel": "Installations sans contrat d’entretien",
+      "hinweis": "Nos installations mises en service sans contrat en cours. L’offre part avec le forfait et le prix adaptés, dans la langue du client, via la corbeille de sortie.",
+      "suche": "Rechercher client, lieu ou projet",
+      "filter": "Filtrer les installations",
+      "filterwert": {
+        "nie": "Jamais proposé",
+        "nachfassen": "À relancer",
+        "alle": "Toutes"
+      },
+      "alleMarkieren": "Tout sélectionner",
+      "markieren": "Sélectionner {{kunde}}",
+      "keineMail": "pas d’adresse e-mail",
+      "ibn": "En service depuis",
+      "paket": "Forfait adapté",
+      "angebot": "Offre",
+      "nie": "jamais",
+      "stand": {
+        "offen": "envoyée le {{datum}}",
+        "angenommen": "acceptée le {{datum}}",
+        "abgelehnt": "refusée le {{datum}}"
+      },
+      "senden": "Envoyer l’offre",
+      "serie_one": "Envoyer à {{count}} client",
+      "serie_other": "Envoyer à {{count}} clients",
+      "abgelehnt": "Refusée",
+      "angenommen": "Acceptée",
+      "leer": "Aucune installation",
+      "leerText": "Toutes nos installations de cette sélection ont un contrat ou une offre."
     }
   },
   "einkauf": {
@@ -5235,7 +5310,9 @@
       "nachtraege": "Avenants",
       "unterschrift": "Signature du client",
       "bestaetigt": "Par la signature, les avenants de ce rapport sont confirmés.",
-      "fotos": "Photos"
+      "fotos": "Photos",
+      "vorjahr": "Dernière fois ({{datum}})",
+      "heute": "Aujourd’hui"
     },
     "heute": {
       "titel": "Chantier",
@@ -5516,6 +5593,21 @@
         "nichtGestempelt": "Intervention sans temps",
         "laeuft": "Le temps tourne encore",
         "saldo": "Solde {{h}} h"
+      }
+    },
+    "inspektion": {
+      "titel": "Inspection",
+      "badge": "Inspection {{nummer}}",
+      "letztes": "Dernière fois : {{wert}}",
+      "abweichung": "Écart de {{prozent}} % par rapport à la dernière fois",
+      "vorjahr": {
+        "wartung": "Comparaison avec l’inspection du {{datum}}",
+        "ibn": "Comparaison avec le protocole de mise en service du {{datum}}"
+      },
+      "paket": {
+        "essentiel": "Essentiel",
+        "comfort": "Comfort",
+        "premium": "Premium avec mesures"
       }
     }
   },

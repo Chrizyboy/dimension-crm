@@ -2523,7 +2523,11 @@
     "projekte_maengel_offen": "Erst alle Mängel erledigen, dann ist die Übergabe möglich.",
     "projekte_rolle_unbekannt": "Diese Rolle gibt es nicht.",
     "finanzen_karte_keine_firmenkarte": "Nur Spesen «Firmenkarte» lassen sich mit einer Kartenbuchung verbinden.",
-    "finanzen_karte_schon_verbunden": "Diese Spese ist schon mit einer anderen Kartenbuchung verbunden."
+    "finanzen_karte_schon_verbunden": "Diese Spese ist schon mit einer anderen Kartenbuchung verbunden.",
+    "wartung_termin_ungueltig": "Das Ende des Termins muss nach dem Beginn liegen.",
+    "wartung_kein_termin": "Für diesen Vertrag ist kein Termin geplant.",
+    "wartung_keine_mail": "Der Kunde hat keine Mail-Adresse.",
+    "wartung_kein_angebot": "Für diese Anlage gibt es noch kein Angebot."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -4445,7 +4449,8 @@
       "inspektionen": "Inspektionen",
       "keineInspektion": "Dieses Paket hat keine Inspektion vor Ort.",
       "rechnungErstellt": "Jahresrechnung als Entwurf erstellt",
-      "zurRechnung": "Öffnen"
+      "zurRechnung": "Öffnen",
+      "termin": "Termin {{zeit}}"
     },
     "erledigt": {
       "titel": "Wartung erledigt",
@@ -4536,6 +4541,76 @@
       "am": "Kündigung eingegangen am",
       "endet": "Der Vertrag endet am {{datum}}.",
       "gespeichert": "Kündigung erfasst, Ende {{datum}}"
+    },
+    "reiter": {
+      "vertraege": "Verträge",
+      "inspektionen": "Inspektionen",
+      "ohne": "Ohne Vertrag"
+    },
+    "termin": {
+      "titel": "Inspektion planen · {{nummer}}",
+      "tag": "Tag",
+      "von": "Von",
+      "bis": "Bis",
+      "person": "Wer geht",
+      "personWaehlen": "Person wählen",
+      "entfernen": "Termin entfernen",
+      "ankuendigen": "Jetzt ankündigen",
+      "hinweis": "Die Ankündigung an den Kunden legt das CRM 14 Tage vorher im Ausgangskorb an; dort gibst du sie mit einem Klick frei.",
+      "angekuendigt": "Angekündigt am {{datum}} (Ausgangskorb)."
+    },
+    "insp": {
+      "titel": "Inspektionen",
+      "zusammenfassung": "{{offen}} fällig ohne Termin · {{geplant}} geplant · {{angekuendigt}} angekündigt",
+      "filter": "Inspektionen filtern",
+      "filterwert": {
+        "offen": "Ohne Termin",
+        "geplant": "Geplant",
+        "alle": "Alle"
+      },
+      "spalte": {
+        "tag": "Termin / fällig",
+        "person": "Wer",
+        "ankuendigung": "Ankündigung",
+        "aktion": "Aktion"
+      },
+      "faellig": "fällig {{datum}}",
+      "angekuendigt": "angekündigt",
+      "nochNicht": "noch nicht",
+      "planen": "Termin planen",
+      "aendern": "Termin ändern",
+      "leer": "Nichts zu planen",
+      "leerText": "In den nächsten 90 Tagen ist keine Inspektion fällig."
+    },
+    "ohne": {
+      "titel": "Anlagen ohne Wartungsvertrag",
+      "hinweis": "Eigene Anlagen nach der Inbetriebnahme ohne laufenden Vertrag. Das Angebot geht mit passendem Paket und Preis in der Sprache des Kunden über den Ausgangskorb.",
+      "suche": "Kunde, Ort oder Projekt suchen",
+      "filter": "Anlagen filtern",
+      "filterwert": {
+        "nie": "Noch nie angeboten",
+        "nachfassen": "Nachfassen",
+        "alle": "Alle"
+      },
+      "alleMarkieren": "Alle markieren",
+      "markieren": "{{kunde}} markieren",
+      "keineMail": "keine Mail-Adresse",
+      "ibn": "In Betrieb seit",
+      "paket": "Passendes Paket",
+      "angebot": "Angebot",
+      "nie": "noch nie",
+      "stand": {
+        "offen": "gesendet {{datum}}",
+        "angenommen": "angenommen {{datum}}",
+        "abgelehnt": "abgelehnt {{datum}}"
+      },
+      "senden": "Angebot senden",
+      "serie_one": "An {{count}} Kunden senden",
+      "serie_other": "An {{count}} Kunden senden",
+      "abgelehnt": "Abgelehnt",
+      "angenommen": "Angenommen",
+      "leer": "Keine Anlagen",
+      "leerText": "Alle eigenen Anlagen in dieser Auswahl haben einen Vertrag oder ein Angebot."
     }
   },
   "einkauf": {
@@ -5235,7 +5310,9 @@
       "nachtraege": "Nachträge",
       "unterschrift": "Unterschrift Kunde",
       "bestaetigt": "Mit der Unterschrift sind die Nachträge in diesem Rapport bestätigt.",
-      "fotos": "Fotos"
+      "fotos": "Fotos",
+      "vorjahr": "Letztes Mal ({{datum}})",
+      "heute": "Heute"
     },
     "heute": {
       "titel": "Baustelle",
@@ -5516,6 +5593,21 @@
         "nichtGestempelt": "Einsatz ohne Zeit",
         "laeuft": "Zeit läuft noch",
         "saldo": "Saldo {{h}} h"
+      }
+    },
+    "inspektion": {
+      "titel": "Inspektion",
+      "badge": "Inspektion {{nummer}}",
+      "letztes": "Letztes Mal: {{wert}}",
+      "abweichung": "{{prozent}} % Abweichung zum letzten Mal",
+      "vorjahr": {
+        "wartung": "Vergleich mit der Inspektion vom {{datum}}",
+        "ibn": "Vergleich mit dem IBN-Protokoll vom {{datum}}"
+      },
+      "paket": {
+        "essentiel": "Essentiel",
+        "comfort": "Comfort",
+        "premium": "Premium mit Messungen"
       }
     }
   },

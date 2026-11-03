@@ -131,7 +131,7 @@ test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {
   const preis = page.getByLabel('Jahrespreis exkl. MWST (CHF)')
   await expect(preis).toHaveValue('690.00')
   await preis.fill('621.00')
-  await expect(page.getByText('10 % Rabatt', { exact: true })).toBeVisible()
+  await expect(page.getByRole('dialog').getByText('10 % Rabatt', { exact: true })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('button', { name: 'Speichern' }).click()
 
@@ -144,4 +144,12 @@ test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {
   await erledigt.getByLabel('Durchgeführt am').fill('2026-10-01')
   await erledigt.getByRole('button', { name: 'Speichern' }).click()
   await expect(page.getByRole('dialog').getByText('Nächste Wartung 01.10.2027')).toBeVisible()
+  await page.keyboard.press('Escape')
+
+  // Wartung Teil 2: Reiter Inspektionen und Ohne Vertrag
+  await page.getByRole('tab', { name: /Inspektionen/ }).click()
+  await expect(page.getByRole('button', { name: 'Ohne Termin' })).toBeVisible()
+  await page.getByRole('tab', { name: /Ohne Vertrag/ }).click()
+  await expect(page.getByRole('button', { name: 'Noch nie angeboten' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
 })
