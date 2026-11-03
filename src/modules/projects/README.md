@@ -11,10 +11,11 @@
 2. Der **Fahrplan** zeigt sechs Phasen. Bewilligungen (Gemeinde, Netzbetreiber, IA, SiNa, Abnahme, Pronovo) und die Checkliste Elektriker sind markierte Schritte darin. Automatische Schritte folgen aus Vertrag, Einsätzen und Zahlungsplan.
 3. Im **Zeitplan** werden Einsätze geplant (intern, extern mit Subunternehmer, voraussichtlich), mit Personen. Am PC Sicht Baustellen oder Team, 2/6/13 Wochen, Balken ziehen zum Verschieben, «Zu planen» rechts; am Handy eine Woche als Liste nach Tagen. Konflikte (abwesend, doppelt eingeplant) rot. Entscheid 0035. «IBN durchgeführt» schliesst das Projekt ab und legt die Anlage an.
 4. Gesuche (TAG, Gemeinde, Förderung) als vorausgefüllte Datenblätter aus der Akte.
+5. **Mängel und Restarbeiten** je Projekt in der Akte; die «Übergabe» lässt sich erst abschliessen, wenn alle erledigt sind. **Beteiligte** (Elektriker, Gerüstbau, Netzbetreiber …) sind Kontakte mit Rolle. Den Kunden informiert die Automation «meilenstein_kunde» bei Vertrag, Bautermin, Montage, IBN und Abnahme, mit Freigabe im Ausgangskorb; die Akte zeigt das im Verlauf.
 
 ## Daten
 
-- Liest/schreibt: `projekte`, `aktivitaeten` (über `projekt_vermerken`), `projekt_schritte`, `einsaetze`, `abwesenheiten`, `subunternehmer`, `subunternehmer_auftraege`; Sichten `projekt_fahrplan`, `projekt_stand`, `projekt_signale`, `abwesenheiten_alle`; Akte über `projekt_akte()`, Nachkalkulation über `nachkalkulation()`.
+- Liest/schreibt: `projekte`, `aktivitaeten` (über `projekt_vermerken`), `projekt_maengel` (`projekt_mangel_speichern`/`_erledigen`), `projekt_beteiligte` (`projekt_beteiligt_setzen`/`_entfernen`), `projekt_schritte`, `einsaetze`, `abwesenheiten`, `subunternehmer`, `subunternehmer_auftraege`; Sichten `projekt_fahrplan`, `projekt_stand`, `projekt_signale`, `abwesenheiten_alle`; Akte über `projekt_akte()`, Nachkalkulation über `nachkalkulation()`.
 - Liest: `ablauf_schritte`, `standorte`, `personen`, `zahlungsplan` (über die Sichten), `kontakte`, `objekte`, `offerten`.
 - Abläufe in der Datenbank: `projekt_schritt_setzen`, `projekt_bau_planen`, `projekt_bau_zuruecknehmen`, `projekt_bau_rueckgaengig`, `projekt_zeitplan_speichern`.
 

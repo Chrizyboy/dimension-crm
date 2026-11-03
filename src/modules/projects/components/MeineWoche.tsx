@@ -48,9 +48,9 @@ export function MeineWoche({ onOeffnen }: { onOeffnen: (id: string) => void }) {
   const umfang = wer ?? (hatEigene ? 'meine' : 'alle')
 
   const meine = useMemo(() => {
-    const alle = (projekte.data ?? []).filter((p) => nochOffen(p, heute))
+    const alle = (projekte.data ?? []).filter((p) => nochOffen(p, heute, signale.data?.get(p.id)))
     return new Map((umfang === 'meine' ? alle.filter((p) => p.verantwortlich_id === ich) : alle).map((p) => [p.id, p]))
-  }, [projekte.data, umfang, ich, heute])
+  }, [projekte.data, umfang, ich, heute, signale.data])
 
   const punkte = useMemo(() => {
     const liste: Punkt[] = []
@@ -73,9 +73,14 @@ export function MeineWoche({ onOeffnen }: { onOeffnen: (id: string) => void }) {
     for (const p of meine.values()) {
       for (const h of hinweise(p, signale.data?.get(p.id), heute, lieferfrist)) {
         if (
-          !['material_fehlt', 'material_bestellen', 'zahlung_ueberfaellig', 'ohne_termin', 'verrechnen'].includes(
-            h.schluessel,
-          )
+          ![
+            'material_fehlt',
+            'material_bestellen',
+            'maengel',
+            'zahlung_ueberfaellig',
+            'ohne_termin',
+            'verrechnen',
+          ].includes(h.schluessel)
         )
           continue
         if (h.schluessel === 'ohne_termin' && p.status !== 'auftrag') continue

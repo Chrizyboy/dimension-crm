@@ -1,5 +1,5 @@
 import type { TFunction } from 'i18next'
-import { ClipboardList, Mail, MapPin, MessageSquare, Phone, StickyNote, type LucideIcon } from 'lucide-react'
+import { ClipboardList, Mail, MapPin, MessageSquare, Phone, Send, StickyNote, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -36,6 +36,16 @@ function eintraege(akte: Akte, t: TFunction): Zeitpunkt[] {
       [v.betreff && v.quelle === 'mail' ? v.betreff : null, v.text, v.ergebnis].filter(Boolean).join('\n') || undefined,
     ton: v.quelle === 'mail' ? 'bg-info-soft text-info' : 'bg-muted text-muted-foreground',
   }))
+  // Was für das Projekt im Ausgangskorb liegt (z. B. Kundeninfo bei Meilensteinen, wartet auf Freigabe) oder ging.
+  for (const a of akte.ausgang)
+    liste.push({
+      id: `ausgang:${a.id}`,
+      zeitpunkt: a.gesendet_am ?? a.erstellt_am,
+      icon: a.kanal === 'sms' ? MessageSquare : Send,
+      titel: t(`projekte.verlauf.ausgang.${a.status}`, { defaultValue: t('projekte.verlauf.ausgang.wartet') }),
+      text: a.betreff ?? undefined,
+      ton: a.status === 'gesendet' ? 'bg-ok-soft text-ok' : 'bg-warn-soft text-warn',
+    })
   for (const r of akte.rapporte)
     liste.push({
       id: `rapport:${r.id}`,
@@ -89,7 +99,7 @@ export function Verlauf({ projektId, akte }: { projektId: string; akte: Akte | u
           </Button>
         </div>
       </div>
-      {akte && akte.verlauf.length + akte.rapporte.length > 0 ? (
+      {akte && akte.verlauf.length + akte.rapporte.length + akte.ausgang.length > 0 ? (
         <Zeitachse eintraege={eintraege(akte, t)} sprache={sprache} />
       ) : (
         <p className="text-muted-foreground">{t('projekte.verlauf.leer')}</p>

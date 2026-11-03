@@ -35,3 +35,9 @@ Entwurf mit Beispieldaten: https://claude.ai/artifact/GXLAokpEoDtBmnpGXxNss8
 ## Nachtrag: Blocker aus dem Reiter «Baustellen»
 
 Die Blocker «Material nicht bestellt» (Baubeginn minus Lieferfrist aus `einstellungen.einkauf`) und «Frist vorbei» aus `lib/blocker.ts` erscheinen jetzt als Hinweise auf den Leitstand-Karten, in «Meine Woche» und in der Akte. So bleiben Karte und Glocke gleich, auch ohne den alten Reiter.
+
+## Schritt 2 (3.11.2026, Antworten von Chris auf die drei Fragen)
+
+- **Mängel und Restarbeiten** sind eine eigene Liste je Projekt (`projekt_maengel`), geändert nur über `projekt_mangel_speichern` (wiederholbar mit ID aus der App, auch fürs Handy) und `projekt_mangel_erledigen`. Solange etwas offen ist, lässt sich der Schritt «Übergabe» nicht abschliessen (Trigger `uebergabe_ohne_maengel`, Fehler `projekte.maengel_offen`). Automatische Abläufe (IBN-Rapport setzt das Projekt auf abgeschlossen) bleiben unberührt; ein abgeschlossenes Projekt mit offenen Mängeln bleibt im Leitstand.
+- **Beteiligte** (Elektriker, Gerüstbau, Netzbetreiber, Architekt …) sind Kontakte aus dem Adressbuch mit Rolle (`projekt_beteiligte`, Rollen als Auswahlliste `projekt_rolle`). Die alten Textfelder Elektriker/Architekt bleiben (V233), bis die Daten übertragen sind.
+- **Kunde bei Meilensteinen informieren**: läuft über die bestehende Automation «meilenstein_kunde» (Vertrag, Bautermin, Montage, IBN, Abnahme), Standard «mit Freigabe» im Ausgangskorb. Die Akte zeigt im Verlauf, was dazu wartet oder gesendet wurde; nichts geht ohne Freigabe hinaus (Regel 6).

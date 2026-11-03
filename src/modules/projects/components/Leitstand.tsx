@@ -36,7 +36,10 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
   const heute = heuteIso()
   const sig = useMemo(() => signale.data ?? new Map<string, Signale>(), [signale.data])
 
-  const laufend = useMemo(() => (projekte.data ?? []).filter((p) => nochOffen(p, heute)), [projekte.data, heute])
+  const laufend = useMemo(
+    () => (projekte.data ?? []).filter((p) => nochOffen(p, heute, sig.get(p.id))),
+    [projekte.data, heute, sig],
+  )
   const daten = useMemo(() => {
     const s = suche.trim().toLowerCase()
     return laufend.filter(

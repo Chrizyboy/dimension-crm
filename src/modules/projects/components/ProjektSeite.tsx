@@ -8,7 +8,9 @@ import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/
 import { useAkte, useLieferfrist, useProjekt, useSignale } from '../hooks/useProjekte'
 import { heuteIso, hinweise } from '../lib/leitstand'
 import { AKTE_REITER, type AkteReiter } from '../types'
+import { AkteBeteiligte } from './AkteBeteiligte'
 import { AkteFahrplan } from './AkteFahrplan'
+import { AkteMaengel } from './AkteMaengel'
 import { AkteSubunternehmer } from './AkteSubunternehmer'
 import { AkteUebersicht } from './AkteUebersicht'
 import { AkteZeitplan } from './AkteZeitplan'
@@ -52,6 +54,7 @@ export function ProjektSeite({
       <div className="grid items-start gap-4 lg:grid-cols-2 2xl:grid-cols-[23rem_minmax(0,1fr)_23rem]">
         <div className="flex min-w-0 flex-col gap-4">
           <AkteUebersicht key={p.id + String(p.werktage) + (p.elektriker ?? '')} projekt={p} />
+          {a && <AkteBeteiligte projektId={p.id} beteiligte={a.beteiligte} />}
         </div>
         <div className="order-first flex min-w-0 flex-col gap-4 lg:order-last lg:col-span-2 2xl:order-none 2xl:col-span-1">
           <Reiter
@@ -79,6 +82,7 @@ export function ProjektSeite({
               ) : (
                 <Skelett className="h-40" />
               )}
+              {a && <AkteMaengel projektId={p.id} maengel={a.maengel} />}
               <Verlauf projektId={p.id} akte={a} />
               <Karte className="px-3">
                 <KiAkteAbschnitt

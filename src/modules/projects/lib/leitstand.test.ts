@@ -34,6 +34,7 @@ const signale = (x: Partial<Signale>): Signale => ({
   offen_rappen: 0,
   offen_faellig_am: null,
   nachtraege_offen: 0,
+  maengel_offen: 0,
   ...x,
 })
 
@@ -83,6 +84,15 @@ describe('hinweise', () => {
     const p = projekt({ material_status: null, stand: stand('vorb', { spaet: true }) })
     expect(hinweise(p, undefined, heute).map((h) => h.schluessel)).toEqual(['material_bestellen', 'frist'])
     expect(hinweise(p, undefined, heute, 5).map((h) => h.schluessel)).toEqual(['frist'])
+  })
+  it('meldet offene Mängel und hält Abgeschlossene damit im Leitstand', () => {
+    const s = signale({ maengel_offen: 2 })
+    expect(hinweise(projekt({}), s, heute)).toContainEqual({
+      schluessel: 'maengel',
+      ton: 'warnung',
+      werte: { anzahl: 2 },
+    })
+    expect(nochOffen(projekt({ status: 'abgeschlossen', baubeginn: '2024-05-01' }), heute, s)).toBe(true)
   })
   it('meldet überfällige Rechnungen mit Tagen', () => {
     const s = signale({ offen_rappen: 500, offen_faellig_am: '2026-10-20' })

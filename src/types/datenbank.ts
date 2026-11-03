@@ -7195,6 +7195,241 @@ export type Database = {
         }
         Relationships: []
       }
+      projekt_beteiligte: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kontakt_id: string
+          notiz: string | null
+          projekt_id: string
+          rolle: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id: string
+          notiz?: string | null
+          projekt_id: string
+          rolle: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id?: string
+          notiz?: string | null
+          projekt_id?: string
+          rolle?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      projekt_maengel: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          frist: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          ort: string | null
+          projekt_id: string
+          status: string
+          subunternehmer_id: string | null
+          text: string
+          verantwortlich_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          frist?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          projekt_id: string
+          status?: string
+          subunternehmer_id?: string | null
+          text: string
+          verantwortlich_id?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          frist?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          projekt_id?: string
+          status?: string
+          subunternehmer_id?: string | null
+          text?: string
+          verantwortlich_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekt_maengel_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_subunternehmer_id_fkey'
+            columns: ['subunternehmer_id']
+            isOneToOne: false
+            referencedRelation: 'subunternehmer'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       projekt_material: {
         Row: {
           alt_daten: Json | null
@@ -11856,6 +12091,7 @@ export type Database = {
         Row: {
           letzte_aktivitaet: string | null
           letzte_lieferung: string | null
+          maengel_offen: number | null
           material_fehlt: number | null
           material_positionen: number | null
           nachtraege_offen: number | null
@@ -11870,6 +12106,7 @@ export type Database = {
         Insert: {
           letzte_aktivitaet?: never
           letzte_lieferung?: never
+          maengel_offen?: never
           material_fehlt?: never
           material_positionen?: never
           nachtraege_offen?: never
@@ -11883,6 +12120,7 @@ export type Database = {
         Update: {
           letzte_aktivitaet?: never
           letzte_lieferung?: never
+          maengel_offen?: never
           material_fehlt?: never
           material_positionen?: never
           nachtraege_offen?: never
@@ -13284,6 +13522,13 @@ export type Database = {
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
       projekt_bau_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      projekt_beteiligt_entfernen: { Args: { p_id: string }; Returns: undefined }
+      projekt_beteiligt_setzen: {
+        Args: { p_kontakt: string; p_notiz?: string; p_projekt: string; p_rolle: string }
+        Returns: string
+      }
+      projekt_mangel_erledigen: { Args: { p_erledigt: boolean; p_id: string; p_notiz?: string }; Returns: undefined }
+      projekt_mangel_speichern: { Args: { p: Json; p_id: string; p_projekt: string }; Returns: string }
       projekt_material_vorschlagen: { Args: { p_projekt: string }; Returns: number }
       projekt_schritt_setzen: { Args: { p: Json; p_projekt: string; p_schluessel: string }; Returns: undefined }
       projekt_vermerken: { Args: { p_art: string; p_projekt: string; p_text: string }; Returns: string }

@@ -2079,7 +2079,9 @@
     "automation_lauf_offen": "Wiederholen geht erst, wenn der Lauf zu Ende ist.",
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
-    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr)."
+    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
+    "projekte_maengel_offen": "Erst alle Mängel erledigen, dann ist die Übergabe möglich.",
+    "projekte_rolle_unbekannt": "Diese Rolle gibt es nicht."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2984,7 +2986,8 @@
       "nachtraege": "Nachtrag offen",
       "material_ok": "Material komplett",
       "material_bestellen": "Material nicht bestellt",
-      "frist": "Frist vorbei"
+      "frist": "Frist vorbei",
+      "maengel": "{{anzahl}} Mängel offen"
     },
     "woche": {
       "wer": "Wessen Projekte",
@@ -3005,7 +3008,8 @@
         "zahlung_ueberfaellig": "Zahlung nachfassen",
         "ohne_termin": "Bautermin vergeben",
         "verrechnen": "Rechnung stellen",
-        "material_bestellen": "Material bestellen"
+        "material_bestellen": "Material bestellen",
+        "maengel": "Mängel erledigen"
       }
     },
     "seite": {
@@ -3061,7 +3065,14 @@
       "speichern": "Im Verlauf festhalten",
       "leer": "Noch nichts im Verlauf.",
       "mailVon": "Mail von {{name}}",
-      "rapport": "Rapport {{nummer}} · {{person}}"
+      "rapport": "Rapport {{nummer}} · {{person}}",
+      "ausgang": {
+        "wartet": "Kundeninfo wartet auf Freigabe",
+        "freigegeben": "Kundeninfo freigegeben",
+        "wird_gesendet": "Kundeninfo wird gesendet",
+        "gesendet": "Kundeninfo gesendet",
+        "fehler": "Kundeninfo: Versand fehlgeschlagen"
+      }
     },
     "blocker": {
       "bewilligung": "Bewilligung spät",
@@ -3074,6 +3085,33 @@
         "bewilligung": "Bewilligung",
         "material": "Material"
       }
+    },
+    "maengel": {
+      "titel": "Mängel und Restarbeiten",
+      "offen": "{{anzahl}} offen",
+      "alleErledigt": "Alles erledigt",
+      "leer": "Keine offenen Mängel.",
+      "erledigen": "«{{text}}» erledigt",
+      "oeffnen": "«{{text}}» wieder öffnen",
+      "erledigtAm": "erledigt {{datum}}",
+      "bis": "bis {{datum}}",
+      "nurOffene": "Nur offene zeigen",
+      "erledigteZeigen": "{{anzahl}} erledigte zeigen",
+      "artWahl": "Art",
+      "art": {
+        "mangel": "Mangel",
+        "restarbeit": "Restarbeit"
+      },
+      "eingabe": "Was ist noch offen? Wo genau?",
+      "frist": "Frist",
+      "erfassen": "Erfassen"
+    },
+    "beteiligte": {
+      "titel": "Beteiligte",
+      "hinzufuegen": "Hinzufügen",
+      "leer": "Noch niemand erfasst (Elektriker, Gerüstbau, Netzbetreiber …).",
+      "entfernen": "{{name}} entfernen",
+      "rolle": "Rolle"
     }
   },
   "kundeWahl": {

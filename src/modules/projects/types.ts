@@ -218,6 +218,7 @@ export interface Signale {
   offen_rappen: number
   offen_faellig_am: string | null
   nachtraege_offen: number
+  maengel_offen: number
 }
 
 /** Schnellfilter im Leitstand. */
@@ -284,6 +285,17 @@ export interface Akte {
     stunden: number | null
   }[]
   stunden: number
+  maengel: Mangel[]
+  beteiligte: Beteiligter[]
+  ausgang: {
+    id: string
+    art: string
+    kanal: 'mail' | 'sms'
+    betreff: string | null
+    status: string
+    erstellt_am: string
+    gesendet_am: string | null
+  }[]
   verlauf: {
     quelle: 'aktivitaet' | 'mail'
     id: string
@@ -313,4 +325,31 @@ export interface Nachkalkulation {
     arbeit_rappen: number
     marge_rappen: number
   }
+}
+
+/** Mangel oder Restarbeit am Projekt (Tabelle `projekt_maengel`). */
+export interface Mangel {
+  id: string
+  art: 'mangel' | 'restarbeit'
+  text: string
+  ort: string | null
+  frist: string | null
+  status: 'offen' | 'erledigt'
+  erledigt_am: string | null
+  erledigt_notiz: string | null
+  verantwortlich_id: string | null
+  verantwortlich: string | null
+  subunternehmer_id: string | null
+  subunternehmer: string | null
+}
+
+/** Beteiligter am Projekt: Kontakt mit Rolle aus der Auswahlliste «projekt_rolle». */
+export interface Beteiligter {
+  id: string
+  rolle: string
+  notiz: string | null
+  kontakt_id: string
+  name: string | null
+  telefon: string | null
+  email: string | null
 }

@@ -58,6 +58,7 @@ export function hinweise(
     h.push({ schluessel: 'zahlung_ueberfaellig', ton: 'kritisch', werte: { tage: tageBis(s.offen_faellig_am, heute) } })
   if (ohneTermin(p)) h.push({ schluessel: 'ohne_termin', ton: 'warnung' })
   if (s && s.tranchen_faellig_rappen > 0) h.push({ schluessel: 'verrechnen', ton: 'warnung' })
+  if (s && s.maengel_offen > 0) h.push({ schluessel: 'maengel', ton: 'warnung', werte: { anzahl: s.maengel_offen } })
   if (s && s.nachtraege_offen > 0)
     h.push({ schluessel: 'nachtraege', ton: 'info', werte: { anzahl: s.nachtraege_offen } })
   if (s && s.material_positionen > 0 && s.material_fehlt === 0) h.push({ schluessel: 'material_ok', ton: 'ok' })
@@ -95,9 +96,11 @@ export function trifft(
   }
 }
 
-/** Gehört ein abgeschlossenes Projekt noch in den Leitstand? Nur, wenn im letzten halben Jahr gebaut und noch etwas offen. */
-export function nochOffen(p: Projekt, heute: string): boolean {
+/** Gehört ein abgeschlossenes Projekt noch in den Leitstand? Bei offenen Mängeln immer, sonst nur, wenn im letzten halben Jahr gebaut und noch etwas offen. */
+export function nochOffen(p: Projekt, heute: string, s?: Signale): boolean {
   if (p.status !== 'abgeschlossen') return true
+  // Offene Mängel halten ein Projekt im Leitstand, egal wie alt: es ist erst fertig, wenn alles erledigt ist.
+  if ((s?.maengel_offen ?? 0) > 0) return true
   const datum = p.baubeginn ?? p.unterzeichnet_am
   if (!datum || tageBis(datum, heute) > 183) return false
   return Boolean(p.stand && p.stand.erledigt < p.stand.gesamt)

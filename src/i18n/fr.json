@@ -2079,7 +2079,9 @@
     "automation_lauf_offen": "Relancer n’est possible qu’une fois l’exécution terminée.",
     "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
     "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
-    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus)."
+    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
+    "projekte_maengel_offen": "Il faut d’abord régler tous les défauts avant la remise.",
+    "projekte_rolle_unbekannt": "Ce rôle n’existe pas."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -2984,7 +2986,8 @@
       "nachtraege": "Avenant ouvert",
       "material_ok": "Matériel complet",
       "material_bestellen": "Matériel pas commandé",
-      "frist": "Délai dépassé"
+      "frist": "Délai dépassé",
+      "maengel": "{{anzahl}} défauts ouverts"
     },
     "woche": {
       "wer": "Projets de qui",
@@ -3005,7 +3008,8 @@
         "zahlung_ueberfaellig": "Relancer le paiement",
         "ohne_termin": "Fixer la date de chantier",
         "verrechnen": "Établir la facture",
-        "material_bestellen": "Commander le matériel"
+        "material_bestellen": "Commander le matériel",
+        "maengel": "Régler les défauts"
       }
     },
     "seite": {
@@ -3061,7 +3065,14 @@
       "speichern": "Noter dans l’historique",
       "leer": "Rien dans l’historique.",
       "mailVon": "E-mail de {{name}}",
-      "rapport": "Rapport {{nummer}} · {{person}}"
+      "rapport": "Rapport {{nummer}} · {{person}}",
+      "ausgang": {
+        "wartet": "Info client en attente de validation",
+        "freigegeben": "Info client validée",
+        "wird_gesendet": "Info client en cours d’envoi",
+        "gesendet": "Info client envoyée",
+        "fehler": "Info client : échec de l’envoi"
+      }
     },
     "blocker": {
       "bewilligung": "Autorisation en retard",
@@ -3074,6 +3085,33 @@
         "bewilligung": "Autorisation",
         "material": "Matériel"
       }
+    },
+    "maengel": {
+      "titel": "Défauts et travaux restants",
+      "offen": "{{anzahl}} ouverts",
+      "alleErledigt": "Tout est réglé",
+      "leer": "Aucun défaut ouvert.",
+      "erledigen": "« {{text}} » réglé",
+      "oeffnen": "Rouvrir « {{text}} »",
+      "erledigtAm": "réglé le {{datum}}",
+      "bis": "d’ici le {{datum}}",
+      "nurOffene": "Afficher seulement les ouverts",
+      "erledigteZeigen": "Afficher {{anzahl}} réglés",
+      "artWahl": "Type",
+      "art": {
+        "mangel": "Défaut",
+        "restarbeit": "Travail restant"
+      },
+      "eingabe": "Qu’est-ce qui reste à faire ? Où exactement ?",
+      "frist": "Délai",
+      "erfassen": "Saisir"
+    },
+    "beteiligte": {
+      "titel": "Intervenants",
+      "hinzufuegen": "Ajouter",
+      "leer": "Personne n’est encore saisi (électricien, échafaudage, gestionnaire de réseau …).",
+      "entfernen": "Retirer {{name}}",
+      "rolle": "Rôle"
     }
   },
   "kundeWahl": {
