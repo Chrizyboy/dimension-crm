@@ -26,9 +26,11 @@ select throws_ok($$ update public.einstellungen set schluessel = 'ki_alt' where 
   'Umbenennen ist kein Schlupfloch');
 select throws_ok($$ insert into public.einstellungen (schluessel, wert) values ('neu_p31', '{}') $$, '42501', null,
   'neue Schlüssel nur Administration');
-select lives_ok($$ select public.kennzahlen_quellen_kosten('Website', 5000) $$, 'Kosten pro Lead bleibt für alle offen');
-select lives_ok($$ update public.einstellungen set wert = wert where schluessel = 'marketing' $$,
-  'Marketing-Vorlagen bleiben für alle offen');
+-- Seit 3.11.2026 (Entscheid 0047): auch Kosten pro Lead und Marketing-Vorlagen ändert nur die Administration.
+select throws_ok($$ select public.kennzahlen_quellen_kosten('Website', 5000) $$, '42501', 'einstellungen.nur_admin',
+  'Kosten pro Lead nur Administration');
+select throws_ok($$ update public.einstellungen set wert = wert where schluessel = 'marketing' $$, '42501',
+  'einstellungen.nur_admin', 'Marketing-Vorlagen nur Administration');
 
 -- Ausgangskorb
 select lives_ok($$ select public.ausgang_anlegen('{"an": "kunde@example.ch", "betreff": "Test", "text": "Hallo"}') $$,

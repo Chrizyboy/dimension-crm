@@ -28,7 +28,7 @@ Kosten pro Lead).
 - Neu: Auswahllisten (Texte DE/FR, Farbe, Reihenfolge; nur bei freien Listen neu anlegen und ausblenden),
   Standorte & Regionen mit PLZ-Regeln (`region_fuer_plz`, Trigger `region_setzen` auf `objekte`, nur wenn leer),
   Änderungsprotokoll, Papierkorb über alle Fachtabellen (`papierkorb`, `papierkorb_wiederherstellen`, nur Admin).
-- Schutz: Trigger `nur_admin` auf `einstellungen` (jeder Schlüssel nur Administration, Zeitplan und Automationen
+- Schutz: Trigger `zz_nur_admin` auf `einstellungen` (jeder Schlüssel nur Administration, Zeitplan und Automationen
   ausgenommen), `firmen` ändern nur Admin, `kennzahlen_quellen_kosten` nur Admin. In der App zeigt
   `NurAdministration` (`src/components/shared/`) Firmen-Einstellungen für alle anderen nur zum Lesen.
 

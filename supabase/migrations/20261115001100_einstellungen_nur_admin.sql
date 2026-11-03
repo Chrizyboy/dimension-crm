@@ -17,8 +17,10 @@ begin
 end
 $$;
 revoke execute on function intern.einstellung_nur_admin() from public, anon, authenticated;
-drop trigger if exists nur_admin on public.einstellungen;
-create trigger nur_admin before insert or update on public.einstellungen
+-- Name mit «zz_», damit er als letzter läuft (Postgres: alphabetisch) und die genaueren Meldungen der
+-- Bereichs-Trigger (posteingang.kein_recht, service.kein_recht …) zuerst kommen.
+drop trigger if exists zz_nur_admin on public.einstellungen;
+create trigger zz_nur_admin before insert or update on public.einstellungen
   for each row execute function intern.einstellung_nur_admin();
 
 -- Firmenangaben (IBAN, Bank, Zahlungsfrist, MWST-Nummer): lesen weiterhin alle, ändern nur die Administration.
