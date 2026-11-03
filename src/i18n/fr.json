@@ -2955,7 +2955,10 @@
     "wartung_kein_termin": "Aucun rendez-vous planifié pour ce contrat.",
     "wartung_keine_mail": "Le client n’a pas d’adresse e-mail.",
     "wartung_kein_angebot": "Aucune offre pour cette installation.",
-    "termin_link_stand": "Le lien de rendez-vous n’existe que pour les leads sans rendez-vous ni offre."
+    "termin_link_stand": "Le lien de rendez-vous n’existe que pour les leads sans rendez-vous ni offre.",
+    "team_taetigkeit_unbekannt": "Cette activité n’existe pas (plus).",
+    "team_wer_ungueltig": "Veuillez choisir « chaque personne » ou « au moins une ».",
+    "team_ausweis_unbekannt": "Ce permis n’existe pas (plus)."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -4223,7 +4226,11 @@
       "grund_doppelt": "{{wer}} planifié deux fois",
       "abwesendAm": "Absents : {{namen}}",
       "service": "Interventions de service",
-      "serviceUnter": "depuis Service & garantie"
+      "serviceUnter": "depuis Service & garantie",
+      "taetigkeiten": "Activités",
+      "ausweisFehlt": "{{taetigkeit}} : permis manquant pour {{namen}}",
+      "ausweisNiemand": "{{taetigkeit}} : personne dans l’équipe n’a le permis",
+      "ausweisLegende": "Permis manquant"
     },
     "bewilligungen": {
       "ansicht": "Vue",
@@ -10383,6 +10390,32 @@
       "notiz": "Note",
       "rueckzahlungOffen": "Ouvert selon convention de formation : {{betrag}} (en cas de démission aujourd’hui)",
       "keineFuerPerson": "Aucun cours cette année."
+    },
+    "taetigkeit": {
+      "titel": "Permis obligatoires par activité",
+      "text": "Quels permis une activité sur le chantier exige. La planification avertit s’ils manquent dans l’équipe : « chaque personne » = toutes, « au moins une » = une personne suffit. « Chaque intervention » s’applique sans case cochée. Simple avertissement, la planification reste possible.",
+      "taetigkeit": "Activité",
+      "werKopf": "Qui doit l’avoir",
+      "wer": {
+        "alle": "chaque personne",
+        "einer": "au moins une"
+      },
+      "werFuer": "Qui doit avoir le permis pour {{taetigkeit}}",
+      "immer": "Chaque intervention",
+      "immerFuer": "{{taetigkeit}} s’applique à chaque intervention",
+      "brauchtFuer": "{{taetigkeit}} exige {{ausweis}}",
+      "neu": "Nouvelle activité"
+    },
+    "anlass": {
+      "titel": "Anniversaires et jubilés",
+      "heute": "aujourd’hui",
+      "morgen": "demain",
+      "nichts": "Aucun anniversaire ni jubilé ces prochains jours.",
+      "geburtstag": "Anniversaire",
+      "jubilaeum_one": "{{count}} an chez nous",
+      "jubilaeum_other": "{{count}} ans chez nous",
+      "michVerbergen": "Ne pas m’afficher ici",
+      "michZeigen": "M’afficher à nouveau ici"
     }
   },
   "posteingang": {

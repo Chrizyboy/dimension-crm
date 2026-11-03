@@ -3465,6 +3465,7 @@ export type Database = {
           personen: string[]
           projekt_id: string
           subunternehmer_id: string | null
+          taetigkeiten: string[]
           team: string[]
           von: string
         }
@@ -3483,6 +3484,7 @@ export type Database = {
           personen?: string[]
           projekt_id: string
           subunternehmer_id?: string | null
+          taetigkeiten?: string[]
           team?: string[]
           von: string
         }
@@ -3500,6 +3502,7 @@ export type Database = {
           personen?: string[]
           projekt_id?: string
           subunternehmer_id?: string | null
+          taetigkeiten?: string[]
           team?: string[]
           von?: string
         }
@@ -18334,8 +18337,11 @@ export type Database = {
       submission_protokoll: { Args: { p_id: string; p_zeilen: Json }; Returns: number }
       submission_pruefen: { Args: { p_id: string }; Returns: undefined }
       submission_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
+      taetigkeit_anforderung_speichern: { Args: { p: Json; p_schluessel: string }; Returns: undefined }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
       tag_verschieben: { Args: { p_art: string; p_bis: string; p_id: string }; Returns: undefined }
+      team_anlaesse: { Args: { p_tag?: string }; Returns: Json }
+      team_anlass_zeigen: { Args: { p_zeigen: boolean }; Returns: undefined }
       team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       team_kurse: { Args: { p_jahr?: number }; Returns: Json }
       team_uebersicht: { Args: { p_tag?: string }; Returns: Json }
