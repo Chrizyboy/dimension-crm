@@ -1,6 +1,16 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeEintraege, ladeFahrzeuge, ladeFristen, ladeGeraete, ladeWahl } from '../services/ressourcen'
+import { ladeBelegung } from '../services/belegung'
+import { ladeDateien, type Ordner } from '../services/dateien'
+import { ladeKosten } from '../services/kosten'
+import {
+  ladeEintraege,
+  ladeFahrzeuge,
+  ladeFristen,
+  ladeGeraete,
+  ladeOffeneSchaeden,
+  ladeWahl,
+} from '../services/ressourcen'
 
 const mitDb = supabase !== null
 
@@ -48,3 +58,23 @@ export function useNamen() {
     },
   }
 }
+
+/** Offene Schäden (offen oder in Arbeit) aller Fahrzeuge und Geräte. */
+export const useSchaeden = () =>
+  useQuery({ queryKey: ['fuhrpark', 'schaeden'], enabled: mitDb, queryFn: ladeOffeneSchaeden })
+
+/** Belegung im Zeitraum von–bis (Reservierungen und Fahrzeuge, die dem Team folgen). */
+export const useBelegung = (von: string, bis: string) =>
+  useQuery({ queryKey: ['fuhrpark', 'belegung', von, bis], enabled: mitDb, queryFn: () => ladeBelegung(von, bis) })
+
+/** Kosten eines Jahres; nur abfragen, wenn die Person das Recht «finanzen» hat. */
+export const useKosten = (jahr: number, erlaubt: boolean) =>
+  useQuery({
+    queryKey: ['fuhrpark', 'kosten', jahr],
+    enabled: mitDb && erlaubt,
+    queryFn: () => ladeKosten(jahr),
+  })
+
+/** Dateien eines Fahrzeugs, Geräts oder Eintrags. */
+export const useDateien = (ordner: Ordner, id: string) =>
+  useQuery({ queryKey: ['fuhrpark', 'dateien', ordner, id], enabled: mitDb, queryFn: () => ladeDateien(ordner, id) })

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { AutomatischGeplant } from '@/components/shared/automatik/AutomatischGeplant'
 import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Karte } from '@/components/ui/karte'
@@ -85,6 +86,7 @@ export function ProjektSeite({
                   art="auftrag"
                   mail={{ kontakt_id: p.kontakt_id, projekt_id: p.id }}
                 />
+                <AutomatischGeplant tabelle="projekte" id={p.id} />
               </Karte>
             </ReiterInhalt>
             <ReiterInhalt value="fahrplan" className="pt-3">

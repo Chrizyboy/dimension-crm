@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Handbuch» (V233 Helpdesk: Anleitung, Prozesse, Videos, Meldungen). */
 
-/** Reiter des Handbuchs, in der Adresse `#/knowledge?ansicht=…`. */
-export const ANSICHTEN = ['anleitung', 'start', 'prozesse', 'videos', 'meldungen'] as const
+/** Reiter des Handbuchs, in der Adresse `#/knowledge?ansicht=…` (früher «anleitung» = heute «kapitel»). */
+export const ANSICHTEN = ['fuerdich', 'kapitel', 'start', 'prozesse', 'videos', 'begriffe', 'neu', 'meldungen'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 /** Eine abgelegte Datei (PDF, Video, Vorschaubild) aus `dokumente`. */
@@ -36,6 +36,8 @@ export interface HandbuchEintrag {
   dauer_s: number | null
   reihenfolge: number | null
   sprache: 'de' | 'fr' | null
+  /** Bereich (Modul-id), in dessen Kapitel der Prozess bzw. das Video erscheint; leer = nur im eigenen Reiter. */
+  bereich: string | null
   versionen: FruehereVersion[]
   erstellt_am: string
   geaendert_am: string
@@ -56,6 +58,7 @@ export interface HandbuchEingabe {
   datum: string | null
   sprache: 'de' | 'fr' | null
   reihenfolge: number | null
+  bereich: string | null
   datei_de: File | null
   datei_fr: File | null
 }
