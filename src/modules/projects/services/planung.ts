@@ -1,4 +1,5 @@
 import { supabase } from '@/services/supabase'
+import type { AusweisStand } from '../lib/ausweise'
 import type { Abwesenheit, Einsatz, EinsatzEntwurf, Person, ServiceTermin } from '../types'
 
 /** Zeitplan: Einsätze, Personen und Abwesenheiten. */
@@ -11,7 +12,7 @@ function db() {
 export async function ladeEinsaetze(von: string, bis: string): Promise<Einsatz[]> {
   const { data, error } = await db()
     .from('einsaetze')
-    .select('id, projekt_id, art, von, bis, personen, subunternehmer_id, notiz')
+    .select('id, projekt_id, art, von, bis, personen, subunternehmer_id, notiz, taetigkeiten')
     .is('geloescht_am', null)
     .lte('von', bis)
     .gte('bis', von)
@@ -36,7 +37,7 @@ export async function ladeServiceTermine(von: string, bis: string): Promise<Serv
 export async function ladeProjektEinsaetze(projektId: string): Promise<Einsatz[]> {
   const { data, error } = await db()
     .from('einsaetze')
-    .select('id, projekt_id, art, von, bis, personen, subunternehmer_id, notiz')
+    .select('id, projekt_id, art, von, bis, personen, subunternehmer_id, notiz, taetigkeiten')
     .eq('projekt_id', projektId)
     .is('geloescht_am', null)
     .order('von')
@@ -51,6 +52,16 @@ export async function zeitplanSpeichern(
 ): Promise<void> {
   const { error } = await db().rpc('projekt_zeitplan_speichern', { p_id: projektId, p: p as never })
   if (error) throw error
+}
+
+/** Ausweise aller Personen (nur Art und «gültig bis») für die Warnung «Pflicht-Ausweis fehlt». */
+export async function ladeAusweisStand(): Promise<AusweisStand[]> {
+  const { data, error } = await db()
+    .from('qualifikationen')
+    .select('person_id, art, gueltig_bis')
+    .is('geloescht_am', null)
+  if (error) throw error
+  return data
 }
 
 /** Aktive Personen für Einsätze und Abwesenheiten. */
@@ -114,6 +125,7 @@ export async function einsatzAendern(
       personen: x.personen,
       subunternehmer_id: x.subunternehmer_id,
       notiz: x.notiz,
+      taetigkeiten: x.taetigkeiten,
     }
   })
   const { error } = await db().rpc('projekt_zeitplan_speichern', {

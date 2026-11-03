@@ -18,6 +18,7 @@ import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
 import { VisumHeute } from '@/modules/invoices'
+import { TeamHeute, meta as teamMeta } from '@/modules/staff'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { KiBriefing } from '@/modules/ai'
 import { NeueAufgabeKnopf } from '@/modules/tasks'
@@ -47,6 +48,7 @@ export function Startseite() {
     [fristenMeta, FristenHeute],
     [finanzenMeta, FinanzenHeute],
     [spesenMeta, SpesenHeute],
+    [teamMeta, TeamHeute],
   ] as const
 
   return (

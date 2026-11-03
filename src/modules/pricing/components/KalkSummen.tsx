@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { formatChf } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { dbTon, type summe } from '../lib/kalkulation'
+import { dbTon, foerderung as foerderungAus, type summe } from '../lib/kalkulation'
+import type { PreisRegeln } from '../types'
 
 const TON = { ok: 'text-ok', warnung: 'text-warn', kritisch: 'text-bad' } as const
 
@@ -32,15 +33,18 @@ function Kachel({
 export function KalkSummen({
   s,
   satz,
+  foerderung,
   rabatt,
   onRabatt,
 }: {
   s: ReturnType<typeof summe>
   satz: number
+  foerderung?: PreisRegeln['foerderung'] | undefined
   rabatt: number
   onRabatt: (r: number) => void
 }) {
   const { t } = useTranslation()
+  const eiv = foerderungAus(s.kwp, foerderung)
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_20rem]">
       <div className="grid grid-cols-2 gap-2">
@@ -95,6 +99,18 @@ export function KalkSummen({
           <dt>{t('preise.kalk.totalInkl')}</dt>
           <dd className="zahlen font-mono">CHF {formatChf(s.total)}</dd>
         </div>
+        {eiv > 0 && foerderung && (
+          <>
+            <div className="text-muted-foreground flex justify-between gap-2">
+              <dt>{t('preise.kalk.foerderung', { name: foerderung.name, stand: foerderung.stand })}</dt>
+              <dd className="zahlen font-mono">− {formatChf(eiv)}</dd>
+            </div>
+            <div className="text-muted-foreground flex justify-between gap-2">
+              <dt>{t('preise.kalk.nachFoerderung')}</dt>
+              <dd className="zahlen font-mono">{formatChf(s.total - eiv)}</dd>
+            </div>
+          </>
+        )}
       </dl>
     </div>
   )

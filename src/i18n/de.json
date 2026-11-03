@@ -450,24 +450,193 @@
   },
   "adressbuch": {
     "titel": "Adressbuch",
-    "beschreibung": "Alle Personen und Firmen, auch Partner, Architekt:innen, Lieferanten und Behörden.",
-    "neu": "Neuer Kontakt",
-    "anzahl_one": "{{count}} Kontakt",
-    "anzahl_other": "{{count}} Kontakte",
+    "beschreibung": "Geschäftspartner: Netzbetreiber, Lieferanten, Hersteller, Subunternehmer, Gemeinden, Planer, Elektriker und Vermittler.",
+    "neu": "Neuer Eintrag",
+    "anzahl_one": "{{count}} Eintrag",
+    "anzahl_other": "{{count}} Einträge",
     "artFilter": "Nach Art filtern",
-    "leer": "Noch keine Kontakte",
-    "leerText": "Erfasse den ersten Kontakt mit «Neuer Kontakt».",
+    "leer": "Noch keine Geschäftspartner",
+    "leerText": "Erfasse den ersten Partner mit «Neuer Eintrag». Netzbetreiber kommen auch über das ElCom-Verzeichnis.",
     "papierkorb": "Papierkorb",
     "papierkorbTitel": "Papierkorb",
-    "papierkorbText": "Gelöschte Kontakte. Öffnen und «Wiederherstellen» holt sie zurück.",
+    "papierkorbText": "Gelöschte Partner und Kunden. Öffnen und «Wiederherstellen» holt sie zurück.",
     "papierkorbLeer": "Papierkorb ist leer",
     "papierkorbLeerText": "Hier landen Kontakte, die jemand in den Papierkorb legt.",
     "spalte": {
       "art": "Art",
       "telefon": "Telefon",
-      "email": "E-Mail"
+      "email": "E-Mail",
+      "ansprechperson": "Ansprechperson",
+      "wichtig": "Das Wichtigste",
+      "zuletzt": "Zuletzt"
     },
-    "zurueck": "Zurück zum Adressbuch"
+    "zurueck": "Zurück zum Adressbuch",
+    "suche": "Suchen: Firma, Person, Ort, Marke, Gewerk …",
+    "rolleFilter": "Nach Rolle filtern",
+    "mitKunden": "Auch Kunden zeigen",
+    "kunde": "Kunde",
+    "zurueckListe": "Zurück zum Adressbuch",
+    "liste": {
+      "gesuche_one": "{{count}} Gesuch offen, Ø {{tage}} Tage",
+      "gesuche_other": "{{count}} Gesuche offen, Ø {{tage}} Tage",
+      "gesucheAlt_one": "{{count}} Gesuch wartet lange",
+      "gesucheAlt_other": "{{count}} Gesuche warten lange",
+      "gemeinden_one": "{{count}} Gemeinde",
+      "gemeinden_other": "{{count}} Gemeinden",
+      "kdNr": "Unsere Kd-Nr. {{nr}}",
+      "auftraege_one": "{{count}} Auftrag läuft",
+      "auftraege_other": "{{count}} Aufträge laufen",
+      "provision": "Provision {{prozent}} %"
+    },
+    "zahlen": {
+      "partner": "Geschäftspartner",
+      "gesuche": "Netzgesuche offen",
+      "gesucheAlt_one": "{{count}} über der Frist",
+      "gesucheAlt_other": "{{count}} über der Frist",
+      "nachweise": "Nachweise bald fällig",
+      "auftraege": "Aufträge an Subunternehmer"
+    },
+    "nachweis": {
+      "abgelaufen": "Nachweis abgelaufen",
+      "bald": "Nachweis läuft ab",
+      "ok": "Gültig",
+      "ohne": "Ohne Ablauf"
+    },
+    "bewertung": {
+      "qualitaet": "Qualität",
+      "termin": "Termin",
+      "preis": "Preis"
+    },
+    "bestellstatus": {
+      "entwurf": "Entwurf",
+      "freigegeben": "Freigegeben",
+      "bestellt": "Bestellt",
+      "teilgeliefert": "Teilweise geliefert",
+      "geliefert": "Geliefert",
+      "storniert": "Storniert"
+    },
+    "empfehlung": {
+      "lead": "Lead",
+      "auftrag": "Provision offen",
+      "ausbezahlt": "Ausbezahlt",
+      "verfallen": "Verfallen"
+    },
+    "feld": {
+      "firma": "Firma",
+      "vorname": "Vorname",
+      "nachname": "Nachname",
+      "funktion": "Funktion",
+      "telefon": "Telefon",
+      "email": "E-Mail",
+      "telefonDirekt": "Direkte Nummer in dieser Firma",
+      "emailDirekt": "Direkte Mail in dieser Firma",
+      "bevorzugt": "Am besten erreichbar",
+      "adresse": "Postadresse",
+      "strasse": "Strasse und Nr.",
+      "plz": "PLZ",
+      "ort": "Ort",
+      "webseite": "Webseite",
+      "uid": "UID",
+      "uidUngueltig": "UID stimmt nicht (Prüfziffer). Format CHE-123.456.789",
+      "rechtsform": "Rechtsform",
+      "sprache": "Sprache"
+    },
+    "akte": {
+      "anrufen": "Anrufen",
+      "stammdaten": "Stammdaten",
+      "personen_one": "Ansprechperson",
+      "personen_other": "Ansprechpersonen ({{count}})",
+      "personNeu": "Person hinzufügen",
+      "personEntfernen": "Aus Firma entfernen",
+      "personGibtEs": "Diese Person gibt es schon. Verknüpfen statt doppelt erfassen:",
+      "personVerknuepfen": "{{name}} wird mit dieser Firma verknüpft.",
+      "personDochNeu": "Doch neu erfassen",
+      "keinePersonen": "Noch keine Ansprechperson.",
+      "merker": "Zuständig für",
+      "ladefehler": "Konnte nicht geladen werden.",
+      "nachweise": "Nachweise",
+      "nachweisNeu": "Nachweis erfassen",
+      "nachweisArt": "Art",
+      "gueltigBis": "Gültig bis",
+      "bis": "bis {{datum}}",
+      "keineNachweise": "Keine Nachweise. Für Subunternehmer: Haftpflicht, SUVA und GAV-Erklärung erfassen.",
+      "notiz": "Notiz",
+      "datei": "Datei",
+      "entfernen": "Entfernen",
+      "steckbrief": "Steckbrief {{rolle}}",
+      "steckbriefLeer": "Noch nichts erfasst. «Bearbeiten» füllt die Angaben dieser Rolle.",
+      "ohneRolle": "Dieser Kontakt hat noch keine Rolle. «Rolle hinzufügen» macht ihn zum Geschäftspartner.",
+      "rolle": "Rolle",
+      "rolleNeu": "Rolle hinzufügen",
+      "rolleBearbeiten": "{{rolle}} bearbeiten",
+      "rolleEntfernen": "Rolle entfernen",
+      "feldUngueltig": "Bitte eine Zahl oder einen Betrag eingeben.",
+      "verlauf": "Verlauf",
+      "verlaufArt": "Art des Eintrags",
+      "verlaufText": "Was war?",
+      "verlaufPlatzhalter": "z. B. Gesuch P1234 nachgefragt, Antwort bis Freitag",
+      "festhalten": "Festhalten",
+      "keinVerlauf": "Noch keine Einträge.",
+      "gesuche": "Offene Netzgesuche",
+      "keineGesuche": "Keine offenen Gesuche.",
+      "tage_one": "{{count}} Tag",
+      "tage_other": "{{count}} Tage",
+      "eingereicht": "eingereicht {{datum}}",
+      "gemeinden": "Versorgte Gemeinden (ElCom)",
+      "keineGemeinden": "Keine Gemeinden zugeordnet. Die Administration liest das ElCom-Verzeichnis ein.",
+      "alleZeigen": "alle {{count}} zeigen",
+      "bestellungen": "Offene Bestellungen",
+      "keineBestellungen": "Keine offenen Bestellungen.",
+      "einkaufJahr": "Dieses Jahr {{betrag}}",
+      "liefertermin": "Lieferung {{datum}}",
+      "auftraege": "Aufträge und Bewertung",
+      "keineAuftraege": "Noch keine Aufträge aus Projekten.",
+      "empfehlungen": "Vermittelte Kunden",
+      "keineEmpfehlungen": "Noch keine vermittelten Kunden.",
+      "provisionOffen": "Offen {{betrag}}",
+      "ausbezahlt": "ausbezahlt {{datum}}",
+      "dokumente": "Dokumente",
+      "hochladen": "Hochladen",
+      "keineDokumente": "Verträge, Preislisten oder Zertifikate hier ablegen.",
+      "arbeitetBei": "Arbeitet bei"
+    },
+    "neuDialog": {
+      "text": "Zuerst den Namen eingeben: Das CRM schlägt die Firma aus dem UID-Register vor und warnt vor Doppelten.",
+      "art": "Firma oder Person",
+      "firma": "Firma",
+      "person": "Person",
+      "uidSuchen": "Im UID-Register suchen",
+      "uidTreffer": "Treffer im UID-Register",
+      "uidKeine": "Keine Firma mit diesem Namen im UID-Register.",
+      "uidInaktiv": "Gelöscht",
+      "dubletten": "Gibt es schon? Ein Klick öffnet den bestehenden Eintrag.",
+      "grund": {
+        "uid": "gleiche UID",
+        "email": "gleiche Mail",
+        "telefon": "gleiche Nummer",
+        "name": "ähnlicher Name"
+      },
+      "rollen": "Rollen",
+      "erstePerson": "Erste Ansprechperson (freiwillig)"
+    },
+    "netz": {
+      "knopf": "Netzbetreiber-Verzeichnis",
+      "titel": "Netzbetreiber je Gemeinde (ElCom)",
+      "text": "Aus den offenen Daten der ElCom. Neue Gebäude bekommen ihren Netzbetreiber danach automatisch.",
+      "einlesen": "Jetzt einlesen",
+      "jahr": "Tarifjahr",
+      "eingelesen": "Eingelesen am",
+      "nie": "noch nie",
+      "gemeinden": "Gemeinden / Netzbetreiber",
+      "plz": "PLZ mit Gemeinde",
+      "gebaeudeOhne": "Gebäude ohne Netzbetreiber",
+      "schrittVerzeichnis_one": "Verzeichnis geholt: {{count}} Zeile. Jetzt Gemeinden je PLZ …",
+      "schrittVerzeichnis_other": "Verzeichnis geholt: {{count}} Zeilen. Jetzt Gemeinden je PLZ …",
+      "schrittPlz_one": "{{count}} PLZ zugeordnet …",
+      "schrittPlz_other": "{{count}} PLZ zugeordnet …",
+      "schrittZuordnen": "Netzbetreiber den Gebäuden zuordnen …",
+      "hinweis": "Einmal im Jahr genügt (die ElCom veröffentlicht die Tarife im Herbst). Von Hand eingetragene Netzbetreiber bleiben."
+    }
   },
   "akte": {
     "titel": "Kundenakte",
@@ -2097,7 +2266,7 @@
   },
   "preise": {
     "titel": "Preise",
-    "beschreibung": "Preisliste mit Einkauf und Marge, Archiv, Preise für Kunden und Kalkulation.",
+    "beschreibung": "Preisliste mit Einkauf, Marge, Lager und Handlungsbedarf, Preisänderungen aus Eturnity und Lieferanten, Kalkulation mit Varianten, Leistungen & Regeln.",
     "beschreibungKunden": "Verkaufspreise und Datenblätter für Kundengespräche.",
     "vorschau": "Preise brauchen die Datenbank",
     "vorschauText": "In der Vorschau ohne Datenbank gibt es noch keine Preisliste.",
@@ -2106,7 +2275,9 @@
       "liste": "Preisliste",
       "archiv": "Archiv",
       "kunden": "Für Kunden",
-      "kalkulation": "Kalkulation"
+      "kalkulation": "Kalkulation",
+      "aenderungen": "Preisänderungen",
+      "regeln": "Leistungen & Regeln"
     },
     "suche": "Artikel suchen",
     "sucheHinweis": "Name, Art.-Nr., Hersteller …",
@@ -2123,7 +2294,9 @@
       "vk": "VK exkl.",
       "lieferant": "Lieferant",
       "archiviert": "Archiviert",
-      "aktion": "Aktion"
+      "aktion": "Aktion",
+      "lager": "Lager",
+      "hinweis": "Hinweis"
     },
     "archiv": {
       "titel": "Artikel archivieren",
@@ -2168,7 +2341,22 @@
       "entfernenFrage": "Nochmals klicken zum Entfernen",
       "masse": "Masse und Gewicht",
       "abmessungen": "Abmessungen",
-      "gewicht": "Gewicht (kg)"
+      "gewicht": "Gewicht (kg)",
+      "lagerVerwendung": "Lager und Verwendung",
+      "lager": "Lager Bulle",
+      "lagerText": "{{frei}} frei · {{reserviert}} reserviert · {{bestellt}} bestellt",
+      "verwendung": "Verwendung",
+      "verwendungText": "{{offen}} offene Kalkulationen · {{projekte}} Projekte und {{menge}} Stück in 12 Monaten",
+      "vorlagen": "In Vorlagen: {{namen}}",
+      "garantie": "Herstellergarantie",
+      "jahre": "Jahre",
+      "verlauf": "Preisverlauf",
+      "verlaufLeer": "Noch keine Änderungen aufgezeichnet.",
+      "feld": {
+        "ek": "EK",
+        "marge": "Marge",
+        "skonto": "Skonto"
+      }
     },
     "import": {
       "knopf": "Excel importieren",
@@ -2274,7 +2462,230 @@
       "positionen_other": "{{count}} Positionen",
       "entfernenKalk": "«{{titel}}» in den Papierkorb",
       "entfernenFrage": "Nochmals klicken zum Entfernen",
-      "entfernt": "«{{titel}}» im Papierkorb"
+      "entfernt": "«{{titel}}» im Papierkorb",
+      "ekKosten": "EK / Kosten",
+      "eigenePosition": "Eigene Position",
+      "mengenNeuKnopf": "Mengen neu rechnen",
+      "mengenNeu_one": "{{count}} Menge neu gerechnet",
+      "mengenNeu_other": "{{count}} Mengen neu gerechnet",
+      "foerderung": "Förderung geschätzt ({{name}} {{stand}})",
+      "nachFoerderung": "Nach Förderung"
+    },
+    "lager": {
+      "frei": "{{n}} frei",
+      "reserviert": "{{n}} reserviert",
+      "bestellt": "{{n}} bestellt"
+    },
+    "hinweis": {
+      "marge": "Marge zu tief",
+      "ekAlt": "EK {{tage}} Tage alt",
+      "ohneEk": "Kein Einkauf",
+      "datenblatt": "Datenblatt fehlt",
+      "lager": "Am Lager",
+      "lieferanten": "{{n}} Lieferanten"
+    },
+    "kennzahl": {
+      "aktiv": "Aktive Artikel",
+      "importe": "Preislisten offen",
+      "marge": "Marge unter Minimum",
+      "ekAlt": "EK älter als {{tage}} Tage",
+      "ohneEk": "Ohne Einkauf",
+      "datenblatt": "Datenblatt DE/FR fehlt",
+      "lager": "Am Lager in Bulle"
+    },
+    "mehrfach": {
+      "wahl": "Auswahl",
+      "waehle": "{{name}} wählen",
+      "gewaehlt_one": "{{count}} Artikel gewählt",
+      "gewaehlt_other": "{{count}} Artikel gewählt",
+      "marge": "Marge %",
+      "setzen": "Marge setzen",
+      "standard": "Standard der Kategorie",
+      "aufheben": "Auswahl aufheben",
+      "fertig_one": "Marge bei {{count}} Artikel gesetzt",
+      "fertig_other": "Marge bei {{count}} Artikeln gesetzt"
+    },
+    "datei": {
+      "knopf": "Preisliste einlesen",
+      "titel": "Preisliste einlesen",
+      "beschreibung": "Export der Eturnity-Komponenten oder Preisliste eines Lieferanten (Excel oder CSV). Zuerst wird nur verglichen; ändern tust du danach unter «Preisänderungen».",
+      "quelle": "Woher kommt die Liste?",
+      "eturnity": "Eturnity (Komponenten-Export)",
+      "neuerLieferant": "Neuer Lieferant …",
+      "lieferantName": "Name des Lieferanten",
+      "waehlen": "Datei wählen oder hierher ziehen",
+      "formate": "Excel (.xlsx) oder CSV",
+      "unlesbar": "Die Datei lässt sich nicht lesen. Bitte als .xlsx oder .csv speichern.",
+      "zuordnung": "Spaltennamen in Zeile {{zeile}} erkannt. Bitte prüfen, welche Spalte was enthält:",
+      "keineSpalte": "– keine –",
+      "spalteNr": "Spalte {{n}}",
+      "beispiel": "Erste Zeile: {{nr}} · {{name}} · EK CHF {{ek}}",
+      "vollstaendig": "Vollständige Liste",
+      "vollstaendigHinweis": "Artikel dieses Lieferanten, die nicht mehr in der Datei stehen, werden als «nicht mehr geliefert» gezeigt.",
+      "pruefen_one": "{{count}} Zeile vergleichen",
+      "pruefen_other": "{{count}} Zeilen vergleichen",
+      "geprueft": "Verglichen: {{geaendert}} Preise ändern sich, {{neu}} Artikel sind neu",
+      "feld": {
+        "artikelnummer": "Artikelnummer",
+        "name": "Bezeichnung",
+        "ek": "Einkaufspreis (netto)",
+        "lieferant": "Lieferant",
+        "hersteller": "Hersteller",
+        "einheit": "Einheit",
+        "leistung_w": "Leistung (W)"
+      }
+    },
+    "aenderungen": {
+      "leer": "Noch keine Preisliste eingelesen",
+      "leerText": "Lies den Export aus Eturnity oder die Liste eines Lieferanten ein. Du siehst dann alt und neu und welche offenen Offerten betroffen sind.",
+      "listen": "Eingelesene Preislisten",
+      "kurz": "{{geaendert}} geändert, {{neu}} neu",
+      "status": {
+        "offen": "offen",
+        "uebernommen": "übernommen",
+        "verworfen": "verworfen"
+      },
+      "zaehlung": "{{gelesen}} Zeilen gelesen: {{teurer}} teurer, {{guenstiger}} günstiger, {{neu}} neu, {{gleich}} gleich, {{fehlt}} nicht mehr geliefert. Betroffen: {{offerten}} offene Offerten.",
+      "erledigt": {
+        "uebernommen": "Übernommen von {{von}} am {{datum}}",
+        "verworfen": "Verworfen von {{von}} am {{datum}}"
+      },
+      "art": {
+        "neu": "neu",
+        "fehlt": "nicht mehr geliefert",
+        "geaendert": "geändert",
+        "gleich": "gleich"
+      },
+      "alle": "Alle geänderten wählen",
+      "waehlen": "{{name}} übernehmen",
+      "kategorie": "Kategorie für {{name}}",
+      "kategorieWaehlen": "Kategorie wählen, um anzulegen",
+      "ekAlt": "EK bisher",
+      "ekNeu": "EK neu",
+      "prozent": "Änderung",
+      "vkNeu": "VK neu",
+      "offerten": "Offene Offerten",
+      "nichtMehr": "nicht mehr",
+      "nichts": "Keine Änderungen: alle Preise sind gleich.",
+      "gleich": "{{n}} Artikel mit gleichem Preis ausgeblendet.",
+      "uebernehmen": "{{n}} übernehmen",
+      "verwerfen": "Verwerfen",
+      "verworfen": "Preisliste verworfen, nichts geändert",
+      "fertig": "Übernommen: {{geaendert}} Preise geändert, {{neu}} Artikel neu"
+    },
+    "var": {
+      "titel": "Varianten",
+      "vergleichen": "Varianten vergleichen",
+      "standardA": "Nur PV",
+      "standardB": "PV + Speicher",
+      "standardC": "Variante C",
+      "name": "Name Variante {{id}}",
+      "entfernen": "Variante {{id}} entfernen",
+      "dazu": "Variante {{id}} dazu",
+      "exkl": "exkl. MWST {{betrag}}",
+      "proKwp": "{{betrag}}/kWp",
+      "marge": "Marge {{prozent}} %",
+      "spalte": "In Variante",
+      "inVariante": "{{name}} in Variante {{id}}",
+      "waehlen": "Variante {{name}} wählen (CHF {{betrag}} inkl. MWST)"
+    },
+    "baustein": {
+      "leiste": "Bausteine:",
+      "leistung": "Leistung dazu …",
+      "titel": "Baustein «{{name}}»",
+      "beschreibung": "Artikel wählen, Mengen prüfen. Zeilen mit Regel rechnen ihre Menge selbst.",
+      "einfuegen_one": "{{count}} Position einfügen",
+      "einfuegen_other": "{{count}} Positionen einfügen",
+      "variante": "In Variante",
+      "artikel": "Artikel",
+      "ohne": "– weglassen –",
+      "regel": "Regel für {{name}}",
+      "faktor": "Faktor für {{name}}",
+      "zeileDazu": "Zeile dazu …",
+      "zeileWeg": "{{name}} entfernen",
+      "art": {
+        "wahl": "Artikel nach Wahl: {{kategorie}}",
+        "artikel": "Fester Artikel ({{kategorie}})",
+        "leistung": "Leistung"
+      },
+      "regelArt": {
+        "fest": "fest",
+        "je_modul": "je Modul",
+        "je_kwp": "je kWp"
+      }
+    },
+    "regel": {
+      "fest": "fest",
+      "je_modul": "{{faktor}} je Modul",
+      "je_kwp": "{{faktor}} je kWp",
+      "gespeichert": "Gespeichert",
+      "nurAdmin": "Ansehen kannst du alles. Marge, Grenzen, wer freigibt und Förderung ändert nur die Administration.",
+      "leistungen": "Leistungen & Pauschalen",
+      "leistungenText": "Kosten = was uns eine Einheit kostet (Lohn, Fahrzeug), Verkauf = Preis je Einheit exkl. MWST. In der Kalkulation ein Klick.",
+      "leistungDazu": "Leistung dazu",
+      "neueLeistung": "Neue Leistung",
+      "leistungWeg": "{{name}} entfernen",
+      "nameDe": "Name DE",
+      "nameFr": "Name FR",
+      "einheit": "Einheit",
+      "kosten": "Kosten",
+      "verkauf": "Verkauf",
+      "kategorien": "Marge je Kategorie",
+      "kategorienText": "Marge gilt für neue Artikel; liegt eine Kalkulation unter dem Minimum, braucht sie eine Freigabe.",
+      "marge": "Marge %",
+      "mindest": "Minimum %",
+      "allgemein": "Grenzen",
+      "skonto": "Skonto-Reserve %",
+      "rundung": "Runden auf CHF",
+      "ekTage": "EK gilt (Tage)",
+      "rabattFrei": "Rabatt ohne Freigabe bis %",
+      "mindestDb": "Mindest-Deckungsbeitrag %",
+      "freigeber": "Wer gibt frei?",
+      "freigeberText": "Diese Personen bekommen die Glocke, wenn Rabatt oder Marge eine Freigabe brauchen. Ändern kann das nur die Administration.",
+      "freigeberLeer": "Niemand gewählt: es gibt die Administration frei.",
+      "foerderung": "Förderung {{name}} ({{stand}})",
+      "foerderungText": "Nur für die Schätzung in Kalkulation und Richtpreis. Tarif bitte jährlich mit Pronovo prüfen.",
+      "fGrund": "Grundbeitrag CHF",
+      "fJeKwp": "Je kWp bis {{bis}} kWp",
+      "fBis": "Grenze kWp",
+      "fDarueber": "Je kWp über {{bis}} kWp",
+      "bausteine": "Bausteine der Kalkulation",
+      "bausteinName": "Name neuer Baustein",
+      "bausteinDazu": "Baustein dazu",
+      "bausteinWeg": "Baustein {{name}} entfernen"
+    },
+    "freigabe": {
+      "frei": "Rabatt bis {{prozent}} % und Marge über dem Minimum: keine Freigabe nötig.",
+      "grund": {
+        "rabatt": "Rabatt über {{prozent}} %",
+        "db": "Deckungsbeitrag unter {{prozent}} %",
+        "marge": "Marge einer Position unter dem Minimum"
+      },
+      "ichGl": "Du gibst selbst frei, die Offerte kann direkt übernommen werden.",
+      "erteilt": "Freigegeben von {{von}}.",
+      "wartet": "Freigabe angefragt von {{von}} am {{datum}}, wartet auf die Geschäftsleitung.",
+      "abgelehnt": "Abgelehnt von {{von}}: {{grund}}",
+      "noetig": "Vor dem Übernehmen in die Offerte braucht es eine Freigabe der Geschäftsleitung.",
+      "notiz": "Begründung (z. B. Konkurrenzofferte)",
+      "anfragen": "Freigabe anfragen",
+      "angefragt": "Freigabe angefragt, die Geschäftsleitung bekommt die Glocke",
+      "grundAblehnen": "Grund (nötig beim Ablehnen)",
+      "freigeben": "Freigeben",
+      "ablehnen": "Ablehnen",
+      "ok": "Freigegeben",
+      "nein": "Abgelehnt"
+    },
+    "richtpreis": {
+      "titel": "Richtpreis fürs erste Gespräch",
+      "kwp": "Anlage kWp",
+      "speicher": "Mit Speicher",
+      "eingeben": "kWp eingeben",
+      "keine": "Noch zu wenige Offerten in dieser Grösse.",
+      "nachFoerderung": "Nach Förderung ca. {{betrag}}",
+      "basis": {
+        "angenommen": "Aus {{n}} angenommenen Offerten ähnlicher Grösse, inkl. MWST {{satz}} %",
+        "alle": "Aus {{n}} Offerten ähnlicher Grösse, inkl. MWST {{satz}} %"
+      }
     }
   },
   "fachfehler": {
@@ -2489,6 +2900,14 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "preise_freigabe_noetig": "Rabatt oder Marge brauchen zuerst eine Freigabe der Geschäftsleitung.",
+    "preise_keine_offerte": "Die Kalkulation ist mit keiner Offerte verknüpft.",
+    "preise_nur_freigeber": "Das dürfen nur die Personen, die Preise freigeben.",
+    "preise_import_erledigt": "Diese Preisliste ist schon erledigt.",
+    "preise_quelle_fehlt": "Bitte angeben, woher die Preisliste kommt.",
+    "preise_freigabe_unnoetig": "Diese Kalkulation braucht keine Freigabe.",
+    "preise_keine_anfrage": "Zu dieser Kalkulation gibt es keine offene Anfrage.",
+    "preise_marge_ungueltig": "Die Marge muss zwischen 0 und 500 % liegen.",
     "ausschreibung_nogo_fehlt": "Bitte einen Grund aus der Liste wählen.",
     "ausschreibung_betrag_fehlt": "Bitte den Betrag des Angebots angeben.",
     "ausschreibung_pruefung_fehlt": "Ab diesem Betrag muss eine zweite Person die Eingabe zuerst prüfen.",
@@ -2552,6 +2971,7 @@
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
     "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
+    "preise_nur_admin": "Das darf nur die Administration.",
     "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
     "einkauf_rechnung_abweichung": "Die Rechnung weicht deutlich ab. Bitte in der Notiz begründen.",
     "einkauf_rechnung_fehlt": "Bitte eine Lieferantenrechnung wählen oder Nummer und Betrag angeben.",
@@ -2573,7 +2993,10 @@
     "wartung_kein_termin": "Für diesen Vertrag ist kein Termin geplant.",
     "wartung_keine_mail": "Der Kunde hat keine Mail-Adresse.",
     "wartung_kein_angebot": "Für diese Anlage gibt es noch kein Angebot.",
-    "termin_link_stand": "Den Termin-Link gibt es nur für Leads ohne Termin und ohne Offerte."
+    "termin_link_stand": "Den Termin-Link gibt es nur für Leads ohne Termin und ohne Offerte.",
+    "team_taetigkeit_unbekannt": "Diese Tätigkeit gibt es nicht (mehr).",
+    "team_wer_ungueltig": "Bitte «jede Person» oder «mindestens eine» wählen.",
+    "team_ausweis_unbekannt": "Diesen Ausweis gibt es nicht (mehr)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2913,7 +3336,11 @@
       "datei_zu_gross": "Die Datei ist zu gross (höchstens 5 MB).",
       "sicherung_laeuft": "Eine Sicherung läuft gerade. Bitte in einer Minute nochmals versuchen.",
       "sicherung_fehlt": "Diese Sicherung ist nicht mehr vorhanden.",
-      "sicherung_format": "Die Datei ist keine Sicherung dieses CRM."
+      "sicherung_format": "Die Datei ist keine Sicherung dieses CRM.",
+      "uid_register": "Das UID-Register antwortet gerade nicht. Später nochmals versuchen oder von Hand erfassen.",
+      "elcom": "Die ElCom-Daten (LINDAS) sind gerade nicht erreichbar.",
+      "elcom_leer": "Die ElCom hat für dieses Jahr noch keine Daten veröffentlicht.",
+      "geo_admin": "geo.admin.ch antwortet gerade nicht."
     }
   },
   "verbindungen": {
@@ -3837,7 +4264,11 @@
       "grund_doppelt": "{{wer}} doppelt eingeplant",
       "abwesendAm": "Abwesend: {{namen}}",
       "service": "Service-Einsätze",
-      "serviceUnter": "aus Service & Garantie"
+      "serviceUnter": "aus Service & Garantie",
+      "taetigkeiten": "Tätigkeiten",
+      "ausweisFehlt": "{{taetigkeit}}: Ausweis fehlt bei {{namen}}",
+      "ausweisNiemand": "{{taetigkeit}}: niemand im Team hat den Ausweis",
+      "ausweisLegende": "Ausweis fehlt"
     },
     "bewilligungen": {
       "ansicht": "Ansicht",
@@ -10016,6 +10447,32 @@
       "notiz": "Notiz",
       "rueckzahlungOffen": "Offen aus Weiterbildungsvereinbarung: {{betrag}} (bei Kündigung heute)",
       "keineFuerPerson": "Keine Kurse in diesem Jahr."
+    },
+    "taetigkeit": {
+      "titel": "Pflicht-Ausweise je Tätigkeit",
+      "text": "Welche Ausweise eine Tätigkeit auf der Baustelle braucht. Die Einsatzplanung warnt, wenn sie im Team fehlen: bei «jede Person» alle, bei «mindestens eine» genügt eine Person. «Jeder Einsatz» gilt ohne Häkchen im Einsatz. Nur eine Warnung, geplant werden kann trotzdem.",
+      "taetigkeit": "Tätigkeit",
+      "werKopf": "Wer braucht ihn",
+      "wer": {
+        "alle": "jede Person",
+        "einer": "mindestens eine"
+      },
+      "werFuer": "Wer braucht den Ausweis für {{taetigkeit}}",
+      "immer": "Jeder Einsatz",
+      "immerFuer": "{{taetigkeit}} gilt für jeden Einsatz",
+      "brauchtFuer": "{{taetigkeit}} braucht {{ausweis}}",
+      "neu": "Neue Tätigkeit"
+    },
+    "anlass": {
+      "titel": "Geburtstage und Jubiläen",
+      "heute": "heute",
+      "morgen": "morgen",
+      "nichts": "In den nächsten Tagen hat niemand Geburtstag oder Jubiläum.",
+      "geburtstag": "Geburtstag",
+      "jubilaeum_one": "{{count}} Jahr bei uns",
+      "jubilaeum_other": "{{count}} Jahre bei uns",
+      "michVerbergen": "Mich hier nicht zeigen",
+      "michZeigen": "Mich hier wieder zeigen"
     }
   },
   "posteingang": {
@@ -10674,5 +11131,11 @@
     "datensatzOeffnen": "Datensatz öffnen",
     "warumHinweis": "Passt die Regel grundsätzlich nicht, bitte der Administration melden. Sie kann die Automation anpassen.",
     "warumUnbekannt": "Diese Aufgabe stammt nicht aus einer Automation, die du sehen darfst."
+  },
+  "zugehoerigkeit": {
+    "hauptkontakt": "Hauptkontakt",
+    "unterschreibt": "Unterschreibt",
+    "rechnungen": "Rechnungen",
+    "vorOrt": "Vor Ort"
   }
 }
