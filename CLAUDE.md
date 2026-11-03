@@ -76,7 +76,7 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
    In `index.ts` den `untertitel` (DE/FR, ein Satz: was tut man hier?) ausfüllen. Namen müssen eindeutig sein, siehe `docs/entscheidungen/0008`.
 3. `src/modules/lager/README.md` ausfüllen: Zweck, Daten, Abhängigkeiten, Ereignisse. Dazu das Handbuch-Kapitel `handbuch.de.md`/`handbuch.fr.md` (Gerüst kommt mit, Aufbau siehe Entscheid 0043).
 4. Fachtypen in `types.ts`, Prüfregeln (Zod) in `schema.ts`, Oberfläche in `components/`, Datenzugriff in `services/`.
-5. Braucht es neue Tabellen: neue Datei in `supabase/migrations/` (`npx supabase migration new <name>`). Jede Tabelle danach mit `select intern.richte_fachtabelle_ein('<tabelle>');` einrichten (Papierkorb, Protokoll, RLS, Herkunft), siehe `docs/datenmodell.md`. Dann `npm run db:typen` und einen pgTAP-Test in `supabase/tests/` ergänzen.
+5. Braucht es neue Tabellen: neue Datei in `supabase/migrations/` (`npm run migration:neu -- <name>`, nächste freie Nummer nach main; nicht `supabase migration new`). Jede Tabelle danach mit `select intern.richte_fachtabelle_ein('<tabelle>');` einrichten (Papierkorb, Protokoll, RLS, Herkunft), siehe `docs/datenmodell.md`. Dann `npm run db:typen` und einen pgTAP-Test in `supabase/tests/` ergänzen.
 6. `npm run check` und `npm run test:e2e`.
 
 ## Design
