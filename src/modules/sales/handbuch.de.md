@@ -1,11 +1,11 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, geschaeftsleitung
 ---
 
 # Anfragen & Leads
 
-Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbaren und planen, nachfassen und zur Offerte weitergeben. Dazu Tagesroute, Tour, Kalender, Regionen und der Monatsbericht für die Lead-Anbieter.
+Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbaren und planen, nachfassen und zur Offerte weitergeben. Startansicht ist «Zu tun»: wer jetzt anzurufen ist, was heute fällig ist und was diese Woche ansteht. Dazu Planung (Kalender, Tagesroute, Tour), Regionen, der Monatsbericht für die Lead-Anbieter und die Steuerung für die Geschäftsleitung.
 
 ## Wer arbeitet hier {#wer}
 
@@ -14,6 +14,12 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 - **Geschäftsleitung**: sieht alle Leads und die Pipeline.
 
 ## So geht's {#so}
+
+### Den Tag mit «Zu tun» beginnen
+
+1. **Zu tun** zeigt oben, wer **Jetzt anrufen** muss: neue Anfragen mit Uhr seit Eingang (Ziel 15 Minuten in der Arbeitszeit).
+2. Darunter **Heute** (Rückrufe, Termine, nach dem Termin, Nachfassen) und **Diese Woche**.
+3. **Anrufen** wählt die Nummer, **Ergebnis erfassen** öffnet gleich das Fenster für das Anruf-Ergebnis.
 
 ### Einen neuen Lead erfassen
 
@@ -24,8 +30,10 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 ### Einen Lead anrufen und den Kontakt erfassen
 
 1. Lead öffnen, **Kontakt erfassen**.
-2. Ergebnis wählen: erreicht, nicht erreicht, Rückruf vereinbart, kein Interesse (mit Grund).
-3. Bei «später» ein Datum unter **Wann wieder melden** setzen. Der Lead kommt dann als Wiedervorlage auf [Mein Tag](kapitel:today).
+2. Ergebnis wählen: erreicht, nicht erreicht, Rückruf vereinbart, will zuerst einen Preis, kein Interesse oder ungültig (mit Grund).
+3. Bei «nicht erreicht» setzt das CRM den Rückruf auf den nächsten Arbeitstag; mit **SMS-Entwurf in den Ausgangskorb legen** liegt eine SMS zur Freigabe bereit.
+4. «Will zuerst einen Preis» gibt den Lead ohne Besuch an Andy zur Offerte. Bei «kein Interesse» schlägt das CRM **Wieder vorlegen in 12 Monaten** vor.
+5. Bei «später» ein Datum unter **Wann wieder melden** setzen. Der Lead kommt dann als Wiedervorlage auf [Mein Tag](kapitel:today).
 
 ### Einen Termin vereinbaren
 
@@ -33,10 +41,11 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 2. Der Termin erscheint im Kalender, auf der Tagesroute und, mit Microsoft-Verbindung, in Outlook.
 3. **Terminblatt** druckt alle Angaben für unterwegs.
 
-### Nach der Besichtigung zur Offerte geben
+### Besichtigung am Handy und zur Offerte geben
 
-1. Lead öffnen, Abschnitt **Besichtigung**: Dachfläche, Ausrichtung, Neigung, Dachmaterial, Hausanschluss, Verbrauch und Besonderheiten eintragen.
-2. Stand auf **Offerte in Arbeit** setzen. Der Lead erscheint beim Innendienst unter «Neue Offerten».
+1. Lead öffnen, Abschnitt **Besichtigung**. Die **Checkliste** zeigt, was noch fehlt: Dach (Fläche, Ausrichtung, Neigung, Material), Hausanschluss, Verbrauch und vier Fotos.
+2. Bei jedem Foto **Foto aufnehmen** öffnet am Handy direkt die Kamera.
+3. **Abschliessen · Offerte bestellen** speichert und gibt den Lead an Andy. Er erscheint beim Innendienst unter «Neue Offerten».
 3. Ohne Besichtigung geht **Richtofferte**: der Innendienst offeriert nach Angaben am Telefon.
 
 ### Mehrere Leads auf einmal ändern
@@ -45,6 +54,8 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 2. Unten Stand, Person oder Region für alle gewählten setzen.
 
 ### Den Tag oder eine Tour planen
+
+Alles liegt unter dem Reiter **Planung**, oben umschalten zwischen **Kalender**, **Tagesroute** und **Tour planen**.
 
 1. **Tagesroute**: Tag wählen, Start (Zuhause oder andere Adresse). Das CRM ordnet die Termine und zeigt Fahrzeiten.
 2. **Tour planen**: Leads ohne Termin in einer Gegend wählen oder Adressen einfügen, das CRM schlägt die Reihenfolge vor.
@@ -76,11 +87,14 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 
 - Wer einen neuen Lead bekommt, regeln die Zuständigkeiten (Sprache, Standort, Region, Produkt). Bei Abwesenheit geht er an die Vertretung.
 - Anfragen von der Website und aus dem Posteingang werden selbst zu Leads.
+- Neue Anfragen von der Website: nach 15 Arbeitsminuten ohne Anruf eine Glocke an die zuständige Person, nach 2 Stunden an Chris.
+- Nach dem Senden einer Offerte liegen am Tag 3, 10 und 21 Nachfass-Mails als Entwurf im [Ausgangskorb](kapitel:outbox).
 - Stände nach der Offerte (Offeriert, Nachfassen fällig, Angenommen, In Bau) setzt das CRM selbst. Von Hand geht das nicht.
 
 ## Regeln {#regeln}
 
 - «Verloren» und «Kein Interesse» brauchen einen Grund, «Später» ein Datum in der Zukunft.
+- Der **Richtpreis** in der Lead-Akte ist nur eine Hilfe fürs Gespräch und geht nie an Kunden.
 - Personen mit **Keine Werbung** bekommen keine Serien-Mails und keinen Newsletter.
 
 ## Häufige Fragen {#fragen}
@@ -99,5 +113,7 @@ Die Karte kommt von swisstopo. Ist sie gesperrt oder offline, bleibt sie grau; R
 
 ## Neu {#neu}
 
+- 03.11.2026: Planung in einem Reiter (Kalender, Tagesroute, Tour); Besichtigung mit Checkliste, Kamera und «Abschliessen · Offerte bestellen».
+- 02.11.2026: Startansicht «Zu tun» mit 15-Minuten-Uhr, Lead-Akte als ganze Seite, Anruf-Ergebnis mit Rückruf und SMS-Entwurf, Pipeline in sechs Schritten, Steuerung für die Geschäftsleitung, Website-Anfragen direkt.
 - 01.11.2026: Lead direkt aus einer Mail im Posteingang anlegen.
 - 31.10.2026: Neue Leads und Offerten verteilt das CRM nach Einstellungen › Zuständigkeiten.

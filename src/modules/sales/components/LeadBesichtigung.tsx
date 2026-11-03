@@ -1,4 +1,4 @@
-import { Save } from 'lucide-react'
+import { FileSignature, Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -9,9 +9,10 @@ import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import type { Json } from '@/types/datenbank'
 import { useVerkaufAenderung } from '../hooks/useVerkauf'
-import type { Besichtigung } from '../lib/besichtigung'
+import { besichtigungCheckliste, type Besichtigung } from '../lib/besichtigung'
 import { aendereLead } from '../services/leads'
 import { useLuftbildAnalyse } from '../hooks/useLuftbildAnalyse'
+import { BesichtigungCheckliste } from './BesichtigungCheckliste'
 
 const AUSRICHTUNG = ['sued', 'suedost', 'suedwest', 'ost', 'west', 'ost_west', 'nord', 'flach'] as const
 const MATERIAL = [
@@ -28,9 +29,20 @@ const LEER = '_leer'
 
 /**
  * Vor-Ort-Besichtigung (V233): Dachfläche, Ausrichtung, Neigung, Material, Hausanschluss,
- * Verbrauch und Besonderheiten. Geht auch am Handy beim Kunden; Fotos kommen unter «Dateien».
+ * Verbrauch und Besonderheiten. Am Handy beim Kunden mit Checkliste und Kamera; «Abschliessen» speichert
+ * und gibt den Lead an die Offerten-Erstellung weiter (nur solange er im Stand «Termin» ist).
  */
-export function LeadBesichtigung({ verkaufschanceId, wert }: { verkaufschanceId: string; wert: Besichtigung | null }) {
+export function LeadBesichtigung({
+  verkaufschanceId,
+  wert,
+  dateiOrdner = [],
+  onAbschliessen,
+}: {
+  verkaufschanceId: string
+  wert: Besichtigung | null
+  dateiOrdner?: readonly (string | null)[]
+  onAbschliessen?: () => void
+}) {
   const { t } = useTranslation()
   const [b, setB] = useState<Besichtigung>(wert ?? {})
   const luftbild = useLuftbildAnalyse(verkaufschanceId).data?.inhalt
@@ -55,18 +67,24 @@ export function LeadBesichtigung({ verkaufschanceId, wert }: { verkaufschanceId:
     </Feld>
   )
 
-  async function sichern() {
+  async function sichern(): Promise<boolean> {
+    // Wer vor Ort speichert, war heute da: Datum vorschlagen, damit es nicht vergessen geht.
+    const neu = b.datum ? b : { ...b, datum: new Date().toISOString().slice(0, 10) }
     try {
-      await speichern.mutateAsync(b)
+      await speichern.mutateAsync(neu)
+      setB(neu)
       melde('ok', { de: 'Besichtigung gespeichert', fr: 'Visite enregistrée' })
+      return true
     } catch (f) {
       meldeFehler(f, 'besichtigung')
       melde('kritisch', { de: 'Nicht gespeichert', fr: 'Non enregistré' })
+      return false
     }
   }
 
   return (
     <div className="flex flex-col gap-3">
+      <BesichtigungCheckliste verkaufschanceId={verkaufschanceId} punkte={besichtigungCheckliste(b, dateiOrdner)} />
       <div className="grid grid-cols-2 gap-3">
         {feld('datum', 'date')}
         {feld('flaeche', 'number', 'm²')}
@@ -117,16 +135,27 @@ export function LeadBesichtigung({ verkaufschanceId, wert }: { verkaufschanceId:
           }}
         />
       </Feld>
-      <Button
-        variant="secondary"
-        size="sm"
-        className="self-end"
-        laedt={speichern.isPending}
-        onClick={() => void sichern()}
-      >
-        <Save />
-        {t('verkauf.besichtigung.speichern')}
-      </Button>
+      <div className="flex flex-wrap justify-end gap-2">
+        <Button variant="secondary" size="sm" laedt={speichern.isPending} onClick={() => void sichern()}>
+          <Save />
+          {t('verkauf.besichtigung.speichern')}
+        </Button>
+        {onAbschliessen && (
+          <Button
+            size="sm"
+            title={t('verkauf.besichtigung.abschliessenHinweis')}
+            disabled={speichern.isPending}
+            onClick={() => {
+              void sichern().then((ok) => {
+                if (ok) onAbschliessen()
+              })
+            }}
+          >
+            <FileSignature />
+            {t('verkauf.besichtigung.abschliessen')}
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

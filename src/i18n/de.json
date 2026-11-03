@@ -1048,7 +1048,20 @@
         "flach_begruent": "Flachdach begrünt",
         "schiefer": "Schiefer",
         "andere": "Andere"
-      }
+      },
+      "checkliste": "Checkliste",
+      "punkt": {
+        "dach": "Dach: Fläche, Ausrichtung, Neigung, Material",
+        "anschluss": "Hausanschluss",
+        "verbrauch": "Stromverbrauch",
+        "foto_dach": "Foto Dach",
+        "foto_zaehler": "Foto Zähler",
+        "foto_verteilung": "Foto Verteilung / Sicherungskasten",
+        "foto_heizung": "Foto Heizung"
+      },
+      "foto": "Foto aufnehmen",
+      "abschliessen": "Abschliessen · Offerte bestellen",
+      "abschliessenHinweis": "Speichert die Besichtigung und gibt den Lead an die Offerten-Erstellung (Andy)."
     },
     "kontakt": {
       "wann": "Wann wieder melden",
@@ -1431,6 +1444,15 @@
       "wert": "Auftragswert",
       "min": "{{n}} Min.",
       "std": "{{n}} Std."
+    },
+    "reiter": {
+      "zutun": "Zu tun",
+      "pipeline": "Pipeline",
+      "liste": "Leads",
+      "planung": "Planung",
+      "regionen": "Regionen",
+      "bericht": "Monatsbericht",
+      "steuerung": "Steuerung"
     }
   },
   "offerten": {
