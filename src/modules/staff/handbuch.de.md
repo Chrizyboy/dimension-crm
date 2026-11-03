@@ -80,6 +80,7 @@ Entweder fehlt das Geburtsdatum in der Akte, oder du hast **Mich hier nicht zeig
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Kurse (ausser besuchte) und Dokumente der Personal-Akte, mit Rückfrage und «Rückgängig»; zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Pflicht-Ausweise je Tätigkeit mit Warnung in der Einsatzplanung; Geburtstage und Jubiläen auf «Mein Tag».
 - 02.11.2026: Reiter Team mit «Heute», Kurse mit Antrag, Bewilligung, Kosten und Ausweis danach, Anforderungen je Rolle.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

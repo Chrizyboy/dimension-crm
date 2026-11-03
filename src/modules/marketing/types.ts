@@ -213,7 +213,7 @@ export interface Referenzanlage {
   datum: string | null
 }
 
-/* --- Marketing vollständig (Entscheid 0055) ------------------------------------------------------------- */
+/* --- Marketing vollständig (Entscheid 0056) ------------------------------------------------------------- */
 
 export const KAMPAGNEN_ARTEN = [
   'aktion',
@@ -366,7 +366,7 @@ export interface MediathekFoto {
   titel: boolean
 }
 
-/** Zusätzliche Einstellungen «marketing» (Entscheid 0055). */
+/** Zusätzliche Einstellungen «marketing» (Entscheid 0056). */
 export interface MarketingPlanung {
   budget?: Record<string, Partial<Record<Kanal, number>>>
   werbepause_tage?: number

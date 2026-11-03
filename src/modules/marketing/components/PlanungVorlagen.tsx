@@ -19,7 +19,7 @@ const zeilen = (s: string) =>
     .filter(Boolean)
 
 /**
- * Planung im Marketing (Entscheid 0055): Budget je Kanal und Jahr (nur Finanzen), Saison-Themen je Monat,
+ * Planung im Marketing (Entscheid 0056): Budget je Kanal und Jahr (nur Finanzen), Saison-Themen je Monat,
  * Checkliste für Messen, Dankes-Mail nach der Messe, Werbe-Pause, Stichworte für Werbe-Rechnungen und der
  * Datenschutz-Satz unter gezählten Mails.
  */

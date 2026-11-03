@@ -498,7 +498,7 @@ verify_jwt = false
 [functions.abmelden]
 verify_jwt = false
 
-# Öffnen und Klicks von Serien-Mails und Newslettern zählen (Entscheid 0055): Link in der Mail, ohne Login.
+# Öffnen und Klicks von Serien-Mails und Newslettern zählen (Entscheid 0056): Link in der Mail, ohne Login.
 [functions.zaehler]
 verify_jwt = false
 

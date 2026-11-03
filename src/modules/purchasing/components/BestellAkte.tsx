@@ -2,6 +2,7 @@ import { Ban, CheckCircle2, ExternalLink, FileText, Mail, PackageCheck, Phone, S
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -49,6 +50,9 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const fuss = b && (
     <>
       <PdfAnsehen bestellung={b} positionen={positionen} />
+      {b.status === 'entwurf' && (
+        <InPapierkorbKnopf tabelle="bestellungen" id={b.id} name={b.nummer} onFertig={onSchliessen} />
+      )}
       {['entwurf', 'freigegeben', 'bestellt'].includes(b.status) && (
         <Button
           variant="ghost"

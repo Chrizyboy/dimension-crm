@@ -2,7 +2,7 @@ import { supabase } from '@/services/supabase'
 import type { MediathekFoto } from '../types'
 
 /**
- * Fotos für Werbung (Entscheid 0055): Fotos aus Rapporten mit Ort und Anlage, nie Name oder Adresse. Ob ein Foto
+ * Fotos für Werbung (Entscheid 0056): Fotos aus Rapporten mit Ort und Anlage, nie Name oder Adresse. Ob ein Foto
  * verwendet werden darf, steht am Rapport (der Kunde hat es erlaubt); nachtragen nur mit Vermerk beim Kunden.
  */
 function db() {

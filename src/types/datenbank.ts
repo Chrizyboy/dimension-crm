@@ -3428,6 +3428,269 @@ export type Database = {
         }
         Relationships: []
       }
+      eingangsrechnungen: {
+        Row: {
+          abaninja_uuid: string | null
+          abgelehnt_grund: string | null
+          abgelehnt_von: string | null
+          alt_daten: Json | null
+          alt_id: string | null
+          bestellung_id: string | null
+          betrag_rappen: number
+          bezahlt_am: string | null
+          datum: string | null
+          dokument_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          faellig_am: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kreditor_zahlung_id: string | null
+          lieferant: string
+          lieferant_id: string | null
+          nummer: string | null
+          offen_rappen: number | null
+          projekt_id: string | null
+          quelle: string
+          skonto_bis: string | null
+          skonto_prozent: number | null
+          status: string
+          text: string | null
+          visum_gl_am: string | null
+          visum_gl_bemerkung: string | null
+          visum_gl_noetig: boolean
+          visum_gl_von: string | null
+          visum_pl_am: string | null
+          visum_pl_bemerkung: string | null
+          visum_pl_person_id: string | null
+          visum_pl_von: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          abaninja_uuid?: string | null
+          abgelehnt_grund?: string | null
+          abgelehnt_von?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bestellung_id?: string | null
+          betrag_rappen: number
+          bezahlt_am?: string | null
+          datum?: string | null
+          dokument_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          faellig_am?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kreditor_zahlung_id?: string | null
+          lieferant: string
+          lieferant_id?: string | null
+          nummer?: string | null
+          offen_rappen?: number | null
+          projekt_id?: string | null
+          quelle?: string
+          skonto_bis?: string | null
+          skonto_prozent?: number | null
+          status?: string
+          text?: string | null
+          visum_gl_am?: string | null
+          visum_gl_bemerkung?: string | null
+          visum_gl_noetig?: boolean
+          visum_gl_von?: string | null
+          visum_pl_am?: string | null
+          visum_pl_bemerkung?: string | null
+          visum_pl_person_id?: string | null
+          visum_pl_von?: string | null
+        }
+        Update: {
+          abaninja_uuid?: string | null
+          abgelehnt_grund?: string | null
+          abgelehnt_von?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bestellung_id?: string | null
+          betrag_rappen?: number
+          bezahlt_am?: string | null
+          datum?: string | null
+          dokument_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          faellig_am?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kreditor_zahlung_id?: string | null
+          lieferant?: string
+          lieferant_id?: string | null
+          nummer?: string | null
+          offen_rappen?: number | null
+          projekt_id?: string | null
+          quelle?: string
+          skonto_bis?: string | null
+          skonto_prozent?: number | null
+          status?: string
+          text?: string | null
+          visum_gl_am?: string | null
+          visum_gl_bemerkung?: string | null
+          visum_gl_noetig?: boolean
+          visum_gl_von?: string | null
+          visum_pl_am?: string | null
+          visum_pl_bemerkung?: string | null
+          visum_pl_person_id?: string | null
+          visum_pl_von?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'eingangsrechnungen_abgelehnt_von_fkey'
+            columns: ['abgelehnt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_abgelehnt_von_fkey'
+            columns: ['abgelehnt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_dokument_id_fkey'
+            columns: ['dokument_id']
+            isOneToOne: false
+            referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_kreditor_zahlung_id_fkey'
+            columns: ['kreditor_zahlung_id']
+            isOneToOne: true
+            referencedRelation: 'kreditor_zahlungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten_kennzahlen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_gl_von_fkey'
+            columns: ['visum_gl_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_gl_von_fkey'
+            columns: ['visum_gl_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_person_id_fkey'
+            columns: ['visum_pl_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_person_id_fkey'
+            columns: ['visum_pl_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_von_fkey'
+            columns: ['visum_pl_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_von_fkey'
+            columns: ['visum_pl_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       einkauf_reklamationen: {
         Row: {
           alt_daten: Json | null
@@ -11108,6 +11371,78 @@ export type Database = {
           },
         ]
       }
+      rechnung_ereignisse: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string | null
+          rechnung_id: string
+          text: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          rechnung_id: string
+          text: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          rechnung_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'rechnung_ereignisse_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rechnung_ereignisse_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnung_ereignisse_rechnung_id_fkey'
+            columns: ['rechnung_id']
+            isOneToOne: false
+            referencedRelation: 'rechnungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnung_ereignisse_rechnung_id_fkey'
+            columns: ['rechnung_id']
+            isOneToOne: false
+            referencedRelation: 'rechnungen_liste'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       rechnung_zahlungen: {
         Row: {
           alt_daten: Json | null
@@ -11179,10 +11514,14 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          ausgebucht_art: string | null
+          ausgebucht_grund: string | null
+          ausgebucht_rappen: number
           bezahlt_am: string | null
           bezahlt_rappen: number
           datum: string | null
           dokument_id: string | null
+          erinnert_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           faellig_am: string | null
@@ -11193,7 +11532,10 @@ export type Database = {
           id: string
           inkl_mwst: boolean
           kontakt_id: string
+          kunden_referenz: string | null
           mahnfrist: string | null
+          mahnsperre_bis: string | null
+          mahnsperre_grund: string | null
           mahnstufe: number
           mwst_rappen: number
           mwst_satz: number
@@ -11203,17 +11545,20 @@ export type Database = {
           positionen: NonNullable<Json>
           projekt_id: string | null
           rapport_id: string | null
+          rechnung_an: Json | null
           service_fall_id: string | null
           sprache: string
           status: string
           storniert_grund: string | null
           titel: string
           total_rappen: number
+          versandweg: string
           visum_am: string | null
           visum_bemerkung: string | null
           visum_von: string | null
           wartungsvertrag_id: string | null
           zahlungsplan_id: string | null
+          zusage_bis: string | null
         }
         ComputedFields: never
         Insert: {
@@ -11225,10 +11570,14 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art: string
+          ausgebucht_art?: string | null
+          ausgebucht_grund?: string | null
+          ausgebucht_rappen?: number
           bezahlt_am?: string | null
           bezahlt_rappen?: number
           datum?: string | null
           dokument_id?: string | null
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           faellig_am?: string | null
@@ -11239,7 +11588,10 @@ export type Database = {
           id?: string
           inkl_mwst?: boolean
           kontakt_id: string
+          kunden_referenz?: string | null
           mahnfrist?: string | null
+          mahnsperre_bis?: string | null
+          mahnsperre_grund?: string | null
           mahnstufe?: number
           mwst_rappen?: number
           mwst_satz?: number
@@ -11249,17 +11601,20 @@ export type Database = {
           positionen?: NonNullable<Json>
           projekt_id?: string | null
           rapport_id?: string | null
+          rechnung_an?: Json | null
           service_fall_id?: string | null
           sprache?: string
           status?: string
           storniert_grund?: string | null
           titel: string
           total_rappen?: number
+          versandweg?: string
           visum_am?: string | null
           visum_bemerkung?: string | null
           visum_von?: string | null
           wartungsvertrag_id?: string | null
           zahlungsplan_id?: string | null
+          zusage_bis?: string | null
         }
         Update: {
           abaninja_abgeglichen_am?: string | null
@@ -11270,10 +11625,14 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          ausgebucht_art?: string | null
+          ausgebucht_grund?: string | null
+          ausgebucht_rappen?: number
           bezahlt_am?: string | null
           bezahlt_rappen?: number
           datum?: string | null
           dokument_id?: string | null
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           faellig_am?: string | null
@@ -11284,7 +11643,10 @@ export type Database = {
           id?: string
           inkl_mwst?: boolean
           kontakt_id?: string
+          kunden_referenz?: string | null
           mahnfrist?: string | null
+          mahnsperre_bis?: string | null
+          mahnsperre_grund?: string | null
           mahnstufe?: number
           mwst_rappen?: number
           mwst_satz?: number
@@ -11294,17 +11656,20 @@ export type Database = {
           positionen?: NonNullable<Json>
           projekt_id?: string | null
           rapport_id?: string | null
+          rechnung_an?: Json | null
           service_fall_id?: string | null
           sprache?: string
           status?: string
           storniert_grund?: string | null
           titel?: string
           total_rappen?: number
+          versandweg?: string
           visum_am?: string | null
           visum_bemerkung?: string | null
           visum_von?: string | null
           wartungsvertrag_id?: string | null
           zahlungsplan_id?: string | null
+          zusage_bis?: string | null
         }
         Relationships: [
           {
@@ -14381,6 +14746,8 @@ export type Database = {
           rechnung_am: string | null
           rechnung_nr: string | null
           reihenfolge: number
+          verrechnen_ausgeloest_am: string | null
+          verrechnen_ausgeloest_von: string | null
         }
         ComputedFields: never
         Insert: {
@@ -14402,6 +14769,8 @@ export type Database = {
           rechnung_am?: string | null
           rechnung_nr?: string | null
           reihenfolge?: number
+          verrechnen_ausgeloest_am?: string | null
+          verrechnen_ausgeloest_von?: string | null
         }
         Update: {
           abaninja_id?: string | null
@@ -14422,6 +14791,8 @@ export type Database = {
           rechnung_am?: string | null
           rechnung_nr?: string | null
           reihenfolge?: number
+          verrechnen_ausgeloest_am?: string | null
+          verrechnen_ausgeloest_von?: string | null
         }
         Relationships: [
           {
@@ -14472,6 +14843,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'wartung_ohne_vertrag'
             referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_verrechnen_ausgeloest_von_fkey'
+            columns: ['verrechnen_ausgeloest_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_verrechnen_ausgeloest_von_fkey'
+            columns: ['verrechnen_ausgeloest_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -15426,6 +15811,161 @@ export type Database = {
           },
         ]
       }
+      eingangsrechnungen_liste: {
+        Row: {
+          abgelehnt_grund: string | null
+          abgelehnt_von_name: string | null
+          bestellung_id: string | null
+          bestellung_nummer: string | null
+          betrag_rappen: number | null
+          bezahlt_am: string | null
+          datum: string | null
+          dokument_id: string | null
+          erstellt_am: string | null
+          faellig_am: string | null
+          ich_visiere: boolean | null
+          id: string | null
+          kunde: string | null
+          lieferant: string | null
+          nummer: string | null
+          offen_rappen: number | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          projekt_titel: string | null
+          quelle: string | null
+          skonto_bis: string | null
+          skonto_prozent: number | null
+          status: string | null
+          text: string | null
+          ueberfaellig: boolean | null
+          visum_gl_am: string | null
+          visum_gl_bemerkung: string | null
+          visum_gl_noetig: boolean | null
+          visum_gl_von: string | null
+          visum_gl_von_name: string | null
+          visum_pl_am: string | null
+          visum_pl_bemerkung: string | null
+          visum_pl_person: string | null
+          visum_pl_person_id: string | null
+          visum_pl_von: string | null
+          visum_pl_von_name: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'eingangsrechnungen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_dokument_id_fkey'
+            columns: ['dokument_id']
+            isOneToOne: false
+            referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_gl_von_fkey'
+            columns: ['visum_gl_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_gl_von_fkey'
+            columns: ['visum_gl_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_person_id_fkey'
+            columns: ['visum_pl_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_person_id_fkey'
+            columns: ['visum_pl_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_von_fkey'
+            columns: ['visum_pl_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_visum_pl_von_fkey'
+            columns: ['visum_pl_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       einkauf_bedarf: {
         Row: {
           artikel_id: string | null
@@ -16095,6 +16635,7 @@ export type Database = {
       }
       offene_tranchen: {
         Row: {
+          ausgeloest_von: string | null
           bau_status: string | null
           betrag_rappen: number | null
           bezeichnung: string | null
@@ -16102,9 +16643,13 @@ export type Database = {
           id: string | null
           kontakt_id: string | null
           kunde: string | null
+          meilenstein: Json | null
           projekt_id: string | null
           projekt_nummer: string | null
           projekt_titel: string | null
+          projektleiter: string | null
+          projektleiter_id: string | null
+          verrechnen_ausgeloest_am: string | null
         }
         ComputedFields: never
         Relationships: [
@@ -16149,6 +16694,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['projektleiter_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['projektleiter_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'zahlungsplan_projekt_id_fkey'
@@ -16992,9 +17551,13 @@ export type Database = {
           abaninja_status: string | null
           abaninja_uuid: string | null
           art: string | null
+          ausgebucht_art: string | null
+          ausgebucht_grund: string | null
+          ausgebucht_rappen: number | null
           bezahlt_am: string | null
           bezahlt_rappen: number | null
           datum: string | null
+          erinnert_am: string | null
           erstellt_am: string | null
           faellig_am: string | null
           firma: string | null
@@ -17004,8 +17567,11 @@ export type Database = {
           inkl_mwst: boolean | null
           kontakt_id: string | null
           kunde: string | null
+          kunden_referenz: string | null
           kundennummer: number | null
           mahnfrist: string | null
+          mahnsperre_bis: string | null
+          mahnsperre_grund: string | null
           mahnstufe: number | null
           mwst_rappen: number | null
           netto_rappen: number | null
@@ -17013,17 +17579,39 @@ export type Database = {
           offen_rappen: number | null
           projekt_id: string | null
           projekt_nummer: string | null
+          projekt_titel: string | null
+          projektleiter: string | null
+          projektleiter_id: string | null
           rapport_id: string | null
+          rechnung_an: Json | null
           sprache: string | null
           status: string | null
+          tage_ueberfaellig: number | null
           titel: string | null
           total_rappen: number | null
           ueberfaellig: boolean | null
+          versandweg: string | null
+          versendet: boolean | null
           wartungsvertrag_id: string | null
           zahlungsplan_id: string | null
+          zusage_bis: string | null
         }
         ComputedFields: never
         Relationships: [
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['projektleiter_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['projektleiter_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'rechnungen_firma_id_fkey'
             columns: ['firma_id']
@@ -18247,6 +18835,10 @@ export type Database = {
       dienste_pruefen: { Args: { p_extern?: Json }; Returns: number }
       dienste_zustand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
+      eingang_bezahlt: { Args: { p_datum: string; p_id: string }; Returns: undefined }
+      eingang_speichern: { Args: { p: Json; p_id: string }; Returns: string }
+      eingang_vergleich: { Args: { p_id: string }; Returns: Json }
+      eingang_visieren: { Args: { p_bemerkung: string; p_id: string; p_ok: boolean }; Returns: string }
       einkauf_darf_freigeben: { Args: { p_total_rappen: number }; Returns: boolean }
       einkauf_melden: { Args: Record<PropertyKey, never>; Returns: number }
       einsatz_verschieben: {
@@ -18481,6 +19073,30 @@ export type Database = {
         }[]
       }
       leads_erstkontakt_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      mahnlauf_vorschlag: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          aktion: string
+          email: string
+          faellig_am: string
+          grund: string
+          kontakt_id: string
+          kunde: string
+          mahnsperre_grund: string
+          mahnstufe: number
+          nummer: string
+          offen_rappen: number
+          projekt_nummer: string
+          rechnung_id: string
+          sprache: string
+          stufe: number
+          tage: number
+          total_rappen: number
+          versandweg: string
+          zusage_bis: string
+        }[]
+      }
+      mahnung_darf_freigeben: { Args: Record<PropertyKey, never>; Returns: boolean }
       mails_vermerken: { Args: { p_mails: Json; p_person: string }; Returns: number }
       marketing_abmelden: { Args: { p_schluessel: string }; Returns: string }
       marketing_budget: {
@@ -18866,13 +19482,23 @@ export type Database = {
       rapport_oeffnen: { Args: { p_id: string }; Returns: undefined }
       rapport_speichern: { Args: { p: Json }; Returns: string }
       rapport_visieren: { Args: { p_id: string; p_rueckfrage?: string }; Returns: undefined }
+      rechnung_angaben: { Args: { p: Json; p_id: string }; Returns: undefined }
+      rechnung_ausbuchen: {
+        Args: { p_art: string; p_betrag: number; p_grund: string; p_id: string }
+        Returns: undefined
+      }
       rechnung_entwurf: { Args: { p: Json }; Returns: string }
       rechnung_mahnen: { Args: { p_id: string }; Returns: number }
+      rechnung_mahnsperre: { Args: { p_bis: string; p_grund: string; p_id: string }; Returns: undefined }
+      rechnung_notiz: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      rechnung_verlauf: { Args: { p_id: string }; Returns: Json }
       rechnung_visieren: { Args: { p_bemerkung?: string; p_id: string }; Returns: undefined }
+      rechnung_zusage: { Args: { p_bis: string; p_id: string; p_text: string }; Returns: undefined }
       rechnungen_heute: { Args: Record<PropertyKey, never>; Returns: Json }
+      rechnungen_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
       rechnungen_zum_visum: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -18906,7 +19532,7 @@ export type Database = {
           titel: string
         }[]
       }
-      region_fuer_plz: { Args: { p_plz: string }; Returns: string | null }
+      region_fuer_plz: { Args: { p_plz: string }; Returns: string }
       registrier_link_einloesen: { Args: { p_email: string; p_schluessel: string }; Returns: Json }
       registrier_link_erstellen: { Args: { p_person: string }; Returns: string }
       registrier_link_pruefen: { Args: { p_schluessel: string }; Returns: Json }
@@ -19170,10 +19796,7 @@ export type Database = {
         }[]
       }
       social_von_hand_melden: { Args: Record<PropertyKey, never>; Returns: number }
-      social_zuordnung_setzen: {
-        Args: { p_konto: string; p_netzwerk: string; p_sprache: string }
-        Returns: undefined
-      }
+      social_zuordnung_setzen: { Args: { p_konto: string; p_netzwerk: string; p_sprache: string }; Returns: undefined }
       social_zur_freigabe: { Args: { p_id: string }; Returns: undefined }
       social_zurueckziehen: { Args: { p_id: string }; Returns: undefined }
       social_zustand_anlegen: {
@@ -19223,6 +19846,7 @@ export type Database = {
       termin_link_senden: { Args: { p_kanal?: string; p_verkaufschance: string }; Returns: Json }
       termin_link_zeiten: { Args: { p_schluessel: string }; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
+      tranche_verrechnen: { Args: { p_id: string }; Returns: string }
       versand_ergebnisse: {
         Args: { p_ids: string[] }
         Returns: {
@@ -19276,6 +19900,7 @@ export type Database = {
           nr: number
         }[]
       }
+      zahlungsstand_projekte: { Args: { p_alle?: boolean }; Returns: Json }
       zeit_speichern: { Args: { p: Json }; Returns: string }
       zeit_starten: { Args: { p: Json }; Returns: string }
       zeit_stoppen: { Args: { p: Json }; Returns: undefined }

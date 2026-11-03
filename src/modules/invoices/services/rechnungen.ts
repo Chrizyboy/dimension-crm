@@ -3,6 +3,7 @@ import { supabase } from '@/services/supabase'
 import type { TablesUpdate } from '@/types/datenbank'
 import type { EntwurfVorgabe, Firma, OffenerRapport, Position, Rechnung, RechnungFilter, Tranche } from '../types'
 import { FIRMA_SPALTEN as FIRMA } from '@/services/rechnungsdaten'
+import { heuteZuerich } from '../lib/rechnung'
 
 /**
  * Datenzugriff für Rechnungen. Die Regeln (Nummer, Fälligkeit, fest nach dem Stellen, Mahnstufen,
@@ -21,6 +22,9 @@ export async function ladeRechnungen(filter: RechnungFilter, projektId?: string)
   if (filter === 'ueberfaellig') q = q.eq('ueberfaellig', true)
   if (filter === 'entwuerfe') q = q.eq('status', 'entwurf')
   if (filter === 'bezahlt') q = q.eq('status', 'bezahlt')
+  if (filter === 'gemahnt') q = q.in('status', ['gestellt', 'teilbezahlt']).gt('mahnstufe', 0)
+  if (filter === 'nichtVersendet') q = q.in('status', ['gestellt', 'teilbezahlt']).eq('versendet', false)
+  if (filter === 'sperre') q = q.in('status', ['gestellt', 'teilbezahlt']).gte('mahnsperre_bis', heuteZuerich())
   const { data, error } = await q
     .order('datum', { ascending: false, nullsFirst: true })
     .order('erstellt_am', { ascending: false })
@@ -91,7 +95,10 @@ export async function stornieren(id: string, grund: string): Promise<void> {
   if (error) throw error
 }
 
-/** Nächste Mahnstufe setzen; gibt die neue Stufe zurück. */
+/**
+ * Mahnen für den Versand per Post (nur die Freigabe-Person): Stufe 0 merkt die Erinnerung, sonst nächste Stufe.
+ * Per Mail zählt die Stufe erst, wenn die Mail aus dem Ausgangskorb gesendet ist. Gibt die neue Stufe zurück.
+ */
 export async function mahnen(id: string): Promise<number> {
   const { data, error } = await db().rpc('rechnung_mahnen', { p_id: id })
   if (error) throw error

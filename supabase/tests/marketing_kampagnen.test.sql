@@ -1,4 +1,4 @@
--- Prüft Marketing vollständig (Entscheid 0055): Kennzeichen, Kampagne am Lead (Website, Messe, Antwort auf Mail,
+-- Prüft Marketing vollständig (Entscheid 0056): Kennzeichen, Kampagne am Lead (Website, Messe, Antwort auf Mail,
 -- Quelle), Messe-Lead (wiederholbar, Aufgabe, Einwilligung), Zahlen je Kampagne, Kosten nur mit Recht, Zuordnen
 -- nur Finanzen, Öffnen/Klick nur über den Server und nur echte Links, Social «von Hand», Fotos für Werbung.
 -- Ausführen: npm run db:test

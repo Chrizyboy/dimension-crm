@@ -10,17 +10,17 @@ export const meta: ModulMeta = {
   id: 'invoices',
   titel: { de: 'Rechnungen', fr: 'Factures' },
   untertitel: {
-    de: 'Rechnungen stellen, Zahlungen verbuchen, mahnen, Abgleich mit AbaNinja',
-    fr: 'Émettre des factures, saisir les paiements, rappels, synchronisation AbaNinja',
+    de: 'Rechnungen stellen, Zahlungen verfolgen, mahnen, Lieferantenrechnungen visieren',
+    fr: 'Émettre des factures, suivre les paiements, rappels, viser les factures fournisseurs',
   },
   pfad: '/invoices',
   icon: 'receipt',
   gruppe: 'abwicklung',
   phase: 10,
-  recht: 'finanzen',
+  // Kein Recht nötig: Projektleitung und Verkauf sehen ihren Zahlungsstand und ihre Visa (Bereich in der Rolle).
 }
 
-/** Die Seite: Rechnungen, zu verrechnen, Firmenangaben. */
+/** Die Seite: Übersicht, Rechnungen, zu verrechnen, Mahnlauf, Eingangsrechnungen, Zahlungsstand, Firmenangaben. */
 export const Rechnungen = lazy(() => import('./components/Rechnungen'))
 
 /** Karte «Rechnungen zum Visum» für Mein Tag (Erstvisum der Projektleitung). */
