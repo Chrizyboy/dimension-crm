@@ -1,4 +1,4 @@
-import { FileSignature, Settings } from 'lucide-react'
+import { FileSignature, Plus, Settings } from 'lucide-react'
 import { Suspense, lazy, useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -18,6 +18,7 @@ const VertragListe = lazy(() => import('./VertragListe'))
 const VertragAkte = lazy(() => import('./VertragAkte'))
 const AuftragDialog = lazy(() => import('./AuftragDialog'))
 const EinstellungDialog = lazy(() => import('./EinstellungDialog'))
+const OfferteWahl = lazy(() => import('./OfferteWahl'))
 
 export interface WerkvertraegeProps {
   /** Offener Werkvertrag aus der Adresse (?vertrag=…). */
@@ -37,6 +38,8 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
   const [suche, setSuche] = useState('')
   const [stand, setStand] = useState<string[]>([])
   const [einstellen, setEinstellen] = useState(false)
+  // «Neuer Werkvertrag» (Chris 2.11.2026): erst die Offerte wählen, dann das Formular «Auftrag erstellen».
+  const [waehlen, setWaehlen] = useState(false)
   const admin = hatRecht(
     useAnmeldung((z) => z.ich),
     'admin',
@@ -64,22 +67,31 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
       <Seitenkopf
         titel={t('werkvertraege.titel')}
         beschreibung={t('werkvertraege.beschreibung')}
-        {...(admin && einstellung.data
-          ? {
-              aktionen: (
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => {
-                    setEinstellen(true)
-                  }}
-                >
-                  <Settings />
-                  {t('werkvertraege.einstellung.titel')}
-                </Button>
-              ),
-            }
-          : {})}
+        aktionen={
+          <>
+            {admin && einstellung.data && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  setEinstellen(true)
+                }}
+              >
+                <Settings />
+                {t('werkvertraege.einstellung.titel')}
+              </Button>
+            )}
+            <Button
+              size="sm"
+              onClick={() => {
+                setWaehlen(true)
+              }}
+            >
+              <Plus />
+              {t('werkvertraege.neu.knopf')}
+            </Button>
+          </>
+        }
       />
       <Werkzeugleiste
         suche={
@@ -138,6 +150,17 @@ export default function Werkvertraege({ vertragId, auftragOfferteId, onAdresse }
             einstellung={einstellung.data}
             onSchliessen={() => {
               setEinstellen(false)
+            }}
+          />
+        )}
+        {waehlen && (
+          <OfferteWahl
+            onWahl={(offerteId) => {
+              setWaehlen(false)
+              onAdresse({ vertrag: null, auftrag: offerteId })
+            }}
+            onSchliessen={() => {
+              setWaehlen(false)
             }}
           />
         )}

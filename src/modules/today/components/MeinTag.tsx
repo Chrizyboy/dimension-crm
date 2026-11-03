@@ -5,6 +5,7 @@ import {
   Inbox,
   ListChecks,
   Mail,
+  MailCheck,
   PhoneOutgoing,
   ShieldCheck,
   Stamp,
@@ -34,6 +35,7 @@ import { TagKarte } from './TagKarte'
 
 /** Karten unter Termine und Aufgaben: Symbol und wohin «Alle anzeigen» führt. Leere Karten bleiben weg. */
 const WEITERE: { liste: TagListeName; icon: LucideIcon; ziel: string }[] = [
+  { liste: 'freigaben', icon: MailCheck, ziel: '/outbox' },
   { liste: 'nachfassen', icon: PhoneOutgoing, ziel: '/quotes?ansicht=nachfassen' },
   { liste: 'neue_leads', icon: Inbox, ziel: '/sales' },
   { liste: 'wiedervorlagen', icon: BellRing, ziel: '/sales' },

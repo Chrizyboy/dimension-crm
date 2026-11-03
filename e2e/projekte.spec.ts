@@ -67,19 +67,41 @@ test('Service-Fall erfassen, Notiz, erledigen', async ({ page }) => {
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('button', { name: 'Speichern' }).click()
 
-  const akte = page.getByRole('dialog')
-  await expect(akte.getByText(`Wechselrichter meldet Fehler ${lauf}`).first()).toBeVisible()
-  await expect(akte.getByText(/^S\d{3,} · /).first()).toBeVisible()
-  await akte.getByLabel('Notiz zum Verlauf').fill('Fernzugriff geprüft')
-  await akte.getByRole('button', { name: 'Notiz speichern' }).click()
-  await expect(akte.getByText('Fernzugriff geprüft')).toBeVisible()
+  // Die Fall-Akte füllt die ganze Seite: Nummer und Titel als Überschrift, Arbeitsschritte, Verlauf.
+  const kopf = page.getByRole('heading', {
+    level: 1,
+    name: new RegExp(`S\\d{3,}.*Wechselrichter meldet Fehler ${lauf}`),
+  })
+  await expect(kopf).toBeVisible()
+  await expect(page.getByRole('list', { name: 'Arbeitsschritte' })).toBeVisible()
+  await page.getByRole('button', { name: 'Anruf' }).click()
+  await page.getByLabel('Eintrag im Verlauf').fill('Fernzugriff geprüft')
+  await page.getByRole('button', { name: 'Festhalten' }).click()
+  await expect(page.getByText('Fernzugriff geprüft')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  await akte.getByRole('button', { name: 'Erledigt' }).click()
-  await expect(akte.getByText(/Erledigt am/)).toBeVisible()
+  await page.getByRole('button', { name: 'Erledigt', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Wieder öffnen' })).toBeVisible()
 
-  await page.keyboard.press('Escape')
+  await page.getByRole('button', { name: 'Zurück zum Leitstand' }).click()
+  await expect(page.getByRole('region', { name: 'Board' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
   await page.getByRole('tab', { name: 'Anlagen' }).click()
   expect(await verstoesse(page)).toEqual([])
+  // Anlage-Akte als ganze Seite (nur wenn die Testdatenbank schon eine Anlage hat, z. B. aus der IBN).
+  const zeile = page.getByRole('row').nth(1)
+  if (
+    await zeile
+      .getByRole('cell')
+      .first()
+      .isVisible()
+      .catch(() => false)
+  ) {
+    await zeile.click()
+    await expect(page.getByRole('button', { name: 'Zurück zu den Anlagen' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: 'Komponenten' })).toBeVisible()
+    expect(await verstoesse(page)).toEqual([])
+    await page.getByRole('button', { name: 'Zurück zu den Anlagen' }).click()
+  }
 })
 
 test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {
@@ -89,15 +111,19 @@ test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {
   await page.getByRole('button', { name: 'Neuer Vertrag' }).click()
   await testkunde(page)
   await page.getByLabel('Vertragsbeginn').fill('2026-01-15')
-  await page.getByLabel(/Preis pro Jahr/).fill('480.00')
-  // Die üblichen Leistungen sind vorgewählt.
-  await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(5)
+  // Pakete der Website: Premium bei 42 kWp kostet CHF 690.00 exkl. MWST; tiefer = Rabatt.
+  await page.getByLabel('Leistung (kWp)').fill('42')
+  await page.getByRole('button', { name: /Premium/ }).click()
+  const preis = page.getByLabel('Jahrespreis exkl. MWST (CHF)')
+  await expect(preis).toHaveValue('690.00')
+  await preis.fill('621.00')
+  await expect(page.getByText('10 % Rabatt', { exact: true })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('button', { name: 'Speichern' }).click()
 
   const akte = page.getByRole('dialog')
   await expect(akte.getByText('Nächste Wartung 15.01.2027')).toBeVisible()
-  await expect(akte.getByText('CHF 480.00')).toBeVisible()
+  await expect(akte.getByText(/CHF 621\.00/)).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await akte.getByRole('button', { name: 'Wartung erledigt' }).click()
   const erledigt = page.getByRole('dialog', { name: 'Wartung erledigt' })

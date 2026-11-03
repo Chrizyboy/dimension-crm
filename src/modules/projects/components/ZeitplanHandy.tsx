@@ -124,6 +124,7 @@ export function ZeitplanHandy({
         <ZeitplanAgenda
           montag={montag}
           gruppen={z.baustellen}
+          service={z.service}
           abwesend={z.abwesend}
           personen={z.personen}
           wahl={wahl}

@@ -181,6 +181,7 @@ export default function Benutzerverwaltung({
         rollen={rollen.data ?? []}
         standorte={standorte.data ?? []}
         module={module}
+        vergeben={liste.flatMap((p) => (p.id !== person?.id && p.kurzzeichen ? [p.kurzzeichen] : []))}
       />
       <RollenDialog
         key={rolle?.id ?? 'keine-rolle'}

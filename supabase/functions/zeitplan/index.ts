@@ -10,6 +10,7 @@
 //  * kalender     alle 15 Min.    Outlook-Kalender aller verbundenen Personen (V231)
 //  * mails        alle 15 Min.    Mail-Verlauf mit Kunden (V81/V227)
 //  * posteingang  alle 5 Minuten  alle Mails holen, «beantwortet» erkennen, mit KI einordnen (Phase 18)
+//  * posteingang_nachholen alle 2 Min.  ältere Mails rückwärts als Archiv (nachholen_monate), bis alles da ist
 //  * posteingang_erinnern alle 5 Min.  Antwortfristen: Glocke an Zuständige, bei doppelter Frist an die Leitung
 //  * ablage       alle 5 Minuten  Offert-Ordner in SharePoint anlegen/verschieben, Dateien einordnen (Entscheid 0031)
 //  * sicherung    alle 30 Min.    Kundendateien in SharePoint sichern (V64)
@@ -17,7 +18,11 @@
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
 //  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
+//  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
+//  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
 //  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
@@ -28,9 +33,13 @@ import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
+import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
+import { bewertungenEinschaetzen } from '../_shared/bewertung.ts'
+import { guthaben } from '../_shared/aspsms.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
+import { posteingangNachholen } from '../_shared/posteingang_nachholen.ts'
 import { kiEntwuerfeAbarbeiten } from '../_shared/ki_automation.ts'
 import { kiEingerichtet } from '../_shared/ki_rahmen.ts'
 import { dienst } from '../_shared/datenbank.ts'
@@ -116,6 +125,90 @@ Deno.serve(async (req) => {
   ergebnis.fristen = await job('fristen', 60, async () => {
     const n = await dienst.rpc<number>('fristen_melden', {})
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
+  ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
+    const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Personal-Akte: Probezeit, Befristung, Bewilligung, nächstes Gespräch an GL/Buchhaltung und Vorgesetzte.
+  ergebnis.personal_fristen = await job('personal_fristen', 60, async () => {
+    const n = await dienst.rpc<number>('personal_fristen_melden', {})
+    return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Service (Modul-Prüfung 22A): dringende Fälle ohne Reaktion melden, nur intern (Glocke).
+  ergebnis.service_eskalation = await job('service_eskalation', 15, async () => {
+    const n = await dienst.rpc<number>('service_eskalieren', {})
+    return `${n} ${n === 1 ? 'Fall' : 'Fälle'} gemeldet`
+  })
+
+  // Baustelle (Modul-Prüfung 23A): Zeiten, die zu lange laufen, der Person melden («Stopp vergessen?»), nur Glocke.
+  ergebnis.zeiten_vergessen = await job('zeiten_vergessen', 60, async () => {
+    const n = await dienst.rpc<number>('zeiten_vergessen_melden', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Abgleich AbaNinja jede Nacht (Modul-Prüfung 25A): einmal in der Stunde ab 02:00 Zürich, Änderungen der letzten
+  // drei Tage (deckt einen ausgefallenen Lauf ab). Zahlungen und Lieferantenrechnungen setzt die Datenbank.
+  if (ein.abaninja) {
+    ergebnis.abaninja_abgleich = await job('abaninja_abgleich', 60, async () => {
+      const stunde = Number(
+        new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric' }).format(new Date()),
+      )
+      if (stunde !== 2) return 'wartet auf die Nacht'
+      const seit = new Date(Date.now() - 3 * 86_400_000).toISOString()
+      const r = await dienst.rpc<Record<string, number>>('abaninja_abgleich_anwenden', { p: await abgleichDaten(seit) })
+      return `${r.zahlungen ?? 0} Zahlungen, ${r.belege_neu ?? 0} Lieferantenrechnungen neu`
+    })
+  }
+
+  // Finanzen (Modul-Prüfung 25A): Mahnlauf montags und Spesen am Monatsanfang als Glocke an die Buchhaltung.
+  ergebnis.finanzen_erinnern = await job('finanzen_erinnern', 60, async () => {
+    const n = await dienst.rpc<number>('finanzen_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Dienst-Wächter (Modul-Prüfung 28A): SMS und AbaNinja hier messen, den Rest prüft die Datenbank. Ein Fehler
+  // beim Messen ist selbst ein Befund (Glocke), kein Fehler des Jobs.
+  ergebnis.waechter = await job('waechter', 60, async () => {
+    const extern: Record<string, { ok: boolean; credits?: number; meldung?: string }> = {}
+    const code = (f: unknown) =>
+      f instanceof DienstFehler ? f.code : f instanceof Error ? f.message.slice(0, 80) : 'fehler'
+    if (ein.sms) {
+      try {
+        extern.sms = { ok: true, credits: await guthaben() }
+      } catch (f) {
+        extern.sms = { ok: false, meldung: code(f) }
+      }
+    }
+    if (ein.abaninja) {
+      try {
+        await abaTesten()
+        extern.abaninja = { ok: true }
+      } catch (f) {
+        extern.abaninja = { ok: false, meldung: code(f) }
+      }
+    }
+    const n = await dienst.rpc<number>('dienste_pruefen', { p_extern: extern })
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}`
+  })
+
+  // Empfehlung und Bewertung (Modul-Prüfung 32A): KI schätzt fällige Anfragen ein, gesendet wird nur nach Freigabe.
+  ergebnis.bewertungen = await job('bewertungen', 60, () => bewertungenEinschaetzen())
+
+  // Mein Tag (Modul-Prüfung 27A): alte Freigaben im Ausgangskorb (werktags) und «Woche in Zahlen» (montags), nur Glocke.
+  ergebnis.tag_erinnern = await job('tag_erinnern', 60, async () => {
+    const n = await dienst.rpc<number>('tag_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung = await job('wartung', 720, async () => {
+    const n = await dienst.rpc<number>('wartung_jahreslauf', {})
+    return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
   })
 
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
@@ -233,6 +326,21 @@ Deno.serve(async (req) => {
         return r.neu
       })
       return `${meldung}; ${neu} neu, ${beantwortet} beantwortet; ${await posteingangEinordnen(15)}`
+    })
+    // Ältere Mails: höchstens 40 Sekunden pro Lauf, gleich verteilt, damit jede Person vorankommt.
+    ergebnis.posteingang_nachholen = await job('posteingang_nachholen', 2, async () => {
+      const personen = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
+      const proPerson = 40_000 / Math.max(1, personen.length)
+      let neu = 0
+      let fehler = 0
+      for (const p of personen) {
+        try {
+          neu += await posteingangNachholen(p.person_id, s, true, Date.now() + proPerson)
+        } catch {
+          fehler++
+        }
+      }
+      return `${neu} ältere Mails${fehler ? `, ${fehler} Fehler` : ''}`
     })
 
     // Ablage vor der Sicherung: Dateien von Offerten und Projekten gehören in deren Ordner, nicht ins Kunden-Backup.

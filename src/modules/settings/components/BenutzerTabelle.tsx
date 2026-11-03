@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Avatar } from '@/components/ui/diverses'
+import { Kurzzeichen } from '@/components/shared/Kurzzeichen'
 import { Badge } from '@/components/ui/badge'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zeile, Zelle } from '@/components/ui/tabelle'
 import { formatRelativ } from '@/lib/format'
@@ -60,7 +60,7 @@ export function BenutzerTabelle({ personen, status, rollen, standorte, onWaehle 
             >
               <Zelle>
                 <div className="flex min-w-0 items-center gap-2.5">
-                  <Avatar name={p.name} className="size-7 shrink-0" />
+                  <Kurzzeichen person={p} className="size-7 shrink-0" />
                   <div className="flex min-w-0 flex-col">
                     <span className="line-clamp-2 font-medium">{p.name}</span>
                     <span className="text-muted-foreground line-clamp-2 text-xs break-all">

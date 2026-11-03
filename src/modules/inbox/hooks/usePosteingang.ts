@@ -1,6 +1,14 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeAuswertung, ladeMails, ladePersonen, ladeRegeln, ladeText } from '../services/posteingang'
+import {
+  ladeAeltere,
+  ladeAuswertung,
+  ladeMails,
+  ladeNachholen,
+  ladePersonen,
+  ladeRegeln,
+  ladeText,
+} from '../services/posteingang'
 
 const mitDb = supabase !== null
 
@@ -12,6 +20,19 @@ export const useMails = (aktiv = true) =>
     queryFn: ladeMails,
     refetchInterval: 60_000,
   })
+
+/** Ältere Mails mit Suche (nur, wenn die Ansicht offen ist). */
+export const useAeltere = (suche: string, aktiv: boolean) =>
+  useQuery({
+    queryKey: ['posteingang', 'aeltere', suche],
+    enabled: mitDb && aktiv,
+    queryFn: () => ladeAeltere(suche),
+    placeholderData: (vorher) => vorher,
+  })
+
+/** Stand des Nachholens (Einstellungen); alle 30 Sekunden neu, solange es läuft. */
+export const useNachholen = () =>
+  useQuery({ queryKey: ['posteingang', 'nachholen'], enabled: mitDb, queryFn: ladeNachholen, refetchInterval: 30_000 })
 
 /** Volltext einer Mail aus Outlook (einmal pro Mail). */
 export const useText = (id: string) =>

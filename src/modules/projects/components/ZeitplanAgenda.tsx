@@ -7,11 +7,15 @@ import { alsDatum, alsIso, plusTage, ueberschneidet } from '../lib/zeitplan'
 import { konfliktText, tagImEinsatz, type PlanBalken, type PlanGruppe } from '../lib/zeitplanAnsicht'
 import type { Abwesenheit, Person, Projekt } from '../types'
 
+/** Kunde eines Balkens (Baustelle oder Service-Termin), zum Sortieren und Anzeigen. */
+const kundeVon = (b: PlanBalken) => b.projekt?.kunde ?? b.service?.kunde ?? ''
+
 /** Farbstreifen links an der Karte, gleiche Farben wie die Balken am PC. */
 const STREIFEN: Record<string, string> = {
   intern: 'bg-primary',
   extern: 'bg-accent',
   geplant: 'border-primary border-2 border-dashed bg-surface',
+  service: 'bg-info',
 }
 
 /**
@@ -21,6 +25,7 @@ const STREIFEN: Record<string, string> = {
 export function ZeitplanAgenda({
   montag,
   gruppen,
+  service,
   abwesend,
   personen,
   wahl,
@@ -28,6 +33,8 @@ export function ZeitplanAgenda({
 }: {
   montag: string
   gruppen: PlanGruppe[]
+  /** Service-Termine als Balken (aus «Service & Garantie»). */
+  service: PlanBalken[]
   abwesend: Abwesenheit[]
   personen: Person[]
   /** Nur die Einsätze dieser Person (leer = alle). */
@@ -38,9 +45,12 @@ export function ZeitplanAgenda({
   const { t, i18n } = useTranslation()
   const [heute] = useState(() => alsIso(new Date()))
   const sprache = i18n.language === 'fr' ? 'fr-CH' : 'de-CH'
-  const alle = gruppen
-    .flatMap((g) => g.zeilen.flatMap((z) => z.balken))
-    .filter((b) => b.einsatz && (wahl.length === 0 || b.einsatz.personen.some((id) => wahl.includes(id))))
+  const alle = [
+    ...gruppen
+      .flatMap((g) => g.zeilen.flatMap((z) => z.balken))
+      .filter((b) => b.einsatz && (wahl.length === 0 || b.einsatz.personen.some((id) => wahl.includes(id)))),
+    ...service.filter((b) => wahl.length === 0 || b.service?.personen.some((id) => wahl.includes(id))),
+  ]
   const kuerzel = (id: string) => personen.find((p) => p.id === id)?.kuerzel ?? '?'
 
   const tage = Array.from({ length: 7 }, (_, i) => alsIso(plusTage(alsDatum(montag), i)))
@@ -48,7 +58,7 @@ export function ZeitplanAgenda({
       tag,
       balken: alle
         .filter((b) => ueberschneidet(b, { von: tag, bis: tag }))
-        .sort((a, b) => (a.projekt?.kunde ?? '').localeCompare(b.projekt?.kunde ?? '')),
+        .sort((a, b) => kundeVon(a).localeCompare(kundeVon(b))),
       weg: [
         ...new Set(abwesend.filter((a) => ueberschneidet(a, { von: tag, bis: tag })).map((a) => a.person_id)),
       ].filter((id) => wahl.length === 0 || wahl.includes(id)),
@@ -95,7 +105,8 @@ function Karte({ b, tag, onOeffnen }: { b: PlanBalken; tag: string; onOeffnen: (
     <button
       type="button"
       onClick={() => {
-        if (p) onOeffnen(p)
+        if (b.service) window.location.hash = `#/aftersales?fall=${b.service.id}`
+        else if (p) onOeffnen(p)
       }}
       className={cn(
         'bg-surface focus-visible:ring-ring relative flex flex-col gap-0.5 overflow-hidden rounded-lg border py-2 pr-3 pl-4 text-left shadow-xs outline-none focus-visible:ring-2',
@@ -104,7 +115,7 @@ function Karte({ b, tag, onOeffnen }: { b: PlanBalken; tag: string; onOeffnen: (
     >
       <span aria-hidden className={cn('absolute inset-y-0 left-0 w-1.5', STREIFEN[b.art])} />
       <span className="flex items-baseline justify-between gap-2">
-        <span className="truncate font-semibold">{p?.kunde}</span>
+        <span className="truncate font-semibold">{kundeVon(b)}</span>
         {nr.von > 1 && (
           <span className="text-muted-foreground zahlen shrink-0 text-xs">
             {t('projekte.zeitplan.tagVon', { nr: nr.nr, von: nr.von })}
@@ -112,13 +123,20 @@ function Karte({ b, tag, onOeffnen }: { b: PlanBalken; tag: string; onOeffnen: (
         )}
       </span>
       <span className="text-muted-foreground flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
-        <span>{p?.ort}</span>
+        <span>{p?.ort ?? b.service?.ort}</span>
+        {b.service && (
+          <span className="zahlen">
+            {b.service.nummer} · {b.service.titel}
+          </span>
+        )}
         <span className="text-foreground flex items-center gap-1">
           <Users className="text-muted-foreground size-4" aria-hidden />
           {b.text || '–'}
         </span>
         {b.art !== 'intern' && (
-          <Badge ton={b.art === 'extern' ? 'marke' : 'neutral'}>{t(`projekte.einsatz.${b.art}`)}</Badge>
+          <Badge ton={b.art === 'extern' ? 'marke' : b.art === 'service' ? 'info' : 'neutral'}>
+            {t(`projekte.einsatz.${b.art}`)}
+          </Badge>
         )}
       </span>
       {b.konflikt.length > 0 && (

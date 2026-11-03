@@ -19,17 +19,23 @@ export function ErledigtDialog({ vertrag: v, onSchliessen }: { vertrag: Vertrag;
   const [notiz, setNotiz] = useState('')
 
   async function speichern() {
-    let naechste = ''
+    // Objekt statt Variable: TypeScript sieht die Zuweisung im Rückruf sonst nicht.
+    const ergebnis: { naechste: string | null } = { naechste: null }
     const ok = await aus(async () => {
-      naechste = await wartungErledigt(v.id, am, notiz.trim())
+      ergebnis.naechste = await wartungErledigt(v.id, am, notiz.trim())
     })
-    if (ok) onSchliessen()
-    if (ok && naechste) {
-      melde('ok', {
-        de: `Wartung eingetragen, nächste am ${formatDatum(naechste)}`,
-        fr: `Entretien enregistré, prochain le ${formatDatum(naechste)}`,
-      })
-    }
+    if (!ok) return
+    onSchliessen()
+    const n = ergebnis.naechste
+    melde(
+      'ok',
+      n
+        ? {
+            de: `Wartung eingetragen, nächste am ${formatDatum(n)}`,
+            fr: `Entretien enregistré, prochain le ${formatDatum(n)}`,
+          }
+        : { de: 'Wartung eingetragen', fr: 'Entretien enregistré' },
+    )
   }
 
   return (

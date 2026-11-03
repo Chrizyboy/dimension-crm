@@ -47,6 +47,10 @@ export const useLieferanten = () =>
   useQuery({ queryKey: ['einkauf', 'lieferanten'], enabled: an, queryFn: l.ladeLieferanten })
 
 /** Nach einer Änderung alles zum Einkauf neu laden (auch den Fahrplan der Projekte). */
+/** Reiter «Zu bestellen». */
+export const useZuBestellen = () =>
+  useQuery({ queryKey: ['einkauf', 'zubestellen'], enabled: an, queryFn: m.ladeZuBestellen })
+
 export function useNeuLaden() {
   const qc = useQueryClient()
   return async () => {

@@ -12,7 +12,7 @@ import { inTagen, wartungTon } from '../lib/anzeige'
 export default function HeuteKarte() {
   const { t } = useTranslation()
   const [heute] = useState(() => new Date())
-  const liste = useVertraege('faellig', inTagen(heute, 30))
+  const liste = useVertraege('faellig', inTagen(heute, 30), inTagen(heute, 30))
   if (!liste.data) return null
   const faellig = liste.data
 

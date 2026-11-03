@@ -1,6 +1,6 @@
 import { microsoft } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
-import type { Art, Auswertung, Mail, Person, PosteingangRegeln } from '../types'
+import type { Art, Auswertung, Mail, NachholenStand, Person, PosteingangRegeln } from '../types'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -51,6 +51,27 @@ export async function ladeMails(): Promise<Mail[]> {
     .limit(1500)
   if (error) throw error
   return (data as unknown as Roh[]).map(alsMail)
+}
+
+/**
+ * Ältere Mails (vor den letzten 14 Tagen, meist nachgeholtes Archiv), neueste zuerst, höchstens 200. Suche in
+ * Betreff, Absender und Kurzfassung.
+ */
+export async function ladeAeltere(suche: string): Promise<Mail[]> {
+  const bis = new Date(Date.now() - 14 * 86_400_000).toISOString()
+  let q = db().from('posteingang').select(FELDER).is('geloescht_am', null).lt('eingang_am', bis)
+  const s = suche.replace(/[%,()*]/g, ' ').trim()
+  if (s) q = q.or(`betreff.ilike.*${s}*,von_name.ilike.*${s}*,von_email.ilike.*${s}*,vorschau.ilike.*${s}*`)
+  const { data, error } = await q.order('eingang_am', { ascending: false }).limit(200)
+  if (error) throw error
+  return (data as unknown as Roh[]).map(alsMail)
+}
+
+/** Wie weit ältere Mails schon nachgeholt sind (nur Administration). */
+export async function ladeNachholen(): Promise<NachholenStand[]> {
+  const { data, error } = await db().rpc('posteingang_nachholen_uebersicht')
+  if (error) throw error
+  return data as unknown as NachholenStand[]
 }
 
 /** Änderung über die Datenbank-Funktion (sie prüft, ob ich die Mail sehen darf). */
