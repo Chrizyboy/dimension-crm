@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Unterschriftfeld } from '@/components/shared/Unterschriftfeld'
@@ -9,7 +9,8 @@ import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
 import { melde } from '@/services/meldungen'
-import { useBilder, usePflichtfotos } from '../hooks/useBaustelle'
+import { useBilder, usePflichtfotos, useRapportNachtraege } from '../hooks/useBaustelle'
+import { useRapportInfo } from '../hooks/useLeitung'
 import { fehlendePflichtfotos, pflichtFuer } from '../lib/pflichtfotos'
 import { rapportAbschliessen } from '../services/monteur'
 import { useUi } from '@/stores/ui'
@@ -32,27 +33,54 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
   const [werbung, setWerbung] = useState(false)
   const [verrechnung, setVerrechnung] = useState<Verrechnung | null>(r.verrechnung)
   const [laeuft, setLaeuft] = useState(false)
+  const [vorbehalte, setVorbehalte] = useState<string[]>([])
+  const nachtraege = useRapportNachtraege(r.id)
+  const info = useRapportInfo(r.einsatz_id).data ?? null
+  // Unterschrift nur bei der Abnahme und für Nachträge; ein normaler Tagesrapport braucht keine (Entscheid 0045).
+  const mitNachtrag = r.nachtraege_anzahl > 0 || (nachtraege.data?.length ?? 0) > 0
+  const brauchtUnterschrift = r.art !== 'montage' || fertig || mitNachtrag
+  const schritteHeute = Object.values(r.schritte).some(Boolean)
   const sprache = useUi((z) => z.sprache)
   const bilder = useBilder(r.id)
-  const fotosFehlen = fehlendePflichtfotos(pflichtFuer(usePflichtfotos().data, r.art), bilder.data ?? [])
+  const jeArt = pflichtFuer(usePflichtfotos().data, r.art)
+  // Montage mit Einsatz: Pflichtfotos gelten für die ganze Baustelle und erst bei der Abnahme.
+  const fotosFehlen =
+    r.art === 'montage' && info
+      ? fertig
+        ? fehlendePflichtfotos(info.fotos, [
+            ...(bilder.data ?? []),
+            ...info.fotos_da.map((k) => ({ ordner: 'fotos', kategorie: k })),
+          ])
+        : []
+      : fehlendePflichtfotos(jeArt, bilder.data ?? [])
 
-  const fehlt = !r.arbeiten?.trim()
-    ? t('baustelle.abschluss.arbeitenFehlen')
-    : fotosFehlen.length > 0
-      ? t('baustelle.abschluss.fotosFehlen', {
-          liste: fotosFehlen.map((p) => (sprache === 'fr' ? p.fr : p.de)).join(', '),
-        })
-      : (r.art === 'service' || r.art === 'wartung') && !verrechnung
-        ? t('baustelle.abschluss.verrechnungFehlt')
-        : ohne
-          ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
-          : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
+  const fehlt =
+    !r.arbeiten?.trim() && !schritteHeute
+      ? t('baustelle.abschluss.arbeitenFehlen')
+      : fotosFehlen.length > 0
+        ? t('baustelle.abschluss.fotosFehlen', {
+            liste: fotosFehlen.map((p) => (sprache === 'fr' ? p.fr : p.de)).join(', '),
+          })
+        : (r.art === 'service' || r.art === 'wartung') && !verrechnung
+          ? t('baustelle.abschluss.verrechnungFehlt')
+          : !brauchtUnterschrift
+            ? false
+            : ohne
+              ? !grund.trim() && t('baustelle.abschluss.grundFehlt')
+              : (!bild || !name.trim()) && t('baustelle.abschluss.unterschriftFehlt')
 
   async function abschliessen() {
     setLaeuft(true)
     try {
       await rapportAbschliessen(r.id, {
-        ...(ohne ? { ohne_unterschrift: grund.trim() } : bild ? { unterschrift: { bild, name: name.trim() } } : {}),
+        ...(!brauchtUnterschrift
+          ? {}
+          : ohne
+            ? { ohne_unterschrift: grund.trim() }
+            : bild
+              ? { unterschrift: { bild, name: name.trim() } }
+              : {}),
+        ...(fertig ? { vorbehalte: vorbehalte.filter((v) => v.trim()).map((text) => ({ text: text.trim() })) } : {}),
         verrechnung,
         ...(r.art === 'montage' ? { montage_fertig: fertig } : {}),
         ...(r.art === 'service' ? { fall_erledigt: erledigt } : {}),
@@ -116,7 +144,35 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
           {(r.art === 'service' || r.art === 'wartung') && (
             <VerrechnungWahl wert={verrechnung} onWahl={setVerrechnung} />
           )}
-          {ohne ? (
+          {r.art === 'montage' && fertig && (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm font-medium">{t('baustelle.abschluss.vorbehalte')}</p>
+              {vorbehalte.map((v, i) => (
+                <Input
+                  key={i}
+                  aria-label={t('baustelle.abschluss.vorbehalt', { nr: i + 1 })}
+                  value={v}
+                  onChange={(e) => {
+                    setVorbehalte(vorbehalte.map((x, j) => (j === i ? e.target.value : x)))
+                  }}
+                />
+              ))}
+              <Button
+                variant="secondary"
+                className="self-start"
+                onClick={() => {
+                  setVorbehalte([...vorbehalte, ''])
+                }}
+              >
+                <Plus />
+                {t('baustelle.abschluss.vorbehaltDazu')}
+              </Button>
+              <p className="text-muted-foreground text-xs">{t('baustelle.abschluss.vorbehalteHinweis')}</p>
+            </div>
+          )}
+          {!brauchtUnterschrift ? (
+            <p className="text-muted-foreground text-sm">{t('baustelle.abschluss.ohneNoetig')}</p>
+          ) : ohne ? (
             <Feld id="ab-grund" label={t('baustelle.abschluss.grund')} pflicht>
               <Input
                 id="ab-grund"
@@ -143,15 +199,17 @@ export function AbschlussDialog({ rapport: r, onSchliessen }: { rapport: Rapport
               <p className="text-muted-foreground text-xs">{t('baustelle.abschluss.bestaetigt')}</p>
             </>
           )}
-          <Button
-            variant="link"
-            className="self-start"
-            onClick={() => {
-              setOhne(!ohne)
-            }}
-          >
-            {t(ohne ? 'baustelle.abschluss.mitUnterschrift' : 'baustelle.abschluss.ohneUnterschrift')}
-          </Button>
+          {brauchtUnterschrift && (
+            <Button
+              variant="link"
+              className="self-start"
+              onClick={() => {
+                setOhne(!ohne)
+              }}
+            >
+              {t(ohne ? 'baustelle.abschluss.mitUnterschrift' : 'baustelle.abschluss.ohneUnterschrift')}
+            </Button>
+          )}
           {fehlt && <p className="text-warn text-sm">{fehlt}</p>}
         </div>
       </DialogInhalt>
