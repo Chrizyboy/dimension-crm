@@ -26,12 +26,12 @@ export const Route = createFileRoute('/automations')({
     return (
       <Suspense>
         <Automationen
-          ansicht={ansicht ?? 'liste'}
+          ansicht={ansicht ?? 'uebersicht'}
           automationId={automation ?? null}
           onAdresse={(a) => {
             void navigate({
               search: {
-                ...(a.ansicht === 'liste' ? {} : { ansicht: a.ansicht }),
+                ...(a.ansicht === 'uebersicht' ? {} : { ansicht: a.ansicht }),
                 ...(a.automation ? { automation: a.automation } : {}),
               },
             })

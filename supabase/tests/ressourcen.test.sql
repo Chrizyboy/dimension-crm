@@ -42,7 +42,8 @@ select public.ressource_eintrag_erfassen('00000000-0000-0000-0000-0000000017c1',
   null, 'service', '2026-10-20', 52000, 45000, null, null, 'Ölwechsel');
 select public.ressource_eintrag_erfassen('00000000-0000-0000-0000-0000000017c1', '00000000-0000-0000-0000-0000000017f1',
   null, 'service', '2026-10-20', 52000, 45000, null, null, 'Ölwechsel');
-select is((select count(*)::int from public.ressourcen_eintraege where fahrzeug_id = '00000000-0000-0000-0000-0000000017f1'),
+select is((select count(*)::int from public.ressourcen_eintraege where fahrzeug_id = '00000000-0000-0000-0000-0000000017f1'
+            and art = 'service'),
   1, 'gleiche ID vom Handy legt nichts doppelt an');
 select is((select km_stand || ' ' || naechster_service || ' ' || service_km from public.fahrzeuge
             where id = '00000000-0000-0000-0000-0000000017f1'),

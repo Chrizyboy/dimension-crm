@@ -11,7 +11,7 @@ function db() {
 }
 
 const SPALTEN =
-  'id, vorlage, name_de, name_fr, beschreibung_de, beschreibung_fr, aktiv, aktiv_seit, modus, ausloeser, bedingungen, aktionen, reihenfolge'
+  'id, vorlage, name_de, name_fr, beschreibung_de, beschreibung_fr, aktiv, aktiv_seit, modus, ausloeser, bedingungen, aktionen, reihenfolge, versandfenster, kontakt_pause_tage'
 
 /** Alle Automationen (ohne Papierkorb) in der eingestellten Reihenfolge. */
 export async function ladeAutomationen(): Promise<Automation[]> {
@@ -25,11 +25,19 @@ export async function ladeAutomationen(): Promise<Automation[]> {
   return data as unknown as Automation[]
 }
 
-/** Bausteine für den Editor. */
+/** Bausteine für den Editor: der Katalog und die Auslöser/Aktionen des Ausbaus (Entscheid 0044). */
 export async function ladeKatalog(): Promise<Katalog> {
-  const { data, error } = await db().rpc('automation_katalog')
-  if (error) throw error
-  return data as unknown as Katalog
+  const [grund, ausbau] = await Promise.all([db().rpc('automation_katalog'), db().rpc('automation_katalog_ausbau')])
+  if (grund.error) throw grund.error
+  const k = grund.data as unknown as Katalog
+  const z = (ausbau.error ? {} : ausbau.data) as Partial<Pick<Katalog, 'ereignisse' | 'aktionen'>>
+  const neu = <T extends object>(alt: T[], dazu: T[] | undefined, schluessel: keyof T) =>
+    alt.concat((dazu ?? []).filter((x) => !alt.some((a) => a[schluessel] === x[schluessel])))
+  return {
+    ...k,
+    ereignisse: neu(k.ereignisse, z.ereignisse, 'schluessel'),
+    aktionen: neu(k.aktionen, z.aktionen, 'art'),
+  }
 }
 
 /** Neu anlegen (ohne id) oder ändern. Gibt die gespeicherte Automation zurück. */
@@ -67,7 +75,7 @@ export async function ladeLaeufe(filter: LaufFilter, anzahl = 300): Promise<Lauf
   let q = db()
     .from('automation_laeufe')
     .select(
-      'id, automation_id, ereignis, tabelle, bezug_id, titel, stand, schritt, weiter_am, protokoll, fehler, erstellt_am, beendet_am',
+      'id, automation_id, ereignis, tabelle, bezug_id, titel, stand, schritt, weiter_am, protokoll, fehler, erstellt_am, beendet_am, gestoppt_grund',
     )
     .order('erstellt_am', { ascending: false })
     .limit(anzahl)
@@ -92,11 +100,15 @@ export async function ladeEinstellungen(): Promise<AutomationsEinstellungen> {
   return data.wert as unknown as AutomationsEinstellungen
 }
 
-/** Einstellungen speichern (nur Administration, prüft RLS). */
-export async function speichereEinstellungen(e: AutomationsEinstellungen): Promise<void> {
+/**
+ * Einstellungen speichern (nur Administration, prüft RLS). Nur die übergebenen Teile ändern sich: zwei Formulare
+ * (Auslöser, Schutzregeln) teilen sich den Eintrag, keins soll die Änderung des anderen überschreiben.
+ */
+export async function speichereEinstellungen(e: Partial<AutomationsEinstellungen>): Promise<void> {
+  const jetzt = await ladeEinstellungen()
   const { error } = await db()
     .from('einstellungen')
-    .update({ wert: e as never })
+    .update({ wert: { ...jetzt, ...e } as never })
     .eq('schluessel', 'automationen')
   if (error) throw error
 }
