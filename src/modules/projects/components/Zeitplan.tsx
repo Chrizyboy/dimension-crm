@@ -258,6 +258,9 @@ function Legende() {
       <span className="flex items-center gap-1.5">
         <span className="ring-bad inline-block h-3 w-5 rounded-sm ring-2" /> {t('projekte.zeitplan.konflikt')}
       </span>
+      <span className="flex items-center gap-1.5">
+        <span className="ring-warn inline-block h-3 w-5 rounded-sm ring-2" /> {t('projekte.zeitplan.ausweisLegende')}
+      </span>
       <span>{t('projekte.zeitplan.hilfe')}</span>
     </p>
   )

@@ -30,6 +30,8 @@ export interface PlanBalken {
   service?: ServiceTermin
   /** Personen mit Konflikt: abwesend oder am selben Tag auf einer anderen Baustelle. */
   konflikt: Konflikt[]
+  /** Fehlende Pflicht-Ausweise als fertige Sätze (Warnung, nur bei Einsätzen). */
+  ausweis?: string[]
   /** Spur innerhalb der Zeile, wenn sich Balken überlappen (0 = oben). */
   spur: number
 }
@@ -96,6 +98,8 @@ interface Eingabe {
   subunternehmer: Subunternehmer[]
   /** Service-Termine (Team-Sicht und Handy), optional. */
   service?: ServiceTermin[]
+  /** Fehlende Pflicht-Ausweise eines Einsatzes als Sätze, optional. */
+  ausweisFehlt?: (e: Einsatz) => string[]
 }
 
 /** Uhrzeit eines Termins in Schweizer Zeit («08:30»). */
@@ -136,7 +140,7 @@ export function serviceBalken(
   }
 }
 
-function helfer({ projekte, einsaetze, abwesend, personen, subunternehmer }: Eingabe) {
+function helfer({ projekte, einsaetze, abwesend, personen, subunternehmer, ausweisFehlt }: Eingabe) {
   const kuerzel = (id: string) => personen.find((p) => p.id === id)?.kuerzel ?? '?'
   const sub = (id: string | null) => subunternehmer.find((s) => s.id === id)?.name ?? null
   const projekt = (id: string) => projekte.find((p) => p.id === id) ?? null
@@ -151,6 +155,7 @@ function helfer({ projekte, einsaetze, abwesend, personen, subunternehmer }: Ein
     projekt: projekt(e.projekt_id),
     einsatz: e,
     konflikt: einsatzKonflikte(e, einsaetze, abwesend).map((k) => ({ kuerzel: kuerzel(k.person), grund: k.grund })),
+    ...(ausweisFehlt ? { ausweis: ausweisFehlt(e) } : {}),
     spur: 0,
   })
   return { kuerzel, sub, projekt, team, balken }

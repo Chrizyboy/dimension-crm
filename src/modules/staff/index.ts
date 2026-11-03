@@ -23,5 +23,8 @@ export const meta: ModulMeta = {
 /** Die Seite: Team, Ausweise, Kurse, Anforderungen und Person mit Ausweisen, Kursen, Ausrüstung und Akte. */
 export const Team = lazy(() => import('./components/Team'))
 
+/** Karte für «Mein Tag»: Geburtstage und Dienstjubiläen der nächsten Tage (ohne Jahrgang, abschaltbar). */
+export const TeamHeute = lazy(() => import('./components/HeuteKarte'))
+
 export type * from './types'
 export { REITER } from './types'
