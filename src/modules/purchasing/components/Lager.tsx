@@ -1,4 +1,4 @@
-import { ListPlus, Plus, Warehouse } from 'lucide-react'
+import { ClipboardCheck, ListPlus, Plus, Warehouse } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
@@ -13,6 +13,7 @@ import { useLager, useLagerorte } from '../hooks/useEinkauf'
 import { formatMenge } from '../lib/anzeige'
 import { nachbestellen } from '../services/lager'
 import type { LagerZeile } from '../types'
+import { InventurDialog } from './InventurDialog'
 import { LagerBuchenDialog } from './LagerBuchenDialog'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
@@ -21,8 +22,9 @@ type Filter = (typeof FILTER)[number]
 const spalte = spaltenHelfer<LagerZeile>()
 
 /**
- * Lager Bulle: Bestand, für Projekte reserviert, frei, unterwegs (bestellt) und Mindestmenge.
- * Ein Klick öffnet die Buchung; «Nachbestellen» legt Entwürfe für alles unter der Mindestmenge an.
+ * Lager Bulle: Lagerplatz, Bestand, für Projekte reserviert, frei, unterwegs (bestellt) und Mindestmenge.
+ * Ein Klick öffnet die Buchung; «Nachbestellen» legt Entwürfe für alles unter der Mindestmenge an, «Inventur»
+ * zählt alles in einem Durchgang.
  */
 export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) {
   const { t } = useTranslation()
@@ -32,6 +34,7 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
   const [filter, setFilter] = useState<Filter>('alle')
   const [suche, setSuche] = useState('')
   const [buchen, setBuchen] = useState<LagerZeile | 'neu' | null>(null)
+  const [inventur, setInventur] = useState(false)
   const unter = (lager.data ?? []).filter((z) => z.unter_mindest)
 
   const spalten = useMemo(
@@ -45,6 +48,11 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
               <span className="text-muted-foreground truncate text-xs">{c.row.original.artikelnummer}</span>
             </span>
           ),
+        }),
+        spalte.accessor((z) => z.lagerplatz ?? '', {
+          id: 'lagerplatz',
+          header: t('einkauf.lager.platz'),
+          cell: (c) => <span className="font-mono text-xs">{c.getValue() || '–'}</span>,
         }),
         spalte.accessor('menge', {
           header: t('einkauf.lager.bestand'),
@@ -87,7 +95,7 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
     return (lager.data ?? []).filter(
       (z) =>
         (filter === 'alle' || (filter === 'unter' ? z.unter_mindest : z.reserviert > 0)) &&
-        (!s || `${z.artikel} ${z.artikelnummer ?? ''}`.toLowerCase().includes(s)),
+        (!s || `${z.artikel} ${z.artikelnummer ?? ''} ${z.lagerplatz ?? ''}`.toLowerCase().includes(s)),
     )
   }, [lager.data, filter, suche])
 
@@ -120,6 +128,16 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
             <Button variant="secondary" laedt={laeuft} disabled={unter.length === 0} onClick={auffuellen}>
               <ListPlus />
               {t('einkauf.lager.nachbestellen')}
+            </Button>
+            <Button
+              variant="secondary"
+              disabled={!lager.data?.length}
+              onClick={() => {
+                setInventur(true)
+              }}
+            >
+              <ClipboardCheck />
+              {t('einkauf.inventur.knopf')}
             </Button>
             <Button
               onClick={() => {
@@ -157,6 +175,15 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
           onOeffnen={setBuchen}
           beschriftung={lagerort?.name ?? t('einkauf.reiter.lager')}
           leer={<Leerzustand icon={Warehouse} titel={t('einkauf.lager.leer')} text={t('einkauf.lager.leerText')} />}
+        />
+      )}
+      {inventur && lagerort && (
+        <InventurDialog
+          lagerortId={lagerort.id}
+          zeilen={lager.data ?? []}
+          onSchliessen={() => {
+            setInventur(false)
+          }}
         />
       )}
       {buchen && lagerort && (

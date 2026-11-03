@@ -9,7 +9,10 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'settings',
   titel: { de: 'Einstellungen', fr: 'Paramètres' },
-  untertitel: { de: 'Benutzer, Rollen, Vorlagen und Verbindungen', fr: 'Utilisateurs, rôles, modèles et connexions' },
+  untertitel: {
+    de: 'Personen, Firma, Listen, Abläufe und Verbindungen an einem Ort',
+    fr: 'Personnes, entreprise, listes, processus et connexions au même endroit',
+  },
   pfad: '/settings',
   icon: 'settings',
   gruppe: 'verwaltung',
@@ -22,6 +25,10 @@ export const meta: ModulMeta = {
  * nicht den Code jeder Seite in den Start der App.
  */
 export const MeinKonto = lazy(() => import('./components/MeinKonto'))
-export const Benutzerverwaltung = lazy(() => import('./components/Benutzerverwaltung'))
+export const Einstellungen = lazy(() => import('./components/Einstellungen'))
+
+/** Bereiche dieses Moduls für die Einstellungs-Seite (die Route ergänzt die der anderen Module). */
+export { eigeneBereiche } from './bereiche'
+export { ALTE_REITER } from './lib/bereiche'
 
 export type * from './types'

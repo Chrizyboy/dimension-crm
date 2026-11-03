@@ -75,7 +75,7 @@ test('Mein Konto und Verbindungen ohne Verstösse', async ({ page }) => {
   await page.goto('/#/konto')
   await expect(page.getByText('Microsoft 365', { exact: true })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  await page.goto('/#/settings?reiter=verbindungen')
+  await page.goto('/#/settings?bereich=verbindungen')
   await expect(page.getByText('Wer ist mit Microsoft verbunden?')).toBeVisible()
   await expect(page.getByLabel('SMS-Absender (höchstens 11 Zeichen)')).toHaveValue('DimSolaire')
   expect(await verstoesse(page)).toEqual([])

@@ -102,6 +102,7 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 ## Nouveautés {#neu}
 
 - 03.11.2026: Heures de tous seulement pour la direction et la comptabilité, les supérieur·e·s direct·e·s voient leur équipe.
+- 03.11.2026: Heures : choisir plusieurs personnes à la fois ; l'export des salaires ne contient que celles-ci.
 - 03.11.2026: Les cas de service d’hier restent dans le planning («En retard»). Temps de travail et trajet dans **Ma journée** aussi sans rapport ; les modifications partent tout de suite.
 - 03.11.2026: Inspections des contrats d’entretien dans «Ma journée», points de contrôle selon la formule avec les valeurs de la dernière fois.
 - 02.11.2026 : contrôle de sécurité et temps d’équipe, étapes de travail, photos obligatoires du chantier, scanner les numéros de série, dossier, signaler un problème, réception avec réserves ; chantiers du jour, dossier chantier, signalements, feuille hebdomadaire, visa et analyse.

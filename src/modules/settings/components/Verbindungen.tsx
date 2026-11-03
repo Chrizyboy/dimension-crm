@@ -10,7 +10,6 @@ import { fehlerText, meldeIntegrationsFehler, useVerbindungsStatus, verbindungTe
 import { melde } from '@/services/meldungen'
 import { useVerbindungen, useVerbindungenNeuLaden } from '../hooks/useVerbindungen'
 import type { Integration } from '../types'
-import { AblageEinstellungen } from './AblageEinstellungen'
 import { VerbindungenEinstellungen } from './VerbindungenEinstellungen'
 import { VerbindungenProtokoll } from './VerbindungenProtokoll'
 
@@ -158,7 +157,6 @@ export function Verbindungen() {
       </Karte>
 
       {dienste.data && <VerbindungenEinstellungen dienste={dienste.data} onGespeichert={() => void neuLaden()} />}
-      <AblageEinstellungen />
       <VerbindungenProtokoll zeitplan={zeitplan.data ?? []} protokoll={protokoll.data ?? []} />
     </div>
   )

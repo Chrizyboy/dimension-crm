@@ -1,4 +1,4 @@
-# 0053 – Rollen: Geschäftsleitung und Administration als Zusätze
+# 0054 – Rollen: Geschäftsleitung und Administration als Zusätze
 
 **Datum:** 03.11.2026 · **Entschieden von:** Chris (Abhak-Liste vom 02.11.2026)
 

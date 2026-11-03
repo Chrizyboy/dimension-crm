@@ -1,8 +1,8 @@
 import { ChevronLeft, ChevronRight, Download, ListChecks, Plus, Timer } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { MehrfachFilter } from '@/components/shared/MehrfachFilter'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
-import { Auswahl } from '@/components/ui/auswahl'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
@@ -20,8 +20,6 @@ import { ladeZeiten, zeitenExportieren, zeitenPruefen } from '../services/bauste
 import type { Zeit } from '../types'
 import { Wochenblatt } from './Wochenblatt'
 import { ZeitDialog } from './ZeitDialog'
-
-const ALLE = 'alle'
 
 function herunterladen(text: string, name: string) {
   const a = document.createElement('a')
@@ -45,7 +43,10 @@ export function Zeiten() {
   const darfPruefen = hatRecht(ich, 'personal') || hatRecht(ich, 'finanzen')
   const darfExport = hatRecht(ich, 'finanzen')
   const [woche, setWoche] = useState(() => wochenStart(heute()))
-  const [person, setPerson] = useState<string>(darfPruefen ? ALLE : (ich?.id ?? ALLE))
+  // Gewählte Personen (leer = alle). Bei genau einer fragt die Datenbank nur diese ab, sonst filtert die App.
+  const [wahl, setWahl] = useState<string[]>(darfPruefen || !ich ? [] : [ich.id])
+  const einePerson = wahl.length === 1 ? (wahl[0] ?? null) : null
+  const mehrere = einePerson === null
   const [gewaehlt, setGewaehlt] = useState<Set<string>>(new Set())
   const [dialog, setDialog] = useState<Zeit | 'neu' | null>(null)
   const personen = usePersonen()
@@ -54,9 +55,12 @@ export function Zeiten() {
     (p) => darfPruefen || p.id === ich?.id || (team.data ?? []).includes(p.id),
   )
   const bis = plusTage(woche, 6)
-  const zeiten = useZeiten(woche, bis, person === ALLE ? null : person)
+  const zeiten = useZeiten(woche, bis, einePerson)
   const { laeuft, aus } = useAktion()
-  const liste = useMemo(() => zeiten.data ?? [], [zeiten.data])
+  const liste = useMemo(
+    () => (zeiten.data ?? []).filter((z) => wahl.length === 0 || wahl.includes(z.person_id)),
+    [zeiten.data, wahl],
+  )
   const summen = useMemo(() => summeJePerson(liste), [liste])
   const pruefbar = liste.filter((z) => z.stopp && !z.freigegeben_am && !z.exportiert_am)
   const ungeprueft = liste.filter((z) => !z.freigegeben_am).length
@@ -72,10 +76,10 @@ export function Zeiten() {
     await aus(async () => {
       const neu = liste.filter((z) => z.freigegeben_am && !z.exportiert_am && z.stopp)
       if (neu.length) await zeitenExportieren(neu.map((z) => z.id))
-      const frisch = await ladeZeiten(woche, bis, person === ALLE ? null : person)
+      const frisch = await ladeZeiten(woche, bis, einePerson)
       herunterladen(
         lohnCsv(
-          frisch.filter((z) => z.exportiert_am),
+          frisch.filter((z) => z.exportiert_am && (wahl.length === 0 || wahl.includes(z.person_id))),
           sprache,
         ),
         `lohn-${woche}-${bis}.csv`,
@@ -124,15 +128,16 @@ export function Zeiten() {
             <ChevronRight />
           </Button>
           {(darfPruefen || (team.data ?? []).length > 0) && (
-            <Auswahl
-              aria-label={t('baustelle.zeiten.person')}
+            <MehrfachFilter
+              beschriftung={t('baustelle.zeiten.person')}
+              alleText={t('baustelle.zeiten.allePersonen')}
               className="w-full sm:ml-2 sm:w-48"
-              value={person}
-              onValueChange={setPerson}
-              optionen={[
-                { wert: ALLE, text: t('baustelle.zeiten.allePersonen') },
-                ...sichtbar.map((p) => ({ wert: p.id, text: p.name })),
-              ]}
+              gewaehlt={wahl}
+              onChange={(w) => {
+                setWahl(w)
+                setGewaehlt(new Set())
+              }}
+              optionen={sichtbar.map((p) => ({ wert: p.id, text: p.name }))}
             />
           )}
         </div>
@@ -200,9 +205,7 @@ export function Zeiten() {
                   </Kopfzelle>
                 )}
                 <Kopfzelle>{t('baustelle.spalte.datum')}</Kopfzelle>
-                {person === ALLE && (
-                  <Kopfzelle className="hidden md:table-cell">{t('baustelle.spalte.person')}</Kopfzelle>
-                )}
+                {mehrere && <Kopfzelle className="hidden md:table-cell">{t('baustelle.spalte.person')}</Kopfzelle>}
                 <Kopfzelle>{t('baustelle.zeiten.vonBis')}</Kopfzelle>
                 <Kopfzelle className="hidden text-right md:table-cell">{t('baustelle.zeiten.pause')}</Kopfzelle>
                 <Kopfzelle className="text-right">{t('baustelle.spalte.zeit')}</Kopfzelle>
@@ -239,13 +242,13 @@ export function Zeiten() {
                   <Zelle className="zahlen whitespace-nowrap">
                     {formatDatum(z.tag)}
                     {/* Am Handy steht die Person unter dem Datum. */}
-                    {person === ALLE && (
+                    {mehrere && (
                       <span className="text-muted-foreground block text-xs whitespace-normal md:hidden">
                         {z.person}
                       </span>
                     )}
                   </Zelle>
-                  {person === ALLE && <Zelle className="hidden md:table-cell">{z.person}</Zelle>}
+                  {mehrere && <Zelle className="hidden md:table-cell">{z.person}</Zelle>}
                   <Zelle className="zahlen whitespace-nowrap">
                     {zuerich(z.start).zeit} – {z.stopp ? zuerich(z.stopp).zeit : '…'}
                   </Zelle>

@@ -28,3 +28,6 @@ export const VisumHeute = lazy(() => import('./components/VisumKarte'))
 
 export { REITER } from './types'
 export type * from './types'
+
+/** Bereiche für Einstellungen (zentral). */
+export { einstellungen } from './einstellungen'

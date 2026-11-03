@@ -16,6 +16,7 @@ import { formatChf } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
+import { useSpaltenWahl } from '../hooks/useSpaltenWahl'
 import { useAussendienst, VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { erlaubteZiele, standBedarf, summe } from '../lib/geschaeft'
@@ -89,7 +90,9 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
   const [ziehe, setZiehe] = useState<Geschaeft | null>(null)
   const [wechsel, setWechsel] = useState<{ g: Geschaeft; ziel: string } | null>(null)
   const sensoren = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
-  const spalten = useMemo(() => verteile(geschaefte, abgeschlossen), [geschaefte, abgeschlossen])
+  // Welche Schritte man sieht, wählt «Spalten» in der Filterleiste (SpaltenWahl); «Aus» kommt mit dem Schalter.
+  const [sichtbar] = useSpaltenWahl()
+  const spalten = useMemo(() => verteile(geschaefte, abgeschlossen, sichtbar), [geschaefte, abgeschlossen, sichtbar])
   const kuerzel = useMemo(
     () => new Map((personen.data ?? []).map((p) => [p.id, p.kuerzel.slice(0, 3)])),
     [personen.data],

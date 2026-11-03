@@ -111,10 +111,11 @@ La carte vient de swisstopo. Si elle est bloquée ou hors ligne, elle reste gris
 
 ### Comment enregistrer mes filtres ?
 
-**Vues enregistrées**, **Enregistrer la vue actuelle**. Avec **Visible pour toute l’équipe**, tout le monde la voit.
+Le CRM mémorise tout seul personne, source, région et colonnes. Pour plusieurs vues fixes : **Vues enregistrées**, **Enregistrer la vue actuelle**. Avec **Visible pour toute l’équipe**, tout le monde la voit.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Personne, source et région avec des cases à cocher (plusieurs, **seul**, « Tous sauf … ») ; le bouton **Colonnes** affiche ou masque les étapes du pipeline. Le choix est mémorisé.
 - 03.11.2026: « Envoyer le lien de rendez-vous » : les clients réservent eux-mêmes la visite sur dimension-solaire.ch.
 - 03.11.2026: Planification dans un onglet (calendrier, tournée du jour, tournée) ; visite avec check-list, appareil photo et « Terminer · Commander l’offre ».
 - 02.11.2026: Vue de départ « À faire » avec chrono de 15 minutes, fiche du lead en pleine page, résultat d’appel avec rappel et brouillon de SMS, pipeline en six étapes, pilotage pour la direction, demandes du site web en direct.

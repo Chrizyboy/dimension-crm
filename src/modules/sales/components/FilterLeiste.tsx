@@ -1,9 +1,9 @@
 import { X } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 import { Filterchips } from '@/components/shared/Filterchips'
-import { Auswahl } from '@/components/ui/auswahl'
+import { MehrfachFilter } from '@/components/shared/MehrfachFilter'
 import { Button } from '@/components/ui/button'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useTaste } from '@/hooks/useTaste'
@@ -15,15 +15,18 @@ interface FilterLeisteProps {
   onChange: (f: VerkaufFilter) => void
   /** Anzahl Treffer rechts, z. B. «42 Geschäfte». */
   anzahl?: string
+  /** Weiterer Knopf vor der Anzahl, z. B. «Spalten» in der Pipeline. */
+  zusatz?: ReactNode
 }
 
 const ALLE = '_alle'
 
 /**
  * Filter über Pipeline, Liste und Regionen (V233: Suche, Region Alle/Muri/Bulle, Person, Quelle, Tour).
- * Leer heisst «alle»; «Zurücksetzen» erscheint erst, wenn etwas gefiltert ist.
+ * Person, Quelle und Region mit Häkchen (mehrere oder «alle ausser»). Leer heisst «alle»;
+ * «Zurücksetzen» erscheint erst, wenn etwas gefiltert ist.
  */
-export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
+export function FilterLeiste({ filter, onChange, anzahl, zusatz }: FilterLeisteProps) {
   const { t } = useTranslation()
   const personen = useAussendienst()
   const regionen = useRegionen()
@@ -32,8 +35,8 @@ export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
   useTaste('/', () => suchfeld.current?.focus(), true, t('kuerzel.suche'))
   const gefiltert = JSON.stringify(filter) !== JSON.stringify(LEERER_FILTER)
   const eins = (liste: string[]) => liste[0] ?? ALLE
-  const setze = (feld: keyof Omit<VerkaufFilter, 'suche'>) => (w: string) => {
-    onChange({ ...filter, [feld]: w === ALLE ? [] : [w] })
+  const setze = (feld: keyof Omit<VerkaufFilter, 'suche'>) => (w: string[]) => {
+    onChange({ ...filter, [feld]: w })
   }
 
   return (
@@ -57,39 +60,33 @@ export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
         ]}
         gewaehlt={[eins(filter.standorte)]}
         onChange={(w) => {
-          setze('standorte')(w[0] ?? ALLE)
+          setze('standorte')(w[0] === ALLE || !w[0] ? [] : w)
         }}
       />
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:flex">
-        <Auswahl
-          aria-label={t('verkauf.person')}
+        <MehrfachFilter
+          beschriftung={t('verkauf.person')}
+          alleText={t('verkauf.allePersonen')}
           className="lg:w-40"
-          value={eins(filter.personen)}
-          onValueChange={setze('personen')}
-          optionen={[
-            { wert: ALLE, text: t('verkauf.allePersonen') },
-            ...(personen.data ?? []).map((p) => ({ wert: p.id, text: p.vorname })),
-          ]}
+          gewaehlt={filter.personen}
+          onChange={setze('personen')}
+          optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.vorname }))}
         />
-        <Auswahl
-          aria-label={t('verkauf.quelle')}
+        <MehrfachFilter
+          beschriftung={t('verkauf.quelle')}
+          alleText={t('verkauf.alleQuellen')}
           className="lg:w-40"
-          value={eins(filter.quellen)}
-          onValueChange={setze('quellen')}
-          optionen={[
-            { wert: ALLE, text: t('verkauf.alleQuellen') },
-            ...quellen.werte.map((q) => ({ wert: q.schluessel, text: quellen.text(q.schluessel) })),
-          ]}
+          gewaehlt={filter.quellen}
+          onChange={setze('quellen')}
+          optionen={quellen.werte.map((q) => ({ wert: q.schluessel, text: quellen.text(q.schluessel) }))}
         />
-        <Auswahl
-          aria-label={t('verkauf.region')}
+        <MehrfachFilter
+          beschriftung={t('verkauf.region')}
+          alleText={t('verkauf.alleRegionen')}
           className="lg:w-48"
-          value={eins(filter.regionen)}
-          onValueChange={setze('regionen')}
-          optionen={[
-            { wert: ALLE, text: t('verkauf.alleRegionen') },
-            ...(regionen.data ?? []).map((r) => ({ wert: r.id, text: `${r.nummer ?? ''} ${r.name}`.trim() })),
-          ]}
+          gewaehlt={filter.regionen}
+          onChange={setze('regionen')}
+          optionen={(regionen.data ?? []).map((r) => ({ wert: r.id, text: `${r.nummer ?? ''} ${r.name}`.trim() }))}
         />
       </div>
       {gefiltert && (
@@ -104,6 +101,7 @@ export function FilterLeiste({ filter, onChange, anzahl }: FilterLeisteProps) {
           {t('verkauf.zuruecksetzen')}
         </Button>
       )}
+      {zusatz}
       {anzahl && (
         <p className="text-muted-foreground text-sm lg:ml-auto" aria-live="polite">
           {anzahl}

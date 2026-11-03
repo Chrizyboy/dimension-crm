@@ -1,4 +1,3 @@
-import { Paperclip } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
@@ -10,12 +9,12 @@ import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { formatDatumZeit } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
-import { useAktion, useAnhaenge } from '../hooks/useHandbuch'
-import { meldungNummer } from '../lib/handbuch'
+import { useAktion } from '../hooks/useHandbuch'
+import { istOffen, meldungNummer } from '../lib/handbuch'
 import { beantworten } from '../services/meldungen'
 import { MELDUNG_STATUS, type Meldung, type MeldungStatus } from '../types'
 import { MeldungEntscheid } from './MeldungEntscheid'
-import { oeffneDatei } from './Oeffnen'
+import { MeldungAnhaenge } from './MeldungAnhaenge'
 
 const TON: Record<MeldungStatus, 'info' | 'warnung' | 'ok' | 'marke' | 'neutral'> = {
   neu: 'info',
@@ -26,7 +25,7 @@ const TON: Record<MeldungStatus, 'info' | 'warnung' | 'ok' | 'marke' | 'neutral'
   abgelehnt: 'neutral',
 }
 
-/** Eine Meldung mit Text, Anhängen und Antwort; die Administration setzt Status und antwortet direkt hier. */
+/** Eine Meldung mit Text, Bildschirmfotos und Antwort; die Administration setzt Status und antwortet direkt hier. */
 export function MeldungKarte({
   meldung: m,
   admin,
@@ -44,7 +43,6 @@ export function MeldungKarte({
   const { laeuft, aus } = useAktion()
   const [status, setStatus] = useState<MeldungStatus>(m.status)
   const [antwort, setAntwort] = useState(m.antwort ?? '')
-  const anhaenge = useAnhaenge(m.id)
   const ref = useRef<HTMLLIElement>(null)
   useEffect(() => {
     if (hervorheben) ref.current?.scrollIntoView({ block: 'center' })
@@ -78,18 +76,7 @@ export function MeldungKarte({
             <span className="font-medium">{t('handbuch.meldungen.erwartetKurz')}</span> {m.erwartet}
           </p>
         )}
-        {(anhaenge.data?.length ?? 0) > 0 && (
-          <ul className="flex flex-wrap gap-2">
-            {anhaenge.data?.map((d) => (
-              <li key={d.id}>
-                <Button size="sm" variant="secondary" onClick={() => void oeffneDatei(d)}>
-                  <Paperclip />
-                  {d.name}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
+        <MeldungAnhaenge meldungId={m.id} nachreichen={istOffen(m)} />
         {m.antwort && !admin && (
           <div className="bg-muted rounded-md p-3 text-sm">
             <p className="font-medium">

@@ -63,7 +63,7 @@ export async function ladeZiele(): Promise<{
   return { personen: p.data, ziele: wert.ziele_personen ?? {} }
 }
 
-/** Wochenziele einer Person speichern (`kennzahlen_ziele_setzen`, nur Administration oder Recht «finanzen»). */
+/** Wochenziele einer Person speichern (`kennzahlen_ziele_setzen`, nur Administration). */
 export async function zieleSpeichern(person: string, ziele: Partial<Record<ZielSchluessel, number>>): Promise<void> {
   const { error } = await db().rpc('kennzahlen_ziele_setzen', { p_person: person, p_ziele: ziele })
   if (error) throw error

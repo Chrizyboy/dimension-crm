@@ -6,7 +6,7 @@
 -- Ausführen: npm run db:test
 begin;
 set local timezone = 'Europe/Zurich';
-select plan(25);
+select plan(26);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000014a1', 'p14-vk@test.local'),
@@ -102,8 +102,15 @@ select ok(exists (select 1 from fakt where schluessel = 'faelle_offen' and id = 
 select is((select count(*)::int from fakt where schluessel = 'quelle_offerte' and quelle = 'test14'), 1, 'Lead-Quelle bis zur Offerte verfolgt');
 
 -- Kosten pro Lead-Quelle
-select lives_ok($$ select public.kennzahlen_quellen_kosten('test14', 5000) $$, 'Kosten pro Lead setzen');
+-- Seit 3.11.2026 ändert nur die Administration Einstellungen (Chris).
+select throws_ok($$ select public.kennzahlen_quellen_kosten('test14', 5000) $$, '42501', 'einstellungen.nur_admin',
+  'Verkauf setzt keine Kosten pro Lead');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000014a2", "role": "authenticated"}', true),
+       set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000014a2', true);
+select lives_ok($$ select public.kennzahlen_quellen_kosten('test14', 5000) $$, 'Administration setzt Kosten pro Lead');
 select throws_ok($$ select public.kennzahlen_quellen_kosten('test14', -1) $$, 'P0001', 'kennzahlen.kosten_ungueltig', 'negative Kosten abgelehnt');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000014a1", "role": "authenticated"}', true),
+       set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000014a1', true);
 
 -- Betrieb: Auftragsbestand; Marge mit dem Recht «marge» (Verkauf hat es)
 create temp table betrieb on commit drop as select public.kennzahlen_betrieb(current_date - 30, current_date) as b;

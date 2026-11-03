@@ -1,4 +1,6 @@
+import { verkleinern } from '@/lib/bild'
 import { supabase } from '@/services/supabase'
+import { VERKLEINERN_AB, istBild } from '../lib/anhaenge'
 import type { HandbuchDatei, HelpdeskStand, Meldung, MeldungStatus, NeueMeldung } from '../types'
 import { dateiAblegen } from './handbuch'
 
@@ -36,8 +38,15 @@ export function umgebung(sprache: string): string {
   return [navigator.userAgent.slice(0, 160), fenster, sprache, window.location.hash.split('?')[0]].join(' · ')
 }
 
-/** Meldung absenden; Bildschirmfotos und Dateien hängen danach an der Meldung. */
-export async function melden(n: NeueMeldung, sprache: string): Promise<{ id: string; nummer: number }> {
+/**
+ * Meldung absenden, danach Bildschirmfotos und Dateien anhängen. Klappt ein Anhang nicht (z. B. Funkloch),
+ * bleibt die Meldung trotzdem gesendet: `fehlend` sagt, wie viele fehlen, damit man sie nachreichen kann,
+ * statt die Meldung ein zweites Mal zu schicken.
+ */
+export async function melden(
+  n: NeueMeldung,
+  sprache: string,
+): Promise<{ id: string; nummer: number; fehlend: number }> {
   const { data, error } = await db().rpc('rueckmeldung_melden', {
     p_titel: n.titel,
     p_text: n.text,
@@ -48,15 +57,37 @@ export async function melden(n: NeueMeldung, sprache: string): Promise<{ id: str
   })
   if (error) throw error
   const r = data as { id: string; nummer: number }
-  for (const datei of n.dateien) {
-    const id = await dateiAblegen(datei, datei.name)
-    const v = await db()
-      .from('dokumente')
-      .update({ bezug_tabelle: 'rueckmeldungen', bezug_id: r.id, ordner: 'meldungen' })
-      .eq('id', id)
-    if (v.error) throw v.error
+  return { ...r, fehlend: await anhaengen(r.id, n.dateien) }
+}
+
+/** Grosse Fotos verkleinern (Handykamera), kleine Bildschirmfotos unverändert lassen, damit Text scharf bleibt. */
+async function vorbereiten(f: File): Promise<{ blob: Blob; name: string }> {
+  if (!istBild(f.type) || f.size <= VERKLEINERN_AB || f.type === 'image/gif') return { blob: f, name: f.name }
+  const blob = await verkleinern(f, 2000, 0.85)
+  if (blob === f) return { blob: f, name: f.name }
+  return { blob, name: f.name.replace(/\.[^.]+$/, '') + '.jpg' }
+}
+
+/**
+ * Bilder und Dateien an eine bestehende Meldung hängen (beim Melden oder nachgereicht). Gibt zurück, wie viele
+ * nicht geklappt haben.
+ */
+export async function anhaengen(meldungId: string, dateien: File[]): Promise<number> {
+  let fehlend = 0
+  for (const datei of dateien) {
+    try {
+      const { blob, name } = await vorbereiten(datei)
+      const id = await dateiAblegen(blob, name)
+      const v = await db()
+        .from('dokumente')
+        .update({ bezug_tabelle: 'rueckmeldungen', bezug_id: meldungId, ordner: 'meldungen' })
+        .eq('id', id)
+      if (v.error) throw v.error
+    } catch {
+      fehlend++
+    }
   }
-  return r
+  return fehlend
 }
 
 /** Status setzen und antworten (nur Administration). */
@@ -84,7 +115,7 @@ export async function helpdeskEinstellen(personen: string[], sms: boolean): Prom
   if (error) throw error
 }
 
-/** Anhänge einer Meldung. */
+/** Anhänge einer Meldung, älteste zuerst (so wie sie angehängt wurden). */
 export async function ladeAnhaenge(meldungId: string): Promise<HandbuchDatei[]> {
   const { data, error } = await db()
     .from('dokumente')
@@ -92,6 +123,29 @@ export async function ladeAnhaenge(meldungId: string): Promise<HandbuchDatei[]> 
     .eq('bezug_tabelle', 'rueckmeldungen')
     .eq('bezug_id', meldungId)
     .is('geloescht_am', null)
+    .order('erstellt_am', { ascending: true })
   if (error) throw error
   return data
+}
+
+/**
+ * Kurz gültige Adressen (10 Minuten) für die Vorschaubilder einer Meldung, in einer Abfrage.
+ * Der Speicher bleibt privat; ein weitergegebener Link verfällt bald.
+ */
+export async function bildAdressen(dateien: HandbuchDatei[]): Promise<Record<string, string>> {
+  const bilder = dateien.filter((d) => istBild(d.mime_typ) && d.speicher_pfad)
+  if (!bilder.length) return {}
+  const { data, error } = await db()
+    .storage.from('dokumente')
+    .createSignedUrls(
+      bilder.map((d) => d.speicher_pfad as string),
+      600,
+    )
+  if (error) throw error
+  const adressen: Record<string, string> = {}
+  for (const d of bilder) {
+    const u = data.find((x) => x.path === d.speicher_pfad)?.signedUrl
+    if (u) adressen[d.id] = u
+  }
+  return adressen
 }

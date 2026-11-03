@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, geschaeftsleitung
 ---
 
@@ -69,4 +69,5 @@ Unter **Social Media** steht beim Post der Fehler. Meist ist die Verbindung abge
 
 ## Neu {#neu}
 
+- 03.11.2026: Vorlagen ändert nur noch die Administration; alle anderen sehen sie zum Lesen und brauchen sie beim Senden.
 - 02.11.2026: Instagram und LinkedIn je mit deutschem und französischem Konto, zwei Facebook-Seiten.

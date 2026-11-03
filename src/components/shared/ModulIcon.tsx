@@ -1,4 +1,5 @@
 import {
+  Activity,
   BookOpen,
   BookUser,
   Building2,
@@ -28,6 +29,17 @@ import {
   Wallet,
   Workflow,
   Wrench,
+  DatabaseBackup,
+  FolderOpen,
+  History,
+  LifeBuoy,
+  List,
+  Map,
+  Plug,
+  Route,
+  ShieldCheck,
+  Trash2,
+  UserRound,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -61,6 +73,18 @@ const ICONS: Record<string, LucideIcon> = {
   wallet: Wallet,
   workflow: Workflow,
   wrench: Wrench,
+  activity: Activity,
+  'database-backup': DatabaseBackup,
+  'folder-open': FolderOpen,
+  history: History,
+  'life-buoy': LifeBuoy,
+  list: List,
+  map: Map,
+  plug: Plug,
+  route: Route,
+  'shield-check': ShieldCheck,
+  'trash-2': Trash2,
+  'user-round': UserRound,
 }
 
 /** Zeigt das Icon eines Moduls; unbekannte Namen werden als Kreis dargestellt. */

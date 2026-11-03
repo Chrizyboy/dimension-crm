@@ -56,6 +56,9 @@ Gemeinsame Bausteine in `src/components/shared/`: `Seitenkopf`, `Knopfleiste`, `
 1. Jede Seite beginnt mit `Seitenkopf`; mehrere Knöpfe dort mit der Hauptaktion zuletzt (am Handy bleibt nur sie offen).
 1. Über jeder Liste die `Werkzeugleiste` mit `Suchfeld` (oben links), Filter darunter. Datum, Betrag, Nummer und
    Status nur über die Zellen aus `Zellen.tsx`, damit nichts umbricht.
+1. Filter: wenige, kurze Werte als `Filterchips` (mehrere anklickbar); längere Listen (Personen, Quellen, Regionen,
+   Spalten) als `MehrfachFilter` mit Häkchen, «nur» und «Alle ausser …», nie als Einzel-`Auswahl`. Was man sich
+   merken soll, mit `useGemerkterFilter(ansicht, start)` (je Person, lokal). Entscheid 0036.
 1. Seitenblätter nur `breite="normal"` oder `"breit"`, Angaben in Akten nur mit `Angabe`.
 1. Jede Liste hat einen Leerzustand und einen Ladezustand (Skelett), jeder Datenzugriff einen Fehlerzustand mit «Nochmal versuchen».
 1. Gefährliche Aktionen (löschen, senden) nutzen `variant="danger"` und einen Bestätigungsdialog.

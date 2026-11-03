@@ -25,7 +25,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 
 1. Ouvrir l’onglet **Nouvelles offres**. Tous les leads au statut « Offre en préparation » y figurent.
 2. Cliquer la ligne et choisir **Traiter**. Les autres voient « En traitement par … ».
-3. Planifier l’installation dans Eturnity et glisser le PDF sous **PDF de l’offre**. Date, montant, kWc et batterie se remplissent.
+3. Planifier l’installation dans Eturnity et glisser le PDF sous **Reprendre les valeurs du PDF**. Date, montant, kWc, batterie et la **liste de matériel** (toutes les positions des coûts détaillés) se remplissent.
 4. S’il manque une information du service externe : **Question** sous **Que manque-t-il ?**.
 5. Terminé : **À valider** au service externe.
 
@@ -77,6 +77,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 - Qui reçoit l’offre est réglé dans Paramètres › Responsabilités.
 - Le dossier SharePoint est créé et déplacé en cas d’accord ou de refus.
 - Les relances dues apparaissent sur Ma journée.
+- Quand l’offre devient une commande, les achats proposent la liste de matériel du projet depuis la **liste de matériel** (matériel seulement, sans montage ni options).
 
 ## Règles {#regeln}
 
@@ -91,7 +92,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 
 ### Le PDF Eturnity ne remplit rien.
 
-Seuls les PDF d’Eturnity sont lus. Pour d’autres PDF, saisir les valeurs à la main.
+Seuls les PDF d’Eturnity sont lus en entier. Pour un devis de l’ancien outil de Bulle, seules les valeurs principales se remplissent, sans liste de matériel. Compléter le reste à la main.
 
 ### Comment accéder au calcul ?
 
@@ -99,6 +100,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Liste de matériel du PDF Eturnity dans l’offre, puis liste de matériel aux achats ; les offres sans numéro CRM sont attribuées via le projet Eturnity (« hyd-… »).
 - 03.11.2026: Onglet Analyse (taux, par personne, motifs de perte, concurrence).
 - 03.11.2026: Travail en cours comme vue de départ, offre en pleine page, relance avec résultat selon le plan, variantes, validation et chance.
 
