@@ -39,6 +39,6 @@ test('Monteur: nur Zeit, Spesen und Plan, Arbeit starten und stoppen, Spese erfa
   await spese.getByLabel('Kategorie').click()
   await page.getByRole('option', { name: 'Parkieren' }).click()
   await spese.getByLabel('Zweck').fill(`E2E Parkhaus ${lauf}`)
-  await spese.getByRole('button', { name: 'Speichern' }).click()
+  await spese.getByRole('button', { name: 'Speichern', exact: true }).click()
   await expect(page.getByText(`E2E Parkhaus ${lauf}`)).toBeVisible()
 })

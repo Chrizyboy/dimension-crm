@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Plus, SquareCheck, Workflow } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { WarumKnopf } from '@/components/shared/automatik/WarumKnopf'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
@@ -95,6 +96,11 @@ export default function Aufgaben({ wer = 'meine' }: { wer?: AufgabenFilter['wer'
           </span>
           {c.row.original.text && (
             <span className="text-muted-foreground line-clamp-3 text-xs">{c.row.original.text}</span>
+          )}
+          {c.row.original.lauf_id && !c.row.original.erledigt_am && (
+            <span className="pt-0.5">
+              <WarumKnopf laufId={c.row.original.lauf_id} />
+            </span>
           )}
         </span>
       ),
