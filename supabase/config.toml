@@ -506,6 +506,10 @@ verify_jwt = false
 [functions.anfrage]
 verify_jwt = false
 
+# Termin-Link der Website: Kunden sehen freie Zeiten und buchen, von Server zu Server. Prüft ANFRAGE_SCHLUESSEL selbst.
+[functions.termin]
+verify_jwt = false
+
 # Anmeldemail (Send Email Hook): Supabase Auth ruft signiert auf, kein Login. Prüft ANMELDEMAIL_HOOK_SECRET selbst.
 [functions.anmeldemail]
 verify_jwt = false

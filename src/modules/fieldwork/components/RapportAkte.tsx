@@ -26,7 +26,7 @@ import { DossierDialog } from './DossierDialog'
 import { FotoAbschnitt } from './FotoAbschnitt'
 import { MeldungDialog } from './MeldungDialog'
 import { NachtragAbschnitt } from './NachtragAbschnitt'
-import { PruefAbschnitt } from './PruefAbschnitt'
+import { PruefAbschnitt, WartungPruefAbschnitt } from './PruefAbschnitt'
 import { RapportPdfKnopf } from './RapportPdfKnopf'
 import { RapportSenden } from './RapportSenden'
 import { RapportZeit } from './RapportZeit'
@@ -178,6 +178,9 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
             {montage && <SchritteAbschnitt rapport={r} info={info} offen={offen} onAendern={aendern} />}
             <ArbeitenAbschnitt rapport={r} offen={offen} onAendern={aendern} />
             {r.art === 'ibn' && <PruefAbschnitt rapport={r} offen={offen} onAendern={aendern} />}
+            {r.art === 'wartung' && r.wartungsvertrag_id && (
+              <WartungPruefAbschnitt rapport={r} offen={offen} onAendern={aendern} />
+            )}
             {(r.art === 'service' || r.art === 'wartung') && (
               <AkteAbschnitt titel={t('baustelle.verrechnung.titel')}>
                 <VerrechnungWahl

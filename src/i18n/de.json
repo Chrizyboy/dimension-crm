@@ -1453,6 +1453,13 @@
       "regionen": "Regionen",
       "bericht": "Monatsbericht",
       "steuerung": "Steuerung"
+    },
+    "terminLink": {
+      "senden": "Termin-Link senden",
+      "sms": "Per SMS",
+      "mail": "Per Mail",
+      "bereit": "Termin-Link liegt im Ausgangskorb zur Freigabe",
+      "zumAusgang": "Zum Ausgangskorb"
     }
   },
   "offerten": {
@@ -2769,8 +2776,17 @@
     "baustelle_soll_negativ": "Soll-Stunden können nicht negativ sein.",
     "baustelle_projekt_nicht_gefunden": "Projekt nicht gefunden.",
     "baustelle_kein_recht": "Dafür fehlt das Recht.",
+    "projekte_text_fehlt": "Bitte zuerst etwas eintragen.",
+    "projekte_art_unbekannt": "Diese Art von Eintrag gibt es nicht.",
+    "projekte_maengel_offen": "Erst alle Mängel erledigen, dann ist die Übergabe möglich.",
+    "projekte_rolle_unbekannt": "Diese Rolle gibt es nicht.",
     "finanzen_karte_keine_firmenkarte": "Nur Spesen «Firmenkarte» lassen sich mit einer Kartenbuchung verbinden.",
-    "finanzen_karte_schon_verbunden": "Diese Spese ist schon mit einer anderen Kartenbuchung verbunden."
+    "finanzen_karte_schon_verbunden": "Diese Spese ist schon mit einer anderen Kartenbuchung verbunden.",
+    "wartung_termin_ungueltig": "Das Ende des Termins muss nach dem Beginn liegen.",
+    "wartung_kein_termin": "Für diesen Vertrag ist kein Termin geplant.",
+    "wartung_keine_mail": "Der Kunde hat keine Mail-Adresse.",
+    "wartung_kein_angebot": "Für diese Anlage gibt es noch kein Angebot.",
+    "termin_link_stand": "Den Termin-Link gibt es nur für Leads ohne Termin und ohne Offerte."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -3835,7 +3851,9 @@
       "bewilligungen": "Bewilligungen",
       "alle": "Alle Projekte",
       "subunternehmer": "Subunternehmer",
-      "abwesenheiten": "Abwesenheiten"
+      "abwesenheiten": "Abwesenheiten",
+      "leitstand": "Leitstand",
+      "woche": "Meine Woche"
     },
     "akteReiter": {
       "uebersicht": "Übersicht",
@@ -4140,6 +4158,156 @@
         "bewilligung": "Bewilligung",
         "material": "Material"
       }
+    },
+    "leitstand": {
+      "bau": "Bau {{datum}}",
+      "suche": "Projekt, Kunde, Ort, Elektriker oder Nummer suchen",
+      "ansicht": "Ansicht",
+      "board": "Board",
+      "liste": "Liste",
+      "filter": "Schnellfilter",
+      "leer": "Nichts in dieser Phase."
+    },
+    "zahl": {
+      "laufend": "laufende Projekte",
+      "ohne_termin": "ohne Bautermin",
+      "spaet": "blockiert oder im Verzug",
+      "bewilligung": "Bewilligung überfällig",
+      "material": "Material fehlt für die nächsten 14 Tage",
+      "woche": "Montagen diese Woche",
+      "verrechnen": "Tranchen fällig, nicht gestellt"
+    },
+    "schnell": {
+      "meine": "Meine",
+      "spaet": "Blockiert",
+      "bewilligung": "Bewilligung überfällig",
+      "material": "Material fehlt",
+      "ohne_termin": "Ohne Bautermin",
+      "verrechnen": "Zu verrechnen"
+    },
+    "hinweis": {
+      "material_fehlt": "{{anzahl}} Positionen fehlen",
+      "bewilligung_spaet": "Bewilligung überfällig",
+      "zahlung_ueberfaellig": "Zahlung {{tage}} Tage überfällig",
+      "ohne_termin": "ohne Bautermin",
+      "verrechnen": "Tranche fällig",
+      "nachtraege": "Nachtrag offen",
+      "material_ok": "Material komplett",
+      "material_bestellen": "Material nicht bestellt",
+      "frist": "Frist vorbei",
+      "maengel": "{{anzahl}} Mängel offen"
+    },
+    "woche": {
+      "wer": "Wessen Projekte",
+      "meine": "Meine Projekte",
+      "alle": "Alle Projekte",
+      "seit": "seit {{tage}} Tagen",
+      "leer": "Diese Woche ist nichts fällig",
+      "leerText": "Keine offenen Schritte mit Frist und nichts, was blockiert.",
+      "baustellen": "Baustellen diese Woche",
+      "keineBaustellen": "Diese Woche keine Einsätze.",
+      "gruppe": {
+        "ueberfaellig": "Überfällig und blockiert",
+        "woche": "Diese Woche",
+        "naechste": "Nächste Woche"
+      },
+      "aufgabe": {
+        "material_fehlt": "Material bestellen",
+        "zahlung_ueberfaellig": "Zahlung nachfassen",
+        "ohne_termin": "Bautermin vergeben",
+        "verrechnen": "Rechnung stellen",
+        "material_bestellen": "Material bestellen",
+        "maengel": "Mängel erledigen"
+      }
+    },
+    "seite": {
+      "leitung": "Projektleitung {{name}}",
+      "verkauf": "Verkauf {{name}}",
+      "vertrag": "Vertrag {{betrag}}",
+      "phasen": "Phasen des Projekts",
+      "schritte": "{{erledigt}} von {{gesamt}}",
+      "zuTun": "Jetzt zu tun",
+      "alleSchritte": "Alle {{anzahl}} offenen Schritte",
+      "erledigt": "«{{name}}» erledigt",
+      "eingereicht": "eingereicht {{datum}}",
+      "verlauf": "Verlauf",
+      "termine": "Termine",
+      "keineTermine": "Noch keine Einsätze geplant.",
+      "material": "Material",
+      "keinMaterial": "Noch keine Materialliste. Im Einkauf aus der Offerte übernehmen.",
+      "fehlt": "fehlt {{menge}}",
+      "unterwegs": "bestellt",
+      "da": "da",
+      "lieferung": "Letzte Lieferung erwartet",
+      "zumEinkauf": "Material im Einkauf öffnen",
+      "geld": "Geld",
+      "vertragInkl": "Werkvertrag inkl. MWST",
+      "offen": "offen",
+      "bezahlt": "bezahlt",
+      "gestellt": "gestellt {{nummer}}",
+      "entwurf": "Entwurf",
+      "stellen": "jetzt stellen",
+      "spaeter": "später",
+      "zuRechnungen": "Zu verrechnen öffnen",
+      "kalkulation": "Nachkalkulation",
+      "exkl": "exkl. MWST",
+      "margeSoll": "Marge geplant",
+      "margeIst": "Marge heute",
+      "stundenSollIst": "Stunden geplant / erfasst",
+      "materialSollIst": "Material Soll / Ist",
+      "verrechnet": "Verrechnet",
+      "stunden": "{{stunden}} Std."
+    },
+    "verlauf": {
+      "art": {
+        "notiz": "Notiz",
+        "anruf": "Anruf",
+        "mail": "Mail",
+        "besuch": "Besuch",
+        "sms": "SMS",
+        "brief": "Brief",
+        "aenderung": "Änderung"
+      },
+      "artWahl": "Art des Eintrags",
+      "eingabe": "Was ist passiert? Mit wem gesprochen, was vereinbart?",
+      "speichern": "Im Verlauf festhalten",
+      "leer": "Noch nichts im Verlauf.",
+      "mailVon": "Mail von {{name}}",
+      "rapport": "Rapport {{nummer}} · {{person}}",
+      "ausgang": {
+        "wartet": "Kundeninfo wartet auf Freigabe",
+        "freigegeben": "Kundeninfo freigegeben",
+        "wird_gesendet": "Kundeninfo wird gesendet",
+        "gesendet": "Kundeninfo gesendet",
+        "fehler": "Kundeninfo: Versand fehlgeschlagen"
+      }
+    },
+    "maengel": {
+      "titel": "Mängel und Restarbeiten",
+      "offen": "{{anzahl}} offen",
+      "alleErledigt": "Alles erledigt",
+      "leer": "Keine offenen Mängel.",
+      "erledigen": "«{{text}}» erledigt",
+      "oeffnen": "«{{text}}» wieder öffnen",
+      "erledigtAm": "erledigt {{datum}}",
+      "bis": "bis {{datum}}",
+      "nurOffene": "Nur offene zeigen",
+      "erledigteZeigen": "{{anzahl}} erledigte zeigen",
+      "artWahl": "Art",
+      "art": {
+        "mangel": "Mangel",
+        "restarbeit": "Restarbeit"
+      },
+      "eingabe": "Was ist noch offen? Wo genau?",
+      "frist": "Frist",
+      "erfassen": "Erfassen"
+    },
+    "beteiligte": {
+      "titel": "Beteiligte",
+      "hinzufuegen": "Hinzufügen",
+      "leer": "Noch niemand erfasst (Elektriker, Gerüstbau, Netzbetreiber …).",
+      "entfernen": "{{name}} entfernen",
+      "rolle": "Rolle"
     }
   },
   "kundeWahl": {
@@ -4540,7 +4708,8 @@
       "inspektionen": "Inspektionen",
       "keineInspektion": "Dieses Paket hat keine Inspektion vor Ort.",
       "rechnungErstellt": "Jahresrechnung als Entwurf erstellt",
-      "zurRechnung": "Öffnen"
+      "zurRechnung": "Öffnen",
+      "termin": "Termin {{zeit}}"
     },
     "erledigt": {
       "titel": "Wartung erledigt",
@@ -4631,6 +4800,76 @@
       "am": "Kündigung eingegangen am",
       "endet": "Der Vertrag endet am {{datum}}.",
       "gespeichert": "Kündigung erfasst, Ende {{datum}}"
+    },
+    "reiter": {
+      "vertraege": "Verträge",
+      "inspektionen": "Inspektionen",
+      "ohne": "Ohne Vertrag"
+    },
+    "termin": {
+      "titel": "Inspektion planen · {{nummer}}",
+      "tag": "Tag",
+      "von": "Von",
+      "bis": "Bis",
+      "person": "Wer geht",
+      "personWaehlen": "Person wählen",
+      "entfernen": "Termin entfernen",
+      "ankuendigen": "Jetzt ankündigen",
+      "hinweis": "Die Ankündigung an den Kunden legt das CRM 14 Tage vorher im Ausgangskorb an; dort gibst du sie mit einem Klick frei.",
+      "angekuendigt": "Angekündigt am {{datum}} (Ausgangskorb)."
+    },
+    "insp": {
+      "titel": "Inspektionen",
+      "zusammenfassung": "{{offen}} fällig ohne Termin · {{geplant}} geplant · {{angekuendigt}} angekündigt",
+      "filter": "Inspektionen filtern",
+      "filterwert": {
+        "offen": "Ohne Termin",
+        "geplant": "Geplant",
+        "alle": "Alle"
+      },
+      "spalte": {
+        "tag": "Termin / fällig",
+        "person": "Wer",
+        "ankuendigung": "Ankündigung",
+        "aktion": "Aktion"
+      },
+      "faellig": "fällig {{datum}}",
+      "angekuendigt": "angekündigt",
+      "nochNicht": "noch nicht",
+      "planen": "Termin planen",
+      "aendern": "Termin ändern",
+      "leer": "Nichts zu planen",
+      "leerText": "In den nächsten 90 Tagen ist keine Inspektion fällig."
+    },
+    "ohne": {
+      "titel": "Anlagen ohne Wartungsvertrag",
+      "hinweis": "Eigene Anlagen nach der Inbetriebnahme ohne laufenden Vertrag. Das Angebot geht mit passendem Paket und Preis in der Sprache des Kunden über den Ausgangskorb.",
+      "suche": "Kunde, Ort oder Projekt suchen",
+      "filter": "Anlagen filtern",
+      "filterwert": {
+        "nie": "Noch nie angeboten",
+        "nachfassen": "Nachfassen",
+        "alle": "Alle"
+      },
+      "alleMarkieren": "Alle markieren",
+      "markieren": "{{kunde}} markieren",
+      "keineMail": "keine Mail-Adresse",
+      "ibn": "In Betrieb seit",
+      "paket": "Passendes Paket",
+      "angebot": "Angebot",
+      "nie": "noch nie",
+      "stand": {
+        "offen": "gesendet {{datum}}",
+        "angenommen": "angenommen {{datum}}",
+        "abgelehnt": "abgelehnt {{datum}}"
+      },
+      "senden": "Angebot senden",
+      "serie_one": "An {{count}} Kunden senden",
+      "serie_other": "An {{count}} Kunden senden",
+      "abgelehnt": "Abgelehnt",
+      "angenommen": "Angenommen",
+      "leer": "Keine Anlagen",
+      "leerText": "Alle eigenen Anlagen in dieser Auswahl haben einen Vertrag oder ein Angebot."
     }
   },
   "einkauf": {
@@ -5330,7 +5569,9 @@
       "nachtraege": "Nachträge",
       "unterschrift": "Unterschrift Kunde",
       "bestaetigt": "Mit der Unterschrift sind die Nachträge in diesem Rapport bestätigt.",
-      "fotos": "Fotos"
+      "fotos": "Fotos",
+      "vorjahr": "Letztes Mal ({{datum}})",
+      "heute": "Heute"
     },
     "heute": {
       "titel": "Baustelle",
@@ -5611,6 +5852,21 @@
         "nichtGestempelt": "Einsatz ohne Zeit",
         "laeuft": "Zeit läuft noch",
         "saldo": "Saldo {{h}} h"
+      }
+    },
+    "inspektion": {
+      "titel": "Inspektion",
+      "badge": "Inspektion {{nummer}}",
+      "letztes": "Letztes Mal: {{wert}}",
+      "abweichung": "{{prozent}} % Abweichung zum letzten Mal",
+      "vorjahr": {
+        "wartung": "Vergleich mit der Inspektion vom {{datum}}",
+        "ibn": "Vergleich mit dem IBN-Protokoll vom {{datum}}"
+      },
+      "paket": {
+        "essentiel": "Essentiel",
+        "comfort": "Comfort",
+        "premium": "Premium mit Messungen"
       }
     }
   },
@@ -8890,7 +9146,8 @@
       "garantie_bis": "Garantie bis",
       "zurueck_bis": "Zurück bis",
       "ausgemustert_am": "Ausgemustert am",
-      "ungueltig": "Bitte prüfen"
+      "ungueltig": "Bitte prüfen",
+      "privat_anteil": "Privatanteil (Geschäftsauto privat)"
     },
     "fahrzeug": {
       "neu": "Fahrzeug erfassen",
@@ -9038,7 +9295,8 @@
       },
       "heute": "Diese Woche",
       "weiter": "Nächste Woche",
-      "zurueck": "Vorherige Woche"
+      "zurueck": "Vorherige Woche",
+      "folgtTeam": "folgt dem Team"
     },
     "reservieren": {
       "knopf": "Reservieren",
@@ -9092,7 +9350,10 @@
       "zahlGeraete": "Wert der Geräte",
       "zahlProKm": "CHF pro km im Schnitt",
       "zahlTotal": "Kosten Fahrzeuge total",
-      "zahlUnterhalt": "Unterhalt"
+      "zahlUnterhalt": "Unterhalt",
+      "privatanteil": "Privatanteil",
+      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
+      "privatanteilTitel": "Privatanteil {{jahr}}"
     },
     "dateien": {
       "hochladen": "Datei hinzufügen",
@@ -9107,7 +9368,8 @@
     "schnell": {
       "nehmen": "Nehme ich",
       "zurueck": "Zurück ins Lager"
-    }
+    },
+    "ja": "Ja"
   },
   "grossprojekte": {
     "titel": "Grossprojekte",

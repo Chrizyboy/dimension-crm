@@ -125,6 +125,13 @@ export type Database = {
             foreignKeyName: 'ablage_ordner_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: true
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -134,6 +141,13 @@ export type Database = {
             isOneToOne: true
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -553,6 +567,13 @@ export type Database = {
             foreignKeyName: 'aktivitaeten_projekt_fk'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'aktivitaeten_projekt_fk'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -562,6 +583,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aktivitaeten_projekt_fk'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'aktivitaeten_verkaufschance_id_fkey'
@@ -731,6 +759,13 @@ export type Database = {
             foreignKeyName: 'anlagen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'anlagen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -740,6 +775,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'anlagen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -1506,6 +1548,13 @@ export type Database = {
             foreignKeyName: 'ausgangskorb_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -1515,6 +1564,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
@@ -2026,6 +2082,13 @@ export type Database = {
             foreignKeyName: 'ausschreibungen_gng_von_fkey'
             columns: ['gng_von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_gng_von_fkey'
+            columns: ['gng_von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -2061,6 +2124,13 @@ export type Database = {
             foreignKeyName: 'ausschreibungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -2069,6 +2139,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -2086,6 +2163,20 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_pruefung_von_fkey'
+            columns: ['pruefung_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
             foreignKeyName: 'ausschreibungen_pruefung_von_fkey'
             columns: ['pruefung_von']
             isOneToOne: false
@@ -2098,6 +2189,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'standorte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'ausschreibungen_verantwortlich_id_fkey'
@@ -2543,6 +2641,13 @@ export type Database = {
             foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -2552,6 +2657,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
@@ -2971,6 +3083,13 @@ export type Database = {
             foreignKeyName: 'bestellungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -2980,6 +3099,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'bestellungen_rechnung_geprueft_von_fkey'
@@ -3158,6 +3284,13 @@ export type Database = {
             foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: true
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -3167,6 +3300,13 @@ export type Database = {
             isOneToOne: true
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -3389,6 +3529,13 @@ export type Database = {
             foreignKeyName: 'einsaetze_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'einsaetze_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -3398,6 +3545,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'einsaetze_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'einsaetze_subunternehmer_id_fkey'
@@ -3576,6 +3730,13 @@ export type Database = {
             foreignKeyName: 'empfehlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'empfehlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -3585,6 +3746,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'empfehlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'empfehlungen_verkaufschance_id_fkey'
@@ -3687,6 +3855,13 @@ export type Database = {
             foreignKeyName: 'erwartete_eingaenge_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'erwartete_eingaenge_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -3696,6 +3871,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'erwartete_eingaenge_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -4065,6 +4247,63 @@ export type Database = {
         }
         Relationships: []
       }
+      firmen_nachweise: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          ausgestellt_am: string
+          datei_pfad: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          firma_id: string
+          geaendert_am: string
+          geloescht_am: string | null
+          gueltig_bis: string
+          id: string
+          notiz: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          ausgestellt_am: string
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis: string
+          id?: string
+          notiz?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          ausgestellt_am?: string
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id?: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string
+          id?: string
+          notiz?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'firmen_nachweise_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'firmen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       firmenkarte_buchungen: {
         Row: {
           alt_daten: Json | null
@@ -4135,6 +4374,13 @@ export type Database = {
             foreignKeyName: 'firmenkarte_buchungen_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'firmenkarte_buchungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -4150,63 +4396,6 @@ export type Database = {
             columns: ['spese_id']
             isOneToOne: false
             referencedRelation: 'spesen_liste'
-            referencedColumns: ['id']
-          },
-        ]
-      }
-      firmen_nachweise: {
-        Row: {
-          alt_daten: Json | null
-          alt_id: string | null
-          art: string
-          ausgestellt_am: string
-          datei_pfad: string | null
-          erstellt_am: string
-          erstellt_von: string | null
-          firma_id: string
-          geaendert_am: string
-          geloescht_am: string | null
-          gueltig_bis: string
-          id: string
-          notiz: string | null
-        }
-        ComputedFields: never
-        Insert: {
-          alt_daten?: Json | null
-          alt_id?: string | null
-          art: string
-          ausgestellt_am: string
-          datei_pfad?: string | null
-          erstellt_am?: string
-          erstellt_von?: string | null
-          firma_id: string
-          geaendert_am?: string
-          geloescht_am?: string | null
-          gueltig_bis: string
-          id?: string
-          notiz?: string | null
-        }
-        Update: {
-          alt_daten?: Json | null
-          alt_id?: string | null
-          art?: string
-          ausgestellt_am?: string
-          datei_pfad?: string | null
-          erstellt_am?: string
-          erstellt_von?: string | null
-          firma_id?: string
-          geaendert_am?: string
-          geloescht_am?: string | null
-          gueltig_bis?: string
-          id?: string
-          notiz?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'firmen_nachweise_firma_id_fkey'
-            columns: ['firma_id']
-            isOneToOne: false
-            referencedRelation: 'firmen'
             referencedColumns: ['id']
           },
         ]
@@ -4356,6 +4545,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'anlagen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'garantiefaelle_anlage_id_fkey'
+            columns: ['anlage_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['anlage_id']
           },
           {
             foreignKeyName: 'garantiefaelle_service_fall_id_fkey'
@@ -6168,6 +6364,13 @@ export type Database = {
             foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -6177,6 +6380,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -6490,6 +6700,13 @@ export type Database = {
             foreignKeyName: 'lagerbewegungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'lagerbewegungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -6499,6 +6716,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lagerbewegungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -6947,6 +7171,13 @@ export type Database = {
             foreignKeyName: 'material_zahlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'material_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -6956,6 +7187,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'material_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -7064,6 +7302,13 @@ export type Database = {
             foreignKeyName: 'nachtraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -7073,6 +7318,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'nachtraege_rapport_id_fkey'
@@ -8430,6 +8682,13 @@ export type Database = {
             foreignKeyName: 'posteingang_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -8439,6 +8698,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'posteingang_rechnung_id_fkey'
@@ -8952,6 +9218,283 @@ export type Database = {
         }
         Relationships: []
       }
+      projekt_beteiligte: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kontakt_id: string
+          notiz: string | null
+          projekt_id: string
+          rolle: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id: string
+          notiz?: string | null
+          projekt_id: string
+          rolle: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id?: string
+          notiz?: string | null
+          projekt_id?: string
+          rolle?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_beteiligte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+        ]
+      }
+      projekt_maengel: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          frist: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          ort: string | null
+          projekt_id: string
+          status: string
+          subunternehmer_id: string | null
+          text: string
+          verantwortlich_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          frist?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          projekt_id: string
+          status?: string
+          subunternehmer_id?: string | null
+          text: string
+          verantwortlich_id?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          frist?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          projekt_id?: string
+          status?: string
+          subunternehmer_id?: string | null
+          text?: string
+          verantwortlich_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekt_maengel_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_subunternehmer_id_fkey'
+            columns: ['subunternehmer_id']
+            isOneToOne: false
+            referencedRelation: 'subunternehmer'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'projekt_maengel_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       projekt_material: {
         Row: {
           alt_daten: Json | null
@@ -9054,6 +9597,13 @@ export type Database = {
             foreignKeyName: 'projekt_material_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -9063,6 +9613,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -9159,6 +9716,13 @@ export type Database = {
             foreignKeyName: 'projekt_schritte_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_schritte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -9168,6 +9732,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_schritte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -9689,6 +10260,13 @@ export type Database = {
             foreignKeyName: 'rapporte_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -9698,6 +10276,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'rapporte_service_fall_id_fkey'
@@ -10000,6 +10585,13 @@ export type Database = {
             foreignKeyName: 'rechnungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -10009,6 +10601,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'rechnungen_rapport_id_fkey'
@@ -10348,6 +10947,13 @@ export type Database = {
             foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -10357,6 +10963,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -10727,6 +11340,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'service_faelle_anlage_id_fkey'
+            columns: ['anlage_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['anlage_id']
+          },
+          {
             foreignKeyName: 'service_faelle_kontakt_id_fkey'
             columns: ['kontakt_id']
             isOneToOne: false
@@ -10821,6 +11441,13 @@ export type Database = {
             foreignKeyName: 'service_faelle_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -10830,6 +11457,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'service_faelle_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -11326,6 +11960,13 @@ export type Database = {
             foreignKeyName: 'spesen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -11335,6 +11976,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -11520,6 +12168,13 @@ export type Database = {
             foreignKeyName: 'submission_referenzen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -11528,6 +12183,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_signale'
             referencedColumns: ['projekt_id']
           },
           {
@@ -11543,6 +12205,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -11722,6 +12391,13 @@ export type Database = {
             foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -11731,6 +12407,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'subunternehmer_auftraege_subunternehmer_id_fkey'
@@ -11784,6 +12467,13 @@ export type Database = {
             foreignKeyName: 'tag_verschoben_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'tag_verschoben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -11831,6 +12521,8 @@ export type Database = {
           termin_am: string | null
           termin_bestaetigt: Json | null
           termin_dauer_min: number | null
+          termin_link: string | null
+          termin_link_bis: string | null
           tour_person_id: string | null
           verlauf_text: string | null
           verlustgrund: string | null
@@ -11883,6 +12575,8 @@ export type Database = {
           termin_am?: string | null
           termin_bestaetigt?: Json | null
           termin_dauer_min?: number | null
+          termin_link?: string | null
+          termin_link_bis?: string | null
           tour_person_id?: string | null
           verlauf_text?: string | null
           verlustgrund?: string | null
@@ -11934,6 +12628,8 @@ export type Database = {
           termin_am?: string | null
           termin_bestaetigt?: Json | null
           termin_dauer_min?: number | null
+          termin_link?: string | null
+          termin_link_bis?: string | null
           tour_person_id?: string | null
           verlauf_text?: string | null
           verlustgrund?: string | null
@@ -12066,10 +12762,130 @@ export type Database = {
           },
         ]
       }
+      wartung_angebote: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anlage_id: string
+          ausgang_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gesendet_am: string
+          id: string
+          kontakt_id: string
+          notiz: string | null
+          paket: string
+          preis_netto_rappen: number | null
+          stand: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anlage_id: string
+          ausgang_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gesendet_am?: string
+          id?: string
+          kontakt_id: string
+          notiz?: string | null
+          paket: string
+          preis_netto_rappen?: number | null
+          stand?: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anlage_id?: string
+          ausgang_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gesendet_am?: string
+          id?: string
+          kontakt_id?: string
+          notiz?: string | null
+          paket?: string
+          preis_netto_rappen?: number | null
+          stand?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'wartung_angebote_anlage_id_fkey'
+            columns: ['anlage_id']
+            isOneToOne: false
+            referencedRelation: 'anlagen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_anlage_id_fkey'
+            columns: ['anlage_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['anlage_id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_ausgang_id_fkey'
+            columns: ['ausgang_id']
+            isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_ausgang_id_fkey'
+            columns: ['ausgang_id']
+            isOneToOne: false
+            referencedRelation: 'ausgangskorb'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'wartung_angebote_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
       wartungsvertraege: {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          angekuendigt_am: string | null
           anlage_id: string | null
           anlage_kwp: number | null
           anlage_ort: string | null
@@ -12101,6 +12917,10 @@ export type Database = {
           start_am: string | null
           status: string
           tarif_netto_rappen: number | null
+          termin_bis: string | null
+          termin_geplant_von: string | null
+          termin_person_id: string | null
+          termin_von: string | null
           verlauf: NonNullable<Json>
           verrechnet_bis: string | null
           wechselrichter: string | null
@@ -12109,6 +12929,7 @@ export type Database = {
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          angekuendigt_am?: string | null
           anlage_id?: string | null
           anlage_kwp?: number | null
           anlage_ort?: string | null
@@ -12140,6 +12961,10 @@ export type Database = {
           start_am?: string | null
           status?: string
           tarif_netto_rappen?: number | null
+          termin_bis?: string | null
+          termin_geplant_von?: string | null
+          termin_person_id?: string | null
+          termin_von?: string | null
           verlauf?: NonNullable<Json>
           verrechnet_bis?: string | null
           wechselrichter?: string | null
@@ -12147,6 +12972,7 @@ export type Database = {
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          angekuendigt_am?: string | null
           anlage_id?: string | null
           anlage_kwp?: number | null
           anlage_ort?: string | null
@@ -12178,6 +13004,10 @@ export type Database = {
           start_am?: string | null
           status?: string
           tarif_netto_rappen?: number | null
+          termin_bis?: string | null
+          termin_geplant_von?: string | null
+          termin_person_id?: string | null
+          termin_von?: string | null
           verlauf?: NonNullable<Json>
           verrechnet_bis?: string | null
           wechselrichter?: string | null
@@ -12189,6 +13019,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'anlagen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_anlage_id_fkey'
+            columns: ['anlage_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['anlage_id']
           },
           {
             foreignKeyName: 'wartungsvertraege_kontakt_id_fkey'
@@ -12271,6 +13108,13 @@ export type Database = {
             foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -12279,6 +13123,41 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_termin_geplant_von_fkey'
+            columns: ['termin_geplant_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_termin_geplant_von_fkey'
+            columns: ['termin_geplant_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_termin_person_id_fkey'
+            columns: ['termin_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_termin_person_id_fkey'
+            columns: ['termin_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -12459,6 +13338,13 @@ export type Database = {
             foreignKeyName: 'werkvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -12469,7 +13355,54 @@ export type Database = {
             referencedRelation: 'projekte'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
         ]
+      }
+      wetter_prognose: {
+        Row: {
+          datum: string
+          geholt_am: string
+          lauf: string | null
+          plz: string
+          regen_mm: number | null
+          regen_prozent: number | null
+          symbol: number | null
+          tmax: number | null
+          tmin: number | null
+          wind_kmh: number | null
+        }
+        ComputedFields: never
+        Insert: {
+          datum: string
+          geholt_am?: string
+          lauf?: string | null
+          plz: string
+          regen_mm?: number | null
+          regen_prozent?: number | null
+          symbol?: number | null
+          tmax?: number | null
+          tmin?: number | null
+          wind_kmh?: number | null
+        }
+        Update: {
+          datum?: string
+          geholt_am?: string
+          lauf?: string | null
+          plz?: string
+          regen_mm?: number | null
+          regen_prozent?: number | null
+          symbol?: number | null
+          tmax?: number | null
+          tmin?: number | null
+          wind_kmh?: number | null
+        }
+        Relationships: []
       }
       zahlungsplan: {
         Row: {
@@ -12559,6 +13492,13 @@ export type Database = {
             foreignKeyName: 'zahlungsplan_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -12568,6 +13508,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -12693,6 +13640,13 @@ export type Database = {
             foreignKeyName: 'zeiten_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -12702,6 +13656,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'zeiten_rapport_id_fkey'
@@ -12999,6 +13960,13 @@ export type Database = {
             foreignKeyName: 'ausgangskorb_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -13008,6 +13976,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
@@ -13108,6 +14083,13 @@ export type Database = {
             foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -13117,6 +14099,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
@@ -13285,6 +14274,13 @@ export type Database = {
             foreignKeyName: 'bestellungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -13294,6 +14290,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'bestellungen_rechnung_kreditor_id_fkey'
@@ -13387,6 +14390,13 @@ export type Database = {
             foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: true
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -13396,6 +14406,13 @@ export type Database = {
             isOneToOne: true
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -13503,6 +14520,13 @@ export type Database = {
             foreignKeyName: 'empfehlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'empfehlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -13512,6 +14536,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'empfehlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'empfehlungen_verkaufschance_id_fkey'
@@ -13553,6 +14584,13 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: [
+          {
+            foreignKeyName: 'firmenkarte_buchungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'firmenkarte_buchungen_person_id_fkey'
             columns: ['person_id']
@@ -13958,6 +14996,13 @@ export type Database = {
             foreignKeyName: 'nachtraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -13967,6 +15012,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'nachtraege_rapport_id_fkey'
@@ -14083,6 +15135,13 @@ export type Database = {
             foreignKeyName: 'zahlungsplan_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -14092,6 +15151,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -14613,6 +15679,13 @@ export type Database = {
             foreignKeyName: 'projekt_material_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -14621,6 +15694,74 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
+          },
+        ]
+      }
+      projekt_signale: {
+        Row: {
+          letzte_aktivitaet: string | null
+          letzte_lieferung: string | null
+          maengel_offen: number | null
+          material_fehlt: number | null
+          material_positionen: number | null
+          nachtraege_offen: number | null
+          naechster_einsatz: string | null
+          offen_faellig_am: string | null
+          offen_rappen: number | null
+          projekt_id: string | null
+          tranchen_faellig_rappen: number | null
+          verantwortlich_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          letzte_aktivitaet?: never
+          letzte_lieferung?: never
+          maengel_offen?: never
+          material_fehlt?: never
+          material_positionen?: never
+          nachtraege_offen?: never
+          naechster_einsatz?: never
+          offen_faellig_am?: never
+          offen_rappen?: never
+          projekt_id?: string | null
+          tranchen_faellig_rappen?: never
+          verantwortlich_id?: string | null
+        }
+        Update: {
+          letzte_aktivitaet?: never
+          letzte_lieferung?: never
+          maengel_offen?: never
+          material_fehlt?: never
+          material_positionen?: never
+          nachtraege_offen?: never
+          naechster_einsatz?: never
+          offen_faellig_am?: never
+          offen_rappen?: never
+          projekt_id?: string | null
+          tranchen_faellig_rappen?: never
+          verantwortlich_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -14737,6 +15878,13 @@ export type Database = {
             foreignKeyName: 'rapporte_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -14746,6 +15894,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'rapporte_service_fall_id_fkey'
@@ -14889,6 +16044,13 @@ export type Database = {
             foreignKeyName: 'rechnungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -14898,6 +16060,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'rechnungen_rapport_id_fkey'
@@ -15020,6 +16189,13 @@ export type Database = {
             foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -15029,6 +16205,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -15196,6 +16379,13 @@ export type Database = {
             foreignKeyName: 'spesen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -15205,6 +16395,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -15291,6 +16488,66 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+        ]
+      }
+      wartung_ohne_vertrag: {
+        Row: {
+          angebot_am: string | null
+          angebot_paket: string | null
+          angebot_stand: string | null
+          anlage_id: string | null
+          email: string | null
+          garantie_bis: string | null
+          ibn_am: string | null
+          kontakt_id: string | null
+          kunde: string | null
+          leistung_kwp: number | null
+          ort: string | null
+          paket: string | null
+          plz: string | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          sprache: string | null
+          tarif_rappen: number | null
+          telefon: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'objekte_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
           },
         ]
       }
@@ -15439,6 +16696,13 @@ export type Database = {
             foreignKeyName: 'werkvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -15448,6 +16712,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
         ]
       }
@@ -15534,6 +16805,13 @@ export type Database = {
             foreignKeyName: 'zeiten_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'projekt_signale'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'projekt_stand'
             referencedColumns: ['projekt_id']
           },
@@ -15543,6 +16821,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'wartung_ohne_vertrag'
+            referencedColumns: ['projekt_id']
           },
           {
             foreignKeyName: 'zeiten_rapport_id_fkey'
@@ -15984,6 +17269,7 @@ export type Database = {
       kalkulation_freigeben: { Args: { p_grund?: string; p_kalk: string; p_ok: boolean }; Returns: undefined }
       kalkulation_in_offerte: { Args: { p_kalk: string }; Returns: undefined }
       kennzahlen_betrieb: { Args: { p_bis: string; p_von: string }; Returns: Json }
+      kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
       kennzahlen_fakten: {
         Args: { p_bis: string; p_von: string }
         Returns: {
@@ -16002,10 +17288,9 @@ export type Database = {
           tage: number
         }[]
       }
+      kennzahlen_monatsbericht_melden: { Args: Record<PropertyKey, never>; Returns: number }
       kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
       kennzahlen_ziele_setzen: { Args: { p_person: string; p_ziele: Json }; Returns: undefined }
-      kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
-      kennzahlen_monatsbericht_melden: { Args: Record<PropertyKey, never>; Returns: number }
       kennzahlen_zusatz: {
         Args: { p_bis: string; p_von: string }
         Returns: {
@@ -16313,11 +17598,20 @@ export type Database = {
       preise_importieren: { Args: { p_pruefen?: boolean; p_zeilen: Json }; Returns: Json }
       preise_regeln: { Args: Record<PropertyKey, never>; Returns: Json }
       preise_regeln_setzen: { Args: { p: Json }; Returns: undefined }
+      projekt_akte: { Args: { p_id: string }; Returns: Json }
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
       projekt_bau_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
+      projekt_beteiligt_entfernen: { Args: { p_id: string }; Returns: undefined }
+      projekt_beteiligt_setzen: {
+        Args: { p_kontakt: string; p_notiz?: string; p_projekt: string; p_rolle: string }
+        Returns: string
+      }
+      projekt_mangel_erledigen: { Args: { p_erledigt: boolean; p_id: string; p_notiz?: string }; Returns: undefined }
+      projekt_mangel_speichern: { Args: { p: Json; p_id: string; p_projekt: string }; Returns: string }
       projekt_material_vorschlagen: { Args: { p_projekt: string }; Returns: number }
       projekt_schritt_setzen: { Args: { p: Json; p_projekt: string; p_schluessel: string }; Returns: undefined }
+      projekt_vermerken: { Args: { p_art: string; p_projekt: string; p_text: string }; Returns: string }
       projekt_zeitplan_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       quellen_lauf: {
         Args: {
@@ -16623,9 +17917,16 @@ export type Database = {
       team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       team_kurse: { Args: { p_jahr?: number }; Returns: Json }
       team_uebersicht: { Args: { p_tag?: string }; Returns: Json }
+      termin_link_buchen: { Args: { p_beginn: string; p_notiz?: string; p_schluessel: string }; Returns: Json }
+      termin_link_senden: { Args: { p_kanal?: string; p_verkaufschance: string }; Returns: Json }
+      termin_link_zeiten: { Args: { p_schluessel: string }; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }
+      wartung_angebot_senden: { Args: { p_anlagen: string[]; p_paket?: string }; Returns: number }
+      wartung_angebot_stand: { Args: { p_anlage: string; p_stand: string }; Returns: undefined }
+      wartung_ankuendigen: { Args: { p_id: string }; Returns: string }
+      wartung_ankuendigungen: { Args: Record<PropertyKey, never>; Returns: number }
       wartung_erledigt: { Args: { p_am?: string; p_id: string; p_notiz?: string }; Returns: string }
       wartung_jahreslauf: { Args: Record<PropertyKey, never>; Returns: number }
       wartung_kuendigen: { Args: { p_am?: string; p_id: string }; Returns: string }
@@ -16633,11 +17934,16 @@ export type Database = {
       wartung_laeuft_bis: { Args: { p_jahre: number; p_start: string; p_stichtag?: string }; Returns: string }
       wartung_rechnung_erstellen: { Args: { p_id: string }; Returns: string }
       wartung_tarif: { Args: { p_kwp: number; p_paket: string }; Returns: number }
+      wartung_termin_setzen: {
+        Args: { p_bis: string; p_id: string; p_person: string; p_von: string }
+        Returns: undefined
+      }
+      wartung_vorjahr: { Args: { p_vertrag: string }; Returns: Json }
+      werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
+      werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       wetter_baustellen: { Args: Record<PropertyKey, never>; Returns: Json }
       wetter_plz: { Args: Record<PropertyKey, never>; Returns: string[] }
       wetter_speichern: { Args: { p_lauf?: string; p_zeilen: Json }; Returns: number }
-      werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
-      werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       wochenplan: { Args: { p_bis: string; p_von: string }; Returns: Json }
       zahlungsplan_berechnen: {
         Args: { p_baubeginn?: string; p_kondition: string; p_sprache: string; p_unterzeichnet: string; p_wert: number }
