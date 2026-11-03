@@ -1,5 +1,6 @@
 import {
   Bell,
+  CalendarClock,
   CalendarPlus,
   Clock,
   Copy,
@@ -12,6 +13,7 @@ import {
   MessageSquare,
   ReceiptText,
   SquareCheck,
+  StickyNote,
   Users,
   UserPlus,
   Zap,
@@ -35,6 +37,8 @@ export const AKTION_ICON: Record<AktionsArt, LucideIcon> = {
   outlook_termin: CalendarPlus,
   sharepoint_ordner: FolderPlus,
   abaninja_kunde: UserPlus,
+  wiedervorlage: CalendarClock,
+  notiz: StickyNote,
 }
 
 /** Symbol des Auslösers: sofort (Blitz) oder nach Datum (Uhr). */

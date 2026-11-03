@@ -1,4 +1,4 @@
-# 0044 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
+# 0045 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
 
 ## Ausgangslage
 

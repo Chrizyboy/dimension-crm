@@ -2070,6 +2070,14 @@
     "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
     "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
     "grossprojekt_text_fehlt": "Bitte einen Text eingeben.",
+    "automation_grund_fehlt": "Bitte einen Grund angeben.",
+    "automation_lauf_zu_ende": "Dieser Lauf ist schon zu Ende.",
+    "automation_nicht_gestoppt": "Dieser Lauf ist nicht gestoppt.",
+    "automation_wartet_nicht": "Verschieben geht nur, solange der Lauf wartet oder gestoppt ist.",
+    "automation_lauf_offen": "Wiederholen geht erst, wenn der Lauf zu Ende ist.",
+    "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
+    "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
+    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
     "finanzen_schritt_falsch": "Dieser Schritt passt nicht zum Stand der Rechnung.",
     "finanzen_im_zahllauf": "Die Rechnung steckt in einem Zahllauf. Zuerst den Zahllauf verwerfen.",
     "finanzen_zahllauf_leer": "Keine Rechnung gewählt.",
@@ -5369,7 +5377,9 @@
     "ansicht": {
       "liste": "Automationen",
       "protokoll": "Protokoll",
-      "einstellungen": "Einstellungen"
+      "einstellungen": "Einstellungen",
+      "uebersicht": "Übersicht",
+      "geplant": "Geplant"
     },
     "aus": "Ausgeschaltet",
     "mitFreigabe": "Mit Freigabe",
@@ -5416,7 +5426,11 @@
       "projekt_frist_ueberfaellig": "Frist im Fahrplan vorbei",
       "projekt_material_faellig": "Material bestellen fällig",
       "einsatz_morgen": "Montage morgen",
-      "service_termin_morgen": "Service-Termin morgen"
+      "service_termin_morgen": "Service-Termin morgen",
+      "lead_ohne_kontakt": "Lead ohne Kontakt",
+      "anlage_jahrestag": "Jahrestag der Anlage",
+      "rechnung_bezahlt": "Rechnung bezahlt",
+      "garantie_laeuft_ab": "Garantie läuft ab"
     },
     "ereignisHilfe": {
       "lead_neu": "Sobald ein Lead erfasst ist (von Hand, Website, Telefon). Der Import der Vorlage löst nichts aus.",
@@ -5439,7 +5453,11 @@
       "projekt_frist_ueberfaellig": "Wenn die Frist eines Schritts vorbei und er nicht erledigt ist; eingereichte Gesuche zählen nicht (die überwacht «Gesuch eingereicht»).",
       "projekt_material_faellig": "Wenn «bestellen bis» (Baubeginn minus Lieferfrist aus Einstellungen › Einkauf) erreicht und das Material noch nicht bestellt ist.",
       "einsatz_morgen": "Am Vortag einer geplanten Montage, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00).",
-      "service_termin_morgen": "Am Vortag eines Service- oder Wartungstermins, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00)."
+      "service_termin_morgen": "Am Vortag eines Service- oder Wartungstermins, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00).",
+      "lead_ohne_kontakt": "Wenn ein offener Lead so viele Arbeitstage ohne Anruf, Mail oder Termin ist (Schutzregeln). Wiedervorlagen zählen erst ab ihrem Datum.",
+      "anlage_jahrestag": "Jedes Jahr am Tag der Inbetriebnahme, einmal pro Jahr.",
+      "rechnung_bezahlt": "Wenn eine Rechnung ganz bezahlt ist (Abgleich mit AbaNinja oder von Hand).",
+      "garantie_laeuft_ab": "Wenn die Garantie einer Anlage in die Vorlaufzeit kommt (Schutzregeln), einmal pro Garantie."
     },
     "aktion": {
       "aufgabe": "Aufgabe erstellen",
@@ -5455,7 +5473,9 @@
       "zielgruppe": "Zielgruppe melden",
       "outlook_termin": "Termin in Outlook",
       "sharepoint_ordner": "SharePoint-Ordner",
-      "abaninja_kunde": "Kunde in AbaNinja"
+      "abaninja_kunde": "Kunde in AbaNinja",
+      "wiedervorlage": "Wiedervorlage setzen",
+      "notiz": "Notiz in die Zeitachse"
     },
     "aktionKurz": {
       "aufgabe": "Aufgabe",
@@ -5471,7 +5491,9 @@
       "zielgruppe": "Zielgruppe",
       "outlook_termin": "Outlook",
       "sharepoint_ordner": "SharePoint",
-      "abaninja_kunde": "AbaNinja"
+      "abaninja_kunde": "AbaNinja",
+      "wiedervorlage": "Wiedervorlage",
+      "notiz": "Notiz"
     },
     "aktionHilfe": {
       "aufgabe": "Die Aufgabe erscheint unter «Aufgaben» bei der ersten Person aus der Liste, die es gibt.",
@@ -5487,7 +5509,9 @@
       "zielgruppe": "Zählt Kunden mit diesem Merkmal und meldet einen Link zu «Kunden anschreiben».",
       "outlook_termin": "Trägt den Termin im Outlook der zuständigen Person ein (ohne Einladung an den Kunden).",
       "sharepoint_ordner": "Legt den Kundenordner «K0123 Name» mit Unterordnern an, falls es ihn noch nicht gibt.",
-      "abaninja_kunde": "Verknüpft den Kunden mit AbaNinja oder legt ihn dort an."
+      "abaninja_kunde": "Verknüpft den Kunden mit AbaNinja oder legt ihn dort an.",
+      "wiedervorlage": "Legt den Lead auf Wiedervorlage; er erscheint am Datum wieder in der Liste des Verkaufs.",
+      "notiz": "Schreibt in die Zeitachse des Kunden, damit alle sehen, was automatisch passiert ist."
     },
     "feld": {
       "lead_quelle": "Lead: Quelle",
@@ -5593,7 +5617,23 @@
       "pruefen_ok": "Noch nötig, es geht weiter",
       "nicht_verrechenbar": "Nicht kostenpflichtig, kein Rechnungsentwurf",
       "schon_verrechnet": "Schon verrechnet",
-      "rapport_nicht_verrechenbar": "Rapport ist nicht verrechenbar"
+      "rapport_nicht_verrechenbar": "Rapport ist nicht verrechenbar",
+      "versandfenster": "Wartet aufs Versandfenster: {{bis}}",
+      "kontakt_pause": "Kontakt-Pause, geht am {{bis}}",
+      "naechster_uebersprungen": "Nicht mehr nötig, nächster Schritt übersprungen",
+      "gestoppt": "Für diesen Fall gestoppt von {{von}}: {{grund}}",
+      "fortgesetzt": "Fortgesetzt von {{von}}",
+      "verschoben": "Verschoben von {{von}} auf {{bis}}",
+      "wiedervorlage": "Wiedervorlage am {{am}}",
+      "notiz": "Notiz in der Zeitachse",
+      "kein_lead": "Kein Lead dazu",
+      "probe_versandfenster": "Ausserhalb des Versandfensters: geht erst zur angezeigten Zeit",
+      "probe_keine_mail": "Keine Mail-Adresse: würde übersprungen",
+      "probe_kein_telefon": "Keine Handynummer: würde übersprungen",
+      "probe_werbesperre": "Kunde will keine Werbung: würde übersprungen",
+      "probe_kein_empfaenger": "Niemand gefunden, der es bekommt",
+      "probe_abwesend": "Die Person ist an diesem Tag abwesend (Stellvertretung prüfen)",
+      "probe_erst_dann": "Wird erst dann geprüft; heute stimmt es so"
     },
     "empfaenger": {
       "zustaendig": "Zuständige Person",
@@ -5632,7 +5672,8 @@
       "fertig": "Fertig",
       "uebersprungen": "Übersprungen",
       "fehler": "Fehler",
-      "abgebrochen": "Abgebrochen"
+      "abgebrochen": "Abgebrochen",
+      "gestoppt": "Gestoppt"
     },
     "ergebnis": {
       "ok": "Erledigt",
@@ -5643,7 +5684,10 @@
     },
     "schritt": {
       "bedingungen": "Bedingungen geprüft",
-      "ende": "Ende"
+      "ende": "Ende",
+      "gestoppt": "Gestoppt",
+      "fortgesetzt": "Fortgesetzt",
+      "verschoben": "Verschoben"
     },
     "editor": {
       "beschreibung": "Wenn … (Auslöser), nur wenn … (Bedingungen), dann … (Aktionen der Reihe nach).",
@@ -5687,7 +5731,19 @@
       "modus": "Was nach aussen geht",
       "aktiv": "Eingeschaltet",
       "weg": "In den Papierkorb",
-      "wirklichWeg": "Wirklich in den Papierkorb?"
+      "wirklichWeg": "Wirklich in den Papierkorb?",
+      "arbeitstage": "In Arbeitstagen (ohne Wochenende und Feiertage)",
+      "ersatzMail": "Ohne Mail-Adresse: Anruf-Aufgabe statt Mail",
+      "ersatzSms": "Ohne Handynummer: Anruf-Aufgabe statt SMS",
+      "sonstWas": "Wenn nicht mehr nötig",
+      "sonstArt": {
+        "ende": "Lauf beenden",
+        "ueberspringen": "Nur den nächsten Schritt überspringen"
+      },
+      "schutz": "Schutz für Kunden",
+      "probelauf": "Probelauf",
+      "aenderungen": "Änderungen",
+      "duplizieren": "Duplizieren"
     },
     "protokoll": {
       "zeit": "Gestartet",
@@ -5703,7 +5759,8 @@
         "offen": "Offen",
         "fertig": "Fertig",
         "uebersprungen": "Übersprungen",
-        "fehler": "Fehler"
+        "fehler": "Fehler",
+        "gestoppt": "Gestoppt"
       },
       "leerTitel": "Noch keine Läufe",
       "leerText": "Sobald etwas passiert, steht hier jeder Lauf mit seinen Schritten.",
@@ -5724,6 +5781,180 @@
       "bewertung_link_fr": "Link für Bewertungen (Romandie)",
       "bewertung_link_hilfe": "Z. B. Google-Bewertung; erscheint im Platzhalter {Bewertungslink}. Kunden mit Sprache Französisch bekommen den Link der Romandie.",
       "linkFalsch": "Bitte eine Adresse mit https:// eingeben."
+    },
+    "bereich": {
+      "verkauf": "Verkauf",
+      "offerten": "Offerten",
+      "projekte": "Projekte",
+      "service": "Service und Anlagen",
+      "finanzen": "Finanzen",
+      "marketing": "Marketing und Weiteres"
+    },
+    "liste": {
+      "suche": "Automation suchen",
+      "filterTitel": "Automationen filtern",
+      "keine": "Keine Automation passt zum Filter.",
+      "zuletzt": "zuletzt {{zeit}}",
+      "filter": {
+        "alle": "Alle",
+        "aktiv": "Eingeschaltet",
+        "aus": "Ausgeschaltet",
+        "fehler": "Mit Fehlern",
+        "aussen": "Geht an Kunden"
+      }
+    },
+    "uebersicht": {
+      "motorOk": "Motor läuft",
+      "motorStill": "Motor steht",
+      "motorZuletzt": "zuletzt {{zeit}}",
+      "motorNie": "noch nie gelaufen",
+      "aktivVon": "{{aktiv}} von {{alle}} eingeschaltet",
+      "wartend_one": "{{count}} Lauf wartet",
+      "wartend_other": "{{count}} Läufe warten",
+      "erledigt": "Diese Woche erledigt",
+      "gespart": "ca. {{dauer}} Handarbeit gespart",
+      "wirkung": {
+        "aufgabe_one": "{{count}} Aufgabe",
+        "aufgabe_other": "{{count}} Aufgaben",
+        "mail_one": "{{count}} Mail",
+        "mail_other": "{{count}} Mails",
+        "sms_one": "{{count}} SMS",
+        "sms_other": "{{count}} SMS",
+        "benachrichtigt_one": "{{count}} Meldung",
+        "benachrichtigt_other": "{{count}} Meldungen",
+        "rechnung_entwurf_one": "{{count}} Rechnungsentwurf",
+        "rechnung_entwurf_other": "{{count}} Rechnungsentwürfe",
+        "wiedervorlage_one": "{{count}} Wiedervorlage",
+        "wiedervorlage_other": "{{count}} Wiedervorlagen"
+      },
+      "mailsWartend": "Warten auf Freigabe",
+      "mailsAlt_one": "{{count}} liegt seit über 2 Tagen",
+      "mailsAlt_other": "{{count}} liegen seit über 2 Tagen",
+      "mailsFreigegeben_one": "{{count}} diese Woche freigegeben",
+      "mailsFreigegeben_other": "{{count}} diese Woche freigegeben",
+      "zumAusgang": "Zum Ausgangskorb",
+      "rechnungen": "Rechnungsentwürfe offen",
+      "rechnungenHilfe": "von Automationen vorbereitet, noch nicht gestellt",
+      "probleme": "Probleme (7 Tage)",
+      "vorwoche_one": "Vorwoche {{count}}",
+      "vorwoche_other": "Vorwoche {{count}}",
+      "zumProtokoll": "Zum Protokoll",
+      "aufmerksamkeit": "Braucht Aufmerksamkeit",
+      "siebenTage": "letzte 7 Tage",
+      "allesGut": "Alles in Ordnung: keine Fehler und keine fehlenden Adressen.",
+      "beheben": "Beheben",
+      "wiederholen": "Wiederholen",
+      "naechste": "Nächste 24 Stunden",
+      "alleGeplant": "Alles Geplante",
+      "nichtsGeplant": "In den nächsten 24 Stunden ist nichts geplant.",
+      "ausgeschaltet": "Ausgeschaltet",
+      "ausVon": "von {{von}}, {{zeit}}",
+      "ausSeit": "seit {{zeit}}"
+    },
+    "geplant": {
+      "wann": "Wann",
+      "fuer": "Für",
+      "knoepfe": "Aktionen",
+      "suche": "Kunde, Offerte, Text suchen",
+      "filterTitel": "Geplantes filtern",
+      "leerTitel": "Nichts geplant",
+      "leerText": "Sobald eine Automation wartet, steht hier, was sie als Nächstes tut.",
+      "filter": {
+        "alle": "Alle",
+        "heute": "Heute",
+        "woche": "7 Tage",
+        "aussen": "An Kunden",
+        "gestoppt": "Gestoppt"
+      }
+    },
+    "lesesatz": {
+      "wenn": "Wenn «{{ausloeser}}»",
+      "bedingungen_one": "und {{count}} Bedingung erfüllt ist",
+      "bedingungen_other": "und {{count}} Bedingungen erfüllt sind",
+      "sofort": "sofort {{was}}",
+      "nachTagen_one": "nach {{count}} Tag {{was}}",
+      "nachTagen_other": "nach {{count}} Tagen {{was}}",
+      "nachArbeitstagen_one": "nach {{count}} Arbeitstag {{was}}",
+      "nachArbeitstagen_other": "nach {{count}} Arbeitstagen {{was}}",
+      "freigabe": "Mails und SMS warten auf Freigabe.",
+      "automatisch": "Mails und SMS gehen ohne Klick hinaus.",
+      "fenster": "Nachrichten an Kunden nur im Versandfenster."
+    },
+    "probe": {
+      "datensatz": "Datensatz für den Probelauf",
+      "keinDatensatz": "Kein Datensatz vorhanden",
+      "starten": "Probelauf",
+      "hinweis": "Rechnet die Automation für diesen Datensatz durch, wie sie jetzt im Editor steht. Es wird nichts angelegt und nichts gesendet.",
+      "ohneTabelle": "Dieser Auslöser hat keinen Datensatz, ein Probelauf ist nicht möglich.",
+      "an": "an {{an}}",
+      "personen": "für {{personen}}",
+      "faellig": "fällig am {{am}}",
+      "ergebnis": {
+        "ok": "Würde laufen",
+        "fehler": "Fehler",
+        "uebersprungen": "Würde übersprungen",
+        "wartet": "Wartet",
+        "server": "Auf dem Server"
+      }
+    },
+    "schutz": {
+      "titel": "Schutz für Kunden",
+      "text": "Gilt für alle Automationen, die Mails oder SMS an Kunden schicken. Eine einzelne Automation kann es im Editor anders einstellen.",
+      "fenster": "Versandfenster",
+      "von": "Von",
+      "bis": "Bis",
+      "zeitFalsch": "«Bis» muss nach «Von» sein.",
+      "fensterHilfe": "Ausserhalb wartet die Nachricht bis zum nächsten erlaubten Zeitpunkt. Die SMS am Vortag eines Termins ist ausgenommen.",
+      "tag": {
+        "1": "Mo",
+        "2": "Di",
+        "3": "Mi",
+        "4": "Do",
+        "5": "Fr",
+        "6": "Sa",
+        "7": "So"
+      },
+      "kontakt_pause_tage": "Kontakt-Pause (Tage)",
+      "kontakt_pause_tage_hilfe": "Höchstens eine automatische Nachricht pro Kunde in so vielen Tagen. Zahlungserinnerungen zählen nicht mit.",
+      "lead_ohne_kontakt_tage": "Lead ohne Kontakt nach (Arbeitstagen)",
+      "lead_ohne_kontakt_tage_hilfe": "Auslöser «Lead ohne Kontakt»: so lange ohne Anruf, Mail oder Termin.",
+      "garantie_vorlauf_tage": "Garantie: Vorlauf (Tage)",
+      "garantie_vorlauf_tage_hilfe": "So viele Tage vor Ablauf der Garantie löst «Garantie läuft ab» aus.",
+      "feiertage": "Feiertage",
+      "feiertageHilfe_one": "{{count}} Feiertag, ein Datum pro Zeile (z. B. 25.12.2026). Zählen nicht als Arbeitstag.",
+      "feiertageHilfe_other": "{{count}} Feiertage, ein Datum pro Zeile (z. B. 25.12.2026). Zählen nicht als Arbeitstag.",
+      "feiertageFalsch": "Nicht lesbar: {{liste}}",
+      "jeAutomation": "Standard aus den Schutzregeln (Einstellungen) oder jederzeit.",
+      "wahl": {
+        "standard": "Wie in den Schutzregeln",
+        "immer": "Jederzeit senden"
+      },
+      "pauseLeer": "Leer = wie in den Schutzregeln, 0 = keine Pause."
+    },
+    "aenderungen": {
+      "keine": "Noch keine Änderung.",
+      "aktion": {
+        "erstellt": "angelegt",
+        "geaendert": "geändert",
+        "geloescht": "gelöscht",
+        "papierkorb": "in den Papierkorb gelegt",
+        "wiederhergestellt": "wiederhergestellt"
+      },
+      "feld": {
+        "aktiv": "ein/aus",
+        "modus": "Modus",
+        "aktionen": "Aktionen",
+        "bedingungen": "Bedingungen",
+        "ausloeser": "Auslöser",
+        "name_de": "Name",
+        "name_fr": "Name FR",
+        "beschreibung_de": "Beschreibung",
+        "beschreibung_fr": "Beschreibung FR",
+        "versandfenster": "Versandfenster",
+        "kontakt_pause_tage": "Kontakt-Pause",
+        "reihenfolge": "Reihenfolge",
+        "geloescht_am": "Papierkorb"
+      }
     }
   },
   "aufgaben": {
@@ -8267,5 +8498,38 @@
       "bau_status": "Bau",
       "paket": "Paket"
     }
+  },
+  "automatik": {
+    "titel": "Automatisch geplant",
+    "anzahl_one": "{{count}} Schritt",
+    "anzahl_other": "{{count}} Schritte",
+    "hinweis": "Kommt das CRM dem Kunden zuvor, weil er schon angerufen hat? Hier für diesen Fall stoppen oder verschieben.",
+    "schrittVon": "Schritt {{schritt}} von {{schritte}}",
+    "gestopptAm": "Angehalten",
+    "grundIst": "Grund: {{grund}}",
+    "plus7": "+7 Tage",
+    "jetzt": "Jetzt",
+    "stoppenKurz": "Stoppen",
+    "stoppen": "Für diesen Fall stoppen",
+    "stoppenFall": "Für diesen Fall stoppen",
+    "stoppenTitel": "«{{name}}» stoppen",
+    "stoppenText": "Nur für diesen Datensatz. Die Automation läuft für alle anderen weiter. Fortsetzen geht jederzeit.",
+    "grund": "Grund",
+    "grundHinweis": "Steht in der Zeitachse des Kunden, damit alle wissen, warum nichts mehr kommt.",
+    "grundBeispiel": "z. B. Kunde meldet sich nach den Ferien selbst",
+    "fortsetzen": "Fortsetzen",
+    "gestoppt": "Für diesen Fall gestoppt",
+    "fortgesetzt": "Läuft wieder",
+    "verschoben_one": "Um {{count}} Tag verschoben",
+    "verschoben_other": "Um {{count}} Tage verschoben",
+    "jetztOk": "Läuft in der nächsten Minute (Versandfenster gilt weiter)",
+    "fehler": "Das hat nicht geklappt. Bitte nochmals versuchen.",
+    "warum": "Warum?",
+    "warumTitel": "Woher kommt diese Aufgabe?",
+    "warumSatz": "Die Automation «{{name}}» hat sie angelegt, ausgelöst durch «{{ausloeser}}» am {{zeit}}.",
+    "fuer": "Für:",
+    "datensatzOeffnen": "Datensatz öffnen",
+    "warumHinweis": "Passt die Regel grundsätzlich nicht, bitte der Administration melden. Sie kann die Automation anpassen.",
+    "warumUnbekannt": "Diese Aufgabe stammt nicht aus einer Automation, die du sehen darfst."
   }
 }

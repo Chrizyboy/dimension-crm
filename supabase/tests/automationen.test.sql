@@ -11,6 +11,9 @@ select plan(41);
 -- Eigene Ausgangslage: die mitgelieferten Vorlagen ausschalten, damit nur die Test-Automationen laufen.
 update public.automationen set aktiv = false where vorlage is not null;
 update intern.automation_signale set verteilt = true where not verteilt;
+-- Versandfenster und Kontakt-Pause (Entscheid 0039) prüft automationen_ausbau.test.sql; hier immer senden.
+update public.einstellungen set wert = wert || '{"versandfenster": {"immer": true}, "kontakt_pause_tage": 0}'
+ where schluessel = 'automationen';
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000012a1', 'p12-vk@test.local'),
@@ -23,8 +26,8 @@ insert into public.kontakte (id, art, kontaktart, vorname, nachname, email, tele
 
 -- Katalog und Vorlagen
 select is(jsonb_array_length(public.automation_katalog() -> 'ereignisse'), 21, 'Katalog kennt 21 Auslöser (11 aus Phase 12, 6 für Service, Rapport, Bestellung, 4 für Projekte und Termine)');
-select is((select count(*)::int from public.automationen where vorlage is not null and geloescht_am is null), 26,
-  '10 Vorlagen aus dem Auftrag, Meilenstein-Meldung, 6 für Service, Rapport und Bestellung, 4 für Projekte, 2 SMS am Vortag, Rapport an Kunde, Rate Montage, Wartungsrechnung');
+select is((select count(*)::int from public.automationen where vorlage is not null and geloescht_am is null), 30,
+  '10 Vorlagen aus dem Auftrag, Meilenstein-Meldung, 6 für Service, Rapport und Bestellung, 4 für Projekte, 2 SMS am Vortag, Rapport an Kunde, Rate Montage, Wartungsrechnung, 4 aus dem Ausbau (Entscheid 0044)');
 select is((select count(*)::int from public.automationen where vorlage is not null and modus <> 'freigabe'), 0,
   'alle Vorlagen stehen auf «mit Freigabe»');
 
