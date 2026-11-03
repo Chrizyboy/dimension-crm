@@ -8824,7 +8824,7 @@
         "normal": "Normal",
         "dringend": "Dringend"
       },
-      "dateien": "Bildschirmfotos oder Dateien",
+      "dateien": "Bildschirmfotos und Fotos",
       "dateienHinweis": "Ein Bildschirmfoto hilft am meisten.",
       "intro": "Deine Meldungen und die Antworten der Administration.",
       "introAdmin": "Alle Meldungen der Mitarbeitenden. Das CRM prüft jede Meldung und schreibt eine Einschätzung; entschieden wird mit «Erledige es» oder «Nicht». Die meldende Person sieht die Antwort hier, in der Glocke und per Mail.",
@@ -8878,7 +8878,19 @@
       "entscheidet": "Über Meldungen entscheidet",
       "alleAdmins": "Niemand gewählt: alle aus der Administration sehen die Einschätzung in der Glocke und können entscheiden.",
       "perSms": "Einschätzung zusätzlich per SMS",
-      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
+      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS.",
+      "fotoAufnehmen": "Foto aufnehmen",
+      "bildWaehlen": "Bild wählen",
+      "bilderHinweisPc": "Bildschirmfoto mit Windows+Umschalt+S, dann hier Strg+V. Oder Bild hierher ziehen.",
+      "bilderHinweisHandy": "Foto vom Bildschirm oder von der Stelle, die nicht geht.",
+      "bilderVoll": "Höchstens {{max}} Anhänge.",
+      "bildEntfernen": "{{name}} entfernen",
+      "bildGross": "{{name}} gross anzeigen",
+      "bildVon": "Bild {{nr}} von {{von}}",
+      "bildZurueck": "Vorheriges Bild",
+      "bildWeiter": "Nächstes Bild",
+      "bildOeffnen": "In neuem Fenster",
+      "bildAnhaengen": "Bild anhängen"
     },
     "anleitung": {
       "schneller": "So geht es schneller",

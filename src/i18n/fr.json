@@ -8824,7 +8824,7 @@
         "normal": "Normale",
         "dringend": "Urgente"
       },
-      "dateien": "Captures d’écran ou fichiers",
+      "dateien": "Captures d’écran et photos",
       "dateienHinweis": "Une capture d’écran aide le plus.",
       "intro": "Tes signalements et les réponses de l’administration.",
       "introAdmin": "Tous les signalements de l’équipe. Le CRM examine chaque signalement et rédige une évaluation ; la décision se prend avec « Règle-le » ou « Non ». La personne voit la réponse ici, dans la cloche et par e-mail.",
@@ -8878,7 +8878,19 @@
       "entscheidet": "Décide des signalements",
       "alleAdmins": "Personne de choisi : toute l’administration voit l’évaluation dans la cloche et peut décider.",
       "perSms": "Évaluation aussi par SMS",
-      "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
+      "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS.",
+      "fotoAufnehmen": "Prendre une photo",
+      "bildWaehlen": "Choisir une image",
+      "bilderHinweisPc": "Capture avec Windows+Maj+S, puis Ctrl+V ici. Ou glisse l’image ici.",
+      "bilderHinweisHandy": "Photo de l’écran ou de l’endroit qui ne fonctionne pas.",
+      "bilderVoll": "{{max}} pièces jointes au maximum.",
+      "bildEntfernen": "Retirer {{name}}",
+      "bildGross": "Agrandir {{name}}",
+      "bildVon": "Image {{nr}} sur {{von}}",
+      "bildZurueck": "Image précédente",
+      "bildWeiter": "Image suivante",
+      "bildOeffnen": "Dans une nouvelle fenêtre",
+      "bildAnhaengen": "Joindre une image"
     },
     "anleitung": {
       "schneller": "Pour aller plus vite",
