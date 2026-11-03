@@ -3000,6 +3000,19 @@
     "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
     "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
     "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
+    "finanzen_mahnung_nur_freigeber": "Seule la personne désignée valide les relances et rappels. Dépose l’e-mail dans la boîte d’envoi.",
+    "finanzen_datum_fehlt": "Merci d’indiquer une date.",
+    "finanzen_art_ungueltig": "Ce type n’existe pas.",
+    "finanzen_text_fehlt": "Merci de saisir un texte.",
+    "finanzen_betrag_ungueltig": "Le montant n’est pas valable ou dépasse le solde ouvert.",
+    "finanzen_nur_projektleiter": "Seul le chef de projet responsable peut lancer la facturation.",
+    "finanzen_meilenstein_offen": "L’étape n’est pas encore atteinte.",
+    "finanzen_keine_buchhaltung": "Personne avec le droit « Finances » ne peut reprendre la facture.",
+    "finanzen_nicht_dein_visum": "Ce visa appartient à quelqu’un d’autre.",
+    "finanzen_vier_augen": "Le second visa doit être donné par une autre personne que le premier.",
+    "finanzen_visum_nicht_offen": "Cette facture n’attend aucun visa.",
+    "finanzen_eingang_fest": "Les factures fournisseurs payées ou annulées ne sont plus modifiables.",
+    "finanzen_nicht_bereit": "Marquer comme payée seulement après tous les visas.",
     "preise_nur_admin": "Seule l'administration peut faire cela.",
     "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
     "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
@@ -6221,7 +6234,11 @@
       "rechnungen": "Factures",
       "verrechnen": "À facturer",
       "firmen": "Sociétés & réglages",
-      "heute": "À vérifier"
+      "heute": "À vérifier",
+      "uebersicht": "Aperçu",
+      "mahnlauf": "Relances",
+      "eingang": "Factures fournisseurs",
+      "projekte": "Mes projets"
     },
     "filter": "Filtrer les factures",
     "filterwert": {
@@ -6229,7 +6246,10 @@
       "ueberfaellig": "En retard",
       "entwuerfe": "Brouillons",
       "bezahlt": "Payées",
-      "alle": "Toutes"
+      "alle": "Toutes",
+      "gemahnt": "Relancées",
+      "sperre": "Blocage relance",
+      "nichtVersendet": "Non envoyées"
     },
     "suche": "Numéro, client, projet …",
     "export": "Exporter la liste",
@@ -6289,7 +6309,21 @@
       "erstellen": "Créer la facture",
       "nachBau": "selon l’avancement",
       "leer": "Rien à facturer",
-      "leerText": "Toutes les tranches et tous les rapports payants ont une facture."
+      "leerText": "Toutes les tranches et tous les rapports payants ont une facture.",
+      "meilenstein": {
+        "ibn": "après la mise en service",
+        "montage": "après le montage",
+        "vertrag": "à la signature",
+        "baubeginn": "avant le début des travaux",
+        "datum": "selon la date"
+      },
+      "erreicht": "Étape atteinte",
+      "offen": "Étape pas encore atteinte",
+      "ausgeloest": "lancé par {{wer}}",
+      "wartetPl": "attend {{wer}}",
+      "ausloesen": "Lancer la facturation",
+      "ausgeloestOk": "Facturation lancée. La comptabilité vérifie et émet la facture.",
+      "projektleitung": "Direction de projet"
     },
     "akte": {
       "titel": "Facture",
@@ -6310,7 +6344,68 @@
       "mail": "Par e-mail",
       "zahlung": "Saisir un paiement",
       "stornieren": "Annuler",
-      "entwurfLoeschen": "Supprimer le brouillon"
+      "entwurfLoeschen": "Supprimer le brouillon",
+      "schritt": {
+        "entwurf": "Brouillon",
+        "gestellt": "Émise",
+        "versendet": "Envoyée",
+        "erinnerung": "Rappel",
+        "mahnung": "{{stufe}}e relance",
+        "bezahlt": "Payée"
+      },
+      "empfaenger": "Destinataire",
+      "rechnungAn": "Facture à",
+      "referenz": "Référence client",
+      "versandweg": "Envoi",
+      "versand": {
+        "mail": "E-mail",
+        "post": "Poste"
+      },
+      "angabenAendern": "Modifier",
+      "verlauf": "Historique",
+      "notizPlatzhalter": "Qu’a-t-on convenu avec le client ?",
+      "notizArt": {
+        "notiz": "Note",
+        "anruf": "Appel",
+        "mail": "E-mail"
+      },
+      "notizSpeichern": "Ajouter",
+      "mahnsperre": "Blocage relance",
+      "mahnsperreBis": "Blocage jusqu’au {{datum}} : {{grund}}",
+      "zusage": "Promesse de paiement",
+      "zusageBis": "Paiement promis jusqu’au {{datum}}",
+      "ausbuchen": "Passer en perte",
+      "ausgebucht": "Passé en perte {{betrag}} ({{art}}) : {{grund}}",
+      "zahlungsplan": "Plan de paiement {{nummer}}",
+      "projektleiter": "Direction de projet",
+      "versendetNein": "Pas encore envoyée",
+      "keinVerlauf": "Aucune entrée.",
+      "erinnert": "Rappel le {{datum}}",
+      "verlaufArt": {
+        "notiz": "Note",
+        "anruf": "Appel",
+        "mail": "E-mail",
+        "zusage": "Promesse",
+        "mahnsperre": "Blocage",
+        "ausgebucht": "Perte",
+        "system": "Système",
+        "zahlung": "Paiement {{betrag}}",
+        "versand": "Envoi",
+        "gestellt": "Émise"
+      },
+      "mailArt": {
+        "rechnung": "Facture par e-mail",
+        "mahnung": "Relance par e-mail",
+        "zahlungserinnerung": "Rappel par e-mail"
+      },
+      "mailStand": {
+        "wartet": "attend validation",
+        "freigegeben": "validé",
+        "gesendet": "envoyé",
+        "fehler": "erreur",
+        "verworfen": "rejeté"
+      },
+      "mehr": "Autres actions"
     },
     "pos": {
       "text": "Texte",
@@ -6356,7 +6451,9 @@
       "betreff": "Facture {{nummer}} · {{titel}}",
       "text": "Bonjour\n\nVeuillez trouver ci-joint notre facture {{nummer}} d’un montant de {{betrag}}, payable jusqu’au {{faellig}}.\n\nNous vous remercions de votre confiance.\n\nMeilleures salutations",
       "mahnungBetreff": "{{stufe}}e rappel · facture {{nummer}}",
-      "mahnungText": "Bonjour\n\nNotre facture {{nummer}} est encore ouverte. Nous vous prions de verser le montant de {{betrag}} d’ici au {{frist}}. Vous trouverez le bulletin de versement en annexe.\n\nSi votre paiement a croisé ce courrier, merci de ne pas en tenir compte.\n\nMeilleures salutations"
+      "mahnungText": "Bonjour\n\nNotre facture {{nummer}} est encore ouverte. Nous vous prions de verser le montant de {{betrag}} d’ici au {{frist}}. Vous trouverez le bulletin de versement en annexe.\n\nSi votre paiement a croisé ce courrier, merci de ne pas en tenir compte.\n\nMeilleures salutations",
+      "erinnerungBetreff": "Rappel de paiement · facture {{nummer}}",
+      "erinnerungText": "Bonjour\n\nCela vous a peut-être échappé : notre facture {{nummer}} de {{betrag}} était payable le {{faellig}}. Nous vous prions de bien vouloir effectuer le virement dans les prochains jours. Vous trouverez la facture avec le bulletin de versement en annexe.\n\nSi vous avez déjà payé, veuillez ne pas tenir compte de ce message.\n\nMeilleures salutations"
     },
     "firma": {
       "name": "Société",
@@ -6404,7 +6501,8 @@
       "gruss": "Meilleures salutations",
       "mahntext1": "Notre facture {{nummer}} du {{datum}} est encore ouverte. Merci de verser le montant ouvert d’ici au délai indiqué ci-dessous.",
       "mahntext2": "Malgré notre rappel, la facture {{nummer}} du {{datum}} est toujours ouverte. Merci de régler le montant d’ici au délai indiqué ci-dessous.",
-      "mahntext3": "Dernier rappel : la facture {{nummer}} du {{datum}} est toujours ouverte. Sans paiement dans le délai, nous engagerons d’autres démarches."
+      "mahntext3": "Dernier rappel : la facture {{nummer}} du {{datum}} est toujours ouverte. Sans paiement dans le délai, nous engagerons d’autres démarches.",
+      "referenz": "Votre référence"
     },
     "qr": {
       "empfangsschein": "Récépissé",
@@ -6441,6 +6539,230 @@
       "fehler": "Échec de l’envoi",
       "alleFreigeben_one": "Valider la relance",
       "alleFreigeben_other": "Valider les {{count}}"
+    },
+    "uebersicht": {
+      "offen": "ouvert ({{n}} factures)",
+      "ueberfaellig": "en retard ({{n}})",
+      "erwartet": "attendu dans 30 jours",
+      "gestelltMonat": "émis ce mois",
+      "zuVerrechnen": "Étape atteinte, sans facture ({{n}})",
+      "tage": "Ø jours jusqu’au paiement",
+      "tageWert": "{{n}} jours",
+      "heute": "À faire aujourd’hui",
+      "nichtsZuTun": "Tout est fait. Rien ne t’attend.",
+      "oeffnen": "Ouvrir",
+      "alter": "Ancienneté des factures ouvertes",
+      "alterWert": {
+        "nicht_faellig": "pas échu",
+        "bis_30": "1–30 jours",
+        "bis_60": "31–60 jours",
+        "bis_90": "61–90 jours",
+        "ueber_90": "plus de 90 jours"
+      },
+      "firmen": "Ouvert par site",
+      "groesste": "Plus gros retards",
+      "tageUeber": "{{n}} jours",
+      "keineUeberfaelligen": "Aucune facture en retard.",
+      "aufgabe": {
+        "entwuerfe": "{{n}} brouillons à vérifier et émettre",
+        "entwuerfeText": "total {{betrag}}, dont {{ausgeloest}} lancés par la direction de projet",
+        "mahnlauf": "Relances : {{n}} factures à valider",
+        "mahnlaufText": "total ouvert {{betrag}}. Rien ne part avant la validation.",
+        "verrechnen": "{{n}} étapes atteintes, encore sans facture",
+        "verrechnenText": "total {{betrag}}. La direction de projet lance la facturation.",
+        "nichtVersendet": "{{n}} émises mais non envoyées",
+        "nichtVersendetText": "depuis plus de 2 jours, ni dans AbaNinja ni par e-mail",
+        "kleinerRest": "{{n}} factures avec un petit solde",
+        "kleinerRestText": "passer en perte (arrondi, escompte) ou demander au client",
+        "zusage": "{{n}} promesses de paiement échues",
+        "zusageText": "vérifier si le paiement est arrivé",
+        "eingang": "{{n}} factures fournisseurs prêtes au paiement",
+        "eingangText": "visées, à payer dans AbaNinja",
+        "visum": "{{n}} factures fournisseurs attendent un visa",
+        "visumText": "chez la direction de projet ou la direction"
+      }
+    },
+    "angaben": {
+      "titel": "Données de {{nummer}}",
+      "text": "Ces données restent modifiables après l’émission. Les montants restent fixes.",
+      "abweichend": "Adresse de facturation différente (p. ex. gérance)",
+      "name": "Nom / entreprise",
+      "zusatz": "Complément (p. ex. comptabilité)",
+      "strasse": "Rue et n°",
+      "plz": "NPA",
+      "ort": "Localité",
+      "email": "E-mail pour les factures",
+      "referenz": "Référence du client (n° de commande)",
+      "versandweg": "Envoi",
+      "speichern": "Enregistrer"
+    },
+    "sperre": {
+      "titel": "Blocage des relances",
+      "text": "Jusqu’à cette date, la facture n’est pas proposée dans les relances.",
+      "bis": "Jusqu’au",
+      "grund": "Motif",
+      "aufheben": "Lever",
+      "setzen": "Bloquer les relances"
+    },
+    "zusage": {
+      "titel": "Promesse de paiement",
+      "text": "Le client a promis le paiement. Pas de relance jusque-là.",
+      "bis": "Paiement jusqu’au",
+      "text2": "Note (qui, comment)",
+      "setzen": "Enregistrer la promesse"
+    },
+    "ausbuchen": {
+      "titel": "Passer le solde en perte",
+      "text": "Ouvert : {{offen}}. Le montant n’est plus attendu ; la comptabilisation se fait dans AbaNinja.",
+      "betrag": "Montant CHF",
+      "art": "Type",
+      "arten": {
+        "rundung": "Arrondi",
+        "skonto": "Escompte",
+        "kulanz": "Geste commercial / note de crédit",
+        "verlust": "Perte (irrécouvrable)"
+      },
+      "grund": "Motif",
+      "setzen": "Passer en perte"
+    },
+    "mahnlauf": {
+      "titel": "Relances du {{datum}}",
+      "text": "Chaque lundi, Dimension Work prépare les relances. Rien ne part avant la validation par la personne désignée.",
+      "nurFreigeber": "Seule la personne désignée (Chris) peut valider. Tu vois la proposition.",
+      "freigeben": "Valider {{n}}",
+      "leer": "Rien à relancer",
+      "leerText": "Aucune facture en retard n’a besoin d’un rappel ou d’une relance aujourd’hui.",
+      "stufe": {
+        "0": "Rappel",
+        "1": "1re relance",
+        "2": "2e relance",
+        "3": "3e relance"
+      },
+      "betreibung": "Examiner la poursuite",
+      "grund": {
+        "klein": "solde sous le minimum",
+        "sperre": "blocage des relances",
+        "zusage": "paiement promis",
+        "unterwegs": "déjà dans la boîte d’envoi",
+        "reklamation": "réclamation ouverte au service"
+      },
+      "spalte": {
+        "rechnung": "Facture",
+        "kunde": "Client",
+        "offen": "Ouvert",
+        "tage": "Retard",
+        "schritt": "Étape suivante",
+        "versand": "Envoi"
+      },
+      "tage": "{{n}} jours",
+      "keineMail": "pas d’e-mail, par poste",
+      "fertig": "{{mail}} e-mails validés, {{post}} par poste",
+      "postPdf": "Pour la poste : le PDF s’ouvre pour l’impression.",
+      "vorschau": "Aperçu",
+      "alleWaehlen": "Tout choisir",
+      "ueberspringen": "Ignorée"
+    },
+    "projekte": {
+      "titel": "État des paiements de mes projets",
+      "text": "Projets que tu diriges ou as vendus. Lecture seule : émettre, relancer et saisir les paiements, c’est la comptabilité.",
+      "leer": "Aucun projet en cours",
+      "leerText": "Dès qu’un projet avec plan de paiement t’appartient, il apparaît ici.",
+      "vertrag": "Contrat",
+      "bezahlt": "payé",
+      "offen": "émis, ouvert",
+      "rest": "encore à facturer",
+      "ueberfaellig": "en retard {{betrag}}",
+      "alle": "Tous les projets",
+      "tranche": {
+        "bezahlt": "payé le {{datum}}",
+        "gestellt": "{{nummer}} émise, échéance {{datum}}",
+        "ueberfaellig": "{{nummer}} en retard depuis le {{datum}}",
+        "entwurf": "à la comptabilité",
+        "bereit": "Étape atteinte",
+        "wartet": "Étape pas encore atteinte"
+      },
+      "andere": "Autres factures"
+    },
+    "eingang": {
+      "titel": "Factures fournisseurs",
+      "text": "Factures fournisseurs d’AbaNinja et saisies à la main. Premier visa par la direction de projet, dès {{betrag}} ou sans commande aussi par la direction. Le paiement se fait dans AbaNinja.",
+      "neu": "Saisir une facture",
+      "filter": "Filtrer les factures fournisseurs",
+      "filterwert": {
+        "meine": "Mes visas",
+        "offen": "En visa",
+        "bereit": "Prêtes au paiement",
+        "neu": "Sans projet",
+        "bezahlt": "Payées",
+        "abgelehnt": "Refusées",
+        "alle": "Toutes"
+      },
+      "status": {
+        "neu": "Sans projet",
+        "visum_pl": "Visa direction de projet",
+        "visum_gl": "Visa direction",
+        "bereit": "Prête au paiement",
+        "bezahlt": "Payée",
+        "abgelehnt": "Refusée",
+        "storniert": "Annulée"
+      },
+      "spalte": {
+        "lieferant": "Fournisseur",
+        "projekt": "Projet",
+        "betrag": "Montant",
+        "faellig": "Échéance",
+        "bestellung": "Commande",
+        "visum": "État"
+      },
+      "leer": "Aucune facture fournisseur",
+      "leerText": "Les factures fournisseurs arrivent avec la synchronisation AbaNinja ou via « Saisir une facture ».",
+      "skonto": "{{prozent}} % d’escompte jusqu’au {{datum}}",
+      "wartetAuf": "attend {{wer}}",
+      "suche": "Fournisseur, numéro, projet …",
+      "akte": {
+        "titel": "Facture fournisseur",
+        "angaben": "Données",
+        "bestellung": "Commande {{nummer}}",
+        "keineBestellung": "Aucune commande liée. Il faut donc aussi le visa de la direction.",
+        "artikel": "Article",
+        "bestellt": "Commandé",
+        "geliefert": "Livré",
+        "differenz": "Facture moins commande (TVA incl.)",
+        "visa": "Visas",
+        "erstvisum": "Premier visa direction de projet",
+        "zweitvisum": "Second visa direction",
+        "nichtNoetig": "pas nécessaire",
+        "offen": "ouvert",
+        "visieren": "Viser",
+        "ablehnen": "Refuser",
+        "bemerkung": "Remarque (facultatif)",
+        "grund": "Motif du refus",
+        "bezahlt": "Marquer comme payée",
+        "aendern": "Modifier",
+        "beleg": "Ouvrir le justificatif",
+        "abgelehnt": "Refusée par {{wer}} : {{grund}}",
+        "visiert": "{{wer}} le {{datum}}",
+        "ok": "Visa donné",
+        "abgelehntOk": "Refusée, la comptabilité clarifie avec le fournisseur"
+      },
+      "dialog": {
+        "titel": "Saisir une facture fournisseur",
+        "aendern": "Modifier la facture fournisseur",
+        "lieferant": "Fournisseur",
+        "nummer": "N° de facture",
+        "datum": "Date de facture",
+        "faellig": "Échéance",
+        "betrag": "Montant TVA incl. (CHF)",
+        "skonto": "Escompte %",
+        "skontoBis": "Escompte jusqu’au",
+        "projekt": "N° de projet",
+        "bestellung": "N° de commande",
+        "text": "Texte",
+        "beleg": "Justificatif (PDF ou photo)",
+        "speichern": "Enregistrer",
+        "projektUnbekannt": "Le projet {{nummer}} n’existe pas.",
+        "bestellungUnbekannt": "La commande {{nummer}} n’existe pas."
+      }
     },
     "visum": {
       "titel": "Factures à viser",
@@ -8913,7 +9235,8 @@
       "fuerdich": "Pour toi",
       "kapitel": "Chapitres",
       "begriffe": "Termes A–Z",
-      "neu": "Nouveautés"
+      "neu": "Nouveautés",
+      "anleitung": "Mode d’emploi"
     },
     "nichtsGefunden": "Aucun résultat",
     "titelFeld": "Titre",
@@ -9063,7 +9386,9 @@
       "tippNeu": "Nouvelle entrée dans les listes",
       "tippFilter": "Dans les listes, aller au champ de recherche",
       "alleKuerzel": "Afficher tous les raccourcis (?)",
-      "tippHilfe": "Aide pour le domaine où tu te trouves"
+      "tippHilfe": "Aide pour le domaine où tu te trouves",
+      "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
+      "suche": "Chercher dans le mode d’emploi"
     },
     "fehler": {
       "titel": "Saisis un titre.",

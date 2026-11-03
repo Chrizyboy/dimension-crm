@@ -34,6 +34,8 @@ export interface FinanzEinstellungen {
   buchhaltung_email: string | null
   spesen_kategorien: SpesenKategorie[]
   spesen: SpesenRegeln
+  /** Eingangsrechnungen: ab diesem Betrag braucht es das Zweitvisum der Geschäftsleitung. */
+  eingang?: { visum_gl_ab_rappen?: number }
 }
 
 const STANDARD: FinanzEinstellungen = {

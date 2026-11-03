@@ -49,13 +49,17 @@ export async function ladeRechnung(id: string): Promise<RechnungVoll> {
       .maybeSingle(),
   ])
   if (f.error) throw f.error
+  // Abweichende Rechnungsadresse (Verwaltung) geht vor; ohne Adresse dort bleibt die des Kunden.
+  const an = liste.rechnung_an ?? {}
+  const eigeneAdresse = Boolean(an.strasse || an.ort)
   const empfaenger: Empfaenger = {
-    name: liste.kunde,
-    anrede: k.data?.anrede ?? null,
-    email: k.data?.email ?? null,
-    strasse: o.data?.strasse ?? null,
-    plz: o.data?.plz ?? null,
-    ort: o.data?.ort ?? null,
+    name: an.name?.trim() || liste.kunde,
+    zusatz: an.zusatz?.trim() || null,
+    anrede: an.name ? null : (k.data?.anrede ?? null),
+    email: an.email?.trim() || (k.data?.email ?? null),
+    strasse: eigeneAdresse ? (an.strasse ?? null) : (o.data?.strasse ?? null),
+    plz: eigeneAdresse ? (an.plz ?? null) : (o.data?.plz ?? null),
+    ort: eigeneAdresse ? (an.ort ?? null) : (o.data?.ort ?? null),
   }
   return {
     ...liste,

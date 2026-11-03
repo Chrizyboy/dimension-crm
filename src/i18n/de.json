@@ -3000,6 +3000,19 @@
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
     "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
+    "finanzen_mahnung_nur_freigeber": "Mahnungen und Zahlungserinnerungen gibt nur die Freigabe-Person frei. Lege die Mail in den Ausgangskorb.",
+    "finanzen_datum_fehlt": "Bitte ein Datum angeben.",
+    "finanzen_art_ungueltig": "Diese Art gibt es nicht.",
+    "finanzen_text_fehlt": "Bitte einen Text eingeben.",
+    "finanzen_betrag_ungueltig": "Der Betrag ist nicht gültig oder grösser als der offene Rest.",
+    "finanzen_nur_projektleiter": "Verrechnen auslösen darf nur der zuständige Projektleiter.",
+    "finanzen_meilenstein_offen": "Der Meilenstein ist noch nicht erreicht.",
+    "finanzen_keine_buchhaltung": "Es ist niemand mit Recht «Finanzen» angemeldet, der die Rechnung übernehmen kann.",
+    "finanzen_nicht_dein_visum": "Dieses Visum gehört jemand anderem.",
+    "finanzen_vier_augen": "Das Zweitvisum muss eine andere Person geben als das Erstvisum.",
+    "finanzen_visum_nicht_offen": "Diese Rechnung wartet auf kein Visum.",
+    "finanzen_eingang_fest": "Bezahlte oder stornierte Eingangsrechnungen lassen sich nicht mehr ändern.",
+    "finanzen_nicht_bereit": "Erst nach allen Visa als bezahlt markieren.",
     "preise_nur_admin": "Das darf nur die Administration.",
     "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
     "einkauf_rechnung_abweichung": "Die Rechnung weicht deutlich ab. Bitte in der Notiz begründen.",
@@ -6221,7 +6234,11 @@
       "rechnungen": "Rechnungen",
       "verrechnen": "Zu verrechnen",
       "firmen": "Firmen & Einstellungen",
-      "heute": "Heute prüfen"
+      "heute": "Heute prüfen",
+      "uebersicht": "Übersicht",
+      "mahnlauf": "Mahnlauf",
+      "eingang": "Eingangsrechnungen",
+      "projekte": "Meine Projekte"
     },
     "filter": "Rechnungen filtern",
     "filterwert": {
@@ -6229,7 +6246,10 @@
       "ueberfaellig": "Überfällig",
       "entwuerfe": "Entwürfe",
       "bezahlt": "Bezahlt",
-      "alle": "Alle"
+      "alle": "Alle",
+      "gemahnt": "Gemahnt",
+      "sperre": "Mahnsperre",
+      "nichtVersendet": "Nicht versendet"
     },
     "suche": "Nummer, Kunde, Projekt …",
     "export": "Liste exportieren",
@@ -6289,7 +6309,21 @@
       "erstellen": "Rechnung erstellen",
       "nachBau": "nach Baufortschritt",
       "leer": "Nichts zu verrechnen",
-      "leerText": "Alle Tranchen und kostenpflichtigen Rapporte haben eine Rechnung."
+      "leerText": "Alle Tranchen und kostenpflichtigen Rapporte haben eine Rechnung.",
+      "meilenstein": {
+        "ibn": "nach IBN",
+        "montage": "nach Montage",
+        "vertrag": "bei Unterzeichnung",
+        "baubeginn": "vor Baubeginn",
+        "datum": "nach Datum"
+      },
+      "erreicht": "Meilenstein erreicht",
+      "offen": "Meilenstein offen",
+      "ausgeloest": "ausgelöst von {{wer}}",
+      "wartetPl": "wartet auf {{wer}}",
+      "ausloesen": "Verrechnen auslösen",
+      "ausgeloestOk": "Verrechnung ausgelöst. Die Buchhaltung prüft und stellt die Rechnung.",
+      "projektleitung": "Projektleitung"
     },
     "akte": {
       "titel": "Rechnung",
@@ -6310,7 +6344,68 @@
       "mail": "Per Mail",
       "zahlung": "Zahlung erfassen",
       "stornieren": "Stornieren",
-      "entwurfLoeschen": "Entwurf löschen"
+      "entwurfLoeschen": "Entwurf löschen",
+      "schritt": {
+        "entwurf": "Entwurf",
+        "gestellt": "Gestellt",
+        "versendet": "Versendet",
+        "erinnerung": "Erinnerung",
+        "mahnung": "{{stufe}}. Mahnung",
+        "bezahlt": "Bezahlt"
+      },
+      "empfaenger": "Empfänger",
+      "rechnungAn": "Rechnung an",
+      "referenz": "Referenz Kunde",
+      "versandweg": "Versand",
+      "versand": {
+        "mail": "Mail",
+        "post": "Post"
+      },
+      "angabenAendern": "Angaben ändern",
+      "verlauf": "Verlauf",
+      "notizPlatzhalter": "Was wurde mit dem Kunden besprochen?",
+      "notizArt": {
+        "notiz": "Notiz",
+        "anruf": "Anruf",
+        "mail": "Mail"
+      },
+      "notizSpeichern": "Eintragen",
+      "mahnsperre": "Mahnsperre",
+      "mahnsperreBis": "Mahnsperre bis {{datum}}: {{grund}}",
+      "zusage": "Zahlungszusage",
+      "zusageBis": "Zahlung zugesagt bis {{datum}}",
+      "ausbuchen": "Ausbuchen",
+      "ausgebucht": "Ausgebucht {{betrag}} ({{art}}): {{grund}}",
+      "zahlungsplan": "Zahlungsplan {{nummer}}",
+      "projektleiter": "Projektleitung",
+      "versendetNein": "Noch nicht versendet",
+      "keinVerlauf": "Noch keine Einträge.",
+      "erinnert": "Erinnert am {{datum}}",
+      "verlaufArt": {
+        "notiz": "Notiz",
+        "anruf": "Anruf",
+        "mail": "Mail",
+        "zusage": "Zusage",
+        "mahnsperre": "Mahnsperre",
+        "ausgebucht": "Ausgebucht",
+        "system": "System",
+        "zahlung": "Zahlung {{betrag}}",
+        "versand": "Versand",
+        "gestellt": "Gestellt"
+      },
+      "mailArt": {
+        "rechnung": "Rechnung per Mail",
+        "mahnung": "Mahnung per Mail",
+        "zahlungserinnerung": "Zahlungserinnerung per Mail"
+      },
+      "mailStand": {
+        "wartet": "wartet auf Freigabe",
+        "freigegeben": "freigegeben",
+        "gesendet": "gesendet",
+        "fehler": "Fehler",
+        "verworfen": "verworfen"
+      },
+      "mehr": "Weitere Aktionen"
     },
     "pos": {
       "text": "Text",
@@ -6356,7 +6451,9 @@
       "betreff": "Rechnung {{nummer}} · {{titel}}",
       "text": "Guten Tag\n\nIm Anhang senden wir Ihnen unsere Rechnung {{nummer}} über {{betrag}}, zahlbar bis {{faellig}}.\n\nHerzlichen Dank für Ihr Vertrauen.\n\nFreundliche Grüsse",
       "mahnungBetreff": "{{stufe}}. Mahnung · Rechnung {{nummer}}",
-      "mahnungText": "Guten Tag\n\nUnsere Rechnung {{nummer}} ist noch offen. Wir bitten Sie, den Betrag von {{betrag}} bis zum {{frist}} zu überweisen. Den Einzahlungsschein finden Sie im Anhang.\n\nSollte sich Ihre Zahlung mit diesem Schreiben gekreuzt haben, betrachten Sie es bitte als gegenstandslos.\n\nFreundliche Grüsse"
+      "mahnungText": "Guten Tag\n\nUnsere Rechnung {{nummer}} ist noch offen. Wir bitten Sie, den Betrag von {{betrag}} bis zum {{frist}} zu überweisen. Den Einzahlungsschein finden Sie im Anhang.\n\nSollte sich Ihre Zahlung mit diesem Schreiben gekreuzt haben, betrachten Sie es bitte als gegenstandslos.\n\nFreundliche Grüsse",
+      "erinnerungBetreff": "Zahlungserinnerung · Rechnung {{nummer}}",
+      "erinnerungText": "Guten Tag\n\nVielleicht ist es Ihnen entgangen: Unsere Rechnung {{nummer}} über {{betrag}} war am {{faellig}} fällig. Wir bitten Sie, den Betrag in den nächsten Tagen zu überweisen. Die Rechnung mit Einzahlungsschein finden Sie im Anhang.\n\nHaben Sie bereits bezahlt? Dann betrachten Sie diese Mail bitte als gegenstandslos.\n\nFreundliche Grüsse"
     },
     "firma": {
       "name": "Firma",
@@ -6404,7 +6501,8 @@
       "gruss": "Freundliche Grüsse",
       "mahntext1": "Unsere Rechnung {{nummer}} vom {{datum}} ist noch offen. Bitte überweisen Sie den offenen Betrag bis zur unten genannten Frist.",
       "mahntext2": "Trotz unserer Erinnerung ist die Rechnung {{nummer}} vom {{datum}} noch offen. Bitte begleichen Sie den Betrag bis zur unten genannten Frist.",
-      "mahntext3": "Letzte Mahnung: Die Rechnung {{nummer}} vom {{datum}} ist weiterhin offen. Ohne Zahlung bis zur Frist leiten wir weitere Schritte ein."
+      "mahntext3": "Letzte Mahnung: Die Rechnung {{nummer}} vom {{datum}} ist weiterhin offen. Ohne Zahlung bis zur Frist leiten wir weitere Schritte ein.",
+      "referenz": "Ihre Referenz"
     },
     "qr": {
       "empfangsschein": "Empfangsschein",
@@ -6441,6 +6539,230 @@
       "fehler": "Senden fehlgeschlagen",
       "alleFreigeben_one": "Mahnung freigeben",
       "alleFreigeben_other": "Alle {{count}} freigeben"
+    },
+    "uebersicht": {
+      "offen": "offen ({{n}} Rechnungen)",
+      "ueberfaellig": "überfällig ({{n}})",
+      "erwartet": "erwartet in 30 Tagen",
+      "gestelltMonat": "gestellt diesen Monat",
+      "zuVerrechnen": "Meilenstein erreicht, ohne Rechnung ({{n}})",
+      "tage": "Ø Tage bis zur Zahlung",
+      "tageWert": "{{n}} Tage",
+      "heute": "Heute zu tun",
+      "nichtsZuTun": "Alles erledigt. Nichts wartet auf dich.",
+      "oeffnen": "Öffnen",
+      "alter": "Altersstruktur offene Rechnungen",
+      "alterWert": {
+        "nicht_faellig": "nicht fällig",
+        "bis_30": "1–30 Tage",
+        "bis_60": "31–60 Tage",
+        "bis_90": "61–90 Tage",
+        "ueber_90": "über 90 Tage"
+      },
+      "firmen": "Offen nach Standort",
+      "groesste": "Grösste Überfällige",
+      "tageUeber": "{{n}} Tage",
+      "keineUeberfaelligen": "Keine überfälligen Rechnungen.",
+      "aufgabe": {
+        "entwuerfe": "{{n}} Entwürfe prüfen und stellen",
+        "entwuerfeText": "zusammen {{betrag}}, davon {{ausgeloest}} von der Projektleitung ausgelöst",
+        "mahnlauf": "Mahnlauf: {{n}} Rechnungen zur Freigabe",
+        "mahnlaufText": "offen zusammen {{betrag}}. Erst nach der Freigabe geht etwas hinaus.",
+        "verrechnen": "{{n}} Meilensteine erreicht, noch ohne Rechnung",
+        "verrechnenText": "zusammen {{betrag}}. Die Projektleitung löst die Verrechnung aus.",
+        "nichtVersendet": "{{n}} gestellt, aber nicht versendet",
+        "nichtVersendetText": "seit mehr als 2 Tagen weder an AbaNinja noch per Mail",
+        "kleinerRest": "{{n}} Rechnungen mit kleinem Rest",
+        "kleinerRestText": "ausbuchen (Rundung, Skonto) oder beim Kunden nachfragen",
+        "zusage": "{{n}} Zahlungszusagen abgelaufen",
+        "zusageText": "nachfragen, ob bezahlt wurde",
+        "eingang": "{{n}} Eingangsrechnungen zur Zahlung bereit",
+        "eingangText": "visiert, jetzt in AbaNinja bezahlen",
+        "visum": "{{n}} Eingangsrechnungen warten auf das Visum",
+        "visumText": "bei der Projektleitung oder Geschäftsleitung"
+      }
+    },
+    "angaben": {
+      "titel": "Angaben zu {{nummer}}",
+      "text": "Diese Angaben lassen sich auch nach dem Stellen ändern. Die Beträge bleiben fest.",
+      "abweichend": "Abweichende Rechnungsadresse (z. B. Verwaltung)",
+      "name": "Name / Firma",
+      "zusatz": "Zusatz (z. B. Buchhaltung)",
+      "strasse": "Strasse und Nr.",
+      "plz": "PLZ",
+      "ort": "Ort",
+      "email": "Mail für Rechnungen",
+      "referenz": "Referenz des Kunden (Bestellnummer)",
+      "versandweg": "Versand",
+      "speichern": "Speichern"
+    },
+    "sperre": {
+      "titel": "Mahnsperre",
+      "text": "Bis zum Datum schlägt der Mahnlauf diese Rechnung nicht vor.",
+      "bis": "Bis",
+      "grund": "Grund",
+      "aufheben": "Aufheben",
+      "setzen": "Mahnsperre setzen"
+    },
+    "zusage": {
+      "titel": "Zahlungszusage",
+      "text": "Der Kunde hat die Zahlung zugesagt. Bis dahin wird nicht gemahnt.",
+      "bis": "Zahlung bis",
+      "text2": "Notiz (wer, wie)",
+      "setzen": "Zusage eintragen"
+    },
+    "ausbuchen": {
+      "titel": "Rest ausbuchen",
+      "text": "Offen sind {{offen}}. Der ausgebuchte Betrag wird nicht mehr erwartet; gebucht wird in AbaNinja.",
+      "betrag": "Betrag CHF",
+      "art": "Art",
+      "arten": {
+        "rundung": "Rundung",
+        "skonto": "Skonto",
+        "kulanz": "Kulanz / Gutschrift",
+        "verlust": "Verlust (uneinbringlich)"
+      },
+      "grund": "Grund",
+      "setzen": "Ausbuchen"
+    },
+    "mahnlauf": {
+      "titel": "Mahnlauf vom {{datum}}",
+      "text": "Jeden Montag bereitet Dimension Work den Mahnlauf vor. Nichts geht hinaus, bevor die Freigabe-Person freigibt.",
+      "nurFreigeber": "Freigeben kann nur die Freigabe-Person (Chris). Du siehst den Vorschlag.",
+      "freigeben": "{{n}} freigeben",
+      "leer": "Nichts zu mahnen",
+      "leerText": "Keine überfällige Rechnung braucht heute eine Erinnerung oder Mahnung.",
+      "stufe": {
+        "0": "Erinnerung",
+        "1": "1. Mahnung",
+        "2": "2. Mahnung",
+        "3": "3. Mahnung"
+      },
+      "betreibung": "Betreibung prüfen",
+      "grund": {
+        "klein": "Rest unter dem Minimum",
+        "sperre": "Mahnsperre",
+        "zusage": "Zahlung zugesagt",
+        "unterwegs": "schon im Ausgangskorb",
+        "reklamation": "offene Reklamation im Service"
+      },
+      "spalte": {
+        "rechnung": "Rechnung",
+        "kunde": "Kunde",
+        "offen": "Offen",
+        "tage": "Überfällig",
+        "schritt": "Nächster Schritt",
+        "versand": "Versand"
+      },
+      "tage": "{{n}} Tage",
+      "keineMail": "keine Mail, per Post",
+      "fertig": "{{mail}} Mails freigegeben, {{post}} per Post",
+      "postPdf": "Für die Post: das PDF öffnet sich zum Drucken.",
+      "vorschau": "Vorschau",
+      "alleWaehlen": "Alle wählen",
+      "ueberspringen": "Übersprungen"
+    },
+    "projekte": {
+      "titel": "Zahlungsstand meiner Projekte",
+      "text": "Projekte, die du leitest oder verkauft hast. Nur lesen: stellen, mahnen und Zahlungen erfassen macht die Buchhaltung.",
+      "leer": "Keine laufenden Projekte",
+      "leerText": "Sobald ein Projekt mit Zahlungsplan dir gehört, steht es hier.",
+      "vertrag": "Vertrag",
+      "bezahlt": "bezahlt",
+      "offen": "gestellt, offen",
+      "rest": "noch zu verrechnen",
+      "ueberfaellig": "überfällig {{betrag}}",
+      "alle": "Alle Projekte",
+      "tranche": {
+        "bezahlt": "bezahlt {{datum}}",
+        "gestellt": "{{nummer}} gestellt, fällig {{datum}}",
+        "ueberfaellig": "{{nummer}} überfällig seit {{datum}}",
+        "entwurf": "bei der Buchhaltung",
+        "bereit": "Meilenstein erreicht",
+        "wartet": "Meilenstein offen"
+      },
+      "andere": "Weitere Rechnungen"
+    },
+    "eingang": {
+      "titel": "Eingangsrechnungen",
+      "text": "Lieferantenrechnungen aus AbaNinja und von Hand. Erstvisum durch die Projektleitung, ab {{betrag}} oder ohne Bestellung zusätzlich durch die Geschäftsleitung. Bezahlt wird in AbaNinja.",
+      "neu": "Rechnung erfassen",
+      "filter": "Eingangsrechnungen filtern",
+      "filterwert": {
+        "meine": "Meine Visa",
+        "offen": "Im Visum",
+        "bereit": "Zur Zahlung bereit",
+        "neu": "Ohne Projekt",
+        "bezahlt": "Bezahlt",
+        "abgelehnt": "Abgelehnt",
+        "alle": "Alle"
+      },
+      "status": {
+        "neu": "Ohne Projekt",
+        "visum_pl": "Visum Projektleitung",
+        "visum_gl": "Visum Geschäftsleitung",
+        "bereit": "Zur Zahlung bereit",
+        "bezahlt": "Bezahlt",
+        "abgelehnt": "Abgelehnt",
+        "storniert": "Storniert"
+      },
+      "spalte": {
+        "lieferant": "Lieferant",
+        "projekt": "Projekt",
+        "betrag": "Betrag",
+        "faellig": "Fällig",
+        "bestellung": "Bestellung",
+        "visum": "Stand"
+      },
+      "leer": "Keine Eingangsrechnungen",
+      "leerText": "Lieferantenrechnungen kommen mit dem Abgleich aus AbaNinja oder über «Rechnung erfassen».",
+      "skonto": "{{prozent}} % Skonto bis {{datum}}",
+      "wartetAuf": "wartet auf {{wer}}",
+      "suche": "Lieferant, Nummer, Projekt …",
+      "akte": {
+        "titel": "Eingangsrechnung",
+        "angaben": "Angaben",
+        "bestellung": "Bestellung {{nummer}}",
+        "keineBestellung": "Keine Bestellung zugeordnet. Deshalb braucht es zusätzlich das Visum der Geschäftsleitung.",
+        "artikel": "Artikel",
+        "bestellt": "Bestellt",
+        "geliefert": "Geliefert",
+        "differenz": "Rechnung minus Bestellung (inkl. MWST)",
+        "visa": "Visa",
+        "erstvisum": "Erstvisum Projektleitung",
+        "zweitvisum": "Zweitvisum Geschäftsleitung",
+        "nichtNoetig": "nicht nötig",
+        "offen": "offen",
+        "visieren": "Visum geben",
+        "ablehnen": "Ablehnen",
+        "bemerkung": "Bemerkung (optional)",
+        "grund": "Grund der Ablehnung",
+        "bezahlt": "Als bezahlt markieren",
+        "aendern": "Ändern",
+        "beleg": "Beleg öffnen",
+        "abgelehnt": "Abgelehnt von {{wer}}: {{grund}}",
+        "visiert": "{{wer}} am {{datum}}",
+        "ok": "Visum gegeben",
+        "abgelehntOk": "Abgelehnt, die Buchhaltung klärt es mit dem Lieferanten"
+      },
+      "dialog": {
+        "titel": "Eingangsrechnung erfassen",
+        "aendern": "Eingangsrechnung ändern",
+        "lieferant": "Lieferant",
+        "nummer": "Rechnungsnummer",
+        "datum": "Rechnungsdatum",
+        "faellig": "Fällig am",
+        "betrag": "Betrag inkl. MWST (CHF)",
+        "skonto": "Skonto %",
+        "skontoBis": "Skonto bis",
+        "projekt": "Projektnummer",
+        "bestellung": "Bestellnummer",
+        "text": "Text",
+        "beleg": "Beleg (PDF oder Foto)",
+        "speichern": "Speichern",
+        "projektUnbekannt": "Projekt {{nummer}} gibt es nicht.",
+        "bestellungUnbekannt": "Bestellung {{nummer}} gibt es nicht."
+      }
     },
     "visum": {
       "titel": "Rechnungen zum Visum",
@@ -8913,7 +9235,8 @@
       "fuerdich": "Für dich",
       "kapitel": "Kapitel",
       "begriffe": "Begriffe A–Z",
-      "neu": "Neu"
+      "neu": "Neu",
+      "anleitung": "Anleitung"
     },
     "nichtsGefunden": "Nichts gefunden",
     "titelFeld": "Titel",
@@ -9063,7 +9386,9 @@
       "tippNeu": "Neuer Eintrag in Listen",
       "tippFilter": "In Listen ins Suchfeld",
       "alleKuerzel": "Alle Tastenkürzel anzeigen (?)",
-      "tippHilfe": "Hilfe zum Bereich, in dem du gerade bist"
+      "tippHilfe": "Hilfe zum Bereich, in dem du gerade bist",
+      "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
+      "suche": "In der Anleitung suchen"
     },
     "fehler": {
       "titel": "Bitte einen Titel eintragen.",
