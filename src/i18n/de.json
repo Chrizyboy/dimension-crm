@@ -1453,6 +1453,13 @@
       "regionen": "Regionen",
       "bericht": "Monatsbericht",
       "steuerung": "Steuerung"
+    },
+    "terminLink": {
+      "senden": "Termin-Link senden",
+      "sms": "Per SMS",
+      "mail": "Per Mail",
+      "bereit": "Termin-Link liegt im Ausgangskorb zur Freigabe",
+      "zumAusgang": "Zum Ausgangskorb"
     }
   },
   "offerten": {
@@ -2449,6 +2456,24 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "ausschreibung_nogo_fehlt": "Bitte einen Grund aus der Liste wählen.",
+    "ausschreibung_betrag_fehlt": "Bitte den Betrag des Angebots angeben.",
+    "ausschreibung_pruefung_fehlt": "Ab diesem Betrag muss eine zweite Person die Eingabe zuerst prüfen.",
+    "ausschreibung_pruefung_selbst": "Wer verantwortlich ist, kann nicht selbst prüfen.",
+    "ausschreibung_protokoll_fehlt": "Zuerst das Öffnungsprotokoll erfassen oder angeben, warum es keines gibt.",
+    "ausschreibung_protokoll_wir": "Im Protokoll muss genau ein Angebot unseres sein.",
+    "ausschreibung_punkt_auto": "Diesen Punkt setzt das CRM selbst.",
+    "ausschreibung_kriterien": "Die Kriterien sind ungültig.",
+    "ausschreibung_kriterien_summe": "Die Gewichte der Kriterien müssen zusammen 100 % ergeben.",
+    "ausschreibung_art_fehlt": "Bitte eine Art aus der Liste wählen.",
+    "tag_kein_recht": "Keine Berechtigung für «Mein Tag».",
+    "tag_zeile_unbekannt": "Diese Zeile kann nicht verschoben werden.",
+    "tag_datum_ungueltig": "Das Datum muss nach heute und höchstens ein Jahr entfernt liegen.",
+    "tag_nicht_meine_aufgabe": "Nur eigene, offene Aufgaben lassen sich verschieben.",
+    "tag_ziele_kein_recht": "Ziele setzen darf nur die Administration oder die Geschäftsleitung.",
+    "tag_person_unbekannt": "Diese Person gibt es nicht.",
+    "tag_ziel_unbekannt": "Unbekanntes Ziel.",
+    "tag_ziel_ungueltig": "Ziele müssen ganze Zahlen ab 0 sein.",
     "kennzahlen_kein_recht": "Ziele und Kennzahlen-Einstellungen ändert nur, wer das Recht «Finanzen» hat.",
     "kennzahlen_wert_ungueltig": "Ein Wert ist ungültig (Prozente 0–100, Beträge nicht negativ).",
     "kennzahlen_schluessel_ungueltig": "Diese Einstellung gibt es nicht.",
@@ -2500,13 +2525,24 @@
     "baustelle_soll_negativ": "Soll-Stunden können nicht negativ sein.",
     "baustelle_projekt_nicht_gefunden": "Projekt nicht gefunden.",
     "baustelle_kein_recht": "Dafür fehlt das Recht.",
+    "projekte_text_fehlt": "Bitte zuerst etwas eintragen.",
+    "projekte_art_unbekannt": "Diese Art von Eintrag gibt es nicht.",
+    "projekte_maengel_offen": "Erst alle Mängel erledigen, dann ist die Übergabe möglich.",
+    "projekte_rolle_unbekannt": "Diese Rolle gibt es nicht.",
+    "finanzen_karte_keine_firmenkarte": "Nur Spesen «Firmenkarte» lassen sich mit einer Kartenbuchung verbinden.",
+    "finanzen_karte_schon_verbunden": "Diese Spese ist schon mit einer anderen Kartenbuchung verbunden.",
+    "wartung_termin_ungueltig": "Das Ende des Termins muss nach dem Beginn liegen.",
+    "wartung_kein_termin": "Für diesen Vertrag ist kein Termin geplant.",
+    "wartung_keine_mail": "Der Kunde hat keine Mail-Adresse.",
+    "wartung_kein_angebot": "Für diese Anlage gibt es noch kein Angebot.",
+    "termin_link_stand": "Den Termin-Link gibt es nur für Leads ohne Termin und ohne Offerte.",
     "team_taetigkeit_unbekannt": "Diese Tätigkeit gibt es nicht (mehr).",
     "team_wer_ungueltig": "Bitte «jede Person» oder «mindestens eine» wählen.",
     "team_ausweis_unbekannt": "Diesen Ausweis gibt es nicht (mehr)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
-    "beschreibung": "Alles, was das CRM per Mail oder SMS verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
+    "beschreibung": "Alles, was das CRM per Mail, SMS oder Brief verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
     "ohneDatenbank": "Der Ausgangskorb braucht die Datenbank. In der Vorschau ohne Datenbank ist er leer.",
     "filter": "Anzeigen",
     "filterwert": {
@@ -2554,7 +2590,18 @@
       "bestellung": "Bestellung",
       "serienmail": "Serien-Mail",
       "newsletter": "Newsletter",
-      "zahlungserinnerung": "Zahlungserinnerung"
+      "zahlungserinnerung": "Zahlungserinnerung",
+      "service_bestaetigung": "Service: Eingangsbestätigung",
+      "rechnung": "Rechnung",
+      "anzahlung": "Anzahlungsrechnung",
+      "teilzahlung": "Teilrechnung",
+      "schluss": "Schlussrechnung",
+      "spesen": "Spesen",
+      "subunternehmer": "Subunternehmer",
+      "tagesuebersicht": "Tagesübersicht",
+      "anlagedossier": "Anlagedossier",
+      "baugesuch": "Baugesuch",
+      "brief": "Brief"
     },
     "titelMail": "Mail prüfen",
     "titelSms": "SMS prüfen",
@@ -2581,7 +2628,188 @@
     "grund": "Grund",
     "grundFrage": "Warum wird das nicht gesendet?",
     "automatisch": "Automatisch",
-    "verwerfenJa": "Ja, nicht senden"
+    "verwerfenJa": "Ja, nicht senden",
+    "ordnerTitel": "Ordner",
+    "ordner": {
+      "fuer_mich": "Für mich zur Freigabe",
+      "fehler": "Fehler",
+      "zurueck": "Zurückgeschickt",
+      "team": "Ganzes Team",
+      "geplant": "Geplant",
+      "unterwegs": "Wird gesendet",
+      "gesendet": "Gesendet",
+      "verworfen": "Nicht gesendet"
+    },
+    "abschnitt": {
+      "zuTun": "Zu tun",
+      "unterwegs": "Unterwegs",
+      "archiv": "Archiv"
+    },
+    "leerOrdner": {
+      "fuer_mich": "Nichts wartet auf dich",
+      "fehler": "Keine Fehler",
+      "zurueck": "Nichts zurückgeschickt",
+      "team": "Im Team wartet nichts",
+      "geplant": "Nichts geplant",
+      "unterwegs": "Gerade ist nichts unterwegs",
+      "gesendet": "Noch nichts gesendet",
+      "verworfen": "Nichts verworfen"
+    },
+    "gruppe": {
+      "heute": "Heute",
+      "gestern": "Gestern",
+      "aelter": "Älter"
+    },
+    "serie_one": "{{art}} · {{count}} Nachricht",
+    "serie_other": "Serie {{art}} · {{count}} Nachrichten",
+    "serieAlle_one": "{{count}} wählen",
+    "serieAlle_other": "Alle {{count}} wählen",
+    "serieWaehlen": "Ganze Serie wählen",
+    "waehlen": "{{name}} wählen",
+    "kanal": {
+      "mail": "Mail",
+      "sms": "SMS",
+      "brief": "Brief"
+    },
+    "titelBrief": "Brief prüfen",
+    "ohneBetreff": "(ohne Betreff)",
+    "zurueckVon": "Zurück von {{name}}",
+    "seitStunden_one": "seit {{count}} Std.",
+    "seitStunden_other": "seit {{count}} Std.",
+    "geplantFuer": "geplant {{zeit}}",
+    "kiText": "KI-Text",
+    "antwort": "Antwort erhalten",
+    "nichtMeins": "Freigabe durch andere",
+    "von": "von {{name}}",
+    "vonFeld": "Von",
+    "brief": {
+      "offen": "Rücklauf offen",
+      "zurueck": "Rücklauf erhalten",
+      "versendet": "Gedruckt und versendet",
+      "ruecklaufJa": "Unterschrieben zurück",
+      "ruecklaufNein": "Rücklauf zurücksetzen"
+    },
+    "suchen": "Empfänger, Kunde, Betreff …",
+    "nichtsOffen": "Nichts geöffnet",
+    "nichtsOffenText": "Wähle links eine Nachricht. Mit J und K blätterst du, mit F gibst du frei.",
+    "auswahl_one": "{{count}} gewählt",
+    "auswahl_other": "{{count}} gewählt",
+    "auswahlLeeren": "Auswahl aufheben",
+    "auswahlOhneRecht_one": "{{count}} davon darfst du nicht freigeben, sie bleiben liegen.",
+    "auswahlOhneRecht_other": "{{count}} davon darfst du nicht freigeben, sie bleiben liegen.",
+    "freigebenAnzahl_one": "{{count}} freigeben",
+    "freigebenAnzahl_other": "{{count}} freigeben",
+    "spaeter": "Später senden",
+    "zeit": {
+      "heute17": "Heute 17:00",
+      "morgen8": "Morgen 08:00",
+      "montag8": "Montag 08:00"
+    },
+    "eigeneZeit": "Eigene Zeit …",
+    "eigeneZeitEinzeln": "Eigene Zeit: in der einzelnen Nachricht",
+    "planen": "Freigeben und planen",
+    "verwerfGrund": {
+      "erledigt": "Schon erledigt",
+      "telefoniert": "Telefonisch geklärt",
+      "falsch": "Inhalt falsch",
+      "doppelt": "Doppelt",
+      "veraltet": "Nicht mehr aktuell",
+      "anderes": "Anderer Grund …"
+    },
+    "zurueckAn": "Zurück an {{name}}",
+    "zurueckFrage": "Was soll {{name}} ändern?",
+    "zurueckBeispiel": "z. B. Bitte Speicher-Variante beilegen",
+    "zurueckSenden": "Zurückschicken",
+    "zurueckholen": "Zurückholen",
+    "bearbeiten": "Ändern",
+    "postadresse": "Postadresse",
+    "anhang": "Anhang",
+    "soSiehtEsAus": "So sieht es der Empfänger",
+    "smsTeile_one": "{{count}} SMS",
+    "smsTeile_other": "{{count}} SMS",
+    "herkunft": "vorbereitet von {{name}} am {{zeit}}",
+    "freigegebenVon": "freigegeben von {{name}} am {{zeit}}",
+    "gesendetUm": "gesendet {{zeit}}",
+    "verworfenVon": "Nicht gesendet ({{name}})",
+    "keinRecht": "Diese Art gibt eine andere Person frei. Du kannst sie ansehen, zurückschicken oder nicht senden.",
+    "antwortAm": "Antwort erhalten am {{zeit}}",
+    "nochKeineAntwort": "Noch keine Antwort erhalten.",
+    "geprueft": "Vor dem Senden geprüft",
+    "stufe": {
+      "ok": "in Ordnung",
+      "warnung": "Hinweis",
+      "fehler": "Problem"
+    },
+    "pruefung": {
+      "outlook_ok": "Outlook von {{wert}} ist verbunden",
+      "outlook_fehlt": "Outlook von {{wert}} ist nicht verbunden: so geht die Mail nicht raus",
+      "werbung_ok": "Kunde hat keine Werbesperre",
+      "werbesperre": "Kunde will keine Werbung (Werbesperre)",
+      "sprache_ok": "Sprache passt zum Kunden ({{wert}})",
+      "sprache_anders": "Kunde spricht {{wert}}, die Nachricht ist in einer anderen Sprache",
+      "anhaenge_ok": "Anhänge vorhanden ({{wert}})",
+      "anhang_fehlt": "Ein Anhang fehlt oder ist im Papierkorb",
+      "kuerzlich": "Gleiche Art ging am {{wert}} schon an diese Adresse",
+      "sms_lang": "Text ist lang: wird als {{wert}} SMS verrechnet",
+      "veraltet": "Geplante Zeit {{wert}} ist schon vorbei: noch aktuell?",
+      "kein_recht": "Freigabe nur mit Recht «{{wert}}»"
+    },
+    "recht": {
+      "admin": "Administration",
+      "finanzen": "Finanzen",
+      "preise": "Preise",
+      "planung": "Planung",
+      "basis": "Basis"
+    },
+    "gehoertZu": "Gehört zu",
+    "bezug": {
+      "kunde": "Kunde",
+      "lead": "Lead",
+      "offerte": "Offerte",
+      "projekt": "Projekt",
+      "rechnung": "Rechnung"
+    },
+    "faellig": "fällig {{datum}}",
+    "danachOfferte": "Nach dem Senden steht die Offerte auf «versendet».",
+    "letzteNachrichten": "Letzte Nachrichten",
+    "verlaufArt": {
+      "mail": "Mail",
+      "sms": "SMS",
+      "anruf": "Anruf",
+      "notiz": "Notiz",
+      "termin": "Termin",
+      "brief": "Brief"
+    },
+    "loesung": {
+      "outlook": "Die Microsoft-Verbindung von {{name}} fehlt oder ist abgelaufen. {{name}} verbindet unter «Mein Konto» neu, oder du sendest aus deinem Outlook.",
+      "sms": "Der SMS-Dienst hat abgelehnt (Zugang oder Guthaben). Unter Einstellungen › Verbindungen prüfen, dann nochmals senden.",
+      "unklar": "Unklar, ob die Nachricht angekommen ist. Schau in Outlook unter «Gesendete Elemente». Ist sie dort, markiere sie als gesendet, sonst nochmals senden.",
+      "anhang": "Ein Anhang ist zu gross oder fehlt. Anhang prüfen, dann nochmals senden.",
+      "nochmal": "Beim Senden ging etwas schief. Meist hilft nochmals senden."
+    },
+    "loesungKnopf": {
+      "verbinden": "Zu «Mein Konto»",
+      "ausMeinem": "Aus meinem Outlook senden",
+      "alsGesendet": "In Outlook gefunden: als gesendet markieren",
+      "nochmal": "Nochmals senden"
+    },
+    "woche": {
+      "gesendet": "gesendet (7 Tage)",
+      "wartezeit": "Ø bis zur Freigabe",
+      "antworten": "Antworten"
+    },
+    "heute": {
+      "titel": "Wartet auf deine Freigabe",
+      "alle_one": "{{count}} offen",
+      "alle_other": "Alle {{count}}"
+    },
+    "kuerzel": {
+      "freigeben": "Freigeben und senden",
+      "bearbeiten": "Nachricht ändern",
+      "verwerfen": "Nicht senden",
+      "naechste": "Nächste Nachricht",
+      "vorige": "Vorige Nachricht"
+    }
   },
   "integration": {
     "fehler": {
@@ -2826,7 +3054,27 @@
       "doppelte": "Gleiche Meldung aus anderen Quellen",
       "verlauf": "Verlauf",
       "korrigiert": "Korrigiert",
-      "forum": "Fragen nur über das simap-Forum stellen: die Vergabestelle ist bis zum Zuschlag gesperrt."
+      "forum": "Fragen nur über das simap-Forum stellen: die Vergabestelle ist bis zum Zuschlag gesperrt.",
+      "zurueck": "Zurück",
+      "verantwortlich": "verantwortlich: {{name}}",
+      "projekt": "Projekt öffnen",
+      "eckdaten": "Eckdaten",
+      "bearbeiten": "Bearbeiten",
+      "kriterien": "Zuschlagskriterien",
+      "keineKriterien": "Noch keine Kriterien erfasst (Bearbeiten).",
+      "checkliste": "Checkliste Eingabe",
+      "nachweiseFehlen": "Fehlt oder läuft vor der Eingabe ab: {{liste}}",
+      "kalkulation": "Kalkulation",
+      "offerteOeffnen": "Offerte öffnen",
+      "proKwp": "pro kWp",
+      "mitbewerberMittel": "Mitbewerber im Mittel {{wert}}",
+      "exklMwst": "Beträge exkl. MWST",
+      "geprueft": "Geprüft am {{datum}}",
+      "pruefungNoetig": "Ab CHF {{betrag}} prüft eine zweite Person vor der Eingabe",
+      "pruefenKnopf": "Als geprüft bestätigen",
+      "notiz": "Notiz",
+      "notizHinweis": "Notiz: Frage im Forum, Erkenntnis der Begehung, Anruf …",
+      "notizSpeichern": "Notiz speichern"
     },
     "feld": {
       "quelle": "Quelle",
@@ -2849,7 +3097,36 @@
       "datum_eingereicht": "Eingereicht am",
       "datum_beobachten": "Wieder ansehen am",
       "form": "Form der Eingabe",
-      "formWaehlen": "Form wählen"
+      "formWaehlen": "Form wählen",
+      "verantwortlich": "Verantwortlich",
+      "verfahren": "Verfahren",
+      "auftragsart": "Auftragsart",
+      "leistung": "Leistung",
+      "leistungKwp": "Leistung (kWp)",
+      "schaetzung": "Schätzung",
+      "schaetzungChf": "Schätzung (CHF, exkl. MWST)",
+      "angebot": "Unser Angebot",
+      "ausfuehrung": "Ausführung",
+      "ausfuehrungVon": "Ausführung ab",
+      "ausfuehrungBis": "Ausführung bis",
+      "varianten": "Varianten erlaubt",
+      "arge": "ARGE erlaubt",
+      "eignungKwp": "Eignung: Referenz ab",
+      "bindefrist": "Bindefrist",
+      "eingabeAdresse": "Eingabe an",
+      "fristOeffnung": "Öffnung der Angebote",
+      "zuschlagErwartet": "Zuschlag erwartet",
+      "nogo": "Grund (für die Auswertung)",
+      "grundZusatz": "Bemerkung",
+      "gewinner": "Zuschlag an",
+      "gewinnerHinweis": "Leer lassen: günstigstes Angebot aus dem Protokoll",
+      "ohneProtokoll": "Kein Öffnungsprotokoll, weil …",
+      "ohneProtokollHinweis": "Besser zuerst das Protokoll in der Akte erfassen",
+      "datum_zuschlag": "Zuschlag am",
+      "datum_absage": "Absage am",
+      "betrag_eingereicht": "Angebot (CHF)",
+      "betrag_zuschlag": "Zuschlag (CHF, falls anders als Angebot)",
+      "betrag_absage": "Betrag Gewinner (CHF)"
     },
     "bauherrArt": {
       "privat": "Privatperson",
@@ -2963,16 +3240,19 @@
       "ablehnenTitel": "Anschreiben ablehnen"
     },
     "reiter": {
-      "pruefen": "Prüfen",
+      "leitstand": "Leitstand",
       "bewilligen": "Bewilligen",
       "senden": "Senden",
-      "alle": "Alle",
-      "quellen": "Quellen",
-      "trichter": "Trichter"
+      "fristen": "Fristen",
+      "nachweise": "Nachweise & Referenzen",
+      "auswertung": "Auswertung",
+      "quellen": "Quellen & Regeln"
     },
     "pruefung": {
       "erreichbar": "Bitte E-Mail, Telefon oder Adresse angeben.",
-      "datum": "Bitte ein Datum wählen."
+      "datum": "Bitte ein Datum wählen.",
+      "betrag": "Betrag bitte wie 125'000.00 eingeben.",
+      "protokoll": "Ohne Öffnungsprotokoll bitte den Grund angeben."
     },
     "erfassen": {
       "knopf": "Von Hand erfassen",
@@ -2987,7 +3267,11 @@
       "bauherr": "Bauherrschaft",
       "vergabestelle": "Vergabestelle",
       "frist": "Frist",
-      "beschreibung_feld": "Text der Publikation"
+      "beschreibung_feld": "Text der Publikation",
+      "einfuegen": "Text der Publikation einfügen",
+      "einfuegenHinweis": "Die KI liest die Felder aus; bitte danach prüfen.",
+      "auslesen": "Mit KI auslesen",
+      "pruefen": "Vorschlag der KI: bitte jedes Feld prüfen."
     },
     "quellen": {
       "titel": "Quellen-Kontrolle",
@@ -3055,7 +3339,249 @@
       "antworten": "Antworten da",
       "kontakt_fehlt": "Kontakt fehlt",
       "fristen": "Fristen in 7 Tagen",
-      "quellen_still": "Quellen still"
+      "quellen_still": "Quellen still",
+      "pruefung": "Eingaben zu prüfen (Vier-Augen)",
+      "nachweise_ablauf": "Nachweise laufen ab",
+      "gng": "Go/No-Go offen"
+    },
+    "ja": "Ja",
+    "nein": "Nein",
+    "monate_one": "{{count}} Monat",
+    "monate_other": "{{count}} Monate",
+    "zahl": {
+      "neu": "neu heute",
+      "gng": "warten auf Go/No-Go",
+      "pruefung": "warten auf Prüfung",
+      "bewilligen": "Anschreiben zu bewilligen",
+      "fristen": "Fristen in 14 Tagen",
+      "eingereicht": "eingereicht, offen",
+      "nachweise": "Nachweise laufen ab"
+    },
+    "board": {
+      "gng": "Go/No-Go",
+      "kalkulation": "Kalkulation",
+      "eingereicht": "Eingereicht",
+      "entschieden": "Entschieden",
+      "kontakt_fehlt": "Kontakt suchen",
+      "entwurf": "Entwurf",
+      "bewilligt": "Bewilligt, senden",
+      "versendet": "Versendet",
+      "antwort": "Antwort",
+      "beobachten": "Beobachten"
+    },
+    "boardHilfe": {
+      "gng": "Neu gemeldet: teilnehmen oder nicht? Vorschlag in der Akte.",
+      "kalkulation": "Offerte rechnen, Checkliste, Prüfung vor der Eingabe.",
+      "eingereicht": "Warten auf Öffnung und Zuschlag; Protokoll erfassen.",
+      "entschieden": "Zuschlag, Absage oder nicht teilgenommen (12 Monate).",
+      "kontakt_fehlt": "Wer baut? Bauherr, Architekt oder GU finden.",
+      "entwurf": "Anschreiben liegt bei Andy zum Bewilligen.",
+      "bewilligt": "Bewilligt: Chris sendet oder druckt.",
+      "versendet": "Gesendet; nach Regel wird einmal nachgefasst.",
+      "antwort": "Antwort da, Lead oder abgeschlossen.",
+      "beobachten": "Später wieder ansehen, wenn der Auslöser eintritt."
+    },
+    "leitstand": {
+      "fristen": "Nächste Fristen",
+      "spur": "Spur wählen",
+      "rang": "Rang {{rang}} von {{von}}",
+      "spurWahl": {
+        "angebot": "Submission",
+        "akquise": "Akquise",
+        "beobachten": "Beobachten",
+        "liste": "Liste"
+      }
+    },
+    "fristArt": {
+      "fragen": "Fragen",
+      "begehung": "Begehung",
+      "eingabe": "Eingabe",
+      "oeffnung": "Öffnung",
+      "pruefung": "Prüfung intern",
+      "post": "Post aufgeben",
+      "beschwerde": "Beschwerde bis",
+      "zuschlag": "Zuschlag erwartet",
+      "einsprache": "Einsprache",
+      "ausloeser": "Wieder ansehen"
+    },
+    "schritte": {
+      "titel": "Arbeitsschritte",
+      "publiziert": "Publiziert",
+      "gng": "Go/No-Go",
+      "kalkulation": "Kalkulation",
+      "pruefung": "Prüfung",
+      "eingabe": "Eingabe",
+      "oeffnung": "Öffnung",
+      "entscheid": "Zuschlag",
+      "gefunden": "Gefunden",
+      "kontakt": "Kontakt",
+      "bewilligt": "Bewilligt",
+      "gesendet": "Gesendet",
+      "antwort": "Antwort",
+      "lead": "Lead",
+      "ausloeser": "Auslöser"
+    },
+    "verfahren": {
+      "offen": "Offen",
+      "selektiv": "Selektiv",
+      "einladung": "Einladung",
+      "freihaendig": "Freihändig"
+    },
+    "auftragsart": {
+      "bau": "Bauauftrag",
+      "liefer": "Lieferauftrag",
+      "dienst": "Dienstleistung"
+    },
+    "gng": {
+      "titel": "Go/No-Go",
+      "hinweis": "Vorschlag des CRM",
+      "empfehlung": {
+        "go": "Empfehlung: teilnehmen",
+        "pruefen": "Genau ansehen",
+        "nogo": "Empfehlung: nicht teilnehmen"
+      },
+      "entscheid": {
+        "go": "Go",
+        "nogo": "No-Go"
+      },
+      "teil": {
+        "thema": "Thema passt",
+        "groesse": "Grösse",
+        "distanz": "Distanz",
+        "eignung": "Eignung (Referenzen)",
+        "quote": "Erfolg bei dieser Vergabestelle",
+        "nachweise": "Nachweise gültig"
+      },
+      "unbekannt": "unbekannt",
+      "referenzen_one": "{{count}} Referenz ab {{kwp}} kWp",
+      "referenzen_other": "{{count}} Referenzen ab {{kwp}} kWp",
+      "quote": "{{g}} von {{e}} gewonnen",
+      "keineQuote": "noch keine Entscheide",
+      "fehlen_one": "{{count}} Nachweis fehlt",
+      "fehlen_other": "{{count}} Nachweise fehlen",
+      "alleNachweise": "alle gültig bis zur Eingabe",
+      "kapazitaet": "Montage-Kapazität im Ausführungszeitraum bitte selbst prüfen.",
+      "grund": "Grund: {{grund}}"
+    },
+    "nogo": {
+      "kapazitaet": "Keine Kapazität",
+      "zu_klein": "Zu klein",
+      "gesamtlos": "Nur Gesamtlos",
+      "eignung": "Eignung fehlt",
+      "zu_weit": "Zu weit weg",
+      "preis": "Preis nicht machbar",
+      "frist": "Frist zu knapp",
+      "andere": "Anderer Grund"
+    },
+    "entscheidHilfe": {
+      "zuschlag": "Das CRM legt das Projekt an (Vertragswert inkl. MWST, ohne eigenen Werkvertrag) und hebt die Sperre der Vergabestelle auf."
+    },
+    "eckdaten": {
+      "titel": "Eckdaten der Submission",
+      "bedingungen": "Bedingungen",
+      "kriterium": "Kriterium",
+      "gewicht": "Gewicht in %",
+      "kriteriumDazu": "Kriterium dazu",
+      "summeIst": "Summe {{summe}} %",
+      "summe": "Die Gewichte müssen zusammen 100 % ergeben.",
+      "betragUngueltig": "Betrag bitte wie 125'000.00 eingeben."
+    },
+    "protokoll": {
+      "titel": "Öffnungsprotokoll",
+      "erfassen": "Erfassen",
+      "hilfe": "Alle Angebote aus dem Protokoll, Beträge exkl. MWST. Unser Angebot mit «wir» markieren.",
+      "anbieter": "Anbieter",
+      "ort": "Ort",
+      "betrag": "Betrag",
+      "wir": "wir",
+      "abstand": "Abstand",
+      "zeile": "Angebot {{n}}",
+      "zeileDazu": "Angebot dazu",
+      "entfernen": "Entfernen",
+      "zeileFehlt": "Jede Zeile braucht Anbieter und Betrag.",
+      "einmalWir": "Genau ein Angebot muss unseres sein.",
+      "leer": "Noch kein Protokoll. Sobald die Vergabestelle es schickt, hier erfassen.",
+      "ohne": "Kein Protokoll: {{grund}}"
+    },
+    "fristen": {
+      "hilfe": "Alle Fristen der offenen Dossiers nach Woche. Prüfung und Postversand sind interne Termine, rückwärts ab der Eingabe gerechnet.",
+      "woche": "KW {{kw}} · ab {{datum}}",
+      "leer": "Keine offenen Fristen",
+      "leerText": "Sobald ein Dossier Fristen hat, stehen sie hier."
+    },
+    "nachweise": {
+      "titel": "Nachweise der Firmen",
+      "hilfe": "Was Vergabestellen verlangen. 30 Tage vor Ablauf kommt eine Aufgabe «Nachweis erneuern».",
+      "neu": "Nachweis ablegen",
+      "firma": "Firma",
+      "art": "Nachweis",
+      "ausgestellt": "Ausgestellt am",
+      "gueltigBis": "Gültig bis",
+      "gueltigHinweis": "Leer lassen: rechnet das CRM aus der Art",
+      "datei": "Datei (PDF oder Bild)",
+      "notiz": "Notiz",
+      "bis": "bis {{datum}}",
+      "fehlt": "fehlt",
+      "erneuern": "Erneuern",
+      "oeffnen": "Datei öffnen"
+    },
+    "referenzen": {
+      "titel": "Referenzen für Eingaben",
+      "neu": "Referenz dazu",
+      "aendern": "Referenz ändern",
+      "ausProjekten": "Aus Projekten",
+      "vorschlagHilfe": "Projekte mit Inbetriebnahme, die noch keine Referenz sind.",
+      "keineVorschlaege": "Keine weiteren Projekte.",
+      "uebernehmen": "Übernehmen",
+      "leer": "Noch keine Referenzen. Vorschläge kommen aus den Projekten.",
+      "projekt": "Projekt",
+      "jahr": "Jahr",
+      "auftraggeber": "Auftraggeber",
+      "anfragen": "Darf angefragt werden",
+      "aktionen": "Aktionen",
+      "ja": "ja",
+      "nein": "noch nicht",
+      "freigegeben": "Ansprechperson ist einverstanden, angefragt zu werden",
+      "feld": {
+        "titel": "Projekt",
+        "ort": "Ort",
+        "gebaeude": "Gebäude",
+        "leistung_kwp": "Leistung (kWp)",
+        "jahr": "Jahr",
+        "auftraggeber": "Auftraggeber",
+        "ansprechperson": "Ansprechperson",
+        "telefon": "Telefon",
+        "sprache": "Sprache",
+        "notiz": "Notiz"
+      }
+    },
+    "auswertung": {
+      "zeitraum": "Zeitraum",
+      "jahr": "Dieses Jahr",
+      "vorjahr": "Letztes Jahr",
+      "monate12": "12 Monate",
+      "zahl": {
+        "gemeldet": "Submissionen gemeldet",
+        "go": "Go von entschieden",
+        "eingereicht": "eingereicht",
+        "gewonnen": "gewonnen",
+        "gewonnenChf": "gewonnen (exkl. MWST)",
+        "offenChf": "eingereicht, offen",
+        "abstand": "Abstand zum Zuschlag",
+        "leads": "Leads aus Anschreiben"
+      },
+      "kantone": "Nach Kanton",
+      "nogo": "Gründe für No-Go",
+      "nochNichts": "Noch keine Daten im Zeitraum.",
+      "mitbewerber": "Mitbewerber",
+      "keineMitbewerber": "Mitbewerber erscheinen, sobald Öffnungsprotokolle erfasst sind.",
+      "gegenUns": "gegen uns",
+      "erster": "1. Rang",
+      "preisZuUns": "Preis zu uns",
+      "proKwp": "CHF/kWp",
+      "kantoneSpalte": "Kantone",
+      "zuletzt": "Zuletzt",
+      "trichter": "Trichter der Quellen"
     }
   },
   "projekte": {
@@ -3077,7 +3603,9 @@
       "bewilligungen": "Bewilligungen",
       "alle": "Alle Projekte",
       "subunternehmer": "Subunternehmer",
-      "abwesenheiten": "Abwesenheiten"
+      "abwesenheiten": "Abwesenheiten",
+      "leitstand": "Leitstand",
+      "woche": "Meine Woche"
     },
     "akteReiter": {
       "uebersicht": "Übersicht",
@@ -3386,6 +3914,156 @@
         "bewilligung": "Bewilligung",
         "material": "Material"
       }
+    },
+    "leitstand": {
+      "bau": "Bau {{datum}}",
+      "suche": "Projekt, Kunde, Ort, Elektriker oder Nummer suchen",
+      "ansicht": "Ansicht",
+      "board": "Board",
+      "liste": "Liste",
+      "filter": "Schnellfilter",
+      "leer": "Nichts in dieser Phase."
+    },
+    "zahl": {
+      "laufend": "laufende Projekte",
+      "ohne_termin": "ohne Bautermin",
+      "spaet": "blockiert oder im Verzug",
+      "bewilligung": "Bewilligung überfällig",
+      "material": "Material fehlt für die nächsten 14 Tage",
+      "woche": "Montagen diese Woche",
+      "verrechnen": "Tranchen fällig, nicht gestellt"
+    },
+    "schnell": {
+      "meine": "Meine",
+      "spaet": "Blockiert",
+      "bewilligung": "Bewilligung überfällig",
+      "material": "Material fehlt",
+      "ohne_termin": "Ohne Bautermin",
+      "verrechnen": "Zu verrechnen"
+    },
+    "hinweis": {
+      "material_fehlt": "{{anzahl}} Positionen fehlen",
+      "bewilligung_spaet": "Bewilligung überfällig",
+      "zahlung_ueberfaellig": "Zahlung {{tage}} Tage überfällig",
+      "ohne_termin": "ohne Bautermin",
+      "verrechnen": "Tranche fällig",
+      "nachtraege": "Nachtrag offen",
+      "material_ok": "Material komplett",
+      "material_bestellen": "Material nicht bestellt",
+      "frist": "Frist vorbei",
+      "maengel": "{{anzahl}} Mängel offen"
+    },
+    "woche": {
+      "wer": "Wessen Projekte",
+      "meine": "Meine Projekte",
+      "alle": "Alle Projekte",
+      "seit": "seit {{tage}} Tagen",
+      "leer": "Diese Woche ist nichts fällig",
+      "leerText": "Keine offenen Schritte mit Frist und nichts, was blockiert.",
+      "baustellen": "Baustellen diese Woche",
+      "keineBaustellen": "Diese Woche keine Einsätze.",
+      "gruppe": {
+        "ueberfaellig": "Überfällig und blockiert",
+        "woche": "Diese Woche",
+        "naechste": "Nächste Woche"
+      },
+      "aufgabe": {
+        "material_fehlt": "Material bestellen",
+        "zahlung_ueberfaellig": "Zahlung nachfassen",
+        "ohne_termin": "Bautermin vergeben",
+        "verrechnen": "Rechnung stellen",
+        "material_bestellen": "Material bestellen",
+        "maengel": "Mängel erledigen"
+      }
+    },
+    "seite": {
+      "leitung": "Projektleitung {{name}}",
+      "verkauf": "Verkauf {{name}}",
+      "vertrag": "Vertrag {{betrag}}",
+      "phasen": "Phasen des Projekts",
+      "schritte": "{{erledigt}} von {{gesamt}}",
+      "zuTun": "Jetzt zu tun",
+      "alleSchritte": "Alle {{anzahl}} offenen Schritte",
+      "erledigt": "«{{name}}» erledigt",
+      "eingereicht": "eingereicht {{datum}}",
+      "verlauf": "Verlauf",
+      "termine": "Termine",
+      "keineTermine": "Noch keine Einsätze geplant.",
+      "material": "Material",
+      "keinMaterial": "Noch keine Materialliste. Im Einkauf aus der Offerte übernehmen.",
+      "fehlt": "fehlt {{menge}}",
+      "unterwegs": "bestellt",
+      "da": "da",
+      "lieferung": "Letzte Lieferung erwartet",
+      "zumEinkauf": "Material im Einkauf öffnen",
+      "geld": "Geld",
+      "vertragInkl": "Werkvertrag inkl. MWST",
+      "offen": "offen",
+      "bezahlt": "bezahlt",
+      "gestellt": "gestellt {{nummer}}",
+      "entwurf": "Entwurf",
+      "stellen": "jetzt stellen",
+      "spaeter": "später",
+      "zuRechnungen": "Zu verrechnen öffnen",
+      "kalkulation": "Nachkalkulation",
+      "exkl": "exkl. MWST",
+      "margeSoll": "Marge geplant",
+      "margeIst": "Marge heute",
+      "stundenSollIst": "Stunden geplant / erfasst",
+      "materialSollIst": "Material Soll / Ist",
+      "verrechnet": "Verrechnet",
+      "stunden": "{{stunden}} Std."
+    },
+    "verlauf": {
+      "art": {
+        "notiz": "Notiz",
+        "anruf": "Anruf",
+        "mail": "Mail",
+        "besuch": "Besuch",
+        "sms": "SMS",
+        "brief": "Brief",
+        "aenderung": "Änderung"
+      },
+      "artWahl": "Art des Eintrags",
+      "eingabe": "Was ist passiert? Mit wem gesprochen, was vereinbart?",
+      "speichern": "Im Verlauf festhalten",
+      "leer": "Noch nichts im Verlauf.",
+      "mailVon": "Mail von {{name}}",
+      "rapport": "Rapport {{nummer}} · {{person}}",
+      "ausgang": {
+        "wartet": "Kundeninfo wartet auf Freigabe",
+        "freigegeben": "Kundeninfo freigegeben",
+        "wird_gesendet": "Kundeninfo wird gesendet",
+        "gesendet": "Kundeninfo gesendet",
+        "fehler": "Kundeninfo: Versand fehlgeschlagen"
+      }
+    },
+    "maengel": {
+      "titel": "Mängel und Restarbeiten",
+      "offen": "{{anzahl}} offen",
+      "alleErledigt": "Alles erledigt",
+      "leer": "Keine offenen Mängel.",
+      "erledigen": "«{{text}}» erledigt",
+      "oeffnen": "«{{text}}» wieder öffnen",
+      "erledigtAm": "erledigt {{datum}}",
+      "bis": "bis {{datum}}",
+      "nurOffene": "Nur offene zeigen",
+      "erledigteZeigen": "{{anzahl}} erledigte zeigen",
+      "artWahl": "Art",
+      "art": {
+        "mangel": "Mangel",
+        "restarbeit": "Restarbeit"
+      },
+      "eingabe": "Was ist noch offen? Wo genau?",
+      "frist": "Frist",
+      "erfassen": "Erfassen"
+    },
+    "beteiligte": {
+      "titel": "Beteiligte",
+      "hinzufuegen": "Hinzufügen",
+      "leer": "Noch niemand erfasst (Elektriker, Gerüstbau, Netzbetreiber …).",
+      "entfernen": "{{name}} entfernen",
+      "rolle": "Rolle"
     }
   },
   "kundeWahl": {
@@ -3786,7 +4464,8 @@
       "inspektionen": "Inspektionen",
       "keineInspektion": "Dieses Paket hat keine Inspektion vor Ort.",
       "rechnungErstellt": "Jahresrechnung als Entwurf erstellt",
-      "zurRechnung": "Öffnen"
+      "zurRechnung": "Öffnen",
+      "termin": "Termin {{zeit}}"
     },
     "erledigt": {
       "titel": "Wartung erledigt",
@@ -3877,6 +4556,76 @@
       "am": "Kündigung eingegangen am",
       "endet": "Der Vertrag endet am {{datum}}.",
       "gespeichert": "Kündigung erfasst, Ende {{datum}}"
+    },
+    "reiter": {
+      "vertraege": "Verträge",
+      "inspektionen": "Inspektionen",
+      "ohne": "Ohne Vertrag"
+    },
+    "termin": {
+      "titel": "Inspektion planen · {{nummer}}",
+      "tag": "Tag",
+      "von": "Von",
+      "bis": "Bis",
+      "person": "Wer geht",
+      "personWaehlen": "Person wählen",
+      "entfernen": "Termin entfernen",
+      "ankuendigen": "Jetzt ankündigen",
+      "hinweis": "Die Ankündigung an den Kunden legt das CRM 14 Tage vorher im Ausgangskorb an; dort gibst du sie mit einem Klick frei.",
+      "angekuendigt": "Angekündigt am {{datum}} (Ausgangskorb)."
+    },
+    "insp": {
+      "titel": "Inspektionen",
+      "zusammenfassung": "{{offen}} fällig ohne Termin · {{geplant}} geplant · {{angekuendigt}} angekündigt",
+      "filter": "Inspektionen filtern",
+      "filterwert": {
+        "offen": "Ohne Termin",
+        "geplant": "Geplant",
+        "alle": "Alle"
+      },
+      "spalte": {
+        "tag": "Termin / fällig",
+        "person": "Wer",
+        "ankuendigung": "Ankündigung",
+        "aktion": "Aktion"
+      },
+      "faellig": "fällig {{datum}}",
+      "angekuendigt": "angekündigt",
+      "nochNicht": "noch nicht",
+      "planen": "Termin planen",
+      "aendern": "Termin ändern",
+      "leer": "Nichts zu planen",
+      "leerText": "In den nächsten 90 Tagen ist keine Inspektion fällig."
+    },
+    "ohne": {
+      "titel": "Anlagen ohne Wartungsvertrag",
+      "hinweis": "Eigene Anlagen nach der Inbetriebnahme ohne laufenden Vertrag. Das Angebot geht mit passendem Paket und Preis in der Sprache des Kunden über den Ausgangskorb.",
+      "suche": "Kunde, Ort oder Projekt suchen",
+      "filter": "Anlagen filtern",
+      "filterwert": {
+        "nie": "Noch nie angeboten",
+        "nachfassen": "Nachfassen",
+        "alle": "Alle"
+      },
+      "alleMarkieren": "Alle markieren",
+      "markieren": "{{kunde}} markieren",
+      "keineMail": "keine Mail-Adresse",
+      "ibn": "In Betrieb seit",
+      "paket": "Passendes Paket",
+      "angebot": "Angebot",
+      "nie": "noch nie",
+      "stand": {
+        "offen": "gesendet {{datum}}",
+        "angenommen": "angenommen {{datum}}",
+        "abgelehnt": "abgelehnt {{datum}}"
+      },
+      "senden": "Angebot senden",
+      "serie_one": "An {{count}} Kunden senden",
+      "serie_other": "An {{count}} Kunden senden",
+      "abgelehnt": "Abgelehnt",
+      "angenommen": "Angenommen",
+      "leer": "Keine Anlagen",
+      "leerText": "Alle eigenen Anlagen in dieser Auswahl haben einen Vertrag oder ein Angebot."
     }
   },
   "einkauf": {
@@ -4576,7 +5325,9 @@
       "nachtraege": "Nachträge",
       "unterschrift": "Unterschrift Kunde",
       "bestaetigt": "Mit der Unterschrift sind die Nachträge in diesem Rapport bestätigt.",
-      "fotos": "Fotos"
+      "fotos": "Fotos",
+      "vorjahr": "Letztes Mal ({{datum}})",
+      "heute": "Heute"
     },
     "heute": {
       "titel": "Baustelle",
@@ -4858,6 +5609,21 @@
         "laeuft": "Zeit läuft noch",
         "saldo": "Saldo {{h}} h"
       }
+    },
+    "inspektion": {
+      "titel": "Inspektion",
+      "badge": "Inspektion {{nummer}}",
+      "letztes": "Letztes Mal: {{wert}}",
+      "abweichung": "{{prozent}} % Abweichung zum letzten Mal",
+      "vorjahr": {
+        "wartung": "Vergleich mit der Inspektion vom {{datum}}",
+        "ibn": "Vergleich mit dem IBN-Protokoll vom {{datum}}"
+      },
+      "paket": {
+        "essentiel": "Essentiel",
+        "comfort": "Comfort",
+        "premium": "Premium mit Messungen"
+      }
     }
   },
   "unterschrift": {
@@ -5129,7 +5895,8 @@
       "kategorien": "Regeln",
       "pruefen": "Prüfen",
       "auszahlen": "Auszahlen",
-      "auswertung": "Auswertung"
+      "auswertung": "Auswertung",
+      "karte": "Firmenkarte"
     },
     "spalte": {
       "datum": "Datum",
@@ -5354,6 +6121,43 @@
       "unterschriftPerson": "Datum, Unterschrift Mitarbeiter/in",
       "unterschriftBuchhaltung": "Geprüft Buchhaltung",
       "datei": "Spesenabrechnung"
+    },
+    "karte": {
+      "einlesen": "Auszug einlesen",
+      "hinweis": "Auszug der Firmenkarte als CSV aus dem E-Banking oder dem Kartenportal. Schon Eingelesenes wird übersprungen; passt genau eine Firmenkarten-Spese (gleicher Betrag, ±3 Tage), wird sie selbst verbunden.",
+      "kachelOffen_one": "ohne Beleg ({{count}} Buchung)",
+      "kachelOffen_other": "ohne Beleg ({{count}} Buchungen)",
+      "kachelVerbunden": "mit Beleg verbunden",
+      "kachelErledigt": "ohne Beleg erledigt",
+      "kachelFrei": "Firmenkarten-Spesen ohne Buchung",
+      "stand": {
+        "offen": "Ohne Beleg",
+        "verbunden": "Verbunden",
+        "erledigt": "Erledigt",
+        "alle": "Alle"
+      },
+      "nachfordern_one": "Beleg nachfordern ({{count}})",
+      "nachfordern_other": "Belege nachfordern ({{count}})",
+      "buchung": "Kartenbuchung",
+      "person": "Karte von",
+      "personWaehlen": "Person wählen",
+      "verbinden": "Mit Spese verbinden",
+      "keinBeleg": "Noch keine passende Spese",
+      "loesen": "Verbindung lösen",
+      "ohneBeleg": "Ohne Beleg",
+      "wiederOeffnen": "Wieder öffnen",
+      "erledigenTitel": "Ohne Beleg erledigen",
+      "erledigen": "Erledigen",
+      "grund": "Grund",
+      "grundHinweis": "Wird beim Abgleich angezeigt, z. B. für die Revision.",
+      "grundVorschlag": {
+        "abo": "Abo, Rechnung kommt per Mail",
+        "gebuehr": "Kartengebühr",
+        "privat": "Privat, wird vom Lohn abgezogen"
+      },
+      "leer": "Noch kein Auszug eingelesen",
+      "leerFilter": "Nichts in dieser Auswahl",
+      "leerText": "Auszug der Firmenkarte als CSV einlesen. Danach siehst du hier jede Buchung mit oder ohne Beleg."
     }
   },
   "finanzen": {
@@ -6979,7 +7783,71 @@
     },
     "kennzahlen": "Kennzahlen",
     "team": "Team und Betrieb",
-    "system": "System und Bauplan"
+    "system": "System und Bauplan",
+    "warum": {
+      "nachfassen_one": "Seit 1 Tag ohne Antwort",
+      "nachfassen_other": "Seit {{count}} Tagen ohne Antwort",
+      "lead_one": "Anfrage seit 1 Tag offen",
+      "lead_other": "Anfrage seit {{count}} Tagen offen",
+      "lead_zero": "Anfrage von heute",
+      "nachfassen_zero": "Heute gesendet",
+      "von": "Von {{name}}",
+      "kanal_mail": "Mail wartet auf deinen Klick",
+      "kanal_sms": "SMS wartet auf deinen Klick",
+      "kanal_brief": "Brief wartet auf deinen Klick"
+    },
+    "verschieben": {
+      "knopf": "«{{titel}}» verschieben",
+      "titel": "Verschieben",
+      "morgen": "Auf morgen",
+      "naechsteWoche": "Auf nächste Woche (Montag)",
+      "datum": "Auf ein Datum …",
+      "ok": "Verschieben",
+      "bis": "Wieder zeigen am",
+      "erledigt": "Verschoben auf {{datum}}",
+      "fehler": "Nicht verschoben"
+    },
+    "ziele": {
+      "titel": "Meine Woche",
+      "festlegen": "Ziele festlegen",
+      "keine": "Für dich sind keine Ziele gesetzt.",
+      "beschreibung": "Ziele je Person: Anzahlen pro Woche (Montag bis Sonntag), Aufträge als Betrag pro Monat. Leer = kein Ziel.",
+      "person": "Person",
+      "leads_neu": "Neue Anfragen",
+      "termine": "Besichtigungen",
+      "gesendet": "Offerten gesendet",
+      "auftrag_monat_rappen": "Aufträge im Monat",
+      "speichern": "Speichern",
+      "gespeichert": "Ziele gespeichert",
+      "nichtGespeichert": "Ziele nicht gespeichert",
+      "ungueltig": "Bitte ganze Zahlen bzw. einen Betrag wie 250'000 eingeben",
+      "nurVerkauf": "Nur Verkauf und Personen mit Zielen",
+      "allePersonen": "Alle Personen zeigen"
+    },
+    "teamHeute": {
+      "titel": "Team heute",
+      "halbtag": "halber Tag",
+      "abwesend": "abwesend",
+      "baustelle": "Baustelle",
+      "kunde": "beim Kunden",
+      "service": "Service",
+      "da": "da"
+    },
+    "wetter": {
+      "titel": "Wetter auf den Baustellen",
+      "achtung": "Achtung",
+      "keine": "Noch keine Prognose",
+      "regen": "{{mm}} mm",
+      "wind": "{{kmh}} km/h Wind",
+      "quelle": "Quelle: MeteoSchweiz, stündlich aktualisiert",
+      "art": {
+        "sonne": "sonnig",
+        "wolken": "bewölkt",
+        "regen": "Regen",
+        "schnee": "Schnee",
+        "unbekannt": "keine Prognose"
+      }
+    }
   },
   "kz": {
     "titel": "Kennzahlen",
@@ -8034,7 +8902,8 @@
       "garantie_bis": "Garantie bis",
       "zurueck_bis": "Zurück bis",
       "ausgemustert_am": "Ausgemustert am",
-      "ungueltig": "Bitte prüfen"
+      "ungueltig": "Bitte prüfen",
+      "privat_anteil": "Privatanteil (Geschäftsauto privat)"
     },
     "fahrzeug": {
       "neu": "Fahrzeug erfassen",
@@ -8182,7 +9051,8 @@
       },
       "heute": "Diese Woche",
       "weiter": "Nächste Woche",
-      "zurueck": "Vorherige Woche"
+      "zurueck": "Vorherige Woche",
+      "folgtTeam": "folgt dem Team"
     },
     "reservieren": {
       "knopf": "Reservieren",
@@ -8236,7 +9106,10 @@
       "zahlGeraete": "Wert der Geräte",
       "zahlProKm": "CHF pro km im Schnitt",
       "zahlTotal": "Kosten Fahrzeuge total",
-      "zahlUnterhalt": "Unterhalt"
+      "zahlUnterhalt": "Unterhalt",
+      "privatanteil": "Privatanteil",
+      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
+      "privatanteilTitel": "Privatanteil {{jahr}}"
     },
     "dateien": {
       "hochladen": "Datei hinzufügen",
@@ -8251,7 +9124,8 @@
     "schnell": {
       "nehmen": "Nehme ich",
       "zurueck": "Zurück ins Lager"
-    }
+    },
+    "ja": "Ja"
   },
   "grossprojekte": {
     "titel": "Grossprojekte",
@@ -9142,7 +10016,8 @@
       "aeltere": "Ältere",
       "verteilen": "Zu verteilen",
       "kunde": "Warten auf Kunde",
-      "zurueck": "Zurückgestellt"
+      "zurueck": "Zurückgestellt",
+      "neu": "Alle offenen"
     },
     "leer": {
       "warten": "Niemand wartet auf eine Antwort",
@@ -9153,7 +10028,8 @@
       "aeltere": "Keine älteren Mails gefunden",
       "verteilen": "Nichts zu verteilen",
       "kunde": "Du wartest auf keinen Kunden",
-      "zurueck": "Nichts zurückgestellt"
+      "zurueck": "Nichts zurückgestellt",
+      "neu": "Keine offenen Mails"
     },
     "art": {
       "anfrage": "Neue Anfrage",

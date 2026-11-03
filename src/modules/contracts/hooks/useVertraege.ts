@@ -41,6 +41,13 @@ export const useKundenAnlagen = (kontaktId: string | null) =>
 export const useVertragRechnungen = (id: string) =>
   useQuery({ queryKey: ['wartung', 'rechnungen', id], enabled: an, queryFn: () => s.ladeVertragRechnungen(id) })
 
+/** Personen für die Planung der Inspektionen. */
+export const usePlanPersonen = () =>
+  useQuery({ queryKey: ['wartung', 'personen'], enabled: an, queryFn: s.ladePlanPersonen, staleTime: 30 * 60_000 })
+
+/** Eigene Anlagen ohne Wartungsvertrag. */
+export const useOhneVertrag = () => useQuery({ queryKey: ['wartung', 'ohne'], enabled: an, queryFn: s.ladeOhneVertrag })
+
 /** Nach einer Änderung alles zur Wartung neu laden. */
 export function useNeuLaden() {
   const qc = useQueryClient()

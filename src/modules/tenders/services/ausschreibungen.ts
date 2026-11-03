@@ -20,10 +20,32 @@ function db() {
 }
 
 const DOSSIER_FELDER =
-  'id, nummer, quelle, quell_url, art, spur, status, prioritaet, punkte, begruendung, titel, beschreibung, gemeinde, plz, kanton, sprache, fahrzeit_min, vergabestelle, frist, frist_fragen, frist_begehung, frist_eingabe, publiziert_am, parzelle, bauherr, bauherr_art, ausloeser, ausloeser_am, grund, haupt_id, korrigiert_am, wiedervorlage_am, eingereicht_am, eingereicht_form, offerte_id, verkaufschance_id, erstellt_am, standort:standorte(name)'
+  'id, nummer, quelle, quell_url, art, spur, status, prioritaet, punkte, begruendung, titel, beschreibung, gemeinde, plz, kanton, sprache, fahrzeit_min, vergabestelle, frist, frist_fragen, frist_begehung, frist_eingabe, publiziert_am, parzelle, bauherr, bauherr_art, ausloeser, ausloeser_am, grund, haupt_id, korrigiert_am, wiedervorlage_am, eingereicht_am, eingereicht_form, offerte_id, verkaufschance_id, erstellt_am, standort:standorte(name), verantwortlich_id, verfahren, auftragsart, leistung_kwp, schaetzung_rappen, ausfuehrung_von, ausfuehrung_bis, kriterien, varianten, arge, eignung_ref_kwp, frist_oeffnung, zuschlag_erwartet, bindefrist_monate, eingabe_adresse, gng_vorschlag, gng_entscheid, gng_grund, gng_am, checkliste, pruefung_von, pruefung_am, angebot_rappen, rang, anbieter_anzahl, zuschlag_rappen, gewinner, entscheid_datum, beschwerde_bis, debriefing_am, ohne_protokoll, projekt_id, wer:personen!ausschreibungen_verantwortlich_id_fkey(name)'
 
-type DossierRoh = Omit<Dossier, 'standort'> & { standort: { name: string } | null }
-const alsDossier = ({ standort, ...d }: DossierRoh): Dossier => ({ ...d, standort: standort?.name ?? null })
+type DossierRoh = Omit<Dossier, 'standort' | 'verantwortlich'> & {
+  standort: { name: string } | null
+  wer: { name: string } | null
+}
+const alsDossier = ({ standort, wer, ...d }: DossierRoh): Dossier => ({
+  ...d,
+  standort: standort?.name ?? null,
+  verantwortlich: wer?.name ?? null,
+})
+
+/** Alle offenen Dossiers für den Leitstand und dazu, was in den letzten 12 Monaten entschieden wurde. */
+export async function ladeLeitstand(): Promise<Dossier[]> {
+  const jahr = new Date(Date.now() - 365 * 86_400_000).toISOString()
+  const { data, error } = await db()
+    .from('ausschreibungen')
+    .select(DOSSIER_FELDER)
+    .is('geloescht_am', null)
+    .is('haupt_id', null)
+    .or(`status.not.in.(${ERLEDIGT.join(',')}),geaendert_am.gte.${jahr}`)
+    .order('frist', { ascending: true, nullsFirst: false })
+    .limit(1000)
+  if (error) throw error
+  return (data as unknown as DossierRoh[]).map(alsDossier)
+}
 
 /** Dossiers einer Ansicht (ohne Doppelte, die zu einem anderen Dossier gehören), dringende zuerst. */
 export async function ladeDossiers(filter: ListenFilter | 'pruefen'): Promise<Dossier[]> {

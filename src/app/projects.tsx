@@ -29,16 +29,16 @@ export const Route = createFileRoute('/projects')({
     return (
       <Suspense>
         <Projekte
-          reiter={reiter ?? 'baustellen'}
+          reiter={reiter ?? 'leitstand'}
           projektId={projekt ?? null}
           akte={akte ?? 'uebersicht'}
           onNavigation={(z) => {
-            const r = z.reiter ?? reiter ?? 'baustellen'
+            const r = z.reiter ?? reiter ?? 'leitstand'
             const p = z.projekt === undefined ? projekt : z.projekt
             const a = z.projekt !== undefined ? undefined : (z.akte ?? akte)
             void navigate({
               search: {
-                ...(r !== 'baustellen' ? { reiter: r } : {}),
+                ...(r !== 'leitstand' ? { reiter: r } : {}),
                 ...(p ? { projekt: p } : {}),
                 ...(p && a && a !== 'uebersicht' ? { akte: a } : {}),
               },

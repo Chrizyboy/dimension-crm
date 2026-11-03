@@ -121,9 +121,10 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
 
   await page.getByRole('button', { name: 'Meine Akte' }).click()
   const akte = page.getByRole('dialog', { name: 'Mario Montage' })
+  // Personal-Akte ist ein eigener Reiter; die Person selbst ändert nur «Persönlich» (Entscheid 0040).
   await akte.getByRole('tab', { name: 'Personal-Akte' }).click()
-  await akte.getByRole('button', { name: 'Bearbeiten' }).click()
-  const form = page.getByRole('dialog', { name: 'Personal-Akte' })
+  await akte.getByRole('button', { name: 'Bearbeiten' }).first().click()
+  const form = page.getByRole('dialog', { name: 'Persönlich' })
   await expect(form.getByLabel('Pensum (%)')).toHaveCount(0)
   await form.getByLabel('Notfallkontakt (Name)').fill(`Notfall ${kennung}`)
   await form.getByRole('button', { name: 'Speichern' }).click()
@@ -151,8 +152,8 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await verkauf.goto('/#/staff')
   await verkauf.getByRole('row', { name: /Mario Montage/ }).click()
   const fremd = verkauf.getByRole('dialog', { name: 'Mario Montage' })
-  await expect(fremd.getByRole('button', { name: 'Kurs oder Ausweis erfassen' })).toHaveCount(0)
   await fremd.getByRole('tab', { name: 'Personal-Akte' }).click()
   await expect(fremd).toContainText('Nur für die Person selbst, die Geschäftsleitung')
   await expect(fremd).not.toContainText(`Notfall ${kennung}`)
+  await expect(fremd.getByRole('button', { name: 'Kurs oder Ausweis erfassen' })).toHaveCount(0)
 })

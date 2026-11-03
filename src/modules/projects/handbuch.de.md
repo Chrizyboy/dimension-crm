@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -14,6 +14,23 @@ Jeder unterschriebene Auftrag läuft hier über Bewilligungen, Vorbereitung und 
 - **Geschäftsleitung**: Übersicht über alle Baustellen.
 
 ## So geht's {#so}
+
+### Den Tag im Leitstand beginnen
+
+1. Ansicht **Leitstand**: alle Projekte als **Board** nach Phase oder als **Liste**. Karten mit rotem Hinweis sind blockiert (Material bestellen, Bewilligung überfällig, Zahlung offen, Mängel).
+2. Ansicht **Meine Woche**: was diese und nächste Woche fällig ist, oben **Überfällig und blockiert**. Umschalten zwischen **Meine Projekte** und **Alle Projekte**.
+3. Klick auf eine Karte öffnet die Projekt-Akte als ganze Seite.
+
+### Mängel und Restarbeiten festhalten
+
+1. In der Akte die Karte **Mängel und Restarbeiten**: Art wählen (**Mangel** oder **Restarbeit**), Text, Frist, **Erfassen**.
+2. Haken setzt ihn erledigt; erledigte lassen sich wieder öffnen.
+3. Solange etwas offen ist, lässt sich die **Übergabe** nicht abschliessen.
+
+### Beteiligte erfassen
+
+1. In der Akte die Karte **Beteiligte**, **Hinzufügen**: Rolle (Elektriker, Gerüstbau, Netzbetreiber …) und Kontakt aus dem Adressbuch.
+2. Telefon und Mail stehen dann direkt in der Akte. Die Rollen sind eine Auswahlliste in den Einstellungen.
 
 ### Einen neuen Auftrag einplanen
 
@@ -75,6 +92,8 @@ Jeder unterschriebene Auftrag läuft hier über Bewilligungen, Vorbereitung und 
 
 - Automatische Schritte nie von Hand setzen. Rückgängig nur über **Letzten Bau-Schritt rückgängig**.
 - Die Checkliste Elektriker ist Teil des Fahrplans und muss vor der IBN erledigt sein.
+- Übergabe erst, wenn keine Mängel oder Restarbeiten mehr offen sind.
+- Kundeninfos bei Meilensteinen gehen nur nach Freigabe im [Ausgangskorb](kapitel:outbox) raus.
 
 ## Häufige Fragen {#fragen}
 
@@ -86,7 +105,12 @@ Er wird automatisch gesetzt; der Hinweis zeigt, woher er kommt (z. B. «Kommt vo
 
 Dann gilt die Anlage als gebaut: die Schritte bis zur Montage werden erledigt und die Anlage angelegt. Alles lässt sich rückgängig machen.
 
+### Warum steht im Verlauf «Kundeninfo wartet auf Freigabe»?
+
+Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info an den Kunden vor. Sie geht erst raus, wenn jemand sie im Ausgangskorb freigibt.
+
 ## Neu {#neu}
 
 - 03.11.2026: Einsätze mit Tätigkeiten (Hebebühne, Anhänger, Dach vor 1990); fehlt im Team ein Pflicht-Ausweis, warnt der Zeitplan gelb.
+- 03.11.2026: Leitstand, Meine Woche und Projekt-Akte als ganze Seite; Mängel und Restarbeiten, Beteiligte mit Rolle, Kundeninfo bei Meilensteinen mit Freigabe.
 - 01.11.2026: Zeitplan der Baustellen mit Sicht Baustellen oder Team, Konflikte rot.

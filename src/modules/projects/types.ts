@@ -1,7 +1,15 @@
 /** Fachliche Typen des Moduls «Projekte & Montage» (Phase 9). */
 
 /** Reiter der Seite; steht in der Adresse (#/projects?reiter=zeitplan). */
-export const REITER = ['baustellen', 'zeitplan', 'bewilligungen', 'alle', 'subunternehmer', 'abwesenheiten'] as const
+export const REITER = [
+  'leitstand',
+  'woche',
+  'zeitplan',
+  'bewilligungen',
+  'alle',
+  'subunternehmer',
+  'abwesenheiten',
+] as const
 export type Reiter = (typeof REITER)[number]
 
 /** Reiter der Projekt-Akte. */
@@ -69,6 +77,7 @@ export interface Projekt {
   wechselrichter: string | null
   batterie: string | null
   verantwortlich: string | null
+  verantwortlich_id: string | null
   ablauf: string | null
   /** Zusammenfassung aus der Sicht `projekt_stand` (null, wenn keine Ablauf-Vorlage). */
   stand: {
@@ -196,4 +205,153 @@ export interface Standort {
   id: string
   kuerzel: string
   name: string
+}
+
+/** Signale je laufendem Projekt (Sicht `projekt_signale`): zeigen, worauf ein Projekt wartet. */
+export interface Signale {
+  projekt_id: string
+  verantwortlich_id: string | null
+  material_fehlt: number
+  material_positionen: number
+  letzte_lieferung: string | null
+  naechster_einsatz: string | null
+  letzte_aktivitaet: string | null
+  tranchen_faellig_rappen: number
+  offen_rappen: number
+  offen_faellig_am: string | null
+  nachtraege_offen: number
+  maengel_offen: number
+}
+
+/** Schnellfilter im Leitstand. */
+export const SCHNELLFILTER = ['meine', 'spaet', 'bewilligung', 'material', 'ohne_termin', 'verrechnen'] as const
+export type Schnellfilter = (typeof SCHNELLFILTER)[number]
+
+/** Ein Hinweis auf einer Karte: worauf das Projekt wartet oder was fehlt. */
+export interface Hinweis {
+  schluessel: string
+  ton: 'kritisch' | 'warnung' | 'info' | 'ok' | 'neutral'
+  werte?: Record<string, string | number>
+}
+
+/** Alles zu einem Projekt aus `projekt_akte()`. */
+export interface Akte {
+  verkauf: string | null
+  einsaetze: {
+    id: string
+    art: EinsatzArt
+    von: string
+    bis: string
+    notiz: string | null
+    personen: string[]
+    subunternehmer: string | null
+  }[]
+  material: {
+    id: string
+    bezeichnung: string
+    menge: number
+    einheit: string | null
+    vorhanden: number
+    unterwegs: number
+    fehlt: number
+  }[]
+  bestellungen: { id: string; nummer: string; status: string; liefertermin: string | null; lieferant: string | null }[]
+  tranchen: {
+    id: string
+    bezeichnung: string
+    betrag_rappen: number
+    faellig_am: string | null
+    bezahlt_am: string | null
+    rechnung_nr: string | null
+    rechnung: { id: string; nummer: string | null; status: string } | null
+  }[]
+  rechnungen: {
+    id: string
+    nummer: string | null
+    status: string
+    titel: string
+    datum: string | null
+    faellig_am: string | null
+    total_rappen: number
+    bezahlt_rappen: number
+  }[]
+  nachtraege: { id: string; nummer: string; beschreibung: string; betrag_rappen: number | null; status: string }[]
+  rapporte: {
+    id: string
+    nummer: string | null
+    datum: string
+    art: string
+    arbeiten: string | null
+    abgeschlossen_am: string | null
+    person: string | null
+    stunden: number | null
+  }[]
+  stunden: number
+  maengel: Mangel[]
+  beteiligte: Beteiligter[]
+  ausgang: {
+    id: string
+    art: string
+    kanal: 'mail' | 'sms'
+    betreff: string | null
+    status: string
+    erstellt_am: string
+    gesendet_am: string | null
+  }[]
+  verlauf: {
+    quelle: 'aktivitaet' | 'mail'
+    id: string
+    art: string
+    richtung: 'ein' | 'aus' | null
+    zeit: string
+    text: string | null
+    ergebnis?: string | null
+    betreff?: string | null
+    person: string | null
+  }[]
+}
+
+/** Nachkalkulation aus `nachkalkulation()`, Beträge exkl. MWST. */
+export interface Nachkalkulation {
+  soll: {
+    verkauf_rappen: number | null
+    einkauf_rappen: number | null
+    werktage: number | null
+    stunden: number | null
+  }
+  ist: {
+    umsatz_rappen: number
+    verrechnet_rappen: number
+    material_rappen: number
+    stunden: number
+    arbeit_rappen: number
+    marge_rappen: number
+  }
+}
+
+/** Mangel oder Restarbeit am Projekt (Tabelle `projekt_maengel`). */
+export interface Mangel {
+  id: string
+  art: 'mangel' | 'restarbeit'
+  text: string
+  ort: string | null
+  frist: string | null
+  status: 'offen' | 'erledigt'
+  erledigt_am: string | null
+  erledigt_notiz: string | null
+  verantwortlich_id: string | null
+  verantwortlich: string | null
+  subunternehmer_id: string | null
+  subunternehmer: string | null
+}
+
+/** Beteiligter am Projekt: Kontakt mit Rolle aus der Auswahlliste «projekt_rolle». */
+export interface Beteiligter {
+  id: string
+  rolle: string
+  notiz: string | null
+  kontakt_id: string
+  name: string | null
+  telefon: string | null
+  email: string | null
 }

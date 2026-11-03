@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: innendienst, verkauf, buchhaltung, geschaeftsleitung
 ---
 
@@ -29,6 +29,19 @@ Wartungsverträge nach den drei Paketen der Website: **Essentiel**, **Comfort** 
 1. Vertrag öffnen, **Wartung erledigt**.
 2. **Durchgeführt am** und kurz, was gemacht wurde. Die nächste Inspektion rechnet das CRM aus dem Paket.
 
+### Eine Inspektion planen
+
+1. Reiter **Inspektionen**: fällige Inspektionen der nächsten 90 Tage ohne Termin, mit **Geplant** die schon geplanten.
+2. **Termin planen**: Tag, Von, Bis und wer geht. **Speichern**.
+3. 14 Tage vorher liegt die Ankündigung an den Kunden im [Ausgangskorb](kapitel:outbox). Erst nach deiner Freigabe geht sie hinaus. Sofort: im Termin **Jetzt ankündigen**.
+4. Die Inspektion erscheint am Handy der Person in [Baustelle](kapitel:fieldwork) unter «Mein Tag».
+
+### Kunden ohne Vertrag ein Angebot schicken
+
+1. Reiter **Ohne Vertrag**: eigene Anlagen nach der Inbetriebnahme ohne laufenden Vertrag, mit passendem Paket und Preis.
+2. **Angebot senden** für einen Kunden, oder mehrere ankreuzen und **An … Kunden senden**. Der Klick ist die Freigabe, die Mail geht in der Sprache des Kunden.
+3. Antwort des Kunden: **Angenommen** öffnet «Neuer Vertrag», sonst **Abgelehnt**. Filter **Nachfassen** zeigt offene Angebote nach 14 Tagen.
+
 ### Eine Kündigung erfassen
 
 1. Vertrag öffnen, **Kündigung erfassen**, Datum des Eingangs eintragen.
@@ -50,6 +63,7 @@ Wartungsverträge nach den drei Paketen der Website: **Essentiel**, **Comfort** 
 ## Läuft automatisch {#automatisch}
 
 - 30 Tage vor jedem Vertragsjahr legt das CRM die Jahresrechnung als Entwurf an. «verrechnet bis» verhindert doppelte Rechnungen.
+- 14 Tage vor einem geplanten Termin legt das CRM die Ankündigung an den Kunden in den Ausgangskorb (wartet auf Freigabe). Nach «Wartung erledigt» ist der Termin wieder leer.
 - Fällige Wartungen der nächsten 30 Tage stehen auf [Mein Tag](kapitel:today).
 - Nach Ablauf der Mindestlaufzeit (3 Jahre) verlängert sich der Vertrag um je 1 Jahr.
 
@@ -75,5 +89,6 @@ Nur Verträge mit Paket bekommen sie automatisch. Bei älteren Verträgen **Jahr
 
 ## Neu {#neu}
 
+- 03.11.2026: Inspektionen planen mit Ankündigung 14 Tage vorher, Reiter «Ohne Vertrag» mit Angebot einzeln oder als Serie, Inspektion am Handy mit Werten vom letzten Mal.
 - 02.11.2026: Verträge nach den Paketen der Website, Tarif nach kWp mit sichtbarem Rabatt, Kündigung mit «kündbar bis», Jahresrechnung automatisch als Entwurf.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

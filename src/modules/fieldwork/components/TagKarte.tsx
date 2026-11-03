@@ -1,4 +1,4 @@
-import { ClipboardPen, MapPin, Navigation, Package, Phone, ShieldCheck, Users, Zap } from 'lucide-react'
+import { ClipboardCheck, ClipboardPen, MapPin, Navigation, Package, Phone, ShieldCheck, Users, Zap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -35,7 +35,14 @@ export function TagKarte({
   const mehrtaegig = e.von !== e.bis
   const tagNr = Math.round((new Date(tag).getTime() - new Date(e.von).getTime()) / 86_400_000) + 1
   const dauer = Math.round((new Date(e.bis).getTime() - new Date(e.von).getTime()) / 86_400_000) + 1
-  const hauptArt: RapportArt = e.typ === 'service' ? 'service' : e.projekt?.bau_status === 'ibn' ? 'ibn' : 'montage'
+  const hauptArt: RapportArt =
+    e.typ === 'service'
+      ? 'service'
+      : e.typ === 'wartung'
+        ? 'wartung'
+        : e.projekt?.bau_status === 'ibn'
+          ? 'ibn'
+          : 'montage'
 
   return (
     <Karte
@@ -57,6 +64,12 @@ export function TagKarte({
               {e.service?.garantie && <ShieldCheck />}
               {e.service?.nummer} {e.zeit ?? ''}
             </Badge>
+          ) : e.typ === 'wartung' ? (
+            <Badge ton="info">
+              <ClipboardCheck />
+              {t('baustelle.inspektion.badge', { nummer: e.wartung?.nummer ?? '' })} {e.zeit ?? ''}
+              {e.wartung?.bis ? `–${e.wartung.bis}` : ''}
+            </Badge>
           ) : (
             <Badge ton="marke">{e.projekt?.nummer}</Badge>
           )}
@@ -70,6 +83,19 @@ export function TagKarte({
           )}
         </div>
       </div>
+
+      {e.typ === 'wartung' && e.wartung && (
+        <p className="text-sm">
+          <span className="font-medium">{t('baustelle.inspektion.titel')}</span>
+          {[
+            e.wartung.paket ? t(`baustelle.inspektion.paket.${e.wartung.paket}`) : null,
+            e.wartung.kwp != null ? `${String(e.wartung.kwp)} kWp` : null,
+          ]
+            .filter(Boolean)
+            .map((x) => ` · ${String(x)}`)
+            .join('')}
+        </p>
+      )}
 
       {(e.service?.titel ?? e.notiz) && (
         <p className="text-sm">

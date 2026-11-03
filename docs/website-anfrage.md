@@ -60,3 +60,24 @@ alles Weitere als Zeilen in der internen Notiz. Herkunft (Seite, Kampagne, Konta
    und die Website neu starten. Die Weiterleitung steckt im Repository `dimension-solaire-website` (`anfrageAnCrm` im
    Lead-Handler); Mails an info@ laufen unverändert weiter.
 4. Probe: Rückruf-Formular mit eigener Nummer senden → Lead unter «Zu tun», Glocke nach 15 Minuten.
+
+## Termin-Link (Kunde bucht die Besichtigung selbst, Entscheid 0052)
+
+```
+Lead-Akte «Termin-Link senden» → Ausgangskorb (SMS/Mail, Freigabe) → Kunde öffnet /de/termin/?t=… bzw. /fr/rendez-vous/?t=…
+Browser → Website-Backend (POST /api/termin) → Edge Function «termin» → termin_link_zeiten() / termin_link_buchen()
+```
+
+- Schlüssel im Link: zufällig, je Lead einer (`verkaufschancen.termin_link`), gilt `gueltig_tage` lang und nur, solange
+  der Lead neu, offen oder wartend ist. Nach dem Buchen gilt er nicht mehr.
+- Aufruf wie oben mit `x-anfrage-schluessel`, Körper `{ "aktion": "zeiten", "t": "…" }` oder
+  `{ "aktion": "buchen", "t": "…", "beginn": "2026-11-05T08:00:00Z", "notiz": "…" }` (Notiz höchstens 500 Zeichen).
+- `zeiten` → `{ gueltig, vorname, sprache, verkaeufer, ort, dauer_min, zeiten: [ISO …] }`. Nur Vorname, Name des
+  Verkäufers und Ort gehen hinaus, keine Adresse und keine Nummer.
+- `buchen` → `{ ok: true }` oder `{ ok: false, fehler: "besetzt" | "ungueltig" }`. Gebucht wird über
+  `setze_stand(…, 'termin', …)`; der Verkäufer bekommt eine Glocke.
+- Freie Zeiten: Besuchszeiten je Wochentag, Raster, Dauer, Puffer, Vorlauf und Tage in `einstellungen.verkauf.termin_link`
+  (nur Administration). Weg fallen Feiertage, Abwesenheiten, Outlook-Termine des Verkäufers (nicht «frei») und seine
+  anderen Besichtigungen, je mit Puffer.
+- Einrichten: `npx supabase functions deploy termin --no-verify-jwt`; gleicher `ANFRAGE_SCHLUESSEL`. Auf der Website
+  ist nichts Neues zu setzen, wenn `ANFRAGE_URL` gesetzt ist (`TERMIN_URL` nur, wenn abweichend).
