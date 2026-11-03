@@ -1,5 +1,6 @@
 import type {
   LaufendeZeit,
+  MeldungEingabe,
   MeinTag,
   NachtragEingabe,
   NeuerRapport,
@@ -56,6 +57,14 @@ export async function rapportAnlegen(n: NeuerRapport, kopf: Partial<Rapport>): P
     stunden: null,
     fotos_anzahl: 0,
     nachtraege_anzahl: 0,
+    team: [],
+    schritte: {},
+    sicherheit: null,
+    seriennummern: [],
+    vorbehalte: [],
+    visiert_am: null,
+    visiert_von_name: null,
+    rueckfrage: null,
     ...kopf,
     ...n,
   }
@@ -84,7 +93,12 @@ export async function rapportAendern(id: string, e: RapportEingabe): Promise<voi
  * So geht kein Prüfpunkt verloren, wenn der Monteur schnell nacheinander tippt und ein Neuladen dazwischenkommt.
  */
 export function eingabeAnwenden(alt: Rapport, e: RapportEingabe): Rapport {
-  return { ...alt, ...e, pruefpunkte: e.pruefpunkte ? { ...alt.pruefpunkte, ...e.pruefpunkte } : alt.pruefpunkte }
+  return {
+    ...alt,
+    ...e,
+    pruefpunkte: e.pruefpunkte ? { ...alt.pruefpunkte, ...e.pruefpunkte } : alt.pruefpunkte,
+    schritte: e.schritte ? { ...alt.schritte, ...e.schritte } : alt.schritte,
+  }
 }
 
 /** Zeit starten (Start-Knopf); eine laufende Zeit endet damit. */
@@ -118,33 +132,74 @@ export async function nachtragErfassen(rapportId: string, n: NachtragEingabe): P
   ])
 }
 
-/** Foto oder Unterschrift (Bild) als Dokument des Rapports ablegen. */
+/**
+ * Foto oder Unterschrift (Bild) als Dokument ablegen, normal am Rapport; mit `kategorie` als Pflichtfoto
+ * (z. B. «modulfeld»), mit `bezug` an einer Meldung.
+ */
 export async function bildAblegen(
   rapportId: string,
   blob: Blob,
   ordner: 'fotos' | 'unterschrift',
-  kategorie?: string,
+  extra: { kategorie?: string | null; bezug?: { tabelle: string; id: string } } = {},
 ): Promise<string> {
   const id = crypto.randomUUID()
   const endung = blob.type === 'image/png' ? 'png' : 'jpg'
   const name = `${ordner === 'fotos' ? 'Foto' : 'Unterschrift'}-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}.${endung}`
+  const bezug = extra.bezug ?? { tabelle: 'rapporte', id: rapportId }
   await einreihen({
     art: 'datei',
     blob,
-    pfad: `rapporte/${rapportId}/${id}.${endung}`,
+    pfad: `${bezug.tabelle}/${bezug.id}/${id}.${endung}`,
     dokument: {
       id,
       name,
       mime_typ: blob.type,
       ordner,
-      bezug_tabelle: 'rapporte',
-      bezug_id: rapportId,
-      ...(kategorie ? { kategorie } : {}),
+      bezug_tabelle: bezug.tabelle,
+      bezug_id: bezug.id,
+      ...(extra.kategorie ? { kategorie: extra.kategorie } : {}),
     },
     bezug: rapportId,
     erstellt: jetzt(),
   })
   return id
+}
+
+/**
+ * Teamleitung startet die Zeit für mehrere Personen (z. B. das ganze Team nach dem Sicherheits-Check).
+ * Ist die angemeldete Person dabei, läuft ihre Zeit sofort auch in der Ansicht.
+ */
+export async function teamStarten(rapportId: string, projektId: string | null, personen: string[], ich: string | null) {
+  const start = jetzt()
+  const liste = personen.map((person_id) => ({ person_id, id: crypto.randomUUID() }))
+  const p = { rapport_id: rapportId, start, personen: liste }
+  await einreihen({ art: 'rpc', name: 'zeit_team_starten', args: { p }, bezug: rapportId, erstellt: start })
+  const meine = liste.find((x) => x.person_id === ich)
+  if (meine) {
+    const laufend: LaufendeZeit = { id: meine.id, start, rapport_id: rapportId, projekt_id: projektId, art: 'arbeit' }
+    await tagAendern((t) => ({ ...t, laufend }))
+  }
+}
+
+/** Teamleitung stoppt die Zeiten des Rapports (alle oder einzelne Personen), mit Pause in Minuten. */
+export async function teamStoppen(rapportId: string, pause_min: number, personen?: string[]) {
+  const p = { rapport_id: rapportId, stopp: jetzt(), pause_min, ...(personen ? { personen } : {}) }
+  await einreihen({ art: 'rpc', name: 'zeit_team_stoppen', args: { p }, bezug: rapportId, erstellt: jetzt() })
+  await tagAendern((t) => ({ ...t, laufend: t.laufend?.rapport_id === rapportId ? null : t.laufend }))
+}
+
+/** Problem von der Baustelle melden, mit Fotos; geht an die Projektleitung, auch ohne Netz (später). */
+export async function meldungErfassen(m: MeldungEingabe, fotos: Blob[]): Promise<void> {
+  await einreihen({
+    art: 'rpc',
+    name: 'meldung_erfassen',
+    args: { p: m },
+    bezug: m.rapport_id ?? m.id,
+    erstellt: jetzt(),
+  })
+  for (const f of fotos) {
+    await bildAblegen(m.id, f, 'fotos', { bezug: { tabelle: 'baustellen_meldungen', id: m.id } })
+  }
 }
 
 /**
@@ -159,6 +214,7 @@ export async function rapportAbschliessen(
     verrechnung?: string | null
     montage_fertig?: boolean
     fall_erledigt?: boolean
+    vorbehalte?: { text: string }[]
     /** Kunde erlaubt Fotos für Werbung (ohne Namen): nach der IBN entsteht ein Referenz-Post als Entwurf. */
     fotos_werbung?: boolean
   },
@@ -169,10 +225,11 @@ export async function rapportAbschliessen(
     unterschrift = { name: a.unterschrift.name, dokument_id, am: jetzt() }
   }
   const p = {
-    ...(unterschrift ? { unterschrift } : { ohne_unterschrift: a.ohne_unterschrift }),
+    ...(unterschrift ? { unterschrift } : a.ohne_unterschrift ? { ohne_unterschrift: a.ohne_unterschrift } : {}),
     ...(a.verrechnung ? { verrechnung: a.verrechnung } : {}),
     ...(a.montage_fertig !== undefined ? { montage_fertig: a.montage_fertig } : {}),
     ...(a.fall_erledigt ? { fall_erledigt: true } : {}),
+    ...(a.vorbehalte?.length ? { vorbehalte: a.vorbehalte } : {}),
     ...(a.fotos_werbung ? { fotos_werbung: true } : {}),
     stopp: jetzt(),
   }
@@ -180,7 +237,11 @@ export async function rapportAbschliessen(
   const am = jetzt()
   await ablageAendern<Rapport>(ablageRapport(id), (alt) =>
     alt
-      ? { ...alt, abgeschlossen_am: am, unterschrift_kunde: unterschrift ?? { ohne: a.ohne_unterschrift ?? '', am } }
+      ? {
+          ...alt,
+          abgeschlossen_am: am,
+          unterschrift_kunde: unterschrift ?? (a.ohne_unterschrift ? { ohne: a.ohne_unterschrift, am } : null),
+        }
       : undefined,
   )
   await tagAendern((t) => ({

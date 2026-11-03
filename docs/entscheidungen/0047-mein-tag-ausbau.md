@@ -1,4 +1,4 @@
-# 0045 – «Mein Tag» ausbauen: handeln statt nur anzeigen (2.11.2026)
+# 0047 – «Mein Tag» ausbauen: handeln statt nur anzeigen (2.11.2026)
 
 ## Ausgangslage
 

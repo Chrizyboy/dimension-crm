@@ -1,4 +1,4 @@
--- Wetter auf den Baustellen (M5 A, Quelle M7 B MeteoSwiss Open Data, 3.11.2026, Entscheid 0045):
+-- Wetter auf den Baustellen (M5 A, Quelle M7 B MeteoSwiss Open Data, 3.11.2026, Entscheid 0047):
 -- Der Zeitplan holt einmal pro Stunde die lokale Prognose von MeteoSwiss (data.geo.admin.ch, gratis, ohne Schlüssel)
 -- für die Postleitzahlen der Einsätze der nächsten Tage und legt sie in `wetter_prognose` ab. Die App liest nur
 -- die Tabelle, nie MeteoSwiss direkt: so bleibt der Abruf an einem Ort, und Handys laden nicht je 1 MB CSV.

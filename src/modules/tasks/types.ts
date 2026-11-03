@@ -1,4 +1,17 @@
-/** Eine Aufgabe: von Hand, aus einer Automation (lauf_id) oder aus dem Ausschreibungs-Monitor. */
+/** Ein Teilschritt einer Aufgabe («Eigenverbrauch rechnen», «Anrufen»). */
+export interface Teilschritt {
+  id: string
+  text: string
+  erledigt: boolean
+}
+
+/** Wie oft eine Aufgabe wiederkommt; nach dem Erledigen legt die Datenbank die nächste an. */
+export type Wiederholung = 'woche' | 'monat' | 'quartal' | 'jahr'
+
+/** Woher eine Aufgabe kommt (von der Datenbank hergeleitet, siehe Sicht `aufgaben_liste`). */
+export type Herkunft = 'automation' | 'monitor' | 'frist' | 'system' | 'selbst' | 'person' | 'ki' | 'posteingang'
+
+/** Eine Aufgabe aus der Sicht `aufgaben_liste`: mit Bezug-Name, Herkunft, Kommentaren und Vertretung. */
 export interface Aufgabe {
   id: string
   titel: string
@@ -7,20 +20,56 @@ export interface Aufgabe {
   person_id: string | null
   bezug_tabelle: string | null
   bezug_id: string | null
+  bezug_name: string | null
   lauf_id: string | null
   erledigt_am: string | null
+  erledigt_von: string | null
+  erledigt_notiz: string | null
+  erstellt_am: string
+  ersteller_id: string | null
+  wichtig: boolean
+  teilschritte: Teilschritt[]
+  wiederholung: Wiederholung | null
+  herkunft: Herkunft
+  kommentare: number
+  vertretung: boolean
+}
+
+/** Kommentar im Verlauf einer Aufgabe. */
+export interface Kommentar {
+  id: string
+  text: string
+  person_id: string | null
   erstellt_am: string
 }
 
-/** Person für «Wer?». */
+/** Person für «Für wen» und die runden Kürzel. */
 export interface Person {
   id: string
+  /** Technischer Schlüssel für Regeln («loris»), nie anzeigen. */
   kuerzel: string
+  /** Anzeige-Kürzel («LP»). */
+  kurzzeichen: string | null
   name: string
 }
 
-/** «meine», «vergeben» (von mir an andere) oder «alle»; «offen» oder «erledigt». */
-export interface AufgabenFilter {
-  wer: 'meine' | 'vergeben' | 'alle'
-  stand: 'offen' | 'erledigt'
+/** Eine Zeile der Team-Sicht (person_id null = nicht zugeteilt). */
+export interface TeamZeile {
+  person_id: string | null
+  name: string | null
+  kurzzeichen: string | null
+  offen: number
+  ueberfaellig: number
+  heute: number
+  erledigt_7: number
+  abwesend: boolean
 }
+
+/** Ansichten der Seite «Aufgaben». */
+export const ANSICHTEN = ['meine', 'vergeben', 'vertretung', 'alle', 'team', 'erledigt'] as const
+export type Ansicht = (typeof ANSICHTEN)[number]
+
+/** Felder, die sich in der Akte ändern lassen. */
+export type AufgabeAenderung = Partial<
+  Pick<Aufgabe, 'titel' | 'text' | 'faellig_am' | 'person_id' | 'wichtig' | 'teilschritte' | 'wiederholung'>
+>

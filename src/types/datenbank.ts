@@ -326,6 +326,13 @@ export type Database = {
             foreignKeyName: 'abwesenheiten_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'abwesenheiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -506,6 +513,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aktivitaeten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'aktivitaeten_person_id_fkey'
@@ -824,6 +838,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'anschreiben_aufgabe_id_fkey'
+            columns: ['aufgabe_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'anschreiben_ausgang_id_fkey'
             columns: ['ausgang_id']
             isOneToOne: false
@@ -836,6 +857,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'ausschreibungen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'anschreiben_bewilligt_von_fkey'
+            columns: ['bewilligt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'anschreiben_bewilligt_von_fkey'
@@ -864,6 +892,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkaufschancen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'anschreiben_versendet_von_fkey'
+            columns: ['versendet_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'anschreiben_versendet_von_fkey'
@@ -1023,6 +1058,7 @@ export type Database = {
           bezug_id: string | null
           bezug_tabelle: string | null
           erledigt_am: string | null
+          erledigt_notiz: string | null
           erledigt_von: string | null
           erstellt_am: string
           erstellt_von: string | null
@@ -1032,8 +1068,13 @@ export type Database = {
           id: string
           lauf_id: string | null
           person_id: string | null
+          quelle: string | null
+          teilschritte: NonNullable<Json>
           text: string | null
           titel: string
+          vorgaenger_id: string | null
+          wichtig: boolean
+          wiederholung: string | null
         }
         ComputedFields: never
         Insert: {
@@ -1042,6 +1083,7 @@ export type Database = {
           bezug_id?: string | null
           bezug_tabelle?: string | null
           erledigt_am?: string | null
+          erledigt_notiz?: string | null
           erledigt_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -1051,8 +1093,13 @@ export type Database = {
           id?: string
           lauf_id?: string | null
           person_id?: string | null
+          quelle?: string | null
+          teilschritte?: NonNullable<Json>
           text?: string | null
           titel: string
+          vorgaenger_id?: string | null
+          wichtig?: boolean
+          wiederholung?: string | null
         }
         Update: {
           alt_daten?: Json | null
@@ -1060,6 +1107,7 @@ export type Database = {
           bezug_id?: string | null
           bezug_tabelle?: string | null
           erledigt_am?: string | null
+          erledigt_notiz?: string | null
           erledigt_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -1069,10 +1117,22 @@ export type Database = {
           id?: string
           lauf_id?: string | null
           person_id?: string | null
+          quelle?: string | null
+          teilschritte?: NonNullable<Json>
           text?: string | null
           titel?: string
+          vorgaenger_id?: string | null
+          wichtig?: boolean
+          wiederholung?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'aufgaben_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'aufgaben_erledigt_von_fkey'
             columns: ['erledigt_von']
@@ -1089,6 +1149,96 @@ export type Database = {
           },
           {
             foreignKeyName: 'aufgaben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'aufgaben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_vorgaenger_id_fkey'
+            columns: ['vorgaenger_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_vorgaenger_id_fkey'
+            columns: ['vorgaenger_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      aufgaben_kommentare: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          aufgabe_id: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string | null
+          text: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          aufgabe_id: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          text: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          aufgabe_id?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'aufgaben_kommentare_aufgabe_id_fkey'
+            columns: ['aufgabe_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_kommentare_aufgabe_id_fkey'
+            columns: ['aufgabe_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_kommentare_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'aufgaben_kommentare_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
@@ -1217,8 +1367,22 @@ export type Database = {
             foreignKeyName: 'ausgangskorb_absender_person_id_fkey'
             columns: ['absender_person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_absender_person_id_fkey'
+            columns: ['absender_person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_freigegeben_von_fkey'
+            columns: ['freigegeben_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'ausgangskorb_freigegeben_von_fkey'
@@ -1613,6 +1777,13 @@ export type Database = {
             foreignKeyName: 'ausschreibungen_entscheid_von_fkey'
             columns: ['entscheid_von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_entscheid_von_fkey'
+            columns: ['entscheid_von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -1953,6 +2124,13 @@ export type Database = {
             foreignKeyName: 'automationen_ausfuehren_als_fkey'
             columns: ['ausfuehren_als']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'automationen_ausfuehren_als_fkey'
+            columns: ['ausfuehren_als']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -2012,6 +2190,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'automation_laeufe'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'benachrichtigungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'benachrichtigungen_person_id_fkey'
@@ -2264,6 +2449,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_freigegeben_von_fkey'
+            columns: ['freigegeben_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'bestellungen_freigegeben_von_fkey'
@@ -2620,6 +2812,13 @@ export type Database = {
           widerrufen_am?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'einladungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'einladungen_person_id_fkey'
             columns: ['person_id']
@@ -3251,6 +3450,13 @@ export type Database = {
             foreignKeyName: 'fahrzeuge_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'fahrzeuge_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -3636,6 +3842,13 @@ export type Database = {
             foreignKeyName: 'geraete_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'geraete_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -3693,6 +3906,13 @@ export type Database = {
           person_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'gespeicherte_ansichten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'gespeicherte_ansichten_person_id_fkey'
             columns: ['person_id']
@@ -3926,6 +4146,13 @@ export type Database = {
             foreignKeyName: 'grossprojekte_entschieden_von_fkey'
             columns: ['entschieden_von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_entschieden_von_fkey'
+            columns: ['entschieden_von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -3935,6 +4162,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'standorte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'grossprojekte_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'grossprojekte_verantwortlich_id_fkey'
@@ -4232,6 +4466,13 @@ export type Database = {
             foreignKeyName: 'integrations_protokoll_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'integrations_protokoll_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -4300,6 +4541,13 @@ export type Database = {
           quelle?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'kalender_eintraege_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'kalender_eintraege_person_id_fkey'
             columns: ['person_id']
@@ -4510,6 +4758,13 @@ export type Database = {
             foreignKeyName: 'ki_aufrufe_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ki_aufrufe_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -4566,6 +4821,13 @@ export type Database = {
           sprache?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'ki_ergebnisse_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'ki_ergebnisse_person_id_fkey'
             columns: ['person_id']
@@ -4972,6 +5234,13 @@ export type Database = {
           wert?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'kontaktsperren_aufgehoben_von_fkey'
+            columns: ['aufgehoben_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'kontaktsperren_aufgehoben_von_fkey'
             columns: ['aufgehoben_von']
@@ -5392,6 +5661,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'lagerorte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lagerbewegungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'lagerbewegungen_person_id_fkey'
@@ -5902,6 +6178,13 @@ export type Database = {
           unterschrift_kunde?: Json | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'nachtraege_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'nachtraege_person_id_fkey'
             columns: ['person_id']
@@ -6452,6 +6735,13 @@ export type Database = {
             foreignKeyName: 'offerten_verantwortlich_id_fkey'
             columns: ['verantwortlich_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'offerten_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -6786,6 +7076,13 @@ export type Database = {
             foreignKeyName: 'personal_loehne_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'personal_akten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -6964,8 +7261,10 @@ export type Database = {
           hat_anhang: boolean
           id: string
           kennung: string
+          ki_werte: Json
           kontakt_id: string | null
           konversation_id: string | null
+          nachfassen: boolean
           nummern: string[]
           offerte_id: string | null
           outlook_id: string
@@ -6980,11 +7279,17 @@ export type Database = {
           sprache: string | null
           stand: string
           verkaufschance_id: string | null
+          verteilt_am: string | null
+          verteilt_von: string | null
           vertretung_fuer: string | null
           von_email: string | null
           von_name: string | null
           vorschau: string | null
+          vorschlag_id: string | null
+          warten_bis: string | null
           web_link: string | null
+          zahlung_id: string | null
+          zurueck_am: string | null
           zusammenfassung: string | null
           zustaendig_id: string | null
         }
@@ -7012,8 +7317,10 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung: string
+          ki_werte?: Json
           kontakt_id?: string | null
           konversation_id?: string | null
+          nachfassen?: boolean
           nummern?: string[]
           offerte_id?: string | null
           outlook_id: string
@@ -7028,11 +7335,17 @@ export type Database = {
           sprache?: string | null
           stand?: string
           verkaufschance_id?: string | null
+          verteilt_am?: string | null
+          verteilt_von?: string | null
           vertretung_fuer?: string | null
           von_email?: string | null
           von_name?: string | null
           vorschau?: string | null
+          vorschlag_id?: string | null
+          warten_bis?: string | null
           web_link?: string | null
+          zahlung_id?: string | null
+          zurueck_am?: string | null
           zusammenfassung?: string | null
           zustaendig_id?: string | null
         }
@@ -7059,8 +7372,10 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung?: string
+          ki_werte?: Json
           kontakt_id?: string | null
           konversation_id?: string | null
+          nachfassen?: boolean
           nummern?: string[]
           offerte_id?: string | null
           outlook_id?: string
@@ -7075,15 +7390,49 @@ export type Database = {
           sprache?: string | null
           stand?: string
           verkaufschance_id?: string | null
+          verteilt_am?: string | null
+          verteilt_von?: string | null
           vertretung_fuer?: string | null
           von_email?: string | null
           von_name?: string | null
           vorschau?: string | null
+          vorschlag_id?: string | null
+          warten_bis?: string | null
           web_link?: string | null
+          zahlung_id?: string | null
+          zurueck_am?: string | null
           zusammenfassung?: string | null
           zustaendig_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'posteingang_verteilt_von_fkey'
+            columns: ['verteilt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_vorschlag_id_fkey'
+            columns: ['vorschlag_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_zahlung_id_fkey'
+            columns: ['zahlung_id']
+            isOneToOne: false
+            referencedRelation: 'kreditor_zahlungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_abgeholt_von_fkey'
+            columns: ['abgeholt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'posteingang_abgeholt_von_fkey'
             columns: ['abgeholt_von']
@@ -7104,6 +7453,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'bestellungen_liste'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'posteingang_erledigt_von_fkey'
@@ -7167,6 +7523,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'posteingang_postfach_person_id_fkey'
@@ -7256,12 +7619,155 @@ export type Database = {
             foreignKeyName: 'posteingang_vertretung_fuer_fkey'
             columns: ['vertretung_fuer']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_vertretung_fuer_fkey'
+            columns: ['vertretung_fuer']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'posteingang_zustaendig_id_fkey'
             columns: ['zustaendig_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_zustaendig_id_fkey'
+            columns: ['zustaendig_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      posteingang_notizen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          erwaehnt: string[]
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          posteingang_id: string
+          text: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          erwaehnt?: string[]
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id: string
+          posteingang_id: string
+          text: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          erwaehnt?: string[]
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          posteingang_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'posteingang_notizen_posteingang_id_fkey'
+            columns: ['posteingang_id']
+            isOneToOne: false
+            referencedRelation: 'posteingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_notizen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      posteingang_regeln: {
+        Row: {
+          absender: string
+          aktion: string
+          alt_daten: Json | null
+          alt_id: string | null
+          angelegt_von: string | null
+          art: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string | null
+          postfach_person_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          absender: string
+          aktion: string
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angelegt_von?: string | null
+          art?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          postfach_person_id?: string | null
+        }
+        Update: {
+          absender?: string
+          aktion?: string
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angelegt_von?: string | null
+          art?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          postfach_person_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
+            columns: ['angelegt_von']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
@@ -7789,6 +8295,13 @@ export type Database = {
             foreignKeyName: 'projekte_verantwortlich_id_fkey'
             columns: ['verantwortlich_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'projekte_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -7871,6 +8384,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'kurse'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'qualifikationen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'qualifikationen_person_id_fkey'
@@ -8029,6 +8549,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'einsaetze'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'rapporte_person_id_fkey'
@@ -8578,6 +9105,13 @@ export type Database = {
             foreignKeyName: 'ressourcen_eintraege_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_eintraege_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -8860,8 +9394,22 @@ export type Database = {
             foreignKeyName: 'rueckmeldungen_entschieden_von_fkey'
             columns: ['entschieden_von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rueckmeldungen_entschieden_von_fkey'
+            columns: ['entschieden_von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rueckmeldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'rueckmeldungen_person_id_fkey'
@@ -8914,6 +9462,13 @@ export type Database = {
           regeln?: NonNullable<Json>
         }
         Relationships: [
+          {
+            foreignKeyName: 'schreibstile_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'schreibstile_person_id_fkey'
             columns: ['person_id']
@@ -9110,6 +9665,13 @@ export type Database = {
             foreignKeyName: 'service_faelle_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'service_faelle_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -9293,6 +9855,13 @@ export type Database = {
             foreignKeyName: 'sicherungen_von_fkey'
             columns: ['von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'sicherungen_von_fkey'
+            columns: ['von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -9337,6 +9906,13 @@ export type Database = {
           sprache?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'signaturen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'signaturen_person_id_fkey'
             columns: ['person_id']
@@ -9427,6 +10003,13 @@ export type Database = {
           zeit?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'social_posts_freigegeben_von_fkey'
+            columns: ['freigegeben_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'social_posts_freigegeben_von_fkey'
             columns: ['freigegeben_von']
@@ -9582,6 +10165,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'dokumente'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'spesen_person_id_fkey'
@@ -10235,6 +10825,13 @@ export type Database = {
             foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
             columns: ['tour_person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
+            columns: ['tour_person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -10818,8 +11415,22 @@ export type Database = {
             foreignKeyName: 'zeiten_freigegeben_von_fkey'
             columns: ['freigegeben_von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'zeiten_freigegeben_von_fkey'
+            columns: ['freigegeben_von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'zeiten_person_id_fkey'
@@ -10900,6 +11511,68 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: []
+      }
+      aufgaben_liste: {
+        Row: {
+          bezug_id: string | null
+          bezug_name: string | null
+          bezug_tabelle: string | null
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          ersteller_id: string | null
+          erstellt_am: string | null
+          faellig_am: string | null
+          herkunft: string | null
+          id: string | null
+          kommentare: number | null
+          lauf_id: string | null
+          person_id: string | null
+          teilschritte: Json | null
+          text: string | null
+          titel: string | null
+          vertretung: boolean | null
+          wichtig: boolean | null
+          wiederholung: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'aufgaben_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'aufgaben_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_lauf_id_fkey'
+            columns: ['lauf_id']
+            isOneToOne: false
+            referencedRelation: 'automation_laeufe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aufgaben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'aufgaben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       bestellungen_liste: {
         Row: {
@@ -11571,6 +12244,13 @@ export type Database = {
             foreignKeyName: 'nachtraege_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'nachtraege_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -11810,6 +12490,13 @@ export type Database = {
             foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
             columns: ['tour_person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
+            columns: ['tour_person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -11914,6 +12601,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'standorte'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'offerten_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'offerten_verantwortlich_id_fkey'
@@ -12062,6 +12756,13 @@ export type Database = {
           zivilstand?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'personal_akten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'personal_akten_person_id_fkey'
             columns: ['person_id']
@@ -12288,6 +12989,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'einsaetze'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'rapporte_person_id_fkey'
@@ -12660,6 +13368,13 @@ export type Database = {
             foreignKeyName: 'spesen_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'spesen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
@@ -12762,6 +13477,13 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: [
+          {
+            foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
+            columns: ['termin_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
             columns: ['termin_person_id']
@@ -12962,8 +13684,22 @@ export type Database = {
             foreignKeyName: 'zeiten_freigegeben_von_fkey'
             columns: ['freigegeben_von']
             isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'zeiten_freigegeben_von_fkey'
+            columns: ['freigegeben_von']
+            isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'zeiten_person_id_fkey'
@@ -13090,6 +13826,21 @@ export type Database = {
       anschreiben_volltext: { Args: { p_id: string }; Returns: string }
       artikel_archivieren: { Args: { p_artikel: string; p_grund: string; p_nachfolger?: string }; Returns: undefined }
       artikel_preis_setzen: { Args: { p: Json; p_artikel: string }; Returns: undefined }
+      aufgabe_erledigen: { Args: { p_id: string; p_notiz?: string }; Returns: undefined }
+      aufgaben_melden: { Args: { p_jetzt?: string }; Returns: number }
+      aufgaben_team: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          abwesend: boolean
+          erledigt_7: number
+          heute: number
+          kurzzeichen: string
+          name: string
+          offen: number
+          person_id: string
+          ueberfaellig: number
+        }[]
+      }
       auftrag_erstellen: { Args: { p: Json; p_offerte: string }; Returns: string }
       ausgang_aendern: { Args: { p: Json; p_id: string }; Returns: undefined }
       ausgang_anlegen: { Args: { p: Json }; Returns: string }
@@ -13600,9 +14351,14 @@ export type Database = {
         }[]
       }
       posteingang_antworten: { Args: { p_mails: Json }; Returns: number }
+      posteingang_aufgabe: {
+        Args: { p_faellig: string | null; p_id: string; p_person: string | null; p_titel: string }
+        Returns: string
+      }
       posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
       posteingang_auswertung: { Args: { p_wochen?: number }; Returns: Json }
       posteingang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      posteingang_liefertermin: { Args: { p_bestellung: string; p_datum: string; p_id: string }; Returns: undefined }
       posteingang_nachholen: {
         Args: {
           p_bis: string
@@ -13617,9 +14373,17 @@ export type Database = {
       }
       posteingang_nachholen_stand: { Args: { p_ordner: string; p_schluessel: string }; Returns: Json }
       posteingang_nachholen_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
+      posteingang_notiz: { Args: { p_id: string; p_text: string }; Returns: string }
+      posteingang_notizen_von: {
+        Args: { p_id: string }
+        Returns: { am: string; id: string; kuerzel: string; person: string; text: string }[]
+      }
+      posteingang_regel_loeschen: { Args: { p_id: string }; Returns: undefined }
+      posteingang_regel_speichern: { Args: { p: Json }; Returns: string }
       posteingang_seit: { Args: Record<PropertyKey, never>; Returns: string }
       posteingang_setzen: { Args: { p?: Json; p_aktion: string; p_id: string }; Returns: undefined }
       posteingang_sortieren: { Args: { p: Json; p_id: string }; Returns: undefined }
+      posteingang_team: { Args: Record<PropertyKey, never>; Returns: Json }
       posteingang_unsortiert: {
         Args: { p_limit: number }
         Returns: {
@@ -13635,6 +14399,7 @@ export type Database = {
           vorschau: string
         }[]
       }
+      posteingang_zahlung_erfassen: { Args: { p: Json; p_id: string }; Returns: string }
       preise_importieren: { Args: { p_pruefen?: boolean; p_zeilen: Json }; Returns: Json }
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
