@@ -104,6 +104,13 @@ export type Database = {
             foreignKeyName: 'ablage_ordner_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: true
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ablage_ordner_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -511,6 +518,13 @@ export type Database = {
             foreignKeyName: 'aktivitaeten_projekt_fk'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'aktivitaeten_projekt_fk'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -677,6 +691,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['objekt_id']
+          },
+          {
+            foreignKeyName: 'anlagen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'anlagen_projekt_id_fkey'
@@ -976,6 +997,13 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'artikel_bevorzugter_lieferant_id_fkey'
+            columns: ['bevorzugter_lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten_kennzahlen'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'artikel_nachfolger_id_fkey'
             columns: ['nachfolger_id']
             isOneToOne: false
@@ -1256,6 +1284,13 @@ export type Database = {
             columns: ['offerte_id']
             isOneToOne: false
             referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -1992,6 +2027,8 @@ export type Database = {
       }
       bestellpositionen: {
         Row: {
+          ab_ek_rappen: number | null
+          ab_menge: number | null
           alt_daten: Json | null
           alt_id: string | null
           artikel_id: string | null
@@ -2013,6 +2050,8 @@ export type Database = {
         }
         ComputedFields: never
         Insert: {
+          ab_ek_rappen?: number | null
+          ab_menge?: number | null
           alt_daten?: Json | null
           alt_id?: string | null
           artikel_id?: string | null
@@ -2033,6 +2072,8 @@ export type Database = {
           seriennummern?: string[]
         }
         Update: {
+          ab_ek_rappen?: number | null
+          ab_menge?: number | null
           alt_daten?: Json | null
           alt_id?: string | null
           artikel_id?: string | null
@@ -2099,10 +2140,15 @@ export type Database = {
       }
       bestellungen: {
         Row: {
+          ab_am: string | null
+          ab_nummer: string | null
+          ab_termin: string | null
+          ab_total_rappen: number | null
           alt_daten: Json | null
           alt_id: string | null
           bestaetigt_am: string | null
           bestellt_am: string | null
+          bestellt_von: string | null
           erstellt_am: string
           erstellt_von: string | null
           freigegeben_am: string | null
@@ -2111,22 +2157,39 @@ export type Database = {
           geliefert_am: string | null
           geloescht_am: string | null
           id: string
+          kontakt_vor_ort: string | null
           lagerort_id: string | null
           lieferant_id: string
+          lieferhinweis: string | null
+          lieferscheine: string[]
           liefertermin: string | null
+          nachgefragt_am: string | null
           notiz: string | null
           nummer: string
           projekt_id: string | null
+          rechnung_geprueft_am: string | null
+          rechnung_geprueft_von: string | null
+          rechnung_kreditor_id: string | null
+          rechnung_notiz: string | null
+          rechnung_nummer: string | null
+          rechnung_rappen: number | null
           status: string
           storniert_grund: string | null
           total_rappen: number | null
+          tracking: string | null
+          vorgelegt_am: string | null
         }
         ComputedFields: never
         Insert: {
+          ab_am?: string | null
+          ab_nummer?: string | null
+          ab_termin?: string | null
+          ab_total_rappen?: number | null
           alt_daten?: Json | null
           alt_id?: string | null
           bestaetigt_am?: string | null
           bestellt_am?: string | null
+          bestellt_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           freigegeben_am?: string | null
@@ -2135,21 +2198,38 @@ export type Database = {
           geliefert_am?: string | null
           geloescht_am?: string | null
           id?: string
+          kontakt_vor_ort?: string | null
           lagerort_id?: string | null
           lieferant_id: string
+          lieferhinweis?: string | null
+          lieferscheine?: string[]
           liefertermin?: string | null
+          nachgefragt_am?: string | null
           notiz?: string | null
           nummer?: string
           projekt_id?: string | null
+          rechnung_geprueft_am?: string | null
+          rechnung_geprueft_von?: string | null
+          rechnung_kreditor_id?: string | null
+          rechnung_notiz?: string | null
+          rechnung_nummer?: string | null
+          rechnung_rappen?: number | null
           status?: string
           storniert_grund?: string | null
           total_rappen?: number | null
+          tracking?: string | null
+          vorgelegt_am?: string | null
         }
         Update: {
+          ab_am?: string | null
+          ab_nummer?: string | null
+          ab_termin?: string | null
+          ab_total_rappen?: number | null
           alt_daten?: Json | null
           alt_id?: string | null
           bestaetigt_am?: string | null
           bestellt_am?: string | null
+          bestellt_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           freigegeben_am?: string | null
@@ -2158,17 +2238,36 @@ export type Database = {
           geliefert_am?: string | null
           geloescht_am?: string | null
           id?: string
+          kontakt_vor_ort?: string | null
           lagerort_id?: string | null
           lieferant_id?: string
+          lieferhinweis?: string | null
+          lieferscheine?: string[]
           liefertermin?: string | null
+          nachgefragt_am?: string | null
           notiz?: string | null
           nummer?: string
           projekt_id?: string | null
+          rechnung_geprueft_am?: string | null
+          rechnung_geprueft_von?: string | null
+          rechnung_kreditor_id?: string | null
+          rechnung_notiz?: string | null
+          rechnung_nummer?: string | null
+          rechnung_rappen?: number | null
           status?: string
           storniert_grund?: string | null
           total_rappen?: number | null
+          tracking?: string | null
+          vorgelegt_am?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'bestellungen_bestellt_von_fkey'
+            columns: ['bestellt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'bestellungen_freigegeben_von_fkey'
             columns: ['freigegeben_von']
@@ -2188,6 +2287,20 @@ export type Database = {
             columns: ['lieferant_id']
             isOneToOne: false
             referencedRelation: 'lieferanten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten_kennzahlen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -2216,6 +2329,20 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_rechnung_geprueft_von_fkey'
+            columns: ['rechnung_geprueft_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_rechnung_kreditor_id_fkey'
+            columns: ['rechnung_kreditor_id']
+            isOneToOne: false
+            referencedRelation: 'kreditor_zahlungen'
             referencedColumns: ['id']
           },
         ]
@@ -2334,6 +2461,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
@@ -2556,6 +2690,13 @@ export type Database = {
             foreignKeyName: 'einsaetze_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'einsaetze_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -2729,6 +2870,13 @@ export type Database = {
             foreignKeyName: 'empfehlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'empfehlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -2829,6 +2977,13 @@ export type Database = {
           wahrscheinlichkeit?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'erwartete_eingaenge_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'erwartete_eingaenge_projekt_id_fkey'
             columns: ['projekt_id']
@@ -2974,7 +3129,6 @@ export type Database = {
           nutzlast_kg: number | null
           person_id: string | null
           praemie_rappen: number | null
-          privat_anteil: boolean
           reifen: string | null
           schaden_telefon: string | null
           schluessel: string | null
@@ -3028,7 +3182,6 @@ export type Database = {
           nutzlast_kg?: number | null
           person_id?: string | null
           praemie_rappen?: number | null
-          privat_anteil?: boolean
           reifen?: string | null
           schaden_telefon?: string | null
           schluessel?: string | null
@@ -3081,7 +3234,6 @@ export type Database = {
           nutzlast_kg?: number | null
           person_id?: string | null
           praemie_rappen?: number | null
-          privat_anteil?: boolean
           reifen?: string | null
           schaden_telefon?: string | null
           schluessel?: string | null
@@ -4996,6 +5148,20 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'kreditor_zahlungen_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten_kennzahlen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'kreditor_zahlungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
@@ -5293,6 +5459,13 @@ export type Database = {
             foreignKeyName: 'lagerbewegungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lagerbewegungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -5479,53 +5652,83 @@ export type Database = {
           aktiv: boolean
           alt_daten: Json | null
           alt_id: string | null
+          bestellschluss: string | null
+          bestellweg: string
           email_bestellung: string | null
           erstellt_am: string
           erstellt_von: string | null
+          fracht_frei_ab_rappen: number | null
+          fracht_rappen: number | null
           geaendert_am: string
           geloescht_am: string | null
           id: string
           kontakt_id: string | null
           kundennummer_bei_lieferant: string | null
+          lieferzeit_tage: number | null
+          mindestbestellwert_rappen: number | null
           name: string
           notiz: string | null
+          skonto_prozent: number | null
+          skonto_tage: number | null
           sprache: string
           telefon: string | null
+          webshop_url: string | null
+          zahlungsziel_tage: number | null
         }
         ComputedFields: never
         Insert: {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          bestellschluss?: string | null
+          bestellweg?: string
           email_bestellung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fracht_frei_ab_rappen?: number | null
+          fracht_rappen?: number | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           kontakt_id?: string | null
           kundennummer_bei_lieferant?: string | null
+          lieferzeit_tage?: number | null
+          mindestbestellwert_rappen?: number | null
           name: string
           notiz?: string | null
+          skonto_prozent?: number | null
+          skonto_tage?: number | null
           sprache?: string
           telefon?: string | null
+          webshop_url?: string | null
+          zahlungsziel_tage?: number | null
         }
         Update: {
           aktiv?: boolean
           alt_daten?: Json | null
           alt_id?: string | null
+          bestellschluss?: string | null
+          bestellweg?: string
           email_bestellung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fracht_frei_ab_rappen?: number | null
+          fracht_rappen?: number | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           kontakt_id?: string | null
           kundennummer_bei_lieferant?: string | null
+          lieferzeit_tage?: number | null
+          mindestbestellwert_rappen?: number | null
           name?: string
           notiz?: string | null
+          skonto_prozent?: number | null
+          skonto_tage?: number | null
           sprache?: string
           telefon?: string | null
+          webshop_url?: string | null
+          zahlungsziel_tage?: number | null
         }
         Relationships: [
           {
@@ -5571,14 +5774,18 @@ export type Database = {
           alt_id: string | null
           artikel_id: string
           artikelnummer: string | null
+          ek_geaendert_am: string | null
           ek_rappen: number | null
+          ek_vorher_rappen: number | null
           erstellt_am: string
           erstellt_von: string | null
           geaendert_am: string
           geloescht_am: string | null
           id: string
           lieferant_id: string | null
+          lieferzeit_tage: number | null
           stand: string | null
+          verpackungseinheit: number | null
         }
         ComputedFields: never
         Insert: {
@@ -5586,28 +5793,36 @@ export type Database = {
           alt_id?: string | null
           artikel_id: string
           artikelnummer?: string | null
+          ek_geaendert_am?: string | null
           ek_rappen?: number | null
+          ek_vorher_rappen?: number | null
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           lieferant_id?: string | null
+          lieferzeit_tage?: number | null
           stand?: string | null
+          verpackungseinheit?: number | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           artikel_id?: string
           artikelnummer?: string | null
+          ek_geaendert_am?: string | null
           ek_rappen?: number | null
+          ek_vorher_rappen?: number | null
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
           lieferant_id?: string | null
+          lieferzeit_tage?: number | null
           stand?: string | null
+          verpackungseinheit?: number | null
         }
         Relationships: [
           {
@@ -5629,6 +5844,13 @@ export type Database = {
             columns: ['lieferant_id']
             isOneToOne: false
             referencedRelation: 'lieferanten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'lieferantenpreise_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten_kennzahlen'
             referencedColumns: ['id']
           },
         ]
@@ -5690,6 +5912,13 @@ export type Database = {
           zahlbar_bis?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'material_zahlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'material_zahlungen_projekt_id_fkey'
             columns: ['projekt_id']
@@ -5791,6 +6020,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -6120,26 +6356,37 @@ export type Database = {
           batterie: string | null
           betrag_manuell: boolean
           betrag_rappen: number | null
+          chance_prozent: number | null
           entscheid: string | null
           entscheid_am: string | null
+          entscheid_erwartet: string | null
           entscheid_von: string | null
           erstellt_am: string
           erstellt_von: string | null
           eturnity_id: string | null
+          freigabe: Json | null
           geaendert_am: string
           geloescht_am: string | null
+          gueltig_bis: string | null
           id: string
           jahr: number | null
+          konkurrenz: string | null
           kontakt_id: string
           leistung_kwp: number | null
+          nachfass_ergebnis: string | null
+          nachfass_schritt: number
           nachfassen: string | null
           nachfassen_am: string | null
           nummer: string
           objekt_id: string | null
+          rabatt_prozent: number | null
           sprache: string
           standort_id: string | null
           status: string
           titel: string | null
+          unterlagen: NonNullable<Json>
+          variante: string | null
+          varianten: NonNullable<Json>
           verantwortlich_id: string | null
           verkaufschance_id: string | null
           verlustgrund: string | null
@@ -6160,26 +6407,37 @@ export type Database = {
           batterie?: string | null
           betrag_manuell?: boolean
           betrag_rappen?: number | null
+          chance_prozent?: number | null
           entscheid?: string | null
           entscheid_am?: string | null
+          entscheid_erwartet?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           eturnity_id?: string | null
+          freigabe?: Json | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gueltig_bis?: string | null
           id?: string
           jahr?: number | null
+          konkurrenz?: string | null
           kontakt_id: string
           leistung_kwp?: number | null
+          nachfass_ergebnis?: string | null
+          nachfass_schritt?: number
           nachfassen?: string | null
           nachfassen_am?: string | null
           nummer: string
           objekt_id?: string | null
+          rabatt_prozent?: number | null
           sprache?: string
           standort_id?: string | null
           status?: string
           titel?: string | null
+          unterlagen?: NonNullable<Json>
+          variante?: string | null
+          varianten?: NonNullable<Json>
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
           verlustgrund?: string | null
@@ -6199,26 +6457,37 @@ export type Database = {
           batterie?: string | null
           betrag_manuell?: boolean
           betrag_rappen?: number | null
+          chance_prozent?: number | null
           entscheid?: string | null
           entscheid_am?: string | null
+          entscheid_erwartet?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           eturnity_id?: string | null
+          freigabe?: Json | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gueltig_bis?: string | null
           id?: string
           jahr?: number | null
+          konkurrenz?: string | null
           kontakt_id?: string
           leistung_kwp?: number | null
+          nachfass_ergebnis?: string | null
+          nachfass_schritt?: number
           nachfassen?: string | null
           nachfassen_am?: string | null
           nummer?: string
           objekt_id?: string | null
+          rabatt_prozent?: number | null
           sprache?: string
           standort_id?: string | null
           status?: string
           titel?: string | null
+          unterlagen?: NonNullable<Json>
+          variante?: string | null
+          varianten?: NonNullable<Json>
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
           verlustgrund?: string | null
@@ -7023,6 +7292,13 @@ export type Database = {
             foreignKeyName: 'posteingang_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -7434,6 +7710,13 @@ export type Database = {
             foreignKeyName: 'projekt_material_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -7527,6 +7810,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'projekt_fahrplan'
             referencedColumns: ['ablauf_schritt_id']
+          },
+          {
+            foreignKeyName: 'projekt_schritte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'projekt_schritte_projekt_id_fkey'
@@ -8007,6 +8297,13 @@ export type Database = {
             foreignKeyName: 'rapporte_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -8292,6 +8589,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'rechnungen_projekt_id_fkey'
@@ -8618,6 +8922,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -9056,6 +9367,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'service_faelle_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -9532,6 +9850,13 @@ export type Database = {
             foreignKeyName: 'spesen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -9821,6 +10146,13 @@ export type Database = {
           termin_von?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'subunternehmer_auftraege_projekt_id_fkey'
             columns: ['projekt_id']
@@ -10300,6 +10632,13 @@ export type Database = {
             foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'wartungsvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -10481,6 +10820,13 @@ export type Database = {
             foreignKeyName: 'werkvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -10570,6 +10916,13 @@ export type Database = {
           reihenfolge?: number
         }
         Relationships: [
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'zahlungsplan_projekt_id_fkey'
             columns: ['projekt_id']
@@ -10687,6 +11040,13 @@ export type Database = {
             foreignKeyName: 'zeiten_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -10751,18 +11111,31 @@ export type Database = {
       }
       bestellungen_liste: {
         Row: {
+          ab_am: string | null
+          ab_nummer: string | null
+          ab_termin: string | null
+          ab_total_rappen: number | null
+          baubeginn: string | null
           bestaetigt_am: string | null
           bestellt_am: string | null
+          bestellt_von: string | null
+          bestellt_von_name: string | null
+          bestellweg: string | null
           email_bestellung: string | null
           erstellt_am: string | null
+          erwartet_am: string | null
           firma: string | null
           firma_ort: string | null
           firma_plz: string | null
           firma_strasse: string | null
+          fracht_frei_ab_rappen: number | null
+          fracht_rappen: number | null
           freigegeben_am: string | null
           freigegeben_von: string | null
+          gefaehrdet: boolean | null
           geliefert_am: string | null
           id: string | null
+          kontakt_vor_ort: string | null
           kunde: string | null
           kundennummer_bei_lieferant: string | null
           lagerort: string | null
@@ -10771,10 +11144,14 @@ export type Database = {
           lieferant: string | null
           lieferant_id: string | null
           lieferant_sprache: string | null
+          lieferhinweis: string | null
+          lieferscheine: string[] | null
           liefertermin: string | null
           mail_status: string | null
           menge_geliefert: number | null
           menge_total: number | null
+          mindestbestellwert_rappen: number | null
+          nachgefragt_am: string | null
           notiz: string | null
           nummer: string | null
           objekt_ort: string | null
@@ -10784,13 +11161,31 @@ export type Database = {
           projekt_id: string | null
           projekt_nummer: string | null
           projekt_titel: string | null
+          projekte: string | null
+          rechnung_geprueft_am: string | null
+          rechnung_geprueft_von: string | null
+          rechnung_kreditor_id: string | null
+          rechnung_notiz: string | null
+          rechnung_nummer: string | null
+          rechnung_rappen: number | null
+          schritt: string | null
           status: string | null
           storniert_grund: string | null
           total_rappen: number | null
+          tracking: string | null
           ueberfaellig: boolean | null
+          vorgelegt_am: string | null
+          webshop_url: string | null
         }
         ComputedFields: never
         Relationships: [
+          {
+            foreignKeyName: 'bestellungen_bestellt_von_fkey'
+            columns: ['bestellt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'bestellungen_lagerort_id_fkey'
             columns: ['lagerort_id']
@@ -10803,6 +11198,20 @@ export type Database = {
             columns: ['lieferant_id']
             isOneToOne: false
             referencedRelation: 'lieferanten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten_kennzahlen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -10831,6 +11240,13 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bestellungen_rechnung_kreditor_id_fkey'
+            columns: ['rechnung_kreditor_id']
+            isOneToOne: false
+            referencedRelation: 'kreditor_zahlungen'
             referencedColumns: ['id']
           },
         ]
@@ -10897,6 +11313,13 @@ export type Database = {
             foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: true
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: true
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -10922,6 +11345,32 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      einkauf_bedarf: {
+        Row: {
+          artikel_id: string | null
+          artikelnummer: string | null
+          artikelnummer_lieferant: string | null
+          aus_lager: number | null
+          baubeginn: string | null
+          bestellen_bis: string | null
+          bezeichnung: string | null
+          einheit: string | null
+          ek_rappen: number | null
+          fehlt: number | null
+          kunde: string | null
+          lagerort_id: string | null
+          lieferant: string | null
+          lieferant_id: string | null
+          lieferzeit_tage: number | null
+          material_id: string | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          quelle: string | null
+          verpackungseinheit: number | null
+        }
+        ComputedFields: never
+        Relationships: []
       }
       empfehlungen_liste: {
         Row: {
@@ -10975,6 +11424,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'empfehlungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'empfehlungen_projekt_id_fkey'
@@ -11251,6 +11707,19 @@ export type Database = {
         }
         Relationships: []
       }
+      lieferanten_kennzahlen: {
+        Row: {
+          artikel_mit_preis: number | null
+          bestellungen_jahr: number | null
+          einkauf_jahr_rappen: number | null
+          id: string | null
+          lieferzeit_schnitt_tage: number | null
+          offen: number | null
+          puenktlich_prozent: number | null
+        }
+        ComputedFields: never
+        Relationships: []
+      }
       marketing_zielgruppe: {
         Row: {
           abmelde_schluessel: string | null
@@ -11282,6 +11751,38 @@ export type Database = {
         }
         ComputedFields: never
         Relationships: []
+      }
+      materialplan: {
+        Row: {
+          baubeginn: string | null
+          bestellen_bis: string | null
+          deckung_prozent: number | null
+          erwartet_spaetestens: string | null
+          gefaehrdet: boolean | null
+          id: string | null
+          kunde: string | null
+          material_status: string | null
+          nummer: string | null
+          ort: string | null
+          standort_id: string | null
+          status: string | null
+          titel: string | null
+          ueberfaellig: boolean | null
+          zeilen: number | null
+          zeilen_da: number | null
+          zeilen_fehlt: number | null
+          zeilen_unterwegs: number | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'projekte_standort_id_fkey'
+            columns: ['standort_id']
+            isOneToOne: false
+            referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+        ]
       }
       nachtraege_liste: {
         Row: {
@@ -11316,6 +11817,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'nachtraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -11440,6 +11948,13 @@ export type Database = {
             foreignKeyName: 'zahlungsplan_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zahlungsplan_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -11547,32 +12062,46 @@ export type Database = {
       }
       offerten_liste: {
         Row: {
+          abgelaufen: boolean | null
           angebot_am: string | null
           angebot_am_frueher: string[] | null
           anzahl_module: number | null
           anzahl_versionen: number | null
           batterie: string | null
           betrag_rappen: number | null
+          chance: number | null
+          chance_prozent: number | null
+          eingang_status: string | null
           email: string | null
           entscheid: string | null
           entscheid_am: string | null
+          entscheid_erwartet: string | null
           erstellt_am: string | null
           eturnity_id: string | null
           faellig_am: string | null
+          freigabe: Json | null
+          freigabe_grund: string | null
           geaendert_am: string | null
+          gueltig_bis: string | null
           id: string | null
           im_eingang: boolean | null
+          konkurrenz: string | null
           kontakt_id: string | null
           kundennummer: number | null
           leistung_kwp: number | null
+          nachfass_ergebnis: string | null
+          nachfass_schritt: number | null
           nachfassen_am: string | null
           name: string | null
           nummer: string | null
           objekt_id: string | null
           ort: string | null
+          phase: string | null
           plz: string | null
           projekt_id: string | null
           projekt_nummer: string | null
+          rabatt_prozent: number | null
+          rueckfrage: string | null
           sprache: string | null
           stand: string | null
           standort: string | null
@@ -11581,9 +12110,15 @@ export type Database = {
           strasse: string | null
           suchtext: string | null
           telefon: string | null
+          termin_am: string | null
           titel: string | null
+          unterlagen: Json | null
+          variante: string | null
+          varianten: Json | null
           verantwortlich_id: string | null
           verantwortlich_name: string | null
+          verkauf_person_id: string | null
+          verkauf_person_name: string | null
           verkaufschance_id: string | null
           verlustgrund: string | null
           versionen: Json | null
@@ -11592,6 +12127,7 @@ export type Database = {
           werkvertrag_id: string | null
           werkvertrag_status: string | null
           wirtschaftlichkeit: Json | null
+          zur_offerte_am: string | null
           zurueckgegeben: Json | null
         }
         ComputedFields: never
@@ -11643,6 +12179,13 @@ export type Database = {
             columns: ['verkaufschance_id']
             isOneToOne: false
             referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
+            columns: ['verkauf_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -11900,6 +12443,13 @@ export type Database = {
             foreignKeyName: 'projekt_material_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'projekt_material_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -11994,6 +12544,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -12126,6 +12683,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'verkauf_geschaefte'
             referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
           },
           {
             foreignKeyName: 'rechnungen_projekt_id_fkey'
@@ -12353,6 +12917,13 @@ export type Database = {
             foreignKeyName: 'spesen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -12574,6 +13145,13 @@ export type Database = {
             foreignKeyName: 'werkvertraege_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'werkvertraege_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -12642,6 +13220,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -12919,9 +13504,36 @@ export type Database = {
       automationen_abarbeiten: { Args: { p_limit?: number }; Returns: Json }
       benachrichtigung_ausblenden: { Args: { p_id: string }; Returns: undefined }
       benachrichtigungen_gelesen: { Args: { p_ids?: string[] }; Returns: number }
+      bestellung_ab_erfassen: { Args: { p: Json; p_id: string }; Returns: number }
       bestellung_bestellt: { Args: { p_datum?: string; p_id: string }; Returns: undefined }
       bestellung_freigeben: { Args: { p_id: string }; Returns: undefined }
+      bestellung_mails: {
+        Args: { p_id: string }
+        Returns: {
+          betreff: string
+          eingang_am: string
+          hat_anhang: boolean
+          id: string
+          von_email: string
+          von_name: string
+          vorschau: string
+        }[]
+      }
+      bestellung_rechnung: { Args: { p: Json; p_id: string }; Returns: undefined }
+      bestellung_rechnungen: {
+        Args: { p_id: string }
+        Returns: {
+          betrag_rappen: number
+          erwartet_rappen: number
+          id: string
+          rechnung_am: string
+          rechnung_nr: string
+          status: string
+          text: string
+        }[]
+      }
       bestellung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      bestellung_vorlegen: { Args: { p_id: string }; Returns: undefined }
       bestellung_zuruecknehmen: { Args: { p_id: string }; Returns: undefined }
       bestellungen_zusammenfassen: { Args: { p_lagerort: string; p_lieferant: string }; Returns: string }
       bestellvorschlag: { Args: { p_projekt: string }; Returns: Json }
@@ -12940,6 +13552,8 @@ export type Database = {
       dienste_pruefen: { Args: { p_extern?: Json }; Returns: number }
       dienste_zustand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
+      einkauf_darf_freigeben: { Args: { p_total_rappen: number }; Returns: boolean }
+      einkauf_melden: { Args: Record<PropertyKey, never>; Returns: number }
       einsatz_verschieben: {
         Args: { p_id: string; p_tage: number; p_von_person?: string; p_zu_person?: string }
         Returns: undefined
@@ -13203,8 +13817,11 @@ export type Database = {
           vorname: string
         }[]
       }
+      offerte_angaben_setzen: { Args: { p: Json; p_offerte: string }; Returns: undefined }
       offerte_anlegen: { Args: { p: Json }; Returns: string }
       offerte_entscheiden: { Args: { p_angaben?: Json; p_offerte: string; p_ziel: string }; Returns: string }
+      offerte_freigeben: { Args: { p_notiz?: string; p_offerte: string }; Returns: undefined }
+      offerte_nachfassen: { Args: { p?: Json; p_ergebnis: string; p_offerte: string }; Returns: string }
       offerte_status_setzen: { Args: { p_angaben?: Json; p_status: string; p_verkaufschance: string }; Returns: string }
       offerte_version_entfernen: { Args: { p_offerte: string }; Returns: number }
       offerte_version_erfassen: { Args: { p: Json; p_offerte: string }; Returns: number }
@@ -13350,28 +13967,26 @@ export type Database = {
         }
         Returns: string
       }
-      ressource_reservierung_aufheben: {
-        Args: { p_id: string }
-        Returns: undefined
-      }
+      ressource_reservierung_aufheben: { Args: { p_id: string }; Returns: undefined }
       ressource_schaden_setzen: {
-        Args: {
-          p_eintrag: string
-          p_erledigung?: string
-          p_kosten_rappen?: number
-          p_stand: string
-        }
+        Args: { p_eintrag: string; p_erledigung?: string; p_kosten_rappen?: number; p_stand: string }
         Returns: undefined
       }
       ressource_uebergeben: {
-        Args: { p_fahrzeug: string; p_geraet: string; p_in_fahrzeug?: string; p_person: string; p_text?: string }
+        Args: {
+          p_fahrzeug: string
+          p_geraet: string
+          p_in_fahrzeug?: string
+          p_person: string
+          p_text?: string
+          p_zurueck_bis?: string
+        }
         Returns: undefined
       }
       richtpreis: { Args: { p_kwp: number; p_speicher: boolean }; Returns: Json }
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
       rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
-        p_zurueck_bis?: string
         Args: {
           p_bereich: string
           p_erwartet: string
@@ -13384,6 +13999,7 @@ export type Database = {
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
+      sammelbestellung: { Args: { p_lieferant?: string }; Returns: Json }
       seriennummern_erfassen: { Args: { p: Json; p_bestellung: string }; Returns: number }
       service_akte: { Args: { p_id: string }; Returns: Json }
       service_aus_website: { Args: { p: Json }; Returns: Json }

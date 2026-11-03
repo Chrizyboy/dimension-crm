@@ -19,7 +19,7 @@ function doppelt(error: PostgrestError | null): void {
 }
 
 const FAHRZEUG =
-  'id, kennzeichen, bezeichnung, marke_modell, jahrgang, standort_id, person_id, km_stand, km_stand_am, naechste_mfk, naechster_service, service_km, leasing_bis, versicherung, ausser_betrieb, notiz, art, treibstoff, erste_inverkehrsetzung, stammnummer, fahrgestell_nr, gesamtgewicht_kg, nutzlast_kg, anhaengelast_kg, ausweis, tankkarte, schluessel, kaufdatum, kaufpreis_rappen, leasinggeber, leasing_vertrag, leasing_beginn, leasing_rate_rappen, leasing_km_jahr, leasing_mehr_km_rappen, versicherung_police, versicherung_deckung, selbstbehalt_rappen, schaden_telefon, praemie_rappen, verkehrssteuer_rappen, reifen, naechster_reifenwechsel, vignette_bis, privat_anteil'
+  'id, kennzeichen, bezeichnung, marke_modell, jahrgang, standort_id, person_id, km_stand, km_stand_am, naechste_mfk, naechster_service, service_km, leasing_bis, versicherung, ausser_betrieb, notiz, art, treibstoff, erste_inverkehrsetzung, stammnummer, fahrgestell_nr, gesamtgewicht_kg, nutzlast_kg, anhaengelast_kg, ausweis, tankkarte, schluessel, kaufdatum, kaufpreis_rappen, leasinggeber, leasing_vertrag, leasing_beginn, leasing_rate_rappen, leasing_km_jahr, leasing_mehr_km_rappen, versicherung_police, versicherung_deckung, selbstbehalt_rappen, schaden_telefon, praemie_rappen, verkehrssteuer_rappen, reifen, naechster_reifenwechsel, vignette_bis'
 const GERAET =
   'id, art, bezeichnung, inventar_nr, serien_nr, hersteller, standort_id, person_id, fahrzeug_id, pruef_monate, naechste_pruefung, zustand, notiz, kaufdatum, kaufpreis_rappen, lieferant, garantie_bis, pruefstelle, uebernommen_am, zurueck_bis, ausgemustert_am, ausgemustert_grund'
 

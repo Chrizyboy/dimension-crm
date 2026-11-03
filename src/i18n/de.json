@@ -1252,7 +1252,8 @@
       "muri": "Offerten Muri",
       "bulle": "Offerten Bulle",
       "nachfassen": "Nachfassen",
-      "import": "PDF-Import"
+      "import": "PDF-Import",
+      "vorrat": "Arbeitsvorrat"
     },
     "standort": {
       "alle": "Alle",
@@ -1517,6 +1518,157 @@
       "zuordnen": "Zu {{nummer}} {{name}}",
       "erledigt": "Erledigt",
       "hinweis": "Eturnity schickt neue Offerten automatisch hierher, sobald der Webhook eingerichtet ist."
+    },
+    "phase": {
+      "zu_offerieren": "Zu offerieren",
+      "zu_offerieren_text": "Termin war, Offerte fehlt",
+      "planung": "In Planung",
+      "planung_text": "in Eturnity in Arbeit",
+      "pruefen": "Prüfen",
+      "pruefen_text": "Kontrolle oder Freigabe vor dem Senden",
+      "offeriert": "Offeriert",
+      "offeriert_text": "gesendet, Nachfassen nach Plan",
+      "verhandlung": "Verhandlung",
+      "verhandlung_text": "Kunde interessiert oder vergleicht",
+      "gewonnen": "Gewonnen",
+      "gewonnen_text": "letzte 14 Tage, weiter zum Werkvertrag"
+    },
+    "vorrat": {
+      "filter": "Arbeitsvorrat filtern",
+      "f_alle": "Alle",
+      "f_meine": "Meine",
+      "f_muri": "Muri",
+      "f_bulle": "Bulle",
+      "kOffen_one": "offen offeriert · {{count}} Offerte · {{kwp}} kWp",
+      "kOffen_other": "offen offeriert · {{count}} Offerten · {{kwp}} kWp",
+      "kGewichtet": "gewichtet mit der Chance",
+      "kUeberfaellig": "Termin länger als {{tage}} Arbeitstage her, noch keine Offerte",
+      "kNachfassen": "heute nachzufassen",
+      "tage": "{{n}} Tage",
+      "kDauer": "Ø Termin bis Offerte (Ziel {{ziel}} Arbeitstage)",
+      "kQuote": "Abschlussquote der letzten 90 Tage",
+      "leer": "Nichts in dieser Spalte",
+      "ueberfaellig_one": "seit {{count}} Arbeitstag überfällig",
+      "ueberfaellig_other": "seit {{count}} Arbeitstagen überfällig",
+      "rueckfrage": "Rückfrage offen",
+      "nachfassenHeute": "heute nachfassen",
+      "nachfassenSeit_one": "Nachfassen seit {{count}} Tag fällig",
+      "nachfassenSeit_other": "Nachfassen seit {{count}} Tagen fällig",
+      "abgelaufen": "Gültigkeit abgelaufen",
+      "richt": "Richtofferte",
+      "variante": "Variante {{k}}",
+      "varianten_one": "{{count}} Variante",
+      "varianten_other": "{{count}} Varianten"
+    },
+    "chance": {
+      "titel": "Chance und Angaben",
+      "chance": "Chance",
+      "auto": "automatisch nach Stand",
+      "vonHand": "von Hand gesetzt",
+      "gewichtet": "gewichtet {{betrag}}",
+      "vonHandFeld": "Chance von Hand (%, leer = automatisch)",
+      "erwartet": "Entscheid erwartet bis",
+      "gueltig": "Gültig bis",
+      "konkurrenz": "Konkurrenz",
+      "konkurrenzHinweis": "z. B. Helion, Solarmax",
+      "rabatt": "Rabatt (%)",
+      "kurz": "{{p}} %"
+    },
+    "freigabe": {
+      "noetig_rabatt": "Freigabe: Rabatt",
+      "noetig_marge": "Freigabe: Marge zu tief",
+      "text": "ab {{rabatt}} % Rabatt oder unter {{marge}} % Marge gibt eine zweite Person frei",
+      "knopf": "Freigeben",
+      "erteilt": "Freigegeben von {{name}} am {{datum}}"
+    },
+    "ergebnis": {
+      "knopf": "Ergebnis",
+      "titel": "Ergebnis vom Nachfassen",
+      "art": "Wie",
+      "art_anruf": "Anruf",
+      "art_mail": "Mail",
+      "art_besuch": "Besuch",
+      "art_sms": "SMS",
+      "was": "Was hat der Kunde gesagt?",
+      "e_nicht_erreicht": "Nicht erreicht",
+      "e_vergleicht": "Vergleicht noch",
+      "e_interessiert": "Interessiert, klärt noch",
+      "e_neue_version": "Will eine neue Version",
+      "e_spaeter": "Später melden",
+      "e_ruht": "Ruht",
+      "e_ja": "Ja, Auftrag",
+      "e_nein": "Nein",
+      "notiz": "Notiz",
+      "notizHinweis": "Kommt in den Verlauf der Offerte und des Kunden.",
+      "wann": "Wann wieder melden",
+      "folge_vergleicht": "Nächster Anruf nach Plan, Stand «Verhandlung».",
+      "folge_interessiert": "Nächster Anruf nach Plan, Stand «Verhandlung», Chance steigt.",
+      "folge_neue_version": "Die Offerte geht zurück in die Planung; nach dem Senden beginnt der Plan neu.",
+      "folge_spaeter": "Die Offerte ist vertagt und kommt am gewählten Tag wieder.",
+      "folge_ja": "Gewonnen. Danach öffnet sich der Werkvertrag.",
+      "folge_nein": "Verloren mit Grund; kommt in die Auswertung.",
+      "ok": "Ergebnis gespeichert",
+      "okNaechst": "Gespeichert, nächstes Nachfassen am {{datum}}"
+    },
+    "schritt": {
+      "titel": "Nächster Schritt",
+      "vertagt": "Vertagt: wieder melden",
+      "planTag": "Nachfassen Tag {{tag}} nach dem Senden",
+      "anruf": "Nachfassen",
+      "faelligSeit": "fällig seit {{datum}}",
+      "faelligAm": "fällig am {{datum}}",
+      "zuletzt": "zuletzt: {{was}}",
+      "erreicht": "Erreicht, Ergebnis erfassen",
+      "nichtErreicht": "Nicht erreicht"
+    },
+    "schritte": {
+      "titel": "Schritte der Offerte",
+      "termin": "Termin",
+      "planung": "Planung",
+      "geprueft": "Geprüft",
+      "versendet": "Gesendet",
+      "nachfassen": "Nachfassen",
+      "entscheid": "Entscheid",
+      "werkvertrag": "Werkvertrag"
+    },
+    "seite": {
+      "zurueck": "Zurück zu den Offerten",
+      "verkauf": "Verkauf: {{name}}",
+      "offerte": "Offerte: {{name}}",
+      "kunde": "Kunde",
+      "name": "Name",
+      "telefon": "Telefon",
+      "mail": "Mail",
+      "objekt": "Objekt",
+      "sprache": "Sprache",
+      "sprache_de": "Deutsch",
+      "sprache_fr": "Französisch",
+      "termin": "Termin vor Ort",
+      "gueltig": "gültig bis {{datum}}",
+      "abgelaufen": "abgelaufen am {{datum}}"
+    },
+    "unterlagen": {
+      "titel": "Unterlagen",
+      "stand": "{{n}} von {{von}}"
+    },
+    "varianten": {
+      "titel": "Varianten",
+      "keine": "Noch keine Varianten. Eine Offerte kann mehrere Varianten haben (z. B. mit und ohne Batterie).",
+      "gewaehlt": "Gewählte Variante",
+      "waehlen": "Wählen",
+      "nettoTitel": "Was der Kunde zahlt (Variante {{k}})",
+      "inkl": "Preis inkl. {{satz}} % MWST",
+      "eiv": "Einmalvergütung (EIV)",
+      "steuer": "Steuerersparnis (geschätzt)",
+      "netto": "Netto für den Kunden",
+      "variante": "Variante {{k}}",
+      "feldTitel": "Bezeichnung",
+      "feldBetrag": "Betrag exkl. MWST",
+      "entfernen": "Variante {{k}} entfernen",
+      "neu": "Variante hinzufügen",
+      "vorschlagA": "Wie offeriert",
+      "bearbeiten": "Varianten bearbeiten",
+      "erfassen": "Varianten erfassen"
     }
   },
   "werkvertraege": {
@@ -2306,6 +2458,12 @@
     "preise_freigabe_unnoetig": "Diese Kalkulation braucht keine Freigabe.",
     "preise_keine_anfrage": "Zu dieser Kalkulation gibt es keine offene Anfrage.",
     "preise_marge_ungueltig": "Die Marge muss zwischen 0 und 500 % liegen.",
+    "offerte_freigabe_fehlt": "Diese Offerte braucht vor dem Senden eine Freigabe (Rabatt oder Marge).",
+    "offerte_freigabe_kein_recht": "Freigeben dürfen nur die Personen aus den Einstellungen.",
+    "offerte_varianten_ungueltig": "Jede Variante braucht eine Kennung (A, B …).",
+    "offerte_variante_unbekannt": "Diese Variante gibt es in der Offerte nicht.",
+    "offerte_nicht_offeriert": "Nachfassen geht nur bei gesendeten Offerten.",
+    "offerte_kein_recht": "Die Offerten-Einstellungen darf nur die Administration ändern.",
     "kurs_kein_recht": "Dafür fehlt dir das Recht.",
     "kurs_titel_fehlt": "Bitte einen Titel eingeben.",
     "kurs_niemand": "Bitte mindestens eine Person wählen.",
@@ -2328,7 +2486,10 @@
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
     "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
-    "preise_nur_admin": "Das darf nur die Administration."
+    "preise_nur_admin": "Das darf nur die Administration.",
+    "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
+    "einkauf_rechnung_abweichung": "Die Rechnung weicht deutlich ab. Bitte in der Notiz begründen.",
+    "einkauf_rechnung_fehlt": "Bitte eine Lieferantenrechnung wählen oder Nummer und Betrag angeben."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -3703,13 +3864,15 @@
   },
   "einkauf": {
     "titel": "Einkauf & Material",
-    "beschreibung": "Material je Projekt, Bestellungen mit Freigabe und PDF per Mail, Wareneingang und Lager Bulle.",
+    "beschreibung": "Was die Baustellen brauchen, rechtzeitig und gebündelt bestellen, Bestätigung, Lieferung und Rechnung prüfen. Lager Bulle.",
     "reiter": {
       "bestellungen": "Bestellungen",
       "zubestellen": "Zu bestellen",
-      "material": "Material je Projekt",
+      "material": "Materialplan",
       "lager": "Lager",
-      "lieferanten": "Lieferanten"
+      "lieferanten": "Lieferanten",
+      "leitstand": "Leitstand",
+      "bestellen": "Bestellen"
     },
     "filter": "Filter",
     "filterwert": {
@@ -3742,7 +3905,8 @@
     "materialFilter": {
       "fehlt": "Es fehlt noch etwas",
       "mitListe": "Mit Materialliste",
-      "alle": "Alle offenen"
+      "alle": "Alle offenen",
+      "gefaehrdet": "Montage in Gefahr"
     },
     "spalte": {
       "nummer": "Nr.",
@@ -3778,7 +3942,11 @@
       "stornieren": "Stornieren",
       "pdf": "PDF ansehen",
       "ueberfaellig": "Lieferung überfällig",
-      "ohneAdresse": "Beim Lieferanten fehlt die Bestell-Adresse. Sie lässt sich unter «Lieferanten» eintragen oder in der Mail von Hand eingeben."
+      "ohneAdresse": "Beim Lieferanten fehlt die Bestell-Adresse. Sie lässt sich unter «Lieferanten» eintragen oder in der Mail von Hand eingeben.",
+      "vorlegen": "Zur Freigabe vorlegen",
+      "vorgelegt": "Vorgelegt",
+      "webshop": "Webshop öffnen",
+      "grenzeHinweis": "Diese Bestellung liegt über der Freigabegrenze. Die Geschäftsleitung bekommt eine Glocke und gibt frei."
     },
     "feld": {
       "lieferant": "Lieferant",
@@ -3801,7 +3969,9 @@
       "mengeVon": "Menge {{name}}",
       "ekVon": "Einkaufspreis {{name}}",
       "entfernen": "{{name}} entfernen",
-      "guenstiger": "Günstiger bei {{lieferant}}: CHF {{preis}} (spart CHF {{total}})"
+      "guenstiger": "Günstiger bei {{lieferant}}: CHF {{preis}} (spart CHF {{total}})",
+      "abMenge": "AB: {{menge}}",
+      "abEk": "AB: {{ek}}"
     },
     "eingang": {
       "titel": "Wareneingang {{nummer}}",
@@ -3813,7 +3983,8 @@
       "buchen": "Wareneingang buchen",
       "snErfassen": "Seriennummern erfassen",
       "snVon": "Seriennummern von {{name}}",
-      "snPlatzhalter": "Eine pro Zeile oder mit Komma getrennt; gehen mit der IBN an die Anlage"
+      "snPlatzhalter": "Eine pro Zeile oder mit Komma getrennt; gehen mit der IBN an die Anlage",
+      "lieferschein": "Lieferschein-Nr."
     },
     "storno": {
       "titel": "Bestellung {{nummer}} stornieren",
@@ -3919,7 +4090,13 @@
       "inaktiv": "Inaktiv",
       "neu": "Neuer Lieferant",
       "leer": "Keine Lieferanten",
-      "text": "Bestellungen gehen an die Bestell-Mail, in der gewählten Sprache."
+      "text": "Bestellungen gehen an die Bestell-Mail, in der gewählten Sprache.",
+      "einkaufJahr": "Einkauf 12 Monate",
+      "puenktlich": "Pünktlich",
+      "lieferzeit": "Lieferzeit",
+      "tage": "{{n}} Tage",
+      "frachtFrei": "Frachtfrei ab",
+      "offen": "Offen"
     },
     "pruefung": {
       "name": "Bitte einen Namen eingeben."
@@ -3948,6 +4125,148 @@
       "hinweis": "Baustellen mit fehlendem Material. «Bestellen bis» = Baubeginn minus Lieferfrist.",
       "leer": "Alles bestellt",
       "leerText": "Keine Baustelle hat fehlendes Material ohne Bestellung."
+    },
+    "schritt": {
+      "titel": "Schritte der Bestellung",
+      "freigabe": "Freigabe",
+      "ab_offen": "Bestätigung",
+      "unterwegs": "Unterwegs",
+      "eingang": "Eingang",
+      "rechnung": "Rechnung",
+      "fertig": "Fertig"
+    },
+    "ls": {
+      "kz": {
+        "zuBestellen": "Lieferanten zu bestellen",
+        "freigabe": "warten auf Freigabe",
+        "abOffen": "ohne Auftragsbestätigung",
+        "gefaehrdet": "Montagen in Gefahr",
+        "baustellen": "Baustellen 14 Tage komplett",
+        "offen": "bestellt, nicht geliefert"
+      },
+      "spalte": {
+        "zuBestellen": "Zu bestellen",
+        "freigabe": "Freigabe",
+        "ab_offen": "Bestätigung offen",
+        "unterwegs": "Unterwegs",
+        "eingang": "Teilweise da",
+        "rechnung": "Rechnung prüfen"
+      },
+      "leer": "Nichts",
+      "ohneLieferant": "Ohne Lieferant",
+      "bis": "bis {{datum}}",
+      "zeilen_one": "{{count}} Artikel",
+      "zeilen_other": "{{count}} Artikel",
+      "montage": "Montage {{datum}} in Gefahr",
+      "ueberfaellig": "überfällig seit {{datum}}",
+      "senden": "freigegeben, jetzt bestellen",
+      "vorgelegt": "zur Freigabe vorgelegt",
+      "entwurf": "Entwurf",
+      "abOffen": "AB fehlt",
+      "bestaetigt": "bestätigt auf {{datum}}",
+      "erwartet": "erwartet {{datum}}",
+      "teil": "{{da}} von {{von}} da",
+      "rechnungDa": "Rechnung {{nummer}} prüfen",
+      "rechnungErwartet": "Rechnung erwartet",
+      "tracking": "Tracking",
+      "gefahrHinweis": "Rot: Ware kommt nach der Montage oder ist noch nicht bestellt. Der Materialplan zeigt, welche Baustellen betroffen sind.",
+      "tafel": "Bestellungen nach Schritt"
+    },
+    "bestellen": {
+      "hinweis": "Was die Baustellen und das Lager brauchen, je Lieferant. Freies im Lager wird zuerst reserviert, der Rest kommt in einen Entwurf, auf Verpackungseinheiten gerundet. Nichts geht weg, bevor jemand freigibt und bestellt.",
+      "alle": "Für alle Lieferanten Entwürfe anlegen",
+      "anlegen": "Entwurf anlegen",
+      "leer": "Alles bestellt",
+      "leerText": "Keine Baustelle und kein Lagerartikel braucht gerade Material.",
+      "ohneLieferant": "Ohne Lieferant (Preisliste ergänzen)",
+      "frachtFrei": "frachtfrei",
+      "frachtAb": "frachtfrei ab CHF {{betrag}}",
+      "unterMindest": "unter Mindestwert CHF {{betrag}}",
+      "artikel": "Artikel",
+      "fuer": "Für",
+      "fehlt": "Fehlt",
+      "lager": "Aus Lager",
+      "bestellen": "Bestellen",
+      "ek": "EK",
+      "bis": "Bestellen bis",
+      "ve": "VE {{ve}}",
+      "ohneArtikel": "ohne Artikel",
+      "lagerMindest": "Lager (unter Mindestmenge)",
+      "total": "Total geschätzt",
+      "zusammenfassen": "Entwürfe zusammenfassen ({{liste}})"
+    },
+    "plan": {
+      "deckung": "Deckung",
+      "bestellenBis": "Bestellen bis",
+      "gefaehrdet": "Montage in Gefahr",
+      "kommt": "kommt bis {{datum}}"
+    },
+    "kond": {
+      "titel": "Konditionen",
+      "fracht_frei_ab": "Frachtfrei ab CHF",
+      "fracht": "Fracht CHF",
+      "mindestwert": "Mindestbestellwert CHF",
+      "lieferzeit": "Lieferzeit (Arbeitstage)",
+      "zahlungsziel": "Zahlungsziel (Tage)",
+      "skonto_prozent": "Skonto %",
+      "skonto_tage": "Skonto innert Tagen",
+      "bestellschluss": "Bestellschluss (z. B. 14:00)",
+      "bestellweg": "Bestellweg",
+      "webshop_url": "Webshop-Adresse",
+      "weg": {
+        "mail": "Mail mit PDF",
+        "webshop": "Webshop",
+        "telefon": "Telefon"
+      }
+    },
+    "ab": {
+      "abschnitt": "Bestätigung und Lieferung",
+      "erfasst": "AB erfasst",
+      "fehlt": "AB fehlt",
+      "titel": "Auftragsbestätigung {{nummer}}",
+      "beschreibung": "Was der Lieferant bestätigt. Abweichungen bei Menge oder Preis werden markiert.",
+      "ki": "Die KI liest die AB aus einer Mail oder einem PDF vor. Bitte prüfen.",
+      "pdf": "PDF lesen",
+      "nummer": "AB-Nummer",
+      "datum": "Datum der AB",
+      "termin": "Bestätigter Termin",
+      "total": "Total exkl. MWST",
+      "bestellt": "bestellt {{menge}} {{einheit}} à {{ek}}",
+      "mengeVon": "Bestätigte Menge {{name}}",
+      "ekVon": "Bestätigter Preis {{name}}",
+      "abweichungen": "Abweichungen",
+      "anzahl_one": "{{count}} Position weicht ab",
+      "anzahl_other": "{{count}} Positionen weichen ab",
+      "keine": "alles wie bestellt",
+      "ausstehend": "Bestellt am {{datum}}, Auftragsbestätigung noch ausstehend.",
+      "nachgefragt": "Nachgefragt am {{datum}}.",
+      "erfassen": "AB erfassen",
+      "aendern": "AB ändern",
+      "nachfragen": "Nachgefragt"
+    },
+    "lieferung": {
+      "tracking": "Tracking",
+      "hinweis": "Hinweis Anlieferung",
+      "kontakt": "Kontakt vor Ort",
+      "lieferscheine": "Lieferscheine"
+    },
+    "rechnung": {
+      "titel": "Lieferantenrechnung",
+      "offen": "noch nicht geprüft",
+      "geprueft": "Geprüft",
+      "nummer": "Rechnungs-Nr.",
+      "betrag": "Betrag",
+      "vorschlaege": "Passende Rechnungen aus AbaNinja",
+      "erwartet": "erwartet CHF {{betrag}}",
+      "keine": "Noch keine passende Rechnung aus AbaNinja. Der Abgleich holt sie in den Finanzen.",
+      "notiz": "Notiz zur Rechnung",
+      "notizPlatzhalter": "Bei Abweichung: warum (z. B. Fracht, Palettenpfand)",
+      "pruefen": "Als geprüft markieren"
+    },
+    "mails": {
+      "titel": "Mails",
+      "keine": "Keine Mails zu dieser Bestellung im Posteingang.",
+      "anhang": "mit Anhang"
     }
   },
   "baustelle": {
@@ -6053,7 +6372,8 @@
       "zusammenfassung": "Zusammenfassung",
       "lead_bewertung": "Lead-Bewertung",
       "briefing": "Tagesbriefing",
-      "automation": "Automationen"
+      "automation": "Automationen",
+      "auftragsbestaetigung": "Auftragsbestätigung lesen"
     },
     "assistent": {
       "titel": "Mit KI schreiben",
@@ -7081,7 +7401,6 @@
       "kaufdatum": "Kaufdatum",
       "kaufpreis_rappen": "Kaufpreis (CHF)",
       "kaufpreis": "Kaufpreis (CHF)",
-      "privat_anteil": "Privatanteil (Geschäftsauto privat)",
       "versicherung_police": "Police-Nr.",
       "versicherung_deckung": "Deckung",
       "selbstbehalt_rappen": "Selbstbehalt (CHF)",
@@ -7170,7 +7489,6 @@
       "versicherung": "Versicherung und Steuern",
       "weiteres": "Weiteres"
     },
-    "ja": "Ja",
     "treibstoff": {
       "diesel": "Diesel",
       "benzin": "Benzin",
@@ -7237,12 +7555,11 @@
         "einsatz": "Einsatz"
       },
       "legende": {
-        "einsatz": "Einsatz (folgt dem Team)",
+        "einsatz": "Für einen Einsatz",
         "hand": "Von Hand reserviert",
         "werkstatt": "Werkstatt",
         "konflikt": "Doppelt verplant"
       },
-      "folgtTeam": "folgt dem Team",
       "heute": "Diese Woche",
       "weiter": "Nächste Woche",
       "zurueck": "Vorherige Woche"
@@ -7288,9 +7605,6 @@
       "keinRechtText": "Die Kosten pro Fahrzeug sehen Geschäftsleitung und Buchhaltung.",
       "leasing": "Leasing",
       "leer": "Noch keine Kosten in diesem Jahr.",
-      "privatanteil": "Privatanteil",
-      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
-      "privatanteilTitel": "Privatanteil {{jahr}}",
       "proFahrzeug": "Kosten pro Fahrzeug {{jahr}}",
       "proKm": "CHF {{chf}} pro km ({{km}} km)",
       "rest": "Unterhalt und Übriges",

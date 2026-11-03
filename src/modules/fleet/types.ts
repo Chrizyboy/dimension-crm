@@ -47,7 +47,6 @@ export interface Fahrzeug {
   reifen: string | null
   naechster_reifenwechsel: string | null
   vignette_bis: string | null
-  privat_anteil: boolean
 }
 
 export const TREIBSTOFFE = ['diesel', 'benzin', 'elektro', 'hybrid', 'gas'] as const
@@ -131,9 +130,9 @@ export interface Wahl {
   name: string
 }
 
-/** Eine Zeile der Belegung: Reservierung (von Hand, Werkstatt, Einsatz) oder Fahrzeug, das dem Team folgt. */
+/** Eine Zeile der Belegung: Reservierung von Hand, Werkstatt oder für einen Einsatz (Chris 3.11.: nie automatisch). */
 export interface Belegung {
-  quelle: 'hand' | 'auto'
+  quelle: 'hand'
   reservierung_id: string | null
   fahrzeug_id: string | null
   geraet_id: string | null
@@ -159,7 +158,6 @@ export interface FahrzeugKosten {
   unterhalt_rappen: number
   fix_rappen: number
   uebrige_rappen: number
-  privatanteil_rappen: number | null
 }
 
 /** Kosten aller Fahrzeuge und der Geräte in einem Jahr. */
