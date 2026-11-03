@@ -273,6 +273,7 @@ export type Database = {
           geloescht_am: string | null
           halbtag: boolean
           id: string
+          kurs_id: string | null
           outlook_id: string | null
           person_id: string
           quelle: string
@@ -290,6 +291,7 @@ export type Database = {
           geloescht_am?: string | null
           halbtag?: boolean
           id?: string
+          kurs_id?: string | null
           outlook_id?: string | null
           person_id: string
           quelle?: string
@@ -306,6 +308,7 @@ export type Database = {
           geloescht_am?: string | null
           halbtag?: boolean
           id?: string
+          kurs_id?: string | null
           outlook_id?: string | null
           person_id?: string
           quelle?: string
@@ -2978,75 +2981,162 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          anhaengelast_kg: number | null
+          art: string
           ausser_betrieb: boolean
+          ausweis: string | null
           bezeichnung: string
+          erste_inverkehrsetzung: string | null
           erstellt_am: string
           erstellt_von: string | null
+          fahrgestell_nr: string | null
           geaendert_am: string
           geloescht_am: string | null
+          gesamtgewicht_kg: number | null
           id: string
           jahrgang: number | null
+          kaufdatum: string | null
+          kaufpreis_rappen: number | null
           kennzeichen: string
           km_stand: number | null
           km_stand_am: string | null
+          leasing_beginn: string | null
           leasing_bis: string | null
+          leasing_km_jahr: number | null
+          leasing_mehr_km_rappen: number | null
+          leasing_rate_rappen: number | null
+          leasing_vertrag: string | null
+          leasinggeber: string | null
           marke_modell: string | null
           naechste_mfk: string | null
+          naechster_reifenwechsel: string | null
           naechster_service: string | null
           notiz: string | null
+          nutzlast_kg: number | null
           person_id: string | null
+          praemie_rappen: number | null
+          privat_anteil: boolean
+          reifen: string | null
+          schaden_telefon: string | null
+          schluessel: string | null
+          selbstbehalt_rappen: number | null
           service_km: number | null
+          stammnummer: string | null
           standort_id: string | null
+          tankkarte: string | null
+          treibstoff: string | null
+          verkehrssteuer_rappen: number | null
           versicherung: string | null
+          versicherung_deckung: string | null
+          versicherung_police: string | null
+          vignette_bis: string | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anhaengelast_kg?: number | null
+          art?: string
           ausser_betrieb?: boolean
+          ausweis?: string | null
           bezeichnung: string
+          erste_inverkehrsetzung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fahrgestell_nr?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gesamtgewicht_kg?: number | null
           id?: string
           jahrgang?: number | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
           kennzeichen: string
           km_stand?: number | null
           km_stand_am?: string | null
+          leasing_beginn?: string | null
           leasing_bis?: string | null
+          leasing_km_jahr?: number | null
+          leasing_mehr_km_rappen?: number | null
+          leasing_rate_rappen?: number | null
+          leasing_vertrag?: string | null
+          leasinggeber?: string | null
           marke_modell?: string | null
           naechste_mfk?: string | null
+          naechster_reifenwechsel?: string | null
           naechster_service?: string | null
           notiz?: string | null
+          nutzlast_kg?: number | null
           person_id?: string | null
+          praemie_rappen?: number | null
+          privat_anteil?: boolean
+          reifen?: string | null
+          schaden_telefon?: string | null
+          schluessel?: string | null
+          selbstbehalt_rappen?: number | null
           service_km?: number | null
+          stammnummer?: string | null
           standort_id?: string | null
+          tankkarte?: string | null
+          treibstoff?: string | null
+          verkehrssteuer_rappen?: number | null
           versicherung?: string | null
+          versicherung_deckung?: string | null
+          versicherung_police?: string | null
+          vignette_bis?: string | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anhaengelast_kg?: number | null
+          art?: string
           ausser_betrieb?: boolean
+          ausweis?: string | null
           bezeichnung?: string
+          erste_inverkehrsetzung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          fahrgestell_nr?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gesamtgewicht_kg?: number | null
           id?: string
           jahrgang?: number | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
           kennzeichen?: string
           km_stand?: number | null
           km_stand_am?: string | null
+          leasing_beginn?: string | null
           leasing_bis?: string | null
+          leasing_km_jahr?: number | null
+          leasing_mehr_km_rappen?: number | null
+          leasing_rate_rappen?: number | null
+          leasing_vertrag?: string | null
+          leasinggeber?: string | null
           marke_modell?: string | null
           naechste_mfk?: string | null
+          naechster_reifenwechsel?: string | null
           naechster_service?: string | null
           notiz?: string | null
+          nutzlast_kg?: number | null
           person_id?: string | null
+          praemie_rappen?: number | null
+          privat_anteil?: boolean
+          reifen?: string | null
+          schaden_telefon?: string | null
+          schluessel?: string | null
+          selbstbehalt_rappen?: number | null
           service_km?: number | null
+          stammnummer?: string | null
           standort_id?: string | null
+          tankkarte?: string | null
+          treibstoff?: string | null
+          verkehrssteuer_rappen?: number | null
           versicherung?: string | null
+          versicherung_deckung?: string | null
+          versicherung_police?: string | null
+          vignette_bis?: string | null
         }
         Relationships: [
           {
@@ -3413,21 +3503,30 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          ausgemustert_am: string | null
+          ausgemustert_grund: string | null
           bezeichnung: string
           erstellt_am: string
           erstellt_von: string | null
           fahrzeug_id: string | null
+          garantie_bis: string | null
           geaendert_am: string
           geloescht_am: string | null
           hersteller: string | null
           id: string
           inventar_nr: string | null
+          kaufdatum: string | null
+          kaufpreis_rappen: number | null
+          lieferant: string | null
           naechste_pruefung: string | null
           notiz: string | null
           person_id: string | null
           pruef_monate: number | null
+          pruefstelle: string | null
           serien_nr: string | null
           standort_id: string | null
+          uebernommen_am: string | null
+          zurueck_bis: string | null
           zustand: string
         }
         ComputedFields: never
@@ -3435,42 +3534,60 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art: string
+          ausgemustert_am?: string | null
+          ausgemustert_grund?: string | null
           bezeichnung: string
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
+          garantie_bis?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           hersteller?: string | null
           id?: string
           inventar_nr?: string | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
+          lieferant?: string | null
           naechste_pruefung?: string | null
           notiz?: string | null
           person_id?: string | null
           pruef_monate?: number | null
+          pruefstelle?: string | null
           serien_nr?: string | null
           standort_id?: string | null
+          uebernommen_am?: string | null
+          zurueck_bis?: string | null
           zustand?: string
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          ausgemustert_am?: string | null
+          ausgemustert_grund?: string | null
           bezeichnung?: string
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
+          garantie_bis?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           hersteller?: string | null
           id?: string
           inventar_nr?: string | null
+          kaufdatum?: string | null
+          kaufpreis_rappen?: number | null
+          lieferant?: string | null
           naechste_pruefung?: string | null
           notiz?: string | null
           person_id?: string | null
           pruef_monate?: number | null
+          pruefstelle?: string | null
           serien_nr?: string | null
           standort_id?: string | null
+          uebernommen_am?: string | null
+          zurueck_bis?: string | null
           zustand?: string
         }
         Relationships: [
@@ -3813,6 +3930,7 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          bereich: string | null
           beschreibung_de: string | null
           beschreibung_fr: string | null
           datei_de_id: string | null
@@ -3837,6 +3955,7 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art: string
+          bereich?: string | null
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
           datei_de_id?: string | null
@@ -3860,6 +3979,7 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          bereich?: string | null
           beschreibung_de?: string | null
           beschreibung_fr?: string | null
           datei_de_id?: string | null
@@ -5109,6 +5229,103 @@ export type Database = {
             columns: ['projekt_id']
             isOneToOne: false
             referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      kurse: {
+        Row: {
+          absage_grund: string | null
+          alt_daten: Json | null
+          alt_id: string | null
+          anbieter: string | null
+          art: string | null
+          beantragt_von: string | null
+          besucht_von: string[]
+          bewilligt_am: string | null
+          bewilligt_von: string | null
+          bis: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kosten_rappen: number | null
+          notiz: string | null
+          ort: string | null
+          personen: string[]
+          stand: string
+          titel: string
+          vereinbarung_bis: string | null
+          vereinbarung_rappen: number | null
+          von: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          absage_grund?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter?: string | null
+          art?: string | null
+          beantragt_von?: string | null
+          besucht_von?: string[]
+          bewilligt_am?: string | null
+          bewilligt_von?: string | null
+          bis?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_rappen?: number | null
+          notiz?: string | null
+          ort?: string | null
+          personen?: string[]
+          stand?: string
+          titel: string
+          vereinbarung_bis?: string | null
+          vereinbarung_rappen?: number | null
+          von?: string | null
+        }
+        Update: {
+          absage_grund?: string | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter?: string | null
+          art?: string | null
+          beantragt_von?: string | null
+          besucht_von?: string[]
+          bewilligt_am?: string | null
+          bewilligt_von?: string | null
+          bis?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_rappen?: number | null
+          notiz?: string | null
+          ort?: string | null
+          personen?: string[]
+          stand?: string
+          titel?: string
+          vereinbarung_bis?: string | null
+          vereinbarung_rappen?: number | null
+          von?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'kurse_beantragt_von_fkey'
+            columns: ['beantragt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kurse_bewilligt_von_fkey'
+            columns: ['bewilligt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -7742,6 +7959,7 @@ export type Database = {
           geloescht_am: string | null
           gueltig_bis: string | null
           id: string
+          kurs_id: string | null
           notiz: string | null
           person_id: string
         }
@@ -7760,6 +7978,7 @@ export type Database = {
           geloescht_am?: string | null
           gueltig_bis?: string | null
           id?: string
+          kurs_id?: string | null
           notiz?: string | null
           person_id: string
         }
@@ -7777,6 +7996,7 @@ export type Database = {
           geloescht_am?: string | null
           gueltig_bis?: string | null
           id?: string
+          kurs_id?: string | null
           notiz?: string | null
           person_id?: string
         }
@@ -8395,6 +8615,8 @@ export type Database = {
           datum: string
           dokument_id: string | null
           ergebnis: string | null
+          erledigt_am: string | null
+          erledigung: string | null
           erstellt_am: string
           erstellt_von: string | null
           fahrzeug_id: string | null
@@ -8404,8 +8626,10 @@ export type Database = {
           id: string
           km: number | null
           kosten_rappen: number | null
+          liter: number | null
           naechste_am: string | null
           person_id: string | null
+          stand: string | null
           text: string | null
         }
         ComputedFields: never
@@ -8416,6 +8640,8 @@ export type Database = {
           datum?: string
           dokument_id?: string | null
           ergebnis?: string | null
+          erledigt_am?: string | null
+          erledigung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
@@ -8425,8 +8651,10 @@ export type Database = {
           id?: string
           km?: number | null
           kosten_rappen?: number | null
+          liter?: number | null
           naechste_am?: string | null
           person_id?: string | null
+          stand?: string | null
           text?: string | null
         }
         Update: {
@@ -8436,6 +8664,8 @@ export type Database = {
           datum?: string
           dokument_id?: string | null
           ergebnis?: string | null
+          erledigt_am?: string | null
+          erledigung?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           fahrzeug_id?: string | null
@@ -8445,8 +8675,10 @@ export type Database = {
           id?: string
           km?: number | null
           kosten_rappen?: number | null
+          liter?: number | null
           naechste_am?: string | null
           person_id?: string | null
+          stand?: string | null
           text?: string | null
         }
         Relationships: [
@@ -8476,6 +8708,121 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ressourcen_reservierungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          bis: string
+          einsatz_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          fahrzeug_id: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          geraet_id: string | null
+          id: string
+          person_id: string | null
+          projekt_id: string | null
+          von: string
+          zweck: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bis: string
+          einsatz_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geraet_id?: string | null
+          id?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          von: string
+          zweck?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          bis?: string
+          einsatz_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          fahrzeug_id?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          geraet_id?: string | null
+          id?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          von?: string
+          zweck?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ressourcen_reservierungen_einsatz_id_fkey'
+            columns: ['einsatz_id']
+            isOneToOne: false
+            referencedRelation: 'einsaetze'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_fahrzeug_id_fkey'
+            columns: ['fahrzeug_id']
+            isOneToOne: false
+            referencedRelation: 'fahrzeuge'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_geraet_id_fkey'
+            columns: ['geraet_id']
+            isOneToOne: false
+            referencedRelation: 'geraete'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
             referencedColumns: ['id']
           },
         ]
@@ -9213,76 +9560,144 @@ export type Database = {
       }
       spesen: {
         Row: {
+          abgelehnt_grund: string | null
           alt_daten: Json | null
           alt_id: string | null
+          art: string
           ausbezahlt_am: string | null
+          ausbezahlt_mit: string | null
           ausbezahlt_von: string | null
+          auszahlung_id: string | null
           beleg_id: string | null
           betrag_rappen: number
+          bezahlt_mit: string
           datum: string
           erstellt_am: string
           erstellt_von: string | null
           geaendert_am: string
           geloescht_am: string | null
+          geprueft_am: string | null
+          geprueft_von: string | null
           id: string
           kategorie: string
+          km: number | null
+          km_satz_rappen: number | null
           mail: Json | null
+          mwst_rappen: number | null
+          mwst_satz: number | null
           notiz: string | null
           person_id: string | null
+          personen: number | null
+          projekt_id: string | null
+          rueckfrage: string | null
+          rueckfrage_am: string | null
           status: string
           storniert_am: string | null
           storniert_grund: string | null
           storniert_von: string | null
+          strecke: string | null
+          verlauf: NonNullable<Json>
+          waehrung: string
           zweck: string | null
         }
         ComputedFields: never
         Insert: {
+          abgelehnt_grund?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
+          art?: string
           ausbezahlt_am?: string | null
+          ausbezahlt_mit?: string | null
           ausbezahlt_von?: string | null
+          auszahlung_id?: string | null
           beleg_id?: string | null
           betrag_rappen: number
+          bezahlt_mit?: string
           datum: string
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          geprueft_am?: string | null
+          geprueft_von?: string | null
           id?: string
           kategorie: string
+          km?: number | null
+          km_satz_rappen?: number | null
           mail?: Json | null
+          mwst_rappen?: number | null
+          mwst_satz?: number | null
           notiz?: string | null
           person_id?: string | null
+          personen?: number | null
+          projekt_id?: string | null
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
           status?: string
           storniert_am?: string | null
           storniert_grund?: string | null
           storniert_von?: string | null
+          strecke?: string | null
+          verlauf?: NonNullable<Json>
+          waehrung?: string
           zweck?: string | null
         }
         Update: {
+          abgelehnt_grund?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
+          art?: string
           ausbezahlt_am?: string | null
+          ausbezahlt_mit?: string | null
           ausbezahlt_von?: string | null
+          auszahlung_id?: string | null
           beleg_id?: string | null
           betrag_rappen?: number
+          bezahlt_mit?: string
           datum?: string
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          geprueft_am?: string | null
+          geprueft_von?: string | null
           id?: string
           kategorie?: string
+          km?: number | null
+          km_satz_rappen?: number | null
           mail?: Json | null
+          mwst_rappen?: number | null
+          mwst_satz?: number | null
           notiz?: string | null
           person_id?: string | null
+          personen?: number | null
+          projekt_id?: string | null
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
           status?: string
           storniert_am?: string | null
           storniert_grund?: string | null
           storniert_von?: string | null
+          strecke?: string | null
+          verlauf?: NonNullable<Json>
+          waehrung?: string
           zweck?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen_liste'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'spesen_beleg_id_fkey'
             columns: ['beleg_id']
@@ -9297,7 +9712,87 @@ export type Database = {
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
         ]
+      }
+      spesen_auszahlungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anzahl: number
+          art: string
+          datum: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          notiz: string | null
+          personen: number
+          titel: string
+          total_rappen: number
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzahl?: number
+          art: string
+          datum: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          notiz?: string | null
+          personen?: number
+          titel: string
+          total_rappen?: number
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anzahl?: number
+          art?: string
+          datum?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          notiz?: string | null
+          personen?: number
+          titel?: string
+          total_rappen?: number
+        }
+        Relationships: []
       }
       standorte: {
         Row: {
@@ -12040,6 +12535,24 @@ export type Database = {
           },
         ]
       }
+      ressourcen_belegung: {
+        Row: {
+          art: string | null
+          bis: string | null
+          einsatz_id: string | null
+          fahrzeug_id: string | null
+          geraet_id: string | null
+          person_id: string | null
+          projekt: string | null
+          projekt_id: string | null
+          quelle: string | null
+          reservierung_id: string | null
+          von: string | null
+          zweck: string | null
+        }
+        ComputedFields: never
+        Relationships: []
+      }
       service_termine: {
         Row: {
           auswirkung: string | null
@@ -12061,29 +12574,103 @@ export type Database = {
         ComputedFields: never
         Relationships: []
       }
-      spesen_liste: {
+      spesen_auszahlungen_liste: {
         Row: {
-          ausbezahlt_am: string | null
-          ausbezahlt_von: string | null
-          beleg_id: string | null
-          beleg_name: string | null
-          betrag_rappen: number | null
+          anzahl: number | null
+          art: string | null
           datum: string | null
           erstellt_am: string | null
           id: string | null
+          notiz: string | null
+          personen: number | null
+          titel: string | null
+          total_rappen: number | null
+        }
+        ComputedFields: never
+        Insert: {
+          anzahl?: number | null
+          art?: string | null
+          datum?: string | null
+          erstellt_am?: string | null
+          id?: string | null
+          notiz?: string | null
+          personen?: number | null
+          titel?: string | null
+          total_rappen?: number | null
+        }
+        Update: {
+          anzahl?: number | null
+          art?: string | null
+          datum?: string | null
+          erstellt_am?: string | null
+          id?: string | null
+          notiz?: string | null
+          personen?: number | null
+          titel?: string | null
+          total_rappen?: number | null
+        }
+        Relationships: []
+      }
+      spesen_liste: {
+        Row: {
+          abgelehnt_grund: string | null
+          art: string | null
+          ausbezahlt_am: string | null
+          ausbezahlt_mit: string | null
+          ausbezahlt_von: string | null
+          auszahlung_id: string | null
+          beleg_id: string | null
+          beleg_name: string | null
+          beleg_typ: string | null
+          betrag_rappen: number | null
+          bezahlt_mit: string | null
+          datum: string | null
+          erstellt_am: string | null
+          geprueft_am: string | null
+          geprueft_von: string | null
+          hinweise: string[] | null
+          id: string | null
           kategorie: string | null
+          km: number | null
+          km_satz_rappen: number | null
+          konto: string | null
           kuerzel: string | null
+          mwst_rappen: number | null
+          mwst_satz: number | null
           notiz: string | null
           person: string | null
           person_id: string | null
+          personen: number | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          projekt_titel: string | null
+          rueckfrage: string | null
+          rueckfrage_am: string | null
           status: string | null
           storniert_am: string | null
           storniert_grund: string | null
           storniert_von: string | null
+          strecke: string | null
+          verlauf: Json | null
+          waehrung: string | null
           zweck: string | null
         }
         ComputedFields: never
         Relationships: [
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_auszahlung_fk'
+            columns: ['auszahlung_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_auszahlungen_liste'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'spesen_beleg_id_fkey'
             columns: ['beleg_id']
@@ -12096,6 +12683,34 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
             referencedColumns: ['id']
           },
         ]
@@ -12573,6 +13188,7 @@ export type Database = {
           strasse: string
         }[]
       }
+      ausweis_anforderung_speichern: { Args: { p: Json; p_schluessel: string }; Returns: undefined }
       automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }
       automation_lauf_abbrechen: { Args: { p_lauf: string }; Returns: boolean }
       automation_server_ergebnis: {
@@ -12620,6 +13236,8 @@ export type Database = {
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       finanzen_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
+      fuhrpark_km_erinnern: { Args: { p_heute?: string }; Returns: number }
+      fuhrpark_kosten: { Args: { p_jahr: number }; Returns: Json }
       gesundheit: { Args: Record<PropertyKey, never>; Returns: Json }
       grossprojekt_akte_setzen: { Args: { p: Json; p_id: string }; Returns: undefined }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
@@ -12650,6 +13268,7 @@ export type Database = {
       grossprojekt_vermerken: { Args: { p_art: string; p_id: string; p_text: string }; Returns: undefined }
       grossprojekt_vorrat_freigeben: { Args: Record<PropertyKey, never>; Returns: number }
       grossprojekte_melden: { Args: Record<PropertyKey, never>; Returns: Json }
+      handbuch_bereich_setzen: { Args: { p_bereich: string; p_id: string }; Returns: undefined }
       handbuch_entfernen: { Args: { p_id: string }; Returns: undefined }
       handbuch_pruefen: { Args: Record<PropertyKey, never>; Returns: number }
       handbuch_speichern: {
@@ -12753,6 +13372,12 @@ export type Database = {
           stand_datum: string
         }[]
       }
+      kurs_besucht: { Args: { p_id: string; p_personen?: string[] }; Returns: number }
+      kurs_entscheiden: {
+        Args: { p_bewilligt: boolean; p_grund?: string; p_id: string }
+        Returns: undefined
+      }
+      kurs_speichern: { Args: { p: Json; p_id: string | null }; Returns: string }
       lager_buchen: { Args: { p: Json }; Returns: undefined }
       lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
       lead_anlegen: { Args: { p: Json }; Returns: string }
@@ -13020,10 +13645,38 @@ export type Database = {
           p_id: string
           p_km?: number
           p_kosten_rappen?: number
+          p_liter?: number
           p_naechste?: string
           p_text?: string
         }
         Returns: string
+      }
+      ressource_reservieren: {
+        Args: {
+          p_art?: string
+          p_bis: string
+          p_einsatz?: string
+          p_fahrzeug: string
+          p_geraet: string
+          p_id: string
+          p_person?: string
+          p_von: string
+          p_zweck?: string
+        }
+        Returns: string
+      }
+      ressource_reservierung_aufheben: {
+        Args: { p_id: string }
+        Returns: undefined
+      }
+      ressource_schaden_setzen: {
+        Args: {
+          p_eintrag: string
+          p_erledigung?: string
+          p_kosten_rappen?: number
+          p_stand: string
+        }
+        Returns: undefined
       }
       ressource_uebergeben: {
         Args: { p_fahrzeug: string; p_geraet: string; p_in_fahrzeug?: string; p_person: string; p_text?: string }
@@ -13032,6 +13685,7 @@ export type Database = {
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
       rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
+        p_zurueck_bis?: string
         Args: {
           p_bereich: string
           p_erwartet: string
@@ -13223,10 +13877,27 @@ export type Database = {
           sprache: string
         }[]
       }
+      spesen_ablehnen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       spesen_auszahlen: { Args: { p_datum?: string; p_ids: string[] }; Returns: number }
+      spesen_auszahlung: {
+        Args: { p_art?: string; p_datum?: string; p_ids: string[]; p_titel?: string }
+        Returns: string
+      }
+      spesen_geprueft: { Args: { p_ids: string[] }; Returns: number }
+      spesen_projekte: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          nummer: string
+          titel: string
+        }[]
+      }
+      spesen_rueckfrage: { Args: { p_id: string; p_text: string }; Returns: undefined }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
+      team_kurse: { Args: { p_jahr?: number }; Returns: Json }
+      team_uebersicht: { Args: { p_tag?: string }; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
       vk_aus_ek: { Args: { p_ek: number; p_marge: number; p_skonto: number }; Returns: number }
       wareneingang_buchen: { Args: { p: Json; p_id: string }; Returns: string }

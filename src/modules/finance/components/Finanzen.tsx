@@ -21,7 +21,7 @@ import { Zahllauf } from './Zahllauf'
 import { Zahlungen } from './Zahlungen'
 
 /**
- * Finanzen für Geschäftsleitung und Buchhaltung (nur mit Recht «finanzen», Entscheid 0041): Cockpit,
+ * Finanzen für Geschäftsleitung und Buchhaltung (nur mit Recht «finanzen», Entscheid 0044): Cockpit,
  * Lieferantenrechnungen mit Freigabe, Zahllauf mit zweiter Person, Liquidität, Projekte & Marge sowie
  * Konten, MWST und Monatsabschluss. Oben die Wahl der Gesellschaft (Muri GmbH, Bulle Sàrl oder beide).
  * #/finance?reiter=…

@@ -97,14 +97,6 @@ export function AktePersoenlich({ daten, onAktion }: { daten: AkteDaten; onAktio
               .filter(Boolean)
               .join(' · ') || null}
           </Angabe>
-          <Angabe label={t('team.akte.ausruestung')}>
-            {daten.ausruestung.length > 0 ? (
-              <>
-                {daten.ausruestung.join(' · ')}
-                <span className="text-muted-foreground block text-xs">{t('team.akte.ausFuhrpark')}</span>
-              </>
-            ) : null}
-          </Angabe>
         </dl>
       </AkteAbschnitt>
     </>
