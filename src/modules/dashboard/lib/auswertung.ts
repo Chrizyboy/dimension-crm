@@ -1,4 +1,4 @@
-import type { Bereich, Fakt, Ziele } from '../types'
+import type { Bereich, Fakt, KennzahlenEinstellungen } from '../types'
 
 /** Wie eine Zeile zählt: Anzahl, Summe der Beträge, Quote (angenommen von entschieden) oder Schnitt der Tage. */
 export type Mass = 'anzahl' | 'summe' | 'quote' | 'schnitt'
@@ -77,10 +77,10 @@ export function schnittTage(fakten: Fakt[]): number | null {
   return tage.length ? Math.round(tage.reduce((a, b) => a + b, 0) / tage.length) : null
 }
 
-/** Zeilen des Reiters «Abwicklung»; `ziel` ist der Schlüssel in einstellungen.kennzahlen.ziele (weniger ist besser). */
-export const ABWICKLUNG: (ZeilenDef & { ziel?: keyof Ziele })[] = [
+/** Zeilen der Tabelle «Abwicklung»; `ziel` ist der Richtwert in einstellungen.kennzahlen.richtwerte (weniger ist besser). */
+export const ABWICKLUNG: (ZeilenDef & { ziel?: keyof KennzahlenEinstellungen['richtwerte'] })[] = [
   { id: 'ibn', schluessel: 'ibn', mass: 'anzahl' },
-  { id: 'dauer_vertrag_ibn', schluessel: 'ibn', mass: 'schnitt', ziel: 'dauer_vertrag_ibn' },
+  { id: 'dauer_vertrag_ibn', schluessel: 'ibn', mass: 'schnitt', ziel: 'unterschrift_ibn_tage' },
   { id: 'fristen_ueberfaellig', schluessel: 'fristen_ueberfaellig', mass: 'anzahl', ziel: 'fristen_ueberfaellig' },
   { id: 'material_spaet', schluessel: 'material_spaet', mass: 'anzahl', ziel: 'material_spaet' },
   { id: 'faelle_dauer', schluessel: 'faelle_dauer', mass: 'schnitt', ziel: 'faelle_dauer' },
@@ -169,5 +169,7 @@ export function tabelleVon(art: Fakt['art']): string {
     projekt: 'projekte',
     zahlung: 'projekte',
     fall: 'service_faelle',
+    rechnung: 'rechnungen',
+    wartung: 'wartungsvertraege',
   }[art]
 }

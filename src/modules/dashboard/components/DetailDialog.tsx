@@ -1,10 +1,13 @@
 import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
+import { herunterladen } from '@/lib/datei'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zelle, Zeile } from '@/components/ui/tabelle'
 import { formatChf, formatDatum } from '@/lib/format'
 import { zielVon } from '@/lib/ziel'
 import { summe, tabelleVon } from '../lib/auswertung'
+import { alsCsv } from '../lib/csv'
 import type { Detail } from '../types'
 
 /**
@@ -23,7 +26,31 @@ export function DetailDialog({ detail, onSchliessen }: { detail: Detail; onSchli
         if (!o) onSchliessen()
       }}
     >
-      <DialogInhalt art="seite" titel={detail.titel} beschreibung={t('kz.detail.anzahl', { count: zeilen.length })}>
+      <DialogInhalt
+        art="seite"
+        titel={detail.titel}
+        beschreibung={t('kz.detail.anzahl', { count: zeilen.length })}
+        fuss={
+          zeilen.length > 0 ? (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                const kopf = ['datum', 'nummer', 'name', 'ort', 'betrag', 'kwp', 'tage', 'info'].map((k) =>
+                  t(`kz.csv.${k}`),
+                )
+                herunterladen(
+                  alsCsv(zeilen, kopf),
+                  `${detail.titel.replace(/[^\p{L}\p{N}]+/gu, '-')}.csv`,
+                  'text/csv;charset=utf-8',
+                )
+              }}
+            >
+              {t('kz.csv.knopf')}
+            </Button>
+          ) : undefined
+        }
+      >
         {zeilen.length === 0 ? (
           <p className="text-muted-foreground text-sm">{t('kz.detail.leer')}</p>
         ) : (
