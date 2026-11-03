@@ -4,18 +4,45 @@
 export type VerkaufAnsicht =
   'zutun' | 'pipeline' | 'liste' | 'tagesroute' | 'tour' | 'kalender' | 'regionen' | 'bericht' | 'steuerung'
 
-/** Reihenfolge der Reiter und der Tasten 1–9; «Zu tun» ist die Startansicht (02.11.2026). */
+/** Alle Ansichten (Adresse `?ansicht=`); die Reiter fassen Kalender, Tagesroute und Tour unter «Planung» zusammen. */
 export const VERKAUF_ANSICHTEN: readonly VerkaufAnsicht[] = [
   'zutun',
   'pipeline',
   'liste',
+  'kalender',
   'tagesroute',
   'tour',
-  'kalender',
   'regionen',
   'bericht',
   'steuerung',
 ]
+
+/** Die drei Teile der Planung (03.11.2026): Woche im Kalender, Route eines Tages, Tour über mehrere Tage. */
+export const PLANUNG_ANSICHTEN: readonly VerkaufAnsicht[] = ['kalender', 'tagesroute', 'tour']
+
+/** Ein Reiter oben: eine Ansicht oder «planung» für die drei Planungsansichten. */
+export type VerkaufReiter = Exclude<VerkaufAnsicht, 'tagesroute' | 'tour' | 'kalender'> | 'planung'
+
+/** Reihenfolge der Reiter und der Tasten 1–7; «Zu tun» ist die Startansicht (02.11.2026). */
+export const VERKAUF_REITER: readonly VerkaufReiter[] = [
+  'zutun',
+  'pipeline',
+  'liste',
+  'planung',
+  'regionen',
+  'bericht',
+  'steuerung',
+]
+
+/** Zu welchem Reiter eine Ansicht gehört. */
+export function reiterVon(a: VerkaufAnsicht): VerkaufReiter {
+  return PLANUNG_ANSICHTEN.includes(a) ? 'planung' : (a as VerkaufReiter)
+}
+
+/** Welche Ansicht ein Reiter öffnet; «Planung» beginnt mit dem Kalender. */
+export function ansichtVon(r: VerkaufReiter): VerkaufAnsicht {
+  return r === 'planung' ? 'kalender' : r
+}
 
 /**
  * Ein Geschäft der Pipeline: ein Lead mit seiner jüngsten Offerte und seinem Projekt,

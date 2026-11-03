@@ -1048,7 +1048,20 @@
         "flach_begruent": "Toit plat végétalisé",
         "schiefer": "Ardoise",
         "andere": "Autre"
-      }
+      },
+      "checkliste": "Check-list",
+      "punkt": {
+        "dach": "Toit : surface, orientation, inclinaison, matériau",
+        "anschluss": "Raccordement",
+        "verbrauch": "Consommation électrique",
+        "foto_dach": "Photo du toit",
+        "foto_zaehler": "Photo du compteur",
+        "foto_verteilung": "Photo du tableau électrique",
+        "foto_heizung": "Photo du chauffage"
+      },
+      "foto": "Prendre une photo",
+      "abschliessen": "Terminer · Commander l’offre",
+      "abschliessenHinweis": "Enregistre la visite et transmet le lead à l’établissement des offres (Andy)."
     },
     "kontakt": {
       "wann": "Quand recontacter",
@@ -1431,6 +1444,15 @@
       "wert": "Valeur commandes",
       "min": "{{n}} min",
       "std": "{{n}} h"
+    },
+    "reiter": {
+      "zutun": "À faire",
+      "pipeline": "Pipeline",
+      "liste": "Leads",
+      "planung": "Planification",
+      "regionen": "Régions",
+      "bericht": "Rapport mensuel",
+      "steuerung": "Pilotage"
     }
   },
   "offerten": {
@@ -2427,6 +2449,9 @@
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "kennzahlen_kein_recht": "Seules les personnes avec le droit « Finances » modifient les objectifs et réglages des indicateurs.",
+    "kennzahlen_wert_ungueltig": "Une valeur n'est pas valable (pourcentages 0–100, montants non négatifs).",
+    "kennzahlen_schluessel_ungueltig": "Ce réglage n'existe pas.",
     "posteingang_absender_ungueltig": "Saisis une adresse e-mail ou @entreprise.ch.",
     "posteingang_bestellung_falsch": "Cette commande n’existe pas ou est déjà livrée.",
     "posteingang_kein_recht_finanzen": "Il te manque le droit Finances.",
@@ -2475,6 +2500,8 @@
     "baustelle_soll_negativ": "Les heures prévues ne peuvent pas être négatives.",
     "baustelle_projekt_nicht_gefunden": "Projet introuvable.",
     "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire.",
+    "finanzen_karte_keine_firmenkarte": "Seuls les frais « carte d’entreprise » peuvent être associées à une transaction.",
+    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction.",
     "einkauf_mehr_als_entnommen": "Impossible de retourner plus que ce qui a été sorti pour le projet.",
     "einkauf_loesung_fehlt": "Merci de choisir une solution (avoir, remplacement, retour ou aucune)."
   },
@@ -4397,6 +4424,7 @@
       "leer": "Aucune intervention ces sept prochains jours",
       "leerText": "La direction de projet planifie les interventions; les rendez-vous de service viennent de « Service & garantie ».",
       "tagVon": "Jour {{nr}} sur {{von}}",
+      "ueberfaellig": "En retard depuis le {{datum}}",
       "team": "Équipe",
       "material": "Matériel",
       "materialFehlt_one": "{{count}} matériel manque encore",
@@ -5170,7 +5198,8 @@
       "kategorien": "Règles",
       "pruefen": "Vérifier",
       "auszahlen": "Verser",
-      "auswertung": "Analyse"
+      "auswertung": "Analyse",
+      "karte": "Carte d’entreprise"
     },
     "spalte": {
       "datum": "Date",
@@ -5395,6 +5424,43 @@
       "unterschriftPerson": "Date, signature collaborateur/trice",
       "unterschriftBuchhaltung": "Vérifié comptabilité",
       "datei": "Decompte de frais"
+    },
+    "karte": {
+      "einlesen": "Importer le relevé",
+      "hinweis": "Relevé de la carte d’entreprise en CSV depuis l’e-banking ou le portail de la carte. Ce qui est déjà importé est ignoré ; si un seul frais « carte d’entreprise » correspond (même montant, ±3 jours), il est associé automatiquement.",
+      "kachelOffen_one": "sans justificatif ({{count}} transaction)",
+      "kachelOffen_other": "sans justificatif ({{count}} transactions)",
+      "kachelVerbunden": "associées à un justificatif",
+      "kachelErledigt": "réglées sans justificatif",
+      "kachelFrei": "frais carte d’entreprise sans transaction",
+      "stand": {
+        "offen": "Sans justificatif",
+        "verbunden": "Associées",
+        "erledigt": "Réglées",
+        "alle": "Toutes"
+      },
+      "nachfordern_one": "Demander le justificatif ({{count}})",
+      "nachfordern_other": "Demander les justificatifs ({{count}})",
+      "buchung": "Transaction",
+      "person": "Carte de",
+      "personWaehlen": "Choisir la personne",
+      "verbinden": "Associer à un frais",
+      "keinBeleg": "Pas encore de frais correspondant",
+      "loesen": "Retirer l’association",
+      "ohneBeleg": "Sans justificatif",
+      "wiederOeffnen": "Rouvrir",
+      "erledigenTitel": "Régler sans justificatif",
+      "erledigen": "Régler",
+      "grund": "Motif",
+      "grundHinweis": "Affiché lors du rapprochement, p. ex. pour la révision.",
+      "grundVorschlag": {
+        "abo": "Abonnement, facture par e-mail",
+        "gebuehr": "Frais de carte",
+        "privat": "Privé, déduit du salaire"
+      },
+      "leer": "Aucun relevé importé",
+      "leerFilter": "Rien dans cette sélection",
+      "leerText": "Importer le relevé de la carte d’entreprise en CSV. Chaque transaction apparaît ensuite ici, avec ou sans justificatif."
     }
   },
   "finanzen": {
@@ -7027,9 +7093,12 @@
     "beschreibung": "Où en sommes-nous ? Chaque chiffre est cliquable et montre ce qu’il contient.",
     "reiter": {
       "verkauf": "Vente",
-      "pipeline": "Pipeline par région",
-      "betrieb": "Commandes et charge",
-      "abwicklung": "Exécution"
+      "pipeline": "Pipeline et prévision",
+      "ueberblick": "Vue d'ensemble",
+      "abwicklung": "Réalisation",
+      "finanzen": "Finances",
+      "service": "Service et maintenance",
+      "alle": "Tous les chiffres"
     },
     "zeitraum": {
       "titel": "Période",
@@ -7037,7 +7106,8 @@
       "quartal": "Trimestre",
       "jahr": "Année",
       "12m": "12 mois",
-      "alle": "Tout"
+      "alle": "Tout",
+      "woche": "Semaine"
     },
     "bereich": {
       "titel": "Société",
@@ -7099,7 +7169,8 @@
         "quartal": "semaine",
         "jahr": "mois",
         "12m": "mois",
-        "alle": "trimestre"
+        "alle": "trimestre",
+        "woche": "jour"
       },
       "tooltip": "{{fach}} : Muri {{muri}}, Bulle {{bulle}}",
       "tabelle": "En tableau"
@@ -7173,8 +7244,289 @@
         "abgeschlossen": "terminé"
       }
     },
+    "kpi": {
+      "vergleich": "{{text}}",
+      "ziel": "Objectif {{ziel}} · {{prozent}} % atteint"
+    },
+    "k": {
+      "auftragseingang": "Entrée de commandes",
+      "auftraegeAnzahl": "{{n}} commandes signées",
+      "kwp": "Puissance vendue",
+      "kwpSchnitt": "Moyenne {{kwp}} kWc par commande",
+      "umsatz": "Chiffre d'affaires (HT)",
+      "quote": "Taux de conclusion",
+      "offeneAuftraege": "Commandes en cours",
+      "projekteAnzahl": "{{n}} projets pas encore terminés",
+      "pipeline": "Prévision pondérée",
+      "pipelineUnter": "Valeur des offres ouvertes {{wert}}",
+      "offenKunden": "Ouvert chez les clients",
+      "ueberfaellig": "dont échu {{wert}}",
+      "reaktion": "Réactivité service",
+      "reaktionUnter": "Objectif ≥ {{richtwert}} % · {{n}} cas ouverts",
+      "ibn": "Mises en service",
+      "ibnUnter": "{{kwp}} kWc raccordés",
+      "schnitt": "Moyenne {{wert}} par commande"
+    },
+    "verlauf": {
+      "titel": "Entrée de commandes cumulée",
+      "jetzt": "Cette année",
+      "ziel": "Objectif"
+    },
+    "hinweis": {
+      "titel": "Ce qui compte maintenant",
+      "beschreibung": "Les écarts les plus importants, un clic affiche les entrées.",
+      "nichts": "Tout est dans le vert.",
+      "ton": {
+        "kritisch": "Urgent",
+        "warnung": "Attention",
+        "ok": "Bien",
+        "info": "Info"
+      },
+      "nachfassen": "{{standort}} : {{n}} offres à relancer",
+      "alt": "{{n}} offres de plus de {{tage}} jours ({{wert}}) – relancer ou clôturer",
+      "quelle": "Source « {{quelle}} » : {{n}} leads sans commande – vérifier les coûts",
+      "ibn": "De la signature à la mise en service : {{tage}} jours (valeur cible {{richtwert}})",
+      "reaktion": "Le service ne réagit à temps que dans {{prozent}} % des cas (objectif {{richtwert}} %)",
+      "ueberfaellig": "{{n}} factures échues, au total {{wert}}",
+      "zielKnapp": "Entrée de commandes à {{prozent}} % de l'objectif au prorata",
+      "zielOk": "Objectif atteint : {{prozent}} % de l'objectif au prorata"
+    },
+    "firmen": {
+      "titel": "Muri et Bulle",
+      "ziel": "Objectif atteint",
+      "offen": "Ouvert chez les clients"
+    },
+    "woche": {
+      "titel": "Cette semaine",
+      "leads": "Nouveaux leads",
+      "gesendet": "Offres envoyées",
+      "angenommen": "Commandes",
+      "ibn": "Mises en service",
+      "faelle": "Nouveaux cas de service"
+    },
+    "produkte": {
+      "titel": "Mix de produits",
+      "hinweis": "Commandes qui contiennent le produit (une commande peut en avoir plusieurs).",
+      "pv": "Photovoltaïque",
+      "batterie": "Batterie",
+      "wallbox": "Borne de recharge",
+      "waermepumpe": "Pompe à chaleur"
+    },
+    "ziele": {
+      "keine": "Aucun objectif n'est saisi pour cette période. La direction le fixe sous « Objectifs ».",
+      "knopf": "Objectifs",
+      "titel": "Objectifs {{jahr}}",
+      "beschreibung": "Objectifs annuels d'entrée de commandes et de chiffre d'affaires, probabilités de la prévision et valeurs cibles. Pour les périodes plus courtes, les objectifs sont calculés au prorata.",
+      "firma": "Entreprise (entrée de commandes TTC)",
+      "gesamt": "Les deux ensemble",
+      "gesamtHinweis": "Laisser vide = somme de Muri et Bulle",
+      "umsatz": "Chiffre d'affaires",
+      "umsatzHinweis": "Factures émises HT",
+      "personen": "Par personne (entrée de commandes)",
+      "wahrscheinlichkeit": "Probabilité par état (%)",
+      "altTage": "Une offre est ancienne après (jours)",
+      "richtwerte": "Valeurs cibles",
+      "r": {
+        "unterschrift_ibn_tage": "Signature à mise en service (jours)",
+        "reaktion_prozent": "Service à temps (%)",
+        "marge_prozent": "Marge (%)",
+        "fristen_ueberfaellig": "Délais dépassés (nombre)",
+        "material_spaet": "Matériel en retard (nombre)",
+        "faelle_dauer": "Cas de service jusqu’à résolution (jours)"
+      },
+      "gespeichert": "Objectifs {{jahr}} enregistrés."
+    },
+    "meine": {
+      "titel": "Tes chiffres, {{name}}",
+      "auftraege": "{{n}} commandes · {{wert}}",
+      "ziel": "{{prozent}} % de ton objectif",
+      "nachfassen": "{{n}} offres à relancer"
+    },
+    "trichter": {
+      "titel": "Du lead à la commande",
+      "beschreibung": "Leads de la période et jusqu'où ils sont allés.",
+      "hinweis": "Seuls les leads créés dans la période sont comptés.",
+      "leads": "Leads",
+      "termin": "avec rendez-vous",
+      "offerte": "avec offre",
+      "auftrag": "avec commande"
+    },
+    "rang": {
+      "titel": "Classement vente",
+      "beschreibung": "Commandes signées par personne dans la période.",
+      "person": "Personne",
+      "erreicht": "Entrée de commandes",
+      "ziel": "Objectif",
+      "auftraege": "Commandes",
+      "quote": "Taux",
+      "reaktion": "Jours jusqu'à l'offre",
+      "hinweis": "Objectif au prorata de la période. Un clic affiche les commandes."
+    },
+    "verlust": {
+      "titel": "Motifs de perte",
+      "beschreibung": "{{n}} offres perdues dans la période.",
+      "ohne": "Sans motif"
+    },
+    "pipe": {
+      "offen": "Offres ouvertes",
+      "angebotswert": "Valeur des offres {{wert}}",
+      "gewichtetUnter": "Valeur de l'offre × probabilité par état",
+      "alt": "Plus de {{tage}} jours",
+      "nachStand": "Pipeline par état",
+      "nachStandHinweis": "La direction règle les probabilités sous « Objectifs ».",
+      "stand": "État",
+      "anzahl": "Nombre",
+      "wert": "Valeur",
+      "wahrscheinlichkeit": "Probabilité",
+      "gewichtet": "Pondéré",
+      "s": {
+        "offeriert": "Offert",
+        "nachfassen": "Relance due",
+        "vertagt": "Reporté",
+        "alt": "Plus de {{tage}} jours"
+      },
+      "alter": "Âge des offres ouvertes",
+      "alterHinweis": "Depuis l'envoi de l'offre.",
+      "seit": "Ouvert depuis",
+      "k": {
+        "a14": "jusqu'à 14 jours",
+        "a30": "15–30 jours",
+        "a60": "31–60 jours",
+        "a90": "61–90 jours",
+        "aMehr": "plus de 90 jours"
+      }
+    },
+    "abw": {
+      "bau": "Signature au début des travaux",
+      "bauUnter": "{{n}} débuts de chantier dans la période",
+      "tage": "jours",
+      "ibnTage": "Signature à mise en service",
+      "richtwert": "Valeur cible ≤ {{tage}} jours",
+      "nachStand": "Projets ouverts par état",
+      "nachStandHinweis": "Projets signés sans mise en service.",
+      "stand": "État",
+      "seit": "Jours depuis la signature",
+      "s": {
+        "auftrag": "Commande",
+        "im_bau": "en chantier"
+      },
+      "ibnMonat": "Mises en service par mois (kWc)"
+    },
+    "fin": {
+      "keinZugriff": "Pas d'accès",
+      "keinZugriffText": "Seules les personnes avec le droit « Finances » voient les chiffres financiers.",
+      "rechnungen": "{{n}} factures émises",
+      "eingang": "Paiements reçus",
+      "inkl": "TTC",
+      "ueberfaellig": "{{n}} échues · {{wert}}",
+      "dauer": "Délai de paiement",
+      "dauerUnter": "Moyenne de la facture au paiement",
+      "verlauf": "Facturé et payé par mois",
+      "verrechnet": "Facturé",
+      "bezahlt": "Payé",
+      "alter": "Factures ouvertes par échéance",
+      "alterHinweis": "Un clic affiche les factures.",
+      "faelligkeit": "Échéance",
+      "gemahnt": "Rappelé",
+      "k": {
+        "nichtFaellig": "pas encore échu",
+        "bis30": "1–30 jours de retard",
+        "bis60": "31–60 jours de retard",
+        "mehr60": "plus de 60 jours de retard"
+      },
+      "arten": "Chiffre d'affaires par type de facture",
+      "art": "Type",
+      "anteil": "Part",
+      "a": {
+        "anzahlung": "Acompte",
+        "teilzahlung": "Paiement partiel",
+        "schluss": "Facture finale",
+        "service": "Service",
+        "wartung": "Maintenance",
+        "frei": "Facture libre"
+      }
+    },
+    "srv": {
+      "offen": "Cas ouverts",
+      "reaktionUnter": "Objectif ≥ {{richtwert}} %",
+      "neu": "Nouveaux cas",
+      "garantie": "dont {{n}} garantie ({{prozent}} %)",
+      "loesung": "Durée de résolution",
+      "geloest": "{{n}} cas résolus",
+      "komponenten": "Cas par composant",
+      "komponentenHinweis": "Montre où les problèmes sont fréquents.",
+      "komponente": "Composant",
+      "faelle": "Cas",
+      "davonGarantie": "dont garantie",
+      "ohneKomponente": "Sans composant",
+      "k": {
+        "pv": "Modules",
+        "wechselrichter": "Onduleur",
+        "batterie": "Batterie",
+        "waermepumpe": "Pompe à chaleur",
+        "wallbox": "Borne de recharge",
+        "montage": "Montage",
+        "elektro": "Électricité"
+      },
+      "wartung": "Contrats de maintenance",
+      "wartungHinweis": "{{n}} contrats actifs · {{wert}} par an",
+      "paket": "Forfait",
+      "aktiv": "Actifs",
+      "neuVertraege": "Nouveaux",
+      "gekuendigt": "Résiliés",
+      "jahreswert": "Valeur annuelle",
+      "ohnePaket": "Sans forfait"
+    },
+    "vergleich": {
+      "titel": "Comparaison",
+      "vorjahr": "Année précédente",
+      "vorperiode": "Période précédente",
+      "laedt": "Chargement de la comparaison …"
+    },
+    "person": {
+      "titel": "Personne",
+      "alle": "Toutes les personnes",
+      "ich": "Moi seulement",
+      "hinweis": "Aucun lead pour cette personne dans la période."
+    },
+    "bericht": {
+      "knopf": "Rapport mensuel PDF",
+      "titel": "Rapport mensuel {{monat}}",
+      "untertitel": "Dimension Solaire, Muri et Bulle",
+      "kennzahl": "Indicateur",
+      "ziel": "Objectif",
+      "fuss": "Créé le {{datum}} avec Dimension Work",
+      "datei": "Rapport-mensuel",
+      "z": {
+        "leads": "Nouveaux leads",
+        "termine": "Rendez-vous clients",
+        "gesendet": "Offres envoyées",
+        "auftraege": "Commandes (TTC)",
+        "kwp": "Puissance vendue",
+        "quote": "Taux de conclusion",
+        "ibn": "Mises en service",
+        "ibnTage": "Signature à mise en service",
+        "umsatz": "Chiffre d'affaires (HT)",
+        "eingang": "Paiements reçus",
+        "ueberfaellig": "Factures échues",
+        "pipeline": "Prévision pondérée",
+        "faelle": "Nouveaux cas de service",
+        "reaktion": "Service à temps"
+      }
+    },
+    "csv": {
+      "knopf": "En CSV",
+      "datum": "Date",
+      "nummer": "Numéro",
+      "name": "Nom",
+      "ort": "Lieu / complément",
+      "betrag": "Montant CHF",
+      "kwp": "kWc",
+      "tage": "Jours",
+      "info": "Info"
+    },
     "abwicklung": {
-      "hinweis": "Les commandes avancent-elles vite et bien ? Vert = objectif atteint, rouge = dépassé. Objectifs dans les réglages.",
+      "hinweis": "Les commandes avancent-elles vite et bien ? Vert = valeur cible atteinte, rouge = dépassée. Valeurs cibles sous « Objectifs ».",
       "ziel": "Objectif",
       "tage_one": "{{count}} jour",
       "tage_other": "{{count}} jours",
@@ -7184,7 +7536,8 @@
         "fristen_ueberfaellig": "Délais dépassés (actuel)",
         "material_spaet": "Matériel commandé trop tard (actuel)",
         "faelle_dauer": "Ø cas SAV jusqu’à la clôture"
-      }
+      },
+      "titel": "Déroulement et valeurs cibles"
     }
   },
   "handbuch": {
@@ -8870,7 +9223,8 @@
       "aeltere": "Plus anciens",
       "verteilen": "À attribuer",
       "kunde": "En attente du client",
-      "zurueck": "Mis de côté"
+      "zurueck": "Mis de côté",
+      "neu": "Tous ouverts"
     },
     "leer": {
       "warten": "Personne n’attend de réponse",
@@ -8881,7 +9235,8 @@
       "aeltere": "Aucun e-mail plus ancien trouvé",
       "verteilen": "Rien à attribuer",
       "kunde": "Tu n’attends aucun client",
-      "zurueck": "Rien mis de côté"
+      "zurueck": "Rien mis de côté",
+      "neu": "Aucun e-mail ouvert"
     },
     "art": {
       "anfrage": "Nouvelle demande",
