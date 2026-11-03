@@ -10,10 +10,12 @@ import { useUi } from '@/stores/ui'
 import { useAktion } from '../hooks/useAktion'
 import { useSocialStatus, useVerbindungen } from '../hooks/useMarketing'
 import { trennen, verbinden } from '../services/social'
+import { KontoSprachen } from './KontoSprachen'
 
 /**
- * Verbindungen zu Meta (Facebook-Seite und Instagram), LinkedIn (Firmenseite) und Canva, eine je Dienst für die
- * ganze Firma. Verbinden und Trennen nur durch die Administration; alle sehen, ob es verbunden ist.
+ * Verbindungen zu Meta (Facebook-Seiten und Instagram), LinkedIn (Firmenseiten) und Canva, eine je Dienst für die
+ * ganze Firma. Verbinden, Trennen und die Wahl des deutschen/französischen Kontos nur durch die Administration;
+ * alle sehen, ob es verbunden ist und welches Konto welche Sprache bekommt.
  */
 export function Verbindungen() {
   const { t } = useTranslation()
@@ -60,8 +62,9 @@ export function Verbindungen() {
                       ? t('marketing.verbindung.nichtEingerichtet')
                       : t(`marketing.verbindung.wozu.${v.dienst}`)}
                 </p>
+                <KontoSprachen v={v} admin={admin} />
                 {admin && (
-                  <div className="flex gap-2">
+                  <div className="mt-auto flex gap-2">
                     <Button
                       size="sm"
                       variant={v.verbunden && !v.fehler ? 'secondary' : 'primary'}

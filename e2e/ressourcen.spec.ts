@@ -114,6 +114,8 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await anmelden(page, 'montage@test.local')
   await page.goto('/#/staff')
   await expect(page.getByRole('heading', { name: 'Team & Ausweise', level: 1 })).toBeVisible()
+  // Übersicht «wer darf was» steht im Reiter Ausweise, die Personal-Akte im gleichnamigen Reiter des Panels.
+  await page.getByRole('tab', { name: 'Ausweise' }).click()
   await expect(page.getByRole('table', { name: 'Übersicht: wer darf was' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
