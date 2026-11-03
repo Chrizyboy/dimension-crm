@@ -3854,6 +3854,95 @@ export type Database = {
         }
         Relationships: []
       }
+      firmenkarte_buchungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          betrag_rappen: number
+          datei: string | null
+          datum: string
+          erledigt_am: string | null
+          erledigt_grund: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          karte: string | null
+          nachgefordert_am: string | null
+          person_id: string | null
+          schluessel: string
+          spese_id: string | null
+          text: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          betrag_rappen: number
+          datei?: string | null
+          datum: string
+          erledigt_am?: string | null
+          erledigt_grund?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          karte?: string | null
+          nachgefordert_am?: string | null
+          person_id?: string | null
+          schluessel: string
+          spese_id?: string | null
+          text?: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          betrag_rappen?: number
+          datei?: string | null
+          datum?: string
+          erledigt_am?: string | null
+          erledigt_grund?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          karte?: string | null
+          nachgefordert_am?: string | null
+          person_id?: string | null
+          schluessel?: string
+          spese_id?: string | null
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'firmenkarte_buchungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'firmenkarte_buchungen_spese_id_fkey'
+            columns: ['spese_id']
+            isOneToOne: false
+            referencedRelation: 'spesen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'firmenkarte_buchungen_spese_id_fkey'
+            columns: ['spese_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_liste'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       fixkosten: {
         Row: {
           ab: string | null
@@ -12775,6 +12864,60 @@ export type Database = {
           },
         ]
       }
+      firmenkarte_abgleich: {
+        Row: {
+          beleg_id: string | null
+          betrag_rappen: number | null
+          datei: string | null
+          datum: string | null
+          erledigt_am: string | null
+          erledigt_grund: string | null
+          erledigt_von: string | null
+          erstellt_am: string | null
+          id: string | null
+          karte: string | null
+          nachgefordert_am: string | null
+          person: string | null
+          person_id: string | null
+          spese_datum: string | null
+          spese_id: string | null
+          spese_kategorie: string | null
+          spese_zweck: string | null
+          stand: string | null
+          text: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'firmenkarte_buchungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'firmenkarte_buchungen_spese_id_fkey'
+            columns: ['spese_id']
+            isOneToOne: false
+            referencedRelation: 'spesen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'firmenkarte_buchungen_spese_id_fkey'
+            columns: ['spese_id']
+            isOneToOne: false
+            referencedRelation: 'spesen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_beleg_id_fkey'
+            columns: ['beleg_id']
+            isOneToOne: false
+            referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       fristen: {
         Row: {
           art: string | null
@@ -15033,6 +15176,11 @@ export type Database = {
       empfehlungs_code: { Args: { p_kontakt: string }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       finanzen_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      firmenkarte_einlesen: { Args: { p_datei?: string; p_zeilen: Json }; Returns: Json }
+      firmenkarte_erledigen: { Args: { p_buchung: string; p_grund: string | null }; Returns: undefined }
+      firmenkarte_nachfordern: { Args: { p_ids: string[] }; Returns: number }
+      firmenkarte_person_setzen: { Args: { p_buchung: string; p_person: string }; Returns: number }
+      firmenkarte_verbinden: { Args: { p_buchung: string; p_spese: string | null }; Returns: undefined }
       fristen_melden: { Args: { p_heute?: string }; Returns: number }
       fuhrpark_km_erinnern: { Args: { p_heute?: string }; Returns: number }
       fuhrpark_kosten: { Args: { p_jahr: number }; Returns: Json }
@@ -15123,6 +15271,26 @@ export type Database = {
         }[]
       }
       kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
+      kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
+      kennzahlen_monatsbericht_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      kennzahlen_zusatz: {
+        Args: { p_bis: string; p_von: string }
+        Returns: {
+          art: string
+          betrag_rappen: number
+          datum: string
+          id: string
+          kwp: number
+          name: string
+          nummer: string
+          ort: string
+          person_id: string
+          schluessel: string
+          standort: string
+          tage: number
+          zusatz: string
+        }[]
+      }
       ki_briefing_daten: { Args: Record<PropertyKey, never>; Returns: Json }
       ki_budget: { Args: { p_person: string }; Returns: Json }
       ki_entwuerfe_offen: { Args: { p_limit?: number }; Returns: Json }
