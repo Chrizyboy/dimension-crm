@@ -1,11 +1,13 @@
-import { ClipboardPen, MapPin, Navigation, Package, Phone, ShieldCheck, Users, Zap } from 'lucide-react'
+import { ClipboardCheck, ClipboardPen, MapPin, Navigation, Package, Phone, ShieldCheck, Users, Zap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Karte } from '@/components/ui/karte'
-import { formatTelefon } from '@/lib/format'
+import { formatDatum, formatTelefon } from '@/lib/format'
 import { adressText, naviLink, telLink } from '../lib/links'
 import type { RapportArt, TagEintrag } from '../types'
+import { ServiceVorOrt } from './ServiceVorOrt'
+import { TagKarteInfo } from './TagKarteInfo'
 
 /** Ein Einsatz oder Service-Termin im Tagesplan, mit allem, was man auf dem Weg zur Baustelle braucht. */
 export function TagKarte({
@@ -14,6 +16,8 @@ export function TagKarte({
   aktiv,
   onBeginnen,
   onRapport,
+  onMappe,
+  onMelden,
 }: {
   eintrag: TagEintrag
   tag: string
@@ -21,6 +25,8 @@ export function TagKarte({
   aktiv: boolean
   onBeginnen: (art: RapportArt) => void
   onRapport: (id: string) => void
+  onMappe?: (projekt: string) => void
+  onMelden?: (projekt: string) => void
 }) {
   const { t } = useTranslation()
   const navi = naviLink(e.adresse)
@@ -29,7 +35,14 @@ export function TagKarte({
   const mehrtaegig = e.von !== e.bis
   const tagNr = Math.round((new Date(tag).getTime() - new Date(e.von).getTime()) / 86_400_000) + 1
   const dauer = Math.round((new Date(e.bis).getTime() - new Date(e.von).getTime()) / 86_400_000) + 1
-  const hauptArt: RapportArt = e.typ === 'service' ? 'service' : e.projekt?.bau_status === 'ibn' ? 'ibn' : 'montage'
+  const hauptArt: RapportArt =
+    e.typ === 'service'
+      ? 'service'
+      : e.typ === 'wartung'
+        ? 'wartung'
+        : e.projekt?.bau_status === 'ibn'
+          ? 'ibn'
+          : 'montage'
 
   return (
     <Karte
@@ -51,8 +64,17 @@ export function TagKarte({
               {e.service?.garantie && <ShieldCheck />}
               {e.service?.nummer} {e.zeit ?? ''}
             </Badge>
+          ) : e.typ === 'wartung' ? (
+            <Badge ton="info">
+              <ClipboardCheck />
+              {t('baustelle.inspektion.badge', { nummer: e.wartung?.nummer ?? '' })} {e.zeit ?? ''}
+              {e.wartung?.bis ? `–${e.wartung.bis}` : ''}
+            </Badge>
           ) : (
             <Badge ton="marke">{e.projekt?.nummer}</Badge>
+          )}
+          {e.ueberfaellig && e.termin_tag && (
+            <Badge ton="kritisch">{t('baustelle.tag.ueberfaellig', { datum: formatDatum(e.termin_tag) })}</Badge>
           )}
           {mehrtaegig && (
             <span className="text-muted-foreground text-xs">
@@ -61,6 +83,19 @@ export function TagKarte({
           )}
         </div>
       </div>
+
+      {e.typ === 'wartung' && e.wartung && (
+        <p className="text-sm">
+          <span className="font-medium">{t('baustelle.inspektion.titel')}</span>
+          {[
+            e.wartung.paket ? t(`baustelle.inspektion.paket.${e.wartung.paket}`) : null,
+            e.wartung.kwp != null ? `${String(e.wartung.kwp)} kWp` : null,
+          ]
+            .filter(Boolean)
+            .map((x) => ` · ${String(x)}`)
+            .join('')}
+        </p>
+      )}
 
       {(e.service?.titel ?? e.notiz) && (
         <p className="text-sm">
@@ -98,6 +133,20 @@ export function TagKarte({
           </div>
         )}
       </dl>
+
+      {e.info && e.projekt && onMappe && onMelden && (
+        <TagKarteInfo
+          info={e.info}
+          onMappe={() => {
+            onMappe(e.info?.projekt_id ?? '')
+          }}
+          onMelden={() => {
+            onMelden(e.info?.projekt_id ?? '')
+          }}
+        />
+      )}
+
+      {e.typ === 'service' && e.service && <ServiceVorOrt s={e.service} aktiv={aktiv} />}
 
       {rapporte.length > 0 && (
         <div className="flex flex-wrap gap-1.5">

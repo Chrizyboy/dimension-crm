@@ -1,4 +1,4 @@
--- Social Media mit je einem deutschen und einem französischen Konto (Entscheid 0037).
+-- Social Media mit je einem deutschen und einem französischen Konto (Entscheid 0053).
 -- Dimension Solaire hat bei Facebook, Instagram und LinkedIn je ein Konto pro Sprache. Eine Anmeldung bei Meta bzw.
 -- LinkedIn bringt alle Seiten mit, die die Person verwaltet (intern.social_konten.konto.seiten / .organisationen).
 -- Welche Seite deutsch und welche französisch ist, steht in konto.zuordnung: {"facebook": {"de": id, "fr": id}, …}.

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { supabase } from '@/services/supabase'
 import { istNetzFehler } from '../lib/netz'
 import * as b from '../services/baustelle'
+import { ladeInfos } from '../services/leitung'
 import { ABLAGE_TAG, ablageNachtraege, ablageRapport } from '../services/monteur'
 import { ablageLesen } from '../services/speicher'
 import { mitAblage, offeneDateien, useWarteschlange } from '../services/warteschlange'
@@ -11,6 +12,20 @@ import type { MeinTag, Nachtrag, NachtragEingabe, NachtragFilter, Rapport, Rappo
 const an = Boolean(supabase)
 // Ansichten mit Ablage am Gerät laufen auch ohne Netz (networkMode «always»), sonst würde React Query sie anhalten.
 
+/**
+ * Tagesplan mit den Zusätzen je Einsatz (Schritte, Pflichtfotos, Team mit IDs). Fehlen die Zusätze (z. B. ältere
+ * Datenbank), bleibt der Tagesplan trotzdem nutzbar.
+ */
+async function tagMitInfos(von: string, bis: string, person?: string | null): Promise<MeinTag> {
+  const t = await b.ladeTag(von, bis, person)
+  const ids = t.eintraege.filter((e) => e.typ === 'einsatz').map((e) => e.id)
+  const infos = await ladeInfos(ids).catch(() => ({}) as Record<string, never>)
+  return {
+    ...t,
+    eintraege: t.eintraege.map((e) => ({ ...e, info: e.typ === 'einsatz' ? (infos[e.id] ?? null) : null })),
+  }
+}
+
 /** Tagesplan; für die eigene Person mit Ablage am Gerät (funktioniert ohne Netz). */
 export const useTag = (von: string, bis: string, person: string | null) =>
   useQuery({
@@ -18,10 +33,10 @@ export const useTag = (von: string, bis: string, person: string | null) =>
     networkMode: 'always',
     enabled: an,
     queryFn: async (): Promise<MeinTag> => {
-      if (person) return b.ladeTag(von, bis, person)
+      if (person) return tagMitInfos(von, bis, person)
       const t = await mitAblage(ABLAGE_TAG, async () => ({
         schluessel: `${von}:${bis}`,
-        daten: await b.ladeTag(von, bis),
+        daten: await tagMitInfos(von, bis),
       }))
       return t.daten
     },
@@ -96,6 +111,7 @@ export const useBilder = (rapportId: string) => {
             id: a.dokument.id,
             name: a.dokument.name,
             ordner: a.dokument.ordner,
+            kategorie: a.dokument.kategorie ?? null,
             speicher_pfad: null,
             lokal: true,
             url: URL.createObjectURL(a.blob),
@@ -105,6 +121,20 @@ export const useBilder = (rapportId: string) => {
   })
 }
 
+/** Wochenplan je Person (nur mit Netz, fürs Büro). */
+export const useWochenplan = (von: string, bis: string) =>
+  useQuery({ queryKey: ['baustelle', 'wochenplan', von, bis], enabled: an, queryFn: () => b.ladeWochenplan(von, bis) })
+
+/** Pflichtfotos je Rapport-Art; auch ohne Netz aus der Ablage. */
+export const usePflichtfotos = () =>
+  useQuery({
+    queryKey: ['baustelle', 'pflichtfotos'],
+    networkMode: 'always',
+    enabled: an,
+    staleTime: 30 * 60_000,
+    queryFn: () => mitAblage('pflichtfotos', b.ladePflichtfotos),
+  })
+
 export const usePruefpunkte = () =>
   useQuery({
     queryKey: ['baustelle', 'pruefpunkte'],
@@ -112,6 +142,16 @@ export const usePruefpunkte = () =>
     enabled: an,
     staleTime: 30 * 60_000,
     queryFn: () => mitAblage('pruefpunkte', b.ladePruefpunkte),
+  })
+
+/** Prüfpunkte und Vorjahr einer Inspektion, mit Kopie am Gerät (die Inspektion läuft auch ohne Netz). */
+export const useWartungPruefung = (vertragId: string | null) =>
+  useQuery({
+    queryKey: ['baustelle', 'wartung', vertragId],
+    networkMode: 'always',
+    enabled: an && Boolean(vertragId),
+    staleTime: 10 * 60_000,
+    queryFn: () => mitAblage(`wartung-${vertragId ?? ''}`, () => b.ladeWartungPruefung(vertragId ?? '')),
   })
 
 export const useRapporte = (filter: RapportFilter) =>

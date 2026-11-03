@@ -1,5 +1,15 @@
 import { supabase } from '@/services/supabase'
-import type { Anlage, FallEingabe, Komponente, FallFilter, Person, ServiceFall, Verlaufseintrag } from '../types'
+import type {
+  Anlage,
+  Checkpunkt,
+  FallEingabe,
+  FallFilter,
+  Komponente,
+  Meldung,
+  Person,
+  ServiceFall,
+  Verlaufseintrag,
+} from '../types'
 
 /** Datenzugriff für Service-Fälle, Anlagen, Anhänge und Aufgaben. */
 function db() {
@@ -13,31 +23,57 @@ const kundeName = (k: Kontakt) =>
 
 const FALL_FELDER =
   'id, nummer, titel, beschreibung, kategorie, prioritaet, status, garantie, termin_am, erledigt_am, erstellt_am, kontakt_id, anlage_id, projekt_id, person_id, verlauf, ' +
-  'kontakt:kontakte(vorname, nachname, firma, sprache), anlage:anlagen(objekt:objekte(ort)), projekt:projekte(nummer), person:personen(name)'
+  'quelle, auswirkung, reaktion_bis, objekt_id, vor_ort_name, vor_ort_telefon, zugang, komponente, fehlercode, checkliste, meldung, zuordnung, team, dauer_minuten, ' +
+  'kontakt:kontakte(vorname, nachname, firma, sprache), anlage:anlagen(leistung_kwp), einsatzort:objekte(strasse, plz, ort), ' +
+  'projekt:projekte(nummer), person:personen(name)'
 
-type FallRoh = Omit<ServiceFall, 'kunde' | 'ort' | 'sprache' | 'projekt' | 'person' | 'verlauf'> & {
+type Roh = 'kunde' | 'ort' | 'adresse' | 'sprache' | 'projekt' | 'person' | 'verlauf' | 'checkliste' | 'meldung' | 'kwp'
+type FallRoh = Omit<ServiceFall, Roh> & {
   verlauf: unknown
+  checkliste: unknown
+  meldung: unknown
   kontakt: Kontakt
-  anlage: { objekt: { ort: string | null } | null } | null
+  anlage: { leistung_kwp: number | null } | null
+  einsatzort: { strasse: string | null; plz: string | null; ort: string | null } | null
   projekt: { nummer: string } | null
   person: { name: string } | null
 }
 
-function alsFall({ kontakt, anlage, projekt, person, verlauf, ...f }: FallRoh): ServiceFall {
+function alsFall({
+  kontakt,
+  anlage,
+  einsatzort,
+  projekt,
+  person,
+  verlauf,
+  checkliste,
+  meldung,
+  ...f
+}: FallRoh): ServiceFall {
+  const m = meldung && typeof meldung === 'object' ? (meldung as Meldung) : null
+  const plzOrt = [einsatzort?.plz, einsatzort?.ort].filter(Boolean).join(' ')
   return {
     ...f,
     verlauf: Array.isArray(verlauf) ? (verlauf as Verlaufseintrag[]) : [],
-    kunde: kundeName(kontakt),
-    ort: anlage?.objekt?.ort ?? null,
-    sprache: kontakt?.sprache === 'fr' ? 'fr' : 'de',
+    checkliste: Array.isArray(checkliste) ? (checkliste as Checkpunkt[]) : [],
+    meldung: m,
+    // Ohne zugeordneten Kunden zeigt der Leitstand den Namen aus der Website-Meldung.
+    kunde: kontakt ? kundeName(kontakt) : (m?.name ?? '–'),
+    ort: einsatzort?.ort ?? null,
+    adresse: [einsatzort?.strasse, plzOrt].filter(Boolean).join(', ') || (m?.adresse ?? null),
+    sprache: (kontakt?.sprache ?? m?.sprache) === 'fr' ? 'fr' : 'de',
     projekt: projekt?.nummer ?? null,
     person: person?.name ?? null,
+    kwp: anlage?.leistung_kwp ?? null,
   }
 }
 
 /** Service-Fälle nach Filter, neueste zuerst. */
 export async function ladeFaelle(filter: FallFilter): Promise<ServiceFall[]> {
   let q = db().from('service_faelle').select(FALL_FELDER).is('geloescht_am', null)
+  // Leitstand: alles Offene und was in den letzten 14 Tagen erledigt wurde (Spalte «Erledigt»).
+  const vor14 = new Date(Date.now() - 14 * 86_400_000).toISOString().slice(0, 10)
+  if (filter === 'leitstand') q = q.or(`status.neq.erledigt,erledigt_am.gte.${vor14}`)
   if (filter === 'offen') q = q.neq('status', 'erledigt')
   if (filter === 'hoch') q = q.neq('status', 'erledigt').eq('prioritaet', 'hoch')
   if (filter === 'garantie') q = q.eq('garantie', true)

@@ -1,3 +1,4 @@
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { create } from 'zustand'
 import { fachFehlerSchluessel } from '@/services/fachfehler'
 import { meldeFehler } from '@/services/fehler'
@@ -25,6 +26,12 @@ export type RpcName =
   | 'zeit_stoppen'
   | 'zeit_speichern'
   | 'nachtrag_speichern'
+  | 'zeit_team_starten'
+  | 'zeit_team_stoppen'
+  | 'meldung_erfassen'
+  | 'service_eintrag_handy'
+  | 'service_checkliste'
+  | 'service_seriennummer'
 
 interface Basis {
   nr?: number
@@ -40,7 +47,15 @@ export type Auftrag =
       art: 'datei'
       blob: Blob
       pfad: string
-      dokument: { id: string; name: string; mime_typ: string; ordner: string; bezug_tabelle: string; bezug_id: string }
+      dokument: {
+        id: string
+        name: string
+        mime_typ: string
+        ordner: string
+        bezug_tabelle: string
+        bezug_id: string
+        kategorie?: string | null
+      }
     })
 
 interface Stand {
@@ -70,33 +85,51 @@ async function ausfuehren(a: Auftrag): Promise<void> {
   }
   const hoch = await supabase.storage.from('dokumente').upload(a.pfad, a.blob, { contentType: a.dokument.mime_typ })
   if (hoch.error && !istSchonDa(hoch.error)) throw hoch.error
-  const { error } = await supabase
+  // «kategorie» (Pflichtfoto) ist neu (Entscheid 0045) und fehlt noch in den erzeugten Typen.
+  const { error } = await (supabase as unknown as SupabaseClient)
     .from('dokumente')
     .insert({ ...a.dokument, bytes: a.blob.size, speicher: 'intern', speicher_pfad: a.pfad })
   if (error && !istSchonDa(error)) throw error
 }
 
 let lauf: Promise<void> | null = null
+/** Während eines Laufs kam ein neuer Auftrag dazu: gleich danach nochmals durchgehen. */
+let nochmal = false
+/** Als Funktion gelesen, weil `einreihen` den Wert während des Wartens ändert. */
+const nochmalSenden = () => nochmal
 
 /** Alles Offene senden, der Reihe nach. Bei Funkloch Abbruch, beim nächsten Versuch geht es weiter. */
 export function abarbeiten(): Promise<void> {
   if (!navigator.onLine) return standAktualisieren()
-  lauf ??= (async () => {
+  if (lauf) {
+    // Sonst bliebe z. B. «Zeit starten» direkt nach «Rapport anlegen» bis zum 30-Sekunden-Takt liegen,
+    // und die Ansicht zeigte so lange «wartet auf Netz», obwohl Netz da ist.
+    nochmal = true
+    return lauf
+  }
+  lauf = (async () => {
     useWarteschlange.setState({ laeuft: true })
     try {
-      for (const a of await auftraegeLesen<Auftrag>()) {
-        if (a.fehler || a.nr === undefined) continue
-        try {
-          await ausfuehren(a)
-          await auftragEntfernen(a.nr)
-          useWarteschlange.setState((s) => ({ version: s.version + 1 }))
-        } catch (e) {
-          if (istNetzFehler(e)) break
-          const schluessel = fachFehlerSchluessel(e)
-          if (!schluessel) meldeFehler(e, 'baustelle')
-          await auftragErsetzen({ ...a, fehler: schluessel ?? String((e as { message?: unknown }).message ?? e) })
+      let netzWeg = false
+      do {
+        nochmal = false
+        for (const a of await auftraegeLesen<Auftrag>()) {
+          if (a.fehler || a.nr === undefined) continue
+          try {
+            await ausfuehren(a)
+            await auftragEntfernen(a.nr)
+            useWarteschlange.setState((s) => ({ version: s.version + 1 }))
+          } catch (e) {
+            if (istNetzFehler(e)) {
+              netzWeg = true
+              break
+            }
+            const schluessel = fachFehlerSchluessel(e)
+            if (!schluessel) meldeFehler(e, 'baustelle')
+            await auftragErsetzen({ ...a, fehler: schluessel ?? String((e as { message?: unknown }).message ?? e) })
+          }
         }
-      }
+      } while (nochmalSenden() && !netzWeg)
     } finally {
       await standAktualisieren()
       useWarteschlange.setState({ laeuft: false })

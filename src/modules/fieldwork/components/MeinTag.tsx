@@ -12,9 +12,12 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { usePersonen, useTag } from '../hooks/useBaustelle'
 import { heute, plusTage } from '../lib/zeit'
 import { rapportAnlegen, zeitStarten } from '../services/monteur'
-import type { RapportArt, TagEintrag } from '../types'
+import type { RapportArt, TagEintrag, TeamPerson } from '../types'
+import { MappeDialog } from './MappeDialog'
+import { MeldungDialog } from './MeldungDialog'
+import { SicherheitDialog } from './SicherheitDialog'
 import { TagKarte } from './TagKarte'
-import { ZeitLaeuft } from './ZeitLaeuft'
+import Stempeluhr from './Stempeluhr'
 
 /** Tage von heute bis in einer Woche, an denen ein Eintrag liegt (mehrtägige Einsätze an jedem Tag). */
 function nachTagen(eintraege: TagEintrag[], von: string): { tag: string; eintraege: TagEintrag[] }[] {
@@ -37,6 +40,9 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
   const von = heute()
   const tag = useTag(von, plusTage(von, 6), person)
   const eigener = !person || person === ich?.id
+  const [check, setCheck] = useState<{ rapportId: string; projektId: string | null; team: TeamPerson[] } | null>(null)
+  const [mappe, setMappe] = useState<string | null>(null)
+  const [melden, setMelden] = useState<string | null>(null)
 
   async function beginnen(e: TagEintrag, art: RapportArt) {
     const offen = e.rapporte.find((r) => r.datum === von && !r.abgeschlossen_am && r.art === art)
@@ -53,8 +59,9 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
           datum: von,
           projekt_id: e.projekt?.id ?? null,
           service_fall_id: e.service?.id ?? null,
+          wartungsvertrag_id: e.wartung?.id ?? null,
           einsatz_id: e.typ === 'einsatz' ? e.id : null,
-          verrechnung: e.service?.garantie ? 'garantie' : null,
+          verrechnung: e.service?.garantie ? 'garantie' : e.typ === 'wartung' ? 'vertrag' : null,
         },
         {
           kunde: e.kunde.name,
@@ -65,6 +72,12 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
           objekt_ort: e.adresse.ort,
         },
       )
+      if (e.typ === 'einsatz' && e.info && art === 'montage') {
+        // Montage: erst Sicherheits-Check, dann startet die Zeit fürs ganze Team (Entscheid 0045).
+        await qc.invalidateQueries({ queryKey: ['baustelle', 'tag'] })
+        setCheck({ rapportId: id, projektId: e.projekt?.id ?? null, team: e.info.team })
+        return
+      }
       await zeitStarten({ rapport_id: id, projekt_id: e.projekt?.id ?? null, art: 'arbeit' })
       await qc.invalidateQueries({ queryKey: ['baustelle', 'tag'] })
       onRapport(id)
@@ -88,7 +101,8 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
           optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
         />
       )}
-      {tag.data?.laufend && eigener && <ZeitLaeuft laufend={tag.data.laufend} onRapport={onRapport} />}
+      {/* Eigener Plan: Stempeluhr mit Arbeit und Reise (auch ohne Rapport), läuft eine Zeit, steht hier «Stopp». */}
+      {eigener && <Stempeluhr onRapport={onRapport} />}
       {tag.error ? (
         <Fehlerzustand details={String(tag.error)} onNochmal={() => void tag.refetch()} />
       ) : tag.isPending ? (
@@ -110,10 +124,38 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
                 aktiv={g.tag === von && eigener}
                 onBeginnen={(art) => void beginnen(e, art)}
                 onRapport={onRapport}
+                onMappe={setMappe}
+                onMelden={setMelden}
               />
             ))}
           </section>
         ))
+      )}
+      {check && (
+        <SicherheitDialog
+          {...check}
+          onFertig={() => {
+            setCheck(null)
+            onRapport(check.rapportId)
+          }}
+        />
+      )}
+      {mappe && (
+        <MappeDialog
+          projektId={mappe}
+          onSchliessen={() => {
+            setMappe(null)
+          }}
+        />
+      )}
+      {melden && (
+        <MeldungDialog
+          projektId={melden}
+          rapportId={null}
+          onSchliessen={() => {
+            setMelden(null)
+          }}
+        />
       )}
     </div>
   )

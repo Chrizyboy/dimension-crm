@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
-import { Input } from '@/components/ui/input'
+import { Input, Textarea } from '@/components/ui/input'
 import { melde } from '@/services/meldungen'
 import { useAktion } from '../hooks/useAktion'
 import { alsZahl, formatMenge, inTagen } from '../lib/anzeige'
-import { wareneingang } from '../services/bestellungen'
+import { seriennummernErfassen, wareneingang } from '../services/bestellungen'
 import type { Bestellung, Position } from '../types'
 
 /**
@@ -26,10 +26,14 @@ export function WareneingangDialog({
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
   const [datum, setDatum] = useState(() => inTagen(new Date(), 0))
+  const [lieferschein, setLieferschein] = useState('')
   const offen = positionen.filter((p) => p.geliefert_menge < p.menge)
   const [mengen, setMengen] = useState(() =>
     Object.fromEntries(offen.map((p) => [p.id, formatMenge(p.menge - p.geliefert_menge)])),
   )
+  // Seriennummern sind freiwillig: erst auf Klick sichtbar, damit der normale Eingang einfach bleibt.
+  const [mitSn, setMitSn] = useState(false)
+  const [sn, setSn] = useState<Record<string, string>>({})
   const eingabe = offen.map((p) => ({ id: p.id, menge: alsZahl(mengen[p.id] ?? '') ?? 0 }))
   const gueltig = eingabe.some((e) => e.menge > 0) && eingabe.every((e) => e.menge >= 0)
 
@@ -40,6 +44,13 @@ export function WareneingangDialog({
         b.id,
         datum,
         eingabe.filter((e) => e.menge > 0),
+        lieferschein.trim() || undefined,
+      )
+      await seriennummernErfassen(
+        b.id,
+        Object.entries(sn)
+          .filter(([, text]) => text.trim())
+          .map(([id, text]) => ({ id, text })),
       )
     })
     if (!ok) return
@@ -86,9 +97,19 @@ export function WareneingangDialog({
               }}
             />
           </Feld>
+          <Feld id="we-lieferschein" label={t('einkauf.eingang.lieferschein')}>
+            <Input
+              id="we-lieferschein"
+              className="w-60"
+              value={lieferschein}
+              onChange={(e) => {
+                setLieferschein(e.target.value)
+              }}
+            />
+          </Feld>
           <ul className="flex flex-col divide-y rounded-md border">
             {offen.map((p) => (
-              <li key={p.id} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
+              <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 text-sm">
                 <span className="min-w-0">
                   <span className="block truncate">{p.bezeichnung}</span>
                   <span className="text-muted-foreground text-xs">
@@ -108,9 +129,33 @@ export function WareneingangDialog({
                     setMengen((m) => ({ ...m, [p.id]: e.target.value }))
                   }}
                 />
+                {mitSn && (
+                  <Textarea
+                    aria-label={t('einkauf.eingang.snVon', { name: p.bezeichnung })}
+                    placeholder={t('einkauf.eingang.snPlatzhalter')}
+                    rows={2}
+                    className="basis-full font-mono text-xs"
+                    value={sn[p.id] ?? ''}
+                    onChange={(e) => {
+                      setSn((x) => ({ ...x, [p.id]: e.target.value }))
+                    }}
+                  />
+                )}
               </li>
             ))}
           </ul>
+          {!mitSn && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="self-start"
+              onClick={() => {
+                setMitSn(true)
+              }}
+            >
+              {t('einkauf.eingang.snErfassen')}
+            </Button>
+          )}
         </div>
       </DialogInhalt>
     </Dialog>

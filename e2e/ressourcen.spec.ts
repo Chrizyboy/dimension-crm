@@ -40,9 +40,11 @@ test('Fahrzeug: anlegen, Kilometer und Service erfassen, Papierkorb', async ({ p
   await dialog.getByLabel('Kilometerstand').fill('50000')
   await dialog.getByRole('button', { name: 'Speichern' }).click()
 
-  // Die Akte öffnet sich gleich.
-  const akte = page.getByRole('dialog', { name: new RegExp(`E2E Bus ${kennung}`) })
-  await expect(akte).toContainText('50’000 km')
+  // Die Akte öffnet sich gleich als ganze Seite.
+  await expect(page.getByRole('heading', { name: `E2E Bus ${kennung}`, level: 1 })).toBeVisible()
+  const akte = page.getByRole('main')
+  await expect(akte).toContainText(/50['’]000 km/)
+  await expect(akte.getByRole('heading', { name: 'Versicherung und Steuern', level: 2 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await akte.getByRole('button', { name: 'Eintrag erfassen' }).click()
@@ -56,8 +58,8 @@ test('Fahrzeug: anlegen, Kilometer und Service erfassen, Papierkorb', async ({ p
   await dialog.getByLabel('Kosten (CHF)').fill('450')
   await dialog.getByRole('button', { name: 'Speichern' }).click()
   await expect(dialog).toBeHidden()
-  await expect(akte).toContainText('bei 72’000 km')
-  await expect(akte.getByRole('listitem').filter({ hasText: 'Service · 52’000 km' })).toContainText('CHF 450.00')
+  await expect(akte).toContainText(/bei 72['’]000 km/)
+  await expect(akte.getByRole('listitem').filter({ hasText: /Service · 52['’]000 km/ })).toContainText('CHF 450.00')
 
   await akte.getByRole('button', { name: 'Angaben ändern' }).click()
   await page.getByRole('dialog', { name: 'Fahrzeug ändern' }).getByRole('button', { name: 'In den Papierkorb' }).click()
@@ -96,6 +98,12 @@ test.describe('am Handy', () => {
     await expect(akte.getByRole('listitem').filter({ hasText: 'Prüfung · In Ordnung' })).toContainText('nächste')
     expect(await verstoesse(page)).toEqual([])
 
+    // Nach dem Scannen des QR-Etiketts: mit einem Klick zurück ins Lager und wieder nehmen.
+    await akte.getByRole('button', { name: 'Zurück ins Lager' }).click()
+    await expect(akte.getByRole('button', { name: 'Nehme ich' })).toBeVisible()
+    await akte.getByRole('button', { name: 'Nehme ich' }).click()
+    await expect(akte.getByRole('button', { name: 'Zurück ins Lager' })).toBeVisible()
+
     await akte.getByRole('button', { name: 'Angaben ändern' }).click()
     await page.getByRole('dialog', { name: 'Gerät ändern' }).getByRole('button', { name: 'In den Papierkorb' }).click()
   })
@@ -111,13 +119,16 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
 
   await page.getByRole('button', { name: 'Meine Akte' }).click()
   const akte = page.getByRole('dialog', { name: 'Mario Montage' })
-  await akte.getByRole('button', { name: 'Bearbeiten' }).click()
-  const form = page.getByRole('dialog', { name: 'Personal-Akte' })
+  // Personal-Akte ist ein eigener Reiter; die Person selbst ändert nur «Persönlich» (Entscheid 0040).
+  await akte.getByRole('tab', { name: 'Personal-Akte' }).click()
+  await akte.getByRole('button', { name: 'Bearbeiten' }).first().click()
+  const form = page.getByRole('dialog', { name: 'Persönlich' })
   await expect(form.getByLabel('Pensum (%)')).toHaveCount(0)
   await form.getByLabel('Notfallkontakt (Name)').fill(`Notfall ${kennung}`)
   await form.getByRole('button', { name: 'Speichern' }).click()
   await expect(akte).toContainText(`Notfall ${kennung}`)
 
+  await akte.getByRole('tab', { name: 'Ausweise' }).click()
   await akte.getByRole('button', { name: 'Kurs oder Ausweis erfassen' }).click()
   const ausweis = page.getByRole('dialog', { name: 'Kurs oder Ausweis erfassen' })
   await ausweis.getByRole('combobox', { name: /Art/ }).click()
@@ -139,7 +150,8 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await verkauf.goto('/#/staff')
   await verkauf.getByRole('row', { name: /Mario Montage/ }).click()
   const fremd = verkauf.getByRole('dialog', { name: 'Mario Montage' })
-  await expect(fremd).toContainText('Nur für die Person selbst und die Administration sichtbar.')
+  await fremd.getByRole('tab', { name: 'Personal-Akte' }).click()
+  await expect(fremd).toContainText('Nur für die Person selbst, die Geschäftsleitung')
   await expect(fremd).not.toContainText(`Notfall ${kennung}`)
   await expect(fremd.getByRole('button', { name: 'Kurs oder Ausweis erfassen' })).toHaveCount(0)
 })

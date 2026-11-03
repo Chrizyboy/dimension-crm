@@ -4,7 +4,7 @@
 -- Ergebnis je Netzwerk, Tokens unsichtbar, deutsches/französisches Konto wählen nur Admin, CI-Stil nur Admin.
 -- Ausführen: npm run db:test
 begin;
-select plan(35);
+select plan(36);
 
 -- Eigene Ausgangslage: lokale Verbindungen (z. B. aus marketing:pruefen) zählen hier nicht; alles wird zurückgerollt.
 delete from intern.social_konten;
@@ -79,6 +79,11 @@ select is((select count(*)::int from public.newsletter_empfaenger_fuer('00000000
 update public.newsletter set segment = '{"sprache": "fr", "einzelne": false}' where id = '00000000-0000-0000-0000-0000000011f1';
 select is((select array_agg(email) from public.newsletter_empfaenger_fuer('00000000-0000-0000-0000-0000000011f1')
             where email like '%@beispiel.test'), '{luc@beispiel.test}', 'Segment nach Sprache');
+-- Newsletter gibt nur die Administration frei (33A)
+select throws_ok($t$select public.marketing_senden($j${"art": "newsletter", "newsletter_id": "00000000-0000-0000-0000-0000000011f1", "betreff": "Hiver", "mails": [
+  {"kontakt_id": "00000000-0000-0000-0000-0000000011c2", "an": "luc@beispiel.test", "betreff": "Hiver", "text": "x", "sprache": "fr"}]}$j$)$t$,
+  '42501', 'ausgang.freigabe_kein_recht', 'Newsletter nicht durch den Verkauf');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000011a2", "role": "authenticated"}', true);
 select is((public.marketing_senden($j${"art": "newsletter", "newsletter_id": "00000000-0000-0000-0000-0000000011f1", "betreff": "Hiver", "mails": [
   {"kontakt_id": "00000000-0000-0000-0000-0000000011c2", "an": "luc@beispiel.test", "betreff": "Hiver", "text": "Bonjour Luc Exemple,", "sprache": "fr"}]}$j$) ->> 'angelegt')::int,
   1, 'Newsletter senden');
@@ -88,6 +93,7 @@ select is((public.marketing_senden($j${"art": "newsletter", "newsletter_id": "00
   {"kontakt_id": "00000000-0000-0000-0000-0000000011c2", "an": "luc@beispiel.test", "betreff": "Hiver", "text": "nochmals", "sprache": "fr"}]}$j$) ->> 'uebersprungen')::int,
   1, 'Newsletter geht nie zweimal an dieselbe Adresse');
 select is((select status from public.newsletter where id = '00000000-0000-0000-0000-0000000011f1'), 'versendet', 'Newsletter ist versendet');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000011a1", "role": "authenticated"}', true);
 
 -- Social Media
 insert into public.social_posts (id, thema, netzwerke, sprache, texte) values
@@ -118,7 +124,7 @@ select public.social_ergebnis('00000000-0000-0000-0000-000000001191', '{"instagr
 select is((select status from public.social_posts where id = '00000000-0000-0000-0000-000000001191'), 'fehler',
   'ein Netzwerk gescheitert: Status Fehler, Instagram bleibt gepostet');
 
--- Deutsches und französisches Konto (Entscheid 0037): wählen nur die Administration, nur verbundene Seiten
+-- Deutsches und französisches Konto (Entscheid 0053): wählen nur die Administration, nur verbundene Seiten
 update intern.social_konten set konto = '{"seiten": [{"id": "1", "name": "Dimension Solaire Sàrl", "instagram_id": "11"},
   {"id": "2", "name": "Dimension Solaire GmbH", "instagram_id": null}], "zuordnung": {"facebook": {"de": "1", "fr": "1"}}}'
  where dienst = 'meta';

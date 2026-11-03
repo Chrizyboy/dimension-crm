@@ -5,6 +5,7 @@ import {
   Inbox,
   ListChecks,
   Mail,
+  MailCheck,
   PhoneOutgoing,
   ShieldCheck,
   Stamp,
@@ -21,19 +22,25 @@ import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { meldeFehler } from '@/services/fehler'
+import { formatDatum } from '@/lib/format'
 import { supabase } from '@/services/supabase'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { useMeinTag } from '../hooks/useMeinTag'
-import { anzahlOffen, tageszeit, vorname } from '../lib/tag'
-import { aufgabeErledigt } from '../services/meinTag'
+import { anzahlOffen, listeVon, tageszeit, vorname } from '../lib/tag'
+import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
+import { aufgabeErledigt, verschieben } from '../services/meinTag'
 import type { TagListeName, TagZeile } from '../types'
 import { TagesMail } from './TagesMail'
 import { TagKarte } from './TagKarte'
+import { TeamHeute } from './TeamHeute'
+import { WetterKarte } from './WetterKarte'
+import { ZieleKarte } from './ZieleKarte'
 
 /** Karten unter Termine und Aufgaben: Symbol und wohin «Alle anzeigen» führt. Leere Karten bleiben weg. */
 const WEITERE: { liste: TagListeName; icon: LucideIcon; ziel: string }[] = [
+  { liste: 'freigaben', icon: MailCheck, ziel: '/outbox' },
   { liste: 'nachfassen', icon: PhoneOutgoing, ziel: '/quotes?ansicht=nachfassen' },
   { liste: 'neue_leads', icon: Inbox, ziel: '/sales' },
   { liste: 'wiedervorlagen', icon: BellRing, ziel: '/sales' },
@@ -78,6 +85,22 @@ export default function MeinTag({
     void client.invalidateQueries({ queryKey: ['aufgaben'] })
   }
 
+  /** Verschieben (M2 A): Aufgabe neu fällig, sonst bis zum Datum ausgeblendet. */
+  async function verschiebe(z: TagZeile, bis: string) {
+    const id = z.art === 'aufgabe' ? z.aufgabe_id : z.id
+    if (!id) return
+    try {
+      await verschieben(z.art, id, bis)
+      melde('ok', zweisprachig('tag.verschieben.erledigt', { datum: formatDatum(bis) }))
+    } catch (f) {
+      const s = fachFehlerSchluessel(f)
+      if (!s) meldeFehler(f, 'tag')
+      melde('kritisch', zweisprachig(s ?? 'tag.verschieben.fehler'))
+    }
+    void client.invalidateQueries({ queryKey: ['mein-tag'] })
+    void client.invalidateQueries({ queryKey: ['aufgaben'] })
+  }
+
   const d = tag.data
   const datum = d
     ? new Date(`${d.heute}T12:00:00`).toLocaleDateString(sprache === 'fr' ? 'fr-CH' : 'de-CH', {
@@ -88,7 +111,7 @@ export default function MeinTag({
       })
     : ''
   const offen = d ? anzahlOffen(d) : 0
-  const weitere = d ? WEITERE.filter((w) => d[w.liste].anzahl > 0) : []
+  const weitere = d ? WEITERE.filter((w) => listeVon(d, w.liste).anzahl > 0) : []
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6 px-4 py-6 sm:px-6" data-testid="mein-tag">
@@ -143,6 +166,9 @@ export default function MeinTag({
               max={8}
               alleZiel={aufgabenSicht === 'vergeben' ? '/tasks?wer=vergeben' : '/tasks'}
               onAbhaken={(z) => void abhaken(z)}
+              {...(aufgabenSicht === 'aufgaben'
+                ? { onVerschieben: (z: TagZeile, bis: string) => void verschiebe(z, bis) }
+                : {})}
               testId="tag-aufgaben"
               kopf={
                 <Filterchips
@@ -161,6 +187,12 @@ export default function MeinTag({
             />
           </div>
 
+          <div className="grid items-start gap-4 lg:grid-cols-2">
+            <ZieleKarte ziele={d.ziele ?? null} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />
+            <TeamHeute />
+            <WetterKarte />
+          </div>
+
           {weitere.length > 0 && (
             <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
               {weitere.map((w) => (
@@ -168,9 +200,10 @@ export default function MeinTag({
                   key={w.liste}
                   icon={w.icon}
                   titel={t(`tag.liste.${w.liste}`)}
-                  liste={d[w.liste]}
+                  liste={listeVon(d, w.liste)}
                   heute={d.heute}
                   alleZiel={w.ziel}
+                  onVerschieben={(z, bis) => void verschiebe(z, bis)}
                   testId={`tag-${w.liste}`}
                 />
               ))}

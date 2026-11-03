@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -7,7 +8,8 @@ import { formatChf, parseChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { alsZahl, formatMenge } from '../lib/anzeige'
 import { positionEntfernen, positionSpeichern } from '../services/bestellungen'
-import { lieferantenpreis } from '../services/material'
+import { guenstiger } from '../lib/preisvergleich'
+import { ladeVergleichspreise, lieferantenpreis } from '../services/material'
 import type { ArtikelTreffer, Bestellung, Position } from '../types'
 import { ArtikelWahl } from './ArtikelWahl'
 
@@ -21,6 +23,13 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
   const entwurf = b.status === 'entwurf'
   const mitLieferung = ['bestellt', 'teilgeliefert', 'geliefert'].includes(b.status)
   const naechste = (positionen.at(-1)?.reihenfolge ?? 0) + 10
+  // Preisvergleich nur im Entwurf, solange man den Lieferanten noch wechseln kann.
+  const artikelIds = [...new Set(positionen.map((p) => p.artikel_id).filter((x): x is string => !!x))]
+  const vergleich = useQuery({
+    queryKey: ['einkauf', 'vergleich', b.id, artikelIds.join(',')],
+    enabled: entwurf && artikelIds.length > 0,
+    queryFn: () => ladeVergleichspreise(artikelIds),
+  })
 
   const aendern = (p: Position, felder: Partial<Pick<Position, 'menge' | 'ek_rappen'>>) => {
     const { id, bestellung_id, artikel_id, bezeichnung, artikelnummer, menge, einheit, ek_rappen, reihenfolge } = p
@@ -80,6 +89,19 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
                 <Zelle className="min-w-0 py-1.5">
                   <span className="line-clamp-2 max-w-[20rem]">{p.bezeichnung}</span>
                   {p.artikelnummer && <span className="text-muted-foreground block text-xs">{p.artikelnummer}</span>}
+                  {entwurf &&
+                    (() => {
+                      const g = guenstiger(p.artikel_id, b.lieferant_id, p.ek_rappen, vergleich.data ?? [])
+                      return g ? (
+                        <span className="text-warn block text-xs" data-testid="preisvergleich">
+                          {t('einkauf.pos.guenstiger', {
+                            lieferant: g.lieferant,
+                            preis: formatChf(g.ek_rappen),
+                            total: formatChf(Math.round(g.ersparnis * p.menge)),
+                          })}
+                        </span>
+                      ) : null
+                    })()}
                 </Zelle>
                 <Zelle zahl>
                   {entwurf ? (
@@ -95,7 +117,14 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
                       }}
                     />
                   ) : (
-                    `${formatMenge(p.menge)} ${p.einheit}`
+                    <>
+                      {formatMenge(p.menge)} {p.einheit}
+                      {p.ab_menge != null && p.ab_menge !== p.menge && (
+                        <span className="text-warn block text-xs">
+                          {t('einkauf.pos.abMenge', { menge: formatMenge(p.ab_menge) })}
+                        </span>
+                      )}
+                    </>
                   )}
                 </Zelle>
                 {mitLieferung && <Zelle zahl>{formatMenge(p.geliefert_menge)}</Zelle>}
@@ -115,7 +144,14 @@ export function Positionen({ bestellung: b, positionen }: { bestellung: Bestellu
                   ) : p.ek_rappen === null ? (
                     '–'
                   ) : (
-                    formatChf(p.ek_rappen)
+                    <>
+                      {formatChf(p.ek_rappen)}
+                      {p.ab_ek_rappen != null && p.ab_ek_rappen !== p.ek_rappen && (
+                        <span className="text-warn block text-xs">
+                          {t('einkauf.pos.abEk', { ek: formatChf(p.ab_ek_rappen) })}
+                        </span>
+                      )}
+                    </>
                   )}
                 </Zelle>
                 {entwurf && (

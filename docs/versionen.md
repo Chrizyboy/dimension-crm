@@ -5,11 +5,21 @@ Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nic
 Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
 veröffentlichen» starten (docs/installation.md).
 
-## 1.0.1
+## 1.1.0
 
-- Desktop-App: Die Seite lässt sich nicht mehr unter den Rahmen ins Leere scrollen; es scrollt nur noch der Inhalt.
-- Anmeldung: Beispiel-Adresse heisst jetzt vorname@dimension-solaire.ch.
-- App-Symbol: auf dem Handy ganz orange bis an den Rand (keine schwarzen Ecken mehr), unter Windows abgerundet und in der Taskleiste scharf.
+- Desktop-App: startet automatisch mit Windows (ausschalten unter «Mein Konto»), kein Leer-Scrollen mehr, neues App-Symbol (Signet) in Fenster, Taskleiste, Browser-Tab und auf dem Handy.
+- Anmeldung: Sprachwahl DE/FR wirkt auch auf der Anmeldeseite; Beispiel-Adresse vorname@dimension-solaire.ch.
+- Posteingang: ältere Mails aus allen Postfächern und info@ werden nachgeholt (als Archiv, ohne Frist).
+- Service & Garantie: Einsatz mit Team, Anlage-Akte und Ablauf am Handy.
+- Kurzzeichen je Person (z. B. CR, LP) in allen Bereichen; Ansprechpersonen gehören zu ihrer Firma.
+- Assistent: Fragen ans CRM, Aufträge und Dokumente lesen, mit Verlauf (Ctrl+J).
+- Grossprojekte: Pipeline bis zum Vertrag, Wochen-Auswahl, Projekt-Akte mit Rechner.
+- Spesen: Prüfen, Rückfrage, Kilometer, Firmenkarte und Auszahlungsläufe.
+- Team & Ausweise: «Heute», Kurse mit Antrag und Bewilligung, Anforderungen je Rolle; Personal-Akte mit Privatadresse, Notfall und Pensum.
+- Fahrzeuge & Geräte: Zu erledigen, Fahrzeug-Akte, Belegung, Schäden, Kosten, QR-Etiketten.
+- Handbuch: ein Kapitel pro Bereich, Hilfe mit F1, Wege je Rolle, Begriffe.
+- Automationen: Schutz für Kunden, Übersicht, Geplant und Probelauf.
+- Download-Seite für das Team.
 
 ## 1.0.0
 

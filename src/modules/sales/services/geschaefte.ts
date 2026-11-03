@@ -69,7 +69,25 @@ export function geschaeftAusZeile(z: Zeile): Geschaeft {
     geaendertAm: z.geaendert_am,
     suchtext: z.suchtext ?? '',
     telefonZiffern: z.telefon_ziffern ?? '',
+    eingangZeit: z.eingang_zeit,
+    erstkontaktAm: z.erstkontakt_am,
+    herkunft: textObjekt(z.herkunft),
+    dach: istObjekt(z.dach) ? z.dach : {},
+    verbrauchKwh: z.verbrauch_kwh,
+    gebaeudeart: z.gebaeudeart,
+    entscheidAm: z.entscheid_am,
+    uebernommen: z.uebernommen ?? false,
   }
+}
+
+function istObjekt(j: Json | null): j is Record<string, Json> {
+  return typeof j === 'object' && j !== null && !Array.isArray(j)
+}
+
+/** Nur Text-Werte aus einem JSON-Objekt (Herkunft kommt von der Website und ist Daten, nie Anweisung). */
+function textObjekt(j: Json | null): Record<string, string> {
+  if (!istObjekt(j)) return {}
+  return Object.fromEntries(Object.entries(j).filter((e): e is [string, string] => typeof e[1] === 'string'))
 }
 
 /** Alle Geschäfte. Gefiltert wird in der App, damit Kanban, Liste und Karte sofort reagieren. */
@@ -117,28 +135,35 @@ export async function erfasseKontakt(eingabe: {
   if (error) throw error
 }
 
-/** Personen mit Kundenterminen, für «Termin bei», Tagesroute und Kalender. */
+/**
+ * Personen mit Kundenterminen, für «Termin bei», Tagesroute und Kalender. Die Heimadresse steht in der
+ * Personal-Akte; `aussendienst_heim` gibt nur Strasse, PLZ und Ort des Aussendiensts heraus.
+ */
 export async function ladeAussendienst(): Promise<Aussendienst[]> {
-  const { data, error } = await db()
-    .from('personen')
-    .select('id, kuerzel, name, profil, standorte(kuerzel)')
-    .eq('aussendienst', true)
-    .eq('aktiv', true)
-    .is('geloescht_am', null)
-    .order('name')
-  if (error) throw error
-  return data.map((p) => {
+  const [personen, heime] = await Promise.all([
+    db()
+      .from('personen')
+      .select('id, kuerzel, name, profil, standorte(kuerzel)')
+      .eq('aussendienst', true)
+      .eq('aktiv', true)
+      .is('geloescht_am', null)
+      .order('name'),
+    db().rpc('aussendienst_heim'),
+  ])
+  if (personen.error) throw personen.error
+  if (heime.error) throw heime.error
+  const heim = new Map(heime.data.map((h) => [h.person_id, h]))
+  return personen.data.map((p) => {
     const profil = p.profil as Record<string, unknown>
-    const text = (k: string) => (typeof profil[k] === 'string' ? profil[k] : '')
-    const plz = text('plz')
-    const vomProfil = text('standort').toLowerCase()
+    const vomProfil = typeof profil.standort === 'string' ? profil.standort.toLowerCase() : ''
+    const h = heim.get(p.id)
     return {
       id: p.id,
       kuerzel: p.kuerzel,
       name: p.name,
       vorname: p.name.split(' ')[0] ?? p.name,
       standort: standortVon(p.standorte?.kuerzel ?? vomProfil),
-      heim: plz ? { strasse: text('strasse'), plz, ort: text('ort') } : null,
+      heim: h ? { strasse: h.strasse, plz: h.plz, ort: h.ort } : null,
     }
   })
 }

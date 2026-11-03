@@ -44,9 +44,9 @@ test('Kunde anlegen, per Telefon finden und Kontakt erfassen', async ({ page }) 
   await dialog.getByLabel('Ort').fill('Muri AG')
   await dialog.getByRole('button', { name: 'Speichern' }).click()
 
-  // Nach dem Speichern öffnet sich die Akte des neuen Kunden.
-  const akte = page.getByRole('dialog', { name: `Erika ${nachname}` })
-  await expect(akte).toBeVisible()
+  // Nach dem Speichern öffnet sich die Akte des neuen Kunden als ganze Seite.
+  const akte = page.getByRole('main')
+  await expect(page.getByRole('heading', { name: `Erika ${nachname}`, level: 1 })).toBeVisible()
   await expect(akte.getByText('Muri AG').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await akte.getByRole('button', { name: 'Kontakt erfassen' }).first().click()
@@ -57,10 +57,17 @@ test('Kunde anlegen, per Telefon finden und Kontakt erfassen', async ({ page }) 
   await gespraech.getByRole('button', { name: 'Speichern' }).click()
   await expect(gespraech).toBeHidden()
 
-  await akte.getByRole('tab', { name: 'Zeitachse' }).click()
+  // Der Verlauf steht direkt auf der Seite, ohne Reiter.
   await expect(akte.getByText('Interesse an PV mit Batterie')).toBeVisible()
-  await expect(page).toHaveURL(/reiter=zeitachse/)
-  await page.keyboard.press('Escape')
+
+  // Betreuung und Rechnung: Zahlungsfrist setzen, steht danach in der Akte.
+  await akte.getByRole('button', { name: 'Betreuung und Rechnung bearbeiten' }).click()
+  const betreuung = page.getByRole('dialog', { name: 'Betreuung und Rechnung bearbeiten' })
+  await betreuung.getByLabel('Zahlungsfrist').fill('10')
+  await betreuung.getByRole('button', { name: 'Speichern' }).click()
+  await expect(betreuung).toBeHidden()
+  await expect(akte.getByText('10 Tage')).toBeVisible()
+  await page.getByRole('button', { name: 'Zurück zu den Kunden' }).click()
 
   // Suche nach Telefonziffern in anderer Schreibweise (+41 statt 0)
   await page.getByRole('searchbox').fill(`+41 ${ziffern.slice(1, 3)} ${ziffern.slice(3, 6)}`)
@@ -79,7 +86,7 @@ test('Dublette wird beim Anlegen erkannt', async ({ page }) => {
   await expect(dialog.getByRole('alert')).toContainText(nachname)
   await expect(dialog.getByRole('alert')).toContainText('gleiche Telefonnummer')
   await dialog.getByRole('button', { name: 'Öffnen' }).click()
-  await expect(page.getByRole('dialog', { name: `Erika ${nachname}` })).toBeVisible()
+  await expect(page.getByRole('heading', { name: `Erika ${nachname}`, level: 1 })).toBeVisible()
 })
 
 test('Ctrl K findet den Kunden, Papierkorb und Wiederherstellen', async ({ page }) => {
@@ -87,10 +94,10 @@ test('Ctrl K findet den Kunden, Papierkorb und Wiederherstellen', async ({ page 
   await page.keyboard.press('Control+k')
   await page.keyboard.type(nachname)
   await page.getByRole('option', { name: new RegExp(nachname) }).click()
-  const akte = page.getByRole('dialog', { name: `Erika ${nachname}` })
+  const akte = page.getByRole('heading', { name: `Erika ${nachname}`, level: 1 })
   await expect(akte).toBeVisible()
 
-  await akte.getByRole('button', { name: 'Weitere Aktionen' }).click()
+  await page.getByRole('main').getByRole('button', { name: 'Weitere Aktionen' }).click()
   await page.getByRole('menuitem', { name: 'In den Papierkorb' }).click()
   await page
     .getByRole('dialog', { name: 'In den Papierkorb legen?' })

@@ -7,6 +7,7 @@ import {
   ladeOffertVerlauf,
   ladePersonen,
 } from '../services/offerten'
+import { ladeOffertEinstellungen } from '../services/ablauf'
 import type { Offerte } from '../types'
 
 /** Zwischenspeicher-Schlüssel aller Offertdaten. */
@@ -62,5 +63,14 @@ export function useOffertAenderung<A, R = unknown>(aktion: (a: A) => Promise<R>)
         qc.invalidateQueries({ queryKey: ['kontakte'] }),
       ])
     },
+  })
+}
+
+/** Einstellungen der Offerten (Nachfass-Plan, Ziel, Freigabe, Unterlagen); ändern sich selten. */
+export function useOffertEinstellungen() {
+  return useQuery({
+    queryKey: [...OFFERTEN_SCHLUESSEL, 'einstellungen'],
+    queryFn: ladeOffertEinstellungen,
+    staleTime: 10 * 60_000,
   })
 }

@@ -10,11 +10,20 @@ import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useGeschaefte } from '../hooks/useVerkauf'
 import { passtZuFilter } from '../lib/geschaeft'
-import { LEERER_FILTER, VERKAUF_ANSICHTEN, type VerkaufAnsicht, type VerkaufFilter } from '../types'
+import {
+  ansichtVon,
+  LEERER_FILTER,
+  PLANUNG_ANSICHTEN,
+  reiterVon,
+  VERKAUF_REITER,
+  type VerkaufAnsicht,
+  type VerkaufFilter,
+} from '../types'
 import { AnfragenKnopf } from './AnfragenKnopf'
 import { FilterLeiste } from './FilterLeiste'
 import { OrdnerKnopf } from './OrdnerKnopf'
 
+const ZuTun = lazy(() => import('./ZuTun'))
 const Pipeline = lazy(() => import('./Pipeline'))
 const LeadListe = lazy(() => import('./LeadListe'))
 const Tagesroute = lazy(() => import('./Tagesroute'))
@@ -22,6 +31,7 @@ const Tour = lazy(() => import('./Tour'))
 const Wochenkalender = lazy(() => import('./Wochenkalender'))
 const Regionen = lazy(() => import('./Regionen'))
 const Monatsbericht = lazy(() => import('./Monatsbericht'))
+const Steuerung = lazy(() => import('./Steuerung'))
 const LeadAkte = lazy(() => import('./LeadAkte'))
 const LeadDialog = lazy(() => import('./LeadDialog'))
 const ExcelImport = lazy(() => import('./ExcelImport'))
@@ -41,8 +51,9 @@ export interface VerkaufProps {
 const MIT_FILTER = new Set<VerkaufAnsicht>(['pipeline', 'liste', 'regionen'])
 
 /**
- * «Anfragen & Leads» (V233 Leads, Pipeline, Tagesroute, Tour planen, Kalender, Regionen, Monatsbericht).
- * Alle Ansichten arbeiten mit denselben Geschäften; ein Klick öffnet überall die Lead-Akte.
+ * «Anfragen & Leads»: Zu tun (Start), Pipeline in sechs Schritten, Liste, Tagesroute, Tour, Kalender, Regionen,
+ * Monatsbericht und Verkaufssteuerung (V233 und Neuentwurf 02.11.2026). Alle Ansichten arbeiten mit denselben
+ * Geschäften; ein Klick öffnet überall die Lead-Akte als ganze Seite (?lead=…).
  */
 export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdresse }: VerkaufProps) {
   const { t } = useTranslation()
@@ -71,12 +82,12 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
   })
   useEffect(() => {
     const beiTaste = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey || e.altKey || !/^[1-7]$/.test(e.key)) return
+      if (e.ctrlKey || e.metaKey || e.altKey || !/^[1-9]$/.test(e.key)) return
       const ziel = e.target
       if (ziel instanceof HTMLElement && (ziel.isContentEditable || /INPUT|TEXTAREA|SELECT/.test(ziel.tagName))) return
       if (document.querySelector('[role="dialog"]')) return
-      const a = VERKAUF_ANSICHTEN[Number(e.key) - 1]
-      if (a) wechsle.current({ ansicht: a })
+      const r = VERKAUF_REITER[Number(e.key) - 1]
+      if (r) wechsle.current({ ansicht: ansichtVon(r) })
     }
     window.addEventListener('keydown', beiTaste)
     return () => {
@@ -98,6 +109,25 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
   }
 
   const daten = geschaefte.data ?? []
+
+  // Offener Lead: die Akte als ganze Seite statt der Ansichten (zurück führt in die letzte Ansicht).
+  if (leadId) {
+    return (
+      <div className="mx-auto flex w-full max-w-[110rem] flex-col gap-4 px-4 py-6 sm:px-6">
+        <Suspense fallback={<Skelett className="h-[32rem]" />}>
+          <LeadAkte
+            key={leadId}
+            id={leadId}
+            geschaeft={daten.find((g) => g.id === leadId) ?? null}
+            onSchliessen={() => {
+              oeffne(null)
+            }}
+          />
+        </Suspense>
+      </div>
+    )
+  }
+
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf
@@ -153,21 +183,39 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
       />
 
       <nav aria-label={t('verkauf.ansichten')} className={reiterListeKlasse}>
-        {VERKAUF_ANSICHTEN.map((a, i) => (
+        {VERKAUF_REITER.map((r, i) => (
           <button
-            key={a}
+            key={r}
             type="button"
-            aria-current={a === ansicht ? 'page' : undefined}
+            aria-current={r === reiterVon(ansicht) ? 'page' : undefined}
             title={String(i + 1)}
             onClick={() => {
-              onAdresse({ ansicht: a })
+              if (r !== reiterVon(ansicht)) onAdresse({ ansicht: ansichtVon(r) })
             }}
             className={reiterKnopfKlasse}
           >
-            {t(`verkauf.ansicht.${a}`)}
+            {t(`verkauf.reiter.${r}`)}
           </button>
         ))}
       </nav>
+
+      {reiterVon(ansicht) === 'planung' && (
+        <div className="flex flex-wrap gap-1" role="group" aria-label={t('verkauf.reiter.planung')}>
+          {PLANUNG_ANSICHTEN.map((a) => (
+            <Button
+              key={a}
+              size="sm"
+              variant={a === ansicht ? 'secondary' : 'ghost'}
+              aria-pressed={a === ansicht}
+              onClick={() => {
+                onAdresse({ ansicht: a })
+              }}
+            >
+              {t(`verkauf.ansicht.${a}`)}
+            </Button>
+          ))}
+        </div>
+      )}
 
       {MIT_FILTER.has(ansicht) && (
         <FilterLeiste
@@ -187,6 +235,8 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
         </div>
       ) : (
         <Suspense fallback={<Skelett className="h-96" />}>
+          {ansicht === 'zutun' && <ZuTun geschaefte={daten} onOeffnen={oeffne} />}
+          {ansicht === 'steuerung' && <Steuerung geschaefte={daten} />}
           {ansicht === 'pipeline' && <Pipeline geschaefte={gefiltert} aktiveId={leadId} onOeffnen={oeffne} />}
           {ansicht === 'liste' && (
             <LeadListe
@@ -206,15 +256,6 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
       )}
 
       <Suspense>
-        {leadId && (
-          <LeadAkte
-            id={leadId}
-            geschaeft={daten.find((g) => g.id === leadId) ?? null}
-            onSchliessen={() => {
-              oeffne(null)
-            }}
-          />
-        )}
         {neu && (
           <LeadDialog
             onSchliessen={(id) => {

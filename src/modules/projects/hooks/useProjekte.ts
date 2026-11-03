@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import * as pl from '../services/planung'
 import * as s from '../services/projekte'
+import * as le from '../services/leitstand'
 import * as su from '../services/subunternehmer'
 import type { ProjektStatus } from '../types'
 
@@ -29,6 +30,14 @@ export const useBewilligungen = () =>
 export const useEinsaetze = (von: string, bis: string) =>
   useQuery({ queryKey: ['projekte', 'einsaetze', von, bis], enabled: an, queryFn: () => pl.ladeEinsaetze(von, bis) })
 
+/** Service-Termine im Zeitraum. */
+export const useServiceTermine = (von: string, bis: string) =>
+  useQuery({
+    queryKey: ['projekte', 'service', von, bis],
+    enabled: an,
+    queryFn: () => pl.ladeServiceTermine(von, bis),
+  })
+
 /** Einsätze eines Projekts. */
 export const useProjektEinsaetze = (id: string) =>
   useQuery({
@@ -49,6 +58,10 @@ export const useAbwesenheiten = (von: string, bis: string) =>
 export const usePersonen = () =>
   useQuery({ queryKey: ['projekte', 'personen'], enabled: an, queryFn: pl.ladePersonen, staleTime: 10 * 60_000 })
 
+/** Lieferfrist aus den Einstellungen Einkauf (für den Material-Blocker). */
+export const useLieferfrist = () =>
+  useQuery({ queryKey: ['projekte', 'lieferfrist'], enabled: an, queryFn: s.ladeLieferfrist, staleTime: 30 * 60_000 })
+
 /** Standorte Muri und Bulle. */
 export const useStandorte = () =>
   useQuery({ queryKey: ['projekte', 'standorte'], enabled: an, queryFn: s.ladeStandorte, staleTime: 30 * 60_000 })
@@ -67,6 +80,25 @@ export const useSubauftraege = (projektId: string) =>
     queryKey: ['projekte', 'subauftraege', projektId],
     enabled: an,
     queryFn: () => su.ladeSubauftraege(projektId),
+  })
+
+/** Signale aller laufenden Projekte für den Leitstand. */
+export const useSignale = () => useQuery({ queryKey: ['projekte', 'signale'], enabled: an, queryFn: le.ladeSignale })
+
+/** Alles zu einem Projekt für die Akte. */
+export const useAkte = (id: string) =>
+  useQuery({ queryKey: ['projekte', 'akte', id], enabled: an, queryFn: () => le.ladeAkte(id) })
+
+/** Fällige Schritte bis zum Datum (Meine Woche). */
+export const useFaelligeSchritte = (bis: string) =>
+  useQuery({ queryKey: ['projekte', 'faellig', bis], enabled: an, queryFn: () => le.ladeFaelligeSchritte(bis) })
+
+/** Nachkalkulation, nur wenn die Person Preise oder Finanzen sehen darf. */
+export const useNachkalkulation = (id: string, erlaubt: boolean) =>
+  useQuery({
+    queryKey: ['projekte', 'nachkalkulation', id],
+    enabled: an && erlaubt,
+    queryFn: () => le.ladeNachkalkulation(id),
   })
 
 /** Nach einer Änderung alles zu den Projekten neu laden (auch Kunden, deren Stand vom Projekt abhängt). */

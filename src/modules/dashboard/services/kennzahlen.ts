@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabase'
-import type { Betrieb, Fakt, PipelineZeile } from '../types'
+import type { Json } from '@/types/datenbank'
+import type { Betrieb, Fakt, KennzahlenEinstellungen, PipelineZeile } from '../types'
 import { alleSeiten } from '@/services/seiten'
 
 /** Datenzugriff «Kennzahlen». Gezählt wird in der Datenbank-Sicht der Person (RLS), gerechnet in der App. */
@@ -69,4 +70,32 @@ export async function ladeQuellenNamen(): Promise<Record<string, { de: string; f
   const { data, error } = await db().from('auswahlwerte').select('schluessel, text_de, text_fr').eq('liste', 'quelle')
   if (error) throw error
   return Object.fromEntries(data.map((q) => [q.schluessel, { de: q.text_de, fr: q.text_fr }]))
+}
+
+/** Zusatz-Fakten (Durchlaufzeiten, kWp, Umsatz, Service, Wartung); Rechnungen nur mit Recht (RLS). */
+export async function ladeZusatz(von: string, bis: string): Promise<Fakt[]> {
+  const data = await alleSeiten((a, b) =>
+    db()
+      .rpc('kennzahlen_zusatz', { p_von: von, p_bis: bis })
+      .order('schluessel')
+      .order('id')
+      .order('datum')
+      .range(a, b),
+  )
+  return (data as Omit<Fakt, 'quelle' | 'stand'>[]).map((f) => ({ ...f, quelle: null, stand: null }))
+}
+
+/** Einstellung «kennzahlen» ganz: Ziele, Wahrscheinlichkeiten, Richtwerte, Kosten pro Lead. */
+export async function ladeKzEinstellungen(): Promise<Partial<KennzahlenEinstellungen> | null> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'kennzahlen').maybeSingle()
+  if (error) throw error
+  return (data?.wert ?? null) as Partial<KennzahlenEinstellungen> | null
+}
+
+/** Ziele, Wahrscheinlichkeiten oder Richtwerte speichern (Recht «finanzen», geprüft in der Datenbank). */
+export async function setzeKzEinstellungen(
+  wert: Partial<Pick<KennzahlenEinstellungen, 'ziele' | 'wahrscheinlichkeit' | 'alt_tage' | 'richtwerte'>>,
+): Promise<void> {
+  const { error } = await db().rpc('kennzahlen_einstellungen_setzen', { p_wert: wert as unknown as Json })
+  if (error) throw error
 }

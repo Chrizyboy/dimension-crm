@@ -10,23 +10,34 @@ import { parseChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { heuteZuerich } from '../lib/fristen'
 import { eintragSchema } from '../schema'
+import { dateiHochladen } from '../services/dateien'
 import { eintragErfassen } from '../services/ressourcen'
 
 const MIT_ERGEBNIS = ['pruefung', 'kalibrierung', 'reparatur']
-const MIT_NAECHSTER = ['mfk', 'service', 'pruefung', 'kalibrierung']
+const MIT_NAECHSTER = ['mfk', 'service', 'pruefung', 'kalibrierung', 'reifen', 'vignette']
+
+/** Eintrag-Arten mit Kosten, zu denen ein Beleg gehört (meist mit der Firmenkarte bezahlt). */
+const MIT_BELEG = ['tanken', 'kosten', 'service', 'reparatur', 'reifen', 'vignette', 'mfk']
+
+/** Beleg mit Datum und Art im Namen, z. B. «2026-11-03 tanken quittung.jpg». */
+function belegName(f: File, datum: string, art: string): File {
+  return new File([f], `${datum} ${art} ${f.name}`, { type: f.type })
+}
 
 /**
  * Eintrag erfassen (am Handy wie am PC): MFK, Service, Kilometerstand, Prüfung, Kalibrierung, Reparatur,
- * Schaden oder Notiz. Welche Arten es gibt, steht in der Auswahlliste «ressourcen_eintrag». Service und Prüfung
+ * Schaden (mit Fotos), Tanken, Reifenwechsel, Vignette, übrige Kosten oder Notiz. Welche Arten es gibt, steht in der Auswahlliste «ressourcen_eintrag». Service und Prüfung
  * rechnen die nächste Frist selbst, wenn man sie leer lässt; ein Schaden meldet sich bei der Administration.
  */
 export function EintragDialog({
   bezug,
   kmStand,
+  startArt,
   onSchliessen,
 }: {
   bezug: { fahrzeug?: string; geraet?: string }
   kmStand?: number | null
+  startArt?: string
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
@@ -39,13 +50,15 @@ export function EintragDialog({
   })
   // Eine id pro geöffnetem Fenster: ein zweiter Klick oder ein Netz-Wackler legt nichts doppelt an.
   const [id] = useState(() => crypto.randomUUID())
-  const [art, setArt] = useState(fuer === 'fahrzeug' ? 'km_stand' : 'pruefung')
+  const [art, setArt] = useState(startArt ?? (fuer === 'fahrzeug' ? 'km_stand' : 'pruefung'))
   const [datum, setDatum] = useState(heuteZuerich())
   const [km, setKm] = useState('')
   const [ergebnis, setErgebnis] = useState<'ok' | 'maengel' | ''>('')
   const [naechste, setNaechste] = useState('')
   const [kosten, setKosten] = useState('')
   const [text, setText] = useState('')
+  const [liter, setLiter] = useState('')
+  const [fotos, setFotos] = useState<File[]>([])
   const kmZahl = km.trim() === '' ? null : Number(km.replace(/['\s]/g, ''))
   const pruefung = eintragSchema.safeParse({
     art,
@@ -53,6 +66,7 @@ export function EintragDialog({
     km: kmZahl,
     ergebnis: ergebnis || null,
     naechste: naechste || null,
+    kosten: kosten.trim() ? parseChf(kosten) : null,
   })
 
   async function speichern() {
@@ -69,9 +83,19 @@ export function EintragDialog({
             ergebnis: ergebnis || null,
             naechste: naechste || null,
             text: text.trim() || null,
+            liter: liter.trim() ? Number(liter.replace(',', '.')) : null,
           },
           id,
-        ),
+        ).then(async () => {
+          // Fotos nach dem Eintrag: beim Schaden in den Ordner des Eintrags (erscheinen beim Schaden). Belege
+          // (Firmenkarte, Chris 3.11.2026) zu den Dokumenten des Fahrzeugs/Geräts, mit Datum und Art im Namen,
+          // damit die Buchhaltung sie mit der Kartenabrechnung abgleichen kann.
+          for (const f of fotos) {
+            if (art === 'schaden') await dateiHochladen('eintrag', id, f)
+            else if (bezug.fahrzeug) await dateiHochladen('fahrzeug', bezug.fahrzeug, belegName(f, datum, art))
+            else if (bezug.geraet) await dateiHochladen('geraet', bezug.geraet, belegName(f, datum, art))
+          }
+        }),
       { de: 'Eintrag gespeichert', fr: 'Entrée enregistrée' },
     )
     if (ok) onSchliessen()
@@ -168,8 +192,20 @@ export function EintragDialog({
               />
             </Feld>
           )}
+          {art === 'tanken' && (
+            <Feld id="ei-liter" label={t('fuhrpark.eintrag.liter')}>
+              <Input
+                id="ei-liter"
+                inputMode="decimal"
+                value={liter}
+                onChange={(e) => {
+                  setLiter(e.target.value)
+                }}
+              />
+            </Feld>
+          )}
           {art !== 'km_stand' && art !== 'notiz' && (
-            <Feld id="ei-kosten" label={t('fuhrpark.eintrag.kosten')}>
+            <Feld id="ei-kosten" label={t('fuhrpark.eintrag.kosten')} pflicht={art === 'tanken' || art === 'kosten'}>
               <Input
                 id="ei-kosten"
                 inputMode="decimal"
@@ -192,6 +228,25 @@ export function EintragDialog({
               }}
             />
           </Feld>
+          {(art === 'schaden' || MIT_BELEG.includes(art)) && (
+            <Feld
+              id="ei-fotos"
+              label={t(art === 'schaden' ? 'fuhrpark.schaden.fotos' : 'fuhrpark.eintrag.beleg')}
+              className="sm:col-span-2"
+              hinweis={t(art === 'schaden' ? 'fuhrpark.schaden.fotosHinweis' : 'fuhrpark.eintrag.belegHinweis')}
+            >
+              <Input
+                id="ei-fotos"
+                type="file"
+                accept={art === 'schaden' ? 'image/*' : 'image/*,application/pdf'}
+                capture="environment"
+                multiple
+                onChange={(e) => {
+                  setFotos([...(e.target.files ?? [])])
+                }}
+              />
+            </Feld>
+          )}
         </div>
       </DialogInhalt>
     </Dialog>

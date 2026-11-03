@@ -2,6 +2,7 @@
 // geschützt durch den Schlüssel ZEITPLAN_SCHLUESSEL im Kopf. Jeder Job läuft nur, wenn er fällig ist
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
+//  * ausgang_erinnern alle 15 Min.  wartet seit 4 Arbeitsstunden oder Fehler: Glocke (Stellvertretung nach 1 Tag)
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
@@ -17,8 +18,15 @@
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
-//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle, Nachweise
+//  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
+//  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * wetter       stündlich       Tagesprognose von MeteoSwiss Open Data für die PLZ der Baustellen (Entscheid 0050)
+//  * monatsbericht stündlich      am 1. des Monats Glocke «Monatsbericht» an die Geschäftsleitung (Kennzahlen)
+//  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
+//  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
+//  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
 //  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
@@ -26,9 +34,13 @@
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { dachsuche } from '../_shared/dachsuche.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
+import { leadsDachAnreichern } from '../_shared/leads_dach.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
+import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
+import { bewertungenEinschaetzen } from '../_shared/bewertung.ts'
+import { guthaben } from '../_shared/aspsms.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
@@ -44,6 +56,7 @@ import { ausgangAbarbeiten } from '../_shared/versand.ts'
 import { postsAbarbeiten } from '../_shared/posten.ts'
 import { socialEingerichtet } from '../_shared/social_konten.ts'
 import { utcZuZuerich } from '../_shared/outlook.ts'
+import { wetterHolen, type WetterParameter } from '../_shared/wetter.ts'
 
 declare const Deno: { serve(h: (req: Request) => Promise<Response>): unknown }
 
@@ -106,6 +119,12 @@ Deno.serve(async (req) => {
     const r = await ausgangAbarbeiten(20)
     return `${r.gesendet} gesendet, ${r.fehler} Fehler`
   })
+  // Was zu lange auf Freigabe wartet oder mit Fehler hängt: Glocke an Zuständige, nach einem Arbeitstag auch an die
+  // Stellvertretung (höchstens einmal am Tag je Eintrag).
+  ergebnis.ausgang_erinnern = await job('ausgang_erinnern', 15, async () => {
+    const n = await dienst.rpc<number>('ausgang_erinnern', {})
+    return `${n} erinnert`
+  })
 
   // Automationen (Phase 12): die Datenbank macht alles ausser den Schritten, die Microsoft oder AbaNinja brauchen.
   ergebnis.automationen = await job('automationen', 0, async () => {
@@ -120,10 +139,135 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Monatsbericht der Kennzahlen (Entscheid 0045): am 1. eine Glocke für die Geschäftsleitung, nur intern.
+  ergebnis.monatsbericht = await job('monatsbericht', 60, async () => {
+    const n = await dienst.rpc<number>('kennzahlen_monatsbericht_melden', {})
+    return n ? `${n} gemeldet` : 'nicht fällig'
+  })
+
+  // Aufgaben (Entscheid 0045): Morgen-Glocke ab «erinnern_ab», die Datenbank meldet jede Person nur einmal am Tag.
+  ergebnis.aufgaben = await job('aufgaben', 60, async () => {
+    const n = await dienst.rpc<number>('aufgaben_melden', {})
+    return `${n} ${n === 1 ? 'Person' : 'Personen'} erinnert`
+  })
+
+  // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
+  // Wetter für «Mein Tag» (M5 A): nur PLZ von Einsätzen und Standorten, ohne Schlüssel, darum immer aktiv.
+  ergebnis.wetter = await job('wetter', 60, async () => {
+    const plz = await dienst.rpc<string[]>('wetter_plz', {})
+    const [e] = await dienst.lies<{ wert: { parameter?: WetterParameter } }[]>(
+      'einstellungen?schluessel=eq.wetter&select=wert',
+    )
+    const r = await wetterHolen(plz, e?.wert.parameter ?? {})
+    const n = await dienst.rpc<number>('wetter_speichern', { p_zeilen: r.zeilen, p_lauf: r.lauf })
+    return `${n} Tage für ${plz.length} PLZ${r.fehlend.length ? `, fehlt: ${r.fehlend.join(', ')}` : ''}`
+  })
+
+  ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
+    const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Personal-Akte: Probezeit, Befristung, Bewilligung, nächstes Gespräch an GL/Buchhaltung und Vorgesetzte.
+  ergebnis.personal_fristen = await job('personal_fristen', 60, async () => {
+    const n = await dienst.rpc<number>('personal_fristen_melden', {})
+    return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Service (Modul-Prüfung 22A): dringende Fälle ohne Reaktion melden, nur intern (Glocke).
+  ergebnis.service_eskalation = await job('service_eskalation', 15, async () => {
+    const n = await dienst.rpc<number>('service_eskalieren', {})
+    return `${n} ${n === 1 ? 'Fall' : 'Fälle'} gemeldet`
+  })
+
+  // Baustelle (Modul-Prüfung 23A): Zeiten, die zu lange laufen, der Person melden («Stopp vergessen?»), nur Glocke.
+  ergebnis.zeiten_vergessen = await job('zeiten_vergessen', 60, async () => {
+    const n = await dienst.rpc<number>('zeiten_vergessen_melden', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Abgleich AbaNinja jede Nacht (Modul-Prüfung 25A): einmal in der Stunde ab 02:00 Zürich, Änderungen der letzten
+  // drei Tage (deckt einen ausgefallenen Lauf ab). Zahlungen und Lieferantenrechnungen setzt die Datenbank.
+  if (ein.abaninja) {
+    ergebnis.abaninja_abgleich = await job('abaninja_abgleich', 60, async () => {
+      const stunde = Number(
+        new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric' }).format(new Date()),
+      )
+      if (stunde !== 2) return 'wartet auf die Nacht'
+      const seit = new Date(Date.now() - 3 * 86_400_000).toISOString()
+      const r = await dienst.rpc<Record<string, number>>('abaninja_abgleich_anwenden', { p: await abgleichDaten(seit) })
+      return `${r.zahlungen ?? 0} Zahlungen, ${r.belege_neu ?? 0} Lieferantenrechnungen neu`
+    })
+  }
+
+  // Finanzen (Modul-Prüfung 25A): Mahnlauf montags und Spesen am Monatsanfang als Glocke an die Buchhaltung.
+  ergebnis.finanzen_erinnern = await job('finanzen_erinnern', 60, async () => {
+    const n = await dienst.rpc<number>('finanzen_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Dienst-Wächter (Modul-Prüfung 28A): SMS und AbaNinja hier messen, den Rest prüft die Datenbank. Ein Fehler
+  // beim Messen ist selbst ein Befund (Glocke), kein Fehler des Jobs.
+  ergebnis.waechter = await job('waechter', 60, async () => {
+    const extern: Record<string, { ok: boolean; credits?: number; meldung?: string }> = {}
+    const code = (f: unknown) =>
+      f instanceof DienstFehler ? f.code : f instanceof Error ? f.message.slice(0, 80) : 'fehler'
+    if (ein.sms) {
+      try {
+        extern.sms = { ok: true, credits: await guthaben() }
+      } catch (f) {
+        extern.sms = { ok: false, meldung: code(f) }
+      }
+    }
+    if (ein.abaninja) {
+      try {
+        await abaTesten()
+        extern.abaninja = { ok: true }
+      } catch (f) {
+        extern.abaninja = { ok: false, meldung: code(f) }
+      }
+    }
+    const n = await dienst.rpc<number>('dienste_pruefen', { p_extern: extern })
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}`
+  })
+
+  // Empfehlung und Bewertung (Modul-Prüfung 32A): KI schätzt fällige Anfragen ein, gesendet wird nur nach Freigabe.
+  ergebnis.bewertungen = await job('bewertungen', 60, () => bewertungenEinschaetzen())
+
+  // Mein Tag (Modul-Prüfung 27A): alte Freigaben im Ausgangskorb (werktags) und «Woche in Zahlen» (montags), nur Glocke.
+  ergebnis.tag_erinnern = await job('tag_erinnern', 60, async () => {
+    const n = await dienst.rpc<number>('tag_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung_ankuendigung = await job('wartung_ankuendigung', 60, async () => {
+    const n = await dienst.rpc<number>('wartung_ankuendigungen', {})
+    return `${n} ${n === 1 ? 'Ankündigung' : 'Ankündigungen'} im Ausgangskorb`
+  })
+  ergebnis.wartung = await job('wartung', 720, async () => {
+    const n = await dienst.rpc<number>('wartung_jahreslauf', {})
+    return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
+  })
+
+  // Einkauf (Entscheid 0041): fehlende Auftragsbestätigung, gefährdete Montage, «bestellen bis» – nur Glocke.
+  ergebnis.einkauf = await job('einkauf', 60, async () => {
+    const n = await dienst.rpc<number>('einkauf_melden', {})
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'} Einkauf`
+  })
+
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Leads (02.11.2026): neue Leads ohne Anruf nach 15 Minuten melden, nach 2 Stunden an die Geschäftsleitung (nur
+  // Glocke), dann Dachdaten von sonnendach.ch zu neuen Adressen. Werte in einstellungen.verkauf.
+  ergebnis.leads = await job('leads', 5, async () => {
+    const n = await dienst.rpc<number>('leads_erstkontakt_melden', {})
+    const dach = await leadsDachAnreichern(10)
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}, ${dach}`
   })
 
   // Grossprojekte (Phase 8c): erst Gebäudedaten holen, dann einige Gebiete nach grossen Dächern durchsuchen, zuletzt
@@ -190,9 +334,9 @@ Deno.serve(async (req) => {
   if (faelligesFenster([monitor.pruefen_zeit ?? '07:00'], uhr)) {
     ergebnis.ausschreibungen = await job('ausschreibungen_pruefen', 600, async () => {
       const r = await dienst.rpc<Record<string, number>>('ausschreibungen_pruefen', {})
-      return Object.entries(r)
-        .map(([k, v]) => `${k} ${v}`)
-        .join(', ')
+      // Nachweise (Betreibung, SUVA, AHV …) 30 Tage vor Ablauf als Aufgabe, einmal pro Nachweis.
+      const nachweise = await dienst.rpc<number>('nachweise_melden', {})
+      return [...Object.entries(r), ['nachweise', nachweise] as const].map(([k, v]) => `${k} ${v}`).join(', ')
     })
   }
 

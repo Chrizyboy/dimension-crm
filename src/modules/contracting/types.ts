@@ -1,10 +1,78 @@
 /** Fachliche Typen des Moduls «Grossprojekte» (Phase 8c, Contracting-Monitor). */
 
 /** Reiter der Seite. */
-export const ANSICHTEN = ['pruefen', 'beobachten', 'bewilligt', 'alle', 'annahmen'] as const
+export const ANSICHTEN = ['pipeline', 'pruefen', 'beobachten', 'alle', 'annahmen'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 export type Stand = 'pruefen' | 'beobachten' | 'bewilligt' | 'verworfen'
+
+/** Contracting-Stufen nach dem Bewilligen, in dieser Reihenfolge; «verloren» steht ausserhalb. */
+export const STUFEN = ['qualifizieren', 'erstkontakt', 'besichtigung', 'daten', 'angebot', 'vertrag'] as const
+export type Stufe = (typeof STUFEN)[number] | 'verloren'
+
+/** Rolle einer Person beim Kunden. */
+export const KONTAKT_ROLLEN = ['entscheider', 'technik', 'einfluss', 'andere'] as const
+export type KontaktRolle = (typeof KONTAKT_ROLLEN)[number]
+
+/** Wer beim Kunden entscheidet oder mitredet. */
+export interface Kontakt {
+  name: string
+  funktion?: string | null
+  rolle: KontaktRolle
+  telefon?: string | null
+  email?: string | null
+}
+
+/** Eigene Werte für den Rechner; was fehlt, kommt aus Schätzung und Annahmen. */
+export interface RechnungWerte {
+  kwp?: number
+  kwh_pro_kwp?: number
+  verbrauch_kwh?: number
+  eigenverbrauch_prozent?: number
+  strompreis_rp?: number
+  preis_rp?: number
+  chf_pro_kwp?: number
+}
+
+/** Stand bei Youdera. Datum als JJJJ-MM-TT. */
+export interface YouderaStand {
+  dossier_am?: string | undefined
+  angebot_am?: string | undefined
+  preis_rp?: number | undefined
+  laufzeit_jahre?: number | undefined
+  notiz?: string | undefined
+}
+
+/** Ein Punkt der Besichtigung: in Ordnung oder Problem, mit Notiz. */
+export interface BesichtigungPunkt {
+  stand: 'ok' | 'problem'
+  notiz?: string | undefined
+}
+
+/** Besichtigung vor Ort. `am` gesetzt heisst abgeschlossen. */
+export interface Besichtigung {
+  am?: string | undefined
+  von?: string | undefined
+  punkte?: Record<string, BesichtigungPunkt> | undefined
+  notiz?: string | undefined
+}
+
+/** Ein Eintrag einer Liste aus der Einstellung, in beiden Sprachen. */
+export interface ListenPunkt {
+  id: string
+  de: string
+  fr: string
+}
+
+/** Einstellung «grossprojekte.pipeline»: Stufen mit Wahrscheinlichkeit, Unterlagen, Ziel, Besichtigung, Youdera. */
+export interface PipelineRegeln {
+  stufen?: { id: Stufe; prozent: number }[]
+  unterlagen?: ListenPunkt[]
+  ziel?: { jahr: number; kwp: number }
+  besichtigung?: ListenPunkt[]
+  /** Mail-Adresse von Youdera für das Dossier (leer = beim Senden eintragen). */
+  youdera_mail?: string
+}
 export type ContractingArt = 'pv' | 'waerme' | 'beides'
 
 export const BAUHERR_ARTEN = [
@@ -115,6 +183,18 @@ export interface Grossprojekt {
   ansprechperson: Ansprechperson | null
   /** Wer bei uns das Grossprojekt betreut (Standard Chris, änderbar). */
   verantwortlich_id: string | null
+  stufe: Stufe | null
+  stufe_seit: string | null
+  naechster_schritt: string | null
+  naechster_schritt_am: string | null
+  kontakte: Kontakt[]
+  /** Unterlage → vorhanden seit (JJJJ-MM-TT). */
+  unterlagen: Record<string, string>
+  rechnung: RechnungWerte
+  youdera: YouderaStand
+  besichtigung: Besichtigung
+  vertrag_am: string | null
+  vertrag_kwp: number | null
 }
 
 /** Eine Ansprechperson (aus der Recherche vorgeschlagen oder übernommen). */
@@ -149,7 +229,12 @@ export interface Vermerk {
   zeitpunkt: string
   text: string | null
   person: string | null
+  /** notiz, anruf, mail, termin (von Hand), stufe, schritt, youdera; leer = System. */
+  art: string | null
 }
+
+/** Arten, die man im Verlauf von Hand festhält. */
+export const VERMERK_ARTEN = ['notiz', 'anruf', 'mail', 'termin'] as const
 
 /** Die Annahmen und Schwellen aus «einstellungen.grossprojekte» (Ausschnitt für die Anzeige). */
 export interface GrossprojektRegeln {
@@ -173,6 +258,7 @@ export interface GrossprojektRegeln {
   /** Kürzel der Person, die neue Grossprojekte betreut. */
   verantwortlich?: string[]
   suche?: SucheRegeln
+  pipeline?: PipelineRegeln
 }
 
 /** Ein Suchgebiet: PLZ als Mitte und Radius (oder alte Form mit Koordinaten e/n in LV95). */

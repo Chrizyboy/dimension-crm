@@ -4,9 +4,12 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
+import { useState } from 'react'
 import { useBestellungen } from '../hooks/useEinkauf'
 import { REITER, type Reiter as ReiterTyp } from '../types'
 import { BestellAkte } from './BestellAkte'
+import { Bestellen } from './Bestellen'
+import { Leitstand } from './Leitstand'
 import { Bestellungen } from './Bestellungen'
 import { Lager } from './Lager'
 import { Lieferanten } from './Lieferanten'
@@ -20,8 +23,8 @@ export interface EinkaufNavigation {
 }
 
 /**
- * Einkauf & Material: Bestellungen bei Lieferanten (Entwurf, Freigabe, Mail mit PDF, Wareneingang),
- * Materialliste je Projekt mit Bestellvorschlag, Lager Bulle und Lieferanten.
+ * Einkauf & Material: Leitstand (jede Bestellung in ihrem Schritt), Materialplan nach Montagetermin, Bestellen
+ * (Bedarf je Lieferant gebündelt), Bestellungen, Lager Bulle und Lieferanten mit Konditionen.
  * #/purchasing?reiter=material&projekt=…&bestellung=…
  */
 export default function Einkauf({
@@ -37,6 +40,7 @@ export default function Einkauf({
 }) {
   const { t } = useTranslation()
   const entwuerfe = useBestellungen('entwuerfe')
+  const [lieferantId, setLieferantId] = useState<string | null>(null)
 
   if (!supabase) {
     return (
@@ -67,12 +71,36 @@ export default function Einkauf({
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`einkauf.reiter.${r}`)}
-              {r === 'bestellungen' && entwuerfe.data?.length ? (
+              {r === 'leitstand' && entwuerfe.data?.length ? (
                 <span className="text-muted-foreground zahlen ml-1.5 text-xs">{entwuerfe.data.length}</span>
               ) : null}
             </ReiterKnopf>
           ))}
         </ReiterListe>
+        <ReiterInhalt value="leitstand" className="pt-4">
+          <Leitstand
+            onBestellung={oeffnen}
+            onBestellen={(l) => {
+              setLieferantId(l)
+              onNavigation({ reiter: 'bestellen', bestellung: null })
+            }}
+            onMaterialplan={() => {
+              onNavigation({ reiter: 'material', bestellung: null })
+            }}
+            onListe={() => {
+              onNavigation({ reiter: 'bestellungen', bestellung: null })
+            }}
+          />
+        </ReiterInhalt>
+        <ReiterInhalt value="bestellen" className="pt-4">
+          <Bestellen
+            lieferantId={lieferantId}
+            onBestellung={zurBestellung}
+            onProjekt={(p) => {
+              onNavigation({ reiter: 'material', projekt: p, bestellung: null })
+            }}
+          />
+        </ReiterInhalt>
         <ReiterInhalt value="bestellungen" className="pt-4">
           <Bestellungen aktiveId={bestellungId} onOeffnen={oeffnen} />
         </ReiterInhalt>

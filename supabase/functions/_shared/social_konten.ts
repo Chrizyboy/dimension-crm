@@ -1,7 +1,7 @@
 // Verbindungen zu Meta (Facebook-Seiten und Instagram), LinkedIn (Firmenseiten) und Canva, eine je Dienst für die
 // ganze Firma (Entscheid 0022). Eine Person mit Recht «admin» meldet sich einmal an; das Token liegt
 // verschlüsselt im Schema «intern». Eine Anmeldung bringt alle Seiten mit, die die Person verwaltet; welche davon
-// deutsch und welche französisch ist, steht in `konto.zuordnung` (Entscheid 0037).
+// deutsch und welche französisch ist, steht in `konto.zuordnung` (Entscheid 0053).
 // Adressen über META_URL, LINKEDIN_URL, CANVA_URL … umstellbar (Ersatz-Server).
 
 import { dienst } from './datenbank.ts'
@@ -230,7 +230,7 @@ export interface KontoDaten {
   seiten?: { id: string; name: string; instagram_id: string | null; instagram_name: string | null }[]
   organisationen?: { id: string; name: string }[]
   zuordnung?: Zuordnung
-  // Ältere Verbindungen (vor Entscheid 0037): eine Seite bzw. Firmenseite
+  // Ältere Verbindungen (vor Entscheid 0053): eine Seite bzw. Firmenseite
   seite_id?: string
   seite_name?: string
   instagram_id?: string | null

@@ -20,7 +20,7 @@ export function imNachfassen(o: Offerte): boolean {
 export function zaehleTreffer(
   offerten: Offerte[],
   eingang: Eingang[],
-): Record<Exclude<OffertAnsicht, 'import'>, number> {
+): Record<Exclude<OffertAnsicht, 'import' | 'vorrat' | 'auswertung'>, number> {
   return {
     eingang: eingang.filter((e) => e.status !== 'offeriert').length,
     muri: offerten.filter((o) => inListe(o, 'muri')).length,

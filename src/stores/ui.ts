@@ -11,11 +11,14 @@ interface UiZustand {
   /** Nicht gespeichert: Befehlspalette und Handy-Menü sind nach dem Start immer zu. */
   befehlspaletteOffen: boolean
   handyMenueOffen: boolean
+  /** Assistent-Fenster (Ctrl J), nicht gespeichert. */
+  assistentOffen: boolean
   setSprache: (s: Sprache) => void
   setDarstellung: (d: Darstellung) => void
   toggleSeitenleiste: () => void
   setBefehlspalette: (offen: boolean) => void
   setHandyMenue: (offen: boolean) => void
+  setAssistent: (offen: boolean) => void
 }
 
 /**
@@ -31,6 +34,7 @@ export const useUi = create<UiZustand>()(
       seitenleisteEingeklappt: false,
       befehlspaletteOffen: false,
       handyMenueOffen: false,
+      assistentOffen: false,
       setSprache: (sprache) => {
         set({ sprache })
       },
@@ -45,6 +49,9 @@ export const useUi = create<UiZustand>()(
       },
       setHandyMenue: (handyMenueOffen) => {
         set({ handyMenueOffen })
+      },
+      setAssistent: (assistentOffen) => {
+        set({ assistentOffen })
       },
     }),
     {

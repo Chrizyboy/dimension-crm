@@ -1,21 +1,33 @@
 /** Fachliche Typen des Moduls «Kennzahlen» (V233 Dashboard, ERP-Entscheid 0009). */
 
-/** Zeitraum der Auswertung (V233: Monat, Quartal, Jahr, 12 Monate, alles). */
-export const ZEITRAEUME = ['monat', 'quartal', 'jahr', '12m', 'alle'] as const
+/** Zeitraum der Auswertung (V233: Monat, Quartal, Jahr, 12 Monate, alles; neu die laufende Woche). */
+export const ZEITRAEUME = ['woche', 'monat', 'quartal', 'jahr', '12m', 'alle'] as const
 export type Zeitraum = (typeof ZEITRAEUME)[number]
 
 /** Welche Firma: beide, Muri oder Bulle. */
 export const BEREICHE = ['alle', 'muri', 'bulle'] as const
 export type Bereich = (typeof BEREICHE)[number]
 
-/** Reiter der Seite. */
-export const KENNZAHLEN_REITER = ['verkauf', 'pipeline', 'betrieb'] as const
+/** Reiter der Seite; jede Rolle startet in ihrem (siehe `lib/rolle.ts`). */
+export const KENNZAHLEN_REITER = [
+  'ueberblick',
+  'verkauf',
+  'pipeline',
+  'abwicklung',
+  'finanzen',
+  'service',
+  'alle',
+] as const
 export type KennzahlenReiter = (typeof KENNZAHLEN_REITER)[number]
+
+/** Womit jede Zahl verglichen wird: gleicher Zeitraum im Vorjahr oder der Zeitraum direkt davor. */
+export const VERGLEICHE = ['vorjahr', 'vorperiode'] as const
+export type Vergleich = (typeof VERGLEICHE)[number]
 
 /** Eine Detail-Zeile aus `kennzahlen_fakten`: jede Zahl auf der Seite ist eine Menge solcher Zeilen. */
 export interface Fakt {
   schluessel: string
-  art: 'lead' | 'offerte' | 'projekt' | 'zahlung' | 'fall'
+  art: 'lead' | 'offerte' | 'projekt' | 'zahlung' | 'fall' | 'rechnung' | 'wartung'
   id: string
   datum: string | null
   standort: string | null
@@ -26,6 +38,37 @@ export interface Fakt {
   nummer: string | null
   ort: string | null
   stand: string | null
+  /** Nur Zusatz-Fakten (`kennzahlen_zusatz`): Leistung, Dauer eines Abschnitts in Tagen, Grund/Produkte/Paket. */
+  kwp?: number | null
+  tage?: number | null
+  zusatz?: string | null
+}
+
+/** Ziele eines Jahres in Rappen (Auftragseingang inkl. MWST; Umsatz exkl. MWST); Personen nach id. */
+export interface JahresZiel {
+  gesamt?: number | null
+  muri?: number | null
+  bulle?: number | null
+  umsatz?: number | null
+  personen?: Record<string, number>
+}
+
+/** Einstellung «kennzahlen» (ändern über `kennzahlen_einstellungen_setzen`, Recht «finanzen»). */
+export interface KennzahlenEinstellungen {
+  ziele: Record<string, JahresZiel>
+  /** Abschluss-Wahrscheinlichkeit in Prozent je Stand; «alt» gilt für Offerten älter als `alt_tage`. */
+  wahrscheinlichkeit: { offeriert: number; nachfassen: number; vertagt: number; alt: number }
+  alt_tage: number
+  richtwerte: {
+    unterschrift_ibn_tage: number
+    reaktion_prozent: number
+    marge_prozent: number
+    /** Abwicklung (weniger ist besser): überfällige Fristen, Material zu spät, Tage bis ein Fall erledigt ist. */
+    fristen_ueberfaellig: number
+    material_spaet: number
+    faelle_dauer: number
+  }
+  quellen_kosten_rappen: Record<string, number>
 }
 
 /** Was hinter einer angeklickten Zahl steht. */

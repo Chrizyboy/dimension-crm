@@ -7,18 +7,27 @@ import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/
 import { supabase } from '@/services/supabase'
 import { useNachSenden } from '../hooks/useBaustelle'
 import { warteschlangeStarten } from '../services/warteschlange'
-import { REITER, type Reiter as ReiterTyp } from '../types'
+import { hatRecht } from '@/lib/rechte'
+import { useAnmeldung } from '@/stores/anmeldung'
+import { REITER, REITER_LEITUNG, type Reiter as ReiterTyp } from '../types'
+import { AuswertungAnsicht } from './AuswertungAnsicht'
+import { BaustellenAkteAnsicht } from './BaustellenAkteAnsicht'
+import { BaustellenListe } from './BaustellenListe'
+import { LeitstandHeute } from './LeitstandHeute'
+import { MeldungenListe } from './MeldungenListe'
 import { MeinTag } from './MeinTag'
 import { Nachtraege } from './Nachtraege'
 import { Netzstand } from './Netzstand'
 import { RapportAkte } from './RapportAkte'
 import { RapportListe } from './RapportListe'
+import { Wochenplan } from './Wochenplan'
 import { Zeiten } from './Zeiten'
 
 /** Navigation der Seite: Reiter und offener Rapport stehen in der Adresse. */
 export interface BaustelleNavigation {
   reiter?: ReiterTyp
   rapport?: string | null
+  baustelle?: string | null
 }
 
 /**
@@ -29,13 +38,19 @@ export interface BaustelleNavigation {
 export default function Baustelle({
   reiter,
   rapportId,
+  baustelleId,
   onNavigation,
 }: {
   reiter: ReiterTyp
   rapportId: string | null
+  baustelleId: string | null
   onNavigation: (z: BaustelleNavigation) => void
 }) {
   const { t } = useTranslation()
+  const ich = useAnmeldung((z) => z.ich)
+  const leitung = hatRecht(ich, 'preise')
+  // Monteure sehen nur ihre Reiter; Leitstand, Baustellen, Meldungen und Auswertung sind für Leitung und GL.
+  const reiterListe = REITER.filter((r) => leitung || !REITER_LEITUNG.includes(r))
   useNachSenden()
   useEffect(() => {
     warteschlangeStarten()
@@ -52,6 +67,9 @@ export default function Baustelle({
   const oeffnen = (id: string | null) => {
     onNavigation({ rapport: id })
   }
+  const baustelleOeffnen = (id: string | null) => {
+    onNavigation({ baustelle: id })
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-3 py-4 sm:px-6 sm:py-6">
@@ -59,18 +77,37 @@ export default function Baustelle({
       <Reiter
         value={reiter}
         onValueChange={(r) => {
-          onNavigation({ reiter: r as ReiterTyp, rapport: null })
+          onNavigation({ reiter: r as ReiterTyp, rapport: null, baustelle: null })
         }}
       >
         <ReiterListe>
-          {REITER.map((r) => (
+          {reiterListe.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`baustelle.reiter.${r}`)}
             </ReiterKnopf>
           ))}
         </ReiterListe>
+        {leitung && (
+          <>
+            <ReiterInhalt value="heute" className="pt-4">
+              <LeitstandHeute onBaustelle={baustelleOeffnen} onRapport={oeffnen} />
+            </ReiterInhalt>
+            <ReiterInhalt value="baustellen" className="pt-4">
+              <BaustellenListe aktiveId={baustelleId} onOeffnen={baustelleOeffnen} />
+            </ReiterInhalt>
+            <ReiterInhalt value="meldungen" className="pt-4">
+              <MeldungenListe />
+            </ReiterInhalt>
+            <ReiterInhalt value="auswertung" className="pt-4">
+              <AuswertungAnsicht onBaustelle={baustelleOeffnen} />
+            </ReiterInhalt>
+          </>
+        )}
         <ReiterInhalt value="tag" className="pt-4">
           <MeinTag onRapport={oeffnen} />
+        </ReiterInhalt>
+        <ReiterInhalt value="wochenplan" className="pt-4">
+          <Wochenplan />
         </ReiterInhalt>
         <ReiterInhalt value="rapporte" className="pt-4">
           <RapportListe aktiveId={rapportId} onOeffnen={oeffnen} />
@@ -82,6 +119,16 @@ export default function Baustelle({
           <Nachtraege onRapport={oeffnen} />
         </ReiterInhalt>
       </Reiter>
+      {baustelleId && (
+        <BaustellenAkteAnsicht
+          key={baustelleId}
+          projektId={baustelleId}
+          onSchliessen={() => {
+            baustelleOeffnen(null)
+          }}
+          onRapport={oeffnen}
+        />
+      )}
       {rapportId && (
         <RapportAkte
           key={rapportId}

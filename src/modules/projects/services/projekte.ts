@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabase'
 import type { FahrplanSchritt, Projekt, ProjektStatus, SchrittStand, Standort } from '../types'
+import { LIEFERFRIST_STANDARD } from '../lib/blocker'
 
 function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
@@ -7,7 +8,7 @@ function db() {
 }
 
 const FELDER =
-  'id, nummer, titel, status, bau_status, material_status, baubeginn, werktage, unterzeichnet_am, vertragswert_rappen, vertrag_sprache, elektriker, architekt, bau_vorher, standort_id, kontakt_id, objekt_id, offerte_id, ' +
+  'id, nummer, titel, status, bau_status, material_status, baubeginn, werktage, unterzeichnet_am, vertragswert_rappen, vertrag_sprache, elektriker, architekt, bau_vorher, standort_id, verantwortlich_id, kontakt_id, objekt_id, offerte_id, ' +
   'kontakt:kontakte(vorname, nachname, firma, telefon, email, sprache), objekt:objekte(strasse, plz, ort), ' +
   'offerte:offerten(leistung_kwp, anzahl_module, wechselrichter, batterie, standort_id), standort:standorte(id, kuerzel, name), ' +
   'verantwortlich:personen(name), ablauf:ablauf_vorlagen(schluessel)'
@@ -28,6 +29,7 @@ interface Roh {
   architekt: string | null
   bau_vorher: unknown
   standort_id: string | null
+  verantwortlich_id: string | null
   kontakt_id: string
   objekt_id: string | null
   offerte_id: string | null
@@ -96,6 +98,7 @@ function alsProjekt(r: Roh, standorte: Standort[], stand: Map<string, Projekt['s
     wechselrichter: r.offerte?.wechselrichter ?? null,
     batterie: r.offerte?.batterie ?? null,
     verantwortlich: r.verantwortlich?.name ?? null,
+    verantwortlich_id: r.verantwortlich_id,
     ablauf: r.ablauf?.schluessel ?? null,
     stand: stand.get(r.id) ?? null,
   }
@@ -218,4 +221,12 @@ export async function ladeAblaeufe(): Promise<{ id: string; schluessel: string; 
     .eq('aktiv', true)
   if (error) throw error
   return data
+}
+
+/** Lieferfrist in Tagen aus den Einstellungen Einkauf (für «Material bestellen bis»). */
+export async function ladeLieferfrist(): Promise<number> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'einkauf').maybeSingle()
+  if (error) throw error
+  const tage = Number((data?.wert as { lieferfrist_tage?: unknown } | null)?.lieferfrist_tage)
+  return Number.isFinite(tage) && tage >= 0 ? tage : LIEFERFRIST_STANDARD
 }

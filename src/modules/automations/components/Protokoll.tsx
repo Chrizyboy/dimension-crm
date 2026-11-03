@@ -10,14 +10,15 @@ import { formatDatumZeit } from '@/lib/format'
 import { spaltenHelfer } from '@/lib/tabelle'
 import { useUi } from '@/stores/ui'
 import { useAutomationen, useLaeufe } from '../hooks/useAutomationen'
-import { OFFEN, STAND_TON } from '../lib/anzeige'
+import { STAND_TON } from '../lib/anzeige'
 import type { Lauf, LaufStand } from '../types'
 import { LaufDetail } from './LaufDetail'
 
 const spalte = spaltenHelfer<Lauf>()
 
 const FILTER: Record<string, LaufStand[]> = {
-  offen: [...OFFEN],
+  offen: ['laeuft', 'wartet', 'server'],
+  gestoppt: ['gestoppt'],
   fertig: ['fertig'],
   uebersprungen: ['uebersprungen', 'abgebrochen'],
   fehler: ['fehler'],

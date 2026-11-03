@@ -2,15 +2,18 @@ import { microsoft } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
 import type { Art, Auswertung, Mail, NachholenStand, Person, PosteingangRegeln } from '../types'
 
-function db() {
+/** Datenbank oder Fehler (ohne Verbindung). */
+export function db() {
   if (!supabase) throw new Error('Keine Datenbank verbunden')
   return supabase
 }
 
 const FELDER = `id, eingang_am, von_email, von_name, betreff, vorschau, web_link, hat_anhang, postfach, postfach_person_id,
   art, sprache, dringend, zusammenfassung, sortiert, stand, frist_am, eskalation_am, erledigt_am, erledigt_grund,
-  reaktion_minuten, zustaendig_id,
+  reaktion_minuten, zustaendig_id, zurueck_am, warten_bis, nachfassen, verteilt_am, vorschlag_id, ki_werte,
+  zahlung_id, konversation_id,
   zustaendig:personen!posteingang_zustaendig_id_fkey(name),
+  vorgeschlagen:personen!posteingang_vorschlag_id_fkey(name),
   vertreten:personen!posteingang_vertretung_fuer_fkey(name),
   erledigt:personen!posteingang_erledigt_von_fkey(name),
   kontakt:kontakte(id, vorname, nachname, firma, sprache),
@@ -18,8 +21,9 @@ const FELDER = `id, eingang_am, von_email, von_name, betreff, vorschau, web_link
   rechnung:rechnungen(id, nummer), bestellung:bestellungen(id, nummer), fall:service_faelle(id, nummer)`
 
 type Name = { name: string } | null
-type Roh = Omit<Mail, 'zustaendig' | 'vertretung_fuer' | 'erledigt_von' | 'kontakt'> & {
+type Roh = Omit<Mail, 'zustaendig' | 'vertretung_fuer' | 'erledigt_von' | 'kontakt' | 'vorschlag'> & {
   zustaendig: Name
+  vorgeschlagen: Name
   vertreten: Name
   erledigt: Name
   kontakt: { id: string; vorname: string | null; nachname: string | null; firma: string | null; sprache: string } | null
@@ -29,9 +33,10 @@ const kontaktName = (k: NonNullable<Roh['kontakt']>) =>
   [k.vorname, k.nachname].filter(Boolean).join(' ') || k.firma || '–'
 
 /** Rohzeile → Mail (Namen statt verschachtelter Objekte). */
-export function alsMail({ zustaendig, vertreten, erledigt, kontakt, ...m }: Roh): Mail {
+export function alsMail({ zustaendig, vertreten, erledigt, kontakt, vorgeschlagen, ...m }: Roh): Mail {
   return {
     ...m,
+    vorschlag: vorgeschlagen?.name ?? null,
     zustaendig: zustaendig?.name ?? null,
     vertretung_fuer: vertreten?.name ?? null,
     erledigt_von: erledigt?.name ?? null,
@@ -92,6 +97,17 @@ export const zuweisen = (id: string, personId: string) => setzen(id, 'zuweisen',
 export const artAendern = (id: string, art: Art) => setzen(id, 'art', { art })
 /** Mit einem Kunden verknüpfen; danach sucht die Datenbank Projekt, Lead und Service-Fall. */
 export const kundeVerknuepfen = (id: string, kontaktId: string) => setzen(id, 'verknuepfen', { kontakt_id: kontaktId })
+
+/** Zurückstellen bis (kommt dann mit Glocke wieder in «Für mich»). */
+export const zurueckstellen = (id: string, bis: Date) => setzen(id, 'zurueck', { bis: bis.toISOString() })
+/** Zurückgestellte Mail jetzt zurückholen. */
+export const zurueckHolen = (id: string) => setzen(id, 'zurueck_holen')
+/** Erledigt und auf den Kunden warten (Arbeitstage); antwortet er nicht, kommt die Mail zum Nachfassen zurück. */
+export const aufKundeWarten = (id: string, tage?: number) => setzen(id, 'warten', tage ? { tage } : {})
+/** Nicht mehr auf den Kunden warten. */
+export const wartenBeenden = (id: string) => setzen(id, 'warten_ende')
+/** Akte über eine Nummer zuordnen (Offerte, Projekt, Rechnung, Bestellung, Lead, Service-Fall). */
+export const nummerZuordnen = (id: string, nummer: string) => setzen(id, 'nummer', { nummer })
 
 /** Volltext aus Outlook (nur wenn die Microsoft-Verbindung steht). */
 export const ladeText = (id: string) => microsoft.posteingangText(id).then((r) => r.text)

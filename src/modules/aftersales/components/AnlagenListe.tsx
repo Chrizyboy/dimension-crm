@@ -11,7 +11,6 @@ import { formatDatum } from '@/lib/format'
 import { useAnlagen } from '../hooks/useService'
 import { faellig, tageBis } from '../lib/anzeige'
 import type { Anlage } from '../types'
-import { AnlageDialog } from './AnlageDialog'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
 type Ansicht = 'alle' | 'kontrolle' | 'garantie'
@@ -20,14 +19,13 @@ type Ansicht = 'alle' | 'kontrolle' | 'garantie'
  * Anlagen (V233 «Anlage-Daten»): je gebaute Anlage IBN, Garantie, nächste Kontrolle, Komponenten und
  * Monitoring. «Kontrolle fällig» zeigt, was in den nächsten 30 Tagen ansteht.
  */
-export function AnlagenListe() {
+export function AnlagenListe({ onOeffnen }: { onOeffnen: (id: string) => void }) {
   const { t } = useTranslation()
   const liste = useAnlagen()
   const komponente = useAuswahl('komponente')
   const [ansicht, setAnsicht] = useState<Ansicht>('alle')
   const [suche, setSuche] = useState('')
   const [heute] = useState(() => new Date())
-  const [offen, setOffen] = useState<Anlage | null>(null)
 
   const passt = useMemo(
     () => ({
@@ -95,10 +93,10 @@ export function AnlagenListe() {
                   tabIndex={0}
                   className="cursor-pointer"
                   onClick={() => {
-                    setOffen(a)
+                    onOeffnen(a.id)
                   }}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') setOffen(a)
+                    if (e.key === 'Enter') onOeffnen(a.id)
                   }}
                 >
                   <Zelle>
@@ -134,14 +132,6 @@ export function AnlagenListe() {
             </TabelleKoerper>
           </Tabelle>
         </div>
-      )}
-      {offen && (
-        <AnlageDialog
-          anlage={offen}
-          onSchliessen={() => {
-            setOffen(null)
-          }}
-        />
       )}
     </div>
   )

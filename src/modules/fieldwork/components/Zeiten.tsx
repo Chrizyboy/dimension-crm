@@ -18,6 +18,7 @@ import { lohnCsv } from '../lib/lohnExport'
 import { dauerText, heute, minuten, plusTage, summeJePerson, wochenStart, zuerich } from '../lib/zeit'
 import { ladeZeiten, zeitenExportieren, zeitenPruefen } from '../services/baustelle'
 import type { Zeit } from '../types'
+import { Wochenblatt } from './Wochenblatt'
 import { ZeitDialog } from './ZeitDialog'
 
 const ALLE = 'alle'
@@ -170,6 +171,7 @@ export function Zeiten() {
           {t('baustelle.zeiten.ungeprueftHinweis', { count: ungeprueft })}
         </p>
       )}
+      <Wochenblatt montag={woche} />
       {zeiten.error ? (
         <Fehlerzustand details={String(zeiten.error)} onNochmal={() => void zeiten.refetch()} />
       ) : zeiten.isPending ? (
@@ -245,7 +247,7 @@ export function Zeiten() {
                   <Zelle className="zahlen hidden text-right md:table-cell">
                     {z.pause_min ? `${String(z.pause_min)}′` : ''}
                   </Zelle>
-                  <Zelle className="zahlen text-right">{dauerText(minuten(z))}</Zelle>
+                  <Zelle className="zahlen text-right whitespace-nowrap">{dauerText(minuten(z))}</Zelle>
                   <Zelle>
                     <span className="text-muted-foreground text-xs">
                       {t(`baustelle.zeitart.${z.art}`)}

@@ -56,7 +56,7 @@ CRM › **Marketing** › **Social Media** › Karte «Facebook und Instagram» 
 **beide** Seiten und **beide** Instagram-Konten auswählen, zustimmen. Danach steht dort «Verbunden» mit den
 Seitennamen. Darunter wählt die Administration je Netzwerk, welches Konto **Deutsch** und welches **Französisch**
 ist (Vorschlag nach dem Namen: GmbH/Muri = Deutsch, Sàrl/Bulle = Französisch). Ein deutscher Post geht nur ans
-deutsche Konto, ein französischer nur ans französische, «DE + FR» an beide, jedes in seiner Sprache (Entscheid 0037). Der Seiten-Zugang läuft nicht ab, solange niemand das Passwort ändert oder die App entfernt; sonst
+deutsche Konto, ein französischer nur ans französische, «DE + FR» an beide, jedes in seiner Sprache (Entscheid 0053). Der Seiten-Zugang läuft nicht ab, solange niemand das Passwort ändert oder die App entfernt; sonst
 zeigt die Karte «Neu verbinden».
 
 ## 2. LinkedIn-Firmenseite
