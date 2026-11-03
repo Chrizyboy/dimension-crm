@@ -9,7 +9,7 @@ import { kiEingerichtet, kiEinstellung } from '../_shared/ki_rahmen.ts'
 import { briefing, leadBewertung, zusammenfassung } from './bewerten.ts'
 import { auftragsbestaetigung } from './einkauf.ts'
 import { dokument, frage } from './fragen.ts'
-import { beleg, luftbild, mailErkennen, notiz, offertePdf } from './lesen.ts'
+import { beleg, luftbild, mailErkennen, notiz, offertePdf, publikation } from './lesen.ts'
 import { entwurf, marketingText, monatsbericht, social, stilLernen } from './texte.ts'
 
 starte({
@@ -35,6 +35,7 @@ starte({
   beleg: { recht: 'basis', f: beleg },
   offerte_pdf: { recht: 'basis', f: offertePdf },
   luftbild: { recht: 'basis', f: luftbild },
+  publikation: { recht: 'basis', f: publikation },
   zusammenfassung: { recht: 'basis', f: zusammenfassung },
   lead_bewertung: { recht: 'basis', f: leadBewertung },
   briefing: { recht: 'basis', f: briefing },

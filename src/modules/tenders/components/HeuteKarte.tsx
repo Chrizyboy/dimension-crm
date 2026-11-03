@@ -13,17 +13,19 @@ interface Punkt {
   reiter: Reiter
   ton: 'neutral' | 'info' | 'warnung' | 'kritisch'
   /** Nur zeigen, wenn die Person diesen Schritt machen darf. */
-  nur?: 'darf_bewilligen' | 'darf_senden'
+  nur?: 'darf_bewilligen' | 'darf_senden' | 'darf_pruefen'
 }
 
 const PUNKTE: Punkt[] = [
-  { schluessel: 'neu_heute', reiter: 'pruefen', ton: 'info' },
-  { schluessel: 'pruefen', reiter: 'pruefen', ton: 'warnung' },
+  { schluessel: 'neu_heute', reiter: 'leitstand', ton: 'info' },
+  { schluessel: 'pruefung', reiter: 'leitstand', ton: 'warnung', nur: 'darf_pruefen' },
+  { schluessel: 'pruefen', reiter: 'leitstand', ton: 'warnung' },
   { schluessel: 'bewilligen', reiter: 'bewilligen', ton: 'warnung', nur: 'darf_bewilligen' },
   { schluessel: 'senden', reiter: 'senden', ton: 'warnung', nur: 'darf_senden' },
-  { schluessel: 'antworten', reiter: 'pruefen', ton: 'info' },
-  { schluessel: 'kontakt_fehlt', reiter: 'pruefen', ton: 'kritisch' },
-  { schluessel: 'fristen', reiter: 'alle', ton: 'warnung' },
+  { schluessel: 'antworten', reiter: 'leitstand', ton: 'info' },
+  { schluessel: 'kontakt_fehlt', reiter: 'leitstand', ton: 'kritisch' },
+  { schluessel: 'fristen', reiter: 'fristen', ton: 'warnung' },
+  { schluessel: 'nachweise_ablauf', reiter: 'nachweise', ton: 'warnung' },
   { schluessel: 'quellen_still', reiter: 'quellen', ton: 'kritisch' },
 ]
 
