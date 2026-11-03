@@ -69,6 +69,9 @@ export function bewegungen(d: Finanzdaten, heute: string): Bewegung[] {
       faellig: z.faellig_am,
       geplant: Boolean(z.geplant_am),
       lohn: z.kategorie === 'Lohn',
+      pruefung: z.pruefung,
+      skontoBis: z.skonto_bis,
+      imZahllauf: Boolean(z.zahllauf_id),
     })
   }
 
@@ -177,6 +180,25 @@ export function bewegungen(d: Finanzdaten, heute: string): Bewegung[] {
       geplant: false,
     })
   }
+  // MWST: jede noch nicht bezahlte Zahllast (geschätzt oder verbindlich) am Fälligkeitstag.
+  for (const m of d.mwst) {
+    if (m.bezahlt_am || m.zahllast_rappen <= 0) continue
+    dazu({
+      ...basis,
+      richtung: -1,
+      rappen: m.zahllast_rappen,
+      datum: m.faellig_am,
+      titel: `MWST ${m.periode}`,
+      zusatz: [d.firmen.find((f) => f.id === m.firma_id)?.name, m.verbindlich ? null : 'geschätzt']
+        .filter(Boolean)
+        .join(' · '),
+      quelle: 'mwst',
+      id: `${m.firma_id}|${m.periode}`,
+      kategorie: 'Steuern',
+      faellig: m.faellig_am,
+      geplant: true,
+    })
+  }
   return liste
 }
 
@@ -199,6 +221,13 @@ export function saldo(d: Finanzdaten): {
   seit: string | null
   buchungen: number
 } {
+  // Mit Konten gilt deren Stand (aus dem Kontoauszug oder von Hand); «seit» ist der älteste Stand.
+  const konten = d.konten.filter((x) => x.aktiv && x.stand_rappen !== null && x.stand_am)
+  if (konten.length > 0) {
+    const summe = konten.reduce((s, x) => s + (x.stand_rappen ?? 0), 0)
+    const seit = konten.map((x) => x.stand_am ?? '').sort()[0] ?? null
+    return { bekannt: true, rappen: summe, basis: summe, seit, buchungen: 0 }
+  }
   const k = d.einstellungen.saldo
   if (!k || (k.betrag_rappen === undefined && k.betrag === undefined)) {
     return { bekannt: false, rappen: 0, basis: 0, seit: null, buchungen: 0 }

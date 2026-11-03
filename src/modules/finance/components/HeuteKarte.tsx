@@ -64,7 +64,7 @@ export default function HeuteKarte() {
             <li key={`${b.quelle}-${b.id}-${String(b.idx ?? '')}`}>
               <Link
                 to="/finance"
-                search={{ reiter: 'zahlungen' }}
+                search={{ reiter: 'lieferanten' }}
                 className="hover:bg-surface-2 flex flex-col gap-0.5 px-4 py-2 text-sm"
               >
                 <span className="min-w-0 truncate">{b.titel}</span>

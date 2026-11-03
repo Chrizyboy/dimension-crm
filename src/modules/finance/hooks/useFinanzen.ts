@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
+import { ladeAbschluss, ladeBuchungen, ladeMarge } from '../services/ablaeufe'
 import { ladeFinanzen, ladeNachkalkulation, ladeProjekte } from '../services/finanzen'
 
 const an = supabase !== null
@@ -25,3 +26,19 @@ export function useNeuLaden() {
   const qc = useQueryClient()
   return () => qc.invalidateQueries({ queryKey: ['finanzen'] })
 }
+
+/** Marge aller Projekte. */
+export const useMarge = (aktiv = true) =>
+  useQuery({ queryKey: ['finanzen', 'marge'], enabled: an && aktiv, queryFn: ladeMarge })
+
+/** Stand der Abschluss-Liste eines Monats. */
+export const useAbschluss = (monat: string) =>
+  useQuery({ queryKey: ['finanzen', 'abschluss', monat], enabled: an, queryFn: () => ladeAbschluss(monat) })
+
+/** Buchungen eines Kontos (erst beim Aufklappen). */
+export const useBuchungen = (konto: string | null) =>
+  useQuery({
+    queryKey: ['finanzen', 'buchungen', konto],
+    enabled: an && Boolean(konto),
+    queryFn: () => ladeBuchungen(konto ?? ''),
+  })

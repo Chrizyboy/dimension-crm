@@ -133,13 +133,34 @@ test('Finanzen: Reiter ohne Verstösse, Zahlung erfassen, einplanen und bezahlen
   await expect(page.getByRole('heading', { name: 'Finanzen', level: 1 })).toBeVisible()
   await expect(page.getByText('Tiefster Stand').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Zahlungen', 'Material', 'Fixkosten', 'Eingänge', 'Bank', 'Nachkalkulation']) {
+  await expect(page.getByRole('heading', { name: 'Heute zu tun' })).toBeVisible()
+  for (const reiter of [
+    'Lieferantenrechnungen',
+    'Zahllauf',
+    'Liquidität',
+    'Projekte & Marge',
+    'Konten, MWST & Abschluss',
+  ]) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
+  // Liquidität: die früheren Reiter sind Unterteile.
+  await page.getByRole('tab', { name: 'Liquidität' }).click()
+  for (const teil of ['Material je Baustelle', 'Fixkosten', 'Erwartete Eingänge', 'Woche für Woche']) {
+    await page.getByRole('button', { name: new RegExp(`^${teil}`) }).click()
+    expect(await verstoesse(page), teil).toEqual([])
+  }
+  // Zahllauf: Vorschlag öffnet sich ohne Verstösse.
+  await page.getByRole('tab', { name: 'Zahllauf' }).click()
+  await page.getByRole('button', { name: 'Zahllauf vorbereiten' }).click()
+  await expect(page.getByRole('dialog')).toBeVisible()
+  expect(await verstoesse(page), 'Zahllauf vorbereiten').toEqual([])
+  await page.keyboard.press('Escape')
+  // Alte Adresse führt weiter.
+  await page.goto('/#/finance?reiter=zahlungen')
+  await expect(page.getByRole('tab', { name: 'Lieferantenrechnungen' })).toHaveAttribute('aria-selected', 'true')
 
-  await page.getByRole('tab', { name: 'Zahlungen' }).click()
   await page.getByRole('button', { name: 'Zahlung', exact: true }).click()
   const d = page.getByRole('dialog')
   await d.getByLabel('Firma').fill(`E2E Lieferant ${lauf}`)

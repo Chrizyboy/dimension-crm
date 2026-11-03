@@ -47,9 +47,9 @@ export function Marge({ zeilen }: { zeilen: MargeZeile[] }) {
                   key={m.id}
                   tabIndex={0}
                   className="cursor-pointer"
-                  onClick={() => void navigate({ to: '/finance', search: { reiter: 'nachkalkulation' } })}
+                  onClick={() => void navigate({ to: '/finance', search: { reiter: 'marge' } })}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') void navigate({ to: '/finance', search: { reiter: 'nachkalkulation' } })
+                    if (e.key === 'Enter') void navigate({ to: '/finance', search: { reiter: 'marge' } })
                   }}
                 >
                   <Zelle>

@@ -5,74 +5,78 @@ rollen: buchhaltung, geschaeftsleitung
 
 # Finances
 
-La liquidité semaine par semaine : solde, ce que nous devons payer (fournisseurs, matériel par chantier, frais fixes) et ce qui rentre (factures ouvertes, tranches, entrées attendues). En plus, la planification des paiements et le post-calcul par projet. Visible uniquement avec le droit **Finances**.
+Les finances pour la direction et la comptabilité : l’argent sur les comptes, ce que les clients nous doivent et ce que nous devons, les factures fournisseurs prêtes à payer, l’ordre de paiement validé par une deuxième personne, les liquidités semaine par semaine, la marge des projets ainsi que comptes, TVA et clôture mensuelle. En haut, tu choisis **Dimension Solaire GmbH**, **Dimension Solaire Sàrl** ou **Les deux**. Visible uniquement avec le droit **Finances**.
 
 ## Qui travaille ici {#wer}
 
-- **Comptabilité** : solde, paiements, planification, frais fixes, attribution des justificatifs.
-- **Direction** : aperçu, scénarios, post-calcul.
+- **Comptabilité** : valider les factures fournisseurs, préparer l’ordre de paiement, importer le relevé, saisir la TVA, clôturer le mois.
+- **Direction** : cockpit, valider l’ordre de paiement, projets & marge.
 
 ## Comment faire {#so}
 
-### Planifier la semaine
+### Commencer la journée
 
-1. Onglet **Banque**, **Saisir le solde** avec **Solde au**. Sans solde actuel, la prévision est fausse.
-2. Onglet **Aperçu** : tuiles **Solde**, **Solde le plus bas**, **À payer cette semaine**. Si une semaine passe sous la réserve, un avertissement s’affiche en haut.
-3. Changer de **Scénario** : **Réaliste**, **Prudent (entrées sûres seulement)** ou **Optimiste (toutes les entrées)**.
-4. Déplier une semaine montre chaque mouvement avec sa source.
+1. Onglet **Cockpit** : en haut l’argent sur les comptes, le point le plus bas, ce que les clients nous doivent et ce que nous devons aux fournisseurs, la prochaine TVA.
+2. **À faire aujourd’hui** montre escomptes, poursuites menaçantes, validations, ordres en attente, soldes anciens et TVA échue. **Ouvrir** mène au bon onglet.
+3. **Factures clients par ancienneté** montre ce qui est échu. Les relances se font sous [Factures](kapitel:invoices).
 
-### Planifier les paiements
+### Contrôler les factures fournisseurs
 
-1. Onglet **Paiements**, **Planifier les paiements**.
-2. Choisir la **Date de paiement**. Le CRM propose selon l’urgence ce qui tient jusqu’au solde moins la réserve.
-3. Ajuster la sélection, **Planifier …**. Le paiement se fait à la banque, ensuite marquer **Payé**.
+1. Onglet **Factures fournisseurs**, filtre **À valider**.
+2. Cliquer sur le nom : le dossier montre montant, escompte, IBAN et la comparaison avec la commande.
+3. **Valider**, **À clarifier** ou **Retenir** (les deux derniers avec motif). Les factures visées dans les factures entrantes sont déjà **Prêt à payer**.
 
-### Saisir ou reporter un paiement
+### Faire un ordre de paiement
 
-1. Onglet **Paiements**, **Paiement** : entreprise, montant, **Échéance**, **Urgence** (Normal, Important, Rappel, Poursuite imminente), projet.
-2. Reporter : sur la ligne **Date**, fixer **Payer le**.
-3. Les lignes **D’Excel, non vérifiés** viennent de la reprise ; vérifier et enregistrer.
+1. Onglet **Ordre de paiement**, **Préparer un ordre de paiement** : choisir société, **Compte débité** et **Exécuter le**.
+2. Le CRM propose les factures prêtes, poursuites et escomptes en premier. En bas : somme, **Solde après** et **Escompte économisé**.
+3. **Soumettre … paiements**. Une deuxième personne de la direction reçoit une cloche et clique **Valider**.
+4. Déclencher les paiements dans AbaNinja ou l’e-banking, puis **Exécuté dans l’e-banking**.
 
-### Gérer matériel, frais fixes et entrées
+### Importer un relevé
 
-1. **Matériel** : par **Chantier**, positions avec date de montage et **Payable jusqu’au**. **Archiver** ce qui est réglé.
-2. **Frais fixes** : loyer, salaires, assurances avec rythme et jour ; payé ou reporté chaque mois.
-3. **Entrées** : paiements attendus hors factures avec **Probabilité** (Sûr, Probable, Incertain). L’argent est là : **Reçu**.
+1. Dans l’e-banking, télécharger le relevé camt.053 (XML).
+2. Onglet **Comptes, TVA & clôture**, **Importer un relevé**, choisir le fichier.
+3. Le CRM trouve le compte par l’IBAN, reprend les nouvelles écritures et reconnaît comme payés les paiements d’un ordre validé.
 
-### Faire le post-calcul d’un projet
+### Clôturer le mois
 
-1. Onglet **Post-calcul**, chercher le projet.
-2. Le CRM compare valeur du contrat et avenants au matériel, au travail et aux factures fournisseurs et montre la **Marge de contribution**.
-3. Sous **Sans projet (d’AbaNinja)**, **Attribuer** les factures fournisseurs au projet.
+1. Sous **Clôture mensuelle**, choisir le mois.
+2. La liste montre ce qui reste ouvert : soldes, attributions, société, validations, frais, tranches, heures.
+3. **Clôturer le mois**, même avec des points ouverts (ils sont enregistrés). **Postes ouverts (CSV)** pour la fiduciaire.
 
 ## Statuts {#staende}
 
-- Paiements : ouvert, planifié, **Payé** ; groupés en **En retard / immédiat**, **Cette semaine**, **Semaine prochaine**, **Plus tard**, **Sans date**.
-- Entrées : **Sûr**, **Probable**, **Incertain** ou **Ne pas compter**.
+- Facture fournisseur : **À valider**, **Prêt à payer**, **À clarifier**, **Retenu**, dans un ordre, payé.
+- Ordre de paiement : **À valider**, **Validé**, **Exécuté**, **Rejeté**.
+- TVA : **Estimation**, **AbaNinja** (montant définitif saisi), **Payé**.
 
 ## Automatique {#automatisch}
 
-- Les [Factures](kapitel:invoices) ouvertes et les tranches pas encore facturées comptent comme entrées, sans ressaisie.
-- La synchronisation AbaNinja récupère les factures fournisseurs comme paiements.
-- Le matériel est planifié autant de jours avant le montage qu’indiqué sous **Banque** › **Avance matériel**.
+- Les nouvelles factures fournisseurs d’AbaNinja arrivent avec la société (du projet) et la commande correspondante.
+- Dès qu’une facture entrante est visée, le paiement devient prêt ici.
+- La TVA est estimée par trimestre à partir des factures et des factures fournisseurs et entre dans les liquidités.
+- La marge par produit et les travaux en cours sont calculés sur tous les projets.
 
 ## Règles {#regeln}
 
-- Tout le domaine uniquement avec le droit Finances. La comptabilité elle-même reste dans AbaNinja.
-- Rien n’est supprimé : **Mettre à la corbeille** se restaure.
+- Qui prépare un ordre de paiement ne peut pas le valider soi-même.
+- L’application ne déclenche aucun paiement ; on paie dans AbaNinja ou l’e-banking.
+- Comptabilité, salaires et décompte TVA restent dans AbaNinja. Rien n’est supprimé.
 
 ## Questions fréquentes {#fragen}
 
-### L’aperçu montre un solde bien trop bas.
+### Le cockpit montre un solde bien trop bas.
 
-Le plus souvent, le solde est ancien. Saisir le solde du jour sous **Banque**.
+Souvent un solde est ancien. Importer le relevé ou saisir le solde sur le compte.
 
 ### Je ne veux pas montrer les salaires à l’écran.
 
-En haut, **Masquer les salaires**. La somme reste dans le calcul, seules les lignes sont masquées.
+En haut **Masquer les salaires**. La somme reste dans le calcul, seules les lignes sont masquées.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026 : Nouvelle construction : cockpit, factures fournisseurs avec validation, ordre de paiement à deux personnes, comptes avec relevé, estimation TVA, projets & marge, clôture mensuelle, choix de la société.
 - 03.11.2026: Paiements : cliquer plusieurs catégories à la fois ; **D’Excel, non vérifiés** filtre en plus.
 - 26.10.2026: Colonnes regroupées sur le portable, noms sur deux lignes.
 - 22.10.2026: Finances avec liquidité semaine par semaine, planification des paiements et post-calcul.
