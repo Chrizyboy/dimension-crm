@@ -1,4 +1,4 @@
-# 0047 – Ausschreibungen vollständig: Submission bis Zuschlag
+# 0050 – Ausschreibungen vollständig: Submission bis Zuschlag
 
 Datum: 02.11.2026 · Thread «Ausschreibungen vollständig machen» · Vorschau: https://claude.ai/artifact/KhnKwqUYsFHAW8y9Vswy62
 

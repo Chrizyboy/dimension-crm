@@ -81,15 +81,36 @@ export function fristInfo(m: Mail, sprache: 'de' | 'fr', jetzt = new Date()): Fr
   }
 }
 
-/** Gehört die Mail in die Ansicht? «meine» = mir zugeteilt und noch nicht erledigt. */
-export function inAnsicht(m: Mail, a: Ansicht, ich: string | null): boolean {
+const OFFEN = new Set(['neu', 'offen', 'info'])
+
+/** Ist die Mail gerade zurückgestellt (kommt später wieder)? */
+export const istZurueck = (m: Pick<Mail, 'zurueck_am'>, jetzt = Date.now()) =>
+  m.zurueck_am !== null && Date.parse(m.zurueck_am) > jetzt
+
+/** Wer schaut: ich (Person) und ob ich Mails aus info@ verteile. */
+export interface Betrachter {
+  ich: string | null
+  verteile: boolean
+}
+
+/**
+ * Gehört die Mail in die Ansicht? «meine» = mir zugeteilt, offen und nicht zurückgestellt; «verteilen» = aus einem
+ * Team-Postfach und noch nicht weitergegeben; «warten» = alle offenen im Team; «kunde» = wir warten auf meinen Kunden;
+ * «zurueck» = von mir zurückgestellt.
+ */
+export function inAnsicht(m: Mail, a: Ansicht, b: Betrachter, jetzt = Date.now()): boolean {
+  const offen = OFFEN.has(m.stand)
   switch (a) {
-    case 'warten':
-      return m.stand === 'offen'
-    case 'neu':
-      return m.stand === 'offen' || m.stand === 'neu' || m.stand === 'info'
     case 'meine':
-      return m.zustaendig_id === ich && (m.stand === 'offen' || m.stand === 'neu' || m.stand === 'info')
+      return offen && m.zustaendig_id === b.ich && !istZurueck(m, jetzt)
+    case 'verteilen':
+      return b.verteile && offen && m.postfach_person_id === null && m.verteilt_am === null
+    case 'warten':
+      return m.stand === 'offen' && !istZurueck(m, jetzt)
+    case 'kunde':
+      return m.stand === 'erledigt' && m.warten_bis !== null && m.zustaendig_id === b.ich
+    case 'zurueck':
+      return offen && istZurueck(m, jetzt) && m.zustaendig_id === b.ich
     case 'erledigt':
       return m.stand === 'erledigt'
     case 'abgelegt':
@@ -98,6 +119,21 @@ export function inAnsicht(m: Mail, a: Ansicht, ich: string | null): boolean {
       return false // eigene Abfrage (ladeAeltere)
   }
 }
+
+/** Gruppen der Liste nach Dringlichkeit. */
+export const GRUPPEN = ['ueber', 'heute', 'spaeter', 'ohne'] as const
+export type Gruppe = (typeof GRUPPEN)[number]
+
+/** In welche Gruppe gehört eine offene Mail: über der Frist, heute fällig, später, ohne Frist (zur Kenntnis). */
+export function gruppe(m: Mail, jetzt = new Date()): Gruppe {
+  if (m.stand !== 'offen' || !m.frist_am) return 'ohne'
+  const f = Date.parse(m.frist_am)
+  if (f < jetzt.getTime()) return 'ueber'
+  return tag(m.frist_am) === tag(jetzt.toISOString()) ? 'heute' : 'spaeter'
+}
+
+/** Ansichten mit Gruppen (die anderen sind nach Datum sortiert). */
+export const MIT_GRUPPEN = new Set<Ansicht>(['meine', 'verteilen', 'warten'])
 
 /** Sortierung: Offene nach Frist (die dringendste zuerst), alle anderen neueste zuerst. */
 export function sortiere(liste: Mail[]): Mail[] {

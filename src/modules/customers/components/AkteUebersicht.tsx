@@ -67,7 +67,14 @@ export function Gebaeude({ objekt, onBearbeiten }: { objekt: Objekt; onBearbeite
         <Angabe label={t('akte.feld.verbrauch')}>{objekt.verbrauch_kwh ? `${objekt.verbrauch_kwh} kWh` : ''}</Angabe>
         <Angabe label={t('akte.feld.besichtigung')}>{datumOderLeer(jsonText(objekt.dach, 'datum'))}</Angabe>
         <Angabe label={t('akte.feld.gemeinde')}>{objekt.gemeinde}</Angabe>
+        <Angabe label={t('akte.feld.heizung')}>{objekt.heizung}</Angabe>
       </Angaben>
+      {objekt.vor_ort && (
+        <p className="bg-warn-soft rounded-md px-3 py-2 text-sm whitespace-pre-line">
+          <span className="font-medium">{t('akte.feld.vorOrt')}: </span>
+          {objekt.vor_ort}
+        </p>
+      )}
     </article>
   )
 }

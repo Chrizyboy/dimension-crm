@@ -12,6 +12,7 @@ import { heuteIso, ueberfaellig } from '../lib/pipeline'
 import { akteSetzen } from '../services/grossprojekte'
 import type { Grossprojekt, YouderaStand } from '../types'
 import { Box, Zeile } from './Box'
+import { DossierSenden } from './Versand'
 
 /**
  * Nächster Schritt mit Datum: Jedes offene Grossprojekt hat genau einen, damit nichts liegen bleibt. Rot, wenn das
@@ -193,6 +194,11 @@ export function YouderaBox({ g }: { g: Grossprojekt }) {
           />
         </Zeile>
       </dl>
+      {!geaendert && (
+        <div className="self-end">
+          <DossierSenden g={g} />
+        </div>
+      )}
       {geaendert && (
         <Button
           size="sm"
