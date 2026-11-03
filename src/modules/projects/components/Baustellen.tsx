@@ -2,10 +2,13 @@ import { CalendarPlus, HardHat } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { formatDatum } from '@/lib/format'
-import { useProjekte, useStandorte } from '../hooks/useProjekte'
+import { Filterchips } from '@/components/shared/Filterchips'
+import { useLieferfrist, useProjekte, useStandorte } from '../hooks/useProjekte'
+import { blockerVon, type Blocker } from '../lib/blocker'
 import { anlageKurz, ortZeile } from '../lib/anzeige'
 import type { Projekt } from '../types'
 import { BauDialog } from './BauDialog'
@@ -14,6 +17,15 @@ import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 
 const STATUS = ['im_bau', 'auftrag'] as const
 const REIHE: Record<string, number> = { ausstehend: 0, terminiert: 1, ibn: 2, fertig: 3 }
+const FILTER = ['alle', 'blocker', 'bewilligung', 'material'] as const
+type Filter = (typeof FILTER)[number]
+
+/** Passt eine Baustelle zum gewählten Filter? «Mit Blocker» = irgendein Blocker. */
+function passt(b: readonly Blocker[], f: Filter): boolean {
+  if (f === 'alle') return true
+  if (f === 'blocker') return b.length > 0
+  return b.includes(f)
+}
 
 /** Baustellen zuerst nach Status (ausstehend oben, braucht einen Termin), dann nach Baubeginn. */
 function nachBau(a: Projekt, b: Projekt): number {
@@ -26,16 +38,23 @@ function nachBau(a: Projekt, b: Projekt): number {
 /**
  * Board der Baustellen wie in V233: je Standort (Muri, Bulle) eine Spalte mit allen Projekten im Bau.
  * Darunter die neuen Aufträge, die noch keinen Bautermin haben, mit «Bautermin» (V126).
+ * Filter «Mit Blocker / Bewilligung / Material» zeigen nur, was aufgehalten ist (gilt für Board und Aufträge).
  */
 export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; onOeffnen: (id: string) => void }) {
   const { t } = useTranslation()
   const projekte = useProjekte([...STATUS])
   const standorte = useStandorte()
+  const lieferfrist = useLieferfrist()
   const [suche, setSuche] = useState('')
+  const [filter, setFilter] = useState<Filter>('alle')
   const [planen, setPlanen] = useState<Projekt | null>(null)
 
-  const { spalten, auftraege } = useMemo(() => {
-    const alle = projekte.data ?? []
+  const { spalten, auftraege, blocker, anzahl } = useMemo(() => {
+    const blocker = new Map((projekte.data ?? []).map((p) => [p.id, blockerVon(p, lieferfrist.data)]))
+    const anzahl = Object.fromEntries(
+      FILTER.map((f) => [f, (projekte.data ?? []).filter((p) => passt(blocker.get(p.id) ?? [], f)).length]),
+    ) as Record<Filter, number>
+    const alle = (projekte.data ?? []).filter((p) => passt(blocker.get(p.id) ?? [], filter))
     const imBau = alle.filter((p) => p.status === 'im_bau').sort(nachBau)
     const s = suche.trim().toLowerCase()
     const neu = alle
@@ -45,8 +64,10 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
     return {
       spalten: (standorte.data ?? []).map((st) => ({ st, liste: imBau.filter((p) => p.standort_id === st.id) })),
       auftraege: neu,
+      blocker,
+      anzahl,
     }
-  }, [projekte.data, standorte.data, suche])
+  }, [projekte.data, standorte.data, suche, filter, lieferfrist.data])
 
   if (projekte.error)
     return <Fehlerzustand details={String(projekte.error)} onNochmal={() => void projekte.refetch()} />
@@ -54,6 +75,15 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
 
   return (
     <div className="flex flex-col gap-6">
+      <Filterchips
+        beschriftung={t('projekte.blocker.filter')}
+        einzeln
+        optionen={FILTER.map((f) => ({ wert: f, text: t(`projekte.blocker.filterwert.${f}`), anzahl: anzahl[f] }))}
+        gewaehlt={[filter]}
+        onChange={(w) => {
+          setFilter((w[0] ?? 'alle') as Filter)
+        }}
+      />
       <div className="grid gap-4 md:grid-cols-2">
         {spalten.map(({ st, liste }) => (
           <section key={st.id} aria-label={st.name} className="bg-muted/40 flex flex-col gap-2 rounded-xl border p-3">
@@ -69,6 +99,7 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
                   key={p.id}
                   p={p}
                   aktiv={p.id === aktiveId}
+                  blocker={blocker.get(p.id) ?? []}
                   onOeffnen={() => {
                     onOeffnen(p.id)
                   }}
@@ -110,6 +141,11 @@ export function Baustellen({ aktiveId, onOeffnen }: { aktiveId: string | null; o
                 >
                   <span className="line-clamp-2 text-sm font-medium">
                     {p.kunde} <span className="text-muted-foreground zahlen font-mono text-xs">{p.nummer}</span>
+                    {(blocker.get(p.id) ?? []).map((b) => (
+                      <Badge key={b} ton="kritisch" className="ml-1.5 align-middle">
+                        {t(`projekte.blocker.${b}`)}
+                      </Badge>
+                    ))}
                   </span>
                   <span className="text-muted-foreground line-clamp-2 text-xs">
                     {[

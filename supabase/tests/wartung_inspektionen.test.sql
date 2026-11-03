@@ -1,4 +1,4 @@
--- Prüft Wartung Teil 2 (Entscheid 0040): Termin setzen, Ankündigung einmal pro Termin im Ausgangskorb (wartet auf
+-- Prüft Wartung Teil 2 (Entscheid 0044): Termin setzen, Ankündigung einmal pro Termin im Ausgangskorb (wartet auf
 -- Freigabe), Termin nach «Wartung erledigt» leer, Mein Tag zeigt die Inspektion, Anlagen ohne Vertrag mit Angebot
 -- (Serie, nicht doppelt am selben Tag) und Vorjahreswerte aus dem letzten Wartungs-Rapport.
 -- Ausführen: npm run db:test

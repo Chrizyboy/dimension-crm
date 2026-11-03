@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Baustelle & Rapporte». */
 
 /** Reiter der Seite (#/fieldwork?reiter=…). «tag» ist die Handy-Ansicht der Monteure. */
-export const REITER = ['tag', 'rapporte', 'zeiten', 'nachtraege'] as const
+export const REITER = ['tag', 'wochenplan', 'rapporte', 'zeiten', 'nachtraege'] as const
 export type Reiter = (typeof REITER)[number]
 
 export const RAPPORT_ARTEN = ['montage', 'service', 'wartung', 'ibn'] as const
@@ -231,6 +231,13 @@ export interface Nachtrag {
   erstellt_am: string
 }
 
+/** Ein Pflichtfoto je Rapport-Art (Liste in `einstellungen.baustelle.pflichtfotos`). */
+export interface Pflichtfoto {
+  schluessel: string
+  de: string
+  fr: string
+}
+
 /**
  * Prüfpunkt des IBN-Protokolls (`einstellungen.ibn_pruefpunkte`) oder der Inspektion (`wartung_pakete.pruefpunkte`);
  * `nur_messung` gilt nur für Pakete mit Messungen (Premium).
@@ -263,6 +270,8 @@ export interface RapportBild {
   id: string
   name: string
   ordner: string
+  /** Pflichtfoto-Kategorie (z. B. «vorher», «typenschild»), sonst null. */
+  kategorie: string | null
   speicher_pfad: string | null
   lokal: boolean
 }

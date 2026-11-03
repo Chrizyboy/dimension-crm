@@ -6,7 +6,7 @@ Sprache des Kunden.
 
 **Stand:** gebaut in Phase **9** (V233: Verträge, Leistungen WA_LEIST), Pakete der Website seit 2.11.2026.
 Entscheide: `docs/entscheidungen/0018-projekte-service-wartung.md`, `0037-wartung-pakete-website.md`,
-`0040-wartung-inspektionen.md`.
+`0044-wartung-inspektionen.md`.
 
 ## So läuft es
 
