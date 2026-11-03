@@ -13489,7 +13489,7 @@ export type Database = {
       }
       kurs_besucht: { Args: { p_id: string; p_personen?: string[] }; Returns: number }
       kurs_entscheiden: { Args: { p_bewilligt: boolean; p_grund?: string; p_id: string }; Returns: undefined }
-      kurs_speichern: { Args: { p: Json; p_id: string }; Returns: string }
+      kurs_speichern: { Args: { p: Json; p_id: string | null }; Returns: string }
       lager_buchen: { Args: { p: Json }; Returns: undefined }
       lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
       lead_anlegen: { Args: { p: Json }; Returns: string }
