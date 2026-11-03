@@ -2427,6 +2427,9 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "kennzahlen_kein_recht": "Ziele und Kennzahlen-Einstellungen ändert nur, wer das Recht «Finanzen» hat.",
+    "kennzahlen_wert_ungueltig": "Ein Wert ist ungültig (Prozente 0–100, Beträge nicht negativ).",
+    "kennzahlen_schluessel_ungueltig": "Diese Einstellung gibt es nicht.",
     "posteingang_absender_ungueltig": "Bitte eine Mail-Adresse oder @firma.ch eingeben.",
     "posteingang_bestellung_falsch": "Diese Bestellung gibt es nicht oder sie ist schon geliefert.",
     "posteingang_kein_recht_finanzen": "Dafür fehlt dir das Recht Finanzen.",
@@ -6953,9 +6956,12 @@
     "beschreibung": "Wie läuft es? Jede Zahl lässt sich anklicken und zeigt, was dahinter steht.",
     "reiter": {
       "verkauf": "Verkauf",
-      "pipeline": "Pipeline pro Region",
-      "betrieb": "Aufträge und Auslastung",
-      "abwicklung": "Abwicklung"
+      "pipeline": "Pipeline & Prognose",
+      "ueberblick": "Überblick",
+      "abwicklung": "Abwicklung",
+      "finanzen": "Finanzen",
+      "service": "Service & Wartung",
+      "alle": "Alle Zahlen"
     },
     "zeitraum": {
       "titel": "Zeitraum",
@@ -6963,7 +6969,8 @@
       "quartal": "Quartal",
       "jahr": "Jahr",
       "12m": "12 Monate",
-      "alle": "Alles"
+      "alle": "Alles",
+      "woche": "Woche"
     },
     "bereich": {
       "titel": "Firma",
@@ -7025,7 +7032,8 @@
         "quartal": "Woche",
         "jahr": "Monat",
         "12m": "Monat",
-        "alle": "Quartal"
+        "alle": "Quartal",
+        "woche": "Tag"
       },
       "tooltip": "{{fach}}: Muri {{muri}}, Bulle {{bulle}}",
       "tabelle": "Als Tabelle"
@@ -7099,8 +7107,289 @@
         "abgeschlossen": "abgeschlossen"
       }
     },
+    "kpi": {
+      "vergleich": "{{text}}",
+      "ziel": "Ziel {{ziel}} · {{prozent}} % erreicht"
+    },
+    "k": {
+      "auftragseingang": "Auftragseingang",
+      "auftraegeAnzahl": "{{n}} Aufträge unterschrieben",
+      "kwp": "Verkaufte Leistung",
+      "kwpSchnitt": "Schnitt {{kwp}} kWp pro Auftrag",
+      "umsatz": "Umsatz (exkl. MWST)",
+      "quote": "Abschlussquote",
+      "offeneAuftraege": "Offene Aufträge",
+      "projekteAnzahl": "{{n}} Projekte noch nicht fertig",
+      "pipeline": "Prognose gewichtet",
+      "pipelineUnter": "Angebotswert offen {{wert}}",
+      "offenKunden": "Offen bei Kunden",
+      "ueberfaellig": "davon überfällig {{wert}}",
+      "reaktion": "Service-Reaktion",
+      "reaktionUnter": "Ziel ≥ {{richtwert}} % · {{n}} Fälle offen",
+      "ibn": "Inbetriebnahmen",
+      "ibnUnter": "{{kwp}} kWp ans Netz",
+      "schnitt": "Schnitt {{wert}} pro Auftrag"
+    },
+    "verlauf": {
+      "titel": "Auftragseingang kumuliert",
+      "jetzt": "Dieses Jahr",
+      "ziel": "Ziel"
+    },
+    "hinweis": {
+      "titel": "Was jetzt zählt",
+      "beschreibung": "Die wichtigsten Abweichungen, Klick zeigt die Einträge.",
+      "nichts": "Alles im grünen Bereich.",
+      "ton": {
+        "kritisch": "Dringend",
+        "warnung": "Achtung",
+        "ok": "Gut",
+        "info": "Info"
+      },
+      "nachfassen": "{{standort}}: {{n}} Offerten zum Nachfassen fällig",
+      "alt": "{{n}} Offerten älter als {{tage}} Tage ({{wert}}) – nachfassen oder abschliessen",
+      "quelle": "Quelle «{{quelle}}»: {{n}} Leads ohne Auftrag – Kosten prüfen",
+      "ibn": "Unterschrift bis Inbetriebnahme dauert {{tage}} Tage (Richtwert {{richtwert}})",
+      "reaktion": "Service reagiert nur bei {{prozent}} % rechtzeitig (Ziel {{richtwert}} %)",
+      "ueberfaellig": "{{n}} Rechnungen überfällig, zusammen {{wert}}",
+      "zielKnapp": "Auftragseingang erst bei {{prozent}} % des anteiligen Ziels",
+      "zielOk": "Ziel erreicht: {{prozent}} % des anteiligen Ziels"
+    },
+    "firmen": {
+      "titel": "Muri und Bulle",
+      "ziel": "Ziel erreicht",
+      "offen": "Offen bei Kunden"
+    },
+    "woche": {
+      "titel": "Diese Woche",
+      "leads": "Neue Leads",
+      "gesendet": "Offerten gesendet",
+      "angenommen": "Aufträge",
+      "ibn": "Inbetriebnahmen",
+      "faelle": "Neue Service-Fälle"
+    },
+    "produkte": {
+      "titel": "Produktmix",
+      "hinweis": "Aufträge, die das Produkt enthalten (ein Auftrag kann mehrere haben).",
+      "pv": "Photovoltaik",
+      "batterie": "Batterie",
+      "wallbox": "Ladestation",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "ziele": {
+      "keine": "Für diesen Zeitraum ist kein Ziel erfasst. Die Geschäftsleitung setzt es unter «Ziele».",
+      "knopf": "Ziele",
+      "titel": "Ziele {{jahr}}",
+      "beschreibung": "Jahresziele für Auftragseingang und Umsatz, Wahrscheinlichkeiten der Prognose und Richtwerte. Ziele werden für kürzere Zeiträume anteilig gerechnet.",
+      "firma": "Firma (Auftragseingang inkl. MWST)",
+      "gesamt": "Beide zusammen",
+      "gesamtHinweis": "Leer lassen = Summe von Muri und Bulle",
+      "umsatz": "Umsatz",
+      "umsatzHinweis": "Gestellte Rechnungen exkl. MWST",
+      "personen": "Pro Person (Auftragseingang)",
+      "wahrscheinlichkeit": "Wahrscheinlichkeit je Stand (%)",
+      "altTage": "Offerte gilt als alt nach (Tagen)",
+      "richtwerte": "Richtwerte",
+      "r": {
+        "unterschrift_ibn_tage": "Unterschrift bis IBN (Tage)",
+        "reaktion_prozent": "Service rechtzeitig (%)",
+        "marge_prozent": "Marge (%)",
+        "fristen_ueberfaellig": "Fristen überfällig (Anzahl)",
+        "material_spaet": "Material zu spät (Anzahl)",
+        "faelle_dauer": "Service-Fall bis erledigt (Tage)"
+      },
+      "gespeichert": "Ziele {{jahr}} gespeichert."
+    },
+    "meine": {
+      "titel": "Deine Zahlen, {{name}}",
+      "auftraege": "{{n}} Aufträge · {{wert}}",
+      "ziel": "{{prozent}} % deines Ziels",
+      "nachfassen": "{{n}} Offerten zum Nachfassen fällig"
+    },
+    "trichter": {
+      "titel": "Vom Lead zum Auftrag",
+      "beschreibung": "Leads aus dem Zeitraum und wie weit sie kamen.",
+      "hinweis": "Gezählt werden nur Leads, die im Zeitraum entstanden sind.",
+      "leads": "Leads",
+      "termin": "mit Termin",
+      "offerte": "mit Offerte",
+      "auftrag": "mit Auftrag"
+    },
+    "rang": {
+      "titel": "Rangliste Verkauf",
+      "beschreibung": "Unterschriebene Aufträge je Person im Zeitraum.",
+      "person": "Person",
+      "erreicht": "Auftragseingang",
+      "ziel": "Ziel",
+      "auftraege": "Aufträge",
+      "quote": "Quote",
+      "reaktion": "Tage bis Offerte",
+      "hinweis": "Ziel anteilig für den Zeitraum. Klick zeigt die Aufträge."
+    },
+    "verlust": {
+      "titel": "Verlustgründe",
+      "beschreibung": "{{n}} verlorene Offerten im Zeitraum.",
+      "ohne": "Ohne Grund"
+    },
+    "pipe": {
+      "offen": "Offerten offen",
+      "angebotswert": "Angebotswert {{wert}}",
+      "gewichtetUnter": "Angebotswert × Wahrscheinlichkeit je Stand",
+      "alt": "Älter als {{tage}} Tage",
+      "nachStand": "Pipeline nach Stand",
+      "nachStandHinweis": "Wahrscheinlichkeiten stellt die Geschäftsleitung unter «Ziele» ein.",
+      "stand": "Stand",
+      "anzahl": "Anzahl",
+      "wert": "Wert",
+      "wahrscheinlichkeit": "Wahrscheinlichkeit",
+      "gewichtet": "Gewichtet",
+      "s": {
+        "offeriert": "Offeriert",
+        "nachfassen": "Nachfassen fällig",
+        "vertagt": "Vertagt",
+        "alt": "Älter als {{tage}} Tage"
+      },
+      "alter": "Alter der offenen Offerten",
+      "alterHinweis": "Seit dem Versand der Offerte.",
+      "seit": "Offen seit",
+      "k": {
+        "a14": "bis 14 Tage",
+        "a30": "15–30 Tage",
+        "a60": "31–60 Tage",
+        "a90": "61–90 Tage",
+        "aMehr": "über 90 Tage"
+      }
+    },
+    "abw": {
+      "bau": "Unterschrift bis Baubeginn",
+      "bauUnter": "{{n}} Baustarts im Zeitraum",
+      "tage": "Tage",
+      "ibnTage": "Unterschrift bis IBN",
+      "richtwert": "Richtwert ≤ {{tage}} Tage",
+      "nachStand": "Offene Projekte nach Stand",
+      "nachStandHinweis": "Unterschriebene Projekte ohne Inbetriebnahme.",
+      "stand": "Stand",
+      "seit": "Tage seit Unterschrift",
+      "s": {
+        "auftrag": "Auftrag",
+        "im_bau": "im Bau"
+      },
+      "ibnMonat": "Inbetriebnahmen pro Monat (kWp)"
+    },
+    "fin": {
+      "keinZugriff": "Kein Zugriff",
+      "keinZugriffText": "Finanzzahlen sehen nur Personen mit dem Recht «Finanzen».",
+      "rechnungen": "{{n}} Rechnungen gestellt",
+      "eingang": "Zahlungseingang",
+      "inkl": "inkl. MWST",
+      "ueberfaellig": "{{n}} überfällig · {{wert}}",
+      "dauer": "Zahlungsdauer",
+      "dauerUnter": "Schnitt von Rechnung bis Zahlung",
+      "verlauf": "Verrechnet und bezahlt pro Monat",
+      "verrechnet": "Verrechnet",
+      "bezahlt": "Bezahlt",
+      "alter": "Offene Rechnungen nach Fälligkeit",
+      "alterHinweis": "Klick zeigt die Rechnungen.",
+      "faelligkeit": "Fälligkeit",
+      "gemahnt": "Gemahnt",
+      "k": {
+        "nichtFaellig": "noch nicht fällig",
+        "bis30": "1–30 Tage überfällig",
+        "bis60": "31–60 Tage überfällig",
+        "mehr60": "über 60 Tage überfällig"
+      },
+      "arten": "Umsatz nach Rechnungsart",
+      "art": "Art",
+      "anteil": "Anteil",
+      "a": {
+        "anzahlung": "Anzahlung",
+        "teilzahlung": "Teilzahlung",
+        "schluss": "Schlussrechnung",
+        "service": "Service",
+        "wartung": "Wartung",
+        "frei": "Freie Rechnung"
+      }
+    },
+    "srv": {
+      "offen": "Fälle offen",
+      "reaktionUnter": "Ziel ≥ {{richtwert}} %",
+      "neu": "Neue Fälle",
+      "garantie": "davon {{n}} Garantie ({{prozent}} %)",
+      "loesung": "Lösungsdauer",
+      "geloest": "{{n}} Fälle gelöst",
+      "komponenten": "Fälle nach Komponente",
+      "komponentenHinweis": "Zeigt, wo es häufig Probleme gibt.",
+      "komponente": "Komponente",
+      "faelle": "Fälle",
+      "davonGarantie": "davon Garantie",
+      "ohneKomponente": "Ohne Komponente",
+      "k": {
+        "pv": "Module",
+        "wechselrichter": "Wechselrichter",
+        "batterie": "Batterie",
+        "waermepumpe": "Wärmepumpe",
+        "wallbox": "Ladestation",
+        "montage": "Montage",
+        "elektro": "Elektro"
+      },
+      "wartung": "Wartungsverträge",
+      "wartungHinweis": "{{n}} aktive Verträge · {{wert}} pro Jahr",
+      "paket": "Paket",
+      "aktiv": "Aktiv",
+      "neuVertraege": "Neu",
+      "gekuendigt": "Gekündigt",
+      "jahreswert": "Jahreswert",
+      "ohnePaket": "Ohne Paket"
+    },
+    "vergleich": {
+      "titel": "Vergleich",
+      "vorjahr": "Vorjahr",
+      "vorperiode": "Vorperiode",
+      "laedt": "Vergleich wird geladen …"
+    },
+    "person": {
+      "titel": "Person",
+      "alle": "Alle Personen",
+      "ich": "Nur ich",
+      "hinweis": "Für diese Person gibt es im Zeitraum keine Leads."
+    },
+    "bericht": {
+      "knopf": "Monatsbericht PDF",
+      "titel": "Monatsbericht {{monat}}",
+      "untertitel": "Dimension Solaire, Muri und Bulle",
+      "kennzahl": "Kennzahl",
+      "ziel": "Ziel",
+      "fuss": "Erstellt am {{datum}} mit Dimension Work",
+      "datei": "Monatsbericht",
+      "z": {
+        "leads": "Neue Leads",
+        "termine": "Kundentermine",
+        "gesendet": "Offerten gesendet",
+        "auftraege": "Aufträge (inkl. MWST)",
+        "kwp": "Verkaufte Leistung",
+        "quote": "Abschlussquote",
+        "ibn": "Inbetriebnahmen",
+        "ibnTage": "Unterschrift bis IBN",
+        "umsatz": "Umsatz (exkl. MWST)",
+        "eingang": "Zahlungseingang",
+        "ueberfaellig": "Überfällige Rechnungen",
+        "pipeline": "Prognose gewichtet",
+        "faelle": "Neue Service-Fälle",
+        "reaktion": "Service rechtzeitig"
+      }
+    },
+    "csv": {
+      "knopf": "Als CSV",
+      "datum": "Datum",
+      "nummer": "Nummer",
+      "name": "Name",
+      "ort": "Ort / Zusatz",
+      "betrag": "Betrag CHF",
+      "kwp": "kWp",
+      "tage": "Tage",
+      "info": "Info"
+    },
     "abwicklung": {
-      "hinweis": "Wie schnell und sauber laufen die Aufträge? Grün heisst Ziel erreicht, rot heisst darüber. Ziele unter Einstellungen.",
+      "hinweis": "Wie schnell und sauber laufen die Aufträge? Grün heisst Richtwert erreicht, rot heisst darüber. Richtwerte unter «Ziele».",
       "ziel": "Ziel",
       "tage_one": "{{count}} Tag",
       "tage_other": "{{count}} Tage",
@@ -7110,7 +7399,8 @@
         "fristen_ueberfaellig": "Fristen überfällig (aktuell)",
         "material_spaet": "Material zu spät bestellt (aktuell)",
         "faelle_dauer": "Ø Service-Fall bis erledigt"
-      }
+      },
+      "titel": "Abläufe und Richtwerte"
     }
   },
   "handbuch": {
