@@ -1,4 +1,4 @@
-// Ersatz-Server für Meta (Facebook-Seite, Instagram), LinkedIn und Canva – nur für Tests. Antwortet wie die echten
+// Ersatz-Server für Meta (Facebook-Seiten DE/FR, Instagram), LinkedIn und Canva – nur für Tests. Antwortet wie die echten
 // Dienste, soweit das CRM sie nutzt, und merkt sich jeden Post, damit der Test prüfen kann, was gesendet wurde.
 // Ersetzt NICHT den Test mit echten Konten (siehe docs/marketing.md).
 
@@ -79,27 +79,45 @@ export function starteSocialErsatz({ port, host }) {
     if (p.startsWith('/meta-graph/') && z.abgelaufen.has(metaToken())) {
       return json(res, 400, { error: { code: 190, message: 'Error validating access token' } })
     }
+    // Zwei Seiten wie bei Dimension Solaire: französisch (Sàrl, Bulle) und deutsch (GmbH, Muri), je mit Instagram
+    const SEITEN = {
+      1001: {
+        token: 'seite-token',
+        ig: '2002',
+        name: 'Dimension Solaire Sàrl (Ersatz)',
+        ig_name: 'dimension.solaire.bulle',
+      },
+      1002: {
+        token: 'seite-token-de',
+        ig: '2003',
+        name: 'Dimension Solaire GmbH (Ersatz)',
+        ig_name: 'dimension.solaire.muri',
+      },
+    }
     if (p === '/meta-graph/me/accounts') {
       return json(res, 200, {
-        data: [
-          {
-            id: '1001',
-            name: 'Dimension Solaire (Ersatz)',
-            access_token: 'seite-token',
-            instagram_business_account: { id: '2002', username: 'dimension.solaire.ersatz' },
-          },
-        ],
+        data: Object.entries(SEITEN).map(([id, s]) => ({
+          id,
+          name: s.name,
+          access_token: s.token,
+          instagram_business_account: { id: s.ig, username: s.ig_name },
+        })),
       })
     }
-    if (p === '/meta-graph/1001/photos' || p === '/meta-graph/1001/feed') {
+    const seitePost = /^\/meta-graph\/(100[12])\/(photos|feed)$/.exec(p)
+    if (seitePost) {
+      const [, seite, art] = seitePost
       const f = formular(roh)
-      if (f.access_token !== 'seite-token') return json(res, 400, { error: { code: 190, message: 'token' } })
+      if (f.access_token !== SEITEN[seite].token) return json(res, 400, { error: { code: 190, message: 'token' } })
       const id = String(3000 + z.fb.length)
-      z.fb.push({ art: p.endsWith('photos') ? 'foto' : 'text', text: f.caption ?? f.message, bild: f.url ?? null })
-      return json(res, 200, p.endsWith('photos') ? { id, post_id: `1001_${id}` } : { id: `1001_${id}` })
+      z.fb.push({ seite, art: art === 'photos' ? 'foto' : 'text', text: f.caption ?? f.message, bild: f.url ?? null })
+      return json(res, 200, art === 'photos' ? { id, post_id: `${seite}_${id}` } : { id: `${seite}_${id}` })
     }
-    if (p === '/meta-graph/2002/media') {
+    const igMedia = /^\/meta-graph\/(200[23])\/media$/.exec(p)
+    if (igMedia) {
       const f = formular(roh)
+      const s = Object.values(SEITEN).find((x) => x.ig === igMedia[1])
+      if (f.access_token !== s.token) return json(res, 400, { error: { code: 190, message: 'token' } })
       // Instagram lädt das Bild selbst: die Adresse muss erreichbar sein, und nur JPEG ist erlaubt
       const bild = await fetch(f.image_url.replace(host, '127.0.0.1')).catch(() => null)
       if (!bild?.ok) return json(res, 400, { error: { code: 9004, message: 'Bild nicht erreichbar' } })
@@ -108,6 +126,7 @@ export function starteSocialErsatz({ port, host }) {
       }
       const id = `c${z.ig.length}`
       z.ig.push({
+        konto: igMedia[1],
         behaelter: id,
         text: f.caption,
         bytes: (await bild.arrayBuffer()).byteLength,
@@ -116,7 +135,7 @@ export function starteSocialErsatz({ port, host }) {
       return json(res, 200, { id })
     }
     if (/^\/meta-graph\/c\d+$/.test(p)) return json(res, 200, { status_code: 'FINISHED', id: p.split('/').pop() })
-    if (p === '/meta-graph/2002/media_publish') {
+    if (/^\/meta-graph\/200[23]\/media_publish$/.test(p)) {
       const b = z.ig.find((x) => x.behaelter === formular(roh).creation_id)
       if (!b) return json(res, 400, { error: { code: 100, message: 'creation_id' } })
       b.veroeffentlicht = true
@@ -140,9 +159,17 @@ export function starteSocialErsatz({ port, host }) {
     }
     if (p.startsWith('/linkedin/') && z.abgelaufen.has(bearer(req))) return json(res, 401, { message: 'expired' })
     if (p === '/linkedin/rest/organizationAcls') {
-      return json(res, 200, { elements: [{ organization: 'urn:li:organization:777', role: 'ADMINISTRATOR' }] })
+      return json(res, 200, {
+        elements: [
+          { organization: 'urn:li:organization:777', role: 'ADMINISTRATOR' },
+          { organization: 'urn:li:organization:778', role: 'ADMINISTRATOR' },
+        ],
+      })
     }
-    if (p === '/linkedin/rest/organizations/777') return json(res, 200, { localizedName: 'Dimension Solaire (Ersatz)' })
+    if (p === '/linkedin/rest/organizations/777')
+      return json(res, 200, { localizedName: 'Dimension Solaire Sàrl (Ersatz)' })
+    if (p === '/linkedin/rest/organizations/778')
+      return json(res, 200, { localizedName: 'Dimension Solaire GmbH (Ersatz)' })
     if (p === '/linkedin/rest/images' && q.get('action') === 'initializeUpload') {
       const id = `urn:li:image:${z.hochgeladen.length + 1}`
       return json(res, 200, {

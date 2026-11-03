@@ -168,9 +168,45 @@ try {
   r = await rpc('social_verbindungen', {}, verkauf)
   const verb = Object.fromEntries((r.daten ?? []).map((v) => [v.dienst, v]))
   ok(
-    verb.meta?.verbunden && verb.meta.name === 'Dimension Solaire (Ersatz)',
-    'Meta: Seite verbunden, für alle sichtbar',
+    verb.meta?.verbunden && verb.meta.konten?.length === 2 && verb.meta.name.includes('GmbH'),
+    'Meta: beide Seiten verbunden, für alle sichtbar',
     JSON.stringify(r.daten),
+  )
+  ok(
+    verb.meta?.zuordnung?.facebook?.de === '1002' &&
+      verb.meta.zuordnung.facebook.fr === '1001' &&
+      verb.meta.zuordnung.instagram?.de === '1002' &&
+      verb.linkedin?.zuordnung?.linkedin?.de === 'urn:li:organization:778',
+    'Deutsch/Französisch nach Namen vorgeschlagen (GmbH = DE, Sàrl = FR)',
+    JSON.stringify(verb.meta?.zuordnung),
+  )
+  r = await rpc(
+    'social_zuordnung_setzen',
+    { p_netzwerk: 'linkedin', p_sprache: 'de', p_konto: 'urn:li:organization:777' },
+    verkauf,
+  )
+  ok(r.daten?.message === 'social.kein_recht', 'Zuordnung ändern nur durch die Administration', JSON.stringify(r.daten))
+  r = await rpc(
+    'social_zuordnung_setzen',
+    { p_netzwerk: 'instagram', p_sprache: 'de', p_konto: 'gibt-es-nicht' },
+    admin,
+  )
+  ok(r.daten?.message === 'social.konto_unbekannt', 'Nur verbundene Konten wählbar', JSON.stringify(r.daten))
+  r = await rpc(
+    'social_zuordnung_setzen',
+    { p_netzwerk: 'linkedin', p_sprache: 'de', p_konto: 'urn:li:organization:777' },
+    admin,
+  )
+  r = await rpc('social_verbindungen', {}, verkauf)
+  ok(
+    r.daten?.find((v) => v.dienst === 'linkedin')?.zuordnung?.linkedin?.de === 'urn:li:organization:777',
+    'Administration ändert die Zuordnung',
+    JSON.stringify(r.daten),
+  )
+  await rpc(
+    'social_zuordnung_setzen',
+    { p_netzwerk: 'linkedin', p_sprache: 'de', p_konto: 'urn:li:organization:778' },
+    admin,
   )
   ok(verb.linkedin?.verbunden && verb.canva?.verbunden, 'LinkedIn und Canva verbunden')
   r = await fetch(`${API}/rest/v1/rpc/social_konto_lesen`, {
@@ -221,13 +257,32 @@ try {
   r = await funktion('social', { aktion: 'veroeffentlichen', id: post.id }, verkauf)
   ok(r.daten?.status === 'veroeffentlicht', 'Post veröffentlicht', JSON.stringify(r.daten))
   ok(
-    z.fb[0]?.art === 'foto' && z.fb[0].text === 'Winterstrom (Test)\n\nÉlectricité d’hiver',
-    'Facebook: Foto mit Text DE+FR',
+    z.fb.length === 2 &&
+      z.fb.some((x) => x.seite === '1002' && x.art === 'foto' && x.text === 'Winterstrom (Test)') &&
+      z.fb.some((x) => x.seite === '1001' && x.text === 'Électricité d’hiver'),
+    'Facebook DE + FR: deutsche Seite deutsch, französische Seite französisch',
     JSON.stringify(z.fb),
   )
-  ok(z.ig[0]?.veroeffentlicht && z.ig[0].bytes > 0, 'Instagram: Bild abgeholt und veröffentlicht', JSON.stringify(z.ig))
   ok(
-    z.li[0]?.author === 'urn:li:organization:777' &&
+    z.ig.length === 2 &&
+      z.ig.every((x) => x.veroeffentlicht && x.bytes > 0) &&
+      z.ig.find((x) => x.konto === '2003')?.text === 'Winterstrom ☀️ #Solar' &&
+      z.ig.find((x) => x.konto === '2002')?.text === 'Hiver #Solaire',
+    'Instagram: je Sprache ins eigene Konto, Bild abgeholt',
+    JSON.stringify(z.ig),
+  )
+  ok(
+    z.li.length === 2 && z.li[1]?.author === 'urn:li:organization:777',
+    'LinkedIn: französischer Text auf die französische Firmenseite',
+    JSON.stringify(z.li[1]),
+  )
+  ok(
+    r.daten?.ergebnis?.instagram?.teile?.de?.ok && r.daten.ergebnis.instagram.teile.fr?.ok,
+    'Ergebnis je Konto gespeichert',
+    JSON.stringify(r.daten?.ergebnis),
+  )
+  ok(
+    z.li[0]?.author === 'urn:li:organization:778' &&
       z.li[0].commentary.includes('{hashtag|\\#|Solar}') &&
       z.li[0].commentary.includes('\\(Test\\)') &&
       z.li[0].content?.media?.id === z.hochgeladen[0]?.urn,
@@ -236,7 +291,7 @@ try {
   )
   ok(r.daten?.ergebnis?.linkedin?.url?.includes('urn:li:share:'), 'Link zum Post gespeichert')
   r = await funktion('social', { aktion: 'veroeffentlichen', id: post.id }, verkauf)
-  ok(r.daten?.fehler === 'social.nicht_geplant' && z.fb.length === 1, 'Kein zweites Posten')
+  ok(r.daten?.fehler === 'social.nicht_geplant' && z.fb.length === 2, 'Kein zweites Posten')
 
   // --- Geplant über den Zeitplan -------------------------------------------------------------------------------
   const [geplant] = await rest('social_posts', {
@@ -256,7 +311,7 @@ try {
   )
   await funktion('zeitplan', {}, null, { 'x-zeitplan-schluessel': zeitplanSchluessel })
   let [g] = await rest(`social_posts?id=eq.${geplant.id}&select=status`)
-  ok(g.status === 'geplant' && z.li.length === 1, 'Zeitplan wartet bis zur geplanten Zeit')
+  ok(g.status === 'geplant' && z.li.length === 2, 'Zeitplan wartet bis zur geplanten Zeit')
   await rest(`social_posts?id=eq.${geplant.id}`, {
     method: 'PATCH',
     body: JSON.stringify({ geplant_am: new Date(Date.now() - 60_000).toISOString() }),
@@ -284,13 +339,17 @@ try {
   await funktion('zeitplan', {}, null, { 'x-zeitplan-schluessel': zeitplanSchluessel })
   ;[g] = await rest(`social_posts?id=eq.${geplant.id}&select=status`)
   ok(
-    g.status === 'veroeffentlicht' && z.li.length === 2 && !z.li[1].content,
+    g.status === 'veroeffentlicht' &&
+      z.li.length === 3 &&
+      !z.li[2].content &&
+      z.li[2].author === 'urn:li:organization:778',
     'Zeitplan postet zur Zeit (Text ohne Bild)',
     g.status,
   )
 
   // --- Widerrufenes Token -----------------------------------------------------------------------------------
   z.abgelaufen.add('seite-token')
+  z.abgelaufen.add('seite-token-de')
   const [kaputt] = await rest('social_posts', {
     method: 'POST',
     body: JSON.stringify({
