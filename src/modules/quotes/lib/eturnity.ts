@@ -1,4 +1,8 @@
 import type { PdfWerte, Wirtschaftlichkeit } from '../types'
+import { leseStueckliste, mengeVon, nameVon } from './stueckliste'
+import { rappen, zahl } from './zahlen'
+
+export { rappen, zahl }
 
 /**
  * Liest die Offerte aus Eturnity (PDF, deutsch oder französisch) aus den Textzeilen der Seiten.
@@ -25,6 +29,12 @@ export function leseEturnityOfferte(zeilen: readonly string[]): PdfWerte {
     w.nummer ??= fuss[1] ?? ''
     w.datum = `${fuss[4] ?? ''}-${fuss[3] ?? ''}-${fuss[2] ?? ''}`
   }
+  // Fusszeile der echten Vorlage: «hyd-89  23.03.2026  Created with Eturnity Software  1» (Eturnity-Projekt, Datum).
+  const eturnity = z.map((x) => /(\S+) (\d{2})\.(\d{2})\.(\d{4}) Created with Eturnity/.exec(x)).find(Boolean)
+  if (eturnity) {
+    w.eturnityId = eturnity[1] ?? ''
+    w.datum ??= `${eturnity[4] ?? ''}-${eturnity[3] ?? ''}-${eturnity[2] ?? ''}`
+  }
 
   const betrag = (muster: RegExp): number | undefined => {
     for (const x of z) {
@@ -36,31 +46,44 @@ export function leseEturnityOfferte(zeilen: readonly string[]): PdfWerte {
   const BETRAG = String.raw`(-?\d[\d’' .,  ]*\d)`
 
   w.betragRappen =
-    betrag(new RegExp(String.raw`^(?:Gesamtkosten exkl\.|Total hors TVA) [\d,.]+ ?% (?:MWST )?${BETRAG}$`)) ??
-    betrag(new RegExp(String.raw`^(?:Total exkl\. MWST|Total hors TVA) ${BETRAG} CHF`))
-  w.totalInklRappen = betrag(new RegExp(String.raw`(?:Kosten inkl\. MWST|Total TVA incluse) ${BETRAG} CHF`))
-  ws.eivRappen = betrag(new RegExp(String.raw`(?:Einmalvergütung|Rétribution unique)[^-\d]*${BETRAG} CHF`))
-  ws.steuerersparnisRappen = betrag(
-    new RegExp(String.raw`(?:Erwartete Steuerersparnis|Déductions fiscales attendues)\**:? ${BETRAG} CHF`),
+    betrag(
+      new RegExp(
+        String.raw`(?:^|\s)(?:Gesamtkosten exkl\.|Total hors TVA|Coût total hors TVA de) [\d,.]+ ?% (?:MWST )?${BETRAG}(?:$|\s)`,
+      ),
+    ) ?? betrag(new RegExp(String.raw`^(?:Total exkl\. MWST|Total hors TVA) ${BETRAG} CHF`))
+  w.totalInklRappen = betrag(
+    new RegExp(String.raw`(?:Kosten inkl\. MWST|Total TVA incluse|Coûts TVA comprise) ${BETRAG} CHF`),
   )
-  ws.effektiveKostenRappen = betrag(new RegExp(String.raw`(?:Effektive Kosten|Coût effectif) ${BETRAG} CHF`))
+  ws.eivRappen = betrag(
+    new RegExp(String.raw`(?:Einmalvergütung|Rétribution unique|Rémunération unique)[^-\d]*${BETRAG} CHF`),
+  )
+  ws.steuerersparnisRappen = betrag(
+    new RegExp(
+      String.raw`(?:Erwartete Steuerersparnis|Déductions fiscales attendues|Économie d'impôt attendue) ?\**:? ${BETRAG} CHF`,
+    ),
+  )
+  ws.effektiveKostenRappen = betrag(new RegExp(String.raw`(?:Effektive Kosten|Coûts? effectifs?) ${BETRAG} CHF`))
 
-  const rabatt = z.map((x) => /^(?:Rabatt|Remise|Rabais) \((\d+(?:[.,]\d+)?) ?%\)/.exec(x)).find(Boolean)
+  // «Rabatt (5%)», «Frühlingsrabatt (2%)», «Remise de printemps (2 %)»
+  const rabatt = z
+    .map((x) => /(?:^|\s)(?:\S*rabatt|Remise|Rabais)[^(\d]{0,30}\((\d+(?:[.,]\d+)?) ?%\)/i.exec(x))
+    .find(Boolean)
   if (rabatt?.[1]) w.rabattProzent = zahl(rabatt[1])
 
   const kwp =
     z
       .map((x) =>
-        /(?:Solarstromanlage|Système (?:photovoltaïque|solaire)|Installation (?:photovoltaïque|solaire)) \(([\d.,]+) ?kWp\)/.exec(
+        /(?:Solarstromanlage|Système (?:photovoltaïque|solaire)|Installation (?:photovoltaïque|solaire)) \(([\d.,]+) ?kW[pc]\)/.exec(
           x,
         ),
       )
-      .find(Boolean) ?? z.map((x) => /^(?:Solaranlage|Installation solaire) ([\d.,]+) kWp$/.exec(x)).find(Boolean)
+      .find(Boolean) ?? z.map((x) => /^(?:Solaranlage|Installation solaire) ([\d.,]+) kW[pc]$/.exec(x)).find(Boolean)
   if (kwp?.[1]) w.kwp = zahl(kwp[1])
 
   const batterieKwh =
-    z.map((x) => /(?:Batteriespeichersystem|Système de batterie) \(([\d.,]+) ?kWh\)/.exec(x)).find(Boolean) ??
-    z.map((x) => /^Batterie ([\d.,]+) kWh$/.exec(x)).find(Boolean)
+    z
+      .map((x) => /(?:Batteriespeichersystem|Système de (?:stockage par )?batterie) \(([\d.,]+) ?kWh\)/.exec(x))
+      .find(Boolean) ?? z.map((x) => /^Batterie ([\d.,]+) kWh$/.exec(x)).find(Boolean)
   if (batterieKwh?.[1]) w.batterieKwh = zahl(batterieKwh[1])
 
   // Detailkosten: «Photovoltaikmodule 55 St. …», darunter «Aiko * A480-…».
@@ -106,6 +129,10 @@ export function leseEturnityOfferte(zeilen: readonly string[]): PdfWerte {
     }
   }
 
+  // Echte Vorlage: Wert nach der Beschriftung («Unabhängigkeitsgrad  46%», «Consommation propre  54%»).
+  ws.autarkieProzent ??= prozentNach(z, /(?:Unabhängigkeitsgrad|Degré d'indépendance)/)
+  ws.eigenverbrauchProzent ??= prozentNach(z, /(?:^|\s)(?:Eigenverbrauch|Consommation propre)(?! durch| par)/)
+
   // Wirtschaftlichkeit: Rendite, Solarstrompreis, Ertrag über 25 Jahre.
   const rendite = z
     .map((x) => /(?:Rendite Ihrer PV-Anlage|Rendement de votre installation|Rentabilité)\D*([\d.,]+) ?%/.exec(x))
@@ -121,8 +148,35 @@ export function leseEturnityOfferte(zeilen: readonly string[]): PdfWerte {
   if (preis?.[1]) ws.solarstrompreisRappen = zahl(preis[1])
   ws.ertrag25JahreRappen = ertragAusGrafik(z)
 
+  // Stückliste aus den Detailkosten; sie ergänzt Module, Wechselrichter und Batterie, wenn oben nichts stand.
+  const liste = leseStueckliste(z)
+  if (liste.length > 0) {
+    w.stueckliste = liste
+    const module = mengeVon(liste, 'modul')
+    if (module > 0) w.anzahlModule ??= module
+    const modul = w.modul ?? nameVon(liste, 'modul')
+    if (modul) w.modul = modul
+    const wechselrichter = w.wechselrichter ?? nameVon(liste, 'wechselrichter')
+    if (wechselrichter) w.wechselrichter = wechselrichter
+    const batterie = nameVon(liste, 'batterie')
+    if (batterie && (!w.batterie || w.batterie === `${w.batterieKwh} kWh`)) w.batterie = batterie
+  }
+
   // Leere Werte entfernen, damit «nur leere Felder füllen» nichts mit undefined überschreibt.
   return { ...ohneLeere(w), wirtschaftlichkeit: ohneLeere(ws) }
+}
+
+/** Prozentwert in derselben oder der nächsten Zeile nach einer Beschriftung. */
+function prozentNach(z: readonly string[], beschriftung: RegExp): number | undefined {
+  for (let i = 0; i < z.length; i++) {
+    const zeile = z[i] ?? ''
+    const m = beschriftung.exec(zeile)
+    if (!m) continue
+    const rest = `${zeile.slice(m.index + m[0].length)} ${z[i + 1] ?? ''}`
+    const p = /^\s*(\d{1,3}) ?%/.exec(rest)
+    if (p) return Number(p[1])
+  }
+  return undefined
 }
 
 function ohneLeere<T extends object>(o: T): T {
@@ -142,17 +196,4 @@ function ertragAusGrafik(z: readonly string[]): number | undefined {
     .flatMap((x) => [...x.matchAll(/(?:^| )(\d{1,3}'\d{3})(?= |$)/g)].map((m) => Number((m[1] ?? '').replace("'", ''))))
     .filter((n) => n % 1000 !== 0)
   return kandidaten.length >= 2 ? Math.max(...kandidaten) * 100 : undefined
-}
-
-/** «39’874.30», «10 048,75», «-9’504.00» → Zahl. */
-export function zahl(text: string): number {
-  let s = text.replace(/[’'\s  ]/g, '')
-  if (s.includes(',') && !s.includes('.')) s = s.replace(',', '.')
-  else s = s.replace(/,/g, '')
-  return Number(s)
-}
-
-/** Betrag als Text → Rappen (Ganzzahl). */
-export function rappen(text: string): number {
-  return Math.round(zahl(text) * 100)
 }

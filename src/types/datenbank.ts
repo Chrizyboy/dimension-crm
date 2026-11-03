@@ -7775,6 +7775,7 @@ export type Database = {
           sprache: string
           standort_id: string | null
           status: string
+          stueckliste: Json | null
           titel: string | null
           unterlagen: NonNullable<Json>
           variante: string | null
@@ -7826,6 +7827,7 @@ export type Database = {
           sprache?: string
           standort_id?: string | null
           status?: string
+          stueckliste?: Json | null
           titel?: string | null
           unterlagen?: NonNullable<Json>
           variante?: string | null
@@ -7876,6 +7878,7 @@ export type Database = {
           sprache?: string
           standort_id?: string | null
           status?: string
+          stueckliste?: Json | null
           titel?: string | null
           unterlagen?: NonNullable<Json>
           variante?: string | null

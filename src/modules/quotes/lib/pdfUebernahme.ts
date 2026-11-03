@@ -1,3 +1,4 @@
+import { stuecklisteFuerDb } from '../services/stueckliste'
 import type { Offerte, PdfWerte } from '../types'
 
 /** Felder der Offerte, die aus dem PDF kommen können, in der Reihenfolge der Anzeige. */
@@ -21,18 +22,31 @@ export interface FeldVergleich {
   gleich: boolean
 }
 
+/** Was ausser den verglichenen Feldern mitgeht: Wirtschaftlichkeit, Eturnity-Projekt und Stückliste. */
+export interface Zusatzwerte extends Record<string, unknown> {
+  wirtschaftlichkeit?: unknown
+  eturnity_id?: string
+  stueckliste?: unknown[]
+}
+
 /** Werte aus dem PDF in Spaltennamen der Offerte (für offerte_werte_setzen). */
-export function werteFuerOfferte(
-  p: PdfWerte,
-): Partial<Record<PdfFeld, string | number>> & { wirtschaftlichkeit?: unknown } {
-  const w: Partial<Record<PdfFeld, string | number>> & { wirtschaftlichkeit?: unknown } = {}
+export function werteFuerOfferte(p: PdfWerte): Partial<Record<PdfFeld, string | number>> & Zusatzwerte {
+  const w: Partial<Record<PdfFeld, string | number>> & Zusatzwerte = zusatzwerte(p)
   if (p.betragRappen !== undefined) w.betrag_rappen = p.betragRappen
   if (p.kwp !== undefined) w.leistung_kwp = p.kwp
   if (p.anzahlModule !== undefined) w.anzahl_module = p.anzahlModule
   if (p.wechselrichter) w.wechselrichter = p.wechselrichter
   if (p.batterie) w.batterie = p.batterie
   if (p.datum) w.angebot_am = p.datum
+  return w
+}
+
+/** Wirtschaftlichkeit, Eturnity-Projekt und Stückliste, soweit im PDF erkannt. */
+export function zusatzwerte(p: PdfWerte): Zusatzwerte {
+  const w: Zusatzwerte = {}
   if (Object.keys(p.wirtschaftlichkeit).length > 0) w.wirtschaftlichkeit = p.wirtschaftlichkeit
+  if (p.eturnityId) w.eturnity_id = p.eturnityId
+  if (p.stueckliste?.length) w.stueckliste = stuecklisteFuerDb(p.stueckliste)
   return w
 }
 
