@@ -563,7 +563,10 @@
       "erreichbarkeit": "Disponibilité",
       "kommentarKunde": "Commentaire client",
       "wiedervorlage": "Rappel",
-      "verlauf": "Historique (modèle)"
+      "verlauf": "Historique (modèle)",
+      "heizung": "Chauffage actuel",
+      "vorOrt": "À savoir sur place",
+      "vorOrtHinweis": "Accès, clés, parking, chien, compteur – visible pour le montage et le service."
     },
     "abaninja": {
       "nicht": "Pas encore lié à AbaNinja. Liez-le pour voir les factures ici et transmettre les changements d'adresse à AbaNinja.",
@@ -641,7 +644,51 @@
       "baubeginn": "Prochain RDV: début des travaux"
     },
     "nurFinanzen": "Seules les personnes avec le droit «Finances» voient les factures.",
-    "nurBuchhaltung": "comptabilité seulement"
+    "nurBuchhaltung": "comptabilité seulement",
+    "betreuung": {
+      "titel": "Suivi et facturation",
+      "betreuer": "Responsable chez nous",
+      "keinBetreuer": "Pas de responsable fixe",
+      "herkunft": "Provenance",
+      "rechnungAn": "Facture à",
+      "gleicheAdresse": "Adresse du client",
+      "abweichend": "Adresse de facturation différente",
+      "rechnungsEmail": "Facture par e-mail à",
+      "zahlungsfrist": "Délai de paiement",
+      "fristFirma": "comme la société",
+      "tage": "{{count}} jours",
+      "uid": "IDE",
+      "bearbeiten": "Modifier suivi et facturation",
+      "adresse": {
+        "name": "Nom / Société",
+        "zusatz": "Complément",
+        "strasse": "Rue",
+        "plz": "NPA",
+        "ort": "Localité"
+      }
+    },
+    "personen": {
+      "titel": "Personnes de contact",
+      "firmen": "Fait partie de",
+      "keine": "Aucune autre personne saisie.",
+      "hauptkontakt": "Contact principal",
+      "unterschreibt": "Signe",
+      "rechnungen": "Factures",
+      "vorOrt": "Sur place",
+      "imAdressbuch": "Modifier dans le carnet d'adresses"
+    },
+    "zusammen": {
+      "menue": "Fusionner un doublon",
+      "titel": "Fusionner un doublon",
+      "text": "Choisis le contact saisi en double. Tout ce qui y est lié (bâtiments, leads, offres, projets, factures, e-mails, tâches, documents) passe à {{name}}. Le doublon va à la corbeille.",
+      "keine": "Aucun doublon possible trouvé (même e-mail, téléphone ou nom).",
+      "bestaetigen": "Fusionner",
+      "grund": {
+        "email": "même e-mail",
+        "telefon": "même téléphone",
+        "name": "même nom"
+      }
+    }
   },
   "kontakt": {
     "neuTitel": "Nouveau contact",
