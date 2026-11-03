@@ -54,6 +54,35 @@ const FRANZOESISCH = [
   'Total hors TVA 8,1%  9 186,70',
 ]
 
+// Aufbau der Vorlage 2026 (Muri und Bulle): keine CRM-Nummer, Fusszeile mit Eturnity-Projekt, Detailkosten.
+const VORLAGE_2026 = [
+  'VOTRE OFFRE PERSONNALISÉE',
+  'COÛTS*  10’500.00 CHF  2’900.00 CHF',
+  'Installation photovoltaïque (5,16 kWc))  Système de stockage par batterie (6,9 kWh)',
+  'Remise de printemps (2 %)  -268.00 CHF  1’063.70 CHF',
+  'TVA 8,1 %  Coûts TVA comprise  14’195.70 CHF',
+  'SUBVENTIONS**  Rémunération unique (photovoltaïque)  -1’900.00 CHF',
+  "Économie d'impôt attendue ***  -1’800.00 CHF",
+  'Coûts effectifs  10’495.70 CHF',
+  'hyd-7  01.11.2026  Created with Eturnity Software  1',
+  'Consommation  4’500 kWh',
+  'Installation solaire  5,16 kWc',
+  'Rendement annuel  5’300 kWh',
+  "Degré d'indépendance",
+  '70%',
+  'Consommation propre  48%',
+  'hyd-7  01.11.2026  Created with Eturnity Software  2',
+  'Installation photovoltaïque  10’500.00',
+  'Modules photovoltaïques  12 St.  95.00  1’140.00',
+  'Exemple * EX-430',
+  'Onduleur  1 St.  1’200.00  1’200.00',
+  'Exemple * Onduleur 5.0',
+  'Accumulateur  1 St.  2’900.00  2’900.00',
+  'Exemple * Batterie 7',
+  'Coût total hors TVA de 8,1 %  13’132.00',
+  'hyd-7  01.11.2026  Created with Eturnity Software  8',
+]
+
 describe('Eturnity-Offerte lesen', () => {
   it('liest Nummer, Datum, Beträge und Anlage aus der deutschen Offerte', () => {
     const w = leseEturnityOfferte(DEUTSCH)
@@ -102,6 +131,35 @@ describe('Eturnity-Offerte lesen', () => {
       batterie: 'Exemple BAT-9 (9.2 kWh)',
     })
     expect(w.kwp).toBeUndefined()
+  })
+
+  it('liest die Vorlage 2026 mit Eturnity-Projekt, Fusszeilen-Datum und Stückliste', () => {
+    const w = leseEturnityOfferte(VORLAGE_2026)
+    expect(w).toMatchObject({
+      sprache: 'fr',
+      eturnityId: 'hyd-7',
+      datum: '2026-11-01',
+      betragRappen: 1_313_200,
+      totalInklRappen: 1_419_570,
+      rabattProzent: 2,
+      kwp: 5.16,
+      batterieKwh: 6.9,
+      anzahlModule: 12,
+      modul: 'Exemple EX-430',
+      wechselrichter: 'Exemple Onduleur 5.0',
+      batterie: 'Exemple Batterie 7',
+    })
+    expect(w.nummer).toBeUndefined()
+    expect(w.stueckliste).toHaveLength(3)
+    expect(w.wirtschaftlichkeit).toMatchObject({
+      eivRappen: -190_000,
+      steuerersparnisRappen: -180_000,
+      effektiveKostenRappen: 1_049_570,
+      verbrauchKwh: 4500,
+      jahresertragKwh: 5300,
+      autarkieProzent: 70,
+      eigenverbrauchProzent: 48,
+    })
   })
 
   it('lässt leer, was nicht im Text steht', () => {

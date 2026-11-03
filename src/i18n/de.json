@@ -1888,6 +1888,12 @@
       "keineVerloren": "Keine verlorenen Offerten im Zeitraum.",
       "keineKonkurrenz": "Keine Konkurrenz erfasst. Beim Nachfassen unter «Konkurrenz» eintragen.",
       "ohne": "Ohne Zuständige"
+    },
+    "stueckliste": {
+      "titel": "Stückliste",
+      "stand": "{{material}} Material · {{alle}} Positionen",
+      "option": "Option: {{gruppe}}",
+      "imPdf": "Stückliste mit {{anzahl}} Positionen erkannt, sie wird mitgespeichert."
     }
   },
   "werkvertraege": {
