@@ -72,7 +72,7 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
         },
       )
       if (e.typ === 'einsatz' && e.info && art === 'montage') {
-        // Montage: erst Sicherheits-Check, dann startet die Zeit fürs ganze Team (Entscheid 0044).
+        // Montage: erst Sicherheits-Check, dann startet die Zeit fürs ganze Team (Entscheid 0045).
         await qc.invalidateQueries({ queryKey: ['baustelle', 'tag'] })
         setCheck({ rapportId: id, projektId: e.projekt?.id ?? null, team: e.info.team })
         return

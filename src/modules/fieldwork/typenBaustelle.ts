@@ -1,4 +1,4 @@
-/** Typen für den Ausbau am Handy (Schritte, Team, Seriennummern, Meldungen), Entscheid 0044. */
+/** Typen für den Ausbau am Handy (Schritte, Team, Seriennummern, Meldungen), Entscheid 0045. */
 /** Arbeitsschritt oder Pflichtfoto aus `einstellungen.baustelle` (je Projektart). */
 export interface Schritt {
   schluessel: string

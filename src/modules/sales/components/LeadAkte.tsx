@@ -17,6 +17,7 @@ import { ladeGeschaeft } from '../services/geschaefte'
 import type { Geschaeft } from '../types'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { AutomatischGeplant } from '@/components/shared/automatik/AutomatischGeplant'
 import { KiKnopf } from '@/components/shared/ki/KiKnopf'
 import { KiLeadBewertung } from '@/components/shared/ki/KiLeadBewertung'
 import { KiZusammenfassung } from '@/components/shared/ki/KiZusammenfassung'
@@ -194,6 +195,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
               <OutlookTermin verkaufschanceId={g.verkaufschanceId} outlook={akte.details.data.outlook} />
             )}
             <LeadAngaben g={g} details={akte.details.data} />
+            <AutomatischGeplant tabelle="verkaufschancen" id={g.verkaufschanceId} />
             {g.verkaufschanceId && (
               <AkteAbschnitt
                 titel={t('verkauf.akte.besichtigung')}

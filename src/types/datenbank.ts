@@ -309,6 +309,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: 'abwesenheiten_kurs_id_fkey'
+            columns: ['kurs_id']
+            isOneToOne: false
+            referencedRelation: 'kurse'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'abwesenheiten_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
@@ -1724,8 +1731,11 @@ export type Database = {
           erstellt_am: string
           fehler: number
           geaendert_am: string
+          gestoppt_grund: string | null
+          gestoppt_von: string | null
           id: string
           kontakt_id: string | null
+          nur_schritt: number | null
           protokoll: NonNullable<Json>
           schritt: number
           signal_id: number
@@ -1743,8 +1753,11 @@ export type Database = {
           erstellt_am?: string
           fehler?: number
           geaendert_am?: string
+          gestoppt_grund?: string | null
+          gestoppt_von?: string | null
           id?: string
           kontakt_id?: string | null
+          nur_schritt?: number | null
           protokoll?: NonNullable<Json>
           schritt?: number
           signal_id: number
@@ -1761,8 +1774,11 @@ export type Database = {
           erstellt_am?: string
           fehler?: number
           geaendert_am?: string
+          gestoppt_grund?: string | null
+          gestoppt_von?: string | null
           id?: string
           kontakt_id?: string | null
+          nur_schritt?: number | null
           protokoll?: NonNullable<Json>
           schritt?: number
           signal_id?: number
@@ -1777,6 +1793,13 @@ export type Database = {
             columns: ['automation_id']
             isOneToOne: false
             referencedRelation: 'automationen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'automation_laeufe_gestoppt_von_fkey'
+            columns: ['gestoppt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -1833,10 +1856,12 @@ export type Database = {
           geaendert_am: string
           geloescht_am: string | null
           id: string
+          kontakt_pause_tage: number | null
           modus: string
           name_de: string
           name_fr: string
           reihenfolge: number
+          versandfenster: Json | null
           vorlage: string | null
         }
         ComputedFields: never
@@ -1856,10 +1881,12 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          kontakt_pause_tage?: number | null
           modus?: string
           name_de: string
           name_fr: string
           reihenfolge?: number
+          versandfenster?: Json | null
           vorlage?: string | null
         }
         Update: {
@@ -1878,10 +1905,12 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          kontakt_pause_tage?: number | null
           modus?: string
           name_de?: string
           name_fr?: string
           reihenfolge?: number
+          versandfenster?: Json | null
           vorlage?: string | null
         }
         Relationships: [
@@ -6312,6 +6341,13 @@ export type Database = {
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'personal_akten_vorgesetzt_id_fkey'
+            columns: ['vorgesetzt_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
         ]
       }
       personal_dokumente: {
@@ -6358,7 +6394,15 @@ export type Database = {
           person_id?: string
           titel?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'personal_dokumente_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       personal_gespraeche: {
         Row: {
@@ -6404,7 +6448,22 @@ export type Database = {
           notiz?: string | null
           person_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'personal_gespraeche_gefuehrt_von_fkey'
+            columns: ['gefuehrt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'personal_gespraeche_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       personal_loehne: {
         Row: {
@@ -6453,7 +6512,15 @@ export type Database = {
           notiz?: string | null
           person_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'personal_loehne_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
       }
       personen: {
         Row: {
@@ -7508,6 +7575,13 @@ export type Database = {
           person_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'qualifikationen_kurs_id_fkey'
+            columns: ['kurs_id']
+            isOneToOne: false
+            referencedRelation: 'kurse'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'qualifikationen_person_id_fkey'
             columns: ['person_id']
@@ -8565,8 +8639,8 @@ export type Database = {
           person_id: string | null
           prioritaet: string | null
           projekt_id: string | null
-          reaktion_am: string | null
           quelle: string
+          reaktion_am: string | null
           reaktion_bis: string | null
           status: string
           team: string[]
@@ -8605,8 +8679,8 @@ export type Database = {
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
-          reaktion_am?: string | null
           quelle?: string
+          reaktion_am?: string | null
           reaktion_bis?: string | null
           status?: string
           team?: string[]
@@ -8644,8 +8718,8 @@ export type Database = {
           person_id?: string | null
           prioritaet?: string | null
           projekt_id?: string | null
-          reaktion_am?: string | null
           quelle?: string
+          reaktion_am?: string | null
           reaktion_bis?: string | null
           status?: string
           team?: string[]
@@ -11404,6 +11478,13 @@ export type Database = {
             referencedRelation: 'personen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'personal_akten_vorgesetzt_id_fkey'
+            columns: ['vorgesetzt_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
         ]
       }
       preisliste: {
@@ -12460,8 +12541,64 @@ export type Database = {
         }[]
       }
       ausweis_anforderung_speichern: { Args: { p: Json; p_schluessel: string }; Returns: undefined }
+      automation_aenderungen: {
+        Args: { p_id: string }
+        Returns: {
+          aktion: string
+          felder: string[]
+          person: string
+          zeitpunkt: string
+        }[]
+      }
+      automation_geplant: {
+        Args: { p_id?: string; p_tabelle?: string }
+        Returns: {
+          art: string
+          automation_id: string
+          bezug_id: string
+          darf: boolean
+          grund: string
+          lauf_id: string
+          modus: string
+          nach_aussen: boolean
+          name_de: string
+          name_fr: string
+          schritt: number
+          schritte: number
+          stand: string
+          tabelle: string
+          text_de: string
+          text_fr: string
+          titel: string
+          weiter_am: string
+        }[]
+      }
       automation_katalog: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_katalog_ausbau: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_kennzahlen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          automation_id: string
+          laeufe: number
+          mit_fehler: number
+          wartend: number
+          zuletzt_am: string
+        }[]
+      }
       automation_lauf_abbrechen: { Args: { p_lauf: string }; Returns: boolean }
+      automation_lauf_fortsetzen: { Args: { p_lauf: string }; Returns: undefined }
+      automation_lauf_jetzt: { Args: { p_lauf: string }; Returns: undefined }
+      automation_lauf_stoppen: { Args: { p_grund: string; p_lauf: string }; Returns: undefined }
+      automation_lauf_verschieben: { Args: { p_lauf: string; p_tage: number }; Returns: string }
+      automation_probe_datensaetze: {
+        Args: { p_tabelle: string }
+        Returns: {
+          id: string
+          titel: string
+        }[]
+      }
+      automation_probelauf: { Args: { p: Json; p_id: string; p_tabelle: string }; Returns: Json }
+      automation_schritt_wiederholen: { Args: { p_lauf: string; p_schritt: number }; Returns: undefined }
       automation_server_ergebnis: {
         Args: {
           p_ergebnis: string
@@ -12474,6 +12611,8 @@ export type Database = {
         Returns: undefined
       }
       automation_server_offen: { Args: { p_limit?: number }; Returns: Json }
+      automation_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
+      automation_warum: { Args: { p_lauf: string }; Returns: Json }
       automationen_abarbeiten: { Args: { p_limit?: number }; Returns: Json }
       benachrichtigung_ausblenden: { Args: { p_id: string }; Returns: undefined }
       benachrichtigungen_gelesen: { Args: { p_ids?: string[] }; Returns: number }
@@ -12639,10 +12778,7 @@ export type Database = {
         }[]
       }
       kurs_besucht: { Args: { p_id: string; p_personen?: string[] }; Returns: number }
-      kurs_entscheiden: {
-        Args: { p_bewilligt: boolean; p_grund?: string; p_id: string }
-        Returns: undefined
-      }
+      kurs_entscheiden: { Args: { p_bewilligt: boolean; p_grund?: string; p_id: string }; Returns: undefined }
       kurs_speichern: { Args: { p: Json; p_id: string | null }; Returns: string }
       lager_buchen: { Args: { p: Json }; Returns: undefined }
       lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
@@ -12926,9 +13062,6 @@ export type Database = {
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
       seriennummern_erfassen: { Args: { p: Json; p_bestellung: string }; Returns: number }
-      service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
-      service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
-      service_termin_verschieben: { Args: { p_datum: string; p_id: string; p_person?: string }; Returns: undefined }
       service_akte: { Args: { p_id: string }; Returns: Json }
       service_aus_website: { Args: { p: Json }; Returns: Json }
       service_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_nr: number }; Returns: undefined }
@@ -12942,9 +13075,12 @@ export type Database = {
         Args: { p_am?: string; p_art: string; p_eintrag: string; p_id: string; p_text: string }
         Returns: undefined
       }
+      service_eskalieren: { Args: Record<PropertyKey, never>; Returns: number }
       service_kunde_aus_meldung: { Args: { p_id: string }; Returns: string }
       service_leitstand: { Args: Record<PropertyKey, never>; Returns: Json }
+      service_notiz: { Args: { p_id: string; p_text: string }; Returns: undefined }
       service_seriennummer: { Args: { p_id: string; p_nr: number; p_seriennummer: string }; Returns: undefined }
+      service_termin_verschieben: { Args: { p_datum: string; p_id: string; p_person?: string }; Returns: undefined }
       service_zuordnen: {
         Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
         Returns: undefined
