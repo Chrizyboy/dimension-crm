@@ -118,6 +118,8 @@ export interface Einsatz {
   personen: string[]
   subunternehmer_id: string | null
   notiz: string | null
+  /** Tätigkeiten (Liste «taetigkeit»), daraus folgen die Pflicht-Ausweise. */
+  taetigkeiten: string[]
 }
 
 /** Service-Termin aus «Service & Garantie» (Sicht service_termine), im Zeitplan neben den Baustellen. */

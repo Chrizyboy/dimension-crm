@@ -2510,6 +2510,7 @@ export type Database = {
           personen: string[]
           projekt_id: string
           subunternehmer_id: string | null
+          taetigkeiten: string[]
           team: string[]
           von: string
         }
@@ -2528,6 +2529,7 @@ export type Database = {
           personen?: string[]
           projekt_id: string
           subunternehmer_id?: string | null
+          taetigkeiten?: string[]
           team?: string[]
           von: string
         }
@@ -2545,6 +2547,7 @@ export type Database = {
           personen?: string[]
           projekt_id?: string
           subunternehmer_id?: string | null
+          taetigkeiten?: string[]
           team?: string[]
           von?: string
         }
@@ -13258,7 +13261,10 @@ export type Database = {
       spesen_rueckfrage: { Args: { p_id: string; p_text: string }; Returns: undefined }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      taetigkeit_anforderung_speichern: { Args: { p: Json; p_schluessel: string }; Returns: undefined }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
+      team_anlaesse: { Args: { p_tag?: string }; Returns: Json }
+      team_anlass_zeigen: { Args: { p_zeigen: boolean }; Returns: undefined }
       team_kurse: { Args: { p_jahr?: number }; Returns: Json }
       team_uebersicht: { Args: { p_tag?: string }; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }

@@ -2077,7 +2077,10 @@
     "automation_lauf_offen": "Wiederholen geht erst, wenn der Lauf zu Ende ist.",
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
-    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr)."
+    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
+    "team_taetigkeit_unbekannt": "Diese Tätigkeit gibt es nicht (mehr).",
+    "team_wer_ungueltig": "Bitte «jede Person» oder «mindestens eine» wählen.",
+    "team_ausweis_unbekannt": "Diesen Ausweis gibt es nicht (mehr)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -2849,7 +2852,11 @@
       "grund_doppelt": "{{wer}} doppelt eingeplant",
       "abwesendAm": "Abwesend: {{namen}}",
       "service": "Service-Einsätze",
-      "serviceUnter": "aus Service & Garantie"
+      "serviceUnter": "aus Service & Garantie",
+      "taetigkeiten": "Tätigkeiten",
+      "ausweisFehlt": "{{taetigkeit}}: Ausweis fehlt bei {{namen}}",
+      "ausweisNiemand": "{{taetigkeit}}: niemand im Team hat den Ausweis",
+      "ausweisLegende": "Ausweis fehlt"
     },
     "bewilligungen": {
       "ansicht": "Ansicht",
@@ -7809,6 +7816,32 @@
       "notiz": "Notiz",
       "rueckzahlungOffen": "Offen aus Weiterbildungsvereinbarung: {{betrag}} (bei Kündigung heute)",
       "keineFuerPerson": "Keine Kurse in diesem Jahr."
+    },
+    "taetigkeit": {
+      "titel": "Pflicht-Ausweise je Tätigkeit",
+      "text": "Welche Ausweise eine Tätigkeit auf der Baustelle braucht. Die Einsatzplanung warnt, wenn sie im Team fehlen: bei «jede Person» alle, bei «mindestens eine» genügt eine Person. «Jeder Einsatz» gilt ohne Häkchen im Einsatz. Nur eine Warnung, geplant werden kann trotzdem.",
+      "taetigkeit": "Tätigkeit",
+      "werKopf": "Wer braucht ihn",
+      "wer": {
+        "alle": "jede Person",
+        "einer": "mindestens eine"
+      },
+      "werFuer": "Wer braucht den Ausweis für {{taetigkeit}}",
+      "immer": "Jeder Einsatz",
+      "immerFuer": "{{taetigkeit}} gilt für jeden Einsatz",
+      "brauchtFuer": "{{taetigkeit}} braucht {{ausweis}}",
+      "neu": "Neue Tätigkeit"
+    },
+    "anlass": {
+      "titel": "Geburtstage und Jubiläen",
+      "heute": "heute",
+      "morgen": "morgen",
+      "nichts": "In den nächsten Tagen hat niemand Geburtstag oder Jubiläum.",
+      "geburtstag": "Geburtstag",
+      "jubilaeum_one": "{{count}} Jahr bei uns",
+      "jubilaeum_other": "{{count}} Jahre bei uns",
+      "michVerbergen": "Mich hier nicht zeigen",
+      "michZeigen": "Mich hier wieder zeigen"
     }
   },
   "posteingang": {

@@ -1,4 +1,4 @@
-import { TriangleAlert } from 'lucide-react'
+import { IdCard, TriangleAlert } from 'lucide-react'
 import { useLayoutEffect, useRef, useState, type PointerEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatDatum } from '@/lib/format'
@@ -79,12 +79,14 @@ export function ZeitplanBalken({
   const ende = zug?.nurEnde ?? false
   const tagProzent = 100 / tage
   const konflikt = b.konflikt.length > 0
+  const ausweis = b.ausweis ?? []
   const artText = b.art === 'abwesend' ? b.text : t(`projekte.einsatz.${b.art}`)
   const titel = [
     `${artText}: ${formatDatum(b.von)} – ${formatDatum(b.bis)}`,
     b.projekt ? `${b.projekt.nummer} · ${b.projekt.kunde}` : null,
     b.art !== 'abwesend' && b.text ? b.text : null,
     konflikt ? t('projekte.zeitplan.konfliktMit', { namen: konfliktText(b.konflikt, t) }) : null,
+    ...ausweis,
   ]
     .filter(Boolean)
     .join('\n')
@@ -125,6 +127,7 @@ export function ZeitplanBalken({
           FARBE[b.art],
           ziehbar && 'cursor-grab active:cursor-grabbing',
           konflikt && 'ring-bad ring-2 ring-offset-1',
+          !konflikt && ausweis.length > 0 && 'ring-warn ring-2 ring-offset-1',
           n !== 0 && 'z-10 opacity-90 shadow-md',
         )}
         style={{
@@ -134,6 +137,9 @@ export function ZeitplanBalken({
         }}
       >
         {konflikt && <TriangleAlert className="text-bad bg-surface size-3.5 shrink-0 rounded-full p-px" aria-hidden />}
+        {!konflikt && ausweis.length > 0 && (
+          <IdCard className="text-warn bg-surface size-3.5 shrink-0 rounded-full p-px" aria-hidden />
+        )}
         <span ref={textRef} className={cn('truncate', aussen && 'invisible')}>
           {text}
         </span>

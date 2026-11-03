@@ -88,4 +88,5 @@ L’installation est alors considérée comme construite : les étapes jusqu’a
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Interventions avec activités (nacelle, remorque, toit avant 1990) ; s’il manque un permis obligatoire dans l’équipe, le planning avertit en jaune.
 - 01.11.2026: Planning des chantiers avec vue chantiers ou équipe, conflits en rouge.
