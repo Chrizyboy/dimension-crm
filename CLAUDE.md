@@ -17,7 +17,7 @@ Desktop-App für Windows (Tauri 2) und Handy/Browser (PWA), Daten in Supabase (F
 | `npm run dev`            | Web-Oberfläche auf http://localhost:1420                 |
 | `npm run app:dev`        | Desktop-Fenster (Tauri) mit Live-Neuladen                |
 | `npm run check`          | Lint + Typen + Tests + Build in einem Schritt            |
-| `npm run lint`           | ESLint und Prüfung der Modul-Grenzen                     |
+| `npm run lint`           | ESLint, Modul-Grenzen, eindeutige Migrations-Nummern     |
 | `npm run typecheck`      | TypeScript                                               |
 | `npm test`               | Unit- und Komponenten-Tests (Vitest)                     |
 | `npm run test:e2e`       | Browser-Tests Desktop + Handy (Playwright)               |
