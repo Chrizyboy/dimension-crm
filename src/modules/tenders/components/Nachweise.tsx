@@ -1,6 +1,7 @@
 import { FileText, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -105,6 +106,14 @@ export function Nachweise() {
                             >
                               <FileText />
                             </Button>
+                          )}
+                          {n && (
+                            <InPapierkorbKnopf
+                              tabelle="firmen_nachweise"
+                              id={n.id}
+                              name={`${sprache === 'fr' ? a.fr : a.de} ${f.name}`}
+                              nurSymbol
+                            />
                           )}
                           {ton(n) !== 'ok' && (
                             <Button

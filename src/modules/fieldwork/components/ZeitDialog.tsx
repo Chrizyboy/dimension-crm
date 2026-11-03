@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
+import { formatDatum } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { heute, zuerich } from '../lib/zeit'
 import { zeitSpeichern } from '../services/baustelle'
@@ -60,9 +62,20 @@ export function ZeitDialog({ zeit, onSchliessen }: { zeit: Zeit | null; onSchlie
           ? { beschreibung: [zeit.person, zeit.projekt_nummer, zeit.rapport_nummer].filter(Boolean).join(' · ') }
           : {})}
         fuss={
-          <Button laedt={laeuft} disabled={Boolean(fehler)} onClick={() => void speichern()}>
-            {t('allgemein.speichern')}
-          </Button>
+          <>
+            {zeit && !zeit.exportiert_am && (
+              <InPapierkorbKnopf
+                tabelle="zeiten"
+                id={zeit.id}
+                name={[zeit.person, formatDatum(zeit.tag)].filter(Boolean).join(' ')}
+                onFertig={onSchliessen}
+                className="mr-auto"
+              />
+            )}
+            <Button laedt={laeuft} disabled={Boolean(fehler)} onClick={() => void speichern()}>
+              {t('allgemein.speichern')}
+            </Button>
+          </>
         }
       >
         <div className="grid grid-cols-2 gap-3">

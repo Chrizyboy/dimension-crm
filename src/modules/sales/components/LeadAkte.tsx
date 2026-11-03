@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -143,6 +144,14 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
             </div>
           </div>
           <Knopfleiste haupt="letzte">
+            {g.verkaufschanceId && (
+              <InPapierkorbKnopf
+                tabelle="verkaufschancen"
+                id={g.verkaufschanceId}
+                name={[g.nummer, g.name].filter(Boolean).join(' ')}
+                onFertig={onSchliessen}
+              />
+            )}
             {g.telefon && (
               <a href={`tel:${g.telefon.replace(/[^\d+]/g, '')}`} className={buttonVariants({ variant: 'secondary' })}>
                 <Phone />

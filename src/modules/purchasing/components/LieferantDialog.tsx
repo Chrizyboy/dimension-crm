@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -77,6 +78,15 @@ export function LieferantDialog({
         beschreibung={t('einkauf.lieferant.text')}
         fuss={
           <>
+            {l && (
+              <InPapierkorbKnopf
+                tabelle="lieferanten"
+                id={l.id}
+                name={l.name}
+                onFertig={onSchliessen}
+                className="mr-auto"
+              />
+            )}
             <Button variant="ghost" onClick={onSchliessen}>
               {t('allgemein.abbrechen')}
             </Button>

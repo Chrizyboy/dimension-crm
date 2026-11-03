@@ -18690,14 +18690,26 @@ export type Database = {
       papierkorb: {
         Args: { p_limit?: number }
         Returns: {
-          bezeichnung: string
+          bezeichnung: string | null
           geloescht_am: string
-          geloescht_von: string
+          geloescht_von: string | null
           id: string
           tabelle: string
         }[]
       }
+      papierkorb_legen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
+      papierkorb_liste: {
+        Args: { p_grenze?: number }
+        Returns: {
+          geloescht_am: string
+          geloescht_von: string | null
+          id: string
+          tabelle: string
+          titel: string | null
+        }[]
+      }
       papierkorb_wiederherstellen: { Args: { p_id: string; p_tabelle: string }; Returns: boolean }
+      papierkorb_zurueckholen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
       partner_akte: { Args: { p_kontakt: string }; Returns: Json }
       partner_dubletten: {
         Args: { p_email?: string; p_name: string; p_ohne?: string; p_telefon?: string; p_uid?: string }
@@ -18894,7 +18906,7 @@ export type Database = {
           titel: string
         }[]
       }
-      region_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      region_fuer_plz: { Args: { p_plz: string }; Returns: string | null }
       registrier_link_einloesen: { Args: { p_email: string; p_schluessel: string }; Returns: Json }
       registrier_link_erstellen: { Args: { p_person: string }; Returns: string }
       registrier_link_pruefen: { Args: { p_schluessel: string }; Returns: Json }
@@ -19158,7 +19170,10 @@ export type Database = {
         }[]
       }
       social_von_hand_melden: { Args: Record<PropertyKey, never>; Returns: number }
-      social_zuordnung_setzen: { Args: { p_konto: string; p_netzwerk: string; p_sprache: string }; Returns: undefined }
+      social_zuordnung_setzen: {
+        Args: { p_konto: string; p_netzwerk: string; p_sprache: string }
+        Returns: undefined
+      }
       social_zur_freigabe: { Args: { p_id: string }; Returns: undefined }
       social_zurueckziehen: { Args: { p_id: string }; Returns: undefined }
       social_zustand_anlegen: {

@@ -19,6 +19,7 @@ import {
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Zeitachse, type Zeitpunkt } from '@/components/shared/Zeitachse'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Skelett } from '@/components/ui/diverses'
@@ -64,6 +65,11 @@ const TON: Record<string, string> = {
   geschaeft: 'bg-accent-soft text-accent-ink',
   dokumente: 'bg-muted text-muted-foreground',
   aenderungen: 'bg-muted text-muted-foreground',
+}
+
+/** Eigene Einträge (Anruf, Notiz, Besuch …) lassen sich wegwerfen, automatisch Protokolliertes nicht. */
+function loeschbar(e: Zeitachseneintrag): boolean {
+  return e.bezugTabelle === 'aktivitaeten' && e.art !== 'aktivitaet:aenderung' && Boolean(e.bezugId)
 }
 
 /** Mischt Mails als Einträge in die Zeitachse, neueste zuerst. */
@@ -129,7 +135,23 @@ export function AkteZeitachse({
             icon: ICONS[e.art] ?? History,
             titel,
             text: e.text || undefined,
-            meta: meta.length ? meta.map((m) => <span key={m}>{m}</span>) : undefined,
+            meta:
+              meta.length || loeschbar(e) ? (
+                <>
+                  {meta.map((m) => (
+                    <span key={m}>{m}</span>
+                  ))}
+                  {loeschbar(e) && (
+                    <InPapierkorbKnopf
+                      tabelle="aktivitaeten"
+                      id={e.bezugId}
+                      name={e.text ? e.text.slice(0, 60) : titel}
+                      nurSymbol
+                      className="size-6"
+                    />
+                  )}
+                </>
+              ) : undefined,
             ton: TON[gruppeVon(e.art)],
           }
         }),

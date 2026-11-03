@@ -1,6 +1,7 @@
 import { Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -115,6 +116,15 @@ export function ObjektDialog({ kontaktId, objekt, onSchliessen }: ObjektDialogPr
         titel={objekt ? t('akte.gebaeudeBearbeiten') : t('akte.gebaeudeNeu')}
         fuss={
           <>
+            {objekt && (
+              <InPapierkorbKnopf
+                tabelle="objekte"
+                id={objekt.id}
+                name={[objekt.strasse, objekt.ort].filter(Boolean).join(', ')}
+                onFertig={onSchliessen}
+                className="mr-auto"
+              />
+            )}
             <Button variant="secondary" onClick={onSchliessen}>
               {t('allgemein.abbrechen')}
             </Button>

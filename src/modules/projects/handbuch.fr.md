@@ -112,6 +112,7 @@ Au contrat, à la date, au montage, à la MES et à la réception, l’automatio
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les projets (menu «⋯» dans le dossier du projet), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Les supérieur·e·s direct·e·s saisissent les absences de leur équipe.
 - 03.11.2026: Planning sur mobile : choisir plusieurs personnes à la fois.
 - 03.11.2026: Interventions avec activités (nacelle, remorque, toit avant 1990) ; s’il manque un permis obligatoire dans l’équipe, le planning avertit en jaune.
