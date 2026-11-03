@@ -9,6 +9,9 @@ import { cn } from '@/lib/utils'
 import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import type { Geschaeft } from '../types'
 
+/** Hauptstand je Schritt-Spalte; alle anderen Stände (später, nach Termin, vertagt …) stehen auf der Karte. */
+const HAUPTSTAENDE = new Set(['lead_neu', 'lead_offen', 'termin', 'offerte', 'offeriert', 'angenommen'])
+
 interface PipelineKarteProps {
   g: Geschaeft
   aktiv: boolean
@@ -111,6 +114,11 @@ export const PipelineKarte = memo(function PipelineKarte({
       <span className="text-muted-foreground line-clamp-2 text-xs">
         {[g.nummer, [g.plz, g.ort].filter(Boolean).join(' ')].filter(Boolean).join(' · ')}
       </span>
+      {!HAUPTSTAENDE.has(g.stand) && (
+        <span className="text-muted-foreground bg-muted self-start rounded px-1.5 py-0.5 text-xs">
+          {staende.text(g.stand)}
+        </span>
+      )}
       {g.terminAm && (g.stand === 'termin' || g.stand === 'nach_termin') && (
         <span className="text-info flex items-center gap-1 text-xs">
           <CalendarClock className="size-3" aria-hidden="true" />
