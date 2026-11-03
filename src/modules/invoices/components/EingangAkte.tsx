@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -60,6 +61,14 @@ export function EingangAkte({
           <FileText />
           {t(`${a}.beleg`)}
         </Button>
+      )}
+      {finanzen && e.status !== 'bezahlt' && e.quelle === 'hand' && (
+        <InPapierkorbKnopf
+          tabelle="eingangsrechnungen"
+          id={e.id}
+          name={[e.lieferant, e.nummer].filter(Boolean).join(' ')}
+          onFertig={onSchliessen}
+        />
       )}
       {finanzen && e.status !== 'bezahlt' && e.quelle === 'hand' && (
         <Button
