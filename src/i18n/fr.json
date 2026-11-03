@@ -7295,7 +7295,9 @@
       "kosten": "Coût (CHF)",
       "bemerkung": "Remarque",
       "schadenBeispiel": "Que s'est-il passé ? p. ex. couture du harnais ouverte",
-      "liter": "Litres"
+      "liter": "Litres",
+      "beleg": "Justificatif (photo ou PDF)",
+      "belegHinweis": "Payé avec la carte d’entreprise ? Photographier le justificatif. Il est ajouté aux documents et la comptabilité le rapproche du relevé de carte."
     },
     "uebergeben": {
       "knopf": "Remettre",
