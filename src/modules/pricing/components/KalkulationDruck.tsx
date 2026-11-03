@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { formatChf, formatDatum } from '@/lib/format'
-import { zeile, type summe } from '../lib/kalkulation'
+import { positionenDerVariante, zeile, type summe } from '../lib/kalkulation'
 import { prozentText } from '../lib/prozent'
 import type { Kalkulation } from '../types'
 
@@ -56,7 +56,7 @@ export function KalkulationDruck({
           </tr>
         </thead>
         <tbody>
-          {k.positionen.map((p) => {
+          {positionenDerVariante(k).map((p) => {
             const w = zeile(p)
             return (
               <tr key={p.key}>
