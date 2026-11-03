@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Karte } from '@/components/ui/karte'
-import { formatTelefon } from '@/lib/format'
+import { formatDatum, formatTelefon } from '@/lib/format'
 import { adressText, naviLink, telLink } from '../lib/links'
 import type { RapportArt, TagEintrag } from '../types'
 import { ServiceVorOrt } from './ServiceVorOrt'
@@ -59,6 +59,9 @@ export function TagKarte({
             </Badge>
           ) : (
             <Badge ton="marke">{e.projekt?.nummer}</Badge>
+          )}
+          {e.ueberfaellig && e.termin_tag && (
+            <Badge ton="kritisch">{t('baustelle.tag.ueberfaellig', { datum: formatDatum(e.termin_tag) })}</Badge>
           )}
           {mehrtaegig && (
             <span className="text-muted-foreground text-xs">
