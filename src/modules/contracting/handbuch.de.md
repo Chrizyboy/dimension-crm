@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -14,17 +14,35 @@ Findet Gebäude und Bauvorhaben, bei denen sich PV- oder Wärme-Contracting lohn
 
 ## So geht's {#so}
 
-### Die Treffer der Woche prüfen
+### Die Treffer der Woche entscheiden
 
-1. Reiter **Prüfen**: die besten Treffer mit Punkten, Dach, Heizung und Schätzung.
-2. Treffer öffnen: Eigentümer, Ansprechperson und nächste Schritte stehen dabei, sobald die Recherche fertig ist.
+1. Reiter **Zu entscheiden**: eine Karte pro Treffer mit Punkten, Dach, Heizung, Eigentümer und Ansprechperson.
+2. **Ja, angehen** (Taste J, Andy oder Vertretung): das Grossprojekt kommt in die Pipeline, Stufe «Qualifizieren». **Beobachten** (B) mit Wiedervorlage, **Nein …** (N) mit Grund.
 3. Recherche-Vorschläge mit einem Klick übernehmen; von Hand Eingetragenes bleibt immer.
 
-### Entscheiden
+### In der Pipeline bis zum Vertrag arbeiten
 
-1. **Bewilligen** (Andy): es entsteht ein Lead, weiter im Kapitel [Anfragen & Leads](kapitel:sales).
-2. **Beobachten**: mit Wiedervorlage.
-3. **Verwerfen**: mit Grund.
+1. Reiter **Pipeline**: oben MWp offen, gewichtet und unterschrieben gegen das Ziel, darunter ein Board nach Stufe.
+2. Karte öffnen: die Akte zeigt Gebäude, Kontakte, nächsten Schritt, Verlauf, Rechner, Unterlagen und Youdera.
+3. Jedes offene Projekt hat einen **nächsten Schritt** mit Datum; überfällige sind rot.
+4. **Weiter: …** setzt die nächste Stufe. **Verloren** braucht einen Grund, **Vertrag** Datum und Leistung.
+5. Anrufe, Mails und Termine im **Verlauf** festhalten.
+
+### Potenzialanalyse an den Kunden
+
+1. Im Rechner eigene Werte eintragen (Verbrauch, Strompreis, Preis), grau sind Vorschläge.
+2. **Potenzialanalyse**: PDF in der Sprache des Kunden, nennt nur Dimension Solaire. **PDF ansehen**, dann **Senden**.
+
+### Besichtigung vor Ort
+
+1. Am Handy die Akte öffnen, pro Punkt **In Ordnung** oder **Problem** mit Notiz.
+2. **Besichtigung abschliessen**: Datum und Ergebnis kommen in den Verlauf und ins Dossier.
+
+### Dossier an Youdera
+
+1. Unterlagen abhaken, vor allem das **Einverständnis** des Kunden.
+2. **Dossier an Youdera**: PDF mit Objekt, Anlage, Kontakten, Unterlagen und Besichtigung, **Senden**. «Dossier gesendet» ist danach gesetzt.
+3. Angebot von Youdera mit Preis und Laufzeit eintragen.
 
 ### Einen Treffer von Hand erfassen
 
@@ -33,13 +51,14 @@ Findet Gebäude und Bauvorhaben, bei denen sich PV- oder Wärme-Contracting lohn
 
 ### Annahmen anpassen
 
-1. Reiter **Annahmen** (nur Administration): Werte, Schwellen, Stichworte und Suchgebiete.
+1. Reiter **Annahmen** (nur Administration): Werte, Schwellen, Suchgebiete und die Mail-Adresse von Youdera.
 
 ## Stände {#staende}
 
-- **Prüfen**: neu, wartet auf Entscheid.
+- **Zu entscheiden**: neu, wartet auf Entscheid.
 - **Beobachten**: später wieder anschauen.
-- **Bewilligt**: Lead ist angelegt.
+- **Pipeline**: Qualifizieren, Erstkontakt, Besichtigung, Daten & Machbarkeit, Angebot & Verhandlung, Vertrag.
+- **Verloren**: mit Grund, lässt sich wieder aufnehmen.
 - **Verworfen**: mit Grund.
 
 ## Läuft automatisch {#automatisch}
@@ -57,8 +76,14 @@ Aus Dachgrösse, Verbrauch, Heizung, Gebäudeart und Stichworten. Die Gewichte s
 
 ### Warum kam keine Mail?
 
-Grossprojekte senden bewusst keine Mail. Die Glocke und Mein Tag zeigen neue Treffer.
+Grossprojekte melden neue Treffer nie per Mail, nur Glocke und Mein Tag. Mails an Kunde oder Youdera gehen nur, wenn du **Senden** drückst.
+
+### Was verdienen wir an einem Projekt?
+
+Youdera finanziert und besitzt die Anlage, wir bauen und warten sie. Der Rechner zeigt die Marge am Bau und die Wartung pro Jahr; beides steht nie im PDF für den Kunden.
 
 ## Neu {#neu}
 
+- 03.11.2026: Potenzialanalyse, Dossier an Youdera und Besichtigung am Handy.
+- 02.11.2026: Pipeline bis zum Vertrag, Reiter «Zu entscheiden» und Projekt-Akte mit Rechner.
 - 31.10.2026: Dachsuche um Muri und Bulle, pro Woche die besten zehn.
