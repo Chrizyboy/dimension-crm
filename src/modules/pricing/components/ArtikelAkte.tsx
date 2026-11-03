@@ -17,6 +17,7 @@ import type { Artikel } from '../types'
 import { ArtikelDatenblaetter } from './ArtikelDatenblaetter'
 import { ArtikelLieferanten } from './ArtikelLieferanten'
 import { ArtikelMasse } from './ArtikelMasse'
+import { ArtikelUebersicht } from './ArtikelUebersicht'
 
 function Verweis({ a, onOeffnen }: { a: Artikel; onOeffnen: (id: string) => void }) {
   return (
@@ -35,7 +36,7 @@ function Verweis({ a, onOeffnen }: { a: Artikel; onOeffnen: (id: string) => void
 
 /**
  * Artikel im Seitenpanel (V61, V87, V97, V121): Preise, Datenblätter DE/FR/EN, Nachfolger und Vorgänger,
- * Lieferantenpreise (der günstigste ist der EK) sowie Masse und Gewicht.
+ * Lieferantenpreise (der günstigste ist der EK), Masse und Gewicht, dazu Lager, Verwendung, Garantie und Preisverlauf.
  */
 export default function ArtikelAkte({
   artikel: a,
@@ -126,6 +127,7 @@ export default function ArtikelAkte({
                 {a.leistungW ? <Angabe label={t('preise.spalte.wp')}>{a.leistungW} Wp</Angabe> : null}
               </dl>
             </AkteAbschnitt>
+            <ArtikelUebersicht a={a} />
             <ArtikelDatenblaetter a={a} />
             {(nachfolger !== undefined || vorgaenger.length > 0) && (
               <AkteAbschnitt titel={t('preise.akte.nachfolge')}>

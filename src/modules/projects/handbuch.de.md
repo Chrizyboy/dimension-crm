@@ -111,5 +111,6 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 03.11.2026: Einsätze mit Tätigkeiten (Hebebühne, Anhänger, Dach vor 1990); fehlt im Team ein Pflicht-Ausweis, warnt der Zeitplan gelb.
 - 03.11.2026: Leitstand, Meine Woche und Projekt-Akte als ganze Seite; Mängel und Restarbeiten, Beteiligte mit Rolle, Kundeninfo bei Meilensteinen mit Freigabe.
 - 01.11.2026: Zeitplan der Baustellen mit Sicht Baustellen oder Team, Konflikte rot.
