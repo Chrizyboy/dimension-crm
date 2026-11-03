@@ -1,3 +1,4 @@
+import { useIstAdmin } from '@/hooks/useIstAdmin'
 import { FileDown, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -113,6 +114,7 @@ export function SerienDialog({
     }
   }
 
+  const admin = useIstAdmin()
   const beispiel = (s: Sprache) => r.liste.find((k) => k.sprache === s)
   return (
     <Dialog
@@ -133,26 +135,29 @@ export function SerienDialog({
         })}
         fuss={
           <>
-            <Button
-              variant="ghost"
-              disabled={laeuft}
-              onClick={() =>
-                void aus(
-                  () =>
-                    speichereVorlagen(
-                      entwurf && nachruest
-                        ? { ...vorlagen, nachruest: { ...vorlagen.nachruest, [nachruest]: texte }, absender }
-                        : { ...vorlagen, [art]: texte, absender },
-                    ),
-                  {
-                    de: 'Vorlage gespeichert',
-                    fr: 'Modèle enregistré',
-                  },
-                )
-              }
-            >
-              {t('marketing.serien.alsVorlage')}
-            </Button>
+            {/* Vorlage für alle speichern ist eine Firmen-Einstellung: nur Administration. */}
+            {admin && (
+              <Button
+                variant="ghost"
+                disabled={laeuft}
+                onClick={() =>
+                  void aus(
+                    () =>
+                      speichereVorlagen(
+                        entwurf && nachruest
+                          ? { ...vorlagen, nachruest: { ...vorlagen.nachruest, [nachruest]: texte }, absender }
+                          : { ...vorlagen, [art]: texte, absender },
+                      ),
+                    {
+                      de: 'Vorlage gespeichert',
+                      fr: 'Modèle enregistré',
+                    },
+                  )
+                }
+              >
+                {t('marketing.serien.alsVorlage')}
+              </Button>
+            )}
             <Button onClick={() => void los()} laedt={laeuft} disabled={r.liste.length === 0}>
               {art === 'brief' ? <FileDown /> : <Send />}
               {t(`marketing.serien.los.${art}`, { count: r.liste.length })}

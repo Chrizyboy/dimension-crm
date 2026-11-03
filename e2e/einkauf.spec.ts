@@ -4,7 +4,8 @@ import { anmelden, brauchtDatenbank } from './hilfen'
 
 // Phase 9a: Einkauf & Material. Alle Reiter ohne Verstösse; ein Testlieferant; eine Bestellung vom Entwurf
 // über Freigabe, «ohne Mail bestellt» und Auftragsbestätigung bis zum Wareneingang in zwei Teilen mit Lieferschein; eine zweite Bestellung per Mail
-// mit PDF in den Ausgangskorb und danach storniert (die wartende Mail wird dabei verworfen).
+// mit PDF in den Ausgangskorb und danach storniert (die wartende Mail wird dabei verworfen). Schritt 2: Wareneingang
+// und Reklamation am Handy, Inventur im Lager.
 
 test.describe.configure({ mode: 'serial' })
 brauchtDatenbank()
@@ -131,4 +132,51 @@ test('Bestellung per Mail mit PDF in den Ausgangskorb, dann stornieren', async (
   await page.getByRole('dialog').last().getByRole('button', { name: 'Stornieren' }).click()
   await expect(akte.getByText('Storniert').first()).toBeVisible()
   await expect(akte.getByText('Mail verworfen')).toBeVisible()
+})
+
+test('Handy: Wareneingang und Reklamation bis erledigt', async ({ page }) => {
+  await anmelden(page, 'admin@test.local')
+  const text = `E2E Klemmen ${lauf}`
+  let akte = await bestellungMitPosition(page, text)
+  await akte.getByRole('button', { name: 'Freigeben' }).click()
+  await akte.getByRole('button', { name: 'Ohne Mail bestellt' }).click()
+  await expect(akte.getByText('Bestellt', { exact: true }).first()).toBeVisible()
+
+  // Ab hier in Handy-Grösse, wie im Lager oder auf der Baustelle.
+  await page.setViewportSize({ width: 412, height: 915 })
+  akte = page.getByRole('dialog')
+  await akte.getByRole('button', { name: 'Wareneingang' }).click()
+  const eingang = page.getByRole('dialog').last()
+  await eingang.getByLabel('Lieferschein-Nr.').fill(`LS-H-${lauf}`)
+  expect(await verstoesse(page), 'Wareneingang Handy').toEqual([])
+  await eingang.getByRole('button', { name: 'Wareneingang buchen' }).click()
+  await expect(akte.getByText('Geliefert', { exact: true }).first()).toBeVisible()
+
+  await akte.getByRole('button', { name: 'Reklamation erfassen' }).click()
+  const rek = page.getByRole('dialog').last()
+  await rek.getByLabel('Menge').fill('2')
+  await rek.getByLabel('Beschreibung').fill('Zwei Klemmen verbogen')
+  expect(await verstoesse(page), 'Reklamation').toEqual([])
+  await rek.getByRole('button', { name: 'Speichern' }).click()
+  await expect(akte.getByText('Zwei Klemmen verbogen')).toBeVisible()
+  await akte.getByRole('button', { name: 'Beim Lieferanten gemeldet' }).click()
+  await expect(akte.getByText('Gemeldet', { exact: true })).toBeVisible()
+  await akte.getByRole('button', { name: 'Erledigt' }).click()
+  const fertig = page.getByRole('dialog').last()
+  await fertig.getByLabel('Antwort des Lieferanten').fill('Gutschrift folgt')
+  await fertig.getByRole('button', { name: 'Speichern' }).click()
+  await expect(akte.getByText(/Gutschrift · .* · Gutschrift folgt/)).toBeVisible()
+})
+
+test('Lager: Spalte Lagerplatz und Inventur', async ({ page }) => {
+  await anmelden(page, 'admin@test.local')
+  await page.goto('/#/purchasing?reiter=lager')
+  await expect(page.getByRole('button', { name: 'Inventur' })).toBeVisible()
+  const leer = await page.getByText('Lager ist leer').isVisible()
+  test.skip(leer, 'Kein Bestand in der lokalen Datenbank')
+  await expect(page.getByRole('columnheader', { name: 'Lagerplatz' })).toBeVisible()
+  await page.getByRole('button', { name: 'Inventur' }).click()
+  const inv = page.getByRole('dialog')
+  await expect(inv.getByRole('button', { name: /Abweichungen? buchen/ })).toBeDisabled()
+  expect(await verstoesse(page), 'Inventur').toEqual([])
 })

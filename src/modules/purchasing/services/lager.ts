@@ -1,4 +1,5 @@
 import type { LagerArt, Lagerort, LagerZeile, Lieferant } from '../types'
+import type { RuestZeile } from '../lib/lagerTypen'
 import { db } from './bestellungen'
 
 /** Datenzugriff für Lager und Lieferanten. Buchungen laufen über `lager_buchen` (mit Bewegung). */
@@ -69,4 +70,42 @@ export async function lieferantSpeichern(l: Omit<Lieferant, 'id'> & { id?: strin
     ? await db().from('lieferanten').update(felder).eq('id', id)
     : await db().from('lieferanten').insert(felder)
   if (error) throw error
+}
+
+/** Lagerplatz eines Artikels setzen (z. B. «A-03»), leer = keiner. */
+export async function lagerplatzSetzen(lagerortId: string, artikelId: string, platz: string): Promise<void> {
+  const { error } = await db().rpc('lagerplatz_setzen', {
+    p_lagerort: lagerortId,
+    p_artikel: artikelId,
+    p_platz: platz,
+  })
+  if (error) throw error
+}
+
+/** Rüstliste eines Projekts, nach Lagerplatz sortiert. */
+export async function ladeRuestliste(projektId: string): Promise<RuestZeile[]> {
+  const { data, error } = await db().rpc('ruestliste', { p_projekt: projektId })
+  if (error) throw error
+  return data
+}
+
+/** Gerüstetes an die Baustelle ausgeben. Gibt die Zahl der Buchungen zurück. */
+export async function ruesten(
+  projektId: string,
+  zeilen: { id: string; menge: number; lagerort_id: string | null }[],
+): Promise<number> {
+  const { data, error } = await db().rpc('projekt_ruesten', { p_projekt: projektId, p: zeilen })
+  if (error) throw error
+  return data
+}
+
+/** Inventur buchen: nur Abweichungen werden als Korrektur gebucht. Gibt die Zahl der Korrekturen zurück. */
+export async function inventurBuchen(
+  lagerortId: string,
+  zeilen: { artikel_id: string; menge: number }[],
+  notiz: string,
+): Promise<number> {
+  const { data, error } = await db().rpc('inventur_buchen', { p_lagerort: lagerortId, p: zeilen, p_notiz: notiz })
+  if (error) throw error
+  return data
 }

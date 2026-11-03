@@ -109,4 +109,5 @@ Unter **Social Media** steht beim Post der Fehler. Meist ist die Verbindung abge
 ## Neu {#neu}
 
 - 03.11.2026: Übersicht mit «Heute zu tun», Kalender, Kampagnen mit Ergebnis, Messen mit Lead-Erfassung am Handy, Social-Media-Board mit Freigabe, Mediathek, gespeicherte Zielgruppen, Werbe-Pause, Öffnungen und Klicks.
+- 03.11.2026: Vorlagen ändert nur noch die Administration; alle anderen sehen sie zum Lesen und brauchen sie beim Senden.
 - 02.11.2026: Instagram und LinkedIn je mit deutschem und französischem Konto, zwei Facebook-Seiten.

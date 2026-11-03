@@ -109,4 +109,5 @@ Sous **Réseaux sociaux**, l’erreur figure au post. Le plus souvent, la connex
 ## Nouveautés {#neu}
 
 - 03.11.2026: Aperçu avec « À faire aujourd’hui », calendrier, campagnes avec résultat, salons avec saisie des leads sur le portable, tableau des réseaux sociaux avec validation, médiathèque, groupes cibles enregistrés, pause publicitaire, ouvertures et clics.
+- 03.11.2026: Seule l’administration modifie les modèles ; les autres les voient en lecture seule et les utilisent à l’envoi.
 - 02.11.2026: Instagram et LinkedIn avec un compte allemand et un compte français, deux pages Facebook.

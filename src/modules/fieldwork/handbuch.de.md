@@ -101,6 +101,7 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
+- 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.
 - 03.11.2026: Offene Service-Fälle von gestern bleiben im Tagesplan («Überfällig»). Arbeitszeit und Reise in **Mein Tag** auch ohne Rapport starten; Änderungen gehen sofort raus.
 - 03.11.2026: Inspektionen aus Wartungsverträgen in «Mein Tag», Prüfpunkte nach Paket mit Werten vom letzten Mal.
 - 02.11.2026: Sicherheits-Check und Teamzeit, Arbeitsschritte, Pflichtfotos der Baustelle, Seriennummern scannen, Mappe, Problem melden, Abnahme mit Vorbehalten; Baustellen heute, Baustellen-Akte, Meldungen, Wochenblatt, Visum und Auswertung.

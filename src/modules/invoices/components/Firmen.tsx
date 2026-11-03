@@ -1,3 +1,4 @@
+import { NurAdministration } from '@/components/shared/NurAdministration'
 import { Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -170,11 +171,13 @@ export function Firmen() {
   if (firmen.error) return <Fehlerzustand details={String(firmen.error)} onNochmal={() => void firmen.refetch()} />
   if (!firmen.data) return <Skelett className="h-64" />
   return (
-    <div className="grid gap-4 xl:grid-cols-2">
-      {firmen.data.map((f) => (
-        <FirmaKarte key={`${f.id}${f.iban ?? ''}${f.name}`} firma={f} />
-      ))}
-      <RechnungsEinstellungen key={`${String(e.mahnfrist_tage)}-${String(e.service_stundensatz_rappen)}`} />
-    </div>
+    <NurAdministration>
+      <div className="grid gap-4 xl:grid-cols-2">
+        {firmen.data.map((f) => (
+          <FirmaKarte key={`${f.id}${f.iban ?? ''}${f.name}`} firma={f} />
+        ))}
+        <RechnungsEinstellungen key={`${String(e.mahnfrist_tage)}-${String(e.service_stundensatz_rappen)}`} />
+      </div>
+    </NurAdministration>
   )
 }

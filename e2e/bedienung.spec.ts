@@ -52,3 +52,21 @@ test('Fehlerhafter Betrag wird verständlich gemeldet', async ({ page }) => {
   await expect(page.getByRole('alert').filter({ hasText: "12'500.00" })).toBeVisible()
   await expect(betrag).toHaveAttribute('aria-invalid', 'true')
 })
+
+test('Einstellungen: Suche findet Bereiche aus anderen Modulen, Bereich steht in der Adresse', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'Navigation am Handy als Auswahlliste')
+  await page.goto('/#/settings')
+  await expect(page.getByRole('heading', { name: 'Einstellungen', level: 1 })).toBeVisible()
+  const nav = page.getByRole('navigation', { name: 'Einstellungen' })
+  await nav.getByRole('textbox').fill('IBAN')
+  await expect(nav.getByRole('button', { name: 'Firmen & Bank' })).toBeVisible()
+  await expect(nav.getByRole('button', { name: 'Papierkorb' })).toHaveCount(0)
+  await nav.getByRole('textbox').press('Enter')
+  await expect(page).toHaveURL(/bereich=firmen/)
+  await expect(page.getByRole('heading', { name: 'Firmen & Bank', level: 2 })).toBeVisible()
+  await page.goto('/#/settings?reiter=verbindungen')
+  await expect(page.getByRole('heading', { name: 'Verbindungen & Dienste', level: 2 })).toBeVisible()
+})

@@ -162,10 +162,11 @@ select is((select count(*) from public.spesen_liste where person_id <> '00000000
 select is((select count(*) from public.finanz_einstellungen) + (select count(*) from public.kreditor_zahlungen), 0::bigint,
   'Liquidität (Kontostand, Zahlungen) ist für Verkauf unsichtbar');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000010a1", "role": "authenticated"}', true);
+-- Seit 3.11.2026 ändert nur die Administration Einstellungen und Firmenangaben (Chris), auch nicht die Buchhaltung.
 update public.firmen set zahlungsfrist_tage = 21 where kuerzel = 'sarl';
-select is((select zahlungsfrist_tage from public.firmen where kuerzel = 'sarl'), 21, 'Buchhaltung ändert die Zahlungsfrist');
-select lives_ok($$ update public.einstellungen set wert = wert || '{"mahnfrist_tage": 12}' where schluessel = 'finanzen' $$,
-  'Buchhaltung ändert die Einstellung «finanzen»');
+select isnt((select zahlungsfrist_tage from public.firmen where kuerzel = 'sarl'), 21, 'Buchhaltung ändert die Zahlungsfrist nicht');
+select throws_ok($$ update public.einstellungen set wert = wert || '{"mahnfrist_tage": 12}' where schluessel = 'finanzen' $$,
+  '42501', 'einstellungen.nur_admin', 'Buchhaltung ändert die Einstellung «finanzen» nicht');
 
 reset role;
 select setval('intern.rapport_nummer', r, ri) from t_seq;

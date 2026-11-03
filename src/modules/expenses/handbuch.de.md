@@ -10,7 +10,7 @@ Spesen in Sekunden erfassen: Foto vom Beleg, die KI füllt Betrag, Datum, Katego
 ## Wer arbeitet hier {#wer}
 
 - **Alle**: eigene Spesen erfassen, bis zur Prüfung ändern oder zurückziehen, Rückfragen beantworten.
-- **Buchhaltung (Recht Finanzen)**: prüfen, Rückfrage stellen, ablehnen, auszahlen, Firmenkarte abgleichen, Auswertung und Regeln.
+- **Buchhaltung (Recht Finanzen)**: prüfen, Rückfrage stellen, ablehnen, auszahlen, Firmenkarte abgleichen, Auswertung; Regeln und Kategorien nur lesen.
 
 ## So geht's {#so}
 
@@ -52,7 +52,7 @@ Spesen in Sekunden erfassen: Foto vom Beleg, die KI füllt Betrag, Datum, Katego
 3. Fehlt der Beleg: **Belege nachfordern**, die Person bekommt eine Glocke. Sobald sie die Spese erfasst, verbindet sich die Buchung selbst.
 4. Ohne Beleg in Ordnung (Abo, Gebühr, privat): **Ohne Beleg**, Grund angeben, **Erledigen**.
 
-### Regeln pflegen (Buchhaltung)
+### Regeln pflegen (Administration)
 
 1. Reiter **Regeln**: Mail der Buchhaltung, Kilometer-Ansatz, Frist zum Einreichen, Standard der Auszahlung.
 2. Kategorien mit Konto, üblicher MWST, Richtwert und «Beleg ab». **Speichern**.
@@ -97,6 +97,7 @@ Als CSV herunterladen, nicht als PDF. Die Kopfzeile braucht ein Datum und einen 
 
 ## Neu {#neu}
 
+- 03.11.2026: Regeln und Kategorien ändert nur noch die Administration; auch unter Einstellungen › Spesen-Kategorien.
 - 03.11.2026: Firmenkarte mit dem Kartenauszug abgleichen, fehlende Belege nachfordern.
 - 02.11.2026: Prüfen mit Rückfrage und Ablehnen, Kilometer, Firmenkarte, Projekt, MWST, Auszahlung als Lauf mit Abrechnung PDF, Auswertung und Regeln.
 - 31.10.2026: Spesen per Klick in der Monteur-Ansicht.

@@ -10,7 +10,8 @@ mit «bestellen bis», Freigabegrenze, Auftragsbestätigung (KI liest Mail/PDF),
 
 ## Daten
 
-- Besitzt: `projekt_material`, `bestellungen`, `bestellpositionen`, `lagerbestand`, `lagerbewegungen`, `lieferanten`.
+- Besitzt: `projekt_material`, `bestellungen`, `bestellpositionen`, `lagerbestand` (mit `lagerplatz`), `lagerbewegungen`,
+  `lieferanten`, `einkauf_reklamationen`.
 - Liest: `projekte`, `kalkulationen`, `offerten`, `artikel`, `lieferantenpreise` (Recht `preise`), `lagerorte`.
 - Sichten: `bestellungen_liste` (mit `schritt`, `gefaehrdet`, `projekte`), `projekt_material_stand`, `lager_uebersicht`,
   `einkauf_bedarf` (Bedarf je Lieferant mit `bestellen_bis`), `materialplan` (Deckung je Projekt), `lieferanten_kennzahlen`.
@@ -18,7 +19,9 @@ mit «bestellen bis», Freigabegrenze, Auftragsbestätigung (KI liest Mail/PDF),
 - Abläufe (Datenbank): `projekt_material_vorschlagen`, `bestellvorschlag`, `lager_nachbestellen`,
   `bestellung_freigeben`, `bestellung_zuruecknehmen`, `bestellung_bestellt`, `bestellung_stornieren`,
   `wareneingang_buchen`, `lager_buchen`, `sammelbestellung`, `bestellung_vorlegen`, `bestellung_ab_erfassen`,
-  `bestellung_rechnungen`, `bestellung_rechnung`, `bestellung_mails`, `einkauf_melden` (Zeitplan, stündlich).
+  `bestellung_rechnungen`, `bestellung_rechnung`, `bestellung_mails`, `einkauf_melden` (Zeitplan, stündlich),
+  `lagerplatz_setzen`, `ruestliste`, `projekt_ruesten`, `inventur_buchen`, `reklamation_speichern`; Rückgabe von der
+  Baustelle über `lager_buchen` mit Art `rueckgabe`.
   Fehler als `einkauf.*`.
 
 ## Abhängigkeiten
@@ -37,8 +40,10 @@ mit «bestellen bis», Freigabegrenze, Auftragsbestätigung (KI liest Mail/PDF),
 ## Ordner
 
 - `components/` – Seite mit sechs Reitern (Leitstand, Materialplan, Bestellen, Bestellungen, Lager, Lieferanten),
-  Bestell-Akte (Schritte, AB, Lieferung, Rechnung, Mails), Leitstand, Startseiten-Karte
+  Bestell-Akte (Schritte, AB, Lieferung, Reklamationen, Rechnung, Mails), Leitstand, Startseiten-Karte, Rüstliste (mit
+  Druck), Rückgabe, Inventur
 - `hooks/` – Daten laden (`useEinkauf`), Aktionen mit Fehlermeldung (`useAktion`)
 - `services/` – Bestellungen, Material, Lager und Lieferanten, Bestell-PDF
-- `lib/anzeige.ts` – Mengen anzeigen und lesen (mit Tests); `lib/leitstand.ts` – Spalten und Kopfzahlen (mit Tests)
+- `lib/anzeige.ts` – Mengen anzeigen und lesen (mit Tests); `lib/leitstand.ts` – Spalten und Kopfzahlen (mit Tests);
+  `lib/lagerTypen.ts` – Rüstliste, Inventur-Abweichungen, Reklamationen (mit Tests)
 - `types.ts`, `schema.ts` (Lieferant), `index.ts`

@@ -23,3 +23,6 @@ export const Automationen = lazy(() => import('./components/Automationen'))
 
 export { ANSICHTEN } from './types'
 export type * from './types'
+
+/** Bereiche für Einstellungen (zentral). */
+export { einstellungen } from './einstellungen'

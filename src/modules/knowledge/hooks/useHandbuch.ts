@@ -4,7 +4,7 @@ import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { supabase } from '@/services/supabase'
-import { ladeAnhaenge, ladeHelpdeskStand, ladeMeldungen } from '../services/meldungen'
+import { bildAdressen, ladeAnhaenge, ladeHelpdeskStand, ladeMeldungen } from '../services/meldungen'
 import { ladeDateien, ladeHandbuch } from '../services/handbuch'
 
 /** Prozesse und Videos. */
@@ -27,12 +27,21 @@ export function useHelpdeskStand(admin: boolean) {
   return useQuery({ queryKey: ['meldungen', 'stand'], queryFn: ladeHelpdeskStand, enabled: supabase !== null && admin })
 }
 
-/** Anhänge einer Meldung, wenn sie offen ist. */
+/**
+ * Anhänge einer Meldung mit kurz gültigen Adressen für die Vorschaubilder. Neu geladen nach 8 Minuten,
+ * bevor die Adressen (10 Minuten) verfallen.
+ */
 export function useAnhaenge(meldungId: string | null) {
   return useQuery({
     queryKey: ['meldungen', 'anhaenge', meldungId],
-    queryFn: () => ladeAnhaenge(meldungId ?? ''),
+    queryFn: async () => {
+      const dateien = await ladeAnhaenge(meldungId ?? '')
+      const adressen: Record<string, string> = await bildAdressen(dateien).catch(() => ({}))
+      return { dateien, adressen }
+    },
     enabled: meldungId !== null,
+    staleTime: 8 * 60_000,
+    refetchInterval: 8 * 60_000,
   })
 }
 

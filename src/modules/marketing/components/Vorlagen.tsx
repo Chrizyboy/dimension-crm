@@ -1,3 +1,4 @@
+import { NurAdministration } from '@/components/shared/NurAdministration'
 import { Save } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -105,121 +106,123 @@ function VorlagenForm({ start }: { start: MarketingVorlagen }) {
   )
 
   return (
-    <div className="flex flex-col gap-4">
-      <p className="text-muted-foreground text-sm">
-        {t('marketing.vorlagen.platzhalter', { liste: PLATZHALTER.map((p) => `{${p}}`).join(' ') })}
-      </p>
-      {abschnitt(
-        'brief',
-        <>
-          {sprachfeld(
-            'absender',
-            (s) => v.absender[s],
-            (s, w) => {
-              setV({ ...v, absender: { ...v.absender, [s]: w } })
-            },
-            3,
-          )}
-          {sprachfeld(
-            'ort',
-            (s) => v.ort[s],
-            (s, w) => {
-              setV({ ...v, ort: { ...v.ort, [s]: w } })
-            },
-          )}
-          {text('brief')}
-        </>,
-      )}
-      {abschnitt(
-        'mail',
-        <>
-          {text('mail')}
-          {sprachfeld(
-            'abmelden',
-            (s) => v.abmelden[s],
-            (s, w) => {
-              setV({ ...v, abmelden: { ...v.abmelden, [s]: w } })
-            },
-            2,
-          )}
-          <Feld id="nl-max" label={t('marketing.vorlagen.maxWoerter')} className="max-w-48">
-            <Input
-              id="nl-max"
-              type="number"
-              min={50}
-              value={v.newsletter_max_woerter}
-              onChange={(e) => {
-                setV({ ...v, newsletter_max_woerter: Number(e.target.value) || 450 })
-              }}
-            />
-          </Feld>
-        </>,
-      )}
-      {abschnitt(
-        'social',
-        <>
-          <Feld id="themen" label={t('marketing.vorlagen.themen')} hinweis={t('marketing.vorlagen.themenHinweis')}>
-            <Input
-              id="themen"
-              value={v.social.themen.join(', ')}
-              onChange={(e) => {
-                setV({
-                  ...v,
-                  social: {
-                    ...v.social,
-                    themen: e.target.value
-                      .split(',')
-                      .map((x) => x.trim())
-                      .filter(Boolean),
-                  },
-                })
-              }}
-            />
-          </Feld>
-          {NETZWERKE.map((n) => (
-            <Feld
-              key={n}
-              id={`regel-${n}`}
-              label={t('marketing.vorlagen.regel', { netzwerk: t(`marketing.netzwerk.${n}`) })}
-            >
-              <Textarea
-                id={`regel-${n}`}
-                rows={2}
-                value={v.social.regeln[n] ?? ''}
+    <NurAdministration>
+      <div className="flex flex-col gap-4">
+        <p className="text-muted-foreground text-sm">
+          {t('marketing.vorlagen.platzhalter', { liste: PLATZHALTER.map((p) => `{${p}}`).join(' ') })}
+        </p>
+        {abschnitt(
+          'brief',
+          <>
+            {sprachfeld(
+              'absender',
+              (s) => v.absender[s],
+              (s, w) => {
+                setV({ ...v, absender: { ...v.absender, [s]: w } })
+              },
+              3,
+            )}
+            {sprachfeld(
+              'ort',
+              (s) => v.ort[s],
+              (s, w) => {
+                setV({ ...v, ort: { ...v.ort, [s]: w } })
+              },
+            )}
+            {text('brief')}
+          </>,
+        )}
+        {abschnitt(
+          'mail',
+          <>
+            {text('mail')}
+            {sprachfeld(
+              'abmelden',
+              (s) => v.abmelden[s],
+              (s, w) => {
+                setV({ ...v, abmelden: { ...v.abmelden, [s]: w } })
+              },
+              2,
+            )}
+            <Feld id="nl-max" label={t('marketing.vorlagen.maxWoerter')} className="max-w-48">
+              <Input
+                id="nl-max"
+                type="number"
+                min={50}
+                value={v.newsletter_max_woerter}
                 onChange={(e) => {
-                  setV({ ...v, social: { ...v.social, regeln: { ...v.social.regeln, [n]: e.target.value } } })
+                  setV({ ...v, newsletter_max_woerter: Number(e.target.value) || 450 })
                 }}
               />
             </Feld>
-          ))}
-          <Feld
-            id="ci"
-            label={t('marketing.vorlagen.ci')}
-            hinweis={admin ? t('marketing.vorlagen.ciHinweis') : t('marketing.vorlagen.ciNurAdmin')}
-          >
-            <Textarea
+          </>,
+        )}
+        {abschnitt(
+          'social',
+          <>
+            <Feld id="themen" label={t('marketing.vorlagen.themen')} hinweis={t('marketing.vorlagen.themenHinweis')}>
+              <Input
+                id="themen"
+                value={v.social.themen.join(', ')}
+                onChange={(e) => {
+                  setV({
+                    ...v,
+                    social: {
+                      ...v.social,
+                      themen: e.target.value
+                        .split(',')
+                        .map((x) => x.trim())
+                        .filter(Boolean),
+                    },
+                  })
+                }}
+              />
+            </Feld>
+            {NETZWERKE.map((n) => (
+              <Feld
+                key={n}
+                id={`regel-${n}`}
+                label={t('marketing.vorlagen.regel', { netzwerk: t(`marketing.netzwerk.${n}`) })}
+              >
+                <Textarea
+                  id={`regel-${n}`}
+                  rows={2}
+                  value={v.social.regeln[n] ?? ''}
+                  onChange={(e) => {
+                    setV({ ...v, social: { ...v.social, regeln: { ...v.social.regeln, [n]: e.target.value } } })
+                  }}
+                />
+              </Feld>
+            ))}
+            <Feld
               id="ci"
-              rows={5}
-              readOnly={!admin}
-              value={v.social.ci}
-              onChange={(e) => {
-                setV({ ...v, social: { ...v.social, ci: e.target.value } })
-              }}
-            />
-          </Feld>
-        </>,
-      )}
-      <div className="flex justify-end">
-        <Button
-          laedt={laeuft}
-          onClick={() =>
-            void aus(() => speichereVorlagen(v), { de: 'Vorlagen gespeichert', fr: 'Modèles enregistrés' })
-          }
-        >
-          <Save />
-          {t('allgemein.speichern')}
-        </Button>
+              label={t('marketing.vorlagen.ci')}
+              hinweis={admin ? t('marketing.vorlagen.ciHinweis') : t('marketing.vorlagen.ciNurAdmin')}
+            >
+              <Textarea
+                id="ci"
+                rows={5}
+                readOnly={!admin}
+                value={v.social.ci}
+                onChange={(e) => {
+                  setV({ ...v, social: { ...v.social, ci: e.target.value } })
+                }}
+              />
+            </Feld>
+          </>,
+        )}
+        <div className="flex justify-end">
+          <Button
+            laedt={laeuft}
+            onClick={() =>
+              void aus(() => speichereVorlagen(v), { de: 'Vorlagen gespeichert', fr: 'Modèles enregistrés' })
+            }
+          >
+            <Save />
+            {t('allgemein.speichern')}
+          </Button>
+        </div>
       </div>
-    </div>
+    </NurAdministration>
   )
 }

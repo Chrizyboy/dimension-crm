@@ -195,8 +195,14 @@ test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ pa
   await page.keyboard.press('Escape')
 
   await page.getByRole('tab', { name: 'Zeiten' }).click()
-  await page.getByRole('combobox', { name: 'Person' }).click()
-  await page.getByRole('option', { name: 'Mario Montage' }).click()
+  await page.getByRole('button', { name: /^Person:/ }).click()
+  const personen = page.getByRole('group', { name: 'Person' })
+  await personen.getByText('Mario Montage').hover()
+  await personen
+    .locator('div', { hasText: /^Mario Montage/ })
+    .getByRole('button', { name: 'nur' })
+    .click()
+  await page.keyboard.press('Escape')
   await page.getByLabel('Alle prüfbaren wählen').click()
   await page.getByRole('button', { name: /^Prüfen/ }).click()
   await expect(page.getByText('Geprüft').first()).toBeVisible()

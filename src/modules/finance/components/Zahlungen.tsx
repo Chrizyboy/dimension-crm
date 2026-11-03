@@ -13,6 +13,7 @@ import { BewegungZeile, type BewegungAktion } from './BewegungZeile'
 
 const datumVon = (z: Zahlung) => z.geplant_am ?? z.faellig_am
 
+const UNGEPRUEFT = '_ungeprueft'
 /**
  * Zahlungen (V233): offene nach Dringlichkeit gruppiert (überfällig, diese Woche, nächste Woche, später,
  * ohne Datum), innerhalb nach Betreibung → Mahnung → wichtig, dann Datum. Filter nach Kategorie, «ungeprüft»
@@ -32,7 +33,8 @@ export function Zahlungen({
   onZahllauf: () => void
 }) {
   const { t } = useTranslation()
-  const [kategorie, setKategorie] = useState('alle')
+  // Mehrere Kategorien zugleich (leer = alle); «ungeprüft» schränkt zusätzlich ein.
+  const [wahl, setWahl] = useState<string[]>([])
   const [suche, setSuche] = useState('')
   const heute = heuteZuerich()
   const w0 = plusTage(montag(heute), 6)
@@ -40,11 +42,10 @@ export function Zahlungen({
 
   const { offen, bezahlt, kategorien } = useMemo(() => {
     const s = suche.trim().toLowerCase()
+    const kats = wahl.filter((w) => w !== UNGEPRUEFT)
     const passt = (z: Zahlung) =>
-      (kategorie === 'alle' ||
-        (kategorie === 'ungeprueft'
-          ? z.quelle === 'excel' && !z.geprueft
-          : (z.kategorie ?? 'Sonstiges') === kategorie)) &&
+      (!wahl.includes(UNGEPRUEFT) || (z.quelle === 'excel' && !z.geprueft)) &&
+      (kats.length === 0 || kats.includes(z.kategorie ?? 'Sonstiges')) &&
       (!s || [z.firma, z.text, z.rechnung_nr, z.notiz, z.kategorie].join(' ').toLowerCase().includes(s))
     const liste = daten.zahlungen.filter(passt)
     return {
@@ -59,7 +60,7 @@ export function Zahlungen({
         .sort((a, b) => (b.bezahlt_am ?? '').localeCompare(a.bezahlt_am ?? '')),
       kategorien: [...new Set(daten.zahlungen.map((z) => z.kategorie ?? 'Sonstiges'))].sort(),
     }
-  }, [daten.zahlungen, kategorie, suche])
+  }, [daten.zahlungen, wahl, suche])
 
   // Dieselben Zeilen wie in der Vorschau (gleiche Schritte), nur für die Zahlungen dieser Liste.
   const zeilen = useMemo(() => {
@@ -117,17 +118,13 @@ export function Zahlungen({
         </div>
       </div>
       <Filterchips
-        einzeln
         beschriftung={t('finanzen.kategorie')}
         optionen={[
-          { wert: 'alle', text: t('finanzen.alle') },
-          { wert: 'ungeprueft', text: t('finanzen.ungeprueft') },
+          { wert: UNGEPRUEFT, text: t('finanzen.ungeprueft') },
           ...kategorien.map((k) => ({ wert: k, text: k })),
         ]}
-        gewaehlt={[kategorie]}
-        onChange={([k]) => {
-          if (k) setKategorie(k)
-        }}
+        gewaehlt={wahl}
+        onChange={setWahl}
       />
       {gruppen.map(
         (g) =>

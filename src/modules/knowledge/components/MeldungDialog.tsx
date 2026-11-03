@@ -8,15 +8,19 @@ import { Input, Textarea } from '@/components/ui/input'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
 import { melde } from '@/services/meldungen'
 import { useUi } from '@/stores/ui'
+import { useDateienHinzufuegen } from '../hooks/useDateienHinzufuegen'
 import { useAktion } from '../hooks/useHandbuch'
+import { dateienAus } from '../lib/anhaenge'
 import { meldungNummer } from '../lib/handbuch'
 import { meldungSchema } from '../schema'
 import { melden } from '../services/meldungen'
 import { PRIOS, type Prio } from '../types'
+import { BilderFeld } from './BilderFeld'
 
 /**
  * «Fehler melden» (V233 openHelpdesk): worum es geht, was passiert ist, was man erwartet hätte, Bereich,
- * Dringlichkeit und Bildschirmfotos. Browser, Fenstergrösse und Sprache gehen automatisch mit.
+ * Dringlichkeit und Bildschirmfotos. Ein Bildschirmfoto kommt am PC mit Strg+V irgendwo im Dialog dazu, am Handy
+ * mit Kamera oder Galerie. Browser, Fenstergrösse und Sprache gehen automatisch mit.
  */
 export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | null; onSchliessen: () => void }) {
   const { t } = useTranslation()
@@ -30,6 +34,7 @@ export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | nul
   const [prio, setPrio] = useState<Prio>('normal')
   const [dateien, setDateien] = useState<File[]>([])
   const [gezeigt, setGezeigt] = useState(false)
+  const dazu = useDateienHinzufuegen(dateien, setDateien)
 
   const pruefung = meldungSchema.safeParse({ titel, text })
   const fehler = (feld: string) => {
@@ -42,15 +47,25 @@ export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | nul
     setGezeigt(true)
     if (!pruefung.success) return
     let nummer = ''
+    let fehlend = 0
     const ok = await aus(async () => {
       const r = await melden({ titel, text, erwartet, bereich: wo, prio, dateien }, sprache)
       nummer = meldungNummer(r)
+      fehlend = r.fehlend
     })
     if (ok) {
-      melde('ok', {
-        de: `Danke! Meldung ${nummer} ist bei der Administration.`,
-        fr: `Merci ! Le signalement ${nummer} est transmis à l’administration.`,
-      })
+      if (fehlend) {
+        // Meldung ist da, nur Bilder fehlen: nicht nochmals senden, sondern in der Meldung nachreichen.
+        melde('warnung', {
+          de: `Meldung ${nummer} ist gesendet, aber ${String(fehlend)} Bild(er) fehlen. Bitte in der Meldung mit «Bild anhängen» nachreichen.`,
+          fr: `Le signalement ${nummer} est envoyé, mais ${String(fehlend)} image(s) manquent. Ajoute-les dans le signalement avec « Joindre une image ».`,
+        })
+      } else {
+        melde('ok', {
+          de: `Danke! Meldung ${nummer} ist bei der Administration.`,
+          fr: `Merci ! Le signalement ${nummer} est transmis à l’administration.`,
+        })
+      }
       onSchliessen()
     }
   }
@@ -66,6 +81,13 @@ export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | nul
         titel={t('handbuch.meldungen.melden')}
         beschreibung={t('handbuch.meldungen.meldenText')}
         className="md:max-w-xl"
+        onPaste={(e) => {
+          // Nur Bilder abfangen; eingefügter Text landet wie gewohnt im Feld.
+          const neu = dateienAus(e.clipboardData)
+          if (!neu.length) return
+          e.preventDefault()
+          dazu(neu)
+        }}
         fuss={
           <>
             <Button variant="ghost" onClick={onSchliessen}>
@@ -142,22 +164,9 @@ export function MeldungDialog({ bereich, onSchliessen }: { bereich: string | nul
               optionen={PRIOS.map((p) => ({ wert: p, text: t(`handbuch.meldungen.prioWert.${p}`) }))}
             />
           </Feld>
-          <Feld
-            id="meldung-dateien"
-            label={t('handbuch.meldungen.dateien')}
-            hinweis={dateien.length ? dateien.map((d) => d.name).join(', ') : t('handbuch.meldungen.dateienHinweis')}
-            className="sm:col-span-2"
-          >
-            <Input
-              id="meldung-dateien"
-              type="file"
-              multiple
-              accept="image/*,application/pdf"
-              onChange={(e) => {
-                setDateien([...(e.target.files ?? [])])
-              }}
-            />
-          </Feld>
+          <div className="sm:col-span-2">
+            <BilderFeld dateien={dateien} onDateien={setDateien} />
+          </div>
         </div>
       </DialogInhalt>
     </Dialog>
