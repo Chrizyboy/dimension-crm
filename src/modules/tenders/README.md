@@ -4,7 +4,7 @@
 
 Konzept (von Chris am 21.10.2026 freigegeben): [Claude Doc](https://claude.ai/artifact/KkeHUwF5oaTugDwPyW3Tcm). Entscheid: `docs/entscheidungen/0017-ausschreibungs-monitor.md`.
 
-**Stand:** gebaut in Phase **8b**, am 02.11.2026 vollständig gemacht (Entscheid `0045`: Go/No-Go, Eckdaten, Checkliste,
+**Stand:** gebaut in Phase **8b**, am 02.11.2026 vollständig gemacht (Entscheid `0047`: Go/No-Go, Eckdaten, Checkliste,
 Vier-Augen-Prüfung, Öffnungsprotokoll, Zuschlag → Projekt, Fristen-Agenda, Nachweise, Referenzen, Auswertung, KI-Erfassung).
 Im V233-Export gab es keine Treffer zu übernehmen (nur das Recht «tenders»).
 

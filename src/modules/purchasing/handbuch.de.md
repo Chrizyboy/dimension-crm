@@ -15,23 +15,41 @@ Material je Projekt erfassen, bei den Lieferanten bestellen (Krannich, Solarmark
 
 ## So geht's {#so}
 
+### Der Leitstand
+
+Startansicht des Einkaufs. Oben die Kopfzahlen (zu bestellen, wartet auf Freigabe, ohne Auftragsbestätigung, Montagen in Gefahr), darunter jede Bestellung in ihrem Schritt: Freigabe, Bestätigung offen, unterwegs, teilweise da, Rechnung prüfen. **Rot** heisst: die Ware kommt nach der Montage oder ist noch nicht bestellt. Ein Klick auf eine Karte öffnet die Bestellung.
+
 ### Die Materialliste eines Projekts erstellen
 
-1. Reiter **Material je Projekt**, Projekt wählen.
+1. Reiter **Materialplan**, Projekt wählen. Der Materialplan zeigt je Baustelle die Deckung in Prozent und «bestellen bis».
 2. **Vorschlagen** übernimmt die Liste aus der Kalkulation oder der Offerte. Zeilen anpassen oder ergänzen.
 3. Je Zeile zeigt das CRM, was **Da**, **Unterwegs** oder **Fehlt** ist.
 
 ### Bestellen
 
-1. In der Materialliste **Bestellvorschlag**: das CRM gruppiert fehlendes Material nach Lieferant.
-2. Bestellung öffnen, Positionen prüfen, **Freigeben** (Recht Preise).
-3. **Per Mail bestellen**: Bestell-PDF und Mail liegen im [Ausgangskorb](kapitel:outbox). Mit dem Senden gilt die Bestellung als bestellt.
-4. Telefonisch oder im Webshop bestellt: **Ohne Mail bestellt**.
+1. Reiter **Bestellen**: alles, was Baustellen und Lager brauchen, je Lieferant, mit «bestellen bis» (Baubeginn minus Lieferzeit und Puffer, in Arbeitstagen), Frachtfrei-Grenze und Mindestbestellwert.
+2. **Entwurf anlegen** (oder für alle Lieferanten): Freies im Lager wird zuerst reserviert, der Rest kommt in einen Entwurf, auf Verpackungseinheiten gerundet. Liegen mehrere Entwürfe eines Lieferanten ans Lager, fasst **Entwürfe zusammenfassen** sie zu einer Sammelbestellung zusammen.
+3. Bestellung öffnen, Positionen prüfen, **Freigeben** (Recht Preise). Über der Freigabegrenze: **Zur Freigabe vorlegen**, die Geschäftsleitung bekommt eine Glocke und gibt frei.
+4. **Per Mail bestellen**: Bestell-PDF und Mail liegen im [Ausgangskorb](kapitel:outbox). Mit dem Senden gilt die Bestellung als bestellt.
+5. Telefonisch oder im Webshop bestellt: **Ohne Mail bestellt**. Bei Lieferanten mit Webshop öffnet **Webshop öffnen** die Seite.
+
+### Auftragsbestätigung prüfen
+
+1. Bestellung öffnen, Abschnitt **Bestätigung und Lieferung**, **AB erfassen**.
+2. Die KI liest die AB aus einer Mail im Posteingang oder aus einem PDF vor (**PDF lesen**). Nummer, Termin, Mengen und Preise prüfen, **Speichern**.
+3. Abweichungen bei Menge oder Preis sind markiert. Der bestätigte Termin wird zum Liefertermin.
+4. Nur kurz bestätigt, ohne Details: **AB erhalten** bei den Angaben. Kommt nichts: **Nachgefragt** vermerken.
+5. Tracking, Hinweis zur Anlieferung und Kontakt vor Ort im selben Abschnitt.
 
 ### Wareneingang buchen
 
-1. Bestellung öffnen, **Wareneingang**, gelieferte Menge und Datum eintragen.
+1. Bestellung öffnen, **Wareneingang**, gelieferte Menge, Datum und Lieferschein-Nr. eintragen. Seriennummern auf Wunsch mit **Seriennummern erfassen**.
 2. **Wareneingang buchen**. Ware fürs Lager wird für das Projekt reserviert; Ware direkt auf die Baustelle zählt beim Projekt.
+
+### Lieferantenrechnung prüfen
+
+1. Nach der Lieferung in der Bestellung, Abschnitt **Lieferantenrechnung**: das CRM schlägt passende Rechnungen aus AbaNinja vor, mit dem erwarteten Betrag.
+2. Rechnung wählen, **Als geprüft markieren**. Weicht sie deutlich ab (mehr als CHF 50 oder 1 %), braucht es eine Notiz (z. B. Fracht). Die Rechnung gilt dann auch in den Finanzen als geprüft.
 
 ### Material aus dem Lager nehmen
 
@@ -45,7 +63,8 @@ Material je Projekt erfassen, bei den Lieferanten bestellen (Krannich, Solarmark
 
 ### Lieferanten pflegen
 
-1. Reiter **Lieferanten**: Bestell-Adresse, Kontakt, Lieferzeit.
+1. Reiter **Lieferanten**: Bestell-Adresse, Kontakt und Konditionen (Lieferzeit, Fracht, frachtfrei ab, Mindestbestellwert, Zahlungsziel, Skonto, Bestellweg).
+2. Die Liste zeigt je Lieferant den Einkauf der letzten 12 Monate, die Pünktlichkeit und die tatsächliche Lieferzeit.
 
 ## Stände {#staende}
 
@@ -60,11 +79,13 @@ Material je Projekt erfassen, bei den Lieferanten bestellen (Krannich, Solarmark
 
 - Mit «Bestellt» und dem Wareneingang setzt das CRM den Material-Stand im Projekt-Fahrplan.
 - Der Bestand ändert sich nur über Wareneingang und Lagerbuchungen, nie direkt.
+- Stündlich eine Glocke, wenn eine Auftragsbestätigung ausbleibt, eine Montage in Gefahr ist oder «bestellen bis» erreicht ist.
 
 ## Regeln {#regeln}
 
 - Bestellungen und Einkaufspreise nur mit Recht **Preise**.
 - Die Bestell-Mail geht nur für freigegebene Bestellungen.
+- Über der Freigabegrenze (Standard CHF 5'000) geben nur die eingestellten Personen frei. Grenze und Personen ändert nur die Administration.
 
 ## Häufige Fragen {#fragen}
 
@@ -78,4 +99,5 @@ Unter **Lieferanten** eintragen oder in der Mail von Hand eingeben.
 
 ## Neu {#neu}
 
+- 02.11.2026: Leitstand, Bestellen je Lieferant mit Sammelbestellung, Materialplan, Freigabegrenze, Auftragsbestätigung mit KI, Lieferantenrechnung prüfen, Konditionen der Lieferanten.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.
