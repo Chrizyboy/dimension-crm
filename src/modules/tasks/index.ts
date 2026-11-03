@@ -17,10 +17,12 @@ export const meta: ModulMeta = {
   immer: true,
 }
 
-/** Die Seite «Aufgaben» (meine/alle, offen/erledigt). */
+/** Die Seite «Aufgaben»: Ansichten, Schnelleingabe, gruppierte Liste, Akte, Team-Sicht. */
 export const Aufgaben = lazy(() => import('./components/Aufgaben'))
 
 /** Knopf «+ Aufgabe» mit Dialog, für «Mein Tag». */
 export const NeueAufgabeKnopf = lazy(() => import('./components/NeueAufgabeKnopf'))
 
+export { ANSICHTEN } from './types'
 export type * from './types'
+export type { AufgabenNavigation } from './components/Aufgaben'
