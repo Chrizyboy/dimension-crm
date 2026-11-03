@@ -301,12 +301,13 @@ language sql stable security invoker set search_path = '' as $$
       order by r.datum desc limit 1))
 $$;
 
--- Mein Tag am Handy: Stand aus 20261110004200_service_einsatz, dazu die geplanten Inspektionen der Person.
+-- Mein Tag am Handy: Stand aus 20261114027384_mein_tag_ueberfaellig, dazu die geplanten Inspektionen der Person.
 create or replace function public.mein_tag(p_von date, p_bis date, p_person uuid default null)
 returns jsonb
 language plpgsql stable security invoker set search_path = '' as $$
 declare
   v_person uuid := intern.meine_person_id();
+  v_heute date := (now() at time zone 'Europe/Zurich')::date;
 begin
   if p_person is not null and p_person is distinct from v_person then
     if not intern.hat_recht('preise') then
@@ -342,8 +343,9 @@ begin
            and es.von <= p_bis and es.bis >= p_von and v_person = any (es.personen)
         union all
         select jsonb_build_object(
-          'typ', 'service', 'id', f.id, 'von', (f.termin_am at time zone 'Europe/Zurich')::date,
-          'bis', (f.termin_am at time zone 'Europe/Zurich')::date,
+          'typ', 'service', 'id', f.id, 'von', case when u.ueberfaellig then v_heute else u.termin_tag end,
+          'bis', case when u.ueberfaellig then v_heute else u.termin_tag end,
+          'ueberfaellig', u.ueberfaellig, 'termin_tag', u.termin_tag,
           'zeit', to_char(f.termin_am at time zone 'Europe/Zurich', 'HH24:MI'), 'notiz', f.beschreibung,
           'service', jsonb_build_object('id', f.id, 'nummer', f.nummer, 'titel', f.titel, 'garantie', f.garantie,
                                         'prioritaet', f.prioritaet, 'kategorie', f.kategorie, 'auswirkung', f.auswirkung,
@@ -371,8 +373,11 @@ begin
           left join public.projekte p on p.id = coalesce(f.projekt_id, a.projekt_id)
           left join public.kontakte k on k.id = coalesce(f.kontakt_id, p.kontakt_id)
           left join public.objekte o on o.id = coalesce(f.objekt_id, a.objekt_id, p.objekt_id)
+          cross join lateral (select (f.termin_am at time zone 'Europe/Zurich')::date as termin_tag) d
+          -- Überfällig nur, wenn heute im gefragten Zeitraum liegt: dann gehört der Fall auf heute.
+          cross join lateral (select d.termin_tag < v_heute and v_heute between p_von and p_bis as ueberfaellig, d.termin_tag) u
          where f.geloescht_am is null and f.status <> 'erledigt' and (f.person_id = v_person or v_person = any (f.team))
-           and (f.termin_am at time zone 'Europe/Zurich')::date between p_von and p_bis
+           and (u.ueberfaellig or u.termin_tag between p_von and p_bis)
         union all
         -- Inspektion aus einem Wartungsvertrag (Termin in der Wartung geplant), Rapport-Art «wartung».
         select jsonb_build_object(

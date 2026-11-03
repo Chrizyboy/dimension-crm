@@ -79,6 +79,7 @@ La vue mobile pour le montage et la vue bureau correspondante : planning du jour
 
 - Sans réseau, le mobile garde tout dans une file d’attente et envoie dès que le réseau revient.
 - Le matériel du projet indique **Matériel prêt** ou combien il manque.
+- Un cas de service dont le rendez-vous est passé reste aujourd’hui dans le planning jusqu’à **Terminé**, marqué en rouge **En retard depuis le …**.
 - Les heures prévues découlent d’une règle (kWc, toit, batterie). À la MES, les numéros de série vont dans l’installation.
 - Chaque signalement donne une tâche et une cloche au chef de projet.
 
@@ -100,6 +101,7 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Les cas de service d’hier restent dans le planning («En retard»). Temps de travail et trajet dans **Ma journée** aussi sans rapport ; les modifications partent tout de suite.
 - 03.11.2026: Inspections des contrats d’entretien dans «Ma journée», points de contrôle selon la formule avec les valeurs de la dernière fois.
 - 02.11.2026 : contrôle de sécurité et temps d’équipe, étapes de travail, photos obligatoires du chantier, scanner les numéros de série, dossier, signaler un problème, réception avec réserves ; chantiers du jour, dossier chantier, signalements, feuille hebdomadaire, visa et analyse.
 - 31.10.2026: Vue simple pour les monteurs avec temps de travail d’un clic et frais.

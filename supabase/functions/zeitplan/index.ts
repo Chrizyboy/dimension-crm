@@ -21,6 +21,7 @@
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * monatsbericht stündlich      am 1. des Monats Glocke «Monatsbericht» an die Geschäftsleitung (Kennzahlen)
 //  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
@@ -127,6 +128,12 @@ Deno.serve(async (req) => {
   ergebnis.fristen = await job('fristen', 60, async () => {
     const n = await dienst.rpc<number>('fristen_melden', {})
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
+  })
+
+  // Monatsbericht der Kennzahlen (Entscheid 0045): am 1. eine Glocke für die Geschäftsleitung, nur intern.
+  ergebnis.monatsbericht = await job('monatsbericht', 60, async () => {
+    const n = await dienst.rpc<number>('kennzahlen_monatsbericht_melden', {})
+    return n ? `${n} gemeldet` : 'nicht fällig'
   })
 
   // Aufgaben (Entscheid 0045): Morgen-Glocke ab «erinnern_ab», die Datenbank meldet jede Person nur einmal am Tag.
