@@ -11306,15 +11306,19 @@ export type Database = {
           besichtigung: Json | null
           eingang_am: string | null
           empfohlen_von: string | null
+          erinnert_am: string | null
           erledigt: boolean | null
           erreichbarkeit: string | null
           erstellt_am: string
           erstellt_von: string | null
+          erstkontakt_am: string | null
           erstkontakt_standort: string | null
+          eskaliert_am: string | null
           finanzierung: string | null
           foerderung: string | null
           geaendert_am: string
           geloescht_am: string | null
+          herkunft: NonNullable<Json>
           id: string
           interesse: string[]
           kommentar_kunde: string | null
@@ -11354,15 +11358,19 @@ export type Database = {
           besichtigung?: Json | null
           eingang_am?: string | null
           empfohlen_von?: string | null
+          erinnert_am?: string | null
           erledigt?: boolean | null
           erreichbarkeit?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          erstkontakt_am?: string | null
           erstkontakt_standort?: string | null
+          eskaliert_am?: string | null
           finanzierung?: string | null
           foerderung?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          herkunft?: NonNullable<Json>
           id?: string
           interesse?: string[]
           kommentar_kunde?: string | null
@@ -11401,15 +11409,19 @@ export type Database = {
           besichtigung?: Json | null
           eingang_am?: string | null
           empfohlen_von?: string | null
+          erinnert_am?: string | null
           erledigt?: boolean | null
           erreichbarkeit?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
+          erstkontakt_am?: string | null
           erstkontakt_standort?: string | null
+          eskaliert_am?: string | null
           finanzierung?: string | null
           foerderung?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          herkunft?: NonNullable<Json>
           id?: string
           interesse?: string[]
           kommentar_kunde?: string | null
@@ -14658,12 +14670,18 @@ export type Database = {
           art: string | null
           baubeginn: string | null
           breite: number | null
+          dach: Json | null
           eingang_am: string | null
+          eingang_zeit: string | null
           email: string | null
           entscheid: string | null
+          entscheid_am: string | null
           erreichbarkeit: string | null
+          erstkontakt_am: string | null
           geaendert_am: string | null
+          gebaeudeart: string | null
           gruppe: string | null
+          herkunft: Json | null
           hoehe: number | null
           id: string | null
           interesse: string[] | null
@@ -14704,6 +14722,8 @@ export type Database = {
           termin_am: string | null
           termin_dauer_min: number | null
           termin_person_id: string | null
+          uebernommen: boolean | null
+          verbrauch_kwh: number | null
           verkaufschance_id: string | null
           verlustgrund: string | null
           vertagt_grund: string | null
@@ -15445,6 +15465,8 @@ export type Database = {
       lager_buchen: { Args: { p: Json }; Returns: undefined }
       lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
       lead_anlegen: { Args: { p: Json }; Returns: string }
+      lead_aus_website: { Args: { p: Json }; Returns: Json }
+      lead_dach_speichern: { Args: { p: Json; p_meldung: string; p_objekt: string }; Returns: undefined }
       lead_kontakt_erfassen: {
         Args: {
           p_angaben?: Json
@@ -15469,6 +15491,16 @@ export type Database = {
           termin: number
         }[]
       }
+      leads_dach_offen: {
+        Args: { p_limit?: number }
+        Returns: {
+          id: string
+          ort: string
+          plz: string
+          strasse: string
+        }[]
+      }
+      leads_erstkontakt_melden: { Args: Record<PropertyKey, never>; Returns: number }
       mahnlauf_vorschlag: {
         Args: Record<PropertyKey, never>
         Returns: {
