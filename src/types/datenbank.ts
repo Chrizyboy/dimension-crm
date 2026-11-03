@@ -10784,6 +10784,54 @@ export type Database = {
           },
         ]
       }
+      tag_verschoben: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bis: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          schluessel: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bis: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          schluessel: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bis?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          schluessel?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'tag_verschoben_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       verkaufschancen: {
         Row: {
           alt_daten: Json | null
@@ -14531,6 +14579,7 @@ export type Database = {
         }[]
       }
       kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
+      kennzahlen_ziele_setzen: { Args: { p_person: string; p_ziele: Json }; Returns: undefined }
       kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
       kennzahlen_monatsbericht_melden: { Args: Record<PropertyKey, never>; Returns: number }
       kennzahlen_zusatz: {
@@ -15104,6 +15153,8 @@ export type Database = {
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
+      tag_verschieben: { Args: { p_art: string; p_bis: string; p_id: string }; Returns: undefined }
+      team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       team_kurse: { Args: { p_jahr?: number }; Returns: Json }
       team_uebersicht: { Args: { p_tag?: string }; Returns: Json }
       termin_vermerken: { Args: { p_person: string; p_text: string; p_verkaufschance: string }; Returns: undefined }
@@ -15116,6 +15167,9 @@ export type Database = {
       wartung_laeuft_bis: { Args: { p_jahre: number; p_start: string; p_stichtag?: string }; Returns: string }
       wartung_rechnung_erstellen: { Args: { p_id: string }; Returns: string }
       wartung_tarif: { Args: { p_kwp: number; p_paket: string }; Returns: number }
+      wetter_baustellen: { Args: Record<PropertyKey, never>; Returns: Json }
+      wetter_plz: { Args: Record<PropertyKey, never>; Returns: string[] }
+      wetter_speichern: { Args: { p_lauf?: string; p_zeilen: Json }; Returns: number }
       werkvertrag_anzahlungsrechnung: { Args: { p_werkvertrag: string }; Returns: string }
       werkvertrag_status: { Args: { p?: Json; p_id: string; p_ziel: string }; Returns: undefined }
       wochenplan: { Args: { p_bis: string; p_von: string }; Returns: Json }

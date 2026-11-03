@@ -34,6 +34,14 @@ export interface TagZeile {
   status?: string
   name_fr?: string
   bewilligung?: boolean
+  /** Tage seit Versand (Nachfassen) bzw. seit Eingang (Anfrage), für «warum steht das hier». */
+  tage?: number
+  /** Wer mir die Aufgabe gegeben hat (nur wenn nicht ich selbst). */
+  von?: string
+  /** Kanal eines Eintrags im Ausgangskorb (mail, sms, brief). */
+  kanal?: string
+  /** Postleitzahl des Orts, für das Wetter auf der Baustelle. */
+  plz?: string
 }
 
 /** Liste mit Gesamtzahl; `zeilen` ist auf 20 bis 30 gekürzt. */
@@ -58,5 +66,54 @@ export const TAG_LISTEN = [
 ] as const
 export type TagListeName = (typeof TAG_LISTEN)[number]
 
+/** Schlüssel eines Wochenziels (Anzahlen pro Woche, Aufträge als Betrag pro Monat). */
+export type ZielSchluessel = 'leads_neu' | 'termine' | 'gesendet' | 'auftrag_monat_rappen'
+export const ZIEL_SCHLUESSEL: ZielSchluessel[] = ['leads_neu', 'termine', 'gesendet', 'auftrag_monat_rappen']
+
+/** Meine Ziele mit Stand (null, wenn für mich keine gesetzt sind). */
+export interface MeineZiele {
+  woche_von: string
+  monat: string
+  zeilen: { schluessel: ZielSchluessel; ziel: number; ist: number }[]
+}
+
 /** Antwort von `heute_fuer_mich`. */
-export type MeinTag = { heute: string; person: { id: string; name: string } } & Record<TagListeName, TagListe>
+export type MeinTag = {
+  heute: string
+  person: { id: string; name: string }
+  /** Darf Wochenziele setzen (Administration oder Recht «finanzen»). */
+  darf_ziele: boolean
+  ziele: MeineZiele | null
+} & Record<TagListeName, TagListe>
+
+/** Eine Person in «Team heute» (`team_heute`): wo sie ist, ohne Grund einer Abwesenheit. */
+export interface TeamPerson {
+  id: string
+  name: string
+  kuerzel: string
+  status: 'abwesend' | 'baustelle' | 'kunde' | 'service' | 'da'
+  ort?: string
+  zeit?: string
+  nummer?: string
+  halbtag?: boolean
+  standort?: string
+}
+
+/** Ein Tag auf einer Baustelle mit Prognose (`wetter_baustellen`); ohne Prognose fehlen die Werte. */
+export interface BaustellenWetter {
+  datum: string
+  projekt_id: string
+  nummer?: string
+  titel?: string
+  ort?: string
+  plz?: string
+  leite_ich?: boolean
+  tmin?: number
+  tmax?: number
+  regen_mm?: number
+  regen_prozent?: number
+  wind_kmh?: number
+  symbol?: number
+  geholt_am?: string
+  achtung?: boolean
+}

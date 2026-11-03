@@ -2449,6 +2449,14 @@
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "tag_kein_recht": "Pas d'autorisation pour «Ma journée».",
+    "tag_zeile_unbekannt": "Cette ligne ne peut pas être reportée.",
+    "tag_datum_ungueltig": "La date doit être après aujourd'hui et au plus dans un an.",
+    "tag_nicht_meine_aufgabe": "Seules tes tâches ouvertes peuvent être reportées.",
+    "tag_ziele_kein_recht": "Seules l'administration ou la direction peuvent fixer des objectifs.",
+    "tag_person_unbekannt": "Cette personne n'existe pas.",
+    "tag_ziel_unbekannt": "Objectif inconnu.",
+    "tag_ziel_ungueltig": "Les objectifs doivent être des nombres entiers à partir de 0.",
     "kennzahlen_kein_recht": "Seules les personnes avec le droit « Finances » modifient les objectifs et réglages des indicateurs.",
     "kennzahlen_wert_ungueltig": "Une valeur n'est pas valable (pourcentages 0–100, montants non négatifs).",
     "kennzahlen_schluessel_ungueltig": "Ce réglage n'existe pas.",
@@ -7012,7 +7020,71 @@
     },
     "kennzahlen": "Indicateurs",
     "team": "Équipe et exploitation",
-    "system": "Système et plan de construction"
+    "system": "Système et plan de construction",
+    "warum": {
+      "nachfassen_one": "Sans réponse depuis 1 jour",
+      "nachfassen_other": "Sans réponse depuis {{count}} jours",
+      "lead_one": "Demande ouverte depuis 1 jour",
+      "lead_other": "Demande ouverte depuis {{count}} jours",
+      "lead_zero": "Demande du jour",
+      "nachfassen_zero": "Envoyée aujourd'hui",
+      "von": "De {{name}}",
+      "kanal_mail": "E-mail attend ton clic",
+      "kanal_sms": "SMS attend ton clic",
+      "kanal_brief": "Lettre attend ton clic"
+    },
+    "verschieben": {
+      "knopf": "Reporter «{{titel}}»",
+      "titel": "Reporter",
+      "morgen": "À demain",
+      "naechsteWoche": "À la semaine prochaine (lundi)",
+      "datum": "À une date …",
+      "ok": "Reporter",
+      "bis": "Afficher à nouveau le",
+      "erledigt": "Reporté au {{datum}}",
+      "fehler": "Non reporté"
+    },
+    "ziele": {
+      "titel": "Ma semaine",
+      "festlegen": "Fixer les objectifs",
+      "keine": "Aucun objectif n'est fixé pour toi.",
+      "beschreibung": "Objectifs par personne : nombres par semaine (lundi à dimanche), commandes en montant par mois. Vide = pas d'objectif.",
+      "person": "Personne",
+      "leads_neu": "Nouvelles demandes",
+      "termine": "Visites",
+      "gesendet": "Offres envoyées",
+      "auftrag_monat_rappen": "Commandes du mois",
+      "speichern": "Enregistrer",
+      "gespeichert": "Objectifs enregistrés",
+      "nichtGespeichert": "Objectifs non enregistrés",
+      "ungueltig": "Saisis des nombres entiers ou un montant comme 250'000",
+      "nurVerkauf": "Seulement la vente et les personnes avec objectifs",
+      "allePersonen": "Afficher toutes les personnes"
+    },
+    "teamHeute": {
+      "titel": "L'équipe aujourd'hui",
+      "halbtag": "demi-journée",
+      "abwesend": "absent·e",
+      "baustelle": "Chantier",
+      "kunde": "chez le client",
+      "service": "Service",
+      "da": "présent·e"
+    },
+    "wetter": {
+      "titel": "Météo sur les chantiers",
+      "achtung": "Attention",
+      "keine": "Pas encore de prévision",
+      "regen": "{{mm}} mm",
+      "wind": "vent {{kmh}} km/h",
+      "quelle": "Source : MétéoSuisse, mise à jour chaque heure",
+      "art": {
+        "sonne": "ensoleillé",
+        "wolken": "nuageux",
+        "regen": "pluie",
+        "schnee": "neige",
+        "unbekannt": "pas de prévision"
+      }
+    }
   },
   "kz": {
     "titel": "Indicateurs",

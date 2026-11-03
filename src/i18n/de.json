@@ -2449,6 +2449,14 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "tag_kein_recht": "Keine Berechtigung für «Mein Tag».",
+    "tag_zeile_unbekannt": "Diese Zeile kann nicht verschoben werden.",
+    "tag_datum_ungueltig": "Das Datum muss nach heute und höchstens ein Jahr entfernt liegen.",
+    "tag_nicht_meine_aufgabe": "Nur eigene, offene Aufgaben lassen sich verschieben.",
+    "tag_ziele_kein_recht": "Ziele setzen darf nur die Administration oder die Geschäftsleitung.",
+    "tag_person_unbekannt": "Diese Person gibt es nicht.",
+    "tag_ziel_unbekannt": "Unbekanntes Ziel.",
+    "tag_ziel_ungueltig": "Ziele müssen ganze Zahlen ab 0 sein.",
     "kennzahlen_kein_recht": "Ziele und Kennzahlen-Einstellungen ändert nur, wer das Recht «Finanzen» hat.",
     "kennzahlen_wert_ungueltig": "Ein Wert ist ungültig (Prozente 0–100, Beträge nicht negativ).",
     "kennzahlen_schluessel_ungueltig": "Diese Einstellung gibt es nicht.",
@@ -7012,7 +7020,71 @@
     },
     "kennzahlen": "Kennzahlen",
     "team": "Team und Betrieb",
-    "system": "System und Bauplan"
+    "system": "System und Bauplan",
+    "warum": {
+      "nachfassen_one": "Seit 1 Tag ohne Antwort",
+      "nachfassen_other": "Seit {{count}} Tagen ohne Antwort",
+      "lead_one": "Anfrage seit 1 Tag offen",
+      "lead_other": "Anfrage seit {{count}} Tagen offen",
+      "lead_zero": "Anfrage von heute",
+      "nachfassen_zero": "Heute gesendet",
+      "von": "Von {{name}}",
+      "kanal_mail": "Mail wartet auf deinen Klick",
+      "kanal_sms": "SMS wartet auf deinen Klick",
+      "kanal_brief": "Brief wartet auf deinen Klick"
+    },
+    "verschieben": {
+      "knopf": "«{{titel}}» verschieben",
+      "titel": "Verschieben",
+      "morgen": "Auf morgen",
+      "naechsteWoche": "Auf nächste Woche (Montag)",
+      "datum": "Auf ein Datum …",
+      "ok": "Verschieben",
+      "bis": "Wieder zeigen am",
+      "erledigt": "Verschoben auf {{datum}}",
+      "fehler": "Nicht verschoben"
+    },
+    "ziele": {
+      "titel": "Meine Woche",
+      "festlegen": "Ziele festlegen",
+      "keine": "Für dich sind keine Ziele gesetzt.",
+      "beschreibung": "Ziele je Person: Anzahlen pro Woche (Montag bis Sonntag), Aufträge als Betrag pro Monat. Leer = kein Ziel.",
+      "person": "Person",
+      "leads_neu": "Neue Anfragen",
+      "termine": "Besichtigungen",
+      "gesendet": "Offerten gesendet",
+      "auftrag_monat_rappen": "Aufträge im Monat",
+      "speichern": "Speichern",
+      "gespeichert": "Ziele gespeichert",
+      "nichtGespeichert": "Ziele nicht gespeichert",
+      "ungueltig": "Bitte ganze Zahlen bzw. einen Betrag wie 250'000 eingeben",
+      "nurVerkauf": "Nur Verkauf und Personen mit Zielen",
+      "allePersonen": "Alle Personen zeigen"
+    },
+    "teamHeute": {
+      "titel": "Team heute",
+      "halbtag": "halber Tag",
+      "abwesend": "abwesend",
+      "baustelle": "Baustelle",
+      "kunde": "beim Kunden",
+      "service": "Service",
+      "da": "da"
+    },
+    "wetter": {
+      "titel": "Wetter auf den Baustellen",
+      "achtung": "Achtung",
+      "keine": "Noch keine Prognose",
+      "regen": "{{mm}} mm",
+      "wind": "{{kmh}} km/h Wind",
+      "quelle": "Quelle: MeteoSchweiz, stündlich aktualisiert",
+      "art": {
+        "sonne": "sonnig",
+        "wolken": "bewölkt",
+        "regen": "Regen",
+        "schnee": "Schnee",
+        "unbekannt": "keine Prognose"
+      }
+    }
   },
   "kz": {
     "titel": "Kennzahlen",
