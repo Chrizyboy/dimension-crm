@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, geschaeftsleitung
 ---
 
@@ -69,4 +69,5 @@ Sous **Réseaux sociaux**, l’erreur figure au post. Le plus souvent, la connex
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Seule l’administration modifie les modèles ; les autres les voient en lecture seule et les utilisent à l’envoi.
 - 02.11.2026: Instagram et LinkedIn avec un compte allemand et un compte français, deux pages Facebook.

@@ -160,6 +160,6 @@ test('Newsletter: Entwurf mit Zielgruppe prüfen, dann in den Papierkorb', async
 test('Vorlagen: CI-Stil ändert nur die Administration', async ({ page }) => {
   await anmelden(page, 'verkauf@test.local')
   await page.goto('/#/marketing?ansicht=vorlagen')
-  await expect(page.getByText('Ändern kann nur die Administration.')).toBeVisible()
+  await expect(page.getByText('Ändern kann nur die Administration.').first()).toBeVisible()
   await expect(page.getByLabel('CI-Stil für Bilder (Canva)')).not.toBeEditable()
 })

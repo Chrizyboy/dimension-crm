@@ -28,3 +28,6 @@ export const PosteingangHeute = lazy(() => import('./components/HeuteKarte'))
 export { ANSICHTEN, REITER } from './types'
 export type { Ansicht, Reiter } from './types'
 export type { PosteingangZiel } from './components/Posteingang'
+
+/** Bereiche für Einstellungen (zentral). */
+export { einstellungen } from './einstellungen'

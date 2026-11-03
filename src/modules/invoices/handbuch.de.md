@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: buchhaltung, projektleitung, geschaeftsleitung
 ---
 
@@ -9,7 +9,7 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 
 ## Wer arbeitet hier {#wer}
 
-- **Buchhaltung (Recht Finanzen)**: stellen, Zahlungen, Mahnungen, Abgleich mit AbaNinja, Firmenangaben.
+- **Buchhaltung (Recht Finanzen)**: stellen, Zahlungen, Mahnungen, Abgleich mit AbaNinja; Firmenangaben nur lesen.
 - **Projektleitung**: sieht im Reiter **Zu verrechnen**, welche Tranche fällig ist, und legt Entwürfe an.
 - **Geschäftsleitung**: Übersicht über Offenes und Überfälliges.
 
@@ -75,7 +75,7 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 - Nummer, Fälligkeit, Zahlungsstand, Mahnstufen und Storno setzt nur das CRM, nie von Hand.
 - Eine gestellte Rechnung wird nicht geändert, sondern storniert und neu erstellt.
 - Gesendet wird nur über AbaNinja oder den Ausgangskorb mit Freigabe.
-- Firmenangaben und Einstellungen ändern nur Personen mit Recht Finanzen.
+- Firmenangaben und Einstellungen ändert nur die Administration, auch unter Einstellungen › **Firmen & Bank**. Die Buchhaltung sieht sie zum Lesen.
 
 ## Häufige Fragen {#fragen}
 
@@ -93,6 +93,7 @@ Filter setzen und **Liste exportieren** (CSV).
 
 ## Neu {#neu}
 
+- 03.11.2026: Firmenangaben und Einstellungen der Rechnungen ändert nur noch die Administration; auch unter Einstellungen › Firmen & Bank.
 - 31.10.2026: Das Rechnungs-PDF wird auch für die Anzahlungsrechnung am Werkvertrag gebraucht.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.
 - 22.10.2026: Rechnungen mit Zu verrechnen, Mahnen, Zahlungen und PDF mit QR-Zahlteil.

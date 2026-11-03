@@ -39,7 +39,7 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 3. Eine eigene Aufgabe bekommt das neue Fälligkeitsdatum. Alles andere (Nachfassen, Anfrage, Frist …) verschwindet nur bei dir bis zu diesem Tag; am Datensatz ändert sich nichts.
 4. Termine und Freigaben lassen sich nicht verschieben.
 
-### Wochenziele festlegen (Administration, Geschäftsleitung)
+### Wochenziele festlegen (Administration)
 
 1. In der Karte **Meine Woche** auf **Ziele festlegen** klicken.
 2. Je Person Neue Anfragen, Besichtigungen und Offerten pro Woche sowie Aufträge pro Monat eintragen, Zeile **Speichern**.
@@ -98,5 +98,6 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 ## Neu {#neu}
 
 - 03.11.2026: Verschieben, Gründe je Zeile, Wartet auf deine Freigabe, Meine Woche mit Zielen, Team heute, Wetter auf den Baustellen.
+- 03.11.2026: Wochenziele legt nur noch die Administration fest.
 - 26.10.2026: Status unter dem Titel in schmalen Karten, kürzeres Datum.
 - 24.10.2026: Mein Tag ist die Startseite; Aufgaben «Von mir vergeben» sind dazugekommen.
