@@ -43,13 +43,19 @@ export async function sendeAnmeldecode(email: string, sprache: Sprache): Promise
   return error ? anmeldefehlerVon(error) : null
 }
 
-/** Schlüssel des Registrier-Links aus der Adresse (`#/?registrieren=…`), sonst null. */
-export function registrierSchluessel(): string | null {
-  const hash = window.location.hash
+function schluesselAus(hash: string): string | null {
   const frage = hash.indexOf('?')
   if (frage < 0) return null
   const wert = new URLSearchParams(hash.slice(frage + 1)).get('registrieren')
   return wert && /^[a-f0-9]{32,128}$/.test(wert) ? wert : null
+}
+
+// Beim Laden der App gemerkt: Der Router leitet `#/` sofort auf `#/today` um und verliert dabei die Abfrage.
+let gemerkt: string | null = typeof window === 'undefined' ? null : schluesselAus(window.location.hash)
+
+/** Schlüssel des Registrier-Links aus der Adresse (`#/?registrieren=…`) oder vom App-Start, sonst null. */
+export function registrierSchluessel(): string | null {
+  return schluesselAus(window.location.hash) ?? gemerkt
 }
 
 /** Vorname und Sprache zum Registrier-Link, oder null, wenn der Link nicht (mehr) gilt. */
@@ -74,6 +80,7 @@ export async function loeseRegistrierLinkEin(schluessel: string, email: string):
     if (m === 'registrierung.link_ungueltig') return 'link_ungueltig'
     return anmeldefehlerVon(error)
   }
+  gemerkt = null
   window.history.replaceState(null, '', `${window.location.pathname}#/`)
   return null
 }

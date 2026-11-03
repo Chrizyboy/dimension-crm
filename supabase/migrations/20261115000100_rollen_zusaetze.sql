@@ -60,14 +60,15 @@ update public.rollen set rechte = '{preise,visum}', bereiche = '{dashboard,sales
  where schluessel = 'innendienst';
 update public.rollen set rechte = '{preise,visum}', bereiche = '{dashboard,quotes,workcontracts,pricing,customers,contacts,projects,fieldwork,aftersales,contracts,purchasing,fleet,inbox,outbox,ai,expenses}'
  where schluessel = 'projektleitung';
-update public.rollen set rechte = '{}', bereiche = '{fieldwork,aftersales,fleet,expenses}', ansicht = 'einfach',
+update public.rollen set rechte = '{}', bereiche = '{fieldwork,aftersales,fleet,expenses}', ansicht = 'voll',
        beschreibung_de = 'Eigene Einsätze, Baustelle, Rapporte, Service und Fahrzeuge, am Handy.',
        beschreibung_fr = 'Ses interventions, chantier, rapports, service et véhicules, sur mobile.'
  where schluessel = 'montage';
 update public.rollen set rechte = '{finanzen,preise,planung,personal,marge,visum}', bereiche = '{dashboard,quotes,workcontracts,pricing,customers,contacts,aftersales,contracts,invoices,finance,inbox,outbox,ai,expenses}'
  where schluessel = 'buchhaltung';
 
--- Monteur in Montage zusammenführen.
+-- Monteur in Montage zusammenführen. Montage behält die volle Ansicht, weil Rapport, Service und Fahrzeuge
+-- nur dort erreichbar sind; die einfache Ansicht bleibt als Eigenschaft der (inaktiven) Rolle «monteur» erhalten.
 update public.personen set rolle = 'montage' where rolle = 'monteur';
 update public.rollen set aktiv = false where schluessel = 'monteur';
 
