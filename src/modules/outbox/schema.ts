@@ -10,10 +10,11 @@ export const aenderungSchema = z
     an: z.string().trim().min(1, 'pruefung.pflicht'),
     cc: z.string().trim(),
     betreff: z.string().trim(),
-    text: z.string().trim().min(1, 'pruefung.pflicht'),
+    text: z.string().trim(),
   })
   .superRefine((w, ctx) => {
-    if (w.kanal === 'mail' && !w.betreff)
+    if (w.kanal !== 'brief' && !w.text) ctx.addIssue({ code: 'custom', path: ['text'], message: 'pruefung.pflicht' })
+    if (w.kanal !== 'sms' && !w.betreff)
       ctx.addIssue({ code: 'custom', path: ['betreff'], message: 'pruefung.pflicht' })
     if (w.kanal === 'mail' && !/^[^@\s]+@[^@\s]+\.[^@\s]+(\s*[,;]\s*[^@\s]+@[^@\s]+\.[^@\s]+)*$/.test(w.an)) {
       ctx.addIssue({ code: 'custom', path: ['an'], message: 'pruefung.email' })

@@ -2,6 +2,7 @@
 // geschützt durch den Schlüssel ZEITPLAN_SCHLUESSEL im Kopf. Jeder Job läuft nur, wenn er fällig ist
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
+//  * ausgang_erinnern alle 15 Min.  wartet seit 4 Arbeitsstunden oder Fehler: Glocke (Stellvertretung nach 1 Tag)
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
@@ -117,6 +118,12 @@ Deno.serve(async (req) => {
   ergebnis.ausgang = await job('ausgang', 0, async () => {
     const r = await ausgangAbarbeiten(20)
     return `${r.gesendet} gesendet, ${r.fehler} Fehler`
+  })
+  // Was zu lange auf Freigabe wartet oder mit Fehler hängt: Glocke an Zuständige, nach einem Arbeitstag auch an die
+  // Stellvertretung (höchstens einmal am Tag je Eintrag).
+  ergebnis.ausgang_erinnern = await job('ausgang_erinnern', 15, async () => {
+    const n = await dienst.rpc<number>('ausgang_erinnern', {})
+    return `${n} erinnert`
   })
 
   // Automationen (Phase 12): die Datenbank macht alles ausser den Schritten, die Microsoft oder AbaNinja brauchen.
