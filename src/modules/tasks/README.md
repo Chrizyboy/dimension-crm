@@ -1,28 +1,37 @@
 # Modul: Aufgaben
 
-**Zweck:** Jede Person sieht ihre offenen Aufgaben mit Fälligkeit, hakt sie ab und springt zum Datensatz; Aufgaben kommen von Automationen oder werden von Hand angelegt.
+**Zweck:** Der Arbeitsvorrat jeder Person: was bis wann zu tun ist, gruppiert nach Fälligkeit, mit Akte
+(Teilschritte, Verlauf, Weitergeben, Verschieben), Vertretung bei Abwesenheit und Team-Sicht für die
+Geschäftsleitung. Aufgaben kommen von Hand, aus der Schnelleingabe, aus Automationen, Monitoren, Fristen und KI.
 
-**Stand:** Phase 12 gebaut (in V233 gab es die Tabelle `tasks`, sie war aber leer).
+**Stand:** Phase 12 gebaut, vollständig ausgebaut am 02.11.2026 (Entscheid 0045).
 
 ## Daten
 
-- `aufgaben` (Titel, Text, Person, fällig am, erledigt am, Bezug `bezug_tabelle`/`bezug_id`, `lauf_id` wenn von einer Automation), Papierkorb über `geloescht_am`.
-- `personen` (nur lesen, für «zuweisen an»).
+- `aufgaben` (Titel, Text, Person, fällig am, wichtig, Teilschritte, Wiederholung, erledigt am/von/Notiz, Bezug
+  `bezug_tabelle`/`bezug_id`, `lauf_id`, `quelle`, `vorgaenger_id`), Papierkorb über `geloescht_am`.
+- `aufgaben_kommentare` (Verlauf, `@Kurzzeichen` meldet in der Glocke).
+- Sicht `aufgaben_liste` (mit Bezug-Name, Herkunft, Ersteller, Kommentaren, Vertretung), `aufgaben_team()`.
+- `aufgabe_erledigen(id, notiz)`; `aufgaben_melden()` vom Zeitplan.
+- Regeln in `einstellungen.aufgaben` (nur Administration): `sichtbarkeit`, `vertretung`, `notiz_in_verlauf`, `erinnern_ab`.
+- `personen` (nur lesen, für «Für wen» und Kurzzeichen).
 
 ## Abhängigkeiten
 
-`src/services/supabase.ts`, `src/services/meldungen.ts`, `src/services/fehler.ts`, `src/lib/ziel.ts`.
+`src/services/supabase.ts`, `src/services/meldungen.ts`, `src/services/fehler.ts`, `src/lib/ziel.ts`, `src/lib/rechte.ts`.
 
 ## Ereignisse
 
-- **sendet:** keine.
+- **sendet:** keine (Glocken setzt die Datenbank).
 - **hört auf:** keine.
 
 ## Ordner
 
-- `components/` – Liste mit Filtern (Meine/Von mir vergeben/Alle, Offen/Erledigt), neue Aufgabe; `NeueAufgabeKnopf` für Mein Tag
-- `hooks/` – `useAufgaben`, `usePersonen`
-- `services/` – Laden, Abhaken, Anlegen
-- `lib/` – Fälligkeit (heute in Zürich, überfällig, bald)
+- `components/` – Seite mit Ansichten, `Schnelleingabe`, `AufgabenListe`/`AufgabeZeile`, `AufgabeAkte` mit
+  `AkteAktionen`, `TeilschritteBox`, `KommentarBox`, `TeamSicht`, `NeueAufgabe`; `NeueAufgabeKnopf` für Mein Tag
+  und Akten anderer Bereiche (mit Bezug)
+- `hooks/` – `useAufgaben`, `useAufgabe`, `useKommentare`, `useTeam`, `usePersonen`
+- `services/` – Laden, Erledigen, Ändern, Kommentieren, Team
+- `lib/` – Fälligkeit und Gruppen (Zürich), Schnelleingabe
 - `types.ts`, `schema.ts` – Typen und Prüfregeln
 - `index.ts` – das Einzige, was andere importieren dürfen

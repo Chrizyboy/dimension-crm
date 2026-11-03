@@ -6032,7 +6032,7 @@
   },
   "aufgaben": {
     "titel": "Tâches",
-    "beschreibung": "Qui fait quoi et pour quand. Beaucoup viennent des automatisations ; un clic ouvre la fiche.",
+    "beschreibung": "Ta liste de travail : quoi faire et pour quand. Beaucoup viennent des automatisations ; un clic ouvre la tâche.",
     "neu": "Nouvelle tâche",
     "erledigt": "Fait",
     "erledigtSetzen": "« {{titel}} » fait",
@@ -6071,14 +6071,107 @@
       "titel": "Que faut-il faire ?",
       "text": "Note",
       "faellig": "Échéance le",
-      "person": "Pour qui"
+      "person": "Pour qui",
+      "wiederholung": "Répéter",
+      "textPlatzhalter": "Description …"
     },
     "fehler": {
       "titel": "Merci de saisir un titre.",
       "datum": "Merci de choisir une date valide.",
       "person": "Merci de choisir une personne."
     },
-    "neuKurz": "Tâche"
+    "neuKurz": "Tâche",
+    "vonPerson": "Tâches de {{name}}",
+    "ansicht": "Vue",
+    "ansichten": {
+      "meine": "Mes tâches",
+      "vergeben": "Attribuées",
+      "vertretung": "Remplacement",
+      "alle": "Toutes",
+      "team": "Équipe",
+      "erledigt": "Terminées"
+    },
+    "suchen": "Rechercher des tâches",
+    "filtern": "Filtrer",
+    "anzahl_one": "{{count}} tâche",
+    "anzahl_other": "{{count}} tâches",
+    "schnellfilter": {
+      "wichtig": "Importantes",
+      "automation": "Automatisation",
+      "mit_bezug": "Avec dossier"
+    },
+    "leerVertretung": "Personne à remplacer",
+    "kuerzelNeu": "Nouvelle tâche",
+    "morgen": "Demain",
+    "naechsteWoche": "Semaine prochaine",
+    "morgenVerschieben": "Au prochain jour ouvrable",
+    "morgenVerschiebenFuer": "« {{titel}} » au prochain jour ouvrable",
+    "wichtig": "Important",
+    "vertretungFuer": "Remplacement de {{name}}",
+    "schritteZahl": "{{fertig}}/{{schritte}} étapes",
+    "gruppe": {
+      "ueberfaellig": "En retard",
+      "heute": "Aujourd'hui",
+      "morgen": "Demain",
+      "woche": "Cette semaine",
+      "spaeter": "Plus tard",
+      "ohne": "Sans date"
+    },
+    "herkunft": {
+      "automation": "Automatisation",
+      "monitor": "Veille",
+      "frist": "Échéance",
+      "system": "Système",
+      "selbst": "Moi-même",
+      "person": "Attribuée",
+      "ki": "Proposition IA",
+      "posteingang": "Boîte de réception"
+    },
+    "wiederholung": {
+      "nie": "Jamais",
+      "woche": "Chaque semaine",
+      "monat": "Chaque mois",
+      "quartal": "Chaque trimestre",
+      "jahr": "Chaque année"
+    },
+    "schnell": {
+      "beschriftung": "Saisir rapidement une tâche",
+      "platzhalter": "Nouvelle tâche … p. ex. « Relancer offre Baumann demain @AM ! »",
+      "mehr": "Plus",
+      "enter": "Entrée pour créer",
+      "personUnbekannt": "« @{{wer}} » inconnu"
+    },
+    "akte": {
+      "beschreibung": "Tâche",
+      "weg": "Tâche introuvable",
+      "wegText": "Elle a été supprimée ou tu ne peux pas la voir.",
+      "erledigen": "Terminée …",
+      "erledigtBestaetigen": "Terminée",
+      "notizErledigt": "Quel est le résultat ? (facultatif, aussi dans l'historique du dossier)",
+      "notizWeiter": "Note pour la personne (facultatif)",
+      "weitergeben": "Transmettre",
+      "weitergebenAn": "À qui ?",
+      "wiederOeffnen": "Rouvrir",
+      "vertretungHinweis": "La personne est absente, tu la remplaces.",
+      "herkunft": "Origine",
+      "teilschritte": "Étapes",
+      "schrittNeu": "Ajouter une étape (Entrée)",
+      "schrittEntfernen": "Retirer « {{text}} »",
+      "verlauf": "Historique",
+      "kommentar": "Commentaire",
+      "kommentarPlatzhalter": "Commentaire … avec @LP la personne est notifiée",
+      "kommentieren": "Commenter",
+      "loeschen": "Mettre à la corbeille"
+    },
+    "team": {
+      "offen": "Ouvertes",
+      "erledigt7": "Terminées 7 jours",
+      "last": "Charge",
+      "abwesend": "Absent·e",
+      "niemand": "Non attribuées",
+      "leer": "Aucune tâche ouverte dans l'équipe",
+      "leerText": "Tout est réparti et terminé."
+    }
   },
   "ki": {
     "knopf": "Rédiger avec l’IA",
