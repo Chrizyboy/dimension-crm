@@ -655,8 +655,8 @@ language plpgsql security definer set search_path = '' as $$
 declare
   k public.kalkulationen;
 begin
-  if not intern.hat_recht('admin') then
-    raise exception using errcode = '42501', message = 'preise.nur_admin';
+  if not intern.hat_recht('preise') or not intern.preise_bin_freigeber() then
+    raise exception using errcode = '42501', message = 'preise.nur_freigeber';
   end if;
   select * into k from public.kalkulationen where id = p_kalk and geloescht_am is null for update;
   if not found then raise exception using errcode = 'P0002', message = 'stand.unbekannt'; end if;
