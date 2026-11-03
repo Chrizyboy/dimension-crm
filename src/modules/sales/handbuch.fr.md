@@ -1,11 +1,11 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, geschaeftsleitung
 ---
 
 # Demandes & leads
 
-Du premier contact à l’accord : saisir et appeler les leads, fixer et planifier les rendez-vous, relancer et transmettre pour l’offre. Avec tournée du jour, tournée, calendrier, régions et le rapport mensuel pour les fournisseurs de leads.
+Du premier contact à l’accord : saisir et appeler les leads, fixer et planifier les rendez-vous, relancer et transmettre pour l’offre. La vue de départ est « À faire » : qui appeler maintenant, ce qui est échu aujourd’hui et ce qui vient cette semaine. Avec la planification (calendrier, tournée du jour, tournée), les régions, le rapport mensuel pour les fournisseurs de leads et le pilotage pour la direction.
 
 ## Qui travaille ici {#wer}
 
@@ -14,6 +14,12 @@ Du premier contact à l’accord : saisir et appeler les leads, fixer et planifi
 - **Direction** : voit tous les leads et le pipeline.
 
 ## Comment faire {#so}
+
+### Commencer la journée avec « À faire »
+
+1. **À faire** montre en haut qui **Appeler maintenant** : nouvelles demandes avec chrono depuis l’arrivée (objectif 15 minutes en heures de travail).
+2. En dessous **Aujourd’hui** (rappels, rendez-vous, après le RDV, relances) et **Cette semaine**.
+3. **Appeler** compose le numéro, **Saisir le résultat** ouvre directement la fenêtre du résultat d’appel.
 
 ### Saisir un nouveau lead
 
@@ -24,20 +30,24 @@ Du premier contact à l’accord : saisir et appeler les leads, fixer et planifi
 ### Appeler un lead et saisir le contact
 
 1. Ouvrir le lead, **Saisir un contact**.
-2. Choisir le résultat : atteint, pas atteint, rappel convenu, pas intéressé (avec motif).
-3. Pour « plus tard », fixer une date sous **Quand recontacter**. Le lead revient alors comme rappel sur [Ma journée](kapitel:today).
+2. Choisir le résultat : atteint, pas joint, rappel convenu, veut d’abord un prix, pas intéressé ou invalide (avec motif).
+3. Pour « pas joint », le CRM fixe le rappel au prochain jour ouvrable ; avec **Préparer un SMS dans la boîte d’envoi**, un SMS attend la validation.
+4. « Veut d’abord un prix » transmet le lead sans visite à Andy pour l’offre. Pour « pas intéressé », le CRM propose **Reprendre dans 12 mois**.
+5. Pour « plus tard », fixer une date sous **Quand recontacter**. Le lead revient alors comme rappel sur [Ma journée](kapitel:today).
 
 ### Fixer un rendez-vous
 
 1. Ouvrir le lead, **Fixer un rendez-vous**, choisir date, heure, durée et personne.
 2. Le rendez-vous apparaît dans le calendrier, la tournée du jour et, avec la connexion Microsoft, dans Outlook.
 3. **Fiche de rendez-vous** imprime toutes les données pour la route.
+4. Client injoignable ? **Envoyer le lien de rendez-vous** › **Par SMS** ou **Par e-mail**. Le message attend dans la [Boîte d’envoi](kapitel:outbox) et part après validation. Le client choisit sur dimension-solaire.ch une heure libre de ton calendrier Outlook.
 
-### Après la visite, transmettre pour l’offre
+### Visite sur le portable et transmettre pour l’offre
 
-1. Ouvrir le lead, section **Visite** : surface de toit, orientation, inclinaison, matériau, raccordement, consommation et particularités.
-2. Mettre le statut sur **Offre en préparation**. Le lead apparaît au service interne sous « Nouvelles offres ».
-3. Sans visite : **Offre indicative**, le service interne fait l’offre selon les indications au téléphone.
+1. Ouvrir le lead, section **Visite**. La **Check-list** montre ce qui manque : toit (surface, orientation, inclinaison, matériau), raccordement, consommation et quatre photos.
+2. Pour chaque photo, **Prendre une photo** ouvre directement l’appareil photo du portable.
+3. **Terminer · Commander l’offre** enregistre et transmet le lead à Andy. Il apparaît au service interne sous « Nouvelles offres ».
+4. Sans visite : **Offre indicative**, le service interne fait l’offre selon les indications au téléphone.
 
 ### Modifier plusieurs leads à la fois
 
@@ -45,6 +55,8 @@ Du premier contact à l’accord : saisir et appeler les leads, fixer et planifi
 2. En bas, fixer statut, personne ou région pour toutes les lignes choisies.
 
 ### Planifier la journée ou une tournée
+
+Tout se trouve sous l’onglet **Planification**, en haut on passe entre **Calendrier**, **Tournée du jour** et **Planifier une tournée**.
 
 1. **Tournée du jour** : choisir le jour et le départ (domicile ou autre adresse). Le CRM ordonne les rendez-vous et montre les trajets.
 2. **Planifier une tournée** : choisir des leads sans rendez-vous dans une région ou coller des adresses, le CRM propose l’ordre.
@@ -76,11 +88,15 @@ Du premier contact à l’accord : saisir et appeler les leads, fixer et planifi
 
 - Qui reçoit un nouveau lead est réglé par les responsabilités (langue, site, région, produit). En cas d’absence, il va au remplaçant.
 - Les demandes du site web et de la boîte de réception deviennent des leads toutes seules.
+- Nouvelles demandes du site web : après 15 minutes de travail sans appel, une notification à la personne responsable, après 2 heures à Chris.
+- Si un client réserve par le lien de rendez-vous, le lead passe à « Rendez-vous fixé » et tu reçois une notification. Le site ne propose pas les heures occupées dans Outlook, les absences et les jours fériés.
+- Après l’envoi d’une offre, des e-mails de relance attendent comme brouillon au jour 3, 10 et 21 dans la [Boîte d’envoi](kapitel:outbox).
 - Les statuts après l’offre (envoyée, à relancer, acceptée, chantier) sont posés par le CRM. Pas à la main.
 
 ## Règles {#regeln}
 
 - « Perdue » et « Pas intéressé » demandent un motif, « Plus tard » une date future.
+- Le **prix indicatif** dans la fiche du lead n’est qu’une aide pour l’entretien et ne va jamais au client.
 - Les personnes avec **Pas de publicité** ne reçoivent ni e-mails en série ni newsletter.
 
 ## Questions fréquentes {#fragen}
@@ -99,5 +115,8 @@ La carte vient de swisstopo. Si elle est bloquée ou hors ligne, elle reste gris
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: « Envoyer le lien de rendez-vous » : les clients réservent eux-mêmes la visite sur dimension-solaire.ch.
+- 03.11.2026: Planification dans un onglet (calendrier, tournée du jour, tournée) ; visite avec check-list, appareil photo et « Terminer · Commander l’offre ».
+- 02.11.2026: Vue de départ « À faire » avec chrono de 15 minutes, fiche du lead en pleine page, résultat d’appel avec rappel et brouillon de SMS, pipeline en six étapes, pilotage pour la direction, demandes du site web en direct.
 - 01.11.2026: Créer un lead directement depuis un e-mail de la boîte de réception.
 - 31.10.2026: Le CRM répartit les nouveaux leads et offres selon Paramètres › Responsabilités.

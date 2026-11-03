@@ -16,7 +16,7 @@ export const meta: ModulMeta = {
   phase: '8b',
 }
 
-/** Die Seite: Reiter Prüfen, Bewilligen, Senden, Alle, Quellen, Trichter; Akte als Seitenpanel. */
+/** Die Seite: Reiter Leitstand, Bewilligen, Senden, Fristen, Nachweise, Auswertung, Quellen; Akte als ganze Seite. */
 export const Ausschreibungen = lazy(() => import('./components/Ausschreibungen'))
 
 /** Karte für die Startseite: was heute beim Monitor ansteht (meldet es einmal täglich über die Glocke). */

@@ -2,6 +2,7 @@
 // geschützt durch den Schlüssel ZEITPLAN_SCHLUESSEL im Kopf. Jeder Job läuft nur, wenn er fällig ist
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
+//  * ausgang_erinnern alle 15 Min.  wartet seit 4 Arbeitsstunden oder Fehler: Glocke (Stellvertretung nach 1 Tag)
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
@@ -17,10 +18,12 @@
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
-//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle, Nachweise
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * wetter       stündlich       Tagesprognose von MeteoSwiss Open Data für die PLZ der Baustellen (Entscheid 0050)
+//  * monatsbericht stündlich      am 1. des Monats Glocke «Monatsbericht» an die Geschäftsleitung (Kennzahlen)
 //  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
@@ -53,6 +56,7 @@ import { ausgangAbarbeiten } from '../_shared/versand.ts'
 import { postsAbarbeiten } from '../_shared/posten.ts'
 import { socialEingerichtet } from '../_shared/social_konten.ts'
 import { utcZuZuerich } from '../_shared/outlook.ts'
+import { wetterHolen, type WetterParameter } from '../_shared/wetter.ts'
 
 declare const Deno: { serve(h: (req: Request) => Promise<Response>): unknown }
 
@@ -115,6 +119,12 @@ Deno.serve(async (req) => {
     const r = await ausgangAbarbeiten(20)
     return `${r.gesendet} gesendet, ${r.fehler} Fehler`
   })
+  // Was zu lange auf Freigabe wartet oder mit Fehler hängt: Glocke an Zuständige, nach einem Arbeitstag auch an die
+  // Stellvertretung (höchstens einmal am Tag je Eintrag).
+  ergebnis.ausgang_erinnern = await job('ausgang_erinnern', 15, async () => {
+    const n = await dienst.rpc<number>('ausgang_erinnern', {})
+    return `${n} erinnert`
+  })
 
   // Automationen (Phase 12): die Datenbank macht alles ausser den Schritten, die Microsoft oder AbaNinja brauchen.
   ergebnis.automationen = await job('automationen', 0, async () => {
@@ -129,6 +139,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Monatsbericht der Kennzahlen (Entscheid 0045): am 1. eine Glocke für die Geschäftsleitung, nur intern.
+  ergebnis.monatsbericht = await job('monatsbericht', 60, async () => {
+    const n = await dienst.rpc<number>('kennzahlen_monatsbericht_melden', {})
+    return n ? `${n} gemeldet` : 'nicht fällig'
+  })
+
   // Aufgaben (Entscheid 0045): Morgen-Glocke ab «erinnern_ab», die Datenbank meldet jede Person nur einmal am Tag.
   ergebnis.aufgaben = await job('aufgaben', 60, async () => {
     const n = await dienst.rpc<number>('aufgaben_melden', {})
@@ -136,6 +152,17 @@ Deno.serve(async (req) => {
   })
 
   // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
+  // Wetter für «Mein Tag» (M5 A): nur PLZ von Einsätzen und Standorten, ohne Schlüssel, darum immer aktiv.
+  ergebnis.wetter = await job('wetter', 60, async () => {
+    const plz = await dienst.rpc<string[]>('wetter_plz', {})
+    const [e] = await dienst.lies<{ wert: { parameter?: WetterParameter } }[]>(
+      'einstellungen?schluessel=eq.wetter&select=wert',
+    )
+    const r = await wetterHolen(plz, e?.wert.parameter ?? {})
+    const n = await dienst.rpc<number>('wetter_speichern', { p_zeilen: r.zeilen, p_lauf: r.lauf })
+    return `${n} Tage für ${plz.length} PLZ${r.fehlend.length ? `, fehlt: ${r.fehlend.join(', ')}` : ''}`
+  })
+
   ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
     const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
@@ -214,6 +241,10 @@ Deno.serve(async (req) => {
   })
 
   // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung_ankuendigung = await job('wartung_ankuendigung', 60, async () => {
+    const n = await dienst.rpc<number>('wartung_ankuendigungen', {})
+    return `${n} ${n === 1 ? 'Ankündigung' : 'Ankündigungen'} im Ausgangskorb`
+  })
   ergebnis.wartung = await job('wartung', 720, async () => {
     const n = await dienst.rpc<number>('wartung_jahreslauf', {})
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
@@ -303,9 +334,9 @@ Deno.serve(async (req) => {
   if (faelligesFenster([monitor.pruefen_zeit ?? '07:00'], uhr)) {
     ergebnis.ausschreibungen = await job('ausschreibungen_pruefen', 600, async () => {
       const r = await dienst.rpc<Record<string, number>>('ausschreibungen_pruefen', {})
-      return Object.entries(r)
-        .map(([k, v]) => `${k} ${v}`)
-        .join(', ')
+      // Nachweise (Betreibung, SUVA, AHV …) 30 Tage vor Ablauf als Aufgabe, einmal pro Nachweis.
+      const nachweise = await dienst.rpc<number>('nachweise_melden', {})
+      return [...Object.entries(r), ['nachweise', nachweise] as const].map(([k, v]) => `${k} ${v}`).join(', ')
     })
   }
 

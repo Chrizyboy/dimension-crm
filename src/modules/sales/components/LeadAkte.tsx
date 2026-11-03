@@ -35,6 +35,7 @@ import { LeadAngaben } from './LeadAngaben'
 import { OutlookTermin } from './OutlookTermin'
 import { besichtigungStand, type Besichtigung } from '../lib/besichtigung'
 import { LeadBesichtigung } from './LeadBesichtigung'
+import { TerminLinkKnopf } from './TerminLinkKnopf'
 import { LeadDateien, LeadVerlauf } from './LeadVerlauf'
 import { DachBox, HerkunftBox, RichtpreisBox } from './LeadBoxen'
 import { LeadSchritte } from './LeadSchritte'
@@ -70,6 +71,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
   })
   const g = geschaeft ?? einzeln.data ?? null
   const akte = useLeadAkte(g?.verkaufschanceId ?? null)
+  const dateiOrdner = (akte.dateien.data ?? []).map((d) => d.ordner)
   const [wechsel, setWechsel] = useState<string | null>(null)
   const [kontakt, setKontakt] = useState(false)
   const [blatt, setBlatt] = useState(false)
@@ -147,6 +149,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 {t('verkauf.zutun.anrufen')}
               </a>
             )}
+            {istLead && g.verkaufschanceId && <TerminLinkKnopf verkaufschanceId={g.verkaufschanceId} />}
             {istLead && (
               <Button
                 variant="secondary"
@@ -232,13 +235,21 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
             {g.verkaufschanceId && (
               <AkteAbschnitt
                 titel={t('verkauf.akte.besichtigung')}
-                zusatz={besichtigungStand(akte.details.data?.besichtigung as Besichtigung | null)}
-                offen={false}
+                zusatz={besichtigungStand(akte.details.data?.besichtigung as Besichtigung | null, dateiOrdner)}
+                offen={g.stand === 'termin'}
               >
                 {akte.details.isSuccess ? (
                   <LeadBesichtigung
                     verkaufschanceId={g.verkaufschanceId}
                     wert={akte.details.data.besichtigung as Besichtigung | null}
+                    dateiOrdner={dateiOrdner}
+                    onAbschliessen={
+                      g.stand === 'termin'
+                        ? () => {
+                            setWechsel('offerte')
+                          }
+                        : undefined
+                    }
                   />
                 ) : (
                   <Skelett className="h-32" />

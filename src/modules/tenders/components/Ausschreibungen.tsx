@@ -10,25 +10,30 @@ import { supabase } from '@/services/supabase'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useTagesbericht } from '../hooks/useAusschreibungen'
 import { REITER, type Reiter as ReiterTyp, type Tagesbericht } from '../types'
-import { DossierAkte } from './DossierAkte'
-import { DossierListe } from './DossierListe'
+import { DossierSeite } from './akte/DossierSeite'
+import { Auswertung } from './Auswertung'
 import { ErfassenDialog } from './ErfassenDialog'
 import { Freigabeliste } from './Freigabeliste'
+import { Fristen } from './Fristen'
+import { Leitstand } from './Leitstand'
+import { Nachweise } from './Nachweise'
 import { Quellen } from './Quellen'
-import { Trichter } from './Trichter'
 
 /** Zahl am Reiter: was dort auf jemanden wartet. */
 const ZAHL: Partial<Record<ReiterTyp, (b: Tagesbericht) => number>> = {
-  pruefen: (b) => b.pruefen + b.kontakt_fehlt + b.antworten,
+  leitstand: (b) => b.pruefen + b.kontakt_fehlt + b.antworten + (b.darf_pruefen ? b.pruefung : 0),
   bewilligen: (b) => b.bewilligen,
   senden: (b) => b.senden,
+  fristen: (b) => b.fristen,
+  nachweise: (b) => b.nachweise_ablauf,
   quellen: (b) => b.quellen_still,
 }
 
 /**
  * Ausschreibungs-Monitor: findet öffentliche Ausschreibungen und Baugesuche (simap, Amtsblatt, von Hand)
- * und führt sie durch drei Spuren: selbst offerieren, die richtige Firma anschreiben, oder abwarten.
- * Reiter und offenes Dossier stehen in der Adresse (#/tenders?reiter=senden&dossier=…).
+ * und führt sie durch drei Spuren: selbst offerieren (Submission bis Zuschlag), die richtige Firma anschreiben,
+ * oder abwarten. Reiter und offenes Dossier stehen in der Adresse (#/tenders?reiter=fristen&dossier=…);
+ * ein offenes Dossier ist eine ganze Seite (Akte), «Zurück» führt zum Reiter.
  */
 export default function Ausschreibungen({
   dossierId,
@@ -55,6 +60,7 @@ export default function Ausschreibungen({
 
   const oeffnen = (id: string | null) => {
     onNavigation({ dossier: id, reiter })
+    window.scrollTo({ top: 0 })
   }
 
   return (
@@ -74,50 +80,59 @@ export default function Ausschreibungen({
           </Button>
         }
       />
-      <Reiter
-        value={reiter}
-        onValueChange={(r) => {
-          onNavigation({ dossier: null, reiter: r as ReiterTyp })
-        }}
-      >
-        <ReiterListe>
-          {REITER.map((r) => {
-            const n = bericht.data && ZAHL[r]?.(bericht.data)
-            return (
-              <ReiterKnopf key={r} value={r}>
-                {t(`ausschreibungen.reiter.${r}`)}
-                {n ? <span className="text-muted-foreground zahlen ml-1.5 text-xs">{n}</span> : null}
-              </ReiterKnopf>
-            )
-          })}
-        </ReiterListe>
-        <ReiterInhalt value="pruefen" className="pt-4">
-          <DossierListe ansicht="pruefen" aktiveId={dossierId} onOeffnen={oeffnen} />
-        </ReiterInhalt>
-        <ReiterInhalt value="bewilligen" className="pt-4">
-          <Freigabeliste modus="bewilligen" darf={bericht.data?.darf_bewilligen ?? false} onDossier={oeffnen} />
-        </ReiterInhalt>
-        <ReiterInhalt value="senden" className="pt-4">
-          <Freigabeliste modus="senden" darf={bericht.data?.darf_senden ?? false} onDossier={oeffnen} />
-        </ReiterInhalt>
-        <ReiterInhalt value="alle" className="pt-4">
-          <DossierListe ansicht="alle" aktiveId={dossierId} onOeffnen={oeffnen} />
-        </ReiterInhalt>
-        <ReiterInhalt value="quellen" className="pt-4">
-          <Quellen admin={admin} />
-        </ReiterInhalt>
-        <ReiterInhalt value="trichter" className="pt-4">
-          <Trichter />
-        </ReiterInhalt>
-      </Reiter>
-      {dossierId && (
-        <DossierAkte
+      {dossierId ? (
+        <DossierSeite
           key={dossierId}
           id={dossierId}
-          onSchliessen={() => {
+          onZurueck={() => {
             oeffnen(null)
           }}
         />
+      ) : (
+        <Reiter
+          value={reiter}
+          onValueChange={(r) => {
+            onNavigation({ dossier: null, reiter: r as ReiterTyp })
+          }}
+        >
+          <ReiterListe>
+            {REITER.map((r) => {
+              const n = bericht.data && ZAHL[r]?.(bericht.data)
+              return (
+                <ReiterKnopf key={r} value={r}>
+                  {t(`ausschreibungen.reiter.${r}`)}
+                  {n ? <span className="text-muted-foreground zahlen ml-1.5 text-xs">{n}</span> : null}
+                </ReiterKnopf>
+              )
+            })}
+          </ReiterListe>
+          <ReiterInhalt value="leitstand" className="pt-4">
+            <Leitstand
+              onOeffnen={oeffnen}
+              onReiter={(r) => {
+                onNavigation({ dossier: null, reiter: r })
+              }}
+            />
+          </ReiterInhalt>
+          <ReiterInhalt value="bewilligen" className="pt-4">
+            <Freigabeliste modus="bewilligen" darf={bericht.data?.darf_bewilligen ?? false} onDossier={oeffnen} />
+          </ReiterInhalt>
+          <ReiterInhalt value="senden" className="pt-4">
+            <Freigabeliste modus="senden" darf={bericht.data?.darf_senden ?? false} onDossier={oeffnen} />
+          </ReiterInhalt>
+          <ReiterInhalt value="fristen" className="pt-4">
+            <Fristen onOeffnen={oeffnen} />
+          </ReiterInhalt>
+          <ReiterInhalt value="nachweise" className="pt-4">
+            <Nachweise />
+          </ReiterInhalt>
+          <ReiterInhalt value="auswertung" className="pt-4">
+            <Auswertung />
+          </ReiterInhalt>
+          <ReiterInhalt value="quellen" className="pt-4">
+            <Quellen admin={admin} />
+          </ReiterInhalt>
+        </Reiter>
       )}
       {erfassen && (
         <ErfassenDialog
@@ -126,7 +141,7 @@ export default function Ausschreibungen({
           }}
           onErfasst={(id) => {
             setErfassen(false)
-            onNavigation({ dossier: id, reiter: 'alle' })
+            onNavigation({ dossier: id, reiter })
           }}
         />
       )}

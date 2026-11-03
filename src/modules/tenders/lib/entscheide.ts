@@ -1,14 +1,21 @@
 /** Entscheide eines Dossiers: welche je Stand möglich sind und welche Angaben sie brauchen. */
 import type { Dossier } from '../types'
 
-/** Welche Angaben ein Entscheid braucht. */
-export const BRAUCHT: Record<string, ('grund' | 'datum' | 'form' | 'ausloeser')[]> = {
-  nicht_teilnehmen: ['grund'],
+/** Angaben, die ein Entscheid abfragen kann. */
+export type Angabe = 'grund' | 'datum' | 'form' | 'ausloeser' | 'nogo' | 'betrag' | 'gewinner' | 'ohne_protokoll'
+
+/**
+ * Welche Angaben ein Entscheid braucht. «Nicht teilnehmen» mit Grund aus der Liste (Auswertung), «eingereicht»
+ * mit Betrag exkl. MWST, Zuschlag und Absage mit Datum und, falls es kein Öffnungsprotokoll gibt, dem Grund dafür.
+ */
+export const BRAUCHT: Record<string, Angabe[]> = {
+  nicht_teilnehmen: ['nogo', 'grund'],
   verwerfen: ['grund'],
   ablehnen: ['grund'],
   spaeter: ['datum', 'grund'],
-  eingereicht: ['datum', 'form'],
-  absage: ['grund'],
+  eingereicht: ['datum', 'form', 'betrag'],
+  zuschlag: ['datum', 'betrag', 'ohne_protokoll'],
+  absage: ['datum', 'gewinner', 'betrag', 'grund', 'ohne_protokoll'],
   beobachten: ['ausloeser', 'datum'],
 }
 

@@ -2,28 +2,35 @@ import { useTranslation } from 'react-i18next'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zelle, Zeile } from '@/components/ui/tabelle'
 import { cn } from '@/lib/utils'
-import { useZiele } from '../hooks/useKennzahlen'
 import { ABWICKLUNG, nachStandort, zelle, zielErreicht } from '../lib/auswertung'
-import type { Detail, Fakt } from '../types'
+import type { Detail, Fakt, KennzahlenEinstellungen } from '../types'
 
 /**
- * Reiter «Abwicklung» (Modul-Prüfung 27A): wie schnell und sauber Aufträge laufen, nach Standort, mit Zielen aus
- * den Einstellungen. Grün = Ziel erreicht, rot = darüber. Jede Zahl zeigt per Klick die Projekte oder Fälle.
+ * Tabelle «Abwicklung» (Modul-Prüfung 27A): wie schnell und sauber Aufträge laufen, nach Standort, mit den
+ * Richtwerten aus den Einstellungen. Grün = erreicht, rot = darüber. Jede Zahl zeigt per Klick die Projekte oder Fälle.
  */
-export function Abwicklung({ fakten, onDetail }: { fakten: Fakt[]; onDetail: (d: Detail) => void }) {
+export function AbwicklungTabelle({
+  fakten,
+  e,
+  onDetail,
+}: {
+  fakten: Fakt[]
+  e: KennzahlenEinstellungen
+  onDetail: (d: Detail) => void
+}) {
   const { t } = useTranslation()
-  const ziele = useZiele().data ?? {}
+  const ziele = e.richtwerte
   const spalten = nachStandort(fakten).map((s) => ({ ...s, titel: t(`kz.spalte.${s.id}`) }))
   const einheit = (mass: string, wert: number) =>
     mass === 'schnitt' ? t('kz.abwicklung.tage', { count: wert }) : String(wert)
 
   return (
-    <Karte className="overflow-hidden" data-testid="kz-abwicklung">
+    <Karte className="overflow-hidden" data-testid="kz-abwicklung-tabelle">
       <KarteKopf>
-        <KarteTitel>{t('kz.reiter.abwicklung')}</KarteTitel>
+        <KarteTitel>{t('kz.abwicklung.titel')}</KarteTitel>
         <p className="text-muted-foreground text-sm">{t('kz.abwicklung.hinweis')}</p>
       </KarteKopf>
-      <Tabelle aria-label={t('kz.reiter.abwicklung')}>
+      <Tabelle aria-label={t('kz.abwicklung.titel')}>
         <TabelleKopf>
           <tr>
             <Kopfzelle>{t('kz.spalte.kennzahl')}</Kopfzelle>

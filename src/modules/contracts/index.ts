@@ -23,3 +23,6 @@ export const Vertraege = lazy(() => import('./components/Vertraege'))
 export const WartungHeute = lazy(() => import('./components/HeuteKarte'))
 
 export type * from './types'
+
+/** Reiter der Wartung (für die Adresse). */
+export { WARTUNG_REITER } from './types'

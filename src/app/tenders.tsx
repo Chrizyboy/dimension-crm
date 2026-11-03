@@ -27,11 +27,11 @@ export const Route = createFileRoute('/tenders')({
       <Suspense>
         <Ausschreibungen
           dossierId={dossier ?? null}
-          reiter={reiter ?? 'pruefen'}
+          reiter={reiter ?? 'leitstand'}
           onNavigation={(z) => {
-            const r = z.reiter ?? reiter ?? 'pruefen'
+            const r = z.reiter ?? reiter ?? 'leitstand'
             const d = z.dossier === undefined ? dossier : z.dossier
-            void navigate({ search: { ...(r !== 'pruefen' ? { reiter: r } : {}), ...(d ? { dossier: d } : {}) } })
+            void navigate({ search: { ...(r !== 'leitstand' ? { reiter: r } : {}), ...(d ? { dossier: d } : {}) } })
           }}
         />
       </Suspense>
