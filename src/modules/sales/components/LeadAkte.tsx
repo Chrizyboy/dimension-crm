@@ -35,6 +35,7 @@ import { LeadAngaben } from './LeadAngaben'
 import { OutlookTermin } from './OutlookTermin'
 import { besichtigungStand, type Besichtigung } from '../lib/besichtigung'
 import { LeadBesichtigung } from './LeadBesichtigung'
+import { TerminLinkKnopf } from './TerminLinkKnopf'
 import { LeadDateien, LeadVerlauf } from './LeadVerlauf'
 import { DachBox, HerkunftBox, RichtpreisBox } from './LeadBoxen'
 import { LeadSchritte } from './LeadSchritte'
@@ -147,6 +148,9 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 <Phone />
                 {t('verkauf.zutun.anrufen')}
               </a>
+            )}
+            {istLead && g.verkaufschanceId && (
+              <TerminLinkKnopf verkaufschanceId={g.verkaufschanceId} />
             )}
             {istLead && (
               <Button

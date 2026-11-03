@@ -66,6 +66,11 @@ test('Lead anlegen und Kontakt erfassen', async ({ page }) => {
   await expect(checkliste.getByRole('listitem')).toHaveCount(7)
   await expect(checkliste.getByRole('button', { name: /Foto aufnehmen/ })).toHaveCount(4)
 
+  // Termin-Link (03.11.2026): die SMS mit dem Link liegt danach im Ausgangskorb zur Freigabe.
+  await akte.getByRole('button', { name: /Termin-Link senden/ }).click()
+  await page.getByRole('menuitem', { name: 'Per SMS' }).click()
+  await expect(page.getByText('Termin-Link liegt im Ausgangskorb zur Freigabe')).toBeVisible()
+
   await akte.getByRole('button', { name: 'Kontakt erfassen' }).click()
   const gespraech = page.getByRole('dialog', { name: 'Kontakt erfassen' })
   await gespraech.getByRole('radio', { name: 'Anruf' }).click()

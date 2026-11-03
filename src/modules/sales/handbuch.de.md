@@ -40,6 +40,7 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 1. Lead öffnen, **Termin vereinbaren**, Datum, Uhrzeit, Dauer und Person wählen.
 2. Der Termin erscheint im Kalender, auf der Tagesroute und, mit Microsoft-Verbindung, in Outlook.
 3. **Terminblatt** druckt alle Angaben für unterwegs.
+4. Kunde nicht erreicht? **Termin-Link senden** › **Per SMS** oder **Per Mail**. Die Nachricht liegt im [Ausgangskorb](kapitel:outbox) und geht nach der Freigabe. Der Kunde wählt auf dimension-solaire.ch eine freie Zeit aus deinem Outlook-Kalender.
 
 ### Besichtigung am Handy und zur Offerte geben
 
@@ -89,6 +90,7 @@ Alles liegt unter dem Reiter **Planung**, oben umschalten zwischen **Kalender**,
 - Anfragen von der Website und aus dem Posteingang werden selbst zu Leads.
 - Neue Anfragen von der Website: nach 15 Arbeitsminuten ohne Anruf eine Glocke an die zuständige Person, nach 2 Stunden an Chris.
 - Nach dem Senden einer Offerte liegen am Tag 3, 10 und 21 Nachfass-Mails als Entwurf im [Ausgangskorb](kapitel:outbox).
+- Bucht ein Kunde über den Termin-Link, steht der Lead auf «Termin vereinbart» und du bekommst eine Glocke. Besetzte Zeiten in Outlook, Abwesenheiten und Feiertage bietet die Seite nicht an.
 - Stände nach der Offerte (Offeriert, Nachfassen fällig, Angenommen, In Bau) setzt das CRM selbst. Von Hand geht das nicht.
 
 ## Regeln {#regeln}
@@ -113,6 +115,7 @@ Die Karte kommt von swisstopo. Ist sie gesperrt oder offline, bleibt sie grau; R
 
 ## Neu {#neu}
 
+- 03.11.2026: «Termin-Link senden»: Kunden buchen die Besichtigung selbst auf dimension-solaire.ch.
 - 03.11.2026: Planung in einem Reiter (Kalender, Tagesroute, Tour); Besichtigung mit Checkliste, Kamera und «Abschliessen · Offerte bestellen».
 - 02.11.2026: Startansicht «Zu tun» mit 15-Minuten-Uhr, Lead-Akte als ganze Seite, Anruf-Ergebnis mit Rückruf und SMS-Entwurf, Pipeline in sechs Schritten, Steuerung für die Geschäftsleitung, Website-Anfragen direkt.
 - 01.11.2026: Lead direkt aus einer Mail im Posteingang anlegen.

@@ -1453,6 +1453,13 @@
       "regionen": "Regionen",
       "bericht": "Monatsbericht",
       "steuerung": "Steuerung"
+    },
+    "terminLink": {
+      "senden": "Termin-Link senden",
+      "sms": "Per SMS",
+      "mail": "Per Mail",
+      "bereit": "Termin-Link liegt im Ausgangskorb zur Freigabe",
+      "zumAusgang": "Zum Ausgangskorb"
     }
   },
   "offerten": {
@@ -2527,7 +2534,8 @@
     "wartung_termin_ungueltig": "Das Ende des Termins muss nach dem Beginn liegen.",
     "wartung_kein_termin": "Für diesen Vertrag ist kein Termin geplant.",
     "wartung_keine_mail": "Der Kunde hat keine Mail-Adresse.",
-    "wartung_kein_angebot": "Für diese Anlage gibt es noch kein Angebot."
+    "wartung_kein_angebot": "Für diese Anlage gibt es noch kein Angebot.",
+    "termin_link_stand": "Den Termin-Link gibt es nur für Leads ohne Termin und ohne Offerte."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
