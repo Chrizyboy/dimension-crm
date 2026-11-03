@@ -46,7 +46,7 @@ Du premier contact à l’accord : saisir et appeler les leads, fixer et planifi
 1. Ouvrir le lead, section **Visite**. La **Check-list** montre ce qui manque : toit (surface, orientation, inclinaison, matériau), raccordement, consommation et quatre photos.
 2. Pour chaque photo, **Prendre une photo** ouvre directement l’appareil photo du portable.
 3. **Terminer · Commander l’offre** enregistre et transmet le lead à Andy. Il apparaît au service interne sous « Nouvelles offres ».
-3. Sans visite : **Offre indicative**, le service interne fait l’offre selon les indications au téléphone.
+4. Sans visite : **Offre indicative**, le service interne fait l’offre selon les indications au téléphone.
 
 ### Modifier plusieurs leads à la fois
 

@@ -41,7 +41,7 @@ export function LeadBesichtigung({
   verkaufschanceId: string
   wert: Besichtigung | null
   dateiOrdner?: readonly (string | null)[]
-  onAbschliessen?: () => void
+  onAbschliessen?: (() => void) | undefined
 }) {
   const { t } = useTranslation()
   const [b, setB] = useState<Besichtigung>(wert ?? {})

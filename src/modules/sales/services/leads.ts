@@ -224,15 +224,17 @@ export async function speichereBesichtigungsFoto(verkaufschanceId: string, ordne
   const typ = datei.type || 'image/jpeg'
   const hoch = await db().storage.from('dokumente').upload(pfad, datei, { contentType: typ })
   if (hoch.error) throw hoch.error
-  const { error } = await db().from('dokumente').insert({
-    name: datei.name || ordner,
-    mime_typ: typ,
-    bytes: datei.size,
-    ordner,
-    speicher: 'intern',
-    speicher_pfad: pfad,
-    bezug_tabelle: 'verkaufschancen',
-    bezug_id: verkaufschanceId,
-  })
+  const { error } = await db()
+    .from('dokumente')
+    .insert({
+      name: datei.name || ordner,
+      mime_typ: typ,
+      bytes: datei.size,
+      ordner,
+      speicher: 'intern',
+      speicher_pfad: pfad,
+      bezug_tabelle: 'verkaufschancen',
+      bezug_id: verkaufschanceId,
+    })
   if (error) throw error
 }

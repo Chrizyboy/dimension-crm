@@ -46,7 +46,7 @@ Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbar
 1. Lead öffnen, Abschnitt **Besichtigung**. Die **Checkliste** zeigt, was noch fehlt: Dach (Fläche, Ausrichtung, Neigung, Material), Hausanschluss, Verbrauch und vier Fotos.
 2. Bei jedem Foto **Foto aufnehmen** öffnet am Handy direkt die Kamera.
 3. **Abschliessen · Offerte bestellen** speichert und gibt den Lead an Andy. Er erscheint beim Innendienst unter «Neue Offerten».
-3. Ohne Besichtigung geht **Richtofferte**: der Innendienst offeriert nach Angaben am Telefon.
+4. Ohne Besichtigung geht **Richtofferte**: der Innendienst offeriert nach Angaben am Telefon.
 
 ### Mehrere Leads auf einmal ändern
 
