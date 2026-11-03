@@ -1094,7 +1094,10 @@
       "abgeschlossene": "Abgeschlossene zeigen",
       "leer": "Nichts in dieser Spalte",
       "weitere_one": "{{count}} weiteres zeigen",
-      "weitere_other": "{{count}} weitere zeigen"
+      "weitere_other": "{{count}} weitere zeigen",
+      "spalten": "Spalten",
+      "alleSpalten": "Alle Spalten",
+      "spaltenAnzahl": "Spalten: {{anzahl}} von {{von}}"
     },
     "wechsel": {
       "titel": "Stand ändern: {{name}}",
@@ -11309,5 +11312,12 @@
     "unterschreibt": "Unterschreibt",
     "rechnungen": "Rechnungen",
     "vorOrt": "Vor Ort"
+  },
+  "mehrfachFilter": {
+    "alle": "Alle",
+    "nur": "nur",
+    "ausser": "Alle ausser {{wert}}",
+    "suchen": "Suchen …",
+    "keineTreffer": "Nichts gefunden"
   }
 }

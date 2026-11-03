@@ -1094,7 +1094,10 @@
       "abgeschlossene": "Afficher les affaires closes",
       "leer": "Rien dans cette colonne",
       "weitere_one": "Afficher {{count}} de plus",
-      "weitere_other": "Afficher {{count}} de plus"
+      "weitere_other": "Afficher {{count}} de plus",
+      "spalten": "Colonnes",
+      "alleSpalten": "Toutes les colonnes",
+      "spaltenAnzahl": "Colonnes : {{anzahl}} sur {{von}}"
     },
     "wechsel": {
       "titel": "Changer le statut : {{name}}",
@@ -11309,5 +11312,12 @@
     "unterschreibt": "Signe",
     "rechnungen": "Factures",
     "vorOrt": "Sur place"
+  },
+  "mehrfachFilter": {
+    "alle": "Tous",
+    "nur": "seul",
+    "ausser": "Tous sauf {{wert}}",
+    "suchen": "Rechercher …",
+    "keineTreffer": "Aucun résultat"
   }
 }
