@@ -1048,7 +1048,20 @@
         "flach_begruent": "Toit plat végétalisé",
         "schiefer": "Ardoise",
         "andere": "Autre"
-      }
+      },
+      "checkliste": "Check-list",
+      "punkt": {
+        "dach": "Toit : surface, orientation, inclinaison, matériau",
+        "anschluss": "Raccordement",
+        "verbrauch": "Consommation électrique",
+        "foto_dach": "Photo du toit",
+        "foto_zaehler": "Photo du compteur",
+        "foto_verteilung": "Photo du tableau électrique",
+        "foto_heizung": "Photo du chauffage"
+      },
+      "foto": "Prendre une photo",
+      "abschliessen": "Terminer · Commander l’offre",
+      "abschliessenHinweis": "Enregistre la visite et transmet le lead à l’établissement des offres (Andy)."
     },
     "kontakt": {
       "wann": "Quand recontacter",
@@ -1431,6 +1444,15 @@
       "wert": "Valeur commandes",
       "min": "{{n}} min",
       "std": "{{n}} h"
+    },
+    "reiter": {
+      "zutun": "À faire",
+      "pipeline": "Pipeline",
+      "liste": "Leads",
+      "planung": "Planification",
+      "regionen": "Régions",
+      "bericht": "Rapport mensuel",
+      "steuerung": "Pilotage"
     }
   },
   "offerten": {
