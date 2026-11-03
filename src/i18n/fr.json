@@ -563,7 +563,10 @@
       "erreichbarkeit": "Disponibilité",
       "kommentarKunde": "Commentaire client",
       "wiedervorlage": "Rappel",
-      "verlauf": "Historique (modèle)"
+      "verlauf": "Historique (modèle)",
+      "heizung": "Chauffage actuel",
+      "vorOrt": "À savoir sur place",
+      "vorOrtHinweis": "Accès, clés, parking, chien, compteur – visible pour le montage et le service."
     },
     "abaninja": {
       "nicht": "Pas encore lié à AbaNinja. Liez-le pour voir les factures ici et transmettre les changements d'adresse à AbaNinja.",
@@ -641,7 +644,51 @@
       "baubeginn": "Prochain RDV: début des travaux"
     },
     "nurFinanzen": "Seules les personnes avec le droit «Finances» voient les factures.",
-    "nurBuchhaltung": "comptabilité seulement"
+    "nurBuchhaltung": "comptabilité seulement",
+    "betreuung": {
+      "titel": "Suivi et facturation",
+      "betreuer": "Responsable chez nous",
+      "keinBetreuer": "Pas de responsable fixe",
+      "herkunft": "Provenance",
+      "rechnungAn": "Facture à",
+      "gleicheAdresse": "Adresse du client",
+      "abweichend": "Adresse de facturation différente",
+      "rechnungsEmail": "Facture par e-mail à",
+      "zahlungsfrist": "Délai de paiement",
+      "fristFirma": "comme la société",
+      "tage": "{{count}} jours",
+      "uid": "IDE",
+      "bearbeiten": "Modifier suivi et facturation",
+      "adresse": {
+        "name": "Nom / Société",
+        "zusatz": "Complément",
+        "strasse": "Rue",
+        "plz": "NPA",
+        "ort": "Localité"
+      }
+    },
+    "personen": {
+      "titel": "Personnes de contact",
+      "firmen": "Fait partie de",
+      "keine": "Aucune autre personne saisie.",
+      "hauptkontakt": "Contact principal",
+      "unterschreibt": "Signe",
+      "rechnungen": "Factures",
+      "vorOrt": "Sur place",
+      "imAdressbuch": "Modifier dans le carnet d'adresses"
+    },
+    "zusammen": {
+      "menue": "Fusionner un doublon",
+      "titel": "Fusionner un doublon",
+      "text": "Choisis le contact saisi en double. Tout ce qui y est lié (bâtiments, leads, offres, projets, factures, e-mails, tâches, documents) passe à {{name}}. Le doublon va à la corbeille.",
+      "keine": "Aucun doublon possible trouvé (même e-mail, téléphone ou nom).",
+      "bestaetigen": "Fusionner",
+      "grund": {
+        "email": "même e-mail",
+        "telefon": "même téléphone",
+        "name": "même nom"
+      }
+    }
   },
   "kontakt": {
     "neuTitel": "Nouveau contact",
@@ -807,7 +854,9 @@
       "tour": "Planifier une tournée",
       "kalender": "Agenda",
       "regionen": "Régions",
-      "bericht": "Rapport mensuel"
+      "bericht": "Rapport mensuel",
+      "zutun": "À faire",
+      "steuerung": "Pilotage"
     },
     "suche": "Nom, lieu, téléphone, L012 …",
     "standort": "Site",
@@ -840,15 +889,18 @@
       "neu": "Nouveau",
       "offen": "Ouvert",
       "spaeter": "Recontacter plus tard",
-      "termin": "Rendez-vous fixé",
+      "termin": "Rendez-vous",
       "nach_termin": "Après rendez-vous",
-      "offerte": "Offre en cours",
+      "offerte": "Offre",
       "offeriert": "Offre envoyée",
       "vertagt": "Reporté",
       "angenommen": "Acceptée",
-      "gewonnen": "Chantier & réalisé",
+      "gewonnen": "Gagné",
       "verloren": "Perdu & pas intéressé",
-      "dossier": "Dossier"
+      "dossier": "Dossier",
+      "kontaktiert": "Contacté",
+      "entscheid": "Décision",
+      "aus": "Perdu & pas intéressé"
     },
     "pipeline": {
       "karte": "Affaire",
@@ -935,7 +987,7 @@
       "nichtGefunden": "Cette affaire est introuvable.",
       "kontaktErfassen": "Saisir un contact",
       "terminVereinbaren": "Fixer un rendez-vous",
-      "richtofferte": "Offre indicative",
+      "richtofferte": "Offre sans visite",
       "terminblatt": "Fiche de visite",
       "kundenakte": "Dossier client",
       "kontakt": "Contact",
@@ -964,7 +1016,8 @@
       "dateien": "Fichiers",
       "keinVerlauf": "Aucun contact saisi.",
       "verlaufV233": "Historique de l’ancien CRM",
-      "keineDateien": "Aucun fichier."
+      "keineDateien": "Aucun fichier.",
+      "zurueck": "Retour aux demandes & leads"
     },
     "besichtigung": {
       "datum": "Visité le",
@@ -999,7 +1052,12 @@
     },
     "kontakt": {
       "wann": "Quand recontacter",
-      "grundRueckruf": "Rappel convenu"
+      "grundRueckruf": "Rappel convenu",
+      "grundNichtErreicht": "Pas joint",
+      "smsEntwurf": "Préparer un SMS dans la boîte d’envoi (envoyé seulement après validation)",
+      "willPreisHinweis": "Andy reçoit l’offre à établir sans visite. Note brièvement ce que veut le client (toit, consommation, souhaits).",
+      "wiedervorlage_one": "Reprendre dans {{count}} mois",
+      "wiedervorlage_other": "Reprendre dans {{count}} mois"
     },
     "lead": {
       "anrede": "Civilité",
@@ -1237,6 +1295,142 @@
       "eintragen": "Inscrire dans Outlook",
       "aktualisieren": "Mettre à jour dans Outlook",
       "absagen": "Annuler dans Outlook"
+    },
+    "schritte": {
+      "titel": "Étapes de vente",
+      "neu": "Nouveau",
+      "kontaktiert": "Contacté",
+      "termin": "Rendez-vous",
+      "offerte": "Offre",
+      "entscheid": "Décision",
+      "gewonnen": "Gagné"
+    },
+    "zutun": {
+      "website": "Site web",
+      "anrufen": "Appeler",
+      "ergebnis": "Saisir le résultat",
+      "minuten_one": "depuis {{count}} min",
+      "minuten_other": "depuis {{count}} min",
+      "nurMeine": "Seulement mes leads",
+      "jetzt": "Appeler maintenant (objectif : dans les {{minuten}} min)",
+      "jetztLeer": "Toutes les nouvelles demandes ont été appelées.",
+      "heute": "Aujourd’hui",
+      "heuteLeer": "Rien d’échu aujourd’hui.",
+      "woche": "Cette semaine",
+      "wocheLeer": "Rien de prévu cette semaine.",
+      "leer": "Rien à faire",
+      "leerText": "Aucune nouvelle demande, rappel, rendez-vous ou relance.",
+      "zahl": {
+        "anrufen_one": "nouvelle demande sans appel, {{count}} en retard",
+        "anrufen_other": "nouvelles demandes sans appel, {{count}} en retard",
+        "heute": "échu aujourd’hui",
+        "termine": "rendez-vous cette semaine",
+        "offen": "offres ouvertes (CHF)"
+      },
+      "art": {
+        "anrufen": "Nouveau",
+        "rueckruf": "Rappel",
+        "termin": "Rendez-vous",
+        "nachTermin": "Après RDV : commander l’offre",
+        "nachfassen": "Relance",
+        "wiedervorlage": "Reprise",
+        "liegt": "En attente depuis",
+        "offerteInArbeit": "Offre en cours depuis"
+      },
+      "stunden": "depuis {{h}} h {{m}} min"
+    },
+    "naechster": {
+      "titel": "Prochaine étape",
+      "anrufen": "Appeler et saisir le résultat.",
+      "anrufenSeit_one": "Appeler maintenant : demande sans appel depuis {{count}} minute de travail.",
+      "anrufenSeit_other": "Appeler maintenant : demande sans appel depuis {{count}} minutes de travail.",
+      "rueckruf": "Rappel le {{datum}}.",
+      "termin": "Fixer un rendez-vous pour la visite.",
+      "besuch": "Visite le {{datum}} avec {{person}}. Ensuite, commander l’offre.",
+      "nachTermin": "Le rendez-vous est passé : noter le résultat et commander l’offre chez Andy.",
+      "offerteBestellen": "Commander l’offre",
+      "offerteInArbeit": "Andy établit l’offre. Dès qu’elle est envoyée, la relance démarre.",
+      "nachfassen": "Relance le {{datum}}. Les e-mails des jours {{tage}} attendent en brouillon dans la boîte d’envoi ; un appel est souvent plus efficace.",
+      "vertagt": "Reporté : {{grund}}",
+      "wiedervorlage": "Reprendre le {{datum}}.",
+      "aus": "Clos : {{grund}}",
+      "gewonnen": "Gagné. La suite se passe dans le projet."
+    },
+    "dach": {
+      "titel": "Toit et bâtiment",
+      "sucht": "Recherche en cours (toitsolaire.ch et registre des bâtiments, toutes les 5 minutes).",
+      "nichts": "Aucune donnée de toit trouvée.",
+      "flaeche": "Surface adaptée",
+      "flaecheWebsite": "Surface (site web)",
+      "ertrag": "Production possible",
+      "eignung": "Aptitude",
+      "heizung": "Chauffage",
+      "baujahr": "Année de construction",
+      "verbrauch": "Consommation",
+      "klasse": {
+        "1": "faible",
+        "2": "moyenne",
+        "3": "bonne",
+        "4": "très bonne",
+        "5": "excellente"
+      }
+    },
+    "richtpreis": {
+      "titel": "Prix indicatif",
+      "intern": "Interne uniquement",
+      "ohneDach": "Puissance encore inconnue : données du toit manquantes.",
+      "inkl": "TVA {{satz}} % incl., fourchette ± selon réglage",
+      "foerderung": "Moins subvention env. {{betrag}}",
+      "besuch": "Plus de {{max}} kWc : sans visite, seulement un ordre de grandeur.",
+      "quelle": {
+        "offerte": "{{kwp}} kWc selon l’offre",
+        "sonnendach": "{{kwp}} kWc selon la surface adaptée (toitsolaire.ch)",
+        "website": "{{kwp}} kWc selon la surface indiquée sur le site"
+      },
+      "posten": {
+        "pv": "Installation solaire",
+        "batterie": "Batterie",
+        "wallbox": "Borne de recharge",
+        "waermepumpe": "Pompe à chaleur"
+      }
+    },
+    "herkunft": {
+      "titel": "Provenance",
+      "eingang": "Réception",
+      "erstkontakt": "Premier contact",
+      "nochNicht": "pas encore",
+      "formular": "Formulaire",
+      "seite": "Page",
+      "kampagne": "Campagne",
+      "kontaktwunsch": "Contact souhaité",
+      "referenz": "Référence site web",
+      "formulare": {
+        "offerte": "Assistant d’offre",
+        "rueckruf": "Rappel",
+        "kontakt": "Formulaire de contact",
+        "report-email": "Résultat du calculateur"
+      }
+    },
+    "steuerung": {
+      "zeitraum": "Période",
+      "tage": "{{n}} derniers jours",
+      "gesamt": "Tous les leads",
+      "alle": "Tous",
+      "proPerson": "Par vendeur",
+      "proQuelle": "Par source",
+      "ohnePerson": "Sans vendeur",
+      "ohneQuelle": "Sans source",
+      "verlust": "Pourquoi perdu",
+      "keinVerlust": "Aucun lead perdu dans la période.",
+      "leads": "Leads",
+      "tempo": "Jusqu’à l’appel",
+      "imTempo": "En {{n}} min",
+      "termin": "RDV",
+      "offerte": "Offre",
+      "gewonnen": "Gagné",
+      "wert": "Valeur commandes",
+      "min": "{{n}} min",
+      "std": "{{n}} h"
     }
   },
   "offerten": {
@@ -1253,7 +1447,8 @@
       "bulle": "Offres Bulle",
       "nachfassen": "Relances",
       "import": "Import PDF",
-      "vorrat": "Travail en cours"
+      "vorrat": "Travail en cours",
+      "auswertung": "Analyse"
     },
     "standort": {
       "alle": "Tous",
@@ -1669,6 +1864,30 @@
       "vorschlagA": "Comme offert",
       "bearbeiten": "Modifier les variantes",
       "erfassen": "Saisir des variantes"
+    },
+    "auswertung": {
+      "zeitraum": "Période de l'analyse",
+      "tage": "{{n}} jours",
+      "kOfferiert_one": "offert · {{count}} offre",
+      "kOfferiert_other": "offert · {{count}} offres",
+      "kGewonnen_one": "gagné · {{count}} commande",
+      "kGewonnen_other": "gagné · {{count}} commandes",
+      "kVerloren": "perdues",
+      "kQuote": "Taux de conclusion (gagnées sur décidées)",
+      "kDauer": "Ø de l'envoi à la décision",
+      "jePerson": "Par personne",
+      "person": "Personne",
+      "offeriert": "Offertes",
+      "gewonnen": "Gagnées",
+      "verloren": "Perdues",
+      "quote": "Taux",
+      "volumen": "Gagné CHF",
+      "leer": "Rien d'offert ou de décidé dans la période.",
+      "gruende": "Pourquoi perdues",
+      "konkurrenz": "Contre qui",
+      "keineVerloren": "Aucune offre perdue dans la période.",
+      "keineKonkurrenz": "Aucune concurrence saisie. L'indiquer lors de la relance sous « Concurrence ».",
+      "ohne": "Sans responsable"
     }
   },
   "werkvertraege": {
@@ -7954,7 +8173,8 @@
       "staffel": "Prix par kWc",
       "staffelBis": "jusqu’à {{bis}} kWc : CHF {{chf}}",
       "staffelRest": "au-delà : CHF {{chf}}",
-      "neuRechnen": "Après l’enregistrement, le CRM recalcule tous les grands projets ouverts."
+      "neuRechnen": "Après l’enregistrement, le CRM recalcule tous les grands projets ouverts.",
+      "youdera_mail": "E-mail Youdera (dossier)"
     },
     "heute": {
       "titel": "Grands projets",
@@ -8142,7 +8362,9 @@
       "ueberLaufzeit": "sur {{jahre}} ans",
       "investition": "Investissement (mandat de construction)",
       "waerme": "En plus chaleur : env. {{kw}} kW, annuité env. {{rate}}.",
-      "ertrag": "Rendement toitsolaire.ch"
+      "ertrag": "Rendement toitsolaire.ch",
+      "bau": "Pour nous : construction (marge {{prozent}} %)",
+      "wartung": "Pour nous : maintenance par an ({{prozent}} %)"
     },
     "verlauf": {
       "notiz": "Note",
@@ -8154,6 +8376,101 @@
       "platzhalter": "Que s'est-il passé ? Ctrl+Entrée enregistre.",
       "festhalten": "Enregistrer",
       "stufe": "Étape : {{stufe}}"
+    },
+    "pdf": {
+      "titel": "Analyse de potentiel solaire",
+      "einleitung": "Votre bâtiment dispose d’un grand toit bien ensoleillé. Cette analyse montre combien d’électricité solaire il peut produire et ce que vous économisez. {{firma}} planifie, construit et entretient l’installation. Vous n’investissez rien et achetez l’électricité de votre propre toit moins cher que celle du réseau.",
+      "anlage": "Votre installation solaire",
+      "dach": "Surface de toit adaptée",
+      "leistung": "Puissance",
+      "ertrag": "Électricité solaire par an",
+      "eigen": "Dont consommée directement dans le bâtiment",
+      "kosten": "Vos coûts d’électricité par an",
+      "heute": "Aujourd’hui",
+      "mit": "Avec l’électricité de votre toit",
+      "preise": "Réseau {{netz}} ct./kWh, solaire {{solar}} ct./kWh",
+      "ersparnis": "Vous économisez par an",
+      "ueberLaufzeit": "Sur {{jahre}} ans",
+      "investition": "Votre investissement",
+      "investitionWert": "CHF 0",
+      "vorteile": "Vos avantages",
+      "vorteil1": "Aucun investissement : construction, exploitation et maintenance sont comprises dans le prix de l’électricité.",
+      "vorteil2": "Un prix fixe et bas pour l’électricité solaire pendant toute la durée.",
+      "vorteil3": "Un seul interlocuteur de la région pour la planification, la construction et le service.",
+      "vorteil4": "Moins de CO2 et une contribution visible à la transition énergétique.",
+      "weiter": "Prochaines étapes",
+      "schritt1": "Visite sur place : toit, statique et raccordement électrique.",
+      "schritt2": "Vos données d’électricité (factures ou courbe de charge) pour un calcul précis.",
+      "schritt3": "Offre ferme avec un prix fixe par kWh.",
+      "schritt4": "Contrat, autorisation et construction, en général en quelques mois.",
+      "hinweis": "Estimation basée sur des données publiques (toitsolaire.ch, registre des bâtiments) et sur notre expérience. Seule l’offre après la visite est contraignante.",
+      "kontakt": "Votre interlocuteur"
+    },
+    "dossier": {
+      "titel": "Dossier contracting {{nummer}}",
+      "objekt": "Objet",
+      "parzelle": "Parcelle",
+      "nutzung": "Affectation",
+      "baujahr": "Année de construction",
+      "dach": "Surface de toit",
+      "heizung": "Chauffage",
+      "geschuetzt": "Protégé / inventaire",
+      "ja": "Oui",
+      "nein": "Non",
+      "anlage": "Installation et électricité",
+      "leistung": "Puissance",
+      "ertrag": "Production",
+      "verbrauch": "Consommation client",
+      "schaetzung": "estimation",
+      "eigen": "Autoconsommation",
+      "strompreis": "Prix actuel de l’électricité",
+      "zielpreis": "Prix cible contracting",
+      "investition": "Investissement estimé",
+      "rolle": "Construction et maintenance",
+      "rolleWert": "{{firma}}",
+      "kunde": "Client et interlocuteurs",
+      "keineKontakte": "Aucun interlocuteur saisi",
+      "unterlagen": "Documents",
+      "vorhanden": "disponible depuis le",
+      "fehlt": "manquant",
+      "besichtigung": "Visite sur place",
+      "nochNicht": "Pas encore visité",
+      "besichtigtAm": "Visité le",
+      "ok": "en ordre",
+      "problem": "problème",
+      "kontakt": "Questions à"
+    },
+    "mail": {
+      "beschreibung": "Vérifie l’adresse et le texte. « Envoyer » valide le mail, il part par la corbeille de sortie depuis ta boîte.",
+      "ansehen": "Voir le PDF",
+      "senden": "Envoyer",
+      "an": "À",
+      "cc": "Cc",
+      "betreff": "Objet",
+      "text": "Texte",
+      "potenzialKnopf": "Analyse de potentiel",
+      "potenzialTitel": "Analyse de potentiel au client",
+      "potenzial": {
+        "betreff": "Analyse de potentiel solaire : {{name}}",
+        "text": "Bonjour{{anrede}}\n\nMerci pour notre échange. Vous trouverez en annexe l’analyse de potentiel de votre bâtiment : combien d’électricité solaire votre toit peut produire et ce que vous économisez chaque année, sans investissement de votre part.\n\nNous discuterons volontiers des chiffres lors d’une visite sur place. Une date dans les deux prochaines semaines vous conviendrait-elle ?\n\nMeilleures salutations"
+      },
+      "dossierKnopf": "Dossier à Youdera",
+      "dossierNochmals": "Renvoyer le dossier",
+      "dossierTitel": "Dossier à Youdera",
+      "ohneEinverstaendnis": "L’accord du client pour transmettre les données n’est pas encore coché (documents). N’envoie le dossier qu’une fois l’accord obtenu.",
+      "dossier": {
+        "betreff": "Demande contracting {{nummer}} : {{name}}",
+        "text": "Bonjour à tous\n\nEn annexe le dossier pour {{name}} à {{gemeinde}} : objet, installation, consommation, interlocuteurs, documents et visite. Dimension Solaire se charge de la construction et de la maintenance.\n\nPouvez-vous nous envoyer une offre avec prix par kWh et durée ? S’il manque quelque chose, nous revenons vers vous.\n\nMerci et meilleures salutations"
+      }
+    },
+    "besichtigung": {
+      "titel": "Visite sur place",
+      "am": "Visité le {{datum}}",
+      "ok": "En ordre",
+      "problem": "Problème",
+      "notizPunkt": "Quel est le problème ?",
+      "notiz": "Note sur la visite",
+      "abschliessen": "Terminer la visite"
     }
   },
   "team": {

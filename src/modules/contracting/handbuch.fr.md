@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -14,17 +14,35 @@ Trouve les bâtiments et projets où le contracting PV ou chaleur peut valoir la
 
 ## Comment faire {#so}
 
-### Vérifier les résultats de la semaine
+### Décider des résultats de la semaine
 
-1. Onglet **Vérifier** : les meilleurs résultats avec points, toit, chauffage et estimation.
-2. Ouvrir le résultat : propriétaire, interlocuteur et prochaines étapes figurent dès que la recherche est terminée.
+1. Onglet **À décider** : une carte par résultat avec points, toit, chauffage, propriétaire et interlocuteur.
+2. **Oui, y aller** (touche J, Andy ou remplaçant) : le grand projet entre dans le pipeline, étape « Qualifier ». **Observer** (B) avec rappel, **Non …** (N) avec motif.
 3. Reprendre les propositions de recherche d’un clic ; ce qui a été saisi à la main reste toujours.
 
-### Décider
+### Travailler dans le pipeline jusqu’au contrat
 
-1. **Approuver** (Andy) : un lead est créé, suite dans le chapitre [Demandes & leads](kapitel:sales).
-2. **Observer** : avec rappel.
-3. **Écarter** : avec motif.
+1. Onglet **Pipeline** : en haut les MWp ouverts, pondérés et signés par rapport à l’objectif, en dessous un tableau par étape.
+2. Ouvrir une carte : le dossier montre bâtiment, contacts, prochaine étape, historique, calculateur, documents et Youdera.
+3. Chaque projet ouvert a une **prochaine étape** avec date ; celles en retard sont en rouge.
+4. **Suite : …** passe à l’étape suivante. **Perdu** demande un motif, **Contrat** une date et une puissance.
+5. Noter appels, e-mails et rendez-vous dans l’**historique**.
+
+### Analyse de potentiel au client
+
+1. Saisir ses propres valeurs dans le calculateur (consommation, prix de l’électricité, prix), en gris les propositions.
+2. **Analyse de potentiel** : PDF dans la langue du client, ne nomme que Dimension Solaire. **Voir le PDF**, puis **Envoyer**.
+
+### Visite sur place
+
+1. Ouvrir le dossier sur le portable, pour chaque point **En ordre** ou **Problème** avec note.
+2. **Terminer la visite** : date et résultat vont dans l’historique et dans le dossier.
+
+### Dossier à Youdera
+
+1. Cocher les documents, surtout l’**accord** du client.
+2. **Dossier à Youdera** : PDF avec objet, installation, contacts, documents et visite, **Envoyer**. « Dossier envoyé » est ensuite coché.
+3. Saisir l’offre de Youdera avec prix et durée.
 
 ### Saisir un résultat à la main
 
@@ -33,13 +51,14 @@ Trouve les bâtiments et projets où le contracting PV ou chaleur peut valoir la
 
 ### Adapter les hypothèses
 
-1. Onglet **Hypothèses** (administration seulement) : valeurs, seuils, mots-clés et zones de recherche.
+1. Onglet **Hypothèses** (administration seulement) : valeurs, seuils, zones de recherche et adresse e-mail de Youdera.
 
 ## Statuts {#staende}
 
-- **Vérifier** : nouveau, attend une décision.
+- **À décider** : nouveau, attend une décision.
 - **Observer** : à revoir plus tard.
-- **Approuvé** : le lead est créé.
+- **Pipeline** : Qualifier, Premier contact, Visite, Données & faisabilité, Offre & négociation, Contrat.
+- **Perdu** : avec motif, peut être repris.
 - **Écarté** : avec motif.
 
 ## Automatique {#automatisch}
@@ -57,8 +76,14 @@ De la taille du toit, de la consommation, du chauffage, du type de bâtiment et 
 
 ### Pourquoi pas d’e-mail ?
 
-Les grands projets n’envoient volontairement pas d’e-mail. La cloche et Ma journée montrent les nouveaux résultats.
+Les grands projets ne signalent jamais les nouveaux résultats par e-mail, seulement la cloche et Ma journée. Les e-mails au client ou à Youdera ne partent que si tu cliques sur **Envoyer**.
+
+### Que gagnons-nous sur un projet ?
+
+Youdera finance et possède l’installation, nous la construisons et l’entretenons. Le calculateur montre la marge de construction et la maintenance par an ; les deux ne figurent jamais dans le PDF pour le client.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Analyse de potentiel, dossier à Youdera et visite sur le portable.
+- 02.11.2026: Pipeline jusqu’au contrat, onglet « À décider » et dossier du projet avec calculateur.
 - 31.10.2026: Recherche de toits autour de Muri et Bulle, chaque semaine les dix meilleurs.
