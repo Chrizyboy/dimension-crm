@@ -11856,7 +11856,8 @@
       "auswahlwerte": "Auswahlwert",
       "gespeicherte_ansichten": "Gespeicherte Ansicht",
       "rueckmeldungen": "Rückmeldung",
-      "kontakt_zugehoerigkeiten": "Ansprechperson"
+      "kontakt_zugehoerigkeiten": "Ansprechperson",
+      "eingangsrechnungen": "Lieferantenrechnungen"
     }
   },
   "zugehoerigkeit": {

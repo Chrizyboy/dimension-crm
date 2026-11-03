@@ -134,6 +134,7 @@ Choisir les filtres et **Exporter la liste** (CSV).
 
 - 03.11.2026: L’adresse de facturation, l’e-mail de facturation et le délai de paiement de la fiche client valent pour les nouvelles factures.
 - 03.11.2026: Aperçu, relances avec validation, Mes projets avec Lancer la facturation, factures fournisseurs avec visa, blocage, promesse et passage en perte.
+- 03.11.2026: Factures fournisseurs saisies à la main (pas encore payées) «Mettre à la corbeille», avec confirmation et «Annuler» ; les factures émises sont annulées. Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Premier visa de la direction de projet avant l’émission.
 - 03.11.2026: Seule l’administration modifie les données des sociétés et les réglages des factures ; aussi sous Réglages › Sociétés et banque.
 - 31.10.2026: Le PDF de facture sert aussi pour la facture d’acompte du contrat d’entreprise.
