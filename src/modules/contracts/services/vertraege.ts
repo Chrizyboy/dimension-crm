@@ -1,5 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type {
+  OhneVertrag,
+  PlanPerson,
   Filter,
   Katalog,
   KundenAnlage,
@@ -19,7 +21,7 @@ function db() {
 const FELDER =
   'id, nummer, status, kontakt_id, projekt_id, anlage_id, paket, anlage_kwp, speicher_kwh, ibn_jahr, wechselrichter, anlage_ort, ' +
   'fremdanlage, start_am, laufzeit_jahre, rhythmus_monate, preis_rappen, preis_netto_rappen, tarif_netto_rappen, bestandsaufnahme, ' +
-  'leistungen, letzte_wartung, naechste_wartung, gekuendigt_am, gekuendigt_per, verrechnet_bis, sprache, notiz, verlauf, ' +
+  'leistungen, letzte_wartung, naechste_wartung, gekuendigt_am, gekuendigt_per, verrechnet_bis, termin_von, termin_bis, termin_person_id, angekuendigt_am, sprache, notiz, verlauf, ' +
   'kontakt:kontakte(vorname, nachname, firma, sprache, telefon, objekte(strasse, plz, ort)), projekt:projekte(nummer)'
 
 interface Roh extends Omit<
@@ -199,4 +201,51 @@ export async function ladeKundenProjekte(kontaktId: string): Promise<{ id: strin
     .is('geloescht_am', null)
   if (error) throw error
   return data
+}
+
+/** Termin der nächsten Inspektion setzen oder leeren (von = null). */
+export async function terminSetzen(id: string, von: string | null, bis: string | null, person: string | null) {
+  const { error } = await db().rpc('wartung_termin_setzen', {
+    p_id: id,
+    p_von: von as string,
+    p_bis: bis as string,
+    p_person: person as string,
+  })
+  if (error) throw error
+}
+
+/** Ankündigung sofort in den Ausgangskorb (sonst legt sie der Zeitplan 14 Tage vorher an). */
+export async function jetztAnkuendigen(id: string): Promise<void> {
+  const { error } = await db().rpc('wartung_ankuendigen', { p_id: id })
+  if (error) throw error
+}
+
+/** Personen, die Inspektionen machen können (aktive Personen). */
+export async function ladePlanPersonen(): Promise<PlanPerson[]> {
+  const { data, error } = await db().from('personen').select('id, name').eq('aktiv', true).order('name')
+  if (error) throw error
+  return data
+}
+
+/** Eigene Anlagen ohne Wartungsvertrag. */
+export async function ladeOhneVertrag(): Promise<OhneVertrag[]> {
+  const { data, error } = await db().from('wartung_ohne_vertrag').select('*').order('ibn_am', { ascending: false })
+  if (error) throw error
+  return data as unknown as OhneVertrag[]
+}
+
+/** Angebot an eine oder mehrere Anlagen (Serie) über den Ausgangskorb; gibt die Zahl zurück. */
+export async function angebotSenden(anlagen: string[], paket?: string): Promise<number> {
+  const { data, error } = await db().rpc('wartung_angebot_senden', {
+    p_anlagen: anlagen,
+    ...(paket ? { p_paket: paket } : {}),
+  })
+  if (error) throw error
+  return data
+}
+
+/** Was aus dem letzten Angebot wurde. */
+export async function angebotStand(anlage: string, stand: 'angenommen' | 'abgelehnt' | 'offen'): Promise<void> {
+  const { error } = await db().rpc('wartung_angebot_stand', { p_anlage: anlage, p_stand: stand })
+  if (error) throw error
 }

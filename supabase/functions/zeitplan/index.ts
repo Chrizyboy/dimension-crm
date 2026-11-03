@@ -2,6 +2,7 @@
 // geschützt durch den Schlüssel ZEITPLAN_SCHLUESSEL im Kopf. Jeder Job läuft nur, wenn er fällig ist
 // (zeitplan_faellig sperrt ihn gleich, damit er nie doppelt läuft), und meldet sein Ergebnis.
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
+//  * ausgang_erinnern alle 15 Min.  wartet seit 4 Arbeitsstunden oder Fehler: Glocke (Stellvertretung nach 1 Tag)
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
@@ -17,7 +18,7 @@
 //  * datensicherung 12:00, 16:00  alle Daten sichern, Kopie in SharePoint, alte aufräumen (V39, Phase 16)
 //  * simap        06:52, 12:00, 17:00   neue Ausschreibungen und Zuschläge (Phase 8b, Zeiten in den Einstellungen)
 //  * amtsblatt    06:52 Mo–Sa     Baugesuche aus dem Amtsblattportal
-//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle
+//  * ausschreibungen_pruefen 07:00  Auslöser, Nachfassen, Erinnerungen, Quellen-Kontrolle, Nachweise
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
@@ -117,6 +118,12 @@ Deno.serve(async (req) => {
   ergebnis.ausgang = await job('ausgang', 0, async () => {
     const r = await ausgangAbarbeiten(20)
     return `${r.gesendet} gesendet, ${r.fehler} Fehler`
+  })
+  // Was zu lange auf Freigabe wartet oder mit Fehler hängt: Glocke an Zuständige, nach einem Arbeitstag auch an die
+  // Stellvertretung (höchstens einmal am Tag je Eintrag).
+  ergebnis.ausgang_erinnern = await job('ausgang_erinnern', 15, async () => {
+    const n = await dienst.rpc<number>('ausgang_erinnern', {})
+    return `${n} erinnert`
   })
 
   // Automationen (Phase 12): die Datenbank macht alles ausser den Schritten, die Microsoft oder AbaNinja brauchen.
@@ -234,6 +241,10 @@ Deno.serve(async (req) => {
   })
 
   // Wartungsverträge (02.11.2026): Jahresrechnungen 30 Tage vor dem Vertragsjahr als Entwurf, nur intern.
+  ergebnis.wartung_ankuendigung = await job('wartung_ankuendigung', 60, async () => {
+    const n = await dienst.rpc<number>('wartung_ankuendigungen', {})
+    return `${n} ${n === 1 ? 'Ankündigung' : 'Ankündigungen'} im Ausgangskorb`
+  })
   ergebnis.wartung = await job('wartung', 720, async () => {
     const n = await dienst.rpc<number>('wartung_jahreslauf', {})
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
@@ -323,9 +334,9 @@ Deno.serve(async (req) => {
   if (faelligesFenster([monitor.pruefen_zeit ?? '07:00'], uhr)) {
     ergebnis.ausschreibungen = await job('ausschreibungen_pruefen', 600, async () => {
       const r = await dienst.rpc<Record<string, number>>('ausschreibungen_pruefen', {})
-      return Object.entries(r)
-        .map(([k, v]) => `${k} ${v}`)
-        .join(', ')
+      // Nachweise (Betreibung, SUVA, AHV …) 30 Tage vor Ablauf als Aufgabe, einmal pro Nachweis.
+      const nachweise = await dienst.rpc<number>('nachweise_melden', {})
+      return [...Object.entries(r), ['nachweise', nachweise] as const].map(([k, v]) => `${k} ${v}`).join(', ')
     })
   }
 

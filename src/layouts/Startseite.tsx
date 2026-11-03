@@ -13,6 +13,7 @@ import { ProjekteHeute, meta as projekteMeta } from '@/modules/projects'
 import { BaustelleHeute, meta as baustelleMeta } from '@/modules/fieldwork'
 import { FristenHeute, meta as fristenMeta } from '@/modules/fleet'
 import { PosteingangHeute, meta as posteingangMeta } from '@/modules/inbox'
+import { AusgangHeute, meta as ausgangMeta } from '@/modules/outbox'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
@@ -76,6 +77,12 @@ export function Startseite() {
               {darfModul(posteingangMeta, ich) && (
                 <Suspense>
                   <PosteingangHeute />
+                </Suspense>
+              )}
+              {/* Was auf meine Freigabe wartet, erscheint nur, wenn etwas offen ist. */}
+              {darfModul(ausgangMeta, ich) && (
+                <Suspense>
+                  <AusgangHeute />
                 </Suspense>
               )}
             </>

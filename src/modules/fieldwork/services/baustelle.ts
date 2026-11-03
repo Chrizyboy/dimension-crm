@@ -11,9 +11,12 @@ import type {
   RapportArt,
   RapportBild,
   RapportFilter,
+  Vorjahr,
+  WartungPruefung,
   Zeit,
   ZeitArt,
 } from '../types'
+import { pruefpunkteFuer, type PaketEinstellung } from '../lib/inspektion'
 import type { Wochenplan } from '../lib/wochenplan'
 
 /**
@@ -122,6 +125,27 @@ export async function ladePruefpunkte(): Promise<Pruefpunkt[]> {
     .maybeSingle()
   if (error) throw error
   return (data?.wert ?? []) as unknown as Pruefpunkt[]
+}
+
+/**
+ * Inspektion eines Wartungsvertrags: Prüfpunkte nach Paket (`wartung_pakete`), Werte der letzten Inspektion oder
+ * der IBN (`wartung_vorjahr`) und die Schwelle für Abweichungen.
+ */
+export async function ladeWartungPruefung(vertragId: string): Promise<WartungPruefung> {
+  const [einst, vertrag, vorjahr] = await Promise.all([
+    db().from('einstellungen').select('wert').eq('schluessel', 'wartung_pakete').maybeSingle(),
+    db().from('wartungsvertraege').select('paket').eq('id', vertragId).maybeSingle(),
+    db().rpc('wartung_vorjahr', { p_vertrag: vertragId }),
+  ])
+  if (einst.error) throw einst.error
+  if (vertrag.error) throw vertrag.error
+  if (vorjahr.error) throw vorjahr.error
+  const e = (einst.data?.wert ?? {}) as unknown as PaketEinstellung
+  return {
+    punkte: pruefpunkteFuer(e, vertrag.data?.paket ?? null),
+    vorjahr: (vorjahr.data ?? null) as unknown as Vorjahr | null,
+    abweichung_prozent: e.abweichung_prozent ?? 10,
+  }
 }
 
 /** Aktive Personen (für Filter und «Tag von …»). */

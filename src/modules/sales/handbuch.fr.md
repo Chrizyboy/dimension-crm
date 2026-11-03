@@ -40,6 +40,7 @@ Du premier contact à l’accord : saisir et appeler les leads, fixer et planifi
 1. Ouvrir le lead, **Fixer un rendez-vous**, choisir date, heure, durée et personne.
 2. Le rendez-vous apparaît dans le calendrier, la tournée du jour et, avec la connexion Microsoft, dans Outlook.
 3. **Fiche de rendez-vous** imprime toutes les données pour la route.
+4. Client injoignable ? **Envoyer le lien de rendez-vous** › **Par SMS** ou **Par e-mail**. Le message attend dans la [Boîte d’envoi](kapitel:outbox) et part après validation. Le client choisit sur dimension-solaire.ch une heure libre de ton calendrier Outlook.
 
 ### Visite sur le portable et transmettre pour l’offre
 
@@ -88,6 +89,7 @@ Tout se trouve sous l’onglet **Planification**, en haut on passe entre **Calen
 - Qui reçoit un nouveau lead est réglé par les responsabilités (langue, site, région, produit). En cas d’absence, il va au remplaçant.
 - Les demandes du site web et de la boîte de réception deviennent des leads toutes seules.
 - Nouvelles demandes du site web : après 15 minutes de travail sans appel, une notification à la personne responsable, après 2 heures à Chris.
+- Si un client réserve par le lien de rendez-vous, le lead passe à « Rendez-vous fixé » et tu reçois une notification. Le site ne propose pas les heures occupées dans Outlook, les absences et les jours fériés.
 - Après l’envoi d’une offre, des e-mails de relance attendent comme brouillon au jour 3, 10 et 21 dans la [Boîte d’envoi](kapitel:outbox).
 - Les statuts après l’offre (envoyée, à relancer, acceptée, chantier) sont posés par le CRM. Pas à la main.
 
@@ -113,6 +115,7 @@ La carte vient de swisstopo. Si elle est bloquée ou hors ligne, elle reste gris
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: « Envoyer le lien de rendez-vous » : les clients réservent eux-mêmes la visite sur dimension-solaire.ch.
 - 03.11.2026: Planification dans un onglet (calendrier, tournée du jour, tournée) ; visite avec check-list, appareil photo et « Terminer · Commander l’offre ».
 - 02.11.2026: Vue de départ « À faire » avec chrono de 15 minutes, fiche du lead en pleine page, résultat d’appel avec rappel et brouillon de SMS, pipeline en six étapes, pilotage pour la direction, demandes du site web en direct.
 - 01.11.2026: Créer un lead directement depuis un e-mail de la boîte de réception.

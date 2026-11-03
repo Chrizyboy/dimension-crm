@@ -38,6 +38,12 @@ La vue mobile pour le montage et la vue bureau correspondante : planning du jour
 2. Saisir tous les points de contrôle et mesures, photos de l’onduleur et du compteur.
 3. Clôturer avec signature. L’installation est créée dans [Service & garantie](kapitel:aftersales).
 
+### Faire une inspection (contrat d’entretien)
+
+1. L’inspection planifiée figure dans «Ma journée» avec plage horaire et formule. **Commencer la maintenance**.
+2. Cocher les points de contrôle et saisir les mesures. À côté figure la valeur de la dernière fois ; un écart de plus de 10 % est signalé. Les mesures ne concernent que la formule Premium.
+3. Comme tout rapport, **Clôturer**. Le CRM calcule la prochaine inspection, le PDF montre les deux valeurs.
+
 ### Saisir un supplément (régie)
 
 1. Dans le rapport, **Saisir un supplément** : quoi et pourquoi, heures, matériel.
@@ -97,5 +103,6 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 
 - 03.11.2026: Heures de tous seulement pour la direction et la comptabilité, les supérieur·e·s direct·e·s voient leur équipe.
 - 03.11.2026: Les cas de service d’hier restent dans le planning («En retard»). Temps de travail et trajet dans **Ma journée** aussi sans rapport ; les modifications partent tout de suite.
+- 03.11.2026: Inspections des contrats d’entretien dans «Ma journée», points de contrôle selon la formule avec les valeurs de la dernière fois.
 - 02.11.2026 : contrôle de sécurité et temps d’équipe, étapes de travail, photos obligatoires du chantier, scanner les numéros de série, dossier, signaler un problème, réception avec réserves ; chantiers du jour, dossier chantier, signalements, feuille hebdomadaire, visa et analyse.
 - 31.10.2026: Vue simple pour les monteurs avec temps de travail d’un clic et frais.

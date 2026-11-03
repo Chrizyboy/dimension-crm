@@ -1486,6 +1486,13 @@
       "regionen": "Régions",
       "bericht": "Rapport mensuel",
       "steuerung": "Pilotage"
+    },
+    "terminLink": {
+      "senden": "Envoyer le lien de rendez-vous",
+      "sms": "Par SMS",
+      "mail": "Par e-mail",
+      "bereit": "Le lien de rendez-vous attend la validation dans la boîte d’envoi",
+      "zumAusgang": "Vers la boîte d’envoi"
     }
   },
   "offerten": {
@@ -2482,6 +2489,16 @@
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "ausschreibung_nogo_fehlt": "Merci de choisir un motif dans la liste.",
+    "ausschreibung_betrag_fehlt": "Merci d’indiquer le montant de l’offre.",
+    "ausschreibung_pruefung_fehlt": "Dès ce montant, une deuxième personne doit d’abord contrôler le dépôt.",
+    "ausschreibung_pruefung_selbst": "La personne responsable ne peut pas contrôler elle-même.",
+    "ausschreibung_protokoll_fehlt": "Saisir d’abord le procès-verbal ou indiquer pourquoi il n’y en a pas.",
+    "ausschreibung_protokoll_wir": "Exactement une offre du procès-verbal doit être la nôtre.",
+    "ausschreibung_punkt_auto": "Ce point est géré par le CRM.",
+    "ausschreibung_kriterien": "Les critères ne sont pas valables.",
+    "ausschreibung_kriterien_summe": "Les poids des critères doivent totaliser 100 %.",
+    "ausschreibung_art_fehlt": "Merci de choisir un type dans la liste.",
     "tag_kein_recht": "Pas d'autorisation pour «Ma journée».",
     "tag_zeile_unbekannt": "Cette ligne ne peut pas être reportée.",
     "tag_datum_ungueltig": "La date doit être après aujourd'hui et au plus dans un an.",
@@ -2546,12 +2563,21 @@
     "baustelle_soll_negativ": "Les heures prévues ne peuvent pas être négatives.",
     "baustelle_projekt_nicht_gefunden": "Projet introuvable.",
     "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire.",
+    "projekte_text_fehlt": "Veuillez d’abord saisir un texte.",
+    "projekte_art_unbekannt": "Ce type d’entrée n’existe pas.",
+    "projekte_maengel_offen": "Il faut d’abord régler tous les défauts avant la remise.",
+    "projekte_rolle_unbekannt": "Ce rôle n’existe pas.",
     "finanzen_karte_keine_firmenkarte": "Seuls les frais « carte d’entreprise » peuvent être associées à une transaction.",
-    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction."
+    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction.",
+    "wartung_termin_ungueltig": "La fin du rendez-vous doit être après le début.",
+    "wartung_kein_termin": "Aucun rendez-vous planifié pour ce contrat.",
+    "wartung_keine_mail": "Le client n’a pas d’adresse e-mail.",
+    "wartung_kein_angebot": "Aucune offre pour cette installation.",
+    "termin_link_stand": "Le lien de rendez-vous n’existe que pour les leads sans rendez-vous ni offre."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
-    "beschreibung": "Tout ce que le CRM veut envoyer par e-mail ou SMS attend ici. Rien ne part sans votre approbation.",
+    "beschreibung": "Tout ce que le CRM veut envoyer par e-mail, SMS ou lettre attend ici. Rien ne part sans ta validation.",
     "ohneDatenbank": "La boîte d'envoi a besoin de la base de données. Dans l'aperçu sans base, elle est vide.",
     "filter": "Afficher",
     "filterwert": {
@@ -2599,7 +2625,18 @@
       "bestellung": "Commande",
       "serienmail": "E-mail groupé",
       "newsletter": "Newsletter",
-      "zahlungserinnerung": "Rappel de paiement"
+      "zahlungserinnerung": "Rappel de paiement",
+      "service_bestaetigung": "Service : accusé de réception",
+      "rechnung": "Facture",
+      "anzahlung": "Facture d'acompte",
+      "teilzahlung": "Facture partielle",
+      "schluss": "Facture finale",
+      "spesen": "Frais",
+      "subunternehmer": "Sous-traitant",
+      "tagesuebersicht": "Résumé du jour",
+      "anlagedossier": "Dossier d'installation",
+      "baugesuch": "Demande de permis",
+      "brief": "Lettre"
     },
     "titelMail": "Vérifier l'e-mail",
     "titelSms": "Vérifier le SMS",
@@ -2626,7 +2663,188 @@
     "grund": "Motif",
     "grundFrage": "Pourquoi ne pas l'envoyer ?",
     "automatisch": "Automatique",
-    "verwerfenJa": "Oui, ne pas envoyer"
+    "verwerfenJa": "Oui, ne pas envoyer",
+    "ordnerTitel": "Dossiers",
+    "ordner": {
+      "fuer_mich": "À valider par moi",
+      "fehler": "Erreurs",
+      "zurueck": "Renvoyés",
+      "team": "Toute l'équipe",
+      "geplant": "Planifiés",
+      "unterwegs": "Envoi en cours",
+      "gesendet": "Envoyés",
+      "verworfen": "Non envoyés"
+    },
+    "abschnitt": {
+      "zuTun": "À faire",
+      "unterwegs": "En route",
+      "archiv": "Archives"
+    },
+    "leerOrdner": {
+      "fuer_mich": "Rien ne t'attend",
+      "fehler": "Aucune erreur",
+      "zurueck": "Rien de renvoyé",
+      "team": "Rien n'attend dans l'équipe",
+      "geplant": "Rien de planifié",
+      "unterwegs": "Rien en cours d'envoi",
+      "gesendet": "Rien d'envoyé",
+      "verworfen": "Rien de rejeté"
+    },
+    "gruppe": {
+      "heute": "Aujourd'hui",
+      "gestern": "Hier",
+      "aelter": "Plus ancien"
+    },
+    "serie_one": "{{art}} · {{count}} message",
+    "serie_other": "Série {{art}} · {{count}} messages",
+    "serieAlle_one": "Choisir {{count}}",
+    "serieAlle_other": "Choisir les {{count}}",
+    "serieWaehlen": "Choisir toute la série",
+    "waehlen": "Choisir {{name}}",
+    "kanal": {
+      "mail": "E-mail",
+      "sms": "SMS",
+      "brief": "Lettre"
+    },
+    "titelBrief": "Vérifier la lettre",
+    "ohneBetreff": "(sans objet)",
+    "zurueckVon": "Renvoyé par {{name}}",
+    "seitStunden_one": "depuis {{count}} h",
+    "seitStunden_other": "depuis {{count}} h",
+    "geplantFuer": "planifié {{zeit}}",
+    "kiText": "Texte IA",
+    "antwort": "Réponse reçue",
+    "nichtMeins": "Validation par d'autres",
+    "von": "de {{name}}",
+    "vonFeld": "De",
+    "brief": {
+      "offen": "Retour en attente",
+      "zurueck": "Retour reçu",
+      "versendet": "Imprimée et envoyée",
+      "ruecklaufJa": "Revenue signée",
+      "ruecklaufNein": "Annuler le retour"
+    },
+    "suchen": "Destinataire, client, objet …",
+    "nichtsOffen": "Rien d'ouvert",
+    "nichtsOffenText": "Choisis un message à gauche. J et K pour naviguer, F pour valider.",
+    "auswahl_one": "{{count}} choisi",
+    "auswahl_other": "{{count}} choisis",
+    "auswahlLeeren": "Annuler la sélection",
+    "auswahlOhneRecht_one": "Tu ne peux pas en valider {{count}}, il reste en attente.",
+    "auswahlOhneRecht_other": "Tu ne peux pas en valider {{count}}, ils restent en attente.",
+    "freigebenAnzahl_one": "Valider {{count}}",
+    "freigebenAnzahl_other": "Valider {{count}}",
+    "spaeter": "Envoyer plus tard",
+    "zeit": {
+      "heute17": "Aujourd'hui 17:00",
+      "morgen8": "Demain 08:00",
+      "montag8": "Lundi 08:00"
+    },
+    "eigeneZeit": "Autre heure …",
+    "eigeneZeitEinzeln": "Autre heure : dans le message",
+    "planen": "Valider et planifier",
+    "verwerfGrund": {
+      "erledigt": "Déjà fait",
+      "telefoniert": "Réglé par téléphone",
+      "falsch": "Contenu faux",
+      "doppelt": "En double",
+      "veraltet": "Plus d'actualité",
+      "anderes": "Autre motif …"
+    },
+    "zurueckAn": "Renvoyer à {{name}}",
+    "zurueckFrage": "Que doit modifier {{name}} ?",
+    "zurueckBeispiel": "p. ex. Merci de joindre la variante avec batterie",
+    "zurueckSenden": "Renvoyer",
+    "zurueckholen": "Récupérer",
+    "bearbeiten": "Modifier",
+    "postadresse": "Adresse postale",
+    "anhang": "Pièce jointe",
+    "soSiehtEsAus": "Ce que voit le destinataire",
+    "smsTeile_one": "{{count}} SMS",
+    "smsTeile_other": "{{count}} SMS",
+    "herkunft": "préparé par {{name}} le {{zeit}}",
+    "freigegebenVon": "validé par {{name}} le {{zeit}}",
+    "gesendetUm": "envoyé {{zeit}}",
+    "verworfenVon": "Non envoyé ({{name}})",
+    "keinRecht": "Ce type est validé par une autre personne. Tu peux le consulter, le renvoyer ou ne pas l'envoyer.",
+    "antwortAm": "Réponse reçue le {{zeit}}",
+    "nochKeineAntwort": "Pas encore de réponse.",
+    "geprueft": "Vérifié avant l'envoi",
+    "stufe": {
+      "ok": "en ordre",
+      "warnung": "remarque",
+      "fehler": "problème"
+    },
+    "pruefung": {
+      "outlook_ok": "Outlook de {{wert}} est connecté",
+      "outlook_fehlt": "Outlook de {{wert}} n'est pas connecté : l'e-mail ne partira pas",
+      "werbung_ok": "Le client accepte la publicité",
+      "werbesperre": "Le client refuse la publicité",
+      "sprache_ok": "La langue correspond au client ({{wert}})",
+      "sprache_anders": "Le client parle {{wert}}, le message est dans une autre langue",
+      "anhaenge_ok": "Pièces jointes présentes ({{wert}})",
+      "anhang_fehlt": "Une pièce jointe manque ou est dans la corbeille",
+      "kuerzlich": "Le même type est déjà parti le {{wert}} à cette adresse",
+      "sms_lang": "Texte long : facturé comme {{wert}} SMS",
+      "veraltet": "L'heure prévue {{wert}} est passée : encore d'actualité ?",
+      "kein_recht": "Validation seulement avec le droit «{{wert}}»"
+    },
+    "recht": {
+      "admin": "Administration",
+      "finanzen": "Finances",
+      "preise": "Prix",
+      "planung": "Planification",
+      "basis": "Base"
+    },
+    "gehoertZu": "Lié à",
+    "bezug": {
+      "kunde": "Client",
+      "lead": "Lead",
+      "offerte": "Offre",
+      "projekt": "Projet",
+      "rechnung": "Facture"
+    },
+    "faellig": "échéance {{datum}}",
+    "danachOfferte": "Après l'envoi, l'offre passe à «envoyée».",
+    "letzteNachrichten": "Derniers échanges",
+    "verlaufArt": {
+      "mail": "E-mail",
+      "sms": "SMS",
+      "anruf": "Appel",
+      "notiz": "Note",
+      "termin": "Rendez-vous",
+      "brief": "Lettre"
+    },
+    "loesung": {
+      "outlook": "La connexion Microsoft de {{name}} manque ou a expiré. {{name}} se reconnecte sous «Mon compte», ou tu envoies depuis ton Outlook.",
+      "sms": "Le service SMS a refusé (accès ou crédit). Vérifier sous Paramètres › Connexions, puis renvoyer.",
+      "unklar": "On ne sait pas si le message est arrivé. Regarde dans Outlook sous «Éléments envoyés». S'il y est, marque-le comme envoyé, sinon renvoie-le.",
+      "anhang": "Une pièce jointe est trop grande ou manque. Vérifier, puis renvoyer.",
+      "nochmal": "Un problème est survenu à l'envoi. En général, renvoyer suffit."
+    },
+    "loesungKnopf": {
+      "verbinden": "Vers «Mon compte»",
+      "ausMeinem": "Envoyer depuis mon Outlook",
+      "alsGesendet": "Trouvé dans Outlook : marquer comme envoyé",
+      "nochmal": "Renvoyer"
+    },
+    "woche": {
+      "gesendet": "envoyés (7 jours)",
+      "wartezeit": "Ø jusqu'à la validation",
+      "antworten": "Réponses"
+    },
+    "heute": {
+      "titel": "Attend ta validation",
+      "alle_one": "{{count}} en attente",
+      "alle_other": "Tous les {{count}}"
+    },
+    "kuerzel": {
+      "freigeben": "Valider et envoyer",
+      "bearbeiten": "Modifier le message",
+      "verwerfen": "Ne pas envoyer",
+      "naechste": "Message suivant",
+      "vorige": "Message précédent"
+    }
   },
   "integration": {
     "fehler": {
@@ -2871,7 +3089,27 @@
       "doppelte": "Même publication d’autres sources",
       "verlauf": "Historique",
       "korrigiert": "Corrigé",
-      "forum": "Questions uniquement via le forum simap : l’adjudicateur est bloqué jusqu’à l’adjudication."
+      "forum": "Questions uniquement via le forum simap : l’adjudicateur est bloqué jusqu’à l’adjudication.",
+      "zurueck": "Retour",
+      "verantwortlich": "responsable : {{name}}",
+      "projekt": "Ouvrir le projet",
+      "eckdaten": "Données clés",
+      "bearbeiten": "Modifier",
+      "kriterien": "Critères d’adjudication",
+      "keineKriterien": "Aucun critère saisi (Modifier).",
+      "checkliste": "Liste de contrôle du dépôt",
+      "nachweiseFehlen": "Manque ou expire avant le dépôt : {{liste}}",
+      "kalkulation": "Calcul",
+      "offerteOeffnen": "Ouvrir l’offre",
+      "proKwp": "par kWc",
+      "mitbewerberMittel": "concurrents en moyenne {{wert}}",
+      "exklMwst": "Montants hors TVA",
+      "geprueft": "Contrôlé le {{datum}}",
+      "pruefungNoetig": "Dès CHF {{betrag}}, une deuxième personne contrôle avant le dépôt",
+      "pruefenKnopf": "Confirmer le contrôle",
+      "notiz": "Note",
+      "notizHinweis": "Note : question au forum, visite, appel …",
+      "notizSpeichern": "Enregistrer la note"
     },
     "feld": {
       "quelle": "Source",
@@ -2894,7 +3132,36 @@
       "datum_eingereicht": "Déposé le",
       "datum_beobachten": "Revoir le",
       "form": "Forme du dépôt",
-      "formWaehlen": "Choisir la forme"
+      "formWaehlen": "Choisir la forme",
+      "verantwortlich": "Responsable",
+      "verfahren": "Procédure",
+      "auftragsart": "Type de marché",
+      "leistung": "Puissance",
+      "leistungKwp": "Puissance (kWc)",
+      "schaetzung": "Estimation",
+      "schaetzungChf": "Estimation (CHF, hors TVA)",
+      "angebot": "Notre offre",
+      "ausfuehrung": "Exécution",
+      "ausfuehrungVon": "Exécution dès",
+      "ausfuehrungBis": "Exécution jusqu’au",
+      "varianten": "Variantes admises",
+      "arge": "Consortium admis",
+      "eignungKwp": "Aptitude : référence dès",
+      "bindefrist": "Validité de l’offre",
+      "eingabeAdresse": "Dépôt à",
+      "fristOeffnung": "Ouverture des offres",
+      "zuschlagErwartet": "Adjudication attendue",
+      "nogo": "Motif (pour l’analyse)",
+      "grundZusatz": "Remarque",
+      "gewinner": "Adjugé à",
+      "gewinnerHinweis": "Laisser vide : offre la plus basse du procès-verbal",
+      "ohneProtokoll": "Pas de procès-verbal, car …",
+      "ohneProtokollHinweis": "Mieux : saisir d’abord le procès-verbal dans le dossier",
+      "datum_zuschlag": "Adjugé le",
+      "datum_absage": "Refus le",
+      "betrag_eingereicht": "Offre (CHF)",
+      "betrag_zuschlag": "Adjudication (CHF, si différente de l’offre)",
+      "betrag_absage": "Montant du gagnant (CHF)"
     },
     "bauherrArt": {
       "privat": "Particulier",
@@ -3008,16 +3275,19 @@
       "ablehnenTitel": "Refuser le courrier"
     },
     "reiter": {
-      "pruefen": "Examiner",
+      "leitstand": "Tableau de bord",
       "bewilligen": "Approuver",
       "senden": "Envoyer",
-      "alle": "Tous",
-      "quellen": "Sources",
-      "trichter": "Entonnoir"
+      "fristen": "Délais",
+      "nachweise": "Attestations & références",
+      "auswertung": "Analyse",
+      "quellen": "Sources & règles"
     },
     "pruefung": {
       "erreichbar": "Indiquer un e-mail, un téléphone ou une adresse.",
-      "datum": "Choisir une date."
+      "datum": "Choisir une date.",
+      "betrag": "Saisir le montant comme 125'000.00.",
+      "protokoll": "Sans procès-verbal, merci d’indiquer le motif."
     },
     "erfassen": {
       "knopf": "Saisir à la main",
@@ -3032,7 +3302,11 @@
       "bauherr": "Maître d’ouvrage",
       "vergabestelle": "Adjudicateur",
       "frist": "Délai",
-      "beschreibung_feld": "Texte de la publication"
+      "beschreibung_feld": "Texte de la publication",
+      "einfuegen": "Coller le texte de la publication",
+      "einfuegenHinweis": "L’IA remplit les champs ; merci de vérifier ensuite.",
+      "auslesen": "Lire avec l’IA",
+      "pruefen": "Proposition de l’IA : merci de vérifier chaque champ."
     },
     "quellen": {
       "titel": "Contrôle des sources",
@@ -3100,7 +3374,249 @@
       "antworten": "réponses reçues",
       "kontakt_fehlt": "contact manquant",
       "fristen": "délais dans 7 jours",
-      "quellen_still": "sources muettes"
+      "quellen_still": "sources muettes",
+      "pruefung": "Dépôts à contrôler (quatre yeux)",
+      "nachweise_ablauf": "Attestations expirent",
+      "gng": "Go/No-Go en attente"
+    },
+    "ja": "Oui",
+    "nein": "Non",
+    "monate_one": "{{count}} mois",
+    "monate_other": "{{count}} mois",
+    "zahl": {
+      "neu": "nouveaux aujourd’hui",
+      "gng": "attendent Go/No-Go",
+      "pruefung": "attendent le contrôle",
+      "bewilligen": "courriers à approuver",
+      "fristen": "délais dans 14 jours",
+      "eingereicht": "déposé, en attente",
+      "nachweise": "attestations expirent"
+    },
+    "board": {
+      "gng": "Go/No-Go",
+      "kalkulation": "Calcul",
+      "eingereicht": "Déposé",
+      "entschieden": "Décidé",
+      "kontakt_fehlt": "Chercher le contact",
+      "entwurf": "Brouillon",
+      "bewilligt": "Approuvé, à envoyer",
+      "versendet": "Envoyé",
+      "antwort": "Réponse",
+      "beobachten": "Observer"
+    },
+    "boardHilfe": {
+      "gng": "Nouveau : participer ou non ? Proposition dans le dossier.",
+      "kalkulation": "Calculer l’offre, liste de contrôle, contrôle avant dépôt.",
+      "eingereicht": "Attente de l’ouverture et de l’adjudication ; saisir le procès-verbal.",
+      "entschieden": "Adjugé, refusé ou pas participé (12 mois).",
+      "kontakt_fehlt": "Qui construit ? Trouver maître d’ouvrage, architecte ou EG.",
+      "entwurf": "Le courrier attend l’approbation d’Andy.",
+      "bewilligt": "Approuvé : Chris envoie ou imprime.",
+      "versendet": "Envoyé ; une relance selon la règle.",
+      "antwort": "Réponse reçue, lead ou clos.",
+      "beobachten": "À revoir quand le déclencheur arrive."
+    },
+    "leitstand": {
+      "fristen": "Prochains délais",
+      "spur": "Choisir la voie",
+      "rang": "Rang {{rang}} sur {{von}}",
+      "spurWahl": {
+        "angebot": "Soumission",
+        "akquise": "Prospection",
+        "beobachten": "Observer",
+        "liste": "Liste"
+      }
+    },
+    "fristArt": {
+      "fragen": "Questions",
+      "begehung": "Visite",
+      "eingabe": "Dépôt",
+      "oeffnung": "Ouverture",
+      "pruefung": "Contrôle interne",
+      "post": "Poster",
+      "beschwerde": "Recours jusqu’au",
+      "zuschlag": "Adjudication attendue",
+      "einsprache": "Opposition",
+      "ausloeser": "À revoir"
+    },
+    "schritte": {
+      "titel": "Étapes",
+      "publiziert": "Publié",
+      "gng": "Go/No-Go",
+      "kalkulation": "Calcul",
+      "pruefung": "Contrôle",
+      "eingabe": "Dépôt",
+      "oeffnung": "Ouverture",
+      "entscheid": "Adjudication",
+      "gefunden": "Trouvé",
+      "kontakt": "Contact",
+      "bewilligt": "Approuvé",
+      "gesendet": "Envoyé",
+      "antwort": "Réponse",
+      "lead": "Lead",
+      "ausloeser": "Déclencheur"
+    },
+    "verfahren": {
+      "offen": "Ouverte",
+      "selektiv": "Sélective",
+      "einladung": "Sur invitation",
+      "freihaendig": "De gré à gré"
+    },
+    "auftragsart": {
+      "bau": "Construction",
+      "liefer": "Fournitures",
+      "dienst": "Services"
+    },
+    "gng": {
+      "titel": "Go/No-Go",
+      "hinweis": "Proposition du CRM",
+      "empfehlung": {
+        "go": "Recommandation : participer",
+        "pruefen": "À examiner",
+        "nogo": "Recommandation : ne pas participer"
+      },
+      "entscheid": {
+        "go": "Go",
+        "nogo": "No-Go"
+      },
+      "teil": {
+        "thema": "Thème",
+        "groesse": "Taille",
+        "distanz": "Distance",
+        "eignung": "Aptitude (références)",
+        "quote": "Succès auprès de ce pouvoir adjudicateur",
+        "nachweise": "Attestations valables"
+      },
+      "unbekannt": "inconnu",
+      "referenzen_one": "{{count}} référence dès {{kwp}} kWc",
+      "referenzen_other": "{{count}} références dès {{kwp}} kWc",
+      "quote": "{{g}} gagnées sur {{e}}",
+      "keineQuote": "pas encore de décision",
+      "fehlen_one": "{{count}} attestation manque",
+      "fehlen_other": "{{count}} attestations manquent",
+      "alleNachweise": "toutes valables jusqu’au dépôt",
+      "kapazitaet": "Merci de vérifier vous-même la capacité de montage pendant l’exécution.",
+      "grund": "Motif : {{grund}}"
+    },
+    "nogo": {
+      "kapazitaet": "Pas de capacité",
+      "zu_klein": "Trop petit",
+      "gesamtlos": "Lot global seulement",
+      "eignung": "Aptitude manquante",
+      "zu_weit": "Trop éloigné",
+      "preis": "Prix irréaliste",
+      "frist": "Délai trop court",
+      "andere": "Autre motif"
+    },
+    "entscheidHilfe": {
+      "zuschlag": "Le CRM crée le projet (valeur du contrat TVA incl., sans propre contrat d’entreprise) et lève le blocage du pouvoir adjudicateur."
+    },
+    "eckdaten": {
+      "titel": "Données de la soumission",
+      "bedingungen": "Conditions",
+      "kriterium": "Critère",
+      "gewicht": "Poids en %",
+      "kriteriumDazu": "Ajouter un critère",
+      "summeIst": "Total {{summe}} %",
+      "summe": "Les poids doivent totaliser 100 %.",
+      "betragUngueltig": "Saisir le montant comme 125'000.00."
+    },
+    "protokoll": {
+      "titel": "Procès-verbal d’ouverture",
+      "erfassen": "Saisir",
+      "hilfe": "Toutes les offres du procès-verbal, montants hors TVA. Marquer notre offre avec « nous ».",
+      "anbieter": "Soumissionnaire",
+      "ort": "Lieu",
+      "betrag": "Montant",
+      "wir": "nous",
+      "abstand": "Écart",
+      "zeile": "Offre {{n}}",
+      "zeileDazu": "Ajouter une offre",
+      "entfernen": "Retirer",
+      "zeileFehlt": "Chaque ligne doit avoir soumissionnaire et montant.",
+      "einmalWir": "Exactement une offre doit être la nôtre.",
+      "leer": "Pas encore de procès-verbal. À saisir dès réception.",
+      "ohne": "Pas de procès-verbal : {{grund}}"
+    },
+    "fristen": {
+      "hilfe": "Tous les délais des dossiers ouverts par semaine. Contrôle et envoi postal sont des échéances internes, calculées à rebours depuis le dépôt.",
+      "woche": "Sem. {{kw}} · dès le {{datum}}",
+      "leer": "Aucun délai ouvert",
+      "leerText": "Les délais des dossiers apparaîtront ici."
+    },
+    "nachweise": {
+      "titel": "Attestations des sociétés",
+      "hilfe": "Ce que demandent les pouvoirs adjudicateurs. 30 jours avant l’échéance, une tâche « Renouveler l’attestation » est créée.",
+      "neu": "Déposer une attestation",
+      "firma": "Société",
+      "art": "Attestation",
+      "ausgestellt": "Émise le",
+      "gueltigBis": "Valable jusqu’au",
+      "gueltigHinweis": "Laisser vide : calculé selon le type",
+      "datei": "Fichier (PDF ou image)",
+      "notiz": "Note",
+      "bis": "jusqu’au {{datum}}",
+      "fehlt": "manque",
+      "erneuern": "Renouveler",
+      "oeffnen": "Ouvrir le fichier"
+    },
+    "referenzen": {
+      "titel": "Références pour les dépôts",
+      "neu": "Ajouter une référence",
+      "aendern": "Modifier la référence",
+      "ausProjekten": "Depuis les projets",
+      "vorschlagHilfe": "Projets mis en service qui ne sont pas encore une référence.",
+      "keineVorschlaege": "Aucun autre projet.",
+      "uebernehmen": "Reprendre",
+      "leer": "Pas encore de références. Les propositions viennent des projets.",
+      "projekt": "Projet",
+      "jahr": "Année",
+      "auftraggeber": "Mandant",
+      "anfragen": "Peut être contacté",
+      "aktionen": "Actions",
+      "ja": "oui",
+      "nein": "pas encore",
+      "freigegeben": "La personne de contact accepte d’être contactée",
+      "feld": {
+        "titel": "Projet",
+        "ort": "Lieu",
+        "gebaeude": "Bâtiment",
+        "leistung_kwp": "Puissance (kWc)",
+        "jahr": "Année",
+        "auftraggeber": "Mandant",
+        "ansprechperson": "Personne de contact",
+        "telefon": "Téléphone",
+        "sprache": "Langue",
+        "notiz": "Note"
+      }
+    },
+    "auswertung": {
+      "zeitraum": "Période",
+      "jahr": "Cette année",
+      "vorjahr": "L’an dernier",
+      "monate12": "12 mois",
+      "zahl": {
+        "gemeldet": "Soumissions signalées",
+        "go": "Go sur décidé",
+        "eingereicht": "déposées",
+        "gewonnen": "gagnées",
+        "gewonnenChf": "gagné (hors TVA)",
+        "offenChf": "déposé, en attente",
+        "abstand": "Écart à l’adjudication",
+        "leads": "Leads issus des courriers"
+      },
+      "kantone": "Par canton",
+      "nogo": "Motifs de No-Go",
+      "nochNichts": "Pas encore de données sur la période.",
+      "mitbewerber": "Concurrents",
+      "keineMitbewerber": "Les concurrents apparaissent dès que des procès-verbaux sont saisis.",
+      "gegenUns": "contre nous",
+      "erster": "1er rang",
+      "preisZuUns": "Prix vs nous",
+      "proKwp": "CHF/kWc",
+      "kantoneSpalte": "Cantons",
+      "zuletzt": "Dernière fois",
+      "trichter": "Entonnoir des sources"
     }
   },
   "projekte": {
@@ -3122,7 +3638,9 @@
       "bewilligungen": "Autorisations",
       "alle": "Tous les projets",
       "subunternehmer": "Sous-traitants",
-      "abwesenheiten": "Absences"
+      "abwesenheiten": "Absences",
+      "leitstand": "Poste de pilotage",
+      "woche": "Ma semaine"
     },
     "akteReiter": {
       "uebersicht": "Aperçu",
@@ -3427,6 +3945,156 @@
         "bewilligung": "Autorisation",
         "material": "Matériel"
       }
+    },
+    "leitstand": {
+      "bau": "Chantier {{datum}}",
+      "suche": "Chercher projet, client, lieu, électricien ou numéro",
+      "ansicht": "Affichage",
+      "board": "Tableau",
+      "liste": "Liste",
+      "filter": "Filtres rapides",
+      "leer": "Rien dans cette phase."
+    },
+    "zahl": {
+      "laufend": "projets en cours",
+      "ohne_termin": "sans date de chantier",
+      "spaet": "bloqués ou en retard",
+      "bewilligung": "autorisation en retard",
+      "material": "matériel manquant pour les 14 prochains jours",
+      "woche": "montages cette semaine",
+      "verrechnen": "tranches dues, non facturées"
+    },
+    "schnell": {
+      "meine": "Les miens",
+      "spaet": "Bloqués",
+      "bewilligung": "Autorisation en retard",
+      "material": "Matériel manquant",
+      "ohne_termin": "Sans date de chantier",
+      "verrechnen": "À facturer"
+    },
+    "hinweis": {
+      "material_fehlt": "{{anzahl}} positions manquent",
+      "bewilligung_spaet": "Autorisation en retard",
+      "zahlung_ueberfaellig": "Paiement en retard de {{tage}} jours",
+      "ohne_termin": "sans date de chantier",
+      "verrechnen": "Tranche due",
+      "nachtraege": "Avenant ouvert",
+      "material_ok": "Matériel complet",
+      "material_bestellen": "Matériel pas commandé",
+      "frist": "Délai dépassé",
+      "maengel": "{{anzahl}} défauts ouverts"
+    },
+    "woche": {
+      "wer": "Projets de qui",
+      "meine": "Mes projets",
+      "alle": "Tous les projets",
+      "seit": "depuis {{tage}} jours",
+      "leer": "Rien d’échu cette semaine",
+      "leerText": "Aucune étape ouverte avec délai et rien de bloqué.",
+      "baustellen": "Chantiers cette semaine",
+      "keineBaustellen": "Aucune intervention cette semaine.",
+      "gruppe": {
+        "ueberfaellig": "En retard et bloqués",
+        "woche": "Cette semaine",
+        "naechste": "Semaine prochaine"
+      },
+      "aufgabe": {
+        "material_fehlt": "Commander le matériel",
+        "zahlung_ueberfaellig": "Relancer le paiement",
+        "ohne_termin": "Fixer la date de chantier",
+        "verrechnen": "Établir la facture",
+        "material_bestellen": "Commander le matériel",
+        "maengel": "Régler les défauts"
+      }
+    },
+    "seite": {
+      "leitung": "Chef de projet {{name}}",
+      "verkauf": "Vente {{name}}",
+      "vertrag": "Contrat {{betrag}}",
+      "phasen": "Phases du projet",
+      "schritte": "{{erledigt}} sur {{gesamt}}",
+      "zuTun": "À faire maintenant",
+      "alleSchritte": "Les {{anzahl}} étapes ouvertes",
+      "erledigt": "«{{name}}» terminé",
+      "eingereicht": "déposé le {{datum}}",
+      "verlauf": "Historique",
+      "termine": "Dates",
+      "keineTermine": "Aucune intervention planifiée.",
+      "material": "Matériel",
+      "keinMaterial": "Pas encore de liste de matériel. La reprendre de l’offre dans les achats.",
+      "fehlt": "manque {{menge}}",
+      "unterwegs": "commandé",
+      "da": "en stock",
+      "lieferung": "Dernière livraison attendue",
+      "zumEinkauf": "Ouvrir le matériel dans les achats",
+      "geld": "Argent",
+      "vertragInkl": "Contrat TVA incl.",
+      "offen": "ouvert",
+      "bezahlt": "payé",
+      "gestellt": "facturé {{nummer}}",
+      "entwurf": "Brouillon",
+      "stellen": "facturer maintenant",
+      "spaeter": "plus tard",
+      "zuRechnungen": "Ouvrir «À facturer»",
+      "kalkulation": "Post-calcul",
+      "exkl": "hors TVA",
+      "margeSoll": "Marge prévue",
+      "margeIst": "Marge actuelle",
+      "stundenSollIst": "Heures prévues / saisies",
+      "materialSollIst": "Matériel prévu / réel",
+      "verrechnet": "Facturé",
+      "stunden": "{{stunden}} h"
+    },
+    "verlauf": {
+      "art": {
+        "notiz": "Note",
+        "anruf": "Appel",
+        "mail": "E-mail",
+        "besuch": "Visite",
+        "sms": "SMS",
+        "brief": "Lettre",
+        "aenderung": "Modification"
+      },
+      "artWahl": "Type d’entrée",
+      "eingabe": "Que s’est-il passé ? Avec qui, qu’est-ce qui a été convenu ?",
+      "speichern": "Noter dans l’historique",
+      "leer": "Rien dans l’historique.",
+      "mailVon": "E-mail de {{name}}",
+      "rapport": "Rapport {{nummer}} · {{person}}",
+      "ausgang": {
+        "wartet": "Info client en attente de validation",
+        "freigegeben": "Info client validée",
+        "wird_gesendet": "Info client en cours d’envoi",
+        "gesendet": "Info client envoyée",
+        "fehler": "Info client : échec de l’envoi"
+      }
+    },
+    "maengel": {
+      "titel": "Défauts et travaux restants",
+      "offen": "{{anzahl}} ouverts",
+      "alleErledigt": "Tout est réglé",
+      "leer": "Aucun défaut ouvert.",
+      "erledigen": "« {{text}} » réglé",
+      "oeffnen": "Rouvrir « {{text}} »",
+      "erledigtAm": "réglé le {{datum}}",
+      "bis": "d’ici le {{datum}}",
+      "nurOffene": "Afficher seulement les ouverts",
+      "erledigteZeigen": "Afficher {{anzahl}} réglés",
+      "artWahl": "Type",
+      "art": {
+        "mangel": "Défaut",
+        "restarbeit": "Travail restant"
+      },
+      "eingabe": "Qu’est-ce qui reste à faire ? Où exactement ?",
+      "frist": "Délai",
+      "erfassen": "Saisir"
+    },
+    "beteiligte": {
+      "titel": "Intervenants",
+      "hinzufuegen": "Ajouter",
+      "leer": "Personne n’est encore saisi (électricien, échafaudage, gestionnaire de réseau …).",
+      "entfernen": "Retirer {{name}}",
+      "rolle": "Rôle"
     }
   },
   "kundeWahl": {
@@ -3827,7 +4495,8 @@
       "inspektionen": "Inspections",
       "keineInspektion": "Cette formule ne comprend pas d’inspection sur place.",
       "rechnungErstellt": "Facture annuelle créée comme brouillon",
-      "zurRechnung": "Ouvrir"
+      "zurRechnung": "Ouvrir",
+      "termin": "Rendez-vous {{zeit}}"
     },
     "erledigt": {
       "titel": "Entretien effectué",
@@ -3918,6 +4587,76 @@
       "am": "Résiliation reçue le",
       "endet": "Le contrat prend fin le {{datum}}.",
       "gespeichert": "Résiliation saisie, fin le {{datum}}"
+    },
+    "reiter": {
+      "vertraege": "Contrats",
+      "inspektionen": "Inspections",
+      "ohne": "Sans contrat"
+    },
+    "termin": {
+      "titel": "Planifier l’inspection · {{nummer}}",
+      "tag": "Jour",
+      "von": "De",
+      "bis": "À",
+      "person": "Qui y va",
+      "personWaehlen": "Choisir une personne",
+      "entfernen": "Supprimer le rendez-vous",
+      "ankuendigen": "Annoncer maintenant",
+      "hinweis": "Le CRM prépare l’annonce au client 14 jours avant dans la corbeille de sortie ; vous la validez d’un clic.",
+      "angekuendigt": "Annoncé le {{datum}} (corbeille de sortie)."
+    },
+    "insp": {
+      "titel": "Inspections",
+      "zusammenfassung": "{{offen}} à planifier · {{geplant}} planifiées · {{angekuendigt}} annoncées",
+      "filter": "Filtrer les inspections",
+      "filterwert": {
+        "offen": "Sans rendez-vous",
+        "geplant": "Planifiées",
+        "alle": "Toutes"
+      },
+      "spalte": {
+        "tag": "Rendez-vous / échéance",
+        "person": "Qui",
+        "ankuendigung": "Annonce",
+        "aktion": "Action"
+      },
+      "faellig": "échéance {{datum}}",
+      "angekuendigt": "annoncée",
+      "nochNicht": "pas encore",
+      "planen": "Planifier",
+      "aendern": "Modifier le rendez-vous",
+      "leer": "Rien à planifier",
+      "leerText": "Aucune inspection due dans les 90 prochains jours."
+    },
+    "ohne": {
+      "titel": "Installations sans contrat d’entretien",
+      "hinweis": "Nos installations mises en service sans contrat en cours. L’offre part avec le forfait et le prix adaptés, dans la langue du client, via la corbeille de sortie.",
+      "suche": "Rechercher client, lieu ou projet",
+      "filter": "Filtrer les installations",
+      "filterwert": {
+        "nie": "Jamais proposé",
+        "nachfassen": "À relancer",
+        "alle": "Toutes"
+      },
+      "alleMarkieren": "Tout sélectionner",
+      "markieren": "Sélectionner {{kunde}}",
+      "keineMail": "pas d’adresse e-mail",
+      "ibn": "En service depuis",
+      "paket": "Forfait adapté",
+      "angebot": "Offre",
+      "nie": "jamais",
+      "stand": {
+        "offen": "envoyée le {{datum}}",
+        "angenommen": "acceptée le {{datum}}",
+        "abgelehnt": "refusée le {{datum}}"
+      },
+      "senden": "Envoyer l’offre",
+      "serie_one": "Envoyer à {{count}} client",
+      "serie_other": "Envoyer à {{count}} clients",
+      "abgelehnt": "Refusée",
+      "angenommen": "Acceptée",
+      "leer": "Aucune installation",
+      "leerText": "Toutes nos installations de cette sélection ont un contrat ou une offre."
     }
   },
   "einkauf": {
@@ -4617,7 +5356,9 @@
       "nachtraege": "Avenants",
       "unterschrift": "Signature du client",
       "bestaetigt": "Par la signature, les avenants de ce rapport sont confirmés.",
-      "fotos": "Photos"
+      "fotos": "Photos",
+      "vorjahr": "Dernière fois ({{datum}})",
+      "heute": "Aujourd’hui"
     },
     "heute": {
       "titel": "Chantier",
@@ -4898,6 +5639,21 @@
         "nichtGestempelt": "Intervention sans temps",
         "laeuft": "Le temps tourne encore",
         "saldo": "Solde {{h}} h"
+      }
+    },
+    "inspektion": {
+      "titel": "Inspection",
+      "badge": "Inspection {{nummer}}",
+      "letztes": "Dernière fois : {{wert}}",
+      "abweichung": "Écart de {{prozent}} % par rapport à la dernière fois",
+      "vorjahr": {
+        "wartung": "Comparaison avec l’inspection du {{datum}}",
+        "ibn": "Comparaison avec le protocole de mise en service du {{datum}}"
+      },
+      "paket": {
+        "essentiel": "Essentiel",
+        "comfort": "Comfort",
+        "premium": "Premium avec mesures"
       }
     }
   },
@@ -8196,7 +8952,8 @@
       "garantie_bis": "Garantie jusqu’au",
       "zurueck_bis": "Retour au plus tard le",
       "ausgemustert_am": "Mis hors service le",
-      "ungueltig": "Veuillez vérifier"
+      "ungueltig": "Veuillez vérifier",
+      "privat_anteil": "Part privée (véhicule utilisé en privé)"
     },
     "fahrzeug": {
       "neu": "Saisir un véhicule",
@@ -8344,7 +9101,8 @@
       },
       "heute": "Cette semaine",
       "weiter": "Semaine suivante",
-      "zurueck": "Semaine précédente"
+      "zurueck": "Semaine précédente",
+      "folgtTeam": "suit l’équipe"
     },
     "reservieren": {
       "knopf": "Réserver",
@@ -8398,7 +9156,10 @@
       "zahlGeraete": "Valeur des appareils",
       "zahlProKm": "CHF par km en moyenne",
       "zahlTotal": "Coûts totaux des véhicules",
-      "zahlUnterhalt": "Entretien"
+      "zahlUnterhalt": "Entretien",
+      "privatanteil": "Part privée",
+      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
+      "privatanteilTitel": "Part privée {{jahr}}"
     },
     "dateien": {
       "hochladen": "Ajouter un fichier",
@@ -8413,7 +9174,8 @@
     "schnell": {
       "nehmen": "Je le prends",
       "zurueck": "Retour au dépôt"
-    }
+    },
+    "ja": "Oui"
   },
   "grossprojekte": {
     "titel": "Grands projets",
