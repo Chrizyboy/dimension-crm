@@ -1,6 +1,6 @@
 import type { PostgrestError } from '@supabase/supabase-js'
 import { supabase } from '@/services/supabase'
-import type { Eintrag, Fahrzeug, Frist, Geraet, NeuerEintrag, Wahl } from '../types'
+import type { Eintrag, Fahrzeug, Frist, Geraet, NeuerEintrag, Schaden, SchadenStand, Wahl } from '../types'
 
 /**
  * Datenzugriff für Fahrzeuge und Geräte. Stammdaten schreibt die App direkt (Recht «basis»), Einträge nur über
@@ -19,15 +19,15 @@ function doppelt(error: PostgrestError | null): void {
 }
 
 const FAHRZEUG =
-  'id, kennzeichen, bezeichnung, marke_modell, jahrgang, standort_id, person_id, km_stand, km_stand_am, naechste_mfk, naechster_service, service_km, leasing_bis, versicherung, ausser_betrieb, notiz'
+  'id, kennzeichen, bezeichnung, marke_modell, jahrgang, standort_id, person_id, km_stand, km_stand_am, naechste_mfk, naechster_service, service_km, leasing_bis, versicherung, ausser_betrieb, notiz, art, treibstoff, erste_inverkehrsetzung, stammnummer, fahrgestell_nr, gesamtgewicht_kg, nutzlast_kg, anhaengelast_kg, ausweis, tankkarte, schluessel, kaufdatum, kaufpreis_rappen, leasinggeber, leasing_vertrag, leasing_beginn, leasing_rate_rappen, leasing_km_jahr, leasing_mehr_km_rappen, versicherung_police, versicherung_deckung, selbstbehalt_rappen, schaden_telefon, praemie_rappen, verkehrssteuer_rappen, reifen, naechster_reifenwechsel, vignette_bis, privat_anteil'
 const GERAET =
-  'id, art, bezeichnung, inventar_nr, serien_nr, hersteller, standort_id, person_id, fahrzeug_id, pruef_monate, naechste_pruefung, zustand, notiz'
+  'id, art, bezeichnung, inventar_nr, serien_nr, hersteller, standort_id, person_id, fahrzeug_id, pruef_monate, naechste_pruefung, zustand, notiz, kaufdatum, kaufpreis_rappen, lieferant, garantie_bis, pruefstelle, uebernommen_am, zurueck_bis, ausgemustert_am, ausgemustert_grund'
 
 /** Alle Fahrzeuge (ohne Papierkorb), nach Bezeichnung. */
 export async function ladeFahrzeuge(): Promise<Fahrzeug[]> {
   const { data, error } = await db().from('fahrzeuge').select(FAHRZEUG).is('geloescht_am', null).order('bezeichnung')
   if (error) throw error
-  return data
+  return data as Fahrzeug[]
 }
 
 /** Alle Geräte (ohne Papierkorb), nach Art und Bezeichnung. */
@@ -42,16 +42,45 @@ export async function ladeGeraete(): Promise<Geraet[]> {
   return data as Geraet[]
 }
 
+const EINTRAG =
+  'id, art, datum, km, kosten_rappen, ergebnis, naechste_am, text, erstellt_am, liter, stand, erledigung, erledigt_am, fahrzeug_id, geraet_id, person:personen(name)'
+
 /** Verlauf eines Fahrzeugs oder Geräts, neueste zuerst. */
 export async function ladeEintraege(bezug: { fahrzeug?: string; geraet?: string }): Promise<Eintrag[]> {
-  let q = db()
-    .from('ressourcen_eintraege')
-    .select('id, art, datum, km, kosten_rappen, ergebnis, naechste_am, text, erstellt_am, person:personen(name)')
-    .is('geloescht_am', null)
+  let q = db().from('ressourcen_eintraege').select(EINTRAG).is('geloescht_am', null)
   q = bezug.fahrzeug ? q.eq('fahrzeug_id', bezug.fahrzeug) : q.eq('geraet_id', bezug.geraet ?? '')
   const { data, error } = await q.order('datum', { ascending: false }).order('erstellt_am', { ascending: false })
   if (error) throw error
   return data.map(({ person, ...e }) => ({ ...e, person: person?.name ?? null }) as Eintrag)
+}
+
+/** Alle offenen Schäden (offen oder in Arbeit) an Fahrzeugen und Geräten, älteste zuerst. */
+export async function ladeOffeneSchaeden(): Promise<Schaden[]> {
+  const { data, error } = await db()
+    .from('ressourcen_eintraege')
+    .select(EINTRAG)
+    .eq('art', 'schaden')
+    .in('stand', ['offen', 'in_arbeit'])
+    .is('geloescht_am', null)
+    .order('datum')
+  if (error) throw error
+  return data.map(({ person, ...e }) => ({ ...e, person: person?.name ?? null }) as Schaden)
+}
+
+/** Stand eines Schadens setzen, mit Text (Garage, Versicherungsfall) und Kosten. */
+export async function schadenSetzen(
+  id: string,
+  stand: SchadenStand,
+  erledigung: string | null,
+  kostenRappen: number | null,
+): Promise<void> {
+  const { error } = await db().rpc('ressource_schaden_setzen', {
+    p_eintrag: id,
+    p_stand: stand,
+    ...(erledigung ? { p_erledigung: erledigung } : {}),
+    ...(kostenRappen !== null ? { p_kosten_rappen: kostenRappen } : {}),
+  })
+  if (error) throw error
 }
 
 /** Alle Fristen (MFK, Service, Prüfung, Ausweis) aus der Sicht `fristen`. */
@@ -121,6 +150,7 @@ export async function eintragErfassen(e: NeuerEintrag, id: string = crypto.rando
     ...(e.ergebnis ? { p_ergebnis: e.ergebnis } : {}),
     ...(e.naechste ? { p_naechste: e.naechste } : {}),
     ...(e.text ? { p_text: e.text } : {}),
+    ...(e.liter ? { p_liter: e.liter } : {}),
   })
   if (error) throw error
   return data
@@ -132,6 +162,7 @@ export async function uebergeben(
   person: string | null,
   inFahrzeug: string | null,
   text: string,
+  zurueckBis: string | null = null,
 ): Promise<void> {
   const { error } = await db().rpc('ressource_uebergeben', {
     p_fahrzeug: (bezug.fahrzeug ?? null) as string,
@@ -139,6 +170,7 @@ export async function uebergeben(
     p_person: person as string,
     ...(inFahrzeug ? { p_in_fahrzeug: inFahrzeug } : {}),
     ...(text.trim() ? { p_text: text.trim() } : {}),
+    ...(zurueckBis ? { p_zurueck_bis: zurueckBis } : {}),
   })
   if (error) throw error
 }

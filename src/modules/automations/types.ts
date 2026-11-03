@@ -31,6 +31,8 @@ export type AktionsArt =
   | 'outlook_termin'
   | 'sharepoint_ordner'
   | 'abaninja_kunde'
+  | 'wiedervorlage'
+  | 'notiz'
 
 /** Eine Aktion; welche Felder zählen, hängt von der Art ab (siehe AktionFelder). */
 export interface Aktion {
@@ -53,6 +55,20 @@ export interface Aktion {
   /** Mail: die KI schreibt den Text im Stil der Firma (Art des Kundentexts); der Text oben ist die Vorlage. */
   ki?: string
   ki_wunsch?: string
+  /** Warten/Wiedervorlage: Arbeitstage statt Kalendertage (ohne Wochenende und Feiertage). */
+  arbeitstage?: boolean
+  /** Prüfen: nicht erfüllt → «ende» (Standard) oder nur den nächsten Schritt überspringen. */
+  sonst?: 'ende' | 'ueberspringen'
+  /** Mail/SMS ohne Adresse: stattdessen eine Anruf-Aufgabe an die absendende Person. */
+  ersatz_aufgabe?: boolean
+}
+
+/** Wann Nachrichten an Kunden gehen dürfen (ISO-Wochentage 1 = Montag). */
+export interface Versandfenster {
+  tage?: number[]
+  von?: string
+  bis?: string
+  immer?: boolean
 }
 
 /** Eine Automation: Auslöser → Bedingungen → Aktionen. */
@@ -70,6 +86,9 @@ export interface Automation {
   bedingungen: Bedingung[]
   aktionen: Aktion[]
   reihenfolge: number
+  /** null = Standard aus den Einstellungen. */
+  versandfenster: Versandfenster | null
+  kontakt_pause_tage: number | null
 }
 
 /** Was die Datenbank an Bausteinen anbietet (automation_katalog). */
@@ -83,7 +102,8 @@ export interface Katalog {
   zielgruppen: string[]
 }
 
-export type LaufStand = 'laeuft' | 'wartet' | 'server' | 'fertig' | 'uebersprungen' | 'fehler' | 'abgebrochen'
+export type LaufStand =
+  'laeuft' | 'wartet' | 'server' | 'fertig' | 'uebersprungen' | 'fehler' | 'abgebrochen' | 'gestoppt'
 
 /** Ein Eintrag im Protokoll eines Laufs. «meldung» ist ein Schlüssel (automationen.meldung.*) oder ein Fehlertext. */
 export interface ProtokollEintrag {
@@ -111,6 +131,7 @@ export interface Lauf {
   fehler: number
   erstellt_am: string
   beendet_am: string | null
+  gestoppt_grund?: string | null
 }
 
 /** Einstellungen der Auslöser nach Datum (einstellungen.automationen). */
@@ -122,8 +143,110 @@ export interface AutomationsEinstellungen {
   bewertung_link: string
   /** Google-Bewertung Romandie, für Kunden mit Sprache Französisch. */
   bewertung_link_fr?: string
+  versandfenster?: Versandfenster
+  kontakt_pause_tage?: number
+  lead_ohne_kontakt_tage?: number
+  garantie_vorlauf_tage?: number
+  feiertage?: string[]
+  /** Geschätzte Minuten je erledigtem Schritt (für «Diese Woche erledigt»). */
+  minuten?: Record<string, number>
 }
 
 /** Reiter der Seite (#/automations?ansicht=…). */
-export const ANSICHTEN = ['liste', 'protokoll', 'einstellungen'] as const
+export const ANSICHTEN = ['uebersicht', 'liste', 'geplant', 'protokoll', 'einstellungen'] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
+
+/** Ein geplanter Schritt (wartender oder gestoppter Lauf), aus automation_geplant. */
+export interface Geplant {
+  lauf_id: string
+  automation_id: string
+  name_de: string
+  name_fr: string
+  titel: string | null
+  tabelle: string | null
+  bezug_id: string | null
+  stand: LaufStand
+  weiter_am: string
+  schritt: number
+  schritte: number
+  art: AktionsArt | null
+  text_de: string | null
+  text_fr: string | null
+  nach_aussen: boolean
+  modus: Modus
+  grund: string | null
+  /** Darf die angemeldete Person stoppen und verschieben? */
+  darf: boolean
+}
+
+/** Ein Eintrag «Braucht Aufmerksamkeit». */
+export interface Aufmerksamkeit {
+  lauf_id: string
+  automation_id: string
+  titel: string | null
+  ziel: string | null
+  nr: string
+  art: string
+  ergebnis: ProtokollEintrag['ergebnis']
+  meldung: string | null
+  werte: Record<string, unknown> | null
+  zeit: string
+}
+
+/** Übersicht (automation_uebersicht). */
+export interface Uebersicht {
+  motor: { zuletzt_am: string | null; ok: boolean | null; meldung: string | null } | null
+  aktiv: number
+  alle: number
+  wartend: number
+  wirkung: Record<string, number>
+  minuten: Record<string, number>
+  mails_wartend: number
+  mails_freigegeben: number
+  mails_alt: number
+  rechnungen_rappen: number
+  probleme: number
+  probleme_vorwoche: number
+  aufmerksamkeit: Aufmerksamkeit[]
+  ausgeschaltet: { id: string; name_de: string; name_fr: string; seit: string; von: string | null }[]
+  naechste: Geplant[]
+}
+
+/** Kennzahlen je Automation (30 Tage). */
+export interface Kennzahl {
+  automation_id: string
+  laeufe: number
+  mit_fehler: number
+  zuletzt_am: string | null
+  wartend: number
+}
+
+/** Ein Schritt im Probelauf. */
+export interface ProbeSchritt {
+  nr: number
+  art: string
+  wann: string
+  ergebnis: ProtokollEintrag['ergebnis']
+  meldung?: string
+  an?: string
+  personen?: string
+  betreff?: string
+  text?: string
+  faellig?: string
+  werte?: Record<string, unknown> | null
+}
+
+/** Ergebnis des Probelaufs. */
+export interface Probelauf {
+  titel: string | null
+  sprache: 'de' | 'fr'
+  schritte: ProbeSchritt[]
+}
+
+/** Eine Änderung an einer Automation. */
+export interface Aenderung {
+  zeitpunkt: string
+  person: string
+  aktion: string
+  felder: string[]
+}

@@ -2069,7 +2069,15 @@
     "grossprojekt_nicht_bewilligt": "Erst nach dem Ja (Bewilligen) gibt es Stufen.",
     "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
     "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
-    "grossprojekt_text_fehlt": "Bitte einen Text eingeben."
+    "grossprojekt_text_fehlt": "Bitte einen Text eingeben.",
+    "automation_grund_fehlt": "Bitte einen Grund angeben.",
+    "automation_lauf_zu_ende": "Dieser Lauf ist schon zu Ende.",
+    "automation_nicht_gestoppt": "Dieser Lauf ist nicht gestoppt.",
+    "automation_wartet_nicht": "Verschieben geht nur, solange der Lauf wartet oder gestoppt ist.",
+    "automation_lauf_offen": "Wiederholen geht erst, wenn der Lauf zu Ende ist.",
+    "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
+    "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
+    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -4286,25 +4294,34 @@
   },
   "spesen": {
     "titel": "Spesen",
-    "beschreibung": "Belege fotografieren, Spesen erfassen und an die Buchhaltung senden.",
+    "beschreibung": "Belege fotografieren oder Kilometer erfassen. Die Buchhaltung prüft und zahlt mit dem Lohn aus.",
     "neu": "Spese erfassen",
     "filter": "Stand",
     "filterwert": {
       "offen": "Offen",
       "ausbezahlt": "Ausbezahlt",
       "storniert": "Storniert",
-      "alle": "Alle"
+      "alle": "Alle",
+      "firmenkarte": "Firmenkarte",
+      "abgelehnt": "Abgelehnt"
     },
     "status": {
-      "eingereicht": "Offen",
+      "eingereicht": "Eingereicht",
       "ausbezahlt": "Ausbezahlt",
-      "storniert": "Storniert"
+      "storniert": "Zurückgezogen",
+      "rueckfrage": "Rückfrage",
+      "geprueft": "Geprüft",
+      "abgelehnt": "Abgelehnt",
+      "verbucht": "Verbucht"
     },
     "ausbezahltAm": "Ausbezahlt {{datum}}",
     "ansicht": {
       "meine": "Meine Spesen",
       "alle": "Alle Spesen",
-      "kategorien": "Kategorien"
+      "kategorien": "Regeln",
+      "pruefen": "Prüfen",
+      "auszahlen": "Auszahlen",
+      "auswertung": "Auswertung"
     },
     "spalte": {
       "datum": "Datum",
@@ -4313,13 +4330,14 @@
       "kategorie": "Kategorie",
       "beleg": "Beleg",
       "betrag": "Betrag CHF",
-      "status": "Stand"
+      "status": "Stand",
+      "projekt": "Projekt"
     },
     "alleWaehlen": "Alle offenen wählen",
     "waehlen": "«{{zweck}}» wählen",
     "belegAnsehen": "Ansehen",
     "ohneBeleg": "Ohne Beleg",
-    "stornieren": "Stornieren",
+    "stornieren": "Zurückziehen",
     "summe": "Summe {{betrag}}",
     "anzahl_one": "{{count}} Spese",
     "anzahl_other": "{{count}} Spesen",
@@ -4330,7 +4348,7 @@
     "leerText": "Mit «Spese erfassen» einen Beleg fotografieren und den Betrag eintragen.",
     "erfassen": {
       "titel": "Spese erfassen",
-      "text": "Beleg fotografieren oder als Datei wählen. Die Spese gehört dir und geht an die Buchhaltung.",
+      "text": "Zuerst den Beleg fotografieren: die KI füllt die Felder, du prüfst und speicherst.",
       "speichern": "Speichern",
       "kategorieWaehlen": "Kategorie wählen",
       "zweckBeispiel": "z. B. Parkhaus Kundentermin Freiburg",
@@ -4338,20 +4356,60 @@
       "foto": "Foto",
       "datei": "Datei wählen",
       "belegEntfernen": "Beleg entfernen",
-      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bleibt die Spese gelb markiert."
+      "belegHinweis": "Fotos werden verkleinert. Ohne Beleg bekommt die Buchhaltung einen Hinweis.",
+      "aendern": "Spese ändern",
+      "rueckfrage": "Rückfrage der Buchhaltung: «{{text}}». Nach dem Speichern geht die Spese zurück an die Buchhaltung.",
+      "speichernWeiter": "Speichern und nächste",
+      "art": "Art der Spese",
+      "belegErsetzen": "Beleg ersetzen",
+      "bezahltMit": "Bezahlt mit",
+      "firmenkarteHinweis": "Firmenkarte: wird nicht ausbezahlt, die Buchhaltung braucht nur den Beleg.",
+      "km": "Kilometer",
+      "kmRechnung": "× CHF {{satz}} pro km = {{betrag}}",
+      "mwst": "MWST",
+      "mwstUnbekannt": "nicht ausgewiesen",
+      "ohneMwst": "ohne MWST",
+      "ohneProjekt": "ohne Projekt (Nummer oder Kunde tippen)",
+      "personen": "Personen",
+      "projektHinweis": "Kosten erscheinen in der Nachkalkulation.",
+      "strecke": "Strecke",
+      "streckeBeispiel": "z. B. Bulle – Romont und zurück"
     },
     "storno": {
       "titel": "Spese stornieren",
       "grund": "Grund"
     },
     "auszahlen": {
-      "titel_one": "{{count}} Spese als ausbezahlt markieren",
-      "titel_other": "{{count}} Spesen als ausbezahlt markieren",
-      "text": "Total {{betrag}}. Danach lassen sie sich nicht mehr ändern.",
+      "titel_one": "{{count}} Spese auszahlen",
+      "titel_other": "{{count}} Spesen auszahlen",
+      "text": "Total {{betrag}} an {{personen}} Personen. Danach sind die Spesen fest und jede Person bekommt eine Glocke.",
       "datum": "Ausbezahlt am",
-      "knopf": "Als ausbezahlt markieren",
-      "knopfAuswahl_one": "{{count}} ausbezahlt",
-      "knopfAuswahl_other": "{{count}} ausbezahlt"
+      "knopf": "Auszahlung erstellen",
+      "knopfAuswahl_one": "{{count}} auszahlen",
+      "knopfAuswahl_other": "{{count}} auszahlen",
+      "art": "Auszahlung",
+      "lohn": "Mit dem Lohn",
+      "ueberweisung": "Überweisung",
+      "titelFeld": "Titel",
+      "titelHinweis": "Leer = «Lohn November 2026» nach Datum und Art.",
+      "kachelOffen_one": "geprüft, auszuzahlen ({{count}} · {{personen}} Personen)",
+      "kachelOffen_other": "geprüft, auszuzahlen ({{count}} · {{personen}} Personen)",
+      "kachelVorsteuer": "davon Vorsteuer (MWST)",
+      "kachelPruefen": "noch zu prüfen",
+      "kachelFirmenkarte": "Firmenkarte, noch zu prüfen",
+      "leer": "Nichts auszuzahlen",
+      "leerText": "Geprüfte Spesen mit eigenem Geld erscheinen hier je Person.",
+      "jePerson": "Je Person",
+      "anzahl": "Spesen",
+      "km": "Kilometer",
+      "personWaehlen": "{{person}} auszahlen",
+      "pdf": "Abrechnung PDF",
+      "vorschau": "Entwurf",
+      "csvName": "auszuzahlen",
+      "laeufe": "Bisherige Auszahlungen",
+      "keineLaeufe": "Noch keine Auszahlung erstellt.",
+      "personen_one": "{{count}} Person",
+      "personen_other": "{{count}} Personen"
     },
     "mail": {
       "knopf_one": "{{count}} an die Buchhaltung",
@@ -4371,15 +4429,123 @@
       "fr": "Französisch",
       "entfernen": "Kategorie entfernen",
       "neu": "Kategorie",
-      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar."
+      "hinweis": "Eine entfernte Kategorie bleibt bei alten Spesen sichtbar. Richtwert gilt je Person (Essen) oder je Beleg; Konto nach Kontenplan KMU."
     },
     "heute": {
-      "meine_one": "{{count}} eigene Spese offen",
-      "meine_other": "{{count}} eigene Spesen offen",
+      "meine_one": "{{count}} eigene Spese unterwegs",
+      "meine_other": "{{count}} eigene Spesen unterwegs",
       "alle_one": "{{count}} Spese wartet auf Auszahlung",
       "alle_other": "{{count}} Spesen warten auf Auszahlung",
       "oeffnen": "Öffnen",
-      "nichts": "Keine offenen Spesen."
+      "nichts": "Keine offenen Spesen.",
+      "rueckfrage_one": "{{count}} Rückfrage zu deinen Spesen",
+      "rueckfrage_other": "{{count}} Rückfragen zu deinen Spesen",
+      "pruefen_one": "{{count}} Spese zu prüfen",
+      "pruefen_other": "{{count}} Spesen zu prüfen"
+    },
+    "kilometerErfassen": "Kilometer erfassen",
+    "aendern": "«{{zweck}}» ändern",
+    "konto": "Konto",
+    "verlauf": "Verlauf",
+    "kmZeile": "{{km}} km × {{satz}}",
+    "mwstZeile": "MWST {{satz}} %",
+    "leerTextAlle": "Für diesen Filter gibt es keine Spesen.",
+    "hinweis": {
+      "doppelt": "doppelt?",
+      "ohne_beleg": "ohne Beleg",
+      "alt": "spät eingereicht",
+      "richtwert": "über Richtwert",
+      "waehrung": "fremde Währung"
+    },
+    "art": {
+      "beleg": "Beleg",
+      "kilometer": "Kilometer Privatauto"
+    },
+    "bezahlt": {
+      "eigen": "Eigenes Geld",
+      "firmenkarte": "Firmenkarte"
+    },
+    "grund": {
+      "storno": {
+        "titel": "Spese zurückziehen",
+        "feld": "Grund",
+        "hinweis": "Die Spese bleibt durchgestrichen sichtbar.",
+        "knopf": "Zurückziehen"
+      },
+      "rueckfrage": {
+        "titel": "Rückfrage an die Person",
+        "feld": "Frage",
+        "hinweis": "Die Person bekommt eine Glocke und antwortet, indem sie die Spese ändert.",
+        "knopf": "Rückfrage"
+      },
+      "ablehnen": {
+        "titel": "Spese ablehnen",
+        "feld": "Grund",
+        "hinweis": "Die Person bekommt eine Glocke. Abgelehnte Spesen sind fest.",
+        "knopf": "Ablehnen"
+      }
+    },
+    "meine": {
+      "wirdAusbezahlt_one": "geprüft, wird ausbezahlt ({{count}})",
+      "wirdAusbezahlt_other": "geprüft, wird ausbezahlt ({{count}})",
+      "beiBuchhaltung_one": "bei der Buchhaltung ({{count}})",
+      "beiBuchhaltung_other": "bei der Buchhaltung ({{count}})",
+      "rueckfragen": "Rückfragen an dich",
+      "jahr": "ausbezahlt dieses Jahr",
+      "jahrLetzte": "ausbezahlt dieses Jahr, zuletzt {{datum}} ({{mit}})",
+      "rueckfrageZu": "Rückfrage zu «{{zweck}}» vom {{datum}}:",
+      "beantworten": "Beantworten"
+    },
+    "pruefen": {
+      "leer": "Alles geprüft",
+      "leerText": "Neue Spesen erscheinen hier, sobald jemand eine einreicht.",
+      "alleOhneHinweis_one": "{{count}} ohne Hinweis prüfen",
+      "alleOhneHinweis_other": "Alle {{count}} ohne Hinweis prüfen",
+      "alleOhneHinweis_zero": "Keine ohne Hinweis",
+      "position": "{{nr}} von {{von}}",
+      "tasten": "J/K blättern, P prüfen",
+      "tasteWeiter": "Nächste Spese",
+      "tasteZurueck": "Vorherige Spese",
+      "tastePruefen": "Spese prüfen",
+      "geprueft": "Geprüft",
+      "aendern": "Ändern",
+      "belegAlt": "Beleg zu «{{zweck}}»",
+      "neuesFenster": "In neuem Fenster öffnen",
+      "kilometerOhneBeleg": "Kilometer brauchen keinen Beleg.",
+      "richtwertText": "Über dem Richtwert der Kategorie. Bitte Notiz und Anzahl Personen prüfen."
+    },
+    "auswertung": {
+      "jahr": "Jahr",
+      "total_one": "Spesen {{jahr}} ({{count}} Beleg)",
+      "total_other": "Spesen {{jahr}} ({{count}} Belege)",
+      "proMonat": "pro Monat (Schnitt)",
+      "aufProjekte": "auf Projekte gebucht",
+      "firmenkarte": "mit Firmenkarte",
+      "nachMonat": "Nach Monat",
+      "nachKategorie": "Nach Kategorie",
+      "nachPerson": "Nach Person",
+      "nachProjekt": "Nach Projekt"
+    },
+    "regeln": {
+      "titel": "Regeln",
+      "kmSatz": "Kilometer-Ansatz CHF",
+      "kmSatzHinweis": "Pro km mit dem Privatauto.",
+      "tage": "Einreichen innert Tagen",
+      "tageHinweis": "Später eingereichte bekommen einen Hinweis.",
+      "auszahlung": "Auszahlung normalerweise",
+      "richtwert": "Richtwert CHF",
+      "belegAb": "Beleg ab CHF",
+      "kmKategorie": "Kilometer: Betrag = km × Ansatz, ohne Beleg und ohne MWST."
+    },
+    "pdf": {
+      "titel": "Spesenabrechnung",
+      "mwst": "MWST",
+      "betrag": "CHF",
+      "total": "Total",
+      "vorsteuer": "Darin enthaltene MWST (Vorsteuer):",
+      "unterschriftPerson": "Datum, Unterschrift Mitarbeiter/in",
+      "unterschriftBuchhaltung": "Geprüft Buchhaltung",
+      "datei": "Spesenabrechnung"
     }
   },
   "finanzen": {
@@ -4965,7 +5131,9 @@
     "ansicht": {
       "liste": "Automationen",
       "protokoll": "Protokoll",
-      "einstellungen": "Einstellungen"
+      "einstellungen": "Einstellungen",
+      "uebersicht": "Übersicht",
+      "geplant": "Geplant"
     },
     "aus": "Ausgeschaltet",
     "mitFreigabe": "Mit Freigabe",
@@ -5012,7 +5180,11 @@
       "projekt_frist_ueberfaellig": "Frist im Fahrplan vorbei",
       "projekt_material_faellig": "Material bestellen fällig",
       "einsatz_morgen": "Montage morgen",
-      "service_termin_morgen": "Service-Termin morgen"
+      "service_termin_morgen": "Service-Termin morgen",
+      "lead_ohne_kontakt": "Lead ohne Kontakt",
+      "anlage_jahrestag": "Jahrestag der Anlage",
+      "rechnung_bezahlt": "Rechnung bezahlt",
+      "garantie_laeuft_ab": "Garantie läuft ab"
     },
     "ereignisHilfe": {
       "lead_neu": "Sobald ein Lead erfasst ist (von Hand, Website, Telefon). Der Import der Vorlage löst nichts aus.",
@@ -5035,7 +5207,11 @@
       "projekt_frist_ueberfaellig": "Wenn die Frist eines Schritts vorbei und er nicht erledigt ist; eingereichte Gesuche zählen nicht (die überwacht «Gesuch eingereicht»).",
       "projekt_material_faellig": "Wenn «bestellen bis» (Baubeginn minus Lieferfrist aus Einstellungen › Einkauf) erreicht und das Material noch nicht bestellt ist.",
       "einsatz_morgen": "Am Vortag einer geplanten Montage, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00).",
-      "service_termin_morgen": "Am Vortag eines Service- oder Wartungstermins, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00)."
+      "service_termin_morgen": "Am Vortag eines Service- oder Wartungstermins, ab der Uhrzeit der SMS-Erinnerung (Standard 16:00).",
+      "lead_ohne_kontakt": "Wenn ein offener Lead so viele Arbeitstage ohne Anruf, Mail oder Termin ist (Schutzregeln). Wiedervorlagen zählen erst ab ihrem Datum.",
+      "anlage_jahrestag": "Jedes Jahr am Tag der Inbetriebnahme, einmal pro Jahr.",
+      "rechnung_bezahlt": "Wenn eine Rechnung ganz bezahlt ist (Abgleich mit AbaNinja oder von Hand).",
+      "garantie_laeuft_ab": "Wenn die Garantie einer Anlage in die Vorlaufzeit kommt (Schutzregeln), einmal pro Garantie."
     },
     "aktion": {
       "aufgabe": "Aufgabe erstellen",
@@ -5051,7 +5227,9 @@
       "zielgruppe": "Zielgruppe melden",
       "outlook_termin": "Termin in Outlook",
       "sharepoint_ordner": "SharePoint-Ordner",
-      "abaninja_kunde": "Kunde in AbaNinja"
+      "abaninja_kunde": "Kunde in AbaNinja",
+      "wiedervorlage": "Wiedervorlage setzen",
+      "notiz": "Notiz in die Zeitachse"
     },
     "aktionKurz": {
       "aufgabe": "Aufgabe",
@@ -5067,7 +5245,9 @@
       "zielgruppe": "Zielgruppe",
       "outlook_termin": "Outlook",
       "sharepoint_ordner": "SharePoint",
-      "abaninja_kunde": "AbaNinja"
+      "abaninja_kunde": "AbaNinja",
+      "wiedervorlage": "Wiedervorlage",
+      "notiz": "Notiz"
     },
     "aktionHilfe": {
       "aufgabe": "Die Aufgabe erscheint unter «Aufgaben» bei der ersten Person aus der Liste, die es gibt.",
@@ -5083,7 +5263,9 @@
       "zielgruppe": "Zählt Kunden mit diesem Merkmal und meldet einen Link zu «Kunden anschreiben».",
       "outlook_termin": "Trägt den Termin im Outlook der zuständigen Person ein (ohne Einladung an den Kunden).",
       "sharepoint_ordner": "Legt den Kundenordner «K0123 Name» mit Unterordnern an, falls es ihn noch nicht gibt.",
-      "abaninja_kunde": "Verknüpft den Kunden mit AbaNinja oder legt ihn dort an."
+      "abaninja_kunde": "Verknüpft den Kunden mit AbaNinja oder legt ihn dort an.",
+      "wiedervorlage": "Legt den Lead auf Wiedervorlage; er erscheint am Datum wieder in der Liste des Verkaufs.",
+      "notiz": "Schreibt in die Zeitachse des Kunden, damit alle sehen, was automatisch passiert ist."
     },
     "feld": {
       "lead_quelle": "Lead: Quelle",
@@ -5189,7 +5371,23 @@
       "pruefen_ok": "Noch nötig, es geht weiter",
       "nicht_verrechenbar": "Nicht kostenpflichtig, kein Rechnungsentwurf",
       "schon_verrechnet": "Schon verrechnet",
-      "rapport_nicht_verrechenbar": "Rapport ist nicht verrechenbar"
+      "rapport_nicht_verrechenbar": "Rapport ist nicht verrechenbar",
+      "versandfenster": "Wartet aufs Versandfenster: {{bis}}",
+      "kontakt_pause": "Kontakt-Pause, geht am {{bis}}",
+      "naechster_uebersprungen": "Nicht mehr nötig, nächster Schritt übersprungen",
+      "gestoppt": "Für diesen Fall gestoppt von {{von}}: {{grund}}",
+      "fortgesetzt": "Fortgesetzt von {{von}}",
+      "verschoben": "Verschoben von {{von}} auf {{bis}}",
+      "wiedervorlage": "Wiedervorlage am {{am}}",
+      "notiz": "Notiz in der Zeitachse",
+      "kein_lead": "Kein Lead dazu",
+      "probe_versandfenster": "Ausserhalb des Versandfensters: geht erst zur angezeigten Zeit",
+      "probe_keine_mail": "Keine Mail-Adresse: würde übersprungen",
+      "probe_kein_telefon": "Keine Handynummer: würde übersprungen",
+      "probe_werbesperre": "Kunde will keine Werbung: würde übersprungen",
+      "probe_kein_empfaenger": "Niemand gefunden, der es bekommt",
+      "probe_abwesend": "Die Person ist an diesem Tag abwesend (Stellvertretung prüfen)",
+      "probe_erst_dann": "Wird erst dann geprüft; heute stimmt es so"
     },
     "empfaenger": {
       "zustaendig": "Zuständige Person",
@@ -5228,7 +5426,8 @@
       "fertig": "Fertig",
       "uebersprungen": "Übersprungen",
       "fehler": "Fehler",
-      "abgebrochen": "Abgebrochen"
+      "abgebrochen": "Abgebrochen",
+      "gestoppt": "Gestoppt"
     },
     "ergebnis": {
       "ok": "Erledigt",
@@ -5239,7 +5438,10 @@
     },
     "schritt": {
       "bedingungen": "Bedingungen geprüft",
-      "ende": "Ende"
+      "ende": "Ende",
+      "gestoppt": "Gestoppt",
+      "fortgesetzt": "Fortgesetzt",
+      "verschoben": "Verschoben"
     },
     "editor": {
       "beschreibung": "Wenn … (Auslöser), nur wenn … (Bedingungen), dann … (Aktionen der Reihe nach).",
@@ -5283,7 +5485,19 @@
       "modus": "Was nach aussen geht",
       "aktiv": "Eingeschaltet",
       "weg": "In den Papierkorb",
-      "wirklichWeg": "Wirklich in den Papierkorb?"
+      "wirklichWeg": "Wirklich in den Papierkorb?",
+      "arbeitstage": "In Arbeitstagen (ohne Wochenende und Feiertage)",
+      "ersatzMail": "Ohne Mail-Adresse: Anruf-Aufgabe statt Mail",
+      "ersatzSms": "Ohne Handynummer: Anruf-Aufgabe statt SMS",
+      "sonstWas": "Wenn nicht mehr nötig",
+      "sonstArt": {
+        "ende": "Lauf beenden",
+        "ueberspringen": "Nur den nächsten Schritt überspringen"
+      },
+      "schutz": "Schutz für Kunden",
+      "probelauf": "Probelauf",
+      "aenderungen": "Änderungen",
+      "duplizieren": "Duplizieren"
     },
     "protokoll": {
       "zeit": "Gestartet",
@@ -5299,7 +5513,8 @@
         "offen": "Offen",
         "fertig": "Fertig",
         "uebersprungen": "Übersprungen",
-        "fehler": "Fehler"
+        "fehler": "Fehler",
+        "gestoppt": "Gestoppt"
       },
       "leerTitel": "Noch keine Läufe",
       "leerText": "Sobald etwas passiert, steht hier jeder Lauf mit seinen Schritten.",
@@ -5320,6 +5535,180 @@
       "bewertung_link_fr": "Link für Bewertungen (Romandie)",
       "bewertung_link_hilfe": "Z. B. Google-Bewertung; erscheint im Platzhalter {Bewertungslink}. Kunden mit Sprache Französisch bekommen den Link der Romandie.",
       "linkFalsch": "Bitte eine Adresse mit https:// eingeben."
+    },
+    "bereich": {
+      "verkauf": "Verkauf",
+      "offerten": "Offerten",
+      "projekte": "Projekte",
+      "service": "Service und Anlagen",
+      "finanzen": "Finanzen",
+      "marketing": "Marketing und Weiteres"
+    },
+    "liste": {
+      "suche": "Automation suchen",
+      "filterTitel": "Automationen filtern",
+      "keine": "Keine Automation passt zum Filter.",
+      "zuletzt": "zuletzt {{zeit}}",
+      "filter": {
+        "alle": "Alle",
+        "aktiv": "Eingeschaltet",
+        "aus": "Ausgeschaltet",
+        "fehler": "Mit Fehlern",
+        "aussen": "Geht an Kunden"
+      }
+    },
+    "uebersicht": {
+      "motorOk": "Motor läuft",
+      "motorStill": "Motor steht",
+      "motorZuletzt": "zuletzt {{zeit}}",
+      "motorNie": "noch nie gelaufen",
+      "aktivVon": "{{aktiv}} von {{alle}} eingeschaltet",
+      "wartend_one": "{{count}} Lauf wartet",
+      "wartend_other": "{{count}} Läufe warten",
+      "erledigt": "Diese Woche erledigt",
+      "gespart": "ca. {{dauer}} Handarbeit gespart",
+      "wirkung": {
+        "aufgabe_one": "{{count}} Aufgabe",
+        "aufgabe_other": "{{count}} Aufgaben",
+        "mail_one": "{{count}} Mail",
+        "mail_other": "{{count}} Mails",
+        "sms_one": "{{count}} SMS",
+        "sms_other": "{{count}} SMS",
+        "benachrichtigt_one": "{{count}} Meldung",
+        "benachrichtigt_other": "{{count}} Meldungen",
+        "rechnung_entwurf_one": "{{count}} Rechnungsentwurf",
+        "rechnung_entwurf_other": "{{count}} Rechnungsentwürfe",
+        "wiedervorlage_one": "{{count}} Wiedervorlage",
+        "wiedervorlage_other": "{{count}} Wiedervorlagen"
+      },
+      "mailsWartend": "Warten auf Freigabe",
+      "mailsAlt_one": "{{count}} liegt seit über 2 Tagen",
+      "mailsAlt_other": "{{count}} liegen seit über 2 Tagen",
+      "mailsFreigegeben_one": "{{count}} diese Woche freigegeben",
+      "mailsFreigegeben_other": "{{count}} diese Woche freigegeben",
+      "zumAusgang": "Zum Ausgangskorb",
+      "rechnungen": "Rechnungsentwürfe offen",
+      "rechnungenHilfe": "von Automationen vorbereitet, noch nicht gestellt",
+      "probleme": "Probleme (7 Tage)",
+      "vorwoche_one": "Vorwoche {{count}}",
+      "vorwoche_other": "Vorwoche {{count}}",
+      "zumProtokoll": "Zum Protokoll",
+      "aufmerksamkeit": "Braucht Aufmerksamkeit",
+      "siebenTage": "letzte 7 Tage",
+      "allesGut": "Alles in Ordnung: keine Fehler und keine fehlenden Adressen.",
+      "beheben": "Beheben",
+      "wiederholen": "Wiederholen",
+      "naechste": "Nächste 24 Stunden",
+      "alleGeplant": "Alles Geplante",
+      "nichtsGeplant": "In den nächsten 24 Stunden ist nichts geplant.",
+      "ausgeschaltet": "Ausgeschaltet",
+      "ausVon": "von {{von}}, {{zeit}}",
+      "ausSeit": "seit {{zeit}}"
+    },
+    "geplant": {
+      "wann": "Wann",
+      "fuer": "Für",
+      "knoepfe": "Aktionen",
+      "suche": "Kunde, Offerte, Text suchen",
+      "filterTitel": "Geplantes filtern",
+      "leerTitel": "Nichts geplant",
+      "leerText": "Sobald eine Automation wartet, steht hier, was sie als Nächstes tut.",
+      "filter": {
+        "alle": "Alle",
+        "heute": "Heute",
+        "woche": "7 Tage",
+        "aussen": "An Kunden",
+        "gestoppt": "Gestoppt"
+      }
+    },
+    "lesesatz": {
+      "wenn": "Wenn «{{ausloeser}}»",
+      "bedingungen_one": "und {{count}} Bedingung erfüllt ist",
+      "bedingungen_other": "und {{count}} Bedingungen erfüllt sind",
+      "sofort": "sofort {{was}}",
+      "nachTagen_one": "nach {{count}} Tag {{was}}",
+      "nachTagen_other": "nach {{count}} Tagen {{was}}",
+      "nachArbeitstagen_one": "nach {{count}} Arbeitstag {{was}}",
+      "nachArbeitstagen_other": "nach {{count}} Arbeitstagen {{was}}",
+      "freigabe": "Mails und SMS warten auf Freigabe.",
+      "automatisch": "Mails und SMS gehen ohne Klick hinaus.",
+      "fenster": "Nachrichten an Kunden nur im Versandfenster."
+    },
+    "probe": {
+      "datensatz": "Datensatz für den Probelauf",
+      "keinDatensatz": "Kein Datensatz vorhanden",
+      "starten": "Probelauf",
+      "hinweis": "Rechnet die Automation für diesen Datensatz durch, wie sie jetzt im Editor steht. Es wird nichts angelegt und nichts gesendet.",
+      "ohneTabelle": "Dieser Auslöser hat keinen Datensatz, ein Probelauf ist nicht möglich.",
+      "an": "an {{an}}",
+      "personen": "für {{personen}}",
+      "faellig": "fällig am {{am}}",
+      "ergebnis": {
+        "ok": "Würde laufen",
+        "fehler": "Fehler",
+        "uebersprungen": "Würde übersprungen",
+        "wartet": "Wartet",
+        "server": "Auf dem Server"
+      }
+    },
+    "schutz": {
+      "titel": "Schutz für Kunden",
+      "text": "Gilt für alle Automationen, die Mails oder SMS an Kunden schicken. Eine einzelne Automation kann es im Editor anders einstellen.",
+      "fenster": "Versandfenster",
+      "von": "Von",
+      "bis": "Bis",
+      "zeitFalsch": "«Bis» muss nach «Von» sein.",
+      "fensterHilfe": "Ausserhalb wartet die Nachricht bis zum nächsten erlaubten Zeitpunkt. Die SMS am Vortag eines Termins ist ausgenommen.",
+      "tag": {
+        "1": "Mo",
+        "2": "Di",
+        "3": "Mi",
+        "4": "Do",
+        "5": "Fr",
+        "6": "Sa",
+        "7": "So"
+      },
+      "kontakt_pause_tage": "Kontakt-Pause (Tage)",
+      "kontakt_pause_tage_hilfe": "Höchstens eine automatische Nachricht pro Kunde in so vielen Tagen. Zahlungserinnerungen zählen nicht mit.",
+      "lead_ohne_kontakt_tage": "Lead ohne Kontakt nach (Arbeitstagen)",
+      "lead_ohne_kontakt_tage_hilfe": "Auslöser «Lead ohne Kontakt»: so lange ohne Anruf, Mail oder Termin.",
+      "garantie_vorlauf_tage": "Garantie: Vorlauf (Tage)",
+      "garantie_vorlauf_tage_hilfe": "So viele Tage vor Ablauf der Garantie löst «Garantie läuft ab» aus.",
+      "feiertage": "Feiertage",
+      "feiertageHilfe_one": "{{count}} Feiertag, ein Datum pro Zeile (z. B. 25.12.2026). Zählen nicht als Arbeitstag.",
+      "feiertageHilfe_other": "{{count}} Feiertage, ein Datum pro Zeile (z. B. 25.12.2026). Zählen nicht als Arbeitstag.",
+      "feiertageFalsch": "Nicht lesbar: {{liste}}",
+      "jeAutomation": "Standard aus den Schutzregeln (Einstellungen) oder jederzeit.",
+      "wahl": {
+        "standard": "Wie in den Schutzregeln",
+        "immer": "Jederzeit senden"
+      },
+      "pauseLeer": "Leer = wie in den Schutzregeln, 0 = keine Pause."
+    },
+    "aenderungen": {
+      "keine": "Noch keine Änderung.",
+      "aktion": {
+        "erstellt": "angelegt",
+        "geaendert": "geändert",
+        "geloescht": "gelöscht",
+        "papierkorb": "in den Papierkorb gelegt",
+        "wiederhergestellt": "wiederhergestellt"
+      },
+      "feld": {
+        "aktiv": "ein/aus",
+        "modus": "Modus",
+        "aktionen": "Aktionen",
+        "bedingungen": "Bedingungen",
+        "ausloeser": "Auslöser",
+        "name_de": "Name",
+        "name_fr": "Name FR",
+        "beschreibung_de": "Beschreibung",
+        "beschreibung_fr": "Beschreibung FR",
+        "versandfenster": "Versandfenster",
+        "kontakt_pause_tage": "Kontakt-Pause",
+        "reihenfolge": "Reihenfolge",
+        "geloescht_am": "Papierkorb"
+      }
     }
   },
   "aufgaben": {
@@ -5857,13 +6246,16 @@
   },
   "handbuch": {
     "titel": "Handbuch",
-    "beschreibung": "Anleitung zu jedem Bereich, unsere Prozesse, Erklärvideos und deine Meldungen an die Administration.",
+    "beschreibung": "Wie alles funktioniert: ein Kapitel pro Bereich, Schritt für Schritt. Dazu unsere Prozesse, Videos und deine Meldungen.",
     "reiter": {
-      "anleitung": "Anleitung",
       "prozesse": "Prozesse",
       "videos": "Videos",
       "meldungen": "Meldungen",
-      "start": "Erste Schritte"
+      "start": "Erste Schritte",
+      "fuerdich": "Für dich",
+      "kapitel": "Kapitel",
+      "begriffe": "Begriffe A–Z",
+      "neu": "Neu"
     },
     "nichtsGefunden": "Nichts gefunden",
     "titelFeld": "Titel",
@@ -5995,14 +6387,13 @@
       "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
     },
     "anleitung": {
-      "intro": "Alles, was du für die Arbeit mit dem CRM wissen musst. Du siehst nur die Bereiche, die du nutzen darfst.",
-      "suche": "In der Anleitung suchen",
       "schneller": "So geht es schneller",
       "tippSuche": "Bereich, Kontakt oder Aktion suchen",
       "tippSprung": "Springen, z. B. zu den Kunden",
       "tippNeu": "Neuer Eintrag in Listen",
       "tippFilter": "In Listen ins Suchfeld",
-      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)"
+      "alleKuerzel": "Alle Tastenkürzel anzeigen (?)",
+      "tippHilfe": "Hilfe zum Bereich, in dem du gerade bist"
     },
     "fehler": {
       "titel": "Bitte einen Titel eintragen.",
@@ -6067,6 +6458,55 @@
           ]
         }
       ]
+    },
+    "bereichFeld": "Bereich",
+    "bereichHinweis": "Erscheint im Kapitel dieses Bereichs und in der Hilfe (F1).",
+    "keinBereich": "Kein Bereich (nur hier)",
+    "kapitel": {
+      "intro": "Zu jedem Bereich ein ganzes Kapitel: wofür, Schritt für Schritt, Stände, was automatisch läuft, Regeln und häufige Fragen.",
+      "alleBereiche": "Auch andere Bereiche zeigen",
+      "anleitungen_one": "{{count}} Anleitung",
+      "anleitungen_other": "{{count}} Anleitungen",
+      "stand": "Stand {{datum}}",
+      "inhalt": "Inhalt des Kapitels",
+      "alle": "Alle Kapitel",
+      "oeffnen": "{{bereich}} öffnen",
+      "drucken": "Drucken / PDF",
+      "melden": "Stimmt etwas nicht? Melden",
+      "fehlt": "Zu diesem Bereich gibt es noch kein Kapitel",
+      "fehltText": "Melde es, dann wird es ergänzt.",
+      "unterlagen": "Prozesse und Videos zu diesem Bereich",
+      "prozess": "Prozess · PDF · V{{version}}",
+      "video": "Video · {{dauer}}"
+    },
+    "fuerDich": {
+      "titel": "Dein Arbeitstag: {{rolle}}",
+      "rolle": "Rolle",
+      "neu": "Neu für dich",
+      "hilfeTitel": "Hilfe, wo du gerade bist",
+      "hilfeText1": "In jedem Bereich zeigt",
+      "hilfeText2": "oder das Fragezeichen oben rechts das passende Kapitel daneben, ohne die Arbeit zu verlassen."
+    },
+    "begriffe": {
+      "intro": "Was die Wörter im CRM bedeuten, von A bis Z.",
+      "suche": "Begriff suchen"
+    },
+    "neu": {
+      "leer": "Noch keine Neuigkeiten",
+      "ungesehenSr": "ungelesene Neuigkeiten:"
+    },
+    "suche": {
+      "feld": "Im Handbuch suchen",
+      "beispiel": "z. B. «Offerte senden», «Rabatt», «IBN»",
+      "kuerzel": "Im Handbuch suchen",
+      "anleitungen": "In den Kapiteln",
+      "mehr": "Begriffe, Prozesse und Videos",
+      "leerText": "Versuche ein anderes Wort oder melde, was fehlt."
+    },
+    "hilfe": {
+      "knopf": "Hilfe zu diesem Bereich (F1)",
+      "titel": "Hilfe · {{bereich}}",
+      "ganz": "Ganzes Kapitel"
     }
   },
   "update": {
@@ -6243,7 +6683,10 @@
     "reiter": {
       "fahrzeuge": "Fahrzeuge",
       "geraete": "Geräte",
-      "fristen": "Fristen"
+      "fristen": "Fristen",
+      "erledigen": "Zu erledigen",
+      "belegung": "Belegung",
+      "kosten": "Kosten"
     },
     "spalte": {
       "fahrzeug": "Fahrzeug",
@@ -6301,7 +6744,11 @@
         "mfk": "MFK",
         "service": "Service",
         "pruefung": "Geräteprüfung",
-        "ausweis": "Ausweis läuft ab"
+        "ausweis": "Ausweis läuft ab",
+        "reifen": "Reifenwechsel",
+        "vignette": "Vignette",
+        "leasing": "Leasing endet",
+        "ausleihe": "Ausgeliehenes Gerät zurück"
       }
     },
     "akte": {
@@ -6314,7 +6761,27 @@
       "bearbeiten": "Angaben ändern",
       "anBord": "Geräte an Bord",
       "verlauf": "Verlauf",
-      "beiKm": "bei {{km}} km"
+      "beiKm": "bei {{km}} km",
+      "alleFahrzeuge": "Alle Fahrzeuge",
+      "ausgemustert": "Ausgemustert am {{datum}} {{grund}}",
+      "belegung": "Belegung",
+      "belegungLeer": "In den nächsten Tagen nicht verplant.",
+      "dokumente": "Dokumente",
+      "gefahren": "Gefahren seit Vertragsjahr: {{km}} km",
+      "kalibrierungAbgelaufen": "Kalibrierung abgelaufen: Messwerte nicht für Abnahmen verwenden.",
+      "kosten": "Kosten {{jahr}}",
+      "leasing": "Leasing",
+      "leasingBalken": "Gefahrene Kilometer im Vergleich zur Vertragslimite",
+      "mehrKm": "{{chf}} pro Mehr-km",
+      "nutzlast": "Nutzlast {{kg}}",
+      "proMonat": "{{chf}} pro Monat",
+      "prognose": "Prognose Vertragsjahr: {{km}} km",
+      "schaeden": "Offene Schäden",
+      "seitTagen_one": "seit 1 Tag",
+      "seitTagen_other": "seit {{count}} Tagen",
+      "ueberLimite": "Voraussichtlich {{km}} km über der Limite, rund {{chf}} Mehrkosten.",
+      "unterLimite": "Voraussichtlich unter der Limite, keine Mehr-km.",
+      "versicherung": "Versicherung und Steuern"
     },
     "feld": {
       "kennzeichen": "Kennzeichen",
@@ -6336,7 +6803,50 @@
       "serienNr": "Serien-Nr.",
       "hersteller": "Hersteller",
       "pruefMonate": "Prüfintervall (Monate)",
-      "naechste_pruefung": "Nächste Prüfung"
+      "naechste_pruefung": "Nächste Prüfung",
+      "art": "Fahrzeugart",
+      "treibstoff": "Treibstoff",
+      "standort_id": "Standort",
+      "naechster_reifenwechsel": "Nächster Reifenwechsel",
+      "vignette_bis": "Vignette gültig bis",
+      "erste_inverkehrsetzung": "1. Inverkehrsetzung",
+      "stammnummer": "Stammnummer",
+      "fahrgestell_nr": "Fahrgestell-Nr.",
+      "gesamtgewicht_kg": "Gesamtgewicht (kg)",
+      "nutzlast_kg": "Nutzlast (kg)",
+      "anhaengelast_kg": "Anhängelast (kg)",
+      "ausweis": "Nötiger Führerausweis",
+      "tankkarte": "Tankkarte",
+      "schluessel": "Schlüssel",
+      "reifen": "Reifen",
+      "leasinggeber": "Leasinggeber",
+      "leasing_vertrag": "Leasing-Vertrag Nr.",
+      "leasing_beginn": "Leasing ab",
+      "leasing_rate_rappen": "Leasingrate pro Monat (CHF)",
+      "leasing_km_jahr": "Kilometer pro Jahr laut Vertrag",
+      "leasing_mehr_km_rappen": "Preis pro Mehr-km (CHF)",
+      "leasing_rate": "Leasingrate",
+      "leasing_zeit": "Laufzeit",
+      "kaufdatum": "Kaufdatum",
+      "kaufpreis_rappen": "Kaufpreis (CHF)",
+      "kaufpreis": "Kaufpreis (CHF)",
+      "privat_anteil": "Privatanteil (Geschäftsauto privat)",
+      "versicherung_police": "Police-Nr.",
+      "versicherung_deckung": "Deckung",
+      "selbstbehalt_rappen": "Selbstbehalt (CHF)",
+      "selbstbehalt": "Selbstbehalt",
+      "schaden_telefon": "Schadennummer",
+      "praemie_rappen": "Prämie pro Jahr (CHF)",
+      "praemie": "Prämie pro Jahr",
+      "verkehrssteuer_rappen": "Verkehrssteuer pro Jahr (CHF)",
+      "verkehrssteuer": "Verkehrssteuer pro Jahr",
+      "ausser_betrieb": "Ausser Betrieb",
+      "lieferant": "Lieferant",
+      "pruefstelle": "Prüfstelle",
+      "garantie_bis": "Garantie bis",
+      "zurueck_bis": "Zurück bis",
+      "ausgemustert_am": "Ausgemustert am",
+      "ungueltig": "Bitte prüfen"
     },
     "fahrzeug": {
       "neu": "Fahrzeug erfassen",
@@ -6352,7 +6862,7 @@
       "knopf": "Eintrag erfassen",
       "titel": "Eintrag erfassen",
       "text": {
-        "fahrzeug": "MFK, Service, Kilometerstand oder Schaden festhalten.",
+        "fahrzeug": "Kilometer, Tanken, MFK, Service, Reifen, Vignette, Kosten oder Schaden festhalten.",
         "geraet": "Prüfung, Kalibrierung, Reparatur oder Schaden festhalten."
       },
       "art": "Was",
@@ -6364,13 +6874,16 @@
         "mfk": "Nächste MFK (laut Ausweis)",
         "service": "Nächster Service",
         "pruefung": "Nächste Prüfung",
-        "kalibrierung": "Nächste Kalibrierung"
+        "kalibrierung": "Nächste Kalibrierung",
+        "reifen": "Nächster Reifenwechsel",
+        "vignette": "Vignette gültig bis"
       },
       "mfkHinweis": "Steht auf dem Fahrzeugausweis.",
       "automatisch": "Leer lassen: das CRM rechnet sie aus dem Intervall.",
       "kosten": "Kosten (CHF)",
       "bemerkung": "Bemerkung",
-      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen"
+      "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen",
+      "liter": "Liter"
     },
     "uebergeben": {
       "knopf": "Übergeben",
@@ -6378,7 +6891,9 @@
       "an": "An",
       "anMich": "An mich",
       "inFahrzeug": "Ins Fahrzeug: {{name}}",
-      "niemand": "Niemand fest zugeteilt"
+      "niemand": "Niemand fest zugeteilt",
+      "ausweisFehlt": "Achtung: Für dieses Fahrzeug ist kein gültiger Führerausweis dieser Person erfasst.",
+      "bisHinweis": "Leer lassen, wenn das Gerät fest bei der Person bleibt."
     },
     "verlauf": {
       "leer": "Noch keine Einträge.",
@@ -6389,6 +6904,168 @@
       "alle_one": "{{count}} anstehend",
       "alle_other": "{{count}} anstehend",
       "nichts": "Keine Frist in den nächsten 30 Tagen."
+    },
+    "aktion": {
+      "bearbeiten": "Angaben ändern",
+      "eintrag": "Eintrag erfassen",
+      "uebergeben": "Übergeben",
+      "reservieren": "Reservieren",
+      "schaden": "Schaden melden"
+    },
+    "abschnitt": {
+      "grund": "Grunddaten",
+      "technik": "Technik und Ausweis",
+      "leasing": "Leasing oder Kauf",
+      "versicherung": "Versicherung und Steuern",
+      "weiteres": "Weiteres"
+    },
+    "ja": "Ja",
+    "treibstoff": {
+      "diesel": "Diesel",
+      "benzin": "Benzin",
+      "elektro": "Elektro",
+      "hybrid": "Hybrid",
+      "gas": "Gas"
+    },
+    "erledigen": {
+      "titel": {
+        "mfk": "MFK {{name}}",
+        "service": "Service {{name}}",
+        "pruefung": "Prüfung {{name}}",
+        "reifen": "Reifenwechsel {{name}}",
+        "vignette": "Vignette {{name}}",
+        "leasing": "Leasing-Ende {{name}}",
+        "ausleihe": "{{name}} zurückbringen",
+        "ausweis": "Ausweis läuft ab: {{name}}",
+        "service_km": "Service nach Kilometern {{name}}",
+        "schaden": "Schaden {{name}}",
+        "konflikt": "Doppelt verplant: {{name}}",
+        "km_fehlt": "Kilometerstand fehlt {{name}}",
+        "lange_weg": "{{name}} lange ausgeliehen"
+      },
+      "zeile": {
+        "frist_one": "{{datum}}, morgen fällig",
+        "frist_other": "{{datum}}, in {{count}} Tagen fällig",
+        "frist_vorbei_one": "seit {{datum}} überfällig (1 Tag)",
+        "frist_vorbei_other": "seit {{datum}} überfällig ({{count}} Tage)",
+        "service_km_one": "fällig bei {{bei}} km, noch {{count}} km",
+        "service_km_other": "fällig bei {{bei}} km, noch {{count}} km",
+        "schaden": "{{stand}} seit {{datum}} · {{text}} · {{person}}",
+        "konflikt_one": "ab {{datum}} an 1 Tag doppelt verplant",
+        "konflikt_other": "ab {{datum}} an {{count}} Tagen doppelt verplant",
+        "km_fehlt": "diesen Monat noch nicht eingetragen · {{person}}",
+        "lange_weg_one": "seit 1 Tag bei {{person}}",
+        "lange_weg_other": "seit {{count}} Tagen bei {{person}}"
+      },
+      "zahl": {
+        "ueberfaellig": "Überfällig",
+        "bald": "In den nächsten 30 Tagen",
+        "schaeden": "Offene Schäden",
+        "konflikte": "Doppelt verplant"
+      },
+      "liste": "Was ansteht",
+      "leer": "Alles erledigt",
+      "leerText": "Keine Frist, kein Schaden und nichts doppelt verplant.",
+      "oeffnen": "Öffnen",
+      "heute": "Heute unterwegs",
+      "frei": "Frei"
+    },
+    "belegung": {
+      "tag": {
+        "0": "So",
+        "1": "Mo",
+        "2": "Di",
+        "3": "Mi",
+        "4": "Do",
+        "5": "Fr",
+        "6": "Sa"
+      },
+      "art": {
+        "hand": "Reserviert",
+        "werkstatt": "Werkstatt",
+        "einsatz": "Einsatz"
+      },
+      "legende": {
+        "einsatz": "Einsatz (folgt dem Team)",
+        "hand": "Von Hand reserviert",
+        "werkstatt": "Werkstatt",
+        "konflikt": "Doppelt verplant"
+      },
+      "folgtTeam": "folgt dem Team",
+      "heute": "Diese Woche",
+      "weiter": "Nächste Woche",
+      "zurueck": "Vorherige Woche"
+    },
+    "reservieren": {
+      "knopf": "Reservieren",
+      "art": "Art",
+      "aufheben": "Reservierung aufheben",
+      "von": "Von",
+      "bis": "Bis",
+      "fuer": "Für",
+      "zweck": "Wofür",
+      "zweckBeispiel": "z. B. Material holen in Bulle"
+    },
+    "schaden": {
+      "stand": {
+        "offen": "Offen",
+        "in_arbeit": "In Arbeit",
+        "erledigt": "Erledigt"
+      },
+      "titel": "Schaden bearbeiten",
+      "standLabel": "Stand",
+      "erledigung": "Was wurde gemacht",
+      "erledigungBeispiel": "z. B. Scheibe in der Garage Muri ersetzt",
+      "fotos": "Fotos",
+      "fotosHinweis": "Fotos vom Schaden, auch direkt mit der Handy-Kamera",
+      "ohneText": "Schaden ohne Beschreibung"
+    },
+    "ausmustern": {
+      "grund": {
+        "defekt": "Defekt",
+        "verloren": "Verloren",
+        "verkauft": "Verkauft",
+        "ersetzt": "Ersetzt"
+      },
+      "grundLabel": "Grund"
+    },
+    "kosten": {
+      "chfKm": "CHF/km",
+      "fix": "Versicherung und Steuer",
+      "jahr": "Jahr",
+      "keinRecht": "Nur mit Recht «Finanzen»",
+      "keinRechtText": "Die Kosten pro Fahrzeug sehen Geschäftsleitung und Buchhaltung.",
+      "leasing": "Leasing",
+      "leer": "Noch keine Kosten in diesem Jahr.",
+      "privatanteil": "Privatanteil",
+      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
+      "privatanteilTitel": "Privatanteil {{jahr}}",
+      "proFahrzeug": "Kosten pro Fahrzeug {{jahr}}",
+      "proKm": "CHF {{chf}} pro km ({{km}} km)",
+      "rest": "Unterhalt und Übriges",
+      "total": "Total",
+      "treibstoff": "Treibstoff",
+      "uebrige": "Übriges",
+      "unterhalt": "Service, Reparaturen, Reifen",
+      "verbrauch": "{{l}} l/100 km",
+      "zahlGeraete": "Wert der Geräte",
+      "zahlProKm": "CHF pro km im Schnitt",
+      "zahlTotal": "Kosten Fahrzeuge total",
+      "zahlUnterhalt": "Unterhalt"
+    },
+    "dateien": {
+      "hochladen": "Datei hinzufügen",
+      "leer": "Noch keine Dokumente."
+    },
+    "etikett": {
+      "knopf_one": "QR-Etikett drucken",
+      "knopf_other": "{{count}} QR-Etiketten drucken",
+      "einzeln": "QR-Etikett drucken",
+      "fuss": "Scannen = Akte"
+    },
+    "schnell": {
+      "nehmen": "Nehme ich",
+      "zurueck": "Zurück ins Lager"
     }
   },
   "grossprojekte": {
@@ -7330,7 +8007,8 @@
     "spesen": {
       "erfassen": "Spese erfassen",
       "keine": "Noch keine Spesen erfasst.",
-      "offen": "Offen {{betrag}}"
+      "offen": "Offen {{betrag}}",
+      "wirdAusbezahlt": "{{betrag}} sind geprüft und werden ausbezahlt."
     },
     "plan": {
       "titel": "Mein Plan",
@@ -7574,5 +8252,38 @@
       "bau_status": "Bau",
       "paket": "Paket"
     }
+  },
+  "automatik": {
+    "titel": "Automatisch geplant",
+    "anzahl_one": "{{count}} Schritt",
+    "anzahl_other": "{{count}} Schritte",
+    "hinweis": "Kommt das CRM dem Kunden zuvor, weil er schon angerufen hat? Hier für diesen Fall stoppen oder verschieben.",
+    "schrittVon": "Schritt {{schritt}} von {{schritte}}",
+    "gestopptAm": "Angehalten",
+    "grundIst": "Grund: {{grund}}",
+    "plus7": "+7 Tage",
+    "jetzt": "Jetzt",
+    "stoppenKurz": "Stoppen",
+    "stoppen": "Für diesen Fall stoppen",
+    "stoppenFall": "Für diesen Fall stoppen",
+    "stoppenTitel": "«{{name}}» stoppen",
+    "stoppenText": "Nur für diesen Datensatz. Die Automation läuft für alle anderen weiter. Fortsetzen geht jederzeit.",
+    "grund": "Grund",
+    "grundHinweis": "Steht in der Zeitachse des Kunden, damit alle wissen, warum nichts mehr kommt.",
+    "grundBeispiel": "z. B. Kunde meldet sich nach den Ferien selbst",
+    "fortsetzen": "Fortsetzen",
+    "gestoppt": "Für diesen Fall gestoppt",
+    "fortgesetzt": "Läuft wieder",
+    "verschoben_one": "Um {{count}} Tag verschoben",
+    "verschoben_other": "Um {{count}} Tage verschoben",
+    "jetztOk": "Läuft in der nächsten Minute (Versandfenster gilt weiter)",
+    "fehler": "Das hat nicht geklappt. Bitte nochmals versuchen.",
+    "warum": "Warum?",
+    "warumTitel": "Woher kommt diese Aufgabe?",
+    "warumSatz": "Die Automation «{{name}}» hat sie angelegt, ausgelöst durch «{{ausloeser}}» am {{zeit}}.",
+    "fuer": "Für:",
+    "datensatzOeffnen": "Datensatz öffnen",
+    "warumHinweis": "Passt die Regel grundsätzlich nicht, bitte der Administration melden. Sie kann die Automation anpassen.",
+    "warumUnbekannt": "Diese Aufgabe stammt nicht aus einer Automation, die du sehen darfst."
   }
 }

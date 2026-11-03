@@ -28,7 +28,9 @@ export const eintragSchema = z
     km: z.number().int().min(0).nullable(),
     ergebnis: z.enum(['ok', 'maengel']).nullable(),
     naechste: datum.nullable(),
+    kosten: z.number().int().min(0).nullable(),
   })
   .refine((e) => e.art !== 'mfk' || e.naechste !== null, { path: ['naechste'] })
   .refine((e) => !['pruefung', 'kalibrierung'].includes(e.art) || e.ergebnis !== null, { path: ['ergebnis'] })
   .refine((e) => e.art !== 'km_stand' || e.km !== null, { path: ['km'] })
+  .refine((e) => !['tanken', 'kosten'].includes(e.art) || e.kosten !== null, { path: ['kosten'] })

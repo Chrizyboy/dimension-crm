@@ -13,7 +13,7 @@ function db() {
 
 const DATEI = 'id, name, mime_typ, bytes, speicher_pfad, sharepoint_url'
 const FELDER =
-  'id, art, titel_de, titel_fr, beschreibung_de, beschreibung_fr, version, datum, dauer_s, reihenfolge, sprache, ' +
+  'id, art, titel_de, titel_fr, beschreibung_de, beschreibung_fr, version, datum, dauer_s, reihenfolge, sprache, bereich, ' +
   'versionen, erstellt_am, geaendert_am, ' +
   `datei_de:dokumente!handbuch_eintraege_datei_de_id_fkey(${DATEI}), ` +
   `datei_fr:dokumente!handbuch_eintraege_datei_fr_id_fkey(${DATEI}), ` +
@@ -88,6 +88,9 @@ export async function speichereEintrag(e: HandbuchEingabe, video?: VideoAngaben)
     ...(bild ? { p_vorschaubild_id: bild } : {}),
   })
   if (error) throw error
+  // Bereich getrennt setzen, damit «handbuch_speichern» gleich bleibt (Entscheid 0043).
+  const bereich = await db().rpc('handbuch_bereich_setzen', { p_id: data, p_bereich: e.bereich ?? '' })
+  if (bereich.error) throw bereich.error
   return data
 }
 

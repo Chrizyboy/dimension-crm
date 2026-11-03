@@ -10,23 +10,26 @@ import { parseChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { heuteZuerich } from '../lib/fristen'
 import { eintragSchema } from '../schema'
+import { dateiHochladen } from '../services/dateien'
 import { eintragErfassen } from '../services/ressourcen'
 
 const MIT_ERGEBNIS = ['pruefung', 'kalibrierung', 'reparatur']
-const MIT_NAECHSTER = ['mfk', 'service', 'pruefung', 'kalibrierung']
+const MIT_NAECHSTER = ['mfk', 'service', 'pruefung', 'kalibrierung', 'reifen', 'vignette']
 
 /**
  * Eintrag erfassen (am Handy wie am PC): MFK, Service, Kilometerstand, Prüfung, Kalibrierung, Reparatur,
- * Schaden oder Notiz. Welche Arten es gibt, steht in der Auswahlliste «ressourcen_eintrag». Service und Prüfung
+ * Schaden (mit Fotos), Tanken, Reifenwechsel, Vignette, übrige Kosten oder Notiz. Welche Arten es gibt, steht in der Auswahlliste «ressourcen_eintrag». Service und Prüfung
  * rechnen die nächste Frist selbst, wenn man sie leer lässt; ein Schaden meldet sich bei der Administration.
  */
 export function EintragDialog({
   bezug,
   kmStand,
+  startArt,
   onSchliessen,
 }: {
   bezug: { fahrzeug?: string; geraet?: string }
   kmStand?: number | null
+  startArt?: string
   onSchliessen: () => void
 }) {
   const { t } = useTranslation()
@@ -39,13 +42,15 @@ export function EintragDialog({
   })
   // Eine id pro geöffnetem Fenster: ein zweiter Klick oder ein Netz-Wackler legt nichts doppelt an.
   const [id] = useState(() => crypto.randomUUID())
-  const [art, setArt] = useState(fuer === 'fahrzeug' ? 'km_stand' : 'pruefung')
+  const [art, setArt] = useState(startArt ?? (fuer === 'fahrzeug' ? 'km_stand' : 'pruefung'))
   const [datum, setDatum] = useState(heuteZuerich())
   const [km, setKm] = useState('')
   const [ergebnis, setErgebnis] = useState<'ok' | 'maengel' | ''>('')
   const [naechste, setNaechste] = useState('')
   const [kosten, setKosten] = useState('')
   const [text, setText] = useState('')
+  const [liter, setLiter] = useState('')
+  const [fotos, setFotos] = useState<File[]>([])
   const kmZahl = km.trim() === '' ? null : Number(km.replace(/['\s]/g, ''))
   const pruefung = eintragSchema.safeParse({
     art,
@@ -53,6 +58,7 @@ export function EintragDialog({
     km: kmZahl,
     ergebnis: ergebnis || null,
     naechste: naechste || null,
+    kosten: kosten.trim() ? parseChf(kosten) : null,
   })
 
   async function speichern() {
@@ -69,9 +75,13 @@ export function EintragDialog({
             ergebnis: ergebnis || null,
             naechste: naechste || null,
             text: text.trim() || null,
+            liter: liter.trim() ? Number(liter.replace(',', '.')) : null,
           },
           id,
-        ),
+        ).then(async () => {
+          // Fotos nach dem Eintrag: Ordner = Eintrag, damit sie beim Schaden in der Akte erscheinen.
+          for (const f of fotos) await dateiHochladen('eintrag', id, f)
+        }),
       { de: 'Eintrag gespeichert', fr: 'Entrée enregistrée' },
     )
     if (ok) onSchliessen()
@@ -168,8 +178,20 @@ export function EintragDialog({
               />
             </Feld>
           )}
+          {art === 'tanken' && (
+            <Feld id="ei-liter" label={t('fuhrpark.eintrag.liter')}>
+              <Input
+                id="ei-liter"
+                inputMode="decimal"
+                value={liter}
+                onChange={(e) => {
+                  setLiter(e.target.value)
+                }}
+              />
+            </Feld>
+          )}
           {art !== 'km_stand' && art !== 'notiz' && (
-            <Feld id="ei-kosten" label={t('fuhrpark.eintrag.kosten')}>
+            <Feld id="ei-kosten" label={t('fuhrpark.eintrag.kosten')} pflicht={art === 'tanken' || art === 'kosten'}>
               <Input
                 id="ei-kosten"
                 inputMode="decimal"
@@ -192,6 +214,25 @@ export function EintragDialog({
               }}
             />
           </Feld>
+          {art === 'schaden' && (
+            <Feld
+              id="ei-fotos"
+              label={t('fuhrpark.schaden.fotos')}
+              className="sm:col-span-2"
+              hinweis={t('fuhrpark.schaden.fotosHinweis')}
+            >
+              <Input
+                id="ei-fotos"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                multiple
+                onChange={(e) => {
+                  setFotos([...(e.target.files ?? [])])
+                }}
+              />
+            </Feld>
+          )}
         </div>
       </DialogInhalt>
     </Dialog>
