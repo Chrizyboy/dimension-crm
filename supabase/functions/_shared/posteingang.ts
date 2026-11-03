@@ -141,6 +141,14 @@ export const EINORDNEN_SCHEMA = objekt({
   antwort_noetig: janein,
   zusammenfassung: text,
   nummern: liste(text),
+  werte: objekt({
+    firma: text,
+    rechnungsnummer: text,
+    rechnungsdatum: text,
+    betrag: text,
+    faellig: text,
+    liefertermin: text,
+  }),
 })
 
 /** Systemtext und Teile für die Einordnung einer Mail (fremder Inhalt nur als Daten). */
@@ -154,7 +162,8 @@ export function einordnenTeile(m: { von: string; betreff: string; text: string; 
 «antwort_noetig»: true, wenn der Absender eine Antwort oder Rückmeldung von uns erwartet.
 «dringend»: true nur bei Stillstand, Gefahr, Schaden oder ausdrücklich dringender Bitte.
 «zusammenfassung»: ein bis zwei kurze Sätze in der Sprache der Mail, was der Absender will (ohne Grussformeln).
-«nummern»: Offerten-, Projekt-, Rechnungs-, Bestell-, Lead- oder Service-Nummern genau wie in der Mail (z. B. «R2026-118», «S014»), sonst eine leere Liste.`,
+«nummern»: Offerten-, Projekt-, Rechnungs-, Bestell-, Lead- oder Service-Nummern genau wie in der Mail (z. B. «R2026-118», «S014»), sonst eine leere Liste.
+«werte»: nur was ausdrücklich in der Mail steht, sonst leerer Text. firma = Firma des Absenders; bei einer Lieferantenrechnung rechnungsnummer, rechnungsdatum (JJJJ-MM-TT), betrag (Total in Franken inkl. MWST, nur Ziffern und Punkt, z. B. «4812.35») und faellig (JJJJ-MM-TT); bei einer Auftragsbestätigung liefertermin (JJJJ-MM-TT).`,
     },
   ]
 }
