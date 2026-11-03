@@ -61,3 +61,26 @@ export function rechne(e: Eingaben): Ergebnis {
     investition_rappen: Math.round(e.kwp * e.chf_pro_kwp * 100),
   }
 }
+
+/** Unser Anteil bei «Bauen und warten» (Antwort Chris 03.11.2026): Marge am Bauauftrag, Wartung jedes Jahr. */
+export interface UnserAnteil {
+  bau_rappen: number
+  wartung_rappen_jahr: number
+  marge_prozent: number
+  wartung_prozent: number
+}
+
+/**
+ * Was Dimension Solaire an einem Contracting-Projekt verdient: Youdera finanziert und besitzt die Anlage, wir bauen
+ * (Marge laut Annahmen) und warten sie (Betrieb in % der Investition pro Jahr, laut Annahmen).
+ */
+export function unserAnteil(investition_rappen: number, regeln: GrossprojektRegeln | undefined): UnserAnteil {
+  const marge = regeln?.annahmen?.marge_prozent ?? 20
+  const wartung = regeln?.annahmen?.betrieb_prozent ?? 1.5
+  return {
+    bau_rappen: Math.round((investition_rappen * marge) / 100),
+    wartung_rappen_jahr: Math.round((investition_rappen * wartung) / 100),
+    marge_prozent: marge,
+    wartung_prozent: wartung,
+  }
+}

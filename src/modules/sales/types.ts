@@ -1,9 +1,12 @@
 /** Fachliche Typen des Moduls «Anfragen & Leads». */
 
 /** Die Ansichten des Bereichs (V233: Leads · Tagesroute · Tour planen · Kalender · Regionen · Monatsbericht). */
-export type VerkaufAnsicht = 'pipeline' | 'liste' | 'tagesroute' | 'tour' | 'kalender' | 'regionen' | 'bericht'
+export type VerkaufAnsicht =
+  'zutun' | 'pipeline' | 'liste' | 'tagesroute' | 'tour' | 'kalender' | 'regionen' | 'bericht' | 'steuerung'
 
+/** Reihenfolge der Reiter und der Tasten 1–9; «Zu tun» ist die Startansicht (02.11.2026). */
 export const VERKAUF_ANSICHTEN: readonly VerkaufAnsicht[] = [
+  'zutun',
   'pipeline',
   'liste',
   'tagesroute',
@@ -11,6 +14,7 @@ export const VERKAUF_ANSICHTEN: readonly VerkaufAnsicht[] = [
   'kalender',
   'regionen',
   'bericht',
+  'steuerung',
 ]
 
 /**
@@ -74,6 +78,38 @@ export interface Geschaeft {
   geaendertAm: string | null
   suchtext: string
   telefonZiffern: string
+  /** Eingang mit Uhrzeit (Lead angelegt), für die 15-Minuten-Uhr. */
+  eingangZeit: string | null
+  /** Erster Anruf, Mail, SMS oder Besuch beim Kunden. */
+  erstkontaktAm: string | null
+  /** Woher: Formular, Seite, Kampagne (utm_*), Kontaktwunsch. */
+  herkunft: Record<string, string>
+  /** Dach aus Website-Formular (`website`) und sonnendach.ch (`sonnendach`). */
+  dach: LeadDach
+  verbrauchKwh: number | null
+  gebaeudeart: string | null
+  entscheidAm: string | null
+  /** Aus V233 übernommen (zählt nicht für Tempo und Quoten). */
+  uebernommen: boolean
+}
+
+/** Dachdaten am Gebäude (objekte.dach). */
+export interface LeadDach {
+  website?: { flaeche_m2?: number; ertrag_kwh?: number; egid?: string }
+  /** Format von _shared/gebaeude.ts (sonnendach.ch und Gebäuderegister). */
+  sonnendach?: {
+    dachflaeche_m2?: number
+    stromertrag_kwh?: number
+    /** 3 gut, 4 sehr gut, 5 hervorragend. */
+    dach_klasse?: number
+    heizung?: string
+    heizung_jahr?: number
+    baujahr?: number
+    wohnungen?: number
+    egid?: string
+  }
+  gesucht_am?: string
+  meldung?: string
 }
 
 /** Angaben, die ein Wechsel des Stands braucht (Grund, Datum, Termin). */
@@ -85,6 +121,10 @@ export interface StandAngaben {
   dauer_min?: number
   person_id?: string
   richtofferte?: boolean
+  /** Nach «nicht erreicht»: SMS-Entwurf in den Ausgangskorb. */
+  sms?: boolean
+  /** Nach «kein Interesse»/«ungültig»: wann der Lead wieder vorgelegt wird. */
+  wiedervorlage_am?: string
 }
 
 /** Was ein Stand beim Wechsel abfragt (V170). */

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -50,6 +50,7 @@ Chaque commande signée passe ici par les autorisations, la préparation et le m
 
 1. Vue **Absences**, **Saisir une absence** : personne, du, au, demi-journée.
 2. Vacances et « absent » d’Outlook apparaissent tout seuls.
+3. Pour tout le monde : direction et comptabilité ; le ou la supérieur·e direct·e (dossier du personnel) aussi pour son équipe, les autres seulement pour eux-mêmes.
 
 ### Mise en service et clôture
 
@@ -88,4 +89,5 @@ L’installation est alors considérée comme construite : les étapes jusqu’a
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Les supérieur·e·s direct·e·s saisissent les absences de leur équipe.
 - 01.11.2026: Planning des chantiers avec vue chantiers ou équipe, conflits en rouge.

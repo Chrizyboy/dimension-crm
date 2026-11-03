@@ -1,4 +1,4 @@
-import { BellRing, CalendarClock, Check, Hammer, X } from 'lucide-react'
+import { BellRing, CalendarClock, Check, Hammer, MessageSquareText, PhoneMissed, X } from 'lucide-react'
 import { Suspense, lazy, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -9,7 +9,9 @@ import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/schalter'
 import { formatChf, parseChf } from '@/lib/format'
+import { meldeFehler } from '@/services/fehler'
 import { useAnmeldung } from '@/stores/anmeldung'
+import { useOffertAenderung } from '../hooks/useOfferten'
 import {
   FAELLIG_SEIT,
   nachfassKennzahlen,
@@ -20,11 +22,13 @@ import {
   type NachfassSortierung,
 } from '../lib/nachfassen'
 import { imNachfassen } from '../lib/suche'
+import { erfasseNachfassen } from '../services/ablauf'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
 import { NachfassChip } from './OffertStand'
 
 const EntscheidDialog = lazy(() => import('./EntscheidDialog'))
+const ErgebnisDialog = lazy(() => import('./ErgebnisDialog'))
 
 const SEITE = 50
 const SORTIERUNGEN: readonly NachfassSortierung[] = ['neu', 'alt', 'betrag', 'name', 'nr']
@@ -41,7 +45,7 @@ function Kennzahl({ titel, wert }: { titel: string; wert: string | number }) {
 /**
  * Nachfassen (V45, V193): versendete Offerten 14 Tage nach dem Angebot oder am vertagten Datum.
  * Filter nach Standort, «fällig seit», Mindestbetrag und eigener Zuständigkeit; je Zeile Angenommen,
- * Abgelehnt oder Vertagt, mit Mehrfachauswahl für mehrere auf einmal. Zeigt 50, dann «Weitere laden».
+ * Abgelehnt oder Vertagt sowie «Ergebnis» (Gespräch erfassen, nächster Schritt nach Plan) und «nicht erreicht», mit Mehrfachauswahl für mehrere auf einmal. Zeigt 50, dann «Weitere laden».
  */
 export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[]; onOeffnen: (id: string) => void }) {
   const { t } = useTranslation()
@@ -54,6 +58,8 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
   const [anzahl, setAnzahl] = useState(SEITE)
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
   const [dialog, setDialog] = useState<{ ziel: Entscheid; liste: Offerte[] } | null>(null)
+  const [gespraech, setGespraech] = useState<Offerte | null>(null)
+  const nichtErreicht = useOffertAenderung((id: string) => erfasseNachfassen(id, 'nicht_erreicht'))
 
   const offen = useMemo(() => offerten.filter(imNachfassen), [offerten])
   const kennzahlen = nachfassKennzahlen(offen)
@@ -217,6 +223,30 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
               <div className="flex flex-wrap gap-1.5 pl-7 md:pl-0">
                 <Button
                   size="sm"
+                  onClick={() => {
+                    setGespraech(o)
+                  }}
+                >
+                  <MessageSquareText />
+                  {t('offerten.ergebnis.knopf')}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  laedt={nichtErreicht.isPending && nichtErreicht.variables === o.id}
+                  onClick={() => {
+                    nichtErreicht.mutate(o.id, {
+                      onError: (e) => {
+                        meldeFehler(e)
+                      },
+                    })
+                  }}
+                >
+                  <PhoneMissed />
+                  {t('offerten.ergebnis.e_nicht_erreicht')}
+                </Button>
+                <Button
+                  size="sm"
                   variant="secondary"
                   onClick={() => {
                     setDialog({ ziel: 'angenommen', liste: [o] })
@@ -273,6 +303,14 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
       )}
 
       <Suspense>
+        {gespraech && (
+          <ErgebnisDialog
+            o={gespraech}
+            onSchliessen={() => {
+              setGespraech(null)
+            }}
+          />
+        )}
         {dialog && (
           <EntscheidDialog
             offerten={dialog.liste}

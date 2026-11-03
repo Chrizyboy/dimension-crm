@@ -10,7 +10,7 @@ import { melde } from '@/services/meldungen'
 import { useBilder, usePflichtfotos } from '../hooks/useBaustelle'
 import { pflichtFuer } from '../lib/pflichtfotos'
 import { bildAblegen } from '../services/monteur'
-import type { RapportArt } from '../types'
+import type { Pflichtfoto, RapportArt } from '../types'
 import { useUi } from '@/stores/ui'
 
 /**
@@ -18,18 +18,33 @@ import { useUi } from '@/stores/ui'
  * Pflichtfotos der Rapport-Art (Einstellungen › Baustelle) haben je einen eigenen Knopf mit Häkchen,
  * damit der Monteur sieht, was noch fehlt; ohne sie lässt sich der Rapport nicht abschliessen.
  */
-export function FotoAbschnitt({ rapportId, art, offen }: { rapportId: string; art: RapportArt; offen: boolean }) {
+export function FotoAbschnitt({
+  rapportId,
+  art,
+  offen,
+  baustelle,
+}: {
+  rapportId: string
+  art: RapportArt
+  offen: boolean
+  /**
+   * Montage mit Einsatz: Pflichtfotos der ganzen Baustelle je Projektart (Entscheid 0045) und was an früheren
+   * Tagen schon fotografiert wurde; sie müssen erst bis zur Abnahme da sein.
+   */
+  baustelle?: { pflicht: Pflichtfoto[]; da: string[] }
+}) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const qc = useQueryClient()
   const bilder = useBilder(rapportId)
-  const pflicht = pflichtFuer(usePflichtfotos().data, art)
+  const jeArt = pflichtFuer(usePflichtfotos().data, art)
+  const pflicht = baustelle?.pflicht ?? jeArt
   const eingabe = useRef<HTMLInputElement>(null)
   // Welche Pflicht-Kategorie die Kamera gerade aufnimmt (null = freies Foto).
   const [kategorie, setKategorie] = useState<string | null>(null)
   const [laedt, setLaedt] = useState(false)
   const fotos = (bilder.data ?? []).filter((b) => b.ordner === 'fotos')
-  const da = new Set(fotos.map((f) => f.kategorie))
+  const da = new Set([...fotos.map((f) => f.kategorie), ...(baustelle?.da ?? [])])
 
   function aufnehmen(k: string | null) {
     setKategorie(k)
@@ -45,8 +60,7 @@ export function FotoAbschnitt({ rapportId, art, offen }: { rapportId: string; ar
     if (!dateien?.length) return
     setLaedt(true)
     try {
-      for (const d of Array.from(dateien))
-        await bildAblegen(rapportId, await verkleinern(d), 'fotos', kategorie ?? undefined)
+      for (const d of Array.from(dateien)) await bildAblegen(rapportId, await verkleinern(d), 'fotos', { kategorie })
       await qc.invalidateQueries({ queryKey: ['baustelle', 'bilder', rapportId] })
     } catch {
       melde('kritisch', { de: 'Foto nicht gespeichert', fr: 'Photo non enregistrée' })

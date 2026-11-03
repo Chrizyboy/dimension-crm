@@ -27,7 +27,7 @@ export async function ladeBestellung(id: string): Promise<{ bestellung: Bestellu
     db()
       .from('bestellpositionen')
       .select(
-        'id, bestellung_id, artikel_id, projekt_material_id, bezeichnung, artikelnummer, menge, einheit, ek_rappen, geliefert_menge, reihenfolge',
+        'id, bestellung_id, artikel_id, projekt_material_id, bezeichnung, artikelnummer, menge, einheit, ek_rappen, geliefert_menge, reihenfolge, ab_menge, ab_ek_rappen',
       )
       .eq('bestellung_id', id)
       .is('geloescht_am', null)
@@ -58,6 +58,10 @@ export async function bestellungAendern(
     notiz: string | null
     lieferant_id: string
     lagerort_id: string | null
+    tracking: string | null
+    lieferhinweis: string | null
+    kontakt_vor_ort: string | null
+    nachgefragt_am: string | null
   }>,
 ): Promise<void> {
   const { error } = await db().from('bestellungen').update(p).eq('id', id)
@@ -66,7 +70,7 @@ export async function bestellungAendern(
 
 /** Position anlegen oder ändern (nur im Entwurf). */
 export async function positionSpeichern(
-  p: Omit<Position, 'id' | 'geliefert_menge' | 'projekt_material_id'> & { id?: string },
+  p: Omit<Position, 'id' | 'geliefert_menge' | 'projekt_material_id' | 'ab_menge' | 'ab_ek_rappen'> & { id?: string },
 ): Promise<void> {
   const { id, ...felder } = p
   const { error } = id
@@ -102,7 +106,6 @@ export async function stornieren(id: string, grund: string): Promise<void> {
   if (error) throw error
 }
 
-/** Wareneingang buchen; gibt den neuen Stand zurück (teilgeliefert oder geliefert). */
 /**
  * Seriennummern zu Positionen (ersetzt die bisherigen). Sie gehen an die Materialzeile und mit der IBN als
  * Komponente an die Anlage. Text aus dem Feld: getrennt durch Zeilen, Komma oder Strichpunkt.
@@ -121,8 +124,17 @@ export async function seriennummernErfassen(id: string, positionen: { id: string
   return data
 }
 
-export async function wareneingang(id: string, datum: string, positionen: { id: string; menge: number }[]) {
-  const { data, error } = await db().rpc('wareneingang_buchen', { p_id: id, p: { datum, positionen } })
+/** Wareneingang buchen (mit Lieferschein-Nr.); gibt den neuen Stand zurück (teilgeliefert oder geliefert). */
+export async function wareneingang(
+  id: string,
+  datum: string,
+  positionen: { id: string; menge: number }[],
+  lieferschein?: string,
+) {
+  const { data, error } = await db().rpc('wareneingang_buchen', {
+    p_id: id,
+    p: { datum, positionen, ...(lieferschein ? { lieferschein } : {}) },
+  })
   if (error) throw error
   return data
 }

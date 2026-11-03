@@ -1,9 +1,11 @@
-import { Plus, X } from 'lucide-react'
+import { Mic, Plus, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { Button } from '@/components/ui/button'
 import { Input, Textarea } from '@/components/ui/input'
+import { useDiktat } from '@/hooks/useDiktat'
+import { useUi } from '@/stores/ui'
 import type { MaterialZeile, Rapport, RapportEingabe } from '../types'
 
 /** Ausgeführte Arbeiten (Pflicht zum Abschliessen) und Mehrmaterial, das nicht auf der Materialliste stand. */
@@ -16,8 +18,14 @@ export function ArbeitenAbschnitt({
   offen: boolean
   onAendern: (e: RapportEingabe) => void
 }) {
-  const { t } = useTranslation()
-  const [neu, setNeu] = useState<MaterialZeile>({ text: '', menge: null, einheit: 'Stk' })
+  const { t, i18n } = useTranslation()
+  // Diktat hängt fertige Sätze an den gespeicherten Text an (Hände voll, Handschuhe an).
+  const diktat = useDiktat(i18n.language.startsWith('fr') ? 'fr' : 'de', (satz) => {
+    onAendern({ arbeiten: r.arbeiten ? `${r.arbeiten} ${satz}` : satz })
+  })
+  // Einheit ist freier Text; vorgeschlagen in der Sprache der Person (Monteure in Bulle arbeiten französisch).
+  const stueck = useUi((z) => z.sprache) === 'fr' ? 'pce' : 'Stk'
+  const [neu, setNeu] = useState<MaterialZeile>({ text: '', menge: null, einheit: stueck })
   const material = r.material
 
   const hinzufuegen = () => {
@@ -30,6 +38,7 @@ export function ArbeitenAbschnitt({
     <>
       <AkteAbschnitt titel={t('baustelle.rapport.arbeiten')}>
         <Textarea
+          key={r.arbeiten ?? ''}
           aria-label={t('baustelle.rapport.arbeiten')}
           placeholder={t('baustelle.rapport.arbeitenPlatzhalter')}
           defaultValue={r.arbeiten ?? ''}
@@ -39,6 +48,12 @@ export function ArbeitenAbschnitt({
             if (e.target.value !== (r.arbeiten ?? '')) onAendern({ arbeiten: e.target.value })
           }}
         />
+        {offen && diktat.verfuegbar && (
+          <Button className="mt-2" variant={diktat.laeuft ? 'danger' : 'secondary'} onClick={diktat.umschalten}>
+            <Mic />
+            {t(diktat.laeuft ? 'baustelle.diktat.stopp' : 'baustelle.diktat.start')}
+          </Button>
+        )}
       </AkteAbschnitt>
       <AkteAbschnitt
         titel={t('baustelle.rapport.mehrmaterial')}

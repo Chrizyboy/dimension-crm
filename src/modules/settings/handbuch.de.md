@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: administration
 ---
 
@@ -9,7 +9,8 @@ Hier richtet die Administration das CRM ein: Personen und Rollen, wer neue Leads
 
 ## Wer arbeitet hier {#wer}
 
-- **Administration**: alle Reiter.
+- **Administration**: alle Reiter, ändert alles.
+- **Geschäftsleitung**: sieht alle Reiter, ändert nichts.
 - **Alle**: [Mein Konto](/konto) über das Bild oben rechts.
 
 ## So geht's {#so}
@@ -20,11 +21,19 @@ Hier richtet die Administration das CRM ein: Personen und Rollen, wer neue Leads
 2. Name, E-Mail, **Rolle** und **Standort** eintragen, **Einladung senden**. Die Person meldet sich mit Microsoft oder einem Code per Mail an.
 3. Kam nichts an: in der Zeile **Einladung nochmals senden**.
 
+### Eine Person ohne Firmen-Mail aufnehmen (Link fürs Handy)
+
+1. **Person einladen**, Name eintragen und **Ohne Mail: Link fürs Handy** einschalten.
+2. **Rolle** und **Standort** wählen, **Registrier-Link erstellen**.
+3. **Link kopieren** oder **Per WhatsApp** schicken. Die Person öffnet den Link am Handy, gibt ihre private Mail ein und meldet sich mit dem Code an.
+4. Der Link gilt 14 Tage und nur einmal. Für einen neuen Link die Person öffnen, **Registrier-Link erstellen**.
+
 ### Rechte und sichtbare Bereiche festlegen
 
 1. Reiter **Rollen**: je Rolle die **Rechte der Rolle** und die sichtbaren Bereiche.
-2. Für eine einzelne Person: Person öffnen, **Eigene Auswahl für diese Person**.
-3. **Einfache Ansicht (nur Arbeitszeit und Spesen)** bei der Rolle: so arbeitet die Rolle Monteur, mit Arbeitszeit, Spesen und Plan.
+2. Bei der Person unter **Zusätze**: **Zusatz Geschäftsleitung** (sieht alles inkl. Finanzen) und **Zusatz Administration** (richtet das System ein, sieht keine Finanzen und keine fremden Personal-Akten).
+3. Für eine einzelne Person: Person öffnen, **Eigene Auswahl für diese Person**.
+4. **Einfache Ansicht (nur Arbeitszeit und Spesen)** bei der Rolle: nur Arbeitszeit, Spesen und Plan. Die Montage arbeitet mit der normalen Ansicht, damit sie Rapporte, Service und Fahrzeuge erreicht.
 
 ### Zuständigkeiten einstellen
 
@@ -86,6 +95,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 03.11.2026: Zusätze Geschäftsleitung und Administration, Link fürs Handy für Personen ohne Firmen-Mail.
 - 31.10.2026: Reiter Zuständigkeiten für Leads, Offerten und Stellvertretung.
 - 31.10.2026: Dateiablage in SharePoint unter Verbindungen; eigene Unterschrift in Mein Konto.
 - 31.10.2026: Rolle Monteur mit einfacher Ansicht.

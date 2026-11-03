@@ -76,8 +76,8 @@ select is((select kontakt_id from public.posteingang where kennung = '<pe1@x>'),
   'Kunde aus dem Projekt');
 select is((select zustaendig_id from public.posteingang where kennung = '<pe1@x>'), '00000000-0000-0000-0000-0000000018b1'::uuid,
   'eigenes Postfach: zuständig ist die Person selbst, nicht die Projektleitung');
-select is((select stand || '/' || sichtbar from public.posteingang where kennung = '<pe1@x>'), 'offen/team',
-  'Störung: offen und fürs Team sichtbar');
+select is((select stand || '/' || sichtbar from public.posteingang where kennung = '<pe1@x>'), 'offen/person',
+  'Störung: offen, bleibt im persönlichen Postfach (nie das Postfach anderer, Rollen 2.11.)');
 select is((select frist_am from public.posteingang where kennung = '<pe1@x>'), '2026-11-02 11:00+01'::timestamptz,
   'Störung: 2 Arbeitsstunden');
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b1'

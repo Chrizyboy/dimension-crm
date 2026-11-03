@@ -596,7 +596,10 @@
       "erreichbarkeit": "Erreichbarkeit",
       "kommentarKunde": "Kommentar Kunde",
       "wiedervorlage": "Wiedervorlage",
-      "verlauf": "Verlauf (Vorlage)"
+      "verlauf": "Verlauf (Vorlage)",
+      "heizung": "Heizung heute",
+      "vorOrt": "Vor Ort beachten",
+      "vorOrtHinweis": "Zugang, Schlüssel, Parkplatz, Hund, Zähler – sieht die Montage und der Service."
     },
     "abaninja": {
       "nicht": "Noch nicht mit AbaNinja verknüpft. Verknüpfen, damit Rechnungen hier erscheinen und Adressänderungen nach AbaNinja gehen.",
@@ -674,7 +677,51 @@
       "baubeginn": "Nächster Termin: Baubeginn"
     },
     "nurFinanzen": "Rechnungen sieht nur, wer das Recht «Finanzen» hat.",
-    "nurBuchhaltung": "nur Buchhaltung"
+    "nurBuchhaltung": "nur Buchhaltung",
+    "betreuung": {
+      "titel": "Betreuung und Rechnung",
+      "betreuer": "Betreuer bei uns",
+      "keinBetreuer": "Kein fester Betreuer",
+      "herkunft": "Herkunft",
+      "rechnungAn": "Rechnung an",
+      "gleicheAdresse": "Adresse des Kunden",
+      "abweichend": "Abweichende Rechnungsadresse",
+      "rechnungsEmail": "Rechnung per Mail an",
+      "zahlungsfrist": "Zahlungsfrist",
+      "fristFirma": "wie Firma",
+      "tage": "{{count}} Tage",
+      "uid": "UID",
+      "bearbeiten": "Betreuung und Rechnung bearbeiten",
+      "adresse": {
+        "name": "Name / Firma",
+        "zusatz": "Zusatz",
+        "strasse": "Strasse",
+        "plz": "PLZ",
+        "ort": "Ort"
+      }
+    },
+    "personen": {
+      "titel": "Ansprechpersonen",
+      "firmen": "Gehört zu",
+      "keine": "Keine weiteren Personen erfasst.",
+      "hauptkontakt": "Hauptkontakt",
+      "unterschreibt": "Unterschreibt",
+      "rechnungen": "Rechnungen",
+      "vorOrt": "Vor Ort",
+      "imAdressbuch": "Im Adressbuch bearbeiten"
+    },
+    "zusammen": {
+      "menue": "Doppelten zusammenführen",
+      "titel": "Doppelten zusammenführen",
+      "text": "Wähle den doppelt erfassten Kontakt. Alles, was an ihm hängt (Gebäude, Leads, Offerten, Projekte, Rechnungen, Mails, Aufgaben, Dokumente), kommt zu {{name}}. Der Doppelte landet im Papierkorb.",
+      "keine": "Keine möglichen Doppelten gefunden (gleiche Mail, Telefon oder Name).",
+      "bestaetigen": "Zusammenführen",
+      "grund": {
+        "email": "gleiche Mail",
+        "telefon": "gleiches Telefon",
+        "name": "gleicher Name"
+      }
+    }
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
@@ -840,7 +887,9 @@
       "tour": "Tour planen",
       "kalender": "Kalender",
       "regionen": "Regionen",
-      "bericht": "Monatsbericht"
+      "bericht": "Monatsbericht",
+      "zutun": "Zu tun",
+      "steuerung": "Steuerung"
     },
     "suche": "Name, Ort, Telefon, L012 …",
     "standort": "Standort",
@@ -873,15 +922,18 @@
       "neu": "Neu",
       "offen": "Offen",
       "spaeter": "Später kontaktieren",
-      "termin": "Termin vereinbart",
+      "termin": "Termin",
       "nach_termin": "Nach Termin",
-      "offerte": "Offerte in Arbeit",
+      "offerte": "Offerte",
       "offeriert": "Offeriert",
       "vertagt": "Vertagt",
       "angenommen": "Angenommen",
-      "gewonnen": "Bau & verbaut",
+      "gewonnen": "Gewonnen",
       "verloren": "Verloren & kein Interesse",
-      "dossier": "Dossier"
+      "dossier": "Dossier",
+      "kontaktiert": "Kontaktiert",
+      "entscheid": "Entscheid",
+      "aus": "Verloren & kein Interesse"
     },
     "pipeline": {
       "karte": "Geschäft",
@@ -968,7 +1020,7 @@
       "nichtGefunden": "Dieses Geschäft wurde nicht gefunden.",
       "kontaktErfassen": "Kontakt erfassen",
       "terminVereinbaren": "Termin vereinbaren",
-      "richtofferte": "Richtofferte",
+      "richtofferte": "Offerte ohne Besuch",
       "terminblatt": "Terminblatt",
       "kundenakte": "Kundenakte",
       "kontakt": "Kontakt",
@@ -997,7 +1049,8 @@
       "dateien": "Dateien",
       "keinVerlauf": "Noch kein Kontakt erfasst.",
       "verlaufV233": "Verlauf aus dem bisherigen CRM",
-      "keineDateien": "Keine Dateien."
+      "keineDateien": "Keine Dateien.",
+      "zurueck": "Zurück zu Anfragen & Leads"
     },
     "besichtigung": {
       "datum": "Besichtigt am",
@@ -1032,7 +1085,12 @@
     },
     "kontakt": {
       "wann": "Wann wieder melden",
-      "grundRueckruf": "Rückruf vereinbart"
+      "grundRueckruf": "Rückruf vereinbart",
+      "grundNichtErreicht": "Nicht erreicht",
+      "smsEntwurf": "SMS-Entwurf in den Ausgangskorb legen (geht erst nach Freigabe)",
+      "willPreisHinweis": "Andy bekommt die Offerte ohne Besuch zum Erstellen. Schreib kurz auf, was der Kunde will (Dach, Verbrauch, Wünsche).",
+      "wiedervorlage_one": "Wieder vorlegen in {{count}} Monat",
+      "wiedervorlage_other": "Wieder vorlegen in {{count}} Monaten"
     },
     "lead": {
       "anrede": "Anrede",
@@ -1270,6 +1328,142 @@
       "eintragen": "In Outlook eintragen",
       "aktualisieren": "In Outlook aktualisieren",
       "absagen": "In Outlook absagen"
+    },
+    "schritte": {
+      "titel": "Verkaufsschritte",
+      "neu": "Neu",
+      "kontaktiert": "Kontaktiert",
+      "termin": "Termin",
+      "offerte": "Offerte",
+      "entscheid": "Entscheid",
+      "gewonnen": "Gewonnen"
+    },
+    "zutun": {
+      "website": "Website",
+      "anrufen": "Anrufen",
+      "ergebnis": "Ergebnis erfassen",
+      "minuten_one": "seit {{count}} Min.",
+      "minuten_other": "seit {{count}} Min.",
+      "nurMeine": "Nur meine Leads",
+      "jetzt": "Jetzt anrufen (Ziel: innert {{minuten}} Min.)",
+      "jetztLeer": "Alle neuen Anfragen sind angerufen.",
+      "heute": "Heute",
+      "heuteLeer": "Heute ist nichts fällig.",
+      "woche": "Diese Woche",
+      "wocheLeer": "Diese Woche ist nichts geplant.",
+      "leer": "Nichts zu tun",
+      "leerText": "Keine neuen Anfragen, Rückrufe, Termine oder Nachfassen.",
+      "zahl": {
+        "anrufen_one": "neue Anfrage ohne Anruf, {{count}} zu spät",
+        "anrufen_other": "neue Anfragen ohne Anruf, {{count}} zu spät",
+        "heute": "heute fällig",
+        "termine": "Termine diese Woche",
+        "offen": "offen offeriert (CHF)"
+      },
+      "art": {
+        "anrufen": "Neu",
+        "rueckruf": "Rückruf",
+        "termin": "Termin",
+        "nachTermin": "Nach Termin: Offerte bestellen",
+        "nachfassen": "Nachfassen",
+        "wiedervorlage": "Wiedervorlage",
+        "liegt": "Liegt seit",
+        "offerteInArbeit": "Offerte in Arbeit seit"
+      },
+      "stunden": "seit {{h}} Std. {{m}} Min."
+    },
+    "naechster": {
+      "titel": "Nächster Schritt",
+      "anrufen": "Anrufen und Ergebnis erfassen.",
+      "anrufenSeit_one": "Jetzt anrufen: Anfrage seit {{count}} Arbeitsminute ohne Anruf.",
+      "anrufenSeit_other": "Jetzt anrufen: Anfrage seit {{count}} Arbeitsminuten ohne Anruf.",
+      "rueckruf": "Rückruf am {{datum}}.",
+      "termin": "Termin für die Besichtigung vereinbaren.",
+      "besuch": "Besichtigung am {{datum}} mit {{person}}. Danach Offerte bestellen.",
+      "nachTermin": "Der Termin ist vorbei: Ergebnis festhalten und die Offerte bei Andy bestellen.",
+      "offerteBestellen": "Offerte bestellen",
+      "offerteInArbeit": "Andy erstellt die Offerte. Sobald sie gesendet ist, läuft das Nachfassen.",
+      "nachfassen": "Nachfassen am {{datum}}. Die Mails an Tag {{tage}} liegen als Entwurf im Ausgangskorb; anrufen wirkt oft besser.",
+      "vertagt": "Vertagt: {{grund}}",
+      "wiedervorlage": "Wieder vorlegen am {{datum}}.",
+      "aus": "Abgeschlossen: {{grund}}",
+      "gewonnen": "Gewonnen. Weiter geht es im Projekt."
+    },
+    "dach": {
+      "titel": "Dach und Gebäude",
+      "sucht": "Wird gesucht (sonnendach.ch und Gebäuderegister, alle 5 Minuten).",
+      "nichts": "Keine Dachdaten gefunden.",
+      "flaeche": "Geeignete Fläche",
+      "flaecheWebsite": "Fläche (Website)",
+      "ertrag": "Möglicher Ertrag",
+      "eignung": "Eignung",
+      "heizung": "Heizung",
+      "baujahr": "Baujahr",
+      "verbrauch": "Verbrauch",
+      "klasse": {
+        "1": "gering",
+        "2": "mittel",
+        "3": "gut",
+        "4": "sehr gut",
+        "5": "hervorragend"
+      }
+    },
+    "richtpreis": {
+      "titel": "Richtpreis",
+      "intern": "Nur intern",
+      "ohneDach": "Noch keine Leistung bekannt: Dachdaten fehlen.",
+      "inkl": "inkl. {{satz}} % MWST, Spanne ± nach Einstellung",
+      "foerderung": "Abzüglich Förderung ca. {{betrag}}",
+      "besuch": "Mehr als {{max}} kWp: ohne Besuch nur grobe Grössenordnung.",
+      "quelle": {
+        "offerte": "{{kwp}} kWp aus der Offerte",
+        "sonnendach": "{{kwp}} kWp aus der geeigneten Dachfläche (sonnendach.ch)",
+        "website": "{{kwp}} kWp aus der Dachfläche der Website"
+      },
+      "posten": {
+        "pv": "Solaranlage",
+        "batterie": "Batterie",
+        "wallbox": "Ladestation",
+        "waermepumpe": "Wärmepumpe"
+      }
+    },
+    "herkunft": {
+      "titel": "Herkunft",
+      "eingang": "Eingang",
+      "erstkontakt": "Erster Kontakt",
+      "nochNicht": "noch nicht",
+      "formular": "Formular",
+      "seite": "Seite",
+      "kampagne": "Kampagne",
+      "kontaktwunsch": "Kontaktwunsch",
+      "referenz": "Website-Referenz",
+      "formulare": {
+        "offerte": "Offerten-Assistent",
+        "rueckruf": "Rückruf",
+        "kontakt": "Kontaktformular",
+        "report-email": "Rechner-Ergebnis"
+      }
+    },
+    "steuerung": {
+      "zeitraum": "Zeitraum",
+      "tage": "Letzte {{n}} Tage",
+      "gesamt": "Alle Leads",
+      "alle": "Alle",
+      "proPerson": "Pro Verkäufer",
+      "proQuelle": "Pro Quelle",
+      "ohnePerson": "Ohne Verkäufer",
+      "ohneQuelle": "Ohne Quelle",
+      "verlust": "Warum verloren",
+      "keinVerlust": "Keine verlorenen Leads im Zeitraum.",
+      "leads": "Leads",
+      "tempo": "Bis zum Anruf",
+      "imTempo": "In {{n}} Min.",
+      "termin": "Termin",
+      "offerte": "Offerte",
+      "gewonnen": "Gewonnen",
+      "wert": "Auftragswert",
+      "min": "{{n}} Min.",
+      "std": "{{n}} Std."
     }
   },
   "offerten": {
@@ -1285,7 +1479,8 @@
       "muri": "Offerten Muri",
       "bulle": "Offerten Bulle",
       "nachfassen": "Nachfassen",
-      "import": "PDF-Import"
+      "import": "PDF-Import",
+      "vorrat": "Arbeitsvorrat"
     },
     "standort": {
       "alle": "Alle",
@@ -1550,6 +1745,157 @@
       "zuordnen": "Zu {{nummer}} {{name}}",
       "erledigt": "Erledigt",
       "hinweis": "Eturnity schickt neue Offerten automatisch hierher, sobald der Webhook eingerichtet ist."
+    },
+    "phase": {
+      "zu_offerieren": "Zu offerieren",
+      "zu_offerieren_text": "Termin war, Offerte fehlt",
+      "planung": "In Planung",
+      "planung_text": "in Eturnity in Arbeit",
+      "pruefen": "Prüfen",
+      "pruefen_text": "Kontrolle oder Freigabe vor dem Senden",
+      "offeriert": "Offeriert",
+      "offeriert_text": "gesendet, Nachfassen nach Plan",
+      "verhandlung": "Verhandlung",
+      "verhandlung_text": "Kunde interessiert oder vergleicht",
+      "gewonnen": "Gewonnen",
+      "gewonnen_text": "letzte 14 Tage, weiter zum Werkvertrag"
+    },
+    "vorrat": {
+      "filter": "Arbeitsvorrat filtern",
+      "f_alle": "Alle",
+      "f_meine": "Meine",
+      "f_muri": "Muri",
+      "f_bulle": "Bulle",
+      "kOffen_one": "offen offeriert · {{count}} Offerte · {{kwp}} kWp",
+      "kOffen_other": "offen offeriert · {{count}} Offerten · {{kwp}} kWp",
+      "kGewichtet": "gewichtet mit der Chance",
+      "kUeberfaellig": "Termin länger als {{tage}} Arbeitstage her, noch keine Offerte",
+      "kNachfassen": "heute nachzufassen",
+      "tage": "{{n}} Tage",
+      "kDauer": "Ø Termin bis Offerte (Ziel {{ziel}} Arbeitstage)",
+      "kQuote": "Abschlussquote der letzten 90 Tage",
+      "leer": "Nichts in dieser Spalte",
+      "ueberfaellig_one": "seit {{count}} Arbeitstag überfällig",
+      "ueberfaellig_other": "seit {{count}} Arbeitstagen überfällig",
+      "rueckfrage": "Rückfrage offen",
+      "nachfassenHeute": "heute nachfassen",
+      "nachfassenSeit_one": "Nachfassen seit {{count}} Tag fällig",
+      "nachfassenSeit_other": "Nachfassen seit {{count}} Tagen fällig",
+      "abgelaufen": "Gültigkeit abgelaufen",
+      "richt": "Richtofferte",
+      "variante": "Variante {{k}}",
+      "varianten_one": "{{count}} Variante",
+      "varianten_other": "{{count}} Varianten"
+    },
+    "chance": {
+      "titel": "Chance und Angaben",
+      "chance": "Chance",
+      "auto": "automatisch nach Stand",
+      "vonHand": "von Hand gesetzt",
+      "gewichtet": "gewichtet {{betrag}}",
+      "vonHandFeld": "Chance von Hand (%, leer = automatisch)",
+      "erwartet": "Entscheid erwartet bis",
+      "gueltig": "Gültig bis",
+      "konkurrenz": "Konkurrenz",
+      "konkurrenzHinweis": "z. B. Helion, Solarmax",
+      "rabatt": "Rabatt (%)",
+      "kurz": "{{p}} %"
+    },
+    "freigabe": {
+      "noetig_rabatt": "Freigabe: Rabatt",
+      "noetig_marge": "Freigabe: Marge zu tief",
+      "text": "ab {{rabatt}} % Rabatt oder unter {{marge}} % Marge gibt eine zweite Person frei",
+      "knopf": "Freigeben",
+      "erteilt": "Freigegeben von {{name}} am {{datum}}"
+    },
+    "ergebnis": {
+      "knopf": "Ergebnis",
+      "titel": "Ergebnis vom Nachfassen",
+      "art": "Wie",
+      "art_anruf": "Anruf",
+      "art_mail": "Mail",
+      "art_besuch": "Besuch",
+      "art_sms": "SMS",
+      "was": "Was hat der Kunde gesagt?",
+      "e_nicht_erreicht": "Nicht erreicht",
+      "e_vergleicht": "Vergleicht noch",
+      "e_interessiert": "Interessiert, klärt noch",
+      "e_neue_version": "Will eine neue Version",
+      "e_spaeter": "Später melden",
+      "e_ruht": "Ruht",
+      "e_ja": "Ja, Auftrag",
+      "e_nein": "Nein",
+      "notiz": "Notiz",
+      "notizHinweis": "Kommt in den Verlauf der Offerte und des Kunden.",
+      "wann": "Wann wieder melden",
+      "folge_vergleicht": "Nächster Anruf nach Plan, Stand «Verhandlung».",
+      "folge_interessiert": "Nächster Anruf nach Plan, Stand «Verhandlung», Chance steigt.",
+      "folge_neue_version": "Die Offerte geht zurück in die Planung; nach dem Senden beginnt der Plan neu.",
+      "folge_spaeter": "Die Offerte ist vertagt und kommt am gewählten Tag wieder.",
+      "folge_ja": "Gewonnen. Danach öffnet sich der Werkvertrag.",
+      "folge_nein": "Verloren mit Grund; kommt in die Auswertung.",
+      "ok": "Ergebnis gespeichert",
+      "okNaechst": "Gespeichert, nächstes Nachfassen am {{datum}}"
+    },
+    "schritt": {
+      "titel": "Nächster Schritt",
+      "vertagt": "Vertagt: wieder melden",
+      "planTag": "Nachfassen Tag {{tag}} nach dem Senden",
+      "anruf": "Nachfassen",
+      "faelligSeit": "fällig seit {{datum}}",
+      "faelligAm": "fällig am {{datum}}",
+      "zuletzt": "zuletzt: {{was}}",
+      "erreicht": "Erreicht, Ergebnis erfassen",
+      "nichtErreicht": "Nicht erreicht"
+    },
+    "schritte": {
+      "titel": "Schritte der Offerte",
+      "termin": "Termin",
+      "planung": "Planung",
+      "geprueft": "Geprüft",
+      "versendet": "Gesendet",
+      "nachfassen": "Nachfassen",
+      "entscheid": "Entscheid",
+      "werkvertrag": "Werkvertrag"
+    },
+    "seite": {
+      "zurueck": "Zurück zu den Offerten",
+      "verkauf": "Verkauf: {{name}}",
+      "offerte": "Offerte: {{name}}",
+      "kunde": "Kunde",
+      "name": "Name",
+      "telefon": "Telefon",
+      "mail": "Mail",
+      "objekt": "Objekt",
+      "sprache": "Sprache",
+      "sprache_de": "Deutsch",
+      "sprache_fr": "Französisch",
+      "termin": "Termin vor Ort",
+      "gueltig": "gültig bis {{datum}}",
+      "abgelaufen": "abgelaufen am {{datum}}"
+    },
+    "unterlagen": {
+      "titel": "Unterlagen",
+      "stand": "{{n}} von {{von}}"
+    },
+    "varianten": {
+      "titel": "Varianten",
+      "keine": "Noch keine Varianten. Eine Offerte kann mehrere Varianten haben (z. B. mit und ohne Batterie).",
+      "gewaehlt": "Gewählte Variante",
+      "waehlen": "Wählen",
+      "nettoTitel": "Was der Kunde zahlt (Variante {{k}})",
+      "inkl": "Preis inkl. {{satz}} % MWST",
+      "eiv": "Einmalvergütung (EIV)",
+      "steuer": "Steuerersparnis (geschätzt)",
+      "netto": "Netto für den Kunden",
+      "variante": "Variante {{k}}",
+      "feldTitel": "Bezeichnung",
+      "feldBetrag": "Betrag exkl. MWST",
+      "entfernen": "Variante {{k}} entfernen",
+      "neu": "Variante hinzufügen",
+      "vorschlagA": "Wie offeriert",
+      "bearbeiten": "Varianten bearbeiten",
+      "erfassen": "Varianten erfassen"
     }
   },
   "werkvertraege": {
@@ -2089,6 +2435,21 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "posteingang_absender_ungueltig": "Bitte eine Mail-Adresse oder @firma.ch eingeben.",
+    "posteingang_bestellung_falsch": "Diese Bestellung gibt es nicht oder sie ist schon geliefert.",
+    "posteingang_kein_recht_finanzen": "Dafür fehlt dir das Recht Finanzen.",
+    "posteingang_kein_recht_preise": "Dafür fehlt dir das Recht Preise (Einkauf).",
+    "posteingang_notiz_leer": "Bitte einen Text für die Notiz eingeben.",
+    "posteingang_nummer_fehlt": "Zu dieser Nummer gibt es keine Akte.",
+    "posteingang_titel_fehlt": "Bitte sagen, was zu tun ist.",
+    "posteingang_zahlung_unvollstaendig": "Bitte Lieferant und Betrag angeben.",
+    "posteingang_zeit_ungueltig": "Bitte einen Zeitpunkt in der Zukunft wählen.",
+    "offerte_freigabe_fehlt": "Diese Offerte braucht vor dem Senden eine Freigabe (Rabatt oder Marge).",
+    "offerte_freigabe_kein_recht": "Freigeben dürfen nur die Personen aus den Einstellungen.",
+    "offerte_varianten_ungueltig": "Jede Variante braucht eine Kennung (A, B …).",
+    "offerte_variante_unbekannt": "Diese Variante gibt es in der Offerte nicht.",
+    "offerte_nicht_offeriert": "Nachfassen geht nur bei gesendeten Offerten.",
+    "offerte_kein_recht": "Die Offerten-Einstellungen darf nur die Administration ändern.",
     "kurs_kein_recht": "Dafür fehlt dir das Recht.",
     "kurs_titel_fehlt": "Bitte einen Titel eingeben.",
     "kurs_niemand": "Bitte mindestens eine Person wählen.",
@@ -2115,7 +2476,18 @@
     "automation_lauf_offen": "Wiederholen geht erst, wenn der Lauf zu Ende ist.",
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
-    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr)."
+    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
+    "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
+    "einkauf_rechnung_abweichung": "Die Rechnung weicht deutlich ab. Bitte in der Notiz begründen.",
+    "einkauf_rechnung_fehlt": "Bitte eine Lieferantenrechnung wählen oder Nummer und Betrag angeben.",
+    "baustelle_nicht_im_team": "Nur das Team des Einsatzes oder die Projektleitung kann die Zeit fürs Team stempeln.",
+    "baustelle_meldung_leer": "Bitte beschreiben, was los ist.",
+    "baustelle_meldung_nicht_gefunden": "Meldung nicht gefunden.",
+    "baustelle_woche_montag": "Die Woche beginnt am Montag.",
+    "baustelle_zeit_laeuft": "Es läuft noch eine Zeit in dieser Woche. Erst stoppen, dann bestätigen.",
+    "baustelle_soll_negativ": "Soll-Stunden können nicht negativ sein.",
+    "baustelle_projekt_nicht_gefunden": "Projekt nicht gefunden.",
+    "baustelle_kein_recht": "Dafür fehlt das Recht."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -3490,13 +3862,15 @@
   },
   "einkauf": {
     "titel": "Einkauf & Material",
-    "beschreibung": "Material je Projekt, Bestellungen mit Freigabe und PDF per Mail, Wareneingang und Lager Bulle.",
+    "beschreibung": "Was die Baustellen brauchen, rechtzeitig und gebündelt bestellen, Bestätigung, Lieferung und Rechnung prüfen. Lager Bulle.",
     "reiter": {
       "bestellungen": "Bestellungen",
       "zubestellen": "Zu bestellen",
-      "material": "Material je Projekt",
+      "material": "Materialplan",
       "lager": "Lager",
-      "lieferanten": "Lieferanten"
+      "lieferanten": "Lieferanten",
+      "leitstand": "Leitstand",
+      "bestellen": "Bestellen"
     },
     "filter": "Filter",
     "filterwert": {
@@ -3529,7 +3903,8 @@
     "materialFilter": {
       "fehlt": "Es fehlt noch etwas",
       "mitListe": "Mit Materialliste",
-      "alle": "Alle offenen"
+      "alle": "Alle offenen",
+      "gefaehrdet": "Montage in Gefahr"
     },
     "spalte": {
       "nummer": "Nr.",
@@ -3565,7 +3940,11 @@
       "stornieren": "Stornieren",
       "pdf": "PDF ansehen",
       "ueberfaellig": "Lieferung überfällig",
-      "ohneAdresse": "Beim Lieferanten fehlt die Bestell-Adresse. Sie lässt sich unter «Lieferanten» eintragen oder in der Mail von Hand eingeben."
+      "ohneAdresse": "Beim Lieferanten fehlt die Bestell-Adresse. Sie lässt sich unter «Lieferanten» eintragen oder in der Mail von Hand eingeben.",
+      "vorlegen": "Zur Freigabe vorlegen",
+      "vorgelegt": "Vorgelegt",
+      "webshop": "Webshop öffnen",
+      "grenzeHinweis": "Diese Bestellung liegt über der Freigabegrenze. Die Geschäftsleitung bekommt eine Glocke und gibt frei."
     },
     "feld": {
       "lieferant": "Lieferant",
@@ -3588,7 +3967,9 @@
       "mengeVon": "Menge {{name}}",
       "ekVon": "Einkaufspreis {{name}}",
       "entfernen": "{{name}} entfernen",
-      "guenstiger": "Günstiger bei {{lieferant}}: CHF {{preis}} (spart CHF {{total}})"
+      "guenstiger": "Günstiger bei {{lieferant}}: CHF {{preis}} (spart CHF {{total}})",
+      "abMenge": "AB: {{menge}}",
+      "abEk": "AB: {{ek}}"
     },
     "eingang": {
       "titel": "Wareneingang {{nummer}}",
@@ -3600,7 +3981,8 @@
       "buchen": "Wareneingang buchen",
       "snErfassen": "Seriennummern erfassen",
       "snVon": "Seriennummern von {{name}}",
-      "snPlatzhalter": "Eine pro Zeile oder mit Komma getrennt; gehen mit der IBN an die Anlage"
+      "snPlatzhalter": "Eine pro Zeile oder mit Komma getrennt; gehen mit der IBN an die Anlage",
+      "lieferschein": "Lieferschein-Nr."
     },
     "storno": {
       "titel": "Bestellung {{nummer}} stornieren",
@@ -3706,7 +4088,13 @@
       "inaktiv": "Inaktiv",
       "neu": "Neuer Lieferant",
       "leer": "Keine Lieferanten",
-      "text": "Bestellungen gehen an die Bestell-Mail, in der gewählten Sprache."
+      "text": "Bestellungen gehen an die Bestell-Mail, in der gewählten Sprache.",
+      "einkaufJahr": "Einkauf 12 Monate",
+      "puenktlich": "Pünktlich",
+      "lieferzeit": "Lieferzeit",
+      "tage": "{{n}} Tage",
+      "frachtFrei": "Frachtfrei ab",
+      "offen": "Offen"
     },
     "pruefung": {
       "name": "Bitte einen Namen eingeben."
@@ -3735,6 +4123,148 @@
       "hinweis": "Baustellen mit fehlendem Material. «Bestellen bis» = Baubeginn minus Lieferfrist.",
       "leer": "Alles bestellt",
       "leerText": "Keine Baustelle hat fehlendes Material ohne Bestellung."
+    },
+    "schritt": {
+      "titel": "Schritte der Bestellung",
+      "freigabe": "Freigabe",
+      "ab_offen": "Bestätigung",
+      "unterwegs": "Unterwegs",
+      "eingang": "Eingang",
+      "rechnung": "Rechnung",
+      "fertig": "Fertig"
+    },
+    "ls": {
+      "kz": {
+        "zuBestellen": "Lieferanten zu bestellen",
+        "freigabe": "warten auf Freigabe",
+        "abOffen": "ohne Auftragsbestätigung",
+        "gefaehrdet": "Montagen in Gefahr",
+        "baustellen": "Baustellen 14 Tage komplett",
+        "offen": "bestellt, nicht geliefert"
+      },
+      "spalte": {
+        "zuBestellen": "Zu bestellen",
+        "freigabe": "Freigabe",
+        "ab_offen": "Bestätigung offen",
+        "unterwegs": "Unterwegs",
+        "eingang": "Teilweise da",
+        "rechnung": "Rechnung prüfen"
+      },
+      "leer": "Nichts",
+      "ohneLieferant": "Ohne Lieferant",
+      "bis": "bis {{datum}}",
+      "zeilen_one": "{{count}} Artikel",
+      "zeilen_other": "{{count}} Artikel",
+      "montage": "Montage {{datum}} in Gefahr",
+      "ueberfaellig": "überfällig seit {{datum}}",
+      "senden": "freigegeben, jetzt bestellen",
+      "vorgelegt": "zur Freigabe vorgelegt",
+      "entwurf": "Entwurf",
+      "abOffen": "AB fehlt",
+      "bestaetigt": "bestätigt auf {{datum}}",
+      "erwartet": "erwartet {{datum}}",
+      "teil": "{{da}} von {{von}} da",
+      "rechnungDa": "Rechnung {{nummer}} prüfen",
+      "rechnungErwartet": "Rechnung erwartet",
+      "tracking": "Tracking",
+      "gefahrHinweis": "Rot: Ware kommt nach der Montage oder ist noch nicht bestellt. Der Materialplan zeigt, welche Baustellen betroffen sind.",
+      "tafel": "Bestellungen nach Schritt"
+    },
+    "bestellen": {
+      "hinweis": "Was die Baustellen und das Lager brauchen, je Lieferant. Freies im Lager wird zuerst reserviert, der Rest kommt in einen Entwurf, auf Verpackungseinheiten gerundet. Nichts geht weg, bevor jemand freigibt und bestellt.",
+      "alle": "Für alle Lieferanten Entwürfe anlegen",
+      "anlegen": "Entwurf anlegen",
+      "leer": "Alles bestellt",
+      "leerText": "Keine Baustelle und kein Lagerartikel braucht gerade Material.",
+      "ohneLieferant": "Ohne Lieferant (Preisliste ergänzen)",
+      "frachtFrei": "frachtfrei",
+      "frachtAb": "frachtfrei ab CHF {{betrag}}",
+      "unterMindest": "unter Mindestwert CHF {{betrag}}",
+      "artikel": "Artikel",
+      "fuer": "Für",
+      "fehlt": "Fehlt",
+      "lager": "Aus Lager",
+      "bestellen": "Bestellen",
+      "ek": "EK",
+      "bis": "Bestellen bis",
+      "ve": "VE {{ve}}",
+      "ohneArtikel": "ohne Artikel",
+      "lagerMindest": "Lager (unter Mindestmenge)",
+      "total": "Total geschätzt",
+      "zusammenfassen": "Entwürfe zusammenfassen ({{liste}})"
+    },
+    "plan": {
+      "deckung": "Deckung",
+      "bestellenBis": "Bestellen bis",
+      "gefaehrdet": "Montage in Gefahr",
+      "kommt": "kommt bis {{datum}}"
+    },
+    "kond": {
+      "titel": "Konditionen",
+      "fracht_frei_ab": "Frachtfrei ab CHF",
+      "fracht": "Fracht CHF",
+      "mindestwert": "Mindestbestellwert CHF",
+      "lieferzeit": "Lieferzeit (Arbeitstage)",
+      "zahlungsziel": "Zahlungsziel (Tage)",
+      "skonto_prozent": "Skonto %",
+      "skonto_tage": "Skonto innert Tagen",
+      "bestellschluss": "Bestellschluss (z. B. 14:00)",
+      "bestellweg": "Bestellweg",
+      "webshop_url": "Webshop-Adresse",
+      "weg": {
+        "mail": "Mail mit PDF",
+        "webshop": "Webshop",
+        "telefon": "Telefon"
+      }
+    },
+    "ab": {
+      "abschnitt": "Bestätigung und Lieferung",
+      "erfasst": "AB erfasst",
+      "fehlt": "AB fehlt",
+      "titel": "Auftragsbestätigung {{nummer}}",
+      "beschreibung": "Was der Lieferant bestätigt. Abweichungen bei Menge oder Preis werden markiert.",
+      "ki": "Die KI liest die AB aus einer Mail oder einem PDF vor. Bitte prüfen.",
+      "pdf": "PDF lesen",
+      "nummer": "AB-Nummer",
+      "datum": "Datum der AB",
+      "termin": "Bestätigter Termin",
+      "total": "Total exkl. MWST",
+      "bestellt": "bestellt {{menge}} {{einheit}} à {{ek}}",
+      "mengeVon": "Bestätigte Menge {{name}}",
+      "ekVon": "Bestätigter Preis {{name}}",
+      "abweichungen": "Abweichungen",
+      "anzahl_one": "{{count}} Position weicht ab",
+      "anzahl_other": "{{count}} Positionen weichen ab",
+      "keine": "alles wie bestellt",
+      "ausstehend": "Bestellt am {{datum}}, Auftragsbestätigung noch ausstehend.",
+      "nachgefragt": "Nachgefragt am {{datum}}.",
+      "erfassen": "AB erfassen",
+      "aendern": "AB ändern",
+      "nachfragen": "Nachgefragt"
+    },
+    "lieferung": {
+      "tracking": "Tracking",
+      "hinweis": "Hinweis Anlieferung",
+      "kontakt": "Kontakt vor Ort",
+      "lieferscheine": "Lieferscheine"
+    },
+    "rechnung": {
+      "titel": "Lieferantenrechnung",
+      "offen": "noch nicht geprüft",
+      "geprueft": "Geprüft",
+      "nummer": "Rechnungs-Nr.",
+      "betrag": "Betrag",
+      "vorschlaege": "Passende Rechnungen aus AbaNinja",
+      "erwartet": "erwartet CHF {{betrag}}",
+      "keine": "Noch keine passende Rechnung aus AbaNinja. Der Abgleich holt sie in den Finanzen.",
+      "notiz": "Notiz zur Rechnung",
+      "notizPlatzhalter": "Bei Abweichung: warum (z. B. Fracht, Palettenpfand)",
+      "pruefen": "Als geprüft markieren"
+    },
+    "mails": {
+      "titel": "Mails",
+      "keine": "Keine Mails zu dieser Bestellung im Posteingang.",
+      "anhang": "mit Anhang"
     }
   },
   "baustelle": {
@@ -3749,7 +4279,11 @@
       "rapporte": "Rapporte",
       "zeiten": "Zeiten",
       "nachtraege": "Nachträge",
-      "wochenplan": "Wochenplan"
+      "wochenplan": "Wochenplan",
+      "heute": "Baustellen heute",
+      "baustellen": "Baustellen",
+      "meldungen": "Meldungen",
+      "auswertung": "Auswertung"
     },
     "rapportFilter": {
       "offen": "Offen",
@@ -3818,7 +4352,13 @@
         "ibn": "IBN beginnen",
         "service": "Service beginnen",
         "wartung": "Wartung beginnen"
-      }
+      },
+      "fortschritt": "Fortschritt",
+      "dran": "Heute dran:",
+      "fotosFehlen": "Fotos fehlen noch: {{liste}}",
+      "pl": "Projektleitung",
+      "meldungenOffen_one": "{{count}} Meldung offen",
+      "meldungenOffen_other": "{{count}} Meldungen offen"
     },
     "zeit": {
       "titel": "Zeit",
@@ -3926,7 +4466,12 @@
       "unterschriftFehlt": "Es fehlen Name oder Unterschrift.",
       "fotosFehlen": "Pflichtfotos fehlen: {{liste}}",
       "fotosWerbung": "Kunde erlaubt Fotos für Werbung",
-      "fotosWerbungHinweis": "Ohne Namen und Adresse. Nach der Inbetriebnahme entsteht ein Referenz-Post als Entwurf."
+      "fotosWerbungHinweis": "Ohne Namen und Adresse. Nach der Inbetriebnahme entsteht ein Referenz-Post als Entwurf.",
+      "ohneNoetig": "Tagesrapport: keine Unterschrift nötig. Der Kunde unterschreibt bei der Abnahme und für Nachträge.",
+      "vorbehalte": "Vorbehalte bei der Abnahme",
+      "vorbehalt": "Vorbehalt {{nr}}",
+      "vorbehaltDazu": "Vorbehalt hinzufügen",
+      "vorbehalteHinweis": "Jeder Vorbehalt wird eine Aufgabe für die Projektleitung."
     },
     "neu": {
       "knopf": "Neuer Rapport",
@@ -4088,6 +4633,211 @@
       "erfassen": "Erfassen",
       "speichern": "Speichern",
       "abbrechen": "Abbrechen"
+    },
+    "vorlage": {
+      "pv": "PV",
+      "speicher": "Speicher",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "diktat": {
+      "start": "Diktieren",
+      "stopp": "Diktat stoppen"
+    },
+    "sicherheit": {
+      "titel": "Sicherheits-Check",
+      "text": "Vor Arbeitsbeginn: alles abhaken, dann startet die Zeit für alle Angehakten mit derselben Uhrzeit.",
+      "punkte": "Sicherheit",
+      "team": "Wer arbeitet heute mit?",
+      "ich": "ich",
+      "fehlt": "Alle Punkte abhaken und mindestens eine Person wählen.",
+      "starten_one": "Arbeitsbeginn ({{count}} Person)",
+      "starten_other": "Arbeitsbeginn fürs Team ({{count}})"
+    },
+    "mappe": {
+      "knopf": "Mappe",
+      "titel": "Baustellen-Mappe",
+      "anlage": "Anlage und Dach",
+      "module": "Module",
+      "wechselrichter": "Wechselrichter",
+      "batterie": "Batterie",
+      "dach": "Dach",
+      "material": "Material laden",
+      "fehlt_one": "{{count}} fehlt",
+      "fehlt_other": "{{count}} fehlen",
+      "plaene": "Pläne und Dokumente",
+      "kontakte": "Kontakte",
+      "meldungen": "Offene Meldungen",
+      "rolle": {
+        "kunde": "Kunde",
+        "elektriker": "Elektriker",
+        "architekt": "Architekt",
+        "projektleitung": "Projektleitung"
+      }
+    },
+    "meldung": {
+      "knopf": "Problem melden",
+      "titel": "Problem melden",
+      "text": "Die Projektleitung bekommt die Meldung sofort, auch wenn sie erst später rausgeht (ohne Netz).",
+      "art": "Art",
+      "arten": {
+        "material": "Material",
+        "schaden": "Schaden",
+        "kunde": "Kunde",
+        "wetter": "Wetter",
+        "planung": "Planung",
+        "sicherheit": "Sicherheit"
+      },
+      "was": "Was ist los?",
+      "platzhalter": "z. B. 4 Module fehlen, Ziegel beim Abladen gebrochen …",
+      "foto_one": "Foto ({{count}})",
+      "foto_other": "Fotos ({{count}})",
+      "weiter": "Wir können weiterarbeiten",
+      "steht": "Die Baustelle steht: die Projektleitung bekommt die Meldung als dringend.",
+      "stehtKurz": "Baustelle steht",
+      "senden": "Melden",
+      "stand": "Stand",
+      "offen": "Offen",
+      "alle90": "Alle (90 Tage)",
+      "leer": "Keine Meldungen",
+      "leerText": "Von den Baustellen ist nichts offen.",
+      "erledigen": "Erledigt",
+      "notiz": "Was wurde gemacht? (freiwillig)",
+      "erledigtVon": "Erledigt von {{name}}, {{am}}",
+      "wieder": "Wieder öffnen"
+    },
+    "schritte": {
+      "titel": "Arbeitsschritte",
+      "hinweis": "Hake ab, was heute fertig wurde. Daraus entsteht der Text des Rapports."
+    },
+    "team": {
+      "titel": "Team und Zeit",
+      "check": "Sicherheits-Check um {{zeit}}",
+      "pause": "Pause (Min.)",
+      "feierabend": "Feierabend fürs Team",
+      "pauseHinweis": "Vorschlag nach Arbeitsgesetz: ab 5½ h 15 Min., ab 7 h 30 Min., ab 9 h 60 Min."
+    },
+    "sn": {
+      "titel": "Seriennummern",
+      "geraet": "Gerät",
+      "nummer": "Seriennummer",
+      "dazu": "Hinzufügen",
+      "scannen": "Scannen",
+      "weg": "Seriennummer {{nummer}} entfernen",
+      "art": {
+        "wechselrichter": "Wechselrichter",
+        "batterie": "Batterie",
+        "modul": "Modul",
+        "wallbox": "Wallbox",
+        "waermepumpe": "Wärmepumpe",
+        "optimierer": "Optimierer",
+        "zaehler": "Zähler",
+        "andere": "Anderes"
+      }
+    },
+    "visum": {
+      "rueckfrage": "Rückfrage der Projektleitung:",
+      "visiert": "Visiert von {{name}}, {{am}}",
+      "visieren": "Visieren",
+      "fragen": "Rückfrage",
+      "frageText": "Was ist unklar?",
+      "senden": "Senden",
+      "offen": "Rückfrage offen",
+      "kurz": "visiert"
+    },
+    "leitung": {
+      "k": {
+        "baustellen": "Baustellen heute",
+        "gestempelt": "Gestempelt",
+        "meldungen": "Offene Meldungen",
+        "rapporteFehlen": "Rapporte fehlen",
+        "zeitenPruefen": "Zeiten zu prüfen",
+        "nachtraege": "Nachträge offen"
+      },
+      "baustellen": "Baustellen",
+      "leer": "Heute keine Baustelle",
+      "leerText": "Für heute ist kein Einsatz geplant.",
+      "meldungen": "Meldungen",
+      "keineMeldungen": "Keine offenen Meldungen.",
+      "visieren": "Zu visieren",
+      "allesVisiert": "Alle Rapporte sind visiert.",
+      "nichtGestempelt": "nicht gestempelt",
+      "sollIst": "Ist / Soll",
+      "fotos": "Fotos",
+      "heute": "heute",
+      "gesternFehlt": "Rapport vom letzten Arbeitstag fehlt"
+    },
+    "akte": {
+      "titel": "Baustelle",
+      "suche": "Nummer, Kunde, Ort",
+      "leer": "Keine Baustellen",
+      "leerText": "In den letzten und nächsten Wochen ist nichts geplant.",
+      "zeitraum": "Ab",
+      "speicher": "mit Speicher",
+      "telefon": "Kunde",
+      "stunden": "Stunden",
+      "sollHand": "Soll von Hand",
+      "sollRegel": "Soll nach Faustregel",
+      "reise": "Reise {{h}} h",
+      "sollAendern": "Soll ändern",
+      "sollStunden": "Soll-Stunden",
+      "sollLeer": "leer = Faustregel",
+      "speichern": "Speichern",
+      "einsaetze": "Einsätze",
+      "tagebuch": "Bautagebuch",
+      "keineRapporte": "Noch keine Rapporte.",
+      "check": "Check",
+      "vorbehalte_one": "{{count}} Vorbehalt",
+      "vorbehalte_other": "{{count}} Vorbehalte"
+    },
+    "auswertung": {
+      "zeitraum": "Zeitraum",
+      "monat": "30 Tage",
+      "quartal": "Quartal",
+      "jahr": "12 Monate",
+      "fertig": "Fertige Baustellen",
+      "abweichung": "Ist gegen Soll",
+      "hProKwp": "Stunden pro kWp",
+      "reise": "Anteil Reise",
+      "nachtraege": "Nachträge",
+      "gleicherTag": "Rapport am gleichen Tag",
+      "baustellen": "Fertige Baustellen",
+      "abw": "Abw.",
+      "leer": "Noch nichts fertig",
+      "leerText": "In diesem Zeitraum wurde keine Montage abgeschlossen.",
+      "visiert": "Rapporte visiert"
+    },
+    "wochenblatt": {
+      "titel": "Wochenblatt",
+      "tag": {
+        "mo": "Mo",
+        "di": "Di",
+        "mi": "Mi",
+        "do": "Do",
+        "fr": "Fr",
+        "sa": "Sa",
+        "so": "So"
+      },
+      "istSoll": "Ist / Soll",
+      "saldo": "Saldo Jahr",
+      "stand": "Woche",
+      "bestaetigt": "bestätigt",
+      "bestaetigen": "Bestätigen",
+      "offen": "offen",
+      "abw": {
+        "ferien": "Ferien",
+        "krank": "Krank",
+        "schule": "Schule",
+        "militaer": "Militär",
+        "sonstiges": "Abwesend"
+      },
+      "w": {
+        "pause": "Pause {{min}} Min. zu kurz",
+        "zuLang": "{{h}} h, mehr als erlaubt",
+        "nichtGestempelt": "Einsatz ohne Zeit",
+        "laeuft": "Zeit läuft noch",
+        "saldo": "Saldo {{h}} h"
+      }
     }
   },
   "unterschrift": {
@@ -5770,7 +6520,7 @@
   },
   "aufgaben": {
     "titel": "Aufgaben",
-    "beschreibung": "Was wer bis wann erledigt. Viele kommen aus Automationen; ein Klick öffnet den Datensatz.",
+    "beschreibung": "Dein Arbeitsvorrat: was bis wann zu tun ist. Viele kommen aus Automationen; ein Klick öffnet die Aufgabe.",
     "neu": "Neue Aufgabe",
     "erledigt": "Erledigt",
     "erledigtSetzen": "«{{titel}}» erledigt",
@@ -5809,14 +6559,107 @@
       "titel": "Was ist zu tun?",
       "text": "Notiz",
       "faellig": "Fällig am",
-      "person": "Für wen"
+      "person": "Für wen",
+      "wiederholung": "Wiederholen",
+      "textPlatzhalter": "Beschreibung …"
     },
     "fehler": {
       "titel": "Bitte einen Titel eingeben.",
       "datum": "Bitte ein gültiges Datum wählen.",
       "person": "Bitte eine Person wählen."
     },
-    "neuKurz": "Aufgabe"
+    "neuKurz": "Aufgabe",
+    "vonPerson": "Aufgaben von {{name}}",
+    "ansicht": "Ansicht",
+    "ansichten": {
+      "meine": "Meine",
+      "vergeben": "Vergeben",
+      "vertretung": "Vertretung",
+      "alle": "Alle",
+      "team": "Team",
+      "erledigt": "Erledigt"
+    },
+    "suchen": "Aufgaben suchen",
+    "filtern": "Filtern",
+    "anzahl_one": "{{count}} Aufgabe",
+    "anzahl_other": "{{count}} Aufgaben",
+    "schnellfilter": {
+      "wichtig": "Wichtig",
+      "automation": "Aus Automation",
+      "mit_bezug": "Mit Datensatz"
+    },
+    "leerVertretung": "Niemand zu vertreten",
+    "kuerzelNeu": "Neue Aufgabe",
+    "morgen": "Morgen",
+    "naechsteWoche": "Nächste Woche",
+    "morgenVerschieben": "Auf den nächsten Arbeitstag",
+    "morgenVerschiebenFuer": "«{{titel}}» auf den nächsten Arbeitstag",
+    "wichtig": "Wichtig",
+    "vertretungFuer": "Vertretung für {{name}}",
+    "schritteZahl": "{{fertig}}/{{schritte}} Schritte",
+    "gruppe": {
+      "ueberfaellig": "Überfällig",
+      "heute": "Heute",
+      "morgen": "Morgen",
+      "woche": "Diese Woche",
+      "spaeter": "Später",
+      "ohne": "Ohne Datum"
+    },
+    "herkunft": {
+      "automation": "Automation",
+      "monitor": "Monitor",
+      "frist": "Frist",
+      "system": "System",
+      "selbst": "Selbst",
+      "person": "Vergeben",
+      "ki": "KI-Vorschlag",
+      "posteingang": "Posteingang"
+    },
+    "wiederholung": {
+      "nie": "Nie",
+      "woche": "Jede Woche",
+      "monat": "Jeden Monat",
+      "quartal": "Jedes Quartal",
+      "jahr": "Jedes Jahr"
+    },
+    "schnell": {
+      "beschriftung": "Neue Aufgabe schnell erfassen",
+      "platzhalter": "Neue Aufgabe … z. B. «Offerte Baumann nachfassen morgen @AM !»",
+      "mehr": "Mehr",
+      "enter": "Enter legt an",
+      "personUnbekannt": "«@{{wer}}» unbekannt"
+    },
+    "akte": {
+      "beschreibung": "Aufgabe",
+      "weg": "Aufgabe nicht gefunden",
+      "wegText": "Sie wurde gelöscht oder ist für dich nicht sichtbar.",
+      "erledigen": "Erledigt …",
+      "erledigtBestaetigen": "Erledigt",
+      "notizErledigt": "Was kam heraus? (freiwillig, steht auch im Verlauf des Datensatzes)",
+      "notizWeiter": "Notiz für die Person (freiwillig)",
+      "weitergeben": "Weitergeben",
+      "weitergebenAn": "An wen?",
+      "wiederOeffnen": "Wieder öffnen",
+      "vertretungHinweis": "Die Person ist abwesend, du vertrittst sie.",
+      "herkunft": "Herkunft",
+      "teilschritte": "Teilschritte",
+      "schrittNeu": "Teilschritt hinzufügen (Enter)",
+      "schrittEntfernen": "«{{text}}» entfernen",
+      "verlauf": "Verlauf",
+      "kommentar": "Kommentar",
+      "kommentarPlatzhalter": "Kommentar … mit @LP die Person benachrichtigen",
+      "kommentieren": "Kommentieren",
+      "loeschen": "In den Papierkorb"
+    },
+    "team": {
+      "offen": "Offen",
+      "erledigt7": "Erledigt 7 Tage",
+      "last": "Last",
+      "abwesend": "Abwesend",
+      "niemand": "Nicht zugeteilt",
+      "leer": "Keine offenen Aufgaben im Team",
+      "leerText": "Alles ist verteilt und erledigt."
+    }
   },
   "ki": {
     "knopf": "Mit KI schreiben",
@@ -5859,7 +6702,8 @@
       "zusammenfassung": "Zusammenfassung",
       "lead_bewertung": "Lead-Bewertung",
       "briefing": "Tagesbriefing",
-      "automation": "Automationen"
+      "automation": "Automationen",
+      "auftragsbestaetigung": "Auftragsbestätigung lesen"
     },
     "assistent": {
       "titel": "Mit KI schreiben",
@@ -6887,7 +7731,6 @@
       "kaufdatum": "Kaufdatum",
       "kaufpreis_rappen": "Kaufpreis (CHF)",
       "kaufpreis": "Kaufpreis (CHF)",
-      "privat_anteil": "Privatanteil (Geschäftsauto privat)",
       "versicherung_police": "Police-Nr.",
       "versicherung_deckung": "Deckung",
       "selbstbehalt_rappen": "Selbstbehalt (CHF)",
@@ -6940,7 +7783,9 @@
       "kosten": "Kosten (CHF)",
       "bemerkung": "Bemerkung",
       "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen",
-      "liter": "Liter"
+      "liter": "Liter",
+      "beleg": "Beleg (Foto oder PDF)",
+      "belegHinweis": "Mit der Firmenkarte bezahlt? Beleg fotografieren. Er kommt zu den Dokumenten und die Buchhaltung gleicht ihn mit der Kartenabrechnung ab."
     },
     "uebergeben": {
       "knopf": "Übergeben",
@@ -6976,7 +7821,6 @@
       "versicherung": "Versicherung und Steuern",
       "weiteres": "Weiteres"
     },
-    "ja": "Ja",
     "treibstoff": {
       "diesel": "Diesel",
       "benzin": "Benzin",
@@ -7043,12 +7887,11 @@
         "einsatz": "Einsatz"
       },
       "legende": {
-        "einsatz": "Einsatz (folgt dem Team)",
+        "einsatz": "Für einen Einsatz",
         "hand": "Von Hand reserviert",
         "werkstatt": "Werkstatt",
         "konflikt": "Doppelt verplant"
       },
-      "folgtTeam": "folgt dem Team",
       "heute": "Diese Woche",
       "weiter": "Nächste Woche",
       "zurueck": "Vorherige Woche"
@@ -7094,9 +7937,6 @@
       "keinRechtText": "Die Kosten pro Fahrzeug sehen Geschäftsleitung und Buchhaltung.",
       "leasing": "Leasing",
       "leer": "Noch keine Kosten in diesem Jahr.",
-      "privatanteil": "Privatanteil",
-      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
-      "privatanteilTitel": "Privatanteil {{jahr}}",
       "proFahrzeug": "Kosten pro Fahrzeug {{jahr}}",
       "proKm": "CHF {{chf}} pro km ({{km}} km)",
       "rest": "Unterhalt und Übriges",
@@ -7358,7 +8198,8 @@
       "staffel": "Preis pro kWp",
       "staffelBis": "bis {{bis}} kWp: CHF {{chf}}",
       "staffelRest": "darüber: CHF {{chf}}",
-      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu."
+      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu.",
+      "youdera_mail": "Mail Youdera (Dossier)"
     },
     "heute": {
       "titel": "Grossprojekte",
@@ -7546,7 +8387,9 @@
       "ueberLaufzeit": "über {{jahre}} Jahre",
       "investition": "Investition (Bauauftrag)",
       "waerme": "Dazu Wärme: ca. {{kw}} kW, Jahresrate ca. {{rate}}.",
-      "ertrag": "Ertrag sonnendach.ch"
+      "ertrag": "Ertrag sonnendach.ch",
+      "bau": "Für uns: Bau (Marge {{prozent}} %)",
+      "wartung": "Für uns: Wartung pro Jahr ({{prozent}} %)"
     },
     "verlauf": {
       "notiz": "Notiz",
@@ -7558,6 +8401,101 @@
       "platzhalter": "Was ist passiert? Ctrl+Enter hält es fest.",
       "festhalten": "Festhalten",
       "stufe": "Stufe: {{stufe}}"
+    },
+    "pdf": {
+      "titel": "Potenzialanalyse Solarstrom",
+      "einleitung": "Ihr Gebäude hat ein grosses Dach mit viel Sonne. Diese Analyse zeigt, wie viel Solarstrom es liefern kann und was Sie damit sparen. {{firma}} plant, baut und wartet die Anlage. Sie investieren nichts und beziehen den Strom vom eigenen Dach günstiger als aus dem Netz.",
+      "anlage": "Ihre Solaranlage",
+      "dach": "Geeignete Dachfläche",
+      "leistung": "Leistung",
+      "ertrag": "Solarstrom pro Jahr",
+      "eigen": "Davon direkt im Gebäude verbraucht",
+      "kosten": "Ihre Stromkosten pro Jahr",
+      "heute": "Heute",
+      "mit": "Mit Solarstrom vom eigenen Dach",
+      "preise": "Netzstrom {{netz}} Rp./kWh, Solarstrom {{solar}} Rp./kWh",
+      "ersparnis": "Sie sparen pro Jahr",
+      "ueberLaufzeit": "Über {{jahre}} Jahre",
+      "investition": "Ihre Investition",
+      "investitionWert": "CHF 0",
+      "vorteile": "Ihre Vorteile",
+      "vorteil1": "Keine Investition: Bau, Betrieb und Wartung sind im Strompreis enthalten.",
+      "vorteil2": "Fester, tiefer Preis für den Solarstrom über die ganze Laufzeit.",
+      "vorteil3": "Ein Ansprechpartner aus der Region für Planung, Bau und Service.",
+      "vorteil4": "Weniger CO2 und ein sichtbarer Beitrag zur Energiewende.",
+      "weiter": "So geht es weiter",
+      "schritt1": "Besichtigung vor Ort: Dach, Statik und Elektroanschluss.",
+      "schritt2": "Ihre Stromdaten (Rechnungen oder Lastgang) für eine genaue Rechnung.",
+      "schritt3": "Verbindliches Angebot mit festem Preis pro kWh.",
+      "schritt4": "Vertrag, Bewilligung und Bau, meist in wenigen Monaten.",
+      "hinweis": "Schätzung aus öffentlichen Daten (sonnendach.ch, Gebäuderegister) und Erfahrungswerten. Verbindlich ist erst das Angebot nach der Besichtigung.",
+      "kontakt": "Ihre Ansprechperson"
+    },
+    "dossier": {
+      "titel": "Dossier Contracting {{nummer}}",
+      "objekt": "Objekt",
+      "parzelle": "Parzelle",
+      "nutzung": "Nutzung",
+      "baujahr": "Baujahr",
+      "dach": "Dachfläche",
+      "heizung": "Heizung",
+      "geschuetzt": "Geschützt / Inventar",
+      "ja": "Ja",
+      "nein": "Nein",
+      "anlage": "Anlage und Strom",
+      "leistung": "Leistung",
+      "ertrag": "Ertrag",
+      "verbrauch": "Verbrauch Kunde",
+      "schaetzung": "Schätzung",
+      "eigen": "Eigenverbrauch",
+      "strompreis": "Strompreis heute",
+      "zielpreis": "Zielpreis Contracting",
+      "investition": "Investition geschätzt",
+      "rolle": "Bau und Wartung",
+      "rolleWert": "{{firma}}",
+      "kunde": "Kunde und Ansprechpersonen",
+      "keineKontakte": "Noch keine Ansprechperson erfasst",
+      "unterlagen": "Unterlagen",
+      "vorhanden": "vorhanden seit",
+      "fehlt": "fehlt noch",
+      "besichtigung": "Besichtigung vor Ort",
+      "nochNicht": "Noch nicht besichtigt",
+      "besichtigtAm": "Besichtigt am",
+      "ok": "in Ordnung",
+      "problem": "Problem",
+      "kontakt": "Fragen an"
+    },
+    "mail": {
+      "beschreibung": "Prüfe Adresse und Text. «Senden» gibt die Mail frei, sie geht über den Ausgangskorb aus deinem Postfach.",
+      "ansehen": "PDF ansehen",
+      "senden": "Senden",
+      "an": "An",
+      "cc": "Cc",
+      "betreff": "Betreff",
+      "text": "Text",
+      "potenzialKnopf": "Potenzialanalyse",
+      "potenzialTitel": "Potenzialanalyse an den Kunden",
+      "potenzial": {
+        "betreff": "Potenzialanalyse Solarstrom: {{name}}",
+        "text": "Guten Tag{{anrede}}\n\nVielen Dank für das Gespräch. Im Anhang finden Sie die Potenzialanalyse für Ihr Gebäude: wie viel Solarstrom Ihr Dach liefern kann und was Sie damit pro Jahr sparen, ohne eigene Investition.\n\nGerne besprechen wir die Zahlen bei einer Besichtigung vor Ort. Passt Ihnen ein Termin in den nächsten zwei Wochen?\n\nFreundliche Grüsse"
+      },
+      "dossierKnopf": "Dossier an Youdera",
+      "dossierNochmals": "Dossier nochmals senden",
+      "dossierTitel": "Dossier an Youdera",
+      "ohneEinverstaendnis": "Das Einverständnis des Kunden zur Weitergabe der Daten ist noch nicht abgehakt (Unterlagen). Sende das Dossier erst, wenn es vorliegt.",
+      "dossier": {
+        "betreff": "Contracting-Anfrage {{nummer}}: {{name}}",
+        "text": "Hallo zusammen\n\nIm Anhang das Dossier für {{name}} in {{gemeinde}} mit Objekt, Anlage, Verbrauch, Ansprechpersonen, Unterlagen und Besichtigung. Bau und Wartung übernimmt Dimension Solaire.\n\nKönnt ihr uns ein Angebot mit Preis pro kWh und Laufzeit schicken? Fehlt etwas, melden wir uns gleich.\n\nBesten Dank und freundliche Grüsse"
+      }
+    },
+    "besichtigung": {
+      "titel": "Besichtigung vor Ort",
+      "am": "Besichtigt {{datum}}",
+      "ok": "In Ordnung",
+      "problem": "Problem",
+      "notizPunkt": "Was ist das Problem?",
+      "notiz": "Notiz zur Besichtigung",
+      "abschliessen": "Besichtigung abschliessen"
     }
   },
   "team": {
@@ -7873,29 +8811,35 @@
     "beschreibung": "Alle Mails aus info@ und euren Postfächern, eingeordnet und der Akte zugeordnet. Wer wartet auf uns, und bis wann antworten wir?",
     "holen": "Jetzt abholen",
     "reiter": {
-      "eingang": "Posteingang",
+      "eingang": "Arbeitsplatz",
       "auswertung": "Reaktionszeit",
-      "einstellungen": "Einstellungen"
+      "einstellungen": "Einstellungen",
+      "team": "Team",
+      "regeln": "Absender-Regeln"
     },
     "filter": "Welche Mails",
     "artFilter": "Art",
     "alleArten": "Alle Arten",
     "ansicht": {
-      "warten": "Wartet auf uns",
-      "neu": "Alle offenen",
-      "meine": "Meine",
+      "warten": "Alle offenen",
+      "meine": "Für mich",
       "erledigt": "Erledigt",
       "abgelegt": "Werbung & Intern",
-      "aeltere": "Ältere"
+      "aeltere": "Ältere",
+      "verteilen": "Zu verteilen",
+      "kunde": "Warten auf Kunde",
+      "zurueck": "Zurückgestellt"
     },
     "leer": {
       "warten": "Niemand wartet auf eine Antwort",
-      "neu": "Keine offenen Mails",
-      "meine": "Dir ist gerade nichts zugeteilt",
+      "meine": "Für dich ist alles erledigt",
       "erledigt": "In den letzten 14 Tagen nichts erledigt",
       "abgelegt": "Nichts abgelegt",
       "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort.",
-      "aeltere": "Keine älteren Mails gefunden"
+      "aeltere": "Keine älteren Mails gefunden",
+      "verteilen": "Nichts zu verteilen",
+      "kunde": "Du wartest auf keinen Kunden",
+      "zurueck": "Nichts zurückgestellt"
     },
     "art": {
       "anfrage": "Neue Anfrage",
@@ -7966,7 +8910,32 @@
       "outlook": "In Outlook öffnen",
       "mail": "Mail",
       "laedt": "Text wird aus Outlook geladen …",
-      "nurVorschau": "Der ganze Text kommt aus Outlook. Ohne Microsoft-Verbindung steht hier nur der Anfang."
+      "nurVorschau": "Der ganze Text kommt aus Outlook. Ohne Microsoft-Verbindung steht hier nur der Anfang.",
+      "waehlen": "Links eine Mail wählen. J und K springen zur nächsten oder vorherigen.",
+      "unterhaltung": "Unterhaltung ({{anzahl}} Mails)",
+      "wir": "wir",
+      "anhaenge": "Anhänge",
+      "anhaengeOutlook": "Anhänge konnten nicht aus Outlook geladen werden.",
+      "oeffnenDatei": "Öffnen",
+      "ablegenIn": "Ablegen in",
+      "erstZuordnen": "Erst einer Akte zuordnen, dann ablegen.",
+      "notizen": "Interne Notizen",
+      "notizNeu": "Notiz fürs Team, @Name gibt eine Glocke",
+      "notizSenden": "Notiz speichern",
+      "keinKunde": "noch kein Kunde",
+      "zahlungErfasst": "Zahlung erfasst",
+      "nummer": "Oder Nummer eingeben",
+      "nummerHinweis": "Lead, Offerte, Projekt, Service-Fall, Rechnung oder Bestellung, z. B. P-2026-0412",
+      "wartenEnde": "Kunde hat geantwortet",
+      "aufKundeWarten": "Auf Kunde warten",
+      "zurueckHolen": "Zurückholen",
+      "zurueckstellen": "Zurückstellen",
+      "zurueckWann": "Wieder zeigen …",
+      "mehr": "Mehr",
+      "aufgabe": "Aufgabe daraus machen",
+      "regel": "Regel für diesen Absender",
+      "ablegen": "Ablegen",
+      "erledigtWarten": "Erledigt, auf Kunde warten"
     },
     "feld": {
       "kunde": "Kunde",
@@ -7979,7 +8948,8 @@
       "art": "Art",
       "zustaendig": "Zuständig",
       "erledigt": "Erledigt",
-      "betreff": "Betreff"
+      "betreff": "Betreff",
+      "zahlung": "Zahlung"
     },
     "weitergeben": {
       "titel": "Mail weitergeben",
@@ -8015,7 +8985,18 @@
       "eskalation": "Glocke bei doppelter Frist",
       "eskalationHinweis": "Wartet ein Kunde doppelt so lange wie vorgesehen, bekommen diese Personen die Glocke. Niemand gewählt = Administration.",
       "verteilen": "Wer verteilt Mails aus info@",
-      "verteilenHinweis": "Mails im eigenen Postfach bearbeitet jede Person selbst. Mails aus Team-Postfächern wie info@ gehen an die erste angekreuzte Person, die da ist, alle Angekreuzten bekommen die Glocke. Sie geben die Mail mit «Weitergeben» an die richtige Person."
+      "verteilenHinweis": "Mails im eigenen Postfach bearbeitet jede Person selbst. Mails aus Team-Postfächern wie info@ gehen an die erste angekreuzte Person, die da ist, alle Angekreuzten bekommen die Glocke. Sie geben die Mail mit «Weitergeben» an die richtige Person.",
+      "warten": "Warten auf Kunde und Verteilen",
+      "wartenAuto": "Nach unserer Antwort automatisch auf den Kunden warten",
+      "wartenTage": "Arbeitstage, dann nachfassen",
+      "wartenFehler": "1 bis 30 Tage, Frist bis 72 Stunden",
+      "wartenFrist": "Frist beim Nachfassen",
+      "wartenOfferte": "Mails mit Offerte",
+      "wartenHinweis": "Antwortet der Kunde nicht, kommt die Mail mit «Nachfassen» zurück zur zuständigen Person. Eine neue Mail des Kunden beendet das Warten.",
+      "vorschlag": "Vorschlag beim Verteilen",
+      "vorschlagHinweis": "Wen das Verteilen je Art vorschlägt, wenn die Akte niemanden nennt. «Automatisch» folgt den Zuständigkeiten.",
+      "vorschlagFuer": "Vorschlag für {{art}}",
+      "automatisch": "Automatisch"
     },
     "pruefung": {
       "uhrzeit": "Bitte als Zeit eingeben, z. B. 07:30.",
@@ -8035,7 +9016,7 @@
       "fehlt": "Diese Mail ist nicht mehr da.",
       "verknuepft": "Mit der Mail im Posteingang verknüpft"
     },
-    "suche": "In älteren Mails suchen",
+    "suche": "Absender, Betreff oder Kunde suchen",
     "nachholen": {
       "titel": "Ältere Mails",
       "hinweis": "Ältere Mails aus jedem persönlichen Postfach (sobald die Person Microsoft verbunden hat) und aus info@ kommen im Hintergrund nach, als «erledigt» ohne Frist. Sie zählen nicht bei «Wartet auf uns» und nicht bei der Reaktionszeit. Mails mit Kunden kommen auch in den Kundenverlauf.",
@@ -8045,6 +9026,143 @@
       "sentitems": "Gesendet",
       "fertig": "fertig, {{anzahl}} Mails",
       "laeuft": "läuft, bis {{datum}}, {{anzahl}} Mails"
+    },
+    "gruppe": {
+      "ueber": "Über der Frist",
+      "heute": "Heute fällig",
+      "spaeter": "Später",
+      "ohne": "Ohne Frist, zur Kenntnis"
+    },
+    "auswaehlen": "Mail von {{name}} markieren",
+    "nachfassen": "Nachfassen",
+    "wartetBis": "wir warten bis {{datum}}",
+    "zurueckBis": "zurück am {{datum}}",
+    "eigenesPostfach": "eigenes Postfach",
+    "nichtVerteilt": "nicht verteilt",
+    "zurueck": {
+      "nachmittag": "Heute Nachmittag",
+      "morgen": "Nächster Arbeitstag",
+      "montag": "Nächsten Montag",
+      "woche": "In einer Woche"
+    },
+    "verteilen": {
+      "an": "Vorschlag: an {{name}}",
+      "ohneVorschlag": "Kein Vorschlag, bitte selbst wählen",
+      "text": "Aus info@, noch niemandem gegeben.",
+      "knopf": "So verteilen",
+      "andere": "Andere Person",
+      "selbst": "Selbst übernehmen"
+    },
+    "schritt": {
+      "nachfassen": "Nachfassen",
+      "nachfassenText": "Der Kunde hat nicht geantwortet. Kurz nachfragen?",
+      "nachfassenKnopf": "Nachfassen schreiben",
+      "lead": "Neue Anfrage",
+      "leadText": "Daraus einen Lead machen, Angaben aus der Mail sind schon ausgefüllt.",
+      "leadKnopf": "Lead anlegen",
+      "fall": "Störung",
+      "fallText": "Service-Fall eröffnen, Anlage und Garantie sucht das CRM.",
+      "fallKnopf": "Service-Fall eröffnen",
+      "fallOeffnen": "Service-Fall läuft",
+      "fallOeffnenText": "Zu dieser Störung gibt es schon einen Fall.",
+      "fallOeffnenKnopf": "Fall öffnen",
+      "zahlung": "Lieferantenrechnung",
+      "zahlungText": "Als Zahlung erfassen, damit sie in der Liquidität steht.",
+      "zahlungKnopf": "Zahlung erfassen",
+      "liefertermin": "Auftragsbestätigung",
+      "lieferterminText": "Liefertermin in die Bestellung übernehmen.",
+      "lieferterminKnopf": "Liefertermin übernehmen",
+      "rechnung": "Frage zu unserer Rechnung",
+      "rechnungText": "Rechnung öffnen, Stand und Zahlungen prüfen.",
+      "rechnungKnopf": "Rechnung öffnen",
+      "offerte": "Zur Offerte",
+      "offerteText": "Der Kunde hat eine offene Offerte.",
+      "offerteKnopf": "Offerte öffnen",
+      "projekt": "Zum Projekt",
+      "projektText": "Im Fahrplan des Projekts nachsehen oder den Schritt setzen.",
+      "projektKnopf": "Projekt öffnen",
+      "faellig": "fällig {{datum}}",
+      "ohneRecht": {
+        "finanzen": "Erfasst die Buchhaltung (Recht Finanzen).",
+        "preise": "Übernimmt der Einkauf (Recht Preise)."
+      }
+    },
+    "sammel": {
+      "titel_one": "{{count}} markiert",
+      "titel_other": "{{count}} markiert",
+      "geben": "Weitergeben an …",
+      "aufheben": "Markierung aufheben"
+    },
+    "taste": {
+      "naechste": "Nächste Mail",
+      "vorherige": "Vorherige Mail",
+      "erledigt": "Erledigt",
+      "antworten": "Antworten",
+      "weitergeben": "Weitergeben",
+      "markieren": "Mail markieren",
+      "suchen": "Suchen"
+    },
+    "team": {
+      "text": "Wie viele Mails jede Person offen hat. Nur Zahlen, keine Inhalte aus fremden Postfächern.",
+      "person": "Person",
+      "offen": "Offen",
+      "ueber": "Über der Frist",
+      "zurueck": "Zurückgestellt",
+      "warten": "Warten auf Kunde",
+      "mitte": "Reaktion (Mitte, 7 Tage)",
+      "abwesend": "abwesend",
+      "vertreten": "abwesend, vertreten durch {{name}}",
+      "weg": "weg",
+      "leer": "Noch keine Personen mit Mails"
+    },
+    "aufgabe": {
+      "titel": "Aufgabe aus der Mail",
+      "text": "Die Aufgabe ist mit der Mail verknüpft und erscheint unter Aufgaben.",
+      "was": "Was ist zu tun?",
+      "bis": "Bis wann",
+      "wer": "Für wen",
+      "knopf": "Aufgabe anlegen"
+    },
+    "regel": {
+      "titel": "Regel für diesen Absender",
+      "eigen": "Gilt für dein eigenes Postfach, ab der nächsten Mail.",
+      "team": "Gilt für info@ und die Team-Postfächer, ab der nächsten Mail.",
+      "absender": "Absender",
+      "ganzeFirma": "Ganze Firma ({{domain}})",
+      "was": "Was passiert",
+      "aktion": {
+        "zuweisen": "Immer an eine Person",
+        "art": "Immer als Art einordnen",
+        "ablegen": "Still ablegen"
+      },
+      "hinweis": "Kundenmails werden nie still abgelegt, auch wenn eine Regel passt.",
+      "nurVerteiler": "Regeln für info@ legt an, wer verteilt.",
+      "liste": "Jede Person legt Regeln für ihr eigenes Postfach an, wer verteilt auch für info@. Neue Regeln direkt aus einer Mail: «Mehr › Regel für diesen Absender».",
+      "postfach": "Postfach",
+      "loeschen": "Regel für {{absender}} löschen",
+      "zeigeZuweisen": "an {{name}}",
+      "zeigeArt": "als {{art}}",
+      "leer": "Noch keine Regeln",
+      "leerText": "Öffne eine Mail und wähle «Mehr › Regel für diesen Absender»."
+    },
+    "zahlung": {
+      "titel": "Zahlung erfassen",
+      "text": "Kommt in die Liquidität und zur Zahlung. Bitte die gelesenen Werte prüfen.",
+      "firma": "Lieferant",
+      "nummer": "Rechnungsnummer",
+      "datum": "Rechnungsdatum",
+      "betrag": "Betrag (CHF)",
+      "betragFalsch": "Bitte einen Betrag grösser als 0 eingeben.",
+      "faellig": "Fällig am",
+      "gelesen": "Von der KI aus der Mail gelesen, nichts wird ohne deinen Klick gespeichert.",
+      "knopf": "Zahlung erfassen"
+    },
+    "liefertermin": {
+      "titel": "Liefertermin übernehmen",
+      "text": "Der Termin kommt in die Bestellung, der Einkauf sieht ihn sofort.",
+      "waehlen": "Bestellung wählen",
+      "datum": "Liefertermin",
+      "knopf": "Übernehmen"
     }
   },
   "einfach": {

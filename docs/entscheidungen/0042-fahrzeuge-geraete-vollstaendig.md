@@ -20,13 +20,12 @@ https://claude.ai/artifact/3vk5SRJiTGVPnXp7gLSxFL
   und Kosten brauchen einen Betrag. Alles weiter nur über `ressource_eintrag_erfassen`.
 - **Schäden mit Stand** (offen, in Arbeit, erledigt) über `ressource_schaden_setzen`; erledigt setzt das Gerät
   wieder in Ordnung. Fotos direkt aus dem Eintrag.
-- **Belegung** (Sicht `ressourcen_belegung`): Fahrzeug folgt dem Team (Einsatz einer Person mit fest zugeteiltem
-  Fahrzeug), von Hand reservieren oder ersetzen über `ressource_reservieren` (wiederholbar mit ID),
-  Werkstatt-Termine. Wochenplan Mo–Fr mit Doppelbelegung rot.
+- **Belegung** (Sicht `ressourcen_belegung`): nur von Hand (Frage 1 B), reservieren für einen Einsatz, einen Zweck
+  oder die Werkstatt über `ressource_reservieren` (wiederholbar mit ID). Wochenplan Mo–Fr mit Doppelbelegung rot.
 - **Ausleihe** mit «zurück bis» (`ressource_uebergeben(..., p_zurueck_bis)`), Frist «ausleihe» in `fristen`.
   Warnung, wenn der Person der nötige Führerausweis fehlt.
 - **Kosten** (`fuhrpark_kosten(jahr)`, nur Recht `finanzen`): Leasing, Treibstoff, Unterhalt, Versicherung und
-  Steuer, Übriges, CHF pro km, Privatanteil 0,9 % pro Monat (`einstellungen.ressourcen.privatanteil_prozent_monat`).
+  Steuer, Übriges, CHF pro km. Kein Privatanteil im CRM (Frage 5 B, Lohnausweis bleibt in AbaNinja).
 - **Kilometer monatlich**: Zeitplan-Job `fuhrpark_km` → `fuhrpark_km_erinnern` (einmal pro Fahrzeug und Monat an die
   fest zugeteilte Person, Glocke öffnet gleich «Kilometerstand eintragen»). Abschalten: `km_monatlich: false`.
 - **QR-Etiketten** (PDF, 3 × 8 pro A4-Bogen): der Code öffnet am Handy die Akte; dort «Nehme ich» und «Zurück ins
@@ -34,5 +33,10 @@ https://claude.ai/artifact/3vk5SRJiTGVPnXp7gLSxFL
 
 ## Offen
 
-- Import der Tankkarten-Abrechnung (CSV) folgt, sobald klar ist, welche Tankkarte im Einsatz ist.
-- Antworten auf die Fragen 1–5 im Thread; gebaut ist jeweils die empfohlene Variante.
+- Nichts. (Tankkarten-Import entfällt, siehe unten.)
+
+## Antworten von Chris (3.11.2026)
+
+1 B: Fahrzeug immer von Hand einplanen, nie automatisch dem Team folgen (Migration `20261114001000_fuhrpark_von_hand`).
+2 A: Kosten aus Tankkarte und AbaNinja. Nachtrag: es gibt aktuell keine Tankkarte, getankt wird mit der Firmenkarte. Darum kein Import; beim Eintrag «Tanken» (und Kosten, Service, Reparatur, Reifen, Vignette, MFK) wird der Beleg fotografiert und landet mit Datum und Art im Namen bei den Dokumenten des Fahrzeugs. Die Buchhaltung gleicht ihn in AbaNinja mit der Kartenabrechnung ab. 3 A: QR-Etiketten. 4 A: Kilometer monatlich nachfragen.
+5 B: kein Privatanteil (Spalte `privat_anteil` und Einstellung wieder entfernt).

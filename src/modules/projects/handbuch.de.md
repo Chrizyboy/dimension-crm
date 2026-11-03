@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -50,6 +50,7 @@ Jeder unterschriebene Auftrag läuft hier über Bewilligungen, Vorbereitung und 
 
 1. Ansicht **Abwesenheiten**, **Abwesenheit erfassen**: Person, von, bis, halber Tag.
 2. Ferien und «Abwesend» aus Outlook erscheinen von selbst.
+3. Für alle erfassen Geschäftsleitung und Buchhaltung; direkte Vorgesetzte (aus der Personal-Akte) auch für ihre Mitarbeitenden, alle anderen nur für sich.
 
 ### Inbetriebnahme und Abschluss
 
@@ -88,4 +89,5 @@ Dann gilt die Anlage als gebaut: die Schritte bis zur Montage werden erledigt un
 
 ## Neu {#neu}
 
+- 03.11.2026: Direkte Vorgesetzte erfassen Abwesenheiten ihrer Mitarbeitenden.
 - 01.11.2026: Zeitplan der Baustellen mit Sicht Baustellen oder Team, Konflikte rot.

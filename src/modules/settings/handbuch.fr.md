@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: administration
 ---
 
@@ -9,7 +9,8 @@ L’administration configure ici le CRM : personnes et rôles, qui reçoit les n
 
 ## Qui travaille ici {#wer}
 
-- **Administration** : tous les onglets.
+- **Administration** : tous les onglets, modifie tout.
+- **Direction** : voit tous les onglets, ne modifie rien.
 - **Tout le monde** : [Mon compte](/konto) via la photo en haut à droite.
 
 ## Comment faire {#so}
@@ -20,11 +21,19 @@ L’administration configure ici le CRM : personnes et rôles, qui reçoit les n
 2. Saisir nom, e-mail, **Rôle** et **Site**, **Envoyer l’invitation**. La personne se connecte avec Microsoft ou un code par e-mail.
 3. Rien reçu : sur la ligne, **Renvoyer l’invitation**.
 
+### Ajouter une personne sans e-mail de l’entreprise (lien pour le téléphone)
+
+1. **Inviter une personne**, saisir le nom et activer **Sans e-mail: lien pour le téléphone**.
+2. Choisir **Rôle** et **Site**, **Créer un lien d’inscription**.
+3. **Copier le lien** ou l’envoyer **Par WhatsApp**. La personne ouvre le lien sur son téléphone, saisit son e-mail privé et se connecte avec le code.
+4. Le lien vaut 14 jours et une seule fois. Pour un nouveau lien, ouvrir la personne, **Créer un lien d’inscription**.
+
 ### Fixer les droits et les domaines visibles
 
 1. Onglet **Rôles** : par rôle, les **Droits du rôle** et les domaines visibles.
-2. Pour une seule personne : ouvrir la personne, **Sélection propre pour cette personne**.
-3. **Vue simple (uniquement temps et frais)** sur le rôle : ainsi travaille le rôle monteur, avec temps de travail, frais et planning.
+2. Chez la personne, sous **Compléments** : **Complément direction** (voit tout, finances comprises) et **Complément administration** (configure le système, ne voit ni les finances ni les dossiers du personnel des autres).
+3. Pour une seule personne : ouvrir la personne, **Sélection propre pour cette personne**.
+4. **Vue simple (uniquement temps et frais)** sur le rôle : seulement temps de travail, frais et planning. Le montage travaille avec la vue normale pour accéder aux rapports, au service et aux véhicules.
 
 ### Régler les responsabilités
 
@@ -86,6 +95,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Compléments direction et administration, lien pour le téléphone pour les personnes sans e-mail de l’entreprise.
 - 31.10.2026: Onglet Responsabilités pour leads, offres et remplacement.
 - 31.10.2026: Classement dans SharePoint sous Connexions ; signature propre dans Mon compte.
 - 31.10.2026: Rôle monteur avec vue simple.
