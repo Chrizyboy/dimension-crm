@@ -8,7 +8,7 @@ import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useOffertAenderung } from '../hooks/useOfferten'
 import { leseEturnityOfferte } from '../lib/eturnity'
-import { auswahlFuerSpeichern, vergleiche } from '../lib/pdfUebernahme'
+import { auswahlFuerSpeichern, vergleiche, zusatzwerte } from '../lib/pdfUebernahme'
 import { pdfZeilen } from '../lib/pdfText'
 import { legePdfAb, setzeWerte } from '../services/offerten'
 import type { Offerte, PdfWerte } from '../types'
@@ -27,7 +27,7 @@ export function PdfWerteAbschnitt({ o }: { o: Offerte }) {
   const speichern = useOffertAenderung(async (nurLeere: boolean) => {
     if (!werte) return
     const felder = auswahlFuerSpeichern(vergleiche(o, werte), nurLeere)
-    await setzeWerte(o.id, { ...felder, wirtschaftlichkeit: werte.wirtschaftlichkeit }, 'eturnity-pdf', nurLeere)
+    await setzeWerte(o.id, { ...felder, ...zusatzwerte(werte) }, 'eturnity-pdf', nurLeere)
     if (ablegen && datei) await legePdfAb(o, datei)
   })
 
@@ -92,6 +92,11 @@ export function PdfWerteAbschnitt({ o }: { o: Offerte }) {
           {fremdeNummer && (
             <p role="alert" className="bg-warn-soft text-warn rounded-md p-2 text-sm">
               {t('offerten.pdf.andereNummer', { nummer: werte.nummer })}
+            </p>
+          )}
+          {werte.stueckliste && werte.stueckliste.length > 0 && (
+            <p className="text-muted-foreground text-sm">
+              {t('offerten.stueckliste.imPdf', { anzahl: werte.stueckliste.length })}
             </p>
           )}
           {vergleich.length === 0 ? (

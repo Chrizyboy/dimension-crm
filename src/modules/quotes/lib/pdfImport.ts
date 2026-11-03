@@ -15,12 +15,15 @@ function normal(text: string): string {
 }
 
 /**
- * Sucht das Ziel für ein gelesenes PDF: zuerst eine Offerte mit derselben Nummer, sonst ein Lead in
+ * Sucht das Ziel für ein gelesenes PDF: zuerst eine Offerte mit derselben Nummer oder demselben Eturnity-Projekt, sonst ein Lead in
  * «Neue Offerten», dessen Name den Kundennamen aus dem PDF enthält (Eturnity schreibt «MURER»).
  * Ist der Name nicht eindeutig, wird nichts geraten.
  */
 export function findeZiel(p: PdfWerte, offerten: readonly Offerte[], eingang: readonly Eingang[]): ImportZiel {
-  const o = p.nummer ? offerten.find((x) => x.nummer === p.nummer) : undefined
+  // Die Vorlage 2026 trägt keine CRM-Nummer, aber das Eturnity-Projekt («hyd-89») in der Fusszeile.
+  const o =
+    (p.nummer ? offerten.find((x) => x.nummer === p.nummer) : undefined) ??
+    (p.eturnityId ? offerten.find((x) => x.eturnityId === p.eturnityId) : undefined)
   if (o) return { art: 'offerte', offerteId: o.id }
   const kunde = p.kunde ? normal(p.kunde) : ''
   if (kunde.length < 2) return { art: 'keins' }

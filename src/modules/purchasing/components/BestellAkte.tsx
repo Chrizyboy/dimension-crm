@@ -19,6 +19,7 @@ import { AbDialog } from './AbDialog'
 import { AbLieferung } from './AbLieferung'
 import { MailsAbschnitt } from './MailsAbschnitt'
 import { RechnungAbschnitt } from './RechnungAbschnitt'
+import { ReklamationAbschnitt } from './ReklamationAbschnitt'
 import { Schritte } from './Schritte'
 import { BestellAngaben } from './BestellAngaben'
 import { BestellungSenden } from './BestellungSenden'
@@ -30,7 +31,7 @@ import { WareneingangDialog } from './WareneingangDialog'
 /**
  * Akte einer Bestellung: Angaben, Positionen (im Entwurf bearbeitbar) und die nächsten Schritte je Stand:
  * Freigeben (über der Grenze: vorlegen) → per Mail mit PDF bestellen (oder Webshop/Telefon) → Auftragsbestätigung
- * → Wareneingang mit Lieferschein → Lieferantenrechnung prüfen.
+ * → Wareneingang mit Lieferschein → Reklamationen → Lieferantenrechnung prüfen.
  */
 export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: () => void }) {
   const { t } = useTranslation()
@@ -180,6 +181,7 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
                 setDialog('ab')
               }}
             />
+            <ReklamationAbschnitt bestellung={b} positionen={positionen} />
             <RechnungAbschnitt bestellung={b} />
             <MailsAbschnitt id={b.id} />
             {b.status === 'freigegeben' && !b.email_bestellung && (

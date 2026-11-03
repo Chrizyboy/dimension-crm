@@ -111,10 +111,11 @@ Die Karte kommt von swisstopo. Ist sie gesperrt oder offline, bleibt sie grau; R
 
 ### Wie speichere ich meine Filter?
 
-**Gespeicherte Ansichten**, **Aktuelle Ansicht speichern**. Mit **Für das ganze Team sichtbar** sehen sie alle.
+Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für mehrere feste Ansichten: **Gespeicherte Ansichten**, **Aktuelle Ansicht speichern**. Mit **Für das ganze Team sichtbar** sehen sie alle.
 
 ## Neu {#neu}
 
+- 03.11.2026: Person, Quelle und Region mit Häkchen (mehrere, **nur**, «Alle ausser …»); Knopf **Spalten** blendet Schritte der Pipeline ein und aus. Die Auswahl bleibt gemerkt.
 - 03.11.2026: «Termin-Link senden»: Kunden buchen die Besichtigung selbst auf dimension-solaire.ch.
 - 03.11.2026: Planung in einem Reiter (Kalender, Tagesroute, Tour); Besichtigung mit Checkliste, Kamera und «Abschliessen · Offerte bestellen».
 - 02.11.2026: Startansicht «Zu tun» mit 15-Minuten-Uhr, Lead-Akte als ganze Seite, Anruf-Ergebnis mit Rückruf und SMS-Entwurf, Pipeline in sechs Schritten, Steuerung für die Geschäftsleitung, Website-Anfragen direkt.

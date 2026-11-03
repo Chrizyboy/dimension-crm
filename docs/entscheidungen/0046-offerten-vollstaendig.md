@@ -35,3 +35,15 @@ Alle Werte in `einstellungen.offerten` (nur Administration). Regeln liegen in de
 
 Eingang aus Eturnity mit Abweichungen und Stückliste, Auswertung (Verlustgründe, Quote je Person), Handy-Ansicht.
 Die drei Fragen (Varianten, Freigabe-Regel, Chance) sind nach Empfehlung A gebaut, bis Chris anders entscheidet.
+
+## Nachtrag 03.11.2026: Stückliste aus Eturnity
+
+- Echte Offerten (SharePoint, Muri und Bulle, DE und FR) kommen alle aus Eturnity mit «Detailkosten». Die App liest
+  daraus die Stückliste (`lib/stueckliste.ts`) und speichert sie über `offerte_werte_setzen` in `offerten.stueckliste`.
+  Die Liste ersetzt die alte ganz; im Verlauf steht nur die Zahl der Positionen.
+- Gelesen wird zeilenunabhängig (Menge, Einheit, EP, Preis sind der Anker), weil pdf.js je nach Vorlage Titel und
+  «Hersteller * Typ» in anderer Reihenfolge liefert. Infotexte mit 0.00 werden weggelassen.
+- Zuordnung ohne CRM-Nummer über das Eturnity-Projekt aus der Fusszeile (`eturnity_id`).
+- Materialliste beim Auftrag: Kalkulation zuerst, sonst Stückliste (Material ohne Optionen), sonst Module/
+  Wechselrichter/Batterie aus den Offert-Angaben.
+- Verkaufspreise aus Eturnity sind keine Einkaufspreise und darum für alle sichtbar, die die Offerte sehen.

@@ -8,6 +8,7 @@ import {
   ladePersonen,
 } from '../services/offerten'
 import { ladeOffertEinstellungen } from '../services/ablauf'
+import { ladeStueckliste } from '../services/stueckliste'
 import type { Offerte } from '../types'
 
 /** Zwischenspeicher-Schlüssel aller Offertdaten. */
@@ -72,5 +73,13 @@ export function useOffertEinstellungen() {
     queryKey: [...OFFERTEN_SCHLUESSEL, 'einstellungen'],
     queryFn: ladeOffertEinstellungen,
     staleTime: 10 * 60_000,
+  })
+}
+
+/** Stückliste einer Offerte (aus dem Eturnity-PDF), erst beim Öffnen der Akte geladen. */
+export function useStueckliste(offerteId: string) {
+  return useQuery({
+    queryKey: [...OFFERTEN_SCHLUESSEL, 'stueckliste', offerteId],
+    queryFn: () => ladeStueckliste(offerteId),
   })
 }

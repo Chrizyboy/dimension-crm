@@ -229,6 +229,7 @@ export interface LagerZeile {
   mindestmenge: number | null
   unterwegs: number
   unter_mindest: boolean
+  lagerplatz: string | null
 }
 
 export interface Lieferant {
@@ -266,4 +267,4 @@ export interface ArtikelTreffer {
   einheit: string
 }
 
-export type LagerArt = 'eingang' | 'korrektur' | 'inventur' | 'reservierung' | 'freigabe' | 'entnahme'
+export type LagerArt = 'eingang' | 'korrektur' | 'inventur' | 'reservierung' | 'freigabe' | 'entnahme' | 'rueckgabe'

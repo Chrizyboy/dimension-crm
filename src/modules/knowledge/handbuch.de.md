@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -44,7 +44,8 @@ Hier steht, wie das CRM funktioniert: zu jedem Bereich ein Kapitel, für jede Ro
 
 1. **Fehler melden** (auch am Ende jedes Kapitels, in jeder Fehleranzeige oder mit Ctrl K).
 2. **Worum geht es?**, **Was ist passiert?**, **Was hast du erwartet?**, **Bereich** und am besten ein Bildschirmfoto.
-3. **Meldung senden**. Die Meldung wird geprüft; die Einschätzung geht an die entscheidende Person. Nach dem Entscheid bekommst du die Antwort in der Glocke und per Mail.
+3. Bildschirmfoto anhängen: am PC mit **Windows+Umschalt+S** einen Ausschnitt fotografieren und im Fenster **Strg+V** drücken, ein Bild hineinziehen oder **Bild wählen**. Am Handy **Foto aufnehmen** (Kamera) oder **Bild wählen** (Galerie). Höchstens 8 Bilder oder PDF; mit dem **×** entfernst du eines wieder.
+4. **Meldung senden**. Die Meldung wird geprüft; die Einschätzung geht an die entscheidende Person. Nach dem Entscheid bekommst du die Antwort in der Glocke und per Mail.
 
 ### Einen Prozess oder ein Video ablegen (Administration)
 
@@ -74,12 +75,17 @@ Hier steht, wie das CRM funktioniert: zu jedem Bereich ein Kapitel, für jede Ro
 
 Am Ende des Kapitels **Stimmt etwas nicht? Melden**. Fehlende Anleitungen werden ergänzt.
 
+### Ich habe das Bildschirmfoto vergessen.
+
+Öffne deine Meldung unter **Meldungen** und tippe auf **Bild anhängen**. Das geht, solange die Meldung offen ist, auch nach einer Rückfrage.
+
 ### Wo finde ich die Kurzanleitung für den ersten Tag?
 
 Reiter **Erste Schritte**.
 
 ## Neu {#neu}
 
+- 03.11.2026: Bildschirmfotos und Fotos anhängen: Strg+V, Hineinziehen, Kamera am Handy, Vorschau in der Meldung und **Bild anhängen** zum Nachreichen.
 - 02.11.2026: Kapitel zu jedem Bereich, Hilfe mit F1, Suche über alles, «Für dich» je Rolle, Begriffe A–Z und «Neu».
 - 31.10.2026: Meldungen mit Einschätzung und Entscheid «Erledige es» / «Nicht».
 - 24.10.2026: Handbuch mit Prozessen, Videos, Erste Schritte und Fehler melden.
