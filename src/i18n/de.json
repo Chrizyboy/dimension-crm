@@ -1253,7 +1253,8 @@
       "bulle": "Offerten Bulle",
       "nachfassen": "Nachfassen",
       "import": "PDF-Import",
-      "vorrat": "Arbeitsvorrat"
+      "vorrat": "Arbeitsvorrat",
+      "auswertung": "Auswertung"
     },
     "standort": {
       "alle": "Alle",
@@ -1669,6 +1670,30 @@
       "vorschlagA": "Wie offeriert",
       "bearbeiten": "Varianten bearbeiten",
       "erfassen": "Varianten erfassen"
+    },
+    "auswertung": {
+      "zeitraum": "Zeitraum der Auswertung",
+      "tage": "{{n}} Tage",
+      "kOfferiert_one": "offeriert · {{count}} Offerte",
+      "kOfferiert_other": "offeriert · {{count}} Offerten",
+      "kGewonnen_one": "gewonnen · {{count}} Auftrag",
+      "kGewonnen_other": "gewonnen · {{count}} Aufträge",
+      "kVerloren": "verloren",
+      "kQuote": "Abschlussquote (gewonnen von entschieden)",
+      "kDauer": "Ø vom Senden bis zum Entscheid",
+      "jePerson": "Je Person",
+      "person": "Person",
+      "offeriert": "Offeriert",
+      "gewonnen": "Gewonnen",
+      "verloren": "Verloren",
+      "quote": "Quote",
+      "volumen": "Gewonnen CHF",
+      "leer": "Im Zeitraum nichts offeriert oder entschieden.",
+      "gruende": "Warum verloren",
+      "konkurrenz": "Gegen wen",
+      "keineVerloren": "Keine verlorenen Offerten im Zeitraum.",
+      "keineKonkurrenz": "Keine Konkurrenz erfasst. Beim Nachfassen unter «Konkurrenz» eintragen.",
+      "ohne": "Ohne Zuständige"
     }
   },
   "werkvertraege": {

@@ -1253,7 +1253,8 @@
       "bulle": "Offres Bulle",
       "nachfassen": "Relances",
       "import": "Import PDF",
-      "vorrat": "Travail en cours"
+      "vorrat": "Travail en cours",
+      "auswertung": "Analyse"
     },
     "standort": {
       "alle": "Tous",
@@ -1669,6 +1670,30 @@
       "vorschlagA": "Comme offert",
       "bearbeiten": "Modifier les variantes",
       "erfassen": "Saisir des variantes"
+    },
+    "auswertung": {
+      "zeitraum": "Période de l'analyse",
+      "tage": "{{n}} jours",
+      "kOfferiert_one": "offert · {{count}} offre",
+      "kOfferiert_other": "offert · {{count}} offres",
+      "kGewonnen_one": "gagné · {{count}} commande",
+      "kGewonnen_other": "gagné · {{count}} commandes",
+      "kVerloren": "perdues",
+      "kQuote": "Taux de conclusion (gagnées sur décidées)",
+      "kDauer": "Ø de l'envoi à la décision",
+      "jePerson": "Par personne",
+      "person": "Personne",
+      "offeriert": "Offertes",
+      "gewonnen": "Gagnées",
+      "verloren": "Perdues",
+      "quote": "Taux",
+      "volumen": "Gagné CHF",
+      "leer": "Rien d'offert ou de décidé dans la période.",
+      "gruende": "Pourquoi perdues",
+      "konkurrenz": "Contre qui",
+      "keineVerloren": "Aucune offre perdue dans la période.",
+      "keineKonkurrenz": "Aucune concurrence saisie. L'indiquer lors de la relance sous « Concurrence ».",
+      "ohne": "Sans responsable"
     }
   },
   "werkvertraege": {

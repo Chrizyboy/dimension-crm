@@ -34,3 +34,35 @@ export function Zeile({ label, children }: { label: string; children: ReactNode 
     </div>
   )
 }
+
+/** Kennzahl-Kachel: grosse Zahl, kurzer Text, optional eingefärbt. */
+export function Kachel({
+  zahl,
+  text,
+  ton,
+  nurGross = false,
+}: {
+  zahl: string
+  text: string
+  ton?: 'bad' | 'warn' | 'ok' | undefined
+  /** Am Handy ausblenden (nur ab sm), damit oben nur steht, was heute zu tun ist. */
+  nurGross?: boolean
+}) {
+  return (
+    <div
+      className={cn('bg-surface flex-col gap-0.5 rounded-lg border px-3 py-2.5', nurGross ? 'hidden sm:flex' : 'flex')}
+    >
+      <span
+        className={cn(
+          'font-display zahlen text-xl font-semibold',
+          ton === 'bad' && 'text-bad',
+          ton === 'warn' && 'text-warn',
+          ton === 'ok' && 'text-ok',
+        )}
+      >
+        {zahl}
+      </span>
+      <span className="text-muted-foreground text-xs">{text}</span>
+    </div>
+  )
+}
