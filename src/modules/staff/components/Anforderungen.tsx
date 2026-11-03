@@ -13,9 +13,10 @@ import { useAktion } from '../hooks/useAktion'
 import { useRollen } from '../hooks/useTeam'
 import { ausweisArten } from '../lib/matrix'
 import { anforderungSpeichern } from '../services/kurse'
+import { TaetigkeitAnforderungen } from './TaetigkeitAnforderungen'
 
 /**
- * Reiter «Anforderungen»: welche Ausweise je Rolle Pflicht sind und wie lange sie gelten. Ein Häkchen speichert
+ * Reiter «Anforderungen»: welche Ausweise je Rolle Pflicht sind und wie lange sie gelten, darunter je Tätigkeit. Ein Häkchen speichert
  * sofort; eine neue Art ist eine neue Zeile, keine Programmierung. Ändern nur Administration und Recht «personal»
  * (die Datenbank prüft), alle anderen sehen die Tabelle nur.
  */
@@ -161,6 +162,7 @@ export function Anforderungen({ darfAendern }: { darfAendern: boolean }) {
             {t('team.anforderung.neu')}
           </Button>
         ))}
+      <TaetigkeitAnforderungen darfAendern={darfAendern} />
     </div>
   )
 }

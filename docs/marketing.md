@@ -23,7 +23,10 @@ Rückruf-Adresse für alle drei Dienste (beim Anbieter als «Redirect URI» eint
 
 ## 1. Facebook-Seite und Instagram (Meta)
 
-Ein Konto für die ganze Firma: verbunden wird einmal durch eine Person mit Admin-Recht im CRM.
+Eine Verbindung für die ganze Firma: verbunden wird einmal durch eine Person mit Admin-Recht im CRM. Sie bringt alle
+Facebook-Seiten mit, die diese Person verwaltet (bei Dimension Solaire die deutsche und die französische), samt
+dem Instagram-Konto, das an der jeweiligen Seite hängt. Jedes Instagram-Konto muss darum mit «seiner» Seite
+verknüpft sein (deutsches Instagram ↔ deutsche Seite, französisches ↔ französische).
 
 ### 1.1 App bei Meta anlegen (einmal)
 
@@ -50,8 +53,10 @@ npx supabase secrets set META_SEITE_ID=<ID der Seite Dimension Solaire>
 ### 1.3 Verbinden
 
 CRM › **Marketing** › **Social Media** › Karte «Facebook und Instagram» › **Verbinden**. Bei Meta anmelden, die
-Seite Dimension Solaire und das Instagram-Konto auswählen, zustimmen. Danach steht dort «Verbunden» mit dem
-Seitennamen. Der Seiten-Zugang läuft nicht ab, solange niemand das Passwort ändert oder die App entfernt; sonst
+**beide** Seiten und **beide** Instagram-Konten auswählen, zustimmen. Danach steht dort «Verbunden» mit den
+Seitennamen. Darunter wählt die Administration je Netzwerk, welches Konto **Deutsch** und welches **Französisch**
+ist (Vorschlag nach dem Namen: GmbH/Muri = Deutsch, Sàrl/Bulle = Französisch). Ein deutscher Post geht nur ans
+deutsche Konto, ein französischer nur ans französische, «DE + FR» an beide, jedes in seiner Sprache (Entscheid 0053). Der Seiten-Zugang läuft nicht ab, solange niemand das Passwort ändert oder die App entfernt; sonst
 zeigt die Karte «Neu verbinden».
 
 ## 2. LinkedIn-Firmenseite
@@ -70,7 +75,8 @@ npx supabase secrets set LINKEDIN_CLIENT_ID=… LINKEDIN_CLIENT_SECRET=…
 npx supabase secrets set LINKEDIN_ORGANISATION=urn:li:organization:<Nummer>
 ```
 
-5. CRM › Marketing › Social Media › «LinkedIn-Firmenseite» › **Verbinden** (als Super-Admin der Firmenseite).
+5. CRM › Marketing › Social Media › «LinkedIn-Firmenseite» › **Verbinden** (als Super-Admin **beider** Firmenseiten,
+   deutsch und französisch). Darunter Deutsch und Französisch prüfen bzw. wählen.
    Der Zugang gilt 60 Tage und wird automatisch verlängert; nach einem Jahr will LinkedIn eine neue Anmeldung
    («Neu verbinden»).
 

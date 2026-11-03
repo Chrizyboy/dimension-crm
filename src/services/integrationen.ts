@@ -47,6 +47,7 @@ export async function rufeFunktion<T extends object>(
     | 'verbindungen'
     | 'ausschreibungen'
     | 'grossprojekte'
+    | 'adressbuch'
     | 'social'
     | 'ki'
     | 'sicherung',

@@ -1,4 +1,4 @@
--- Finanzen vollständig (Entscheid 0053): Gesellschaften getrennt, Konten mit Kontoauszug, Lieferantenrechnungen mit
+-- Finanzen vollständig (Entscheid 0054): Gesellschaften getrennt, Konten mit Kontoauszug, Lieferantenrechnungen mit
 -- Freigabe der Buchhaltung (das Visum der Projektleitung gehört zu den Eingangsrechnungen, Thread «Rechnungen»),
 -- Zahllauf mit Freigabe durch eine zweite Person,
 -- MWST-Schätzung je Quartal, Marge über alle Projekte und Monatsabschluss. Buchhaltung bleibt in AbaNinja.

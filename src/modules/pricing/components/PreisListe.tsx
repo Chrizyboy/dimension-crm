@@ -14,8 +14,10 @@ import { melde } from '@/services/meldungen'
 import { usePreisAenderung } from '../hooks/usePreise'
 import { leseProzent, prozentText } from '../lib/prozent'
 import { archiviere, setzePreis } from '../services/preise'
-import type { Artikel } from '../types'
+import type { Artikel, PreisRegeln } from '../types'
+import { MehrfachLeiste } from './MehrfachLeiste'
 import { PreisFeld } from './PreisFeld'
+import { auswahlSpalte, hinweisSpalte, lagerSpalte } from './PreisListeSpalten'
 
 const ArchivDialog = lazy(() => import('./ArchivDialog'))
 const spalte = spaltenHelfer<Artikel>()
@@ -30,18 +32,21 @@ export default function PreisListe({
   alle,
   archiv,
   aktiveId,
+  regeln,
   onOeffnen,
 }: {
   artikel: Artikel[]
   alle: Artikel[]
   archiv: boolean
   aktiveId: string | null
+  regeln: PreisRegeln | undefined
   onOeffnen: (id: string) => void
 }) {
   const { t } = useTranslation()
   const satz = useMwst()
   const kategorien = useAuswahl('artikelkategorie')
   const [archivieren, setArchivieren] = useState<Artikel | null>(null)
+  const [gewaehlt, setGewaehlt] = useState<Set<string>>(new Set())
   const preis = usePreisAenderung((a: { id: string; p: Parameters<typeof setzePreis>[1] }) => setzePreis(a.id, a.p))
   const zurueck = usePreisAenderung((id: string) => archiviere(id, null))
 
@@ -198,18 +203,34 @@ export default function PreisListe({
   const spalten = archiv
     ? spalte.columns([nameSpalte, archivSpalte, vkSpalte, lieferantSpalte, aktionSpalte])
     : spalte.columns([
+        auswahlSpalte(t, gewaehlt, (id, an) => {
+          const n = new Set(gewaehlt)
+          if (an) n.add(id)
+          else n.delete(id)
+          setGewaehlt(n)
+        }),
         nameSpalte,
+        lagerSpalte(t),
         wpSpalte,
         ekSpalte,
         margeSpalte,
         skontoSpalte,
         vkSpalte,
         lieferantSpalte,
+        hinweisSpalte(t, regeln),
         aktionSpalte,
       ])
 
   return (
     <>
+      {!archiv && (
+        <MehrfachLeiste
+          ids={[...gewaehlt]}
+          onFertig={() => {
+            setGewaehlt(new Set())
+          }}
+        />
+      )}
       <Datentabelle
         daten={artikel}
         spalten={spalten}
