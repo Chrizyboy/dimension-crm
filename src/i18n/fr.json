@@ -11865,7 +11865,10 @@
       "gespeicherte_ansichten": "Vue enregistrée",
       "rueckmeldungen": "Retour",
       "kontakt_zugehoerigkeiten": "Personne de contact",
-      "eingangsrechnungen": "Factures fournisseurs"
+      "eingangsrechnungen": "Factures fournisseurs",
+      "marketing_kampagnen": "Campagnes",
+      "marketing_zielgruppen": "Groupes cibles",
+      "werbemittel": "Supports publicitaires"
     }
   },
   "zugehoerigkeit": {
