@@ -56,7 +56,7 @@ function Spalte({
       ref={setNodeRef}
       aria-label={t(`verkauf.spalte.${spalte.id}`)}
       className={cn(
-        'bg-muted/50 flex w-72 shrink-0 flex-col rounded-xl border',
+        'bg-muted/50 flex min-w-44 flex-1 shrink-0 flex-col rounded-xl border',
         ziehe && !erlaubt && 'opacity-50',
         isOver && erlaubt && 'border-accent bg-accent-soft/40',
       )}

@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { ladeMonatsbericht } from '../services/bericht'
+import { ladeVerkaufEinstellung } from '../services/einstellung'
 import { ladeAussendienst, ladeGeschaefte } from '../services/geschaefte'
 import { ladeLeadDateien, ladeLeadDetails, ladeLeadVerlauf, ladeRegionen, ladeStandorte } from '../services/leads'
 import { ladeAnsichten, ladeKalender, ladeLagen, ladeSmsVorlage, ladeTourEinstellungen } from '../services/planung'
@@ -63,6 +64,11 @@ export function useOrte() {
       }
     },
   })
+}
+
+/** Einstellungen des Verkaufs (15-Minuten-Uhr, Arbeitszeit, Richtpreis). */
+export function useVerkaufEinstellung() {
+  return useQuery({ queryKey: ['einstellungen', 'verkauf'], queryFn: ladeVerkaufEinstellung, staleTime: SELTEN })
 }
 
 /** Einstellungen der Tourplanung. */

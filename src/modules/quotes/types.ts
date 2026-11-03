@@ -4,9 +4,17 @@
  * Die Reiter des Bereichs: Arbeitsvorrat (Board vom Termin bis zum Auftrag, Entscheid 0046) und die Listen aus V233
  * (Neue Offerten · Offerten Muri · Offerten Bulle · Nachfassen · PDF-Import).
  */
-export type OffertAnsicht = 'vorrat' | 'eingang' | 'muri' | 'bulle' | 'nachfassen' | 'import'
+export type OffertAnsicht = 'vorrat' | 'eingang' | 'muri' | 'bulle' | 'nachfassen' | 'auswertung' | 'import'
 
-export const OFFERT_ANSICHTEN: readonly OffertAnsicht[] = ['vorrat', 'eingang', 'muri', 'bulle', 'nachfassen', 'import']
+export const OFFERT_ANSICHTEN: readonly OffertAnsicht[] = [
+  'vorrat',
+  'eingang',
+  'muri',
+  'bulle',
+  'nachfassen',
+  'auswertung',
+  'import',
+]
 
 /** Spalten des Arbeitsvorrats, in der Reihenfolge des Ablaufs. */
 export type OffertPhase = 'zu_offerieren' | 'planung' | 'pruefen' | 'offeriert' | 'verhandlung' | 'gewonnen'
