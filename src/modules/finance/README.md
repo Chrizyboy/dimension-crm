@@ -1,6 +1,6 @@
 # Modul: Finanzen
 
-**Zweck:** Finanzen für Geschäftsleitung und Buchhaltung (Entscheid 0047): Cockpit, Lieferantenrechnungen mit
+**Zweck:** Finanzen für Geschäftsleitung und Buchhaltung (Entscheid 0048): Cockpit, Lieferantenrechnungen mit
 Freigabe, Zahllauf mit zweiter Person, Liquidität Woche für Woche, Projekte & Marge, Konten mit Kontoauszug, MWST und
 Monatsabschluss. Je Gesellschaft (Muri GmbH, Bulle Sàrl) oder beide. Nur mit Recht `finanzen`.
 

@@ -1,4 +1,4 @@
--- Prüft «Finanzen vollständig» (Entscheid 0047): Gesellschaft und Prüfschritt neuer Lieferantenrechnungen,
+-- Prüft «Finanzen vollständig» (Entscheid 0048): Gesellschaft und Prüfschritt neuer Lieferantenrechnungen,
 -- «geprüft» (Visum der Eingangsrechnung) macht zahlbereit, Freigabe der Buchhaltung, Zahllauf mit
 -- zweiter Person, Kontoauszug ohne Doppelte und mit erkannter Zahlung, MWST-Schätzung, Marge, Monatsabschluss.
 -- Ausführen: npm run db:test

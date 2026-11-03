@@ -1,4 +1,4 @@
-# 0047 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
+# 0048 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
 
 ## Ausgangslage
 
