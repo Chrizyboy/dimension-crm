@@ -3564,6 +3564,7 @@ export type Database = {
           bauherr_art: string | null
           baujahr: number | null
           beschreibung: string | null
+          besichtigung: NonNullable<Json>
           dach_klasse: number | null
           dachflaeche_m2: number | null
           egid: string | null
@@ -3635,6 +3636,7 @@ export type Database = {
           bauherr_art?: string | null
           baujahr?: number | null
           beschreibung?: string | null
+          besichtigung?: NonNullable<Json>
           dach_klasse?: number | null
           dachflaeche_m2?: number | null
           egid?: string | null
@@ -3705,6 +3707,7 @@ export type Database = {
           bauherr_art?: string | null
           baujahr?: number | null
           beschreibung?: string | null
+          besichtigung?: NonNullable<Json>
           dach_klasse?: number | null
           dachflaeche_m2?: number | null
           egid?: string | null

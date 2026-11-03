@@ -7301,7 +7301,8 @@
       "staffel": "Prix par kWc",
       "staffelBis": "jusqu’à {{bis}} kWc : CHF {{chf}}",
       "staffelRest": "au-delà : CHF {{chf}}",
-      "neuRechnen": "Après l’enregistrement, le CRM recalcule tous les grands projets ouverts."
+      "neuRechnen": "Après l’enregistrement, le CRM recalcule tous les grands projets ouverts.",
+      "youdera_mail": "E-mail Youdera (dossier)"
     },
     "heute": {
       "titel": "Grands projets",
@@ -7489,7 +7490,9 @@
       "ueberLaufzeit": "sur {{jahre}} ans",
       "investition": "Investissement (mandat de construction)",
       "waerme": "En plus chaleur : env. {{kw}} kW, annuité env. {{rate}}.",
-      "ertrag": "Rendement toitsolaire.ch"
+      "ertrag": "Rendement toitsolaire.ch",
+      "bau": "Pour nous : construction (marge {{prozent}} %)",
+      "wartung": "Pour nous : maintenance par an ({{prozent}} %)"
     },
     "verlauf": {
       "notiz": "Note",
@@ -7501,6 +7504,101 @@
       "platzhalter": "Que s'est-il passé ? Ctrl+Entrée enregistre.",
       "festhalten": "Enregistrer",
       "stufe": "Étape : {{stufe}}"
+    },
+    "pdf": {
+      "titel": "Analyse de potentiel solaire",
+      "einleitung": "Votre bâtiment dispose d’un grand toit bien ensoleillé. Cette analyse montre combien d’électricité solaire il peut produire et ce que vous économisez. {{firma}} planifie, construit et entretient l’installation. Vous n’investissez rien et achetez l’électricité de votre propre toit moins cher que celle du réseau.",
+      "anlage": "Votre installation solaire",
+      "dach": "Surface de toit adaptée",
+      "leistung": "Puissance",
+      "ertrag": "Électricité solaire par an",
+      "eigen": "Dont consommée directement dans le bâtiment",
+      "kosten": "Vos coûts d’électricité par an",
+      "heute": "Aujourd’hui",
+      "mit": "Avec l’électricité de votre toit",
+      "preise": "Réseau {{netz}} ct./kWh, solaire {{solar}} ct./kWh",
+      "ersparnis": "Vous économisez par an",
+      "ueberLaufzeit": "Sur {{jahre}} ans",
+      "investition": "Votre investissement",
+      "investitionWert": "CHF 0",
+      "vorteile": "Vos avantages",
+      "vorteil1": "Aucun investissement : construction, exploitation et maintenance sont comprises dans le prix de l’électricité.",
+      "vorteil2": "Un prix fixe et bas pour l’électricité solaire pendant toute la durée.",
+      "vorteil3": "Un seul interlocuteur de la région pour la planification, la construction et le service.",
+      "vorteil4": "Moins de CO2 et une contribution visible à la transition énergétique.",
+      "weiter": "Prochaines étapes",
+      "schritt1": "Visite sur place : toit, statique et raccordement électrique.",
+      "schritt2": "Vos données d’électricité (factures ou courbe de charge) pour un calcul précis.",
+      "schritt3": "Offre ferme avec un prix fixe par kWh.",
+      "schritt4": "Contrat, autorisation et construction, en général en quelques mois.",
+      "hinweis": "Estimation basée sur des données publiques (toitsolaire.ch, registre des bâtiments) et sur notre expérience. Seule l’offre après la visite est contraignante.",
+      "kontakt": "Votre interlocuteur"
+    },
+    "dossier": {
+      "titel": "Dossier contracting {{nummer}}",
+      "objekt": "Objet",
+      "parzelle": "Parcelle",
+      "nutzung": "Affectation",
+      "baujahr": "Année de construction",
+      "dach": "Surface de toit",
+      "heizung": "Chauffage",
+      "geschuetzt": "Protégé / inventaire",
+      "ja": "Oui",
+      "nein": "Non",
+      "anlage": "Installation et électricité",
+      "leistung": "Puissance",
+      "ertrag": "Production",
+      "verbrauch": "Consommation client",
+      "schaetzung": "estimation",
+      "eigen": "Autoconsommation",
+      "strompreis": "Prix actuel de l’électricité",
+      "zielpreis": "Prix cible contracting",
+      "investition": "Investissement estimé",
+      "rolle": "Construction et maintenance",
+      "rolleWert": "{{firma}}",
+      "kunde": "Client et interlocuteurs",
+      "keineKontakte": "Aucun interlocuteur saisi",
+      "unterlagen": "Documents",
+      "vorhanden": "disponible depuis le",
+      "fehlt": "manquant",
+      "besichtigung": "Visite sur place",
+      "nochNicht": "Pas encore visité",
+      "besichtigtAm": "Visité le",
+      "ok": "en ordre",
+      "problem": "problème",
+      "kontakt": "Questions à"
+    },
+    "mail": {
+      "beschreibung": "Vérifie l’adresse et le texte. « Envoyer » valide le mail, il part par la corbeille de sortie depuis ta boîte.",
+      "ansehen": "Voir le PDF",
+      "senden": "Envoyer",
+      "an": "À",
+      "cc": "Cc",
+      "betreff": "Objet",
+      "text": "Texte",
+      "potenzialKnopf": "Analyse de potentiel",
+      "potenzialTitel": "Analyse de potentiel au client",
+      "potenzial": {
+        "betreff": "Analyse de potentiel solaire : {{name}}",
+        "text": "Bonjour{{anrede}}\n\nMerci pour notre échange. Vous trouverez en annexe l’analyse de potentiel de votre bâtiment : combien d’électricité solaire votre toit peut produire et ce que vous économisez chaque année, sans investissement de votre part.\n\nNous discuterons volontiers des chiffres lors d’une visite sur place. Une date dans les deux prochaines semaines vous conviendrait-elle ?\n\nMeilleures salutations"
+      },
+      "dossierKnopf": "Dossier à Youdera",
+      "dossierNochmals": "Renvoyer le dossier",
+      "dossierTitel": "Dossier à Youdera",
+      "ohneEinverstaendnis": "L’accord du client pour transmettre les données n’est pas encore coché (documents). N’envoie le dossier qu’une fois l’accord obtenu.",
+      "dossier": {
+        "betreff": "Demande contracting {{nummer}} : {{name}}",
+        "text": "Bonjour à tous\n\nEn annexe le dossier pour {{name}} à {{gemeinde}} : objet, installation, consommation, interlocuteurs, documents et visite. Dimension Solaire se charge de la construction et de la maintenance.\n\nPouvez-vous nous envoyer une offre avec prix par kWh et durée ? S’il manque quelque chose, nous revenons vers vous.\n\nMerci et meilleures salutations"
+      }
+    },
+    "besichtigung": {
+      "titel": "Visite sur place",
+      "am": "Visité le {{datum}}",
+      "ok": "En ordre",
+      "problem": "Problème",
+      "notizPunkt": "Quel est le problème ?",
+      "notiz": "Note sur la visite",
+      "abschliessen": "Terminer la visite"
     }
   },
   "team": {
