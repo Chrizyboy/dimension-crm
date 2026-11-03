@@ -18,7 +18,7 @@ export const Route = createFileRoute('/purchasing')({
   validateSearch: (s: Record<string, unknown>): Suche => ({
     ...(typeof s.reiter === 'string' && GUELTIG.has(s.reiter) ? { reiter: s.reiter as Reiter } : {}),
     // Früherer Reiter «Zu bestellen» (Links in Glocken und Handbuch) ist jetzt «Bestellen».
-    ...(s.reiter === 'zubestellen' ? { reiter: 'bestellen' as Reiter } : {}),
+    ...(s.reiter === 'zubestellen' ? { reiter: 'bestellen' } : {}),
     ...(typeof s.bestellung === 'string' && s.bestellung ? { bestellung: s.bestellung } : {}),
     ...(typeof s.projekt === 'string' && s.projekt ? { projekt: s.projekt } : {}),
   }),
