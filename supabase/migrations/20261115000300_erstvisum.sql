@@ -167,18 +167,14 @@ end
 $function$;
 
 -- Nachkalkulation auch mit «marge» (Kennzahlen); liest Einkauf und Kalkulation unabhängig von RLS.
-CREATE OR REPLACE FUNCTION public.nachkalkulation(p_projekt uuid)
- RETURNS jsonb
- LANGUAGE plpgsql
- STABLE SECURITY DEFINER
- SET search_path TO ''
-AS $function$
+create or replace function public.nachkalkulation(p_projekt uuid) returns jsonb
+language plpgsql stable security definer set search_path = '' as $$
 declare
   pr public.projekte;
   v_satz numeric := public.mwst_satz();
   v_kal public.kalkulationen;
   v_lief bigint; v_best bigint; v_mat bigint; v_material bigint; v_quelle text;
-  v_stunden numeric; v_arbeit bigint;
+  v_stunden numeric; v_arbeit bigint; v_spesen bigint;
   v_nachtraege bigint; v_erloes bigint; v_vertrag bigint;
 begin
   if not (intern.hat_recht('preise') or intern.hat_recht('finanzen') or intern.hat_recht('marge')) then
@@ -205,6 +201,10 @@ begin
     from public.zeiten where projekt_id = p_projekt and stopp is not null and geloescht_am is null;
   v_arbeit := round(v_stunden * coalesce((intern.fin_cfg() ->> 'intern_stundensatz_rappen')::bigint, 6500));
 
+  -- Seit dem Rollen-Schritt läuft sie als definer: wer die Nachkalkulation sehen darf, sieht alle Spesen des Projekts.
+  select coalesce(sum(betrag_rappen - coalesce(mwst_rappen, 0)), 0) into v_spesen from public.spesen
+   where projekt_id = p_projekt and geloescht_am is null and status in ('geprueft', 'ausbezahlt');
+
   select coalesce(sum(betrag_rappen), 0) into v_nachtraege from public.nachtraege
    where projekt_id = p_projekt and geloescht_am is null and status in ('vom_kunden_bestaetigt', 'verrechnet');
   select coalesce(sum(netto_rappen), 0) into v_erloes from public.rechnungen
@@ -218,7 +218,7 @@ begin
     'ist', jsonb_build_object('vertrag_rappen', v_vertrag, 'nachtraege_rappen', v_nachtraege,
                               'umsatz_rappen', v_vertrag + v_nachtraege, 'verrechnet_rappen', v_erloes,
                               'material_rappen', v_material, 'material_quelle', v_quelle,
-                              'stunden', round(v_stunden, 2), 'arbeit_rappen', v_arbeit,
-                              'marge_rappen', v_vertrag + v_nachtraege - v_material - v_arbeit));
+                              'stunden', round(v_stunden, 2), 'arbeit_rappen', v_arbeit, 'spesen_rappen', v_spesen,
+                              'marge_rappen', v_vertrag + v_nachtraege - v_material - v_arbeit - v_spesen));
 end
-$function$;
+$$;
