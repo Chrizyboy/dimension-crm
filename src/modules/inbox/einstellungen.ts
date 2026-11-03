@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import type { EinstellungsBereich } from '@/types/einstellungen'
 
-/** Bereiche dieses Moduls in Einstellungen (zentral, Entscheid 0047); die Route `src/app/settings.tsx` sammelt sie. */
+/** Bereiche dieses Moduls in Einstellungen (zentral, Entscheid 0048); die Route `src/app/settings.tsx` sammelt sie. */
 export const einstellungen: EinstellungsBereich[] = [
   {
     id: 'posteingang',

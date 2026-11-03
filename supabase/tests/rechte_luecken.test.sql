@@ -26,7 +26,7 @@ select throws_ok($$ update public.einstellungen set schluessel = 'ki_alt' where 
   'Umbenennen ist kein Schlupfloch');
 select throws_ok($$ insert into public.einstellungen (schluessel, wert) values ('neu_p31', '{}') $$, '42501', null,
   'neue Schlüssel nur Administration');
--- Seit 3.11.2026 (Entscheid 0047): auch Kosten pro Lead und Marketing-Vorlagen ändert nur die Administration.
+-- Seit 3.11.2026 (Entscheid 0048): auch Kosten pro Lead und Marketing-Vorlagen ändert nur die Administration.
 select throws_ok($$ select public.kennzahlen_quellen_kosten('Website', 5000) $$, '42501', 'einstellungen.nur_admin',
   'Kosten pro Lead nur Administration');
 select throws_ok($$ update public.einstellungen set wert = wert where schluessel = 'marketing' $$, '42501',

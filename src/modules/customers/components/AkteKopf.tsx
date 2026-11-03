@@ -3,6 +3,7 @@ import {
   Copy,
   Download,
   Mail,
+  Merge,
   MoreHorizontal,
   NotebookPen,
   Pencil,
@@ -29,6 +30,8 @@ interface AkteKopfProps {
   onExport: () => void
   onPapierkorb: () => void
   onWiederherstellen: () => void
+  /** Nur mit Recht Administration gesetzt (Entscheid 0045). */
+  onZusammenfuehren?: (() => void) | undefined
 }
 
 /**
@@ -43,6 +46,7 @@ export function AkteKopf({
   onExport,
   onPapierkorb,
   onWiederherstellen,
+  onZusammenfuehren,
 }: AkteKopfProps) {
   const { t } = useTranslation()
   const kontaktart = useAuswahl('kontaktart')
@@ -115,6 +119,12 @@ export function AkteKopf({
               <Download />
               {t('akte.export')}
             </MenueEintrag>
+            {onZusammenfuehren && !kopf.geloeschtAm && (
+              <MenueEintrag onSelect={onZusammenfuehren}>
+                <Merge />
+                {t('kundenseite.zusammen.menue')}
+              </MenueEintrag>
+            )}
             <MenueTrenner />
             {kopf.geloeschtAm ? (
               <MenueEintrag onSelect={onWiederherstellen}>

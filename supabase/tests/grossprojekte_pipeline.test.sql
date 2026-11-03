@@ -2,7 +2,7 @@
 -- änderbar, «verloren» mit Grund, Vertrag mit Datum und Leistung, Akte pflegen, Verlauf von Hand.
 -- Ausführen: npm run db:test
 begin;
-select plan(14);
+select plan(18);
 
 create temporary table t (name text primary key, id uuid) on commit drop;
 grant all on t to authenticated;
@@ -62,6 +62,19 @@ select is((select vertrag_am || '/' || vertrag_kwp from public.grossprojekte whe
 select public.grossprojekt_stufe_setzen((select id from t), 'verloren', '{"grund": "Kunde baut selbst"}');
 select is((select grund || '/' || coalesce(vertrag_am::text, '-') from public.grossprojekte where id = (select id from t)),
   'Kunde baut selbst/-', 'verloren mit Grund, Vertrag gelöscht');
+
+select public.grossprojekt_akte_setzen((select id from t), '{"besichtigung": {"punkte": {"dach_zustand": {"stand": "ok"},
+  "zaehler": {"stand": "problem", "notiz": "Trafo zu klein"}}}}');
+select ok(not exists (select 1 from public.aktivitaeten where grossprojekt_id = (select id from t) and details ->> 'art' = 'besichtigung'),
+  'Besichtigung offen: noch kein Eintrag im Verlauf');
+select public.grossprojekt_akte_setzen((select id from t), '{"besichtigung": {"am": "2026-11-05", "punkte": {"dach_zustand": {"stand": "ok"},
+  "zaehler": {"stand": "problem", "notiz": "Trafo zu klein"}}}}');
+select is((select text from public.aktivitaeten where grossprojekt_id = (select id from t) and details ->> 'art' = 'besichtigung'),
+  'Besichtigung abgeschlossen: 1 Punkt(e) mit Problem', 'Abschluss mit Problemen im Verlauf');
+select throws_ok($$ select public.grossprojekt_akte_setzen((select id from t), '{"besichtigung": {"punkte": []}}') $$, 'P0001',
+  'grossprojekt.ungueltig', 'Punkte der Besichtigung nur als Objekt');
+select ok((select jsonb_array_length(wert -> 'pipeline' -> 'besichtigung') from public.einstellungen where schluessel = 'grossprojekte') >= 8,
+  'Punkte der Besichtigung in der Einstellung');
 
 select * from finish();
 rollback;

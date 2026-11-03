@@ -2,7 +2,7 @@
 
 **Zweck:** Benutzer, Rollen und Rechte verwalten, das eigene Konto pflegen und die Verbindungen zu Microsoft 365, AbaNinja und SMS einrichten und prüfen.
 
-**Stand:** 03.11.2026 Einstellungen an einem Ort (Entscheid 0047): Bereiche mit Suche, dazu Auswahllisten, Standorte & Regionen, Änderungsprotokoll, Papierkorb und die Bereiche der Module. Vorher: Phase 4 gebaut (Benutzer, Rollen, Mein Konto), Phase 8: Reiter «Verbindungen» und Microsoft in «Mein Konto». Phase 16: Reiter «Datensicherung» und «Betrieb», Karte «Diese App» (Version, Updates, Autostart) in «Mein Konto».
+**Stand:** 03.11.2026 Einstellungen an einem Ort (Entscheid 0048): Bereiche mit Suche, dazu Auswahllisten, Standorte & Regionen, Änderungsprotokoll, Papierkorb und die Bereiche der Module. Vorher: Phase 4 gebaut (Benutzer, Rollen, Mein Konto), Phase 8: Reiter «Verbindungen» und Microsoft in «Mein Konto». Phase 16: Reiter «Datensicherung» und «Betrieb», Karte «Diese App» (Version, Updates, Autostart) in «Mein Konto».
 
 ## Daten
 
@@ -11,7 +11,7 @@
 - Phase 16: `sicherungen` und Bucket `sicherungen` (nur lesen; erstellen und wiederherstellen über die Edge Function `sicherung`), `einstellungen.sicherung` (Zeiten, Aufbewahrung, SharePoint-Ordner), `betrieb_stand()`
 - Details: Entscheide 0012, 0016 und 0027, `docs/anmeldung.md`, `docs/integrationen.md`
 
-- 0047: `auswahlwerte`, `regionen`, `standorte` (ändern nur Admin), `aenderungsprotokoll` (lesen), `papierkorb()`, `papierkorb_wiederherstellen()`, `region_fuer_plz()`
+- 0048: `auswahlwerte`, `regionen`, `standorte` (ändern nur Admin), `aenderungsprotokoll` (lesen), `papierkorb()`, `papierkorb_wiederherstellen()`, `region_fuer_plz()`
 
 ## Abhängigkeiten
 

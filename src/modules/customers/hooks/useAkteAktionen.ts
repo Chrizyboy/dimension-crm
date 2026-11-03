@@ -10,7 +10,13 @@ import { useKontaktAenderung } from './useKunden'
 
 /** Welcher Dialog über der Akte offen ist. */
 export type OffenerDialog =
-  { art: 'kontakt' } | { art: 'aktivitaet' } | { art: 'objekt'; objekt: Objekt | null } | { art: 'papierkorb' } | null
+  | { art: 'kontakt' }
+  | { art: 'aktivitaet' }
+  | { art: 'objekt'; objekt: Objekt | null }
+  | { art: 'papierkorb' }
+  | { art: 'betreuung' }
+  | { art: 'zusammenfuehren' }
+  | null
 
 /** Lädt die Daten als Datei herunter (Auskunft nach revDSG). */
 function speichereDatei(name: string, inhalt: unknown) {

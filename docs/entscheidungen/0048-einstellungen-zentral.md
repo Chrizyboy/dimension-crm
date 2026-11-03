@@ -1,4 +1,4 @@
-# 0047 Einstellungen an einem Ort, ändern nur die Administration
+# 0048 Einstellungen an einem Ort, ändern nur die Administration
 
 Datum: 03.11.2026 · Entscheid von Chris (Pop-up-Karten im Thread «Einstellungen vollständig machen», Nachricht im Projekt-Chat)
 

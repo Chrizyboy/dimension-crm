@@ -2,6 +2,7 @@ import { rufeFunktion } from '@/services/integrationen'
 import { supabase } from '@/services/supabase'
 import type {
   Ansprechperson,
+  Besichtigung,
   Kontakt,
   RechnungWerte,
   Stufe,
@@ -21,7 +22,7 @@ function db() {
 }
 
 const FELDER =
-  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, stufe, stufe_seit, naechster_schritt, naechster_schritt_am, kontakte, unterlagen, rechnung, youdera, vertrag_am, vertrag_kwp, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
+  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, stufe, stufe_seit, naechster_schritt, naechster_schritt_am, kontakte, unterlagen, rechnung, youdera, besichtigung, vertrag_am, vertrag_kwp, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
 
 type Roh = Omit<Grossprojekt, 'standort' | 'entschieden_von'> & {
   standort: { name: string } | null
@@ -76,11 +77,18 @@ export async function ladeRegeln(): Promise<GrossprojektRegeln> {
 }
 
 /** Annahmen ändern (nur Administration; die Datenbank prüft das). Ändert nur «annahmen» und «melden_ab». */
-export async function speichereAnnahmen(werte: Pick<GrossprojektRegeln, 'annahmen' | 'melden_ab'>): Promise<void> {
+export async function speichereAnnahmen(
+  werte: Pick<GrossprojektRegeln, 'annahmen' | 'melden_ab'> & { youdera_mail?: string },
+): Promise<void> {
   const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'grossprojekte').single()
   if (error) throw error
   const alt = data.wert as GrossprojektRegeln
-  const neu = { ...alt, melden_ab: werte.melden_ab, annahmen: { ...alt.annahmen, ...werte.annahmen } }
+  const neu = {
+    ...alt,
+    melden_ab: werte.melden_ab,
+    annahmen: { ...alt.annahmen, ...werte.annahmen },
+    ...(werte.youdera_mail === undefined ? {} : { pipeline: { ...alt.pipeline, youdera_mail: werte.youdera_mail } }),
+  }
   const r = await db()
     .from('einstellungen')
     .update({ wert: neu as never })
@@ -226,6 +234,7 @@ export async function akteSetzen(
     unterlagen?: Record<string, string>
     rechnung?: RechnungWerte
     youdera?: YouderaStand
+    besichtigung?: Besichtigung
   },
 ): Promise<void> {
   const { error } = await db().rpc('grossprojekt_akte_setzen', { p_id: id, p: werte as never })
