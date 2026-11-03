@@ -32,7 +32,7 @@ select is(public.lead_aus_website('{"kennung": "web:DS-PGTAP-1", "quelle": "webs
   'schon', 'Dieselbe Anfrage zweimal gibt nur einen Lead');
 reset role;
 
-select is((select herkunft ->> 'seite' from public.verkaufschancen v join public.kontakte k on k.id = v.kontakt_id
+select is((select v.herkunft ->> 'seite' from public.verkaufschancen v join public.kontakte k on k.id = v.kontakt_id
             where k.nachname = 'Pgtaphuber'), '/de/offerte/', 'Herkunft steht am Lead');
 select is((select (dach -> 'website' ->> 'flaeche_m2')::int from public.objekte o join public.kontakte k on k.id = o.kontakt_id
             where k.nachname = 'Pgtaphuber'), 82, 'Dachfläche aus dem Formular steht am Objekt');
