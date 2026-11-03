@@ -563,7 +563,10 @@
       "erreichbarkeit": "Erreichbarkeit",
       "kommentarKunde": "Kommentar Kunde",
       "wiedervorlage": "Wiedervorlage",
-      "verlauf": "Verlauf (Vorlage)"
+      "verlauf": "Verlauf (Vorlage)",
+      "heizung": "Heizung heute",
+      "vorOrt": "Vor Ort beachten",
+      "vorOrtHinweis": "Zugang, Schlüssel, Parkplatz, Hund, Zähler – sieht die Montage und der Service."
     },
     "abaninja": {
       "nicht": "Noch nicht mit AbaNinja verknüpft. Verknüpfen, damit Rechnungen hier erscheinen und Adressänderungen nach AbaNinja gehen.",
@@ -641,7 +644,51 @@
       "baubeginn": "Nächster Termin: Baubeginn"
     },
     "nurFinanzen": "Rechnungen sieht nur, wer das Recht «Finanzen» hat.",
-    "nurBuchhaltung": "nur Buchhaltung"
+    "nurBuchhaltung": "nur Buchhaltung",
+    "betreuung": {
+      "titel": "Betreuung und Rechnung",
+      "betreuer": "Betreuer bei uns",
+      "keinBetreuer": "Kein fester Betreuer",
+      "herkunft": "Herkunft",
+      "rechnungAn": "Rechnung an",
+      "gleicheAdresse": "Adresse des Kunden",
+      "abweichend": "Abweichende Rechnungsadresse",
+      "rechnungsEmail": "Rechnung per Mail an",
+      "zahlungsfrist": "Zahlungsfrist",
+      "fristFirma": "wie Firma",
+      "tage": "{{count}} Tage",
+      "uid": "UID",
+      "bearbeiten": "Betreuung und Rechnung bearbeiten",
+      "adresse": {
+        "name": "Name / Firma",
+        "zusatz": "Zusatz",
+        "strasse": "Strasse",
+        "plz": "PLZ",
+        "ort": "Ort"
+      }
+    },
+    "personen": {
+      "titel": "Ansprechpersonen",
+      "firmen": "Gehört zu",
+      "keine": "Keine weiteren Personen erfasst.",
+      "hauptkontakt": "Hauptkontakt",
+      "unterschreibt": "Unterschreibt",
+      "rechnungen": "Rechnungen",
+      "vorOrt": "Vor Ort",
+      "imAdressbuch": "Im Adressbuch bearbeiten"
+    },
+    "zusammen": {
+      "menue": "Doppelten zusammenführen",
+      "titel": "Doppelten zusammenführen",
+      "text": "Wähle den doppelt erfassten Kontakt. Alles, was an ihm hängt (Gebäude, Leads, Offerten, Projekte, Rechnungen, Mails, Aufgaben, Dokumente), kommt zu {{name}}. Der Doppelte landet im Papierkorb.",
+      "keine": "Keine möglichen Doppelten gefunden (gleiche Mail, Telefon oder Name).",
+      "bestaetigen": "Zusammenführen",
+      "grund": {
+        "email": "gleiche Mail",
+        "telefon": "gleiches Telefon",
+        "name": "gleicher Name"
+      }
+    }
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",

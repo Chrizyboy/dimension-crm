@@ -5110,6 +5110,7 @@ export type Database = {
           alt_id: string | null
           anrede: string | null
           art: string
+          betreuer_id: string | null
           einwilligung: Json | null
           email: string | null
           empfehlungs_code: string | null
@@ -5118,15 +5119,21 @@ export type Database = {
           firma: string | null
           geaendert_am: string
           geloescht_am: string | null
+          herkunft: string | null
           id: string
           kontaktart: string
           kundennummer: number
           nachname: string | null
           notiz: string | null
+          rechnungs_email: string | null
+          rechnungsadresse: Json | null
           sprache: string
           telefon: string | null
+          uid_nr: string | null
           vorname: string | null
           werbesperre: boolean
+          zahlungsfrist_tage: number | null
+          zusammengefuehrt_in: string | null
         }
         ComputedFields: never
         Insert: {
@@ -5137,6 +5144,7 @@ export type Database = {
           alt_id?: string | null
           anrede?: string | null
           art?: string
+          betreuer_id?: string | null
           einwilligung?: Json | null
           email?: string | null
           empfehlungs_code?: string | null
@@ -5145,15 +5153,21 @@ export type Database = {
           firma?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          herkunft?: string | null
           id?: string
           kontaktart?: string
           kundennummer?: number
           nachname?: string | null
           notiz?: string | null
+          rechnungs_email?: string | null
+          rechnungsadresse?: Json | null
           sprache?: string
           telefon?: string | null
+          uid_nr?: string | null
           vorname?: string | null
           werbesperre?: boolean
+          zahlungsfrist_tage?: number | null
+          zusammengefuehrt_in?: string | null
         }
         Update: {
           abaninja_abgeglichen_am?: string | null
@@ -5163,6 +5177,7 @@ export type Database = {
           alt_id?: string | null
           anrede?: string | null
           art?: string
+          betreuer_id?: string | null
           einwilligung?: Json | null
           email?: string | null
           empfehlungs_code?: string | null
@@ -5171,17 +5186,66 @@ export type Database = {
           firma?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          herkunft?: string | null
           id?: string
           kontaktart?: string
           kundennummer?: number
           nachname?: string | null
           notiz?: string | null
+          rechnungs_email?: string | null
+          rechnungsadresse?: Json | null
           sprache?: string
           telefon?: string | null
+          uid_nr?: string | null
           vorname?: string | null
           werbesperre?: boolean
+          zahlungsfrist_tage?: number | null
+          zusammengefuehrt_in?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'kontakte_betreuer_id_fkey'
+            columns: ['betreuer_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakte_zusammengefuehrt_in_fkey'
+            columns: ['zusammengefuehrt_in']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakte_zusammengefuehrt_in_fkey'
+            columns: ['zusammengefuehrt_in']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakte_zusammengefuehrt_in_fkey'
+            columns: ['zusammengefuehrt_in']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakte_zusammengefuehrt_in_fkey'
+            columns: ['zusammengefuehrt_in']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakte_zusammengefuehrt_in_fkey'
+            columns: ['zusammengefuehrt_in']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
       }
       kontaktsperren: {
         Row: {
@@ -6410,6 +6474,7 @@ export type Database = {
           gebaeudeart: string | null
           geloescht_am: string | null
           gemeinde: string | null
+          heizung: string | null
           id: string
           kanton: string | null
           kontakt_id: string
@@ -6420,6 +6485,7 @@ export type Database = {
           region_id: string | null
           strasse: string | null
           verbrauch_kwh: number | null
+          vor_ort: string | null
         }
         ComputedFields: never
         Insert: {
@@ -6435,6 +6501,7 @@ export type Database = {
           gebaeudeart?: string | null
           geloescht_am?: string | null
           gemeinde?: string | null
+          heizung?: string | null
           id?: string
           kanton?: string | null
           kontakt_id: string
@@ -6445,6 +6512,7 @@ export type Database = {
           region_id?: string | null
           strasse?: string | null
           verbrauch_kwh?: number | null
+          vor_ort?: string | null
         }
         Update: {
           alt_daten?: Json | null
@@ -6459,6 +6527,7 @@ export type Database = {
           gebaeudeart?: string | null
           geloescht_am?: string | null
           gemeinde?: string | null
+          heizung?: string | null
           id?: string
           kanton?: string | null
           kontakt_id?: string
@@ -6469,6 +6538,7 @@ export type Database = {
           region_id?: string | null
           strasse?: string | null
           verbrauch_kwh?: number | null
+          vor_ort?: string | null
         }
         Relationships: [
           {
@@ -14116,6 +14186,7 @@ export type Database = {
         Returns: Json
       }
       kontakt_export: { Args: { p_kontakt: string }; Returns: Json }
+      kontakt_zusammenfuehren: { Args: { p_behalten: string; p_weg: string }; Returns: number }
       kontaktsperre_anlegen: {
         Args: { p_art: string; p_bis?: string; p_grund: string; p_wert: string }
         Returns: string

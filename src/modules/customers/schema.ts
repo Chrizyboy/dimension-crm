@@ -73,5 +73,7 @@ export const objektSchema = z.object({
   verbrauch_kwh: z.number().int().min(0).max(10_000_000).nullable(),
   netzbetreiber: frei(120),
   gemeinde: frei(80),
+  heizung: frei(80),
+  vor_ort: frei(1000),
 })
 export type ObjektEingabe = z.infer<typeof objektSchema>
