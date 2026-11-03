@@ -2,8 +2,8 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { ANON, API, anmelden, brauchtDatenbank } from './hilfen'
 
-// Phase 7: Offerten, Werkverträge und Preise ohne Verstösse; eine Kalkulation mit freier Position rechnen
-// und speichern; Verkauf ohne Recht «Preise» sieht nur die Kundenansicht (keine Einkaufspreise).
+// Phase 7: Offerten, Werkverträge und Preise ohne Verstösse; eine Kalkulation mit Leistung und Varianten rechnen
+// und speichern; Preisliste eines Lieferanten einlesen und übernehmen; Verkauf ohne Recht «Preise» sieht nur die Kundenansicht (keine Einkaufspreise).
 // Werkvertrag nach Vorlage Muri: Zahlung 70/30 per Klick, Vertrag und Anzahlungsrechnung in einer Mail.
 
 test.describe.configure({ mode: 'serial' })
@@ -41,7 +41,7 @@ test('Offerten und Werkverträge ohne Verstösse', async ({ page }) => {
   expect(await verstoesse(page)).toEqual([])
 })
 
-test('Kalkulation mit freier Position rechnen und speichern', async ({ page }) => {
+test('Kalkulation mit Leistung und Varianten rechnen und speichern', async ({ page }) => {
   // Der Katalog mit der ganzen Preisliste macht die Prüfung auf Barrierefreiheit langsamer.
   test.setTimeout(60_000)
   await anmelden(page, 'admin@test.local')
@@ -51,20 +51,70 @@ test('Kalkulation mit freier Position rechnen und speichern', async ({ page }) =
 
   await page.goto('/#/pricing?ansicht=kalkulation')
   await page.getByLabel('Bezeichnung').fill(`Testkalkulation ${lauf}`)
-  await page.getByRole('button', { name: '+ Montage', exact: true }).click()
-  const menge = page.getByLabel('Menge Montage')
+  await page.getByRole('combobox', { name: /Leistung dazu/ }).click()
+  await page.getByRole('option', { name: 'Montage PV', exact: true }).click()
+  const menge = page.getByLabel('Menge Montage PV')
   await menge.fill('10')
   await menge.press('Enter')
-  const ek = page.getByLabel('EK Montage')
-  await ek.fill('80')
-  await ek.press('Enter')
   const total = page.locator('dt', { hasText: 'Total exkl. MWST' }).locator('xpath=following-sibling::dd[1]')
-  await expect(total).not.toHaveText(/^(CHF )?0\.00$/)
+  await expect(total).toHaveText(/980\.00/)
+  await page.getByRole('button', { name: 'Varianten vergleichen' }).click()
+  await page.getByRole('button', { name: /Variante PV \+ Speicher wählen/ }).click()
+  await expect(page.getByRole('button', { name: /Variante PV \+ Speicher wählen/ })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  )
   expect(await verstoesse(page)).toEqual([])
 
   await page.getByRole('button', { name: 'Speichern', exact: true }).click()
   await expect(page.getByText('Kalkulation gespeichert').first()).toBeVisible()
   await expect(page.getByText(`Testkalkulation ${lauf}`).first()).toBeVisible()
+})
+
+test('Preisliste eines Lieferanten einlesen, vergleichen und übernehmen', async ({ page }) => {
+  test.setTimeout(60_000)
+  await anmelden(page, 'admin@test.local')
+  const lieferant = `E2E Lieferant ${lauf}`
+  const nummer = `E2E-${lauf}`
+
+  /** CSV wie von Krannich/Tritec: Kopfzeile, eine Zeile mit Nummer, Name und Nettopreis. */
+  async function einlesen(preis: string, ersteMal: boolean) {
+    await page.goto('/#/pricing?ansicht=aenderungen')
+    await page.getByRole('button', { name: 'Preisliste einlesen' }).first().click()
+    const d = page.getByRole('dialog', { name: 'Preisliste einlesen' })
+    await d.getByRole('combobox', { name: /Woher kommt die Liste/ }).click()
+    await page.getByRole('option', { name: ersteMal ? 'Neuer Lieferant …' : lieferant }).click()
+    if (ersteMal) await d.getByLabel('Name des Lieferanten').fill(lieferant)
+    await d.locator('input[type=file]').setInputFiles({
+      name: 'preisliste.csv',
+      mimeType: 'text/csv',
+      buffer: Buffer.from(`Art.-Nr.;Bezeichnung;Nettopreis\n${nummer};E2E Modul ${lauf} 450 W;${preis}\n`),
+    })
+    await expect(d.getByText(new RegExp(`Erste Zeile: ${nummer}`))).toBeVisible()
+    expect(await verstoesse(page)).toEqual([])
+    await d.getByRole('button', { name: '1 Zeile vergleichen' }).click()
+    await expect(page).toHaveURL(/ansicht=aenderungen/)
+  }
+
+  await einlesen('120.50', true)
+  await page.getByRole('combobox', { name: new RegExp(`Kategorie für E2E Modul ${lauf}`) }).click()
+  await page.getByRole('option').first().click()
+  expect(await verstoesse(page)).toEqual([])
+  await page.getByRole('button', { name: '1 übernehmen' }).click()
+  await expect(page.getByText(/1 Artikel neu/).first()).toBeVisible()
+
+  await einlesen('130.00', false)
+  await expect(page.getByText('+7.9 %')).toBeVisible()
+  await page.getByRole('button', { name: '1 übernehmen' }).click()
+  await expect(page.getByText(/1 Preise geändert/).first()).toBeVisible()
+})
+
+test('Leistungen & Regeln ohne Verstösse', async ({ page }) => {
+  await anmelden(page, 'admin@test.local')
+  await page.goto('/#/pricing?ansicht=regeln')
+  await expect(page.getByRole('heading', { name: 'Leistungen & Pauschalen' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Wer gibt frei?' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
 })
 
 test('Verkauf sieht nur die Kundenansicht der Preise', async ({ page }) => {
@@ -75,6 +125,7 @@ test('Verkauf sieht nur die Kundenansicht der Preise', async ({ page }) => {
   await expect(ansichten.getByRole('button', { name: 'Kalkulation' })).toHaveCount(0)
   await expect(ansichten.getByRole('button', { name: 'Preisliste' })).toHaveCount(0)
   await expect(page.getByText(/^EK /)).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'Richtpreis fürs erste Gespräch' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 })
 

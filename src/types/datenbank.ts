@@ -990,6 +990,7 @@ export type Database = {
           einheit: string
           erstellt_am: string
           erstellt_von: string | null
+          garantie_jahre: number | null
           geaendert_am: string
           geloescht_am: string | null
           gewicht_kg: number | null
@@ -1021,6 +1022,7 @@ export type Database = {
           einheit?: string
           erstellt_am?: string
           erstellt_von?: string | null
+          garantie_jahre?: number | null
           geaendert_am?: string
           geloescht_am?: string | null
           gewicht_kg?: number | null
@@ -1051,6 +1053,7 @@ export type Database = {
           einheit?: string
           erstellt_am?: string
           erstellt_von?: string | null
+          garantie_jahre?: number | null
           geaendert_am?: string
           geloescht_am?: string | null
           gewicht_kg?: number | null
@@ -5388,6 +5391,49 @@ export type Database = {
           },
         ]
       }
+      kalk_bausteine: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          name_de: string
+          name_fr: string
+          reihenfolge: number
+          zeilen: NonNullable<Json>
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          name_de: string
+          name_fr: string
+          reihenfolge?: number
+          zeilen?: NonNullable<Json>
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          name_de?: string
+          name_fr?: string
+          reihenfolge?: number
+          zeilen?: NonNullable<Json>
+        }
+        Relationships: []
+      }
       kalkulationen: {
         Row: {
           alt_daten: Json | null
@@ -5395,6 +5441,7 @@ export type Database = {
           einkauf_rappen: number | null
           erstellt_am: string
           erstellt_von: string | null
+          freigabe: Json | null
           geaendert_am: string
           geloescht_am: string | null
           id: string
@@ -5406,6 +5453,8 @@ export type Database = {
           rabatt: number | null
           titel: string | null
           total_rappen: number | null
+          variante: string | null
+          varianten: NonNullable<Json>
           verkauf_rappen: number | null
         }
         ComputedFields: never
@@ -5415,6 +5464,7 @@ export type Database = {
           einkauf_rappen?: number | null
           erstellt_am?: string
           erstellt_von?: string | null
+          freigabe?: Json | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
@@ -5426,6 +5476,8 @@ export type Database = {
           rabatt?: number | null
           titel?: string | null
           total_rappen?: number | null
+          variante?: string | null
+          varianten?: NonNullable<Json>
           verkauf_rappen?: number | null
         }
         Update: {
@@ -5434,6 +5486,7 @@ export type Database = {
           einkauf_rappen?: number | null
           erstellt_am?: string
           erstellt_von?: string | null
+          freigabe?: Json | null
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
@@ -5445,6 +5498,8 @@ export type Database = {
           rabatt?: number | null
           titel?: string | null
           total_rappen?: number | null
+          variante?: string | null
+          varianten?: NonNullable<Json>
           verkauf_rappen?: number | null
         }
         Relationships: [
@@ -6851,6 +6906,64 @@ export type Database = {
           id?: string
           monat?: string
           quelle?: string
+        }
+        Relationships: []
+      }
+      leistungen: {
+        Row: {
+          aktiv: boolean
+          alt_daten: Json | null
+          alt_id: string | null
+          bereiche: string[]
+          einheit: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kosten_rappen: number | null
+          name_de: string
+          name_fr: string
+          reihenfolge: number
+          schluessel: string
+          verkauf_rappen: number
+        }
+        ComputedFields: never
+        Insert: {
+          aktiv?: boolean
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bereiche?: string[]
+          einheit?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_rappen?: number | null
+          name_de: string
+          name_fr: string
+          reihenfolge?: number
+          schluessel: string
+          verkauf_rappen: number
+        }
+        Update: {
+          aktiv?: boolean
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bereiche?: string[]
+          einheit?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kosten_rappen?: number | null
+          name_de?: string
+          name_fr?: string
+          reihenfolge?: number
+          schluessel?: string
+          verkauf_rappen?: number
         }
         Relationships: []
       }
@@ -9194,6 +9307,149 @@ export type Database = {
             columns: ['postfach_person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      preis_importe: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          dateiname: string | null
+          ergebnis: NonNullable<Json>
+          erledigt_am: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          lieferant_id: string | null
+          quelle: string
+          status: string
+          zaehlung: NonNullable<Json>
+          zeilen: NonNullable<Json>
+          zuordnung: NonNullable<Json>
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          dateiname?: string | null
+          ergebnis?: NonNullable<Json>
+          erledigt_am?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          lieferant_id?: string | null
+          quelle: string
+          status?: string
+          zaehlung?: NonNullable<Json>
+          zeilen?: NonNullable<Json>
+          zuordnung?: NonNullable<Json>
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          dateiname?: string | null
+          ergebnis?: NonNullable<Json>
+          erledigt_am?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          lieferant_id?: string | null
+          quelle?: string
+          status?: string
+          zaehlung?: NonNullable<Json>
+          zeilen?: NonNullable<Json>
+          zuordnung?: NonNullable<Json>
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'preis_importe_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      preisverlauf: {
+        Row: {
+          alt: number | null
+          alt_daten: Json | null
+          alt_id: string | null
+          artikel_id: string
+          erstellt_am: string
+          erstellt_von: string | null
+          feld: string
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          lieferant_id: string | null
+          neu: number | null
+          person: string | null
+          quelle: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt?: number | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          artikel_id: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          feld: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          lieferant_id?: string | null
+          neu?: number | null
+          person?: string | null
+          quelle?: string
+        }
+        Update: {
+          alt?: number | null
+          alt_daten?: Json | null
+          alt_id?: string | null
+          artikel_id?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          feld?: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          lieferant_id?: string | null
+          neu?: number | null
+          person?: string | null
+          quelle?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'preisverlauf_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'artikel'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'preisverlauf_artikel_id_fkey'
+            columns: ['artikel_id']
+            isOneToOne: false
+            referencedRelation: 'preisliste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'preisverlauf_lieferant_id_fkey'
+            columns: ['lieferant_id']
+            isOneToOne: false
+            referencedRelation: 'lieferanten'
             referencedColumns: ['id']
           },
         ]
@@ -14948,6 +15204,43 @@ export type Database = {
           },
         ]
       }
+      leistungen_liste: {
+        Row: {
+          bereiche: string[] | null
+          einheit: string | null
+          id: string | null
+          kosten_rappen: number | null
+          name_de: string | null
+          name_fr: string | null
+          reihenfolge: number | null
+          schluessel: string | null
+          verkauf_rappen: number | null
+        }
+        ComputedFields: never
+        Insert: {
+          bereiche?: string[] | null
+          einheit?: string | null
+          id?: string | null
+          kosten_rappen?: never
+          name_de?: string | null
+          name_fr?: string | null
+          reihenfolge?: number | null
+          schluessel?: string | null
+          verkauf_rappen?: number | null
+        }
+        Update: {
+          bereiche?: string[] | null
+          einheit?: string | null
+          id?: string | null
+          kosten_rappen?: never
+          name_de?: string | null
+          name_fr?: string | null
+          reihenfolge?: number | null
+          schluessel?: string | null
+          verkauf_rappen?: number | null
+        }
+        Relationships: []
+      }
       lieferanten_kennzahlen: {
         Row: {
           artikel_mit_preis: number | null
@@ -15644,13 +15937,18 @@ export type Database = {
           einheit: string | null
           ek_rappen: number | null
           ek_stand: string | null
+          garantie_jahre: number | null
           geaendert_am: string | null
           gewicht_kg: number | null
           hersteller_gruppe: string | null
           id: string | null
           kategorie: string | null
+          lager_frei: number | null
+          lager_reserviert: number | null
+          lager_unterwegs: number | null
           leistung_w: number | null
           lieferant: string | null
+          lieferanten_anzahl: number | null
           marge: number | null
           masse: string | null
           masse_art: string | null
@@ -17003,6 +17301,11 @@ export type Database = {
       anschreiben_volltext: { Args: { p_id: string }; Returns: string }
       artikel_archivieren: { Args: { p_artikel: string; p_grund: string; p_nachfolger?: string }; Returns: undefined }
       artikel_preis_setzen: { Args: { p: Json; p_artikel: string }; Returns: undefined }
+      artikel_preise_mehrfach: {
+        Args: { p_ids: string[]; p_marge?: number; p_skonto?: number; p_standard?: boolean }
+        Returns: number
+      }
+      artikel_verwendung: { Args: { p_artikel: string }; Returns: Json }
       aufgabe_erledigen: { Args: { p_id: string; p_notiz?: string }; Returns: undefined }
       aufgaben_melden: { Args: { p_jetzt?: string }; Returns: number }
       aufgaben_team: {
@@ -17350,6 +17653,10 @@ export type Database = {
         Returns: number
       }
       kalender_ersetzen: { Args: { p_eintraege: Json; p_person: string; p_quelle: string }; Returns: number }
+      kalkulation_freigabe_anfragen: { Args: { p_kalk: string; p_notiz?: string }; Returns: undefined }
+      kalkulation_freigabe_pruefen: { Args: { p_kalk: string }; Returns: Json }
+      kalkulation_freigeben: { Args: { p_grund?: string; p_kalk: string; p_ok: boolean }; Returns: undefined }
+      kalkulation_in_offerte: { Args: { p_kalk: string }; Returns: undefined }
       kennzahlen_betrieb: { Args: { p_bis: string; p_von: string }; Returns: Json }
       kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
       kennzahlen_fakten: {
@@ -17697,7 +18004,22 @@ export type Database = {
         }[]
       }
       posteingang_zahlung_erfassen: { Args: { p: Json; p_id: string }; Returns: string }
+      preis_import_anlegen: {
+        Args: {
+          p_dateiname: string
+          p_lieferant: string
+          p_quelle: string
+          p_vollstaendig?: boolean
+          p_zeilen: Json
+          p_zuordnung: Json
+        }
+        Returns: Json
+      }
+      preis_import_uebernehmen: { Args: { p_import: string; p_neu?: Json; p_zeilen?: number[] }; Returns: Json }
+      preis_import_verwerfen: { Args: { p_import: string }; Returns: undefined }
       preise_importieren: { Args: { p_pruefen?: boolean; p_zeilen: Json }; Returns: Json }
+      preise_regeln: { Args: Record<PropertyKey, never>; Returns: Json }
+      preise_regeln_setzen: { Args: { p: Json }; Returns: undefined }
       projekt_akte: { Args: { p_id: string }; Returns: Json }
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
@@ -17794,6 +18116,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      richtpreis: { Args: { p_kwp: number; p_speicher: boolean }; Returns: Json }
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
       rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
