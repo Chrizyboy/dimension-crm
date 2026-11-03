@@ -1,4 +1,4 @@
--- Prüft Mängelliste und Beteiligte je Projekt (Entscheid 0047, Schritt 2): Übergabe erst ohne offene Mängel,
+-- Prüft Mängelliste und Beteiligte je Projekt (Entscheid 0048, Schritt 2): Übergabe erst ohne offene Mängel,
 -- Speichern wiederholbar mit ID aus der App, Beteiligte nur mit bekannter Rolle und ohne Doppelte.
 -- Ausführen: npm run db:test
 begin;

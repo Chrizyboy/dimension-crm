@@ -1,4 +1,4 @@
--- Projekte neu (2.11.2026, Entscheid 0047): Leitstand und Projekt-Akte als ganze Seite.
+-- Projekte neu (2.11.2026, Entscheid 0048): Leitstand und Projekt-Akte als ganze Seite.
 -- Keine neuen Tabellen: alles, was ein Projekt betrifft, liegt schon in anderen Bereichen (Material, Einsätze,
 -- Zahlungsplan, Rechnungen, Nachträge, Rapporte, Mails, Verlauf). Die Akte holt es in einer Abfrage, der Leitstand
 -- bekommt je Projekt die Signale, die zeigen, worauf es wartet.

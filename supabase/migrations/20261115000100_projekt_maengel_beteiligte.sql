@@ -1,4 +1,4 @@
--- Projekte Schritt 2 (3.11.2026, Entscheid 0047, Antworten von Chris): Mängel und Restarbeiten als eigene Liste je
+-- Projekte Schritt 2 (3.11.2026, Entscheid 0048, Antworten von Chris): Mängel und Restarbeiten als eigene Liste je
 -- Projekt, Beteiligte (Elektriker, Gerüstbau, Netzbetreiber …) als Kontakte mit Rolle. Die Kundeninfo bei
 -- Meilensteinen läuft über die bestehende Automation «meilenstein_kunde» (Ausgangskorb, mit Freigabe); die Akte zeigt
 -- dazu, was für das Projekt im Ausgangskorb liegt oder gesendet wurde.
