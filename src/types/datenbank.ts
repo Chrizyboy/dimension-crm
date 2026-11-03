@@ -3179,7 +3179,6 @@ export type Database = {
           nutzlast_kg: number | null
           person_id: string | null
           praemie_rappen: number | null
-          privat_anteil: boolean
           reifen: string | null
           schaden_telefon: string | null
           schluessel: string | null
@@ -3233,7 +3232,6 @@ export type Database = {
           nutzlast_kg?: number | null
           person_id?: string | null
           praemie_rappen?: number | null
-          privat_anteil?: boolean
           reifen?: string | null
           schaden_telefon?: string | null
           schluessel?: string | null
@@ -3286,7 +3284,6 @@ export type Database = {
           nutzlast_kg?: number | null
           person_id?: string | null
           praemie_rappen?: number | null
-          privat_anteil?: boolean
           reifen?: string | null
           schaden_telefon?: string | null
           schluessel?: string | null

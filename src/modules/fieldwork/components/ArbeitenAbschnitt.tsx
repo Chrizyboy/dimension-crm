@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { Button } from '@/components/ui/button'
 import { Input, Textarea } from '@/components/ui/input'
+import { useUi } from '@/stores/ui'
 import type { MaterialZeile, Rapport, RapportEingabe } from '../types'
 
 /** Ausgeführte Arbeiten (Pflicht zum Abschliessen) und Mehrmaterial, das nicht auf der Materialliste stand. */
@@ -17,7 +18,9 @@ export function ArbeitenAbschnitt({
   onAendern: (e: RapportEingabe) => void
 }) {
   const { t } = useTranslation()
-  const [neu, setNeu] = useState<MaterialZeile>({ text: '', menge: null, einheit: 'Stk' })
+  // Einheit ist freier Text; vorgeschlagen in der Sprache der Person (Monteure in Bulle arbeiten französisch).
+  const stueck = useUi((z) => z.sprache) === 'fr' ? 'pce' : 'Stk'
+  const [neu, setNeu] = useState<MaterialZeile>({ text: '', menge: null, einheit: stueck })
   const material = r.material
 
   const hinzufuegen = () => {

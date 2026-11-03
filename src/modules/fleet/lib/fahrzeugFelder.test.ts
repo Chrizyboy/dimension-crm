@@ -10,7 +10,6 @@ describe('Fahrzeug-Formular', () => {
       kennzeichen: 'ag 437 112',
       km_stand: "84'200",
       leasing_rate_rappen: '689.00',
-      privat_anteil: 'ja',
     })
     const { werte, fehler } = ausFormular(w, true, '2026-11-02')
     expect(fehler).toEqual([])
@@ -19,7 +18,6 @@ describe('Fahrzeug-Formular', () => {
       km_stand: 84200,
       km_stand_am: '2026-11-02',
       leasing_rate_rappen: 68900,
-      privat_anteil: true,
       art: 'lieferwagen',
       treibstoff: null,
     })
@@ -30,6 +28,9 @@ describe('Fahrzeug-Formular', () => {
     const r = ausFormular(w, false, '2026-11-02')
     expect(r.fehler).toEqual(['nutzlast_kg', 'praemie_rappen'])
     expect('naechste_mfk' in r.werte).toBe(false)
+    expect(ausFormular({ ...alsFormular(f), ausser_betrieb: 'ja' }, false, '2026-11-02').werte.ausser_betrieb).toBe(
+      true,
+    )
     expect(ausFormular({ ...alsFormular(null), bezeichnung: '' }, true, '2026-11-02').fehler).toContain('bezeichnung')
   })
 })

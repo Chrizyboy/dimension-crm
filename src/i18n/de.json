@@ -7138,7 +7138,6 @@
       "kaufdatum": "Kaufdatum",
       "kaufpreis_rappen": "Kaufpreis (CHF)",
       "kaufpreis": "Kaufpreis (CHF)",
-      "privat_anteil": "Privatanteil (Geschäftsauto privat)",
       "versicherung_police": "Police-Nr.",
       "versicherung_deckung": "Deckung",
       "selbstbehalt_rappen": "Selbstbehalt (CHF)",
@@ -7227,7 +7226,6 @@
       "versicherung": "Versicherung und Steuern",
       "weiteres": "Weiteres"
     },
-    "ja": "Ja",
     "treibstoff": {
       "diesel": "Diesel",
       "benzin": "Benzin",
@@ -7294,12 +7292,11 @@
         "einsatz": "Einsatz"
       },
       "legende": {
-        "einsatz": "Einsatz (folgt dem Team)",
+        "einsatz": "Für einen Einsatz",
         "hand": "Von Hand reserviert",
         "werkstatt": "Werkstatt",
         "konflikt": "Doppelt verplant"
       },
-      "folgtTeam": "folgt dem Team",
       "heute": "Diese Woche",
       "weiter": "Nächste Woche",
       "zurueck": "Vorherige Woche"
@@ -7345,9 +7342,6 @@
       "keinRechtText": "Die Kosten pro Fahrzeug sehen Geschäftsleitung und Buchhaltung.",
       "leasing": "Leasing",
       "leer": "Noch keine Kosten in diesem Jahr.",
-      "privatanteil": "Privatanteil",
-      "privatanteilText": "0,9 % des Kaufpreises pro Monat, für den Lohnausweis (Ziffer 2.2).",
-      "privatanteilTitel": "Privatanteil {{jahr}}",
       "proFahrzeug": "Kosten pro Fahrzeug {{jahr}}",
       "proKm": "CHF {{chf}} pro km ({{km}} km)",
       "rest": "Unterhalt und Übriges",
