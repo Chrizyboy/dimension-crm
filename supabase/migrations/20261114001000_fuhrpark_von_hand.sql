@@ -1,4 +1,4 @@
--- Fahrzeuge & Geräte: Antworten von Chris auf die Fragen (3.11.2026, Entscheid 0042).
+-- Fahrzeuge & Geräte: Antworten von Chris auf die Fragen (3.11.2026, Entscheid 0045).
 -- Frage 1 B «Immer von Hand»: ein Fahrzeug folgt dem Team im Zeitplan nicht mehr automatisch; die Belegung
 -- besteht nur noch aus Reservierungen (von Hand, Werkstatt oder für einen Einsatz).
 -- Frage 5 B «Nicht nötig»: kein Privatanteil Geschäftsauto im CRM (Lohnausweis bleibt in AbaNinja).

@@ -14,6 +14,7 @@ import { useAktion } from '../hooks/useAktion'
 import { useVorlagen } from '../hooks/useMarketing'
 import { PLATZHALTER } from '../lib/zielgruppe'
 import { speichereVorlagen } from '../services/marketing'
+import { PlanungVorlagen } from './PlanungVorlagen'
 import { NETZWERKE, type MarketingVorlagen, type Sprache } from '../types'
 
 /** Vorlagen bearbeiten; neu laden, wenn sich die gespeicherten ändern (key). */
@@ -21,7 +22,12 @@ export function Vorlagen() {
   const v = useVorlagen()
   if (v.error) return <Fehlerzustand details={String(v.error)} onNochmal={() => void v.refetch()} />
   if (!v.data) return <Skelett className="h-96" />
-  return <VorlagenForm key={JSON.stringify(v.data)} start={v.data} />
+  return (
+    <div className="flex flex-col gap-6">
+      <VorlagenForm key={JSON.stringify(v.data)} start={v.data} />
+      <PlanungVorlagen key={`p-${JSON.stringify(v.data)}`} start={v.data} />
+    </div>
+  )
 }
 
 /**

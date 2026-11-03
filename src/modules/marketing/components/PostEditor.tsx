@@ -1,4 +1,4 @@
-import { CheckCheck, ExternalLink, Rocket, Save, Trash2, Undo2 } from 'lucide-react'
+import { CheckCheck, ExternalLink, Rocket, Save, Send, Trash2, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
+import { hatRecht } from '@/lib/rechte'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
@@ -18,10 +19,13 @@ import {
   jetztVeroeffentlichen,
   postPapierkorb,
   speicherePost,
+  zurFreigabe,
   zurueckziehen,
 } from '../services/social'
 import { postFehlerSchluessel } from '../lib/texte'
 import { NETZWERKE, type Netzwerk, type PostSprache, type SocialPost } from '../types'
+import { GepostetDialog } from './GepostetDialog'
+import { KampagneWahl } from './KampagneWahl'
 import { PostBild } from './PostBild'
 import { PostQuelle } from './PostQuelle'
 import { PostTexte } from './PostTexte'
@@ -54,17 +58,29 @@ function lokal(iso: string | null): { datum: string; zeit: string } {
  * (Foto oder Canva), dann «Freigeben und planen» oder «Jetzt veröffentlichen» (Regel 6: der Klick ist die
  * Freigabe). Geplante lassen sich zurückziehen; nach dem Posten zeigt er die Links.
  */
-export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; onSchliessen: () => void }) {
+export function PostEditor({
+  post,
+  vorlage,
+  onSchliessen,
+}: {
+  post: SocialPost | null
+  /** Startwerte für einen neuen Post (z. B. Status «idee» oder Thema des Monats). */
+  vorlage?: Partial<SocialPost>
+  onSchliessen: () => void
+}) {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const sprache = useUi((z) => z.sprache)
   const vorlagen = useVorlagen()
   const { laeuft, aus } = useAktion()
   const [p, setP] = useState<Omit<SocialPost, 'erstellt_am' | 'id'> & { id?: string }>(
-    post ?? { ...NEU, verfasst_von: ich?.kuerzel ?? null },
+    post ?? { ...NEU, ...vorlage, verfasst_von: ich?.kuerzel ?? null },
   )
   const [plan, setPlan] = useState(lokal(post?.geplant_am ?? null))
-  const fest = !['entwurf', 'fehler'].includes(p.status)
+  const fest = !['idee', 'entwurf', 'zur_freigabe', 'fehler'].includes(p.status)
+  // Chris 2.11.: vorbereiten darf jede Person, freigeben und planen die Administration («zur Freigabe» mit Glocke)
+  const admin = hatRecht(ich, 'admin')
+  const [vonHand, setVonHand] = useState(false)
   const aendern = (a: Partial<SocialPost>) => {
     setP((x) => ({ ...x, ...a }))
   }
@@ -103,7 +119,7 @@ export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; on
         beschreibung={t(`marketing.post.status.${p.status}`)}
         fuss={
           <div className="flex w-full flex-wrap justify-end gap-2">
-            {p.id && p.status === 'entwurf' && (
+            {p.id && ['idee', 'entwurf'].includes(p.status) && (
               <Button
                 variant="ghost"
                 disabled={laeuft}
@@ -123,7 +139,18 @@ export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; on
                 {t('marketing.post.erledigt')}
               </Button>
             )}
-            {['geplant', 'fehler'].includes(p.status) && (
+            {post && p.status === 'geplant' && p.details.von_hand && (
+              <Button
+                disabled={laeuft}
+                onClick={() => {
+                  setVonHand(true)
+                }}
+              >
+                <CheckCheck />
+                {t('werbung.social.gepostet')}
+              </Button>
+            )}
+            {['geplant', 'fehler', 'zur_freigabe'].includes(p.status) && (
               <Button
                 variant="secondary"
                 disabled={laeuft}
@@ -147,13 +174,32 @@ export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; on
                   <Save />
                   {t('marketing.post.speichern')}
                 </Button>
-                <Button variant="secondary" disabled={laeuft} onClick={() => void planen(true)}>
-                  <Rocket />
-                  {t('marketing.post.jetzt')}
-                </Button>
-                <Button laedt={laeuft} onClick={() => void planen(false)}>
-                  {t('marketing.post.planen')}
-                </Button>
+                {admin ? (
+                  <>
+                    <Button variant="secondary" disabled={laeuft} onClick={() => void planen(true)}>
+                      <Rocket />
+                      {t('marketing.post.jetzt')}
+                    </Button>
+                    <Button laedt={laeuft} onClick={() => void planen(false)}>
+                      {t('marketing.post.planen')}
+                    </Button>
+                  </>
+                ) : (
+                  p.status !== 'zur_freigabe' && (
+                    <Button
+                      laedt={laeuft}
+                      onClick={() =>
+                        void sichern().then((id) => {
+                          if (id)
+                            void status(zurFreigabe, { de: 'Zur Freigabe gesendet', fr: 'Envoyé pour validation' })
+                        })
+                      }
+                    >
+                      <Send />
+                      {t('werbung.social.zurFreigabe')}
+                    </Button>
+                  )
+                )}
               </>
             )}
           </div>
@@ -186,6 +232,15 @@ export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; on
             </ul>
           )}
           <div className="grid gap-3 sm:grid-cols-2">
+            <Feld id="post-kampagne" label={t('werbung.kampagne.gehoertZu')}>
+              <KampagneWahl
+                id="post-kampagne"
+                wert={p.kampagne_id}
+                onWert={(k) => {
+                  aendern({ kampagne_id: k })
+                }}
+              />
+            </Feld>
             <Feld id="post-thema" label={t('marketing.post.thema')}>
               <Input
                 id="post-thema"
@@ -284,6 +339,15 @@ export function PostEditor({ post, onSchliessen }: { post: SocialPost | null; on
           )}
         </div>
       </DialogInhalt>
+      {vonHand && post && (
+        <GepostetDialog
+          post={post}
+          onSchliessen={() => {
+            setVonHand(false)
+            onSchliessen()
+          }}
+        />
+      )}
     </Dialog>
   )
 }

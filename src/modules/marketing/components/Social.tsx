@@ -1,7 +1,7 @@
-import { CalendarClock, Plus, Share2 } from 'lucide-react'
+import { CalendarClock, Hand, Lightbulb, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
+import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
@@ -12,58 +12,47 @@ import type { PostStatus, SocialPost } from '../types'
 import { PostEditor } from './PostEditor'
 import { Verbindungen } from './Verbindungen'
 
-const TON: Record<PostStatus, 'neutral' | 'info' | 'ok' | 'kritisch'> = {
-  entwurf: 'neutral',
-  geplant: 'info',
-  wird_veroeffentlicht: 'info',
-  veroeffentlicht: 'ok',
-  fehler: 'kritisch',
-  erledigt: 'neutral',
-}
+/** Spalten des Boards; «fehler» steht bei den Entwürfen, «wird veröffentlicht» bei den geplanten. */
+const SPALTEN: { id: string; status: PostStatus[] }[] = [
+  { id: 'ideen', status: ['idee'] },
+  { id: 'entwurf', status: ['entwurf', 'fehler'] },
+  { id: 'freigabe', status: ['zur_freigabe'] },
+  { id: 'geplant', status: ['geplant', 'wird_veroeffentlicht'] },
+  { id: 'veroeffentlicht', status: ['veroeffentlicht'] },
+]
+const TAGE_VEROEFFENTLICHT = 45
 
-/** Posts nach Thema gruppiert (V233 «Entwürfe» und «Vergangene»). */
-function nachThema(liste: SocialPost[]): [string, SocialPost[]][] {
-  const m = new Map<string, SocialPost[]>()
-  for (const p of liste) m.set(p.thema ?? '', [...(m.get(p.thema ?? '') ?? []), p])
-  return [...m.entries()]
-}
-
-/**
- * Social Media (V233, Entscheid 0022): Posts für Instagram, Facebook und LinkedIn entwerfen, freigeben und zur
- * geplanten Zeit direkt veröffentlichen. Oben die Verbindungen, dann Offene (Entwürfe, geplant, Fehler) und Vergangene.
- */
-export function Social() {
+/** Eine Karte im Board: Netzwerke, Zeit, «von Hand», Fehler und der Anfang des Texts. */
+function PostKarte({ p, onOeffnen }: { p: SocialPost; onOeffnen: () => void }) {
   const { t } = useTranslation()
-  const posts = usePosts()
-  const [offen, setOffen] = useState<SocialPost | 'neu' | null>(null)
-  if (posts.error) return <Fehlerzustand details={String(posts.error)} onNochmal={() => void posts.refetch()} />
-  const alle = posts.data ?? []
-  const aktiv = alle.filter((p) => !['veroeffentlicht', 'erledigt'].includes(p.status))
-  const vergangen = alle.filter((p) => ['veroeffentlicht', 'erledigt'].includes(p.status))
-
-  const zeile = (p: SocialPost) => (
-    <li key={p.id}>
+  const zeit = p.veroeffentlicht_am ?? p.geplant_am
+  return (
+    <li>
       <button
         type="button"
-        onClick={() => {
-          setOffen(p)
-        }}
-        className="hover:bg-muted focus-visible:ring-ring flex w-full flex-col gap-1 rounded-md px-3 py-2 text-left outline-none focus-visible:ring-2"
+        onClick={onOeffnen}
+        className="bg-surface hover:border-border-strong focus-visible:ring-ring flex w-full flex-col gap-1.5 rounded-md border p-2.5 text-left shadow-xs outline-none focus-visible:ring-2"
       >
-        <span className="flex flex-wrap items-center gap-2">
-          <Badge ton={TON[p.status]}>{t(`marketing.post.status.${p.status}`)}</Badge>
+        <span className="text-sm font-medium">{p.thema || t('marketing.post.ohneThema')}</span>
+        <span className="flex flex-wrap items-center gap-1">
           {p.netzwerke.map((n) => (
             <Badge key={n} ton="neutral">
               {t(`marketing.netzwerk.${n}`)}
             </Badge>
           ))}
-          {(p.geplant_am ?? p.veroeffentlicht_am) && (
-            <span className="text-muted-foreground zahlen flex items-center gap-1 text-xs">
-              <CalendarClock className="size-3.5" aria-hidden="true" />
-              {formatDatumZeit(p.veroeffentlicht_am ?? p.geplant_am)}
-            </span>
+          {p.details.von_hand && p.status === 'geplant' && (
+            <Badge ton="warnung">
+              <Hand className="size-3" aria-hidden="true" />
+              {t('werbung.social.vonHand')}
+            </Badge>
           )}
         </span>
+        {zeit && (
+          <span className="text-muted-foreground zahlen flex items-center gap-1 text-xs">
+            <CalendarClock className="size-3.5" aria-hidden="true" />
+            {formatDatumZeit(zeit)}
+          </span>
+        )}
         {p.status === 'fehler' &&
           Object.entries(p.ergebnis)
             .filter(([, e]) => !e.ok)
@@ -72,52 +61,99 @@ export function Social() {
                 {t(`marketing.netzwerk.${n}`)}: {t(postFehlerSchluessel(e.fehler), { code: e.fehler ?? '' })}
               </span>
             ))}
-        <span className="line-clamp-2 text-sm">
+        <span className="text-muted-foreground line-clamp-2 text-xs">
           {(p.netzwerke[0] && postText(p, p.netzwerke[0])) || p.idee || t('marketing.post.ohneText')}
         </span>
       </button>
     </li>
   )
-  const gruppen = (liste: SocialPost[]) =>
-    nachThema(liste).map(([thema, ps]) => (
-      <section key={thema} className="flex flex-col gap-1">
-        <h3 className="text-muted-foreground px-3 text-xs font-semibold uppercase">
-          {thema || t('marketing.post.ohneThema')}
-        </h3>
-        <ul className="flex flex-col">{ps.map(zeile)}</ul>
-      </section>
-    ))
+}
+
+/**
+ * Social Media als Board (Entscheid 0056): Ideen → Entwurf → Zur Freigabe → Geplant → Veröffentlicht. Vorbereiten
+ * darf jede Person, freigeben die Administration. Ohne Verbindung zu Meta/LinkedIn kommt zur geplanten Zeit die
+ * Glocke «Jetzt posten» und man trägt danach die Links ein («von Hand»).
+ */
+export function Social() {
+  const { t } = useTranslation()
+  const posts = usePosts()
+  const [offen, setOffen] = useState<SocialPost | Partial<SocialPost> | null>(null)
+  const [grenze] = useState(() => Date.now() - TAGE_VEROEFFENTLICHT * 86_400_000)
+  if (posts.error) return <Fehlerzustand details={String(posts.error)} onNochmal={() => void posts.refetch()} />
+  const alle = (posts.data ?? []).filter(
+    (p) => p.status !== 'veroeffentlicht' || Date.parse(p.veroeffentlicht_am ?? p.erstellt_am) > grenze,
+  )
+  const zeit = (p: SocialPost) => p.veroeffentlicht_am ?? p.geplant_am ?? p.erstellt_am
 
   return (
     <div className="flex flex-col gap-4">
       <Verbindungen />
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="font-display text-base font-semibold">{t('marketing.post.offene')}</h2>
-        <Button
-          onClick={() => {
-            setOffen('neu')
-          }}
-        >
-          <Plus />
-          {t('marketing.post.neu')}
-        </Button>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="font-display text-base font-semibold">{t('werbung.social.board')}</h2>
+        <div className="flex gap-2">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setOffen({ status: 'idee' })
+            }}
+          >
+            <Lightbulb />
+            {t('werbung.social.idee')}
+          </Button>
+          <Button
+            onClick={() => {
+              setOffen({})
+            }}
+          >
+            <Plus />
+            {t('marketing.post.neu')}
+          </Button>
+        </div>
       </div>
       {!posts.data ? (
-        <Skelett className="h-48" />
-      ) : aktiv.length === 0 ? (
-        <Leerzustand icon={Share2} titel={t('marketing.post.leer')} text={t('marketing.post.leerText')} />
+        <Skelett className="h-64" />
       ) : (
-        <div className="bg-surface flex flex-col gap-3 rounded-lg border py-2">{gruppen(aktiv)}</div>
-      )}
-      {vergangen.length > 0 && (
-        <>
-          <h2 className="font-display text-base font-semibold">{t('marketing.post.vergangene')}</h2>
-          <div className="bg-surface flex flex-col gap-3 rounded-lg border py-2">{gruppen(vergangen)}</div>
-        </>
+        <div className="wischzeile grid auto-cols-[minmax(14rem,1fr)] grid-flow-col gap-3 overflow-x-auto pb-2 lg:grid-flow-row lg:grid-cols-5">
+          {SPALTEN.map((s) => {
+            const liste = alle
+              .filter((p) => s.status.includes(p.status))
+              .sort((a, b) =>
+                s.id === 'veroeffentlicht' ? zeit(b).localeCompare(zeit(a)) : zeit(a).localeCompare(zeit(b)),
+              )
+            return (
+              <section
+                key={s.id}
+                className="bg-muted/40 flex flex-col gap-2 rounded-lg border p-2"
+                aria-label={t(`werbung.social.spalte.${s.id}`)}
+              >
+                <h3 className="flex items-center justify-between px-1 text-xs font-semibold uppercase">
+                  {t(`werbung.social.spalte.${s.id}`)}
+                  <span className="text-muted-foreground zahlen">{liste.length}</span>
+                </h3>
+                {liste.length === 0 ? (
+                  <p className="text-muted-foreground px-1 text-xs">{t('werbung.social.spalteLeer')}</p>
+                ) : (
+                  <ul className="flex flex-col gap-2">
+                    {liste.map((p) => (
+                      <PostKarte
+                        key={p.id}
+                        p={p}
+                        onOeffnen={() => {
+                          setOffen(p)
+                        }}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </section>
+            )
+          })}
+        </div>
       )}
       {offen && (
         <PostEditor
-          post={offen === 'neu' ? null : offen}
+          post={'id' in offen && offen.id ? (offen as SocialPost) : null}
+          vorlage={offen}
           onSchliessen={() => {
             setOffen(null)
           }}

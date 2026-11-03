@@ -14,7 +14,7 @@ function db() {
 }
 
 const FELDER =
-  'id, thema, idee, netzwerke, format, sprache, texte, bilder, status, geplant_am, veroeffentlicht_am, ergebnis, details, verfasst_von, erstellt_am'
+  'id, thema, idee, netzwerke, format, sprache, texte, bilder, status, geplant_am, veroeffentlicht_am, ergebnis, details, verfasst_von, erstellt_am, kampagne_id'
 
 /** Alle Posts (ohne Papierkorb), neueste zuerst. */
 export async function ladePosts(): Promise<SocialPost[]> {
@@ -39,6 +39,7 @@ export async function speicherePost(p: Partial<SocialPost> & { id?: string }): P
     texte: (p.texte ?? {}) as never,
     bilder: (p.bilder ?? []) as never,
     details: (p.details ?? {}) as never,
+    kampagne_id: p.kampagne_id ?? null,
   }
   if (p.id) {
     const { error } = await db().from('social_posts').update(werte).eq('id', p.id)
@@ -47,7 +48,7 @@ export async function speicherePost(p: Partial<SocialPost> & { id?: string }): P
   }
   const { data, error } = await db()
     .from('social_posts')
-    .insert({ ...werte, verfasst_von: p.verfasst_von ?? null })
+    .insert({ ...werte, verfasst_von: p.verfasst_von ?? null, ...(p.status === 'idee' ? { status: 'idee' } : {}) })
     .select('id')
     .single()
   if (error) throw error
@@ -195,4 +196,16 @@ export async function ladeReferenzanlagen(): Promise<Referenzanlage[]> {
       datum: a.ibn_am,
     }
   })
+}
+
+/** Post zur Freigabe vorlegen (Idee oder Entwurf); die Administration bekommt eine Glocke. */
+export async function zurFreigabe(id: string) {
+  const { error } = await db().rpc('social_zur_freigabe', { p_id: id })
+  if (error) throw error
+}
+
+/** Von Hand gepostet: veröffentlicht, mit dem Link je Netzwerk (darf leer sein). */
+export async function gepostet(id: string, links: Partial<Record<string, string>>) {
+  const { error } = await db().rpc('social_gepostet', { p_id: id, p_links: links as never })
+  if (error) throw error
 }

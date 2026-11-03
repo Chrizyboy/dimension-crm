@@ -62,7 +62,7 @@ export function ZielFilterLeiste({
         {wahl('sprache', ['de', 'fr'], 'marketing.sprache')}
         {wahl('standort', ['muri', 'bulle'], 'marketing.standort')}
         {wahl('kontakt', ['mail', 'post'], 'marketing.kontaktweg')}
-        {wahl('anlage', ['ohne_batterie', 'ohne_wallbox', 'ohne_waermepumpe', 'alt'], 'marketing.anlage')}
+        {wahl('anlage', ['ohne_batterie', 'ohne_wallbox', 'ohne_waermepumpe', 'alt', 'oel_gas'], 'marketing.anlage')}
         <label className="flex items-center gap-2 text-sm">
           <Switch
             checked={filter.abgemeldete}

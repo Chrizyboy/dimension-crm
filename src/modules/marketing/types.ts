@@ -1,7 +1,18 @@
 /** Fachliche Typen des Moduls «Marketing» (Phase 11, Entscheid 0022). */
 
 /** Reiter der Seite (#/marketing?ansicht=…). */
-export const ANSICHTEN = ['anschreiben', 'social', 'newsletter', 'empfehlungen', 'vorlagen'] as const
+export const ANSICHTEN = [
+  'uebersicht',
+  'kalender',
+  'kampagnen',
+  'messen',
+  'anschreiben',
+  'social',
+  'newsletter',
+  'empfehlungen',
+  'mediathek',
+  'vorlagen',
+] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 export type Sprache = 'de' | 'fr'
@@ -38,6 +49,8 @@ export interface Zielkontakt {
   versandgrund: 'kunde' | 'einwilligung' | null
   zuletzt_angeschrieben: string | null
   abmelde_schluessel: string
+  /** Heizung laut Gebäuderegister (oel, gas, waermepumpe …), null = noch nicht geprüft. */
+  heizung?: string | null
 }
 
 /** Filter der Zielgruppe (V233 «Kunden anschreiben»). */
@@ -48,7 +61,7 @@ export interface ZielFilter {
   sprache: '' | Sprache
   standort: string
   kontakt: '' | 'mail' | 'post'
-  anlage: '' | 'ohne_batterie' | 'ohne_wallbox' | 'ohne_waermepumpe' | 'alt'
+  anlage: '' | 'ohne_batterie' | 'ohne_wallbox' | 'ohne_waermepumpe' | 'alt' | 'oel_gas'
   abgemeldete: boolean
 }
 
@@ -60,7 +73,7 @@ export interface Textvorlage {
 }
 
 /** Einstellung «marketing»: Vorlagen für Brief, Mail, Abmelde-Satz und Social Media. */
-export interface MarketingVorlagen {
+export interface MarketingVorlagen extends MarketingPlanung {
   absender: Zweisprachig<string>
   ort: Zweisprachig<string>
   brief: Zweisprachig<Textvorlage>
@@ -86,6 +99,8 @@ export interface Kampagne {
   anzahl: number | null
   versendet_am: string | null
   versendet_von: string | null
+  kampagne_id?: string | null
+  newsletter_id?: string | null
 }
 
 /** Ein Newsletter mit Segment. */
@@ -102,6 +117,8 @@ export interface Newsletter {
   versendet_von: string | null
   anzahl: number | null
   erstellt_am: string
+  kampagne_id?: string | null
+  geplant_am?: string | null
 }
 
 export interface NewsletterSegment {
@@ -132,7 +149,8 @@ export interface NewsletterEmpfaenger {
 export const NETZWERKE = ['instagram', 'facebook', 'linkedin'] as const
 export type Netzwerk = (typeof NETZWERKE)[number]
 export type PostSprache = 'de' | 'fr' | 'de_fr'
-export type PostStatus = 'entwurf' | 'geplant' | 'wird_veroeffentlicht' | 'veroeffentlicht' | 'fehler' | 'erledigt'
+export type PostStatus =
+  'idee' | 'entwurf' | 'zur_freigabe' | 'geplant' | 'wird_veroeffentlicht' | 'veroeffentlicht' | 'fehler' | 'erledigt'
 export const FORMATE = ['quadrat', 'hoch', 'story', 'quer'] as const
 export type Format = (typeof FORMATE)[number]
 
@@ -149,7 +167,14 @@ export interface SocialPost {
   geplant_am: string | null
   veroeffentlicht_am: string | null
   ergebnis: Partial<Record<Netzwerk, { ok: boolean; url?: string; fehler?: string }>>
-  details: { quelle?: 'eigen' | 'anlage' | 'tipp'; anlage_id?: string; canva?: { id: string; adresse: string } }
+  details: {
+    quelle?: 'eigen' | 'anlage' | 'tipp'
+    anlage_id?: string
+    canva?: { id: string; adresse: string }
+    /** Ohne Verbindung zum Netzwerk: zur Zeit kommt die Glocke «Jetzt posten». */
+    von_hand?: boolean
+  }
+  kampagne_id?: string | null
   verfasst_von: string | null
   erstellt_am: string
 }
@@ -186,6 +211,170 @@ export interface Referenzanlage {
   wechselrichter: string | null
   batterie: string | null
   datum: string | null
+}
+
+/* --- Marketing vollständig (Entscheid 0056) ------------------------------------------------------------- */
+
+export const KAMPAGNEN_ARTEN = [
+  'aktion',
+  'messe',
+  'online',
+  'empfehlung',
+  'newsletter',
+  'social',
+  'gekaufte_leads',
+] as const
+export type KampagnenArt = (typeof KAMPAGNEN_ARTEN)[number]
+export const KAMPAGNEN_STATUS = ['idee', 'vorbereitung', 'laeuft', 'abgeschlossen'] as const
+export type KampagnenStatus = (typeof KAMPAGNEN_STATUS)[number]
+export const KANAELE = ['online', 'messe', 'gekaufte_leads', 'druck', 'social', 'gutschriften', 'sonstiges'] as const
+export type Kanal = (typeof KANAELE)[number]
+
+/** Standdienst an einer Messe: ein Tag mit Zeit und Personen. */
+export interface Standdienst {
+  tag: string
+  von: string
+  bis: string
+  personen: string[]
+}
+export interface Checkpunkt {
+  text: string
+  erledigt: boolean
+  von?: string | null
+  am?: string | null
+}
+
+/** Eine Kampagne (Tabelle marketing_kampagnen). */
+export interface Werbekampagne {
+  id: string
+  name: string
+  art: KampagnenArt
+  status: KampagnenStatus
+  ziel: string | null
+  start_am: string | null
+  ende_am: string | null
+  budget_rappen: number | null
+  ziel_leads: number | null
+  sprache: 'de' | 'fr' | 'de_fr' | null
+  standort_id: string | null
+  verantwortlich_id: string | null
+  kennzeichen: string | null
+  quelle: string | null
+  details: { ort?: string; stand?: string; flaeche_m2?: number; standdienst?: Standdienst[]; checkliste?: Checkpunkt[] }
+  notiz: string | null
+}
+
+/** Zahlen je Kampagne (kampagnen_zahlen). Kosten nur mit Recht preise oder finanzen. */
+export interface KampagnenZahlen {
+  kampagne_id: string
+  erreicht: number
+  geoeffnet: number
+  geklickt: number
+  leads: number
+  offerten: number
+  auftraege: number
+  auftragswert_rappen: number
+  kosten_rappen: number | null
+}
+
+export interface QuellenZeile {
+  quelle: string
+  leads: number
+  auftraege: number
+  auftragswert_rappen: number
+  kosten_rappen: number | null
+}
+
+export interface BudgetZeile {
+  kanal: Kanal
+  budget_rappen: number
+  kosten_rappen: number
+}
+
+/** Lieferantenrechnung aus AbaNinja (kreditor_zahlungen), Ausschnitt für die Zuordnung. */
+export interface Kostenbeleg {
+  id: string
+  firma: string
+  text: string | null
+  kategorie: string | null
+  rechnung_nr: string | null
+  rechnung_am: string | null
+  betrag_rappen: number | null
+  kampagne_id: string | null
+  marketing_kanal: string | null
+}
+
+/** Ergebnis eines Versands (versand_ergebnisse). */
+export interface VersandErgebnis {
+  versand_id: string
+  gesendet: number
+  geoeffnet: number
+  geklickt: number
+  abgemeldet: number
+  leads: number
+}
+
+/** Lead einer Kampagne (für Akte, Messe und «Deine Leads aus Marketing»). */
+export interface KampagnenLead {
+  id: string
+  nummer: string
+  kontakt_id: string
+  kampagne_id: string | null
+  quelle: string | null
+  eingang_am: string | null
+  stufe: string
+  tour_person_id: string | null
+  name: string
+  ort: string | null
+  email: string | null
+}
+
+export interface GespeicherteZielgruppe {
+  id: string
+  name: string
+  beschreibung: string | null
+  filter: ZielFilter
+  zuletzt_am: string | null
+}
+
+export const WERBEMITTEL_ARTEN = ['flyer', 'broschuere', 'rollup', 'logo', 'vorlage', 'sonstiges'] as const
+export interface Werbemittel {
+  id: string
+  name: string
+  art: (typeof WERBEMITTEL_ARTEN)[number]
+  sprache: 'de' | 'fr' | 'de_fr' | null
+  version: string | null
+  link: string | null
+  bestand: number | null
+  mindestbestand: number | null
+  notiz: string | null
+}
+
+/** Foto aus einem Rapport (mediathek_fotos), nur Ort und Anlage, nie Name. */
+export interface MediathekFoto {
+  id: string
+  name: string
+  speicher_pfad: string | null
+  sharepoint_url: string | null
+  rapport_id: string
+  projekt_nummer: string | null
+  ort: string | null
+  leistung_kwp: number | null
+  batterie: boolean
+  datum: string | null
+  erlaubt: boolean
+  titel: boolean
+}
+
+/** Zusätzliche Einstellungen «marketing» (Entscheid 0056). */
+export interface MarketingPlanung {
+  budget?: Record<string, Partial<Record<Kanal, number>>>
+  werbepause_tage?: number
+  kosten_stichworte?: string[]
+  messe_checkliste?: string[]
+  saison_themen?: Record<string, Zweisprachig<string>>
+  messe_danke?: Zweisprachig<Textvorlage>
+  datenschutz?: Zweisprachig<string>
 }
 
 /** KI-Einschätzung der Zufriedenheit vor der Bitte um eine Google-Bewertung. */

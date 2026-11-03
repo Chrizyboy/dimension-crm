@@ -1,4 +1,4 @@
-# 0056 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
+# 0057 – Finanzen für Geschäftsleitung und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Abschluss (2.11.2026)
 
 ## Ausgangslage
 

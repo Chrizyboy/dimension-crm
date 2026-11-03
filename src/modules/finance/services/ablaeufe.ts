@@ -3,7 +3,7 @@ import type { CamtBuchung } from '../lib/camt'
 import type { Pruefung } from '../types'
 
 /**
- * Abläufe der Finanzen, deren Regeln in der Datenbank liegen (Entscheid 0056): Freigabe der
+ * Abläufe der Finanzen, deren Regeln in der Datenbank liegen (Entscheid 0057): Freigabe der
  * Lieferantenrechnungen, Zahllauf mit zweiter Person, Kontoauszug, MWST, Marge, Monatsabschluss.
  */
 function db() {

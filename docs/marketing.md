@@ -105,6 +105,19 @@ kurze Bestätigung auf Deutsch oder Französisch. Der Link braucht keine Anmeldu
 - Newsletter bekommt nur, wer **Kunde** ist (mindestens ein Auftrag) oder eine **Einwilligung** mit Datum und
   Nachweis hat («…» › **Einwilligung erfassen**). So verlangt es das Datenschutzgesetz (revDSG) und das UWG.
 
+## 4a. Öffnungen und Klicks (seit 2.11.2026)
+
+Serien-Mails und Newsletter zählen, ob sie geöffnet und welche Links angeklickt werden (Entscheid 0056). Dafür
+muss die Edge Function **`zaehler`** veröffentlicht sein (ohne Anmeldung, `verify_jwt = false`):
+`npx.cmd supabase functions deploy zaehler` und danach `ausgang` und `zeitplan` neu veröffentlichen.
+Gespeichert werden nur Zeitpunkt und Link, keine IP-Adresse. Der Hinweis unter jeder Mail steht in
+Marketing › Vorlagen › Planung. **Wichtig:** in der Datenschutzerklärung der Website einen Satz ergänzen, z. B.
+«Unsere Newsletter und Informations-Mails enthalten einen Zähler, der erfasst, ob die Mail geöffnet und welcher
+Link angeklickt wurde. Wir speichern dabei keine IP-Adresse.»
+
+Solange Facebook/Instagram/LinkedIn nicht verbunden sind, gilt ein freigegebener Post als «von Hand»: zur
+geplanten Zeit kommt die Glocke «Jetzt posten», danach unter Social Media › Post › **Gepostet** die Links eintragen.
+
 ## 5. Prüfen ohne echte Konten (für Entwicklung)
 
 `npm run marketing:pruefen` startet Ersatz-Server für Meta, LinkedIn und Canva und prüft jeden Ablauf (Verbinden

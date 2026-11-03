@@ -46,8 +46,11 @@ export function filtern(
     if (f.standort && k.standort !== f.standort) return false
     if (f.kontakt === 'mail' && !mitMail(k)) return false
     if (f.kontakt === 'post' && !mitPost(k)) return false
-    // Anlage-Filter gelten nur für Kunden mit Anlage (V233: «Auftrag»)
-    if (f.anlage) {
+    // Wärmepumpe-Potenzial: Öl- oder Gasheizung laut Gebäuderegister, egal ob schon Kunde
+    if (f.anlage === 'oel_gas') {
+      if (!['oel', 'gas'].includes(k.heizung ?? '')) return false
+    } else if (f.anlage) {
+      // Anlage-Filter gelten nur für Kunden mit Anlage (V233: «Auftrag»)
       if (k.gruppe !== 'kunde') return false
       if (f.anlage === 'ohne_batterie' && k.batterie) return false
       if (f.anlage === 'ohne_wallbox' && k.wallbox) return false
@@ -200,4 +203,20 @@ export function adresslisteCsv(
       .join(';'),
   )
   return '﻿' + [kopf.join(';'), ...zeilen].join('\r\n')
+}
+
+/**
+ * Werbe-Pause: wer in den letzten `tage` Tagen angeschrieben wurde (Serien-Mail, Brief, Newsletter), bekommt keine
+ * weitere Werbung. Gibt die IDs zurück, die jetzt ruhen (0 Tage = niemand).
+ */
+export function imPause(
+  liste: readonly Pick<Zielkontakt, 'id' | 'zuletzt_angeschrieben'>[],
+  tage: number,
+  heute = new Date(),
+): Set<string> {
+  if (tage <= 0) return new Set()
+  const grenze = heute.getTime() - tage * 86_400_000
+  return new Set(
+    liste.filter((k) => k.zuletzt_angeschrieben && Date.parse(k.zuletzt_angeschrieben) > grenze).map((k) => k.id),
+  )
 }

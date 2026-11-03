@@ -7563,13 +7563,18 @@
   },
   "marketing": {
     "titel": "Marketing",
-    "beschreibung": "Écrire aux clients, réseaux sociaux et newsletter. Ce qui part vers l’extérieur, tu le valides d’un clic.",
+    "beschreibung": "Campagnes, salons, courriers aux clients, réseaux sociaux et newsletter avec résultats. Ce qui sort, tu le valides d’un clic.",
     "ansicht": {
+      "uebersicht": "Aperçu",
+      "kalender": "Calendrier",
+      "kampagnen": "Campagnes",
+      "messen": "Salons & événements",
       "anschreiben": "Écrire aux clients",
       "social": "Réseaux sociaux",
       "newsletter": "Newsletter",
-      "vorlagen": "Modèles",
-      "empfehlungen": "Recommandations"
+      "empfehlungen": "Recommandations",
+      "mediathek": "Médiathèque",
+      "vorlagen": "Modèles"
     },
     "gruppe": {
       "interessent": "Intéressé",
@@ -7595,7 +7600,8 @@
       "ohne_batterie": "Sans batterie",
       "ohne_wallbox": "Sans borne de recharge",
       "ohne_waermepumpe": "Sans pompe à chaleur",
-      "alt": "Installation ≥ 3 ans"
+      "alt": "Installation ≥ 3 ans",
+      "oel_gas": "Chauffage mazout ou gaz"
     },
     "filter": {
       "suche": "Nom, lieu, e-mail, n° client",
@@ -7701,7 +7707,9 @@
         "wird_veroeffentlicht": "En cours de publication",
         "veroeffentlicht": "Publiée",
         "fehler": "Erreur",
-        "erledigt": "Classée"
+        "erledigt": "Classée",
+        "idee": "Idée",
+        "zur_freigabe": "À valider"
       },
       "thema": "Thème",
       "idee": "Idée / contenu",
@@ -12103,7 +12111,10 @@
       "gespeicherte_ansichten": "Vue enregistrée",
       "rueckmeldungen": "Retour",
       "kontakt_zugehoerigkeiten": "Personne de contact",
-      "eingangsrechnungen": "Factures fournisseurs"
+      "eingangsrechnungen": "Factures fournisseurs",
+      "marketing_kampagnen": "Campagnes",
+      "marketing_zielgruppen": "Groupes cibles",
+      "werbemittel": "Supports publicitaires"
     }
   },
   "zugehoerigkeit": {
@@ -12118,5 +12129,268 @@
     "ausser": "Tous sauf {{wert}}",
     "suchen": "Rechercher …",
     "keineTreffer": "Aucun résultat"
+  },
+  "werbung": {
+    "speichern": "Enregistrer",
+    "papierkorb": "Mettre à la corbeille",
+    "oeffnen": "Ouvrir",
+    "ok": "OK",
+    "art": {
+      "aktion": "Action",
+      "messe": "Salon / événement",
+      "online": "Publicité en ligne",
+      "empfehlung": "Recommandations",
+      "newsletter": "Newsletter",
+      "social": "Réseaux sociaux",
+      "gekaufte_leads": "Leads achetés"
+    },
+    "status": {
+      "idee": "Idée",
+      "vorbereitung": "En préparation",
+      "laeuft": "En cours",
+      "abgeschlossen": "Terminée"
+    },
+    "kanal": {
+      "online": "En ligne",
+      "messe": "Salons",
+      "gekaufte_leads": "Leads achetés",
+      "druck": "Impression et flyers",
+      "social": "Réseaux sociaux",
+      "gutschriften": "Bons de recommandation",
+      "sonstiges": "Divers"
+    },
+    "sprache": {
+      "de": "Allemand",
+      "fr": "Français",
+      "de_fr": "Allemand et français"
+    },
+    "ton": {
+      "info": "Conseil",
+      "warnung": "Bientôt",
+      "kritisch": "Maintenant"
+    },
+    "feld": {
+      "name": "Nom",
+      "art": "Type",
+      "status": "Statut",
+      "sprache": "Langue",
+      "ziel": "Objectif",
+      "start_am": "Début",
+      "ende_am": "Fin",
+      "ziel_leads": "Objectif leads",
+      "budget": "Budget (CHF)",
+      "verantwortlich": "Responsable",
+      "ort": "Lieu",
+      "stand": "Numéro du stand",
+      "notiz": "Note",
+      "zeitraum": "Période"
+    },
+    "kampagne": {
+      "neu": "Nouvelle campagne",
+      "keine": "Aucune campagne",
+      "gehoertZu": "Fait partie de la campagne",
+      "kennzeichen": "Code :",
+      "kennzeichenHinweis": "Indiquez-le comme « Campagne » dans le formulaire du site ou « Campagne : … » dans l’annonce ; le CRM attribue alors chaque demande à cette campagne.",
+      "leer": "Aucune campagne",
+      "leerText": "Une campagne a un objectif et une période, et montre combien de leads et de contrats elle apporte."
+    },
+    "akte": {
+      "ergebnis": "Résultat",
+      "messe": "Salon",
+      "angaben": "Données"
+    },
+    "ergebnis": {
+      "trichter": "Du contact au contrat",
+      "erreicht": "Atteints",
+      "geoeffnet": "Ouverts",
+      "geklickt": "Cliqués",
+      "leads": "Leads",
+      "offerten": "Offres",
+      "auftraege": "Contrats",
+      "auftragswert": "Valeur des contrats",
+      "kostenKurz": "Coûts",
+      "proLead": "Par lead",
+      "ziel": "{{ist}} sur {{ziel}} leads.",
+      "wert": "Valeur des contrats {{wert}}.",
+      "kosten": "Coûts {{kosten}} sur un budget de {{budget}}, {{proLead}} par lead.",
+      "versaende": "Envois",
+      "versand": "{{gesendet}} envoyés · {{geoeffnet}} ouverts · {{geklickt}} cliqués · {{leads}} leads · {{abgemeldet}} désinscrits",
+      "anzahl": "{{anzahl}} destinataires",
+      "leadsTitel": "Leads ({{anzahl}})",
+      "keineLeads": "Pas encore de leads de cette campagne.",
+      "rechnungen": "Factures d’AbaNinja",
+      "keineRechnungen": "Aucune facture attribuée (Aperçu › Attribuer les coûts)."
+    },
+    "messe": {
+      "neu": "Nouveau salon",
+      "leer": "Aucun salon",
+      "leerText": "Salons et événements avec permanence, check-list et saisie des leads sur mobile.",
+      "leadErfassen": "Saisir un lead au stand",
+      "danke": "E-mail de remerciement aux visiteurs ({{anzahl}})",
+      "standdienst": "Permanence au stand",
+      "ohneDatum": "Indiquez d’abord le début et la fin sous « Données ».",
+      "von": "De",
+      "bis": "À",
+      "personen": "Personnes",
+      "kuerzelHinweis": "Initiales, p. ex. LP FS",
+      "checkliste": "Check-list ({{erledigt}} sur {{von}})",
+      "erfassen": "Saisir un lead : {{name}}",
+      "erfassenInfo": "Fonctionne aussi hors ligne ; le lead est envoyé dès que le réseau revient.",
+      "wartend": "{{anzahl}} lead(s) en attente de réseau sur l’appareil.",
+      "speichernNaechster": "Enregistrer et suivant",
+      "sprache": "Langue",
+      "interesse": "Intérêt",
+      "termin": "Souhaite un rendez-vous",
+      "newsletter": "Souhaite la newsletter (consentement)",
+      "feld": {
+        "vorname": "Prénom",
+        "nachname": "Nom",
+        "telefon": "Téléphone",
+        "email": "E-mail",
+        "plz": "NPA",
+        "ort": "Localité",
+        "notiz": "Note"
+      }
+    },
+    "kalender": {
+      "zurueck": "Mois précédent",
+      "weiter": "Mois suivant",
+      "legende": "Légende",
+      "mehr": "+{{anzahl}} autres",
+      "art": {
+        "post": "Publication",
+        "mail": "E-mail / newsletter",
+        "messe": "Salon",
+        "frist": "Fin de campagne",
+        "thema": "Thème du mois"
+      }
+    },
+    "uebersicht": {
+      "kennzahlen": "Chiffres marketing",
+      "leadsJahr": "Leads {{jahr}}",
+      "auftraegeJahr": "Contrats {{jahr}}",
+      "laufend": "Campagnes en cours",
+      "heute": "À faire aujourd’hui",
+      "nichtsZuTun": "Tout est fait, rien d’urgent.",
+      "meineLeads": "Tes leads du marketing",
+      "naechste": "14 prochains jours",
+      "nichtsGeplant": "Rien de prévu.",
+      "quellen": "D’où viennent les contrats ? ({{jahr}})",
+      "quelle": "Source",
+      "ohneQuelle": "Sans source",
+      "budget": "Budget {{jahr}}",
+      "budgetSumme": "{{kosten}} dépensés sur {{budget}}"
+    },
+    "vorschlag": {
+      "freigeben": "{{anzahl}} publication(s) attendent ta validation.",
+      "vonHand": "{{anzahl}} publication(s) à publier maintenant à la main, puis saisir le lien.",
+      "postFehler": "{{anzahl}} publication(s) en erreur.",
+      "kosten": "{{anzahl}} facture(s) ressemblent à de la publicité : attribuer une campagne.",
+      "messe": "{{name}} dans {{tage}} jours : encore {{offen}} points sur la check-list.",
+      "messeDanke": "{{name}} est terminé : envoyer l’e-mail de remerciement aux visiteurs.",
+      "ohneLeads": "{{name}} tourne depuis trois semaines sans lead : vérifier le code dans l’annonce.",
+      "nachbestellen": "{{name}} : plus que {{bestand}} en stock, recommander.",
+      "thema": "Thème du mois « {{thema}} » : aucune publication prévue."
+    },
+    "kosten": {
+      "titel": "Attribuer les coûts ({{anzahl}})",
+      "info": "Factures fournisseurs d’AbaNinja qui ressemblent à de la publicité. L’attribution affiche les coûts dans la campagne et le budget.",
+      "kanal": "Canal",
+      "zuordnen": "Attribuer",
+      "keineWerbung": "Pas de publicité"
+    },
+    "mediathek": {
+      "fotos": "Photos des rapports",
+      "filter": "Filtrer les photos",
+      "nur": {
+        "erlaubt": "Autorisées pour la publicité",
+        "titel": "Photos de couverture",
+        "batterie": "Avec batterie"
+      },
+      "leer": "Aucune photo",
+      "leerText": "Les photos viennent des rapports de montage ; pour la publicité seulement avec l’accord du client.",
+      "alt": "Installation à {{ort}}",
+      "erlaubt": "Autorisée",
+      "nichtErlaubt": "Non autorisée",
+      "batterie": "Batterie",
+      "titelbild": "Marquer comme photo de couverture",
+      "erlauben": "Saisir l’accord",
+      "entziehen": "Retirer l’accord",
+      "grundErlauben": "Comment le client a-t-il donné son accord ?",
+      "grundEntziehen": "Pourquoi retirer ?"
+    },
+    "mittel": {
+      "titel": "Supports publicitaires",
+      "neu": "Nouveau support",
+      "leer": "Aucun support enregistré.",
+      "name": "Nom",
+      "art": "Type",
+      "version": "Version",
+      "link": "Fichier (lien SharePoint)",
+      "bestand": "Stock",
+      "mindestbestand": "Stock minimum",
+      "linkFehler": "Le lien doit commencer par https://.",
+      "knapp": "sous {{min}}",
+      "oeffnen": "Ouvrir",
+      "arten": {
+        "flyer": "Flyer",
+        "broschuere": "Brochure",
+        "rollup": "Roll-up",
+        "logo": "Logo",
+        "vorlage": "Modèle",
+        "sonstiges": "Divers"
+      }
+    },
+    "social": {
+      "board": "Publications",
+      "idee": "Noter une idée",
+      "spalteLeer": "Rien ici.",
+      "spalte": {
+        "ideen": "Idées",
+        "entwurf": "Brouillon",
+        "freigabe": "À valider",
+        "geplant": "Planifié",
+        "veroeffentlicht": "Publié"
+      },
+      "vonHand": "à la main",
+      "zurFreigabe": "Envoyer pour validation",
+      "gepostet": "Publié",
+      "gepostetTitel": "Publié à la main",
+      "gepostetInfo": "Saisir les liens vers les publications (facultatif). La publication est ensuite considérée comme publiée.",
+      "linkHinweis": "Lien vers la publication"
+    },
+    "newsletter": {
+      "ergebnis": "{{geoeffnet}} ouverts · {{geklickt}} cliqués · {{abgemeldet}} désinscrits · {{leads}} leads",
+      "geplant": "Prévu pour le {{wann}}",
+      "geplantFeld": "Prévu pour",
+      "geplantHinweis": "Apparaît dans le calendrier ; l’envoi se fait seulement au clic."
+    },
+    "pause": {
+      "beachten": "Respecter la pause de {{tage}} jours ({{anzahl}} au repos)"
+    },
+    "zielgruppe": {
+      "titel": "Groupes cibles enregistrés",
+      "leer": "aucun",
+      "speichern": "Enregistrer le filtre comme groupe cible",
+      "name": "Nom du groupe cible",
+      "entfernen": "Supprimer {{name}}"
+    },
+    "planung": {
+      "titel": "Planification",
+      "nurAdmin": "Seule l’administration modifie la planification.",
+      "budget": "Budget {{jahr}} par canal (CHF)",
+      "themen": "Thème par mois (DE / FR)",
+      "thema": "Thème mois {{monat}} {{sprache}}",
+      "checkliste": "Check-list salon",
+      "jeZeile": "Un point par ligne",
+      "werbepause": "Pause publicitaire (jours)",
+      "werbepauseHinweis": "Qui a été contacté récemment ne reçoit pas d’e-mail groupé pendant cette durée.",
+      "stichworte": "Mots-clés des factures publicitaires",
+      "stichworteHinweis": "Séparés par des virgules ; les factures contenant ces mots apparaissent sous « Attribuer les coûts ».",
+      "danke": "E-mail de remerciement salon, objet",
+      "dankeText": "E-mail de remerciement salon, texte",
+      "dankePlatzhalter": "Variables : {Messe}, {Anrede}, {Absender}",
+      "datenschutz": "Mention sous les e-mails mesurés"
+    }
   }
 }

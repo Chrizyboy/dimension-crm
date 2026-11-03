@@ -13,6 +13,7 @@ import type { ZielFilter } from '../types'
 import { LetzteAktionen } from './LetzteAktionen'
 import { SerienDialog } from './SerienDialog'
 import { ZielFilterLeiste } from './ZielFilterLeiste'
+import { ZielgruppenLeiste } from './ZielgruppenLeiste'
 import { ZielTabelle } from './ZielTabelle'
 
 /**
@@ -62,6 +63,7 @@ export function Anschreiben({ anlage = '' }: { anlage?: ZielFilter['anlage'] }) 
 
   return (
     <div className="flex flex-col gap-4">
+      <ZielgruppenLeiste filter={filter} onFilter={setFilter} />
       {nachruest && (
         <div
           className="bg-info-soft flex flex-wrap items-center justify-between gap-3 rounded-lg border px-4 py-3 text-sm"
