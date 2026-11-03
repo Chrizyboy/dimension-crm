@@ -206,4 +206,6 @@ test('Vorlagen: CI-Stil ändert nur die Administration', async ({ page }) => {
   await page.goto('/#/marketing?ansicht=vorlagen')
   await expect(page.getByText('Ändern kann nur die Administration.')).toBeVisible()
   await expect(page.getByLabel('CI-Stil für Bilder (Canva)')).not.toBeEditable()
+  await expect(page.getByText('Die Planung ändert nur die Administration.')).toBeVisible()
+  await expect(page.getByLabel('Werbe-Pause (Tage)')).toBeDisabled()
 })

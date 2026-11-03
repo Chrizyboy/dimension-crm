@@ -9524,7 +9524,8 @@
       "danke": "E-mail de remerciement salon, objet",
       "dankeText": "E-mail de remerciement salon, texte",
       "dankePlatzhalter": "Variables : {Messe}, {Anrede}, {Absender}",
-      "datenschutz": "Mention sous les e-mails mesurés"
+      "datenschutz": "Mention sous les e-mails mesurés",
+      "nurAdmin": "Seule l’administration modifie la planification."
     }
   }
 }

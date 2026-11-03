@@ -9524,7 +9524,8 @@
       "danke": "Dankes-Mail Messe, Betreff",
       "dankeText": "Dankes-Mail Messe, Text",
       "dankePlatzhalter": "Platzhalter: {Messe}, {Anrede}, {Absender}",
-      "datenschutz": "Hinweis unter gezählten Mails"
+      "datenschutz": "Hinweis unter gezählten Mails",
+      "nurAdmin": "Die Planung ändert nur die Administration."
     }
   }
 }
