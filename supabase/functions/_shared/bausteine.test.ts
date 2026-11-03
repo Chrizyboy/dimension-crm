@@ -122,7 +122,10 @@ describe('Verschlüsselung der Microsoft-Verbindung', () => {
   it('merkt veränderte Daten und falsche Schlüssel', async () => {
     const a = await verschluessle('x', schluessel)
     await expect(entschluessle(a, Buffer.alloc(32, 8).toString('base64'))).rejects.toThrow()
-    await expect(entschluessle(`${a.slice(0, -2)}AA`, schluessel)).rejects.toThrow()
+    // Ein Zeichen mitten in den Daten ändern: die letzten Zeichen tragen teils nur Füllbits, und «AA» kann
+    // zufällig schon dastehen (1 von etwa 4000 Läufen blieb das Paket so unverändert).
+    const verfaelscht = `${a.slice(0, -5)}${a.at(-5) === 'A' ? 'B' : 'A'}${a.slice(-4)}`
+    await expect(entschluessle(verfaelscht, schluessel)).rejects.toThrow()
     await expect(verschluessle('x', 'zu-kurz')).rejects.toThrow()
   })
 

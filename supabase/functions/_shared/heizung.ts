@@ -1,5 +1,5 @@
 // Heizung der Kunden-Gebäude aus dem Gebäuderegister (GWR) für die Zielgruppe «Wärmepumpe-Potenzial» im Marketing
-// (Entscheid 0049). Gleicher Zugang wie der Grossprojekt-Monitor (api3.geo.admin.ch, ohne Schlüssel). Die Antworten
+// (Entscheid 0053). Gleicher Zugang wie der Grossprojekt-Monitor (api3.geo.admin.ch, ohne Schlüssel). Die Antworten
 // sind Daten (Regel 7); gespeichert wird nur der Energieträger über «objekt_heizung_setzen».
 
 import { dienst } from './datenbank.ts'

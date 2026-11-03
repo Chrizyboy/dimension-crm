@@ -101,7 +101,7 @@ kurze Bestätigung auf Deutsch oder Französisch. Der Link braucht keine Anmeldu
 
 ## 4a. Öffnungen und Klicks (seit 2.11.2026)
 
-Serien-Mails und Newsletter zählen, ob sie geöffnet und welche Links angeklickt werden (Entscheid 0049). Dafür
+Serien-Mails und Newsletter zählen, ob sie geöffnet und welche Links angeklickt werden (Entscheid 0053). Dafür
 muss die Edge Function **`zaehler`** veröffentlicht sein (ohne Anmeldung, `verify_jwt = false`):
 `npx.cmd supabase functions deploy zaehler` und danach `ausgang` und `zeitplan` neu veröffentlichen.
 Gespeichert werden nur Zeitpunkt und Link, keine IP-Adresse. Der Hinweis unter jeder Mail steht in

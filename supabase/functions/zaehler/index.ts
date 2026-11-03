@@ -1,5 +1,5 @@
 // Edge Function «zaehler»: zählt Öffnen (…/zaehler?o=<Mail>) und Klicks (…/zaehler?k=<Mail>&u=<Link>) von
-// Serien-Mails und Newslettern (Entscheid 0049). Ohne Login (verify_jwt = false), wie «abmelden». Umgeleitet wird
+// Serien-Mails und Newslettern (Entscheid 0053). Ohne Login (verify_jwt = false), wie «abmelden». Umgeleitet wird
 // nur auf einen Link, der wirklich in dieser Mail steht (prüft die Datenbank), sonst kein offener Umleitungsdienst.
 // Gespeichert werden nur Zeitpunkt und Link, keine IP-Adresse und kein Gerät.
 

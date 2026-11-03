@@ -9,6 +9,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { useAktion } from '../hooks/useAktion'
+import { useAusweisPflicht } from '../hooks/useAusweisPflicht'
 import { useAbwesenheiten, usePersonen, useProjektEinsaetze, useSubunternehmer } from '../hooks/useProjekte'
 import { alsIso, endeNachWerktagen, konflikte, naechsterWerktag } from '../lib/zeitplan'
 import { zeitplanSpeichern } from '../services/planung'
@@ -21,7 +22,8 @@ const MATERIAL = ['offen', 'bestellt', 'lager'] as const
 /**
  * Zeitplan einer Baustelle bearbeiten (V233 «Bauplanung»): beliebig viele Einsätze (intern, extern,
  * voraussichtlich) tagesgenau, wer dabei ist, dazu Baustellen- und Material-Status. Ist jemand in der Zeit
- * abwesend (CRM oder Outlook), steht es gleich beim Einsatz.
+ * abwesend (CRM oder Outlook) oder fehlt ein Pflicht-Ausweis für eine Tätigkeit (Hebebühne, Anhänger …), steht es
+ * gleich beim Einsatz; beides ist eine Warnung, keine Sperre.
  */
 export function ZeitplanDialog({
   projekt,
@@ -53,6 +55,7 @@ export function ZeitplanDialog({
         personen: e.personen,
         subunternehmer_id: e.subunternehmer_id,
         notiz: e.notiz,
+        taetigkeiten: e.taetigkeiten,
       }))}
       {...(neuAb ? { neuAb } : {})}
       onSchliessen={onSchliessen}
@@ -101,6 +104,7 @@ function neuerEinsatz(von: string, werktage: number | null): EinsatzEntwurf {
     personen: [],
     subunternehmer_id: null,
     notiz: null,
+    taetigkeiten: [],
   }
 }
 
@@ -119,6 +123,8 @@ function Formular({
   const { laeuft, aus } = useAktion()
   const personen = usePersonen()
   const subs = useSubunternehmer()
+  const pflicht = useAusweisPflicht()
+  const ankreuzbar = pflicht.pflichten.filter((x) => !x.immer)
   const [heute] = useState(() => alsIso(naechsterWerktag(new Date())))
   const [liste, setListe] = useState<EinsatzEntwurf[]>(() =>
     neuAb ? [...anfang, neuerEinsatz(alsIso(naechsterWerktag(new Date(`${neuAb}T12:00`))), projekt.werktage)] : anfang,
@@ -271,6 +277,27 @@ function Formular({
                     {t('projekte.zeitplan.abwesend', { namen: fehlt.map(name).join(', ') })}
                   </p>
                 )}
+                {e.art !== 'extern' && ankreuzbar.length > 0 && (
+                  <Filterchips
+                    beschriftung={t('projekte.zeitplan.taetigkeiten')}
+                    optionen={ankreuzbar.map((x) => ({ wert: x.schluessel, text: pflicht.text(x.schluessel) }))}
+                    gewaehlt={e.taetigkeiten}
+                    onChange={(x) => {
+                      aendern(i, { taetigkeiten: x })
+                    }}
+                  />
+                )}
+                {pflicht.luecken(e).map((l) => (
+                  <p key={l.taetigkeit} className="text-warn flex items-center gap-1.5 text-xs">
+                    <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
+                    {l.wer === 'einer'
+                      ? t('projekte.zeitplan.ausweisNiemand', { taetigkeit: pflicht.text(l.taetigkeit) })
+                      : t('projekte.zeitplan.ausweisFehlt', {
+                          taetigkeit: pflicht.text(l.taetigkeit),
+                          namen: l.fehlt.map(name).join(', '),
+                        })}
+                  </p>
+                ))}
                 <Input
                   aria-label={t('projekte.feld.notiz')}
                   placeholder={t('projekte.feld.notiz')}

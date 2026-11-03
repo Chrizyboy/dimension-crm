@@ -467,6 +467,10 @@ verify_jwt = true
 [functions.grossprojekte]
 verify_jwt = true
 
+# Adressbuch: Firma im UID-Register suchen, Netzbetreiber-Verzeichnis der ElCom einlesen (Entscheid 0045).
+[functions.adressbuch]
+verify_jwt = true
+
 # Microsoft leitet nach der Anmeldung ohne Supabase-Login hierher; geschützt durch state und PKCE.
 [functions.microsoft-rueckruf]
 verify_jwt = false
@@ -494,7 +498,7 @@ verify_jwt = false
 [functions.abmelden]
 verify_jwt = false
 
-# Öffnen und Klicks von Serien-Mails und Newslettern zählen (Entscheid 0049): Link in der Mail, ohne Login.
+# Öffnen und Klicks von Serien-Mails und Newslettern zählen (Entscheid 0053): Link in der Mail, ohne Login.
 [functions.zaehler]
 verify_jwt = false
 

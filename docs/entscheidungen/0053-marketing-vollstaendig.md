@@ -1,4 +1,4 @@
-# 0049 – Marketing vollständig: Kampagnen, Messen, Ergebnis, Social «von Hand» (2.11.2026)
+# 0053 – Marketing vollständig: Kampagnen, Messen, Ergebnis, Social «von Hand» (2.11.2026)
 
 ## Ausgangslage
 

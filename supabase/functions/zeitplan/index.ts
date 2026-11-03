@@ -4,8 +4,8 @@
 //  * ausgang      jede Minute     freigegebene Mails und SMS senden
 //  * ausgang_erinnern alle 15 Min.  wartet seit 4 Arbeitsstunden oder Fehler: Glocke (Stellvertretung nach 1 Tag)
 //  * social       jede Minute     freigegebene Social-Media-Posts zur geplanten Zeit (Phase 11)
-//  * social_von_hand alle 5 Min.  Posts ohne Verbindung: Glocke «Jetzt posten» (Entscheid 0049)
-//  * heizung      stündlich       Heizung der Kunden-Gebäude aus dem Gebäuderegister (Entscheid 0049)
+//  * social_von_hand alle 5 Min.  Posts ohne Verbindung: Glocke «Jetzt posten» (Entscheid 0053)
+//  * heizung      stündlich       Heizung der Kunden-Gebäude aus dem Gebäuderegister (Entscheid 0053)
 //  * automationen jede Minute     Signale verteilen, Läufe weiterbringen, Outlook/SharePoint/AbaNinja (Phase 12)
 //  * ki           jede Minute     KI-Entwürfe für Mails aus Automationen (Phase 13), nur mit ANTHROPIC_API_KEY
 //  * sms          ab «uhrzeit»    SMS-Erinnerungen für morgen, nur wenn «automatisch» eingeschaltet ist (V172)
@@ -152,6 +152,12 @@ Deno.serve(async (req) => {
   ergebnis.aufgaben = await job('aufgaben', 60, async () => {
     const n = await dienst.rpc<number>('aufgaben_melden', {})
     return `${n} ${n === 1 ? 'Person' : 'Personen'} erinnert`
+  })
+
+  // Adressbuch (Entscheid 0049): Versicherung, SUVA, GAV der Partner laufen ab → Aufgabe und Glocke, einmal je Nachweis.
+  ergebnis.partner_fristen = await job('partner_fristen', 60, async () => {
+    const n = await dienst.rpc<number>('partner_fristen_melden', {})
+    return `${n} ${n === 1 ? 'Nachweis' : 'Nachweise'} gemeldet`
   })
 
   // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
@@ -304,7 +310,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  // Marketing (Entscheid 0049): Posts ohne Verbindung zum Netzwerk «von Hand» melden (Glocke «Jetzt posten»).
+  // Marketing (Entscheid 0053): Posts ohne Verbindung zum Netzwerk «von Hand» melden (Glocke «Jetzt posten»).
   ergebnis.social_von_hand = await job('social_von_hand', 5, async () => {
     const n = await dienst.rpc<number>('social_von_hand_melden', {})
     return `${n} ${n === 1 ? 'Post' : 'Posts'} gemeldet`

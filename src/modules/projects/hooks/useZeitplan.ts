@@ -16,8 +16,9 @@ import {
   type PlanGruppe,
 } from '../lib/zeitplanAnsicht'
 import { einsatzAendern } from '../services/planung'
-import type { Projekt } from '../types'
+import type { Einsatz, Projekt } from '../types'
 import { useAktion } from './useAktion'
+import { useAusweisPflicht } from './useAusweisPflicht'
 import {
   useAbwesenheiten,
   useEinsaetze,
@@ -57,11 +58,13 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
   const standorte = useStandorte()
   const subs = useSubunternehmer()
   const termine = useServiceTermine(von, ende)
+  const pflicht = useAusweisPflicht()
 
   const daten = useMemo(() => {
     const e = (einsaetze.data ?? []).map((x) => ({ ...x, ...vorschau[x.id] }))
     const p = projekte.data ?? []
     const wort = f.suche.trim().toLowerCase()
+    const kuerzel = (id: string) => personen.data?.find((x) => x.id === id)?.kuerzel ?? '?'
     const passt = (x: Projekt) =>
       (f.standorte.length === 0 || f.standorte.includes(x.standort_id ?? '')) &&
       (f.bau.length === 0 || f.bau.includes(x.bau_status ?? 'ausstehend')) &&
@@ -74,8 +77,16 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
       subunternehmer: subs.data ?? [],
       service: termine.data ?? [],
       passt,
+      ausweisFehlt: (x: Einsatz) =>
+        pflicht.luecken(x).map((l) =>
+          l.wer === 'einer'
+            ? t('projekte.zeitplan.ausweisNiemand', { taetigkeit: pflicht.text(l.taetigkeit) })
+            : t('projekte.zeitplan.ausweisFehlt', {
+                taetigkeit: pflicht.text(l.taetigkeit),
+                namen: l.fehlt.map(kuerzel).join(', '),
+              }),
+        ),
     }
-    const kuerzel = (id: string) => personen.data?.find((x) => x.id === id)?.kuerzel ?? '?'
     // Service-Einsätze: in der Baustellen-Sicht als eigene Zeile, am Handy als Karten; Text = Zeit und Team.
     const service = (termine.data ?? [])
       .filter((x) => !wort || `${x.kunde ?? ''} ${x.ort ?? ''} ${x.nummer}`.toLowerCase().includes(wort))
@@ -143,6 +154,7 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
     w,
     t,
     arten,
+    pflicht,
   ])
 
   /** Einsatz verschieben oder verlängern, mit «Rückgängig» in der Meldung. */
