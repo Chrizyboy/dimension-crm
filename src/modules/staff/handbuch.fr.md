@@ -80,6 +80,7 @@ Soit la date de naissance manque dans le dossier, soit tu as cliqué **Ne pas m�
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les cours (sauf ceux suivis) et les documents du dossier personnel, avec confirmation et «Annuler» ; restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Permis obligatoires par activité avec avertissement dans la planification ; anniversaires et jubilés sur « Ma journée ».
 - 02.11.2026: Onglet Équipe avec « Aujourd’hui », cours avec demande, approbation, coûts et permis ensuite, exigences par rôle.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.

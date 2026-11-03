@@ -8,6 +8,7 @@ import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatChf, parseChf } from '@/lib/format'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { useAktion } from '../hooks/useAktion'
 import { kursBesucht, kursEntscheiden, kursSpeichern } from '../services/kurse'
 import type { Kurs, KursEingabe, TeamPerson } from '../types'
@@ -117,6 +118,9 @@ export function KursDialog({
         {...(k ? {} : { beschreibung: planer ? t('team.kurs.neuText') : t('team.kurs.beantragenText') })}
         fuss={
           <>
+            {k && k.stand !== 'besucht' && (planer || eigenerAntrag) && absage === null && (
+              <InPapierkorbKnopf tabelle="kurse" id={k.id} name={k.titel} onFertig={onSchliessen} />
+            )}
             {k && offen && (planer || eigenerAntrag) && absage === null && (
               <Button
                 variant="ghost"
