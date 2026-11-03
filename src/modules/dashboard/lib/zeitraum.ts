@@ -1,4 +1,4 @@
-import type { Fakt, Zeitraum } from '../types'
+import type { Fakt, Vergleich, Zeitraum } from '../types'
 
 /** Heute in Zürich als JJJJ-MM-TT (sonst wechselt der Tag nach UTC um 1 oder 2 Uhr). */
 export function heuteZuerich(jetzt: Date = new Date()): string {
@@ -14,11 +14,47 @@ function iso(j: number, m: number, t: number): string {
 export function vonBis(z: Zeitraum, heute: string): { von: string; bis: string } {
   const [j, m] = heute.split('-').map(Number) as [number, number]
   const bis = heute
+  if (z === 'woche') return { von: montagVon(heute), bis }
   if (z === 'monat') return { von: iso(j, m - 1, 1), bis }
   if (z === 'quartal') return { von: iso(j, Math.floor((m - 1) / 3) * 3, 1), bis }
   if (z === 'jahr') return { von: iso(j, 0, 1), bis }
   if (z === '12m') return { von: iso(j - 1, m - 1, Number(heute.slice(8)) + 1), bis }
   return { von: '2000-01-01', bis }
+}
+
+/** Montag der Woche eines Datums (ISO-Woche beginnt am Montag). */
+export function montagVon(datum: string): string {
+  const d = new Date(`${datum}T00:00:00Z`)
+  d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7))
+  return d.toISOString().slice(0, 10)
+}
+
+/** Datum um n Tage verschoben. */
+export function plusTage(datum: string, n: number): string {
+  const d = new Date(`${datum}T00:00:00Z`)
+  d.setUTCDate(d.getUTCDate() + n)
+  return d.toISOString().slice(0, 10)
+}
+
+/** Tage von bis bis, beide eingeschlossen. */
+export function tageZwischen(von: string, bis: string): number {
+  return Math.round((Date.parse(`${bis}T00:00:00Z`) - Date.parse(`${von}T00:00:00Z`)) / 86_400_000) + 1
+}
+
+/** Gleiches Datum ein Jahr früher; der 29. Februar wird zum 28. */
+export function vorjahr(datum: string): string {
+  const j = Number(datum.slice(0, 4)) - 1
+  const md = datum.slice(5) === '02-29' ? '02-28' : datum.slice(5)
+  return `${String(j)}-${md}`
+}
+
+/**
+ * Vergleichszeitraum: gleiche Tage im Vorjahr oder gleich viele Tage direkt davor. «Alles» hat keinen Vergleich.
+ */
+export function vergleichVon(z: Zeitraum, v: Vergleich, von: string, bis: string): { von: string; bis: string } | null {
+  if (z === 'alle') return null
+  if (v === 'vorjahr') return { von: vorjahr(von), bis: vorjahr(bis) }
+  return { von: plusTage(von, -tageZwischen(von, bis)), bis: plusTage(von, -1) }
 }
 
 /** Kalenderwoche nach ISO 8601. */
@@ -30,9 +66,9 @@ export function kalenderwoche(datum: string): number {
   return Math.ceil(((d.getTime() - jahresbeginn) / 86_400_000 + 1) / 7)
 }
 
-/** Fach für das Balkendiagramm: Monat → Tage, Quartal → Wochen, Jahr/12 Monate → Monate, alles → Quartale. */
+/** Fach für das Balkendiagramm: Woche/Monat → Tage, Quartal → Wochen, Jahr/12 Monate → Monate, alles → Quartale. */
 export function fachVon(z: Zeitraum, datum: string): string {
-  if (z === 'monat') return datum
+  if (z === 'monat' || z === 'woche') return datum
   if (z === 'quartal') {
     const d = new Date(`${datum}T00:00:00Z`)
     d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7))
@@ -44,7 +80,7 @@ export function fachVon(z: Zeitraum, datum: string): string {
 
 /** Beschriftung eines Fachs: 26.10., KW 44, 10.2026, Q4 2026. */
 export function fachText(z: Zeitraum, fach: string): string {
-  if (z === 'monat') return `${fach.slice(8)}.${fach.slice(5, 7)}.`
+  if (z === 'monat' || z === 'woche') return `${fach.slice(8)}.${fach.slice(5, 7)}.`
   if (z === 'quartal') return `KW ${String(kalenderwoche(fach))}`
   if (z === 'alle') return `${fach.slice(5)} ${fach.slice(0, 4)}`
   return `${fach.slice(5, 7)}.${fach.slice(0, 4)}`
