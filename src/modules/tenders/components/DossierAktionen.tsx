@@ -45,6 +45,7 @@ export function DossierAktionen({ dossier }: { dossier: Dossier }) {
       {offen && (
         <EntscheidDialog
           entscheid={offen}
+          dossier={dossier}
           titel={t(`ausschreibungen.entscheid.${offen}`)}
           laeuft={laeuft}
           onAbbrechen={() => {
