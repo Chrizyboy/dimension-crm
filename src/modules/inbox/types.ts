@@ -31,13 +31,25 @@ export const FRIST_ARTEN = [
 /** neu = noch nicht eingeordnet, offen = Antwort nötig, info = zur Kenntnis, erledigt, abgelegt (Werbung, Intern). */
 export type Stand = 'neu' | 'offen' | 'info' | 'erledigt' | 'abgelegt'
 
-/** Reiter der Seite. */
-export const REITER = ['eingang', 'auswertung', 'einstellungen'] as const
+/** Reiter der Seite: Arbeitsplatz, Team-Übersicht, Absender-Regeln, Reaktionszeit, Einstellungen (Administration). */
+export const REITER = ['eingang', 'team', 'regeln', 'auswertung', 'einstellungen'] as const
 export type Reiter = (typeof REITER)[number]
 
-/** Filter der Liste. */
-/** «aeltere»: Archiv vor den letzten 14 Tagen, mit Suche, eigens vom Server geladen. */
-export const ANSICHTEN = ['warten', 'neu', 'meine', 'erledigt', 'abgelegt', 'aeltere'] as const
+/**
+ * Ansichten links im Arbeitsplatz. meine = «Für mich» (Standard), verteilen = info@ noch nicht weitergegeben (nur wer
+ * verteilt), warten = alle offenen im Team («Wartet auf uns»), kunde = wir warten auf den Kunden, zurueck =
+ * zurückgestellt, aeltere = Archiv vor den letzten 14 Tagen mit Suche (eigens vom Server geladen).
+ */
+export const ANSICHTEN = [
+  'meine',
+  'verteilen',
+  'warten',
+  'kunde',
+  'zurueck',
+  'erledigt',
+  'abgelegt',
+  'aeltere',
+] as const
 export type Ansicht = (typeof ANSICHTEN)[number]
 
 /** Eine Mail im Posteingang, wie die Liste sie lädt. */
@@ -65,6 +77,20 @@ export interface Mail {
   reaktion_minuten: number | null
   zustaendig_id: string | null
   zustaendig: string | null
+  /** zurückgestellt bis (Wiedervorlage) */
+  zurueck_am: string | null
+  /** wir warten auf den Kunden bis */
+  warten_bis: string | null
+  /** kam zurück, weil der Kunde nicht geantwortet hat */
+  nachfassen: boolean
+  /** Team-Postfach: schon weitergegeben */
+  verteilt_am: string | null
+  vorschlag_id: string | null
+  vorschlag: string | null
+  /** von der KI gelesen: betrag_rappen, faellig, rechnungsdatum, rechnungsnummer, liefertermin, firma */
+  ki_werte: KiWerte
+  zahlung_id: string | null
+  konversation_id: string | null
   vertretung_fuer: string | null
   erledigt_von: string | null
   kontakt: { id: string; name: string; sprache: string } | null
@@ -74,6 +100,76 @@ export interface Mail {
   rechnung: { id: string; nummer: string | null } | null
   bestellung: { id: string; nummer: string } | null
   fall: { id: string; nummer: string } | null
+}
+
+/** Werte, die die KI aus einer Rechnung oder Auftragsbestätigung gelesen hat (zum Prüfen, nie automatisch). */
+export interface KiWerte {
+  betrag_rappen?: number
+  faellig?: string
+  rechnungsdatum?: string
+  rechnungsnummer?: string
+  liefertermin?: string
+  firma?: string
+}
+
+/** Eine Mail der Unterhaltung (aus Outlook). */
+export interface VerlaufMail {
+  id: string
+  von: string
+  von_name: string
+  zeit: string
+  wir: boolean
+  text: string
+}
+
+/** Anhang einer Mail (aus Outlook). */
+export interface Anhang {
+  id: string
+  name: string
+  groesse: number
+  typ: string
+}
+
+/** Interne Notiz zu einer Mail. */
+export interface Notiz {
+  id: string
+  person: string
+  kuerzel: string
+  text: string
+  am: string
+}
+
+/** Absender-Regel. postfach_person_id leer = Team-Postfächer (info@). */
+export interface AbsenderRegel {
+  id: string
+  postfach_person_id: string | null
+  absender: string
+  aktion: 'ablegen' | 'zuweisen' | 'art'
+  person_id: string | null
+  art: Art | null
+}
+
+/** Zahlen einer Person für die Team-Übersicht (keine Inhalte). */
+export interface TeamZeile {
+  person_id: string
+  name: string
+  kuerzel: string
+  offen: number
+  ueber: number
+  zurueck: number
+  warten: number
+  mitte_min: number | null
+  abwesend: boolean
+  vertretung: string | null
+}
+
+/** Offene Bestellung zur Auswahl (Liefertermin aus Auftragsbestätigung). */
+export interface OffeneBestellung {
+  id: string
+  nummer: string
+  lieferant: string
+  liefertermin: string | null
+  status: string
 }
 
 /** Auswertung der Reaktionszeit (posteingang_auswertung). */
@@ -100,6 +196,10 @@ export interface PosteingangRegeln {
   eskalation?: string[]
   /** Wie viele Monate ältere Mails nachgeholt werden (0 = keine). */
   nachholen_monate?: number
+  /** Warten auf Kunde: automatisch nach Antwort (Arten, Mails mit Offerte), Arbeitstage, Frist beim Nachfassen. */
+  warten?: { auto?: boolean; tage?: number; arten?: string[]; mit_offerte?: boolean; frist_min?: number }
+  /** Vorschlag beim Verteilen je Art (Kürzel), wenn die Akte niemanden nennt. */
+  vorschlag?: Partial<Record<Art, string>>
 }
 
 /** Stand des Nachholens je Postfach und Ordner (posteingang_nachholen_uebersicht). */

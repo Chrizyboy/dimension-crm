@@ -1,5 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { hatRecht } from '@/lib/rechte'
 import { supabase } from '@/services/supabase'
+import { useAnmeldung } from '@/stores/anmeldung'
+import type { Betrachter } from '../lib/anzeige'
 import {
   ladeAeltere,
   ladeAuswertung,
@@ -38,7 +41,7 @@ export const useNachholen = () =>
 export const useText = (id: string) =>
   useQuery({
     queryKey: ['posteingang', 'text', id],
-    enabled: mitDb,
+    enabled: mitDb && Boolean(id),
     queryFn: () => ladeText(id),
     retry: false,
     staleTime: Infinity,
@@ -60,4 +63,14 @@ export const usePersonen = () =>
 export function useNeuLaden() {
   const qc = useQueryClient()
   return () => qc.invalidateQueries({ queryKey: ['posteingang'], predicate: (q) => q.queryKey[1] !== 'text' })
+}
+
+/** Wer schaut: meine Person und ob ich Mails aus Team-Postfächern verteile (Kürzel in «verteilen» oder Administration). */
+export function useBetrachter(): Betrachter {
+  const ich = useAnmeldung((z) => z.ich)
+  const regeln = useRegeln().data
+  const verteile =
+    hatRecht(ich, 'admin') ||
+    Boolean(ich && (regeln?.verteilen ?? []).map((k) => k.toLowerCase()).includes(ich.kuerzel.toLowerCase()))
+  return { ich: ich?.id ?? null, verteile }
 }
