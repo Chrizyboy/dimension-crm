@@ -15,23 +15,41 @@ Saisir le matériel par projet, commander chez les fournisseurs (Krannich, Solar
 
 ## Comment faire {#so}
 
+### Le tableau de bord
+
+Vue de départ des achats. En haut les chiffres clés (à commander, en attente de validation, sans confirmation, montages en danger), en dessous chaque commande à son étape : validation, confirmation attendue, en route, partiellement livré, facture à contrôler. **En rouge** : la marchandise arrive après le montage ou n’est pas encore commandée. Un clic sur une carte ouvre la commande.
+
 ### Établir la liste de matériel d’un projet
 
-1. Onglet **Matériel par projet**, choisir le projet.
+1. Onglet **Plan matériel**, choisir le projet. Le plan matériel montre par chantier la couverture en pour cent et la date « commander d’ici ».
 2. **Proposer** reprend la liste du calcul ou de l’offre. Adapter ou compléter les lignes.
 3. Pour chaque ligne, le CRM montre ce qui est **Là**, **En route** ou **Manque**.
 
 ### Commander
 
-1. Dans la liste de matériel, **Proposition de commande** : le CRM regroupe le matériel manquant par fournisseur.
-2. Ouvrir la commande, vérifier les positions, **Approuver** (droit Prix).
-3. **Commander par e-mail** : PDF et e-mail sont dans la [Boîte d’envoi](kapitel:outbox). L’envoi vaut commande.
-4. Commandé par téléphone ou en ligne : **Commandé sans e-mail**.
+1. Onglet **Commander** : tout ce dont les chantiers et le stock ont besoin, par fournisseur, avec « commander d’ici » (début des travaux moins délai et marge, en jours ouvrables), seuil franco de port et commande minimale.
+2. **Créer le brouillon** (ou pour tous les fournisseurs) : le disponible en stock est réservé d’abord, le reste va dans un brouillon, arrondi aux unités d’emballage. S’il y a plusieurs brouillons d’un fournisseur vers le stock, **Regrouper les brouillons** en fait une commande groupée.
+3. Ouvrir la commande, vérifier les positions, **Valider** (droit Prix). Au-dessus de la limite : **Soumettre pour validation**, la direction reçoit une notification et valide.
+4. **Commander par e-mail** : PDF et e-mail sont dans la [Boîte d’envoi](kapitel:outbox). L’envoi vaut commande.
+5. Commandé par téléphone ou en ligne : **Commandée sans e-mail**. Pour les fournisseurs avec boutique en ligne, **Ouvrir la boutique** ouvre la page.
+
+### Contrôler la confirmation de commande
+
+1. Ouvrir la commande, section **Confirmation et livraison**, **Saisir la confirmation**.
+2. L’IA lit la confirmation dans un e-mail de la boîte de réception ou dans un PDF (**Lire un PDF**). Vérifier numéro, date, quantités et prix, **Enregistrer**.
+3. Les écarts de quantité ou de prix sont signalés. La date confirmée devient la date de livraison.
+4. Confirmée brièvement, sans détails : **Confirmation reçue** dans les indications. Rien ne vient : noter **Relancé**.
+5. Suivi, indication de livraison et contact sur place dans la même section.
 
 ### Comptabiliser l’entrée de marchandise
 
-1. Ouvrir la commande, **Entrée de marchandise**, saisir quantité livrée et date.
+1. Ouvrir la commande, **Entrée de marchandise**, saisir quantité livrée, date et n° de bulletin de livraison. Numéros de série au besoin avec **Saisir les numéros de série**.
 2. **Comptabiliser l’entrée**. La marchandise pour le stock est réservée au projet ; celle livrée directement au chantier compte pour le projet.
+
+### Contrôler la facture fournisseur
+
+1. Après la livraison, dans la commande, section **Facture fournisseur** : le CRM propose les factures correspondantes d’AbaNinja, avec le montant attendu.
+2. Choisir la facture, **Marquer comme contrôlée**. Si elle diffère nettement (plus de CHF 50 ou 1 %), une note est nécessaire (p. ex. port). La facture est alors aussi contrôlée dans les finances.
 
 ### Prendre du matériel au stock
 
@@ -45,7 +63,8 @@ Saisir le matériel par projet, commander chez les fournisseurs (Krannich, Solar
 
 ### Gérer les fournisseurs
 
-1. Onglet **Fournisseurs** : adresse de commande, contact, délai de livraison.
+1. Onglet **Fournisseurs** : adresse de commande, contact et conditions (délai, port, franco dès, commande minimale, délai de paiement, escompte, mode de commande).
+2. La liste montre par fournisseur les achats des 12 derniers mois, la ponctualité et le délai effectif.
 
 ## Statuts {#staende}
 
@@ -60,11 +79,13 @@ Saisir le matériel par projet, commander chez les fournisseurs (Krannich, Solar
 
 - Avec « Commandée » et l’entrée de marchandise, le CRM pose le statut du matériel dans la feuille de route du projet.
 - Le stock ne change que par les entrées et écritures de stock, jamais directement.
+- Chaque heure une notification si une confirmation manque, si un montage est en danger ou si la date « commander d’ici » est atteinte.
 
 ## Règles {#regeln}
 
 - Commandes et prix d’achat seulement avec le droit **Prix**.
 - L’e-mail de commande ne part que pour les commandes approuvées.
+- Au-dessus de la limite de validation (par défaut CHF 5'000), seules les personnes définies valident. Limite et personnes : seulement l’administration.
 
 ## Questions fréquentes {#fragen}
 
@@ -78,4 +99,5 @@ La saisir sous **Fournisseurs** ou à la main dans l’e-mail.
 
 ## Nouveautés {#neu}
 
+- 02.11.2026: Tableau de bord, commande groupée par fournisseur, plan matériel, limite de validation, confirmation de commande avec IA, contrôle de la facture fournisseur, conditions des fournisseurs.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.
