@@ -6882,7 +6882,9 @@
       "kosten": "Kosten (CHF)",
       "bemerkung": "Bemerkung",
       "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen",
-      "liter": "Liter"
+      "liter": "Liter",
+      "beleg": "Beleg (Foto oder PDF)",
+      "belegHinweis": "Mit der Firmenkarte bezahlt? Beleg fotografieren. Er kommt zu den Dokumenten und die Buchhaltung gleicht ihn mit der Kartenabrechnung ab."
     },
     "uebergeben": {
       "knopf": "Übergeben",
