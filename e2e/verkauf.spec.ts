@@ -60,6 +60,12 @@ test('Lead anlegen und Kontakt erfassen', async ({ page }) => {
   await expect(akte.getByText('Lead neu').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
+  // Besichtigung: Checkliste mit Kamera für jedes der vier Fotos (03.11.2026).
+  await akte.getByRole('button', { name: /^Besichtigung/ }).click()
+  const checkliste = akte.getByRole('list', { name: 'Checkliste' })
+  await expect(checkliste.getByRole('listitem')).toHaveCount(7)
+  await expect(checkliste.getByRole('button', { name: /Foto aufnehmen/ })).toHaveCount(4)
+
   await akte.getByRole('button', { name: 'Kontakt erfassen' }).click()
   const gespraech = page.getByRole('dialog', { name: 'Kontakt erfassen' })
   await gespraech.getByRole('radio', { name: 'Anruf' }).click()
@@ -100,4 +106,11 @@ test('Zu tun, Pipeline, Liste, Tagesroute, Monatsbericht und Steuerung ohne Vers
     await expect(page.getByText(text).first()).toBeVisible()
     expect(await verstoesse(page), `${ansicht} (${schema})`).toEqual([])
   }
+
+  // Kalender, Tagesroute und Tour liegen unter einem Reiter «Planung» (03.11.2026).
+  await page.getByRole('navigation', { name: 'Ansichten' }).getByRole('button', { name: 'Planung' }).click()
+  const planung = page.getByRole('group', { name: 'Planung' })
+  await expect(planung.getByRole('button', { name: 'Kalender', pressed: true })).toBeVisible()
+  await planung.getByRole('button', { name: 'Tagesroute' }).click()
+  await expect(page).toHaveURL(/ansicht=tagesroute/)
 })
