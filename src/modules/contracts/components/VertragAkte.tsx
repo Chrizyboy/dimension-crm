@@ -1,4 +1,4 @@
-import { CheckCircle2, ExternalLink, FileText, Pencil, Receipt, Undo2, XCircle } from 'lucide-react'
+import { CalendarClock, CheckCircle2, ExternalLink, FileText, Pencil, Receipt, Undo2, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -10,7 +10,7 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Skelett } from '@/components/ui/diverses'
 import { useDrucken } from '@/hooks/useDrucken'
 import { useAuswahl } from '@/hooks/useAuswahl'
-import { formatChf, formatDatum, formatTelefon } from '@/lib/format'
+import { formatChf, formatDatum, formatDatumZeit, formatTelefon } from '@/lib/format'
 import { tonVonFarbe } from '@/lib/kontakt'
 import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -23,6 +23,7 @@ import { ErledigtDialog } from './ErledigtDialog'
 import { KuendigenDialog } from './KuendigenDialog'
 import { LaufzeitLeiste } from './LaufzeitLeiste'
 import { RechnungenAbschnitt } from './RechnungenAbschnitt'
+import { TerminDialog } from './TerminDialog'
 import { VertragDialog } from './VertragDialog'
 import { VertragDruck } from './VertragDruck'
 
@@ -39,7 +40,7 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const { aktiv: druckt, drucke } = useDrucken()
   const { aus } = useAktion()
   const [heute] = useState(() => new Date())
-  const [offen, setOffen] = useState<'bearbeiten' | 'erledigt' | 'kuendigen' | null>(null)
+  const [offen, setOffen] = useState<'bearbeiten' | 'erledigt' | 'kuendigen' | 'termin' | null>(null)
   const v = vertrag.data
   const sprache = i18n.language === 'fr' ? 'fr' : 'de'
   const p = findePaket(katalog, v?.paket ?? null)
@@ -84,6 +85,17 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
         >
           <Receipt />
           {t('wartung.akte.rechnung')}
+        </Button>
+      )}
+      {v.status === 'aktiv' && v.naechste_wartung && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setOffen('termin')
+          }}
+        >
+          <CalendarClock />
+          {v.termin_von ? t('wartung.insp.aendern') : t('wartung.insp.planen')}
         </Button>
       )}
       <Button
@@ -139,6 +151,12 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
               {v.status !== 'beendet' && v.naechste_wartung && (
                 <Badge ton={wartungTon(v.naechste_wartung, heute)}>
                   {t('wartung.akte.naechste', { datum: formatDatum(v.naechste_wartung) })}
+                </Badge>
+              )}
+              {v.termin_von && (
+                <Badge ton={v.angekuendigt_am ? 'ok' : 'info'}>
+                  {t('wartung.akte.termin', { zeit: formatDatumZeit(v.termin_von) })}
+                  {v.angekuendigt_am ? ` · ${t('wartung.insp.angekuendigt')}` : ''}
                 </Badge>
               )}
               {v.bestandsaufnahme !== 'keine' && (
@@ -242,6 +260,14 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
         )}
         {v && offen === 'erledigt' && (
           <ErledigtDialog
+            vertrag={v}
+            onSchliessen={() => {
+              setOffen(null)
+            }}
+          />
+        )}
+        {v && offen === 'termin' && (
+          <TerminDialog
             vertrag={v}
             onSchliessen={() => {
               setOffen(null)

@@ -1,6 +1,6 @@
 ---
-stand: 2026-11-02
-rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
+stand: 2026-11-03
+rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
 # Ma journée
@@ -32,6 +32,19 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 2. Saisir titre, personne et échéance, **Enregistrer**.
 3. La personne la voit sur sa journée, toi sous **Confiées par moi**. Plus dans le chapitre [Tâches](kapitel:tasks).
 
+### Reporter quelque chose
+
+1. À droite de la ligne, choisir le symbole calendrier (**Reporter**).
+2. Choisir **À demain**, **À la semaine prochaine (lundi)** ou **À une date …**.
+3. Une tâche à toi reçoit la nouvelle échéance. Tout le reste (relance, demande, délai …) disparaît seulement chez toi jusqu’à ce jour ; l’enregistrement ne change pas.
+4. Les rendez-vous et les validations ne se reportent pas.
+
+### Fixer les objectifs de la semaine (administration, direction)
+
+1. Dans la carte **Ma semaine**, cliquer **Fixer les objectifs**.
+2. Par personne, saisir nouvelles demandes, visites et offres par semaine et commandes par mois, **Enregistrer** la ligne.
+3. Chaque personne voit ses objectifs avec une barre dans **Ma semaine**.
+
 ### Appeler un client directement
 
 1. Pour les demandes et relances, le numéro de téléphone est un bouton.
@@ -54,11 +67,18 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 - **Service et garantie** : cas ouverts, les urgents d’abord.
 - **Contrôles et maintenances (30 jours)** : maintenances à venir selon les contrats.
 - **Boîte de réception** : clients qui attendent ta réponse.
+- **En attente de ta validation** : tes e-mails et SMS dans la boîte d’envoi.
+- **Ma semaine** : tes objectifs de la semaine avec l’état.
+- **L'équipe aujourd'hui** : qui est sur un chantier, chez un client, au service, présent ou absent (sans motif).
+- **Météo sur les chantiers** : pour le montage et la direction de projet, la prévision des 5 prochains jours par chantier ; « Attention » en cas de forte pluie, de vent, de gel ou de chaleur.
+
+Sous une ligne figure pourquoi elle est là, par exemple « Sans réponse depuis 14 jours » ou « De Andy ».
 
 ## Automatique {#automatisch}
 
 - La page se recharge toutes les 2 minutes. Les tâches cochées ou nouvelles apparaissent tout de suite.
 - La base de données décide ce qui figure sur Ma journée selon tes droits. Tu ne vois jamais ce que tu n’as pas le droit de voir.
+- Le serveur récupère la météo de MétéoSuisse une fois par heure.
 - Les tâches issues des [Automatisations](kapitel:automations) et les échéances des véhicules apparaissent toutes seules.
 
 ## Questions fréquentes {#fragen}
@@ -77,5 +97,6 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Reporter, motif par ligne, En attente de ta validation, Ma semaine avec objectifs, L'équipe aujourd'hui, Météo sur les chantiers.
 - 26.10.2026: Statut sous le titre dans les cartes étroites, date plus courte.
 - 24.10.2026: Ma journée est la page d’accueil ; les tâches « Confiées par moi » ont été ajoutées.

@@ -238,3 +238,13 @@ export async function speichereBesichtigungsFoto(verkaufschanceId: string, ordne
     })
   if (error) throw error
 }
+
+/**
+ * Termin-Link an den Kunden: legt SMS oder Mail mit dem Link zur Website in den Ausgangskorb (geht erst nach
+ * Freigabe raus). Der Kunde wählt dort selbst eine freie Zeit der zuständigen Person.
+ */
+export async function terminLinkSenden(verkaufschanceId: string, kanal: 'sms' | 'mail'): Promise<string> {
+  const { data, error } = await db().rpc('termin_link_senden', { p_verkaufschance: verkaufschanceId, p_kanal: kanal })
+  if (error) throw error
+  return (data as { link: string }).link
+}

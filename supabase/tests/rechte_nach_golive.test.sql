@@ -51,7 +51,7 @@ select throws_ok($$select public.ausgang_freigeben(array['00000000-0000-0000-000
   'ausgang.freigabe_kein_recht', 'Mahnung nicht durch den Verkauf');
 select is(public.ausgang_freigeben(array['00000000-0000-0000-0000-0000000043c3'::uuid]), 1, 'eigene Mail gibt man selbst frei');
 
--- Mahnungen gibt zusätzlich nur die Freigabe-Person frei (Entscheid 0048); hier ist das die Buchhaltung.
+-- Mahnungen gibt zusätzlich nur die Freigabe-Person frei (Entscheid 0053); hier ist das die Buchhaltung.
 reset role;
 select set_config('request.jwt.claims', '', true);
 update public.einstellungen set wert = jsonb_set(wert, '{mahnlauf,freigabe_person_ids}', '["00000000-0000-0000-0000-0000000043b3"]')

@@ -54,7 +54,10 @@ export const erfassenSchema = z.object({
 })
 export type ErfassenFormular = z.infer<typeof erfassenSchema>
 
-/** Entscheid mit Angaben: Grund (Pflicht bei «nicht teilnehmen» und «verwerfen»), Datum, Form, Auslöser. */
+/**
+ * Entscheid mit Angaben: Grund (Pflicht bei «verwerfen»), No-Go-Grund bei «nicht teilnehmen», Datum, Form und
+ * Betrag der Eingabe, Gewinner bei Absage, Grund ohne Öffnungsprotokoll, Auslöser.
+ */
 export const entscheidSchema = z
   .object({
     entscheid: z.string(),
@@ -62,10 +65,28 @@ export const entscheidSchema = z
     datum: leer,
     form: leer,
     ausloeser: leer,
+    nogo: leer,
+    betrag: z
+      .string()
+      .trim()
+      .regex(/^([\d'’ ]+([.,]\d{1,2})?)?$/, 'ausschreibungen.pruefung.betrag'),
+    gewinner: leer,
+    ohne_protokoll: leer,
+    /** Ob es ein Öffnungsprotokoll mit unserem Angebot gibt (sonst braucht Zuschlag/Absage einen Grund). */
+    protokoll: z.boolean(),
   })
   .superRefine((e, ctx) => {
-    if (['nicht_teilnehmen', 'verwerfen', 'ablehnen'].includes(e.entscheid) && !e.grund) {
+    if (['verwerfen', 'ablehnen'].includes(e.entscheid) && !e.grund) {
       ctx.addIssue({ code: 'custom', path: ['grund'], message: 'pruefung.pflicht' })
+    }
+    if (e.entscheid === 'nicht_teilnehmen' && !e.nogo) {
+      ctx.addIssue({ code: 'custom', path: ['nogo'], message: 'pruefung.pflicht' })
+    }
+    if (e.entscheid === 'eingereicht' && !e.betrag) {
+      ctx.addIssue({ code: 'custom', path: ['betrag'], message: 'pruefung.pflicht' })
+    }
+    if (['zuschlag', 'absage'].includes(e.entscheid) && !e.protokoll && !e.ohne_protokoll) {
+      ctx.addIssue({ code: 'custom', path: ['ohne_protokoll'], message: 'ausschreibungen.pruefung.protokoll' })
     }
     if ((e.entscheid === 'spaeter' || (e.entscheid === 'beobachten' && e.ausloeser === 'datum')) && !e.datum) {
       ctx.addIssue({ code: 'custom', path: ['datum'], message: 'pruefung.pflicht' })
