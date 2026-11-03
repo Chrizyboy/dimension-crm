@@ -17,11 +17,12 @@ import { ZeitLaeuft } from './ZeitLaeuft'
 const OHNE = 'ohne'
 
 /**
- * Stempeluhr für die einfache Monteur-Ansicht: ein Klick startet Arbeit oder Reise, «Stopp» beendet sie.
+ * Stempeluhr: ein Klick startet Arbeit oder Reise, «Stopp» beendet sie. In der einfachen Monteur-Ansicht und
+ * oben in «Mein Tag» (Rolle Montage), damit auch die Fahrt ins Lager oder zur Baustelle ohne Rapport zählt.
  * Läuft über dieselbe Warteschlange wie die Baustelle, funktioniert also auch im Funkloch. Hat die Person heute
  * Einsätze, wird die Zeit dem gewählten Projekt zugeordnet, damit die Nachkalkulation stimmt.
  */
-export default function Stempeluhr() {
+export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => void }) {
   const { t } = useTranslation()
   const qc = useQueryClient()
   const ich = useAnmeldung((z) => z.ich)
@@ -66,7 +67,7 @@ export default function Stempeluhr() {
         {plan.isPending ? (
           <Skelett className="h-24" />
         ) : laufend ? (
-          <ZeitLaeuft laufend={laufend} />
+          <ZeitLaeuft laufend={laufend} {...(onRapport ? { onRapport } : {})} />
         ) : (
           <>
             {projekte.length > 0 && (
