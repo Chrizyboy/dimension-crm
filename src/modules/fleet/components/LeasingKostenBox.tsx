@@ -103,9 +103,6 @@ export function KostenBox({ f }: { f: Fahrzeug }) {
               ` · ${t('fuhrpark.kosten.proKm', { chf: (total / 100 / k.km).toFixed(2), km: k.km.toLocaleString('de-CH') })}`}
           </span>
         </Zeile>
-        {k.privatanteil_rappen !== null && (
-          <Zeile label={t('fuhrpark.kosten.privatanteil')}>{chf(k.privatanteil_rappen)}</Zeile>
-        )}
       </dl>
     </Box>
   )
