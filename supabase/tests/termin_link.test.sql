@@ -17,7 +17,7 @@ update public.einstellungen set wert = wert || '{"feiertage": []}' where schlues
 
 set local role service_role;
 select is(public.lead_aus_website($j${"kennung": "web:TL-PGTAP-1", "quelle": "webseite", "art": "neu", "sprache": "de",
-  "kontakt": {"vorname": "Marta", "nachname": "Pgtaplink", "email": "pgtaplink@test.local", "telefon": "079 000 33 44"},
+  "kontakt": {"vorname": "Marta", "nachname": "Pgtaplink", "email": "pgtaplink@test.local", "telefon": "079 913 47 26"},
   "objekt": {"strasse": "Dorfstrasse 1", "plz": "5630", "ort": "Muri AG"}, "lead": {}}$j$::jsonb) ->> 'ergebnis', 'neu', 'Lead angelegt');
 reset role;
 update public.verkaufschancen set tour_person_id = '00000000-0000-0000-0000-00000000c1b1'

@@ -149,9 +149,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 {t('verkauf.zutun.anrufen')}
               </a>
             )}
-            {istLead && g.verkaufschanceId && (
-              <TerminLinkKnopf verkaufschanceId={g.verkaufschanceId} />
-            )}
+            {istLead && g.verkaufschanceId && <TerminLinkKnopf verkaufschanceId={g.verkaufschanceId} />}
             {istLead && (
               <Button
                 variant="secondary"
