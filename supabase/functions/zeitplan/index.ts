@@ -33,6 +33,7 @@
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { dachsuche } from '../_shared/dachsuche.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
+import { leadsDachAnreichern } from '../_shared/leads_dach.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
@@ -231,6 +232,14 @@ Deno.serve(async (req) => {
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Leads (02.11.2026): neue Leads ohne Anruf nach 15 Minuten melden, nach 2 Stunden an die Geschäftsleitung (nur
+  // Glocke), dann Dachdaten von sonnendach.ch zu neuen Adressen. Werte in einstellungen.verkauf.
+  ergebnis.leads = await job('leads', 5, async () => {
+    const n = await dienst.rpc<number>('leads_erstkontakt_melden', {})
+    const dach = await leadsDachAnreichern(10)
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}, ${dach}`
   })
 
   // Grossprojekte (Phase 8c): erst Gebäudedaten holen, dann einige Gebiete nach grossen Dächern durchsuchen, zuletzt
