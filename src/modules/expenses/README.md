@@ -23,6 +23,8 @@ wird geprüft, aber nie ausbezahlt. Ausbezahlt, abgelehnt und zurückgezogen sin
   prüfen». Tasten J/K/P.
 - **Auszahlen** (`auszahlen`, `finanzen`): geprüft je Person, Lauf erstellen (Datum, Art, Titel), frühere Läufe mit
   PDF und CSV. Jede Person bekommt eine Glocke.
+- **Firmenkarte** (`karte`, `finanzen`): Kartenauszug als CSV einlesen (`lib/kartenauszug.ts`), Buchungen mit
+  Firmenkarten-Spesen verbinden, Person je Kartenende, Belege nachfordern (Glocke), ohne Beleg erledigen mit Grund.
 - **Alle Spesen** (`alle`, `finanzen`): Filter, Auswahl auszahlen, CSV.
 - **Auswertung** (`auswertung`, `finanzen`): Jahr nach Monat, Kategorie, Person, Projekt; Anteil auf Projekten.
 - **Regeln** (`kategorien`, `finanzen`): Mail der Buchhaltung, Kilometer-Ansatz, Einreichfrist, Standard der
@@ -33,6 +35,9 @@ wird geprüft, aber nie ausbezahlt. Ausbezahlt, abgelehnt und zurückgezogen sin
 
 - Besitzt: `spesen` (Sicht `spesen_liste` mit Projekt, Konto und `hinweise`), `spesen_auszahlungen` (Sicht
   `spesen_auszahlungen_liste`), Belege in `dokumente` (Ordner `spesen`, Bezug `spesen`).
+- Besitzt auch: `firmenkarte_buchungen` (Sicht `firmenkarte_abgleich`), Abläufe `firmenkarte_einlesen`,
+  `firmenkarte_verbinden`, `firmenkarte_person_setzen`, `firmenkarte_erledigen`, `firmenkarte_nachfordern`; eindeutig
+  Passendes verbindet `intern.firmenkarte_zuordnen` (auch per Trigger, wenn die Spese nach dem Auszug kommt).
 - Liest: `personen`, `projekte` (über `spesen_projekte()`), Einstellung `finanzen` (`spesen_kategorien`, `spesen`,
   `buchhaltung_email`).
 - Abläufe: `spesen_geprueft`, `spesen_rueckfrage`, `spesen_ablehnen`, `spesen_auszahlung`, `spesen_auszahlen` (alt,
@@ -56,5 +61,6 @@ wird geprüft, aber nie ausbezahlt. Ausbezahlt, abgelehnt und zurückgezogen sin
 
 - `components/` – Seite mit Reitern, Erfassen, Prüfen, Auszahlen, Auswertung, Regeln, Meine, Handy-Karte, Startseiten-Karte
 - `hooks/` – `useSpesen`, `useAuszahlungen`, `useSpesenProjekte`, `useAbrechnung`, `useAktion`, `useKategorieText`
-- `services/` – `spesen` (Laden, Erfassen, Ändern, Beleg, Prüfen, Rückfrage, Ablehnen, Auszahlung), `abrechnungPdf`
-- `lib/` – Filter, Summen, Kilometer, MWST, CSV, Mail-Zeilen (mit Tests)
+- `services/` – `spesen` (Laden, Erfassen, Ändern, Beleg, Prüfen, Rückfrage, Ablehnen, Auszahlung), `firmenkarte`,
+  `abrechnungPdf`
+- `lib/` – Filter, Summen, Kilometer, MWST, CSV, Mail-Zeilen, Kartenauszug lesen (mit Tests)
