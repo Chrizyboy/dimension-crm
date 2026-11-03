@@ -20,7 +20,8 @@ Nur mit Recht `preise` (Projektleitung, GL), Start dort bei «Baustellen heute»
 
 Für alle:
 
-- **Mein Tag** (`tag`): Einsätze und Service-Termine der angemeldeten Person für heute und die nächsten Tage,
+- **Mein Tag** (`tag`): oben die Stempeluhr (Arbeit oder Reise starten, auch ohne Rapport, z. B. Fahrt ins Lager;
+  Summen heute und Woche), darunter Einsätze und Service-Termine der angemeldeten Person für heute und die nächsten Tage,
   mit Navigation, Anruf, Team, Elektriker, laufender Zeit und «Rapport beginnen» / «IBN-Protokoll». Bei Montagen:
   Fortschritt, was heute dran ist, fehlende Pflichtfotos, Projektleitung, «Mappe» (offline) und «Problem melden».
   «Rapport beginnen» öffnet den Sicherheits-Check und startet die Zeit fürs ganze Team.
@@ -49,7 +50,8 @@ Für alle:
 ## Ohne Netz
 
 `services/warteschlange.ts` hält jede Änderung in IndexedDB (`dimension-baustelle`) und sendet sie, sobald Netz
-da ist. `services/monteur.ts` ändert dazu die Kopie am Handy, damit die Ansicht sofort stimmt. Lesen geht über
+da ist. Kommt während des Sendens ein neuer Auftrag dazu, geht er im selben Lauf mit (nicht erst im 30-Sekunden-Takt).
+`services/monteur.ts` ändert dazu die Kopie am Handy, damit die Ansicht sofort stimmt. Lesen geht über
 `mitAblage`: Solange etwas wartet oder kein Netz da ist, gilt die Kopie am Handy. Neue Handy-Abläufe brauchen
 eine ID vom Handy und eine wiederholbare Datenbank-Funktion.
 

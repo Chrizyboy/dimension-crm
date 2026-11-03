@@ -93,26 +93,43 @@ async function ausfuehren(a: Auftrag): Promise<void> {
 }
 
 let lauf: Promise<void> | null = null
+/** Während eines Laufs kam ein neuer Auftrag dazu: gleich danach nochmals durchgehen. */
+let nochmal = false
+/** Als Funktion gelesen, weil `einreihen` den Wert während des Wartens ändert. */
+const nochmalSenden = () => nochmal
 
 /** Alles Offene senden, der Reihe nach. Bei Funkloch Abbruch, beim nächsten Versuch geht es weiter. */
 export function abarbeiten(): Promise<void> {
   if (!navigator.onLine) return standAktualisieren()
-  lauf ??= (async () => {
+  if (lauf) {
+    // Sonst bliebe z. B. «Zeit starten» direkt nach «Rapport anlegen» bis zum 30-Sekunden-Takt liegen,
+    // und die Ansicht zeigte so lange «wartet auf Netz», obwohl Netz da ist.
+    nochmal = true
+    return lauf
+  }
+  lauf = (async () => {
     useWarteschlange.setState({ laeuft: true })
     try {
-      for (const a of await auftraegeLesen<Auftrag>()) {
-        if (a.fehler || a.nr === undefined) continue
-        try {
-          await ausfuehren(a)
-          await auftragEntfernen(a.nr)
-          useWarteschlange.setState((s) => ({ version: s.version + 1 }))
-        } catch (e) {
-          if (istNetzFehler(e)) break
-          const schluessel = fachFehlerSchluessel(e)
-          if (!schluessel) meldeFehler(e, 'baustelle')
-          await auftragErsetzen({ ...a, fehler: schluessel ?? String((e as { message?: unknown }).message ?? e) })
+      let netzWeg = false
+      do {
+        nochmal = false
+        for (const a of await auftraegeLesen<Auftrag>()) {
+          if (a.fehler || a.nr === undefined) continue
+          try {
+            await ausfuehren(a)
+            await auftragEntfernen(a.nr)
+            useWarteschlange.setState((s) => ({ version: s.version + 1 }))
+          } catch (e) {
+            if (istNetzFehler(e)) {
+              netzWeg = true
+              break
+            }
+            const schluessel = fachFehlerSchluessel(e)
+            if (!schluessel) meldeFehler(e, 'baustelle')
+            await auftragErsetzen({ ...a, fehler: schluessel ?? String((e as { message?: unknown }).message ?? e) })
+          }
         }
-      }
+      } while (nochmalSenden() && !netzWeg)
     } finally {
       await standAktualisieren()
       useWarteschlange.setState({ laeuft: false })
