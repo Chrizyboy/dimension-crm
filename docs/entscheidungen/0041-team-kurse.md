@@ -29,8 +29,15 @@ Ausweise eine Rolle braucht (versteckt in einer Auswahlliste). Neuentwurf: https
 - **Anforderungen:** Pflicht je Rolle und Gültigkeit über `ausweis_anforderung_speichern` (Administration oder Recht
   «personal»); neue Art = neue Zeile.
 
-## Offen
+## Nachtrag 03.11.2026: Fragen 5 und 6 (Empfehlung A, Chris: «alle Threads fortsetzen»)
 
-- **5 Pflicht je Tätigkeit** (Hebebühne, Anhänger, Dach vor 1990, Ersthelfer je Baustelle) braucht die Tätigkeit am
-  Einsatz; kommt als eigener Schritt mit der Einsatzplanung.
-- **6 Geburtstage/Dienstjubiläen auf «Mein Tag»:** eigener Schritt nach Chris' Antwort.
+- **5 Pflicht je Tätigkeit als Warnung:** Tätigkeiten sind die Auswahlliste `taetigkeit` mit `ausweise`, `wer`
+  («alle» = jede Person, «einer» = mindestens eine) und `immer` (gilt ohne Häkchen, z. B. Ersthelfer). Einsätze
+  tragen `einsaetze.taetigkeiten`, gespeichert über `projekt_zeitplan_speichern` (neu mit `taetigkeiten`, fehlt der
+  Schlüssel, bleibt der Wert). Die Lücke rechnet die App wie den Abwesenheits-Konflikt
+  (`src/modules/projects/lib/ausweise.ts`): gelber Rahmen am Balken, Satz im Dialog. Keine Sperre. Pflicht ändern
+  über `taetigkeit_anforderung_speichern` (Administration oder Recht «personal»), Reiter «Anforderungen».
+- **6 Geburtstage und Dienstjubiläen:** `team_anlaesse()` liefert die nächsten `einstellungen.team.anlaesse.vorlauf_tage`
+  (7) Tage, nur Tag und Monat, Jubiläum in vollen Jahren; 29. Februar fällt sonst auf den 28. Jede Person blendet
+  sich über `team_anlass_zeigen` aus (`personen.profil.anlaesse_verbergen`). Karte «Geburtstage und Jubiläen» auf
+  «Mein Tag» (`TeamHeute` aus `src/modules/staff`).
