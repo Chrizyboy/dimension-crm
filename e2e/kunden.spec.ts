@@ -59,6 +59,14 @@ test('Kunde anlegen, per Telefon finden und Kontakt erfassen', async ({ page }) 
 
   // Der Verlauf steht direkt auf der Seite, ohne Reiter.
   await expect(akte.getByText('Interesse an PV mit Batterie')).toBeVisible()
+
+  // Betreuung und Rechnung: Zahlungsfrist setzen, steht danach in der Akte.
+  await akte.getByRole('button', { name: 'Betreuung und Rechnung bearbeiten' }).click()
+  const betreuung = page.getByRole('dialog', { name: 'Betreuung und Rechnung bearbeiten' })
+  await betreuung.getByLabel('Zahlungsfrist').fill('10')
+  await betreuung.getByRole('button', { name: 'Speichern' }).click()
+  await expect(betreuung).toBeHidden()
+  await expect(akte.getByText('10 Tage')).toBeVisible()
   await page.getByRole('button', { name: 'Zurück zu den Kunden' }).click()
 
   // Suche nach Telefonziffern in anderer Schreibweise (+41 statt 0)
@@ -101,7 +109,7 @@ test('Ctrl K findet den Kunden, Papierkorb und Wiederherstellen', async ({ page 
 
   await page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link', { name: 'Adressbuch' }).click()
   await page.getByRole('button', { name: 'Papierkorb', exact: true }).click()
-  // Im Papierkorb des Adressbuchs stehen auch Kunden; sie öffnen sich in ihrer Kundenakte (Entscheid 0045).
+  // Im Papierkorb des Adressbuchs stehen auch Kunden; sie öffnen sich in ihrer Kundenakte (Entscheid 0049).
   await page.getByRole('row', { name: new RegExp(nachname) }).click()
   await expect(akte).toBeVisible()
   const imKorb = page.getByRole('main')

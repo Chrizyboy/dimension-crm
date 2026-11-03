@@ -191,7 +191,7 @@ select k.id, k.kundennummer, k.art, intern.kontaktname(k) as name, k.email, k.te
        k.erstellt_am,
        r.rollen,
        coalesce(a.strasse, o.strasse) as strasse, coalesce(a.plz, o.plz) as plz, coalesce(a.ort, o.ort) as ort,
-       a.webseite, a.uid_nr,
+       a.webseite, k.uid_nr,
        h.person_name as hauptkontakt, h.telefon as hauptkontakt_telefon, h.email as hauptkontakt_email,
        (select count(*) from public.kontakt_zugehoerigkeiten z where z.firma_id = k.id and z.geloescht_am is null)::int
          as anzahl_personen,
@@ -205,7 +205,7 @@ select k.id, k.kundennummer, k.art, intern.kontaktname(k) as name, k.email, k.te
        (r.vermittler ->> 'provision_prozent')::numeric as provision_prozent,
        r.lieferant ->> 'kundennummer' as kundennummer_bei,
        r.subunternehmer ->> 'gewerk' as gewerk,
-       lower(concat_ws(' ', intern.kontaktname(k), k.email, k.telefon, a.ort, o.ort, a.plz, a.uid_nr, r.suchtext,
+       lower(concat_ws(' ', intern.kontaktname(k), k.email, k.telefon, a.ort, o.ort, a.plz, k.uid_nr, r.suchtext,
              (select string_agg(zs.person_name || ' ' || coalesce(zs.funktion, ''), ' ')
                 from public.kontakt_zugehoerigkeiten_sicht zs where zs.firma_id = k.id))) as suchtext,
        intern.telefon_ziffern(k.telefon) as telefon_ziffern
@@ -357,7 +357,7 @@ language sql stable security invoker set search_path = '' as $$
            where length(w) >= 3) as woerter
   )
   select k.id, k.kundennummer, intern.kontaktname(k), coalesce(a.ort, o.ort),
-         case when nullif(trim(p_uid), '') is not null and a.uid_nr = trim(p_uid) then 'uid'
+         case when nullif(trim(p_uid), '') is not null and k.uid_nr = trim(p_uid) then 'uid'
               when nullif(trim(p_email), '') is not null and lower(k.email) = lower(trim(p_email)) then 'email'
               when length(intern.telefon_ziffern(p_telefon)) >= 9
                    and intern.telefon_ziffern(k.telefon) = intern.telefon_ziffern(p_telefon) then 'telefon'
@@ -368,7 +368,7 @@ language sql stable security invoker set search_path = '' as $$
     left join lateral (select ob.ort from public.objekte ob where ob.kontakt_id = k.id and ob.geloescht_am is null
                         order by ob.erstellt_am limit 1) o on true
    where k.geloescht_am is null and (p_ohne is null or k.id <> p_ohne)
-     and ((nullif(trim(p_uid), '') is not null and a.uid_nr = trim(p_uid))
+     and ((nullif(trim(p_uid), '') is not null and k.uid_nr = trim(p_uid))
        or (nullif(trim(p_email), '') is not null and lower(k.email) = lower(trim(p_email)))
        or (length(intern.telefon_ziffern(p_telefon)) >= 9 and intern.telefon_ziffern(k.telefon) = intern.telefon_ziffern(p_telefon))
        or (cardinality(kern.woerter) > 0
@@ -480,3 +480,35 @@ end
 $$;
 revoke execute on function public.partner_fristen_melden(date) from public, anon, authenticated;
 grant execute on function public.partner_fristen_melden(date) to service_role;
+
+-- 6. Zusammenführen von Kontakten (Bereich Kunden hängt alle Fremdschlüssel um) ---------------------------------
+-- Haben beide Kontakte eine Rolle bzw. eine Postadresse, würde das Umhängen an der Eindeutigkeit scheitern. Dann
+-- ergänzt die wegfallende Zeile die bleibende (Bestehendes gewinnt) und geht in den Papierkorb, statt umzuziehen.
+create or replace function intern.partner_umhaengen() returns trigger
+language plpgsql security definer set search_path = '' as $$
+declare
+  v_ziel uuid;
+begin
+  if new.kontakt_id is not distinct from old.kontakt_id then return new; end if;
+  if tg_table_name = 'kontakt_rollen' then
+    select id into v_ziel from public.kontakt_rollen
+     where kontakt_id = new.kontakt_id and rolle = new.rolle and geloescht_am is null and id <> new.id;
+    if v_ziel is null or new.geloescht_am is not null then return new; end if;
+    update public.kontakt_rollen set angaben = old.angaben || angaben where id = v_ziel;
+    update public.kontakt_rollen set geloescht_am = now() where id = old.id;
+  else
+    select id into v_ziel from public.partner_angaben where kontakt_id = new.kontakt_id and id <> new.id;
+    if v_ziel is null then return new; end if;
+    update public.partner_angaben z
+       set strasse = coalesce(z.strasse, old.strasse), plz = coalesce(z.plz, old.plz), ort = coalesce(z.ort, old.ort),
+           webseite = coalesce(z.webseite, old.webseite), rechtsform = coalesce(z.rechtsform, old.rechtsform),
+           geloescht_am = null
+     where z.id = v_ziel;
+    update public.partner_angaben set geloescht_am = now() where id = old.id;
+  end if;
+  return null;  -- diese Zeile bleibt beim alten Kontakt (im Papierkorb)
+end $$;
+create trigger umhaengen before update of kontakt_id on public.kontakt_rollen
+  for each row execute function intern.partner_umhaengen();
+create trigger umhaengen before update of kontakt_id on public.partner_angaben
+  for each row execute function intern.partner_umhaengen();

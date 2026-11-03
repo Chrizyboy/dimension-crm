@@ -90,7 +90,6 @@ create table public.partner_angaben (
   ort        text,
   land       text not null default 'CH',
   webseite   text,
-  uid_nr     text,                          -- CHE-123.456.789, aus dem UID-Register übernommen
   rechtsform text,
   bewertung_notiz text
 );

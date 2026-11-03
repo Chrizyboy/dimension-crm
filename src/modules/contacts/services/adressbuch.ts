@@ -63,8 +63,8 @@ export async function ladeKopf(id: string): Promise<PartnerKopf | null> {
   const { data, error } = await db()
     .from('kontakte')
     .select(
-      'id, kundennummer, art, firma, vorname, nachname, email, telefon, sprache, notiz, geloescht_am, ' +
-        'angaben:partner_angaben(id, strasse, plz, ort, land, webseite, uid_nr, rechtsform, geloescht_am)',
+      'id, kundennummer, art, firma, vorname, nachname, email, telefon, sprache, notiz, uid_nr, geloescht_am, ' +
+        'angaben:partner_angaben(id, strasse, plz, ort, land, webseite, rechtsform, geloescht_am)',
     )
     .eq('id', id)
     .maybeSingle()
@@ -81,6 +81,7 @@ export async function ladeKopf(id: string): Promise<PartnerKopf | null> {
     telefon: string | null
     sprache: string
     notiz: string | null
+    uid_nr: string | null
     geloescht_am: string | null
     angaben: {
       id: string
@@ -89,7 +90,6 @@ export async function ladeKopf(id: string): Promise<PartnerKopf | null> {
       ort: string | null
       land: string
       webseite: string | null
-      uid_nr: string | null
       rechtsform: string | null
       geloescht_am: string | null
     }[]
@@ -116,7 +116,7 @@ export async function ladeKopf(id: string): Promise<PartnerKopf | null> {
     ort: a?.ort ?? null,
     land: a?.land ?? 'CH',
     webseite: a?.webseite ?? null,
-    uidNr: a?.uid_nr ?? null,
+    uidNr: k.uid_nr,
     rechtsform: a?.rechtsform ?? null,
   }
 }
@@ -154,13 +154,14 @@ export async function speichereStammdaten(k: PartnerKopf): Promise<void> {
       telefon: k.telefon?.trim() || null,
       sprache: k.sprache,
       notiz: k.notiz?.trim() || null,
+      uid_nr: k.uidNr?.trim() || null,
     })
     .eq('id', k.id)
   if (error) throw error
   await speichereAngaben(k)
 }
 
-/** Postadresse, Webseite und UID (eine Zeile je Partner, angelegt beim ersten Speichern). */
+/** Postadresse, Webseite und Rechtsform (eine Zeile je Partner, angelegt beim ersten Speichern). */
 export async function speichereAngaben(k: PartnerKopf): Promise<void> {
   const zeile = {
     strasse: k.strasse?.trim() || null,
@@ -168,7 +169,6 @@ export async function speichereAngaben(k: PartnerKopf): Promise<void> {
     ort: k.ort?.trim() || null,
     land: k.land.trim() || 'CH',
     webseite: k.webseite?.trim() || null,
-    uid_nr: k.uidNr?.trim() || null,
     rechtsform: k.rechtsform?.trim() || null,
   }
   const { error } = k.angabenId

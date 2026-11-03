@@ -2,7 +2,7 @@
 -- Liste nur mit Partnern, Akte, Doppelte, Netzbetreiber je Gemeinde (ElCom), Provision für Vermittler und
 -- Fristen der Nachweise. Entscheid 0049. Ausführen: npm run db:test
 begin;
-select plan(19);
+select plan(21);
 
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000049a1', 'ab-admin@test.local');
 insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte, sprache) values
@@ -27,8 +27,9 @@ insert into public.kontakt_rollen (kontakt_id, rolle) values ('00000000-0000-000
 select ok(exists (select 1 from public.subunternehmer where kontakt_id = '00000000-0000-0000-0000-0000000049c2'),
   'Rolle Subunternehmer legt den Subunternehmer an');
 
-insert into public.partner_angaben (kontakt_id, strasse, plz, ort, uid_nr) values
-  ('00000000-0000-0000-0000-0000000049c2', 'Werkstrasse 4', '1630', 'Bulle', 'CHE-000.000.045');
+insert into public.partner_angaben (kontakt_id, strasse, plz, ort) values
+  ('00000000-0000-0000-0000-0000000049c2', 'Werkstrasse 4', '1630', 'Bulle');
+update public.kontakte set uid_nr = 'CHE-000.000.045' where id = '00000000-0000-0000-0000-0000000049c2';
 insert into public.kontakt_zugehoerigkeiten (person_id, firma_id, funktion, hauptkontakt) values
   ('00000000-0000-0000-0000-0000000049c5', '00000000-0000-0000-0000-0000000049c2', 'Innendienst', true);
 
@@ -115,6 +116,21 @@ insert into public.partner_nachweise (kontakt_id, art, gueltig_bis) values
   ('00000000-0000-0000-0000-0000000049c2', 'suva', current_date + 200);
 select is(public.partner_fristen_melden() >= 1 and public.partner_fristen_melden() = 0, true,
   'Ablaufender Nachweis wird einmal gemeldet, der ferne nicht');
+
+-- 7. Zusammenführen: gleiche Rolle und Postadresse bei beiden Kontakten scheitern nicht ----------------------
+insert into public.kontakt_rollen (kontakt_id, rolle, angaben) values
+  ('00000000-0000-0000-0000-0000000049c1', 'lieferant', '{"kundennummer": "ALT", "lieferfrist": "5 Tage"}');
+insert into public.partner_angaben (kontakt_id, webseite) values ('00000000-0000-0000-0000-0000000049c1', 'netz.test');
+update public.kontakt_rollen set kontakt_id = '00000000-0000-0000-0000-0000000049c2'
+ where kontakt_id = '00000000-0000-0000-0000-0000000049c1';
+update public.partner_angaben set kontakt_id = '00000000-0000-0000-0000-0000000049c2'
+ where kontakt_id = '00000000-0000-0000-0000-0000000049c1';
+select is((select angaben ->> 'kundennummer' || ' ' || (angaben ->> 'lieferfrist') from public.kontakt_rollen
+            where kontakt_id = '00000000-0000-0000-0000-0000000049c2' and rolle = 'lieferant' and geloescht_am is null),
+  'K-778 5 Tage', 'Doppelte Rolle beim Zusammenführen: Bestehendes bleibt, Fehlendes kommt dazu');
+select is((select strasse || ' ' || webseite from public.partner_angaben
+            where kontakt_id = '00000000-0000-0000-0000-0000000049c2'),
+  'Werkstrasse 4 netz.test', 'Doppelte Postadresse beim Zusammenführen wird ergänzt');
 
 select * from finish();
 rollback;

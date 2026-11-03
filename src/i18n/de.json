@@ -732,7 +732,10 @@
       "erreichbarkeit": "Erreichbarkeit",
       "kommentarKunde": "Kommentar Kunde",
       "wiedervorlage": "Wiedervorlage",
-      "verlauf": "Verlauf (Vorlage)"
+      "verlauf": "Verlauf (Vorlage)",
+      "heizung": "Heizung heute",
+      "vorOrt": "Vor Ort beachten",
+      "vorOrtHinweis": "Zugang, Schlüssel, Parkplatz, Hund, Zähler – sieht die Montage und der Service."
     },
     "abaninja": {
       "nicht": "Noch nicht mit AbaNinja verknüpft. Verknüpfen, damit Rechnungen hier erscheinen und Adressänderungen nach AbaNinja gehen.",
@@ -810,7 +813,51 @@
       "baubeginn": "Nächster Termin: Baubeginn"
     },
     "nurFinanzen": "Rechnungen sieht nur, wer das Recht «Finanzen» hat.",
-    "nurBuchhaltung": "nur Buchhaltung"
+    "nurBuchhaltung": "nur Buchhaltung",
+    "betreuung": {
+      "titel": "Betreuung und Rechnung",
+      "betreuer": "Betreuer bei uns",
+      "keinBetreuer": "Kein fester Betreuer",
+      "herkunft": "Herkunft",
+      "rechnungAn": "Rechnung an",
+      "gleicheAdresse": "Adresse des Kunden",
+      "abweichend": "Abweichende Rechnungsadresse",
+      "rechnungsEmail": "Rechnung per Mail an",
+      "zahlungsfrist": "Zahlungsfrist",
+      "fristFirma": "wie Firma",
+      "tage": "{{count}} Tage",
+      "uid": "UID",
+      "bearbeiten": "Betreuung und Rechnung bearbeiten",
+      "adresse": {
+        "name": "Name / Firma",
+        "zusatz": "Zusatz",
+        "strasse": "Strasse",
+        "plz": "PLZ",
+        "ort": "Ort"
+      }
+    },
+    "personen": {
+      "titel": "Ansprechpersonen",
+      "firmen": "Gehört zu",
+      "keine": "Keine weiteren Personen erfasst.",
+      "hauptkontakt": "Hauptkontakt",
+      "unterschreibt": "Unterschreibt",
+      "rechnungen": "Rechnungen",
+      "vorOrt": "Vor Ort",
+      "imAdressbuch": "Im Adressbuch bearbeiten"
+    },
+    "zusammen": {
+      "menue": "Doppelten zusammenführen",
+      "titel": "Doppelten zusammenführen",
+      "text": "Wähle den doppelt erfassten Kontakt. Alles, was an ihm hängt (Gebäude, Leads, Offerten, Projekte, Rechnungen, Mails, Aufgaben, Dokumente), kommt zu {{name}}. Der Doppelte landet im Papierkorb.",
+      "keine": "Keine möglichen Doppelten gefunden (gleiche Mail, Telefon oder Name).",
+      "bestaetigen": "Zusammenführen",
+      "grund": {
+        "email": "gleiche Mail",
+        "telefon": "gleiches Telefon",
+        "name": "gleicher Name"
+      }
+    }
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
@@ -976,7 +1023,9 @@
       "tour": "Tour planen",
       "kalender": "Kalender",
       "regionen": "Regionen",
-      "bericht": "Monatsbericht"
+      "bericht": "Monatsbericht",
+      "zutun": "Zu tun",
+      "steuerung": "Steuerung"
     },
     "suche": "Name, Ort, Telefon, L012 …",
     "standort": "Standort",
@@ -1009,15 +1058,18 @@
       "neu": "Neu",
       "offen": "Offen",
       "spaeter": "Später kontaktieren",
-      "termin": "Termin vereinbart",
+      "termin": "Termin",
       "nach_termin": "Nach Termin",
-      "offerte": "Offerte in Arbeit",
+      "offerte": "Offerte",
       "offeriert": "Offeriert",
       "vertagt": "Vertagt",
       "angenommen": "Angenommen",
-      "gewonnen": "Bau & verbaut",
+      "gewonnen": "Gewonnen",
       "verloren": "Verloren & kein Interesse",
-      "dossier": "Dossier"
+      "dossier": "Dossier",
+      "kontaktiert": "Kontaktiert",
+      "entscheid": "Entscheid",
+      "aus": "Verloren & kein Interesse"
     },
     "pipeline": {
       "karte": "Geschäft",
@@ -1104,7 +1156,7 @@
       "nichtGefunden": "Dieses Geschäft wurde nicht gefunden.",
       "kontaktErfassen": "Kontakt erfassen",
       "terminVereinbaren": "Termin vereinbaren",
-      "richtofferte": "Richtofferte",
+      "richtofferte": "Offerte ohne Besuch",
       "terminblatt": "Terminblatt",
       "kundenakte": "Kundenakte",
       "kontakt": "Kontakt",
@@ -1133,7 +1185,8 @@
       "dateien": "Dateien",
       "keinVerlauf": "Noch kein Kontakt erfasst.",
       "verlaufV233": "Verlauf aus dem bisherigen CRM",
-      "keineDateien": "Keine Dateien."
+      "keineDateien": "Keine Dateien.",
+      "zurueck": "Zurück zu Anfragen & Leads"
     },
     "besichtigung": {
       "datum": "Besichtigt am",
@@ -1168,7 +1221,12 @@
     },
     "kontakt": {
       "wann": "Wann wieder melden",
-      "grundRueckruf": "Rückruf vereinbart"
+      "grundRueckruf": "Rückruf vereinbart",
+      "grundNichtErreicht": "Nicht erreicht",
+      "smsEntwurf": "SMS-Entwurf in den Ausgangskorb legen (geht erst nach Freigabe)",
+      "willPreisHinweis": "Andy bekommt die Offerte ohne Besuch zum Erstellen. Schreib kurz auf, was der Kunde will (Dach, Verbrauch, Wünsche).",
+      "wiedervorlage_one": "Wieder vorlegen in {{count}} Monat",
+      "wiedervorlage_other": "Wieder vorlegen in {{count}} Monaten"
     },
     "lead": {
       "anrede": "Anrede",
@@ -1406,6 +1464,142 @@
       "eintragen": "In Outlook eintragen",
       "aktualisieren": "In Outlook aktualisieren",
       "absagen": "In Outlook absagen"
+    },
+    "schritte": {
+      "titel": "Verkaufsschritte",
+      "neu": "Neu",
+      "kontaktiert": "Kontaktiert",
+      "termin": "Termin",
+      "offerte": "Offerte",
+      "entscheid": "Entscheid",
+      "gewonnen": "Gewonnen"
+    },
+    "zutun": {
+      "website": "Website",
+      "anrufen": "Anrufen",
+      "ergebnis": "Ergebnis erfassen",
+      "minuten_one": "seit {{count}} Min.",
+      "minuten_other": "seit {{count}} Min.",
+      "nurMeine": "Nur meine Leads",
+      "jetzt": "Jetzt anrufen (Ziel: innert {{minuten}} Min.)",
+      "jetztLeer": "Alle neuen Anfragen sind angerufen.",
+      "heute": "Heute",
+      "heuteLeer": "Heute ist nichts fällig.",
+      "woche": "Diese Woche",
+      "wocheLeer": "Diese Woche ist nichts geplant.",
+      "leer": "Nichts zu tun",
+      "leerText": "Keine neuen Anfragen, Rückrufe, Termine oder Nachfassen.",
+      "zahl": {
+        "anrufen_one": "neue Anfrage ohne Anruf, {{count}} zu spät",
+        "anrufen_other": "neue Anfragen ohne Anruf, {{count}} zu spät",
+        "heute": "heute fällig",
+        "termine": "Termine diese Woche",
+        "offen": "offen offeriert (CHF)"
+      },
+      "art": {
+        "anrufen": "Neu",
+        "rueckruf": "Rückruf",
+        "termin": "Termin",
+        "nachTermin": "Nach Termin: Offerte bestellen",
+        "nachfassen": "Nachfassen",
+        "wiedervorlage": "Wiedervorlage",
+        "liegt": "Liegt seit",
+        "offerteInArbeit": "Offerte in Arbeit seit"
+      },
+      "stunden": "seit {{h}} Std. {{m}} Min."
+    },
+    "naechster": {
+      "titel": "Nächster Schritt",
+      "anrufen": "Anrufen und Ergebnis erfassen.",
+      "anrufenSeit_one": "Jetzt anrufen: Anfrage seit {{count}} Arbeitsminute ohne Anruf.",
+      "anrufenSeit_other": "Jetzt anrufen: Anfrage seit {{count}} Arbeitsminuten ohne Anruf.",
+      "rueckruf": "Rückruf am {{datum}}.",
+      "termin": "Termin für die Besichtigung vereinbaren.",
+      "besuch": "Besichtigung am {{datum}} mit {{person}}. Danach Offerte bestellen.",
+      "nachTermin": "Der Termin ist vorbei: Ergebnis festhalten und die Offerte bei Andy bestellen.",
+      "offerteBestellen": "Offerte bestellen",
+      "offerteInArbeit": "Andy erstellt die Offerte. Sobald sie gesendet ist, läuft das Nachfassen.",
+      "nachfassen": "Nachfassen am {{datum}}. Die Mails an Tag {{tage}} liegen als Entwurf im Ausgangskorb; anrufen wirkt oft besser.",
+      "vertagt": "Vertagt: {{grund}}",
+      "wiedervorlage": "Wieder vorlegen am {{datum}}.",
+      "aus": "Abgeschlossen: {{grund}}",
+      "gewonnen": "Gewonnen. Weiter geht es im Projekt."
+    },
+    "dach": {
+      "titel": "Dach und Gebäude",
+      "sucht": "Wird gesucht (sonnendach.ch und Gebäuderegister, alle 5 Minuten).",
+      "nichts": "Keine Dachdaten gefunden.",
+      "flaeche": "Geeignete Fläche",
+      "flaecheWebsite": "Fläche (Website)",
+      "ertrag": "Möglicher Ertrag",
+      "eignung": "Eignung",
+      "heizung": "Heizung",
+      "baujahr": "Baujahr",
+      "verbrauch": "Verbrauch",
+      "klasse": {
+        "1": "gering",
+        "2": "mittel",
+        "3": "gut",
+        "4": "sehr gut",
+        "5": "hervorragend"
+      }
+    },
+    "richtpreis": {
+      "titel": "Richtpreis",
+      "intern": "Nur intern",
+      "ohneDach": "Noch keine Leistung bekannt: Dachdaten fehlen.",
+      "inkl": "inkl. {{satz}} % MWST, Spanne ± nach Einstellung",
+      "foerderung": "Abzüglich Förderung ca. {{betrag}}",
+      "besuch": "Mehr als {{max}} kWp: ohne Besuch nur grobe Grössenordnung.",
+      "quelle": {
+        "offerte": "{{kwp}} kWp aus der Offerte",
+        "sonnendach": "{{kwp}} kWp aus der geeigneten Dachfläche (sonnendach.ch)",
+        "website": "{{kwp}} kWp aus der Dachfläche der Website"
+      },
+      "posten": {
+        "pv": "Solaranlage",
+        "batterie": "Batterie",
+        "wallbox": "Ladestation",
+        "waermepumpe": "Wärmepumpe"
+      }
+    },
+    "herkunft": {
+      "titel": "Herkunft",
+      "eingang": "Eingang",
+      "erstkontakt": "Erster Kontakt",
+      "nochNicht": "noch nicht",
+      "formular": "Formular",
+      "seite": "Seite",
+      "kampagne": "Kampagne",
+      "kontaktwunsch": "Kontaktwunsch",
+      "referenz": "Website-Referenz",
+      "formulare": {
+        "offerte": "Offerten-Assistent",
+        "rueckruf": "Rückruf",
+        "kontakt": "Kontaktformular",
+        "report-email": "Rechner-Ergebnis"
+      }
+    },
+    "steuerung": {
+      "zeitraum": "Zeitraum",
+      "tage": "Letzte {{n}} Tage",
+      "gesamt": "Alle Leads",
+      "alle": "Alle",
+      "proPerson": "Pro Verkäufer",
+      "proQuelle": "Pro Quelle",
+      "ohnePerson": "Ohne Verkäufer",
+      "ohneQuelle": "Ohne Quelle",
+      "verlust": "Warum verloren",
+      "keinVerlust": "Keine verlorenen Leads im Zeitraum.",
+      "leads": "Leads",
+      "tempo": "Bis zum Anruf",
+      "imTempo": "In {{n}} Min.",
+      "termin": "Termin",
+      "offerte": "Offerte",
+      "gewonnen": "Gewonnen",
+      "wert": "Auftragswert",
+      "min": "{{n}} Min.",
+      "std": "{{n}} Std."
     }
   },
   "offerten": {
@@ -1422,7 +1616,8 @@
       "bulle": "Offerten Bulle",
       "nachfassen": "Nachfassen",
       "import": "PDF-Import",
-      "vorrat": "Arbeitsvorrat"
+      "vorrat": "Arbeitsvorrat",
+      "auswertung": "Auswertung"
     },
     "standort": {
       "alle": "Alle",
@@ -1838,6 +2033,30 @@
       "vorschlagA": "Wie offeriert",
       "bearbeiten": "Varianten bearbeiten",
       "erfassen": "Varianten erfassen"
+    },
+    "auswertung": {
+      "zeitraum": "Zeitraum der Auswertung",
+      "tage": "{{n}} Tage",
+      "kOfferiert_one": "offeriert · {{count}} Offerte",
+      "kOfferiert_other": "offeriert · {{count}} Offerten",
+      "kGewonnen_one": "gewonnen · {{count}} Auftrag",
+      "kGewonnen_other": "gewonnen · {{count}} Aufträge",
+      "kVerloren": "verloren",
+      "kQuote": "Abschlussquote (gewonnen von entschieden)",
+      "kDauer": "Ø vom Senden bis zum Entscheid",
+      "jePerson": "Je Person",
+      "person": "Person",
+      "offeriert": "Offeriert",
+      "gewonnen": "Gewonnen",
+      "verloren": "Verloren",
+      "quote": "Quote",
+      "volumen": "Gewonnen CHF",
+      "leer": "Im Zeitraum nichts offeriert oder entschieden.",
+      "gruende": "Warum verloren",
+      "konkurrenz": "Gegen wen",
+      "keineVerloren": "Keine verlorenen Offerten im Zeitraum.",
+      "keineKonkurrenz": "Keine Konkurrenz erfasst. Beim Nachfassen unter «Konkurrenz» eintragen.",
+      "ohne": "Ohne Zuständige"
     }
   },
   "werkvertraege": {
@@ -8120,7 +8339,8 @@
       "staffel": "Preis pro kWp",
       "staffelBis": "bis {{bis}} kWp: CHF {{chf}}",
       "staffelRest": "darüber: CHF {{chf}}",
-      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu."
+      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu.",
+      "youdera_mail": "Mail Youdera (Dossier)"
     },
     "heute": {
       "titel": "Grossprojekte",
@@ -8308,7 +8528,9 @@
       "ueberLaufzeit": "über {{jahre}} Jahre",
       "investition": "Investition (Bauauftrag)",
       "waerme": "Dazu Wärme: ca. {{kw}} kW, Jahresrate ca. {{rate}}.",
-      "ertrag": "Ertrag sonnendach.ch"
+      "ertrag": "Ertrag sonnendach.ch",
+      "bau": "Für uns: Bau (Marge {{prozent}} %)",
+      "wartung": "Für uns: Wartung pro Jahr ({{prozent}} %)"
     },
     "verlauf": {
       "notiz": "Notiz",
@@ -8320,6 +8542,101 @@
       "platzhalter": "Was ist passiert? Ctrl+Enter hält es fest.",
       "festhalten": "Festhalten",
       "stufe": "Stufe: {{stufe}}"
+    },
+    "pdf": {
+      "titel": "Potenzialanalyse Solarstrom",
+      "einleitung": "Ihr Gebäude hat ein grosses Dach mit viel Sonne. Diese Analyse zeigt, wie viel Solarstrom es liefern kann und was Sie damit sparen. {{firma}} plant, baut und wartet die Anlage. Sie investieren nichts und beziehen den Strom vom eigenen Dach günstiger als aus dem Netz.",
+      "anlage": "Ihre Solaranlage",
+      "dach": "Geeignete Dachfläche",
+      "leistung": "Leistung",
+      "ertrag": "Solarstrom pro Jahr",
+      "eigen": "Davon direkt im Gebäude verbraucht",
+      "kosten": "Ihre Stromkosten pro Jahr",
+      "heute": "Heute",
+      "mit": "Mit Solarstrom vom eigenen Dach",
+      "preise": "Netzstrom {{netz}} Rp./kWh, Solarstrom {{solar}} Rp./kWh",
+      "ersparnis": "Sie sparen pro Jahr",
+      "ueberLaufzeit": "Über {{jahre}} Jahre",
+      "investition": "Ihre Investition",
+      "investitionWert": "CHF 0",
+      "vorteile": "Ihre Vorteile",
+      "vorteil1": "Keine Investition: Bau, Betrieb und Wartung sind im Strompreis enthalten.",
+      "vorteil2": "Fester, tiefer Preis für den Solarstrom über die ganze Laufzeit.",
+      "vorteil3": "Ein Ansprechpartner aus der Region für Planung, Bau und Service.",
+      "vorteil4": "Weniger CO2 und ein sichtbarer Beitrag zur Energiewende.",
+      "weiter": "So geht es weiter",
+      "schritt1": "Besichtigung vor Ort: Dach, Statik und Elektroanschluss.",
+      "schritt2": "Ihre Stromdaten (Rechnungen oder Lastgang) für eine genaue Rechnung.",
+      "schritt3": "Verbindliches Angebot mit festem Preis pro kWh.",
+      "schritt4": "Vertrag, Bewilligung und Bau, meist in wenigen Monaten.",
+      "hinweis": "Schätzung aus öffentlichen Daten (sonnendach.ch, Gebäuderegister) und Erfahrungswerten. Verbindlich ist erst das Angebot nach der Besichtigung.",
+      "kontakt": "Ihre Ansprechperson"
+    },
+    "dossier": {
+      "titel": "Dossier Contracting {{nummer}}",
+      "objekt": "Objekt",
+      "parzelle": "Parzelle",
+      "nutzung": "Nutzung",
+      "baujahr": "Baujahr",
+      "dach": "Dachfläche",
+      "heizung": "Heizung",
+      "geschuetzt": "Geschützt / Inventar",
+      "ja": "Ja",
+      "nein": "Nein",
+      "anlage": "Anlage und Strom",
+      "leistung": "Leistung",
+      "ertrag": "Ertrag",
+      "verbrauch": "Verbrauch Kunde",
+      "schaetzung": "Schätzung",
+      "eigen": "Eigenverbrauch",
+      "strompreis": "Strompreis heute",
+      "zielpreis": "Zielpreis Contracting",
+      "investition": "Investition geschätzt",
+      "rolle": "Bau und Wartung",
+      "rolleWert": "{{firma}}",
+      "kunde": "Kunde und Ansprechpersonen",
+      "keineKontakte": "Noch keine Ansprechperson erfasst",
+      "unterlagen": "Unterlagen",
+      "vorhanden": "vorhanden seit",
+      "fehlt": "fehlt noch",
+      "besichtigung": "Besichtigung vor Ort",
+      "nochNicht": "Noch nicht besichtigt",
+      "besichtigtAm": "Besichtigt am",
+      "ok": "in Ordnung",
+      "problem": "Problem",
+      "kontakt": "Fragen an"
+    },
+    "mail": {
+      "beschreibung": "Prüfe Adresse und Text. «Senden» gibt die Mail frei, sie geht über den Ausgangskorb aus deinem Postfach.",
+      "ansehen": "PDF ansehen",
+      "senden": "Senden",
+      "an": "An",
+      "cc": "Cc",
+      "betreff": "Betreff",
+      "text": "Text",
+      "potenzialKnopf": "Potenzialanalyse",
+      "potenzialTitel": "Potenzialanalyse an den Kunden",
+      "potenzial": {
+        "betreff": "Potenzialanalyse Solarstrom: {{name}}",
+        "text": "Guten Tag{{anrede}}\n\nVielen Dank für das Gespräch. Im Anhang finden Sie die Potenzialanalyse für Ihr Gebäude: wie viel Solarstrom Ihr Dach liefern kann und was Sie damit pro Jahr sparen, ohne eigene Investition.\n\nGerne besprechen wir die Zahlen bei einer Besichtigung vor Ort. Passt Ihnen ein Termin in den nächsten zwei Wochen?\n\nFreundliche Grüsse"
+      },
+      "dossierKnopf": "Dossier an Youdera",
+      "dossierNochmals": "Dossier nochmals senden",
+      "dossierTitel": "Dossier an Youdera",
+      "ohneEinverstaendnis": "Das Einverständnis des Kunden zur Weitergabe der Daten ist noch nicht abgehakt (Unterlagen). Sende das Dossier erst, wenn es vorliegt.",
+      "dossier": {
+        "betreff": "Contracting-Anfrage {{nummer}}: {{name}}",
+        "text": "Hallo zusammen\n\nIm Anhang das Dossier für {{name}} in {{gemeinde}} mit Objekt, Anlage, Verbrauch, Ansprechpersonen, Unterlagen und Besichtigung. Bau und Wartung übernimmt Dimension Solaire.\n\nKönnt ihr uns ein Angebot mit Preis pro kWh und Laufzeit schicken? Fehlt etwas, melden wir uns gleich.\n\nBesten Dank und freundliche Grüsse"
+      }
+    },
+    "besichtigung": {
+      "titel": "Besichtigung vor Ort",
+      "am": "Besichtigt {{datum}}",
+      "ok": "In Ordnung",
+      "problem": "Problem",
+      "notizPunkt": "Was ist das Problem?",
+      "notiz": "Notiz zur Besichtigung",
+      "abschliessen": "Besichtigung abschliessen"
     }
   },
   "team": {

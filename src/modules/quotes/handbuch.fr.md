@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -53,6 +53,12 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 1. Ouvrir l’offre, **Nouvelle version**, glisser le nouveau PDF et noter brièvement ce qui a changé.
 2. Toutes les versions restent visibles sous **Versions**.
 
+### Analyser
+
+1. Onglet **Analyse** : choisir la période 30, 90 ou 365 jours.
+2. En haut offertes, gagnées, perdues, taux de conclusion et durée moyenne jusqu’à la décision.
+3. En dessous par personne, **Pourquoi perdues** et **Contre qui** (saisis lors de la relance).
+
 ### Attribuer les messages Eturnity
 
 1. Onglet **Import PDF** : PDF et messages d’Eturnity pas encore attribués à une offre.
@@ -93,6 +99,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Onglet Analyse (taux, par personne, motifs de perte, concurrence).
 - 03.11.2026: Travail en cours comme vue de départ, offre en pleine page, relance avec résultat selon le plan, variantes, validation et chance.
 
 - 31.10.2026: Les dossiers d’offres dans SharePoint sont créés et déplacés automatiquement.

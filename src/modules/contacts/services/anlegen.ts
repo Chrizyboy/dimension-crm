@@ -51,6 +51,7 @@ export async function legePartnerAn(e: NeuerPartnerEingabe): Promise<string> {
       email: e.email.trim() || null,
       telefon: e.telefon.trim() || null,
       sprache: e.sprache,
+      uid_nr: e.uidNr.trim() || null,
     })
     .select('id')
     .single()
@@ -64,7 +65,6 @@ export async function legePartnerAn(e: NeuerPartnerEingabe): Promise<string> {
     ort: e.ort,
     land: 'CH',
     webseite: e.webseite,
-    uidNr: e.uidNr,
     rechtsform: e.rechtsform,
   } as PartnerKopf)
   for (const r of e.rollen) await speichereRolle(id, r, e.angaben[r] ?? {})

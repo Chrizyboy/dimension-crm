@@ -95,6 +95,30 @@ test('Grossprojekt erfassen, bewerten, beobachten und bewilligen', async ({ page
   await page.getByRole('button', { name: 'Festhalten' }).click()
   await expect(page.getByText('Interessiert, Termin im Januar')).toBeVisible()
   await expect(page.getByText('Kunde spart pro Jahr')).toBeVisible()
+  // Besichtigung vor Ort: Punkte abhaken, Problem mit Notiz, abschliessen schreibt den Verlauf.
+  await page
+    .getByRole('group', { name: 'Dach: Zustand und Alter der Eindeckung' })
+    .getByRole('button', { name: 'In Ordnung' })
+    .click()
+  await page
+    .getByRole('group', { name: 'Zähler und Netzanschluss (Trafo, Anschlussleistung)' })
+    .getByRole('button', { name: 'Problem' })
+    .click()
+  await page.getByLabel('Was ist das Problem?').fill('Trafo zu klein')
+  await page.getByRole('button', { name: 'Besichtigung abschliessen' }).click()
+  await expect(page.getByText('Besichtigung abgeschlossen: 1 Punkt(e) mit Problem')).toBeVisible()
+  // Potenzialanalyse für den Kunden in seiner Sprache (Französisch), nur ansehen.
+  await page.getByRole('button', { name: 'Potenzialanalyse' }).click()
+  const fenster = page.getByRole('dialog')
+  await expect(fenster.getByLabel('Betreff')).toHaveValue(/Analyse de potentiel solaire/)
+  expect(await verstoesse(page)).toEqual([])
+  await fenster.getByRole('button', { name: 'Abbrechen' }).click()
+  // Dossier an Youdera: Hinweis ohne Einverständnis, senden legt die Mail in den Ausgangskorb.
+  await page.getByRole('button', { name: 'Dossier an Youdera' }).click()
+  await expect(fenster.getByText(/Einverständnis des Kunden/)).toBeVisible()
+  await fenster.getByLabel('An').fill('angebote@youdera.test')
+  await fenster.getByRole('button', { name: 'Senden' }).click()
+  await expect(page.getByRole('button', { name: 'Dossier nochmals senden' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   // In der Pipeline steht es unter «Erstkontakt» mit dem nächsten Schritt.
   await page.getByRole('button', { name: /^Pipeline/ }).click()

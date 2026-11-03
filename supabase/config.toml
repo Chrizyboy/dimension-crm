@@ -506,6 +506,10 @@ verify_jwt = false
 [functions.stoerung]
 verify_jwt = false
 
+# Anfragen aus den Formularen der Website (Leads): von Server zu Server, kein Login. Prüft ANFRAGE_SCHLUESSEL selbst.
+[functions.anfrage]
+verify_jwt = false
+
 # Anmeldemail (Send Email Hook): Supabase Auth ruft signiert auf, kein Login. Prüft ANMELDEMAIL_HOOK_SECRET selbst.
 [functions.anmeldemail]
 verify_jwt = false
