@@ -1,7 +1,7 @@
 # Anfragen der Website → Lead
 
 Die Formulare auf dimension-solaire.ch (DE und FR) legen direkt einen Lead in **Anfragen & Leads** an, statt nur eine
-Mail an info@ zu schicken. Ab dem Eingang läuft die 15-Minuten-Uhr. Entscheid 0045.
+Mail an info@ zu schicken. Ab dem Eingang läuft die 15-Minuten-Uhr. Entscheid 0047.
 
 ## Weg der Anfrage
 

@@ -1,19 +1,25 @@
-import { Ban, CheckCircle2, FileText, Mail, PackageCheck, Phone, Undo2 } from 'lucide-react'
+import { Ban, CheckCircle2, ExternalLink, FileText, Mail, PackageCheck, Phone, Send, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Skelett } from '@/components/ui/diverses'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { tonVonFarbe } from '@/lib/kontakt'
 import { formatChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
-import { useBestellung } from '../hooks/useEinkauf'
+import { useBestellung, useDarfFreigeben } from '../hooks/useEinkauf'
 import { inTagen } from '../lib/anzeige'
 import { alsBestellt, freigeben, zuruecknehmen } from '../services/bestellungen'
+import { vorlegen } from '../services/einkauf'
+import { AbDialog } from './AbDialog'
+import { AbLieferung } from './AbLieferung'
+import { MailsAbschnitt } from './MailsAbschnitt'
+import { RechnungAbschnitt } from './RechnungAbschnitt'
+import { Schritte } from './Schritte'
 import { BestellAngaben } from './BestellAngaben'
 import { BestellungSenden } from './BestellungSenden'
 import { PdfAnsehen } from './PdfAnsehen'
@@ -23,15 +29,17 @@ import { WareneingangDialog } from './WareneingangDialog'
 
 /**
  * Akte einer Bestellung: Angaben, Positionen (im Entwurf bearbeitbar) und die nächsten Schritte je Stand:
- * Freigeben → per Mail mit PDF bestellen (oder «telefonisch bestellt») → Wareneingang.
+ * Freigeben (über der Grenze: vorlegen) → per Mail mit PDF bestellen (oder Webshop/Telefon) → Auftragsbestätigung
+ * → Wareneingang mit Lieferschein → Lieferantenrechnung prüfen.
  */
 export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: () => void }) {
   const { t } = useTranslation()
   const daten = useBestellung(id)
   const status = useAuswahl('bestellstatus')
   const { laeuft, aus } = useAktion()
-  const [dialog, setDialog] = useState<'senden' | 'eingang' | 'storno' | null>(null)
+  const [dialog, setDialog] = useState<'senden' | 'eingang' | 'storno' | 'ab' | null>(null)
   const b = daten.data?.bestellung
+  const darf = useDarfFreigeben(b?.total_rappen ?? null, b?.status === 'entwurf')
   const positionen = daten.data?.positionen ?? []
   const zu = () => {
     setDialog(null)
@@ -51,9 +59,21 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
           {t('einkauf.akte.stornieren')}
         </Button>
       )}
-      {b.status === 'entwurf' && (
+      {b.status === 'entwurf' && darf.data === false && (
         <Button
           laedt={laeuft}
+          disabled={positionen.length === 0 || Boolean(b.vorgelegt_am)}
+          onClick={() =>
+            void aus(() => vorlegen(b.id), { de: 'Zur Freigabe vorgelegt', fr: 'Soumise pour validation' })
+          }
+        >
+          <Send />
+          {b.vorgelegt_am ? t('einkauf.akte.vorgelegt') : t('einkauf.akte.vorlegen')}
+        </Button>
+      )}
+      {b.status === 'entwurf' && darf.data !== false && (
+        <Button
+          laedt={laeuft || darf.isPending}
           disabled={positionen.length === 0}
           onClick={() => void aus(() => freigeben(b.id), { de: 'Bestellung freigegeben', fr: 'Commande validée' })}
         >
@@ -80,7 +100,19 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
             <Phone />
             {t('einkauf.akte.ohneMail')}
           </Button>
+          {b.bestellweg === 'webshop' && b.webshop_url && (
+            <a
+              href={b.webshop_url}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: 'secondary' })}
+            >
+              <ExternalLink />
+              {t('einkauf.akte.webshop')}
+            </a>
+          )}
           <Button
+            variant={b.bestellweg === 'mail' ? 'primary' : 'secondary'}
             onClick={() => {
               setDialog('senden')
             }}
@@ -130,6 +162,10 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
               {b.ueberfaellig && <Badge ton="kritisch">{t('einkauf.akte.ueberfaellig')}</Badge>}
               {b.mail_status && <Badge ton="info">{t(`einkauf.mail.${b.mail_status}`)}</Badge>}
             </div>
+            <Schritte schritt={b.schritt} />
+            {b.status === 'entwurf' && darf.data === false && (
+              <p className="bg-info-soft mb-2 rounded-md p-3 text-sm">{t('einkauf.akte.grenzeHinweis')}</p>
+            )}
             <BestellAngaben bestellung={b} />
             <AkteAbschnitt
               titel={t('einkauf.akte.positionen')}
@@ -137,6 +173,15 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
             >
               <Positionen bestellung={b} positionen={positionen} />
             </AkteAbschnitt>
+            <AbLieferung
+              bestellung={b}
+              positionen={positionen}
+              onAb={() => {
+                setDialog('ab')
+              }}
+            />
+            <RechnungAbschnitt bestellung={b} />
+            <MailsAbschnitt id={b.id} />
             {b.status === 'freigegeben' && !b.email_bestellung && (
               <p className="bg-warn-soft text-foreground flex items-center gap-2 rounded-md p-3 text-sm">
                 <FileText className="size-4 shrink-0" aria-hidden="true" />
@@ -148,6 +193,7 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
         {b && dialog === 'senden' && <BestellungSenden bestellung={b} positionen={positionen} onSchliessen={zu} />}
         {b && dialog === 'eingang' && <WareneingangDialog bestellung={b} positionen={positionen} onSchliessen={zu} />}
         {b && dialog === 'storno' && <StornoDialog bestellung={b} onSchliessen={zu} />}
+        {b && dialog === 'ab' && <AbDialog bestellung={b} positionen={positionen} onSchliessen={zu} />}
       </DialogInhalt>
     </Dialog>
   )

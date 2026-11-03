@@ -1,4 +1,4 @@
--- Anfragen & Leads neu (02.11.2026, Entscheid 0045): Erstkontakt messen und nachhaken, Herkunft und Dachdaten am
+-- Anfragen & Leads neu (02.11.2026, Entscheid 0047): Erstkontakt messen und nachhaken, Herkunft und Dachdaten am
 -- Lead, Website-Formular direkt ins CRM, Nachfassen an Tag 3, 10 und 21. Entscheide von Chris (2.11.2026):
 -- Erinnerung an den Verkäufer nach 15 Minuten, Meldung an Chris nach 2 Stunden (in der Arbeitszeit); Richtofferte
 -- nur intern; Nachfass-Mails als Entwurf mit Freigabe. Alle Werte stehen in einstellungen.verkauf (Regel 8).

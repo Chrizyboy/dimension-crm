@@ -130,25 +130,6 @@ export async function lieferantenpreis(
   return data
 }
 
-/** Baustelle mit fehlendem Material für den Reiter «Zu bestellen» (Datenbank: zu_bestellen). */
-export interface ZuBestellen {
-  projekt_id: string
-  nummer: string
-  kunde: string | null
-  ort: string | null
-  baubeginn: string | null
-  bestellen_bis: string | null
-  zeilen_fehlen: number
-  zeilen_ohne_artikel: number
-}
-
-/** Alle Baustellen mit fehlendem Material, früheste «bestellen bis» zuerst. */
-export async function ladeZuBestellen(): Promise<ZuBestellen[]> {
-  const { data, error } = await db().rpc('zu_bestellen')
-  if (error) throw error
-  return data
-}
-
 /** Entwürfe eines Lieferanten ans selbe Lager zu einer Sammelbestellung zusammenfassen. */
 export async function zusammenfassen(lieferantId: string, lagerortId: string): Promise<string> {
   const { data, error } = await db().rpc('bestellungen_zusammenfassen', {
