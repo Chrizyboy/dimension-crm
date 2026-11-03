@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: innendienst, verkauf, buchhaltung, geschaeftsleitung
 ---
 
@@ -29,6 +29,19 @@ Contrats d’entretien selon les trois formules du site : **Essentiel**, **Comfo
 1. Ouvrir le contrat, **Entretien effectué**.
 2. **Effectué le** et en bref ce qui a été fait. Le CRM calcule la prochaine inspection selon la formule.
 
+### Planifier une inspection
+
+1. Onglet **Inspections** : inspections dues dans les 90 jours sans rendez-vous, avec **Planifiées** celles déjà planifiées.
+2. **Planifier** : jour, de, à et qui y va. **Enregistrer**.
+3. 14 jours avant, l’annonce au client attend dans la [Corbeille de sortie](kapitel:outbox). Elle ne part qu’après ta validation. Tout de suite : dans le rendez-vous, **Annoncer maintenant**.
+4. L’inspection apparaît sur le mobile de la personne dans [Chantier](kapitel:fieldwork) sous «Ma journée».
+
+### Envoyer une offre aux clients sans contrat
+
+1. Onglet **Sans contrat** : nos installations après la mise en service sans contrat en cours, avec formule et prix adaptés.
+2. **Envoyer l’offre** pour un client, ou en cocher plusieurs et envoyer à tous. Le clic vaut validation, le mail part dans la langue du client.
+3. Réponse du client : **Acceptée** ouvre «Nouveau contrat», sinon **Refusée**. Le filtre **À relancer** montre les offres ouvertes après 14 jours.
+
 ### Saisir une résiliation
 
 1. Ouvrir le contrat, **Saisir une résiliation**, date de réception.
@@ -49,6 +62,7 @@ Contrats d’entretien selon les trois formules du site : **Essentiel**, **Comfo
 
 ## Automatique {#automatisch}
 
+- 14 jours avant un rendez-vous planifié, le CRM met l’annonce au client dans la corbeille de sortie (attend la validation). Après «Entretien effectué», le rendez-vous est à nouveau vide.
 - 30 jours avant chaque année contractuelle, le CRM crée la facture annuelle en brouillon. « facturé jusqu’au » évite les doublons.
 - Les entretiens dus dans les 30 jours figurent sur [Ma journée](kapitel:today).
 - Après la durée minimale (3 ans), le contrat se prolonge d’une année à chaque fois.
@@ -75,5 +89,6 @@ Seuls les contrats avec formule la reçoivent automatiquement. Pour les anciens 
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Planifier les inspections avec annonce 14 jours avant, onglet «Sans contrat» avec offre seule ou en série, inspection sur mobile avec les valeurs de la dernière fois.
 - 02.11.2026: Contrats selon les formules du site, tarif selon les kWc avec rabais visible, résiliation avec « résiliable jusqu’au », facture annuelle automatique en brouillon.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.

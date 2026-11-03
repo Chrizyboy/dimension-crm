@@ -101,6 +101,12 @@ export interface Vertrag {
   gekuendigt_am: string | null
   gekuendigt_per: string | null
   verrechnet_bis: string | null
+  /** Geplante Inspektion (Beginn, Ende, wer). */
+  termin_von: string | null
+  termin_bis: string | null
+  termin_person_id: string | null
+  /** Ankündigung an den Kunden im Ausgangskorb angelegt. */
+  angekuendigt_am: string | null
   sprache: 'de' | 'fr'
   notiz: string | null
   verlauf: Wartung[]
@@ -153,4 +159,45 @@ export interface VertragRechnung {
   datum: string | null
   total_rappen: number | null
   titel: string | null
+}
+
+/** Prüfpunkt der Inspektion (Einstellung «wartung_pakete.pruefpunkte»). */
+export interface WartungPruefpunkt {
+  schluessel: string
+  de: string
+  fr: string
+  art: 'ja_nein' | 'wert'
+  einheit?: string
+  /** Nur bei Paketen mit Messung (Premium). */
+  nur_messung?: boolean
+}
+
+/** Reiter der Wartung. */
+export const WARTUNG_REITER = ['vertraege', 'inspektionen', 'ohne'] as const
+export type WartungReiter = (typeof WARTUNG_REITER)[number]
+
+/** Eigene Anlage ohne laufenden Wartungsvertrag (Sicht «wartung_ohne_vertrag»). */
+export interface OhneVertrag {
+  anlage_id: string
+  kontakt_id: string
+  kunde: string
+  email: string | null
+  telefon: string | null
+  sprache: 'de' | 'fr'
+  ort: string | null
+  plz: string | null
+  leistung_kwp: number | null
+  ibn_am: string
+  garantie_bis: string | null
+  projekt_nummer: string | null
+  paket: string
+  tarif_rappen: number | null
+  angebot_am: string | null
+  angebot_stand: 'offen' | 'angenommen' | 'abgelehnt' | null
+}
+
+/** Person für die Planung. */
+export interface PlanPerson {
+  id: string
+  name: string
 }

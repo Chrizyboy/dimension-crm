@@ -1,17 +1,35 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
-import { ladeAusgang } from '../services/ausgang'
-import type { AusgangFilter } from '../types'
+import { kontext, ladeAusgang, ladeWoche, pruefen } from '../services/ausgang'
+import type { AusgangOrdner } from '../types'
 
-/** Einträge des Ausgangskorbs; lädt alle 15 Sekunden neu, solange noch etwas unterwegs ist. */
-export function useAusgang(filter: AusgangFilter) {
+/** Offene Ordner teilen eine Abfrage (Zähler links stimmen so mit der Liste überein). */
+function abfrageOrdner(o: AusgangOrdner): AusgangOrdner {
+  return o === 'gesendet' || o === 'verworfen' ? o : 'team'
+}
+
+/** Einträge eines Ordners; lädt alle 15 Sekunden neu, solange etwas unterwegs ist, sonst jede Minute. */
+export function useAusgang(ordner: AusgangOrdner) {
+  const o = abfrageOrdner(ordner)
   return useQuery({
-    queryKey: ['ausgang', filter],
+    queryKey: ['ausgang', o],
     enabled: Boolean(supabase),
-    queryFn: () => ladeAusgang(filter),
+    queryFn: () => ladeAusgang(o),
     refetchInterval: (q) =>
-      q.state.data?.some((e) => e.status === 'freigegeben' || e.status === 'wird_gesendet') ? 15_000 : false,
+      q.state.data?.some((e) => e.status === 'freigegeben' || e.status === 'wird_gesendet') ? 15_000 : 60_000,
   })
+}
+
+/** Kennzahlen der letzten 7 Tage. */
+export function useAusgangWoche(aktiv: boolean) {
+  return useQuery({ queryKey: ['ausgang', 'woche'], enabled: Boolean(supabase) && aktiv, queryFn: ladeWoche })
+}
+
+/** Prüfungen und Zusammenhang eines Eintrags (beim Öffnen). */
+export function useAusgangAkte(id: string) {
+  const p = useQuery({ queryKey: ['ausgang', 'pruefen', id], enabled: Boolean(supabase), queryFn: () => pruefen(id) })
+  const k = useQuery({ queryKey: ['ausgang', 'kontext', id], enabled: Boolean(supabase), queryFn: () => kontext(id) })
+  return { pruefungen: p.data ?? [], kontext: k.data ?? null, laedt: p.isPending || k.isPending }
 }
 
 /** Liste nach einer Änderung neu laden. */

@@ -2,23 +2,29 @@ import type { TFunction } from 'i18next'
 import { formatChf, formatDatum, formatDatumZeit } from '@/lib/format'
 import { adressText } from '../lib/links'
 import { dauerText } from '../lib/zeit'
-import type { Nachtrag, Pruefpunkt, Rapport } from '../types'
-import { bildAdressen, ladeBilder, ladeNachtraege, ladePruefpunkte } from './baustelle'
+import type { Nachtrag, Pruefpunkt, Rapport, Vorjahr } from '../types'
+import { bildAdressen, ladeBilder, ladeNachtraege, ladePruefpunkte, ladeWartungPruefung } from './baustelle'
 import { neuesPdf, type Schreiber } from './pdf'
 
 /** Was der Rapport im PDF braucht, ausser ihm selbst. */
 export interface RapportPdfDaten {
   nachtraege: Nachtrag[]
   pruefpunkte: Pruefpunkt[]
+  /** Nur Inspektion: Werte der letzten Inspektion (oder IBN) für die Spalte «Vorjahr». */
+  vorjahr?: Vorjahr | null
   unterschrift: ArrayBuffer | null
   fotos: ArrayBuffer[]
 }
 
 /** Nachträge, Prüfpunkte, Unterschrift und Fotos (höchstens zwölf) eines Rapports laden. */
 export async function rapportPdfDaten(r: Rapport, mitFotos = true): Promise<RapportPdfDaten> {
-  const [nachtraege, pruefpunkte, bilder] = await Promise.all([
+  const [nachtraege, pruefung, bilder] = await Promise.all([
     ladeNachtraege('alle', r.id),
-    r.art === 'ibn' ? ladePruefpunkte() : Promise.resolve([]),
+    r.art === 'ibn'
+      ? ladePruefpunkte().then((punkte) => ({ punkte, vorjahr: null }))
+      : r.art === 'wartung' && r.wartungsvertrag_id
+        ? ladeWartungPruefung(r.wartungsvertrag_id)
+        : Promise.resolve({ punkte: [], vorjahr: null }),
     ladeBilder(r.id),
   ])
   const pfade = bilder.flatMap((b) => (b.speicher_pfad ? [b.speicher_pfad] : []))
@@ -31,7 +37,8 @@ export async function rapportPdfDaten(r: Rapport, mitFotos = true): Promise<Rapp
   const fotos = mitFotos ? bilder.filter((b) => b.ordner === 'fotos').slice(0, 12) : []
   return {
     nachtraege,
-    pruefpunkte,
+    pruefpunkte: pruefung.punkte,
+    vorjahr: pruefung.vorjahr,
     unterschrift: unterschriftBild ? await holen(unterschriftBild.speicher_pfad) : null,
     fotos: (await Promise.all(fotos.map((f) => holen(f.speicher_pfad)))).filter((b): b is ArrayBuffer => Boolean(b)),
   }
@@ -59,15 +66,22 @@ export async function rapportSeiten(s: Schreiber, r: Rapport, d: RapportPdfDaten
     s.zwischentitel(t('baustelle.pdf.mehrmaterial'))
     for (const m of r.material) s.absatz(`${m.menge ?? ''} ${m.einheit ?? ''}  ${m.text}`.trim())
   }
-  if (r.art === 'ibn') {
+  if (d.pruefpunkte.length) {
     s.zwischentitel(t('baustelle.pdf.pruefpunkte'))
+    const vj = d.vorjahr
+    if (vj) {
+      s.platz(15)
+      s.text(t('baustelle.pdf.vorjahr', { datum: formatDatum(vj.datum) }), 430, { rechts: true })
+      s.text(t('baustelle.pdf.heute'), 545, { rechts: true })
+      s.y -= 15
+    }
+    const anzeigen = (w: string | boolean | null | undefined, einheit?: string) =>
+      typeof w === 'boolean' ? t(w ? 'baustelle.pdf.ja' : 'baustelle.pdf.nein') : w ? `${w} ${einheit ?? ''}` : '-'
     for (const p of d.pruefpunkte) {
-      const w = r.pruefpunkte[p.schluessel]
-      const wert =
-        typeof w === 'boolean' ? t(w ? 'baustelle.pdf.ja' : 'baustelle.pdf.nein') : w ? `${w} ${p.einheit ?? ''}` : '-'
       s.platz(15)
       s.text(sprache === 'fr' ? p.fr : p.de, 50)
-      s.text(wert, 545, { rechts: true, fett: true })
+      if (vj && p.art === 'wert') s.text(anzeigen(vj.werte[p.schluessel], p.einheit), 430, { rechts: true })
+      s.text(anzeigen(r.pruefpunkte[p.schluessel], p.einheit), 545, { rechts: true, fett: true })
       s.y -= 15
     }
   }

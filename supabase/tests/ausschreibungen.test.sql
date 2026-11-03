@@ -99,7 +99,7 @@ select throws_ok(format($$ select public.anschreiben_senden(array[%L]::uuid[]) $
   (select s.id from public.anschreiben s where s.ausschreibung_id = (select id from t where name = 'firma'))),
   'ausschreibung.kein_recht', 'Andy sendet nicht selbst');
 select throws_ok(format($$ select public.ausschreibung_entscheiden(%L, 'nicht_teilnehmen') $$, (select id from t where name = 'angebot')),
-  'ausschreibung.grund_fehlt', 'Nicht teilnehmen nur mit Grund');
+  'ausschreibung.nogo_fehlt', 'Nicht teilnehmen nur mit Grund aus der Liste');
 select is(public.ausschreibung_entscheiden((select id from t where name = 'angebot'), 'teilnehmen'), 'teilnahme', 'Andy entscheidet: teilnehmen');
 select is((select o.art from public.offerten o join public.ausschreibungen a on a.offerte_id = o.id
   where a.id = (select id from t where name = 'angebot')), 'submission', 'Teilnahme legt eine Offerte vom Typ Submission an');
