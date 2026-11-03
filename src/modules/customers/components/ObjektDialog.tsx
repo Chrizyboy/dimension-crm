@@ -5,7 +5,7 @@ import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
-import { Input } from '@/components/ui/input'
+import { Input, Textarea } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { feldFehler } from '@/lib/formular'
 import { meldeFehler } from '@/services/fehler'
@@ -35,6 +35,8 @@ function ausObjekt(o: Objekt | null): ObjektEingabe {
     verbrauch_kwh: o?.verbrauch_kwh ?? null,
     netzbetreiber: o?.netzbetreiber ?? '',
     gemeinde: o?.gemeinde ?? '',
+    heizung: o?.heizung ?? '',
+    vor_ort: o?.vor_ort ?? '',
   }
 }
 
@@ -68,8 +70,13 @@ export function ObjektDialog({ kontaktId, objekt, onSchliessen }: ObjektDialogPr
     }
   }
 
-  const text = (feld: 'strasse' | 'plz' | 'ort' | 'gemeinde' | 'netzbetreiber', pflicht = false) => (
-    <Feld id={`objekt-${feld}`} label={t(`kontakt.feld.${feld}`)} fehler={fehler[feld]} pflicht={pflicht}>
+  const text = (feld: 'strasse' | 'plz' | 'ort' | 'gemeinde' | 'netzbetreiber' | 'heizung', pflicht = false) => (
+    <Feld
+      id={`objekt-${feld}`}
+      label={t(feld === 'heizung' ? 'akte.feld.heizung' : `kontakt.feld.${feld}`)}
+      fehler={fehler[feld]}
+      pflicht={pflicht}
+    >
       <Input
         id={`objekt-${feld}`}
         value={werte[feld]}
@@ -144,6 +151,21 @@ export function ObjektDialog({ kontaktId, objekt, onSchliessen }: ObjektDialogPr
             {text('gemeinde')}
             {text('netzbetreiber')}
           </div>
+          {text('heizung')}
+          <Feld
+            id="objekt-vor-ort"
+            label={t('akte.feld.vorOrt')}
+            hinweis={t('akte.feld.vorOrtHinweis')}
+            fehler={fehler.vor_ort}
+          >
+            <Textarea
+              id="objekt-vor-ort"
+              value={werte.vor_ort}
+              onChange={(e) => {
+                setze('vor_ort', e.target.value)
+              }}
+            />
+          </Feld>
         </div>
       </DialogInhalt>
     </Dialog>

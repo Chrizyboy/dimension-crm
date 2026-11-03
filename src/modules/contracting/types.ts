@@ -43,11 +43,35 @@ export interface YouderaStand {
   notiz?: string | undefined
 }
 
-/** Einstellung «grossprojekte.pipeline»: Stufen mit Wahrscheinlichkeit, Unterlagen, Ziel. */
+/** Ein Punkt der Besichtigung: in Ordnung oder Problem, mit Notiz. */
+export interface BesichtigungPunkt {
+  stand: 'ok' | 'problem'
+  notiz?: string | undefined
+}
+
+/** Besichtigung vor Ort. `am` gesetzt heisst abgeschlossen. */
+export interface Besichtigung {
+  am?: string | undefined
+  von?: string | undefined
+  punkte?: Record<string, BesichtigungPunkt> | undefined
+  notiz?: string | undefined
+}
+
+/** Ein Eintrag einer Liste aus der Einstellung, in beiden Sprachen. */
+export interface ListenPunkt {
+  id: string
+  de: string
+  fr: string
+}
+
+/** Einstellung «grossprojekte.pipeline»: Stufen mit Wahrscheinlichkeit, Unterlagen, Ziel, Besichtigung, Youdera. */
 export interface PipelineRegeln {
   stufen?: { id: Stufe; prozent: number }[]
-  unterlagen?: { id: string; de: string; fr: string }[]
+  unterlagen?: ListenPunkt[]
   ziel?: { jahr: number; kwp: number }
+  besichtigung?: ListenPunkt[]
+  /** Mail-Adresse von Youdera für das Dossier (leer = beim Senden eintragen). */
+  youdera_mail?: string
 }
 export type ContractingArt = 'pv' | 'waerme' | 'beides'
 
@@ -168,6 +192,7 @@ export interface Grossprojekt {
   unterlagen: Record<string, string>
   rechnung: RechnungWerte
   youdera: YouderaStand
+  besichtigung: Besichtigung
   vertrag_am: string | null
   vertrag_kwp: number | null
 }

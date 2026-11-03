@@ -5,7 +5,7 @@ import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { useMails } from '../hooks/usePosteingang'
-import { absender, sortiere } from '../lib/anzeige'
+import { absender, istZurueck, sortiere } from '../lib/anzeige'
 import { FristMarke } from './FristMarke'
 
 /**
@@ -16,7 +16,7 @@ export default function HeuteKarte() {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const ich = useAnmeldung((z) => z.ich)
-  const offen = (useMails(Boolean(ich)).data ?? []).filter((m) => m.stand === 'offen')
+  const offen = (useMails(Boolean(ich)).data ?? []).filter((m) => m.stand === 'offen' && !istZurueck(m))
   const meine = offen.filter((m) => m.zustaendig_id === ich?.id)
   const liste = sortiere(meine.length ? meine : offen)
 
