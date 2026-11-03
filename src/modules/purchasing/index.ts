@@ -10,8 +10,8 @@ export const meta: ModulMeta = {
   id: 'purchasing',
   titel: { de: 'Einkauf & Material', fr: 'Achats & matériel' },
   untertitel: {
-    de: 'Material bei Lieferanten bestellen, Liefertermine, Wareneingang, Lager',
-    fr: 'Commander le matériel, délais de livraison, réception, stock',
+    de: 'Was die Baustellen brauchen, gebündelt bestellen und bis zur geprüften Rechnung verfolgen',
+    fr: 'Commander groupé ce dont les chantiers ont besoin et suivre jusqu’à la facture contrôlée',
   },
   pfad: '/purchasing',
   icon: 'package',

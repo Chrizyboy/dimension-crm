@@ -14,7 +14,7 @@ interface OffertSuche {
 const ANSICHTEN = new Set<string>(OFFERT_ANSICHTEN)
 
 /**
- * Offerten: Neue Offerten, Offerten Muri und Bulle, Nachfassen und PDF-Import.
+ * Offerten: Arbeitsvorrat, Neue Offerten, Offerten Muri und Bulle, Nachfassen und PDF-Import.
  * Reiter und offene Offerte stehen in der Adresse (#/quotes?ansicht=nachfassen&offerte=…).
  */
 export const Route = createFileRoute('/quotes')({
@@ -28,7 +28,7 @@ export const Route = createFileRoute('/quotes')({
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const ziel = ansicht ?? 'eingang'
+    const ziel = ansicht ?? 'vorrat'
     return (
       <Suspense>
         <Offerten
@@ -39,7 +39,7 @@ export const Route = createFileRoute('/quotes')({
             const n = { ansicht: ziel, offerte: offerte ?? null, lead: lead ?? null, ...a }
             void navigate({
               search: {
-                ...(n.ansicht !== 'eingang' ? { ansicht: n.ansicht } : {}),
+                ...(n.ansicht !== 'vorrat' ? { ansicht: n.ansicht } : {}),
                 ...(n.offerte ? { offerte: n.offerte } : {}),
                 ...(n.lead ? { lead: n.lead } : {}),
               },

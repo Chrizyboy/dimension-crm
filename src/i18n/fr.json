@@ -1252,7 +1252,8 @@
       "muri": "Offres Muri",
       "bulle": "Offres Bulle",
       "nachfassen": "Relances",
-      "import": "Import PDF"
+      "import": "Import PDF",
+      "vorrat": "Travail en cours"
     },
     "standort": {
       "alle": "Tous",
@@ -1517,6 +1518,157 @@
       "zuordnen": "À {{nummer}} {{name}}",
       "erledigt": "Fait",
       "hinweis": "Eturnity envoie automatiquement les nouvelles offres ici dès que le webhook est configuré."
+    },
+    "phase": {
+      "zu_offerieren": "À offrir",
+      "zu_offerieren_text": "Visite faite, offre manquante",
+      "planung": "En planification",
+      "planung_text": "en cours dans Eturnity",
+      "pruefen": "À contrôler",
+      "pruefen_text": "contrôle ou validation avant l'envoi",
+      "offeriert": "Offerte envoyée",
+      "offeriert_text": "envoyée, relance selon le plan",
+      "verhandlung": "Négociation",
+      "verhandlung_text": "client intéressé ou compare",
+      "gewonnen": "Gagnée",
+      "gewonnen_text": "14 derniers jours, vers le contrat d'entreprise"
+    },
+    "vorrat": {
+      "filter": "Filtrer le travail en cours",
+      "f_alle": "Toutes",
+      "f_meine": "Les miennes",
+      "f_muri": "Muri",
+      "f_bulle": "Bulle",
+      "kOffen_one": "en cours · {{count}} offre · {{kwp}} kWc",
+      "kOffen_other": "en cours · {{count}} offres · {{kwp}} kWc",
+      "kGewichtet": "pondéré par la chance",
+      "kUeberfaellig": "visite il y a plus de {{tage}} jours ouvrables, pas encore d'offre",
+      "kNachfassen": "à relancer aujourd'hui",
+      "tage": "{{n}} jours",
+      "kDauer": "Ø visite à offre (objectif {{ziel}} jours ouvrables)",
+      "kQuote": "taux de conclusion des 90 derniers jours",
+      "leer": "Rien dans cette colonne",
+      "ueberfaellig_one": "en retard depuis {{count}} jour ouvrable",
+      "ueberfaellig_other": "en retard depuis {{count}} jours ouvrables",
+      "rueckfrage": "Question ouverte",
+      "nachfassenHeute": "relancer aujourd'hui",
+      "nachfassenSeit_one": "relance due depuis {{count}} jour",
+      "nachfassenSeit_other": "relance due depuis {{count}} jours",
+      "abgelaufen": "Validité échue",
+      "richt": "Offre indicative",
+      "variante": "Variante {{k}}",
+      "varianten_one": "{{count}} variante",
+      "varianten_other": "{{count}} variantes"
+    },
+    "chance": {
+      "titel": "Chance et indications",
+      "chance": "Chance",
+      "auto": "automatique selon l'état",
+      "vonHand": "fixée à la main",
+      "gewichtet": "pondéré {{betrag}}",
+      "vonHandFeld": "Chance à la main (%, vide = automatique)",
+      "erwartet": "Décision attendue d'ici",
+      "gueltig": "Valable jusqu'au",
+      "konkurrenz": "Concurrence",
+      "konkurrenzHinweis": "p. ex. Helion, Solarmax",
+      "rabatt": "Rabais (%)",
+      "kurz": "{{p}} %"
+    },
+    "freigabe": {
+      "noetig_rabatt": "Validation : rabais",
+      "noetig_marge": "Validation : marge trop basse",
+      "text": "dès {{rabatt}} % de rabais ou sous {{marge}} % de marge, une deuxième personne valide",
+      "knopf": "Valider",
+      "erteilt": "Validée par {{name}} le {{datum}}"
+    },
+    "ergebnis": {
+      "knopf": "Résultat",
+      "titel": "Résultat de la relance",
+      "art": "Comment",
+      "art_anruf": "Appel",
+      "art_mail": "E-mail",
+      "art_besuch": "Visite",
+      "art_sms": "SMS",
+      "was": "Qu'a dit le client ?",
+      "e_nicht_erreicht": "Pas atteint",
+      "e_vergleicht": "Compare encore",
+      "e_interessiert": "Intéressé, clarifie encore",
+      "e_neue_version": "Veut une nouvelle version",
+      "e_spaeter": "Recontacter plus tard",
+      "e_ruht": "En pause",
+      "e_ja": "Oui, commande",
+      "e_nein": "Non",
+      "notiz": "Note",
+      "notizHinweis": "Apparaît dans l'historique de l'offre et du client.",
+      "wann": "Quand recontacter",
+      "folge_vergleicht": "Prochain appel selon le plan, état « négociation ».",
+      "folge_interessiert": "Prochain appel selon le plan, état « négociation », la chance augmente.",
+      "folge_neue_version": "L'offre retourne en planification ; le plan recommence après l'envoi.",
+      "folge_spaeter": "L'offre est reportée et revient le jour choisi.",
+      "folge_ja": "Gagnée. Le contrat d'entreprise s'ouvre ensuite.",
+      "folge_nein": "Perdue avec motif ; entre dans l'analyse.",
+      "ok": "Résultat enregistré",
+      "okNaechst": "Enregistré, prochaine relance le {{datum}}"
+    },
+    "schritt": {
+      "titel": "Prochaine étape",
+      "vertagt": "Reportée : recontacter",
+      "planTag": "Relance jour {{tag}} après l'envoi",
+      "anruf": "Relancer",
+      "faelligSeit": "due depuis le {{datum}}",
+      "faelligAm": "due le {{datum}}",
+      "zuletzt": "dernier : {{was}}",
+      "erreicht": "Atteint, saisir le résultat",
+      "nichtErreicht": "Pas atteint"
+    },
+    "schritte": {
+      "titel": "Étapes de l'offre",
+      "termin": "Visite",
+      "planung": "Planification",
+      "geprueft": "Contrôlée",
+      "versendet": "Envoyée",
+      "nachfassen": "Relance",
+      "entscheid": "Décision",
+      "werkvertrag": "Contrat d'entreprise"
+    },
+    "seite": {
+      "zurueck": "Retour aux offres",
+      "verkauf": "Vente : {{name}}",
+      "offerte": "Offre : {{name}}",
+      "kunde": "Client",
+      "name": "Nom",
+      "telefon": "Téléphone",
+      "mail": "E-mail",
+      "objekt": "Objet",
+      "sprache": "Langue",
+      "sprache_de": "Allemand",
+      "sprache_fr": "Français",
+      "termin": "Visite sur place",
+      "gueltig": "valable jusqu'au {{datum}}",
+      "abgelaufen": "échue le {{datum}}"
+    },
+    "unterlagen": {
+      "titel": "Documents",
+      "stand": "{{n}} sur {{von}}"
+    },
+    "varianten": {
+      "titel": "Variantes",
+      "keine": "Pas encore de variantes. Une offre peut en avoir plusieurs (p. ex. avec et sans batterie).",
+      "gewaehlt": "Variante choisie",
+      "waehlen": "Choisir",
+      "nettoTitel": "Ce que paie le client (variante {{k}})",
+      "inkl": "Prix TTC {{satz}} % TVA",
+      "eiv": "Rétribution unique (RU)",
+      "steuer": "Économie d'impôts (estimée)",
+      "netto": "Net pour le client",
+      "variante": "Variante {{k}}",
+      "feldTitel": "Désignation",
+      "feldBetrag": "Montant HT",
+      "entfernen": "Supprimer la variante {{k}}",
+      "neu": "Ajouter une variante",
+      "vorschlagA": "Comme offert",
+      "bearbeiten": "Modifier les variantes",
+      "erfassen": "Saisir des variantes"
     }
   },
   "werkvertraege": {
@@ -2056,8 +2208,12 @@
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
-    "projekte_text_fehlt": "Veuillez d’abord saisir un texte.",
-    "projekte_art_unbekannt": "Ce type d’entrée n’existe pas.",
+    "offerte_freigabe_fehlt": "Cette offre doit être validée avant l'envoi (rabais ou marge).",
+    "offerte_freigabe_kein_recht": "Seules les personnes définies dans les paramètres peuvent valider.",
+    "offerte_varianten_ungueltig": "Chaque variante doit avoir un identifiant (A, B …).",
+    "offerte_variante_unbekannt": "Cette variante n'existe pas dans l'offre.",
+    "offerte_nicht_offeriert": "La relance n'est possible que pour les offres envoyées.",
+    "offerte_kein_recht": "Seule l'administration peut modifier les paramètres des offres.",
     "kurs_kein_recht": "Tu n’as pas le droit de le faire.",
     "kurs_titel_fehlt": "Merci d’indiquer un titre.",
     "kurs_niemand": "Merci de choisir au moins une personne.",
@@ -2080,6 +2236,11 @@
     "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
     "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
     "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
+    "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
+    "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
+    "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant.",
+    "projekte_text_fehlt": "Veuillez d’abord saisir un texte.",
+    "projekte_art_unbekannt": "Ce type d’entrée n’existe pas.",
     "projekte_maengel_offen": "Il faut d’abord régler tous les défauts avant la remise.",
     "projekte_rolle_unbekannt": "Ce rôle n’existe pas."
   },
@@ -2651,13 +2812,14 @@
     "module_other": "{{count}} modules",
     "checkliste": "Électricien {{erledigt}}/{{gesamt}}",
     "reiter": {
-      "leitstand": "Poste de pilotage",
-      "woche": "Ma semaine",
+      "baustellen": "Chantiers",
       "zeitplan": "Planning",
       "bewilligungen": "Autorisations",
       "alle": "Tous les projets",
       "subunternehmer": "Sous-traitants",
-      "abwesenheiten": "Absences"
+      "abwesenheiten": "Absences",
+      "leitstand": "Poste de pilotage",
+      "woche": "Ma semaine"
     },
     "akteReiter": {
       "uebersicht": "Aperçu",
@@ -2951,6 +3113,18 @@
         "hinweis": "Ces données servent à annoncer la rétribution unique auprès de Pronovo. L’annonce se fait en ligne ; vérifier séparément les subventions cantonales ou communales."
       }
     },
+    "blocker": {
+      "bewilligung": "Autorisation en retard",
+      "material": "Commander le matériel",
+      "frist": "Délai dépassé",
+      "filter": "Filtrer les chantiers",
+      "filterwert": {
+        "alle": "Tous",
+        "blocker": "Avec blocage",
+        "bewilligung": "Autorisation",
+        "material": "Matériel"
+      }
+    },
     "leitstand": {
       "bau": "Chantier {{datum}}",
       "suche": "Chercher projet, client, lieu, électricien ou numéro",
@@ -3072,18 +3246,6 @@
         "wird_gesendet": "Info client en cours d’envoi",
         "gesendet": "Info client envoyée",
         "fehler": "Info client : échec de l’envoi"
-      }
-    },
-    "blocker": {
-      "bewilligung": "Autorisation en retard",
-      "material": "Commander le matériel",
-      "frist": "Délai dépassé",
-      "filter": "Filtrer les chantiers",
-      "filterwert": {
-        "alle": "Tous",
-        "blocker": "Avec blocage",
-        "bewilligung": "Autorisation",
-        "material": "Matériel"
       }
     },
     "maengel": {
@@ -3607,13 +3769,15 @@
   },
   "einkauf": {
     "titel": "Achats & matériel",
-    "beschreibung": "Matériel par projet, commandes avec validation et PDF par e-mail, réception et stock de Bulle.",
+    "beschreibung": "Commander à temps et de façon groupée ce dont les chantiers ont besoin, contrôler confirmation, livraison et facture. Stock de Bulle.",
     "reiter": {
       "bestellungen": "Commandes",
       "zubestellen": "À commander",
-      "material": "Matériel par projet",
+      "material": "Plan matériel",
       "lager": "Stock",
-      "lieferanten": "Fournisseurs"
+      "lieferanten": "Fournisseurs",
+      "leitstand": "Tableau de bord",
+      "bestellen": "Commander"
     },
     "filter": "Filtre",
     "filterwert": {
@@ -3646,7 +3810,8 @@
     "materialFilter": {
       "fehlt": "Il manque encore du matériel",
       "mitListe": "Avec liste de matériel",
-      "alle": "Tous les ouverts"
+      "alle": "Tous les ouverts",
+      "gefaehrdet": "Montage en danger"
     },
     "spalte": {
       "nummer": "N°",
@@ -3682,7 +3847,11 @@
       "stornieren": "Annuler",
       "pdf": "Voir le PDF",
       "ueberfaellig": "Livraison en retard",
-      "ohneAdresse": "L’adresse de commande du fournisseur manque. Elle peut être saisie sous «Fournisseurs» ou directement dans l’e-mail."
+      "ohneAdresse": "L’adresse de commande du fournisseur manque. Elle peut être saisie sous «Fournisseurs» ou directement dans l’e-mail.",
+      "vorlegen": "Soumettre pour validation",
+      "vorgelegt": "Soumise",
+      "webshop": "Ouvrir la boutique",
+      "grenzeHinweis": "Cette commande dépasse la limite. La direction reçoit une notification et valide."
     },
     "feld": {
       "lieferant": "Fournisseur",
@@ -3705,7 +3874,9 @@
       "mengeVon": "Quantité {{name}}",
       "ekVon": "Prix d’achat {{name}}",
       "entfernen": "Retirer {{name}}",
-      "guenstiger": "Moins cher chez {{lieferant}} : CHF {{preis}} (économie CHF {{total}})"
+      "guenstiger": "Moins cher chez {{lieferant}} : CHF {{preis}} (économie CHF {{total}})",
+      "abMenge": "Conf. : {{menge}}",
+      "abEk": "Conf. : {{ek}}"
     },
     "eingang": {
       "titel": "Réception {{nummer}}",
@@ -3717,7 +3888,8 @@
       "buchen": "Enregistrer la réception",
       "snErfassen": "Saisir les numéros de série",
       "snVon": "Numéros de série de {{name}}",
-      "snPlatzhalter": "Un par ligne ou séparés par une virgule ; reportés sur l’installation à la mise en service"
+      "snPlatzhalter": "Un par ligne ou séparés par une virgule ; reportés sur l’installation à la mise en service",
+      "lieferschein": "N° de bulletin de livraison"
     },
     "storno": {
       "titel": "Annuler la commande {{nummer}}",
@@ -3823,7 +3995,13 @@
       "inaktiv": "Inactif",
       "neu": "Nouveau fournisseur",
       "leer": "Aucun fournisseur",
-      "text": "Les commandes partent à l’e-mail de commande, dans la langue choisie."
+      "text": "Les commandes partent à l’e-mail de commande, dans la langue choisie.",
+      "einkaufJahr": "Achats 12 mois",
+      "puenktlich": "Ponctualité",
+      "lieferzeit": "Délai",
+      "tage": "{{n}} jours",
+      "frachtFrei": "Franco dès",
+      "offen": "En cours"
     },
     "pruefung": {
       "name": "Veuillez saisir un nom."
@@ -3852,6 +4030,148 @@
       "hinweis": "Chantiers avec du matériel manquant. « Commander avant » = début des travaux moins le délai de livraison.",
       "leer": "Tout est commandé",
       "leerText": "Aucun chantier n’a de matériel manquant sans commande."
+    },
+    "schritt": {
+      "titel": "Étapes de la commande",
+      "freigabe": "Validation",
+      "ab_offen": "Confirmation",
+      "unterwegs": "En route",
+      "eingang": "Réception",
+      "rechnung": "Facture",
+      "fertig": "Terminé"
+    },
+    "ls": {
+      "kz": {
+        "zuBestellen": "Fournisseurs à commander",
+        "freigabe": "en attente de validation",
+        "abOffen": "sans confirmation",
+        "gefaehrdet": "montages en danger",
+        "baustellen": "chantiers 14 jours complets",
+        "offen": "commandé, non livré"
+      },
+      "spalte": {
+        "zuBestellen": "À commander",
+        "freigabe": "Validation",
+        "ab_offen": "Confirmation attendue",
+        "unterwegs": "En route",
+        "eingang": "Partiellement livré",
+        "rechnung": "Facture à contrôler"
+      },
+      "leer": "Rien",
+      "ohneLieferant": "Sans fournisseur",
+      "bis": "d’ici le {{datum}}",
+      "zeilen_one": "{{count}} article",
+      "zeilen_other": "{{count}} articles",
+      "montage": "Montage du {{datum}} en danger",
+      "ueberfaellig": "en retard depuis le {{datum}}",
+      "senden": "validée, à commander",
+      "vorgelegt": "soumise pour validation",
+      "entwurf": "Brouillon",
+      "abOffen": "Confirmation manquante",
+      "bestaetigt": "confirmée pour le {{datum}}",
+      "erwartet": "attendue le {{datum}}",
+      "teil": "{{da}} sur {{von}} reçus",
+      "rechnungDa": "Contrôler la facture {{nummer}}",
+      "rechnungErwartet": "Facture attendue",
+      "tracking": "Suivi",
+      "gefahrHinweis": "En rouge : la marchandise arrive après le montage ou n’est pas encore commandée. Le plan matériel montre les chantiers concernés.",
+      "tafel": "Commandes par étape"
+    },
+    "bestellen": {
+      "hinweis": "Ce dont les chantiers et le stock ont besoin, par fournisseur. Le disponible en stock est réservé d’abord, le reste va dans un brouillon, arrondi aux unités d’emballage. Rien ne part avant validation et commande.",
+      "alle": "Créer les brouillons pour tous",
+      "anlegen": "Créer le brouillon",
+      "leer": "Tout est commandé",
+      "leerText": "Aucun chantier ni article de stock n’a besoin de matériel pour l’instant.",
+      "ohneLieferant": "Sans fournisseur (compléter la liste de prix)",
+      "frachtFrei": "franco de port",
+      "frachtAb": "franco dès CHF {{betrag}}",
+      "unterMindest": "sous le minimum CHF {{betrag}}",
+      "artikel": "Article",
+      "fuer": "Pour",
+      "fehlt": "Manque",
+      "lager": "Du stock",
+      "bestellen": "À commander",
+      "ek": "PA",
+      "bis": "Commander d’ici",
+      "ve": "UE {{ve}}",
+      "ohneArtikel": "sans article",
+      "lagerMindest": "Stock (sous le minimum)",
+      "total": "Total estimé",
+      "zusammenfassen": "Regrouper les brouillons ({{liste}})"
+    },
+    "plan": {
+      "deckung": "Couverture",
+      "bestellenBis": "Commander d’ici",
+      "gefaehrdet": "Montage en danger",
+      "kommt": "arrive d’ici le {{datum}}"
+    },
+    "kond": {
+      "titel": "Conditions",
+      "fracht_frei_ab": "Franco dès CHF",
+      "fracht": "Port CHF",
+      "mindestwert": "Commande minimale CHF",
+      "lieferzeit": "Délai (jours ouvrables)",
+      "zahlungsziel": "Délai de paiement (jours)",
+      "skonto_prozent": "Escompte %",
+      "skonto_tage": "Escompte sous jours",
+      "bestellschluss": "Heure limite (p. ex. 14:00)",
+      "bestellweg": "Mode de commande",
+      "webshop_url": "Adresse de la boutique en ligne",
+      "weg": {
+        "mail": "E-mail avec PDF",
+        "webshop": "Boutique en ligne",
+        "telefon": "Téléphone"
+      }
+    },
+    "ab": {
+      "abschnitt": "Confirmation et livraison",
+      "erfasst": "Confirmation saisie",
+      "fehlt": "Confirmation manquante",
+      "titel": "Confirmation de commande {{nummer}}",
+      "beschreibung": "Ce que le fournisseur confirme. Les écarts de quantité ou de prix sont signalés.",
+      "ki": "L’IA lit la confirmation dans un e-mail ou un PDF. Merci de vérifier.",
+      "pdf": "Lire un PDF",
+      "nummer": "N° de confirmation",
+      "datum": "Date de la confirmation",
+      "termin": "Date confirmée",
+      "total": "Total hors TVA",
+      "bestellt": "commandé {{menge}} {{einheit}} à {{ek}}",
+      "mengeVon": "Quantité confirmée {{name}}",
+      "ekVon": "Prix confirmé {{name}}",
+      "abweichungen": "Écarts",
+      "anzahl_one": "{{count}} position diffère",
+      "anzahl_other": "{{count}} positions diffèrent",
+      "keine": "conforme à la commande",
+      "ausstehend": "Commandé le {{datum}}, confirmation encore attendue.",
+      "nachgefragt": "Relancé le {{datum}}.",
+      "erfassen": "Saisir la confirmation",
+      "aendern": "Modifier la confirmation",
+      "nachfragen": "Relancé"
+    },
+    "lieferung": {
+      "tracking": "Suivi",
+      "hinweis": "Indication de livraison",
+      "kontakt": "Contact sur place",
+      "lieferscheine": "Bulletins de livraison"
+    },
+    "rechnung": {
+      "titel": "Facture fournisseur",
+      "offen": "pas encore contrôlée",
+      "geprueft": "Contrôlée",
+      "nummer": "N° de facture",
+      "betrag": "Montant",
+      "vorschlaege": "Factures correspondantes d’AbaNinja",
+      "erwartet": "attendu CHF {{betrag}}",
+      "keine": "Pas encore de facture correspondante d’AbaNinja. La synchronisation les récupère dans les finances.",
+      "notiz": "Note sur la facture",
+      "notizPlatzhalter": "En cas d’écart : pourquoi (p. ex. port, consigne)",
+      "pruefen": "Marquer comme contrôlée"
+    },
+    "mails": {
+      "titel": "E-mails",
+      "keine": "Aucun e-mail pour cette commande dans la boîte de réception.",
+      "anhang": "avec pièce jointe"
     }
   },
   "baustelle": {
@@ -5868,7 +6188,7 @@
   },
   "aufgaben": {
     "titel": "Tâches",
-    "beschreibung": "Qui fait quoi et pour quand. Beaucoup viennent des automatisations ; un clic ouvre la fiche.",
+    "beschreibung": "Ta liste de travail : quoi faire et pour quand. Beaucoup viennent des automatisations ; un clic ouvre la tâche.",
     "neu": "Nouvelle tâche",
     "erledigt": "Fait",
     "erledigtSetzen": "« {{titel}} » fait",
@@ -5907,14 +6227,107 @@
       "titel": "Que faut-il faire ?",
       "text": "Note",
       "faellig": "Échéance le",
-      "person": "Pour qui"
+      "person": "Pour qui",
+      "wiederholung": "Répéter",
+      "textPlatzhalter": "Description …"
     },
     "fehler": {
       "titel": "Merci de saisir un titre.",
       "datum": "Merci de choisir une date valide.",
       "person": "Merci de choisir une personne."
     },
-    "neuKurz": "Tâche"
+    "neuKurz": "Tâche",
+    "vonPerson": "Tâches de {{name}}",
+    "ansicht": "Vue",
+    "ansichten": {
+      "meine": "Mes tâches",
+      "vergeben": "Attribuées",
+      "vertretung": "Remplacement",
+      "alle": "Toutes",
+      "team": "Équipe",
+      "erledigt": "Terminées"
+    },
+    "suchen": "Rechercher des tâches",
+    "filtern": "Filtrer",
+    "anzahl_one": "{{count}} tâche",
+    "anzahl_other": "{{count}} tâches",
+    "schnellfilter": {
+      "wichtig": "Importantes",
+      "automation": "Automatisation",
+      "mit_bezug": "Avec dossier"
+    },
+    "leerVertretung": "Personne à remplacer",
+    "kuerzelNeu": "Nouvelle tâche",
+    "morgen": "Demain",
+    "naechsteWoche": "Semaine prochaine",
+    "morgenVerschieben": "Au prochain jour ouvrable",
+    "morgenVerschiebenFuer": "« {{titel}} » au prochain jour ouvrable",
+    "wichtig": "Important",
+    "vertretungFuer": "Remplacement de {{name}}",
+    "schritteZahl": "{{fertig}}/{{schritte}} étapes",
+    "gruppe": {
+      "ueberfaellig": "En retard",
+      "heute": "Aujourd'hui",
+      "morgen": "Demain",
+      "woche": "Cette semaine",
+      "spaeter": "Plus tard",
+      "ohne": "Sans date"
+    },
+    "herkunft": {
+      "automation": "Automatisation",
+      "monitor": "Veille",
+      "frist": "Échéance",
+      "system": "Système",
+      "selbst": "Moi-même",
+      "person": "Attribuée",
+      "ki": "Proposition IA",
+      "posteingang": "Boîte de réception"
+    },
+    "wiederholung": {
+      "nie": "Jamais",
+      "woche": "Chaque semaine",
+      "monat": "Chaque mois",
+      "quartal": "Chaque trimestre",
+      "jahr": "Chaque année"
+    },
+    "schnell": {
+      "beschriftung": "Saisir rapidement une tâche",
+      "platzhalter": "Nouvelle tâche … p. ex. « Relancer offre Baumann demain @AM ! »",
+      "mehr": "Plus",
+      "enter": "Entrée pour créer",
+      "personUnbekannt": "« @{{wer}} » inconnu"
+    },
+    "akte": {
+      "beschreibung": "Tâche",
+      "weg": "Tâche introuvable",
+      "wegText": "Elle a été supprimée ou tu ne peux pas la voir.",
+      "erledigen": "Terminée …",
+      "erledigtBestaetigen": "Terminée",
+      "notizErledigt": "Quel est le résultat ? (facultatif, aussi dans l'historique du dossier)",
+      "notizWeiter": "Note pour la personne (facultatif)",
+      "weitergeben": "Transmettre",
+      "weitergebenAn": "À qui ?",
+      "wiederOeffnen": "Rouvrir",
+      "vertretungHinweis": "La personne est absente, tu la remplaces.",
+      "herkunft": "Origine",
+      "teilschritte": "Étapes",
+      "schrittNeu": "Ajouter une étape (Entrée)",
+      "schrittEntfernen": "Retirer « {{text}} »",
+      "verlauf": "Historique",
+      "kommentar": "Commentaire",
+      "kommentarPlatzhalter": "Commentaire … avec @LP la personne est notifiée",
+      "kommentieren": "Commenter",
+      "loeschen": "Mettre à la corbeille"
+    },
+    "team": {
+      "offen": "Ouvertes",
+      "erledigt7": "Terminées 7 jours",
+      "last": "Charge",
+      "abwesend": "Absent·e",
+      "niemand": "Non attribuées",
+      "leer": "Aucune tâche ouverte dans l'équipe",
+      "leerText": "Tout est réparti et terminé."
+    }
   },
   "ki": {
     "knopf": "Rédiger avec l’IA",
@@ -5957,7 +6370,8 @@
       "zusammenfassung": "Résumé",
       "lead_bewertung": "Évaluation du lead",
       "briefing": "Briefing du jour",
-      "automation": "Automatisations"
+      "automation": "Automatisations",
+      "auftragsbestaetigung": "Lire une confirmation de commande"
     },
     "assistent": {
       "titel": "Rédiger avec l’IA",
@@ -6985,7 +7399,6 @@
       "kaufdatum": "Date d’achat",
       "kaufpreis_rappen": "Prix d’achat (CHF)",
       "kaufpreis": "Prix d’achat (CHF)",
-      "privat_anteil": "Part privée (véhicule utilisé en privé)",
       "versicherung_police": "N° de police",
       "versicherung_deckung": "Couverture",
       "selbstbehalt_rappen": "Franchise (CHF)",
@@ -7001,7 +7414,8 @@
       "garantie_bis": "Garantie jusqu’au",
       "zurueck_bis": "Retour au plus tard le",
       "ausgemustert_am": "Mis hors service le",
-      "ungueltig": "Veuillez vérifier"
+      "ungueltig": "Veuillez vérifier",
+      "privat_anteil": "Part privée (véhicule utilisé en privé)"
     },
     "fahrzeug": {
       "neu": "Saisir un véhicule",
@@ -7074,7 +7488,6 @@
       "versicherung": "Assurance et impôts",
       "weiteres": "Divers"
     },
-    "ja": "Oui",
     "treibstoff": {
       "diesel": "Diesel",
       "benzin": "Essence",
@@ -7141,15 +7554,15 @@
         "einsatz": "Intervention"
       },
       "legende": {
-        "einsatz": "Intervention (suit l’équipe)",
+        "einsatz": "Pour une intervention",
         "hand": "Réservé à la main",
         "werkstatt": "Garage",
         "konflikt": "Double réservation"
       },
-      "folgtTeam": "suit l’équipe",
       "heute": "Cette semaine",
       "weiter": "Semaine suivante",
-      "zurueck": "Semaine précédente"
+      "zurueck": "Semaine précédente",
+      "folgtTeam": "suit l’équipe"
     },
     "reservieren": {
       "knopf": "Réserver",
@@ -7192,9 +7605,6 @@
       "keinRechtText": "Les coûts par véhicule sont visibles par la direction et la comptabilité.",
       "leasing": "Leasing",
       "leer": "Pas encore de coûts cette année.",
-      "privatanteil": "Part privée",
-      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
-      "privatanteilTitel": "Part privée {{jahr}}",
       "proFahrzeug": "Coûts par véhicule {{jahr}}",
       "proKm": "CHF {{chf}} par km ({{km}} km)",
       "rest": "Entretien et divers",
@@ -7206,7 +7616,10 @@
       "zahlGeraete": "Valeur des appareils",
       "zahlProKm": "CHF par km en moyenne",
       "zahlTotal": "Coûts totaux des véhicules",
-      "zahlUnterhalt": "Entretien"
+      "zahlUnterhalt": "Entretien",
+      "privatanteil": "Part privée",
+      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
+      "privatanteilTitel": "Part privée {{jahr}}"
     },
     "dateien": {
       "hochladen": "Ajouter un fichier",
@@ -7221,7 +7634,8 @@
     "schnell": {
       "nehmen": "Je le prends",
       "zurueck": "Retour au dépôt"
-    }
+    },
+    "ja": "Oui"
   },
   "grossprojekte": {
     "titel": "Grands projets",

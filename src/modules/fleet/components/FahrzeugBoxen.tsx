@@ -98,7 +98,6 @@ export function AngabenBox({ f, onBearbeiten }: { f: Fahrzeug; onBearbeiten: () 
         <Zeile label={t('fuhrpark.feld.tankkarte')}>{f.tankkarte}</Zeile>
         <Zeile label={t('fuhrpark.feld.schluessel')}>{f.schluessel}</Zeile>
         <Zeile label={t('fuhrpark.feld.reifen')}>{f.reifen}</Zeile>
-        {f.privat_anteil && <Zeile label={t('fuhrpark.feld.privat_anteil')}>{t('fuhrpark.ja')}</Zeile>}
         {f.notiz && <Zeile label={t('fuhrpark.feld.notiz')}>{f.notiz}</Zeile>}
       </dl>
     </Box>
