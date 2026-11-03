@@ -146,7 +146,7 @@ declare
 begin
   select array_agg(column_name::text) into v_spalten
   from information_schema.columns where table_schema = 'public' and table_name = p_tabelle;
-  if 'nummer' = any (v_spalten) then v_teile := v_teile || 'nummer::text'; end if;
+  if 'nummer' = any (v_spalten) then v_teile := array_append(v_teile, 'nummer::text'::text); end if;
   foreach k in array array['titel', 'name', 'bezeichnung', 'betreff', 'kennzeichen', 'firma', 'nachname'] loop
     if k = 'nachname' and k = any (v_spalten) and 'vorname' = any (v_spalten) then
       v_name := coalesce(v_name || ', ', '') || format('nullif(concat_ws(%L, vorname, nachname), %L)', ' ', '');
@@ -154,10 +154,10 @@ begin
       v_name := coalesce(v_name || ', ', '') || format('nullif(%I::text, %L)', k, '');
     end if;
   end loop;
-  if v_name is not null then v_teile := v_teile || format('coalesce(%s)', v_name); end if;
+  if v_name is not null then v_teile := array_append(v_teile, format('coalesce(%s)', v_name)); end if;
   foreach k in array array['text', 'notiz', 'beschreibung'] loop
     if k = any (v_spalten) and array_length(v_teile, 1) is null then
-      v_teile := v_teile || format('left(%I::text, 80)', k);
+      v_teile := array_append(v_teile, format('left(%I::text, 80)', k));
     end if;
   end loop;
   if array_length(v_teile, 1) is null then return 'null::text'; end if;
