@@ -14,7 +14,7 @@ import { leseEturnityOfferte } from '../lib/eturnity'
 import { brauchtKi, ergaenzeMitKi, leseMitKi } from '../lib/pdfKi'
 import { pdfZeilen } from '../lib/pdfText'
 import { findeZiel, type ImportZiel } from '../lib/pdfImport'
-import { werteFuerOfferte } from '../lib/pdfUebernahme'
+import { werteFuerOfferte, zusatzwerte } from '../lib/pdfUebernahme'
 import { legeOfferteAn, legePdfAb, setzeWerte } from '../services/offerten'
 import type { Eingang, Offerte, PdfWerte } from '../types'
 import { EturnityMeldungen } from './EturnityMeldungen'
@@ -61,7 +61,7 @@ export default function PdfImport({
       const lead = p.ziel.verkaufschanceId
       kontaktId = eingang.find((e) => e.id === lead)?.kontaktId ?? ''
       id = await legeOfferteAn({ verkaufschance_id: lead, nummer: p.werte.nummer, ...werte })
-      await setzeWerte(id, { wirtschaftlichkeit: p.werte.wirtschaftlichkeit }, 'eturnity-pdf', true)
+      await setzeWerte(id, zusatzwerte(p.werte), 'eturnity-pdf', true)
     }
     await legePdfAb({ id, kontaktId }, p.datei)
     return id

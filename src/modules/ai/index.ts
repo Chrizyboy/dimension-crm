@@ -30,3 +30,6 @@ export const AssistentFenster = lazy(() => import('./components/AssistentFenster
 
 export { ANSICHTEN } from './types'
 export type * from './types'
+
+/** Bereiche für Einstellungen (zentral). */
+export { einstellungen } from './einstellungen'

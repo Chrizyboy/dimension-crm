@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -44,7 +44,8 @@ Ici, on apprend comment fonctionne le CRM : un chapitre par domaine, pour chaque
 
 1. **Signaler un problème** (aussi à la fin de chaque chapitre, dans chaque message d’erreur ou avec Ctrl K).
 2. **De quoi s’agit-il ?**, **Que s’est-il passé ?**, **Qu’attendais-tu ?**, **Domaine** et de préférence une capture d’écran.
-3. **Envoyer le signalement**. Le signalement est examiné ; l’évaluation va à la personne qui décide. Après la décision, tu reçois la réponse dans les notifications et par mail.
+3. Joindre une capture : sur le PC, **Windows+Maj+S** pour photographier une zone, puis **Ctrl+V** dans la fenêtre, glisser une image ou **Choisir une image**. Sur le portable, **Prendre une photo** (appareil photo) ou **Choisir une image** (galerie). 8 images ou PDF au maximum ; le **×** en retire une.
+4. **Envoyer le signalement**. Le signalement est examiné ; l’évaluation va à la personne qui décide. Après la décision, tu reçois la réponse dans les notifications et par mail.
 
 ### Déposer un processus ou une vidéo (administration)
 
@@ -74,12 +75,17 @@ Ici, on apprend comment fonctionne le CRM : un chapitre par domaine, pour chaque
 
 À la fin du chapitre, **Quelque chose ne joue pas ? Signaler**. Les guides manquants sont complétés.
 
+### J’ai oublié la capture d’écran.
+
+Ouvre ton signalement sous **Signalements** et appuie sur **Joindre une image**. C’est possible tant que le signalement est ouvert, aussi après une question en retour.
+
 ### Où trouver le guide rapide pour le premier jour ?
 
 Onglet **Premiers pas**.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Joindre captures d’écran et photos : Ctrl+V, glisser, appareil photo sur le portable, aperçu dans le signalement et **Joindre une image** pour compléter.
 - 02.11.2026: Un chapitre par domaine, aide avec F1, recherche dans tout, « Pour toi » par rôle, termes A–Z et « Nouveautés ».
 - 31.10.2026: Signalements avec évaluation et décision « Règle-le » / « Non ».
 - 24.10.2026: Manuel avec processus, vidéos, premiers pas et signalement de problèmes.

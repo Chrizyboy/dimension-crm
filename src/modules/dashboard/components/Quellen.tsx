@@ -1,3 +1,4 @@
+import { useIstAdmin } from '@/hooks/useIstAdmin'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Input } from '@/components/ui/input'
@@ -23,6 +24,8 @@ export function Quellen({ fakten, onDetail }: { fakten: Fakt[]; onDetail: (d: De
   const sprache = useUi((z) => z.sprache)
   const client = useQueryClient()
   const kosten = useQuellenKosten()
+  // Kosten pro Lead sind eine Firmen-Einstellung: ändern nur die Administration.
+  const admin = useIstAdmin()
   const namen = useQuellenNamen()
   const zeilen = quellen(fakten, kosten.data ?? {})
   const name = (q: string) => (q === 'ohne' ? t('kz.quellen.ohne') : (namen.data?.[q]?.[sprache] ?? q))
@@ -95,6 +98,10 @@ export function Quellen({ fakten, onDetail }: { fakten: Fakt[]; onDetail: (d: De
               <Zelle zahl>
                 {z.quelle === 'ohne' ? (
                   '–'
+                ) : !admin ? (
+                  <span className="font-mono">
+                    {z.kosten_lead_rappen === null ? '–' : franken(z.kosten_lead_rappen)}
+                  </span>
                 ) : (
                   <Input
                     key={`${z.quelle}-${String(z.kosten_lead_rappen)}`}

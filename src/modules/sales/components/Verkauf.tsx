@@ -5,6 +5,7 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Kbd, Skelett } from '@/components/ui/diverses'
+import { useGemerkterFilter } from '@/hooks/useGemerkterFilter'
 import { useKuerzelAnzeige, useTaste } from '@/hooks/useTaste'
 import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
@@ -22,6 +23,7 @@ import {
 import { AnfragenKnopf } from './AnfragenKnopf'
 import { FilterLeiste } from './FilterLeiste'
 import { OrdnerKnopf } from './OrdnerKnopf'
+import { SpaltenWahl } from './SpaltenWahl'
 
 const ZuTun = lazy(() => import('./ZuTun'))
 const Pipeline = lazy(() => import('./Pipeline'))
@@ -58,7 +60,15 @@ const MIT_FILTER = new Set<VerkaufAnsicht>(['pipeline', 'liste', 'regionen'])
 export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdresse }: VerkaufProps) {
   const { t } = useTranslation()
   const geschaefte = useGeschaefte()
-  const [filter, setFilter] = useState<VerkaufFilter>(LEERER_FILTER)
+  // Personen, Quellen, Regionen bleiben gemerkt (je Person); die Suche beginnt jedes Mal leer.
+  const [gemerkt, setGemerkt] = useGemerkterFilter<VerkaufFilter>('verkauf', LEERER_FILTER)
+  const [suche, setSuche] = useState('')
+  const filter = useMemo(() => ({ ...gemerkt, suche }), [gemerkt, suche])
+  const setFilter = (f: VerkaufFilter) => {
+    setSuche(f.suche)
+    const ohneSuche = { ...f, suche: '' }
+    if (JSON.stringify(ohneSuche) !== JSON.stringify(gemerkt)) setGemerkt(ohneSuche)
+  }
   const [dialog, setDialog] = useState<'excel' | 'sms' | null>(null)
   const [ordnerDatei, setOrdnerDatei] = useState<File | undefined>()
   const verzoegert = useDeferredValue(filter)
@@ -221,6 +231,7 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
         <FilterLeiste
           filter={filter}
           onChange={setFilter}
+          zusatz={ansicht === 'pipeline' && <SpaltenWahl geschaefte={gefiltert} />}
           {...(geschaefte.isSuccess ? { anzahl: t('verkauf.anzahl', { count: gefiltert.length }) } : {})}
         />
       )}

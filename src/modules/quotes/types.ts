@@ -197,7 +197,28 @@ export interface PdfWerte {
   batterie?: string
   batterieKwh?: number | undefined
   rabattProzent?: number | undefined
+  /** Projekt-Nummer in Eturnity («hyd-89»), steht in der Fusszeile jeder Seite. */
+  eturnityId?: string
+  /** Positionen aus den Detailkosten; leer, wenn das PDF keine hat. */
+  stueckliste?: StuecklistenPosition[]
   wirtschaftlichkeit: Wirtschaftlichkeit
+}
+
+/** Bekannte Bauteile der Stückliste, für Module, Wechselrichter, Batterie und die Materialliste. */
+export type StuecklistenTyp = 'modul' | 'wechselrichter' | 'batterie' | 'optimierer' | 'unterkonstruktion'
+
+/** Eine Position aus den Detailkosten der Eturnity-Offerte (Verkaufspreise exkl. MWST, in Rappen). */
+export interface StuecklistenPosition {
+  gruppe: string
+  typ: StuecklistenTyp | null
+  bezeichnung: string
+  menge: number
+  einheit: string
+  epRappen: number
+  preisRappen: number
+  /** Leistungen (Montage, Planung …) kommen nicht in die Materialliste des Projekts. */
+  art: 'material' | 'leistung'
+  optional: boolean
 }
 
 /** Meldung aus Eturnity (Webhook), wartet auf Zuordnung. */

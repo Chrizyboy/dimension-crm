@@ -28,3 +28,6 @@ export const HilfePanel = lazy(() => import('./components/HilfePanel'))
 
 export { ANSICHTEN } from './types'
 export type * from './types'
+
+/** Bereiche für Einstellungen (zentral). */
+export { einstellungen } from './einstellungen'

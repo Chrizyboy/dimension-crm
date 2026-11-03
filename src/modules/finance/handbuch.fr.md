@@ -77,5 +77,6 @@ En haut **Masquer les salaires**. La somme reste dans le calcul, seules les lign
 ## Nouveautés {#neu}
 
 - 03.11.2026 : Nouvelle construction : cockpit, factures fournisseurs avec validation, ordre de paiement à deux personnes, comptes avec relevé, estimation TVA, projets & marge, clôture mensuelle, choix de la société.
+- 03.11.2026: Paiements : cliquer plusieurs catégories à la fois ; **D’Excel, non vérifiés** filtre en plus.
 - 26.10.2026: Colonnes regroupées sur le portable, noms sur deux lignes.
 - 22.10.2026: Finances avec liquidité semaine par semaine, planification des paiements et post-calcul.

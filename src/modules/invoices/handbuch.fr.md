@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: buchhaltung, projektleitung, geschaeftsleitung
 ---
 
@@ -9,7 +9,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 ## Qui travaille ici {#wer}
 
-- **Comptabilité (droit Finances)** : émettre, paiements, rappels, synchronisation AbaNinja, données des sociétés.
+- **Comptabilité (droit Finances)** : émettre, paiements, rappels, synchronisation AbaNinja ; données des sociétés en lecture seule.
 - **Direction de projet** : voit dans l’onglet **À facturer** quelle tranche est due et crée des brouillons.
 - **Direction** : vue d’ensemble de l’ouvert et des retards.
 
@@ -75,7 +75,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 - Numéro, échéance, état de paiement, niveaux de rappel et annulation sont fixés uniquement par le CRM.
 - Une facture émise n’est pas modifiée, mais annulée puis recréée.
 - L’envoi se fait uniquement via AbaNinja ou la boîte d’envoi avec validation.
-- Seules les personnes avec le droit Finances modifient les données des sociétés et les réglages.
+- Seule l’administration modifie les données des sociétés et les réglages, aussi sous Réglages › **Sociétés et banque**. La comptabilité les voit en lecture seule.
 
 ## Questions fréquentes {#fragen}
 
@@ -93,6 +93,7 @@ Choisir les filtres et **Exporter la liste** (CSV).
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Seule l’administration modifie les données des sociétés et les réglages des factures ; aussi sous Réglages › Sociétés et banque.
 - 31.10.2026: Le PDF de facture sert aussi pour la facture d’acompte du contrat d’entreprise.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.
 - 22.10.2026: Factures avec À facturer, rappels, paiements et PDF avec section paiement QR.

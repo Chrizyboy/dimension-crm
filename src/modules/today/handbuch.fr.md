@@ -39,7 +39,7 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 3. Une tâche à toi reçoit la nouvelle échéance. Tout le reste (relance, demande, délai …) disparaît seulement chez toi jusqu’à ce jour ; l’enregistrement ne change pas.
 4. Les rendez-vous et les validations ne se reportent pas.
 
-### Fixer les objectifs de la semaine (administration, direction)
+### Fixer les objectifs de la semaine (administration)
 
 1. Dans la carte **Ma semaine**, cliquer **Fixer les objectifs**.
 2. Par personne, saisir nouvelles demandes, visites et offres par semaine et commandes par mois, **Enregistrer** la ligne.
@@ -98,5 +98,6 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 ## Nouveautés {#neu}
 
 - 03.11.2026: Reporter, motif par ligne, En attente de ta validation, Ma semaine avec objectifs, L'équipe aujourd'hui, Météo sur les chantiers.
+- 03.11.2026 : seule l’administration fixe les objectifs de la semaine.
 - 26.10.2026: Statut sous le titre dans les cartes étroites, date plus courte.
 - 24.10.2026: Ma journée est la page d’accueil ; les tâches « Confiées par moi » ont été ajoutées.

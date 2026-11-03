@@ -34,3 +34,10 @@ it('macht aus «verloren» ohne Offerte «kein Interesse»', () => {
   expect(zielInSpalte(verloren, { offerteId: null })).toBe('kein')
   expect(zielInSpalte(verloren, { offerteId: 'o1' })).toBe('verloren')
 })
+
+it('zeigt nur die gewählten Spalten in fester Reihenfolge, alte Namen zählen nicht', () => {
+  const g = [testGeschaeft({ id: 'b', stand: 'lead_neu' })]
+  expect(verteile(g, false, ['termin', 'neu']).map((s) => s.spalte.id)).toEqual(['neu', 'termin'])
+  expect(verteile(g, true, ['termin']).map((s) => s.spalte.id)).toEqual(['termin', 'aus'])
+  expect(verteile(g, false, ['offen', 'spaeter'])).toHaveLength(6)
+})

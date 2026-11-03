@@ -77,5 +77,6 @@ Oben **Löhne verbergen**. Die Summe bleibt in der Rechnung, nur die Zeilen sind
 ## Neu {#neu}
 
 - 03.11.2026: Neu aufgebaut: Cockpit, Lieferantenrechnungen mit Freigabe, Zahllauf mit zweiter Person, Konten mit Kontoauszug, MWST-Schätzung, Projekte & Marge, Monatsabschluss, Wahl der Gesellschaft.
+- 03.11.2026: Zahlungen: mehrere Kategorien zugleich anklicken; **Aus Excel, ungeprüft** schränkt zusätzlich ein.
 - 26.10.2026: Spalten am Handy zusammengelegt, Namen zweizeilig.
 - 22.10.2026: Finanzen mit Liquidität Woche für Woche, Zahllauf und Nachkalkulation.
