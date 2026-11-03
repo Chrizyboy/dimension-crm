@@ -10,8 +10,8 @@ export const meta: ModulMeta = {
   id: 'outbox',
   titel: { de: 'Ausgangskorb', fr: "Boîte d'envoi" },
   untertitel: {
-    de: 'Mails und SMS prüfen, freigeben und senden',
-    fr: 'Vérifier, approuver et envoyer les e-mails et SMS',
+    de: 'Mails, SMS und Briefe prüfen, freigeben und nachverfolgen',
+    fr: 'Vérifier, valider et suivre e-mails, SMS et lettres',
   },
   pfad: '/outbox',
   icon: 'send',
@@ -19,7 +19,12 @@ export const meta: ModulMeta = {
   phase: 8,
 }
 
-/** Die Seite: Liste mit Filter, Seitenblatt zum Prüfen, Freigeben oder Verwerfen. */
+/** Die Seite: Werkbank mit Ordnern, Liste und der Nachricht zum Prüfen, Freigeben oder Verwerfen. */
 export const Ausgangskorb = lazy(() => import('./components/Ausgangskorb'))
+
+/** Karte «Wartet auf deine Freigabe» für «Mein Tag» (erscheint nur, wenn etwas offen ist). */
+export const AusgangHeute = lazy(() => import('./components/HeuteKarte'))
+
+export { AUSGANG_ORDNER } from './types'
 
 export type * from './types'

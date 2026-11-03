@@ -2517,7 +2517,7 @@
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
-    "beschreibung": "Tout ce que le CRM veut envoyer par e-mail ou SMS attend ici. Rien ne part sans votre approbation.",
+    "beschreibung": "Tout ce que le CRM veut envoyer par e-mail, SMS ou lettre attend ici. Rien ne part sans ta validation.",
     "ohneDatenbank": "La boîte d'envoi a besoin de la base de données. Dans l'aperçu sans base, elle est vide.",
     "filter": "Afficher",
     "filterwert": {
@@ -2565,7 +2565,18 @@
       "bestellung": "Commande",
       "serienmail": "E-mail groupé",
       "newsletter": "Newsletter",
-      "zahlungserinnerung": "Rappel de paiement"
+      "zahlungserinnerung": "Rappel de paiement",
+      "service_bestaetigung": "Service : accusé de réception",
+      "rechnung": "Facture",
+      "anzahlung": "Facture d'acompte",
+      "teilzahlung": "Facture partielle",
+      "schluss": "Facture finale",
+      "spesen": "Frais",
+      "subunternehmer": "Sous-traitant",
+      "tagesuebersicht": "Résumé du jour",
+      "anlagedossier": "Dossier d'installation",
+      "baugesuch": "Demande de permis",
+      "brief": "Lettre"
     },
     "titelMail": "Vérifier l'e-mail",
     "titelSms": "Vérifier le SMS",
@@ -2592,7 +2603,188 @@
     "grund": "Motif",
     "grundFrage": "Pourquoi ne pas l'envoyer ?",
     "automatisch": "Automatique",
-    "verwerfenJa": "Oui, ne pas envoyer"
+    "verwerfenJa": "Oui, ne pas envoyer",
+    "ordnerTitel": "Dossiers",
+    "ordner": {
+      "fuer_mich": "À valider par moi",
+      "fehler": "Erreurs",
+      "zurueck": "Renvoyés",
+      "team": "Toute l'équipe",
+      "geplant": "Planifiés",
+      "unterwegs": "Envoi en cours",
+      "gesendet": "Envoyés",
+      "verworfen": "Non envoyés"
+    },
+    "abschnitt": {
+      "zuTun": "À faire",
+      "unterwegs": "En route",
+      "archiv": "Archives"
+    },
+    "leerOrdner": {
+      "fuer_mich": "Rien ne t'attend",
+      "fehler": "Aucune erreur",
+      "zurueck": "Rien de renvoyé",
+      "team": "Rien n'attend dans l'équipe",
+      "geplant": "Rien de planifié",
+      "unterwegs": "Rien en cours d'envoi",
+      "gesendet": "Rien d'envoyé",
+      "verworfen": "Rien de rejeté"
+    },
+    "gruppe": {
+      "heute": "Aujourd'hui",
+      "gestern": "Hier",
+      "aelter": "Plus ancien"
+    },
+    "serie_one": "{{art}} · {{count}} message",
+    "serie_other": "Série {{art}} · {{count}} messages",
+    "serieAlle_one": "Choisir {{count}}",
+    "serieAlle_other": "Choisir les {{count}}",
+    "serieWaehlen": "Choisir toute la série",
+    "waehlen": "Choisir {{name}}",
+    "kanal": {
+      "mail": "E-mail",
+      "sms": "SMS",
+      "brief": "Lettre"
+    },
+    "titelBrief": "Vérifier la lettre",
+    "ohneBetreff": "(sans objet)",
+    "zurueckVon": "Renvoyé par {{name}}",
+    "seitStunden_one": "depuis {{count}} h",
+    "seitStunden_other": "depuis {{count}} h",
+    "geplantFuer": "planifié {{zeit}}",
+    "kiText": "Texte IA",
+    "antwort": "Réponse reçue",
+    "nichtMeins": "Validation par d'autres",
+    "von": "de {{name}}",
+    "vonFeld": "De",
+    "brief": {
+      "offen": "Retour en attente",
+      "zurueck": "Retour reçu",
+      "versendet": "Imprimée et envoyée",
+      "ruecklaufJa": "Revenue signée",
+      "ruecklaufNein": "Annuler le retour"
+    },
+    "suchen": "Destinataire, client, objet …",
+    "nichtsOffen": "Rien d'ouvert",
+    "nichtsOffenText": "Choisis un message à gauche. J et K pour naviguer, F pour valider.",
+    "auswahl_one": "{{count}} choisi",
+    "auswahl_other": "{{count}} choisis",
+    "auswahlLeeren": "Annuler la sélection",
+    "auswahlOhneRecht_one": "Tu ne peux pas en valider {{count}}, il reste en attente.",
+    "auswahlOhneRecht_other": "Tu ne peux pas en valider {{count}}, ils restent en attente.",
+    "freigebenAnzahl_one": "Valider {{count}}",
+    "freigebenAnzahl_other": "Valider {{count}}",
+    "spaeter": "Envoyer plus tard",
+    "zeit": {
+      "heute17": "Aujourd'hui 17:00",
+      "morgen8": "Demain 08:00",
+      "montag8": "Lundi 08:00"
+    },
+    "eigeneZeit": "Autre heure …",
+    "eigeneZeitEinzeln": "Autre heure : dans le message",
+    "planen": "Valider et planifier",
+    "verwerfGrund": {
+      "erledigt": "Déjà fait",
+      "telefoniert": "Réglé par téléphone",
+      "falsch": "Contenu faux",
+      "doppelt": "En double",
+      "veraltet": "Plus d'actualité",
+      "anderes": "Autre motif …"
+    },
+    "zurueckAn": "Renvoyer à {{name}}",
+    "zurueckFrage": "Que doit modifier {{name}} ?",
+    "zurueckBeispiel": "p. ex. Merci de joindre la variante avec batterie",
+    "zurueckSenden": "Renvoyer",
+    "zurueckholen": "Récupérer",
+    "bearbeiten": "Modifier",
+    "postadresse": "Adresse postale",
+    "anhang": "Pièce jointe",
+    "soSiehtEsAus": "Ce que voit le destinataire",
+    "smsTeile_one": "{{count}} SMS",
+    "smsTeile_other": "{{count}} SMS",
+    "herkunft": "préparé par {{name}} le {{zeit}}",
+    "freigegebenVon": "validé par {{name}} le {{zeit}}",
+    "gesendetUm": "envoyé {{zeit}}",
+    "verworfenVon": "Non envoyé ({{name}})",
+    "keinRecht": "Ce type est validé par une autre personne. Tu peux le consulter, le renvoyer ou ne pas l'envoyer.",
+    "antwortAm": "Réponse reçue le {{zeit}}",
+    "nochKeineAntwort": "Pas encore de réponse.",
+    "geprueft": "Vérifié avant l'envoi",
+    "stufe": {
+      "ok": "en ordre",
+      "warnung": "remarque",
+      "fehler": "problème"
+    },
+    "pruefung": {
+      "outlook_ok": "Outlook de {{wert}} est connecté",
+      "outlook_fehlt": "Outlook de {{wert}} n'est pas connecté : l'e-mail ne partira pas",
+      "werbung_ok": "Le client accepte la publicité",
+      "werbesperre": "Le client refuse la publicité",
+      "sprache_ok": "La langue correspond au client ({{wert}})",
+      "sprache_anders": "Le client parle {{wert}}, le message est dans une autre langue",
+      "anhaenge_ok": "Pièces jointes présentes ({{wert}})",
+      "anhang_fehlt": "Une pièce jointe manque ou est dans la corbeille",
+      "kuerzlich": "Le même type est déjà parti le {{wert}} à cette adresse",
+      "sms_lang": "Texte long : facturé comme {{wert}} SMS",
+      "veraltet": "L'heure prévue {{wert}} est passée : encore d'actualité ?",
+      "kein_recht": "Validation seulement avec le droit «{{wert}}»"
+    },
+    "recht": {
+      "admin": "Administration",
+      "finanzen": "Finances",
+      "preise": "Prix",
+      "planung": "Planification",
+      "basis": "Base"
+    },
+    "gehoertZu": "Lié à",
+    "bezug": {
+      "kunde": "Client",
+      "lead": "Lead",
+      "offerte": "Offre",
+      "projekt": "Projet",
+      "rechnung": "Facture"
+    },
+    "faellig": "échéance {{datum}}",
+    "danachOfferte": "Après l'envoi, l'offre passe à «envoyée».",
+    "letzteNachrichten": "Derniers échanges",
+    "verlaufArt": {
+      "mail": "E-mail",
+      "sms": "SMS",
+      "anruf": "Appel",
+      "notiz": "Note",
+      "termin": "Rendez-vous",
+      "brief": "Lettre"
+    },
+    "loesung": {
+      "outlook": "La connexion Microsoft de {{name}} manque ou a expiré. {{name}} se reconnecte sous «Mon compte», ou tu envoies depuis ton Outlook.",
+      "sms": "Le service SMS a refusé (accès ou crédit). Vérifier sous Paramètres › Connexions, puis renvoyer.",
+      "unklar": "On ne sait pas si le message est arrivé. Regarde dans Outlook sous «Éléments envoyés». S'il y est, marque-le comme envoyé, sinon renvoie-le.",
+      "anhang": "Une pièce jointe est trop grande ou manque. Vérifier, puis renvoyer.",
+      "nochmal": "Un problème est survenu à l'envoi. En général, renvoyer suffit."
+    },
+    "loesungKnopf": {
+      "verbinden": "Vers «Mon compte»",
+      "ausMeinem": "Envoyer depuis mon Outlook",
+      "alsGesendet": "Trouvé dans Outlook : marquer comme envoyé",
+      "nochmal": "Renvoyer"
+    },
+    "woche": {
+      "gesendet": "envoyés (7 jours)",
+      "wartezeit": "Ø jusqu'à la validation",
+      "antworten": "Réponses"
+    },
+    "heute": {
+      "titel": "Attend ta validation",
+      "alle_one": "{{count}} en attente",
+      "alle_other": "Tous les {{count}}"
+    },
+    "kuerzel": {
+      "freigeben": "Valider et envoyer",
+      "bearbeiten": "Modifier le message",
+      "verwerfen": "Ne pas envoyer",
+      "naechste": "Message suivant",
+      "vorige": "Message précédent"
+    }
   },
   "integration": {
     "fehler": {
