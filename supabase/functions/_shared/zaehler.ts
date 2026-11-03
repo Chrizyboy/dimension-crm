@@ -1,4 +1,4 @@
-// Öffnungen und Klicks von Serien-Mails und Newslettern (Chris 2.11.2026, Entscheid 0045). Der Text der Mail wird
+// Öffnungen und Klicks von Serien-Mails und Newslettern (Chris 2.11.2026, Entscheid 0049). Der Text der Mail wird
 // beim Senden zu HTML: Links gehen über die Edge Function «zaehler» (zählt, dann weiter zum Ziel), am Schluss ein
 // unsichtbares Bild (zählt das Öffnen) und ein kurzer Hinweis. Der Abmelde-Link bleibt direkt.
 // Ohne Importe, damit die Tests in Node laufen.

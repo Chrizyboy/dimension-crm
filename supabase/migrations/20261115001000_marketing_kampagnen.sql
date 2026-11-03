@@ -1,4 +1,4 @@
--- Marketing vollständig (2.11.2026, Entscheid 0045): Kampagnen mit Ziel, Budget und Ergebnis, Messen und Events,
+-- Marketing vollständig (2.11.2026, Entscheid 0049): Kampagnen mit Ziel, Budget und Ergebnis, Messen und Events,
 -- gespeicherte Zielgruppen, Werbemittel mit Lagerbestand, Öffnungen und Klicks, Social Media «von Hand».
 -- Die bestehende Tabelle «kampagnen» bleibt der Versand-Verlauf («Letzte Aktionen»); eine Kampagne im Sinn von
 -- «ein Ziel, mehrere Schritte» ist neu «marketing_kampagnen». Alles, was zu einem Ziel gehört, zeigt auf sie.
