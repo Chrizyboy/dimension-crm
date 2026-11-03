@@ -12114,7 +12114,10 @@
       "eingangsrechnungen": "Factures fournisseurs",
       "marketing_kampagnen": "Campagnes",
       "marketing_zielgruppen": "Groupes cibles",
-      "werbemittel": "Supports publicitaires"
+      "werbemittel": "Supports publicitaires",
+      "kreditor_zahlungen": "Paiements fournisseurs",
+      "finanz_konten": "Comptes bancaires",
+      "zahllaeufe": "Lots de paiement"
     }
   },
   "zugehoerigkeit": {
