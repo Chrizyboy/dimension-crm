@@ -2,11 +2,18 @@ import { expect, it } from 'vitest'
 import { PIPELINE_SPALTEN, verteile, zielInSpalte } from './spalten'
 import { testGeschaeft } from './testgeschaeft'
 
-it('blendet abgeschlossene Spalten aus, bis man sie einschaltet', () => {
-  const g = [testGeschaeft({ id: 'a', stand: 'verbaut' }), testGeschaeft({ id: 'b', stand: 'lead_neu' })]
-  expect(verteile(g, false).map((s) => s.spalte.id)).not.toContain('gewonnen')
+it('zeigt sechs Schritte und blendet Abgeschlossenes aus, bis man es einschaltet', () => {
+  const g = [
+    testGeschaeft({ id: 'a', stand: 'verbaut' }),
+    testGeschaeft({ id: 'b', stand: 'lead_neu' }),
+    testGeschaeft({ id: 'c', stand: 'kein' }),
+  ]
+  const ohne = verteile(g, false)
+  expect(ohne.map((s) => s.spalte.id)).toEqual(['neu', 'kontaktiert', 'termin', 'offerte', 'entscheid', 'gewonnen'])
+  expect(ohne.find((s) => s.spalte.id === 'gewonnen')?.karten).toEqual([])
   const mit = verteile(g, true)
   expect(mit.find((s) => s.spalte.id === 'gewonnen')?.karten.map((k) => k.id)).toEqual(['a'])
+  expect(mit.find((s) => s.spalte.id === 'aus')?.karten.map((k) => k.id)).toEqual(['c'])
 })
 
 it('legt mehrere Stände in eine Spalte, neueste Bewegung oben', () => {
@@ -16,13 +23,13 @@ it('legt mehrere Stände in eine Spalte, neueste Bewegung oben', () => {
   ]
   expect(
     verteile(g, false)
-      .find((s) => s.spalte.id === 'offeriert')
+      .find((s) => s.spalte.id === 'entscheid')
       ?.karten.map((k) => k.id),
   ).toEqual(['neu', 'alt'])
 })
 
 it('macht aus «verloren» ohne Offerte «kein Interesse»', () => {
-  const verloren = PIPELINE_SPALTEN.find((s) => s.id === 'verloren')
+  const verloren = PIPELINE_SPALTEN.find((s) => s.id === 'aus')
   if (!verloren) throw new Error('Spalte fehlt')
   expect(zielInSpalte(verloren, { offerteId: null })).toBe('kein')
   expect(zielInSpalte(verloren, { offerteId: 'o1' })).toBe('verloren')

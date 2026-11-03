@@ -33,10 +33,10 @@ https://claude.ai/artifact/3vk5SRJiTGVPnXp7gLSxFL
 
 ## Offen
 
-- Import der Tankkarten-Abrechnung (CSV) folgt, sobald klar ist, welche Tankkarte im Einsatz ist.
+- Nichts. (Tankkarten-Import entfällt, siehe unten.)
 
 ## Antworten von Chris (3.11.2026)
 
 1 B: Fahrzeug immer von Hand einplanen, nie automatisch dem Team folgen (Migration `20261114001000_fuhrpark_von_hand`).
-2 A: Kosten aus Tankkarte und AbaNinja. 3 A: QR-Etiketten. 4 A: Kilometer monatlich nachfragen.
+2 A: Kosten aus Tankkarte und AbaNinja. Nachtrag: es gibt aktuell keine Tankkarte, getankt wird mit der Firmenkarte. Darum kein Import; beim Eintrag «Tanken» (und Kosten, Service, Reparatur, Reifen, Vignette, MFK) wird der Beleg fotografiert und landet mit Datum und Art im Namen bei den Dokumenten des Fahrzeugs. Die Buchhaltung gleicht ihn in AbaNinja mit der Kartenabrechnung ab. 3 A: QR-Etiketten. 4 A: Kilometer monatlich nachfragen.
 5 B: kein Privatanteil (Spalte `privat_anteil` und Einstellung wieder entfernt).

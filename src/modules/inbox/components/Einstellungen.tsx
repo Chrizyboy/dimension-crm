@@ -12,6 +12,7 @@ import { minutenAus, regelnSchema, stundenText } from '../schema'
 import { speichereRegeln } from '../services/posteingang'
 import { FRIST_ARTEN, type PosteingangRegeln, type Person } from '../types'
 import { NachholenKarte } from './NachholenKarte'
+import { WartenKarte } from './WartenKarte'
 
 const KEINE = '–'
 
@@ -187,12 +188,13 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
           </KarteInhalt>
         </Karte>
       </div>
-      <NachholenKarte regeln={regeln} />
       <div className="flex justify-end">
         <Button laedt={laeuft} onClick={() => void speichern()}>
           {t('allgemein.speichern')}
         </Button>
       </div>
+      <WartenKarte regeln={regeln} personen={personen} />
+      <NachholenKarte regeln={regeln} />
     </div>
   )
 }
