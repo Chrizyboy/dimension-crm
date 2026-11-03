@@ -2077,7 +2077,10 @@
     "automation_lauf_offen": "Relancer n’est possible qu’une fois l’exécution terminée.",
     "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
     "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
-    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus)."
+    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
+    "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
+    "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
+    "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -3644,13 +3647,15 @@
   },
   "einkauf": {
     "titel": "Achats & matériel",
-    "beschreibung": "Matériel par projet, commandes avec validation et PDF par e-mail, réception et stock de Bulle.",
+    "beschreibung": "Commander à temps et de façon groupée ce dont les chantiers ont besoin, contrôler confirmation, livraison et facture. Stock de Bulle.",
     "reiter": {
       "bestellungen": "Commandes",
       "zubestellen": "À commander",
-      "material": "Matériel par projet",
+      "material": "Plan matériel",
       "lager": "Stock",
-      "lieferanten": "Fournisseurs"
+      "lieferanten": "Fournisseurs",
+      "leitstand": "Tableau de bord",
+      "bestellen": "Commander"
     },
     "filter": "Filtre",
     "filterwert": {
@@ -3683,7 +3688,8 @@
     "materialFilter": {
       "fehlt": "Il manque encore du matériel",
       "mitListe": "Avec liste de matériel",
-      "alle": "Tous les ouverts"
+      "alle": "Tous les ouverts",
+      "gefaehrdet": "Montage en danger"
     },
     "spalte": {
       "nummer": "N°",
@@ -3719,7 +3725,11 @@
       "stornieren": "Annuler",
       "pdf": "Voir le PDF",
       "ueberfaellig": "Livraison en retard",
-      "ohneAdresse": "L’adresse de commande du fournisseur manque. Elle peut être saisie sous «Fournisseurs» ou directement dans l’e-mail."
+      "ohneAdresse": "L’adresse de commande du fournisseur manque. Elle peut être saisie sous «Fournisseurs» ou directement dans l’e-mail.",
+      "vorlegen": "Soumettre pour validation",
+      "vorgelegt": "Soumise",
+      "webshop": "Ouvrir la boutique",
+      "grenzeHinweis": "Cette commande dépasse la limite. La direction reçoit une notification et valide."
     },
     "feld": {
       "lieferant": "Fournisseur",
@@ -3742,7 +3752,9 @@
       "mengeVon": "Quantité {{name}}",
       "ekVon": "Prix d’achat {{name}}",
       "entfernen": "Retirer {{name}}",
-      "guenstiger": "Moins cher chez {{lieferant}} : CHF {{preis}} (économie CHF {{total}})"
+      "guenstiger": "Moins cher chez {{lieferant}} : CHF {{preis}} (économie CHF {{total}})",
+      "abMenge": "Conf. : {{menge}}",
+      "abEk": "Conf. : {{ek}}"
     },
     "eingang": {
       "titel": "Réception {{nummer}}",
@@ -3754,7 +3766,8 @@
       "buchen": "Enregistrer la réception",
       "snErfassen": "Saisir les numéros de série",
       "snVon": "Numéros de série de {{name}}",
-      "snPlatzhalter": "Un par ligne ou séparés par une virgule ; reportés sur l’installation à la mise en service"
+      "snPlatzhalter": "Un par ligne ou séparés par une virgule ; reportés sur l’installation à la mise en service",
+      "lieferschein": "N° de bulletin de livraison"
     },
     "storno": {
       "titel": "Annuler la commande {{nummer}}",
@@ -3860,7 +3873,13 @@
       "inaktiv": "Inactif",
       "neu": "Nouveau fournisseur",
       "leer": "Aucun fournisseur",
-      "text": "Les commandes partent à l’e-mail de commande, dans la langue choisie."
+      "text": "Les commandes partent à l’e-mail de commande, dans la langue choisie.",
+      "einkaufJahr": "Achats 12 mois",
+      "puenktlich": "Ponctualité",
+      "lieferzeit": "Délai",
+      "tage": "{{n}} jours",
+      "frachtFrei": "Franco dès",
+      "offen": "En cours"
     },
     "pruefung": {
       "name": "Veuillez saisir un nom."
@@ -3889,6 +3908,148 @@
       "hinweis": "Chantiers avec du matériel manquant. « Commander avant » = début des travaux moins le délai de livraison.",
       "leer": "Tout est commandé",
       "leerText": "Aucun chantier n’a de matériel manquant sans commande."
+    },
+    "schritt": {
+      "titel": "Étapes de la commande",
+      "freigabe": "Validation",
+      "ab_offen": "Confirmation",
+      "unterwegs": "En route",
+      "eingang": "Réception",
+      "rechnung": "Facture",
+      "fertig": "Terminé"
+    },
+    "ls": {
+      "kz": {
+        "zuBestellen": "Fournisseurs à commander",
+        "freigabe": "en attente de validation",
+        "abOffen": "sans confirmation",
+        "gefaehrdet": "montages en danger",
+        "baustellen": "chantiers 14 jours complets",
+        "offen": "commandé, non livré"
+      },
+      "spalte": {
+        "zuBestellen": "À commander",
+        "freigabe": "Validation",
+        "ab_offen": "Confirmation attendue",
+        "unterwegs": "En route",
+        "eingang": "Partiellement livré",
+        "rechnung": "Facture à contrôler"
+      },
+      "leer": "Rien",
+      "ohneLieferant": "Sans fournisseur",
+      "bis": "d’ici le {{datum}}",
+      "zeilen_one": "{{count}} article",
+      "zeilen_other": "{{count}} articles",
+      "montage": "Montage du {{datum}} en danger",
+      "ueberfaellig": "en retard depuis le {{datum}}",
+      "senden": "validée, à commander",
+      "vorgelegt": "soumise pour validation",
+      "entwurf": "Brouillon",
+      "abOffen": "Confirmation manquante",
+      "bestaetigt": "confirmée pour le {{datum}}",
+      "erwartet": "attendue le {{datum}}",
+      "teil": "{{da}} sur {{von}} reçus",
+      "rechnungDa": "Contrôler la facture {{nummer}}",
+      "rechnungErwartet": "Facture attendue",
+      "tracking": "Suivi",
+      "gefahrHinweis": "En rouge : la marchandise arrive après le montage ou n’est pas encore commandée. Le plan matériel montre les chantiers concernés.",
+      "tafel": "Commandes par étape"
+    },
+    "bestellen": {
+      "hinweis": "Ce dont les chantiers et le stock ont besoin, par fournisseur. Le disponible en stock est réservé d’abord, le reste va dans un brouillon, arrondi aux unités d’emballage. Rien ne part avant validation et commande.",
+      "alle": "Créer les brouillons pour tous",
+      "anlegen": "Créer le brouillon",
+      "leer": "Tout est commandé",
+      "leerText": "Aucun chantier ni article de stock n’a besoin de matériel pour l’instant.",
+      "ohneLieferant": "Sans fournisseur (compléter la liste de prix)",
+      "frachtFrei": "franco de port",
+      "frachtAb": "franco dès CHF {{betrag}}",
+      "unterMindest": "sous le minimum CHF {{betrag}}",
+      "artikel": "Article",
+      "fuer": "Pour",
+      "fehlt": "Manque",
+      "lager": "Du stock",
+      "bestellen": "À commander",
+      "ek": "PA",
+      "bis": "Commander d’ici",
+      "ve": "UE {{ve}}",
+      "ohneArtikel": "sans article",
+      "lagerMindest": "Stock (sous le minimum)",
+      "total": "Total estimé",
+      "zusammenfassen": "Regrouper les brouillons ({{liste}})"
+    },
+    "plan": {
+      "deckung": "Couverture",
+      "bestellenBis": "Commander d’ici",
+      "gefaehrdet": "Montage en danger",
+      "kommt": "arrive d’ici le {{datum}}"
+    },
+    "kond": {
+      "titel": "Conditions",
+      "fracht_frei_ab": "Franco dès CHF",
+      "fracht": "Port CHF",
+      "mindestwert": "Commande minimale CHF",
+      "lieferzeit": "Délai (jours ouvrables)",
+      "zahlungsziel": "Délai de paiement (jours)",
+      "skonto_prozent": "Escompte %",
+      "skonto_tage": "Escompte sous jours",
+      "bestellschluss": "Heure limite (p. ex. 14:00)",
+      "bestellweg": "Mode de commande",
+      "webshop_url": "Adresse de la boutique en ligne",
+      "weg": {
+        "mail": "E-mail avec PDF",
+        "webshop": "Boutique en ligne",
+        "telefon": "Téléphone"
+      }
+    },
+    "ab": {
+      "abschnitt": "Confirmation et livraison",
+      "erfasst": "Confirmation saisie",
+      "fehlt": "Confirmation manquante",
+      "titel": "Confirmation de commande {{nummer}}",
+      "beschreibung": "Ce que le fournisseur confirme. Les écarts de quantité ou de prix sont signalés.",
+      "ki": "L’IA lit la confirmation dans un e-mail ou un PDF. Merci de vérifier.",
+      "pdf": "Lire un PDF",
+      "nummer": "N° de confirmation",
+      "datum": "Date de la confirmation",
+      "termin": "Date confirmée",
+      "total": "Total hors TVA",
+      "bestellt": "commandé {{menge}} {{einheit}} à {{ek}}",
+      "mengeVon": "Quantité confirmée {{name}}",
+      "ekVon": "Prix confirmé {{name}}",
+      "abweichungen": "Écarts",
+      "anzahl_one": "{{count}} position diffère",
+      "anzahl_other": "{{count}} positions diffèrent",
+      "keine": "conforme à la commande",
+      "ausstehend": "Commandé le {{datum}}, confirmation encore attendue.",
+      "nachgefragt": "Relancé le {{datum}}.",
+      "erfassen": "Saisir la confirmation",
+      "aendern": "Modifier la confirmation",
+      "nachfragen": "Relancé"
+    },
+    "lieferung": {
+      "tracking": "Suivi",
+      "hinweis": "Indication de livraison",
+      "kontakt": "Contact sur place",
+      "lieferscheine": "Bulletins de livraison"
+    },
+    "rechnung": {
+      "titel": "Facture fournisseur",
+      "offen": "pas encore contrôlée",
+      "geprueft": "Contrôlée",
+      "nummer": "N° de facture",
+      "betrag": "Montant",
+      "vorschlaege": "Factures correspondantes d’AbaNinja",
+      "erwartet": "attendu CHF {{betrag}}",
+      "keine": "Pas encore de facture correspondante d’AbaNinja. La synchronisation les récupère dans les finances.",
+      "notiz": "Note sur la facture",
+      "notizPlatzhalter": "En cas d’écart : pourquoi (p. ex. port, consigne)",
+      "pruefen": "Marquer comme contrôlée"
+    },
+    "mails": {
+      "titel": "E-mails",
+      "keine": "Aucun e-mail pour cette commande dans la boîte de réception.",
+      "anhang": "avec pièce jointe"
     }
   },
   "baustelle": {
@@ -5994,7 +6155,8 @@
       "zusammenfassung": "Résumé",
       "lead_bewertung": "Évaluation du lead",
       "briefing": "Briefing du jour",
-      "automation": "Automatisations"
+      "automation": "Automatisations",
+      "auftragsbestaetigung": "Lire une confirmation de commande"
     },
     "assistent": {
       "titel": "Rédiger avec l’IA",
@@ -7022,7 +7184,6 @@
       "kaufdatum": "Date d’achat",
       "kaufpreis_rappen": "Prix d’achat (CHF)",
       "kaufpreis": "Prix d’achat (CHF)",
-      "privat_anteil": "Part privée (véhicule utilisé en privé)",
       "versicherung_police": "N° de police",
       "versicherung_deckung": "Couverture",
       "selbstbehalt_rappen": "Franchise (CHF)",
@@ -7111,7 +7272,6 @@
       "versicherung": "Assurance et impôts",
       "weiteres": "Divers"
     },
-    "ja": "Oui",
     "treibstoff": {
       "diesel": "Diesel",
       "benzin": "Essence",
@@ -7178,12 +7338,11 @@
         "einsatz": "Intervention"
       },
       "legende": {
-        "einsatz": "Intervention (suit l’équipe)",
+        "einsatz": "Pour une intervention",
         "hand": "Réservé à la main",
         "werkstatt": "Garage",
         "konflikt": "Double réservation"
       },
-      "folgtTeam": "suit l’équipe",
       "heute": "Cette semaine",
       "weiter": "Semaine suivante",
       "zurueck": "Semaine précédente"
@@ -7229,9 +7388,6 @@
       "keinRechtText": "Les coûts par véhicule sont visibles par la direction et la comptabilité.",
       "leasing": "Leasing",
       "leer": "Pas encore de coûts cette année.",
-      "privatanteil": "Part privée",
-      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
-      "privatanteilTitel": "Part privée {{jahr}}",
       "proFahrzeug": "Coûts par véhicule {{jahr}}",
       "proKm": "CHF {{chf}} par km ({{km}} km)",
       "rest": "Entretien et divers",
