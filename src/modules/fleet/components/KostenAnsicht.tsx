@@ -35,7 +35,6 @@ export function KostenAnsicht() {
   const total = liste.reduce((s, x) => s + summe(x), 0)
   const km = liste.reduce((s, x) => s + x.km, 0)
   const max = Math.max(1, ...liste.map(summe))
-  const privat = liste.filter((x) => x.privatanteil_rappen !== null)
 
   return (
     <div className="flex flex-col gap-4">
@@ -132,21 +131,6 @@ export function KostenAnsicht() {
               </span>
             </div>
           </Box>
-          {privat.length > 0 && (
-            <Box titel={t('fuhrpark.kosten.privatanteilTitel', { jahr })}>
-              <p className="text-muted-foreground text-xs">{t('fuhrpark.kosten.privatanteilText')}</p>
-              <dl className="flex flex-col gap-1">
-                {privat.map((x) => (
-                  <div key={x.fahrzeug_id} className="flex justify-between gap-2">
-                    <dt>
-                      {x.bezeichnung} · {x.kennzeichen}
-                    </dt>
-                    <dd className="zahlen font-medium">{chf(x.privatanteil_rappen ?? 0)}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Box>
-          )}
         </>
       )}
     </div>

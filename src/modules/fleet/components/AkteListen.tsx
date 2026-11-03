@@ -80,9 +80,7 @@ export function BelegungBox({ bezug, onReservieren }: { bezug: Bezug; onReservie
               <span className="min-w-0 flex-1">
                 {b.projekt ?? b.zweck ?? t(`fuhrpark.belegung.art.${b.art}`)}
                 <span className="text-muted-foreground block text-xs">
-                  {[namen.person(b.person_id), b.quelle === 'auto' ? t('fuhrpark.belegung.folgtTeam') : null]
-                    .filter((x) => x && x !== '–')
-                    .join(' · ')}
+                  {[namen.person(b.person_id)].filter((x) => x && x !== '–').join(' · ')}
                 </span>
               </span>
               {b.reservierung_id && (

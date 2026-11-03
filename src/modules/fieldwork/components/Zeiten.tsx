@@ -245,7 +245,7 @@ export function Zeiten() {
                   <Zelle className="zahlen hidden text-right md:table-cell">
                     {z.pause_min ? `${String(z.pause_min)}′` : ''}
                   </Zelle>
-                  <Zelle className="zahlen text-right">{dauerText(minuten(z))}</Zelle>
+                  <Zelle className="zahlen text-right whitespace-nowrap">{dauerText(minuten(z))}</Zelle>
                   <Zelle>
                     <span className="text-muted-foreground text-xs">
                       {t(`baustelle.zeitart.${z.art}`)}
