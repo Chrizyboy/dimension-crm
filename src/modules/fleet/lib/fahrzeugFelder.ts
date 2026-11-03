@@ -60,7 +60,6 @@ export const ABSCHNITTE: { id: string; felder: FeldDef[] }[] = [
       { k: 'leasing_mehr_km_rappen', art: 'chf' },
       { k: 'kaufdatum', art: 'datum' },
       { k: 'kaufpreis_rappen', art: 'chf' },
-      { k: 'privat_anteil', art: 'schalter', breit: true },
     ],
   },
   {

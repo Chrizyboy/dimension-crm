@@ -38,11 +38,15 @@ select is((select nummer from public.zu_bestellen() where nummer like 'P935-%' l
 
 select public.bestellvorschlag('00000000-0000-0000-0000-0000000035e1');
 select public.bestellvorschlag('00000000-0000-0000-0000-0000000035e2');
-select is((select count(*)::int from public.bestellungen where status = 'entwurf' and geloescht_am is null
-             and projekt_id in ('00000000-0000-0000-0000-0000000035e1', '00000000-0000-0000-0000-0000000035e2')), 2,
-  'pro Projekt ein Entwurf');
-select isnt(public.bestellungen_zusammenfassen((select id from public.lieferanten where name = 'Tritec'),
-  (select id from public.lagerorte where name = 'Lager Bulle')), null, 'zusammengefasst');
+-- Seit Entscheid 0041 legt der Vorschlag Ware ans Lager gleich in den offenen Entwurf desselben Lieferanten.
+select is((select count(distinct b.id)::int from public.bestellungen b join public.bestellpositionen p on p.bestellung_id = b.id
+            join public.projekt_material m on m.id = p.projekt_material_id
+           where b.status = 'entwurf' and b.geloescht_am is null
+             and m.projekt_id in ('00000000-0000-0000-0000-0000000035e1', '00000000-0000-0000-0000-0000000035e2')), 1,
+  'beide Projekte im selben Entwurf ans Lager');
+select throws_ok($$ select public.bestellungen_zusammenfassen((select id from public.lieferanten where name = 'Tritec'),
+  (select id from public.lagerorte where name = 'Lager Bulle')) $$, 'P0001', 'einkauf.nichts_zusammenzufassen',
+  'nichts mehr zusammenzufassen');
 select is((select count(*)::int from public.bestellungen b join public.bestellpositionen p on p.bestellung_id = b.id
             join public.projekt_material m on m.id = p.projekt_material_id
            where b.status = 'entwurf' and b.geloescht_am is null and b.projekt_id is null
