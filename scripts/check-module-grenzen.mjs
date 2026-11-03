@@ -5,7 +5,7 @@
  * Nur src/lib/navigation.ts darf die Kenndaten (meta) aller Module einsammeln.
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs'
-import { join, relative, sep } from 'node:path'
+import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..')
@@ -27,7 +27,9 @@ for (const modul of readdirSync(modulesDir)) {
   for (const datei of dateien(ordner)) {
     const text = readFileSync(datei, 'utf8')
     for (const [, ziel] of text.matchAll(/from\s+['"]([^'"]+)['"]/g)) {
-      const fremd = ziel.match(/^@\/modules\/([^/]+)/) ?? ziel.match(/^\.\.\/\.\.\/([^/.][^/]*)/)
+      // Relative Pfade auflösen: aus Unterordnern (components/akte/) führt «../../» noch ins eigene Modul.
+      const relativ = ziel.startsWith('.') ? relative(modulesDir, resolve(dirname(datei), ziel)).split(sep) : null
+      const fremd = ziel.match(/^@\/modules\/([^/]+)/) ?? (relativ && relativ[0] !== '..' ? [null, relativ[0]] : null)
       if (fremd && fremd[1] !== modul) {
         fehler.push(`${relative(root, datei).split(sep).join('/')}: importiert Modul "${fremd[1]}" direkt (${ziel})`)
       }

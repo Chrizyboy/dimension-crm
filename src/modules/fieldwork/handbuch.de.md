@@ -38,6 +38,12 @@ Die Handy-Ansicht für die Montage und die Büro-Sicht dazu: Tagesplan, ein Rapp
 2. Alle Prüfpunkte und Messwerte eintragen, Fotos von Wechselrichter und Zähler.
 3. Mit Unterschrift abschliessen. Die Anlage entsteht in [Service & Garantie](kapitel:aftersales).
 
+### Eine Inspektion (Wartungsvertrag) machen
+
+1. Die geplante Inspektion steht in «Mein Tag» mit Zeitfenster und Paket. **Wartung beginnen**.
+2. Prüfpunkte abhaken und Messwerte eintragen. Daneben steht der Wert vom letzten Mal; weicht er mehr als 10 % ab, ist er markiert. Messungen gibt es nur beim Paket Premium.
+3. Wie jeder Rapport **Abschliessen**. Die nächste Inspektion rechnet das CRM, das PDF zeigt beide Werte.
+
 ### Einen Nachtrag (Regie) erfassen
 
 1. Im Rapport **Nachtrag erfassen**: was und warum, Stunden, Material.
@@ -73,6 +79,7 @@ Die Handy-Ansicht für die Montage und die Büro-Sicht dazu: Tagesplan, ein Rapp
 
 - Ohne Netz speichert das Handy alles in einer Warteschlange und sendet, sobald wieder Netz da ist.
 - Material des Projekts zeigt **Material bereit** oder wie viel noch fehlt.
+- Ein Service-Fall, dessen Termin vorbei ist, bleibt bis **Erledigt** auf heute im Tagesplan, rot markiert mit **Überfällig seit …**.
 - Soll-Stunden rechnet eine Faustregel aus kWp, Dach und Speicher. Bei der IBN gehen die Seriennummern in die Anlage.
 - Jede Meldung gibt der Projektleitung eine Aufgabe und eine Glocke.
 
@@ -95,5 +102,7 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 ## Neu {#neu}
 
 - 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.
+- 03.11.2026: Offene Service-Fälle von gestern bleiben im Tagesplan («Überfällig»). Arbeitszeit und Reise in **Mein Tag** auch ohne Rapport starten; Änderungen gehen sofort raus.
+- 03.11.2026: Inspektionen aus Wartungsverträgen in «Mein Tag», Prüfpunkte nach Paket mit Werten vom letzten Mal.
 - 02.11.2026: Sicherheits-Check und Teamzeit, Arbeitsschritte, Pflichtfotos der Baustelle, Seriennummern scannen, Mappe, Problem melden, Abnahme mit Vorbehalten; Baustellen heute, Baustellen-Akte, Meldungen, Wochenblatt, Visum und Auswertung.
 - 31.10.2026: Einfache Ansicht für Monteure mit Arbeitszeit per Knopfdruck und Spesen.

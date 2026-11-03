@@ -213,3 +213,38 @@ export async function speichereLuftbild(verkaufschanceId: string, bild: Blob): P
   })
   if (error) throw error
 }
+
+/**
+ * Foto der Besichtigung ablegen (am Handy direkt aus der Kamera). Der Ordner sagt, welcher Punkt der
+ * Checkliste damit erledigt ist; ältere Fotos derselben Art bleiben in den Dateien.
+ */
+export async function speichereBesichtigungsFoto(verkaufschanceId: string, ordner: string, datei: File): Promise<void> {
+  const endung = (datei.name.split('.').pop() ?? 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
+  const pfad = `verkaufschancen/${verkaufschanceId}/${ordner}-${Date.now()}.${endung}`
+  const typ = datei.type || 'image/jpeg'
+  const hoch = await db().storage.from('dokumente').upload(pfad, datei, { contentType: typ })
+  if (hoch.error) throw hoch.error
+  const { error } = await db()
+    .from('dokumente')
+    .insert({
+      name: datei.name || ordner,
+      mime_typ: typ,
+      bytes: datei.size,
+      ordner,
+      speicher: 'intern',
+      speicher_pfad: pfad,
+      bezug_tabelle: 'verkaufschancen',
+      bezug_id: verkaufschanceId,
+    })
+  if (error) throw error
+}
+
+/**
+ * Termin-Link an den Kunden: legt SMS oder Mail mit dem Link zur Website in den Ausgangskorb (geht erst nach
+ * Freigabe raus). Der Kunde wählt dort selbst eine freie Zeit der zuständigen Person.
+ */
+export async function terminLinkSenden(verkaufschanceId: string, kanal: 'sms' | 'mail'): Promise<string> {
+  const { data, error } = await db().rpc('termin_link_senden', { p_verkaufschance: verkaufschanceId, p_kanal: kanal })
+  if (error) throw error
+  return (data as { link: string }).link
+}

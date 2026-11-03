@@ -11,6 +11,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Suspense, lazy, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
+import { Switch } from '@/components/ui/schalter'
 import { formatChf } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
@@ -56,7 +57,7 @@ function Spalte({
       ref={setNodeRef}
       aria-label={t(`verkauf.spalte.${spalte.id}`)}
       className={cn(
-        'bg-muted/50 flex w-72 shrink-0 flex-col rounded-xl border',
+        'bg-muted/50 flex min-w-44 flex-1 shrink-0 flex-col rounded-xl border',
         ziehe && !erlaubt && 'opacity-50',
         isOver && erlaubt && 'border-accent bg-accent-soft/40',
       )}
@@ -84,13 +85,14 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
   const { t } = useTranslation()
   const client = useQueryClient()
   const personen = useAussendienst()
-  // Welche Spalten man sieht, wählt «Spalten» in der Filterleiste (SpaltenWahl).
-  const [sichtbar] = useSpaltenWahl()
+  const [abgeschlossen, setAbgeschlossen] = useState(false)
   const [mehr, setMehr] = useState<Record<string, boolean>>({})
   const [ziehe, setZiehe] = useState<Geschaeft | null>(null)
   const [wechsel, setWechsel] = useState<{ g: Geschaeft; ziel: string } | null>(null)
   const sensoren = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
-  const spalten = useMemo(() => verteile(geschaefte, sichtbar), [geschaefte, sichtbar])
+  // Welche Schritte man sieht, wählt «Spalten» in der Filterleiste (SpaltenWahl); «Aus» kommt mit dem Schalter.
+  const [sichtbar] = useSpaltenWahl()
+  const spalten = useMemo(() => verteile(geschaefte, abgeschlossen, sichtbar), [geschaefte, abgeschlossen, sichtbar])
   const kuerzel = useMemo(
     () => new Map((personen.data ?? []).map((p) => [p.id, p.kuerzel.slice(0, 3)])),
     [personen.data],
@@ -133,6 +135,10 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
 
   return (
     <div className="flex flex-col gap-3">
+      <label className="text-muted-foreground flex items-center gap-2 self-end text-sm">
+        <Switch checked={abgeschlossen} onCheckedChange={setAbgeschlossen} />
+        {t('verkauf.pipeline.abgeschlossene')}
+      </label>
       <DndContext
         sensors={sensoren}
         onDragStart={(e) => {

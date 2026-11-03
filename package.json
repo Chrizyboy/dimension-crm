@@ -12,7 +12,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "lint": "eslint . --max-warnings 0 && node scripts/check-module-grenzen.mjs",
+    "lint": "eslint . --max-warnings 0 && node scripts/check-module-grenzen.mjs && node scripts/check-migrationen.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
@@ -37,7 +37,8 @@
     "messen": "node scripts/messen/lighthouse.mjs",
     "db:typen": "echo '// Automatisch erzeugt aus der lokalen Datenbank mit «npm run db:typen». Nie von Hand ändern.' > src/types/datenbank.ts && supabase gen types typescript --local >> src/types/datenbank.ts && prettier --write src/types/datenbank.ts",
     "sicherung:pruefen": "node scripts/sicherung/pruefen.mjs",
-    "umzug": "node scripts/umzug/umzug.mjs"
+    "umzug": "node scripts/umzug/umzug.mjs",
+    "migration:neu": "node scripts/migration-neu.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
