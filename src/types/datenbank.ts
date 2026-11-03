@@ -6074,6 +6074,92 @@ export type Database = {
           },
         ]
       }
+      kontakt_rollen: {
+        Row: {
+          aktiv: boolean
+          alt_daten: Json | null
+          alt_id: string | null
+          angaben: NonNullable<Json>
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kontakt_id: string
+          rolle: string
+        }
+        ComputedFields: never
+        Insert: {
+          aktiv?: boolean
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angaben?: NonNullable<Json>
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id: string
+          rolle: string
+        }
+        Update: {
+          aktiv?: boolean
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angaben?: NonNullable<Json>
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id?: string
+          rolle?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'kontakt_rollen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'adressbuch_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_rollen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_rollen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_rollen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'kontakt_rollen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'kontakt_rollen_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
       kontakt_zugehoerigkeiten: {
         Row: {
           alt_daten: Json | null
@@ -7499,6 +7585,34 @@ export type Database = {
           },
         ]
       }
+      netzbetreiber_gemeinden: {
+        Row: {
+          bfs_nr: number
+          eingelesen_am: string
+          elcom_id: string
+          gemeinde: string
+          jahr: number | null
+          netzbetreiber: string
+        }
+        ComputedFields: never
+        Insert: {
+          bfs_nr: number
+          eingelesen_am?: string
+          elcom_id: string
+          gemeinde: string
+          jahr?: number | null
+          netzbetreiber: string
+        }
+        Update: {
+          bfs_nr?: number
+          eingelesen_am?: string
+          elcom_id?: string
+          gemeinde?: string
+          jahr?: number | null
+          netzbetreiber?: string
+        }
+        Relationships: []
+      }
       newsletter: {
         Row: {
           alt_daten: Json | null
@@ -8016,6 +8130,203 @@ export type Database = {
           },
         ]
       }
+      partner_angaben: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bewertung_notiz: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          kontakt_id: string
+          land: string
+          ort: string | null
+          plz: string | null
+          rechtsform: string | null
+          strasse: string | null
+          uid_nr: string | null
+          webseite: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bewertung_notiz?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id: string
+          land?: string
+          ort?: string | null
+          plz?: string | null
+          rechtsform?: string | null
+          strasse?: string | null
+          uid_nr?: string | null
+          webseite?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bewertung_notiz?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          kontakt_id?: string
+          land?: string
+          ort?: string | null
+          plz?: string | null
+          rechtsform?: string | null
+          strasse?: string | null
+          uid_nr?: string | null
+          webseite?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'partner_angaben_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: true
+            referencedRelation: 'adressbuch_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_angaben_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: true
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_angaben_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: true
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_angaben_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: true
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_angaben_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: true
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'partner_angaben_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: true
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
+      partner_nachweise: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          dokument_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gueltig_bis: string | null
+          id: string
+          kontakt_id: string
+          notiz: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          dokument_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string | null
+          id?: string
+          kontakt_id: string
+          notiz?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          dokument_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string | null
+          id?: string
+          kontakt_id?: string
+          notiz?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'partner_nachweise_dokument_id_fkey'
+            columns: ['dokument_id']
+            isOneToOne: false
+            referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_nachweise_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'adressbuch_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_nachweise_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_nachweise_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_nachweise_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'partner_nachweise_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'partner_nachweise_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+        ]
+      }
       personal_akten: {
         Row: {
           ahv_nr: string | null
@@ -8466,6 +8777,36 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'standorte'
             referencedColumns: ['id']
+          },
+        ]
+      }
+      plz_gemeinden: {
+        Row: {
+          bfs_nr: number | null
+          eingelesen_am: string
+          gemeinde: string | null
+          plz: string
+        }
+        ComputedFields: never
+        Insert: {
+          bfs_nr?: number | null
+          eingelesen_am?: string
+          gemeinde?: string | null
+          plz: string
+        }
+        Update: {
+          bfs_nr?: number | null
+          eingelesen_am?: string
+          gemeinde?: string | null
+          plz?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'plz_gemeinden_plz_fkey'
+            columns: ['plz']
+            isOneToOne: true
+            referencedRelation: 'plz_verzeichnis'
+            referencedColumns: ['plz']
           },
         ]
       }
@@ -12422,6 +12763,9 @@ export type Database = {
           angefragt_am: string | null
           bestaetigt_am: string | null
           betrag_rappen: number | null
+          bewertung_preis: number | null
+          bewertung_qualitaet: number | null
+          bewertung_termin: number | null
           erstellt_am: string
           erstellt_von: string | null
           geaendert_am: string
@@ -12442,6 +12786,9 @@ export type Database = {
           angefragt_am?: string | null
           bestaetigt_am?: string | null
           betrag_rappen?: number | null
+          bewertung_preis?: number | null
+          bewertung_qualitaet?: number | null
+          bewertung_termin?: number | null
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
@@ -12461,6 +12808,9 @@ export type Database = {
           angefragt_am?: string | null
           bestaetigt_am?: string | null
           betrag_rappen?: number | null
+          bewertung_preis?: number | null
+          bewertung_qualitaet?: number | null
+          bewertung_termin?: number | null
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
@@ -13882,6 +14232,45 @@ export type Database = {
           person_id: string | null
           quelle: string | null
           von: string | null
+        }
+        ComputedFields: never
+        Relationships: []
+      }
+      adressbuch_uebersicht: {
+        Row: {
+          anzahl_personen: number | null
+          art: string | null
+          auftraege: number | null
+          auftraege_laufend: number | null
+          bewertung: number | null
+          email: string | null
+          erstellt_am: string | null
+          geloescht_am: string | null
+          gemeinden: number | null
+          gesuche_alt: number | null
+          gesuche_offen: number | null
+          gesuche_tage: number | null
+          gewerk: string | null
+          hauptkontakt: string | null
+          hauptkontakt_email: string | null
+          hauptkontakt_telefon: string | null
+          id: string | null
+          kundennummer: number | null
+          kundennummer_bei: string | null
+          nachweis_bis: string | null
+          name: string | null
+          ort: string | null
+          plz: string | null
+          provision_prozent: number | null
+          rollen: string[] | null
+          sprache: string | null
+          strasse: string | null
+          suchtext: string | null
+          telefon: string | null
+          telefon_ziffern: string | null
+          uid_nr: string | null
+          webseite: string | null
+          zuletzt: string | null
         }
         ComputedFields: never
         Relationships: []
@@ -17778,6 +18167,18 @@ export type Database = {
       nachtrag_speichern: { Args: { p: Json }; Returns: string }
       nachtrag_status: { Args: { p_grund?: string; p_id: string; p_status: string }; Returns: undefined }
       nachweise_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      netzbetreiber_fuer: {
+        Args: { p_gemeinde?: string; p_plz: string }
+        Returns: {
+          elcom_id: string
+          gemeinde: string
+          kontakt_id: string
+          netzbetreiber: string
+        }[]
+      }
+      netzbetreiber_stand: { Args: Record<PropertyKey, never>; Returns: Json }
+      netzbetreiber_verzeichnis_speichern: { Args: { p_jahr: number; p_zeilen: Json }; Returns: number }
+      netzbetreiber_zuordnen: { Args: Record<PropertyKey, never>; Returns: Json }
       newsletter_empfaenger_fuer: {
         Args: { p_newsletter: string }
         Returns: {
@@ -17808,6 +18209,18 @@ export type Database = {
         Returns: undefined
       }
       offerte_zurueck: { Args: { p_grund: string; p_offerte: string; p_ziel: string }; Returns: undefined }
+      partner_akte: { Args: { p_kontakt: string }; Returns: Json }
+      partner_dubletten: {
+        Args: { p_email?: string; p_name: string; p_ohne?: string; p_telefon?: string; p_uid?: string }
+        Returns: {
+          grund: string
+          id: string
+          kundennummer: number
+          name: string
+          ort: string
+        }[]
+      }
+      partner_fristen_melden: { Args: { p_heute?: string }; Returns: number }
       personal_akte: { Args: { p_person: string }; Returns: Json }
       personal_checklisten: { Args: Record<PropertyKey, never>; Returns: number }
       personal_fristen_melden: { Args: { p_heute?: string }; Returns: number }
@@ -17835,6 +18248,15 @@ export type Database = {
           standort: string
         }[]
       }
+      plz_gemeinden_offen: {
+        Args: { p_limit?: number }
+        Returns: {
+          breite: number
+          laenge: number
+          plz: string
+        }[]
+      }
+      plz_gemeinden_speichern: { Args: { p_zeilen: Json }; Returns: number }
       posteingang_antworten: { Args: { p_mails: Json }; Returns: number }
       posteingang_aufgabe: {
         Args: { p_faellig: string; p_id: string; p_person: string; p_titel: string }
