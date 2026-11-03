@@ -5,16 +5,19 @@
 -- Ausführen: npm run db:test
 begin;
 set local timezone = 'Europe/Zurich';
-select plan(23);
+select plan(24);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000039a1', 'k39-vk@test.local'),
-  ('00000000-0000-0000-0000-0000000039a2', 'k39-bh@test.local');
+  ('00000000-0000-0000-0000-0000000039a2', 'k39-bh@test.local'),
+  ('00000000-0000-0000-0000-0000000039a3', 'k39-ad@test.local');
 insert into public.personen (id, kuerzel, name, auth_user_id, rolle, standort_id) values
   ('00000000-0000-0000-0000-0000000039b1', 'k39_vk', 'Vera Verkauf', '00000000-0000-0000-0000-0000000039a1', 'verkauf',
    (select id from public.standorte where kuerzel = 'bulle')),
   ('00000000-0000-0000-0000-0000000039b2', 'k39_bh', 'Berta Buchhaltung', '00000000-0000-0000-0000-0000000039a2',
-   'buchhaltung', null);
+   'buchhaltung', null),
+  ('00000000-0000-0000-0000-0000000039b3', 'k39_ad', 'Adrian Admin', '00000000-0000-0000-0000-0000000039a3',
+   'admin', null);
 insert into public.kontakte (id, art, kontaktart, vorname, nachname, telefon, sprache) values
   ('00000000-0000-0000-0000-0000000039c1', 'person', 'privat', 'Karl', 'Kennzahl', '+41790003901', 'fr');
 insert into public.objekte (id, kontakt_id, strasse, plz, ort) values
@@ -115,6 +118,11 @@ select is((select betrag_rappen from zb where schluessel = 'umsatz' and id = '00
 select ok(not exists (select 1 from zb where id = '00000000-0000-0000-0000-000000003912'), 'Entwurf zählt nicht');
 select is((select (betrag_rappen, zusatz)::text from zb where schluessel = 'rechnung_offen'
             and id = '00000000-0000-0000-0000-000000003911'), '(1081000,0)', 'offen = Total, Mahnstufe 0');
+-- Seit 3.11.2026 (Entscheid 0048) ändert nur die Administration Einstellungen, auch nicht die Buchhaltung.
+select throws_ok($$ select public.kennzahlen_einstellungen_setzen('{"alt_tage": 30}') $$, '42501',
+  'einstellungen.nur_admin', 'Buchhaltung setzt keine Ziele');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a3", "role": "authenticated"}', true),
+       set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000039a3', true);
 select lives_ok($$ select public.kennzahlen_einstellungen_setzen(
   '{"ziele": {"2026": {"gesamt": 360000000, "personen": {"00000000-0000-0000-0000-0000000039b1": 70000000}}},
     "wahrscheinlichkeit": {"offeriert": 40, "nachfassen": 20, "vertagt": 10, "alt": 5}}') $$, 'Ziele und Wahrscheinlichkeit setzen');

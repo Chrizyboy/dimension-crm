@@ -59,5 +59,5 @@ Les offres avec la décision « Gagnée » dans la période choisie. Le taux ne 
 
 ## Nouveautés {#neu}
 
-- 03.11.2026: Seule l’administration modifie le coût par lead.
+- 03.11.2026: Seule l’administration modifie le coût par lead, les objectifs et les probabilités.
 - 24.10.2026: Indicateurs avec listes au clic, pipeline par région et charge.

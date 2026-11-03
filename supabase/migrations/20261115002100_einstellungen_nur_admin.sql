@@ -47,3 +47,49 @@ end
 $$;
 revoke execute on function public.kennzahlen_quellen_kosten(text, bigint) from public, anon;
 grant execute on function public.kennzahlen_quellen_kosten(text, bigint) to authenticated;
+
+-- Ziele, Wahrscheinlichkeiten und Richtwerte der Kennzahlen (20261112004500): ebenfalls nur Administration.
+-- Gleiche Fassung wie dort, dazu nur die Prüfung auf «admin» (die Buchhaltung sieht die Werte weiterhin).
+create or replace function public.kennzahlen_einstellungen_setzen(p_wert jsonb) returns jsonb
+language plpgsql set search_path = '' as $$
+declare
+  k text;
+  w jsonb;
+begin
+  if not intern.hat_recht('finanzen') then
+    raise exception using errcode = '42501', message = 'kennzahlen.kein_recht';
+  end if;
+  if not intern.hat_recht('admin') then
+    raise exception using errcode = '42501', message = 'einstellungen.nur_admin';
+  end if;
+  for k in select jsonb_object_keys(p_wert) loop
+    if k not in ('ziele', 'wahrscheinlichkeit', 'alt_tage', 'richtwerte') then
+      raise exception using errcode = 'P0001', message = 'kennzahlen.schluessel_ungueltig';
+    end if;
+  end loop;
+  -- Prozentwerte 0–100, Beträge nicht negativ: sonst rechnet die Prognose Unsinn.
+  for k, w in select * from jsonb_each(coalesce(p_wert -> 'wahrscheinlichkeit', '{}')) loop
+    if jsonb_typeof(w) <> 'number' or (w #>> '{}')::numeric not between 0 and 100 then
+      raise exception using errcode = 'P0001', message = 'kennzahlen.wert_ungueltig';
+    end if;
+  end loop;
+  if exists (select 1 from jsonb_each(coalesce(p_wert -> 'ziele', '{}')) j, jsonb_each(j.value) z
+              where z.key <> 'personen' and z.value <> 'null'::jsonb
+                and (jsonb_typeof(z.value) <> 'number' or (z.value #>> '{}')::numeric < 0))
+     or exists (select 1 from jsonb_each(coalesce(p_wert -> 'ziele', '{}')) j,
+                       jsonb_each(coalesce(j.value -> 'personen', '{}')) z
+                 where jsonb_typeof(z.value) <> 'number' or (z.value #>> '{}')::numeric < 0) then
+    raise exception using errcode = 'P0001', message = 'kennzahlen.wert_ungueltig';
+  end if;
+  update public.einstellungen e
+     set wert = e.wert || p_wert
+                       || case when p_wert ? 'ziele'
+                               then jsonb_build_object('ziele', coalesce(e.wert -> 'ziele', '{}') || (p_wert -> 'ziele'))
+                               else '{}' end
+   where e.schluessel = 'kennzahlen'
+  returning e.wert into w;
+  return w;
+end
+$$;
+revoke execute on function public.kennzahlen_einstellungen_setzen(jsonb) from public, anon;
+grant execute on function public.kennzahlen_einstellungen_setzen(jsonb) to authenticated;

@@ -59,5 +59,5 @@ Offerten mit Entscheid «Gewonnen» im gewählten Zeitraum. Die Quote rechnet nu
 
 ## Neu {#neu}
 
-- 03.11.2026: Kosten pro Lead ändert nur noch die Administration.
+- 03.11.2026: Kosten pro Lead, Ziele und Wahrscheinlichkeiten ändert nur noch die Administration.
 - 24.10.2026: Kennzahlen mit Klick-Listen, Pipeline pro Region und Auslastung.
