@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, geschaeftsleitung
 ---
 
@@ -95,9 +95,10 @@ Die Karte kommt von swisstopo. Ist sie gesperrt oder offline, bleibt sie grau; R
 
 ### Wie speichere ich meine Filter?
 
-**Gespeicherte Ansichten**, **Aktuelle Ansicht speichern**. Mit **Für das ganze Team sichtbar** sehen sie alle.
+Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für mehrere feste Ansichten: **Gespeicherte Ansichten**, **Aktuelle Ansicht speichern**. Mit **Für das ganze Team sichtbar** sehen sie alle.
 
 ## Neu {#neu}
 
+- 03.11.2026: Person, Quelle und Region mit Häkchen (mehrere, **nur**, «Alle ausser …»); Knopf **Spalten** blendet Spalten der Pipeline ein und aus (ersetzt «Abgeschlossene zeigen»). Die Auswahl bleibt gemerkt.
 - 01.11.2026: Lead direkt aus einer Mail im Posteingang anlegen.
 - 31.10.2026: Neue Leads und Offerten verteilt das CRM nach Einstellungen › Zuständigkeiten.

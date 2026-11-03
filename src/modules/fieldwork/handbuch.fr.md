@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: montage, projektleitung, buchhaltung
 ---
 
@@ -78,4 +78,5 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Heures : choisir plusieurs personnes à la fois ; l'export des salaires ne contient que celles-ci.
 - 31.10.2026: Vue simple pour les monteurs avec temps de travail d’un clic et frais.

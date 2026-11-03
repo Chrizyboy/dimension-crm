@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: montage, projektleitung, buchhaltung
 ---
 
@@ -78,4 +78,5 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
+- 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.
 - 31.10.2026: Einfache Ansicht für Monteure mit Arbeitszeit per Knopfdruck und Spesen.

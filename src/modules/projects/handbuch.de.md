@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -88,4 +88,5 @@ Dann gilt die Anlage als gebaut: die Schritte bis zur Montage werden erledigt un
 
 ## Neu {#neu}
 
+- 03.11.2026: Zeitplan am Handy: mehrere Personen zugleich wählen.
 - 01.11.2026: Zeitplan der Baustellen mit Sicht Baustellen oder Team, Konflikte rot.

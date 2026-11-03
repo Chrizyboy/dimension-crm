@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -79,6 +79,7 @@ Onglet **Délai de réponse** : médiane en heures de travail jusqu’à la rép
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Filtre par type avec des cases à cocher : plusieurs types à la fois, le choix est mémorisé.
 - 02.11.2026: Les anciens e-mails de toutes les boîtes arrivent comme archive, sans délai.
 - 01.11.2026: Chacun traite ses propres e-mails, info@ est réparti par Davis ou Chris.
 - 31.10.2026: Nouveau domaine Boîte de réception avec délais en heures de travail.

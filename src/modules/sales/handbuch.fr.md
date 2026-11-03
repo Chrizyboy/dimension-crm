@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, geschaeftsleitung
 ---
 
@@ -95,9 +95,10 @@ La carte vient de swisstopo. Si elle est bloquée ou hors ligne, elle reste gris
 
 ### Comment enregistrer mes filtres ?
 
-**Vues enregistrées**, **Enregistrer la vue actuelle**. Avec **Visible pour toute l’équipe**, tout le monde la voit.
+Le CRM mémorise tout seul personne, source, région et colonnes. Pour plusieurs vues fixes : **Vues enregistrées**, **Enregistrer la vue actuelle**. Avec **Visible pour toute l’équipe**, tout le monde la voit.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Personne, source et région avec des cases à cocher (plusieurs, **seul**, « Tous sauf … ») ; le bouton **Colonnes** affiche ou masque les colonnes du pipeline (remplace « Afficher les terminés »). Le choix est mémorisé.
 - 01.11.2026: Créer un lead directement depuis un e-mail de la boîte de réception.
 - 31.10.2026: Le CRM répartit les nouveaux leads et offres selon Paramètres › Responsabilités.

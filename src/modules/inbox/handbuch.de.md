@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -79,6 +79,7 @@ Reiter **Reaktionszeit**: Mitte der Arbeitszeit bis zur Antwort und Anteil in de
 
 ## Neu {#neu}
 
+- 03.11.2026: Filter Art mit Häkchen: mehrere Arten zugleich, die Auswahl bleibt gemerkt.
 - 02.11.2026: Ältere Mails aus allen Postfächern kommen als Archiv nach, ohne Frist.
 - 01.11.2026: Jede Person bearbeitet ihre eigenen Mails, info@ verteilen Davis oder Chris.
 - 31.10.2026: Neuer Bereich Posteingang mit Fristen in Arbeitszeit.

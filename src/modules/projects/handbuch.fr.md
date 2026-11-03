@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -88,4 +88,5 @@ L’installation est alors considérée comme construite : les étapes jusqu’a
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Planning sur mobile : choisir plusieurs personnes à la fois.
 - 01.11.2026: Planning des chantiers avec vue chantiers ou équipe, conflits en rouge.
