@@ -14432,6 +14432,26 @@ export type Database = {
       }
       kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
       kennzahlen_ziele_setzen: { Args: { p_person: string; p_ziele: Json }; Returns: undefined }
+      kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
+      kennzahlen_monatsbericht_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      kennzahlen_zusatz: {
+        Args: { p_bis: string; p_von: string }
+        Returns: {
+          art: string
+          betrag_rappen: number
+          datum: string
+          id: string
+          kwp: number
+          name: string
+          nummer: string
+          ort: string
+          person_id: string
+          schluessel: string
+          standort: string
+          tage: number
+          zusatz: string
+        }[]
+      }
       ki_briefing_daten: { Args: Record<PropertyKey, never>; Returns: Json }
       ki_budget: { Args: { p_person: string }; Returns: Json }
       ki_entwuerfe_offen: { Args: { p_limit?: number }; Returns: Json }

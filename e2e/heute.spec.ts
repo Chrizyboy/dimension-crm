@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
 // Phase 14: «Mein Tag» und Kennzahlen. Die Startseite ist «Mein Tag» mit eigener Aufgabe (anlegen, abhaken,
-// «Von mir vergeben»), die Übersicht per Mail zeigt den Text vor dem Senden; Kennzahlen mit Reitern, Klick auf eine
+// «Von mir vergeben»), die Übersicht per Mail zeigt den Text vor dem Senden; Kennzahlen mit sieben Reitern, Klick auf eine
 // Zahl zeigt die Einträge. Alles ohne Verstösse (WCAG 2.1 AA). Die Zahlen selbst prüft
 // supabase/tests/mein_tag_kennzahlen.test.sql.
 
@@ -88,15 +88,16 @@ test('Mein Tag: Aufgabe anlegen, vergeben sehen, abhaken; Mail-Vorschau', async 
   await page.keyboard.press('Escape')
 })
 
-test('Kennzahlen: Kacheln, Klick auf eine Zahl, Reiter Pipeline und Betrieb', async ({ page }) => {
+test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({ page }) => {
   test.slow()
   await anmelden(page, 'admin@test.local')
-  await page.goto('/#/dashboard?zeitraum=alle')
+  await page.goto('/#/dashboard?zeitraum=alle&reiter=ueberblick')
   await expect(page.getByRole('heading', { name: 'Kennzahlen', level: 1 })).toBeVisible()
-  await expect(page.getByTestId('kz-kacheln')).toBeVisible()
-  await expect(page.getByTestId('kz-standort')).toBeVisible()
+  await expect(page.getByTestId('kz-ueberblick')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
+  await page.getByRole('tab', { name: 'Verkauf' }).click()
+  await expect(page).toHaveURL(/reiter=verkauf/)
   await page
     .getByTestId('kz-kacheln')
     .getByRole('button', { name: /Angenommen/ })
@@ -105,22 +106,37 @@ test('Kennzahlen: Kacheln, Klick auf eine Zahl, Reiter Pipeline und Betrieb', as
   const detail = page.getByRole('dialog', { name: 'Angenommen' })
   await expect(detail).toBeVisible()
   await expect(detail.getByText('Total')).toBeVisible()
+  await expect(detail.getByRole('button', { name: 'Als CSV' })).toBeVisible()
   await page.keyboard.press('Escape')
-
-  await page.getByRole('tab', { name: 'Pipeline pro Region' }).click()
-  await expect(page.getByTestId('kz-pipeline')).toBeVisible()
-  await expect(page).toHaveURL(/reiter=pipeline/)
+  await expect(page.getByTestId('kz-trichter')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Aufträge und Auslastung' }).click()
+  await page.getByRole('tab', { name: 'Pipeline & Prognose' }).click()
+  await expect(page.getByTestId('kz-pipeline-kacheln')).toBeVisible()
+  await expect(page.getByTestId('kz-pipeline')).toBeVisible()
+
+  await page.getByRole('tab', { name: 'Abwicklung' }).click()
+  await expect(page.getByTestId('kz-abwicklung')).toBeVisible()
   await expect(page.getByTestId('kz-auftragsbestand')).toBeVisible()
   await expect(page.getByTestId('kz-auslastung')).toBeVisible()
   await expect(page.getByTestId('kz-marge')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Abwicklung' }).click()
-  const abwicklung = page.getByTestId('kz-abwicklung')
-  await expect(abwicklung.getByText('Ø Service-Fall bis erledigt')).toBeVisible()
-  await expect(abwicklung.getByText('≤ 90 Tage')).toBeVisible()
+  const tabelle = page.getByTestId('kz-abwicklung-tabelle')
+  await expect(tabelle.getByText('Ø Service-Fall bis erledigt')).toBeVisible()
+  await expect(tabelle.getByText('≤ 90 Tage')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
+
+  await page.getByRole('tab', { name: 'Finanzen' }).click()
+  await expect(page.getByTestId('kz-finanzen')).toBeVisible()
+  await page.getByRole('tab', { name: 'Service & Wartung' }).click()
+  await expect(page.getByTestId('kz-service')).toBeVisible()
+  await page.getByRole('tab', { name: 'Alle Zahlen' }).click()
+  await expect(page.getByTestId('kz-standort')).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+
+  // Ziele: Dialog öffnen, nichts speichern.
+  await page.getByTestId('kz-ziele').click()
+  await expect(page.getByRole('dialog', { name: /Ziele \d{4}/ })).toBeVisible()
+  await page.keyboard.press('Escape')
 })
