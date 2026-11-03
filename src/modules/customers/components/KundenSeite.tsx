@@ -28,6 +28,8 @@ import { Box, Leer } from './Box'
 import { GeschaefteBox } from './GeschaefteBox'
 import { RechnungenBox } from './RechnungenBox'
 import { ServiceBox } from './ServiceBox'
+import { BetreuungBox } from './BetreuungBox'
+import { PersonenBox } from './PersonenBox'
 
 /** Heute als ISO-Datum in Zürcher Zeit, für Fälligkeiten und «nächster Termin». */
 const heuteIso = () => new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Zurich' })
@@ -47,10 +49,10 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
   const a = akte.data
   const heute = heuteIso()
   // Rechnungen liest nur, wer das Recht «finanzen» hat (RLS); sonst sagen wir das, statt «keine» zu zeigen.
-  const finanzen = hatRecht(
-    useAnmeldung((z) => z.ich),
-    'finanzen',
-  )
+  const ich = useAnmeldung((z) => z.ich)
+  const finanzen = hatRecht(ich, 'finanzen')
+  // Doppelte zusammenführen nur Administration (Entscheid 0045); die Datenbank prüft es noch einmal.
+  const admin = Boolean(ich?.rechte.includes('admin'))
 
   if (kopf.isError || akte.isError || nach.isError) {
     return (
@@ -104,6 +106,13 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
             setOffen({ art: 'papierkorb' })
           }}
           onWiederherstellen={() => void verschiebe(false)}
+          onZusammenfuehren={
+            admin
+              ? () => {
+                  setOffen({ art: 'zusammenfuehren' })
+                }
+              : undefined
+          }
         />
       </div>
 
@@ -114,6 +123,13 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
           <Box titel={t('akte.kontaktdaten')}>
             <KontaktAngaben kopf={k} akte={a} />
           </Box>
+          <PersonenBox kontaktId={k.id} />
+          <BetreuungBox
+            kontakt={a.kontakt}
+            onBearbeiten={() => {
+              setOffen({ art: 'betreuung' })
+            }}
+          />
           <Box
             titel={t('akte.gebaeude', { count: a.objekte.length })}
             rechts={
@@ -177,7 +193,7 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
       </div>
 
       {druck.aktiv && <Kundenblatt kopf={k} akte={a} />}
-      <AkteDialoge id={id} akte={a} titel={k.name} aktionen={aktionen} />
+      <AkteDialoge id={id} akte={a} titel={k.name} kopf={k} aktionen={aktionen} />
     </div>
   )
 }

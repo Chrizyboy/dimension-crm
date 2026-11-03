@@ -50,6 +50,7 @@ function AnnahmenFormular({ regeln }: { regeln: GrossprojektRegeln }) {
     ...(Object.fromEntries(FELDER.map((f) => [f, String(regeln.annahmen?.[f] ?? '')])) as Record<Annahme, string>),
     melden_ab: String(regeln.melden_ab ?? 50),
   }))
+  const [youderaMail, setYouderaMail] = useState(regeln.pipeline?.youdera_mail ?? '')
   const staffel = regeln.annahmen?.chf_pro_kwp ?? []
 
   return (
@@ -78,6 +79,17 @@ function AnnahmenFormular({ regeln }: { regeln: GrossprojektRegeln }) {
               />
             </Feld>
           ))}
+          <Feld id="gp-a-youdera" label={t('grossprojekte.annahmen.youdera_mail')}>
+            <Input
+              id="gp-a-youdera"
+              type="email"
+              disabled={!admin}
+              value={youderaMail}
+              onChange={(e) => {
+                setYouderaMail(e.target.value)
+              }}
+            />
+          </Feld>
           {admin ? (
             <div className="sm:col-span-2">
               <Button
@@ -87,6 +99,7 @@ function AnnahmenFormular({ regeln }: { regeln: GrossprojektRegeln }) {
                     () =>
                       speichereAnnahmen({
                         melden_ab: Number(w.melden_ab) || 50,
+                        youdera_mail: youderaMail.trim(),
                         annahmen: Object.fromEntries(
                           FELDER.filter((f) => w[f].trim() !== '' && Number.isFinite(Number(w[f]))).map((f) => [
                             f,

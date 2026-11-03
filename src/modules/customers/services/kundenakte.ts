@@ -151,6 +151,8 @@ export async function speichereObjekt(kontaktId: string, id: string | null, e: O
     verbrauch_kwh: e.verbrauch_kwh,
     netzbetreiber: oderNull(e.netzbetreiber),
     gemeinde: oderNull(e.gemeinde),
+    heizung: oderNull(e.heizung),
+    vor_ort: oderNull(e.vor_ort),
   }
   const { error } = id
     ? await db().from('objekte').update(felder).eq('id', id)

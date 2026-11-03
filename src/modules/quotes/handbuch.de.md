@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -14,6 +14,12 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 - **Geschäftsleitung**: Übersicht Muri und Bulle.
 
 ## So geht's {#so}
+
+### Den Arbeitsvorrat lesen
+
+1. **Offerten** öffnet mit dem **Arbeitsvorrat**: jede Offerte als Karte in ihrer Phase, von «Zu offerieren» bis «Gewonnen».
+2. Rote und orange Hinweise zuerst: überfällig (Termin länger als 5 Arbeitstage her), Nachfassen fällig, Freigabe nötig, Rückfrage.
+3. Karte anklicken: die Offerte öffnet als ganze Seite mit Schritten, Varianten, Unterlagen und dem nächsten Schritt.
 
 ### Eine neue Offerte ausarbeiten
 
@@ -31,9 +37,10 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 
 ### Nachfassen
 
-1. Reiter **Nachfassen**: oben steht, was heute fällig ist.
-2. Kunde anrufen, Ergebnis im Verlauf notieren, nächstes Datum setzen.
-3. Mit **Mit KI schreiben** entsteht bei Bedarf eine Nachfass-Mail, die du prüfst und freigibst.
+1. Reiter **Nachfassen** oder Karte mit «Nachfassen fällig»: oben steht, was heute fällig ist.
+2. Kunde anrufen. Nicht erreicht: **Nicht erreicht**, in 2 Arbeitstagen kommt die Offerte wieder.
+3. Erreicht: **Ergebnis** wählen (vergleicht, interessiert, neue Version, später, Ja, Nein). Das nächste Nachfassen setzt das CRM nach Plan (Tag 3, 10, 21, 30 nach dem Senden). Bei **Ja** geht es direkt zum Werkvertrag.
+4. Mit **Mit KI schreiben** entsteht bei Bedarf eine Nachfass-Mail, die du prüfst und freigibst.
 
 ### Den Entscheid festhalten
 
@@ -46,6 +53,12 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 1. Offerte öffnen, **Neue Version**, neues PDF hineinziehen und kurz notieren, was geändert wurde.
 2. Alle Versionen bleiben unter **Versionen** sichtbar.
 
+### Auswerten
+
+1. Reiter **Auswertung**: Zeitraum 30, 90 oder 365 Tage wählen.
+2. Oben offeriert, gewonnen, verloren, Abschlussquote und Ø Dauer bis zum Entscheid.
+3. Darunter je Person, **Warum verloren** und **Gegen wen** (aus dem Nachfassen).
+
 ### Eturnity-Meldungen zuordnen
 
 1. Reiter **PDF-Import**: PDFs und Meldungen aus Eturnity, die noch keiner Offerte zugeordnet sind.
@@ -57,7 +70,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 - **In Bearbeitung**: jemand im Innendienst arbeitet daran.
 - **Rückfrage**: es fehlt eine Angabe vom Aussendienst.
 - **Zur Prüfung**: fertig, der Aussendienst schaut drüber.
-- **Offeriert**: beim Kunden. Die Offerte wandert nach Muri bzw. Bulle, das Nachfassen beginnt nach 14 Tagen.
+- **Offeriert**: beim Kunden. Die Offerte wandert nach Muri bzw. Bulle, das erste Nachfassen ist 3 Tage nach dem Senden.
 
 ## Läuft automatisch {#automatisch}
 
@@ -66,6 +79,10 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 - Fällige Nachfass-Termine erscheinen auf Mein Tag.
 
 ## Regeln {#regeln}
+
+- Ab 5 % Rabatt oder unter 18 % Marge braucht die Offerte vor dem Senden eine **Freigabe** (Chris oder Administration).
+- Eine Offerte kann mehrere **Varianten** haben (z. B. mit und ohne Batterie). Die gewählte Variante bestimmt den Betrag.
+- Die **Chance** rechnet das CRM aus der Phase; von Hand überschreiben geht, leer setzt sie wieder auf automatisch.
 
 - Der Betrag der Offerte ist **exkl. MWST**. Werkvertrag und Vertragswert sind inkl.
 - Einkaufspreise, Marge und Kalkulation sieht nur, wer das Recht **Preise** hat.
@@ -81,5 +98,8 @@ Nur PDFs aus Eturnity werden gelesen. Bei anderen PDFs die Werte von Hand eintra
 In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kapitel:pricing).
 
 ## Neu {#neu}
+
+- 03.11.2026: Reiter Auswertung (Quote, je Person, Verlustgründe, Konkurrenz).
+- 03.11.2026: Arbeitsvorrat als Startansicht, Offerte als ganze Seite, Nachfassen mit Ergebnis nach Plan, Varianten, Freigabe und Chance.
 
 - 31.10.2026: Offerten-Ordner in SharePoint werden selbst angelegt und verschoben.

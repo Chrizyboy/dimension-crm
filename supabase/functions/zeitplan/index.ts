@@ -22,6 +22,7 @@
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
@@ -31,6 +32,7 @@
 import { faelligesFenster, monitorEinstellungen, quelleLesen } from '../_shared/ausschreibungen.ts'
 import { dachsuche } from '../_shared/dachsuche.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
+import { leadsDachAnreichern } from '../_shared/leads_dach.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
@@ -134,6 +136,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Aufgaben (Entscheid 0045): Morgen-Glocke ab «erinnern_ab», die Datenbank meldet jede Person nur einmal am Tag.
+  ergebnis.aufgaben = await job('aufgaben', 60, async () => {
+    const n = await dienst.rpc<number>('aufgaben_melden', {})
+    return `${n} ${n === 1 ? 'Person' : 'Personen'} erinnert`
+  })
+
   // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
   ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
     const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
@@ -228,6 +236,14 @@ Deno.serve(async (req) => {
   ergebnis.posteingang_erinnern = await job('posteingang_erinnern', 5, async () => {
     const n = await dienst.rpc<number>('posteingang_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
+  // Leads (02.11.2026): neue Leads ohne Anruf nach 15 Minuten melden, nach 2 Stunden an die Geschäftsleitung (nur
+  // Glocke), dann Dachdaten von sonnendach.ch zu neuen Adressen. Werte in einstellungen.verkauf.
+  ergebnis.leads = await job('leads', 5, async () => {
+    const n = await dienst.rpc<number>('leads_erstkontakt_melden', {})
+    const dach = await leadsDachAnreichern(10)
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'}, ${dach}`
   })
 
   // Grossprojekte (Phase 8c): erst Gebäudedaten holen, dann einige Gebiete nach grossen Dächern durchsuchen, zuletzt

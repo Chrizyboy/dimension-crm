@@ -16,6 +16,14 @@ import { eintragErfassen } from '../services/ressourcen'
 const MIT_ERGEBNIS = ['pruefung', 'kalibrierung', 'reparatur']
 const MIT_NAECHSTER = ['mfk', 'service', 'pruefung', 'kalibrierung', 'reifen', 'vignette']
 
+/** Eintrag-Arten mit Kosten, zu denen ein Beleg gehört (meist mit der Firmenkarte bezahlt). */
+const MIT_BELEG = ['tanken', 'kosten', 'service', 'reparatur', 'reifen', 'vignette', 'mfk']
+
+/** Beleg mit Datum und Art im Namen, z. B. «2026-11-03 tanken quittung.jpg». */
+function belegName(f: File, datum: string, art: string): File {
+  return new File([f], `${datum} ${art} ${f.name}`, { type: f.type })
+}
+
 /**
  * Eintrag erfassen (am Handy wie am PC): MFK, Service, Kilometerstand, Prüfung, Kalibrierung, Reparatur,
  * Schaden (mit Fotos), Tanken, Reifenwechsel, Vignette, übrige Kosten oder Notiz. Welche Arten es gibt, steht in der Auswahlliste «ressourcen_eintrag». Service und Prüfung
@@ -79,8 +87,14 @@ export function EintragDialog({
           },
           id,
         ).then(async () => {
-          // Fotos nach dem Eintrag: Ordner = Eintrag, damit sie beim Schaden in der Akte erscheinen.
-          for (const f of fotos) await dateiHochladen('eintrag', id, f)
+          // Fotos nach dem Eintrag: beim Schaden in den Ordner des Eintrags (erscheinen beim Schaden). Belege
+          // (Firmenkarte, Chris 3.11.2026) zu den Dokumenten des Fahrzeugs/Geräts, mit Datum und Art im Namen,
+          // damit die Buchhaltung sie mit der Kartenabrechnung abgleichen kann.
+          for (const f of fotos) {
+            if (art === 'schaden') await dateiHochladen('eintrag', id, f)
+            else if (bezug.fahrzeug) await dateiHochladen('fahrzeug', bezug.fahrzeug, belegName(f, datum, art))
+            else if (bezug.geraet) await dateiHochladen('geraet', bezug.geraet, belegName(f, datum, art))
+          }
         }),
       { de: 'Eintrag gespeichert', fr: 'Entrée enregistrée' },
     )
@@ -214,17 +228,17 @@ export function EintragDialog({
               }}
             />
           </Feld>
-          {art === 'schaden' && (
+          {(art === 'schaden' || MIT_BELEG.includes(art)) && (
             <Feld
               id="ei-fotos"
-              label={t('fuhrpark.schaden.fotos')}
+              label={t(art === 'schaden' ? 'fuhrpark.schaden.fotos' : 'fuhrpark.eintrag.beleg')}
               className="sm:col-span-2"
-              hinweis={t('fuhrpark.schaden.fotosHinweis')}
+              hinweis={t(art === 'schaden' ? 'fuhrpark.schaden.fotosHinweis' : 'fuhrpark.eintrag.belegHinweis')}
             >
               <Input
                 id="ei-fotos"
                 type="file"
-                accept="image/*"
+                accept={art === 'schaden' ? 'image/*' : 'image/*,application/pdf'}
                 capture="environment"
                 multiple
                 onChange={(e) => {
