@@ -139,6 +139,29 @@ export const microsoft = {
     ),
   /** Ganzer Text einer Mail im Posteingang, aus Outlook gelesen. */
   posteingangText: (id: string) => rufeFunktion<{ text: string }>('microsoft', 'posteingang_text', { id }),
+  /** Ganze Unterhaltung einer Mail (Kunde und unsere Antworten), aus Outlook gelesen. */
+  posteingangVerlauf: (id: string) =>
+    rufeFunktion<{
+      mails: { id: string; von: string; von_name: string; zeit: string; wir: boolean; text: string }[]
+    }>('microsoft', 'posteingang_verlauf', { id }),
+  /** Anhänge einer Mail (ohne eingebettete Bilder). */
+  posteingangAnhaenge: (id: string) =>
+    rufeFunktion<{ anhaenge: { id: string; name: string; groesse: number; typ: string }[] }>(
+      'microsoft',
+      'posteingang_anhaenge',
+      { id },
+    ),
+  /** Einen Anhang zum Öffnen holen (Base64). */
+  posteingangAnhang: (id: string, anhang_id: string) =>
+    rufeFunktion<{ name: string; typ: string; base64: string }>('microsoft', 'posteingang_anhang', { id, anhang_id }),
+  /** Anhang ins CRM übernehmen (Kunde, Lead, Offerte, Projekt, Fall, Rechnung, Bestellung, Zahlung). */
+  posteingangAnhangAblegen: (id: string, anhang_id: string, tabelle: string, bezug_id: string) =>
+    rufeFunktion<{ dokument_id: string; name: string }>('microsoft', 'posteingang_anhang_ablegen', {
+      id,
+      anhang_id,
+      tabelle,
+      bezug_id,
+    }),
   sharepointSichern: (dokument_ids?: string[]) =>
     rufeFunktion<{ gesichert: number; fehler: number }>(
       'microsoft',

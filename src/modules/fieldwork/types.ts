@@ -1,7 +1,26 @@
 /** Fachliche Typen des Moduls «Baustelle & Rapporte». */
+import type { BaustellenInfo, Seriennummer, Sicherheit } from './typenBaustelle'
 
-/** Reiter der Seite (#/fieldwork?reiter=…). «tag» ist die Handy-Ansicht der Monteure. */
-export const REITER = ['tag', 'wochenplan', 'rapporte', 'zeiten', 'nachtraege'] as const
+export * from './typenBaustelle'
+export * from './typenLeitung'
+
+/**
+ * Reiter der Seite (#/fieldwork?reiter=…). «tag» ist die Handy-Ansicht der Monteure; «heute», «baustellen»,
+ * «meldungen» und «auswertung» sind für Projektleitung und GL (Recht preise).
+ */
+export const REITER = [
+  'tag',
+  'heute',
+  'wochenplan',
+  'baustellen',
+  'rapporte',
+  'zeiten',
+  'nachtraege',
+  'meldungen',
+  'auswertung',
+] as const
+/** Reiter nur mit Recht «preise». */
+export const REITER_LEITUNG: readonly Reiter[] = ['heute', 'baustellen', 'meldungen', 'auswertung']
 export type Reiter = (typeof REITER)[number]
 
 export const RAPPORT_ARTEN = ['montage', 'service', 'wartung', 'ibn'] as const
@@ -61,6 +80,8 @@ export interface TagEintrag {
   team: string[]
   material: { zeilen: number; fehlt: number } | null
   rapporte: RapportKurz[]
+  /** Zusätze aus `baustellen_infos` (nur Einsätze): Schritte, Pflichtfotos, Soll/Ist, Team mit IDs. */
+  info?: BaustellenInfo | null
   service?: {
     id: string
     nummer: string
@@ -173,11 +194,32 @@ export interface Rapport {
   stunden: number | null
   fotos_anzahl: number
   nachtraege_anzahl: number
+  team: string[]
+  schritte: Record<string, boolean>
+  sicherheit: Sicherheit | null
+  seriennummern: Seriennummer[]
+  vorbehalte: { text: string }[]
+  visiert_am: string | null
+  visiert_von_name: string | null
+  rueckfrage: string | null
 }
 
 /** Felder, die der Monteur im Rapport ändert (alle optional: nur Gesendetes wird gespeichert; Prüfpunkte werden zusammengeführt). */
 export type RapportEingabe = Partial<
-  Pick<Rapport, 'arbeiten' | 'material' | 'pruefpunkte' | 'montage_fertig' | 'verrechnung' | 'notiz_intern' | 'datum'>
+  Pick<
+    Rapport,
+    | 'arbeiten'
+    | 'material'
+    | 'pruefpunkte'
+    | 'montage_fertig'
+    | 'verrechnung'
+    | 'notiz_intern'
+    | 'datum'
+    | 'schritte'
+    | 'sicherheit'
+    | 'seriennummern'
+    | 'vorbehalte'
+  >
 >
 
 /** Neuer Rapport: Art und Bezug (Projekt, Service-Fall oder Wartungsvertrag). */

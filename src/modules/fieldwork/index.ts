@@ -11,8 +11,8 @@ export const meta: ModulMeta = {
   titel: { de: 'Baustelle & Rapporte', fr: 'Chantier & rapports' },
   kurztitel: { de: 'Baustelle', fr: 'Chantier' },
   untertitel: {
-    de: 'Am Handy für Monteure: Rapport, Zeiterfassung, Nachträge, IBN-Protokoll',
-    fr: 'Sur mobile pour les monteurs : rapport, saisie du temps, avenants, protocole MES',
+    de: 'Montage am Handy mit Rapport, Teamzeit und Fotos; Baustellen, Meldungen und Auswertung für die Leitung',
+    fr: 'Montage sur mobile avec rapport, temps d’équipe et photos ; chantiers, signalements et analyse pour la direction',
   },
   pfad: '/fieldwork',
   icon: 'clipboard-check',
