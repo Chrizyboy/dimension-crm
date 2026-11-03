@@ -1850,7 +1850,8 @@
       "beispiel": "Erste Zeile: {{nr}} · {{name}} · EK CHF {{ek}}",
       "vollstaendig": "Vollständige Liste",
       "vollstaendigHinweis": "Artikel dieses Lieferanten, die nicht mehr in der Datei stehen, werden als «nicht mehr geliefert» gezeigt.",
-      "pruefen": "{{n}} Zeilen vergleichen",
+      "pruefen_one": "{{count}} Zeile vergleichen",
+      "pruefen_other": "{{count}} Zeilen vergleichen",
       "geprueft": "Verglichen: {{geaendert}} Preise ändern sich, {{neu}} Artikel sind neu",
       "feld": {
         "artikelnummer": "Artikelnummer",
@@ -1913,7 +1914,8 @@
       "proKwp": "{{betrag}}/kWp",
       "marge": "Marge {{prozent}} %",
       "spalte": "In Variante",
-      "inVariante": "{{name}} in Variante {{id}}"
+      "inVariante": "{{name}} in Variante {{id}}",
+      "waehlen": "Variante {{name}} wählen (CHF {{betrag}} inkl. MWST)"
     },
     "baustein": {
       "leiste": "Bausteine:",

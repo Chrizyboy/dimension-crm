@@ -74,7 +74,7 @@ export default function Kalkulation({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="grid gap-4 lg:grid-cols-[22rem_1fr]">
+      <div className="grid gap-4 lg:grid-cols-[22rem_minmax(0,1fr)]">
         <Katalog artikel={artikel} onDazu={dazu} />
         <KalkBlatt
           k={k}

@@ -71,24 +71,15 @@ export function VariantenLeiste({
 
   const frei = IDS.find((id) => !varianten.some((v) => v.id === id))
   return (
-    <div className="grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label={t('preise.var.titel')}>
+    <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label={t('preise.var.titel')}>
       {varianten.map((v) => {
         const s = summe({ ...k, variante: v.id }, satz)
         const an = (k.variante ?? varianten[0]?.id) === v.id
         return (
           <div
             key={v.id}
-            role="radio"
-            aria-checked={an}
-            tabIndex={0}
-            onClick={() => {
-              onAendern({ ...k, variante: v.id })
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') onAendern({ ...k, variante: v.id })
-            }}
             className={cn(
-              'focus-visible:ring-ring flex cursor-pointer flex-col gap-1 rounded-lg border p-2.5 outline-none focus-visible:ring-2',
+              'flex flex-col gap-1 rounded-lg border p-2.5',
               an ? 'border-accent ring-accent bg-accent-soft/40 ring-1' : 'hover:border-border-strong',
             )}
           >
@@ -97,9 +88,6 @@ export function VariantenLeiste({
               <input
                 aria-label={t('preise.var.name', { id: v.id })}
                 value={v.name}
-                onClick={(e) => {
-                  e.stopPropagation()
-                }}
                 onChange={(e) => {
                   onAendern({
                     ...k,
@@ -113,26 +101,34 @@ export function VariantenLeiste({
                 variant="ghost"
                 className="size-6"
                 aria-label={t('preise.var.entfernen', { id: v.id })}
-                onClick={(e) => {
-                  e.stopPropagation()
+                onClick={() => {
                   entferne(v.id)
                 }}
               >
                 <X />
               </Button>
             </div>
-            <span className="zahlen font-display text-lg font-semibold">CHF {formatChf(s.total)}</span>
-            <span className="text-muted-foreground text-xs">
-              {t('preise.var.exkl', { betrag: formatChf(s.netto) })}
-              {s.proKwp ? ` · ${t('preise.var.proKwp', { betrag: formatChf(s.proKwp) })}` : ''}
-            </span>
-            {s.netto > 0 && (
-              <span>
+            {/* Eigener Knopf zum Wählen: Feld und Knopf dürfen nicht in einem anklickbaren Element stecken. */}
+            <button
+              type="button"
+              aria-pressed={an}
+              aria-label={t('preise.var.waehlen', { name: v.name || v.id, betrag: formatChf(s.total) })}
+              onClick={() => {
+                onAendern({ ...k, variante: v.id })
+              }}
+              className="focus-visible:ring-ring flex flex-col items-start gap-1 rounded text-left outline-none focus-visible:ring-2"
+            >
+              <span className="zahlen font-display text-lg font-semibold">CHF {formatChf(s.total)}</span>
+              <span className="text-muted-foreground text-xs">
+                {t('preise.var.exkl', { betrag: formatChf(s.netto) })}
+                {s.proKwp ? ` · ${t('preise.var.proKwp', { betrag: formatChf(s.proKwp) })}` : ''}
+              </span>
+              {s.netto > 0 && (
                 <Badge ton={TON[dbTon(s.dbProzent)]}>
                   {t('preise.var.marge', { prozent: Math.round(s.dbProzent * 10) / 10 })}
                 </Badge>
-              </span>
-            )}
+              )}
+            </button>
           </div>
         )
       })}

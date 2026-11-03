@@ -1850,7 +1850,8 @@
       "beispiel": "Première ligne : {{nr}} · {{name}} · achat CHF {{ek}}",
       "vollstaendig": "Liste complète",
       "vollstaendigHinweis": "Les articles de ce fournisseur absents du fichier sont affichés comme « plus livrés ».",
-      "pruefen": "Comparer {{n}} lignes",
+      "pruefen_one": "Comparer {{count}} ligne",
+      "pruefen_other": "Comparer {{count}} lignes",
       "geprueft": "Comparé : {{geaendert}} prix changent, {{neu}} articles sont nouveaux",
       "feld": {
         "artikelnummer": "Numéro d'article",
@@ -1913,7 +1914,8 @@
       "proKwp": "{{betrag}}/kWc",
       "marge": "Marge {{prozent}} %",
       "spalte": "Dans variante",
-      "inVariante": "{{name}} dans la variante {{id}}"
+      "inVariante": "{{name}} dans la variante {{id}}",
+      "waehlen": "Choisir la variante {{name}} (CHF {{betrag}} TVA incl.)"
     },
     "baustein": {
       "leiste": "Modules :",

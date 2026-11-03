@@ -45,7 +45,7 @@ export function KalkPositionen({
   }
   return (
     <div className="-mx-4 overflow-x-auto px-4">
-      <table className="w-full min-w-[46rem] text-sm">
+      <table className="w-full min-w-[50rem] text-sm">
         <thead>
           <tr className="text-muted-foreground border-b text-left text-xs">
             <th className="py-1.5 font-medium">{t('preise.kalk.position')}</th>
@@ -132,7 +132,7 @@ export function KalkPositionen({
                     />
                   )}
                 </td>
-                <td className="py-1 text-right">
+                <td className="py-1 pl-3 text-right whitespace-nowrap">
                   {p.preisRappen !== undefined ? (
                     <PreisFeld
                       label={`${t('preise.kalk.preis')} ${p.name}`}
@@ -145,7 +145,9 @@ export function KalkPositionen({
                     <span className="zahlen font-mono text-[13px]">{formatChf(z.preis)}</span>
                   )}
                 </td>
-                <td className="zahlen py-1 text-right font-mono text-[13px] font-medium">{formatChf(z.total)}</td>
+                <td className="zahlen py-1 pl-3 text-right font-mono text-[13px] font-medium whitespace-nowrap">
+                  {formatChf(z.total)}
+                </td>
                 {ids.length > 0 && (
                   <td className="py-1 pl-2">
                     <span className="flex gap-0.5">

@@ -37,6 +37,8 @@ export default function Preisaenderungen({
   const [gewaehlt, setGewaehlt] = useState<Set<number> | null>(null)
   const [kategorien, setKategorien] = useState<Record<number, string>>({})
   const [arbeitet, setArbeitet] = useState(false)
+  // Für welche Liste Auswahl und Kategorien gelten; wechselt die Liste (auch nach «Übernehmen»), beginnen sie neu.
+  const [fuer, setFuer] = useState<string | null>(null)
 
   if (importe.error) return <Fehlerzustand details={String(importe.error)} onNochmal={() => void importe.refetch()} />
   if (importe.isPending) return <Skelett className="h-80" />
@@ -59,6 +61,11 @@ export default function Preisaenderungen({
   const imp: PreisImport | undefined =
     liste.find((i) => i.id === offenId) ?? liste.find((i) => i.status === 'offen') ?? liste[0]
   if (!imp) return null
+  if (imp.id !== fuer) {
+    setFuer(imp.id)
+    setGewaehlt(null)
+    setKategorien({})
+  }
   const geaendert = imp.ergebnis.filter((z) => z.art === 'geaendert')
   const auswahl = gewaehlt ?? new Set(geaendert.map((z) => z.i))
 
@@ -75,6 +82,8 @@ export default function Preisaenderungen({
       await Promise.all([
         qc.invalidateQueries({ queryKey: PREIS_SCHLUESSEL }),
         qc.invalidateQueries({ queryKey: ['offerten'] }),
+        // Neue Lieferanten aus der Datei erscheinen sonst erst nach 30 Minuten in der Auswahl.
+        qc.invalidateQueries({ queryKey: ['lieferanten'] }),
       ])
       melde('ok', ok)
       setGewaehlt(null)

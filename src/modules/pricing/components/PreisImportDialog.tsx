@@ -151,7 +151,7 @@ export default function PreisImportDialog({ onSchliessen }: { onSchliessen: (fer
             </Button>
             <Button disabled={!bereit} laedt={anlegen.isPending} onClick={() => void pruefen()}>
               <Upload />
-              {t('preise.datei.pruefen', { n: zeilen.length })}
+              {t('preise.datei.pruefen', { count: zeilen.length })}
             </Button>
           </>
         }
