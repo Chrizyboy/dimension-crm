@@ -15,7 +15,8 @@ const EingangListe = lazy(() => import('./EingangListe'))
 const OffertListe = lazy(() => import('./OffertListe'))
 const Nachfassen = lazy(() => import('./Nachfassen'))
 const PdfImport = lazy(() => import('./PdfImport'))
-const OffertAkte = lazy(() => import('./OffertAkte'))
+const OffertSeite = lazy(() => import('./OffertSeite'))
+const Arbeitsvorrat = lazy(() => import('./Arbeitsvorrat'))
 const EingangAkte = lazy(() => import('./EingangAkte'))
 
 export interface OffertenProps {
@@ -28,7 +29,7 @@ export interface OffertenProps {
 }
 
 /**
- * «Offerten» (V233: Neue Offerten, Offerten Muri, Offerten Bulle, Nachfassen) mit einer Suche über alle
+ * «Offerten» (Arbeitsvorrat als Board; V233: Neue Offerten, Offerten Muri, Offerten Bulle, Nachfassen) mit einer Suche über alle
  * Reiter (V186): die Zahl an jedem Reiter zeigt, wo die Suche etwas findet.
  */
 export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: OffertenProps) {
@@ -60,6 +61,25 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
   const offen = offerteId ? (offerten.data ?? []).find((o) => o.id === offerteId) : undefined
   const offenerEingang = leadId ? (eingang.data ?? []).find((e) => e.id === leadId) : undefined
 
+  if (offerteId) {
+    return (
+      <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
+        {laedt ? (
+          <Skelett className="h-96" />
+        ) : (
+          <Suspense fallback={<Skelett className="h-96" />}>
+            <OffertSeite
+              o={offen ?? null}
+              onZurueck={() => {
+                onAdresse({ offerte: null })
+              }}
+            />
+          </Suspense>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf titel={t('offerten.titel')} beschreibung={t('offerten.beschreibung')} />
@@ -76,7 +96,7 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
             className={reiterKnopfKlasse}
           >
             {t(`offerten.ansicht.${a}`)}
-            {a !== 'import' && !laedt && (
+            {a !== 'import' && a !== 'vorrat' && !laedt && (
               <span className="zahlen text-muted-foreground font-mono text-xs">{zahlen[a]}</span>
             )}
           </button>
@@ -103,6 +123,15 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
         <Skelett className="h-96" />
       ) : (
         <Suspense fallback={<Skelett className="h-96" />}>
+          {ansicht === 'vorrat' && (
+            <Arbeitsvorrat
+              offerten={gefunden.offerten}
+              eingang={gefunden.eingang}
+              onOeffnen={(ziel) => {
+                onAdresse(ziel)
+              }}
+            />
+          )}
           {ansicht === 'eingang' && (
             <EingangListe
               eintraege={gefunden.eingang}
@@ -143,15 +172,6 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
       )}
 
       <Suspense>
-        {offerteId && (
-          <OffertAkte
-            id={offerteId}
-            offerte={offen ?? null}
-            onSchliessen={() => {
-              onAdresse({ offerte: null })
-            }}
-          />
-        )}
         {leadId && (
           <EingangAkte
             eintrag={offenerEingang ?? null}

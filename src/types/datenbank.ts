@@ -6243,26 +6243,37 @@ export type Database = {
           batterie: string | null
           betrag_manuell: boolean
           betrag_rappen: number | null
+          chance_prozent: number | null
           entscheid: string | null
           entscheid_am: string | null
+          entscheid_erwartet: string | null
           entscheid_von: string | null
           erstellt_am: string
           erstellt_von: string | null
           eturnity_id: string | null
+          freigabe: Json | null
           geaendert_am: string
           geloescht_am: string | null
+          gueltig_bis: string | null
           id: string
           jahr: number | null
+          konkurrenz: string | null
           kontakt_id: string
           leistung_kwp: number | null
+          nachfass_ergebnis: string | null
+          nachfass_schritt: number
           nachfassen: string | null
           nachfassen_am: string | null
           nummer: string
           objekt_id: string | null
+          rabatt_prozent: number | null
           sprache: string
           standort_id: string | null
           status: string
           titel: string | null
+          unterlagen: NonNullable<Json>
+          variante: string | null
+          varianten: NonNullable<Json>
           verantwortlich_id: string | null
           verkaufschance_id: string | null
           verlustgrund: string | null
@@ -6283,26 +6294,37 @@ export type Database = {
           batterie?: string | null
           betrag_manuell?: boolean
           betrag_rappen?: number | null
+          chance_prozent?: number | null
           entscheid?: string | null
           entscheid_am?: string | null
+          entscheid_erwartet?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           eturnity_id?: string | null
+          freigabe?: Json | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gueltig_bis?: string | null
           id?: string
           jahr?: number | null
+          konkurrenz?: string | null
           kontakt_id: string
           leistung_kwp?: number | null
+          nachfass_ergebnis?: string | null
+          nachfass_schritt?: number
           nachfassen?: string | null
           nachfassen_am?: string | null
           nummer: string
           objekt_id?: string | null
+          rabatt_prozent?: number | null
           sprache?: string
           standort_id?: string | null
           status?: string
           titel?: string | null
+          unterlagen?: NonNullable<Json>
+          variante?: string | null
+          varianten?: NonNullable<Json>
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
           verlustgrund?: string | null
@@ -6322,26 +6344,37 @@ export type Database = {
           batterie?: string | null
           betrag_manuell?: boolean
           betrag_rappen?: number | null
+          chance_prozent?: number | null
           entscheid?: string | null
           entscheid_am?: string | null
+          entscheid_erwartet?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           eturnity_id?: string | null
+          freigabe?: Json | null
           geaendert_am?: string
           geloescht_am?: string | null
+          gueltig_bis?: string | null
           id?: string
           jahr?: number | null
+          konkurrenz?: string | null
           kontakt_id?: string
           leistung_kwp?: number | null
+          nachfass_ergebnis?: string | null
+          nachfass_schritt?: number
           nachfassen?: string | null
           nachfassen_am?: string | null
           nummer?: string
           objekt_id?: string | null
+          rabatt_prozent?: number | null
           sprache?: string
           standort_id?: string | null
           status?: string
           titel?: string | null
+          unterlagen?: NonNullable<Json>
+          variante?: string | null
+          varianten?: NonNullable<Json>
           verantwortlich_id?: string | null
           verkaufschance_id?: string | null
           verlustgrund?: string | null
@@ -11736,32 +11769,46 @@ export type Database = {
       }
       offerten_liste: {
         Row: {
+          abgelaufen: boolean | null
           angebot_am: string | null
           angebot_am_frueher: string[] | null
           anzahl_module: number | null
           anzahl_versionen: number | null
           batterie: string | null
           betrag_rappen: number | null
+          chance: number | null
+          chance_prozent: number | null
+          eingang_status: string | null
           email: string | null
           entscheid: string | null
           entscheid_am: string | null
+          entscheid_erwartet: string | null
           erstellt_am: string | null
           eturnity_id: string | null
           faellig_am: string | null
+          freigabe: Json | null
+          freigabe_grund: string | null
           geaendert_am: string | null
+          gueltig_bis: string | null
           id: string | null
           im_eingang: boolean | null
+          konkurrenz: string | null
           kontakt_id: string | null
           kundennummer: number | null
           leistung_kwp: number | null
+          nachfass_ergebnis: string | null
+          nachfass_schritt: number | null
           nachfassen_am: string | null
           name: string | null
           nummer: string | null
           objekt_id: string | null
           ort: string | null
+          phase: string | null
           plz: string | null
           projekt_id: string | null
           projekt_nummer: string | null
+          rabatt_prozent: number | null
+          rueckfrage: string | null
           sprache: string | null
           stand: string | null
           standort: string | null
@@ -11770,9 +11817,15 @@ export type Database = {
           strasse: string | null
           suchtext: string | null
           telefon: string | null
+          termin_am: string | null
           titel: string | null
+          unterlagen: Json | null
+          variante: string | null
+          varianten: Json | null
           verantwortlich_id: string | null
           verantwortlich_name: string | null
+          verkauf_person_id: string | null
+          verkauf_person_name: string | null
           verkaufschance_id: string | null
           verlustgrund: string | null
           versionen: Json | null
@@ -11781,6 +11834,7 @@ export type Database = {
           werkvertrag_id: string | null
           werkvertrag_status: string | null
           wirtschaftlichkeit: Json | null
+          zur_offerte_am: string | null
           zurueckgegeben: Json | null
         }
         ComputedFields: never
@@ -11832,6 +11886,13 @@ export type Database = {
             columns: ['verkaufschance_id']
             isOneToOne: false
             referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'verkaufschancen_tour_person_id_fkey'
+            columns: ['verkauf_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
         ]
@@ -13449,8 +13510,11 @@ export type Database = {
           vorname: string
         }[]
       }
+      offerte_angaben_setzen: { Args: { p: Json; p_offerte: string }; Returns: undefined }
       offerte_anlegen: { Args: { p: Json }; Returns: string }
       offerte_entscheiden: { Args: { p_angaben?: Json; p_offerte: string; p_ziel: string }; Returns: string }
+      offerte_freigeben: { Args: { p_notiz?: string; p_offerte: string }; Returns: undefined }
+      offerte_nachfassen: { Args: { p?: Json; p_ergebnis: string; p_offerte: string }; Returns: string }
       offerte_status_setzen: { Args: { p_angaben?: Json; p_status: string; p_verkaufschance: string }; Returns: string }
       offerte_version_entfernen: { Args: { p_offerte: string }; Returns: number }
       offerte_version_erfassen: { Args: { p: Json; p_offerte: string }; Returns: number }
