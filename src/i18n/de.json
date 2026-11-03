@@ -2086,6 +2086,12 @@
       "keineVerloren": "Keine verlorenen Offerten im Zeitraum.",
       "keineKonkurrenz": "Keine Konkurrenz erfasst. Beim Nachfassen unter «Konkurrenz» eintragen.",
       "ohne": "Ohne Zuständige"
+    },
+    "stueckliste": {
+      "titel": "Stückliste",
+      "stand": "{{material}} Material · {{alle}} Positionen",
+      "option": "Option: {{gruppe}}",
+      "imPdf": "Stückliste mit {{anzahl}} Positionen erkannt, sie wird mitgespeichert."
     }
   },
   "werkvertraege": {
@@ -2857,6 +2863,8 @@
     "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration.",
     "einstellungen_kein_recht": "Diese Einstellung darf nur die Administration ändern.",
     "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration.",
+    "social_kein_recht": "Das darf nur die Administration ändern.",
+    "social_konto_unbekannt": "Dieses Konto ist nicht verbunden. Bitte neu verbinden.",
     "ausgang_freigabe_kein_recht": "Diese Nachricht darfst du nicht freigeben: Newsletter gibt die Administration frei, Mahnungen die Buchhaltung, alles andere die Person, die sendet.",
     "empfehlung_werbesperre": "Der Kunde hat eine Werbesperre. Keine Anfrage senden.",
     "empfehlung_nicht_bereit": "Diese Anfrage ist nicht mehr offen.",
@@ -7027,8 +7035,8 @@
         "canva": "Canva"
       },
       "wozu": {
-        "meta": "Posts auf die Facebook-Seite und das Instagram-Konto von Dimension Solaire.",
-        "linkedin": "Posts auf die LinkedIn-Firmenseite.",
+        "meta": "Posts auf die deutsche und die französische Facebook-Seite und ihre Instagram-Konten.",
+        "linkedin": "Posts auf die deutsche und die französische LinkedIn-Firmenseite.",
         "canva": "Bilder mit dem Markenkit gestalten und ins CRM holen."
       },
       "verbundenKurz": "Verbunden",
@@ -7040,7 +7048,12 @@
       "erneuern": "Neu verbinden",
       "trennen": "Trennen",
       "verbunden": "Verbunden: {{dienst}}",
-      "fehlgeschlagen": "Verbindung fehlgeschlagen ({{code}})"
+      "fehlgeschlagen": "Verbindung fehlgeschlagen ({{code}})",
+      "sprache": {
+        "de": "Deutsch",
+        "fr": "Französisch"
+      },
+      "keinKonto": "{{netz}}: kein Konto gefunden."
     },
     "newsletter": {
       "zahlen": "Kennzahlen",

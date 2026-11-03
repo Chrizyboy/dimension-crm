@@ -188,6 +188,18 @@ export interface SocialVerbindung {
   ablauf: string | null
   fehler: string | null
   von: string | null
+  /** Verbundene Seiten (Meta, mit Instagram-Konto falls verknüpft) bzw. Firmenseiten (LinkedIn). */
+  konten: SocialKonto[]
+  /** Welches Konto je Netzwerk deutsch und welches französisch ist (Seiten-ID bzw. Organisation). */
+  zuordnung: Partial<Record<'facebook' | 'instagram' | 'linkedin', Partial<Record<'de' | 'fr', string>>>>
+}
+
+/** Eine verbundene Facebook-Seite (mit Instagram) oder LinkedIn-Firmenseite. */
+export interface SocialKonto {
+  id: string
+  name: string
+  instagram_id?: string | null
+  instagram_name?: string | null
 }
 
 /** Verbaute Anlage als Vorlage für einen Post: nur Ort, Leistung und Komponenten, nie der Name (V233). */
@@ -201,7 +213,7 @@ export interface Referenzanlage {
   datum: string | null
 }
 
-/* --- Marketing vollständig (Entscheid 0053) ------------------------------------------------------------- */
+/* --- Marketing vollständig (Entscheid 0055) ------------------------------------------------------------- */
 
 export const KAMPAGNEN_ARTEN = [
   'aktion',
@@ -354,7 +366,7 @@ export interface MediathekFoto {
   titel: boolean
 }
 
-/** Zusätzliche Einstellungen «marketing» (Entscheid 0053). */
+/** Zusätzliche Einstellungen «marketing» (Entscheid 0055). */
 export interface MarketingPlanung {
   budget?: Record<string, Partial<Record<Kanal, number>>>
   werbepause_tage?: number

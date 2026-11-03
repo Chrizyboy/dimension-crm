@@ -8090,6 +8090,7 @@ export type Database = {
           sprache: string
           standort_id: string | null
           status: string
+          stueckliste: Json | null
           titel: string | null
           unterlagen: NonNullable<Json>
           variante: string | null
@@ -8141,6 +8142,7 @@ export type Database = {
           sprache?: string
           standort_id?: string | null
           status?: string
+          stueckliste?: Json | null
           titel?: string | null
           unterlagen?: NonNullable<Json>
           variante?: string | null
@@ -8191,6 +8193,7 @@ export type Database = {
           sprache?: string
           standort_id?: string | null
           status?: string
+          stueckliste?: Json | null
           titel?: string | null
           unterlagen?: NonNullable<Json>
           variante?: string | null
@@ -18871,6 +18874,16 @@ export type Database = {
         }[]
       }
       sicherung_wiederhergestellt: { Args: { p_anzahl: Json; p_id: string; p_person: string }; Returns: undefined }
+      sms_anfrage: { Args: { p_inhalt: Json; p_url: string; p_zeitlimit_ms?: number }; Returns: number }
+      sms_antwort: {
+        Args: { p_id: number }
+        Returns: {
+          fehler: string
+          inhalt: string
+          status: number
+          zeitlimit: boolean
+        }[]
+      }
       sms_erinnerungen: {
         Args: { p_datum: string }
         Returns: {
@@ -18964,13 +18977,16 @@ export type Database = {
           ablauf: string
           dienst: string
           fehler: string
+          konten: Json
           name: string
           verbunden: boolean
           verbunden_am: string
           von: string
+          zuordnung: Json
         }[]
       }
       social_von_hand_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      social_zuordnung_setzen: { Args: { p_konto: string; p_netzwerk: string; p_sprache: string }; Returns: undefined }
       social_zur_freigabe: { Args: { p_id: string }; Returns: undefined }
       social_zurueckziehen: { Args: { p_id: string }; Returns: undefined }
       social_zustand_anlegen: {

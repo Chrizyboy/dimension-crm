@@ -11,6 +11,19 @@ französisch). Das CRM liest im Browser aus dem Text: Nummer, Kunde, Datum, Betr
 Rendite, Solarstrompreis, EIV, Steuerersparnis). Es schlägt die passende Offerte oder den passenden Lead vor;
 ein Mensch bestätigt. Was nicht eindeutig im PDF steht, bleibt leer. Das PDF verlässt den Computer dabei nicht.
 
+**Vorlage 2026 (Muri und Bulle):** Die Offerte trägt keine CRM-Nummer, aber in jeder Fusszeile das
+Eturnity-Projekt und das Datum (`hyd-89  23.03.2026  Created with Eturnity Software`). Das CRM speichert das
+Projekt als `eturnity_id` und ordnet spätere PDFs darüber zu. Aus den **Detailkosten** (DE «DETAILKOSTEN», FR
+«COÛTS DÉTAILLÉS») liest `src/modules/quotes/lib/stueckliste.ts` jede Position mit Gruppe, Menge, Einheit, EP und
+Preis, erkennt Module, Wechselrichter, Batterie, Optimierer und Unterkonstruktion, trennt Material von Leistungen
+(Montage, Planung …) und markiert «Optionale Komponenten». Die Liste steht in `offerten.stueckliste` und erscheint
+in der Offerte als «Stückliste». Wird die Offerte zum Auftrag, schlägt `projekt_material_vorschlagen` die
+Materialliste daraus vor (nur Material ohne Optionen, Artikel nach Ähnlichkeit), wenn es keine Kalkulation gibt.
+Geprüft mit dem Text echter Offerten aus SharePoint (DE und FR); die Tests nutzen erfundene Daten.
+
+Der Devis aus dem alten Bulle-Werkzeug («DEVIS 101618.01.02», «PRIX HT») hat keine Detailkosten im Eturnity-Aufbau:
+dort füllen Regeln und KI nur die Eckwerte, eine Stückliste entsteht nicht.
+
 ## 2. Webhook-Eingang (vorbereitet, muss eingerichtet werden)
 
 Eturnity bietet keine offene Schnittstelle, über die das CRM Projekte abfragen könnte. Eturnity (direkt oder über

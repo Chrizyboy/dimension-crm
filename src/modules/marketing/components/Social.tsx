@@ -70,7 +70,7 @@ function PostKarte({ p, onOeffnen }: { p: SocialPost; onOeffnen: () => void }) {
 }
 
 /**
- * Social Media als Board (Entscheid 0053): Ideen → Entwurf → Zur Freigabe → Geplant → Veröffentlicht. Vorbereiten
+ * Social Media als Board (Entscheid 0055): Ideen → Entwurf → Zur Freigabe → Geplant → Veröffentlicht. Vorbereiten
  * darf jede Person, freigeben die Administration. Ohne Verbindung zu Meta/LinkedIn kommt zur geplanten Zeit die
  * Glocke «Jetzt posten» und man trägt danach die Links ein («von Hand»).
  */

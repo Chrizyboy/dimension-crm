@@ -59,6 +59,9 @@ export async function rufe(url: string, init: RequestInit = {}, o: AufrufOptione
       res = await fetch(url, { ...init, signal: AbortSignal.timeout(o.zeitlimitMs ?? 10_000) })
     } catch (f) {
       const zeit = f instanceof Error && (f.name === 'TimeoutError' || f.name === 'AbortError')
+      // Ursache ins Protokoll der Funktion (Dashboard › Edge Functions › Logs), z. B. Zertifikat oder DNS:
+      // die App zeigt nur «Keine Verbindung». Ohne Pfad und Inhalt, damit keine Daten ins Protokoll gelangen.
+      console.warn(`rufe ${new URL(url).host}: ${f instanceof Error ? `${f.name} ${f.message}` : String(f)}`)
       letzter = new DienstFehler(
         zeit ? 'zeitlimit' : 'netzwerk',
         0,

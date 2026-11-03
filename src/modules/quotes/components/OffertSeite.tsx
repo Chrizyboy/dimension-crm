@@ -15,6 +15,7 @@ import { OffertSchritte } from './OffertSchritte'
 import { OffertVerlauf } from './OffertVerlauf'
 import { OffertVersionen } from './OffertVersionen'
 import { PdfWerteAbschnitt } from './PdfWerteAbschnitt'
+import { StuecklisteBox } from './StuecklisteBox'
 import { UnterlagenBox } from './UnterlagenBox'
 import { VariantenBox } from './VariantenBox'
 import { WirtschaftlichkeitKarte } from './WirtschaftlichkeitKarte'
@@ -42,6 +43,7 @@ export default function OffertSeite({ o, onZurueck }: { o: Offerte | null; onZur
         </div>
         <div className="flex min-w-0 flex-col gap-4">
           <VariantenBox o={o} />
+          <StuecklisteBox o={o} />
           <PdfWerteAbschnitt o={o} />
           <AutomatischGeplant tabelle="offerten" id={o.id} />
           {o.wirtschaftlichkeit && Object.keys(o.wirtschaftlichkeit).length > 0 && (
