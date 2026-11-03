@@ -1,6 +1,6 @@
 import { mailVorbereiten } from '@/services/ausgang'
 import { supabase } from '@/services/supabase'
-import type { MeinTag } from '../types'
+import type { BaustellenWetter, MeinTag, TeamPerson, ZielSchluessel } from '../types'
 
 /** Datenzugriff «Mein Tag»: eine Abfrage für die ganze Seite, Aufgaben abhaken, Übersicht per Mail. */
 function db() {
@@ -30,4 +30,48 @@ export async function aufgabeErledigt(id: string, ichId: string): Promise<void> 
  */
 export async function tagesMailSenden(an: string, betreff: string, text: string, sprache: 'de' | 'fr'): Promise<void> {
   await mailVorbereiten({ an, betreff, text, sprache, art: 'tagesuebersicht', anhaenge: [] }, true)
+}
+
+/**
+ * Zeile verschieben (`tag_verschieben`): Aufgabe bekommt ein neues Fälligkeitsdatum, alles andere ist bis `bis`
+ * für mich ausgeblendet. `bis` leer = wieder zeigen.
+ */
+export async function verschieben(art: string, id: string, bis: string | null): Promise<void> {
+  const { error } = await db().rpc('tag_verschieben', { p_art: art, p_id: id, p_bis: bis as string })
+  if (error) throw error
+}
+
+/** Wer ist heute wo (`team_heute`), für alle sichtbar, ohne Grund einer Abwesenheit. */
+export async function ladeTeamHeute(): Promise<TeamPerson[]> {
+  const { data, error } = await db().rpc('team_heute')
+  if (error) throw error
+  return data as unknown as TeamPerson[]
+}
+
+/** Personen mit ihren Wochenzielen, für den Dialog «Ziele festlegen». */
+export async function ladeZiele(): Promise<{
+  personen: { id: string; name: string; rolle: string }[]
+  ziele: Record<string, Partial<Record<ZielSchluessel, number>>>
+}> {
+  const [p, e] = await Promise.all([
+    db().from('personen').select('id, name, rolle').eq('aktiv', true).is('geloescht_am', null).order('name'),
+    db().from('einstellungen').select('wert').eq('schluessel', 'kennzahlen').maybeSingle(),
+  ])
+  if (p.error) throw p.error
+  if (e.error) throw e.error
+  const wert = (e.data?.wert ?? {}) as { ziele_personen?: Record<string, Partial<Record<ZielSchluessel, number>>> }
+  return { personen: p.data, ziele: wert.ziele_personen ?? {} }
+}
+
+/** Wochenziele einer Person speichern (`kennzahlen_ziele_setzen`, nur Administration oder Recht «finanzen»). */
+export async function zieleSpeichern(person: string, ziele: Partial<Record<ZielSchluessel, number>>): Promise<void> {
+  const { error } = await db().rpc('kennzahlen_ziele_setzen', { p_person: person, p_ziele: ziele })
+  if (error) throw error
+}
+
+/** Meine Baustellen der nächsten Tage mit Wetter von MeteoSwiss (`wetter_baustellen`, M5 A). */
+export async function ladeWetter(): Promise<BaustellenWetter[]> {
+  const { data, error } = await db().rpc('wetter_baustellen')
+  if (error) throw error
+  return (data ?? []) as unknown as BaustellenWetter[]
 }

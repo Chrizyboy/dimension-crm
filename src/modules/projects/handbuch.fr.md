@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -14,6 +14,23 @@ Chaque commande signée passe ici par les autorisations, la préparation et le m
 - **Direction** : vue d’ensemble de tous les chantiers.
 
 ## Comment faire {#so}
+
+### Commencer la journée au poste de pilotage
+
+1. Vue **Poste de pilotage** : tous les projets en **Tableau** par phase ou en **Liste**. Les cartes avec une indication rouge sont bloquées (commander le matériel, autorisation en retard, paiement ouvert, défauts).
+2. Vue **Ma semaine** : ce qui est dû cette semaine et la suivante, en haut **En retard et bloqués**. Basculer entre **Mes projets** et **Tous les projets**.
+3. Un clic sur une carte ouvre le dossier du projet en pleine page.
+
+### Noter défauts et travaux restants
+
+1. Dans le dossier, la carte **Défauts et travaux restants** : choisir le type (**Défaut** ou **Travail restant**), texte, délai, **Saisir**.
+2. La coche le marque réglé ; les éléments réglés peuvent être rouverts.
+3. Tant que quelque chose est ouvert, la **remise** ne peut pas être clôturée.
+
+### Saisir les intervenants
+
+1. Dans le dossier, la carte **Intervenants**, **Ajouter** : rôle (électricien, échafaudage, gestionnaire de réseau …) et contact du carnet d’adresses.
+2. Téléphone et e-mail figurent alors directement dans le dossier. Les rôles sont une liste de choix dans les paramètres.
 
 ### Planifier une nouvelle commande
 
@@ -75,6 +92,8 @@ Chaque commande signée passe ici par les autorisations, la préparation et le m
 
 - Ne jamais poser à la main les étapes automatiques. Annuler seulement avec **Annuler la dernière étape de chantier**.
 - La check-list électricien fait partie de la feuille de route et doit être faite avant la MES.
+- Remise seulement quand aucun défaut ni travail restant n’est ouvert.
+- Les infos client aux étapes clés ne partent qu’après validation dans la [Boîte d’envoi](kapitel:outbox).
 
 ## Questions fréquentes {#fragen}
 
@@ -86,6 +105,11 @@ Elle est posée automatiquement ; l’indication montre d’où elle vient (p. e
 
 L’installation est alors considérée comme construite : les étapes jusqu’au montage sont faites et l’installation créée. Tout peut être annulé.
 
+### Pourquoi l’historique affiche « Info client en attente de validation » ?
+
+Au contrat, à la date, au montage, à la MES et à la réception, l’automation prépare une info pour le client. Elle ne part que lorsque quelqu’un la valide dans la boîte d’envoi.
+
 ## Nouveautés {#neu}
 
+- 03.11.2026: Poste de pilotage, Ma semaine et dossier de projet en pleine page ; défauts et travaux restants, intervenants avec rôle, info client aux étapes clés avec validation.
 - 01.11.2026: Planning des chantiers avec vue chantiers ou équipe, conflits en rouge.
