@@ -76,8 +76,8 @@ select is((select kontakt_id from public.posteingang where kennung = '<pe1@x>'),
   'Kunde aus dem Projekt');
 select is((select zustaendig_id from public.posteingang where kennung = '<pe1@x>'), '00000000-0000-0000-0000-0000000018b1'::uuid,
   'eigenes Postfach: zuständig ist die Person selbst, nicht die Projektleitung');
-select is((select stand || '/' || sichtbar from public.posteingang where kennung = '<pe1@x>'), 'offen/team',
-  'Störung: offen und fürs Team sichtbar');
+select is((select stand || '/' || sichtbar from public.posteingang where kennung = '<pe1@x>'), 'offen/person',
+  'Störung: offen, bleibt im persönlichen Postfach (nie das Postfach anderer, Rollen 2.11.)');
 select is((select frist_am from public.posteingang where kennung = '<pe1@x>'), '2026-11-02 11:00+01'::timestamptz,
   'Störung: 2 Arbeitsstunden');
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018b1'
@@ -142,7 +142,9 @@ set local role authenticated;
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000018a2", "role": "authenticated"}', true);
 select is((select count(*)::int from public.posteingang where kennung = '<pe3@x>'), 0,
   'Interne Mail in Annas Postfach sieht Ben nicht');
-select is((select count(*)::int from public.posteingang where kennung = '<pe1@x>'), 1, 'Kundenmail sieht das Team');
+select is((select count(*)::int from public.posteingang where kennung = '<pe1@x>'), 0,
+  'Kundenmail in Annas Postfach sieht Ben auch nicht (nur eigenes Postfach und Team-Postfächer)');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000018a1", "role": "authenticated"}', true);
 with u as (update public.posteingang set stand = 'erledigt' where kennung = '<pe1@x>' returning 1)
 select is((select count(*)::int from u), 0, 'direkt ändern geht nicht (nur über posteingang_setzen)');
 select public.posteingang_setzen((select id from public.posteingang where kennung = '<pe1@x>'), 'oeffnen');

@@ -325,7 +325,17 @@
       "code_falsch": "Der Code stimmt nicht oder ist abgelaufen. Lass dir einen neuen schicken.",
       "zu_oft": "Zu viele Versuche. Bitte in einer Minute nochmals.",
       "netzwerk": "Keine Verbindung zum Server. Bitte Internet prüfen.",
-      "unbekannt": "Anmeldung hat nicht geklappt. Bitte nochmals versuchen."
+      "unbekannt": "Anmeldung hat nicht geklappt. Bitte nochmals versuchen.",
+      "link_ungueltig": "Dieser Link gilt nicht mehr. Bitte um einen neuen.",
+      "email_vergeben": "Diese Adresse gehört schon einer anderen Person im CRM.",
+      "email_ungueltig": "Bitte eine gültige Mailadresse eingeben."
+    },
+    "registrieren": {
+      "titel": "Willkommen, {{vorname}}",
+      "text": "Gib deine Mailadresse ein. Du bekommst einen Code, damit bist du angemeldet.",
+      "ungueltig": "Dieser Link gilt nicht mehr. Bitte um einen neuen Link oder melde dich mit deiner Mailadresse an.",
+      "email": "Deine Mailadresse",
+      "emailHinweis": "Auch eine private Adresse geht. Damit meldest du dich künftig an."
     }
   },
   "benutzer": {
@@ -365,19 +375,42 @@
     "bereicheAlle": "Aus: zeigt alle Bereiche, wie die Rolle.",
     "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse.",
     "kurzzeichen": "Kurzzeichen",
-    "kurzzeichenHinweis": "Steht in Listen, Planung und auf Dokumenten. Leer lassen für den Vorschlag {{vorschlag}}."
+    "kurzzeichenHinweis": "Steht in Listen, Planung und auf Dokumenten. Leer lassen für den Vorschlag {{vorschlag}}.",
+    "link": {
+      "titel": "Registrier-Link für {{name}}",
+      "text": "Schick diesen Link per WhatsApp oder SMS. Die Person öffnet ihn am Handy, gibt ihre Mailadresse ein und bestätigt sie mit dem Code.",
+      "feld": "Link",
+      "hinweis": "Der Link gilt 14 Tage und nur einmal. Ein neuer Link macht den alten ungültig.",
+      "kopieren": "Link kopieren",
+      "whatsapp": "Per WhatsApp",
+      "erstellen": "Registrier-Link erstellen",
+      "ohneMail": "Ohne Mail: Link fürs Handy",
+      "ohneMailText": "Für Personen mit privater Mail (z. B. Montage): Sie registrieren sich selbst über einen persönlichen Link.",
+      "nachricht": "Hallo {{name}}, hier ist dein Zugang zu Dimension Work. Öffne den Link am Handy und gib deine Mailadresse ein: {{adresse}}"
+    }
   },
   "rechte": {
     "basis": "Grunddaten",
     "preise": "Einkaufspreise",
     "finanzen": "Finanzen",
-    "admin": "Administration",
-    "preiseText": "Sieht Einkaufspreise und Margen.",
+    "admin": "Zusatz Administration",
+    "preiseText": "Sieht Einkaufspreise und Kalkulation.",
     "finanzenText": "Sieht Liquidität, Kreditoren und Fixkosten.",
     "planung": "Planung",
-    "planungText": "Trägt Abwesenheiten für alle ein und plant Einsätze.",
-    "adminText": "Verwaltet Benutzer, Rollen und alle Einstellungen.",
-    "ausRolle": "Kommt schon mit der Rolle."
+    "planungText": "Trägt Abwesenheiten für alle ein.",
+    "adminText": "Ändert Einstellungen, Benutzer, Rollen, Automationen und Sicherung. Finanzen und Personal nur mit Geschäftsleitung.",
+    "ausRolle": "Kommt schon mit der Rolle.",
+    "gl": "Zusatz Geschäftsleitung",
+    "glText": "Sieht alles inkl. Finanzen und Personal, arbeitet normal mit, sieht die Einstellungen, ändert das System nicht.",
+    "personal": "Personal",
+    "personalText": "Personal-Akten und Arbeitszeiten aller, Personal-Fristen.",
+    "marge": "Marge",
+    "margeText": "Kennzahlen mit Marge und Auftragsbestand in Franken.",
+    "visum": "Erstvisum",
+    "visumText": "Prüft Rechnungsentwürfe der eigenen Projekte und gibt das Erstvisum.",
+    "zusaetze": "Zusätze",
+    "weitere": "Weitere Rechte",
+    "nurLesen": "Du siehst die Einstellungen nur. Ändern kann die Administration."
   },
   "rollen": {
     "rechte": "Rechte der Rolle",
@@ -2953,6 +2986,11 @@
     "grossprojekt_stufe_unbekannt": "Diese Stufe gibt es nicht.",
     "grossprojekt_ungueltig": "Die Angaben sind ungültig.",
     "grossprojekt_text_fehlt": "Bitte einen Text eingeben.",
+    "rechnung_visum_kein_recht": "Diese Rechnung visiert die Projektleitung des Projekts oder die Buchhaltung.",
+    "rechnung_visum_nur_entwurf": "Visieren geht nur bei Entwürfen.",
+    "registrierung_schon_angemeldet": "Diese Person ist schon angemeldet und braucht keinen Link.",
+    "registrierung_kein_recht": "Registrier-Links erstellt die Administration.",
+    "registrierung_name_fehlt": "Bitte einen Namen eingeben.",
     "automation_grund_fehlt": "Bitte einen Grund angeben.",
     "automation_lauf_zu_ende": "Dieser Lauf ist schon zu Ende.",
     "automation_nicht_gestoppt": "Dieser Lauf ist nicht gestoppt.",
@@ -6390,6 +6428,25 @@
       "fehler": "Senden fehlgeschlagen",
       "alleFreigeben_one": "Mahnung freigeben",
       "alleFreigeben_other": "Alle {{count}} freigeben"
+    },
+    "visum": {
+      "titel": "Rechnungen zum Visum",
+      "offen_one": "{{count}} offen",
+      "offen_other": "{{count}} offen",
+      "dialogTitel": "Rechnung prüfen: {{titel}}",
+      "position": "Position",
+      "menge": "Menge",
+      "betrag": "Betrag",
+      "total": "Total",
+      "bemerkung": "Korrektur für die Buchhaltung",
+      "bemerkungText": "Nur ausfüllen, wenn etwas nicht stimmt.",
+      "geben": "Erstvisum geben",
+      "korrektur": "Korrektur melden",
+      "visiert": "visiert {{datum}}",
+      "korrigieren": "Korrektur gemeldet",
+      "akteVisiert": "Erstvisum von {{name}} am {{datum}}.",
+      "akteKorrektur": "Korrektur von {{name}}: {{text}}",
+      "akteOhne": "Noch ohne Erstvisum der Projektleitung."
     }
   },
   "spesen": {

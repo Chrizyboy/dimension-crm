@@ -2,6 +2,7 @@ import { ArrowUpRight, Search } from 'lucide-react'
 import { Suspense, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ModulIcon } from '@/components/shared/ModulIcon'
+import { NurAdministration } from '@/components/shared/NurAdministration'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -42,7 +43,10 @@ export default function Einstellungen({
   useTaste('/', () => sucheRef.current?.focus(), true, t('einstellungen.sucheKuerzel'))
 
   // Ohne Anmeldung (Vorschau ohne Datenbank) ist alles sichtbar, wie bei den Modulen.
-  const darf = (b: EinstellungsBereich) => status !== 'angemeldet' || hatRecht(ich, b.recht)
+  // Geschäftsleitung sieht die Bereiche der Administration zum Lesen (43A), ändern bleibt Administration.
+  const darf = (b: EinstellungsBereich) =>
+    status !== 'angemeldet' || hatRecht(ich, b.recht) || (b.recht === 'admin' && hatRecht(ich, 'gl'))
+  const nurLesen = (b: EinstellungsBereich) => status === 'angemeldet' && !hatRecht(ich, b.recht)
   const erlaubt = useMemo(() => sichtbareBereiche(bereiche, darf), [bereiche, ich, status]) // eslint-disable-line react-hooks/exhaustive-deps
   const gefunden = useMemo(() => sichtbareBereiche(erlaubt, () => true, suche), [erlaubt, suche])
   const offen = erlaubt.find((b) => b.id === bereich) ?? erlaubt[0]
@@ -137,7 +141,13 @@ export default function Einstellungen({
                 )}
               </div>
               <Suspense fallback={<Skelett className="h-64" />}>
-                <offen.Inhalt key={offen.id} module={module} />
+                {nurLesen(offen) ? (
+                  <NurAdministration>
+                    <offen.Inhalt key={offen.id} module={module} />
+                  </NurAdministration>
+                ) : (
+                  <offen.Inhalt key={offen.id} module={module} />
+                )}
               </Suspense>
             </>
           ) : (

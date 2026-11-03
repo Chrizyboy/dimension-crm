@@ -13,7 +13,7 @@ import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { useAktion } from '../hooks/useAktion'
-import { usePersonen, useZeiten } from '../hooks/useBaustelle'
+import { useMeineMitarbeitenden, usePersonen, useZeiten } from '../hooks/useBaustelle'
 import { lohnCsv } from '../lib/lohnExport'
 import { dauerText, heute, minuten, plusTage, summeJePerson, wochenStart, zuerich } from '../lib/zeit'
 import { ladeZeiten, zeitenExportieren, zeitenPruefen } from '../services/baustelle'
@@ -32,14 +32,15 @@ function herunterladen(text: string, name: string) {
 }
 
 /**
- * Zeiten einer Woche: jede Person sieht ihre eigenen, Projektleitung und Buchhaltung alle. Prüfen sperrt sie,
+ * Zeiten einer Woche: jede Person sieht ihre eigenen, direkte Vorgesetzte die ihrer Mitarbeitenden,
+ * Geschäftsleitung und Buchhaltung alle (Rechte «personal» oder «finanzen»). Prüfen sperrt sie,
  * der Lohn-Export (Buchhaltung) schreibt die geprüften als CSV für AbaNinja und markiert sie als exportiert.
  */
 export function Zeiten() {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const ich = useAnmeldung((z) => z.ich)
-  const darfPruefen = hatRecht(ich, 'preise') || hatRecht(ich, 'finanzen')
+  const darfPruefen = hatRecht(ich, 'personal') || hatRecht(ich, 'finanzen')
   const darfExport = hatRecht(ich, 'finanzen')
   const [woche, setWoche] = useState(() => wochenStart(heute()))
   // Gewählte Personen (leer = alle). Bei genau einer fragt die Datenbank nur diese ab, sonst filtert die App.
@@ -49,6 +50,10 @@ export function Zeiten() {
   const [gewaehlt, setGewaehlt] = useState<Set<string>>(new Set())
   const [dialog, setDialog] = useState<Zeit | 'neu' | null>(null)
   const personen = usePersonen()
+  const team = useMeineMitarbeitenden()
+  const sichtbar = (personen.data ?? []).filter(
+    (p) => darfPruefen || p.id === ich?.id || (team.data ?? []).includes(p.id),
+  )
   const bis = plusTage(woche, 6)
   const zeiten = useZeiten(woche, bis, einePerson)
   const { laeuft, aus } = useAktion()
@@ -122,7 +127,7 @@ export function Zeiten() {
           >
             <ChevronRight />
           </Button>
-          {darfPruefen && (
+          {(darfPruefen || (team.data ?? []).length > 0) && (
             <MehrfachFilter
               beschriftung={t('baustelle.zeiten.person')}
               alleText={t('baustelle.zeiten.allePersonen')}
@@ -132,7 +137,7 @@ export function Zeiten() {
                 setWahl(w)
                 setGewaehlt(new Set())
               }}
-              optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
+              optionen={sichtbar.map((p) => ({ wert: p.id, text: p.name }))}
             />
           )}
         </div>

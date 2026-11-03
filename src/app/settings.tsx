@@ -39,7 +39,9 @@ export const Route = createFileRoute('/settings')({
     const { bereich } = Route.useSearch()
     const navigate = Route.useNavigate()
     // Wer keinen einzigen Bereich sehen darf, bekommt die klare Meldung statt einer leeren Seite.
-    if (status === 'angemeldet' && !BEREICHE.some((b) => hatRecht(ich, b.recht))) return <KeinZugriff />
+    // Geschäftsleitung sieht alle Bereiche der Administration, ändert aber nichts (43A).
+    if (status === 'angemeldet' && !hatRecht(ich, 'gl') && !BEREICHE.some((b) => hatRecht(ich, b.recht)))
+      return <KeinZugriff />
     return (
       <Suspense>
         <Einstellungen
