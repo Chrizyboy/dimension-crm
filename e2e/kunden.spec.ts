@@ -101,8 +101,10 @@ test('Ctrl K findet den Kunden, Papierkorb und Wiederherstellen', async ({ page 
 
   await page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link', { name: 'Adressbuch' }).click()
   await page.getByRole('button', { name: 'Papierkorb', exact: true }).click()
+  // Im Papierkorb des Adressbuchs stehen auch Kunden; sie öffnen sich in ihrer Kundenakte (Entscheid 0045).
   await page.getByRole('row', { name: new RegExp(nachname) }).click()
-  const imKorb = page.getByRole('dialog', { name: `Erika ${nachname}` })
+  await expect(akte).toBeVisible()
+  const imKorb = page.getByRole('main')
   await expect(imKorb.getByText('Im Papierkorb')).toBeVisible()
   await imKorb.getByRole('button', { name: 'Weitere Aktionen' }).click()
   await page.getByRole('menuitem', { name: 'Wiederherstellen' }).click()

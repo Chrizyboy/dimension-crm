@@ -1,29 +1,79 @@
 import type { TFunction } from 'i18next'
 import { Badge } from '@/components/ui/badge'
-import { formatTelefon } from '@/lib/format'
-import { formatKundennummer } from '@/lib/kontakt'
+import { formatDatum, formatTelefon, unterzeile } from '@/lib/format'
+import { tonVonFarbe } from '@/lib/kontakt'
 import { spaltenHelfer, type Spalten } from '@/lib/tabelle'
-import type { Kontaktzeile } from '@/types/kontakt'
-import { EinzeilerZelle, NummerZelle } from '@/components/shared/Zellen'
+import { EinzeilerZelle } from '@/components/shared/Zellen'
+import { bewertungText, nachweisStand } from '../lib/rollen'
+import type { Partnerzeile } from '../types'
 
-const spalte = spaltenHelfer<Kontaktzeile>()
+/** Zeile der Liste: ein Partner, oder mit «auch Kunden zeigen» ein Kunde (Rolle «kunde»). */
+export type Listenzeile = Partnerzeile & { kunde?: boolean }
 
-/** Spalten des Adressbuchs: wer, welche Art, wo und wie erreichbar. */
-export function adressbuchSpalten(t: TFunction, kontaktart: (schluessel: string) => string): Spalten<Kontaktzeile> {
+const spalte = spaltenHelfer<Listenzeile>()
+
+/** Das Wichtigste je Rolle in einer Zeile, z. B. offene Gesuche beim Netzbetreiber, Bewertung beim Subunternehmer. */
+export function wichtigText(p: Listenzeile, t: TFunction): string {
+  const teile: string[] = []
+  if (p.rollen.includes('netzbetreiber')) {
+    if (p.gesucheOffen > 0)
+      teile.push(t('adressbuch.liste.gesuche', { count: p.gesucheOffen, tage: p.gesucheTage ?? 0 }))
+    if (p.gemeinden > 0) teile.push(t('adressbuch.liste.gemeinden', { count: p.gemeinden }))
+  }
+  if (p.rollen.includes('lieferant') && p.kundennummerBei)
+    teile.push(t('adressbuch.liste.kdNr', { nr: p.kundennummerBei }))
+  if (p.rollen.includes('subunternehmer')) {
+    if (p.gewerk) teile.push(p.gewerk)
+    const b = bewertungText(p.bewertung)
+    if (b) teile.push(b)
+    if (p.auftraegeLaufend > 0) teile.push(t('adressbuch.liste.auftraege', { count: p.auftraegeLaufend }))
+  }
+  if (p.rollen.includes('vermittler') && p.provisionProzent !== null) {
+    teile.push(t('adressbuch.liste.provision', { prozent: p.provisionProzent }))
+  }
+  return unterzeile(...teile)
+}
+
+/** Spalten der Partnerliste: wer (mit Rollen), wo, wen anrufen, das Wichtigste je Rolle, zuletzt. */
+export function adressbuchSpalten(
+  t: TFunction,
+  rolle: (schluessel: string) => { text: string; farbe: string | null },
+  heute: string,
+): Spalten<Listenzeile> {
   return spalte.columns([
-    spalte.accessor('kundennummer', {
-      header: t('kunden.spalte.nummer'),
-      cell: (c) => <NummerZelle>{formatKundennummer(c.getValue())}</NummerZelle>,
-      meta: { breite: 'w-20' },
-    }),
     spalte.accessor('name', {
       header: t('kunden.spalte.name'),
       sortFn: (a, b) => a.original.name.localeCompare(b.original.name, 'de-CH'),
-      cell: (c) => <span className="line-clamp-2 max-w-[16rem] font-medium lg:max-w-[20rem]">{c.getValue()}</span>,
-    }),
-    spalte.accessor('kontaktart', {
-      header: t('adressbuch.spalte.art'),
-      cell: (c) => <Badge>{kontaktart(c.getValue())}</Badge>,
+      cell: (c) => {
+        const p = c.row.original
+        const stand = nachweisStand(p.nachweisBis, heute)
+        return (
+          <div className="flex min-w-0 flex-col gap-1">
+            <span className="line-clamp-2 max-w-[18rem] font-medium lg:max-w-[22rem]">{c.getValue()}</span>
+            <span className="flex flex-wrap gap-1">
+              {p.kunde ? (
+                <Badge>{t('adressbuch.kunde')}</Badge>
+              ) : (
+                p.rollen.map((r) => (
+                  <Badge key={r} ton={tonVonFarbe(rolle(r).farbe)}>
+                    {rolle(r).text}
+                  </Badge>
+                ))
+              )}
+              {(stand === 'abgelaufen' || stand === 'bald') && (
+                <Badge ton={stand === 'abgelaufen' ? 'kritisch' : 'warnung'} punkt>
+                  {t(`adressbuch.nachweis.${stand}`)}
+                </Badge>
+              )}
+              {p.gesucheAlt > 0 && (
+                <Badge ton="warnung" punkt>
+                  {t('adressbuch.liste.gesucheAlt', { count: p.gesucheAlt })}
+                </Badge>
+              )}
+            </span>
+          </div>
+        )
+      },
     }),
     spalte.accessor('ort', {
       header: t('kunden.spalte.ort'),
@@ -32,21 +82,36 @@ export function adressbuchSpalten(t: TFunction, kontaktart: (schluessel: string)
       ),
       meta: { nurBreit: true },
     }),
-    spalte.accessor((k) => k.telefon ?? '', {
-      id: 'telefon',
-      header: t('adressbuch.spalte.telefon'),
+    spalte.accessor((p) => p.hauptkontakt ?? '', {
+      id: 'ansprechperson',
+      header: t('adressbuch.spalte.ansprechperson'),
+      enableSorting: false,
+      cell: (c) => {
+        const p = c.row.original
+        const tel = p.hauptkontaktTelefon ?? p.telefon
+        return (
+          <div className="flex min-w-0 flex-col">
+            <span className="truncate">{p.hauptkontakt ?? '–'}</span>
+            {tel && <span className="zahlen text-muted-foreground text-xs">{formatTelefon(tel)}</span>}
+          </div>
+        )
+      },
+      meta: { nurBreit: true },
+    }),
+    spalte.accessor((p) => wichtigText(p, t), {
+      id: 'wichtig',
+      header: t('adressbuch.spalte.wichtig'),
       enableSorting: false,
       cell: (c) => (
-        <span className="zahlen text-muted-foreground">{c.getValue() ? formatTelefon(c.getValue()) : '–'}</span>
+        <span className="text-muted-foreground line-clamp-2 max-w-[20rem] text-xs">{c.getValue() || '–'}</span>
       ),
       meta: { nurBreit: true },
     }),
-    spalte.accessor((k) => k.email ?? '', {
-      id: 'email',
-      header: t('adressbuch.spalte.email'),
-      enableSorting: false,
+    spalte.accessor((p) => p.zuletzt ?? '', {
+      id: 'zuletzt',
+      header: t('adressbuch.spalte.zuletzt'),
       cell: (c) => (
-        <span className="text-muted-foreground line-clamp-2 max-w-[15rem] break-words">{c.getValue() || '–'}</span>
+        <span className="zahlen text-muted-foreground text-xs">{c.getValue() ? formatDatum(c.getValue()) : '–'}</span>
       ),
       meta: { nurBreit: true },
     }),
