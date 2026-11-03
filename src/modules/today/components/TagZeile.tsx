@@ -1,4 +1,5 @@
 import { Phone } from 'lucide-react'
+import { warum } from '../lib/tag'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/schalter'
@@ -7,6 +8,7 @@ import { zielVon } from '@/lib/ziel'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/stores/ui'
 import type { TagZeile as Zeile } from '../types'
+import { Verschieben } from './Verschieben'
 
 /** Datum kurz: «heute», «morgen» oder 27.10.2026. */
 function wann(datum: string | undefined, heute: string, t: (s: string) => string): string {
@@ -20,15 +22,28 @@ function wann(datum: string | undefined, heute: string, t: (s: string) => string
 }
 
 /**
- * Eine Zeile in «Mein Tag»: links wann, Mitte wer/was (Klick öffnet den Datensatz), rechts Status oder Betrag.
- * Telefon als eigener Knopf, damit man am Handy direkt anrufen kann. Aufgaben haben ein Häkchen.
+ * Eine Zeile in «Mein Tag»: links wann, Mitte wer/was (Klick öffnet den Datensatz) und warum sie hier steht,
+ * rechts Status oder Betrag. Anrufen und Verschieben als eigene Knöpfe, damit man direkt handeln kann
+ * (Chris 2.11.2026: «nicht nur Fassade»). Aufgaben haben ein Häkchen.
  */
-export function TagZeile({ zeile, heute, onAbhaken }: { zeile: Zeile; heute: string; onAbhaken?: (z: Zeile) => void }) {
+export function TagZeile({
+  zeile,
+  heute,
+  onAbhaken,
+  onVerschieben,
+}: {
+  zeile: Zeile
+  heute: string
+  onAbhaken?: (z: Zeile) => void
+  /** Ohne: Zeile ist nicht verschiebbar (Termine, Freigaben). */
+  onVerschieben?: (z: Zeile, bis: string) => void
+}) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const ziel = zielVon(zeile.tabelle, zeile.id)
   const unter = sprache === 'fr' && zeile.name_fr ? zeile.name_fr : zeile.unter
   const datum = wann(zeile.datum, heute, t)
+  const grund = warum(zeile)
 
   const status = (zeile.bewilligung ||
     zeile.prioritaet === 'hoch' ||
@@ -50,6 +65,7 @@ export function TagZeile({ zeile, heute, onAbhaken }: { zeile: Zeile; heute: str
     <span className="flex min-w-0 flex-1 flex-col">
       <span className="line-clamp-2 font-medium">{zeile.titel}</span>
       {unter && <span className="text-muted-foreground line-clamp-2 text-xs">{unter}</span>}
+      {grund && <span className="text-warn text-xs">{t(grund.schluessel, grund.werte)}</span>}
       {status && <span className="mt-1 flex flex-wrap items-center gap-2 @[30rem]:hidden">{status}</span>}
     </span>
   )
@@ -99,6 +115,15 @@ export function TagZeile({ zeile, heute, onAbhaken }: { zeile: Zeile; heute: str
           >
             <Phone className="size-4" />
           </a>
+        )}
+        {onVerschieben && (
+          <Verschieben
+            titel={zeile.titel}
+            heute={heute}
+            onWahl={(bis) => {
+              onVerschieben(zeile, bis)
+            }}
+          />
         )}
       </span>
     </li>

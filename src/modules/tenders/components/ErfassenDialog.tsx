@@ -1,3 +1,4 @@
+import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -9,6 +10,7 @@ import { feldFehler } from '@/lib/formular'
 import { useAktion } from '../hooks/useAktion'
 import { erfassenSchema, type ErfassenFormular } from '../schema'
 import { erfassen } from '../services/ausschreibungen'
+import { publikationLesen, type Publikation } from '../services/submission'
 
 /** Quellen, die von Hand gelesen werden (kein lesbares Portal), mit dem Kanton dazu. */
 const QUELLEN: Record<string, string | null> = {
@@ -24,9 +26,24 @@ const ARTEN = ['baugesuch', 'ausschreibung', 'zuschlag', 'planermandat', 'vorank
 const BAUHERR = ['', 'privat', 'firma', 'gemeinde', 'landwirtschaft'] as const
 type TextFeld = 'quell_url' | 'titel' | 'gemeinde' | 'plz' | 'parzelle' | 'bauherr' | 'vergabestelle' | 'frist'
 
+/** Felder aus dem KI-Vorschlag übernehmen, die noch leer sind oder die der Vorschlag kennt. */
+function uebernehmen(w: ErfassenFormular, p: Publikation): ErfassenFormular {
+  const n = { ...w }
+  for (const f of ['titel', 'gemeinde', 'parzelle', 'bauherr', 'vergabestelle', 'beschreibung'] as const) {
+    const v = p[f]
+    if (v) n[f] = v
+  }
+  if (p.plz && /^\d{4}$/.test(p.plz)) n.plz = p.plz
+  if (p.frist && /^\d{4}-\d{2}-\d{2}$/.test(p.frist)) n.frist = p.frist
+  if (p.art) n.art = p.art
+  if (p.bauherr_art) n.bauherr_art = p.bauherr_art
+  return n
+}
+
 /**
  * Meldung von Hand erfassen, z. B. ein Baugesuch aus dem Amtsblatt Aargau oder der Feuille officielle
- * Fribourg. Danach läuft sie gleich wie eine gelesene: Bewertung, Spur, Doppelte, Sperren.
+ * Fribourg. Den Text der Publikation einfügen und von der KI auslesen lassen spart das Abtippen; die Felder
+ * sind ein Vorschlag zum Prüfen. Danach läuft die Meldung gleich wie eine gelesene: Bewertung, Spur, Doppelte.
  */
 export function ErfassenDialog({
   onSchliessen,
@@ -52,6 +69,20 @@ export function ErfassenDialog({
     beschreibung: '',
   })
   const [fehler, setFehler] = useState<Partial<Record<keyof ErfassenFormular, string>>>({})
+  const [roh, setRoh] = useState('')
+  const [gelesen, setGelesen] = useState(false)
+
+  async function auslesen() {
+    const ergebnis: { p?: Publikation } = {}
+    const ok = await aus(async () => {
+      ergebnis.p = await publikationLesen(roh)
+    })
+    const p = ergebnis.p
+    if (ok && p) {
+      setW((alt) => uebernehmen(alt, p))
+      setGelesen(true)
+    }
+  }
 
   async function speichern() {
     const g = erfassenSchema.safeParse(w)
@@ -112,6 +143,34 @@ export function ErfassenDialog({
         }
       >
         <div className="grid gap-3 sm:grid-cols-2">
+          <div className="bg-muted/60 flex flex-col gap-1.5 rounded-md p-3 sm:col-span-2">
+            <Feld
+              id="as-e-roh"
+              label={t('ausschreibungen.erfassen.einfuegen')}
+              hinweis={t('ausschreibungen.erfassen.einfuegenHinweis')}
+            >
+              <Textarea
+                id="as-e-roh"
+                rows={3}
+                value={roh}
+                onChange={(e) => {
+                  setRoh(e.target.value)
+                }}
+              />
+            </Feld>
+            <Button
+              size="sm"
+              variant="secondary"
+              className="self-start"
+              disabled={!roh.trim()}
+              laedt={laeuft}
+              onClick={() => void auslesen()}
+            >
+              <Sparkles />
+              {t('ausschreibungen.erfassen.auslesen')}
+            </Button>
+            {gelesen && <p className="text-warn text-xs">{t('ausschreibungen.erfassen.pruefen')}</p>}
+          </div>
           <Feld id="as-e-quelle" label={t('ausschreibungen.feld.quelle')} pflicht>
             <Auswahl
               id="as-e-quelle"
