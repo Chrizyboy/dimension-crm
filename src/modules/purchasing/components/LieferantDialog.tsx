@@ -10,6 +10,8 @@ import { useAktion } from '../hooks/useAktion'
 import { lieferantSpeichern } from '../services/lager'
 import { lieferantSchema } from '../schema'
 import type { Lieferant } from '../types'
+import { konditionenAus, konditionenZuDaten } from '../lib/konditionen'
+import { KonditionenFelder } from './KonditionenFelder'
 
 /** Lieferant anlegen oder ändern. Inaktive Lieferanten bekommen keine Bestellvorschläge mehr. */
 export function LieferantDialog({
@@ -30,6 +32,7 @@ export function LieferantDialog({
     aktiv: l?.aktiv ?? true,
     notiz: l?.notiz ?? '',
   })
+  const [k, setK] = useState(() => konditionenAus(l))
   const pruefung = lieferantSchema.safeParse(w)
   const fehler = (feld: string) => {
     const f = pruefung.error?.issues.find((i) => i.path[0] === feld)
@@ -56,6 +59,7 @@ export function LieferantDialog({
         sprache: d.sprache,
         aktiv: d.aktiv,
         notiz: d.notiz || null,
+        ...konditionenZuDaten(k),
       }),
     )
     if (ok) onSchliessen()
@@ -117,6 +121,7 @@ export function LieferantDialog({
               }}
             />
           </Feld>
+          <KonditionenFelder k={k} onChange={setK} />
           <label className="flex items-center gap-2 text-sm">
             <Switch
               checked={w.aktiv}

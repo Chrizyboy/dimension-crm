@@ -14,7 +14,7 @@ import { heute, plusTage } from '../lib/zeit'
 import { rapportAnlegen, zeitStarten } from '../services/monteur'
 import type { RapportArt, TagEintrag } from '../types'
 import { TagKarte } from './TagKarte'
-import { ZeitLaeuft } from './ZeitLaeuft'
+import Stempeluhr from './Stempeluhr'
 
 /** Tage von heute bis in einer Woche, an denen ein Eintrag liegt (mehrtägige Einsätze an jedem Tag). */
 function nachTagen(eintraege: TagEintrag[], von: string): { tag: string; eintraege: TagEintrag[] }[] {
@@ -89,7 +89,8 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
           optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
         />
       )}
-      {tag.data?.laufend && eigener && <ZeitLaeuft laufend={tag.data.laufend} onRapport={onRapport} />}
+      {/* Eigener Plan: Stempeluhr mit Arbeit und Reise (auch ohne Rapport), läuft eine Zeit, steht hier «Stopp». */}
+      {eigener && <Stempeluhr onRapport={onRapport} />}
       {tag.error ? (
         <Fehlerzustand details={String(tag.error)} onNochmal={() => void tag.refetch()} />
       ) : tag.isPending ? (

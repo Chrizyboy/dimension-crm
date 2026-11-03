@@ -6,20 +6,22 @@ import { Filterchips } from '@/components/shared/Filterchips'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { spaltenHelfer } from '@/lib/tabelle'
-import { useMaterialProjekte } from '../hooks/useEinkauf'
-import type { MaterialProjekt } from '../types'
+import { formatDatum } from '@/lib/format'
+import { useMaterialplan } from '../hooks/useEinkauf'
+import type { PlanZeile } from '../types'
 import { MaterialAkte } from './MaterialAkte'
 import { DatumZelle, NummerZelle } from '@/components/shared/Zellen'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 
-type Zeile = MaterialProjekt & { zeilen: number; fehlt: number }
-const FILTER = ['fehlt', 'mitListe', 'alle'] as const
+type Zeile = PlanZeile
+const FILTER = ['gefaehrdet', 'fehlt', 'mitListe', 'alle'] as const
 type Filter = (typeof FILTER)[number]
 const spalte = spaltenHelfer<Zeile>()
 
 /**
- * Material je Projekt: offene Aufträge und Baustellen, nächster Baubeginn zuerst, mit dem Stand der
- * Materialliste. Ein Klick öffnet die Liste mit Vorschlag und Bestellvorschlag.
+ * Materialplan: offene Aufträge und Baustellen, nächster Baubeginn zuerst. Je Projekt die Deckung, bis wann
+ * bestellt werden muss (Montage − Lieferzeit − Puffer), wann die letzte Lieferung kommt und ob die Montage
+ * gefährdet ist. Ein Klick öffnet die Materialliste mit Vorschlag und Bestellvorschlag.
  */
 export function MaterialProjekte({
   projektId,
@@ -31,7 +33,7 @@ export function MaterialProjekte({
   onBestellung: (id: string) => void
 }) {
   const { t } = useTranslation()
-  const liste = useMaterialProjekte()
+  const liste = useMaterialplan()
   const [filter, setFilter] = useState<Filter>('alle')
   const [suche, setSuche] = useState('')
   const spalten = useMemo(
@@ -58,14 +60,43 @@ export function MaterialProjekte({
           header: t('einkauf.spalte.baubeginn'),
           cell: (c) => <DatumZelle wert={c.row.original.baubeginn} />,
         }),
-        spalte.accessor((p) => (p.zeilen === 0 ? -1 : p.fehlt), {
+        spalte.accessor('deckung_prozent', {
+          header: t('einkauf.plan.deckung'),
+          cell: (c) => {
+            const p = c.row.original
+            if (p.zeilen === 0) return <span className="text-muted-foreground text-xs">{t('einkauf.keineListe')}</span>
+            const ton = p.gefaehrdet ? 'bg-bad' : p.zeilen_fehlt > 0 ? 'bg-warn' : 'bg-ok'
+            return (
+              <span className="flex min-w-24 items-center gap-2">
+                <span className="bg-muted h-1.5 w-16 overflow-hidden rounded-full">
+                  <span className={`block h-full ${ton}`} style={{ width: `${String(p.deckung_prozent)}%` }} />
+                </span>
+                <span className="zahlen text-xs">{p.deckung_prozent} %</span>
+              </span>
+            )
+          },
+        }),
+        spalte.accessor((p) => p.bestellen_bis ?? '9999', {
+          id: 'bestellen_bis',
+          header: t('einkauf.plan.bestellenBis'),
+          cell: (c) => {
+            const p = c.row.original
+            if (!p.bestellen_bis) return <span className="text-muted-foreground">–</span>
+            return <DatumZelle wert={p.bestellen_bis} />
+          },
+          meta: { nurBreit: true },
+        }),
+        spalte.accessor((p) => (p.gefaehrdet ? 0 : p.zeilen === 0 ? 3 : p.zeilen_fehlt > 0 ? 1 : 2), {
           id: 'material',
           header: t('einkauf.spalte.material'),
           cell: (c) => {
             const p = c.row.original
-            if (p.zeilen === 0) return <span className="text-muted-foreground text-xs">{t('einkauf.keineListe')}</span>
-            if (p.fehlt === 0) return <Badge ton="ok">{t('einkauf.gedeckt')}</Badge>
-            return <Badge ton="warnung">{t('einkauf.fehlen', { count: p.fehlt })}</Badge>
+            if (p.gefaehrdet) return <Badge ton="kritisch">{t('einkauf.plan.gefaehrdet')}</Badge>
+            if (p.zeilen === 0) return null
+            if (p.zeilen_fehlt > 0) return <Badge ton="warnung">{t('einkauf.fehlen', { count: p.zeilen_fehlt })}</Badge>
+            if (p.zeilen_unterwegs > 0 && p.erwartet_spaetestens)
+              return <Badge ton="info">{t('einkauf.plan.kommt', { datum: formatDatum(p.erwartet_spaetestens) })}</Badge>
+            return <Badge ton="ok">{t('einkauf.gedeckt')}</Badge>
           },
         }),
       ]),
@@ -75,7 +106,8 @@ export function MaterialProjekte({
     const s = suche.trim().toLowerCase()
     return (liste.data ?? []).filter(
       (p) =>
-        (filter === 'alle' || (filter === 'mitListe' ? p.zeilen > 0 : p.fehlt > 0)) &&
+        (filter === 'alle' ||
+          (filter === 'gefaehrdet' ? p.gefaehrdet : filter === 'mitListe' ? p.zeilen > 0 : p.zeilen_fehlt > 0)) &&
         (!s || `${p.nummer} ${p.kunde} ${p.ort ?? ''} ${p.titel ?? ''}`.toLowerCase().includes(s)),
     )
   }, [liste.data, filter, suche])

@@ -21,6 +21,7 @@
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
 //  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
@@ -127,6 +128,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Frist' : 'Fristen'} gemeldet`
   })
 
+  // Aufgaben (Entscheid 0045): Morgen-Glocke ab «erinnern_ab», die Datenbank meldet jede Person nur einmal am Tag.
+  ergebnis.aufgaben = await job('aufgaben', 60, async () => {
+    const n = await dienst.rpc<number>('aufgaben_melden', {})
+    return `${n} ${n === 1 ? 'Person' : 'Personen'} erinnert`
+  })
+
   // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
   ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
     const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
@@ -213,6 +220,12 @@ Deno.serve(async (req) => {
   ergebnis.wartung = await job('wartung', 720, async () => {
     const n = await dienst.rpc<number>('wartung_jahreslauf', {})
     return `${n} ${n === 1 ? 'Jahresrechnung' : 'Jahresrechnungen'} als Entwurf`
+  })
+
+  // Einkauf (Entscheid 0041): fehlende Auftragsbestätigung, gefährdete Montage, «bestellen bis» – nur Glocke.
+  ergebnis.einkauf = await job('einkauf', 60, async () => {
+    const n = await dienst.rpc<number>('einkauf_melden', {})
+    return `${n} ${n === 1 ? 'Meldung' : 'Meldungen'} Einkauf`
   })
 
   // Posteingang (Phase 18): Erinnerungen nur intern (Glocke), darum ohne Microsoft.
