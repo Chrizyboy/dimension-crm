@@ -115,6 +115,7 @@ Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Leads (in der Lead-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Person, Quelle und Region mit Häkchen (mehrere, **nur**, «Alle ausser …»); Knopf **Spalten** blendet Schritte der Pipeline ein und aus. Die Auswahl bleibt gemerkt.
 - 03.11.2026: «Termin-Link senden»: Kunden buchen die Besichtigung selbst auf dimension-solaire.ch.
 - 03.11.2026: Planung in einem Reiter (Kalender, Tagesroute, Tour); Besichtigung mit Checkliste, Kamera und «Abschliessen · Offerte bestellen».

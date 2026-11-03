@@ -13,6 +13,10 @@ update public.einstellungen
      "4":["00:00","23:30"],"5":["00:00","23:30"],"6":["00:00","23:30"],"7":["00:00","23:30"]}')
        || '{"feiertage": []}'
  where schluessel = 'verkauf';
+-- Ohne Vorlauf und ohne Obergrenze, sonst fällt «morgen 14:00» am späten Nachmittag aus der Liste.
+update public.einstellungen
+   set wert = jsonb_set(jsonb_set(wert, '{termin_link,vorlauf_stunden}', '0'), '{termin_link,max_zeiten}', '1000')
+ where schluessel = 'verkauf';
 update public.einstellungen set wert = wert || '{"feiertage": []}' where schluessel = 'posteingang';
 
 set local role service_role;

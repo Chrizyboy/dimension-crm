@@ -1,7 +1,11 @@
 import type { Sprache, Zweisprachig } from './modul'
 
 /** Rechte, die die Datenbank kennt (RLS). «basis» hat jede aktive Person. */
-export type Recht = 'basis' | 'preise' | 'finanzen' | 'planung' | 'admin'
+/**
+ * Rechte (wie in der Datenbank, intern.wirksame_rechte): «gl» = Zusatz Geschäftsleitung (bringt die Fachrechte mit,
+ * die Anmeldung liefert sie schon ausgeschrieben), «admin» = Zusatz Administration (nur System).
+ */
+export type Recht = 'basis' | 'preise' | 'finanzen' | 'planung' | 'personal' | 'marge' | 'visum' | 'gl' | 'admin'
 
 /** Was die Datenbank nach der Anmeldung über die eigene Person liefert (public.meine_anmeldung). */
 export interface MeineAnmeldung {

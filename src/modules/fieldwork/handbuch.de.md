@@ -51,7 +51,7 @@ Die Handy-Ansicht für die Montage und die Büro-Sicht dazu: Tagesplan, ein Rapp
 
 ### Zeiten prüfen und exportieren (Büro)
 
-1. Reiter **Zeiten**: Woche je Person, Arbeit und Reise.
+1. Reiter **Zeiten**: Woche je Person, Arbeit und Reise. Alle Zeiten sehen Geschäftsleitung und Buchhaltung, direkte Vorgesetzte die ihrer Mitarbeitenden.
 2. Fehlende oder falsche Zeiten erfassen oder korrigieren, **Prüfen**.
 3. **Lohn-Export** gibt eine CSV-Datei für die Lohnbuchhaltung.
 
@@ -101,6 +101,8 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Rapporte und Zeiten; abgeschlossene Rapporte nur die Administration, exportierte Zeiten gar nicht, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
+- 03.11.2026: Zeiten aller nur für Geschäftsleitung und Buchhaltung, direkte Vorgesetzte sehen ihr Team.
 - 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.
 - 03.11.2026: Offene Service-Fälle von gestern bleiben im Tagesplan («Überfällig»). Arbeitszeit und Reise in **Mein Tag** auch ohne Rapport starten; Änderungen gehen sofort raus.
 - 03.11.2026: Inspektionen aus Wartungsverträgen in «Mein Tag», Prüfpunkte nach Paket mit Werten vom letzten Mal.

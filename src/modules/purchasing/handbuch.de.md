@@ -124,6 +124,7 @@ Reiter **Lager**, **Inventur**, gezählten Bestand eintragen. Nur Abweichungen w
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Lieferanten; Bestellungen ab freigegeben werden storniert, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Lagerplatz, Rüstliste mit Druck, Rückgabe von der Baustelle, Inventur in einem Durchgang, Reklamationen beim Lieferanten.
 - 02.11.2026: Leitstand, Bestellen je Lieferant mit Sammelbestellung, Materialplan, Freigabegrenze, Auftragsbestätigung mit KI, Lieferantenrechnung prüfen, Konditionen der Lieferanten.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

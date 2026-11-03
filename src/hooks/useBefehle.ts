@@ -11,6 +11,7 @@ import {
   Palette,
   PanelLeft,
   Sun,
+  Trash2,
   type LucideIcon,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -167,6 +168,14 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       icon: Bell,
       stichworte: ['notifications', 'glocke'],
       ausfuehren: gehe('/benachrichtigungen'),
+    },
+    {
+      id: 'papierkorb',
+      titel: t('befehle.papierkorb'),
+      gruppe: 'aktionen',
+      icon: Trash2,
+      stichworte: ['corbeille', 'gelöscht', 'löschen', 'wiederherstellen', 'restaurer', 'supprimé'],
+      ausfuehren: gehe('/papierkorb'),
     },
     {
       id: 'fehler-melden',

@@ -4,7 +4,7 @@
 -- Postfach ja, info@ nur wer verteilt, «ablegen» schon beim Aufnehmen), Team-Übersicht nur Zahlen (alle nur Geschäftsleitung), Zahlung nur mit
 -- Recht «finanzen». Ausführen: npm run db:test
 begin;
-select plan(22);
+select plan(23);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000018c1', 'ap-anna@test.local'),
@@ -74,7 +74,13 @@ select set_config('request.jwt.claims', '', true);
 
 select ok(exists (select 1 from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000018d2'),
   'Ben hat die Glocke');
-select is((select sichtbar from public.posteingang where kennung = '<ap1@x>'), 'team', 'erwähnte Mail ist fürs Team sichtbar');
+-- Persönliches Postfach bleibt persönlich; die erwähnte Person darf die Mail trotzdem lesen.
+select is((select sichtbar from public.posteingang where kennung = '<ap1@x>'), 'person', 'erwähnte Mail bleibt persönlich');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000018c2", "role": "authenticated"}', true);
+set local role authenticated;
+select ok(exists (select 1 from public.posteingang where kennung = '<ap1@x>'), 'erwähnte Person (Ben) sieht die Mail');
+reset role;
+select set_config('request.jwt.claims', '', true);
 
 -- Regel «ablegen» greift schon beim Aufnehmen
 select public.posteingang_aufnehmen('00000000-0000-0000-0000-0000000018d1', 'me',

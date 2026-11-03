@@ -65,6 +65,13 @@ export async function ladeAusweisStand(): Promise<AusweisStand[]> {
 }
 
 /** Aktive Personen für Einsätze und Abwesenheiten. */
+/** IDs der Mitarbeitenden, deren direkte Vorgesetzte die angemeldete Person ist (Personal-Akte). */
+export async function ladeMeineMitarbeitenden(): Promise<string[]> {
+  const { data, error } = await db().rpc('meine_mitarbeitenden')
+  if (error) throw error
+  return data
+}
+
 export async function ladePersonen(): Promise<Person[]> {
   const { data, error } = await db()
     .from('personen')

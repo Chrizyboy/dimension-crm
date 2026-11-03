@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -77,4 +77,5 @@ Rechnungen sieht nur, wer das Recht Finanzen hat.
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Gebäude, Dokumente und eigene Verlauf-Einträge, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 31.10.2026: Detailfenster und Suche einheitlich wie in allen Bereichen.

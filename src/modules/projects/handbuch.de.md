@@ -67,6 +67,7 @@ Jeder unterschriebene Auftrag läuft hier über Bewilligungen, Vorbereitung und 
 
 1. Ansicht **Abwesenheiten**, **Abwesenheit erfassen**: Person, von, bis, halber Tag.
 2. Ferien und «Abwesend» aus Outlook erscheinen von selbst.
+3. Für alle erfassen Geschäftsleitung und Buchhaltung; direkte Vorgesetzte (aus der Personal-Akte) auch für ihre Mitarbeitenden, alle anderen nur für sich.
 
 ### Inbetriebnahme und Abschluss
 
@@ -111,6 +112,8 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Projekte (Menü «⋯» in der Projekt-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
+- 03.11.2026: Direkte Vorgesetzte erfassen Abwesenheiten ihrer Mitarbeitenden.
 - 03.11.2026: Zeitplan am Handy: mehrere Personen zugleich wählen.
 - 03.11.2026: Einsätze mit Tätigkeiten (Hebebühne, Anhänger, Dach vor 1990); fehlt im Team ein Pflicht-Ausweis, warnt der Zeitplan gelb.
 - 03.11.2026: Leitstand, Meine Woche und Projekt-Akte als ganze Seite; Mängel und Restarbeiten, Beteiligte mit Rolle, Kundeninfo bei Meilensteinen mit Freigabe.

@@ -25,8 +25,11 @@ export interface ModulMeta {
   gruppe: NavGruppe
   /** Phase des Bauplans, in der das Modul gebaut wird (0 = gemeinsamer Baustein). */
   phase: Phasennummer
-  /** Recht, ohne das der Bereich verborgen bleibt (z. B. «finanzen»). Die Daten schützt zusätzlich RLS. */
-  recht?: Recht
+  /**
+   * Recht, ohne das der Bereich verborgen bleibt (z. B. «finanzen»); bei mehreren genügt eines. Bereiche mit «admin»
+   * sind System-Bereiche und erscheinen für alle mit dem Recht. Die Daten schützt zusätzlich RLS.
+   */
+  recht?: Recht | readonly Recht[]
   /** Immer sichtbar, unabhängig von der Bereichs-Auswahl (wie «Mein Tag» in der Vorlage). */
   immer?: boolean
 }

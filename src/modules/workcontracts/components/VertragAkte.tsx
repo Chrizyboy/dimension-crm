@@ -2,6 +2,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { Ban, FileText, Mail, Pencil, Printer, Send, Signature, Undo2 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Badge } from '@/components/ui/badge'
@@ -184,6 +185,12 @@ export default function VertragAkte({
                   {t('werkvertraege.akte.stornieren')}
                 </Button>
               )}
+              <InPapierkorbKnopf
+                tabelle="werkvertraege"
+                id={w.id}
+                name={`${t('werkvertraege.akte.titel')} ${w.nummer}`}
+                onFertig={onSchliessen}
+              />
             </Knopfleiste>
             <AkteAbschnitt titel={t('werkvertraege.akte.angaben')}>
               <dl>

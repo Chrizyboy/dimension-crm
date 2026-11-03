@@ -155,6 +155,13 @@ export async function ladePersonen(): Promise<{ id: string; name: string; kuerze
   return data
 }
 
+/** IDs der Mitarbeitenden, deren direkte Vorgesetzte die angemeldete Person ist: deren Zeiten darf sie sehen. */
+export async function ladeMeineMitarbeitenden(): Promise<string[]> {
+  const { data, error } = await db().rpc('meine_mitarbeitenden')
+  if (error) throw error
+  return data
+}
+
 /** Projekte für «Neuer Rapport», gesucht nach Projektnummer oder Name des Kunden. */
 export async function sucheProjekte(text: string): Promise<ProjektTreffer[]> {
   const s = text

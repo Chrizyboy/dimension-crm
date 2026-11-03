@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -77,4 +77,5 @@ Les factures ne sont visibles qu’avec le droit Finances.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les bâtiments, les documents et ses propres entrées d'historique, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 31.10.2026: Fenêtre de détail et recherche uniformes comme dans tous les domaines.
