@@ -2499,7 +2499,9 @@
     "baustelle_zeit_laeuft": "Un temps tourne encore cette semaine. L'arrêter d'abord, puis confirmer.",
     "baustelle_soll_negativ": "Les heures prévues ne peuvent pas être négatives.",
     "baustelle_projekt_nicht_gefunden": "Projet introuvable.",
-    "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire."
+    "baustelle_kein_recht": "Vous n'avez pas le droit nécessaire.",
+    "finanzen_karte_keine_firmenkarte": "Seuls les frais « carte d’entreprise » peuvent être associées à une transaction.",
+    "finanzen_karte_schon_verbunden": "Ce frais est déjà associé à une autre transaction."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -5122,7 +5124,8 @@
       "kategorien": "Règles",
       "pruefen": "Vérifier",
       "auszahlen": "Verser",
-      "auswertung": "Analyse"
+      "auswertung": "Analyse",
+      "karte": "Carte d’entreprise"
     },
     "spalte": {
       "datum": "Date",
@@ -5347,6 +5350,43 @@
       "unterschriftPerson": "Date, signature collaborateur/trice",
       "unterschriftBuchhaltung": "Vérifié comptabilité",
       "datei": "Decompte de frais"
+    },
+    "karte": {
+      "einlesen": "Importer le relevé",
+      "hinweis": "Relevé de la carte d’entreprise en CSV depuis l’e-banking ou le portail de la carte. Ce qui est déjà importé est ignoré ; si un seul frais « carte d’entreprise » correspond (même montant, ±3 jours), il est associé automatiquement.",
+      "kachelOffen_one": "sans justificatif ({{count}} transaction)",
+      "kachelOffen_other": "sans justificatif ({{count}} transactions)",
+      "kachelVerbunden": "associées à un justificatif",
+      "kachelErledigt": "réglées sans justificatif",
+      "kachelFrei": "frais carte d’entreprise sans transaction",
+      "stand": {
+        "offen": "Sans justificatif",
+        "verbunden": "Associées",
+        "erledigt": "Réglées",
+        "alle": "Toutes"
+      },
+      "nachfordern_one": "Demander le justificatif ({{count}})",
+      "nachfordern_other": "Demander les justificatifs ({{count}})",
+      "buchung": "Transaction",
+      "person": "Carte de",
+      "personWaehlen": "Choisir la personne",
+      "verbinden": "Associer à un frais",
+      "keinBeleg": "Pas encore de frais correspondant",
+      "loesen": "Retirer l’association",
+      "ohneBeleg": "Sans justificatif",
+      "wiederOeffnen": "Rouvrir",
+      "erledigenTitel": "Régler sans justificatif",
+      "erledigen": "Régler",
+      "grund": "Motif",
+      "grundHinweis": "Affiché lors du rapprochement, p. ex. pour la révision.",
+      "grundVorschlag": {
+        "abo": "Abonnement, facture par e-mail",
+        "gebuehr": "Frais de carte",
+        "privat": "Privé, déduit du salaire"
+      },
+      "leer": "Aucun relevé importé",
+      "leerFilter": "Rien dans cette sélection",
+      "leerText": "Importer le relevé de la carte d’entreprise en CSV. Chaque transaction apparaît ensuite ici, avec ou sans justificatif."
     }
   },
   "finanzen": {
@@ -9109,7 +9149,8 @@
       "aeltere": "Plus anciens",
       "verteilen": "À attribuer",
       "kunde": "En attente du client",
-      "zurueck": "Mis de côté"
+      "zurueck": "Mis de côté",
+      "neu": "Tous ouverts"
     },
     "leer": {
       "warten": "Personne n’attend de réponse",
@@ -9120,7 +9161,8 @@
       "aeltere": "Aucun e-mail plus ancien trouvé",
       "verteilen": "Rien à attribuer",
       "kunde": "Tu n’attends aucun client",
-      "zurueck": "Rien mis de côté"
+      "zurueck": "Rien mis de côté",
+      "neu": "Aucun e-mail ouvert"
     },
     "art": {
       "anfrage": "Nouvelle demande",

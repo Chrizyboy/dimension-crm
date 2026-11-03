@@ -2499,7 +2499,9 @@
     "baustelle_zeit_laeuft": "Es läuft noch eine Zeit in dieser Woche. Erst stoppen, dann bestätigen.",
     "baustelle_soll_negativ": "Soll-Stunden können nicht negativ sein.",
     "baustelle_projekt_nicht_gefunden": "Projekt nicht gefunden.",
-    "baustelle_kein_recht": "Dafür fehlt das Recht."
+    "baustelle_kein_recht": "Dafür fehlt das Recht.",
+    "finanzen_karte_keine_firmenkarte": "Nur Spesen «Firmenkarte» lassen sich mit einer Kartenbuchung verbinden.",
+    "finanzen_karte_schon_verbunden": "Diese Spese ist schon mit einer anderen Kartenbuchung verbunden."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5122,7 +5124,8 @@
       "kategorien": "Regeln",
       "pruefen": "Prüfen",
       "auszahlen": "Auszahlen",
-      "auswertung": "Auswertung"
+      "auswertung": "Auswertung",
+      "karte": "Firmenkarte"
     },
     "spalte": {
       "datum": "Datum",
@@ -5347,6 +5350,43 @@
       "unterschriftPerson": "Datum, Unterschrift Mitarbeiter/in",
       "unterschriftBuchhaltung": "Geprüft Buchhaltung",
       "datei": "Spesenabrechnung"
+    },
+    "karte": {
+      "einlesen": "Auszug einlesen",
+      "hinweis": "Auszug der Firmenkarte als CSV aus dem E-Banking oder dem Kartenportal. Schon Eingelesenes wird übersprungen; passt genau eine Firmenkarten-Spese (gleicher Betrag, ±3 Tage), wird sie selbst verbunden.",
+      "kachelOffen_one": "ohne Beleg ({{count}} Buchung)",
+      "kachelOffen_other": "ohne Beleg ({{count}} Buchungen)",
+      "kachelVerbunden": "mit Beleg verbunden",
+      "kachelErledigt": "ohne Beleg erledigt",
+      "kachelFrei": "Firmenkarten-Spesen ohne Buchung",
+      "stand": {
+        "offen": "Ohne Beleg",
+        "verbunden": "Verbunden",
+        "erledigt": "Erledigt",
+        "alle": "Alle"
+      },
+      "nachfordern_one": "Beleg nachfordern ({{count}})",
+      "nachfordern_other": "Belege nachfordern ({{count}})",
+      "buchung": "Kartenbuchung",
+      "person": "Karte von",
+      "personWaehlen": "Person wählen",
+      "verbinden": "Mit Spese verbinden",
+      "keinBeleg": "Noch keine passende Spese",
+      "loesen": "Verbindung lösen",
+      "ohneBeleg": "Ohne Beleg",
+      "wiederOeffnen": "Wieder öffnen",
+      "erledigenTitel": "Ohne Beleg erledigen",
+      "erledigen": "Erledigen",
+      "grund": "Grund",
+      "grundHinweis": "Wird beim Abgleich angezeigt, z. B. für die Revision.",
+      "grundVorschlag": {
+        "abo": "Abo, Rechnung kommt per Mail",
+        "gebuehr": "Kartengebühr",
+        "privat": "Privat, wird vom Lohn abgezogen"
+      },
+      "leer": "Noch kein Auszug eingelesen",
+      "leerFilter": "Nichts in dieser Auswahl",
+      "leerText": "Auszug der Firmenkarte als CSV einlesen. Danach siehst du hier jede Buchung mit oder ohne Beleg."
     }
   },
   "finanzen": {
@@ -9109,7 +9149,8 @@
       "aeltere": "Ältere",
       "verteilen": "Zu verteilen",
       "kunde": "Warten auf Kunde",
-      "zurueck": "Zurückgestellt"
+      "zurueck": "Zurückgestellt",
+      "neu": "Alle offenen"
     },
     "leer": {
       "warten": "Niemand wartet auf eine Antwort",
@@ -9120,7 +9161,8 @@
       "aeltere": "Keine älteren Mails gefunden",
       "verteilen": "Nichts zu verteilen",
       "kunde": "Du wartest auf keinen Kunden",
-      "zurueck": "Nichts zurückgestellt"
+      "zurueck": "Nichts zurückgestellt",
+      "neu": "Keine offenen Mails"
     },
     "art": {
       "anfrage": "Neue Anfrage",
