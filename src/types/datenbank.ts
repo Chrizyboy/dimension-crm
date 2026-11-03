@@ -15587,6 +15587,7 @@ export type Database = {
       }
       kalender_ersetzen: { Args: { p_eintraege: Json; p_person: string; p_quelle: string }; Returns: number }
       kennzahlen_betrieb: { Args: { p_bis: string; p_von: string }; Returns: Json }
+      kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
       kennzahlen_fakten: {
         Args: { p_bis: string; p_von: string }
         Returns: {
@@ -15605,9 +15606,8 @@ export type Database = {
           tage: number
         }[]
       }
-      kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
-      kennzahlen_einstellungen_setzen: { Args: { p_wert: Json }; Returns: Json }
       kennzahlen_monatsbericht_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      kennzahlen_quellen_kosten: { Args: { p_quelle: string; p_rappen: number }; Returns: undefined }
       kennzahlen_zusatz: {
         Args: { p_bis: string; p_von: string }
         Returns: {
