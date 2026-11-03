@@ -34,7 +34,7 @@ Entwurf mit erfundenen Daten: https://claude.ai/artifact/XNa75MjMUyusosN2EDnrsa
 
 ## Folgen
 
-- Migration `20261114004100_ausgangskorb_ausbau.sql`; `ausgang_freigeben` hat zwei neue, freiwillige Parameter
+- Migration `20261114001100_ausgangskorb_ausbau.sql`; `ausgang_freigeben` hat zwei neue, freiwillige Parameter
   (`p_sende_ab`, `p_warten_s`), alte Aufrufe gehen weiter.
 - Zeitplan muss neu verteilt werden (`npx supabase functions deploy zeitplan`), sonst fehlt nur die Erinnerung.
 - Offen (Fragen an Chris): Umfang, Rechte-Matrix, 10 oder 30 Sekunden, Briefe; gebaut nach den Empfehlungen.
