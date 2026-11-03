@@ -1,4 +1,4 @@
--- Prüft den Ausbau der Kennzahlen (Entscheid 0040): Zusatz-Fakten (Auftrag mit kWp und Produkten, Durchlaufzeiten,
+-- Prüft den Ausbau der Kennzahlen (Entscheid 0045): Zusatz-Fakten (Auftrag mit kWp und Produkten, Durchlaufzeiten,
 -- Verlustgrund, IBN, Umsatz aus gestellten Rechnungen nur mit Recht, Service-Reaktion, Wartung), Ziele und
 -- Wahrscheinlichkeiten nur mit Recht «finanzen» und geprüft, Monatsbericht einmal am 1. für die Finanz-Personen.
 -- Die lokale Datenbank enthält importierte Daten: geprüft wird deshalb, ob die Testdatensätze enthalten sind.

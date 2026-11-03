@@ -80,9 +80,10 @@ test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({
   await expect(page).toHaveURL(/reiter=verkauf/)
   await page
     .getByTestId('kz-kacheln')
-    .getByRole('button', { name: /Offerten gesendet/ })
+    .getByRole('button', { name: /Angenommen/ })
     .click()
-  const detail = page.getByRole('dialog', { name: 'Offerten gesendet' })
+  // «Angenommen» hat in den Testdaten immer Einträge mit Betrag (gesendete Offerten nicht).
+  const detail = page.getByRole('dialog', { name: 'Angenommen' })
   await expect(detail).toBeVisible()
   await expect(detail.getByText('Total')).toBeVisible()
   await expect(detail.getByRole('button', { name: 'Als CSV' })).toBeVisible()
@@ -99,6 +100,11 @@ test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({
   await expect(page.getByTestId('kz-auftragsbestand')).toBeVisible()
   await expect(page.getByTestId('kz-auslastung')).toBeVisible()
   await expect(page.getByTestId('kz-marge')).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+
+  const tabelle = page.getByTestId('kz-abwicklung-tabelle')
+  await expect(tabelle.getByText('Ø Service-Fall bis erledigt')).toBeVisible()
+  await expect(tabelle.getByText('≤ 90 Tage')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await page.getByRole('tab', { name: 'Finanzen' }).click()

@@ -53,7 +53,7 @@ export interface KennzahlenAuswahl {
 const ALLE = '__alle'
 
 /**
- * Kennzahlen (Neuentwurf 2.11.2026, Entscheid 0040): Überblick, Verkauf, Pipeline & Prognose, Abwicklung,
+ * Kennzahlen (Neuentwurf 2.11.2026, Entscheid 0045): Überblick, Verkauf, Pipeline & Prognose, Abwicklung,
  * Finanzen, Service & Wartung und alle Zahlen. Jede Zahl mit Vergleich (Vorjahr oder Vorperiode) und, wo es eines
  * gibt, Ziel; jede Zahl zeigt per Klick ihre Einträge.
  */

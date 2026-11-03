@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
 // Phase 10: Rechnungen, Spesen, Finanzen. Alle Reiter ohne Verstösse; eine freie Rechnung vom Entwurf über
-// «Stellen» bis «bezahlt»; eine Spese mit Beleg erfassen, als Buchhaltung ausbezahlen; in den Finanzen eine
+// «Stellen» bis «bezahlt»; eine Spese mit Beleg erfassen, als Buchhaltung prüfen und auszahlen; in den Finanzen eine
 // Zahlung erfassen, einplanen und als bezahlt markieren; ohne Recht «finanzen» keine Finanzen.
 
 test.describe.configure({ mode: 'serial' })
@@ -34,7 +34,7 @@ test('Rechnungen: Reiter ohne Verstösse, freie Rechnung stellen und bezahlen', 
   await page.goto('/#/invoices')
   await expect(page.getByRole('heading', { name: 'Rechnungen', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Zu verrechnen', 'Firmen & Einstellungen']) {
+  for (const reiter of ['Rechnungen', 'Zu verrechnen', 'Firmen & Einstellungen']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -87,17 +87,31 @@ test('Spesen: mit Beleg erfassen, Buchhaltung zahlt aus', async ({ page }) => {
   await d
     .locator('input[type=file]:not([capture])')
     .setInputFiles({ name: 'beleg.png', mimeType: 'image/png', buffer: png })
-  await d.getByRole('button', { name: 'Speichern' }).click()
+  await d.getByRole('button', { name: 'Speichern', exact: true }).click()
   const zeile = page.getByRole('row', { name: new RegExp(`E2E Parkhaus ${lauf}`) })
   await expect(zeile).toBeVisible()
   await expect(zeile.getByRole('button', { name: 'Ansehen' })).toBeVisible()
 
+  // Prüfen: Spese in der Liste wählen und als geprüft markieren.
+  await page.getByRole('tab', { name: /^Prüfen/ }).click()
+  expect(await verstoesse(page), 'Prüfen').toEqual([])
+  await page
+    .getByRole('list', { name: 'Prüfen' })
+    .getByRole('button', { name: new RegExp(`E2E Parkhaus ${lauf}`) })
+    .click()
+  await expect(page.getByRole('heading', { name: new RegExp(`E2E Parkhaus ${lauf}`), level: 2 })).toBeVisible()
+  await page.getByRole('button', { name: 'Geprüft', exact: true }).click()
+
+  // Auszahlen als Lauf «mit dem Lohn».
+  await page.getByRole('tab', { name: /^Auszahlen/ }).click()
+  expect(await verstoesse(page), 'Auszahlen').toEqual([])
   await page.getByRole('tab', { name: 'Alle Spesen' }).click()
   expect(await verstoesse(page), 'Alle Spesen').toEqual([])
   const alle = page.getByRole('row', { name: new RegExp(`E2E Parkhaus ${lauf}`) })
+  await expect(alle.getByText('Geprüft')).toBeVisible()
   await alle.getByRole('checkbox').click()
-  await page.getByRole('button', { name: /^1 ausbezahlt$/ }).click()
-  await page.getByRole('dialog').getByRole('button', { name: 'Als ausbezahlt markieren' }).click()
+  await page.getByRole('button', { name: /^1 auszahlen$/ }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Auszahlung erstellen' }).click()
   await page
     .getByRole('button', { name: /^Ausbezahlt/ })
     .first()
@@ -105,6 +119,11 @@ test('Spesen: mit Beleg erfassen, Buchhaltung zahlt aus', async ({ page }) => {
   await expect(
     page.getByRole('row', { name: new RegExp(`E2E Parkhaus ${lauf}`) }).getByText(/^Ausbezahlt/),
   ).toBeVisible()
+
+  for (const reiter of ['Auswertung', 'Regeln']) {
+    await page.getByRole('tab', { name: reiter }).click()
+    expect(await verstoesse(page), reiter).toEqual([])
+  }
 })
 
 test('Finanzen: Reiter ohne Verstösse, Zahlung erfassen, einplanen und bezahlen', async ({ page }) => {

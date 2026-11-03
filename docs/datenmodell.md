@@ -77,6 +77,7 @@ Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`pers
 - **`moegliche_dubletten(name, email, telefon, ohne)`**: bis 5 Treffer mit Grund `email`, `telefon` oder `name`.
 - **`kontakt_export(kontakt)`**: alle Daten zur Person als JSON (Auskunft nach revDSG), ohne die Rohdaten aus V233.
 - Ergebnisse von Kontaktversuchen: `auswahlwerte` Liste `kontaktergebnis` (nicht erreicht, Combox, Rückruf, meldet sich, Termin, kein Interesse).
+- **`kontakt_zugehoerigkeiten`** (02.11.2026): Ansprechpersonen, Person (`person_id`) gehört zu Firma oder Haushalt (`firma_id`), mit `funktion`, Merkern `hauptkontakt` (höchstens einer pro Firma, ein neuer verdrängt den alten per Trigger), `unterschreibt`, `rechnungen`, `vor_ort`, Wunsch `bevorzugt` und direkter Nummer/Mail. Sicht `kontakt_zugehoerigkeiten_sicht` mit Namen beider Seiten. Gemeinsam für Adressbuch und Kundenakte, App nur über `src/services/zugehoerigkeiten.ts`.
 
 Zugriffsregeln rufen das Recht als `(select intern.hat_recht('…'))` auf, damit Postgres es einmal pro Abfrage prüft. Neue Tabellen bekommen das über `intern.richte_fachtabelle_ein` automatisch. Siehe Entscheid 0013.
 
@@ -160,9 +161,9 @@ Siehe Entscheid 0020.
 - **`firmen`** erweitert: `iban`, `bank`, `telefon`, `email`, `zahlungsfrist_tage`; ändern nur mit Recht `finanzen`.
 - **`rechnungen`** (neu): `nummer` (R2026-n, beim Stellen), `art` (anzahlung, teilzahlung, schluss, service, wartung, frei), `status` (entwurf, gestellt, teilbezahlt, bezahlt, storniert), Bezug auf `kontakt_id`, `projekt_id`, `zahlungsplan_id`, `rapport_id`, `wartungsvertrag_id`, `firma_id`, `sprache`, `positionen` [{text, menge, einheit, preis_rappen}], `inkl_mwst`, `mwst_satz`, Summen (`netto_rappen`, `mwst_rappen`, `total_rappen`, `bezahlt_rappen`) per Trigger, `datum`, `faellig_am`, `mahnstufe`, `gemahnt_am`, `mahnfrist`, `abaninja_uuid`/`_status`, `dokument_id`, `storniert_grund`. Nach dem Stellen fest.
 - **`rechnung_zahlungen`** (neu): Datum, Betrag, Quelle (hand, abaninja); Trigger setzt Stand der Rechnung und `zahlungsplan.bezahlt_am`.
-- **`kreditor_zahlungen`** erweitert: `abaninja_uuid`, `projekt_id`, `lieferant_id`, `offen_rappen`, `bezahlt_am` (Lieferantenrechnungen aus AbaNinja). **`spesen`**: `status` (eingereicht, ausbezahlt, storniert), `storniert_*`, `ausbezahlt_*`, `mail`; eigene oder Recht `finanzen`.
-- **Sichten:** `rechnungen_liste` (Kunde, Projekt, offen, überfällig), `offene_tranchen`, `offene_service_rapporte`, `spesen_liste`.
-- **Abläufe:** `rechnung_entwurf`, `rechnung_speichern`, `rechnung_stellen`, `rechnung_stornieren`, `rechnung_mahnen`, `abaninja_abgleich_anwenden`, `nachkalkulation`, `spesen_stornieren`, `spesen_auszahlen`. Fehler als Schlüssel `finanzen.*`.
+- **`kreditor_zahlungen`** erweitert: `abaninja_uuid`, `projekt_id`, `lieferant_id`, `offen_rappen`, `bezahlt_am` (Lieferantenrechnungen aus AbaNinja). **`spesen`**: `status` (eingereicht, rueckfrage, geprueft, ausbezahlt, abgelehnt, storniert), `art` (beleg, kilometer), `bezahlt_mit` (eigen, firmenkarte), `projekt_id`, `mwst_*`, `km*`, `geprueft_*`, `rueckfrage*`, `abgelehnt_grund`, `auszahlung_id`, `verlauf`, `storniert_*`, `ausbezahlt_*`, `mail`; eigene oder Recht `finanzen` (Entscheid 0040). **`spesen_auszahlungen`**: Lauf mit Datum, Art (lohn, ueberweisung), Titel, Total.
+- **Sichten:** `rechnungen_liste` (Kunde, Projekt, offen, überfällig), `offene_tranchen`, `offene_service_rapporte`, `spesen_liste` (mit `hinweise`), `spesen_auszahlungen_liste`.
+- **Abläufe:** `rechnung_entwurf`, `rechnung_speichern`, `rechnung_stellen`, `rechnung_stornieren`, `rechnung_mahnen`, `abaninja_abgleich_anwenden`, `nachkalkulation` (mit Spesen), `spesen_stornieren`, `spesen_auszahlen`, `spesen_geprueft`, `spesen_rueckfrage`, `spesen_ablehnen`, `spesen_auszahlung`. Fehler als Schlüssel `finanzen.*`.
 - **Einstellungen:** `einstellungen.finanzen` (Stundensätze Service und intern, Mahnfrist, Buchhaltungs-Adresse, Spesen-Kategorien); `finanz_einstellungen` «vorlage.main» (Kontostand mit Verlauf, Wochen, Vorlauf, Reserve, Anpassungen der Eingänge).
 
 Siehe Entscheid 0021.

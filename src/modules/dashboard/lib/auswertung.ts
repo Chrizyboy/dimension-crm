@@ -1,7 +1,7 @@
-import type { Bereich, Fakt } from '../types'
+import type { Bereich, Fakt, KennzahlenEinstellungen } from '../types'
 
-/** Wie eine Zeile zählt: Anzahl, Summe der Beträge oder Quote (angenommen von entschieden). */
-export type Mass = 'anzahl' | 'summe' | 'quote'
+/** Wie eine Zeile zählt: Anzahl, Summe der Beträge, Quote (angenommen von entschieden) oder Schnitt der Tage. */
+export type Mass = 'anzahl' | 'summe' | 'quote' | 'schnitt'
 
 /** Eine Zeile der Tabelle «nach Standort» / «nach Person». */
 export interface ZeilenDef {
@@ -71,6 +71,26 @@ export function quote(fakten: Fakt[]): number | null {
   return an + aus === 0 ? null : Math.round((an / (an + aus)) * 100)
 }
 
+/** Durchschnitt der Tage (gerundet); Zeilen ohne Tage zählen nicht, ohne Zeilen null. */
+export function schnittTage(fakten: Fakt[]): number | null {
+  const tage = fakten.flatMap((f) => (f.tage == null ? [] : [f.tage]))
+  return tage.length ? Math.round(tage.reduce((a, b) => a + b, 0) / tage.length) : null
+}
+
+/** Zeilen der Tabelle «Abwicklung»; `ziel` ist der Richtwert in einstellungen.kennzahlen.richtwerte (weniger ist besser). */
+export const ABWICKLUNG: (ZeilenDef & { ziel?: keyof KennzahlenEinstellungen['richtwerte'] })[] = [
+  { id: 'ibn', schluessel: 'ibn', mass: 'anzahl' },
+  { id: 'dauer_vertrag_ibn', schluessel: 'ibn', mass: 'schnitt', ziel: 'unterschrift_ibn_tage' },
+  { id: 'fristen_ueberfaellig', schluessel: 'fristen_ueberfaellig', mass: 'anzahl', ziel: 'fristen_ueberfaellig' },
+  { id: 'material_spaet', schluessel: 'material_spaet', mass: 'anzahl', ziel: 'material_spaet' },
+  { id: 'faelle_dauer', schluessel: 'faelle_dauer', mass: 'schnitt', ziel: 'faelle_dauer' },
+]
+
+/** Ziel erreicht? null ohne Ziel oder ohne Wert. Weniger ist immer besser. */
+export function zielErreicht(wert: number | null, ziel: number | undefined): boolean | null {
+  return wert === null || ziel === undefined ? null : wert <= ziel
+}
+
 /** Wert einer Zelle und die Zeilen dahinter (für den Klick). */
 export function zelle(fakten: Fakt[], def: ZeilenDef): { wert: number | null; fakten: Fakt[] } {
   if (def.mass === 'quote') {
@@ -78,6 +98,7 @@ export function zelle(fakten: Fakt[], def: ZeilenDef): { wert: number | null; fa
     return { wert: quote(dahinter), fakten: dahinter }
   }
   const dahinter = fakten.filter((f) => f.schluessel === def.schluessel)
+  if (def.mass === 'schnitt') return { wert: schnittTage(dahinter), fakten: dahinter }
   return { wert: def.mass === 'summe' ? summe(dahinter) : dahinter.length, fakten: dahinter }
 }
 

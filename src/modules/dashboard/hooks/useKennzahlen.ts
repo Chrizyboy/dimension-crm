@@ -71,7 +71,9 @@ export function useZeilen(von: string, bis: string, aktiv = true) {
     staleTime: 300_000,
   })
   const zusatz = useZusatz(von, bis, aktiv)
-  const data: Fakt[] | undefined = grund.data ? [...grund.data, ...(zusatz.data ?? [])] : undefined
+  // Die IBN liefern beide Abfragen; die Zusatz-Zeile hat zusätzlich die kWp, darum gilt sie, sobald sie da ist.
+  const grundZeilen = zusatz.data ? (grund.data ?? []).filter((f) => f.schluessel !== 'ibn') : grund.data
+  const data: Fakt[] | undefined = grund.data ? [...(grundZeilen ?? []), ...(zusatz.data ?? [])] : undefined
   return {
     data,
     isLoading: grund.isLoading || (zusatz.isLoading && !zusatz.isError),

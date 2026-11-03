@@ -6,6 +6,7 @@ import { proMonat } from '../lib/betrieb'
 import { franken, kurz, tageText, zahl } from '../lib/format'
 import { gruppiere, kwpSumme, mittelTage, von } from '../lib/verkauf'
 import { fachText } from '../lib/zeitraum'
+import { AbwicklungTabelle } from './AbwicklungTabelle'
 import { Betrieb } from './Betrieb'
 import { Legende, SaeulenDiagramm } from './Diagramme'
 import { Kpi } from './Kpi'
@@ -147,6 +148,7 @@ export function Abwicklung(p: ReiterProps) {
         </Karte>
       </div>
 
+      <AbwicklungTabelle fakten={p.fakten} e={p.e} onDetail={p.onDetail} />
       <Betrieb von={p.von} bis={p.bis} bereich={p.bereich} />
     </div>
   )

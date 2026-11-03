@@ -59,7 +59,15 @@ export interface KennzahlenEinstellungen {
   /** Abschluss-Wahrscheinlichkeit in Prozent je Stand; «alt» gilt für Offerten älter als `alt_tage`. */
   wahrscheinlichkeit: { offeriert: number; nachfassen: number; vertagt: number; alt: number }
   alt_tage: number
-  richtwerte: { unterschrift_ibn_tage: number; reaktion_prozent: number; marge_prozent: number }
+  richtwerte: {
+    unterschrift_ibn_tage: number
+    reaktion_prozent: number
+    marge_prozent: number
+    /** Abwicklung (weniger ist besser): überfällige Fristen, Material zu spät, Tage bis ein Fall erledigt ist. */
+    fristen_ueberfaellig: number
+    material_spaet: number
+    faelle_dauer: number
+  }
   quellen_kosten_rappen: Record<string, number>
 }
 

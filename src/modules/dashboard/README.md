@@ -2,7 +2,7 @@
 
 **Zweck:** Wie läuft es, für jede Rolle? Sieben Reiter: Überblick (Geschäftsleitung), Verkauf (eigene Zahlen und Rangliste), Pipeline & Prognose, Abwicklung (Projektleitung, Montage), Finanzen (nur Recht `finanzen`), Service & Wartung und alle Zahlen (Tabelle wie V233 nach Standort und Person). Jede Zahl mit Vergleich (Vorjahr oder Vorperiode) und, wo eines erfasst ist, Ziel; jede Zahl zeigt per Klick ihre Einträge (auch als CSV).
 
-**Stand:** Neuentwurf 2.11.2026, Entscheid 0040 (`#/dashboard?reiter=…&zeitraum=…&vergleich=…&bereich=…&person=…&bericht=JJJJ-MM`). Startreiter je Rolle aus `lib/rolle.ts`.
+**Stand:** Neuentwurf 2.11.2026, Entscheid 0045 (`#/dashboard?reiter=…&zeitraum=…&vergleich=…&bereich=…&person=…&bericht=JJJJ-MM`). Startreiter je Rolle aus `lib/rolle.ts`.
 
 ## Daten
 

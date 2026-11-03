@@ -1,17 +1,28 @@
--- Kennzahlen vollständig (02.11.2026, Entscheid 0040): Ziele je Firma und Person, Prognose aus fester Wahrscheinlichkeit
+-- Kennzahlen vollständig (02.11.2026, Entscheid 0045): Ziele je Firma und Person, Prognose aus fester Wahrscheinlichkeit
 -- je Stand, Durchlaufzeiten, kWp und Produkte, Umsatz aus gestellten Rechnungen, Service und Wartung, Monatsbericht.
 -- Wie `kennzahlen_fakten` liefert `kennzahlen_zusatz` Einzelzeilen statt Summen: die App zählt sie und zeigt hinter
 -- jeder Zahl genau diese Zeilen. Alles mit den Rechten der lesenden Person (Rechnungen sieht nur, wer sie lesen darf).
 
 -- Einstellungen: Ziele (Rappen, je Jahr), Wahrscheinlichkeit je Stand (Prozent), Richtwerte für «Was auffällt».
-update public.einstellungen
+-- Die Abwicklung (Migration 20261111001100) hatte ihre Richtwerte flach unter `ziele` (dauer_vertrag_ibn,
+-- fristen_ueberfaellig, material_spaet, faelle_dauer): sie wandern nach `richtwerte`, `ziele` hält nur noch Jahre.
+update public.einstellungen e
    set wert = jsonb_build_object(
-         'ziele', '{}'::jsonb,
          'wahrscheinlichkeit', '{"offeriert": 35, "nachfassen": 20, "vertagt": 10, "alt": 5}'::jsonb,
          'alt_tage', 90,
-         'richtwerte', '{"unterschrift_ibn_tage": 60, "reaktion_prozent": 90, "marge_prozent": 30}'::jsonb,
-         'bericht_gemeldet', null) || wert
- where schluessel = 'kennzahlen';
+         'bericht_gemeldet', null) || e.wert
+       || jsonb_build_object(
+         'ziele', coalesce((select jsonb_object_agg(j.key, j.value) from jsonb_each(coalesce(e.wert -> 'ziele', '{}')) j
+                             where j.key ~ '^\d{4}$'), '{}'),
+         'richtwerte', '{"unterschrift_ibn_tage": 90, "reaktion_prozent": 90, "marge_prozent": 30,
+                         "fristen_ueberfaellig": 0, "material_spaet": 0, "faelle_dauer": 10}'::jsonb
+           || jsonb_strip_nulls(jsonb_build_object(
+                'unterschrift_ibn_tage', e.wert -> 'ziele' -> 'dauer_vertrag_ibn',
+                'fristen_ueberfaellig', e.wert -> 'ziele' -> 'fristen_ueberfaellig',
+                'material_spaet', e.wert -> 'ziele' -> 'material_spaet',
+                'faelle_dauer', e.wert -> 'ziele' -> 'faelle_dauer'))
+           || coalesce(e.wert -> 'richtwerte', '{}'))
+ where e.schluessel = 'kennzahlen';
 
 /**
  * Zusätzliche Einzelfakten im Zeitraum [von, bis]. Spalten wie `kennzahlen_fakten`, dazu `kwp` (Leistung), `tage`

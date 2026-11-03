@@ -12,7 +12,14 @@ import { useKzEinstellungenSpeichern } from '../hooks/useKennzahlen'
 import type { JahresZiel, KennzahlenEinstellungen } from '../types'
 
 const WAHRSCHEINLICHKEIT = ['offeriert', 'nachfassen', 'vertagt', 'alt'] as const
-const RICHTWERTE = ['unterschrift_ibn_tage', 'reaktion_prozent', 'marge_prozent'] as const
+const RICHTWERTE = [
+  'unterschrift_ibn_tage',
+  'reaktion_prozent',
+  'marge_prozent',
+  'fristen_ueberfaellig',
+  'material_spaet',
+  'faelle_dauer',
+] as const
 
 /** Betrag in Franken als Text für ein Feld (leer ohne Wert). */
 const alsText = (rappen: number | null | undefined) => (rappen ? formatChf(rappen).replace(/\.00$/, '') : '')
@@ -85,11 +92,9 @@ export function ZieleDialog({
           alt: ganz('w:alt', e.wahrscheinlichkeit.alt),
         },
         alt_tage: ganz('alt_tage', e.alt_tage),
-        richtwerte: {
-          unterschrift_ibn_tage: ganz('r:unterschrift_ibn_tage', e.richtwerte.unterschrift_ibn_tage),
-          reaktion_prozent: ganz('r:reaktion_prozent', e.richtwerte.reaktion_prozent),
-          marge_prozent: ganz('r:marge_prozent', e.richtwerte.marge_prozent),
-        },
+        richtwerte: Object.fromEntries(
+          RICHTWERTE.map((r) => [r, ganz(`r:${r}`, e.richtwerte[r])]),
+        ) as KennzahlenEinstellungen['richtwerte'],
       },
       {
         onSuccess: () => {

@@ -1,7 +1,7 @@
 /** Fachliche Typen des Moduls «Einkauf & Material». */
 
 /** Reiter der Seite (#/purchasing?reiter=…). */
-export const REITER = ['bestellungen', 'material', 'lager', 'lieferanten'] as const
+export const REITER = ['bestellungen', 'zubestellen', 'material', 'lager', 'lieferanten'] as const
 export type Reiter = (typeof REITER)[number]
 
 export const BESTELL_FILTER = ['offen', 'entwuerfe', 'ueberfaellig', 'geliefert', 'alle'] as const
@@ -31,6 +31,8 @@ export interface Bestellung {
   lagerort_adresse: string | null
   liefertermin: string | null
   bestellt_am: string | null
+  /** Auftragsbestätigung des Lieferanten erhalten (stoppt die Nachfrage). */
+  bestaetigt_am: string | null
   geliefert_am: string | null
   freigegeben_am: string | null
   freigegeben_von: string | null

@@ -6,7 +6,14 @@ export const STANDARD_EINSTELLUNGEN: KennzahlenEinstellungen = {
   ziele: {},
   wahrscheinlichkeit: { offeriert: 35, nachfassen: 20, vertagt: 10, alt: 5 },
   alt_tage: 90,
-  richtwerte: { unterschrift_ibn_tage: 60, reaktion_prozent: 90, marge_prozent: 30 },
+  richtwerte: {
+    unterschrift_ibn_tage: 90,
+    reaktion_prozent: 90,
+    marge_prozent: 30,
+    fristen_ueberfaellig: 0,
+    material_spaet: 0,
+    faelle_dauer: 10,
+  },
   quellen_kosten_rappen: {},
 }
 
@@ -53,7 +60,8 @@ export function zielTon(prozent: number | null): 'ok' | 'warnung' | 'kritisch' |
 /** Einstellung aus der Datenbank mit Standardwerten auffüllen (fehlende Schlüssel bei älteren Ständen). */
 export function mitStandard(wert: Partial<KennzahlenEinstellungen> | null | undefined): KennzahlenEinstellungen {
   return {
-    ziele: wert?.ziele ?? {},
+    // Nur Jahre: ältere Stände hatten hier die Richtwerte der Abwicklung (seit Entscheid 0045 unter `richtwerte`).
+    ziele: Object.fromEntries(Object.entries(wert?.ziele ?? {}).filter(([j]) => /^\d{4}$/.test(j))),
     wahrscheinlichkeit: { ...STANDARD_EINSTELLUNGEN.wahrscheinlichkeit, ...wert?.wahrscheinlichkeit },
     alt_tage: wert?.alt_tage ?? STANDARD_EINSTELLUNGEN.alt_tage,
     richtwerte: { ...STANDARD_EINSTELLUNGEN.richtwerte, ...wert?.richtwerte },

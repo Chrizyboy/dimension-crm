@@ -11,6 +11,7 @@ import type { Finanzdaten, Reiter, Szenario } from '../types'
 import { BewegungZeile, type BewegungAktion } from './BewegungZeile'
 import type { Bewegung } from '../types'
 import { Wochenbalken } from './Wochenbalken'
+import { ReserveHinweis } from './ReserveHinweis'
 
 /**
  * Übersicht der Liquidität (V233 «Finanzen»): Kontostand, tiefster Stand, was diese Woche zu zahlen ist,
@@ -128,6 +129,7 @@ export function Uebersicht({
 
   return (
     <div className="flex flex-col gap-4">
+      <ReserveHinweis wochen={v.wochen} reserve={reserve} />
       <section className="grid grid-cols-2 gap-3 lg:grid-cols-5" aria-label={t('finanzen.kennzahlen')}>
         {kacheln.map((k) => (
           <div key={k.label} className="bg-surface flex flex-col gap-1 rounded-lg border p-3">

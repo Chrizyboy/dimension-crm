@@ -10,10 +10,11 @@ import { useVerbindungsStatus } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { supabase } from '@/services/supabase'
 import { useAktion } from '../hooks/useAktion'
-import { useZuVerrechnen } from '../hooks/useRechnungen'
+import { useHeute, useZuVerrechnen } from '../hooks/useRechnungen'
 import { abgleichen } from '../services/rechnungen'
 import { REITER, type EntwurfVorgabe, type Reiter as ReiterTyp } from '../types'
 import { Firmen } from './Firmen'
+import { HeutePruefen } from './HeutePruefen'
 import { NeueRechnungDialog } from './NeueRechnungDialog'
 import { RechnungAkte } from './RechnungAkte'
 import { RechnungListe } from './RechnungListe'
@@ -40,6 +41,7 @@ export default function Rechnungen({
 }) {
   const { t } = useTranslation()
   const zuVerrechnen = useZuVerrechnen()
+  const heute = useHeute()
   const verbindungen = useVerbindungsStatus()
   const { laeuft, aus } = useAktion()
   const [neu, setNeu] = useState<EntwurfVorgabe | null>(null)
@@ -52,6 +54,7 @@ export default function Rechnungen({
     )
   }
   const anzahlOffen = (zuVerrechnen.data?.tranchen.length ?? 0) + (zuVerrechnen.data?.rapporte.length ?? 0)
+  const anzahlHeute = (heute.data?.entwuerfe.length ?? 0) + (heute.data?.mahnungen.length ?? 0)
   const oeffnen = (id: string | null) => {
     onNavigation({ rechnung: id })
   }
@@ -99,12 +102,22 @@ export default function Rechnungen({
           {REITER.map((r) => (
             <ReiterKnopf key={r} value={r}>
               {t(`rechnungen.reiter.${r}`)}
+              {r === 'heute' && anzahlHeute > 0 && (
+                <span className="text-muted-foreground zahlen ml-1.5 text-xs">{anzahlHeute}</span>
+              )}
               {r === 'verrechnen' && anzahlOffen > 0 && (
                 <span className="text-muted-foreground zahlen ml-1.5 text-xs">{anzahlOffen}</span>
               )}
             </ReiterKnopf>
           ))}
         </ReiterListe>
+        <ReiterInhalt value="heute" className="pt-4">
+          <HeutePruefen
+            onRechnung={(id) => {
+              onNavigation({ reiter: 'heute', rechnung: id })
+            }}
+          />
+        </ReiterInhalt>
         <ReiterInhalt value="rechnungen" className="pt-4">
           <RechnungListe aktiveId={rechnungId} onOeffnen={oeffnen} />
         </ReiterInhalt>

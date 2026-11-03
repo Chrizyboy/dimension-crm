@@ -25,7 +25,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useUi } from '@/stores/ui'
 import { chfOderLeer, kwpText } from '../lib/anzeige'
-import type { Zeitachseneintrag } from '../types'
+import type { Mailzeile, Zeitachseneintrag } from '../types'
 
 const ICONS: Record<string, LucideIcon> = {
   'aktivitaet:anruf': Phone,
@@ -43,13 +43,16 @@ const ICONS: Record<string, LucideIcon> = {
   baubeginn: Hammer,
   service: Wrench,
   dokument: Paperclip,
+  'mail:ein': Inbox,
+  'mail:aus': Send,
 }
 
-const FILTER = ['alle', 'kontakte', 'geschaeft', 'dokumente', 'aenderungen'] as const
+const FILTER = ['alle', 'kontakte', 'mails', 'geschaeft', 'dokumente', 'aenderungen'] as const
 type Filter = (typeof FILTER)[number]
 
 function gruppeVon(art: string): Exclude<Filter, 'alle'> {
   if (art === 'aktivitaet:aenderung' || art.startsWith('aenderung:')) return 'aenderungen'
+  if (art.startsWith('mail:')) return 'mails'
   if (art.startsWith('aktivitaet:')) return 'kontakte'
   if (art === 'dokument') return 'dokumente'
   return 'geschaeft'
@@ -57,20 +60,46 @@ function gruppeVon(art: string): Exclude<Filter, 'alle'> {
 
 const TON: Record<string, string> = {
   kontakte: 'bg-info-soft text-info',
+  mails: 'bg-info-soft text-info',
   geschaeft: 'bg-accent-soft text-accent-ink',
   dokumente: 'bg-muted text-muted-foreground',
   aenderungen: 'bg-muted text-muted-foreground',
+}
+
+/** Mischt Mails als Einträge in die Zeitachse, neueste zuerst. */
+function mitMails(eintraege: Zeitachseneintrag[] | undefined, mails: Mailzeile[] | undefined) {
+  if (!eintraege || !mails?.length) return eintraege
+  const alsEintrag = mails.map<Zeitachseneintrag>((m) => ({
+    zeitpunkt: m.zeitpunkt,
+    art: `mail:${m.richtung}`,
+    text: m.betreff,
+    daten: {},
+    bezugTabelle: m.richtung === 'ein' ? 'posteingang' : 'ausgangskorb',
+    bezugId: m.id,
+    wer: m.wer,
+  }))
+  return [...eintraege, ...alsEintrag].sort((a, b) => b.zeitpunkt.localeCompare(a.zeitpunkt))
 }
 
 /**
  * Reiter «Zeitachse»: Anrufe, Mails, Notizen, Offerten, Entscheide, Werkvertrag, Baubeginn,
  * Service, Dokumente und Änderungen chronologisch (Bau-Auftrag 3.2). Filter oben.
  */
-export function AkteZeitachse({ eintraege, laedt }: { eintraege: Zeitachseneintrag[] | undefined; laedt: boolean }) {
+export function AkteZeitachse({
+  eintraege: grund,
+  mails,
+  laedt,
+}: {
+  eintraege: Zeitachseneintrag[] | undefined
+  /** Mails aus Posteingang und Ausgangskorb; die Datenbank-Zeitachse kennt sie nicht. */
+  mails?: Mailzeile[] | undefined
+  laedt: boolean
+}) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const ergebnis = useAuswahl('kontaktergebnis')
   const [filter, setFilter] = useState<Filter>('alle')
+  const eintraege = useMemo(() => mitMails(grund, mails), [grund, mails])
 
   const punkte = useMemo<Zeitpunkt[]>(
     () =>

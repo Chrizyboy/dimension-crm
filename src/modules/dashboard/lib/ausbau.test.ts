@@ -145,7 +145,7 @@ describe('Hinweise', () => {
     const fakten = [
       ...Array.from({ length: 5 }, () => f('nf_faellig', { standort: 'bulle' })),
       f('rechnung_offen', { tage: 10, betrag_rappen: 5 }),
-      f('ibn', { tage: 90 }),
+      f('ibn', { tage: 120 }),
     ]
     const h = hinweise(fakten, STANDARD_EINSTELLUNGEN, '2026-11-02', 80)
     expect(h[0]?.ton).toBe('kritisch')
