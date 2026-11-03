@@ -1,6 +1,7 @@
 import { CalendarClock, CheckCircle2, ExternalLink, FileText, Pencil, Receipt, Undo2, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
@@ -52,6 +53,12 @@ export function VertragAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   // Hauptaktion zuletzt (Knopfleiste): Inspektion erledigt, wenn das Paket Inspektionen hat.
   const fuss = v && (
     <Knopfleiste>
+      <InPapierkorbKnopf
+        tabelle="wartungsvertraege"
+        id={v.id}
+        name={[v.nummer, v.kunde].filter(Boolean).join(' ')}
+        onFertig={onSchliessen}
+      />
       <Button variant="ghost" onClick={drucke}>
         <FileText />
         {t('wartung.akte.pdf')}

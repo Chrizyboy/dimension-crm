@@ -88,7 +88,7 @@ Zusätzliche Arbeit oder Material, das nicht im Werkvertrag stand. Wird auf der 
 
 ## Papierkorb {#papierkorb}
 
-Im CRM wird nichts endgültig gelöscht. Gelöschtes kommt in den Papierkorb und lässt sich wiederherstellen. [Einstellungen](kapitel:settings)
+Im CRM wird nichts endgültig gelöscht. In jedem Bereich legt «In den Papierkorb» einen Eintrag weg (mit Rückfrage und «Rückgängig»); der Papierkorb im Menü oben rechts zeigt, was du weggelegt hast (die Administration sieht alles), und holt es mit «Wiederherstellen» zurück. Gestellte Rechnungen, Spesen, Zahlungen und Lagerbuchungen werden storniert statt gelöscht.
 
 ## Posteingang {#posteingang}
 

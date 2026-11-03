@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Button } from '@/components/ui/button'
 import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
 import { meldeFehler } from '@/services/fehler'
@@ -134,7 +135,7 @@ export function AkteDokumente({ dokumente }: { dokumente: Dokument[] }) {
             {liste.map((d) => {
               const Icon = d.mime_typ?.startsWith('image/') ? Bild : FileText
               return (
-                <li key={d.id}>
+                <li key={d.id} className="flex items-center pr-1">
                   <button
                     type="button"
                     onClick={() => void oeffne(d)}
@@ -149,6 +150,7 @@ export function AkteDokumente({ dokumente }: { dokumente: Dokument[] }) {
                       <ExternalLink className="text-muted-foreground size-3.5 shrink-0" aria-label="SharePoint" />
                     )}
                   </button>
+                  <InPapierkorbKnopf tabelle="dokumente" id={d.id} name={d.name} nurSymbol />
                 </li>
               )
             })}

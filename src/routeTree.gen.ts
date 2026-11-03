@@ -31,6 +31,7 @@ import { Route as KnowledgeRouteImport } from './app/knowledge'
 import { Route as KontoRouteImport } from './app/konto'
 import { Route as MarketingRouteImport } from './app/marketing'
 import { Route as OutboxRouteImport } from './app/outbox'
+import { Route as PapierkorbRouteImport } from './app/papierkorb'
 import { Route as PricingRouteImport } from './app/pricing'
 import { Route as ProjectsRouteImport } from './app/projects'
 import { Route as PurchasingRouteImport } from './app/purchasing'
@@ -153,6 +154,11 @@ const OutboxRoute = OutboxRouteImport.update({
   path: '/outbox',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PapierkorbRoute = PapierkorbRouteImport.update({
+  id: '/papierkorb',
+  path: '/papierkorb',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
@@ -232,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/konto': typeof KontoRoute
   '/marketing': typeof MarketingRoute
   '/outbox': typeof OutboxRoute
+  '/papierkorb': typeof PapierkorbRoute
   '/pricing': typeof PricingRoute
   '/projects': typeof ProjectsRoute
   '/purchasing': typeof PurchasingRoute
@@ -267,6 +274,7 @@ export interface FileRoutesByTo {
   '/konto': typeof KontoRoute
   '/marketing': typeof MarketingRoute
   '/outbox': typeof OutboxRoute
+  '/papierkorb': typeof PapierkorbRoute
   '/pricing': typeof PricingRoute
   '/projects': typeof ProjectsRoute
   '/purchasing': typeof PurchasingRoute
@@ -303,6 +311,7 @@ export interface FileRoutesById {
   '/konto': typeof KontoRoute
   '/marketing': typeof MarketingRoute
   '/outbox': typeof OutboxRoute
+  '/papierkorb': typeof PapierkorbRoute
   '/pricing': typeof PricingRoute
   '/projects': typeof ProjectsRoute
   '/purchasing': typeof PurchasingRoute
@@ -340,6 +349,7 @@ export interface FileRouteTypes {
     | '/konto'
     | '/marketing'
     | '/outbox'
+    | '/papierkorb'
     | '/pricing'
     | '/projects'
     | '/purchasing'
@@ -375,6 +385,7 @@ export interface FileRouteTypes {
     | '/konto'
     | '/marketing'
     | '/outbox'
+    | '/papierkorb'
     | '/pricing'
     | '/projects'
     | '/purchasing'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/konto'
     | '/marketing'
     | '/outbox'
+    | '/papierkorb'
     | '/pricing'
     | '/projects'
     | '/purchasing'
@@ -446,6 +458,7 @@ export interface RootRouteChildren {
   KontoRoute: typeof KontoRoute
   MarketingRoute: typeof MarketingRoute
   OutboxRoute: typeof OutboxRoute
+  PapierkorbRoute: typeof PapierkorbRoute
   PricingRoute: typeof PricingRoute
   ProjectsRoute: typeof ProjectsRoute
   PurchasingRoute: typeof PurchasingRoute
@@ -615,6 +628,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OutboxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/papierkorb': {
+      id: '/papierkorb'
+      path: '/papierkorb'
+      fullPath: '/papierkorb'
+      preLoaderRoute: typeof PapierkorbRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -718,6 +738,7 @@ const rootRouteChildren: RootRouteChildren = {
   KontoRoute: KontoRoute,
   MarketingRoute: MarketingRoute,
   OutboxRoute: OutboxRoute,
+  PapierkorbRoute: PapierkorbRoute,
   PricingRoute: PricingRoute,
   ProjectsRoute: ProjectsRoute,
   PurchasingRoute: PurchasingRoute,

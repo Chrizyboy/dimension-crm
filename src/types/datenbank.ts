@@ -18283,6 +18283,17 @@ export type Database = {
         Returns: undefined
       }
       offerte_zurueck: { Args: { p_grund: string; p_offerte: string; p_ziel: string }; Returns: undefined }
+      papierkorb_legen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
+      papierkorb_liste: {
+        Args: { p_grenze?: number }
+        Returns: {
+          geloescht_am: string
+          geloescht_von: string | null
+          id: string
+          tabelle: string
+          titel: string | null
+        }[]
+      }
       partner_akte: { Args: { p_kontakt: string }; Returns: Json }
       partner_dubletten: {
         Args: { p_email?: string; p_name: string; p_ohne?: string; p_telefon?: string; p_uid?: string }
@@ -18324,6 +18335,7 @@ export type Database = {
         }[]
       }
       papierkorb_wiederherstellen: { Args: { p_id: string; p_tabelle: string }; Returns: boolean }
+      papierkorb_zurueckholen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
       plz_auskunft: {
         Args: { p_plz: string }
         Returns: {

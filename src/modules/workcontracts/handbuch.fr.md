@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, buchhaltung, geschaeftsleitung
 ---
 
@@ -68,5 +68,6 @@ Déposer ta signature sous **Mon compte**, puis recréer le contrat.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les contrats d'entreprise; signés seulement par l'administration, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 02.11.2026: Bouton « Nouveau contrat » avec choix de l’offre.
 - 31.10.2026: Modèle de Muri, conditions de paiement d’un clic et facture d’acompte.

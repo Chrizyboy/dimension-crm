@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { AlertTriangle, CheckCircle2, FileText, FolderArchive, Send, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
@@ -62,6 +63,12 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
     <>
       {/* Im Panel ist der Seitenkopf verdeckt: der Monteur soll auch hier sehen, dass Einträge noch warten. */}
       <Netzstand className="mr-auto" />
+      <InPapierkorbKnopf
+        tabelle="rapporte"
+        id={r.id}
+        name={[r.nummer, r.kunde].filter(Boolean).join(' ')}
+        onFertig={onSchliessen}
+      />
       {!offen && <RapportPdfKnopf rapport={r} />}
       {!offen && (
         <Button

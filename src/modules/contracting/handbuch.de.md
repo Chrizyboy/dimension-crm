@@ -84,6 +84,7 @@ Youdera finanziert und besitzt die Anlage, wir bauen und warten sie. Der Rechner
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Grossprojekte (Akte und Seite), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Potenzialanalyse, Dossier an Youdera und Besichtigung am Handy.
 - 02.11.2026: Pipeline bis zum Vertrag, Reiter «Zu entscheiden» und Projekt-Akte mit Rechner.
 - 31.10.2026: Dachsuche um Muri und Bulle, pro Woche die besten zehn.
