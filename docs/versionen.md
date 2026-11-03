@@ -7,19 +7,34 @@ veröffentlichen» starten (docs/installation.md).
 
 ## 1.1.0
 
-- Desktop-App: startet automatisch mit Windows (ausschalten unter «Mein Konto»), kein Leer-Scrollen mehr, neues App-Symbol (Signet) in Fenster, Taskleiste, Browser-Tab und auf dem Handy.
-- Anmeldung: Sprachwahl DE/FR wirkt auch auf der Anmeldeseite; Beispiel-Adresse vorname@dimension-solaire.ch.
-- Posteingang: ältere Mails aus allen Postfächern und info@ werden nachgeholt (als Archiv, ohne Frist).
-- Service & Garantie: Einsatz mit Team, Anlage-Akte und Ablauf am Handy.
-- Kurzzeichen je Person (z. B. CR, LP) in allen Bereichen; Ansprechpersonen gehören zu ihrer Firma.
+- Desktop-App: startet automatisch mit Windows (ausschalten unter «Mein Konto»), kein Leer-Scrollen mehr, neues App-Symbol in Fenster, Taskleiste, Browser-Tab und auf dem Handy.
+- Anmeldung: Sprachwahl DE/FR wirkt auch auf der Anmeldeseite; Rollen mit Zusätzen Geschäftsleitung und Administration, Registrier-Link für neue Mitarbeitende.
+- Mein Tag: verschieben mit Grund, Freigaben, Team heute, Wochenziele und Wetter auf den Baustellen.
+- Anfragen & Leads: «Zu tun» mit 15-Minuten-Uhr, 6 Schritte, Lead-Akte als ganze Seite, Website-Anfragen kommen direkt als Lead, Termin-Link für Kunden.
+- Kunden: Kundenakte als ganze Seite mit Betreuer, Rechnungsangaben und Ansprechpersonen; Doppelte zusammenführen.
+- Offerten: Arbeitsvorrat nach Phase, Offert-Akte als ganze Seite, Nachfassen nach Plan, Freigabe bei Rabatt oder Marge, Stückliste aus Eturnity, Auswertung.
+- Preise: Preislisten einlesen, Kalkulation mit Freigabe.
+- Projekte: Leitstand, «Meine Woche», Projekt-Akte als ganze Seite, Mängel und Beteiligte.
+- Baustelle & Rapporte: Teamzeit, Pflichtfotos, Sicherheits-Check, Meldungen, «Baustellen heute» und Auswertung für die Leitung.
+- Service & Garantie: Einsatz mit Team, Anlage-Akte und Ablauf am Handy; Wartung: Inspektionen planen, auch für Kunden ohne Vertrag.
+- Einkauf: Leitstand, Sammelbestellung, Freigabegrenze, Auftragsbestätigung, Rechnungsabgleich, Lagerplatz, Rüstliste, Rückgabe und Inventur.
+- Rechnungen: Übersicht für alle Rollen, Mahnlauf mit Freigabe, Eingangsrechnungen mit Visum, Kundenangaben werden übernommen.
+- Finanzen für GL und Buchhaltung: Cockpit, Zahllauf, Konten, MWST, Marge und Monatsabschluss.
+- Spesen: Prüfen, Rückfrage, Kilometer, Auszahlungsläufe und Abgleich der Firmenkarte.
+- Aufgaben: nach Fälligkeit gruppiert, Schnelleingabe («morgen @LP !»), Teilschritte, Kommentare, Vertretung.
+- Posteingang als Arbeitsplatz: Zurückstellen, Warten auf Kunde, Notizen mit @, Absender-Regeln, ältere Mails nachgeholt.
+- Ausgangskorb als Werkbank mit Erinnerung; Marketing mit Übersicht, Kalender, Kampagnen und Öffnungen/Klicks; Social Media je Sprache.
+- Ausschreibungen von der Submission bis zum Zuschlag mit Fristen und Nachweisen; Grossprojekte mit Pipeline bis zum Vertrag, Potenzialanalyse und Besichtigung am Handy.
+- Kennzahlen je Rolle mit Zielen, Vergleich, Prognose und Monatsbericht.
+- Team & Ausweise: «Heute», Kurse mit Antrag und Bewilligung, Pflicht-Ausweise je Tätigkeit; Personal-Akte mit Privatadresse, Notfall und Pensum.
+- Fahrzeuge & Geräte: Zu erledigen, Fahrzeug-Akte, Belegung von Hand, Schäden, Kosten, QR-Etiketten.
+- Adressbuch für Geschäftspartner mit UID-Suche und Netzbetreiber-Verzeichnis.
+- Einstellungen an einem Ort, Firmen-Einstellungen nur Administration.
+- Überall löschen: Einträge gehen in den Papierkorb und lassen sich wiederherstellen.
+- Kurzzeichen je Person (z. B. CR, LP) in allen Bereichen; Filter mit Häkchen und Spaltenwahl.
 - Assistent: Fragen ans CRM, Aufträge und Dokumente lesen, mit Verlauf (Ctrl+J).
-- Grossprojekte: Pipeline bis zum Vertrag, Wochen-Auswahl, Projekt-Akte mit Rechner.
-- Spesen: Prüfen, Rückfrage, Kilometer, Firmenkarte und Auszahlungsläufe.
-- Team & Ausweise: «Heute», Kurse mit Antrag und Bewilligung, Anforderungen je Rolle; Personal-Akte mit Privatadresse, Notfall und Pensum.
-- Fahrzeuge & Geräte: Zu erledigen, Fahrzeug-Akte, Belegung, Schäden, Kosten, QR-Etiketten.
-- Handbuch: ein Kapitel pro Bereich, Hilfe mit F1, Wege je Rolle, Begriffe.
-- Automationen: Schutz für Kunden, Übersicht, Geplant und Probelauf.
-- Download-Seite für das Team.
+- Handbuch: ein Kapitel pro Bereich, Hilfe mit F1; «Fehler melden» jetzt mit Fotos und Screenshots.
+- Automationen: Schutz für Kunden (Versandfenster, Pause), Übersicht, Geplant und Probelauf.
 
 ## 1.0.0
 
