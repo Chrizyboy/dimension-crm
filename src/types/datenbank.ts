@@ -7261,8 +7261,10 @@ export type Database = {
           hat_anhang: boolean
           id: string
           kennung: string
+          ki_werte: Json
           kontakt_id: string | null
           konversation_id: string | null
+          nachfassen: boolean
           nummern: string[]
           offerte_id: string | null
           outlook_id: string
@@ -7277,11 +7279,17 @@ export type Database = {
           sprache: string | null
           stand: string
           verkaufschance_id: string | null
+          verteilt_am: string | null
+          verteilt_von: string | null
           vertretung_fuer: string | null
           von_email: string | null
           von_name: string | null
           vorschau: string | null
+          vorschlag_id: string | null
+          warten_bis: string | null
           web_link: string | null
+          zahlung_id: string | null
+          zurueck_am: string | null
           zusammenfassung: string | null
           zustaendig_id: string | null
         }
@@ -7309,8 +7317,10 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung: string
+          ki_werte?: Json
           kontakt_id?: string | null
           konversation_id?: string | null
+          nachfassen?: boolean
           nummern?: string[]
           offerte_id?: string | null
           outlook_id: string
@@ -7325,11 +7335,17 @@ export type Database = {
           sprache?: string | null
           stand?: string
           verkaufschance_id?: string | null
+          verteilt_am?: string | null
+          verteilt_von?: string | null
           vertretung_fuer?: string | null
           von_email?: string | null
           von_name?: string | null
           vorschau?: string | null
+          vorschlag_id?: string | null
+          warten_bis?: string | null
           web_link?: string | null
+          zahlung_id?: string | null
+          zurueck_am?: string | null
           zusammenfassung?: string | null
           zustaendig_id?: string | null
         }
@@ -7356,8 +7372,10 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung?: string
+          ki_werte?: Json
           kontakt_id?: string | null
           konversation_id?: string | null
+          nachfassen?: boolean
           nummern?: string[]
           offerte_id?: string | null
           outlook_id?: string
@@ -7372,15 +7390,42 @@ export type Database = {
           sprache?: string | null
           stand?: string
           verkaufschance_id?: string | null
+          verteilt_am?: string | null
+          verteilt_von?: string | null
           vertretung_fuer?: string | null
           von_email?: string | null
           von_name?: string | null
           vorschau?: string | null
+          vorschlag_id?: string | null
+          warten_bis?: string | null
           web_link?: string | null
+          zahlung_id?: string | null
+          zurueck_am?: string | null
           zusammenfassung?: string | null
           zustaendig_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'posteingang_verteilt_von_fkey'
+            columns: ['verteilt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_vorschlag_id_fkey'
+            columns: ['vorschlag_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_zahlung_id_fkey'
+            columns: ['zahlung_id']
+            isOneToOne: false
+            referencedRelation: 'kreditor_zahlungen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'posteingang_abgeholt_von_fkey'
             columns: ['abgeholt_von']
@@ -7594,6 +7639,135 @@ export type Database = {
           {
             foreignKeyName: 'posteingang_zustaendig_id_fkey'
             columns: ['zustaendig_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      posteingang_notizen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          erwaehnt: string[]
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          posteingang_id: string
+          text: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          erwaehnt?: string[]
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id: string
+          posteingang_id: string
+          text: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          erwaehnt?: string[]
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          posteingang_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'posteingang_notizen_posteingang_id_fkey'
+            columns: ['posteingang_id']
+            isOneToOne: false
+            referencedRelation: 'posteingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_notizen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      posteingang_regeln: {
+        Row: {
+          absender: string
+          aktion: string
+          alt_daten: Json | null
+          alt_id: string | null
+          angelegt_von: string | null
+          art: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string | null
+          postfach_person_id: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          absender: string
+          aktion: string
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angelegt_von?: string | null
+          art?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          postfach_person_id?: string | null
+        }
+        Update: {
+          absender?: string
+          aktion?: string
+          alt_daten?: Json | null
+          alt_id?: string | null
+          angelegt_von?: string | null
+          art?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string | null
+          postfach_person_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
+            columns: ['angelegt_von']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
@@ -14148,9 +14322,14 @@ export type Database = {
         }[]
       }
       posteingang_antworten: { Args: { p_mails: Json }; Returns: number }
+      posteingang_aufgabe: {
+        Args: { p_faellig: string | null; p_id: string; p_person: string | null; p_titel: string }
+        Returns: string
+      }
       posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
       posteingang_auswertung: { Args: { p_wochen?: number }; Returns: Json }
       posteingang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      posteingang_liefertermin: { Args: { p_bestellung: string; p_datum: string; p_id: string }; Returns: undefined }
       posteingang_nachholen: {
         Args: {
           p_bis: string
@@ -14165,9 +14344,17 @@ export type Database = {
       }
       posteingang_nachholen_stand: { Args: { p_ordner: string; p_schluessel: string }; Returns: Json }
       posteingang_nachholen_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
+      posteingang_notiz: { Args: { p_id: string; p_text: string }; Returns: string }
+      posteingang_notizen_von: {
+        Args: { p_id: string }
+        Returns: { am: string; id: string; kuerzel: string; person: string; text: string }[]
+      }
+      posteingang_regel_loeschen: { Args: { p_id: string }; Returns: undefined }
+      posteingang_regel_speichern: { Args: { p: Json }; Returns: string }
       posteingang_seit: { Args: Record<PropertyKey, never>; Returns: string }
       posteingang_setzen: { Args: { p?: Json; p_aktion: string; p_id: string }; Returns: undefined }
       posteingang_sortieren: { Args: { p: Json; p_id: string }; Returns: undefined }
+      posteingang_team: { Args: Record<PropertyKey, never>; Returns: Json }
       posteingang_unsortiert: {
         Args: { p_limit: number }
         Returns: {
@@ -14183,6 +14370,7 @@ export type Database = {
           vorschau: string
         }[]
       }
+      posteingang_zahlung_erfassen: { Args: { p: Json; p_id: string }; Returns: string }
       preise_importieren: { Args: { p_pruefen?: boolean; p_zeilen: Json }; Returns: Json }
       projekt_bau_planen: { Args: { p?: Json; p_id: string }; Returns: string }
       projekt_bau_rueckgaengig: { Args: { p_id: string }; Returns: undefined }
