@@ -1,9 +1,47 @@
 /** Fachliche Typen des Moduls «Offerten». */
 
-/** Die Reiter des Bereichs (V233: Neue Offerten · Offerten Muri · Offerten Bulle · Nachfassen · PDF-Import). */
-export type OffertAnsicht = 'eingang' | 'muri' | 'bulle' | 'nachfassen' | 'import'
+/**
+ * Die Reiter des Bereichs: Arbeitsvorrat (Board vom Termin bis zum Auftrag, Entscheid 0046) und die Listen aus V233
+ * (Neue Offerten · Offerten Muri · Offerten Bulle · Nachfassen · PDF-Import).
+ */
+export type OffertAnsicht = 'vorrat' | 'eingang' | 'muri' | 'bulle' | 'nachfassen' | 'import'
 
-export const OFFERT_ANSICHTEN: readonly OffertAnsicht[] = ['eingang', 'muri', 'bulle', 'nachfassen', 'import']
+export const OFFERT_ANSICHTEN: readonly OffertAnsicht[] = ['vorrat', 'eingang', 'muri', 'bulle', 'nachfassen', 'import']
+
+/** Spalten des Arbeitsvorrats, in der Reihenfolge des Ablaufs. */
+export type OffertPhase = 'zu_offerieren' | 'planung' | 'pruefen' | 'offeriert' | 'verhandlung' | 'gewonnen'
+
+export const OFFERT_PHASEN: readonly OffertPhase[] = [
+  'zu_offerieren',
+  'planung',
+  'pruefen',
+  'offeriert',
+  'verhandlung',
+  'gewonnen',
+]
+
+/** Ergebnis beim Nachfassen (Datenbank `offerte_nachfassen`). */
+export type NachfassErgebnis =
+  'nicht_erreicht' | 'vergleicht' | 'interessiert' | 'neue_version' | 'spaeter' | 'ruht' | 'ja' | 'nein'
+
+/** Eine Variante der Offerte (A/B/C), der Kunde wählt eine. */
+export interface OffertVariante {
+  k: string
+  titel: string | null
+  betragRappen: number | null
+  kwp: number | null
+  batterie: string | null
+  text: string | null
+}
+
+/** Einstellungen der Offerten (einstellungen.offerten, nur Administration ändert). */
+export interface OffertEinstellungen {
+  gueltigTage: number
+  zielArbeitstage: number
+  nachfassPlan: number[]
+  freigabe: { aktiv: boolean; rabattAb: number; margeUnter: number; durch: string[] }
+  unterlagen: { id: string; de: string; fr: string }[]
+}
 
 /** Status in «Neue Offerten» (Innendienst, V72/V76/V84). */
 export type EingangStatus = 'neu' | 'bearbeitung' | 'rueckfrage' | 'pruefung' | 'offeriert'
@@ -112,6 +150,27 @@ export interface Offerte {
   werkvertragStatus: string | null
   geaendertAm: string | null
   suchtext: string
+  /** Neu (Entscheid 0046) */
+  gueltigBis: string | null
+  abgelaufen: boolean
+  varianten: OffertVariante[]
+  variante: string | null
+  chance: number
+  chanceProzent: number | null
+  entscheidErwartet: string | null
+  konkurrenz: string | null
+  rabattProzent: number | null
+  unterlagen: Record<string, boolean>
+  nachfassSchritt: number
+  nachfassErgebnis: string | null
+  freigabe: { name: string | null; am: string | null; notiz: string | null } | null
+  freigabeGrund: 'rabatt' | 'marge' | null
+  phase: OffertPhase | 'verloren'
+  terminAm: string | null
+  zurOfferteAm: string | null
+  verkaufPersonName: string | null
+  eingangStatus: string | null
+  rueckfrage: string | null
 }
 
 /** Werte, die aus einem Eturnity-PDF gelesen wurden (V91, V183). */
