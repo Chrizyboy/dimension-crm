@@ -1,6 +1,7 @@
 import { FileText, Pencil, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Button } from '@/components/ui/button'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatDatum } from '@/lib/format'
@@ -84,10 +85,10 @@ export function AkteGespraeche({
       <AkteAbschnitt titel={t('team.dokument.titel')} zusatz={daten.dokumente.length || undefined}>
         <ul className="flex flex-col divide-y text-sm">
           {daten.dokumente.map((d) => (
-            <li key={d.id} className="py-1">
+            <li key={d.id} className="flex items-center gap-1 py-1">
               <button
                 type="button"
-                className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-2 rounded px-1 py-1 text-left outline-none focus-visible:ring-2"
+                className="hover:bg-muted focus-visible:ring-ring flex min-w-0 flex-1 items-center gap-2 rounded px-1 py-1 text-left outline-none focus-visible:ring-2"
                 onClick={() => {
                   onDatei(d.datei_pfad)
                 }}
@@ -100,6 +101,7 @@ export function AkteGespraeche({
                   </span>
                 </span>
               </button>
+              {ablegen && <InPapierkorbKnopf nurSymbol tabelle="personal_dokumente" id={d.id} name={d.titel} />}
             </li>
           ))}
           {daten.dokumente.length === 0 && <li className="text-muted-foreground py-2">{t('team.dokument.leer')}</li>}
