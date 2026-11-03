@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
-// Phase 12: Automationen. Reiter ohne Verstösse; eine eigene Automation im Editor anlegen (Auslöser, Bedingung,
+// Phase 12: Automationen. Entscheid 0039: Übersicht als Start, Geplant, Probelauf im Editor, Schutzregeln. Reiter ohne Verstösse; eine eigene Automation im Editor anlegen (Auslöser, Bedingung,
 // Aufgabe mit Platzhalter), ausschalten und in den Papierkorb legen; Verkauf sieht den Bereich nicht. Aufgaben:
 // eine eigene Aufgabe anlegen, erledigen und unter «Erledigt» wiederfinden. Die Ausführung selbst (Signale, Läufe,
 // Ausgangskorb, Mahnstufe) prüft der Datenbank-Test supabase/tests/automationen.test.sql.
@@ -33,10 +33,21 @@ test('Automationen: Vorlagen, Reiter und Editor ohne Verstösse', async ({ page 
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/automations')
   await expect(page.getByRole('heading', { name: 'Automationen', level: 1 })).toBeVisible()
+  // Start: Übersicht mit Motor, Kacheln und «Braucht Aufmerksamkeit»
+  await expect(page.getByTestId('automationen-uebersicht')).toBeVisible()
+  await expect(page.getByTestId('motor')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Braucht Aufmerksamkeit' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  await page.getByRole('tab', { name: 'Automationen' }).click()
+  // Nach Bereich gruppiert, mit Suche
+  await expect(page.getByRole('heading', { name: 'Verkauf', level: 2 })).toBeVisible()
   await expect(
     page.getByTestId('automation').filter({ hasText: 'Neuer Lead: prüfen, zuteilen, Erstkontakt' }),
   ).toBeVisible()
-  expect(await page.getByTestId('automation').count()).toBeGreaterThanOrEqual(11)
+  expect(await page.getByTestId('automation').count()).toBeGreaterThanOrEqual(30)
+  await page.getByRole('searchbox', { name: 'Automation suchen' }).fill('Jahresgruss')
+  await expect(page.getByTestId('automation')).toHaveCount(1)
+  await page.getByRole('searchbox', { name: 'Automation suchen' }).fill('')
   expect(await verstoesse(page)).toEqual([])
 
   await page
@@ -46,21 +57,25 @@ test('Automationen: Vorlagen, Reiter und Editor ohne Verstösse', async ({ page 
     .click()
   const editor = page.getByRole('dialog', { name: 'Gesuch eingereicht: Frist überwachen' })
   await expect(editor.getByTestId('aktion')).toHaveCount(7)
+  await expect(editor.getByTestId('lesesatz')).toContainText('Wenn «Gesuch eingereicht»')
+  await expect(editor.getByTestId('probelauf')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await editor.getByRole('button', { name: 'Abbrechen' }).click()
 
-  for (const reiter of ['Protokoll', 'Einstellungen']) {
+  for (const reiter of ['Geplant', 'Protokoll', 'Einstellungen']) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
+  await expect(page.getByRole('heading', { name: 'Schutz für Kunden' })).toBeVisible()
+  await expect(page.getByLabel('Von')).toHaveValue('08:00')
 })
 
 test('Eigene Automation anlegen, ausschalten und in den Papierkorb legen', async ({ page }) => {
   test.slow()
   const name = `E2E Messe ${lauf}`
   await anmelden(page, 'admin@test.local')
-  await page.goto('/#/automations')
+  await page.goto('/#/automations?ansicht=liste')
   await page.getByRole('button', { name: 'Neue Automation' }).click()
   const editor = page.getByRole('dialog', { name: 'Neue Automation' })
   await editor.getByLabel('Name (Deutsch)').fill(name)

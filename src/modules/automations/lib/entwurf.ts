@@ -16,4 +16,6 @@ export const NEU: Entwurf = {
   bedingungen: [],
   aktionen: [],
   reihenfolge: 500,
+  versandfenster: null,
+  kontakt_pause_tage: null,
 }

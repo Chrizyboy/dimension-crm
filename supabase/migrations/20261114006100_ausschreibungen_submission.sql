@@ -1,4 +1,4 @@
--- Ausschreibungen vollständig (2.11.2026, Entscheid 0042): eine Submission von der Publikation bis zum Zuschlag.
+-- Ausschreibungen vollständig (2.11.2026, Entscheid 0045): eine Submission von der Publikation bis zum Zuschlag.
 -- Neu: Eckdaten und Zuschlagskriterien, Go/No-Go mit Vorschlag, Eingabe-Checkliste, Prüfung durch eine zweite
 -- Person, Öffnungsprotokoll mit allen Anbietern (Mitbewerber), Zuschlag legt das Projekt an. Dazu firmenweite
 -- Eignungsnachweise mit Ablaufdatum und eine Referenzliste für Eingaben. Regeln liegen in «einstellungen» (Regel 8).

@@ -68,7 +68,7 @@ export interface Dossier {
   offerte_id: string | null
   verkaufschance_id: string | null
   erstellt_am: string
-  // Submission (Entscheid 0042)
+  // Submission (Entscheid 0045)
   verantwortlich_id: string | null
   verantwortlich: string | null
   verfahren: 'offen' | 'selektiv' | 'einladung' | 'freihaendig' | null

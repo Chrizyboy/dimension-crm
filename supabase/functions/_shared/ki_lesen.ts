@@ -106,7 +106,9 @@ export function belegTeile(datei: Teil, kategorien: { schluessel: string; de: st
 «datum» als JJJJ-MM-TT (Belegdatum). «betrag» = Gesamtbetrag inkl. MWST als Zahl. «waehrung» z. B. CHF oder EUR.
 «kategorie»: genau einer dieser Schlüssel: ${kategorien.map((k) => `${k.schluessel} (${k.de})`).join(', ')}.
 «zweck»: kurze Beschreibung, z. B. «Tankstelle Coop Pronto Muri» oder «Mittagessen Restaurant Löwen, Bulle» (höchstens 60 Zeichen).
-«bemerkung»: z. B. Liter, Kilometer oder Anzahl Personen, falls ersichtlich; sonst null.`,
+«mwst_satz»: ausgewiesener MWST-Satz in Prozent (z. B. 8.1, 3.8 oder 2.6), sonst null. «mwst_betrag»: ausgewiesener MWST-Betrag als Zahl, sonst null.
+«personen»: Anzahl Personen bei Essen (Gedecke, Menüs), sonst null.
+«bemerkung»: z. B. Liter oder Kilometer, falls ersichtlich; sonst null.`,
     },
   ]
 }
@@ -120,6 +122,9 @@ export function belegSchema(kategorien: string[]): Record<string, unknown> {
     kategorie: oderNull(wahl(kategorien.length ? kategorien : ['sonstiges'])),
     zweck: oderNull(text),
     bemerkung: oderNull(text),
+    mwst_satz: oderNull(zahl),
+    mwst_betrag: oderNull(zahl),
+    personen: oderNull(zahl),
   })
 }
 
