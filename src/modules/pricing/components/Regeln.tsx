@@ -32,12 +32,8 @@ export default function Regeln() {
   if (!regeln.data || !leistungen.data || !bausteine.data) return <Skelett className="h-96" />
   return (
     <div className="flex flex-col gap-4">
-      {!regeln.data.ich_freigeber && (
-        <p className="bg-info-soft text-info rounded-lg p-3 text-sm">
-          {t('preise.regel.nurFreigeber', {
-            namen: (regeln.data.freigeber ?? []).map((f) => f.name).join(', ') || '–',
-          })}
-        </p>
+      {!regeln.data.ich_admin && (
+        <p className="bg-info-soft text-info rounded-lg p-3 text-sm">{t('preise.regel.nurAdmin')}</p>
       )}
       <RegelnLeistungen leistungen={leistungen.data} />
       <RegelnGrenzen regeln={regeln.data} />

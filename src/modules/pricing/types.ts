@@ -179,6 +179,8 @@ export interface PreisRegeln {
     je_kwp_darueber_rappen: number
   }
   ich_freigeber?: boolean
+  /** Regeln ändern darf nur die Administration. */
+  ich_admin?: boolean
   freigeber?: { id: string; name: string }[]
 }
 

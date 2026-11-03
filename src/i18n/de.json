@@ -2017,7 +2017,7 @@
       "je_modul": "{{faktor}} je Modul",
       "je_kwp": "{{faktor}} je kWp",
       "gespeichert": "Gespeichert",
-      "nurFreigeber": "Ansehen kannst du alles. Marge, Grenzen und Förderung ändern nur: {{namen}}.",
+      "nurAdmin": "Ansehen kannst du alles. Marge, Grenzen, wer freigibt und Förderung ändert nur die Administration.",
       "leistungen": "Leistungen & Pauschalen",
       "leistungenText": "Kosten = was uns eine Einheit kostet (Lohn, Fahrzeug), Verkauf = Preis je Einheit exkl. MWST. In der Kalkulation ein Klick.",
       "leistungDazu": "Leistung dazu",
@@ -2039,7 +2039,7 @@
       "rabattFrei": "Rabatt ohne Freigabe bis %",
       "mindestDb": "Mindest-Deckungsbeitrag %",
       "freigeber": "Wer gibt frei?",
-      "freigeberText": "Diese Personen bekommen die Glocke, wenn Rabatt oder Marge eine Freigabe brauchen, und dürfen die Regeln ändern.",
+      "freigeberText": "Diese Personen bekommen die Glocke, wenn Rabatt oder Marge eine Freigabe brauchen. Ändern kann das nur die Administration.",
       "freigeberLeer": "Niemand gewählt: es gibt die Administration frei.",
       "foerderung": "Förderung {{name}} ({{stand}})",
       "foerderungText": "Nur für die Schätzung in Kalkulation und Richtpreis. Tarif bitte jährlich mit Pronovo prüfen.",
@@ -2327,7 +2327,8 @@
     "automation_lauf_offen": "Wiederholen geht erst, wenn der Lauf zu Ende ist.",
     "automation_schritt_ok": "Dieser Schritt hat geklappt, es gibt nichts zu wiederholen.",
     "automation_versandfenster": "Das Versandfenster braucht mindestens einen Tag und «bis» nach «von».",
-    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr)."
+    "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
+    "preise_nur_admin": "Das darf nur die Administration."
   },
   "ausgang": {
     "titel": "Ausgangskorb",

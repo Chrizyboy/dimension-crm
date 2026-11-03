@@ -19,11 +19,11 @@ Einkauf und Marge, ein Excel-Import und eine Kalkulation mit Artikeln und wenige
 - **P4 Freigabe:** Rabatt über `rabatt_frei_prozent` (8 %) oder Deckungsbeitrag unter `mindest_db_prozent` (15 %)
   oder eine Position unter der Mindestmarge der Kategorie braucht die Freigabe (Glocke an die Personen in
   `freigabe_person_ids`, sonst Administration). `kalkulation_in_offerte` prüft das in der Datenbank.
-- Regeln, Grenzen und Förderung (Pronovo-Schätzung) stehen in `einstellungen.preise`; ändern nur, wer freigibt.
+- Regeln, Grenzen und Förderung (Pronovo-Schätzung) stehen in `einstellungen.preise`; ändern nur die Administration (Regel von Chris, 3.11.2026), auch wer freigibt.
 - **Richtpreis** für alle Rollen in «Für Kunden»: Spanne aus eigenen Offerten ähnlicher Grösse (`richtpreis`).
 
 ## Folgen
 
-- Die Geschäftsleitungs-Rolle gibt es noch nicht als Rolle; wer freigibt, wird unter «Leistungen & Regeln» gewählt.
+- Die Geschäftsleitungs-Rolle gibt es noch nicht als Rolle; wer freigibt, wählt die Administration unter «Leistungen & Regeln».
 - Der Pronovo-Tarif ist eine Schätzung und jährlich zu prüfen.
 - Stundensätze in `einstellungen.finanzen` (Rapport-Rechnung) bleiben; die Leistungen gelten für die Kalkulation.

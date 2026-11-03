@@ -2,7 +2,7 @@
 -- neue Artikel), Freigabe von Rabatt/Marge (P4) und Übernahme in die Offerte, Leistungen ohne Kosten für alle.
 -- Ausführen: npm run db:test
 begin;
-select plan(19);
+select plan(20);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000039a1', 'pr-verkauf@test.local'),
@@ -78,6 +78,9 @@ select is((select count(*) from public.benachrichtigungen where person_id = '000
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a2", "role": "authenticated"}', true);
 select public.kalkulation_freigeben('00000000-0000-0000-0000-000000003901', true, null);
+-- Freigeben ja, Regeln ändern nein: Einstellungen ändert nur die Administration
+select throws_ok($$ select public.preise_regeln_setzen('{"rabatt_frei_prozent": 20}') $$,
+  '42501', 'preise.nur_admin', 'Freigebende ohne Administration ändern keine Regeln');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a1", "role": "authenticated"}', true);
 select public.kalkulation_in_offerte('00000000-0000-0000-0000-000000003901');
 reset role;

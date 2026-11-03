@@ -2017,7 +2017,7 @@
       "je_modul": "{{faktor}} par panneau",
       "je_kwp": "{{faktor}} par kWc",
       "gespeichert": "Enregistré",
-      "nurFreigeber": "Tu peux tout consulter. Seules ces personnes modifient marges, limites et subventions : {{namen}}.",
+      "nurAdmin": "Tu peux tout consulter. Seule l'administration modifie marges, limites, validation et subventions.",
       "leistungen": "Prestations et forfaits",
       "leistungenText": "Coût = ce que nous coûte une unité (salaire, véhicule), vente = prix par unité hors TVA. Un clic dans le calcul.",
       "leistungDazu": "Ajouter une prestation",
@@ -2039,7 +2039,7 @@
       "rabattFrei": "Rabais sans validation jusqu'à %",
       "mindestDb": "Marge contributive minimale %",
       "freigeber": "Qui valide ?",
-      "freigeberText": "Ces personnes reçoivent la cloche quand rabais ou marge doivent être validés et peuvent modifier les règles.",
+      "freigeberText": "Ces personnes reçoivent la cloche quand rabais ou marge doivent être validés. Seule l'administration peut le modifier.",
       "freigeberLeer": "Personne choisi : l'administration valide.",
       "foerderung": "Subvention {{name}} ({{stand}})",
       "foerderungText": "Uniquement pour l'estimation dans le calcul et le prix indicatif. Vérifier le tarif chaque année auprès de Pronovo.",
@@ -2327,7 +2327,8 @@
     "automation_lauf_offen": "Relancer n’est possible qu’une fois l’exécution terminée.",
     "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
     "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
-    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus)."
+    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
+    "preise_nur_admin": "Seule l'administration peut faire cela."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",

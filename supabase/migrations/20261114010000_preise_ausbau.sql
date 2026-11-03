@@ -74,6 +74,7 @@ begin
   end if;
   return c || jsonb_build_object(
     'ich_freigeber', intern.preise_bin_freigeber(),
+    'ich_admin', intern.hat_recht('admin'),
     'freigeber', coalesce((select jsonb_agg(jsonb_build_object('id', p.id, 'name', p.name) order by p.name)
                              from public.personen p where p.id = any (intern.preise_freigeber())), '[]'::jsonb));
 end
@@ -82,8 +83,8 @@ revoke execute on function public.preise_regeln() from public, anon;
 grant execute on function public.preise_regeln() to authenticated;
 
 /**
- * Regeln ändern (Geschäftsleitung = Freigeber; solange niemand bestimmt ist, die Administration).
- * Nur bekannte Schlüssel; die übrigen bleiben, wie sie sind.
+ * Regeln ändern, auch wer freigibt: nur die Administration (Regel von Chris, 3.11.2026: Einstellungen ändern nur
+ * Admins). Nur bekannte Schlüssel; die übrigen bleiben, wie sie sind.
  */
 create or replace function public.preise_regeln_setzen(p jsonb) returns void
 language plpgsql security definer set search_path = '' as $$
@@ -93,8 +94,8 @@ declare
   sauber jsonb := '{}';
   k text;
 begin
-  if not intern.hat_recht('preise') or not intern.preise_bin_freigeber() then
-    raise exception using errcode = '42501', message = 'preise.nur_freigeber';
+  if not intern.hat_recht('admin') then
+    raise exception using errcode = '42501', message = 'preise.nur_admin';
   end if;
   for k in select jsonb_object_keys(coalesce(p, '{}')) loop
     if k = any (erlaubt) then sauber := sauber || jsonb_build_object(k, p -> k); end if;
@@ -654,8 +655,8 @@ language plpgsql security definer set search_path = '' as $$
 declare
   k public.kalkulationen;
 begin
-  if not intern.hat_recht('preise') or not intern.preise_bin_freigeber() then
-    raise exception using errcode = '42501', message = 'preise.nur_freigeber';
+  if not intern.hat_recht('admin') then
+    raise exception using errcode = '42501', message = 'preise.nur_admin';
   end if;
   select * into k from public.kalkulationen where id = p_kalk and geloescht_am is null for update;
   if not found then raise exception using errcode = 'P0002', message = 'stand.unbekannt'; end if;

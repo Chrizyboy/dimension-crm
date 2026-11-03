@@ -42,7 +42,7 @@ function Wert({
 export function RegelnGrenzen({ regeln }: { regeln: PreisRegeln }) {
   const { t } = useTranslation()
   const kat = useAuswahl('artikelkategorie')
-  const darf = regeln.ich_freigeber === true
+  const darf = regeln.ich_admin === true
   const personen = useQuery({
     queryKey: ['preise', 'personen'],
     queryFn: ladePersonenKurz,

@@ -7,7 +7,7 @@
 ## Daten
 
 - mit Recht `preise`: `artikel`, `lieferantenpreise`, `lieferanten`, `kalkulationen`, `preisvorlagen`, `preisvorlage_positionen`, `preisverlauf`, `preis_importe`, `leistungen`, `kalk_bausteine`
-- Regeln in `einstellungen.preise` (lesen `preise_regeln()`, ändern `preise_regeln_setzen` nur wer freigibt); Leistungen für alle über die Sicht `leistungen_liste` (Kosten nur mit `preise`)
+- Regeln in `einstellungen.preise` (lesen `preise_regeln()`, ändern `preise_regeln_setzen` nur Administration); Leistungen für alle über die Sicht `leistungen_liste` (Kosten nur mit `preise`)
 - Einlesen: `preis_import_anlegen` (nur vergleichen), `preis_import_uebernehmen`, `preis_import_verwerfen`; Freigabe: `kalkulation_freigabe_pruefen`, `_anfragen`, `kalkulation_freigeben`, `kalkulation_in_offerte`; dazu `artikel_preise_mehrfach`, `artikel_verwendung`, `richtpreis`
 - ohne Recht: nur die Sicht `preisliste` (Verkaufspreis, Datenblätter)
 - schreibt über `artikel_preis_setzen`, `artikel_archivieren`, `preise_importieren`, `offerte_werte_setzen` (Quelle «kalkulation», Betrag exkl. MWST)
