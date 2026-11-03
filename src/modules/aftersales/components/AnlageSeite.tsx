@@ -1,6 +1,7 @@
 import { ArrowLeft, ExternalLink, Pencil, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -73,6 +74,12 @@ export function AnlageSeite({
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
+            <InPapierkorbKnopf
+              tabelle="anlagen"
+              id={id}
+              name={[kunde?.name, a.leistung_kwp ? `${String(a.leistung_kwp)} kWp` : null].filter(Boolean).join(' ')}
+              onFertig={onZurueck}
+            />
             {zumBearbeiten && (
               <Button
                 variant="secondary"

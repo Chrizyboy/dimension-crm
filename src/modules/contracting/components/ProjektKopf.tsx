@@ -1,6 +1,7 @@
 import { ArrowLeft, Check, ChevronRight, ExternalLink, RotateCcw, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -150,6 +151,12 @@ export function ProjektKopf({ g, onZurueck }: { g: Grossprojekt; onZurueck: () =
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          <InPapierkorbKnopf
+            tabelle="grossprojekte"
+            id={g.id}
+            name={[g.nummer, g.bauherr ?? g.titel].filter(Boolean).join(' ')}
+            onFertig={onZurueck}
+          />
           {g.verkaufschance_id && (
             <a href={`#/sales?lead=${g.verkaufschance_id}`} className={buttonVariants({ variant: 'secondary' })}>
               <ExternalLink />

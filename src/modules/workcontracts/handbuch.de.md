@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, buchhaltung, geschaeftsleitung
 ---
 
@@ -68,5 +68,6 @@ Unter **Mein Konto** die eigene Unterschrift ablegen, dann den Vertrag neu erste
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Werkverträge; unterschriebene nur die Administration, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 02.11.2026: Knopf «Neuer Werkvertrag» mit Auswahl der Offerte.
 - 31.10.2026: Vorlage Muri, Zahlungsbedingungen per Klick und Anzahlungsrechnung.

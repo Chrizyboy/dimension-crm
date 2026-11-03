@@ -89,6 +89,7 @@ Nur Verträge mit Paket bekommen sie automatisch. Bei älteren Verträgen **Jahr
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Wartungsverträge (unten in der Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Inspektionen planen mit Ankündigung 14 Tage vorher, Reiter «Ohne Vertrag» mit Angebot einzeln oder als Serie, Inspektion am Handy mit Werten vom letzten Mal.
 - 02.11.2026: Verträge nach den Paketen der Website, Tarif nach kWp mit sichtbarem Rabatt, Kündigung mit «kündbar bis», Jahresrechnung automatisch als Entwurf.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

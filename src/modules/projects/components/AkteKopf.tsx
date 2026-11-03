@@ -1,6 +1,8 @@
 import { ArrowLeft, CalendarPlus, FileText, MoreHorizontal, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { PapierkorbMenueEintrag } from '@/components/shared/papierkorb/InPapierkorbKnopf'
+import { usePapierkorb } from '@/components/shared/papierkorb/usePapierkorb'
 import { AblageLink } from '@/components/shared/AblageLink'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -38,6 +40,12 @@ export function SeiteKopf({
   const [planen, setPlanen] = useState(false)
   const [gesuch, setGesuch] = useState<Gesuch | null>(null)
   const { aktiv: druckt, drucke } = useDrucken()
+  const papierkorb = usePapierkorb({
+    tabelle: 'projekte',
+    id: p.id,
+    name: [p.nummer, p.kunde].filter(Boolean).join(' '),
+    onFertig: onZurueck,
+  })
 
   const zuruecknehmen = async () => {
     const ok = await aus(() => bauZuruecknehmen(p.id))
@@ -140,6 +148,8 @@ export function SeiteKopf({
                 {t('projekte.akte.rueckgaengig')}
               </MenueEintrag>
             )}
+            <MenueTrenner />
+            <PapierkorbMenueEintrag onSelect={papierkorb.frage} />
           </MenueInhalt>
         </Menue>
         {p.status === 'auftrag' && (
@@ -165,6 +175,7 @@ export function SeiteKopf({
         />
       )}
       {gesuch && druckt && <GesuchDruck projekt={p} gesuch={gesuch} />}
+      {papierkorb.dialog}
     </div>
   )
 }

@@ -101,6 +101,7 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Rapporte und Zeiten; abgeschlossene Rapporte nur die Administration, exportierte Zeiten gar nicht, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Zeiten aller nur für Geschäftsleitung und Buchhaltung, direkte Vorgesetzte sehen ihr Team.
 - 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.
 - 03.11.2026: Offene Service-Fälle von gestern bleiben im Tagesplan («Überfällig»). Arbeitszeit und Reise in **Mein Tag** auch ohne Rapport starten; Änderungen gehen sofort raus.

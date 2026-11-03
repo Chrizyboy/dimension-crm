@@ -1,6 +1,7 @@
 import { Check, Eye, ExternalLink, MapPin, Pencil, RefreshCw, RotateCcw, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -153,6 +154,14 @@ export function GrossprojektAkte({
                   {t('grossprojekte.akte.bis', { datum: formatDatum(g.wiedervorlage_am) })}
                 </span>
               )}
+              <InPapierkorbKnopf
+                tabelle="grossprojekte"
+                id={g.id}
+                name={[g.nummer, g.titel].filter(Boolean).join(' ')}
+                onFertig={onSchliessen}
+                size="sm"
+                className="ml-auto"
+              />
             </div>
             {g.grund && <p className="text-muted-foreground pb-2 text-sm">{g.grund}</p>}
             <VerantwortlichWahl g={g} />

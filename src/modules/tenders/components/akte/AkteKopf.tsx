@@ -1,5 +1,6 @@
 import { ArrowLeft, ExternalLink, FolderOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { PRIO_TON, STATUS_TON, ortKurz } from '../../lib/anzeige'
@@ -67,6 +68,13 @@ export function AkteKopf({ d, onZurueck }: { d: Dossier; onZurueck: () => void }
         <p className="text-muted-foreground text-sm">{t(`ausschreibungen.spurHilfe.${d.spur}`)}</p>
       </div>
       <div className="flex flex-wrap items-center gap-2">
+        <InPapierkorbKnopf
+          tabelle="ausschreibungen"
+          id={d.id}
+          name={[d.nummer, d.titel].filter(Boolean).join(' ')}
+          onFertig={onZurueck}
+          size="sm"
+        />
         {d.projekt_id && (
           <a
             href={`#/projects?projekt=${d.projekt_id}`}
