@@ -24,6 +24,7 @@ const einsatz = (e: Partial<Einsatz>): Einsatz => ({
   personen: [],
   subunternehmer_id: null,
   notiz: null,
+  taetigkeiten: [],
   ...e,
 })
 

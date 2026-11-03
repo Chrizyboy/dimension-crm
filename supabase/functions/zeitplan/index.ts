@@ -151,6 +151,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Person' : 'Personen'} erinnert`
   })
 
+  // Adressbuch (Entscheid 0049): Versicherung, SUVA, GAV der Partner laufen ab → Aufgabe und Glocke, einmal je Nachweis.
+  ergebnis.partner_fristen = await job('partner_fristen', 60, async () => {
+    const n = await dienst.rpc<number>('partner_fristen_melden', {})
+    return `${n} ${n === 1 ? 'Nachweis' : 'Nachweise'} gemeldet`
+  })
+
   // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
   // Wetter für «Mein Tag» (M5 A): nur PLZ von Einsätzen und Standorten, ohne Schlüssel, darum immer aktiv.
   ergebnis.wetter = await job('wetter', 60, async () => {

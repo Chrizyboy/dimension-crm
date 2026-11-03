@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import { ladeAkte } from '../services/akte'
+import { ladeAnlaesse } from '../services/anlaesse'
 import { ladeKurse, ladeTeamUebersicht } from '../services/kurse'
 import { ladeAusruestung, ladeAusweise, ladeRollen } from '../services/personal'
 
@@ -29,7 +30,11 @@ export const useAusweise = () => useQuery({ queryKey: ['team', 'ausweise'], enab
 export const useAkte = (personId: string) =>
   useQuery({ queryKey: ['team', 'akte', personId], enabled: mitDb, queryFn: () => ladeAkte(personId) })
 
-/** Nach einer Änderung alles neu laden; auch die Fristen unter «Fahrzeuge & Geräte» und die Ausweis-Arten. */
+/** Geburtstage und Dienstjubiläen der nächsten Tage für «Mein Tag». */
+export const useAnlaesse = () =>
+  useQuery({ queryKey: ['team', 'anlaesse'], enabled: mitDb, queryFn: ladeAnlaesse, staleTime: 30 * 60_000 })
+
+/** Nach einer Änderung alles neu laden; auch die Fristen unter «Fahrzeuge & Geräte», Ausweis-Arten und Tätigkeiten. */
 export function useNeuLaden() {
   const qc = useQueryClient()
   return () =>
@@ -37,5 +42,6 @@ export function useNeuLaden() {
       qc.invalidateQueries({ queryKey: ['team'] }),
       qc.invalidateQueries({ queryKey: ['fuhrpark'] }),
       qc.invalidateQueries({ queryKey: ['auswahl', 'qualifikation'] }),
+      qc.invalidateQueries({ queryKey: ['auswahl', 'taetigkeit'] }),
     ])
 }

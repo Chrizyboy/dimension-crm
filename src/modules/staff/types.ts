@@ -198,3 +198,27 @@ export interface KursEingabe {
 /** Reiter der Seite. */
 export const REITER = ['team', 'ausweise', 'kurse', 'anforderungen'] as const
 export type TeamReiter = (typeof REITER)[number]
+
+/** Geburtstag oder Dienstjubiläum (nur Tag und Monat; beim Jubiläum die vollen Jahre). */
+export interface Anlass {
+  person_id: string
+  name: string
+  kurzzeichen: string | null
+  art: 'geburtstag' | 'jubilaeum'
+  datum: string
+  jahre?: number
+}
+
+/** Antwort von team_anlaesse(). */
+export interface Anlaesse {
+  ich_verborgen: boolean
+  anlaesse: Anlass[]
+}
+
+/** Pflicht-Ausweise einer Tätigkeit (Liste «taetigkeit»). */
+export interface TaetigkeitRegel {
+  schluessel: string
+  ausweise: string[]
+  wer: 'alle' | 'einer'
+  immer: boolean
+}
