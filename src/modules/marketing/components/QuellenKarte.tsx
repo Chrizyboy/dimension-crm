@@ -4,7 +4,7 @@ import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zeile, Zelle } from '@/components/ui/tabelle'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatChf } from '@/lib/format'
-import type { BudgetZeile, QuellenZeile } from '../../types'
+import type { BudgetZeile, QuellenZeile } from '../types'
 
 /** «Woher kommen die Aufträge?»: Leads, Aufträge, Auftragswert und (mit Recht) Kosten pro Lead je Quelle. */
 export function QuellenKarte({ zeilen, jahr }: { zeilen: QuellenZeile[] | undefined; jahr: number }) {

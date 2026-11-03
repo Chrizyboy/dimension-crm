@@ -147,7 +147,10 @@ export async function ausgangAbarbeiten(limit = 10): Promise<{ gesendet: number;
     const basis = env('SUPABASE_URL')
     const a: Ausgang =
       wirdGezaehlt(roh) && basis
-        ? { ...roh, html: marketingHtml(roh.text ?? '', basis, roh.id, hinweis[roh.sprache === 'fr' ? 'fr' : 'de'] ?? '') }
+        ? {
+            ...roh,
+            html: marketingHtml(roh.text ?? '', basis, roh.id, hinweis[roh.sprache === 'fr' ? 'fr' : 'de'] ?? ''),
+          }
         : roh
     const start = Date.now()
     let ok = false

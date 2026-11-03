@@ -5,7 +5,8 @@
 
 const URL_MUSTER = /https?:\/\/[^\s<>"]+/g
 
-const schuetzen = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+const schuetzen = (t: string) =>
+  t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 /** Ist der Ausgangs-Eintrag eine Werbe-Mail, deren Öffnen und Klicks gezählt werden? */
 export function wirdGezaehlt(a: { kanal: string; art?: string | null; html?: string | null }): boolean {

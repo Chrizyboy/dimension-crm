@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
-import { useWerbekampagnen } from '../../hooks/useKampagnen'
+import { useWerbekampagnen } from '../hooks/useKampagnen'
 
 const KEINE = 'keine'
 

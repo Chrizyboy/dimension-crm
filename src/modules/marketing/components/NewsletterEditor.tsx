@@ -16,7 +16,7 @@ import { newsletterPruefen } from '../lib/texte'
 import { fuellen } from '../lib/zielgruppe'
 import { marketingMitKi, textDa } from '../lib/kiTexte'
 import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
-import { KampagneWahl } from './kampagnen/KampagneWahl'
+import { KampagneWahl } from './KampagneWahl'
 import { abmeldeLink, ladeEmpfaenger, newsletterPapierkorb, senden, speichereNewsletter } from '../services/marketing'
 import { GRUPPEN, type Gruppe, type Newsletter, type NewsletterSegment, type Sprache } from '../types'
 

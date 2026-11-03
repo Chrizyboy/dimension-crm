@@ -9,10 +9,10 @@ import { Skelett } from '@/components/ui/diverses'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zeile, Zelle } from '@/components/ui/tabelle'
 import { formatChf } from '@/lib/format'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useKampagnenZahlen, useWerbekampagnen } from '../../hooks/useKampagnen'
-import { kostenSichtbar } from '../../lib/rechte'
-import { KAMPAGNEN_STATUS, type KampagnenStatus } from '../../types'
-import { zeitraum } from '../../lib/kampagne'
+import { useKampagnenZahlen, useWerbekampagnen } from '../hooks/useKampagnen'
+import { kostenSichtbar } from '../lib/rechte'
+import { KAMPAGNEN_STATUS, type KampagnenStatus } from '../types'
+import { zeitraum } from '../lib/kampagne'
 
 const RANG: Record<KampagnenStatus, number> = { laeuft: 0, vorbereitung: 1, idee: 2, abgeschlossen: 3 }
 

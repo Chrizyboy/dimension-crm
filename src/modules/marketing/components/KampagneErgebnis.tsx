@@ -4,10 +4,10 @@ import { Badge } from '@/components/ui/badge'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatChf, formatDatum } from '@/lib/format'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useKampagnenLeads, useKampagnenZahlen, useVersaende } from '../../hooks/useKampagnen'
-import { kostenSichtbar } from '../../lib/rechte'
-import { ladeKostenDerKampagne, ladeVersandErgebnisse } from '../../services/kampagnen'
-import type { Werbekampagne } from '../../types'
+import { useKampagnenLeads, useKampagnenZahlen, useVersaende } from '../hooks/useKampagnen'
+import { kostenSichtbar } from '../lib/rechte'
+import { ladeKostenDerKampagne, ladeVersandErgebnisse } from '../services/kampagnen'
+import type { Werbekampagne } from '../types'
 
 const Abschnitt = ({ titel, children }: { titel: string; children: React.ReactNode }) => (
   <section className="flex flex-col gap-2">

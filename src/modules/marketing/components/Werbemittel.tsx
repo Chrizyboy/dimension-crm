@@ -8,10 +8,10 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zeile, Zelle } from '@/components/ui/tabelle'
-import { useAktion } from '../../hooks/useAktion'
-import { useWerbemittel } from '../../hooks/useKampagnen'
-import { speichereWerbemittel, werbemittelPapierkorb } from '../../services/kampagnen'
-import { WERBEMITTEL_ARTEN, type Werbemittel as Mittel } from '../../types'
+import { useAktion } from '../hooks/useAktion'
+import { useWerbemittel } from '../hooks/useKampagnen'
+import { speichereWerbemittel, werbemittelPapierkorb } from '../services/kampagnen'
+import { WERBEMITTEL_ARTEN, type Werbemittel as Mittel } from '../types'
 
 const zahl = (w: string) => (w === '' ? null : Math.max(0, Math.round(Number(w))))
 

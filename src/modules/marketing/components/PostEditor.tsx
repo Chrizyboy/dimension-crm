@@ -25,7 +25,7 @@ import {
 import { postFehlerSchluessel } from '../lib/texte'
 import { NETZWERKE, type Netzwerk, type PostSprache, type SocialPost } from '../types'
 import { GepostetDialog } from './GepostetDialog'
-import { KampagneWahl } from './kampagnen/KampagneWahl'
+import { KampagneWahl } from './KampagneWahl'
 import { PostBild } from './PostBild'
 import { PostQuelle } from './PostQuelle'
 import { PostTexte } from './PostTexte'

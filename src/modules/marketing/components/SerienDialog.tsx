@@ -15,7 +15,7 @@ import { empfaenger, fuellen, imPause } from '../lib/zielgruppe'
 import { marketingMitKi, textDa } from '../lib/kiTexte'
 import { KiWunschZeile } from '@/components/shared/ki/KiWunschZeile'
 import { abmeldeLink, senden, speichereVorlagen, vermerken } from '../services/marketing'
-import { KampagneWahl } from './kampagnen/KampagneWahl'
+import { KampagneWahl } from './KampagneWahl'
 import type { MarketingVorlagen, Sprache, Textvorlage, ZielFilter, Zielkontakt } from '../types'
 
 /**

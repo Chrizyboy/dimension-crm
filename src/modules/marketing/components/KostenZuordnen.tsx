@@ -4,11 +4,11 @@ import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { formatChf, formatDatum } from '@/lib/format'
-import { useAktion } from '../../hooks/useAktion'
-import { useWerbekampagnen } from '../../hooks/useKampagnen'
-import { kostenZuordnen } from '../../services/kampagnen'
-import { KANAELE, type Kostenbeleg } from '../../types'
-import { KampagneWahl } from '../kampagnen/KampagneWahl'
+import { useAktion } from '../hooks/useAktion'
+import { useWerbekampagnen } from '../hooks/useKampagnen'
+import { kostenZuordnen } from '../services/kampagnen'
+import { KANAELE, type Kostenbeleg } from '../types'
+import { KampagneWahl } from './KampagneWahl'
 
 /** Eine Rechnung: Kanal und Kampagne wählen, «Zuordnen» oder «Keine Werbung». */
 function Beleg({ b }: { b: Kostenbeleg }) {

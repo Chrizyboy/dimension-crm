@@ -10,8 +10,8 @@ export const meta: ModulMeta = {
   id: 'marketing',
   titel: { de: 'Marketing', fr: 'Marketing' },
   untertitel: {
-    de: 'Kunden anschreiben, Social Media und Newsletter',
-    fr: 'Écrire aux clients, réseaux sociaux et newsletter',
+    de: 'Kampagnen und Messen planen, Kunden anschreiben, posten und sehen, was es bringt',
+    fr: 'Planifier campagnes et salons, écrire aux clients, publier et voir ce que cela rapporte',
   },
   pfad: '/marketing',
   icon: 'megaphone',

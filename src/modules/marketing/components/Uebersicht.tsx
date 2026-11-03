@@ -16,12 +16,12 @@ import {
   useVersaende,
   useWerbekampagnen,
   useWerbemittel,
-} from '../../hooks/useKampagnen'
-import { useNewsletter, usePosts, useVorlagen } from '../../hooks/useMarketing'
-import { kalenderEintraege, monatPlus } from '../../lib/kalender'
-import { kostenSichtbar } from '../../lib/rechte'
-import { vorschlaege } from '../../lib/vorschlaege'
-import type { Ansicht } from '../../types'
+} from '../hooks/useKampagnen'
+import { useNewsletter, usePosts, useVorlagen } from '../hooks/useMarketing'
+import { kalenderEintraege, monatPlus } from '../lib/kalender'
+import { kostenSichtbar } from '../lib/rechte'
+import { vorschlaege } from '../lib/vorschlaege'
+import type { Ansicht } from '../types'
 import { KostenZuordnen } from './KostenZuordnen'
 import { BudgetKarte, QuellenKarte } from './QuellenKarte'
 

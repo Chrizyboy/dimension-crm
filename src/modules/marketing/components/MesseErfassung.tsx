@@ -8,10 +8,10 @@ import { Input, Textarea } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/schalter'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { melde } from '@/services/meldungen'
-import { useMarketingNeuLaden } from '../../hooks/useMarketing'
-import { alsParameter, messeWarteschlange, warteschlangeSenden, type MesseLead } from '../../lib/messe'
-import { messeLeadSenden } from '../../services/kampagnen'
-import type { Werbekampagne } from '../../types'
+import { useMarketingNeuLaden } from '../hooks/useMarketing'
+import { alsParameter, messeWarteschlange, warteschlangeSenden, type MesseLead } from '../lib/messe'
+import { messeLeadSenden } from '../services/kampagnen'
+import type { Werbekampagne } from '../types'
 
 const leer = (kampagne: Werbekampagne): MesseLead => ({
   id: crypto.randomUUID(),
