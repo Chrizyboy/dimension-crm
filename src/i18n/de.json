@@ -12114,7 +12114,10 @@
       "eingangsrechnungen": "Lieferantenrechnungen",
       "marketing_kampagnen": "Kampagnen",
       "marketing_zielgruppen": "Zielgruppen",
-      "werbemittel": "Werbemittel"
+      "werbemittel": "Werbemittel",
+      "kreditor_zahlungen": "Lieferantenzahlungen",
+      "finanz_konten": "Bankkonten",
+      "zahllaeufe": "Zahlläufe"
     }
   },
   "zugehoerigkeit": {
