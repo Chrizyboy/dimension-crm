@@ -1,4 +1,4 @@
--- «Mein Tag» ausbauen (2.11.2026, Entscheid 0047): Chris fand die Startseite «nur Fassade».
+-- «Mein Tag» ausbauen (2.11.2026, Entscheid 0050): Chris fand die Startseite «nur Fassade».
 -- Die Karten nach Bereich bleiben (M1 B), dazu kommt:
 --  1. Verschieben (M2 A): jede Zeile auf morgen, nächste Woche oder ein Datum. Aufgaben ändern ihr Fälligkeitsdatum,
 --     alles andere (Nachfassen, Lead, Frist …) wird nur für mich ausgeblendet; die Stand-Regeln im Verkauf

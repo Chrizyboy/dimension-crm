@@ -1,4 +1,4 @@
--- Prüft «Wetter auf den Baustellen» (3.11.2026, Entscheid 0047): PLZ für den Zeitplan, Speichern nur durch den
+-- Prüft «Wetter auf den Baustellen» (3.11.2026, Entscheid 0050): PLZ für den Zeitplan, Speichern nur durch den
 -- Zeitplan, Baustellen nur für Team und Projektleitung, «Achtung» nach den Schwellen der Einstellungen.
 -- Ausführen: npm run db:test
 begin;

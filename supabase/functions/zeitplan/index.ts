@@ -21,7 +21,7 @@
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
-//  * wetter       stündlich       Tagesprognose von MeteoSwiss Open Data für die PLZ der Baustellen (Entscheid 0047)
+//  * wetter       stündlich       Tagesprognose von MeteoSwiss Open Data für die PLZ der Baustellen (Entscheid 0050)
 //  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte

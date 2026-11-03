@@ -1,4 +1,4 @@
-// Wetter auf den Baustellen (M5 A, Quelle M7 B, Entscheid 0047): lokale Prognose von MeteoSwiss Open Data
+// Wetter auf den Baustellen (M5 A, Quelle M7 B, Entscheid 0050): lokale Prognose von MeteoSwiss Open Data
 // (STAC-Sammlung «ch.meteoschweiz.ogd-local-forecasting» auf data.geo.admin.ch, gratis, ohne Schlüssel).
 // Die Sammlung hat eine Tabelle der Prognose-Punkte (auch je Postleitzahl) und pro Lauf eine CSV je Parameter
 // mit allen Punkten. Wir laden nur die Tageswerte, filtern auf unsere Postleitzahlen und speichern sie über
