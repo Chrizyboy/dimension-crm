@@ -2986,7 +2986,9 @@
     "termin_link_stand": "Den Termin-Link gibt es nur für Leads ohne Termin und ohne Offerte.",
     "team_taetigkeit_unbekannt": "Diese Tätigkeit gibt es nicht (mehr).",
     "team_wer_ungueltig": "Bitte «jede Person» oder «mindestens eine» wählen.",
-    "team_ausweis_unbekannt": "Diesen Ausweis gibt es nicht (mehr)."
+    "team_ausweis_unbekannt": "Diesen Ausweis gibt es nicht (mehr).",
+    "einkauf_mehr_als_entnommen": "Es kann nicht mehr zurückkommen, als für das Projekt ausgegeben wurde.",
+    "einkauf_loesung_fehlt": "Bitte eine Lösung wählen (Gutschrift, Ersatz, Rücksendung oder keine)."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5288,13 +5290,16 @@
         "eingang": "Eingang",
         "entnahme": "Entnahme",
         "korrektur": "Korrektur",
-        "inventur": "Inventur"
+        "inventur": "Inventur",
+        "rueckgabe": "Rückgabe"
       },
       "filter": {
         "alle": "Alle",
         "unter": "Unter Mindestmenge",
         "reserviert": "Reserviert"
-      }
+      },
+      "platz": "Lagerplatz",
+      "platzHinweis": "Zum Beispiel A-03. Rüstliste und Inventur sind danach sortiert."
     },
     "lieferant": {
       "name": "Name",
@@ -5485,6 +5490,75 @@
       "titel": "Mails",
       "keine": "Keine Mails zu dieser Bestellung im Posteingang.",
       "anhang": "mit Anhang"
+    },
+    "inventur": {
+      "knopf": "Inventur",
+      "titel": "Inventur Lager",
+      "text": "Gezählten Bestand eintragen. Gebucht werden nur Abweichungen; leere Felder bleiben, wie sie sind.",
+      "notizVorschlag": "Inventur {{jahr}}",
+      "soll": "Soll",
+      "differenz": "Differenz",
+      "gezaehltFuer": "Gezählt: {{name}}",
+      "buchen_one": "{{count}} Abweichung buchen",
+      "buchen_other": "{{count}} Abweichungen buchen"
+    },
+    "ruest": {
+      "knopf": "Rüstliste",
+      "titel": "Rüstliste",
+      "text": "Was noch aus dem Lager an die Baustelle geht, nach Lagerplatz. Menge anpassen, drucken, dann ausgeben.",
+      "offen": "Offen",
+      "menge": "Ausgeben",
+      "mengeFuer": "Ausgeben: {{name}}",
+      "geruestet": "Gerüstet",
+      "visum": "Gerüstet von",
+      "drucken": "Drucken",
+      "ausgeben_one": "{{count}} Position ausgeben",
+      "ausgeben_other": "{{count}} Positionen ausgeben",
+      "leer": "Nichts zu rüsten",
+      "leerText": "Für dieses Projekt liegt nichts mehr im Lager bereit."
+    },
+    "rueck": {
+      "menue": "Rückgabe ins Lager",
+      "titel": "Rückgabe ins Lager",
+      "text": "{{name}}: {{menge}} {{einheit}} an die Baustelle ausgegeben. Wie viel kommt zurück?",
+      "notizHinweis": "z. B. Rest nach Montage",
+      "buchen": "Zurück ins Lager"
+    },
+    "rek": {
+      "titel": "Reklamationen",
+      "leer": "Keine Reklamation. Defekte, falsche oder fehlende Ware hier festhalten.",
+      "offenZahl_one": "{{count}} offen",
+      "offenZahl_other": "{{count}} offen",
+      "erfassen": "Reklamation erfassen",
+      "erfassenText": "Was stimmt nicht? Beim Lieferanten meldest du wie gewohnt per Telefon oder Mail.",
+      "abschliessen": "Erledigt",
+      "abschliessenText": "Wie hat der Lieferant gelöst?",
+      "gemeldet": "Beim Lieferanten gemeldet",
+      "gemeldetAm": "gemeldet {{datum}}",
+      "position": "Position",
+      "ganzeBestellung": "Ganze Bestellung",
+      "grund": "Grund",
+      "beschreibung": "Beschreibung",
+      "loesung": "Lösung",
+      "antwort": "Antwort des Lieferanten",
+      "gruende": {
+        "defekt": "Defekt",
+        "falsch": "Falsche Ware",
+        "fehlt": "Fehlt",
+        "zu_viel": "Zu viel geliefert",
+        "anderes": "Anderes"
+      },
+      "status": {
+        "offen": "Offen",
+        "gemeldet": "Gemeldet",
+        "erledigt": "Erledigt"
+      },
+      "loesungen": {
+        "gutschrift": "Gutschrift",
+        "ersatz": "Ersatz geliefert",
+        "ruecksendung": "Zurückgeschickt",
+        "keine": "Keine"
+      }
     }
   },
   "baustelle": {

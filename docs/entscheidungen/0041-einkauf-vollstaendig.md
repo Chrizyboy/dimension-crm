@@ -37,8 +37,21 @@ abgleichen. Die Vorschau mit Beispieldaten (Leitstand, Materialplan, Bestellen, 
 
 Einstellung `einkauf` ändert nur die Administration (eigener Schutz-Trigger, Fehler `einkauf.kein_recht`).
 
+## Schritt 2: Lager und Reklamationen (03.11.2026)
+
+10. **Lagerplatz** je Artikel und Lagerort (`lagerbestand.lagerplatz`, `lagerplatz_setzen`). Rüstliste und Inventur
+    sind danach sortiert.
+11. **Rüstliste** (`ruestliste`): was für ein Projekt noch aus dem Lager geht, mit offen, reserviert und frei.
+    `projekt_ruesten` bucht die Entnahmen (Notiz «Rüstliste»), zuerst aus der Reservierung. Druck aus der App.
+12. **Rückgabe** von der Baustelle: `lager_buchen` mit Art `rueckgabe`; höchstens so viel wie entnommen
+    (`einkauf.mehr_als_entnommen`), die Entnahme der Materialzeile sinkt.
+13. **Inventur** in einem Durchgang (`inventur_buchen`): nur Abweichungen werden als Korrektur gebucht.
+14. **Reklamationen** (`einkauf_reklamationen`, nur Recht `preise`): Grund, Menge, Stand offen → gemeldet →
+    erledigt; erledigt nur mit Lösung (`einkauf.loesung_fehlt`). Gemeldet wird beim Lieferanten wie bisher per
+    Telefon oder Mail; das CRM schickt nichts selbst (Regel 6).
+15. **Handy:** Wareneingang, Rüstliste und Reklamation laufen in denselben Dialogen, auch auf dem Handy (Browser-Test).
+
 ## Folgen
 
 - Bestellung geht weiterhin nur nach menschlicher Freigabe raus (Ausgangskorb), Regel 6 bleibt.
-- Schritt 2 (Lagerplätze, Rüstliste, Rückgabe, Inventur, Handy-Wareneingang, Reklamationen) folgt separat.
-- Test: `supabase/tests/einkauf_ausbau.test.sql`.
+- Tests: `supabase/tests/einkauf_ausbau.test.sql`, `supabase/tests/einkauf_lager.test.sql`.
