@@ -2,32 +2,14 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { formatChf } from '@/lib/format'
-import { cn } from '@/lib/utils'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useOffertEinstellungen } from '../hooks/useOfferten'
 import { sortiereKarten, vorratKarten, vorratZahlen, type VorratKarte as Karte } from '../lib/vorrat'
 import { OFFERT_PHASEN, type Eingang, type Offerte } from '../types'
+import { Kachel } from './Box'
 import { VorratKarte } from './VorratKarte'
 
 type Filter = 'alle' | 'meine' | 'muri' | 'bulle'
-
-function Kachel({ zahl, text, ton }: { zahl: string; text: string; ton?: 'bad' | 'warn' | 'ok' | undefined }) {
-  return (
-    <div className="bg-surface flex flex-col gap-0.5 rounded-lg border px-3 py-2.5">
-      <span
-        className={cn(
-          'font-display zahlen text-xl font-semibold',
-          ton === 'bad' && 'text-bad',
-          ton === 'warn' && 'text-warn',
-          ton === 'ok' && 'text-ok',
-        )}
-      >
-        {zahl}
-      </span>
-      <span className="text-muted-foreground text-xs">{text}</span>
-    </div>
-  )
-}
 
 /**
  * Arbeitsvorrat: ein Board vom Termin bis zum Auftrag (zu offerieren, in Planung, prüfen, offeriert, Verhandlung,
@@ -65,11 +47,13 @@ export default function Arbeitsvorrat({
         <Kachel
           zahl={`CHF ${formatChf(z.offenRappen).replace(/\.\d\d$/, '')}`}
           text={t('offerten.vorrat.kOffen', { count: z.offenAnzahl, kwp: Math.round(z.offenKwp) })}
+          nurGross
         />
         <Kachel
           zahl={`CHF ${formatChf(z.gewichtetRappen).replace(/\.\d\d$/, '')}`}
           text={t('offerten.vorrat.kGewichtet')}
           ton="warn"
+          nurGross
         />
         <Kachel
           zahl={String(z.ueberfaellig)}
@@ -84,8 +68,14 @@ export default function Arbeitsvorrat({
         <Kachel
           zahl={z.terminBisOfferte === null ? '–' : t('offerten.vorrat.tage', { n: z.terminBisOfferte })}
           text={t('offerten.vorrat.kDauer', { ziel })}
+          nurGross
         />
-        <Kachel zahl={z.quote90 === null ? '–' : `${z.quote90} %`} text={t('offerten.vorrat.kQuote')} ton="ok" />
+        <Kachel
+          zahl={z.quote90 === null ? '–' : `${z.quote90} %`}
+          text={t('offerten.vorrat.kQuote')}
+          ton="ok"
+          nurGross
+        />
       </div>
       <Filterchips
         einzeln
@@ -103,7 +93,7 @@ export default function Arbeitsvorrat({
         role="region"
         aria-label={t('offerten.ansicht.vorrat')}
         tabIndex={0}
-        className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6"
+        className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:snap-none sm:px-6"
       >
         {OFFERT_PHASEN.map((p) => {
           const liste = karten.filter((k) => k.phase === p).sort(sortiereKarten)
@@ -111,7 +101,7 @@ export default function Arbeitsvorrat({
             <section
               key={p}
               aria-label={t(`offerten.phase.${p}`)}
-              className="bg-muted/50 flex min-w-52 flex-1 basis-0 flex-col rounded-xl border"
+              className="bg-muted/50 flex min-w-[80%] flex-1 basis-0 snap-start flex-col rounded-xl border sm:min-w-52"
             >
               <header className="flex flex-col border-b px-3 py-2">
                 <span className="flex items-center justify-between gap-2">

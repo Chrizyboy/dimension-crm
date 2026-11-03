@@ -17,6 +17,7 @@ const Nachfassen = lazy(() => import('./Nachfassen'))
 const PdfImport = lazy(() => import('./PdfImport'))
 const OffertSeite = lazy(() => import('./OffertSeite'))
 const Arbeitsvorrat = lazy(() => import('./Arbeitsvorrat'))
+const Auswertung = lazy(() => import('./Auswertung'))
 const EingangAkte = lazy(() => import('./EingangAkte'))
 
 export interface OffertenProps {
@@ -96,7 +97,7 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
             className={reiterKnopfKlasse}
           >
             {t(`offerten.ansicht.${a}`)}
-            {a !== 'import' && a !== 'vorrat' && !laedt && (
+            {a !== 'import' && a !== 'vorrat' && a !== 'auswertung' && !laedt && (
               <span className="zahlen text-muted-foreground font-mono text-xs">{zahlen[a]}</span>
             )}
           </button>
@@ -159,6 +160,7 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
               }}
             />
           )}
+          {ansicht === 'auswertung' && <Auswertung offerten={gefunden.offerten} />}
           {ansicht === 'import' && (
             <PdfImport
               offerten={offerten.data ?? []}
