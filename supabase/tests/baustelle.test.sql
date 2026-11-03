@@ -3,7 +3,7 @@
 -- seine Folgen (Montage fertig, IBN, Service, Wartung), Prüfung und Lohn-Export der Zeiten, Garantiefall.
 -- Ausführen: npm run db:test
 begin;
-select plan(39);
+select plan(40);
 -- Die Abläufe rechnen mit dem Schweizer Datum; zwischen 22 und 24 Uhr UTC wäre current_date sonst der Vortag.
 set local timezone = 'Europe/Zurich';
 
@@ -145,8 +145,12 @@ select is((select count(*)::int from public.zeiten), 0, 'Kollegin sieht fremde Z
 select throws_ok($$ select public.zeiten_pruefen(array['00000000-0000-0000-0000-00000000b912'::uuid]) $$, 'P0001', 'baustelle.recht_fehlt',
   'Monteur prüft keine Zeiten');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000b9a3", "role": "authenticated"}', true);
+select throws_ok($$ select public.zeiten_pruefen(array['00000000-0000-0000-0000-00000000b912'::uuid]) $$, 'P0001', 'baustelle.recht_fehlt',
+  'Projektleitung prüft keine Zeiten aller (nur GL und Buchhaltung)');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000b9a4", "role": "authenticated"}', true);
 select is(public.zeiten_pruefen(array['00000000-0000-0000-0000-00000000b911', '00000000-0000-0000-0000-00000000b912']::uuid[]), 2,
-  'Projektleitung prüft gestoppte Zeiten');
+  'Buchhaltung prüft gestoppte Zeiten');
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000b9a3", "role": "authenticated"}', true);
 select throws_ok($$ select public.zeiten_exportieren(array['00000000-0000-0000-0000-00000000b912'::uuid]) $$, 'P0001', 'baustelle.recht_fehlt',
   'Lohn-Export nur mit Recht «finanzen»');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000b9a1", "role": "authenticated"}', true);

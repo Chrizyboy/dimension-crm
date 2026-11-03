@@ -128,6 +128,8 @@ export interface RechnungVoll extends Rechnung {
   mwst_satz: number
   notiz: string | null
   storniert_grund: string | null
+  /** Erstvisum der Projektleitung: am = visiert, sonst ggf. Korrektur-Hinweis. */
+  visum: { am: string | null; bemerkung: string | null; name: string | null }
   firma_daten: Firma
   empfaenger: Empfaenger
   zahlungen: Zahlung[]

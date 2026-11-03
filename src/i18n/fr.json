@@ -325,7 +325,17 @@
       "code_falsch": "Le code est incorrect ou expiré. Demande un nouveau code.",
       "zu_oft": "Trop de tentatives. Réessaie dans une minute.",
       "netzwerk": "Pas de connexion au serveur. Vérifie Internet.",
-      "unbekannt": "La connexion a échoué. Merci de réessayer."
+      "unbekannt": "La connexion a échoué. Merci de réessayer.",
+      "link_ungueltig": "Ce lien n’est plus valable. Demande-en un nouveau.",
+      "email_vergeben": "Cette adresse appartient déjà à une autre personne du CRM.",
+      "email_ungueltig": "Merci de saisir une adresse e-mail valable."
+    },
+    "registrieren": {
+      "titel": "Bienvenue, {{vorname}}",
+      "text": "Saisis ton adresse e-mail. Tu reçois un code pour te connecter.",
+      "ungueltig": "Ce lien n’est plus valable. Demande un nouveau lien ou connecte-toi avec ton adresse e-mail.",
+      "email": "Ton adresse e-mail",
+      "emailHinweis": "Une adresse privée convient aussi. Elle te servira à te connecter."
     }
   },
   "benutzer": {
@@ -365,19 +375,42 @@
     "bereicheAlle": "Désactivé : affiche tous les domaines, comme le rôle.",
     "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie.",
     "kurzzeichen": "Initiales",
-    "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}."
+    "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}.",
+    "link": {
+      "titel": "Lien d’inscription pour {{name}}",
+      "text": "Envoie ce lien par WhatsApp ou SMS. La personne l’ouvre sur son téléphone, saisit son adresse e-mail et la confirme avec le code.",
+      "feld": "Lien",
+      "hinweis": "Le lien est valable 14 jours et une seule fois. Un nouveau lien annule l’ancien.",
+      "kopieren": "Copier le lien",
+      "whatsapp": "Par WhatsApp",
+      "erstellen": "Créer un lien d’inscription",
+      "ohneMail": "Sans e-mail: lien pour le téléphone",
+      "ohneMailText": "Pour les personnes avec une adresse privée (p. ex. montage): elles s’inscrivent elles-mêmes via un lien personnel.",
+      "nachricht": "Salut {{name}}, voici ton accès à Dimension Work. Ouvre le lien sur ton téléphone et saisis ton adresse e-mail: {{adresse}}"
+    }
   },
   "rechte": {
     "basis": "Données de base",
     "preise": "Prix d’achat",
     "finanzen": "Finances",
-    "admin": "Administration",
-    "preiseText": "Voit les prix d’achat et les marges.",
+    "admin": "Complément administration",
+    "preiseText": "Voit les prix d’achat et le calcul.",
     "finanzenText": "Voit la trésorerie, les créanciers et les frais fixes.",
     "planung": "Planification",
-    "planungText": "Saisit les absences de tous et planifie les interventions.",
-    "adminText": "Gère les utilisateurs, les rôles et tous les paramètres.",
-    "ausRolle": "Déjà inclus dans le rôle."
+    "planungText": "Saisit les absences de tous.",
+    "adminText": "Modifie paramètres, utilisateurs, rôles, automatisations et sauvegarde. Finances et personnel seulement avec la direction.",
+    "ausRolle": "Déjà inclus dans le rôle.",
+    "gl": "Complément direction",
+    "glText": "Voit tout, y compris finances et personnel, travaille normalement, voit les paramètres sans modifier le système.",
+    "personal": "Personnel",
+    "personalText": "Dossiers du personnel et heures de tous, échéances RH.",
+    "marge": "Marge",
+    "margeText": "Indicateurs avec marge et carnet de commandes en francs.",
+    "visum": "Premier visa",
+    "visumText": "Contrôle les projets de facture de ses projets et donne le premier visa.",
+    "zusaetze": "Compléments",
+    "weitere": "Autres droits",
+    "nurLesen": "Tu vois les paramètres en lecture seule. L’administration peut les modifier."
   },
   "rollen": {
     "rechte": "Droits du rôle",
@@ -2953,6 +2986,11 @@
     "grossprojekt_stufe_unbekannt": "Cette étape n'existe pas.",
     "grossprojekt_ungueltig": "Les données ne sont pas valables.",
     "grossprojekt_text_fehlt": "Merci de saisir un texte.",
+    "rechnung_visum_kein_recht": "Cette facture est visée par la direction du projet ou la comptabilité.",
+    "rechnung_visum_nur_entwurf": "Le visa n’est possible que pour les brouillons.",
+    "registrierung_schon_angemeldet": "Cette personne est déjà connectée et n’a pas besoin de lien.",
+    "registrierung_kein_recht": "Les liens d’inscription sont créés par l’administration.",
+    "registrierung_name_fehlt": "Merci de saisir un nom.",
     "automation_grund_fehlt": "Veuillez indiquer un motif.",
     "automation_lauf_zu_ende": "Cette exécution est déjà terminée.",
     "automation_nicht_gestoppt": "Cette exécution n’est pas arrêtée.",
@@ -6712,6 +6750,25 @@
         "projektUnbekannt": "Le projet {{nummer}} n’existe pas.",
         "bestellungUnbekannt": "La commande {{nummer}} n’existe pas."
       }
+    },
+    "visum": {
+      "titel": "Factures à viser",
+      "offen_one": "{{count}} à viser",
+      "offen_other": "{{count}} à viser",
+      "dialogTitel": "Contrôler la facture: {{titel}}",
+      "position": "Position",
+      "menge": "Quantité",
+      "betrag": "Montant",
+      "total": "Total",
+      "bemerkung": "Correction pour la comptabilité",
+      "bemerkungText": "À remplir seulement si quelque chose ne joue pas.",
+      "geben": "Donner le premier visa",
+      "korrektur": "Signaler une correction",
+      "visiert": "visé le {{datum}}",
+      "korrigieren": "Correction signalée",
+      "akteVisiert": "Premier visa de {{name}} le {{datum}}.",
+      "akteKorrektur": "Correction de {{name}}: {{text}}",
+      "akteOhne": "Pas encore de premier visa de la direction de projet."
     }
   },
   "spesen": {

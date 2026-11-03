@@ -14,7 +14,7 @@ import { formatDatum } from '@/lib/format'
 import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
-import { useAbwesenheiten, usePersonen } from '../hooks/useProjekte'
+import { useAbwesenheiten, useMeineMitarbeitenden, usePersonen } from '../hooks/useProjekte'
 import { alsIso, plusTage, werktage } from '../lib/zeitplan'
 import { abwesenheitSchema } from '../schema'
 import { abwesenheitAnlegen, abwesenheitEntfernen } from '../services/planung'
@@ -22,8 +22,9 @@ import { abwesenheitAnlegen, abwesenheitEntfernen } from '../services/planung'
 /**
  * Abwesenheiten der nächsten drei Monate: im CRM erfasst (Ferien, Krank, Militär …) und aus Outlook
  * («Abwesend» im Kalender, nur der Zeitraum). Sie zählen im Zeitplan bei der Auslastung und warnen beim
- * Einplanen. Outlook-Einträge ändert man in Outlook. Für andere erfassen und löschen nur Planung und
- * Administration (33A, die Datenbank hält das ein); alle anderen nur für sich selbst.
+ * Einplanen. Outlook-Einträge ändert man in Outlook. Für alle erfassen und löschen nur mit Recht Planung
+ * (GL, Buchhaltung); direkte Vorgesetzte auch für ihre Mitarbeitenden (Personal-Akte), alle anderen nur
+ * für sich selbst. Die Datenbank hält das ein (`darf_abwesenheit_erfassen`).
  */
 export function Abwesenheiten() {
   const { t } = useTranslation()
@@ -38,7 +39,8 @@ export function Abwesenheiten() {
   const ich = useAnmeldung((z) => z.ich)
   // Ohne Anmeldung (Vorschau) wie mit Planung, damit die Ansicht vollständig zu sehen ist.
   const selbst = ich && !hatRecht(ich, 'planung') ? ich.id : null
-  const darf = (personId: string) => selbst === null || personId === selbst
+  const team = useMeineMitarbeitenden()
+  const darf = (personId: string) => selbst === null || personId === selbst || (team.data ?? []).includes(personId)
   const leer = { person_id: selbst ?? '', art: 'ferien', von: '', bis: '', halbtag: false }
   const [w, setW] = useState(leer)
   const [fehler, setFehler] = useState<Partial<Record<string, string>>>({})

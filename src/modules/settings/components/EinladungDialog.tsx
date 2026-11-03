@@ -1,18 +1,20 @@
-import { Send } from 'lucide-react'
+import { Link2, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
-import { Feld } from '@/components/ui/feld'
+import { Feld, Label } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/schalter'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { useUi } from '@/stores/ui'
 import { useBenutzerAenderung } from '../hooks/useBenutzer'
 import { feldFehler } from '@/lib/formular'
 import { einladungSchema, type EinladungEingabe } from '../schema'
-import { ladeEin } from '../services/benutzer'
+import { ladeEin, personMitLinkAnlegen } from '../services/benutzer'
+import { RegistrierLinkDialog } from './RegistrierLinkDialog'
 import type { Rolle, Standort } from '../types'
 
 interface EinladungDialogProps {
@@ -27,6 +29,7 @@ const LEER: EinladungEingabe = { name: '', email: '', rolle: 'verkauf', standort
 /**
  * Neue Person einladen. Der Knopf sendet sofort eine Mail an die Person; das steht ausdrücklich
  * über dem Knopf, weil alles, was nach aussen geht, eine bewusste Freigabe braucht (CLAUDE.md Regel 6).
+ * Ohne Mail (z. B. Montage mit privater Adresse): Person erfassen und einen Registrier-Link fürs Handy bekommen.
  */
 export function EinladungDialog({ offen, onOffen, rollen, standorte }: EinladungDialogProps) {
   const { t } = useTranslation()
@@ -34,9 +37,30 @@ export function EinladungDialog({ offen, onOffen, rollen, standorte }: Einladung
   const [werte, setWerte] = useState<EinladungEingabe>(LEER)
   const [fehler, setFehler] = useState<Partial<Record<keyof EinladungEingabe, string>>>({})
   const senden = useBenutzerAenderung(ladeEin)
+  const mitLink = useBenutzerAenderung(personMitLinkAnlegen)
+  const [ohneMail, setOhneMail] = useState(false)
+  const [link, setLink] = useState<{ name: string; schluessel: string } | null>(null)
 
   function setze<K extends keyof EinladungEingabe>(feld: K, wert: EinladungEingabe[K]) {
     setWerte((w) => ({ ...w, [feld]: wert }))
+  }
+
+  async function linkErstellen() {
+    if (werte.name.trim().length < 2) {
+      setFehler({ name: t('pruefung.name') })
+      return
+    }
+    setFehler({})
+    try {
+      const schluessel = await mitLink.mutateAsync({ ...werte, name: werte.name.trim() })
+      setLink({ name: werte.name.trim(), schluessel })
+      setWerte(LEER)
+      setOhneMail(false)
+      onOffen(false)
+    } catch (f) {
+      meldeFehler(f, 'einladen')
+      melde('kritisch', { de: 'Person nicht erfasst', fr: 'Personne non enregistrée' })
+    }
   }
 
   async function absenden() {
@@ -68,92 +92,121 @@ export function EinladungDialog({ offen, onOffen, rollen, standorte }: Einladung
   }
 
   return (
-    <Dialog open={offen} onOpenChange={onOffen}>
-      <DialogInhalt
-        titel={t('benutzer.einladenTitel')}
-        beschreibung={t('benutzer.einladenText')}
-        fuss={
-          <>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                onOffen(false)
-              }}
-            >
-              {t('allgemein.abbrechen')}
-            </Button>
-            <Button laedt={senden.isPending} onClick={() => void absenden()}>
-              <Send />
-              {t('benutzer.einladungSenden')}
-            </Button>
-          </>
-        }
-      >
-        <div className="flex flex-col gap-4">
-          <Feld id="einladung-name" label={t('benutzer.name')} pflicht fehler={fehler.name}>
-            <Input
-              id="einladung-name"
-              value={werte.name}
-              autoComplete="off"
-              onChange={(e) => {
-                setze('name', e.target.value)
-              }}
-            />
-          </Feld>
-          <Feld id="einladung-email" label={t('benutzer.email')} pflicht fehler={fehler.email}>
-            <Input
-              id="einladung-email"
-              type="email"
-              value={werte.email}
-              autoComplete="off"
-              onChange={(e) => {
-                setze('email', e.target.value)
-              }}
-            />
-          </Feld>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Feld id="einladung-rolle" label={t('benutzer.rolle')} pflicht fehler={fehler.rolle}>
-              <Auswahl
-                id="einladung-rolle"
-                value={werte.rolle}
-                onValueChange={(w) => {
-                  setze('rolle', w)
+    <>
+      {link && (
+        <RegistrierLinkDialog
+          name={link.name}
+          schluessel={link.schluessel}
+          onSchliessen={() => {
+            setLink(null)
+          }}
+        />
+      )}
+      <Dialog open={offen} onOpenChange={onOffen}>
+        <DialogInhalt
+          titel={t('benutzer.einladenTitel')}
+          beschreibung={t('benutzer.einladenText')}
+          fuss={
+            <>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  onOffen(false)
                 }}
-                optionen={rollen.map((r) => ({ wert: r.schluessel, text: sprache === 'fr' ? r.name_fr : r.name_de }))}
+              >
+                {t('allgemein.abbrechen')}
+              </Button>
+              {ohneMail ? (
+                <Button laedt={mitLink.isPending} onClick={() => void linkErstellen()}>
+                  <Link2 />
+                  {t('benutzer.link.erstellen')}
+                </Button>
+              ) : (
+                <Button laedt={senden.isPending} onClick={() => void absenden()}>
+                  <Send />
+                  {t('benutzer.einladungSenden')}
+                </Button>
+              )}
+            </>
+          }
+        >
+          <div className="flex flex-col gap-4">
+            <Feld id="einladung-name" label={t('benutzer.name')} pflicht fehler={fehler.name}>
+              <Input
+                id="einladung-name"
+                value={werte.name}
+                autoComplete="off"
+                onChange={(e) => {
+                  setze('name', e.target.value)
+                }}
               />
             </Feld>
-            <Feld id="einladung-standort" label={t('benutzer.standort')}>
+            <div className="flex items-start gap-3">
+              <Switch id="einladung-ohne-mail" checked={ohneMail} onCheckedChange={setOhneMail} />
+              <div className="flex flex-col gap-0.5">
+                <Label htmlFor="einladung-ohne-mail">{t('benutzer.link.ohneMail')}</Label>
+                <span className="text-muted-foreground text-xs">{t('benutzer.link.ohneMailText')}</span>
+              </div>
+            </div>
+            {!ohneMail && (
+              <Feld id="einladung-email" label={t('benutzer.email')} pflicht fehler={fehler.email}>
+                <Input
+                  id="einladung-email"
+                  type="email"
+                  value={werte.email}
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setze('email', e.target.value)
+                  }}
+                />
+              </Feld>
+            )}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Feld id="einladung-rolle" label={t('benutzer.rolle')} pflicht fehler={fehler.rolle}>
+                <Auswahl
+                  id="einladung-rolle"
+                  value={werte.rolle}
+                  onValueChange={(w) => {
+                    setze('rolle', w)
+                  }}
+                  optionen={rollen.map((r) => ({ wert: r.schluessel, text: sprache === 'fr' ? r.name_fr : r.name_de }))}
+                />
+              </Feld>
+              <Feld id="einladung-standort" label={t('benutzer.standort')}>
+                <Auswahl
+                  id="einladung-standort"
+                  value={werte.standort_id ?? ''}
+                  onValueChange={(w) => {
+                    setze('standort_id', w || null)
+                  }}
+                  platzhalter={t('benutzer.keinStandort')}
+                  optionen={standorte.map((s) => ({ wert: s.id, text: s.name }))}
+                />
+              </Feld>
+            </div>
+            <Feld id="einladung-sprache" label={t('einstellungen.sprache')}>
               <Auswahl
-                id="einladung-standort"
-                value={werte.standort_id ?? ''}
+                id="einladung-sprache"
+                value={werte.sprache}
                 onValueChange={(w) => {
-                  setze('standort_id', w || null)
+                  setze('sprache', w === 'fr' ? 'fr' : 'de')
                 }}
-                platzhalter={t('benutzer.keinStandort')}
-                optionen={standorte.map((s) => ({ wert: s.id, text: s.name }))}
+                optionen={[
+                  { wert: 'de', text: 'Deutsch' },
+                  { wert: 'fr', text: 'Français' },
+                ]}
               />
             </Feld>
+            <p className="bg-info-soft text-info rounded-md px-3 py-2 text-xs">
+              {ohneMail
+                ? t('benutzer.link.hinweis')
+                : werte.email.includes('@')
+                  ? t('benutzer.einladenHinweis', { email: werte.email })
+                  : t('benutzer.einladenHinweisLeer')}
+            </p>
           </div>
-          <Feld id="einladung-sprache" label={t('einstellungen.sprache')}>
-            <Auswahl
-              id="einladung-sprache"
-              value={werte.sprache}
-              onValueChange={(w) => {
-                setze('sprache', w === 'fr' ? 'fr' : 'de')
-              }}
-              optionen={[
-                { wert: 'de', text: 'Deutsch' },
-                { wert: 'fr', text: 'Français' },
-              ]}
-            />
-          </Feld>
-          <p className="bg-info-soft text-info rounded-md px-3 py-2 text-xs">
-            {werte.email.includes('@')
-              ? t('benutzer.einladenHinweis', { email: werte.email })
-              : t('benutzer.einladenHinweisLeer')}
-          </p>
-        </div>
-      </DialogInhalt>
-    </Dialog>
+        </DialogInhalt>
+      </Dialog>
+    </>
   )
 }

@@ -30,8 +30,9 @@ const modul = (teil: Partial<ModulMeta>): ModulMeta => ({
 })
 
 describe('Rechte in der Oberfläche', () => {
-  it('Admin hat jedes Recht, «basis» hat jede angemeldete Person', () => {
-    expect(hatRecht(person({ rechte: ['admin'] }), 'finanzen')).toBe(true)
+  it('Administration ist nur das System, «basis» hat jede angemeldete Person', () => {
+    expect(hatRecht(person({ rechte: ['admin'] }), 'finanzen')).toBe(false)
+    expect(hatRecht(person({ rechte: ['admin'] }), 'admin')).toBe(true)
     expect(hatRecht(person({}), 'basis')).toBe(true)
     expect(hatRecht(person({}), 'finanzen')).toBe(false)
     expect(hatRecht(null, 'basis')).toBe(false)
@@ -49,6 +50,17 @@ describe('Rechte in der Oberfläche', () => {
     expect(darfModul(modul({ id: 'today', immer: true }), vera)).toBe(true)
     expect(darfModul(modul({ id: 'finance', recht: 'finanzen' }), person({}))).toBe(false)
     expect(darfModul(modul({ id: 'finance', recht: 'finanzen' }), person({ rechte: ['finanzen'] }))).toBe(true)
+  })
+
+  it('Administration sieht System-Bereiche und die Bereiche der Rolle, GL alle', () => {
+    const adi = person({ rechte: ['admin'], bereiche: ['sales'] })
+    expect(darfModul(modul({ id: 'settings', recht: ['admin', 'gl'] }), adi)).toBe(true)
+    expect(darfModul(modul({ id: 'automations', recht: 'admin' }), adi)).toBe(true)
+    expect(darfModul(modul({ id: 'projects' }), adi)).toBe(false)
+    const gina = person({ rechte: ['gl', 'finanzen'], bereiche: [] })
+    expect(darfModul(modul({ id: 'settings', recht: ['admin', 'gl'] }), gina)).toBe(true)
+    expect(darfModul(modul({ id: 'automations', recht: 'admin' }), gina)).toBe(false)
+    expect(darfModul(modul({ id: 'projects' }), person({ rechte: ['gl'], bereiche: ['sales'] }))).toBe(true)
   })
 
   it('ohne Datenbank (Vorschau) ist alles sichtbar', () => {

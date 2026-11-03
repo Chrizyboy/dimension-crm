@@ -11329,6 +11329,9 @@ export type Database = {
           titel: string
           total_rappen: number
           versandweg: string
+          visum_am: string | null
+          visum_bemerkung: string | null
+          visum_von: string | null
           wartungsvertrag_id: string | null
           zahlungsplan_id: string | null
           zusage_bis: string | null
@@ -11382,6 +11385,9 @@ export type Database = {
           titel: string
           total_rappen?: number
           versandweg?: string
+          visum_am?: string | null
+          visum_bemerkung?: string | null
+          visum_von?: string | null
           wartungsvertrag_id?: string | null
           zahlungsplan_id?: string | null
           zusage_bis?: string | null
@@ -11434,6 +11440,9 @@ export type Database = {
           titel?: string
           total_rappen?: number
           versandweg?: string
+          visum_am?: string | null
+          visum_bemerkung?: string | null
+          visum_von?: string | null
           wartungsvertrag_id?: string | null
           zahlungsplan_id?: string | null
           zusage_bis?: string | null
@@ -11577,6 +11586,20 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rechnungen_visum_von_fkey'
+            columns: ['visum_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rechnungen_visum_von_fkey'
+            columns: ['visum_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -18508,6 +18531,7 @@ export type Database = {
           sprache: string
         }[]
       }
+      darf_abwesenheit_erfassen: { Args: { p_person: string }; Returns: boolean }
       dienste_pruefen: { Args: { p_extern?: Json }; Returns: number }
       dienste_zustand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
@@ -18769,6 +18793,7 @@ export type Database = {
       mein_tag: { Args: { p_bis: string; p_person?: string; p_von: string }; Returns: Json }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_microsoft_verbindung: { Args: Record<PropertyKey, never>; Returns: Json }
+      meine_mitarbeitenden: { Args: Record<PropertyKey, never>; Returns: string[] }
       meldung_erfassen: { Args: { p: Json }; Returns: string }
       meldung_erledigen: { Args: { p_id: string; p_notiz?: string; p_wieder?: boolean }; Returns: undefined }
       messe_geloescht: { Args: { p_kennung: string; p_sids: string[] }; Returns: number }
@@ -18897,6 +18922,10 @@ export type Database = {
         }[]
       }
       partner_fristen_melden: { Args: { p_heute?: string }; Returns: number }
+      person_mit_link_anlegen: {
+        Args: { p_name: string; p_rolle: string; p_sprache?: string; p_standort?: string }
+        Returns: Json
+      }
       personal_akte: { Args: { p_person: string }; Returns: Json }
       personal_checklisten: { Args: Record<PropertyKey, never>; Returns: number }
       personal_fristen_melden: { Args: { p_heute?: string }; Returns: number }
@@ -19050,9 +19079,31 @@ export type Database = {
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       rechnung_verlauf: { Args: { p_id: string }; Returns: Json }
+      rechnung_visieren: { Args: { p_bemerkung?: string; p_id: string }; Returns: undefined }
       rechnung_zusage: { Args: { p_bis: string; p_id: string; p_text: string }; Returns: undefined }
       rechnungen_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       rechnungen_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
+      rechnungen_zum_visum: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          art: string
+          datum: string
+          id: string
+          kunde: string
+          mwst_rappen: number
+          netto_rappen: number
+          nummer: string
+          positionen: Json
+          projekt_id: string
+          projekt_nummer: string
+          projekt_titel: string
+          titel: string
+          total_rappen: number
+          visum_am: string
+          visum_bemerkung: string
+          visum_name: string
+        }[]
+      }
       referenzen_vorschlaege: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -19066,6 +19117,9 @@ export type Database = {
         }[]
       }
       region_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      registrier_link_einloesen: { Args: { p_email: string; p_schluessel: string }; Returns: Json }
+      registrier_link_erstellen: { Args: { p_person: string }; Returns: string }
+      registrier_link_pruefen: { Args: { p_schluessel: string }; Returns: Json }
       reklamation_speichern: { Args: { p: Json }; Returns: string }
       ressource_eintrag_erfassen: {
         Args: {

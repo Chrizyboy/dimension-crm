@@ -10,7 +10,7 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 ## Wer arbeitet hier {#wer}
 
 - **Buchhaltung (Recht Finanzen)**: stellen, Zahlungen, Mahnungen, Abgleich mit AbaNinja; Firmenangaben nur lesen.
-- **Projektleitung**: sieht im Reiter **Zu verrechnen**, welche Tranche fällig ist, und legt Entwürfe an.
+- **Projektleitung**: sieht im Reiter **Zu verrechnen**, welche Tranche fällig ist, und legt Entwürfe an. Gibt das Erstvisum für Entwürfe ihrer Projekte.
 - **Geschäftsleitung**: Übersicht über Offenes und Überfälliges.
 
 ## So geht's {#so}
@@ -26,6 +26,13 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 1. Reiter **Rechnungen**, **Neue Rechnung**, Kunde wählen.
 2. **Vorlage** wählen: **Anzahlung (30 %)**, **Montage (60 %)**, **Schlussrechnung (Rest mit Nachträgen)**, **Gesamtbetrag (100 %)**, **Wartungsvertrag** oder **Freie Rechnung**.
 3. **Entwurf anlegen**. Im Entwurf lassen sich Zeilen ändern und ergänzen.
+
+### Das Erstvisum geben (Projektleitung)
+
+1. Auf [Mein Tag](kapitel:today) die Karte **Rechnungen zum Visum** öffnen.
+2. Rechnung anklicken: Positionen, Menge und Betrag prüfen.
+3. Stimmt alles: **Erstvisum geben**. Sonst unter **Korrektur für die Buchhaltung** schreiben, was nicht stimmt, und **Korrektur melden**.
+4. Die Buchhaltung bekommt eine Glocke und sieht im Entwurf, wer visiert hat.
 
 ### Eine Rechnung stellen und senden
 
@@ -93,6 +100,7 @@ Filter setzen und **Liste exportieren** (CSV).
 
 ## Neu {#neu}
 
+- 03.11.2026: Erstvisum der Projektleitung vor dem Stellen.
 - 03.11.2026: Firmenangaben und Einstellungen der Rechnungen ändert nur noch die Administration; auch unter Einstellungen › Firmen & Bank.
 - 31.10.2026: Das Rechnungs-PDF wird auch für die Anzahlungsrechnung am Werkvertrag gebraucht.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

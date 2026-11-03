@@ -112,11 +112,11 @@ select throws_ok($$ select public.kennzahlen_quellen_kosten('test14', -1) $$, 'P
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000014a1", "role": "authenticated"}', true),
        set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000014a1', true);
 
--- Betrieb: Auftragsbestand, Marge ohne Recht nicht dabei
+-- Betrieb: Auftragsbestand; Marge mit dem Recht «marge» (Verkauf hat es)
 create temp table betrieb on commit drop as select public.kennzahlen_betrieb(current_date - 30, current_date) as b;
 select is((select (x ->> 'rest_rappen')::bigint from betrieb, jsonb_array_elements(b -> 'auftragsbestand') x
             where x ->> 'id' = '00000000-0000-0000-0000-000000001401'), 2100000::bigint, 'Auftragsbestand: Vertrag minus verrechnet');
-select ok((select not (b ? 'marge') from betrieb), 'Marge nur mit Recht preise oder finanzen');
+select ok((select b ? 'marge' from betrieb), 'Verkauf sieht die Marge (Recht «marge»)');
 select is((select (z ->> 'gebucht')::numeric from betrieb, jsonb_array_elements(b -> 'auslastung' -> 'wochen' -> 1 -> 'zellen') z
             where z ->> 'person' = '00000000-0000-0000-0000-0000000014b3'), 3::numeric, 'Auslastung: drei Einsatztage nächste Woche');
 reset role;

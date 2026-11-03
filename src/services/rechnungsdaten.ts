@@ -18,7 +18,13 @@ export const FIRMA_SPALTEN =
 export async function ladeRechnung(id: string): Promise<RechnungVoll> {
   const [l, r, z] = await Promise.all([
     db().from('rechnungen_liste').select('*').eq('id', id).single(),
-    db().from('rechnungen').select('positionen, mwst_satz, notiz, storniert_grund').eq('id', id).single(),
+    db()
+      .from('rechnungen')
+      .select(
+        'positionen, mwst_satz, notiz, storniert_grund, visum_am, visum_bemerkung, visum_von_person:personen!rechnungen_visum_von_fkey(name)',
+      )
+      .eq('id', id)
+      .single(),
     db()
       .from('rechnung_zahlungen')
       .select('id, datum, betrag_rappen, quelle, notiz')
@@ -61,6 +67,11 @@ export async function ladeRechnung(id: string): Promise<RechnungVoll> {
     mwst_satz: r.data.mwst_satz,
     notiz: r.data.notiz,
     storniert_grund: r.data.storniert_grund,
+    visum: {
+      am: r.data.visum_am,
+      bemerkung: r.data.visum_bemerkung,
+      name: r.data.visum_von_person?.name ?? null,
+    },
     firma_daten: f.data,
     empfaenger,
     zahlungen: z.data as Zahlung[],

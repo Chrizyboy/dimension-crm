@@ -243,6 +243,15 @@ export function RechnungAkte({ id, onSchliessen }: { id: string; onSchliessen: (
             </div>
             <Schritte r={r} />
             <Hinweise r={r} />
+            {r.status === 'entwurf' && (
+              <p className={`mb-3 rounded-md p-3 text-sm ${r.visum.am ? 'bg-ok-soft' : 'bg-muted'}`}>
+                {r.visum.am
+                  ? t('rechnungen.visum.akteVisiert', { name: r.visum.name ?? '–', datum: formatDatum(r.visum.am) })
+                  : r.visum.bemerkung
+                    ? t('rechnungen.visum.akteKorrektur', { name: r.visum.name ?? '–', text: r.visum.bemerkung })
+                    : t('rechnungen.visum.akteOhne')}
+              </p>
+            )}
             {r.status === 'storniert' && r.storniert_grund && (
               <p className="bg-muted rounded-md p-3 text-sm">
                 {t('rechnungen.akte.storniertGrund', { grund: r.storniert_grund })}
