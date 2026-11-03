@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Grossprojekt } from '../types'
 import { kwpVon, leistung, nachStufe, pipelineZahlen, ueberfaellig } from './pipeline'
-import { eingaben, rechne } from './rechner'
+import { eingaben, rechne, unserAnteil } from './rechner'
 
 const gp = (x: Partial<Grossprojekt>): Grossprojekt =>
   ({
@@ -102,5 +102,12 @@ describe('Rechner', () => {
     expect(eingaben(gp({}), regeln).chf_pro_kwp).toBe(1500)
     expect(eingaben(gp({ rechnung: { kwp: 300 } }), regeln).chf_pro_kwp).toBe(1000)
     expect(eingaben(gp({ rechnung: { strompreis_rp: 25 } }), regeln).strompreis_rp).toBe(25)
+  })
+
+  it('Bauen und warten: Marge am Bau, Betrieb pro Jahr', () => {
+    const u = unserAnteil(504_000_00, { annahmen: { marge_prozent: 20, betrieb_prozent: 1.5 } })
+    expect(u.bau_rappen).toBe(100_800_00)
+    expect(u.wartung_rappen_jahr).toBe(7_560_00)
+    expect(unserAnteil(100_00, undefined).marge_prozent).toBe(20)
   })
 })

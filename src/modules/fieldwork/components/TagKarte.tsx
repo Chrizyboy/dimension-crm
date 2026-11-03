@@ -7,6 +7,7 @@ import { formatTelefon } from '@/lib/format'
 import { adressText, naviLink, telLink } from '../lib/links'
 import type { RapportArt, TagEintrag } from '../types'
 import { ServiceVorOrt } from './ServiceVorOrt'
+import { TagKarteInfo } from './TagKarteInfo'
 
 /** Ein Einsatz oder Service-Termin im Tagesplan, mit allem, was man auf dem Weg zur Baustelle braucht. */
 export function TagKarte({
@@ -15,6 +16,8 @@ export function TagKarte({
   aktiv,
   onBeginnen,
   onRapport,
+  onMappe,
+  onMelden,
 }: {
   eintrag: TagEintrag
   tag: string
@@ -22,6 +25,8 @@ export function TagKarte({
   aktiv: boolean
   onBeginnen: (art: RapportArt) => void
   onRapport: (id: string) => void
+  onMappe?: (projekt: string) => void
+  onMelden?: (projekt: string) => void
 }) {
   const { t } = useTranslation()
   const navi = naviLink(e.adresse)
@@ -125,6 +130,18 @@ export function TagKarte({
           </div>
         )}
       </dl>
+
+      {e.info && e.projekt && onMappe && onMelden && (
+        <TagKarteInfo
+          info={e.info}
+          onMappe={() => {
+            onMappe(e.info?.projekt_id ?? '')
+          }}
+          onMelden={() => {
+            onMelden(e.info?.projekt_id ?? '')
+          }}
+        />
+      )}
 
       {e.typ === 'service' && e.service && <ServiceVorOrt s={e.service} aktiv={aktiv} />}
 

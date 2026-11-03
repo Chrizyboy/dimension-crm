@@ -12,7 +12,10 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { usePersonen, useTag } from '../hooks/useBaustelle'
 import { heute, plusTage } from '../lib/zeit'
 import { rapportAnlegen, zeitStarten } from '../services/monteur'
-import type { RapportArt, TagEintrag } from '../types'
+import type { RapportArt, TagEintrag, TeamPerson } from '../types'
+import { MappeDialog } from './MappeDialog'
+import { MeldungDialog } from './MeldungDialog'
+import { SicherheitDialog } from './SicherheitDialog'
 import { TagKarte } from './TagKarte'
 import Stempeluhr from './Stempeluhr'
 
@@ -37,6 +40,9 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
   const von = heute()
   const tag = useTag(von, plusTage(von, 6), person)
   const eigener = !person || person === ich?.id
+  const [check, setCheck] = useState<{ rapportId: string; projektId: string | null; team: TeamPerson[] } | null>(null)
+  const [mappe, setMappe] = useState<string | null>(null)
+  const [melden, setMelden] = useState<string | null>(null)
 
   async function beginnen(e: TagEintrag, art: RapportArt) {
     const offen = e.rapporte.find((r) => r.datum === von && !r.abgeschlossen_am && r.art === art)
@@ -66,6 +72,12 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
           objekt_ort: e.adresse.ort,
         },
       )
+      if (e.typ === 'einsatz' && e.info && art === 'montage') {
+        // Montage: erst Sicherheits-Check, dann startet die Zeit fürs ganze Team (Entscheid 0045).
+        await qc.invalidateQueries({ queryKey: ['baustelle', 'tag'] })
+        setCheck({ rapportId: id, projektId: e.projekt?.id ?? null, team: e.info.team })
+        return
+      }
       await zeitStarten({ rapport_id: id, projekt_id: e.projekt?.id ?? null, art: 'arbeit' })
       await qc.invalidateQueries({ queryKey: ['baustelle', 'tag'] })
       onRapport(id)
@@ -112,10 +124,38 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
                 aktiv={g.tag === von && eigener}
                 onBeginnen={(art) => void beginnen(e, art)}
                 onRapport={onRapport}
+                onMappe={setMappe}
+                onMelden={setMelden}
               />
             ))}
           </section>
         ))
+      )}
+      {check && (
+        <SicherheitDialog
+          {...check}
+          onFertig={() => {
+            setCheck(null)
+            onRapport(check.rapportId)
+          }}
+        />
+      )}
+      {mappe && (
+        <MappeDialog
+          projektId={mappe}
+          onSchliessen={() => {
+            setMappe(null)
+          }}
+        />
+      )}
+      {melden && (
+        <MeldungDialog
+          projektId={melden}
+          rapportId={null}
+          onSchliessen={() => {
+            setMelden(null)
+          }}
+        />
       )}
     </div>
   )
