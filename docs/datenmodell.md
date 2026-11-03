@@ -67,6 +67,8 @@ Danach `npm run db:typen`, damit die App die neuen Spalten kennt.
 
 Wirksame Rechte einer Person = Rechte ihrer Rolle ∪ eigene Zusatzrechte (`personen.rechte`). `admin` schliesst alle anderen ein. Die Datenbank prüft das mit `intern.hat_recht()`. Sichtbare Bereiche: `personen.bereiche`, sonst `rollen.bereiche`, sonst alle; sie steuern nur die Menüs. Das `aenderungsprotokoll` zeigt einen Eintrag nur, wer die betroffene Tabelle lesen darf (`intern.tabellen_leserecht`). Siehe Entscheid 0012.
 
+Einstellungen (Entscheid 0048): jeden Schlüssel in `einstellungen` ändert nur die Administration (Trigger `zz_nur_admin`, Zeitplan und Automationen ausgenommen), ebenso `firmen`. Eine neue Adresse in `objekte` ohne Region bekommt sie aus `regionen.plz_regeln` (`region_fuer_plz`, Format wie `standort_regeln`: `{kantone, plz_von, plz_bis}`, erste passende Region nach `nummer`). Papierkorb über alle Fachtabellen: `papierkorb()` und `papierkorb_wiederherstellen(tabelle, id)`, nur Administration.
+
 **Kurzzeichen** (2.11.2026): `personen.kurzzeichen` («CR», «LP») ist die Anzeige in Listen, Planung und auf Dokumenten, 1–4 Zeichen, gross, eindeutig unter den nicht gelöschten Personen. Leer gesetzt füllt der Trigger `kurzzeichen` den Vorschlag aus dem Namen (`intern.kurzzeichen_vorschlag`, gleiche Regel in `src/lib/kurzzeichen.ts`); ein Namenswechsel ändert es nicht. Anzeigen nur mit `Kurzzeichen` aus `src/components/shared/`. `personen.kuerzel` bleibt der technische Schlüssel («andreas»), über den Zuständigkeiten und Regeln Personen finden.
 
 ## Kunden und Kontakte (Phase 5)

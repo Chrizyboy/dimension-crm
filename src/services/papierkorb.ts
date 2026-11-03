@@ -21,11 +21,11 @@ export async function legeInPapierkorb(tabelle: string, id: string): Promise<voi
 
 /** Holt einen Datensatz aus dem Papierkorb zurück. */
 export async function holeAusPapierkorb(tabelle: string, id: string): Promise<void> {
-  const { error } = await db().rpc('papierkorb_wiederherstellen', { p_tabelle: tabelle, p_id: id })
+  const { error } = await db().rpc('papierkorb_zurueckholen', { p_tabelle: tabelle, p_id: id })
   if (error) throw error
 }
 
-/** Alles im Papierkorb, was die Person sehen darf, neueste zuerst. */
+/** Papierkorb: Administration alles, sonst nur selbst Weggelegtes, neueste zuerst. */
 export async function ladePapierkorb(): Promise<PapierkorbEintrag[]> {
   const { data, error } = await db().rpc('papierkorb_liste', { p_grenze: 300 })
   if (error) throw error

@@ -107,10 +107,31 @@ begin
   end if;
 end;
 $$;
+revoke execute on function public.papierkorb_legen(text, uuid) from public, anon;
 grant execute on function public.papierkorb_legen(text, uuid) to authenticated;
 
-/** Holt einen Datensatz aus dem Papierkorb zurück. */
-create or replace function public.papierkorb_wiederherstellen(p_tabelle text, p_id uuid)
+-- Wer zuletzt in den Papierkorb gelegt hat (Änderungsprotokoll). Definer, weil das Protokoll
+-- nicht für alle lesbar sein muss.
+create or replace function intern.papierkorb_von(p_tabelle text, p_id uuid)
+returns uuid
+language sql
+stable
+security definer
+set search_path = public, intern
+as $$
+  select a.benutzer from public.aenderungsprotokoll a
+  where a.tabelle = p_tabelle and a.datensatz = p_id and a.aktion = 'papierkorb'
+  order by a.zeitpunkt desc limit 1
+$$;
+revoke all on function intern.papierkorb_von(text, uuid) from public;
+grant execute on function intern.papierkorb_von(text, uuid) to authenticated;
+
+/**
+ * Holt einen Datensatz zurück («Rückgängig» und «Wiederherstellen» im Papierkorb). Die Administration
+ * darf alles (wie `papierkorb_wiederherstellen` in den Einstellungen); alle anderen nur, was sie selbst
+ * weggelegt haben, und nur wenn sie den Datensatz bearbeiten dürfen (RLS).
+ */
+create or replace function public.papierkorb_zurueckholen(p_tabelle text, p_id uuid)
 returns void
 language plpgsql
 security invoker
@@ -123,13 +144,17 @@ begin
   v_sperre := intern.papierkorb_sperre(p_tabelle, p_id, true);
   if v_sperre is not null then raise exception '%', v_sperre; end if;
   perform intern.papierkorb_tabelle_pruefen(p_tabelle);
+  if not intern.hat_recht('admin') and intern.papierkorb_von(p_tabelle, p_id) is distinct from auth.uid() then
+    raise exception 'papierkorb.nur_eigene';
+  end if;
   execute format('update public.%I set geloescht_am = null where id = $1 and geloescht_am is not null', p_tabelle)
     using p_id;
   get diagnostics v_anzahl = row_count;
   if v_anzahl = 0 then raise exception 'papierkorb.kein_recht'; end if;
 end;
 $$;
-grant execute on function public.papierkorb_wiederherstellen(text, uuid) to authenticated;
+revoke execute on function public.papierkorb_zurueckholen(text, uuid) from public, anon;
+grant execute on function public.papierkorb_zurueckholen(text, uuid) to authenticated;
 
 -- Anzeige-Titel einer Zeile aus den Spalten, die die Tabelle hat (Nummer + Titel/Name/Betreff …).
 create or replace function intern.papierkorb_titel_ausdruck(p_tabelle text)
@@ -166,8 +191,9 @@ end;
 $$;
 
 /**
- * Inhalt des Papierkorbs über alle Bereiche, die die Person lesen darf (RLS der Tabellen),
- * neueste zuerst. Wer gelöscht hat, steht im Änderungsprotokoll.
+ * Inhalt des Papierkorbs über alle Bereiche, die die Person lesen darf (RLS der Tabellen), neueste zuerst.
+ * Die Administration sieht alles, alle anderen nur, was sie selbst weggelegt haben (Regel 3.11.: Firmenweites
+ * nur Administration). Wer gelöscht hat, steht im Änderungsprotokoll.
  */
 create or replace function public.papierkorb_liste(p_grenze int default 300)
 returns table (
@@ -208,14 +234,15 @@ begin
   end loop;
   if v_sql = '' then return; end if;
   return query execute format(
-    'select z.tabelle, z.id, z.titel, z.geloescht_am, (
-        select p.name from public.aenderungsprotokoll a join public.personen p on p.auth_user_id = a.benutzer
-        where a.tabelle = z.tabelle and a.datensatz = z.id and a.aktion = %L
-        order by a.zeitpunkt desc limit 1)
+    'select z.tabelle, z.id, z.titel, z.geloescht_am, p.name
      from (%s) as z(tabelle, id, titel, geloescht_am)
+     cross join lateral (select intern.papierkorb_von(z.tabelle, z.id) as von) v
+     left join public.personen p on p.auth_user_id = v.von
+     where intern.hat_recht(%L) or v.von = auth.uid()
      order by z.geloescht_am desc limit %s',
-    'papierkorb', v_sql, greatest(1, least(p_grenze, 1000))
+    v_sql, 'admin', greatest(1, least(p_grenze, 1000))
   );
 end;
 $$;
+revoke execute on function public.papierkorb_liste(int) from public, anon;
 grant execute on function public.papierkorb_liste(int) to authenticated;

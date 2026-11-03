@@ -25,7 +25,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 
 1. Reiter **Neue Offerten** öffnen. Dort stehen alle Leads mit Stand «Offerte in Arbeit».
 2. Zeile anklicken und **Bearbeiten** wählen. Die anderen sehen jetzt «In Bearbeitung von …».
-3. Anlage in Eturnity planen und das PDF unter **PDF der Offerte** hineinziehen. Datum, Betrag, kWp und Batterie füllen sich selbst.
+3. Anlage in Eturnity planen und das PDF unter **PDF-Werte übernehmen** hineinziehen. Datum, Betrag, kWp, Batterie und die **Stückliste** (alle Positionen der Detailkosten) füllen sich selbst.
 4. Fehlt eine Angabe vom Aussendienst: **Rückfrage** mit der Frage unter **Was fehlt noch?**.
 5. Fertig: **Zur Prüfung** an den Aussendienst.
 
@@ -77,6 +77,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 - Wer die Offerte bekommt, regelt Einstellungen › Zuständigkeiten.
 - Der Ordner in SharePoint wird angelegt und bei Zusage oder Absage verschoben.
 - Fällige Nachfass-Termine erscheinen auf Mein Tag.
+- Wird die Offerte zum Auftrag, schlägt der Einkauf die Materialliste aus der **Stückliste** vor (nur Material, ohne Montage und Optionen).
 
 ## Regeln {#regeln}
 
@@ -91,7 +92,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 
 ### Das Eturnity-PDF füllt nichts aus.
 
-Nur PDFs aus Eturnity werden gelesen. Bei anderen PDFs die Werte von Hand eintragen.
+Nur PDFs aus Eturnity werden ganz gelesen. Beim Devis aus dem alten Bulle-Werkzeug füllen sich nur die Eckwerte, eine Stückliste gibt es dort nicht. Fehlendes von Hand eintragen.
 
 ### Wie komme ich zur Kalkulation?
 
@@ -100,6 +101,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 ## Neu {#neu}
 
 - 03.11.2026: «In den Papierkorb» für Offerten (Kopf der Offert-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
+- 03.11.2026: Stückliste aus dem Eturnity-PDF in der Offerte, daraus die Materialliste im Einkauf; Offerten ohne CRM-Nummer werden über das Eturnity-Projekt («hyd-…») zugeordnet.
 - 03.11.2026: Reiter Auswertung (Quote, je Person, Verlustgründe, Konkurrenz).
 - 03.11.2026: Arbeitsvorrat als Startansicht, Offerte als ganze Seite, Nachfassen mit Ergebnis nach Plan, Varianten, Freigabe und Chance.
 

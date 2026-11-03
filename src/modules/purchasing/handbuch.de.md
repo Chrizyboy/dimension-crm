@@ -11,7 +11,7 @@ Material je Projekt erfassen, bei den Lieferanten bestellen (Krannich, Solarmark
 
 - **Projektleitung**: Materialliste je Projekt, Bestellvorschlag, Wareneingang.
 - **Mit Recht Preise**: sieht Einkaufspreise, gibt Bestellungen frei.
-- **Lager Bulle**: bucht Eingänge, Entnahmen und Inventur.
+- **Lager Bulle**: bucht Eingänge, rüstet für die Baustellen, nimmt Rückgaben an und macht die Inventur.
 
 ## So geht's {#so}
 
@@ -56,6 +56,29 @@ Startansicht des Einkaufs. Oben die Kopfzahlen (zu bestellen, wartet auf Freigab
 1. In der Materialliste bei der Zeile **… aus dem Lager reservieren** oder **… an die Baustelle ausgeben**.
 2. Ohne Bestellung: Reiter **Lager**, **Lager buchen** mit Eingang, Entnahme, Korrektur oder Inventur.
 
+### Für eine Baustelle rüsten
+
+1. Materialliste des Projekts öffnen, **Rüstliste**. Sie zeigt nach Lagerplatz, was noch aus dem Lager an die Baustelle geht.
+2. Menge je Zeile prüfen, **Drucken** und im Lager abhaken.
+3. **… Positionen ausgeben** bucht die Entnahmen, zuerst aus der Reservierung des Projekts.
+
+### Rückgabe von der Baustelle
+
+1. Materialliste des Projekts, bei der Zeile im Menü **Rückgabe ins Lager**.
+2. Menge eintragen, **Zurück ins Lager**. Der Bestand steigt, die Entnahme des Projekts sinkt.
+
+### Lagerplatz und Inventur
+
+1. Reiter **Lager**, Artikel anklicken, **Lagerplatz** eintragen (z. B. A-03).
+2. **Inventur**: Liste nach Lagerplatz, gezählten Bestand eintragen. Leere Felder bleiben, wie sie sind.
+3. **… Abweichungen buchen** bucht nur, was abweicht, mit der Notiz «Inventur».
+
+### Reklamation beim Lieferanten
+
+1. Bestellung öffnen, Abschnitt **Reklamationen**, **Reklamation erfassen**: Position, Grund (defekt, falsche Ware, fehlt, zu viel), Menge und Beschreibung.
+2. Beim Lieferanten wie gewohnt per Telefon oder Mail melden, dann **Beim Lieferanten gemeldet**.
+3. Ist es gelöst: **Erledigt** mit Lösung (Gutschrift, Ersatz geliefert, zurückgeschickt) und Antwort des Lieferanten.
+
 ### Nachbestellen fürs Lager
 
 1. Reiter **Lager**, Filter **Unter Mindestmenge**.
@@ -86,6 +109,8 @@ Startansicht des Einkaufs. Oben die Kopfzahlen (zu bestellen, wartet auf Freigab
 - Bestellungen und Einkaufspreise nur mit Recht **Preise**.
 - Die Bestell-Mail geht nur für freigegebene Bestellungen.
 - Über der Freigabegrenze (Standard CHF 5'000) geben nur die eingestellten Personen frei. Grenze und Personen ändert nur die Administration.
+- Zurück ins Lager kommt höchstens, was für das Projekt ausgegeben wurde.
+- Eine Reklamation ist erst erledigt, wenn eine Lösung gewählt ist.
 
 ## Häufige Fragen {#fragen}
 
@@ -95,10 +120,11 @@ Unter **Lieferanten** eintragen oder in der Mail von Hand eingeben.
 
 ### Der Bestand stimmt nicht.
 
-**Lager buchen**, Art **Inventur**, gezählten Bestand eintragen. Die Korrektur bleibt in den Lagerbewegungen sichtbar.
+Reiter **Lager**, **Inventur**, gezählten Bestand eintragen. Nur Abweichungen werden gebucht; die Korrektur bleibt in den Lagerbewegungen sichtbar.
 
 ## Neu {#neu}
 
 - 03.11.2026: «In den Papierkorb» für Lieferanten; Bestellungen ab freigegeben werden storniert, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
+- 03.11.2026: Lagerplatz, Rüstliste mit Druck, Rückgabe von der Baustelle, Inventur in einem Durchgang, Reklamationen beim Lieferanten.
 - 02.11.2026: Leitstand, Bestellen je Lieferant mit Sammelbestellung, Materialplan, Freigabegrenze, Auftragsbestätigung mit KI, Lieferantenrechnung prüfen, Konditionen der Lieferanten.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

@@ -3383,6 +3383,89 @@ export type Database = {
         }
         Relationships: []
       }
+      einkauf_reklamationen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          antwort: string | null
+          beschreibung: string | null
+          bestellung_id: string
+          erledigt_am: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          gemeldet_am: string | null
+          grund: string
+          id: string
+          loesung: string | null
+          menge: number | null
+          position_id: string | null
+          status: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          antwort?: string | null
+          beschreibung?: string | null
+          bestellung_id: string
+          erledigt_am?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gemeldet_am?: string | null
+          grund: string
+          id?: string
+          loesung?: string | null
+          menge?: number | null
+          position_id?: string | null
+          status?: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          antwort?: string | null
+          beschreibung?: string | null
+          bestellung_id?: string
+          erledigt_am?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gemeldet_am?: string | null
+          grund?: string
+          id?: string
+          loesung?: string | null
+          menge?: number | null
+          position_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'einkauf_reklamationen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'einkauf_reklamationen_bestellung_id_fkey'
+            columns: ['bestellung_id']
+            isOneToOne: false
+            referencedRelation: 'bestellungen_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'einkauf_reklamationen_position_id_fkey'
+            columns: ['position_id']
+            isOneToOne: false
+            referencedRelation: 'bestellpositionen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       einladungen: {
         Row: {
           alt_daten: Json | null
@@ -6601,6 +6684,7 @@ export type Database = {
           geloescht_am: string | null
           id: string
           lagerort_id: string
+          lagerplatz: string | null
           menge: number
           mindestmenge: number | null
           reserviert: number
@@ -6616,6 +6700,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           lagerort_id: string
+          lagerplatz?: string | null
           menge?: number
           mindestmenge?: number | null
           reserviert?: number
@@ -6630,6 +6715,7 @@ export type Database = {
           geloescht_am?: string | null
           id?: string
           lagerort_id?: string
+          lagerplatz?: string | null
           menge?: number
           mindestmenge?: number | null
           reserviert?: number
@@ -7775,6 +7861,7 @@ export type Database = {
           sprache: string
           standort_id: string | null
           status: string
+          stueckliste: Json | null
           titel: string | null
           unterlagen: NonNullable<Json>
           variante: string | null
@@ -7826,6 +7913,7 @@ export type Database = {
           sprache?: string
           standort_id?: string | null
           status?: string
+          stueckliste?: Json | null
           titel?: string | null
           unterlagen?: NonNullable<Json>
           variante?: string | null
@@ -7876,6 +7964,7 @@ export type Database = {
           sprache?: string
           standort_id?: string | null
           status?: string
+          stueckliste?: Json | null
           titel?: string | null
           unterlagen?: NonNullable<Json>
           variante?: string | null
@@ -15176,6 +15265,7 @@ export type Database = {
           kategorie: string | null
           lagerort: string | null
           lagerort_id: string | null
+          lagerplatz: string | null
           menge: number | null
           mindestmenge: number | null
           reserviert: number | null
@@ -17651,6 +17741,7 @@ export type Database = {
       helpdesk_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
       integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
+      inventur_buchen: { Args: { p: Json; p_lagerort: string; p_notiz?: string }; Returns: number }
       kalender_abgleichen: {
         Args: { p_bis: string; p_eintraege: Json; p_person: string; p_von: string }
         Returns: number
@@ -17749,6 +17840,7 @@ export type Database = {
       kurs_speichern: { Args: { p: Json; p_id: string | null }; Returns: string }
       lager_buchen: { Args: { p: Json }; Returns: undefined }
       lager_nachbestellen: { Args: { p_lagerort: string }; Returns: Json }
+      lagerplatz_setzen: { Args: { p_artikel: string; p_lagerort: string; p_platz: string }; Returns: undefined }
       lead_anlegen: { Args: { p: Json }; Returns: string }
       lead_aus_website: { Args: { p: Json }; Returns: Json }
       lead_dach_speichern: { Args: { p: Json; p_meldung: string; p_objekt: string }; Returns: undefined }
@@ -17914,7 +18006,6 @@ export type Database = {
           titel: string | null
         }[]
       }
-      papierkorb_wiederherstellen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
       partner_akte: { Args: { p_kontakt: string }; Returns: Json }
       partner_dubletten: {
         Args: { p_email?: string; p_name: string; p_ohne?: string; p_telefon?: string; p_uid?: string }
@@ -17941,6 +18032,18 @@ export type Database = {
         }
         Returns: string
       }
+      papierkorb: {
+        Args: { p_limit?: number }
+        Returns: {
+          bezeichnung: string | null
+          geloescht_am: string
+          geloescht_von: string | null
+          id: string
+          tabelle: string
+        }[]
+      }
+      papierkorb_wiederherstellen: { Args: { p_id: string; p_tabelle: string }; Returns: boolean }
+      papierkorb_zurueckholen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
       plz_auskunft: {
         Args: { p_plz: string }
         Returns: {
@@ -18047,6 +18150,7 @@ export type Database = {
       projekt_mangel_erledigen: { Args: { p_erledigt: boolean; p_id: string; p_notiz?: string }; Returns: undefined }
       projekt_mangel_speichern: { Args: { p: Json; p_id: string; p_projekt: string }; Returns: string }
       projekt_material_vorschlagen: { Args: { p_projekt: string }; Returns: number }
+      projekt_ruesten: { Args: { p: Json; p_projekt: string }; Returns: number }
       projekt_schritt_setzen: { Args: { p: Json; p_projekt: string; p_schluessel: string }; Returns: undefined }
       projekt_vermerken: { Args: { p_art: string; p_projekt: string; p_text: string }; Returns: string }
       projekt_zeitplan_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
@@ -18084,6 +18188,7 @@ export type Database = {
           titel: string
         }[]
       }
+      reklamation_speichern: { Args: { p: Json }; Returns: string }
       ressource_eintrag_erfassen: {
         Args: {
           p_art: string
@@ -18144,6 +18249,21 @@ export type Database = {
           p_umgebung: string
         }
         Returns: Json
+      }
+      ruestliste: {
+        Args: { p_projekt: string }
+        Returns: {
+          artikel_id: string
+          artikelnummer: string
+          bezeichnung: string
+          einheit: string
+          frei: number
+          lagerort_id: string
+          lagerplatz: string
+          material_id: string
+          offen: number
+          reserviert: number
+        }[]
       }
       runde_5_rappen: { Args: { p_rappen: number }; Returns: number }
       runde_franken: { Args: { p_rappen: number }; Returns: number }
@@ -18307,11 +18427,17 @@ export type Database = {
           ablauf: string
           dienst: string
           fehler: string
+          konten: Json
           name: string
           verbunden: boolean
           verbunden_am: string
           von: string
+          zuordnung: Json
         }[]
+      }
+      social_zuordnung_setzen: {
+        Args: { p_konto: string; p_netzwerk: string; p_sprache: string }
+        Returns: undefined
       }
       social_zurueckziehen: { Args: { p_id: string }; Returns: undefined }
       social_zustand_anlegen: {
@@ -18344,6 +18470,7 @@ export type Database = {
       }
       spesen_rueckfrage: { Args: { p_id: string; p_text: string }; Returns: undefined }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      region_fuer_plz: { Args: { p_plz: string }; Returns: string | null }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       submission_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_schluessel: string }; Returns: Json }
       submission_protokoll: { Args: { p_id: string; p_zeilen: Json }; Returns: number }

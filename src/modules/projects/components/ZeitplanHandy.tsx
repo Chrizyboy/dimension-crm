@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronLeft, ChevronRight, TriangleAlert } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Auswahl } from '@/components/ui/auswahl'
+import { MehrfachFilter } from '@/components/shared/MehrfachFilter'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
@@ -32,7 +32,7 @@ export function ZeitplanHandy({
   onPlanen: (p: Projekt) => void
 }) {
   const { t, i18n } = useTranslation()
-  const [person, setPerson] = useState('')
+  const [wahl, setWahl] = useState<string[]>([])
   const [planenOffen, setPlanenOffen] = useState(false)
   const sprache = i18n.language === 'fr' ? 'fr-CH' : 'de-CH'
   const m = alsDatum(montag)
@@ -85,16 +85,12 @@ export function ZeitplanHandy({
         )}
       </div>
 
-      <Auswahl
-        aria-label={t('projekte.zeitplan.person')}
-        value={person || 'alle'}
-        onValueChange={(v) => {
-          setPerson(v === 'alle' ? '' : v)
-        }}
-        optionen={[
-          { wert: 'alle', text: t('projekte.zeitplan.allePersonen') },
-          ...z.personen.map((p) => ({ wert: p.id, text: p.name })),
-        ]}
+      <MehrfachFilter
+        beschriftung={t('projekte.zeitplan.person')}
+        alleText={t('projekte.zeitplan.allePersonen')}
+        gewaehlt={wahl}
+        onChange={setWahl}
+        optionen={z.personen.map((p) => ({ wert: p.id, text: p.name }))}
       />
       {filter}
 
@@ -131,7 +127,7 @@ export function ZeitplanHandy({
           service={z.service}
           abwesend={z.abwesend}
           personen={z.personen}
-          person={person}
+          wahl={wahl}
           onOeffnen={onOeffnen}
         />
       )}

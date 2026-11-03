@@ -11,7 +11,7 @@ Saisir le matériel par projet, commander chez les fournisseurs (Krannich, Solar
 
 - **Direction de projet** : liste de matériel par projet, proposition de commande, entrée de marchandise.
 - **Avec le droit Prix** : voit les prix d’achat, approuve les commandes.
-- **Stock Bulle** : comptabilise entrées, sorties et inventaire.
+- **Stock Bulle** : comptabilise les entrées, prépare pour les chantiers, reprend les retours et fait l’inventaire.
 
 ## Comment faire {#so}
 
@@ -56,6 +56,29 @@ Vue de départ des achats. En haut les chiffres clés (à commander, en attente 
 1. Dans la liste de matériel, à la ligne : **réserver … du stock** ou **sortir … pour le chantier**.
 2. Sans commande : onglet **Stock**, **Comptabiliser le stock** avec entrée, sortie, correction ou inventaire.
 
+### Préparer pour un chantier
+
+1. Ouvrir la liste de matériel du projet, **Liste de préparation**. Elle montre par emplacement ce qui part encore du stock vers le chantier.
+2. Vérifier la quantité par ligne, **Imprimer** et cocher au stock.
+3. **Sortir … positions** comptabilise les sorties, d’abord depuis la réservation du projet.
+
+### Retour du chantier
+
+1. Liste de matériel du projet, à la ligne dans le menu **Retour au stock**.
+2. Saisir la quantité, **Remettre en stock**. Le stock augmente, la sortie du projet diminue.
+
+### Emplacement et inventaire
+
+1. Onglet **Stock**, cliquer sur l’article, saisir l’**Emplacement** (p. ex. A-03).
+2. **Inventaire** : liste par emplacement, saisir le stock compté. Les champs vides restent inchangés.
+3. **Enregistrer … écarts** n’enregistre que les écarts, avec la note « Inventaire ».
+
+### Réclamation au fournisseur
+
+1. Ouvrir la commande, section **Réclamations**, **Saisir une réclamation** : position, motif (défectueux, mauvais article, manquant, livré en trop), quantité et description.
+2. Signaler au fournisseur comme d’habitude par téléphone ou e-mail, puis **Signalée au fournisseur**.
+3. Une fois réglée : **Réglée** avec la solution (avoir, remplacement livré, renvoyé) et la réponse du fournisseur.
+
 ### Réapprovisionner le stock
 
 1. Onglet **Stock**, filtre **Sous la quantité minimale**.
@@ -86,6 +109,8 @@ Vue de départ des achats. En haut les chiffres clés (à commander, en attente 
 - Commandes et prix d’achat seulement avec le droit **Prix**.
 - L’e-mail de commande ne part que pour les commandes approuvées.
 - Au-dessus de la limite de validation (par défaut CHF 5'000), seules les personnes définies valident. Limite et personnes : seulement l’administration.
+- Au maximum ce qui a été sorti pour le projet peut revenir au stock.
+- Une réclamation n’est réglée qu’avec une solution choisie.
 
 ## Questions fréquentes {#fragen}
 
@@ -95,10 +120,11 @@ La saisir sous **Fournisseurs** ou à la main dans l’e-mail.
 
 ### Le stock n’est pas juste.
 
-**Comptabiliser le stock**, type **Inventaire**, saisir la quantité comptée. La correction reste visible dans les mouvements.
+Onglet **Stock**, **Inventaire**, saisir le stock compté. Seuls les écarts sont enregistrés ; la correction reste visible dans les mouvements.
 
 ## Nouveautés {#neu}
 
 - 03.11.2026: «Mettre à la corbeille» pour les fournisseurs; les commandes dès validation sont annulées, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
+- 03.11.2026: Emplacement, liste de préparation imprimable, retour du chantier, inventaire en un passage, réclamations au fournisseur.
 - 02.11.2026: Tableau de bord, commande groupée par fournisseur, plan matériel, limite de validation, confirmation de commande avec IA, contrôle de la facture fournisseur, conditions des fournisseurs.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.

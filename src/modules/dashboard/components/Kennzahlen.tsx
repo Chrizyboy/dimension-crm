@@ -1,3 +1,4 @@
+import { useIstAdmin } from '@/hooks/useIstAdmin'
 import { ChartColumn, Target } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -68,6 +69,7 @@ export default function Kennzahlen({
   const ich = useAnmeldung((z) => z.ich)
   const [detail, setDetail] = useState<Detail | null>(null)
   const [zieleOffen, setZieleOffen] = useState(false)
+  const admin = useIstAdmin()
   const heute = heuteZuerich()
   const { von, bis } = vonBis(auswahl.zeitraum, heute)
   const vergleich = vergleichVon(auswahl.zeitraum, auswahl.vergleich, von, bis)
@@ -133,17 +135,20 @@ export default function Kennzahlen({
         aktionen={
           finanzen ? (
             <div className="flex flex-wrap gap-2">
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => {
-                  setZieleOffen(true)
-                }}
-                data-testid="kz-ziele"
-              >
-                <Target aria-hidden="true" />
-                {t('kz.ziele.knopf')}
-              </Button>
+              {/* Ziele sind eine Firmen-Einstellung: ändern nur die Administration (Entscheid 0048). */}
+              {admin && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    setZieleOffen(true)
+                  }}
+                  data-testid="kz-ziele"
+                >
+                  <Target aria-hidden="true" />
+                  {t('kz.ziele.knopf')}
+                </Button>
+              )}
               <MonatsberichtKnopf
                 e={props.e}
                 heute={heute}

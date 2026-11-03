@@ -10,7 +10,7 @@ Saisir les frais en quelques secondes : photo du justificatif, l’IA remplit mo
 ## Qui travaille ici {#wer}
 
 - **Tout le monde** : saisir ses frais, les modifier ou les retirer jusqu’à la vérification, répondre aux questions.
-- **Comptabilité (droit Finances)** : vérifier, poser une question, refuser, verser, rapprocher la carte d’entreprise, analyse et règles.
+- **Comptabilité (droit Finances)** : vérifier, poser une question, refuser, verser, rapprocher la carte d’entreprise, analyse ; règles et catégories en lecture seule.
 
 ## Comment faire {#so}
 
@@ -52,7 +52,7 @@ Saisir les frais en quelques secondes : photo du justificatif, l’IA remplit mo
 3. Justificatif manquant : **Demander les justificatifs**, la personne reçoit une notification. Dès qu’elle saisit les frais, la transaction s’associe seule.
 4. Sans justificatif mais en ordre (abonnement, frais, privé) : **Sans justificatif**, indiquer le motif, **Régler**.
 
-### Gérer les règles (comptabilité)
+### Gérer les règles (administration)
 
 1. Onglet **Règles** : e-mail de la comptabilité, tarif kilométrique, délai pour envoyer, versement par défaut.
 2. Catégories avec compte, TVA usuelle, valeur indicative et « justificatif dès ». **Enregistrer**.
@@ -97,6 +97,7 @@ Le télécharger en CSV, pas en PDF. La ligne d’en-tête doit contenir une dat
 
 ## Nouveautés {#neu}
 
+- 03.11.2026 : seule l’administration modifie règles et catégories ; aussi sous Réglages › Catégories de frais.
 - 03.11.2026 : rapprocher la carte d’entreprise du relevé, demander les justificatifs manquants.
 - 02.11.2026 : vérification avec question et refus, kilomètres, carte d’entreprise, projet, TVA, versement groupé avec décompte PDF, analyse et règles.
 - 31.10.2026 : frais en un clic dans la vue monteur.

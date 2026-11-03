@@ -7,7 +7,7 @@ import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { useAktion } from '../hooks/useAktion'
 import { alsZahl, formatMenge } from '../lib/anzeige'
-import { lagerBuchen, mindestmengeSetzen } from '../services/lager'
+import { lagerBuchen, lagerplatzSetzen, mindestmengeSetzen } from '../services/lager'
 import type { ArtikelTreffer, LagerZeile } from '../types'
 import { ArtikelWahl } from './ArtikelWahl'
 
@@ -16,7 +16,8 @@ type Art = (typeof ARTEN)[number]
 
 /**
  * Lager buchen ohne Bestellung: Eingang, Entnahme, Korrektur (+/−) oder Inventur (gezählter Bestand).
- * Jede Buchung steht als Bewegung im Protokoll. Dazu die Mindestmenge für die Warnung «nachbestellen».
+ * Jede Buchung steht als Bewegung im Protokoll. Dazu die Mindestmenge für die Warnung «nachbestellen» und der
+ * Lagerplatz (Rüstliste und Inventur sind danach sortiert).
  */
 export function LagerBuchenDialog({
   lagerortId,
@@ -34,7 +35,9 @@ export function LagerBuchenDialog({
   const [menge, setMenge] = useState('')
   const [notiz, setNotiz] = useState('')
   const [mindest, setMindest] = useState(zeile?.mindestmenge === null || !zeile ? '' : formatMenge(zeile.mindestmenge))
+  const [platz, setPlatz] = useState(zeile?.lagerplatz ?? '')
   const artikelId = zeile?.artikel_id ?? artikel?.id ?? null
+  const platzNeu = zeile !== null && platz.trim() !== (zeile.lagerplatz ?? '')
   const n = alsZahl(menge)
   const m = alsZahl(mindest)
   const mindestNeu = zeile && m !== zeile.mindestmenge && (mindest.trim() === '' || (m !== null && m >= 0))
@@ -47,6 +50,7 @@ export function LagerBuchenDialog({
           await lagerBuchen({ art, lagerort_id: lagerortId, artikel_id: artikelId, menge: n, notiz: notiz.trim() })
         }
         if (zeile && mindestNeu) await mindestmengeSetzen(zeile.id, mindest.trim() === '' ? null : m)
+        if (zeile && platzNeu) await lagerplatzSetzen(lagerortId, zeile.artikel_id, platz)
       },
       { de: 'Gebucht', fr: 'Enregistré' },
     )
@@ -79,7 +83,7 @@ export function LagerBuchenDialog({
             <Button
               onClick={() => void speichern()}
               laedt={laeuft}
-              disabled={!artikelId || (!buchungGueltig && !mindestNeu)}
+              disabled={!artikelId || (!buchungGueltig && !mindestNeu && !platzNeu)}
             >
               {t('allgemein.speichern')}
             </Button>
@@ -132,17 +136,27 @@ export function LagerBuchenDialog({
             />
           </Feld>
           {zeile && (
-            <Feld id="lb-mindest" label={t('einkauf.lager.mindest')} hinweis={t('einkauf.lager.mindestHinweis')}>
-              <Input
-                id="lb-mindest"
-                inputMode="decimal"
-                className="w-32"
-                value={mindest}
-                onChange={(e) => {
-                  setMindest(e.target.value)
-                }}
-              />
-            </Feld>
+            <div className="grid grid-cols-2 gap-3">
+              <Feld id="lb-mindest" label={t('einkauf.lager.mindest')} hinweis={t('einkauf.lager.mindestHinweis')}>
+                <Input
+                  id="lb-mindest"
+                  inputMode="decimal"
+                  value={mindest}
+                  onChange={(e) => {
+                    setMindest(e.target.value)
+                  }}
+                />
+              </Feld>
+              <Feld id="lb-platz" label={t('einkauf.lager.platz')} hinweis={t('einkauf.lager.platzHinweis')}>
+                <Input
+                  id="lb-platz"
+                  value={platz}
+                  onChange={(e) => {
+                    setPlatz(e.target.value)
+                  }}
+                />
+              </Feld>
+            </div>
           )}
         </div>
       </DialogInhalt>

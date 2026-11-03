@@ -3,7 +3,7 @@
 -- Übernahme von Anfragen aus Mails (Dubletten über die Mail-Kennung), verschobene Outlook-Termine.
 -- Ausführen: npm run db:test
 begin;
-select plan(26);
+select plan(28);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000008a1', 'i8-verkauf@test.local');
@@ -96,6 +96,13 @@ select is(public.kalender_abgleichen('00000000-0000-0000-0000-0000000008b1', now
 select is((select string_agg(betreff, ',') from public.kalender_eintraege
             where extern_id = 't8-verschoben' and geloescht_am is null),
   'Neu', 'und ersetzt die alte Zeile');
+
+-- SMS über pg_net (ASPSMS braucht ältere TLS-Verfahren): nur der Server darf Anfragen stellen und Antworten lesen
+set local role authenticated;
+select throws_ok($$ select public.sms_anfrage('https://json.aspsms.com/CheckCredits', '{}') $$, '42501', null,
+  'SMS-Anfrage nur durch den Server');
+select throws_ok($$ select * from public.sms_antwort(1) $$, '42501', null, 'SMS-Antwort nur durch den Server');
+reset role;
 
 select * from finish();
 rollback;

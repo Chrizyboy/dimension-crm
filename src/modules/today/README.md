@@ -11,7 +11,7 @@ Team heute, Wetter auf den Baustellen (MeteoSwiss). Startseite der App (`#/today
   Ziele), `team_heute()` (wer ist wo, ohne Grund), `wetter_baustellen()` (meine Einsätze mit Prognose,
   vom Zeitplan-Job `wetter` gefüllt), für «Ziele festlegen» `personen` und `einstellungen.kennzahlen`.
 - Schreibt: `aufgaben.erledigt_am/_von` beim Abhaken; `tag_verschieben` (Aufgabe neu fällig, sonst
-  `tag_verschoben`); `kennzahlen_ziele_setzen` (nur Administration/Finanzen); Mail «Übersicht» über `ausgang_anlegen`
+  `tag_verschoben`); `kennzahlen_ziele_setzen` (nur Administration); Mail «Übersicht» über `ausgang_anlegen`
   (Ausgangskorb, Klick = Freigabe).
 
 ## Abhängigkeiten

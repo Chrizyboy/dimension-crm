@@ -4,6 +4,7 @@ import * as b from '../services/bestellungen'
 import * as e from '../services/einkauf'
 import * as l from '../services/lager'
 import * as m from '../services/material'
+import * as r from '../services/reklamationen'
 import type { BestellFilter } from '../types'
 
 const an = Boolean(supabase)
@@ -84,3 +85,15 @@ export const useRechnungen = (id: string, aktiv: boolean) =>
 /** Mails zur Bestellung. */
 export const useBestellMails = (id: string) =>
   useQuery({ queryKey: ['einkauf', 'mails', id], enabled: an, queryFn: () => e.ladeMails(id) })
+
+/** Rüstliste eines Projekts (nur solange der Dialog offen ist). */
+export const useRuestliste = (projektId: string) =>
+  useQuery({ queryKey: ['einkauf', 'ruestliste', projektId], enabled: an, queryFn: () => l.ladeRuestliste(projektId) })
+
+/** Reklamationen einer Bestellung. */
+export const useReklamationen = (bestellungId: string) =>
+  useQuery({
+    queryKey: ['einkauf', 'reklamationen', bestellungId],
+    enabled: an,
+    queryFn: () => r.ladeReklamationen(bestellungId),
+  })

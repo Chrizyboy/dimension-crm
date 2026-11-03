@@ -50,14 +50,31 @@
     "darstellung": "Darstellung",
     "hell": "Hell",
     "dunkel": "Dunkel",
-    "system": "System"
+    "system": "System",
+    "titel": "Einstellungen",
+    "beschreibung": "Alles, was man im CRM einstellt, an einem Ort. Suchen mit «/».",
+    "suche": "Einstellungen durchsuchen",
+    "suchePlatzhalter": "Suchen, z. B. IBAN oder Mahnfrist",
+    "sucheKuerzel": "Einstellungen durchsuchen",
+    "nichtsGefunden": "Nichts gefunden",
+    "keinBereich": "Kein Bereich für dich",
+    "keinBereichText": "Für deine Rolle gibt es hier nichts einzustellen. Dein Profil findest du unter «Mein Konto».",
+    "zumModul": "Zum Modul",
+    "gruppe": {
+      "mich": "Für mich",
+      "firma": "Firma",
+      "ablaeufe": "Abläufe & Listen",
+      "system": "System"
+    },
+    "bereichWaehlen": "Bereich wählen"
   },
   "allgemein": {
     "schliessen": "Schliessen",
     "abbrechen": "Abbrechen",
     "speichern": "Speichern",
     "bearbeiten": "Bearbeiten",
-    "rueckgaengig": "Rückgängig"
+    "rueckgaengig": "Rückgängig",
+    "nurAdministration": "Ändern kann nur die Administration."
   },
   "befehle": {
     "titel": "Befehlspalette",
@@ -1078,7 +1095,10 @@
       "abgeschlossene": "Abgeschlossene zeigen",
       "leer": "Nichts in dieser Spalte",
       "weitere_one": "{{count}} weiteres zeigen",
-      "weitere_other": "{{count}} weitere zeigen"
+      "weitere_other": "{{count}} weitere zeigen",
+      "spalten": "Spalten",
+      "alleSpalten": "Alle Spalten",
+      "spaltenAnzahl": "Spalten: {{anzahl}} von {{von}}"
     },
     "wechsel": {
       "titel": "Stand ändern: {{name}}",
@@ -2087,6 +2107,12 @@
       "keineVerloren": "Keine verlorenen Offerten im Zeitraum.",
       "keineKonkurrenz": "Keine Konkurrenz erfasst. Beim Nachfassen unter «Konkurrenz» eintragen.",
       "ohne": "Ohne Zuständige"
+    },
+    "stueckliste": {
+      "titel": "Stückliste",
+      "stand": "{{material}} Material · {{alle}} Positionen",
+      "option": "Option: {{gruppe}}",
+      "imPdf": "Stückliste mit {{anzahl}} Positionen erkannt, sie wird mitgespeichert."
     }
   },
   "werkvertraege": {
@@ -2858,6 +2884,8 @@
     "handbuch_entscheider_ungueltig": "Entscheiden kann nur jemand aus der Administration.",
     "einstellungen_kein_recht": "Diese Einstellung darf nur die Administration ändern.",
     "ausgang_fremder_absender": "Als Absender kannst du nur dich selbst eintragen. Im Namen einer anderen Person sendet nur die Administration.",
+    "social_kein_recht": "Das darf nur die Administration ändern.",
+    "social_konto_unbekannt": "Dieses Konto ist nicht verbunden. Bitte neu verbinden.",
     "ausgang_freigabe_kein_recht": "Diese Nachricht darfst du nicht freigeben: Newsletter gibt die Administration frei, Mahnungen die Buchhaltung, alles andere die Person, die sendet.",
     "empfehlung_werbesperre": "Der Kunde hat eine Werbesperre. Keine Anfrage senden.",
     "empfehlung_nicht_bereit": "Diese Anfrage ist nicht mehr offen.",
@@ -2960,6 +2988,8 @@
     "team_taetigkeit_unbekannt": "Diese Tätigkeit gibt es nicht (mehr).",
     "team_wer_ungueltig": "Bitte «jede Person» oder «mindestens eine» wählen.",
     "team_ausweis_unbekannt": "Diesen Ausweis gibt es nicht (mehr).",
+    "einkauf_mehr_als_entnommen": "Es kann nicht mehr zurückkommen, als für das Projekt ausgegeben wurde.",
+    "einkauf_loesung_fehlt": "Bitte eine Lösung wählen (Gutschrift, Ersatz, Rücksendung oder keine).",
     "papierkorb_rechnung_stornieren": "Gestellte Rechnungen lassen sich nicht löschen. Bitte stornieren.",
     "papierkorb_bestellung_stornieren": "Diese Bestellung ist schon unterwegs. Bitte stornieren statt löschen.",
     "papierkorb_spesen_stornieren": "Spesen werden nicht gelöscht: zurückziehen oder stornieren.",
@@ -2970,7 +3000,8 @@
     "papierkorb_nur_admin": "Unterschriebenes oder Abgeschlossenes legt nur die Administration in den Papierkorb.",
     "papierkorb_zusammengefuehrt": "Dieser Kontakt wurde zusammengeführt und bleibt im Papierkorb.",
     "papierkorb_unbekannt": "Dieser Eintrag lässt sich nicht in den Papierkorb legen.",
-    "papierkorb_kein_recht": "Nicht möglich: Dafür fehlt dir das Recht, oder der Eintrag ist schon weg."
+    "papierkorb_kein_recht": "Nicht möglich: Dafür fehlt dir das Recht, oder der Eintrag ist schon weg.",
+    "papierkorb_nur_eigene": "Zurückholen kann nur, wer es weggelegt hat, oder die Administration."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -5272,13 +5303,16 @@
         "eingang": "Eingang",
         "entnahme": "Entnahme",
         "korrektur": "Korrektur",
-        "inventur": "Inventur"
+        "inventur": "Inventur",
+        "rueckgabe": "Rückgabe"
       },
       "filter": {
         "alle": "Alle",
         "unter": "Unter Mindestmenge",
         "reserviert": "Reserviert"
-      }
+      },
+      "platz": "Lagerplatz",
+      "platzHinweis": "Zum Beispiel A-03. Rüstliste und Inventur sind danach sortiert."
     },
     "lieferant": {
       "name": "Name",
@@ -5469,6 +5503,75 @@
       "titel": "Mails",
       "keine": "Keine Mails zu dieser Bestellung im Posteingang.",
       "anhang": "mit Anhang"
+    },
+    "inventur": {
+      "knopf": "Inventur",
+      "titel": "Inventur Lager",
+      "text": "Gezählten Bestand eintragen. Gebucht werden nur Abweichungen; leere Felder bleiben, wie sie sind.",
+      "notizVorschlag": "Inventur {{jahr}}",
+      "soll": "Soll",
+      "differenz": "Differenz",
+      "gezaehltFuer": "Gezählt: {{name}}",
+      "buchen_one": "{{count}} Abweichung buchen",
+      "buchen_other": "{{count}} Abweichungen buchen"
+    },
+    "ruest": {
+      "knopf": "Rüstliste",
+      "titel": "Rüstliste",
+      "text": "Was noch aus dem Lager an die Baustelle geht, nach Lagerplatz. Menge anpassen, drucken, dann ausgeben.",
+      "offen": "Offen",
+      "menge": "Ausgeben",
+      "mengeFuer": "Ausgeben: {{name}}",
+      "geruestet": "Gerüstet",
+      "visum": "Gerüstet von",
+      "drucken": "Drucken",
+      "ausgeben_one": "{{count}} Position ausgeben",
+      "ausgeben_other": "{{count}} Positionen ausgeben",
+      "leer": "Nichts zu rüsten",
+      "leerText": "Für dieses Projekt liegt nichts mehr im Lager bereit."
+    },
+    "rueck": {
+      "menue": "Rückgabe ins Lager",
+      "titel": "Rückgabe ins Lager",
+      "text": "{{name}}: {{menge}} {{einheit}} an die Baustelle ausgegeben. Wie viel kommt zurück?",
+      "notizHinweis": "z. B. Rest nach Montage",
+      "buchen": "Zurück ins Lager"
+    },
+    "rek": {
+      "titel": "Reklamationen",
+      "leer": "Keine Reklamation. Defekte, falsche oder fehlende Ware hier festhalten.",
+      "offenZahl_one": "{{count}} offen",
+      "offenZahl_other": "{{count}} offen",
+      "erfassen": "Reklamation erfassen",
+      "erfassenText": "Was stimmt nicht? Beim Lieferanten meldest du wie gewohnt per Telefon oder Mail.",
+      "abschliessen": "Erledigt",
+      "abschliessenText": "Wie hat der Lieferant gelöst?",
+      "gemeldet": "Beim Lieferanten gemeldet",
+      "gemeldetAm": "gemeldet {{datum}}",
+      "position": "Position",
+      "ganzeBestellung": "Ganze Bestellung",
+      "grund": "Grund",
+      "beschreibung": "Beschreibung",
+      "loesung": "Lösung",
+      "antwort": "Antwort des Lieferanten",
+      "gruende": {
+        "defekt": "Defekt",
+        "falsch": "Falsche Ware",
+        "fehlt": "Fehlt",
+        "zu_viel": "Zu viel geliefert",
+        "anderes": "Anderes"
+      },
+      "status": {
+        "offen": "Offen",
+        "gemeldet": "Gemeldet",
+        "erledigt": "Erledigt"
+      },
+      "loesungen": {
+        "gutschrift": "Gutschrift",
+        "ersatz": "Ersatz geliefert",
+        "ruecksendung": "Zurückgeschickt",
+        "keine": "Keine"
+      }
     }
   },
   "baustelle": {
@@ -7031,8 +7134,8 @@
         "canva": "Canva"
       },
       "wozu": {
-        "meta": "Posts auf die Facebook-Seite und das Instagram-Konto von Dimension Solaire.",
-        "linkedin": "Posts auf die LinkedIn-Firmenseite.",
+        "meta": "Posts auf die deutsche und die französische Facebook-Seite und ihre Instagram-Konten.",
+        "linkedin": "Posts auf die deutsche und die französische LinkedIn-Firmenseite.",
         "canva": "Bilder mit dem Markenkit gestalten und ins CRM holen."
       },
       "verbundenKurz": "Verbunden",
@@ -7044,7 +7147,12 @@
       "erneuern": "Neu verbinden",
       "trennen": "Trennen",
       "verbunden": "Verbunden: {{dienst}}",
-      "fehlgeschlagen": "Verbindung fehlgeschlagen ({{code}})"
+      "fehlgeschlagen": "Verbindung fehlgeschlagen ({{code}})",
+      "sprache": {
+        "de": "Deutsch",
+        "fr": "Französisch"
+      },
+      "keinKonto": "{{netz}}: kein Konto gefunden."
     },
     "newsletter": {
       "zahlen": "Kennzahlen",
@@ -8823,7 +8931,7 @@
         "normal": "Normal",
         "dringend": "Dringend"
       },
-      "dateien": "Bildschirmfotos oder Dateien",
+      "dateien": "Bildschirmfotos und Fotos",
       "dateienHinweis": "Ein Bildschirmfoto hilft am meisten.",
       "intro": "Deine Meldungen und die Antworten der Administration.",
       "introAdmin": "Alle Meldungen der Mitarbeitenden. Das CRM prüft jede Meldung und schreibt eine Einschätzung; entschieden wird mit «Erledige es» oder «Nicht». Die meldende Person sieht die Antwort hier, in der Glocke und per Mail.",
@@ -8877,7 +8985,19 @@
       "entscheidet": "Über Meldungen entscheidet",
       "alleAdmins": "Niemand gewählt: alle aus der Administration sehen die Einschätzung in der Glocke und können entscheiden.",
       "perSms": "Einschätzung zusätzlich per SMS",
-      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS."
+      "keinMobil": "{{name}} hat keine Handynummer unter «Mein Konto», darum kommt keine SMS.",
+      "fotoAufnehmen": "Foto aufnehmen",
+      "bildWaehlen": "Bild wählen",
+      "bilderHinweisPc": "Bildschirmfoto mit Windows+Umschalt+S, dann hier Strg+V. Oder Bild hierher ziehen.",
+      "bilderHinweisHandy": "Foto vom Bildschirm oder von der Stelle, die nicht geht.",
+      "bilderVoll": "Höchstens {{max}} Anhänge.",
+      "bildEntfernen": "{{name}} entfernen",
+      "bildGross": "{{name}} gross anzeigen",
+      "bildVon": "Bild {{nr}} von {{von}}",
+      "bildZurueck": "Vorheriges Bild",
+      "bildWeiter": "Nächstes Bild",
+      "bildOeffnen": "In neuem Fenster",
+      "bildAnhaengen": "Bild anhängen"
     },
     "anleitung": {
       "schneller": "So geht es schneller",
@@ -11087,15 +11207,186 @@
     "warumHinweis": "Passt die Regel grundsätzlich nicht, bitte der Administration melden. Sie kann die Automation anpassen.",
     "warumUnbekannt": "Diese Aufgabe stammt nicht aus einer Automation, die du sehen darfst."
   },
-  "zugehoerigkeit": {
-    "hauptkontakt": "Hauptkontakt",
-    "unterschreibt": "Unterschreibt",
-    "rechnungen": "Rechnungen",
-    "vorOrt": "Vor Ort"
+  "auswahllisten": {
+    "aktiv": "Aktiv",
+    "farbe": "Farbe",
+    "fest": "Fest: Abläufe hängen daran",
+    "festText": "Abläufe hängen an diesen Einträgen. Texte, Farbe und Reihenfolge lassen sich ändern, neue Einträge nicht.",
+    "freiText": "Einträge ergänzen, umbenennen oder ausblenden. Ausgeblendete bleiben bei bestehenden Daten sichtbar.",
+    "hoch": "Nach oben",
+    "runter": "Nach unten",
+    "reihenfolge": "Reihenfolge",
+    "neuDe": "Neuer Eintrag (Deutsch)",
+    "neuFr": "Neuer Eintrag (Französisch)",
+    "neuHinweis": "Wird mit «Speichern» angelegt.",
+    "namen": {
+      "abwesenheit": "Abwesenheit",
+      "aktivitaet": "Aktivität",
+      "artikelkategorie": "Artikel-Kategorie",
+      "baustatus": "Bau-Stand",
+      "bestellstatus": "Bestell-Stand",
+      "dachform": "Dachform",
+      "eigentum": "Eigentum",
+      "einsatzart": "Einsatz-Art",
+      "erreichbarkeit": "Erreichbarkeit",
+      "fahrzeugart": "Fahrzeug-Art",
+      "finanzierung": "Finanzierung",
+      "foerderung": "Förderung",
+      "garantiestatus": "Garantie-Stand",
+      "gebaeudeart": "Gebäude-Art",
+      "geraeteart": "Geräte-Art",
+      "interesse": "Interesse",
+      "komponente": "Komponente",
+      "kontaktart": "Kontakt-Art",
+      "kontaktergebnis": "Kontakt-Ergebnis",
+      "kundenstand": "Kundenstand",
+      "kundenstand_gruppe": "Kundenstand-Gruppe",
+      "materialstatus": "Material-Stand",
+      "monitoring": "Monitoring",
+      "nachtragstatus": "Nachtrag-Stand",
+      "offertstatus": "Offert-Stand",
+      "personal_bewilligung": "Bewilligung (Personal)",
+      "personal_dokument": "Dokument (Personal)",
+      "personal_gespraech": "Gespräch (Personal)",
+      "personal_vertragsart": "Vertragsart (Personal)",
+      "personal_zivilstand": "Zivilstand",
+      "prioritaet": "Priorität",
+      "projektstatus": "Projekt-Stand",
+      "qualifikation": "Kurse & Ausweise",
+      "quelle": "Quelle",
+      "rapportart": "Rapport-Art",
+      "ressourcen_eintrag": "Fahrzeug-Eintrag",
+      "serviceauswirkung": "Service-Auswirkung",
+      "servicekategorie": "Service-Kategorie",
+      "servicequelle": "Service-Quelle",
+      "servicestatus": "Service-Stand",
+      "subauftragstatus": "Subauftrag-Stand",
+      "verkaufsstufe": "Verkaufsstufe",
+      "verrechnung": "Verrechnung",
+      "wartungsstatus": "Wartungs-Stand",
+      "werkvertragstatus": "Werkvertrag-Stand",
+      "zahlungskondition": "Zahlungsbedingung",
+      "zeitart": "Zeit-Art",
+      "zeithorizont": "Zeithorizont"
+    },
+    "farben": {
+      "neutral": "Neutral",
+      "info": "Blau",
+      "ok": "Grün",
+      "warn": "Orange",
+      "kritisch": "Rot",
+      "marke": "Marke"
+    }
+  },
+  "regionen": {
+    "hinweis": "Neue Adressen ohne Region bekommen sie beim Speichern aus der PLZ. Die erste passende Region (nach Nummer) gewinnt.",
+    "keineRegion": "Keine Region passt",
+    "name": "Name",
+    "neu": "Neue Region",
+    "nummer": "Nr.",
+    "ort": "Ort",
+    "plz": "PLZ",
+    "strasse": "Strasse",
+    "pruefen": "Prüfen",
+    "regeln": "PLZ-Regeln",
+    "regelnFehler": "Format: 5600-5649, 6300, ZG",
+    "standort": "Standort {{name}}",
+    "standortSpalte": "Standort",
+    "test": "Welche Region bekommt diese PLZ?",
+    "titel_one": "{{count}} Region",
+    "titel_other": "{{count}} Regionen"
+  },
+  "protokoll": {
+    "alleBereiche": "Alle Bereiche",
+    "allePersonen": "Alle Personen",
+    "alles": "Alles",
+    "bereich": "Bereich",
+    "heute": "Heute",
+    "hinweis": "Das Protokoll zeigt höchstens 300 Einträge. Du siehst nur Bereiche, die du lesen darfst.",
+    "leer": "Keine Änderungen",
+    "leerText": "Im gewählten Zeitraum hat niemand etwas geändert.",
+    "person": "Person",
+    "system": "System (automatisch)",
+    "tage_one": "Letzter Tag",
+    "tage_other": "Letzte {{count}} Tage",
+    "unbekannt": "Unbekannt",
+    "weitere_one": "und {{count}} weiteres Feld",
+    "weitere_other": "und {{count}} weitere Felder",
+    "zeitraum": "Zeitraum",
+    "aktion": {
+      "erstellt": "Erstellt",
+      "geaendert": "Geändert",
+      "papierkorb": "Papierkorb",
+      "wiederhergestellt": "Wiederhergestellt",
+      "geloescht": "Gelöscht"
+    },
+    "tabellen": {
+      "ablauf_vorlagen": "Ablauf-Vorlagen",
+      "ablauf_schritte": "Ablauf-Schritte",
+      "abwesenheiten": "Abwesenheiten",
+      "aktivitaeten": "Aktivitäten",
+      "anlagen": "Anlagen",
+      "anschreiben": "Anschreiben",
+      "artikel": "Artikel",
+      "aufgaben": "Aufgaben",
+      "ausgangskorb": "Ausgangskorb",
+      "ausschreibungen": "Ausschreibungen",
+      "auswahlwerte": "Auswahllisten",
+      "automationen": "Automationen",
+      "bestellungen": "Bestellungen",
+      "bestellpositionen": "Bestellpositionen",
+      "dokumente": "Dokumente",
+      "einladungen": "Einladungen",
+      "einsaetze": "Einsätze",
+      "einstellungen": "Einstellungen",
+      "fahrzeuge": "Fahrzeuge",
+      "firmen": "Firmen",
+      "fixkosten": "Fixkosten",
+      "garantiefaelle": "Garantiefälle",
+      "geraete": "Geräte",
+      "grossprojekte": "Grossprojekte",
+      "handbuch_eintraege": "Handbuch",
+      "kalender_eintraege": "Kalender",
+      "kalkulationen": "Kalkulationen",
+      "kampagnen": "Kampagnen",
+      "kontakte": "Kontakte",
+      "kurse": "Kurse",
+      "lagerorte": "Lagerorte",
+      "lieferanten": "Lieferanten",
+      "nachtraege": "Nachträge",
+      "newsletter": "Newsletter",
+      "objekte": "Adressen",
+      "offerten": "Offerten",
+      "personal_akten": "Personal-Akten",
+      "personal_dokumente": "Personal-Dokumente",
+      "personal_gespraeche": "Mitarbeitergespräche",
+      "personen": "Personen",
+      "posteingang": "Posteingang",
+      "preisvorlagen": "Preisvorlagen",
+      "projekte": "Projekte",
+      "qualifikationen": "Ausweise",
+      "rapporte": "Rapporte",
+      "rechnungen": "Rechnungen",
+      "regionen": "Regionen",
+      "ressourcen_eintraege": "Fahrzeug-Einträge",
+      "rollen": "Rollen",
+      "rueckmeldungen": "Fehlermeldungen",
+      "service_faelle": "Service-Fälle",
+      "signaturen": "Signaturen",
+      "social_posts": "Social Media",
+      "spesen": "Spesen",
+      "standorte": "Standorte",
+      "subunternehmer": "Subunternehmer",
+      "verkaufschancen": "Leads",
+      "wartungsvertraege": "Wartungsverträge",
+      "werkvertraege": "Werkverträge",
+      "zahlungsplan": "Zahlungsplan",
+      "zeiten": "Zeiten"
+    }
   },
   "papierkorb": {
     "titel": "Papierkorb",
-    "beschreibung": "Alles, was in einem Bereich in den Papierkorb gelegt wurde. «Wiederherstellen» holt es zurück, endgültig gelöscht wird nichts.",
+    "beschreibung": "Was du in einem Bereich in den Papierkorb gelegt hast (die Administration sieht alles). «Wiederherstellen» holt es zurück, endgültig gelöscht wird nichts.",
     "knopf": "In den Papierkorb",
     "frageTitel": "In den Papierkorb legen?",
     "frageText": "«{{name}}» verschwindet aus allen Listen. Im Papierkorb (Menü oben rechts) lässt es sich jederzeit wiederherstellen.",
@@ -11185,5 +11476,18 @@
       "rueckmeldungen": "Rückmeldung",
       "kontakt_zugehoerigkeiten": "Ansprechperson"
     }
+  },
+  "zugehoerigkeit": {
+    "hauptkontakt": "Hauptkontakt",
+    "unterschreibt": "Unterschreibt",
+    "rechnungen": "Rechnungen",
+    "vorOrt": "Vor Ort"
+  },
+  "mehrfachFilter": {
+    "alle": "Alle",
+    "nur": "nur",
+    "ausser": "Alle ausser {{wert}}",
+    "suchen": "Suchen …",
+    "keineTreffer": "Nichts gefunden"
   }
 }
