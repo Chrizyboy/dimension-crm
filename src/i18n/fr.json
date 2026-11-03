@@ -12102,7 +12102,8 @@
       "auswahlwerte": "Valeur de liste",
       "gespeicherte_ansichten": "Vue enregistrée",
       "rueckmeldungen": "Retour",
-      "kontakt_zugehoerigkeiten": "Personne de contact"
+      "kontakt_zugehoerigkeiten": "Personne de contact",
+      "eingangsrechnungen": "Factures fournisseurs"
     }
   },
   "zugehoerigkeit": {
