@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { CheckCircle2, FileText, FolderArchive, Undo2 } from 'lucide-react'
+import { CheckCircle2, FileText, FolderArchive, Send, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
@@ -26,6 +26,7 @@ import { FotoAbschnitt } from './FotoAbschnitt'
 import { NachtragAbschnitt } from './NachtragAbschnitt'
 import { PruefAbschnitt } from './PruefAbschnitt'
 import { RapportPdfKnopf } from './RapportPdfKnopf'
+import { RapportSenden } from './RapportSenden'
 import { RapportZeit } from './RapportZeit'
 import { VerrechnungWahl } from './VerrechnungWahl'
 
@@ -40,7 +41,7 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
   const daten = useRapport(id)
   const ich = useAnmeldung((z) => z.ich)
   const { laeuft, aus } = useAktion()
-  const [dialog, setDialog] = useState<'abschluss' | 'dossier' | null>(null)
+  const [dialog, setDialog] = useState<'abschluss' | 'dossier' | 'senden' | null>(null)
   const r = daten.data
   const offen = Boolean(r && !r.abgeschlossen_am)
 
@@ -54,6 +55,17 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
       {/* Im Panel ist der Seitenkopf verdeckt: der Monteur soll auch hier sehen, dass Einträge noch warten. */}
       <Netzstand className="mr-auto" />
       {!offen && <RapportPdfKnopf rapport={r} />}
+      {!offen && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setDialog('senden')
+          }}
+        >
+          <Send />
+          {t('baustelle.senden.knopf')}
+        </Button>
+      )}
       {!offen && r.art === 'ibn' && r.projekt_id && (
         <Button
           variant="secondary"
@@ -145,7 +157,7 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
                 />
               </AkteAbschnitt>
             )}
-            <FotoAbschnitt rapportId={r.id} offen={offen} />
+            <FotoAbschnitt rapportId={r.id} art={r.art} offen={offen} />
             {r.art !== 'ibn' && <NachtragAbschnitt rapportId={r.id} offen={offen} />}
             <AkteAbschnitt titel={t('baustelle.rapport.notizIntern')} offen={Boolean(r.notiz_intern)}>
               <Textarea
@@ -163,6 +175,14 @@ export function RapportAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
               </p>
             </AkteAbschnitt>
           </div>
+        )}
+        {r && dialog === 'senden' && (
+          <RapportSenden
+            rapport={r}
+            onSchliessen={() => {
+              setDialog(null)
+            }}
+          />
         )}
         {r && dialog === 'abschluss' && (
           <AbschlussDialog

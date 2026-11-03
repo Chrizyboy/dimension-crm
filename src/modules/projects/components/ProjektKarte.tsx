@@ -3,15 +3,27 @@ import { Badge } from '@/components/ui/badge'
 import { formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { anlageKurz, ortZeile } from '../lib/anzeige'
+import type { Blocker } from '../lib/blocker'
 import { BAU_TON } from '../lib/fahrplan'
 import type { Projekt } from '../types'
 import { FahrplanBalken } from './FahrplanBalken'
 
 /**
  * Karte einer Baustelle: Baubeginn und Elektriker, Kunde, Ort und Anlage, Status und Fahrplan.
+ * Blocker (Bewilligung, Material, Frist) stehen rot zuoberst, damit man sieht, was die Baustelle aufhält.
  * Die ganze Karte ist ein Knopf und öffnet die Akte.
  */
-export function ProjektKarte({ p, aktiv, onOeffnen }: { p: Projekt; aktiv: boolean; onOeffnen: () => void }) {
+export function ProjektKarte({
+  p,
+  aktiv,
+  onOeffnen,
+  blocker = [],
+}: {
+  p: Projekt
+  aktiv: boolean
+  onOeffnen: () => void
+  blocker?: readonly Blocker[]
+}) {
   const { t } = useTranslation()
   const anlage = anlageKurz(p, t)
   return (
@@ -36,6 +48,11 @@ export function ProjektKarte({ p, aktiv, onOeffnen }: { p: Projekt; aktiv: boole
         {[ortZeile(p), anlage].filter(Boolean).join(' · ') || '–'}
       </span>
       <span className="flex flex-wrap gap-1">
+        {blocker.map((b) => (
+          <Badge key={b} ton="kritisch">
+            {t(`projekte.blocker.${b}`)}
+          </Badge>
+        ))}
         {p.bau_status && (
           <Badge ton={BAU_TON[p.bau_status] ?? 'neutral'} punkt>
             {t(`projekte.bauStatus.${p.bau_status}`)}

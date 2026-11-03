@@ -17,7 +17,7 @@ export const RECHNUNG_FILTER = ['offen', 'ueberfaellig', 'entwuerfe', 'bezahlt',
 export type RechnungFilter = (typeof RECHNUNG_FILTER)[number]
 
 /** Reiter der Seite. */
-export const REITER = ['rechnungen', 'verrechnen', 'firmen'] as const
+export const REITER = ['heute', 'rechnungen', 'verrechnen', 'firmen'] as const
 export type Reiter = (typeof REITER)[number]
 
 /** Tranche aus dem Zahlungsplan ohne Rechnung (Sicht offene_tranchen). */

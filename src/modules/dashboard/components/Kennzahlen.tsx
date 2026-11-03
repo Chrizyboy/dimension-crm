@@ -20,6 +20,7 @@ import {
   type KennzahlenReiter,
   type Zeitraum,
 } from '../types'
+import { Abwicklung } from './Abwicklung'
 import { Betrieb } from './Betrieb'
 import { DetailDialog } from './DetailDialog'
 import { Kacheln } from './Kacheln'
@@ -137,6 +138,11 @@ export default function Kennzahlen({
         </ReiterInhalt>
         <ReiterInhalt value="betrieb" className="pt-4">
           <Betrieb von={von} bis={bis} bereich={auswahl.bereich} />
+        </ReiterInhalt>
+        <ReiterInhalt value="abwicklung" className="pt-4">
+          {fakten.isError && <Fehlerzustand onNochmal={() => void fakten.refetch()} />}
+          {fakten.isLoading && <Skelett className="h-48" />}
+          {fakten.data && <Abwicklung fakten={gefiltert} onDetail={setDetail} />}
         </ReiterInhalt>
       </Reiter>
 
