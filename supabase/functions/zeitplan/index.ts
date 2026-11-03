@@ -21,6 +21,7 @@
 //  * waechter     stündlich       Microsoft, Jobs, Sicherung, SMS-Guthaben, AbaNinja: Glocke einmal pro Ausfall (28A)
 //  * bewertungen  stündlich       fällige Bewertungsanfragen: KI schätzt Zufriedenheit ein, Mensch gibt frei (32A)
 //  * fristen      stündlich       MFK, Service, Geräteprüfung, Ausweise: Aufgabe und Glocke (Phase 17)
+//  * wetter       stündlich       Tagesprognose von MeteoSwiss Open Data für die PLZ der Baustellen (Entscheid 0050)
 //  * monatsbericht stündlich      am 1. des Monats Glocke «Monatsbericht» an die Geschäftsleitung (Kennzahlen)
 //  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
@@ -54,6 +55,7 @@ import { ausgangAbarbeiten } from '../_shared/versand.ts'
 import { postsAbarbeiten } from '../_shared/posten.ts'
 import { socialEingerichtet } from '../_shared/social_konten.ts'
 import { utcZuZuerich } from '../_shared/outlook.ts'
+import { wetterHolen, type WetterParameter } from '../_shared/wetter.ts'
 
 declare const Deno: { serve(h: (req: Request) => Promise<Response>): unknown }
 
@@ -143,6 +145,17 @@ Deno.serve(async (req) => {
   })
 
   // Fahrzeuge (02.11.2026): am Monatsanfang den Kilometerstand nachfragen, nur Glocke an die fahrende Person.
+  // Wetter für «Mein Tag» (M5 A): nur PLZ von Einsätzen und Standorten, ohne Schlüssel, darum immer aktiv.
+  ergebnis.wetter = await job('wetter', 60, async () => {
+    const plz = await dienst.rpc<string[]>('wetter_plz', {})
+    const [e] = await dienst.lies<{ wert: { parameter?: WetterParameter } }[]>(
+      'einstellungen?schluessel=eq.wetter&select=wert',
+    )
+    const r = await wetterHolen(plz, e?.wert.parameter ?? {})
+    const n = await dienst.rpc<number>('wetter_speichern', { p_zeilen: r.zeilen, p_lauf: r.lauf })
+    return `${n} Tage für ${plz.length} PLZ${r.fehlend.length ? `, fehlt: ${r.fehlend.join(', ')}` : ''}`
+  })
+
   ergebnis.fuhrpark_km = await job('fuhrpark_km', 60, async () => {
     const n = await dienst.rpc<number>('fuhrpark_km_erinnern', {})
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
+import { verschiebbar } from '../lib/tag'
 import type { TagListe, TagZeile as Zeile } from '../types'
 import { TagZeile } from './TagZeile'
 
@@ -19,6 +20,7 @@ export function TagKarte({
   max = 6,
   kopf,
   onAbhaken,
+  onVerschieben,
   testId,
 }: {
   icon: LucideIcon
@@ -30,6 +32,7 @@ export function TagKarte({
   /** Zusätzliche Bedienung im Kopf (z. B. «Für mich | Von mir vergeben»). */
   kopf?: ReactNode
   onAbhaken?: (z: Zeile) => void
+  onVerschieben?: (z: Zeile, bis: string) => void
   testId?: string
 }) {
   const { t } = useTranslation()
@@ -53,6 +56,7 @@ export function TagKarte({
               zeile={z}
               heute={heute}
               {...(onAbhaken ? { onAbhaken } : {})}
+              {...(onVerschieben && verschiebbar(z) ? { onVerschieben } : {})}
             />
           ))}
         </ul>

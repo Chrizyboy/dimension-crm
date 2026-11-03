@@ -19,6 +19,7 @@ import { filtern, heuteZuerich, spesenCsv, summe } from '../lib/spesen'
 import type { Ansicht, Spese, SpesenFilter } from '../types'
 import { Auswertung } from './Auswertung'
 import { Auszahlen } from './Auszahlen'
+import { Firmenkarte } from './Firmenkarte'
 import { AuszahlenDialog } from './AuszahlenDialog'
 import { Kategorien } from './Kategorien'
 import { MeineSpesen } from './MeineSpesen'
@@ -186,6 +187,7 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
               {t('spesen.ansicht.auszahlen')}
               {zuZahlen > 0 && <span className="bg-muted zahlen ml-1 rounded-full px-1.5 text-xs">{zuZahlen}</span>}
             </ReiterKnopf>
+            <ReiterKnopf value="karte">{t('spesen.ansicht.karte')}</ReiterKnopf>
             <ReiterKnopf value="alle">{t('spesen.ansicht.alle')}</ReiterKnopf>
             <ReiterKnopf value="auswertung">{t('spesen.ansicht.auswertung')}</ReiterKnopf>
             <ReiterKnopf value="kategorien">{t('spesen.ansicht.kategorien')}</ReiterKnopf>
@@ -198,6 +200,9 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
           </ReiterInhalt>
           <ReiterInhalt value="auszahlen" className="pt-4">
             {aktiv === 'auszahlen' && mitDaten(<Auszahlen alle={alle} onCsv={csv} />)}
+          </ReiterInhalt>
+          <ReiterInhalt value="karte" className="pt-4">
+            {aktiv === 'karte' && mitDaten(<Firmenkarte alle={alle} />)}
           </ReiterInhalt>
           <ReiterInhalt value="alle" className="pt-4">
             {aktiv === 'alle' && mitDaten(alleAnsicht)}
