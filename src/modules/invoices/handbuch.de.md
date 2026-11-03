@@ -100,6 +100,7 @@ Filter setzen und **Liste exportieren** (CSV).
 
 ## Neu {#neu}
 
+- 03.11.2026: Von Hand erfasste Lieferantenrechnungen (noch nicht bezahlt) «In den Papierkorb», mit Rückfrage und «Rückgängig»; gestellte Rechnungen werden storniert. Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Erstvisum der Projektleitung vor dem Stellen.
 - 03.11.2026: Firmenangaben und Einstellungen der Rechnungen ändert nur noch die Administration; auch unter Einstellungen › Firmen & Bank.
 - 31.10.2026: Das Rechnungs-PDF wird auch für die Anzahlungsrechnung am Werkvertrag gebraucht.
