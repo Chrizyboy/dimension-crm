@@ -231,7 +231,7 @@ export function OffertKopf({
         <InPapierkorbKnopf
           tabelle="offerten"
           id={o.id}
-          name={[o.nummer, o.kunde].filter(Boolean).join(' ')}
+          name={[o.nummer, o.titel].filter(Boolean).join(' ')}
           onFertig={onZurueck}
           size="sm"
         />
