@@ -34,26 +34,40 @@ async function testkunde(page: Page) {
   await page.getByRole('option').first().click()
 }
 
-test('Projekte: Baustellen, Zeitplan, Bewilligungen und Akte', async ({ page }) => {
-  // Sieben Prüfungen auf Barrierefreiheit über grosse Tabellen (mit Importdaten mehrere hundert Projekte).
+test('Projekte: Leitstand, Meine Woche, Zeitplan, Bewilligungen und Akte', async ({ page }) => {
+  // Mehrere Prüfungen auf Barrierefreiheit über grosse Tabellen (mit Importdaten mehrere hundert Projekte).
   test.slow()
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/projects')
   await expect(page.getByRole('heading', { name: 'Projekte & Montage', level: 1 })).toBeVisible()
+  await expect(page.getByRole('region', { name: 'Bewilligungen' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  for (const reiter of ['Zeitplan', 'Bewilligungen', 'Subunternehmer', 'Abwesenheiten', 'Alle Projekte']) {
+  for (const reiter of [
+    'Meine Woche',
+    'Zeitplan',
+    'Bewilligungen',
+    'Subunternehmer',
+    'Abwesenheiten',
+    'Alle Projekte',
+  ]) {
     await page.getByRole('tab', { name: reiter }).click()
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
-  // Gibt es Projekte (aus dem Verkauf), geht die Akte mit dem Fahrplan auf.
+  // Gibt es Projekte (aus dem Verkauf), geht die Akte als ganze Seite auf; Notiz im Verlauf, dann Fahrplan.
   const zeile = page.locator('table tbody tr').first()
   if ((await zeile.getByRole('cell').count()) > 1) {
     await zeile.click()
-    const akte = page.getByRole('dialog')
-    await akte.getByRole('tab', { name: 'Fahrplan' }).click()
-    await expect(akte.getByText('Bewilligungen').first()).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Jetzt zu tun' })).toBeVisible()
+    await page.getByLabel('Was ist passiert? Mit wem gesprochen, was vereinbart?').fill(`Gerüst bestellt ${lauf}`)
+    await page.getByRole('button', { name: 'Im Verlauf festhalten' }).click()
+    await expect(page.getByText(`Gerüst bestellt ${lauf}`)).toBeVisible()
     expect(await verstoesse(page)).toEqual([])
+    await page.getByRole('tab', { name: 'Fahrplan' }).click()
+    await expect(page.getByText('Bewilligungen').first()).toBeVisible()
+    expect(await verstoesse(page)).toEqual([])
+    await page.getByRole('button', { name: /Projekte & Montage/ }).click()
+    await expect(page.getByRole('tab', { name: 'Alle Projekte' })).toHaveAttribute('aria-selected', 'true')
   }
 })
 
