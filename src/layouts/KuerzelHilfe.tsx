@@ -50,6 +50,7 @@ export function KuerzelHilfe() {
             </h3>
             <ul className="divide-y">
               <Zeile text={t('kuerzel.palette')} tasten={[kuerzelText('k')]} />
+              <Zeile text={t('kuerzel.assistent')} tasten={[kuerzelText('j')]} />
               <Zeile text={t('kuerzel.seitenleiste')} tasten={[kuerzelText('b')]} />
               <Zeile text={t('kuerzel.hilfe')} tasten={['?']} />
               <Zeile text={t('kuerzel.schliessen')} tasten={['Esc']} />

@@ -1,6 +1,7 @@
 import { ArrowUpRight, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { WarumKnopf } from '@/components/shared/automatik/WarumKnopf'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -146,6 +147,7 @@ export function AufgabeAkte({
                   {t(`aufgaben.herkunft.${a.herkunft}`)}
                   {a.ersteller_id && ` · ${name(a.ersteller_id)}`} · {formatDatum(a.erstellt_am)}
                 </span>
+                {a.lauf_id && <WarumKnopf laufId={a.lauf_id} />}
               </Angabe>
               {a.erledigt_am && (
                 <Angabe label={t('aufgaben.erledigt')}>

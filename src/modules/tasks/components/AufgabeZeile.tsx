@@ -1,5 +1,6 @@
 import { CalendarClock, MessageSquare, Repeat, Workflow } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { WarumKnopf } from '@/components/shared/automatik/WarumKnopf'
 import { Badge } from '@/components/ui/badge'
 import { Avatar } from '@/components/ui/diverses'
 import { Checkbox } from '@/components/ui/schalter'
@@ -137,6 +138,8 @@ export function AufgabeZeile({
         </span>
       </button>
       <div className="flex shrink-0 items-center gap-2">
+        {/* «Warum?» aus den Automationen: neben der Zeile, nicht darin, weil die Zeile selbst ein Knopf ist. */}
+        {a.lauf_id && !a.erledigt_am && <WarumKnopf laufId={a.lauf_id} />}
         {!a.erledigt_am && (
           <button
             type="button"

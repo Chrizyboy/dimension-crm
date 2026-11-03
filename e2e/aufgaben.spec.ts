@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
-// Aufgaben (Entscheid 0042): Schnelleingabe mit Datum und «!», Liste nach Fälligkeit gruppiert, Akte mit
+// Aufgaben (Entscheid 0045): Schnelleingabe mit Datum und «!», Liste nach Fälligkeit gruppiert, Akte mit
 // Teilschritt, Kommentar und «Erledigt» mit Notiz, danach in «Erledigt». Ohne Verstösse (WCAG 2.1 AA).
 // Sichtbarkeit, Vertretung, Glocken und Wiederholung prüft supabase/tests/aufgaben.test.sql.
 

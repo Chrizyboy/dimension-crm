@@ -1,4 +1,4 @@
--- Prüft Aufgaben (Entscheid 0042): Sichtbarkeit eigene/vergebene, Vertretung bei Abwesenheit, Glocke beim Zuteilen
+-- Prüft Aufgaben (Entscheid 0045): Sichtbarkeit eigene/vergebene, Vertretung bei Abwesenheit, Glocke beim Zuteilen
 -- und Erledigen, Wiederholung, Notiz im Verlauf des Leads, Kommentar mit @Kurzzeichen, Morgen-Glocke einmal pro Tag.
 -- Ausführen: npm run db:test
 begin;

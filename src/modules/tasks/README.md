@@ -4,7 +4,7 @@
 (Teilschritte, Verlauf, Weitergeben, Verschieben), Vertretung bei Abwesenheit und Team-Sicht für die
 Geschäftsleitung. Aufgaben kommen von Hand, aus der Schnelleingabe, aus Automationen, Monitoren, Fristen und KI.
 
-**Stand:** Phase 12 gebaut, vollständig ausgebaut am 02.11.2026 (Entscheid 0042).
+**Stand:** Phase 12 gebaut, vollständig ausgebaut am 02.11.2026 (Entscheid 0045).
 
 ## Daten
 

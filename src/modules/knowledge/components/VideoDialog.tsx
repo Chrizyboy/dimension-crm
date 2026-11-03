@@ -6,6 +6,7 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { useAktion } from '../hooks/useHandbuch'
+import { BereichFeld } from './BereichFeld'
 import { titelAusDateiname } from '../lib/handbuch'
 import { videoAngaben } from '../lib/video'
 import { videoSchema } from '../schema'
@@ -26,6 +27,7 @@ export function VideoDialog({ eintrag, onSchliessen }: { eintrag: HandbuchEintra
   const [sprache, setSprache] = useState<'de' | 'fr'>(eintrag?.sprache ?? 'de')
   const [reihenfolge, setReihenfolge] = useState(eintrag?.reihenfolge ? String(eintrag.reihenfolge) : '')
   const [datei, setDatei] = useState<File | null>(null)
+  const [bereich, setBereich] = useState<string | null>(eintrag?.bereich ?? null)
   const [gezeigt, setGezeigt] = useState(false)
 
   const pruefung = videoSchema.safeParse({ neu: !eintrag, titel_de: titel, datei_de: datei })
@@ -54,6 +56,7 @@ export function VideoDialog({ eintrag, onSchliessen }: { eintrag: HandbuchEintra
             datum: null,
             sprache,
             reihenfolge: Number(reihenfolge) > 0 ? Math.round(Number(reihenfolge)) : null,
+            bereich,
             datei_de: datei,
             datei_fr: null,
           },
@@ -136,6 +139,7 @@ export function VideoDialog({ eintrag, onSchliessen }: { eintrag: HandbuchEintra
               }}
             />
           </Feld>
+          <BereichFeld id="video-bereich" wert={bereich} onWert={setBereich} />
           <Feld id="video-sprache" label={t('handbuch.videos.gesprochen')}>
             <Auswahl
               id="video-sprache"
