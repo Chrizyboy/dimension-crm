@@ -8642,6 +8642,13 @@ export type Database = {
             foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ressourcen_reservierungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -9551,6 +9558,13 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
             referencedColumns: ['id']
           },
           {
@@ -12547,6 +12561,13 @@ export type Database = {
             foreignKeyName: 'spesen_projekt_id_fkey'
             columns: ['projekt_id']
             isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'spesen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
             referencedRelation: 'offerten_liste'
             referencedColumns: ['projekt_id']
           },
@@ -13563,27 +13584,25 @@ export type Database = {
         }
         Returns: string
       }
-      ressource_reservierung_aufheben: {
-        Args: { p_id: string }
-        Returns: undefined
-      }
+      ressource_reservierung_aufheben: { Args: { p_id: string }; Returns: undefined }
       ressource_schaden_setzen: {
-        Args: {
-          p_eintrag: string
-          p_erledigung?: string
-          p_kosten_rappen?: number
-          p_stand: string
-        }
+        Args: { p_eintrag: string; p_erledigung?: string; p_kosten_rappen?: number; p_stand: string }
         Returns: undefined
       }
       ressource_uebergeben: {
-        Args: { p_fahrzeug: string; p_geraet: string; p_in_fahrzeug?: string; p_person: string; p_text?: string }
+        Args: {
+          p_fahrzeug: string
+          p_geraet: string
+          p_in_fahrzeug?: string
+          p_person: string
+          p_text?: string
+          p_zurueck_bis?: string
+        }
         Returns: undefined
       }
       rueckmeldung_beantworten: { Args: { p_antwort: string; p_id: string; p_status: string }; Returns: undefined }
       rueckmeldung_entscheiden: { Args: { p_entscheid: string; p_id: string; p_notiz: string }; Returns: undefined }
       rueckmeldung_melden: {
-        p_zurueck_bis?: string
         Args: {
           p_bereich: string
           p_erwartet: string
