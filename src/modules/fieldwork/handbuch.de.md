@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: montage, projektleitung, buchhaltung
 ---
 
@@ -60,6 +60,7 @@ Die Handy-Ansicht für die Montage und die Büro-Sicht dazu: Tagesplan, ein Rapp
 
 - Ohne Netz speichert das Handy alles in einer Warteschlange und sendet, sobald wieder Netz da ist.
 - Material des Projekts zeigt **Material bereit** oder wie viel noch fehlt.
+- Ein Service-Fall, dessen Termin vorbei ist, bleibt bis **Erledigt** auf heute im Tagesplan, rot markiert mit **Überfällig seit …**.
 
 ## Regeln {#regeln}
 
@@ -78,4 +79,5 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
+- 03.11.2026: Offene Service-Fälle von gestern bleiben im Tagesplan («Überfällig»). Arbeitszeit und Reise in **Mein Tag** auch ohne Rapport starten; Änderungen gehen sofort raus.
 - 31.10.2026: Einfache Ansicht für Monteure mit Arbeitszeit per Knopfdruck und Spesen.

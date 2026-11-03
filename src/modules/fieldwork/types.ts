@@ -45,6 +45,10 @@ export interface TagEintrag {
   bis: string
   zeit: string | null
   notiz: string | null
+  /** Service-Termin liegt in der Vergangenheit, Fall noch offen: steht deshalb auf heute. */
+  ueberfaellig?: boolean
+  /** Ursprünglicher Termin-Tag des Service-Falls. */
+  termin_tag?: string | null
   projekt: {
     id: string
     nummer: string
