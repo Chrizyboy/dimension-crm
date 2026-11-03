@@ -1,6 +1,6 @@
 ---
-stand: 2026-11-02
-rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
+stand: 2026-11-03
+rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
 # Mein Tag
@@ -32,6 +32,19 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 2. Titel, Person und Fälligkeit eintragen, **Speichern**.
 3. Die Person sieht sie auf ihrem Mein Tag, du unter **Von mir vergeben**. Mehr im Kapitel [Aufgaben](kapitel:tasks).
 
+### Etwas auf später verschieben
+
+1. Rechts in der Zeile das Kalender-Symbol (**Verschieben**) wählen.
+2. **Auf morgen**, **Auf nächste Woche (Montag)** oder **Auf ein Datum …** wählen.
+3. Eine eigene Aufgabe bekommt das neue Fälligkeitsdatum. Alles andere (Nachfassen, Anfrage, Frist …) verschwindet nur bei dir bis zu diesem Tag; am Datensatz ändert sich nichts.
+4. Termine und Freigaben lassen sich nicht verschieben.
+
+### Wochenziele festlegen (Administration, Geschäftsleitung)
+
+1. In der Karte **Meine Woche** auf **Ziele festlegen** klicken.
+2. Je Person Neue Anfragen, Besichtigungen und Offerten pro Woche sowie Aufträge pro Monat eintragen, Zeile **Speichern**.
+3. Jede Person sieht ihre Ziele mit Balken in **Meine Woche**.
+
 ### Einen Kunden direkt anrufen
 
 1. Bei Anfragen und Nachfassen steht die Telefonnummer als Knopf.
@@ -54,11 +67,18 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 - **Service und Garantie**: offene Fälle, dringende zuerst.
 - **Kontrollen und Wartungen (30 Tage)**: anstehende Wartungen aus den Verträgen.
 - **Posteingang**: Kunden, die auf deine Antwort warten.
+- **Wartet auf deine Freigabe**: deine Mails und SMS im Ausgangskorb.
+- **Meine Woche**: deine Wochenziele mit Stand.
+- **Team heute**: wer auf der Baustelle, beim Kunden, im Service, da oder abwesend ist (ohne Grund).
+- **Wetter auf den Baustellen**: für Montage und Projektleitung die Prognose der nächsten 5 Tage je Baustelle; «Achtung» bei viel Regen, Wind, Frost oder Hitze.
+
+Unter einer Zeile steht, warum sie hier ist, zum Beispiel «Seit 14 Tagen ohne Antwort» oder «Von Andy».
 
 ## Läuft automatisch {#automatisch}
 
 - Die Seite lädt alle 2 Minuten neu. Abhaken und neue Aufgaben erscheinen sofort.
 - Was auf Mein Tag kommt, entscheidet die Datenbank mit deinen Rechten. Du siehst nie etwas, das du nicht sehen darfst.
+- Das Wetter holt der Server einmal pro Stunde von MeteoSchweiz.
 - Aufgaben aus [Automationen](kapitel:automations) und Fristen aus Fahrzeugen erscheinen von selbst.
 
 ## Häufige Fragen {#fragen}
@@ -77,5 +97,6 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 03.11.2026: Verschieben, Gründe je Zeile, Wartet auf deine Freigabe, Meine Woche mit Zielen, Team heute, Wetter auf den Baustellen.
 - 26.10.2026: Status unter dem Titel in schmalen Karten, kürzeres Datum.
 - 24.10.2026: Mein Tag ist die Startseite; Aufgaben «Von mir vergeben» sind dazugekommen.

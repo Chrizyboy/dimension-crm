@@ -10,7 +10,15 @@ import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useGeschaefte } from '../hooks/useVerkauf'
 import { passtZuFilter } from '../lib/geschaeft'
-import { LEERER_FILTER, VERKAUF_ANSICHTEN, type VerkaufAnsicht, type VerkaufFilter } from '../types'
+import {
+  ansichtVon,
+  LEERER_FILTER,
+  PLANUNG_ANSICHTEN,
+  reiterVon,
+  VERKAUF_REITER,
+  type VerkaufAnsicht,
+  type VerkaufFilter,
+} from '../types'
 import { AnfragenKnopf } from './AnfragenKnopf'
 import { FilterLeiste } from './FilterLeiste'
 import { OrdnerKnopf } from './OrdnerKnopf'
@@ -66,8 +74,8 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
     true,
     t('kuerzel.neuerLead'),
   )
-  useKuerzelAnzeige('1–9', t('kuerzel.ansicht'))
-  // Die Tasten 1 bis 9 wechseln die Ansicht, wie die Reiter von links nach rechts.
+  useKuerzelAnzeige('1–7', t('kuerzel.ansicht'))
+  // Die Tasten 1 bis 7 wechseln die Ansicht, wie die Reiter von links nach rechts.
   const wechsle = useRef(onAdresse)
   useEffect(() => {
     wechsle.current = onAdresse
@@ -78,8 +86,8 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
       const ziel = e.target
       if (ziel instanceof HTMLElement && (ziel.isContentEditable || /INPUT|TEXTAREA|SELECT/.test(ziel.tagName))) return
       if (document.querySelector('[role="dialog"]')) return
-      const a = VERKAUF_ANSICHTEN[Number(e.key) - 1]
-      if (a) wechsle.current({ ansicht: a })
+      const r = VERKAUF_REITER[Number(e.key) - 1]
+      if (r) wechsle.current({ ansicht: ansichtVon(r) })
     }
     window.addEventListener('keydown', beiTaste)
     return () => {
@@ -175,21 +183,39 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
       />
 
       <nav aria-label={t('verkauf.ansichten')} className={reiterListeKlasse}>
-        {VERKAUF_ANSICHTEN.map((a, i) => (
+        {VERKAUF_REITER.map((r, i) => (
           <button
-            key={a}
+            key={r}
             type="button"
-            aria-current={a === ansicht ? 'page' : undefined}
+            aria-current={r === reiterVon(ansicht) ? 'page' : undefined}
             title={String(i + 1)}
             onClick={() => {
-              onAdresse({ ansicht: a })
+              if (r !== reiterVon(ansicht)) onAdresse({ ansicht: ansichtVon(r) })
             }}
             className={reiterKnopfKlasse}
           >
-            {t(`verkauf.ansicht.${a}`)}
+            {t(`verkauf.reiter.${r}`)}
           </button>
         ))}
       </nav>
+
+      {reiterVon(ansicht) === 'planung' && (
+        <div className="flex flex-wrap gap-1" role="group" aria-label={t('verkauf.reiter.planung')}>
+          {PLANUNG_ANSICHTEN.map((a) => (
+            <Button
+              key={a}
+              size="sm"
+              variant={a === ansicht ? 'secondary' : 'ghost'}
+              aria-pressed={a === ansicht}
+              onClick={() => {
+                onAdresse({ ansicht: a })
+              }}
+            >
+              {t(`verkauf.ansicht.${a}`)}
+            </Button>
+          ))}
+        </div>
+      )}
 
       {MIT_FILTER.has(ansicht) && (
         <FilterLeiste

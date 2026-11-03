@@ -17,7 +17,7 @@ export const meta: ModulMeta = {
   phase: 9,
 }
 
-/** Die Seite: Baustellen, Zeitplan, Bewilligungen, Alle, Subunternehmer, Abwesenheiten; Akte als Seitenpanel. */
+/** Die Seite: Leitstand, Meine Woche, Zeitplan, Bewilligungen, Alle, Subunternehmer, Abwesenheiten; Akte als ganze Seite. */
 export const Projekte = lazy(() => import('./components/Projekte'))
 
 /** Karte für die Startseite: wer heute auf dem Bau ist, Baustellen ohne Termin, überfällige Bewilligungen. */

@@ -120,7 +120,7 @@ test('Spesen: mit Beleg erfassen, Buchhaltung zahlt aus', async ({ page }) => {
     page.getByRole('row', { name: new RegExp(`E2E Parkhaus ${lauf}`) }).getByText(/^Ausbezahlt/),
   ).toBeVisible()
 
-  for (const reiter of ['Auswertung', 'Regeln']) {
+  for (const reiter of ['Firmenkarte', 'Auswertung', 'Regeln']) {
     await page.getByRole('tab', { name: reiter }).click()
     expect(await verstoesse(page), reiter).toEqual([])
   }
