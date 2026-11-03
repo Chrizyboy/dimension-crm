@@ -114,11 +114,14 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await anmelden(page, 'montage@test.local')
   await page.goto('/#/staff')
   await expect(page.getByRole('heading', { name: 'Team & Ausweise', level: 1 })).toBeVisible()
+  // Übersicht «wer darf was» steht im Reiter Ausweise, die Personal-Akte im gleichnamigen Reiter des Panels.
+  await page.getByRole('tab', { name: 'Ausweise' }).click()
   await expect(page.getByRole('table', { name: 'Übersicht: wer darf was' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await page.getByRole('button', { name: 'Meine Akte' }).click()
   const akte = page.getByRole('dialog', { name: 'Mario Montage' })
+  await akte.getByRole('tab', { name: 'Personal-Akte' }).click()
   await akte.getByRole('button', { name: 'Bearbeiten' }).click()
   const form = page.getByRole('dialog', { name: 'Personal-Akte' })
   await expect(form.getByLabel('Pensum (%)')).toHaveCount(0)
@@ -126,6 +129,7 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await form.getByRole('button', { name: 'Speichern' }).click()
   await expect(akte).toContainText(`Notfall ${kennung}`)
 
+  await akte.getByRole('tab', { name: 'Ausweise' }).click()
   await akte.getByRole('button', { name: 'Kurs oder Ausweis erfassen' }).click()
   const ausweis = page.getByRole('dialog', { name: 'Kurs oder Ausweis erfassen' })
   await ausweis.getByRole('combobox', { name: /Art/ }).click()
@@ -147,7 +151,8 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await verkauf.goto('/#/staff')
   await verkauf.getByRole('row', { name: /Mario Montage/ }).click()
   const fremd = verkauf.getByRole('dialog', { name: 'Mario Montage' })
-  await expect(fremd).toContainText('Nur für die Person selbst und die Administration sichtbar.')
-  await expect(fremd).not.toContainText(`Notfall ${kennung}`)
   await expect(fremd.getByRole('button', { name: 'Kurs oder Ausweis erfassen' })).toHaveCount(0)
+  await fremd.getByRole('tab', { name: 'Personal-Akte' }).click()
+  await expect(fremd).toContainText('Nur für die Person selbst, die Geschäftsleitung')
+  await expect(fremd).not.toContainText(`Notfall ${kennung}`)
 })
