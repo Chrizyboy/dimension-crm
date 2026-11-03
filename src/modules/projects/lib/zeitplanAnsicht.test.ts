@@ -13,7 +13,17 @@ import {
 } from './zeitplanAnsicht'
 
 const einsatz = (id: string, von: string, bis: string, personen: string[] = [], art: Einsatz['art'] = 'intern') =>
-  ({ id, projekt_id: 'p1', art, von, bis, personen, subunternehmer_id: null, notiz: null }) satisfies Einsatz
+  ({
+    id,
+    projekt_id: 'p1',
+    art,
+    von,
+    bis,
+    personen,
+    subunternehmer_id: null,
+    notiz: null,
+    taetigkeiten: [],
+  }) satisfies Einsatz
 const projekt = (x: Partial<Projekt>) => ({ id: 'p1', kunde: 'Muster', status: 'im_bau', ...x }) as Projekt
 const balken = (von: string, bis: string) => ({ von, bis, spur: 0 }) as PlanBalken
 

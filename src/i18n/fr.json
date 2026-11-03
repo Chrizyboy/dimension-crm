@@ -417,24 +417,193 @@
   },
   "adressbuch": {
     "titel": "Carnet d’adresses",
-    "beschreibung": "Toutes les personnes et entreprises, y compris partenaires, architectes, fournisseurs et autorités.",
-    "neu": "Nouveau contact",
-    "anzahl_one": "{{count}} contact",
-    "anzahl_other": "{{count}} contacts",
+    "beschreibung": "Partenaires : gestionnaires de réseau, fournisseurs, fabricants, sous-traitants, communes, planificateurs, électriciens et apporteurs d’affaires.",
+    "neu": "Nouvelle entrée",
+    "anzahl_one": "{{count}} entrée",
+    "anzahl_other": "{{count}} entrées",
     "artFilter": "Filtrer par type",
-    "leer": "Pas encore de contacts",
-    "leerText": "Saisissez le premier contact avec «Nouveau contact».",
+    "leer": "Aucun partenaire pour l’instant",
+    "leerText": "Saisis le premier partenaire avec «Nouvelle entrée». Les gestionnaires de réseau viennent aussi du répertoire ElCom.",
     "papierkorb": "Corbeille",
     "papierkorbTitel": "Corbeille",
-    "papierkorbText": "Contacts supprimés. Ouvrir puis «Restaurer» pour les récupérer.",
+    "papierkorbText": "Partenaires et clients supprimés. Ouvrir puis «Restaurer» les récupère.",
     "papierkorbLeer": "La corbeille est vide",
     "papierkorbLeerText": "Les contacts mis à la corbeille apparaissent ici.",
     "spalte": {
       "art": "Type",
       "telefon": "Téléphone",
-      "email": "E-mail"
+      "email": "E-mail",
+      "ansprechperson": "Interlocuteur",
+      "wichtig": "L’essentiel",
+      "zuletzt": "Dernier contact"
     },
-    "zurueck": "Retour au carnet d’adresses"
+    "zurueck": "Retour au carnet d’adresses",
+    "suche": "Rechercher : entreprise, personne, lieu, marque, métier …",
+    "rolleFilter": "Filtrer par rôle",
+    "mitKunden": "Afficher aussi les clients",
+    "kunde": "Client",
+    "zurueckListe": "Retour au carnet d’adresses",
+    "liste": {
+      "gesuche_one": "{{count}} demande ouverte, Ø {{tage}} jours",
+      "gesuche_other": "{{count}} demandes ouvertes, Ø {{tage}} jours",
+      "gesucheAlt_one": "{{count}} demande en attente",
+      "gesucheAlt_other": "{{count}} demandes en attente",
+      "gemeinden_one": "{{count}} commune",
+      "gemeinden_other": "{{count}} communes",
+      "kdNr": "Notre n° client {{nr}}",
+      "auftraege_one": "{{count}} mandat en cours",
+      "auftraege_other": "{{count}} mandats en cours",
+      "provision": "Commission {{prozent}} %"
+    },
+    "zahlen": {
+      "partner": "Partenaires",
+      "gesuche": "Demandes réseau ouvertes",
+      "gesucheAlt_one": "{{count}} hors délai",
+      "gesucheAlt_other": "{{count}} hors délai",
+      "nachweise": "Attestations bientôt échues",
+      "auftraege": "Mandats aux sous-traitants"
+    },
+    "nachweis": {
+      "abgelaufen": "Attestation échue",
+      "bald": "Attestation bientôt échue",
+      "ok": "Valable",
+      "ohne": "Sans échéance"
+    },
+    "bewertung": {
+      "qualitaet": "Qualité",
+      "termin": "Délai",
+      "preis": "Prix"
+    },
+    "bestellstatus": {
+      "entwurf": "Brouillon",
+      "freigegeben": "Validée",
+      "bestellt": "Commandée",
+      "teilgeliefert": "Livrée en partie",
+      "geliefert": "Livrée",
+      "storniert": "Annulée"
+    },
+    "empfehlung": {
+      "lead": "Lead",
+      "auftrag": "Commission due",
+      "ausbezahlt": "Versée",
+      "verfallen": "Échue"
+    },
+    "feld": {
+      "firma": "Entreprise",
+      "vorname": "Prénom",
+      "nachname": "Nom",
+      "funktion": "Fonction",
+      "telefon": "Téléphone",
+      "email": "E-mail",
+      "telefonDirekt": "Numéro direct dans cette entreprise",
+      "emailDirekt": "E-mail direct dans cette entreprise",
+      "bevorzugt": "Joignable de préférence",
+      "adresse": "Adresse postale",
+      "strasse": "Rue et n°",
+      "plz": "NPA",
+      "ort": "Localité",
+      "webseite": "Site web",
+      "uid": "IDE",
+      "uidUngueltig": "IDE incorrecte (chiffre de contrôle). Format CHE-123.456.789",
+      "rechtsform": "Forme juridique",
+      "sprache": "Langue"
+    },
+    "akte": {
+      "anrufen": "Appeler",
+      "stammdaten": "Coordonnées",
+      "personen_one": "Interlocuteur",
+      "personen_other": "Interlocuteurs ({{count}})",
+      "personNeu": "Ajouter une personne",
+      "personEntfernen": "Retirer de l’entreprise",
+      "personGibtEs": "Cette personne existe déjà. La lier plutôt que la saisir à double :",
+      "personVerknuepfen": "{{name}} sera lié(e) à cette entreprise.",
+      "personDochNeu": "Saisir quand même",
+      "keinePersonen": "Aucun interlocuteur pour l’instant.",
+      "merker": "Responsable de",
+      "ladefehler": "Chargement impossible.",
+      "nachweise": "Attestations",
+      "nachweisNeu": "Saisir une attestation",
+      "nachweisArt": "Type",
+      "gueltigBis": "Valable jusqu’au",
+      "bis": "jusqu’au {{datum}}",
+      "keineNachweise": "Aucune attestation. Pour les sous-traitants : RC, SUVA et déclaration CCT.",
+      "notiz": "Note",
+      "datei": "Fichier",
+      "entfernen": "Retirer",
+      "steckbrief": "Fiche {{rolle}}",
+      "steckbriefLeer": "Rien de saisi. «Modifier» complète les données de ce rôle.",
+      "ohneRolle": "Ce contact n’a pas encore de rôle. «Ajouter un rôle» en fait un partenaire.",
+      "rolle": "Rôle",
+      "rolleNeu": "Ajouter un rôle",
+      "rolleBearbeiten": "Modifier {{rolle}}",
+      "rolleEntfernen": "Retirer le rôle",
+      "feldUngueltig": "Saisis un nombre ou un montant.",
+      "verlauf": "Historique",
+      "verlaufArt": "Type d’entrée",
+      "verlaufText": "Que s’est-il passé ?",
+      "verlaufPlatzhalter": "p. ex. relance demande P1234, réponse d’ici vendredi",
+      "festhalten": "Enregistrer",
+      "keinVerlauf": "Aucune entrée pour l’instant.",
+      "gesuche": "Demandes réseau ouvertes",
+      "keineGesuche": "Aucune demande ouverte.",
+      "tage_one": "{{count}} jour",
+      "tage_other": "{{count}} jours",
+      "eingereicht": "déposée le {{datum}}",
+      "gemeinden": "Communes desservies (ElCom)",
+      "keineGemeinden": "Aucune commune. L’administration importe le répertoire ElCom.",
+      "alleZeigen": "afficher les {{count}}",
+      "bestellungen": "Commandes ouvertes",
+      "keineBestellungen": "Aucune commande ouverte.",
+      "einkaufJahr": "Cette année {{betrag}}",
+      "liefertermin": "Livraison {{datum}}",
+      "auftraege": "Mandats et évaluation",
+      "keineAuftraege": "Aucun mandat issu des projets.",
+      "empfehlungen": "Clients apportés",
+      "keineEmpfehlungen": "Aucun client apporté.",
+      "provisionOffen": "Dû {{betrag}}",
+      "ausbezahlt": "versée le {{datum}}",
+      "dokumente": "Documents",
+      "hochladen": "Téléverser",
+      "keineDokumente": "Dépose ici contrats, listes de prix ou certificats.",
+      "arbeitetBei": "Travaille chez"
+    },
+    "neuDialog": {
+      "text": "Saisis d’abord le nom : le CRM propose l’entreprise depuis le registre IDE et signale les doublons.",
+      "art": "Entreprise ou personne",
+      "firma": "Entreprise",
+      "person": "Personne",
+      "uidSuchen": "Rechercher dans le registre IDE",
+      "uidTreffer": "Résultats du registre IDE",
+      "uidKeine": "Aucune entreprise de ce nom dans le registre IDE.",
+      "uidInaktiv": "Radiée",
+      "dubletten": "Existe déjà ? Un clic ouvre l’entrée existante.",
+      "grund": {
+        "uid": "même IDE",
+        "email": "même e-mail",
+        "telefon": "même numéro",
+        "name": "nom semblable"
+      },
+      "rollen": "Rôles",
+      "erstePerson": "Premier interlocuteur (facultatif)"
+    },
+    "netz": {
+      "knopf": "Répertoire des gestionnaires",
+      "titel": "Gestionnaires de réseau par commune (ElCom)",
+      "text": "Depuis les données ouvertes de l’ElCom. Les nouveaux bâtiments reçoivent ensuite leur gestionnaire automatiquement.",
+      "einlesen": "Importer maintenant",
+      "jahr": "Année tarifaire",
+      "eingelesen": "Importé le",
+      "nie": "jamais",
+      "gemeinden": "Communes / gestionnaires",
+      "plz": "NPA avec commune",
+      "gebaeudeOhne": "Bâtiments sans gestionnaire",
+      "schrittVerzeichnis_one": "Répertoire chargé : {{count}} ligne. Communes par NPA …",
+      "schrittVerzeichnis_other": "Répertoire chargé : {{count}} lignes. Communes par NPA …",
+      "schrittPlz_one": "{{count}} NPA attribué …",
+      "schrittPlz_other": "{{count}} NPA attribués …",
+      "schrittZuordnen": "Attribution aux bâtiments …",
+      "hinweis": "Une fois par an suffit (l’ElCom publie les tarifs en automne). Les gestionnaires saisis à la main restent."
+    }
   },
   "akte": {
     "titel": "Dossier client",
@@ -905,13 +1074,13 @@
     "pipeline": {
       "karte": "Affaire",
       "standAendern": "Changer le statut",
+      "abgeschlossene": "Afficher les affaires closes",
       "leer": "Rien dans cette colonne",
       "weitere_one": "Afficher {{count}} de plus",
       "weitere_other": "Afficher {{count}} de plus",
       "spalten": "Colonnes",
       "alleSpalten": "Toutes les colonnes",
-      "spaltenAnzahl": "Colonnes : {{anzahl}} sur {{von}}",
-      "abgeschlossene": "Afficher les affaires closes"
+      "spaltenAnzahl": "Colonnes : {{anzahl}} sur {{von}}"
     },
     "wechsel": {
       "titel": "Changer le statut : {{name}}",
@@ -2067,7 +2236,7 @@
   },
   "preise": {
     "titel": "Prix",
-    "beschreibung": "Liste de prix avec achat et marge, archives, prix pour les clients et calcul.",
+    "beschreibung": "Liste de prix avec achat, marge, stock et actions à faire, changements de prix d'Eturnity et des fournisseurs, calcul avec variantes, prestations et règles.",
     "beschreibungKunden": "Prix de vente et fiches techniques pour les entretiens clients.",
     "vorschau": "Les prix ont besoin de la base de données",
     "vorschauText": "Sans base de données, l’aperçu ne contient pas encore de liste de prix.",
@@ -2076,7 +2245,9 @@
       "liste": "Liste de prix",
       "archiv": "Archives",
       "kunden": "Pour clients",
-      "kalkulation": "Calcul"
+      "kalkulation": "Calcul",
+      "aenderungen": "Changements de prix",
+      "regeln": "Prestations et règles"
     },
     "suche": "Rechercher un article",
     "sucheHinweis": "Nom, n° d’art., fabricant …",
@@ -2093,7 +2264,9 @@
       "vk": "PV HT",
       "lieferant": "Fournisseur",
       "archiviert": "Archivé",
-      "aktion": "Action"
+      "aktion": "Action",
+      "lager": "Stock",
+      "hinweis": "Remarque"
     },
     "archiv": {
       "titel": "Archiver l’article",
@@ -2138,7 +2311,22 @@
       "entfernenFrage": "Cliquer encore pour supprimer",
       "masse": "Dimensions et poids",
       "abmessungen": "Dimensions",
-      "gewicht": "Poids (kg)"
+      "gewicht": "Poids (kg)",
+      "lagerVerwendung": "Stock et utilisation",
+      "lager": "Stock Bulle",
+      "lagerText": "{{frei}} libres · {{reserviert}} réservés · {{bestellt}} commandés",
+      "verwendung": "Utilisation",
+      "verwendungText": "{{offen}} calculs ouverts · {{projekte}} projets et {{menge}} pièces en 12 mois",
+      "vorlagen": "Dans les modèles : {{namen}}",
+      "garantie": "Garantie fabricant",
+      "jahre": "ans",
+      "verlauf": "Historique des prix",
+      "verlaufLeer": "Aucun changement enregistré.",
+      "feld": {
+        "ek": "Achat",
+        "marge": "Marge",
+        "skonto": "Escompte"
+      }
     },
     "import": {
       "knopf": "Importer Excel",
@@ -2244,7 +2432,230 @@
       "positionen_other": "{{count}} positions",
       "entfernenKalk": "«{{titel}}» à la corbeille",
       "entfernenFrage": "Cliquer encore pour supprimer",
-      "entfernt": "«{{titel}}» dans la corbeille"
+      "entfernt": "«{{titel}}» dans la corbeille",
+      "ekKosten": "Achat / coût",
+      "eigenePosition": "Position libre",
+      "mengenNeuKnopf": "Recalculer les quantités",
+      "mengenNeu_one": "{{count}} quantité recalculée",
+      "mengenNeu_other": "{{count}} quantités recalculées",
+      "foerderung": "Subvention estimée ({{name}} {{stand}})",
+      "nachFoerderung": "Après subvention"
+    },
+    "lager": {
+      "frei": "{{n}} libres",
+      "reserviert": "{{n}} réservés",
+      "bestellt": "{{n}} commandés"
+    },
+    "hinweis": {
+      "marge": "Marge trop basse",
+      "ekAlt": "Achat de {{tage}} jours",
+      "ohneEk": "Pas de prix d'achat",
+      "datenblatt": "Fiche technique manquante",
+      "lager": "En stock",
+      "lieferanten": "{{n}} fournisseurs"
+    },
+    "kennzahl": {
+      "aktiv": "Articles actifs",
+      "importe": "Listes de prix ouvertes",
+      "marge": "Marge sous le minimum",
+      "ekAlt": "Achat de plus de {{tage}} jours",
+      "ohneEk": "Sans prix d'achat",
+      "datenblatt": "Fiche DE/FR manquante",
+      "lager": "En stock à Bulle"
+    },
+    "mehrfach": {
+      "wahl": "Sélection",
+      "waehle": "Sélectionner {{name}}",
+      "gewaehlt_one": "{{count}} article sélectionné",
+      "gewaehlt_other": "{{count}} articles sélectionnés",
+      "marge": "Marge %",
+      "setzen": "Appliquer la marge",
+      "standard": "Standard de la catégorie",
+      "aufheben": "Annuler la sélection",
+      "fertig_one": "Marge appliquée à {{count}} article",
+      "fertig_other": "Marge appliquée à {{count}} articles"
+    },
+    "datei": {
+      "knopf": "Importer une liste de prix",
+      "titel": "Importer une liste de prix",
+      "beschreibung": "Export des composants Eturnity ou liste de prix d'un fournisseur (Excel ou CSV). On compare d'abord ; tu modifies ensuite sous « Changements de prix ».",
+      "quelle": "D'où vient la liste ?",
+      "eturnity": "Eturnity (export des composants)",
+      "neuerLieferant": "Nouveau fournisseur …",
+      "lieferantName": "Nom du fournisseur",
+      "waehlen": "Choisir ou glisser un fichier ici",
+      "formate": "Excel (.xlsx) ou CSV",
+      "unlesbar": "Impossible de lire le fichier. Merci de l'enregistrer en .xlsx ou .csv.",
+      "zuordnung": "Noms de colonnes reconnus en ligne {{zeile}}. Merci de vérifier quelle colonne contient quoi :",
+      "keineSpalte": "– aucune –",
+      "spalteNr": "Colonne {{n}}",
+      "beispiel": "Première ligne : {{nr}} · {{name}} · achat CHF {{ek}}",
+      "vollstaendig": "Liste complète",
+      "vollstaendigHinweis": "Les articles de ce fournisseur absents du fichier sont affichés comme « plus livrés ».",
+      "pruefen_one": "Comparer {{count}} ligne",
+      "pruefen_other": "Comparer {{count}} lignes",
+      "geprueft": "Comparé : {{geaendert}} prix changent, {{neu}} articles sont nouveaux",
+      "feld": {
+        "artikelnummer": "Numéro d'article",
+        "name": "Désignation",
+        "ek": "Prix d'achat (net)",
+        "lieferant": "Fournisseur",
+        "hersteller": "Fabricant",
+        "einheit": "Unité",
+        "leistung_w": "Puissance (W)"
+      }
+    },
+    "aenderungen": {
+      "leer": "Aucune liste de prix importée",
+      "leerText": "Importe l'export d'Eturnity ou la liste d'un fournisseur. Tu verras ancien et nouveau prix et les offres ouvertes concernées.",
+      "listen": "Listes de prix importées",
+      "kurz": "{{geaendert}} modifiés, {{neu}} nouveaux",
+      "status": {
+        "offen": "ouverte",
+        "uebernommen": "reprise",
+        "verworfen": "rejetée"
+      },
+      "zaehlung": "{{gelesen}} lignes lues : {{teurer}} plus chers, {{guenstiger}} moins chers, {{neu}} nouveaux, {{gleich}} identiques, {{fehlt}} plus livrés. Concernées : {{offerten}} offres ouvertes.",
+      "erledigt": {
+        "uebernommen": "Reprise par {{von}} le {{datum}}",
+        "verworfen": "Rejetée par {{von}} le {{datum}}"
+      },
+      "art": {
+        "neu": "nouveau",
+        "fehlt": "plus livré",
+        "geaendert": "modifié",
+        "gleich": "identique"
+      },
+      "alle": "Sélectionner tous les modifiés",
+      "waehlen": "Reprendre {{name}}",
+      "kategorie": "Catégorie pour {{name}}",
+      "kategorieWaehlen": "Choisir une catégorie pour créer",
+      "ekAlt": "Achat avant",
+      "ekNeu": "Achat nouveau",
+      "prozent": "Variation",
+      "vkNeu": "Vente nouveau",
+      "offerten": "Offres ouvertes",
+      "nichtMehr": "plus livré",
+      "nichts": "Aucun changement : tous les prix sont identiques.",
+      "gleich": "{{n}} articles au même prix masqués.",
+      "uebernehmen": "Reprendre {{n}}",
+      "verwerfen": "Rejeter",
+      "verworfen": "Liste rejetée, rien n'a été modifié",
+      "fertig": "Repris : {{geaendert}} prix modifiés, {{neu}} nouveaux articles"
+    },
+    "var": {
+      "titel": "Variantes",
+      "vergleichen": "Comparer des variantes",
+      "standardA": "PV seul",
+      "standardB": "PV + batterie",
+      "standardC": "Variante C",
+      "name": "Nom variante {{id}}",
+      "entfernen": "Supprimer la variante {{id}}",
+      "dazu": "Ajouter la variante {{id}}",
+      "exkl": "hors TVA {{betrag}}",
+      "proKwp": "{{betrag}}/kWc",
+      "marge": "Marge {{prozent}} %",
+      "spalte": "Dans variante",
+      "inVariante": "{{name}} dans la variante {{id}}",
+      "waehlen": "Choisir la variante {{name}} (CHF {{betrag}} TVA incl.)"
+    },
+    "baustein": {
+      "leiste": "Modules :",
+      "leistung": "Ajouter une prestation …",
+      "titel": "Module « {{name}} »",
+      "beschreibung": "Choisir les articles, vérifier les quantités. Les lignes avec règle calculent leur quantité.",
+      "einfuegen_one": "Insérer {{count}} position",
+      "einfuegen_other": "Insérer {{count}} positions",
+      "variante": "Dans la variante",
+      "artikel": "Article",
+      "ohne": "– omettre –",
+      "regel": "Règle pour {{name}}",
+      "faktor": "Facteur pour {{name}}",
+      "zeileDazu": "Ajouter une ligne …",
+      "zeileWeg": "Supprimer {{name}}",
+      "art": {
+        "wahl": "Article au choix : {{kategorie}}",
+        "artikel": "Article fixe ({{kategorie}})",
+        "leistung": "Prestation"
+      },
+      "regelArt": {
+        "fest": "fixe",
+        "je_modul": "par panneau",
+        "je_kwp": "par kWc"
+      }
+    },
+    "regel": {
+      "fest": "fixe",
+      "je_modul": "{{faktor}} par panneau",
+      "je_kwp": "{{faktor}} par kWc",
+      "gespeichert": "Enregistré",
+      "nurAdmin": "Tu peux tout consulter. Seule l'administration modifie marges, limites, validation et subventions.",
+      "leistungen": "Prestations et forfaits",
+      "leistungenText": "Coût = ce que nous coûte une unité (salaire, véhicule), vente = prix par unité hors TVA. Un clic dans le calcul.",
+      "leistungDazu": "Ajouter une prestation",
+      "neueLeistung": "Nouvelle prestation",
+      "leistungWeg": "Supprimer {{name}}",
+      "nameDe": "Nom DE",
+      "nameFr": "Nom FR",
+      "einheit": "Unité",
+      "kosten": "Coût",
+      "verkauf": "Vente",
+      "kategorien": "Marge par catégorie",
+      "kategorienText": "La marge s'applique aux nouveaux articles ; un calcul sous le minimum doit être validé.",
+      "marge": "Marge %",
+      "mindest": "Minimum %",
+      "allgemein": "Limites",
+      "skonto": "Réserve d'escompte %",
+      "rundung": "Arrondir à CHF",
+      "ekTage": "Prix d'achat valable (jours)",
+      "rabattFrei": "Rabais sans validation jusqu'à %",
+      "mindestDb": "Marge contributive minimale %",
+      "freigeber": "Qui valide ?",
+      "freigeberText": "Ces personnes reçoivent la cloche quand rabais ou marge doivent être validés. Seule l'administration peut le modifier.",
+      "freigeberLeer": "Personne choisi : l'administration valide.",
+      "foerderung": "Subvention {{name}} ({{stand}})",
+      "foerderungText": "Uniquement pour l'estimation dans le calcul et le prix indicatif. Vérifier le tarif chaque année auprès de Pronovo.",
+      "fGrund": "Contribution de base CHF",
+      "fJeKwp": "Par kWc jusqu'à {{bis}} kWc",
+      "fBis": "Limite kWc",
+      "fDarueber": "Par kWc au-delà de {{bis}} kWc",
+      "bausteine": "Modules du calcul",
+      "bausteinName": "Nom du nouveau module",
+      "bausteinDazu": "Ajouter un module",
+      "bausteinWeg": "Supprimer le module {{name}}"
+    },
+    "freigabe": {
+      "frei": "Rabais jusqu'à {{prozent}} % et marge au-dessus du minimum : pas de validation nécessaire.",
+      "grund": {
+        "rabatt": "Rabais au-dessus de {{prozent}} %",
+        "db": "Marge contributive sous {{prozent}} %",
+        "marge": "Marge d'une position sous le minimum"
+      },
+      "ichGl": "Tu valides toi-même, l'offre peut être reprise directement.",
+      "erteilt": "Validé par {{von}}.",
+      "wartet": "Validation demandée par {{von}} le {{datum}}, en attente de la direction.",
+      "abgelehnt": "Refusé par {{von}} : {{grund}}",
+      "noetig": "Avant la reprise dans l'offre, la direction doit valider.",
+      "notiz": "Justification (p. ex. offre concurrente)",
+      "anfragen": "Demander la validation",
+      "angefragt": "Validation demandée, la direction reçoit la cloche",
+      "grundAblehnen": "Motif (obligatoire en cas de refus)",
+      "freigeben": "Valider",
+      "ablehnen": "Refuser",
+      "ok": "Validé",
+      "nein": "Refusé"
+    },
+    "richtpreis": {
+      "titel": "Prix indicatif pour le premier entretien",
+      "kwp": "Installation kWc",
+      "speicher": "Avec batterie",
+      "eingeben": "Saisir les kWc",
+      "keine": "Encore trop peu d'offres de cette taille.",
+      "nachFoerderung": "Après subvention env. {{betrag}}",
+      "basis": {
+        "angenommen": "Sur {{n}} offres acceptées de taille similaire, TVA {{satz}} % incl.",
+        "alle": "Sur {{n}} offres de taille similaire, TVA {{satz}} % incl."
+      }
     }
   },
   "fachfehler": {
@@ -2459,6 +2870,14 @@
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "preise_freigabe_noetig": "Le rabais ou la marge doivent d'abord être validés par la direction.",
+    "preise_keine_offerte": "Le calcul n'est lié à aucune offre.",
+    "preise_nur_freigeber": "Seules les personnes qui valident les prix peuvent faire cela.",
+    "preise_import_erledigt": "Cette liste de prix est déjà traitée.",
+    "preise_quelle_fehlt": "Merci d'indiquer d'où vient la liste de prix.",
+    "preise_freigabe_unnoetig": "Ce calcul n'a pas besoin de validation.",
+    "preise_keine_anfrage": "Il n'y a pas de demande ouverte pour ce calcul.",
+    "preise_marge_ungueltig": "La marge doit être entre 0 et 500 %.",
     "ausschreibung_nogo_fehlt": "Merci de choisir un motif dans la liste.",
     "ausschreibung_betrag_fehlt": "Merci d’indiquer le montant de l’offre.",
     "ausschreibung_pruefung_fehlt": "Dès ce montant, une deuxième personne doit d’abord contrôler le dépôt.",
@@ -2517,6 +2936,7 @@
     "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
     "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
     "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
+    "preise_nur_admin": "Seule l'administration peut faire cela.",
     "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
     "einkauf_rechnung_abweichung": "La facture diffère nettement. Merci d’en indiquer la raison dans la note.",
     "einkauf_rechnung_fehlt": "Merci de choisir une facture fournisseur ou d’indiquer numéro et montant.",
@@ -2538,7 +2958,10 @@
     "wartung_kein_termin": "Aucun rendez-vous planifié pour ce contrat.",
     "wartung_keine_mail": "Le client n’a pas d’adresse e-mail.",
     "wartung_kein_angebot": "Aucune offre pour cette installation.",
-    "termin_link_stand": "Le lien de rendez-vous n’existe que pour les leads sans rendez-vous ni offre."
+    "termin_link_stand": "Le lien de rendez-vous n’existe que pour les leads sans rendez-vous ni offre.",
+    "team_taetigkeit_unbekannt": "Cette activité n’existe pas (plus).",
+    "team_wer_ungueltig": "Veuillez choisir « chaque personne » ou « au moins une ».",
+    "team_ausweis_unbekannt": "Ce permis n’existe pas (plus)."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -2878,7 +3301,11 @@
       "datei_zu_gross": "Le fichier est trop gros (5 Mo au maximum).",
       "sicherung_laeuft": "Une sauvegarde est en cours. Réessaie dans une minute.",
       "sicherung_fehlt": "Cette sauvegarde n’existe plus.",
-      "sicherung_format": "Le fichier n’est pas une sauvegarde de ce CRM."
+      "sicherung_format": "Le fichier n’est pas une sauvegarde de ce CRM.",
+      "uid_register": "Le registre IDE ne répond pas. Réessaie plus tard ou saisis à la main.",
+      "elcom": "Les données ElCom (LINDAS) sont inaccessibles.",
+      "elcom_leer": "L’ElCom n’a pas encore publié de données pour cette année.",
+      "geo_admin": "geo.admin.ch ne répond pas."
     }
   },
   "verbindungen": {
@@ -3802,7 +4229,11 @@
       "grund_doppelt": "{{wer}} planifié deux fois",
       "abwesendAm": "Absents : {{namen}}",
       "service": "Interventions de service",
-      "serviceUnter": "depuis Service & garantie"
+      "serviceUnter": "depuis Service & garantie",
+      "taetigkeiten": "Activités",
+      "ausweisFehlt": "{{taetigkeit}} : permis manquant pour {{namen}}",
+      "ausweisNiemand": "{{taetigkeit}} : personne dans l’équipe n’a le permis",
+      "ausweisLegende": "Permis manquant"
     },
     "bewilligungen": {
       "ansicht": "Vue",
@@ -9962,6 +10393,32 @@
       "notiz": "Note",
       "rueckzahlungOffen": "Ouvert selon convention de formation : {{betrag}} (en cas de démission aujourd’hui)",
       "keineFuerPerson": "Aucun cours cette année."
+    },
+    "taetigkeit": {
+      "titel": "Permis obligatoires par activité",
+      "text": "Quels permis une activité sur le chantier exige. La planification avertit s’ils manquent dans l’équipe : « chaque personne » = toutes, « au moins une » = une personne suffit. « Chaque intervention » s’applique sans case cochée. Simple avertissement, la planification reste possible.",
+      "taetigkeit": "Activité",
+      "werKopf": "Qui doit l’avoir",
+      "wer": {
+        "alle": "chaque personne",
+        "einer": "au moins une"
+      },
+      "werFuer": "Qui doit avoir le permis pour {{taetigkeit}}",
+      "immer": "Chaque intervention",
+      "immerFuer": "{{taetigkeit}} s’applique à chaque intervention",
+      "brauchtFuer": "{{taetigkeit}} exige {{ausweis}}",
+      "neu": "Nouvelle activité"
+    },
+    "anlass": {
+      "titel": "Anniversaires et jubilés",
+      "heute": "aujourd’hui",
+      "morgen": "demain",
+      "nichts": "Aucun anniversaire ni jubilé ces prochains jours.",
+      "geburtstag": "Anniversaire",
+      "jubilaeum_one": "{{count}} an chez nous",
+      "jubilaeum_other": "{{count}} ans chez nous",
+      "michVerbergen": "Ne pas m’afficher ici",
+      "michZeigen": "M’afficher à nouveau ici"
     }
   },
   "posteingang": {
@@ -10620,6 +11077,12 @@
     "datensatzOeffnen": "Ouvrir l’enregistrement",
     "warumHinweis": "Si la règle ne convient pas en général, signalez-le à l’administration. Elle peut adapter l’automatisation.",
     "warumUnbekannt": "Cette tâche ne provient pas d’une automatisation que vous pouvez voir."
+  },
+  "zugehoerigkeit": {
+    "hauptkontakt": "Contact principal",
+    "unterschreibt": "Signe",
+    "rechnungen": "Factures",
+    "vorOrt": "Sur place"
   },
   "mehrfachFilter": {
     "alle": "Tous",

@@ -2,7 +2,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { ladeKalkulationen, ladeOffertAuswahl, ladeVorlagen } from '../services/kalkulationen'
+import { ladeImporte } from '../services/importe'
 import { ladeLieferanten, ladeLieferantenpreise, ladePreisliste } from '../services/preise'
+import { ladeBausteine, ladeLeistungen, ladePreisverlauf, ladeRegeln, ladeVerwendung } from '../services/regeln'
 
 /** Zwischenspeicher-Schlüssel des Bereichs «Preise». */
 export const PREIS_SCHLUESSEL = ['preise'] as const
@@ -59,4 +61,39 @@ export function usePreisAenderung<A, R = unknown>(aktion: (a: A) => Promise<R>) 
       ])
     },
   })
+}
+
+/** Preis-Regeln (Marge je Kategorie, Grenzen, Förderung). */
+export function usePreisRegeln() {
+  return useQuery({ queryKey: [...PREIS_SCHLUESSEL, 'regeln'], queryFn: ladeRegeln, staleTime: 10 * 60_000 })
+}
+
+/** Leistungen & Pauschalen. */
+export function useLeistungen() {
+  return useQuery({ queryKey: [...PREIS_SCHLUESSEL, 'leistungen'], queryFn: ladeLeistungen, staleTime: 10 * 60_000 })
+}
+
+/** Bausteine der Kalkulation (nur mit Recht «preise»). */
+export function useBausteine(aktiv: boolean) {
+  return useQuery({ queryKey: [...PREIS_SCHLUESSEL, 'bausteine'], queryFn: ladeBausteine, enabled: aktiv })
+}
+
+/** Eingelesene Preislisten. */
+export function useImporte(aktiv: boolean) {
+  return useQuery({ queryKey: [...PREIS_SCHLUESSEL, 'importe'], queryFn: ladeImporte, enabled: aktiv })
+}
+
+/** Preisverlauf und Verwendung eines Artikels (Artikel-Akte). */
+export function useArtikelVerlauf(artikelId: string | null, aktiv: boolean) {
+  const verlauf = useQuery({
+    queryKey: [...PREIS_SCHLUESSEL, 'verlauf', artikelId],
+    queryFn: () => (artikelId ? ladePreisverlauf(artikelId) : []),
+    enabled: aktiv && artikelId !== null,
+  })
+  const verwendung = useQuery({
+    queryKey: [...PREIS_SCHLUESSEL, 'verwendung', artikelId],
+    queryFn: () => (artikelId ? ladeVerwendung(artikelId) : null),
+    enabled: aktiv && artikelId !== null,
+  })
+  return { verlauf, verwendung }
 }

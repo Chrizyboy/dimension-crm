@@ -34,6 +34,13 @@ Anforderungen Entscheid 0041. Für alle sichtbar (`immer`).
 - Einstellungen `einstellungen.team`: `bewilligung_grenze_rappen` (Vorgesetzte bis hier, darüber Recht «personal»),
   `budget_rappen` je Jahr, `vereinbarung_ab_rappen`.
 
+## Anlässe und Tätigkeiten (Entscheid 0041, Nachtrag)
+
+- Karte **Geburtstage und Jubiläen** für «Mein Tag» (`TeamHeute`), Daten aus `team_anlaesse()`, ausblenden über
+  `team_anlass_zeigen`.
+- Reiter «Anforderungen» › **Pflicht-Ausweise je Tätigkeit** (Liste `taetigkeit`, `taetigkeit_anforderung_speichern`).
+  Die Warnung in der Einsatzplanung rechnet das Modul `projects` selbst (kein Import aus diesem Modul).
+
 ## Abhängigkeiten
 
 - `src/services/supabase.ts`, `meldungen.ts`, `fehler.ts`, `fachfehler.ts`, `src/hooks/useAuswahl.ts`, `src/lib/bild.ts`
