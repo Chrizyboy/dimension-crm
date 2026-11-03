@@ -52,7 +52,9 @@ export async function nachbestellen(lagerortId: string): Promise<{ bestellungen:
 export async function ladeLieferanten(): Promise<Lieferant[]> {
   const { data, error } = await db()
     .from('lieferanten')
-    .select('id, name, email_bestellung, kundennummer_bei_lieferant, telefon, sprache, aktiv, notiz')
+    .select(
+      'id, name, email_bestellung, kundennummer_bei_lieferant, telefon, sprache, aktiv, notiz, fracht_frei_ab_rappen, fracht_rappen, mindestbestellwert_rappen, lieferzeit_tage, zahlungsziel_tage, skonto_prozent, skonto_tage, bestellschluss, bestellweg, webshop_url',
+    )
     .is('geloescht_am', null)
     .order('aktiv', { ascending: false })
     .order('name')
