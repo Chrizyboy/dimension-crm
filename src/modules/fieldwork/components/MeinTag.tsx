@@ -59,8 +59,9 @@ export function MeinTag({ onRapport }: { onRapport: (id: string) => void }) {
           datum: von,
           projekt_id: e.projekt?.id ?? null,
           service_fall_id: e.service?.id ?? null,
+          wartungsvertrag_id: e.wartung?.id ?? null,
           einsatz_id: e.typ === 'einsatz' ? e.id : null,
-          verrechnung: e.service?.garantie ? 'garantie' : null,
+          verrechnung: e.service?.garantie ? 'garantie' : e.typ === 'wartung' ? 'vertrag' : null,
         },
         {
           kunde: e.kunde.name,

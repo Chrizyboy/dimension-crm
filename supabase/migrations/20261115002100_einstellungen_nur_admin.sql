@@ -93,3 +93,37 @@ end
 $$;
 revoke execute on function public.kennzahlen_einstellungen_setzen(jsonb) from public, anon;
 grant execute on function public.kennzahlen_einstellungen_setzen(jsonb) to authenticated;
+
+-- Wochenziele je Person sind Firmen-Einstellungen: nur noch die Administration (vorher auch Recht «finanzen»).
+-- darf_ziele in «Mein Tag» folgt daraus, der Knopf verschwindet für alle anderen.
+create or replace function intern.darf_ziele_setzen() returns boolean
+language sql stable set search_path = '' as $$
+  select intern.hat_recht('admin')
+$$;
+
+/**
+ * Person einer Firmenkarten-Buchung setzen (Buchhaltung, Recht «finanzen»). Die Zuordnung Karte → Person ist
+ * Arbeit am Abgleich, keine Firmen-Einstellung; darum darf die Funktion sie trotz `zz_nur_admin` merken.
+ */
+create or replace function public.firmenkarte_person_setzen(p_buchung uuid, p_person uuid) returns int
+language plpgsql security invoker set search_path = '' as $$
+declare
+  v_karte text;
+  v_vorher text;
+begin
+  if not intern.hat_recht('finanzen') then raise exception using errcode = 'P0001', message = 'finanzen.kein_recht'; end if;
+  update public.firmenkarte_buchungen set person_id = p_person where id = p_buchung returning karte into v_karte;
+  if coalesce(v_karte, '') <> '' and p_person is not null then
+    v_vorher := current_setting('intern.automation', true);
+    perform set_config('intern.automation', 'an', true);
+    update public.einstellungen
+       set wert = jsonb_set(wert, '{spesen,karten}',
+                            coalesce(wert -> 'spesen' -> 'karten', '{}') || jsonb_build_object(right(v_karte, 4), p_person))
+     where schluessel = 'finanzen';
+    perform set_config('intern.automation', coalesce(v_vorher, ''), true);
+    update public.firmenkarte_buchungen set person_id = p_person
+     where karte = v_karte and person_id is null and spese_id is null and geloescht_am is null;
+  end if;
+  return intern.firmenkarte_zuordnen();
+end
+$$;
