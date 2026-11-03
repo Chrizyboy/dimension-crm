@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: geschaeftsleitung, verkauf, buchhaltung
 ---
 
@@ -29,7 +29,7 @@ Où en sommes-nous ? Vente, pipeline ouvert par région, carnet de commandes, ch
 ### Sources de leads et coût par lead
 
 1. Section **Sources de leads** : jusqu’où sont allés les leads de chaque source (rendez-vous, offres, commandes).
-2. Cliquer **Coût/lead** et saisir le montant ; le CRM en calcule le **coût/commande**.
+2. Cliquer **Coût/lead** et saisir le montant (administration seulement) ; le CRM en calcule le **coût/commande**.
 
 ### Pipeline par région
 
@@ -59,4 +59,5 @@ Les offres avec la décision « Gagnée » dans la période choisie. Le taux ne 
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Seule l’administration modifie le coût par lead.
 - 24.10.2026: Indicateurs avec listes au clic, pipeline par région et charge.

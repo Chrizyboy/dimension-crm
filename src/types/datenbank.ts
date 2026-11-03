@@ -12920,6 +12920,17 @@ export type Database = {
         }
         Returns: string
       }
+      papierkorb: {
+        Args: { p_limit?: number }
+        Returns: {
+          bezeichnung: string | null
+          geloescht_am: string
+          geloescht_von: string | null
+          id: string
+          tabelle: string
+        }[]
+      }
+      papierkorb_wiederherstellen: { Args: { p_id: string; p_tabelle: string }; Returns: boolean }
       plz_auskunft: {
         Args: { p_plz: string }
         Returns: {
@@ -13257,6 +13268,7 @@ export type Database = {
       }
       spesen_rueckfrage: { Args: { p_id: string; p_text: string }; Returns: undefined }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      region_fuer_plz: { Args: { p_plz: string }; Returns: string | null }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
       team_kurse: { Args: { p_jahr?: number }; Returns: Json }

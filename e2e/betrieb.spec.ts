@@ -29,8 +29,8 @@ async function verstoesse(page: Page): Promise<string[]> {
 test('Datensicherung: jetzt sichern, Wiederherstellen nur mit Bestätigung', async ({ page }) => {
   test.slow()
   await anmelden(page, 'admin@test.local')
-  await page.goto('/#/settings?reiter=sicherung')
-  await expect(page.getByRole('heading', { name: 'Datensicherung' })).toBeVisible()
+  await page.goto('/#/settings?bereich=sicherung')
+  await expect(page.getByRole('heading', { name: 'Datensicherung' }).first()).toBeVisible()
   await expect(page.getByText(/Automatisch um 12:00 und 16:00/)).toBeVisible()
 
   await page.getByRole('button', { name: 'Jetzt sichern' }).click()
@@ -52,7 +52,7 @@ test('Datensicherung: jetzt sichern, Wiederherstellen nur mit Bestätigung', asy
 
 test('Betrieb und «Diese App»', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
-  await page.goto('/#/settings?reiter=betrieb')
+  await page.goto('/#/settings?bereich=betrieb')
   await expect(page.getByRole('heading', { name: 'Bereit für das Team?' })).toBeVisible()
   // «Datensicherung» steht in beiden Karten: Bereit für das Team? und Zustand der Dienste (28A).
   await expect(page.getByRole('listitem').filter({ hasText: 'Datensicherung' })).toHaveCount(2)
@@ -79,7 +79,7 @@ test('Handbuch: Erste Schritte mit Druckfassung', async ({ page }) => {
   await expect(page.locator('.druckbereich')).toContainText('Dimension Work: Erste Schritte')
 
   // Verkauf: keine Datensicherung, kein Betrieb.
-  await page.goto('/#/settings?reiter=sicherung')
+  await page.goto('/#/settings?bereich=sicherung')
   await expect(page.getByRole('tab', { name: 'Datensicherung' })).toHaveCount(0)
   await expect(page.getByRole('tab', { name: 'Betrieb' })).toHaveCount(0)
 })

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: geschaeftsleitung, verkauf, buchhaltung
 ---
 
@@ -29,7 +29,7 @@ Wie läuft es? Verkauf, offene Pipeline pro Region, Auftragsbestand, Auslastung 
 ### Lead-Quellen und Kosten pro Lead
 
 1. Abschnitt **Lead-Quellen**: wie weit kamen die Leads jeder Quelle (Termine, Offerten, Aufträge).
-2. **Kosten/Lead** anklicken und den Betrag eintragen; daraus rechnet das CRM die **Kosten/Auftrag**.
+2. **Kosten/Lead** anklicken und den Betrag eintragen (nur Administration); daraus rechnet das CRM die **Kosten/Auftrag**.
 
 ### Pipeline pro Region
 
@@ -59,4 +59,5 @@ Offerten mit Entscheid «Gewonnen» im gewählten Zeitraum. Die Quote rechnet nu
 
 ## Neu {#neu}
 
+- 03.11.2026: Kosten pro Lead ändert nur noch die Administration.
 - 24.10.2026: Kennzahlen mit Klick-Listen, Pipeline pro Region und Auslastung.

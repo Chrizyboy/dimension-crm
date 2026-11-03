@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung
 ---
 
@@ -10,7 +10,7 @@ Spesen mit Foto oder PDF des Belegs erfassen, am Handy direkt mit der Kamera. Je
 ## Wer arbeitet hier {#wer}
 
 - **Alle**: eigene Spesen erfassen und bei Bedarf stornieren.
-- **Buchhaltung (Recht Finanzen)**: alle Spesen, auszahlen, an die Buchhaltung schicken, Kategorien.
+- **Buchhaltung (Recht Finanzen)**: alle Spesen, auszahlen, an die Buchhaltung schicken; Kategorien nur lesen.
 
 ## So geht's {#so}
 
@@ -33,7 +33,7 @@ Spesen mit Foto oder PDF des Belegs erfassen, am Handy direkt mit der Kamera. Je
 3. **… an die Buchhaltung**: Mail mit Liste und Belegen liegt im [Ausgangskorb](kapitel:outbox).
 4. Nach der Überweisung **… ausbezahlt**, **Ausbezahlt am** setzen.
 
-### Kategorien pflegen (Buchhaltung)
+### Kategorien pflegen (Administration)
 
 1. Ansicht **Kategorien**: Namen auf Deutsch und Französisch, dazu die **Mail-Adresse der Buchhaltung**.
 
@@ -66,6 +66,7 @@ Eine davon **Stornieren**, Grund «doppelt».
 
 ## Neu {#neu}
 
+- 03.11.2026: Kategorien und Regeln ändert nur noch die Administration; auch unter Einstellungen › Spesen-Kategorien.
 - 31.10.2026: Spesen per Klick in der Monteur-Ansicht.
 - 23.10.2026: Beleg mit KI lesen.
 - 22.10.2026: Spesen mit Beleg, Meine und Alle, ausbezahlt, Storno, Mail an die Buchhaltung.
