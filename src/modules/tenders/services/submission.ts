@@ -4,7 +4,7 @@ import { supabase } from '@/services/supabase'
 import type { Angebot, Auswertung, GngVorschlag, Mitbewerber, Nachweis, Referenz } from '../types'
 
 /**
- * Datenzugriff für Submissionen (Entscheid 0041): Go/No-Go-Vorschlag, Eckdaten, Checkliste, Prüfung, Öffnungs-
+ * Datenzugriff für Submissionen (Entscheid 0042): Go/No-Go-Vorschlag, Eckdaten, Checkliste, Prüfung, Öffnungs-
  * protokoll, Nachweise, Referenzen, Mitbewerber und Auswertung. Abläufe und Regeln liegen in der Datenbank.
  */
 function db() {

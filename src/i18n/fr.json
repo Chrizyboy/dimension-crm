@@ -583,6 +583,66 @@
     "mailsAusOutlook": "Charger les e-mails d'Outlook",
     "projektOeffnen": "Ouvrir dans «Projets & montage»"
   },
+  "kundenseite": {
+    "zurueck": "Retour aux clients",
+    "verlauf": "Historique",
+    "aufgaben": "Tâches ouvertes",
+    "zuAufgaben": "Toutes les tâches",
+    "keineAufgabe": "Aucune tâche ouverte.",
+    "neueAufgabe": "Nouvelle tâche pour moi, Entrée enregistre",
+    "erledigen": "«{{titel}}» terminée",
+    "anlagen": "Installations",
+    "anlage": "Installation",
+    "ausIbn": "selon la mise en service",
+    "keineAnlage": "Aucune installation en service.",
+    "ibn": "MES {{datum}}",
+    "garantieBis": "Garantie jusqu'au {{datum}}",
+    "garantieAbgelaufen": "Garantie échue",
+    "service": "Service et entretien",
+    "zumService": "Vers le service",
+    "keinService": "Aucun contrat d'entretien ni cas de service.",
+    "wartungsvertrag": "Contrat d'entretien",
+    "wartungFaellig": "Entretien dû",
+    "proJahr": "{{betrag}} par an HT",
+    "naechsteWartung": "prochain entretien {{datum}}",
+    "offeneFaelle": "Cas ouverts",
+    "erledigteFaelle": "Cas terminés",
+    "garantie": "Garantie",
+    "erledigtAm": "terminé le {{datum}}",
+    "rechnungen": "Factures et paiements",
+    "zuRechnungen": "Vers les factures",
+    "keineRechnung": "Aucune facture.",
+    "ueberfaellig": "En retard",
+    "bezahltAm": "payée le {{datum}}",
+    "faelligAm": "échéance {{datum}}",
+    "mahnstufe_one": "{{count}}er rappel",
+    "mahnstufe_other": "{{count}}e rappel",
+    "laufend": "En cours",
+    "abgeschlossen": "Terminés",
+    "alleAngaben": "Tous les détails",
+    "baubeginn": "Début des travaux {{datum}}",
+    "zahl": {
+      "seit": "Client depuis",
+      "auftraege": "Total des commandes",
+      "offen": "Ouvert",
+      "offenUeberfaellig_one": "Ouvert, {{count}} en retard",
+      "offenUeberfaellig_other": "Ouvert, {{count}} en retard",
+      "anlagen": "Installations",
+      "service": "Service",
+      "serviceOffen_one": "{{count}} cas ouvert",
+      "serviceOffen_other": "{{count}} cas ouverts",
+      "keinService": "rien d'ouvert",
+      "termin": "Prochain rendez-vous"
+    },
+    "termin": {
+      "besichtigung": "Prochain RDV: visite",
+      "service": "Prochain RDV: service",
+      "wartung": "Prochain entretien",
+      "baubeginn": "Prochain RDV: début des travaux"
+    },
+    "nurFinanzen": "Seules les personnes avec le droit «Finances» voient les factures.",
+    "nurBuchhaltung": "comptabilité seulement"
+  },
   "kontakt": {
     "neuTitel": "Nouveau contact",
     "bearbeitenTitel": "Modifier le contact",
@@ -632,6 +692,7 @@
     "filter": "Filtrer l'historique",
     "filter_alle": "Tout",
     "filter_kontakte": "Contacts",
+    "filter_mails": "E-mails",
     "filter_geschaeft": "Affaires",
     "filter_dokumente": "Documents",
     "filter_aenderungen": "Modifications",
@@ -653,7 +714,9 @@
       "baubeginn": "Début du chantier {{nummer}}",
       "service": "Service",
       "dokument": "Document",
-      "aenderung": "Données modifiées"
+      "aenderung": "Données modifiées",
+      "mail_ein": "E-mail reçu",
+      "mail_aus": "E-mail envoyé"
     },
     "feld": {
       "vorname": "Prénom",
@@ -1988,7 +2051,7 @@
     "empfehlung_nicht_bereit": "Cette demande n’est plus ouverte.",
     "empfehlung_kein_bewertungslink": "Aucun lien d’avis Google n’est saisi (Automatisations › Réglages).",
     "empfehlung_kein_recht": "Droit manquant.",
-    "team_kein_recht": "Tu n’as pas le droit pour cela (dossier du personnel).",
+    "team_kein_recht": "Réservé à l’administration et à la direction.",
     "team_gespraech_naechstes": "Le prochain entretien doit suivre celui-ci.",
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
@@ -2003,6 +2066,16 @@
     "ausschreibung_kriterien": "Les critères ne sont pas valables.",
     "ausschreibung_kriterien_summe": "Les poids des critères doivent totaliser 100 %.",
     "ausschreibung_art_fehlt": "Merci de choisir un type dans la liste.",
+    "kurs_kein_recht": "Tu n’as pas le droit de le faire.",
+    "kurs_titel_fehlt": "Merci d’indiquer un titre.",
+    "kurs_niemand": "Merci de choisir au moins une personne.",
+    "kurs_stand": "Impossible dans ce statut.",
+    "kurs_nicht_gefunden": "Cours introuvable.",
+    "kurs_abgeschlossen": "Le cours est clôturé.",
+    "kurs_grenze": "Au-delà de ta limite : la direction approuve.",
+    "kurs_datum_fehlt": "Il faut une date pour « inscrit ».",
+    "team_gueltigkeit": "Validité de 1 à 600 mois.",
+    "team_text_fehlt": "Merci d’indiquer la désignation en allemand et en français.",
     "grossprojekt_nicht_bewilligt": "Les étapes n'existent qu'après l'approbation.",
     "grossprojekt_stufe_unbekannt": "Cette étape n'existe pas.",
     "grossprojekt_ungueltig": "Les données ne sont pas valables.",
@@ -6092,13 +6165,16 @@
   },
   "handbuch": {
     "titel": "Manuel",
-    "beschreibung": "Mode d’emploi de chaque domaine, nos processus, des vidéos explicatives et tes signalements à l’administration.",
+    "beschreibung": "Comment tout fonctionne : un chapitre par domaine, étape par étape. Avec nos processus, vidéos et tes signalements.",
     "reiter": {
-      "anleitung": "Mode d’emploi",
       "prozesse": "Processus",
       "videos": "Vidéos",
       "meldungen": "Signalements",
-      "start": "Premiers pas"
+      "start": "Premiers pas",
+      "fuerdich": "Pour toi",
+      "kapitel": "Chapitres",
+      "begriffe": "Termes A–Z",
+      "neu": "Nouveautés"
     },
     "nichtsGefunden": "Aucun résultat",
     "titelFeld": "Titre",
@@ -6230,14 +6306,13 @@
       "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
     "anleitung": {
-      "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
-      "suche": "Chercher dans le mode d’emploi",
       "schneller": "Pour aller plus vite",
       "tippSuche": "Chercher un domaine, un contact ou une action",
       "tippSprung": "Aller à, p. ex. aux clients",
       "tippNeu": "Nouvelle entrée dans les listes",
       "tippFilter": "Dans les listes, aller au champ de recherche",
-      "alleKuerzel": "Afficher tous les raccourcis (?)"
+      "alleKuerzel": "Afficher tous les raccourcis (?)",
+      "tippHilfe": "Aide pour le domaine où tu te trouves"
     },
     "fehler": {
       "titel": "Saisis un titre.",
@@ -6302,6 +6377,55 @@
           ]
         }
       ]
+    },
+    "bereichFeld": "Domaine",
+    "bereichHinweis": "Apparaît dans le chapitre de ce domaine et dans l’aide (F1).",
+    "keinBereich": "Aucun domaine (seulement ici)",
+    "kapitel": {
+      "intro": "Un chapitre complet par domaine : à quoi il sert, étape par étape, statuts, ce qui est automatique, règles et questions fréquentes.",
+      "alleBereiche": "Afficher aussi les autres domaines",
+      "anleitungen_one": "{{count}} guide",
+      "anleitungen_other": "{{count}} guides",
+      "stand": "État au {{datum}}",
+      "inhalt": "Contenu du chapitre",
+      "alle": "Tous les chapitres",
+      "oeffnen": "Ouvrir {{bereich}}",
+      "drucken": "Imprimer / PDF",
+      "melden": "Quelque chose ne joue pas ? Signaler",
+      "fehlt": "Ce domaine n’a pas encore de chapitre",
+      "fehltText": "Signale-le, il sera complété.",
+      "unterlagen": "Processus et vidéos de ce domaine",
+      "prozess": "Processus · PDF · V{{version}}",
+      "video": "Vidéo · {{dauer}}"
+    },
+    "fuerDich": {
+      "titel": "Ta journée : {{rolle}}",
+      "rolle": "Rôle",
+      "neu": "Nouveau pour toi",
+      "hilfeTitel": "De l’aide là où tu es",
+      "hilfeText1": "Dans chaque domaine,",
+      "hilfeText2": "ou le point d’interrogation en haut à droite affiche le bon chapitre à côté, sans quitter ton travail."
+    },
+    "begriffe": {
+      "intro": "Ce que signifient les mots du CRM, de A à Z.",
+      "suche": "Chercher un terme"
+    },
+    "neu": {
+      "leer": "Pas encore de nouveautés",
+      "ungesehenSr": "nouveautés non lues :"
+    },
+    "suche": {
+      "feld": "Chercher dans le manuel",
+      "beispiel": "p. ex. « envoyer l’offre », « rabais », « MES »",
+      "kuerzel": "Chercher dans le manuel",
+      "anleitungen": "Dans les chapitres",
+      "mehr": "Termes, processus et vidéos",
+      "leerText": "Essaie un autre mot ou signale ce qui manque."
+    },
+    "hilfe": {
+      "knopf": "Aide pour ce domaine (F1)",
+      "titel": "Aide · {{bereich}}",
+      "ganz": "Chapitre complet"
     }
   },
   "update": {
@@ -7063,24 +7187,32 @@
   },
   "team": {
     "titel": "Équipe & certificats",
-    "beschreibung": "Qui peut faire quoi : cours et permis de chacun, et son propre dossier du personnel.",
+    "beschreibung": "Qui est où aujourd’hui, qui peut faire quoi : équipe, cours et permis, et le dossier du personnel.",
     "meineAkte": "Mon dossier",
     "filter": "Filtre",
     "filterwert": {
       "alle": "Tous",
-      "probleme": "À régler"
+      "probleme": "À régler",
+      "da": "Présent·es aujourd’hui",
+      "pflicht": "Avec obligation"
     },
     "matrix": "Vue d'ensemble : qui peut faire quoi",
     "spalte": {
-      "person": "Personne"
+      "person": "Personne",
+      "heute": "Aujourd’hui",
+      "telefon": "Téléphone",
+      "vorgesetzt": "Supérieur·e",
+      "ausweise": "Permis"
     },
     "zelle": {
       "fehlt": "manque",
       "abgelaufen": "échu",
       "bis": "jusqu'à {{datum}}",
-      "ja": "oui"
+      "ja": "oui",
+      "kursAm": "Cours {{datum}}",
+      "kurs": "Cours réservé"
     },
-    "legende": "«manque» = obligatoire pour le rôle (réglage dans la liste «Cours et permis»). Jaune = échoit dans 60 jours.",
+    "legende": "Rouge = obligatoire pour le rôle, manquant ou échu. Jaune = échoit dans 60 jours. Bleu = cours réservé. Obligations par rôle dans l’onglet « Exigences ».",
     "leer": "Aucune personne",
     "leerText": "Personne n'a quelque chose à régler dans ce filtre.",
     "ausweise": "Cours et permis",
@@ -7114,7 +7246,7 @@
       "anstellung": "Engagement",
       "anstellungBearbeiten": "Modifier l’engagement",
       "persoenlich": "Personnel",
-      "kleider": "Vêtements de travail et équipement",
+      "kleider": "Vêtements de travail",
       "vorgesetzt": "Supérieur/e",
       "vorgesetzt_id": "Supérieur/e",
       "funktion": "Fonction",
@@ -7235,6 +7367,130 @@
       "bewilligungVorbei": "Permis échu ({{datum}})",
       "gespraech": "Entretien le {{datum}}",
       "gespraechVorbei": "Entretien dû depuis le {{datum}}"
+    },
+    "heute": {
+      "da": "présent·e",
+      "grundBis": "{{grund}} jusqu’au {{datum}}",
+      "abwesendBis": "absent·e jusqu’au {{datum}}",
+      "kurs": "en formation",
+      "baustelleIn": "Chantier {{ort}}",
+      "baustelle": "sur le chantier",
+      "serviceUm": "Service {{zeit}}",
+      "service": "Intervention SAV"
+    },
+    "suchen": "Nom, fonction, téléphone",
+    "reiter": {
+      "team": "Équipe",
+      "ausweise": "Permis",
+      "kurse": "Cours",
+      "anforderungen": "Exigences"
+    },
+    "ohneStandort": "Sans site",
+    "allesGueltig": "tout valable",
+    "summe": "Valables",
+    "summeVon": "{{ok}} sur {{von}}",
+    "vorschlag": {
+      "titel_one": "{{art}} manque ou échoit pour 1 personne :",
+      "titel_other": "{{art}} manque ou échoit pour {{count}} personnes :",
+      "planen_one": "Planifier un cours",
+      "planen_other": "Cours pour {{count}}"
+    },
+    "mail": "E-mail",
+    "seit": "depuis le {{datum}}",
+    "kopieren": "Copier {{was}}",
+    "panel": {
+      "ausweise": "Permis",
+      "kurse": "Cours",
+      "ausruestung": "Équipement",
+      "akte": "Dossier"
+    },
+    "ausruestung": {
+      "leer": "Aucun véhicule ni appareil attribué.",
+      "mfk": "Expertise {{datum}}",
+      "pruefung": "Contrôle {{datum}}"
+    },
+    "anforderung": {
+      "text": "Quels permis sont obligatoires par rôle et leur durée de validité. Une coche enregistre aussitôt. S’il manque une obligation, elle apparaît en rouge et comme proposition « Planifier un cours ».",
+      "ausweis": "Cours ou permis",
+      "gueltig": "Validité (mois)",
+      "monateFuer": "Validité en mois pour {{art}}",
+      "unbefristet": "illimité",
+      "pflichtFuer": "{{art}} obligatoire pour {{rolle}}",
+      "monateHinweis": "Vide = illimité. Le rappel arrive 60 jours avant l’échéance, comme tâche et dans la cloche.",
+      "textDe": "Désignation allemand",
+      "textFr": "Désignation français",
+      "neu": "Ajouter un cours ou permis"
+    },
+    "kurs": {
+      "stand": {
+        "beantragt": "demandé",
+        "bewilligt": "approuvé",
+        "angemeldet": "inscrit",
+        "besucht": "suivi",
+        "abgesagt": "annulé"
+      },
+      "kennzahl": {
+        "geplant": "Cours planifiés",
+        "antraege": "Demandes en attente",
+        "kostenBudget": "Coûts {{jahr}}, budget {{budget}}",
+        "kosten": "Coûts de formation {{jahr}}",
+        "tage": "Jours de cours {{jahr}} dans l’équipe"
+      },
+      "tage_one": "{{count}} jour",
+      "tage_other": "{{count}} jours",
+      "filter": {
+        "offen": "En cours",
+        "antraege": "Demandes",
+        "meine": "Les miens"
+      },
+      "jahrZurueck": "Année précédente",
+      "jahrVor": "Année suivante",
+      "leer": "Aucun cours",
+      "leerText": "Planifie un cours ou demande une formation.",
+      "titel": "Cours",
+      "datum": "Date",
+      "wer": "Qui",
+      "anbieterOrt": "Prestataire, lieu",
+      "kosten": "Coûts",
+      "standTitel": "Statut",
+      "ergibt": "donne « {{art}} »",
+      "weiterbildung": "Formation sans permis",
+      "vereinbarungBis": "Convention jusqu’au {{datum}}",
+      "ohneDatum": "Date ouverte",
+      "wartetAufDich": "attend ta décision",
+      "ohneBudget": "Aucun budget saisi pour cette année (paramètres › team).",
+      "neu": "Planifier un cours",
+      "beantragen": "Demander un cours",
+      "neuText": "Avec une date, le cours est inscrit et le jour bloqué dans la planification.",
+      "beantragenText": "Ta ou ton supérieur·e reçoit la demande dans la cloche, pour des coûts plus élevés la direction.",
+      "ablehnen": "Refuser",
+      "absagen": "Annuler",
+      "bewilligen": "Approuver",
+      "speichernAls": {
+        "beantragt": "Demander",
+        "bewilligt": "Enregistrer (approuvé)",
+        "angemeldet": "Enregistrer (inscrit)"
+      },
+      "grund": "Motif : {{grund}}",
+      "absageGrund": "Motif (envoyé aux personnes concernées)",
+      "absageBestaetigen": "Annuler le cours",
+      "werDabei": "Qui était présent·e ? Le permis sera enregistré.",
+      "besucht": "Marquer comme suivi",
+      "art": "Donne le permis",
+      "artHinweis": "Après le cours, le CRM enregistre le permis avec sa validité.",
+      "von": "Date (premier jour)",
+      "vonHinweis": "Avec date : inscrit",
+      "bis": "Jusqu’au (dernier jour)",
+      "bisHinweis": "Vide pour un jour",
+      "anbieter": "Prestataire",
+      "ort": "Lieu",
+      "kostenChf": "Coûts (CHF)",
+      "vereinbarung": "Remboursement en cas de démission (CHF)",
+      "vereinbarungHinweis": "Convention de formation, diminue linéairement jusqu’à la fin",
+      "bindungBis": "Engagement jusqu’au",
+      "notiz": "Note",
+      "rueckzahlungOffen": "Ouvert selon convention de formation : {{betrag}} (en cas de démission aujourd’hui)",
+      "keineFuerPerson": "Aucun cours cette année."
     }
   },
   "posteingang": {

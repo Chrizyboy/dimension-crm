@@ -6,7 +6,7 @@ import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
-import { Kbd } from '@/components/ui/diverses'
+import { Kbd, Skelett } from '@/components/ui/diverses'
 import { useKontakte } from '@/hooks/useKontakte'
 import { useTaste } from '@/hooks/useTaste'
 import { passtZurSuche } from '@/lib/kontakt'
@@ -15,7 +15,7 @@ import type { AkteReiter } from '../types'
 import { kundenSpalten } from './kundenSpalten'
 import { StandFilter } from './StandFilter'
 
-const Kundenakte = lazy(() => import('./Kundenakte'))
+const KundenSeite = lazy(() => import('./KundenSeite'))
 const KontaktDialog = lazy(() => import('./KontaktDialog'))
 
 /** Kunden sind Privatpersonen und Firmen sowie alle, die schon ein Geschäft mit uns haben. */
@@ -30,9 +30,9 @@ export interface KundenProps {
 
 /**
  * Kundenliste (V233 «Kunden»): suchen nach Name, Ort, Mail, Telefon oder Nummer, filtern nach Stand,
- * sortieren per Klick auf die Spalte. Ein Klick öffnet die 360°-Kundenakte als Seitenpanel.
+ * sortieren per Klick auf die Spalte. Ein Klick öffnet die Kundenakte als ganze Seite.
  */
-export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
+export default function Kunden({ kundeId, onAkte }: KundenProps) {
   const { t } = useTranslation()
   const kontakte = useKontakte()
   const [suche, setSuche] = useState('')
@@ -47,10 +47,10 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
     () => {
       setNeu(true)
     },
-    true,
+    !kundeId,
     t('kuerzel.neuerKunde'),
   )
-  useTaste('/', () => suchfeld.current?.focus(), true, t('kuerzel.suche'))
+  useTaste('/', () => suchfeld.current?.focus(), !kundeId, t('kuerzel.suche'))
 
   const kunden = useMemo(
     () => (kontakte.data ?? []).filter((k) => KUNDENARTEN.has(k.kontaktart) || k.stand !== null),
@@ -69,6 +69,24 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
     [kunden, gruppen, verzoegert],
   )
   const spalten = useMemo(() => kundenSpalten(t), [t])
+
+  // Eine offene Akte ist eine ganze Seite (wie der Service-Fall); die Liste bleibt im Hintergrund mit Suche und
+  // Filter erhalten, «Zurück» führt genau dorthin.
+  if (kundeId && supabase) {
+    return (
+      <div className="mx-auto flex w-full max-w-[110rem] flex-col px-4 py-4 sm:px-6">
+        <Suspense fallback={<Skelett className="h-[32rem] w-full" />}>
+          <KundenSeite
+            key={kundeId}
+            id={kundeId}
+            onZurueck={() => {
+              onAkte(null)
+            }}
+          />
+        </Suspense>
+      </div>
+    )
+  }
 
   if (!supabase) {
     return (
@@ -169,18 +187,6 @@ export default function Kunden({ kundeId, reiter, onAkte }: KundenProps) {
       </>
 
       <Suspense>
-        {kundeId && (
-          <Kundenakte
-            id={kundeId}
-            reiter={reiter}
-            onReiter={(r) => {
-              onAkte(kundeId, r)
-            }}
-            onSchliessen={() => {
-              onAkte(null)
-            }}
-          />
-        )}
         {neu && (
           <KontaktDialog
             kontaktart="privat"
