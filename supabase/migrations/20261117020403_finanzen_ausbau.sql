@@ -1,4 +1,4 @@
--- Finanzen vollständig (Entscheid 0055): Gesellschaften getrennt, Konten mit Kontoauszug, Lieferantenrechnungen mit
+-- Finanzen vollständig (Entscheid 0056): Gesellschaften getrennt, Konten mit Kontoauszug, Lieferantenrechnungen mit
 -- Freigabe der Buchhaltung (das Visum der Projektleitung gehört zu den Eingangsrechnungen, Thread «Rechnungen»),
 -- Zahllauf mit Freigabe durch eine zweite Person,
 -- MWST-Schätzung je Quartal, Marge über alle Projekte und Monatsabschluss. Buchhaltung bleibt in AbaNinja.
@@ -258,7 +258,7 @@ begin
   if not found then raise exception using errcode = 'P0002', message = 'stand.unbekannt'; end if;
   if z.status <> 'zur_freigabe' then raise exception using errcode = 'P0001', message = 'finanzen.schritt_falsch'; end if;
   if z.vorbereitet_von = intern.meine_person_id() then
-    raise exception using errcode = 'P0001', message = 'finanzen.vier_augen';
+    raise exception using errcode = 'P0001', message = 'finanzen.zahllauf_vier_augen';
   end if;
   if jsonb_array_length(v_liste) > 0 and not v_liste ? intern.meine_person_id()::text then
     raise exception using errcode = 'P0001', message = 'finanzen.kein_freigeber';

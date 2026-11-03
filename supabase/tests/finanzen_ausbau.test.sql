@@ -1,4 +1,4 @@
--- Prüft «Finanzen vollständig» (Entscheid 0055): Gesellschaft und Prüfschritt neuer Lieferantenrechnungen,
+-- Prüft «Finanzen vollständig» (Entscheid 0056): Gesellschaft und Prüfschritt neuer Lieferantenrechnungen,
 -- «geprüft» (Visum der Eingangsrechnung) macht zahlbereit, Freigabe der Buchhaltung, Zahllauf mit
 -- zweiter Person, Kontoauszug ohne Doppelte und mit erkannter Zahlung, MWST-Schätzung, Marge, Monatsabschluss.
 -- Ausführen: npm run db:test
@@ -72,7 +72,7 @@ create temp table t_zl on commit drop as
          current_date + 1, array['00000000-0000-0000-0000-0000000039d1']::uuid[]) as id;
 select is((select count(*)::int from public.kreditor_zahlungen where zahllauf_id = (select id from t_zl)), 1, 'Zahllauf vorbereitet');
 select throws_ok($$ select public.zahllauf_freigeben((select id from t_zl)) $$,
-  'P0001', 'finanzen.vier_augen', 'wer vorbereitet, gibt nicht frei');
+  'P0001', 'finanzen.zahllauf_vier_augen', 'wer vorbereitet, gibt nicht frei');
 select throws_ok($$ select public.kreditor_pruefung('00000000-0000-0000-0000-0000000039d1', 'klaeren', 'x') $$,
   'P0001', 'finanzen.im_zahllauf', 'Rechnung im Zahllauf bleibt fest');
 
