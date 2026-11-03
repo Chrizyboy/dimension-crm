@@ -848,6 +848,13 @@ export type Database = {
             foreignKeyName: 'anschreiben_ausgang_id_fkey'
             columns: ['ausgang_id']
             isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'anschreiben_ausgang_id_fkey'
+            columns: ['ausgang_id']
+            isOneToOne: false
             referencedRelation: 'ausgangskorb'
             referencedColumns: ['id']
           },
@@ -1262,6 +1269,7 @@ export type Database = {
           bezug_id: string | null
           bezug_tabelle: string | null
           cc: string | null
+          erinnert_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           extern_id: string | null
@@ -1279,6 +1287,8 @@ export type Database = {
           kontakt_id: string | null
           offerte_id: string | null
           projekt_id: string | null
+          rueckgaengig_bis: string | null
+          ruecklauf_am: string | null
           schluessel: string | null
           sende_ab: string | null
           sprache: string
@@ -1287,6 +1297,11 @@ export type Database = {
           verkaufschance_id: string | null
           versuche: number
           verworfen_grund: string | null
+          verworfen_von: string | null
+          zurueck_am: string | null
+          zurueck_an: string | null
+          zurueck_notiz: string | null
+          zurueck_von: string | null
         }
         ComputedFields: never
         Insert: {
@@ -1301,6 +1316,7 @@ export type Database = {
           bezug_id?: string | null
           bezug_tabelle?: string | null
           cc?: string | null
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           extern_id?: string | null
@@ -1318,6 +1334,8 @@ export type Database = {
           kontakt_id?: string | null
           offerte_id?: string | null
           projekt_id?: string | null
+          rueckgaengig_bis?: string | null
+          ruecklauf_am?: string | null
           schluessel?: string | null
           sende_ab?: string | null
           sprache?: string
@@ -1326,6 +1344,11 @@ export type Database = {
           verkaufschance_id?: string | null
           versuche?: number
           verworfen_grund?: string | null
+          verworfen_von?: string | null
+          zurueck_am?: string | null
+          zurueck_an?: string | null
+          zurueck_notiz?: string | null
+          zurueck_von?: string | null
         }
         Update: {
           absender_person_id?: string | null
@@ -1339,6 +1362,7 @@ export type Database = {
           bezug_id?: string | null
           bezug_tabelle?: string | null
           cc?: string | null
+          erinnert_am?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           extern_id?: string | null
@@ -1356,6 +1380,8 @@ export type Database = {
           kontakt_id?: string | null
           offerte_id?: string | null
           projekt_id?: string | null
+          rueckgaengig_bis?: string | null
+          ruecklauf_am?: string | null
           schluessel?: string | null
           sende_ab?: string | null
           sprache?: string
@@ -1364,6 +1390,11 @@ export type Database = {
           verkaufschance_id?: string | null
           versuche?: number
           verworfen_grund?: string | null
+          verworfen_von?: string | null
+          zurueck_am?: string | null
+          zurueck_an?: string | null
+          zurueck_notiz?: string | null
+          zurueck_von?: string | null
         }
         Relationships: [
           {
@@ -1499,6 +1530,108 @@ export type Database = {
             referencedRelation: 'verkaufschancen'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'ausgangskorb_verworfen_von_fkey'
+            columns: ['verworfen_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verworfen_von_fkey'
+            columns: ['verworfen_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_zurueck_an_fkey'
+            columns: ['zurueck_an']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_zurueck_an_fkey'
+            columns: ['zurueck_an']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_zurueck_von_fkey'
+            columns: ['zurueck_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_zurueck_von_fkey'
+            columns: ['zurueck_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ausschreibung_angebote: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          anbieter: string
+          ausschreibung_id: string
+          bemerkung: string | null
+          betrag_rappen: number
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          ort: string | null
+          rang: number | null
+          wir: boolean
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter: string
+          ausschreibung_id: string
+          bemerkung?: string | null
+          betrag_rappen: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          rang?: number | null
+          wir?: boolean
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          anbieter?: string
+          ausschreibung_id?: string
+          bemerkung?: string | null
+          betrag_rappen?: number
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          ort?: string | null
+          rang?: number | null
+          wir?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ausschreibung_angebote_ausschreibung_id_fkey'
+            columns: ['ausschreibung_id']
+            isOneToOne: false
+            referencedRelation: 'ausschreibungen'
+            referencedColumns: ['id']
+          },
         ]
       }
       ausschreibung_kontakte: {
@@ -1621,7 +1754,13 @@ export type Database = {
         Row: {
           alt_daten: Json | null
           alt_id: string | null
+          anbieter_anzahl: number | null
+          angebot_rappen: number | null
+          arge: boolean | null
           art: string
+          auftragsart: string | null
+          ausfuehrung_bis: string | null
+          ausfuehrung_von: string | null
           ausloeser: string | null
           ausloeser_am: string | null
           bauherr: string | null
@@ -1629,9 +1768,16 @@ export type Database = {
           begruendung: string | null
           beobachten_seit: string | null
           beschreibung: string | null
+          beschwerde_bis: string | null
+          bindefrist_monate: number | null
+          checkliste: NonNullable<Json>
+          debriefing_am: string | null
+          eignung_ref_kwp: number | null
+          eingabe_adresse: string | null
           eingereicht_am: string | null
           eingereicht_form: string | null
           entscheid_am: string | null
+          entscheid_datum: string | null
           entscheid_von: string | null
           erstellt_am: string
           erstellt_von: string | null
@@ -1640,41 +1786,67 @@ export type Database = {
           frist_begehung: string | null
           frist_eingabe: string | null
           frist_fragen: string | null
+          frist_oeffnung: string | null
           geaendert_am: string
           geloescht_am: string | null
           gemeinde: string | null
+          gewinner: string | null
+          gng_am: string | null
+          gng_entscheid: string | null
+          gng_grund: string | null
+          gng_von: string | null
+          gng_vorschlag: Json | null
           grund: string | null
           haupt_id: string | null
           id: string
           kanton: string | null
           kontaktsperre_bis: string | null
           korrigiert_am: string | null
+          kriterien: NonNullable<Json>
+          leistung_kwp: number | null
           nummer: string | null
           offerte_id: string | null
+          ohne_protokoll: string | null
           parzelle: string | null
           plz: string | null
           prioritaet: string | null
+          projekt_id: string | null
+          pruefung_am: string | null
+          pruefung_von: string | null
           publiziert_am: string | null
           punkte: number
           quell_id: string | null
           quell_url: string | null
           quelle: string
+          rang: number | null
           rohdaten: Json | null
+          schaetzung_rappen: number | null
           sprache: string
           spur: string
           standort_id: string | null
           status: string
           titel: string
+          varianten: boolean | null
+          verantwortlich_id: string | null
+          verfahren: string | null
           vergabestelle: string | null
           vergabestelle_kontakt_id: string | null
           verkaufschance_id: string | null
           wiedervorlage_am: string | null
+          zuschlag_erwartet: string | null
+          zuschlag_rappen: number | null
         }
         ComputedFields: never
         Insert: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anbieter_anzahl?: number | null
+          angebot_rappen?: number | null
+          arge?: boolean | null
           art: string
+          auftragsart?: string | null
+          ausfuehrung_bis?: string | null
+          ausfuehrung_von?: string | null
           ausloeser?: string | null
           ausloeser_am?: string | null
           bauherr?: string | null
@@ -1682,9 +1854,16 @@ export type Database = {
           begruendung?: string | null
           beobachten_seit?: string | null
           beschreibung?: string | null
+          beschwerde_bis?: string | null
+          bindefrist_monate?: number | null
+          checkliste?: NonNullable<Json>
+          debriefing_am?: string | null
+          eignung_ref_kwp?: number | null
+          eingabe_adresse?: string | null
           eingereicht_am?: string | null
           eingereicht_form?: string | null
           entscheid_am?: string | null
+          entscheid_datum?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -1693,40 +1872,66 @@ export type Database = {
           frist_begehung?: string | null
           frist_eingabe?: string | null
           frist_fragen?: string | null
+          frist_oeffnung?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           gemeinde?: string | null
+          gewinner?: string | null
+          gng_am?: string | null
+          gng_entscheid?: string | null
+          gng_grund?: string | null
+          gng_von?: string | null
+          gng_vorschlag?: Json | null
           grund?: string | null
           haupt_id?: string | null
           id?: string
           kanton?: string | null
           kontaktsperre_bis?: string | null
           korrigiert_am?: string | null
+          kriterien?: NonNullable<Json>
+          leistung_kwp?: number | null
           nummer?: string | null
           offerte_id?: string | null
+          ohne_protokoll?: string | null
           parzelle?: string | null
           plz?: string | null
           prioritaet?: string | null
+          projekt_id?: string | null
+          pruefung_am?: string | null
+          pruefung_von?: string | null
           publiziert_am?: string | null
           punkte?: number
           quell_id?: string | null
           quell_url?: string | null
           quelle: string
+          rang?: number | null
           rohdaten?: Json | null
+          schaetzung_rappen?: number | null
           sprache?: string
           spur: string
           standort_id?: string | null
           status?: string
           titel: string
+          varianten?: boolean | null
+          verantwortlich_id?: string | null
+          verfahren?: string | null
           vergabestelle?: string | null
           vergabestelle_kontakt_id?: string | null
           verkaufschance_id?: string | null
           wiedervorlage_am?: string | null
+          zuschlag_erwartet?: string | null
+          zuschlag_rappen?: number | null
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
+          anbieter_anzahl?: number | null
+          angebot_rappen?: number | null
+          arge?: boolean | null
           art?: string
+          auftragsart?: string | null
+          ausfuehrung_bis?: string | null
+          ausfuehrung_von?: string | null
           ausloeser?: string | null
           ausloeser_am?: string | null
           bauherr?: string | null
@@ -1734,9 +1939,16 @@ export type Database = {
           begruendung?: string | null
           beobachten_seit?: string | null
           beschreibung?: string | null
+          beschwerde_bis?: string | null
+          bindefrist_monate?: number | null
+          checkliste?: NonNullable<Json>
+          debriefing_am?: string | null
+          eignung_ref_kwp?: number | null
+          eingabe_adresse?: string | null
           eingereicht_am?: string | null
           eingereicht_form?: string | null
           entscheid_am?: string | null
+          entscheid_datum?: string | null
           entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
@@ -1745,35 +1957,55 @@ export type Database = {
           frist_begehung?: string | null
           frist_eingabe?: string | null
           frist_fragen?: string | null
+          frist_oeffnung?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
           gemeinde?: string | null
+          gewinner?: string | null
+          gng_am?: string | null
+          gng_entscheid?: string | null
+          gng_grund?: string | null
+          gng_von?: string | null
+          gng_vorschlag?: Json | null
           grund?: string | null
           haupt_id?: string | null
           id?: string
           kanton?: string | null
           kontaktsperre_bis?: string | null
           korrigiert_am?: string | null
+          kriterien?: NonNullable<Json>
+          leistung_kwp?: number | null
           nummer?: string | null
           offerte_id?: string | null
+          ohne_protokoll?: string | null
           parzelle?: string | null
           plz?: string | null
           prioritaet?: string | null
+          projekt_id?: string | null
+          pruefung_am?: string | null
+          pruefung_von?: string | null
           publiziert_am?: string | null
           punkte?: number
           quell_id?: string | null
           quell_url?: string | null
           quelle?: string
+          rang?: number | null
           rohdaten?: Json | null
+          schaetzung_rappen?: number | null
           sprache?: string
           spur?: string
           standort_id?: string | null
           status?: string
           titel?: string
+          varianten?: boolean | null
+          verantwortlich_id?: string | null
+          verfahren?: string | null
           vergabestelle?: string | null
           vergabestelle_kontakt_id?: string | null
           verkaufschance_id?: string | null
           wiedervorlage_am?: string | null
+          zuschlag_erwartet?: string | null
+          zuschlag_rappen?: number | null
         }
         Relationships: [
           {
@@ -1786,6 +2018,13 @@ export type Database = {
           {
             foreignKeyName: 'ausschreibungen_entscheid_von_fkey'
             columns: ['entscheid_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_gng_von_fkey'
+            columns: ['gng_von']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
@@ -1819,10 +2058,52 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_pruefung_von_fkey'
+            columns: ['pruefung_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'ausschreibungen_standort_id_fkey'
             columns: ['standort_id']
             isOneToOne: false
             referencedRelation: 'standorte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausschreibungen_verantwortlich_id_fkey'
+            columns: ['verantwortlich_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -2142,6 +2423,169 @@ export type Database = {
             columns: ['ausfuehren_als']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      baustellen_meldungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          nummer: string
+          person_id: string | null
+          projekt_id: string | null
+          rapport_id: string | null
+          service_fall_id: string | null
+          text: string
+          weiter: boolean
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          nummer?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          rapport_id?: string | null
+          service_fall_id?: string | null
+          text: string
+          weiter?: boolean
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          nummer?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          rapport_id?: string | null
+          service_fall_id?: string | null
+          text?: string
+          weiter?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
         ]
@@ -2630,6 +3074,13 @@ export type Database = {
             foreignKeyName: 'bewertungsanfragen_ausgang_id_fkey'
             columns: ['ausgang_id']
             isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bewertungsanfragen_ausgang_id_fkey'
+            columns: ['ausgang_id']
+            isOneToOne: false
             referencedRelation: 'ausgangskorb'
             referencedColumns: ['id']
           },
@@ -3051,6 +3502,13 @@ export type Database = {
           verkaufschance_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'empfehlungen_dank_ausgang_id_fkey'
+            columns: ['dank_ausgang_id']
+            isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'empfehlungen_dank_ausgang_id_fkey'
             columns: ['dank_ausgang_id']
@@ -3692,6 +4150,63 @@ export type Database = {
             columns: ['spese_id']
             isOneToOne: false
             referencedRelation: 'spesen_liste'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      firmen_nachweise: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          ausgestellt_am: string
+          datei_pfad: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          firma_id: string
+          geaendert_am: string
+          geloescht_am: string | null
+          gueltig_bis: string
+          id: string
+          notiz: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          ausgestellt_am: string
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis: string
+          id?: string
+          notiz?: string | null
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          ausgestellt_am?: string
+          datei_pfad?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          firma_id?: string
+          geaendert_am?: string
+          geloescht_am?: string | null
+          gueltig_bis?: string
+          id?: string
+          notiz?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'firmen_nachweise_firma_id_fkey'
+            columns: ['firma_id']
+            isOneToOne: false
+            referencedRelation: 'firmen'
             referencedColumns: ['id']
           },
         ]
@@ -5392,6 +5907,13 @@ export type Database = {
           zusammengefuehrt_in?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'kontakte_betreuer_id_fkey'
+            columns: ['betreuer_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
           {
             foreignKeyName: 'kontakte_betreuer_id_fkey'
             columns: ['betreuer_id']
@@ -7627,7 +8149,7 @@ export type Database = {
           hat_anhang: boolean
           id: string
           kennung: string
-          ki_werte: Json
+          ki_werte: NonNullable<Json>
           kontakt_id: string | null
           konversation_id: string | null
           nachfassen: boolean
@@ -7683,7 +8205,7 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung: string
-          ki_werte?: Json
+          ki_werte?: NonNullable<Json>
           kontakt_id?: string | null
           konversation_id?: string | null
           nachfassen?: boolean
@@ -7738,7 +8260,7 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung?: string
-          ki_werte?: Json
+          ki_werte?: NonNullable<Json>
           kontakt_id?: string | null
           konversation_id?: string | null
           nachfassen?: boolean
@@ -7771,27 +8293,6 @@ export type Database = {
           zustaendig_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: 'posteingang_verteilt_von_fkey'
-            columns: ['verteilt_von']
-            isOneToOne: false
-            referencedRelation: 'personen'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'posteingang_vorschlag_id_fkey'
-            columns: ['vorschlag_id']
-            isOneToOne: false
-            referencedRelation: 'personen'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'posteingang_zahlung_id_fkey'
-            columns: ['zahlung_id']
-            isOneToOne: false
-            referencedRelation: 'kreditor_zahlungen'
-            referencedColumns: ['id']
-          },
           {
             foreignKeyName: 'posteingang_abgeholt_von_fkey'
             columns: ['abgeholt_von']
@@ -7982,6 +8483,20 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'posteingang_verteilt_von_fkey'
+            columns: ['verteilt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_verteilt_von_fkey'
+            columns: ['verteilt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'posteingang_vertretung_fuer_fkey'
             columns: ['vertretung_fuer']
             isOneToOne: false
@@ -7993,6 +8508,27 @@ export type Database = {
             columns: ['vertretung_fuer']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_vorschlag_id_fkey'
+            columns: ['vorschlag_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_vorschlag_id_fkey'
+            columns: ['vorschlag_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_zahlung_id_fkey'
+            columns: ['zahlung_id']
+            isOneToOne: false
+            referencedRelation: 'kreditor_zahlungen'
             referencedColumns: ['id']
           },
           {
@@ -8054,17 +8590,24 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'posteingang_notizen_posteingang_id_fkey'
-            columns: ['posteingang_id']
+            foreignKeyName: 'posteingang_notizen_person_id_fkey'
+            columns: ['person_id']
             isOneToOne: false
-            referencedRelation: 'posteingang'
-            referencedColumns: ['id']
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'posteingang_notizen_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_notizen_posteingang_id_fkey'
+            columns: ['posteingang_id']
+            isOneToOne: false
+            referencedRelation: 'posteingang'
             referencedColumns: ['id']
           },
         ]
@@ -8118,11 +8661,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
-            columns: ['postfach_person_id']
+            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
+            columns: ['angelegt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
+            columns: ['angelegt_von']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'posteingang_regeln_person_id_fkey'
@@ -8132,8 +8689,15 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
-            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
-            columns: ['angelegt_von']
+            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
@@ -8629,6 +9193,7 @@ export type Database = {
           nummer: string
           objekt_id: string | null
           offerte_id: string | null
+          soll_stunden: number | null
           standort_id: string | null
           status: string
           titel: string | null
@@ -8663,6 +9228,7 @@ export type Database = {
           nummer: string
           objekt_id?: string | null
           offerte_id?: string | null
+          soll_stunden?: number | null
           standort_id?: string | null
           status?: string
           titel?: string | null
@@ -8696,6 +9262,7 @@ export type Database = {
           nummer?: string
           objekt_id?: string | null
           offerte_id?: string | null
+          soll_stunden?: number | null
           standort_id?: string | null
           status?: string
           titel?: string | null
@@ -8988,10 +9555,18 @@ export type Database = {
           person_id: string | null
           projekt_id: string | null
           pruefpunkte: NonNullable<Json>
+          rueckfrage: string | null
+          rueckfrage_am: string | null
+          schritte: NonNullable<Json>
+          seriennummern: NonNullable<Json>
           service_fall_id: string | null
+          sicherheit: Json | null
           team: string[]
           unterschrift_kunde: Json | null
           verrechnung: string | null
+          visiert_am: string | null
+          visiert_von: string | null
+          vorbehalte: NonNullable<Json>
           wartungsvertrag_id: string | null
         }
         ComputedFields: never
@@ -9017,10 +9592,18 @@ export type Database = {
           person_id?: string | null
           projekt_id?: string | null
           pruefpunkte?: NonNullable<Json>
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
+          schritte?: NonNullable<Json>
+          seriennummern?: NonNullable<Json>
           service_fall_id?: string | null
+          sicherheit?: Json | null
           team?: string[]
           unterschrift_kunde?: Json | null
           verrechnung?: string | null
+          visiert_am?: string | null
+          visiert_von?: string | null
+          vorbehalte?: NonNullable<Json>
           wartungsvertrag_id?: string | null
         }
         Update: {
@@ -9045,10 +9628,18 @@ export type Database = {
           person_id?: string | null
           projekt_id?: string | null
           pruefpunkte?: NonNullable<Json>
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
+          schritte?: NonNullable<Json>
+          seriennummern?: NonNullable<Json>
           service_fall_id?: string | null
+          sicherheit?: Json | null
           team?: string[]
           unterschrift_kunde?: Json | null
           verrechnung?: string | null
+          visiert_am?: string | null
+          visiert_von?: string | null
+          vorbehalte?: NonNullable<Json>
           wartungsvertrag_id?: string | null
         }
         Relationships: [
@@ -9120,6 +9711,20 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -10845,6 +11450,102 @@ export type Database = {
           },
         ]
       }
+      submission_referenzen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          ansprechperson: string | null
+          auftraggeber: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          freigegeben: boolean
+          geaendert_am: string
+          gebaeude: string | null
+          geloescht_am: string | null
+          id: string
+          jahr: number | null
+          leistung_kwp: number | null
+          notiz: string | null
+          ort: string | null
+          projekt_id: string | null
+          sprache: string
+          telefon: string | null
+          titel: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ansprechperson?: string | null
+          auftraggeber?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          freigegeben?: boolean
+          geaendert_am?: string
+          gebaeude?: string | null
+          geloescht_am?: string | null
+          id?: string
+          jahr?: number | null
+          leistung_kwp?: number | null
+          notiz?: string | null
+          ort?: string | null
+          projekt_id?: string | null
+          sprache?: string
+          telefon?: string | null
+          titel: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          ansprechperson?: string | null
+          auftraggeber?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          freigegeben?: boolean
+          geaendert_am?: string
+          gebaeude?: string | null
+          geloescht_am?: string | null
+          id?: string
+          jahr?: number | null
+          leistung_kwp?: number | null
+          notiz?: string | null
+          ort?: string | null
+          projekt_id?: string | null
+          sprache?: string
+          telefon?: string | null
+          titel?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'submission_referenzen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       subunternehmer: {
         Row: {
           aktiv: boolean
@@ -12025,6 +12726,61 @@ export type Database = {
           },
         ]
       }
+      zeiten_wochen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bestaetigt_am: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          woche: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bestaetigt_am?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id: string
+          woche: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bestaetigt_am?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          woche?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'zeiten_wochen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'zeiten_wochen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
     }
     Views: {
       abwesenheiten_alle: {
@@ -12098,6 +12854,303 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ausgang_ansicht: {
+        Row: {
+          absender: string | null
+          absender_person_id: string | null
+          an: string | null
+          anhaenge: Json | null
+          antwort_am: string | null
+          art: string | null
+          automatisch: boolean | null
+          betreff: string | null
+          bezug_id: string | null
+          bezug_tabelle: string | null
+          cc: string | null
+          darf_freigeben: boolean | null
+          erstellt_am: string | null
+          fehler: string | null
+          freigegeben_am: string | null
+          freigegeben_durch: string | null
+          fuer_mich: boolean | null
+          gesendet_am: string | null
+          html: string | null
+          id: string | null
+          kanal: string | null
+          ki_auftrag: Json | null
+          ki_status: string | null
+          kontakt_id: string | null
+          kunde: string | null
+          offerte_id: string | null
+          projekt_id: string | null
+          rueckgaengig_bis: string | null
+          ruecklauf_am: string | null
+          sende_ab: string | null
+          sprache: string | null
+          status: string | null
+          text: string | null
+          verkaufschance_id: string | null
+          verworfen_grund: string | null
+          verworfen_von: string | null
+          vorbereitet_von: string | null
+          zurueck_am: string | null
+          zurueck_an: string | null
+          zurueck_notiz: string | null
+          zurueck_von: string | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'ausgangskorb_absender_person_id_fkey'
+            columns: ['absender_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_absender_person_id_fkey'
+            columns: ['absender_person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kontakte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'kunden_uebersicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'marketing_zielgruppe'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_kontakt_id_fkey'
+            columns: ['kontakt_id']
+            isOneToOne: false
+            referencedRelation: 'verkauf_geschaefte'
+            referencedColumns: ['kontakt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['offerte_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_offerte_id_fkey'
+            columns: ['offerte_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_eingang'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ausgangskorb_verkaufschance_id_fkey'
+            columns: ['verkaufschance_id']
+            isOneToOne: false
+            referencedRelation: 'verkaufschancen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      baustellen_meldungen_liste: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string | null
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          erledigt_von_name: string | null
+          erstellt_am: string | null
+          erstellt_von: string | null
+          fotos_anzahl: number | null
+          geaendert_am: string | null
+          geloescht_am: string | null
+          id: string | null
+          kunde: string | null
+          nummer: string | null
+          objekt_ort: string | null
+          person: string | null
+          person_id: string | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          rapport_id: string | null
+          rapport_nummer: string | null
+          service_fall_id: string | null
+          text: string | null
+          weiter: boolean | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
         ]
@@ -13601,6 +14654,7 @@ export type Database = {
           erstellt_von: string | null
           fotos: string[] | null
           fotos_anzahl: number | null
+          fotos_werbung: boolean | null
           geaendert_am: string | null
           geloescht_am: string | null
           id: string | null
@@ -13618,12 +14672,21 @@ export type Database = {
           projekt_id: string | null
           projekt_nummer: string | null
           pruefpunkte: Json | null
+          rueckfrage: string | null
+          rueckfrage_am: string | null
+          schritte: Json | null
+          seriennummern: Json | null
           service_fall_id: string | null
           service_nummer: string | null
+          sicherheit: Json | null
           stunden: number | null
           team: string[] | null
           unterschrift_kunde: Json | null
           verrechnung: string | null
+          visiert_am: string | null
+          visiert_von: string | null
+          visiert_von_name: string | null
+          vorbehalte: Json | null
           wartungsvertrag_id: string | null
         }
         ComputedFields: never
@@ -13696,6 +14759,20 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -14571,13 +15648,16 @@ export type Database = {
         }[]
       }
       auftrag_erstellen: { Args: { p: Json; p_offerte: string }; Returns: string }
+      ausgang_absender_ich: { Args: { p_id: string }; Returns: undefined }
       ausgang_aendern: { Args: { p: Json; p_id: string }; Returns: undefined }
+      ausgang_als_gesendet: { Args: { p_id: string }; Returns: undefined }
       ausgang_anlegen: { Args: { p: Json }; Returns: string }
       ausgang_ergebnis: {
         Args: { p_extern_id: string; p_id: string; p_meldung: string; p_ok: boolean }
         Returns: undefined
       }
-      ausgang_freigeben: { Args: { p_ids: string[] }; Returns: number }
+      ausgang_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      ausgang_freigeben: { Args: { p_ids: string[]; p_sende_ab?: string; p_warten_s?: number }; Returns: number }
       ausgang_holen: {
         Args: { p_limit?: number }
         Returns: {
@@ -14592,6 +15672,7 @@ export type Database = {
           bezug_id: string | null
           bezug_tabelle: string | null
           cc: string | null
+          erinnert_am: string | null
           erstellt_am: string
           erstellt_von: string | null
           extern_id: string | null
@@ -14609,6 +15690,8 @@ export type Database = {
           kontakt_id: string | null
           offerte_id: string | null
           projekt_id: string | null
+          rueckgaengig_bis: string | null
+          ruecklauf_am: string | null
           schluessel: string | null
           sende_ab: string | null
           sprache: string
@@ -14617,6 +15700,11 @@ export type Database = {
           verkaufschance_id: string | null
           versuche: number
           verworfen_grund: string | null
+          verworfen_von: string | null
+          zurueck_am: string | null
+          zurueck_an: string | null
+          zurueck_notiz: string | null
+          zurueck_von: string | null
         }[]
         SetofOptions: {
           from: '*'
@@ -14625,10 +15713,31 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      ausgang_kontext: { Args: { p_id: string }; Returns: Json }
+      ausgang_planen: { Args: { p_ids: string[]; p_sende_ab: string }; Returns: number }
+      ausgang_pruefen: { Args: { p_id: string }; Returns: Json }
+      ausgang_ruecklauf: { Args: { p_id: string; p_zurueck?: boolean }; Returns: undefined }
       ausgang_verwerfen: { Args: { p_grund: string; p_id: string }; Returns: undefined }
+      ausgang_zurueck: { Args: { p_an?: string; p_id: string; p_notiz: string }; Returns: string }
+      ausgang_zurueckholen: { Args: { p_ids: string[] }; Returns: number }
       ausschreibung_einlesen: { Args: { p: Json }; Returns: Json }
       ausschreibung_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
       ausschreibung_erfassen: { Args: { p: Json }; Returns: string }
+      ausschreibung_gng: { Args: { p_id: string }; Returns: Json }
+      ausschreibung_mitbewerber: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          abstand_prozent: number
+          anbieter: string
+          erster: number
+          kantone: string
+          orte: string
+          rappen_pro_kwp: number
+          submissionen: number
+          zuletzt: string
+        }[]
+      }
+      ausschreibungen_auswertung: { Args: { p_bis: string; p_von: string }; Returns: Json }
       ausschreibungen_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_ids: string[] }; Returns: number }
       ausschreibungen_pruefen: { Args: Record<PropertyKey, never>; Returns: Json }
       ausschreibungen_tagesbericht: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -14727,6 +15836,13 @@ export type Database = {
       automation_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
       automation_warum: { Args: { p_lauf: string }; Returns: Json }
       automationen_abarbeiten: { Args: { p_limit?: number }; Returns: Json }
+      baustelle_akte: { Args: { p_projekt: string }; Returns: Json }
+      baustelle_auswertung: { Args: { p_bis: string; p_von: string }; Returns: Json }
+      baustelle_soll_setzen: { Args: { p_projekt: string; p_stunden: number }; Returns: undefined }
+      baustellen_heute: { Args: { p_tag?: string }; Returns: Json }
+      baustellen_infos: { Args: { p_einsaetze: string[] }; Returns: Json }
+      baustellen_liste: { Args: { p_tage?: number }; Returns: Json }
+      baustellen_mappe: { Args: { p_projekt: string }; Returns: Json }
       benachrichtigung_ausblenden: { Args: { p_id: string }; Returns: undefined }
       benachrichtigungen_gelesen: { Args: { p_ids?: string[] }; Returns: number }
       bestellung_ab_erfassen: { Args: { p: Json; p_id: string }; Returns: number }
@@ -14787,6 +15903,7 @@ export type Database = {
       empfehlungs_code: { Args: { p_kontakt: string }; Returns: string }
       eturnity_zuordnen: { Args: { p_eingang: string; p_offerte: string }; Returns: undefined }
       finanzen_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      firmen_nachweis_speichern: { Args: { p: Json }; Returns: string }
       firmenkarte_einlesen: { Args: { p_datei?: string; p_zeilen: Json }; Returns: Json }
       firmenkarte_erledigen: { Args: { p_buchung: string; p_grund: string | null }; Returns: undefined }
       firmenkarte_nachfordern: { Args: { p_ids: string[] }; Returns: number }
@@ -15004,6 +16121,8 @@ export type Database = {
       mein_tag: { Args: { p_bis: string; p_person?: string; p_von: string }; Returns: Json }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_microsoft_verbindung: { Args: Record<PropertyKey, never>; Returns: Json }
+      meldung_erfassen: { Args: { p: Json }; Returns: string }
+      meldung_erledigen: { Args: { p_id: string; p_notiz?: string; p_wieder?: boolean }; Returns: undefined }
       messe_geloescht: { Args: { p_kennung: string; p_sids: string[] }; Returns: number }
       microsoft_verbindungen: {
         Args: Record<PropertyKey, never>
@@ -15064,6 +16183,7 @@ export type Database = {
       nachkalkulation: { Args: { p_projekt: string }; Returns: Json }
       nachtrag_speichern: { Args: { p: Json }; Returns: string }
       nachtrag_status: { Args: { p_grund?: string; p_id: string; p_status: string }; Returns: undefined }
+      nachweise_melden: { Args: Record<PropertyKey, never>; Returns: number }
       newsletter_empfaenger_fuer: {
         Args: { p_newsletter: string }
         Returns: {
@@ -15123,7 +16243,7 @@ export type Database = {
       }
       posteingang_antworten: { Args: { p_mails: Json }; Returns: number }
       posteingang_aufgabe: {
-        Args: { p_faellig: string | null; p_id: string; p_person: string | null; p_titel: string }
+        Args: { p_faellig: string; p_id: string; p_person: string; p_titel: string }
         Returns: string
       }
       posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
@@ -15147,7 +16267,13 @@ export type Database = {
       posteingang_notiz: { Args: { p_id: string; p_text: string }; Returns: string }
       posteingang_notizen_von: {
         Args: { p_id: string }
-        Returns: { am: string; id: string; kuerzel: string; person: string; text: string }[]
+        Returns: {
+          am: string
+          id: string
+          kuerzel: string
+          person: string
+          text: string
+        }[]
       }
       posteingang_regel_loeschen: { Args: { p_id: string }; Returns: undefined }
       posteingang_regel_speichern: { Args: { p: Json }; Returns: string }
@@ -15208,12 +16334,25 @@ export type Database = {
       rapport_abschliessen: { Args: { p?: Json; p_id: string }; Returns: undefined }
       rapport_oeffnen: { Args: { p_id: string }; Returns: undefined }
       rapport_speichern: { Args: { p: Json }; Returns: string }
+      rapport_visieren: { Args: { p_id: string; p_rueckfrage?: string }; Returns: undefined }
       rechnung_entwurf: { Args: { p: Json }; Returns: string }
       rechnung_mahnen: { Args: { p_id: string }; Returns: number }
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       rechnung_stellen: { Args: { p_datum?: string; p_id: string }; Returns: string }
       rechnung_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       rechnungen_heute: { Args: Record<PropertyKey, never>; Returns: Json }
+      referenzen_vorschlaege: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          auftraggeber: string
+          jahr: number
+          leistung_kwp: number
+          ort: string
+          projekt_id: string
+          sprache: string
+          titel: string
+        }[]
+      }
       ressource_eintrag_erfassen: {
         Args: {
           p_art: string
@@ -15475,6 +16614,10 @@ export type Database = {
       spesen_rueckfrage: { Args: { p_id: string; p_text: string }; Returns: undefined }
       spesen_stornieren: { Args: { p_grund: string; p_id: string }; Returns: undefined }
       standort_fuer_plz: { Args: { p_plz: string }; Returns: string }
+      submission_checkliste: { Args: { p_erledigt: boolean; p_id: string; p_schluessel: string }; Returns: Json }
+      submission_protokoll: { Args: { p_id: string; p_zeilen: Json }; Returns: number }
+      submission_pruefen: { Args: { p_id: string }; Returns: undefined }
+      submission_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
       tag_verschieben: { Args: { p_art: string; p_bis: string; p_id: string }; Returns: undefined }
       team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -15517,9 +16660,13 @@ export type Database = {
       zeit_speichern: { Args: { p: Json }; Returns: string }
       zeit_starten: { Args: { p: Json }; Returns: string }
       zeit_stoppen: { Args: { p: Json }; Returns: undefined }
+      zeit_team_starten: { Args: { p: Json }; Returns: number }
+      zeit_team_stoppen: { Args: { p: Json }; Returns: number }
       zeiten_exportieren: { Args: { p_ids: string[] }; Returns: string }
       zeiten_pruefen: { Args: { p_ids: string[] }; Returns: number }
       zeiten_vergessen_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      zeiten_woche_bestaetigen: { Args: { p_woche: string }; Returns: undefined }
+      zeiten_wochenblatt: { Args: { p_montag: string }; Returns: Json }
       zeitplan_ergebnis: { Args: { p_job: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       zeitplan_faellig: { Args: { p_job: string; p_minuten: number }; Returns: boolean }
       zeitplan_laeufe: {

@@ -3,7 +3,8 @@ import { expect, test, type Page } from '@playwright/test'
 import { anmelden, brauchtDatenbank } from './hilfen'
 
 // Phase 8b: Ausschreibungs-Monitor. Ein Baugesuch von Hand erfassen, den Architekten als Kontakt
-// eintragen, den Entwurf bewilligen und in «Senden» wiederfinden; dazu Sperrliste, Quellen und Trichter
+// eintragen, Notiz in der Akte, den Entwurf bewilligen und in «Senden» wiederfinden; dazu Sperrliste, Quellen,
+// Fristen, Nachweise und Auswertung (mit Trichter)
 // ohne Verstösse. Die Quellen selbst (simap, Amtsblatt) prüft `npm run ausschreibungen:pruefen`.
 
 test.describe.configure({ mode: 'serial' })
@@ -44,8 +45,8 @@ test('Baugesuch erfassen, Kontakt eintragen, Entwurf bewilligen', async ({ page 
   expect(await verstoesse(page)).toEqual([])
   await dialog.getByRole('button', { name: 'Erfassen' }).click()
 
-  // Die Akte geht auf: Akquise, Kontakt fehlt.
-  const akte = page.getByRole('dialog')
+  // Die Akte geht als ganze Seite auf: Akquise, Kontakt fehlt.
+  const akte = page.getByRole('article')
   await expect(akte.getByText(`Neubau Mehrfamilienhaus mit Photovoltaik ${lauf}`).first()).toBeVisible()
   await expect(akte.getByText('Kontakt fehlt').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
@@ -58,7 +59,12 @@ test('Baugesuch erfassen, Kontakt eintragen, Entwurf bewilligen', async ({ page 
   await kontakt.getByRole('button', { name: 'Speichern' }).click()
   await expect(kontakt).toBeHidden()
   await expect(akte.getByText('Entwurf').first()).toBeVisible()
-  await page.keyboard.press('Escape')
+  await akte.getByLabel('Notiz').fill('Architekt am Telefon: Interesse an PV-Offerte')
+  await akte.getByRole('button', { name: 'Notiz speichern' }).click()
+  await expect(akte.getByText('Architekt am Telefon').first()).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  await akte.getByRole('button', { name: 'Zurück' }).click()
+  await expect(page.getByRole('tab', { name: /Leitstand/ })).toBeVisible()
 
   await page.getByRole('tab', { name: /Bewilligen/ }).click()
   await page.getByRole('checkbox', { name: new RegExp(lauf) }).check()
@@ -70,7 +76,7 @@ test('Baugesuch erfassen, Kontakt eintragen, Entwurf bewilligen', async ({ page 
   expect(await verstoesse(page)).toEqual([])
 })
 
-test('Sperrliste, Quellen und Trichter ohne Verstösse', async ({ page }) => {
+test('Sperrliste, Quellen, Fristen, Nachweise und Auswertung ohne Verstösse', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/tenders?reiter=quellen')
   await expect(page.getByText('Quellen-Kontrolle')).toBeVisible()
@@ -81,7 +87,21 @@ test('Sperrliste, Quellen und Trichter ohne Verstösse', async ({ page }) => {
   await expect(page.getByText('Regeln', { exact: true })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Trichter' }).click()
+  await page.getByRole('tab', { name: /Fristen/ }).click()
+  await expect(page.getByText(/KW \d+|Keine offenen Fristen/).first()).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+
+  await page.getByRole('tab', { name: /Nachweise/ }).click()
+  await expect(page.getByText('Nachweise der Firmen')).toBeVisible()
+  await expect(page.getByText('Referenzen für Eingaben')).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  await page.getByRole('button', { name: 'Nachweis ablegen' }).first().click()
+  await expect(page.getByRole('dialog', { name: 'Nachweis ablegen' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  await page.keyboard.press('Escape')
+
+  await page.getByRole('tab', { name: 'Auswertung' }).click()
+  await expect(page.getByText('Mitbewerber', { exact: true })).toBeVisible()
   await expect(page.getByText('Gefunden').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
