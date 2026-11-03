@@ -1453,6 +1453,13 @@
       "regionen": "Régions",
       "bericht": "Rapport mensuel",
       "steuerung": "Pilotage"
+    },
+    "terminLink": {
+      "senden": "Envoyer le lien de rendez-vous",
+      "sms": "Par SMS",
+      "mail": "Par e-mail",
+      "bereit": "Le lien de rendez-vous attend la validation dans la boîte d’envoi",
+      "zumAusgang": "Vers la boîte d’envoi"
     }
   },
   "offerten": {
@@ -2527,7 +2534,8 @@
     "wartung_termin_ungueltig": "La fin du rendez-vous doit être après le début.",
     "wartung_kein_termin": "Aucun rendez-vous planifié pour ce contrat.",
     "wartung_keine_mail": "Le client n’a pas d’adresse e-mail.",
-    "wartung_kein_angebot": "Aucune offre pour cette installation."
+    "wartung_kein_angebot": "Aucune offre pour cette installation.",
+    "termin_link_stand": "Le lien de rendez-vous n’existe que pour les leads sans rendez-vous ni offre."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
