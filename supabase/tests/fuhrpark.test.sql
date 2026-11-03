@@ -1,5 +1,5 @@
 -- Prüft den Ausbau «Fahrzeuge & Geräte vollständig» (Entscheid 0039): neue Eintrag-Arten setzen ihre Frist,
--- Schäden haben einen Stand, Ausleihe mit «zurück bis», Reservierungen und «Fahrzeug folgt dem Team» in der
+-- Schäden haben einen Stand, Ausleihe mit «zurück bis», Reservierungen (nur von Hand, Frage 1 B) in der
 -- Belegung, monatliche Kilometer-Erinnerung (einmal pro Monat) und Kosten pro Fahrzeug (nur Recht «finanzen»).
 -- Ausführen: npm run db:test
 begin;
@@ -12,10 +12,10 @@ insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte, spr
   ('00000000-0000-0000-0000-0000000039b1', 'fp_mt', 'Mia Monteurin', '00000000-0000-0000-0000-0000000039a1', 'montage', '{}', 'de'),
   ('00000000-0000-0000-0000-0000000039b2', 'fp_ad', 'Arno Admin', '00000000-0000-0000-0000-0000000039a2', 'admin', '{}', 'de');
 insert into public.fahrzeuge (id, kennzeichen, bezeichnung, person_id, km_stand, km_stand_am, leasing_beginn, leasing_bis,
-                              leasing_rate_rappen, praemie_rappen, kaufpreis_rappen, privat_anteil) values
+                              leasing_rate_rappen, praemie_rappen, kaufpreis_rappen) values
   ('00000000-0000-0000-0000-0000000039f1', 'ZZ 939 001', 'Testbus', '00000000-0000-0000-0000-0000000039b1', 10000,
-   '2026-09-30', '2025-03-01', '2027-02-28', 68900, 120000, 4500000, true),
-  ('00000000-0000-0000-0000-0000000039f2', 'ZZ 939 002', 'Ersatzbus', null, 5000, '2026-10-01', null, null, null, null, null, false);
+   '2026-09-30', '2025-03-01', '2027-02-28', 68900, 120000, 4500000),
+  ('00000000-0000-0000-0000-0000000039f2', 'ZZ 939 002', 'Ersatzbus', null, 5000, '2026-10-01', null, null, null, null, null);
 insert into public.geraete (id, art, bezeichnung, inventar_nr, pruef_monate) values
   ('00000000-0000-0000-0000-0000000039e1', 'hebegeraet', 'Lift Test', 'FP-001', 12);
 insert into public.kontakte (id, art, nachname) values
@@ -82,10 +82,9 @@ select public.ressource_uebergeben(null, '00000000-0000-0000-0000-0000000039e1',
 select ok((select uebernommen_am is null and zurueck_bis is null from public.geraete
             where id = '00000000-0000-0000-0000-0000000039e1'), 'Zurück ins Lager löscht die Ausleihe');
 
--- Belegung: Fahrzeug folgt dem Team; von Hand ein anderes Fahrzeug ersetzt es
-select is((select count(*)::int from public.ressourcen_belegung
-            where fahrzeug_id = '00000000-0000-0000-0000-0000000039f1' and quelle = 'auto'
-              and projekt = 'Fischer, Villmergen'), 1, 'Fahrzeug folgt der eingeplanten Fahrerin');
+-- Belegung nur von Hand (Frage 1 B): der Einsatz allein belegt kein Fahrzeug, eine Reservierung schon
+select is((select count(*)::int from public.ressourcen_belegung where einsatz_id = '00000000-0000-0000-0000-000000003901'),
+  0, 'Fahrzeug folgt dem Team nicht automatisch');
 select throws_ok($$ select public.ressource_reservieren(null, '00000000-0000-0000-0000-0000000039f2', null,
   '2026-11-05', '2026-11-02') $$, 'P0001', 'ressourcen.zeitraum', 'Bis nicht vor von');
 select public.ressource_reservieren('00000000-0000-0000-0000-000000003921', '00000000-0000-0000-0000-0000000039f2', null,
@@ -94,12 +93,11 @@ select public.ressource_reservieren('00000000-0000-0000-0000-000000003921', '000
   '2026-11-02', '2026-11-04', 'einsatz', '00000000-0000-0000-0000-000000003901');
 select is((select count(*)::int from public.ressourcen_reservierungen where id = '00000000-0000-0000-0000-000000003921'),
   1, 'gleiche ID ändert statt doppelt');
-select is((select array_agg(quelle || ':' || (fahrzeug_id = '00000000-0000-0000-0000-0000000039f2'))::text
-             from public.ressourcen_belegung where einsatz_id = '00000000-0000-0000-0000-000000003901'),
-  '{hand:true}', 'Von Hand gewähltes Fahrzeug ersetzt das automatische');
+select is((select projekt from public.ressourcen_belegung where reservierung_id = '00000000-0000-0000-0000-000000003921'),
+  'Fischer, Villmergen', 'Reservierung für den Einsatz zeigt Kunde und Ort');
 select public.ressource_reservierung_aufheben('00000000-0000-0000-0000-000000003921');
-select is((select count(*)::int from public.ressourcen_belegung where einsatz_id = '00000000-0000-0000-0000-000000003901'
-            and quelle = 'auto'), 1, 'Aufheben bringt das automatische Fahrzeug zurück');
+select is((select count(*)::int from public.ressourcen_belegung where einsatz_id = '00000000-0000-0000-0000-000000003901'),
+  0, 'Aufheben gibt das Fahrzeug frei');
 select throws_ok($$ insert into public.ressourcen_reservierungen (fahrzeug_id, von, bis) values
   ('00000000-0000-0000-0000-0000000039f2', '2026-11-02', '2026-11-02') $$, '42501', null, 'Reservierung nur über die Funktion');
 
@@ -115,9 +113,9 @@ select is((select z ->> 'treibstoff_rappen' || ' ' || (z ->> 'unterhalt_rappen')
             where z ->> 'kennzeichen' = 'ZZ 939 001'), '9850 9500 4000 400',
   'Kosten nach Art getrennt, gefahrene Kilometer im Jahr');
 select ok((select (z ->> 'leasing_rappen')::bigint % 68900 = 0 and (z ->> 'leasing_rappen')::bigint > 0
-                  and (z ->> 'privatanteil_rappen')::bigint > 0
+                  and not z ? 'privatanteil_rappen'
              from jsonb_array_elements(public.fuhrpark_kosten(2026) -> 'fahrzeuge') z
-            where z ->> 'kennzeichen' = 'ZZ 939 001'), 'Leasing als Rate × Monate, Privatanteil gerechnet');
+            where z ->> 'kennzeichen' = 'ZZ 939 001'), 'Leasing als Rate × Monate, kein Privatanteil');
 
 -- Kilometer-Erinnerung: einmal pro Fahrzeug und Monat, nur mit fester Person
 reset role;
