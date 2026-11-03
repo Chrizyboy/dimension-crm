@@ -6830,7 +6830,6 @@
       "kaufdatum": "Date d’achat",
       "kaufpreis_rappen": "Prix d’achat (CHF)",
       "kaufpreis": "Prix d’achat (CHF)",
-      "privat_anteil": "Part privée (véhicule utilisé en privé)",
       "versicherung_police": "N° de police",
       "versicherung_deckung": "Couverture",
       "selbstbehalt_rappen": "Franchise (CHF)",
@@ -6919,7 +6918,6 @@
       "versicherung": "Assurance et impôts",
       "weiteres": "Divers"
     },
-    "ja": "Oui",
     "treibstoff": {
       "diesel": "Diesel",
       "benzin": "Essence",
@@ -6986,12 +6984,11 @@
         "einsatz": "Intervention"
       },
       "legende": {
-        "einsatz": "Intervention (suit l’équipe)",
+        "einsatz": "Pour une intervention",
         "hand": "Réservé à la main",
         "werkstatt": "Garage",
         "konflikt": "Double réservation"
       },
-      "folgtTeam": "suit l’équipe",
       "heute": "Cette semaine",
       "weiter": "Semaine suivante",
       "zurueck": "Semaine précédente"
@@ -7037,9 +7034,6 @@
       "keinRechtText": "Les coûts par véhicule sont visibles par la direction et la comptabilité.",
       "leasing": "Leasing",
       "leer": "Pas encore de coûts cette année.",
-      "privatanteil": "Part privée",
-      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
-      "privatanteilTitel": "Part privée {{jahr}}",
       "proFahrzeug": "Coûts par véhicule {{jahr}}",
       "proKm": "CHF {{chf}} par km ({{km}} km)",
       "rest": "Entretien et divers",

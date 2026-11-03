@@ -15,14 +15,14 @@ Gebaut in Phase **17** (ERP-Lückenanalyse), Entscheid 0028; vollständig gemach
   Schäden, Belegung, Dokumente, Verlauf; «Nehme ich» / «Zurück ins Lager» nach dem Scannen des QR-Etiketts.
 - **Belegung** (`belegung`): Wochenplan Fahrzeuge oder Geräte, Reservieren, Werkstatt, Doppelbelegung rot.
 - **Fristen** (`fristen`): MFK, Service, Prüfungen, Reifen, Vignette, Leasing, Ausleihe, Ausweise.
-- **Kosten** (`kosten`, nur Recht `finanzen`): pro Fahrzeug und Jahr, CHF/km, Privatanteil.
+- **Kosten** (`kosten`, nur Recht `finanzen`): pro Fahrzeug und Jahr, CHF/km.
 
 ## Daten
 
 - Besitzt: `fahrzeuge`, `geraete`, `ressourcen_eintraege`, `ressourcen_reservierungen`, Speicher `fuhrpark`
   (schreiben nur über `ressource_eintrag_erfassen`, `ressource_uebergeben`, `ressource_schaden_setzen`,
   `ressource_reservieren`, `ressource_reservierung_aufheben`).
-- Liest: Sicht `ressourcen_belegung` (Einsätze aus dem Zeitplan), `fuhrpark_kosten(jahr)`.
+- Liest: Sicht `ressourcen_belegung` (nur Reservierungen von Hand), `fuhrpark_kosten(jahr)`.
 - Liest: Sicht `fristen` (auch Ausweise aus «Team & Ausweise»), `personen`, `standorte`, Auswahllisten `geraeteart`,
   `ressourcen_eintrag`, `qualifikation`; Einstellung `ressourcen` (Intervalle, Vorlauf) wirkt in der Datenbank.
 - Erinnerung: `fristen_melden` (Zeitplan, stündlich) → Aufgaben und Glocke; `fuhrpark_km_erinnern` einmal pro Monat.
