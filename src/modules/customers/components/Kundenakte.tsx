@@ -1,26 +1,19 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
-import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
-import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
-import { useDrucken } from '@/hooks/useDrucken'
 import { formatKundennummer } from '@/lib/kontakt'
-import { meldeFehler } from '@/services/fehler'
-import { melde } from '@/services/meldungen'
-import { useKontaktAenderung, useKundenakte } from '../hooks/useKunden'
-import { exportiereKontakt, setzePapierkorb } from '../services/kundenakte'
-import type { AkteReiter, Objekt } from '../types'
+import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
+import { useKundenakte } from '../hooks/useKunden'
+import type { AkteReiter } from '../types'
+import { useAkteAktionen } from '../hooks/useAkteAktionen'
+import { AkteDialoge } from './AkteDialoge'
 import { AkteDokumente } from './AkteDokumente'
 import { AkteKopf } from './AkteKopf'
 import { AkteUebersicht } from './AkteUebersicht'
 import { AkteZeitachse } from './AkteZeitachse'
 import { OutlookMailsKnopf } from './OutlookMailsKnopf'
-import { AktivitaetDialog } from './AktivitaetDialog'
-import KontaktDialog from './KontaktDialog'
 import { Kundenblatt } from './Kundenblatt'
-import { ObjektDialog } from './ObjektDialog'
 
 export interface KundenakteProps {
   id: string
@@ -29,20 +22,7 @@ export interface KundenakteProps {
   onSchliessen: () => void
 }
 
-type Offen =
-  { art: 'kontakt' } | { art: 'aktivitaet' } | { art: 'objekt'; objekt: Objekt | null } | { art: 'papierkorb' } | null
-
 const REITER: AkteReiter[] = ['uebersicht', 'zeitachse', 'dokumente']
-
-/** Lädt die Daten als Datei herunter (Auskunft nach revDSG). */
-function speichereDatei(name: string, inhalt: unknown) {
-  const url = URL.createObjectURL(new Blob([JSON.stringify(inhalt, null, 2)], { type: 'application/json' }))
-  const a = document.createElement('a')
-  a.href = url
-  a.download = name
-  a.click()
-  URL.revokeObjectURL(url)
-}
 
 function Laden() {
   return (
@@ -62,37 +42,9 @@ function Laden() {
 export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: KundenakteProps) {
   const { t } = useTranslation()
   const { kopf, akte, zeitachse } = useKundenakte(id)
-  const [offen, setOffen] = useState<Offen>(null)
-  const druck = useDrucken()
-  const papierkorb = useKontaktAenderung((rein: boolean) => setzePapierkorb(id, rein))
+  const aktionen = useAkteAktionen(id, kopf.data, onSchliessen)
+  const { setOffen, druck, exportieren, verschiebe } = aktionen
   const k = kopf.data
-
-  async function exportieren() {
-    try {
-      const daten = await exportiereKontakt(id)
-      speichereDatei(`kontakt-${k ? formatKundennummer(k.kundennummer) : id}.json`, daten)
-    } catch (f) {
-      meldeFehler(f, 'export')
-      melde('kritisch', { de: 'Export fehlgeschlagen', fr: "L'export a échoué" })
-    }
-  }
-
-  async function verschiebe(rein: boolean) {
-    try {
-      await papierkorb.mutateAsync(rein)
-      melde(
-        'ok',
-        rein
-          ? { de: 'In den Papierkorb gelegt', fr: 'Mis à la corbeille' }
-          : { de: 'Wiederhergestellt', fr: 'Restauré' },
-      )
-      setOffen(null)
-      if (rein) onSchliessen()
-    } catch (f) {
-      meldeFehler(f, 'papierkorb')
-      melde('kritisch', { de: 'Nicht gespeichert', fr: 'Non enregistré' })
-    }
-  }
 
   const titel = k?.name ?? t('akte.titel')
   const beschreibung = k ? [formatKundennummer(k.kundennummer), k.ort].filter(Boolean).join(' · ') : ''
@@ -177,60 +129,7 @@ export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: Kunde
         </DialogInhalt>
       </Dialog>
 
-      {offen?.art === 'kontakt' && akte.data && (
-        <KontaktDialog
-          kontaktart={akte.data.kontakt.kontaktart}
-          kontakt={akte.data.kontakt}
-          onSchliessen={() => {
-            setOffen(null)
-          }}
-        />
-      )}
-      {offen?.art === 'aktivitaet' && (
-        <AktivitaetDialog
-          kontaktId={id}
-          onSchliessen={() => {
-            setOffen(null)
-          }}
-        />
-      )}
-      {offen?.art === 'objekt' && (
-        <ObjektDialog
-          kontaktId={id}
-          objekt={offen.objekt}
-          onSchliessen={() => {
-            setOffen(null)
-          }}
-        />
-      )}
-      {offen?.art === 'papierkorb' && (
-        <Dialog
-          open
-          onOpenChange={(o) => {
-            if (!o) setOffen(null)
-          }}
-        >
-          <DialogInhalt
-            titel={t('akte.papierkorbTitel')}
-            beschreibung={t('akte.papierkorbText', { name: titel })}
-            fuss={
-              <>
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setOffen(null)
-                  }}
-                >
-                  {t('allgemein.abbrechen')}
-                </Button>
-                <Button variant="danger" laedt={papierkorb.isPending} onClick={() => void verschiebe(true)}>
-                  {t('akte.inPapierkorb')}
-                </Button>
-              </>
-            }
-          />
-        </Dialog>
-      )}
+      <AkteDialoge id={id} akte={akte.data} titel={titel} aktionen={aktionen} />
     </>
   )
 }

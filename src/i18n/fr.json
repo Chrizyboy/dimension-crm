@@ -583,6 +583,66 @@
     "mailsAusOutlook": "Charger les e-mails d'Outlook",
     "projektOeffnen": "Ouvrir dans «Projets & montage»"
   },
+  "kundenseite": {
+    "zurueck": "Retour aux clients",
+    "verlauf": "Historique",
+    "aufgaben": "Tâches ouvertes",
+    "zuAufgaben": "Toutes les tâches",
+    "keineAufgabe": "Aucune tâche ouverte.",
+    "neueAufgabe": "Nouvelle tâche pour moi, Entrée enregistre",
+    "erledigen": "«{{titel}}» terminée",
+    "anlagen": "Installations",
+    "anlage": "Installation",
+    "ausIbn": "selon la mise en service",
+    "keineAnlage": "Aucune installation en service.",
+    "ibn": "MES {{datum}}",
+    "garantieBis": "Garantie jusqu'au {{datum}}",
+    "garantieAbgelaufen": "Garantie échue",
+    "service": "Service et entretien",
+    "zumService": "Vers le service",
+    "keinService": "Aucun contrat d'entretien ni cas de service.",
+    "wartungsvertrag": "Contrat d'entretien",
+    "wartungFaellig": "Entretien dû",
+    "proJahr": "{{betrag}} par an HT",
+    "naechsteWartung": "prochain entretien {{datum}}",
+    "offeneFaelle": "Cas ouverts",
+    "erledigteFaelle": "Cas terminés",
+    "garantie": "Garantie",
+    "erledigtAm": "terminé le {{datum}}",
+    "rechnungen": "Factures et paiements",
+    "zuRechnungen": "Vers les factures",
+    "keineRechnung": "Aucune facture.",
+    "ueberfaellig": "En retard",
+    "bezahltAm": "payée le {{datum}}",
+    "faelligAm": "échéance {{datum}}",
+    "mahnstufe_one": "{{count}}er rappel",
+    "mahnstufe_other": "{{count}}e rappel",
+    "laufend": "En cours",
+    "abgeschlossen": "Terminés",
+    "alleAngaben": "Tous les détails",
+    "baubeginn": "Début des travaux {{datum}}",
+    "zahl": {
+      "seit": "Client depuis",
+      "auftraege": "Total des commandes",
+      "offen": "Ouvert",
+      "offenUeberfaellig_one": "Ouvert, {{count}} en retard",
+      "offenUeberfaellig_other": "Ouvert, {{count}} en retard",
+      "anlagen": "Installations",
+      "service": "Service",
+      "serviceOffen_one": "{{count}} cas ouvert",
+      "serviceOffen_other": "{{count}} cas ouverts",
+      "keinService": "rien d'ouvert",
+      "termin": "Prochain rendez-vous"
+    },
+    "termin": {
+      "besichtigung": "Prochain RDV: visite",
+      "service": "Prochain RDV: service",
+      "wartung": "Prochain entretien",
+      "baubeginn": "Prochain RDV: début des travaux"
+    },
+    "nurFinanzen": "Seules les personnes avec le droit «Finances» voient les factures.",
+    "nurBuchhaltung": "comptabilité seulement"
+  },
   "kontakt": {
     "neuTitel": "Nouveau contact",
     "bearbeitenTitel": "Modifier le contact",
@@ -632,6 +692,7 @@
     "filter": "Filtrer l'historique",
     "filter_alle": "Tout",
     "filter_kontakte": "Contacts",
+    "filter_mails": "E-mails",
     "filter_geschaeft": "Affaires",
     "filter_dokumente": "Documents",
     "filter_aenderungen": "Modifications",
@@ -653,7 +714,9 @@
       "baubeginn": "Début du chantier {{nummer}}",
       "service": "Service",
       "dokument": "Document",
-      "aenderung": "Données modifiées"
+      "aenderung": "Données modifiées",
+      "mail_ein": "E-mail reçu",
+      "mail_aus": "E-mail envoyé"
     },
     "feld": {
       "vorname": "Prénom",
@@ -1988,15 +2051,33 @@
     "empfehlung_nicht_bereit": "Cette demande n’est plus ouverte.",
     "empfehlung_kein_bewertungslink": "Aucun lien d’avis Google n’est saisi (Automatisations › Réglages).",
     "empfehlung_kein_recht": "Droit manquant.",
-    "team_kein_recht": "Tu n’as pas le droit pour cela (dossier du personnel).",
+    "team_kein_recht": "Réservé à l’administration et à la direction.",
     "team_gespraech_naechstes": "Le prochain entretien doit suivre celui-ci.",
     "wartung_paket_unbekannt": "Cette formule n’existe pas.",
     "wartung_nicht_gekuendigt": "Le contrat n’est pas résilié.",
     "wartung_nichts_zu_verrechnen": "Rien à facturer pour ce contrat (déjà facturé ou sans prix).",
+    "kurs_kein_recht": "Tu n’as pas le droit de le faire.",
+    "kurs_titel_fehlt": "Merci d’indiquer un titre.",
+    "kurs_niemand": "Merci de choisir au moins une personne.",
+    "kurs_stand": "Impossible dans ce statut.",
+    "kurs_nicht_gefunden": "Cours introuvable.",
+    "kurs_abgeschlossen": "Le cours est clôturé.",
+    "kurs_grenze": "Au-delà de ta limite : la direction approuve.",
+    "kurs_datum_fehlt": "Il faut une date pour « inscrit ».",
+    "team_gueltigkeit": "Validité de 1 à 600 mois.",
+    "team_text_fehlt": "Merci d’indiquer la désignation en allemand et en français.",
     "grossprojekt_nicht_bewilligt": "Les étapes n'existent qu'après l'approbation.",
     "grossprojekt_stufe_unbekannt": "Cette étape n'existe pas.",
     "grossprojekt_ungueltig": "Les données ne sont pas valables.",
     "grossprojekt_text_fehlt": "Merci de saisir un texte.",
+    "automation_grund_fehlt": "Veuillez indiquer un motif.",
+    "automation_lauf_zu_ende": "Cette exécution est déjà terminée.",
+    "automation_nicht_gestoppt": "Cette exécution n’est pas arrêtée.",
+    "automation_wartet_nicht": "Reporter n’est possible que tant que l’exécution attend ou est arrêtée.",
+    "automation_lauf_offen": "Relancer n’est possible qu’une fois l’exécution terminée.",
+    "automation_schritt_ok": "Cette étape a réussi, il n’y a rien à relancer.",
+    "automation_versandfenster": "La plage d’envoi doit avoir au moins un jour et « à » après « de ».",
+    "automation_lauf_unbekannt": "Cette exécution n’existe pas (plus).",
     "finanzen_mahnung_nur_freigeber": "Seule la personne désignée valide les relances et rappels. Dépose l’e-mail dans la boîte d’envoi.",
     "finanzen_datum_fehlt": "Merci d’indiquer une date.",
     "finanzen_art_ungueltig": "Ce type n’existe pas.",
@@ -4535,25 +4616,34 @@
   },
   "spesen": {
     "titel": "Frais",
-    "beschreibung": "Photographier les justificatifs, saisir les frais et les envoyer à la comptabilité.",
+    "beschreibung": "Photographier les justificatifs ou saisir des kilomètres. La comptabilité vérifie et verse avec le salaire.",
     "neu": "Saisir des frais",
     "filter": "État",
     "filterwert": {
       "offen": "Ouverts",
-      "ausbezahlt": "Payés",
+      "ausbezahlt": "Versés",
       "storniert": "Annulés",
-      "alle": "Tous"
+      "alle": "Tous",
+      "firmenkarte": "Carte d’entreprise",
+      "abgelehnt": "Refusés"
     },
     "status": {
-      "eingereicht": "Ouvert",
-      "ausbezahlt": "Payé",
-      "storniert": "Annulé"
+      "eingereicht": "Envoyé",
+      "ausbezahlt": "Versé",
+      "storniert": "Retiré",
+      "rueckfrage": "Question",
+      "geprueft": "Vérifié",
+      "abgelehnt": "Refusé",
+      "verbucht": "Comptabilisé"
     },
     "ausbezahltAm": "Payé le {{datum}}",
     "ansicht": {
       "meine": "Mes frais",
       "alle": "Tous les frais",
-      "kategorien": "Catégories"
+      "kategorien": "Règles",
+      "pruefen": "Vérifier",
+      "auszahlen": "Verser",
+      "auswertung": "Analyse"
     },
     "spalte": {
       "datum": "Date",
@@ -4562,13 +4652,14 @@
       "kategorie": "Catégorie",
       "beleg": "Justificatif",
       "betrag": "Montant CHF",
-      "status": "État"
+      "status": "État",
+      "projekt": "Projet"
     },
     "alleWaehlen": "Choisir tous les ouverts",
     "waehlen": "Choisir « {{zweck}} »",
     "belegAnsehen": "Voir",
     "ohneBeleg": "Sans justificatif",
-    "stornieren": "Annuler",
+    "stornieren": "Retirer",
     "summe": "Somme {{betrag}}",
     "anzahl_one": "{{count}} frais",
     "anzahl_other": "{{count}} frais",
@@ -4579,7 +4670,7 @@
     "leerText": "Avec « Saisir des frais », photographier un justificatif et saisir le montant.",
     "erfassen": {
       "titel": "Saisir des frais",
-      "text": "Photographier le justificatif ou choisir un fichier. Les frais sont les vôtres et vont à la comptabilité.",
+      "text": "D’abord photographier le justificatif : la KI remplit les champs, tu vérifies et enregistres.",
       "speichern": "Enregistrer",
       "kategorieWaehlen": "Choisir la catégorie",
       "zweckBeispiel": "p. ex. parking rendez-vous client Fribourg",
@@ -4587,20 +4678,60 @@
       "foto": "Photo",
       "datei": "Choisir un fichier",
       "belegEntfernen": "Retirer le justificatif",
-      "belegHinweis": "Les photos sont réduites. Sans justificatif, les frais restent marqués en jaune."
+      "belegHinweis": "Les photos sont réduites. Sans justificatif, la comptabilité reçoit une remarque.",
+      "aendern": "Modifier les frais",
+      "rueckfrage": "Question de la comptabilité : «{{text}}». Après l’enregistrement, les frais retournent à la comptabilité.",
+      "speichernWeiter": "Enregistrer et suivant",
+      "art": "Type de frais",
+      "belegErsetzen": "Remplacer le justificatif",
+      "bezahltMit": "Payé avec",
+      "firmenkarteHinweis": "Carte d’entreprise : pas de versement, la comptabilité a seulement besoin du justificatif.",
+      "km": "Kilomètres",
+      "kmRechnung": "× CHF {{satz}} par km = {{betrag}}",
+      "mwst": "TVA",
+      "mwstUnbekannt": "non indiquée",
+      "ohneMwst": "sans TVA",
+      "ohneProjekt": "sans projet (taper numéro ou client)",
+      "personen": "Personnes",
+      "projektHinweis": "Les coûts apparaissent dans le post-calcul.",
+      "strecke": "Trajet",
+      "streckeBeispiel": "p. ex. Bulle – Romont aller-retour"
     },
     "storno": {
       "titel": "Annuler les frais",
       "grund": "Motif"
     },
     "auszahlen": {
-      "titel_one": "Marquer {{count}} frais comme payé",
-      "titel_other": "Marquer {{count}} frais comme payés",
-      "text": "Total {{betrag}}. Ensuite, ils ne peuvent plus être modifiés.",
-      "datum": "Payé le",
-      "knopf": "Marquer comme payés",
-      "knopfAuswahl_one": "{{count}} payé",
-      "knopfAuswahl_other": "{{count}} payés"
+      "titel_one": "Verser {{count}} frais",
+      "titel_other": "Verser {{count}} frais",
+      "text": "Total {{betrag}} pour {{personen}} personnes. Ensuite les frais sont figés et chaque personne reçoit une notification.",
+      "datum": "Versé le",
+      "knopf": "Créer le versement",
+      "knopfAuswahl_one": "Verser {{count}}",
+      "knopfAuswahl_other": "Verser {{count}}",
+      "art": "Versement",
+      "lohn": "Avec le salaire",
+      "ueberweisung": "Virement",
+      "titelFeld": "Titre",
+      "titelHinweis": "Vide = «Lohn November 2026» selon la date et le type.",
+      "kachelOffen_one": "vérifiés, à verser ({{count}} · {{personen}} personnes)",
+      "kachelOffen_other": "vérifiés, à verser ({{count}} · {{personen}} personnes)",
+      "kachelVorsteuer": "dont TVA (impôt préalable)",
+      "kachelPruefen": "encore à vérifier",
+      "kachelFirmenkarte": "carte d’entreprise, à vérifier",
+      "leer": "Rien à verser",
+      "leerText": "Les frais vérifiés payés avec son argent apparaissent ici par personne.",
+      "jePerson": "Par personne",
+      "anzahl": "Frais",
+      "km": "Kilomètres",
+      "personWaehlen": "Verser à {{person}}",
+      "pdf": "Décompte PDF",
+      "vorschau": "Brouillon",
+      "csvName": "a-verser",
+      "laeufe": "Versements précédents",
+      "keineLaeufe": "Aucun versement créé.",
+      "personen_one": "{{count}} personne",
+      "personen_other": "{{count}} personnes"
     },
     "mail": {
       "knopf_one": "{{count}} à la comptabilité",
@@ -4620,15 +4751,123 @@
       "fr": "Français",
       "entfernen": "Retirer la catégorie",
       "neu": "Catégorie",
-      "hinweis": "Une catégorie retirée reste visible sur les anciens frais."
+      "hinweis": "Une catégorie supprimée reste visible sur les anciens frais. La norme vaut par personne (repas) ou par justificatif ; compte selon le plan comptable PME."
     },
     "heute": {
-      "meine_one": "{{count}} frais personnel ouvert",
-      "meine_other": "{{count}} frais personnels ouverts",
-      "alle_one": "{{count}} frais attend le paiement",
-      "alle_other": "{{count}} frais attendent le paiement",
+      "meine_one": "{{count}} de tes frais en cours",
+      "meine_other": "{{count}} de tes frais en cours",
+      "alle_one": "{{count}} frais à verser",
+      "alle_other": "{{count}} frais à verser",
       "oeffnen": "Ouvrir",
-      "nichts": "Aucun frais ouvert."
+      "nichts": "Aucun frais ouvert.",
+      "rueckfrage_one": "{{count}} question sur tes frais",
+      "rueckfrage_other": "{{count}} questions sur tes frais",
+      "pruefen_one": "{{count}} frais à vérifier",
+      "pruefen_other": "{{count}} frais à vérifier"
+    },
+    "kilometerErfassen": "Saisir des kilomètres",
+    "aendern": "Modifier «{{zweck}}»",
+    "konto": "Compte",
+    "verlauf": "Historique",
+    "kmZeile": "{{km}} km × {{satz}}",
+    "mwstZeile": "TVA {{satz}} %",
+    "leerTextAlle": "Aucun frais pour ce filtre.",
+    "hinweis": {
+      "doppelt": "doublon ?",
+      "ohne_beleg": "sans justificatif",
+      "alt": "envoyé tard",
+      "richtwert": "au-dessus de la norme",
+      "waehrung": "devise étrangère"
+    },
+    "art": {
+      "beleg": "Justificatif",
+      "kilometer": "Kilomètres voiture privée"
+    },
+    "bezahlt": {
+      "eigen": "Mon argent",
+      "firmenkarte": "Carte d’entreprise"
+    },
+    "grund": {
+      "storno": {
+        "titel": "Retirer les frais",
+        "feld": "Motif",
+        "hinweis": "Les frais restent visibles, barrés.",
+        "knopf": "Retirer"
+      },
+      "rueckfrage": {
+        "titel": "Question à la personne",
+        "feld": "Question",
+        "hinweis": "La personne reçoit une notification et répond en modifiant les frais.",
+        "knopf": "Question"
+      },
+      "ablehnen": {
+        "titel": "Refuser les frais",
+        "feld": "Motif",
+        "hinweis": "La personne reçoit une notification. Les frais refusés sont figés.",
+        "knopf": "Refuser"
+      }
+    },
+    "meine": {
+      "wirdAusbezahlt_one": "vérifiés, seront versés ({{count}})",
+      "wirdAusbezahlt_other": "vérifiés, seront versés ({{count}})",
+      "beiBuchhaltung_one": "à la comptabilité ({{count}})",
+      "beiBuchhaltung_other": "à la comptabilité ({{count}})",
+      "rueckfragen": "Questions pour toi",
+      "jahr": "versés cette année",
+      "jahrLetzte": "versés cette année, dernier versement le {{datum}} ({{mit}})",
+      "rueckfrageZu": "Question sur «{{zweck}}» du {{datum}} :",
+      "beantworten": "Répondre"
+    },
+    "pruefen": {
+      "leer": "Tout est vérifié",
+      "leerText": "Les nouveaux frais apparaissent ici dès qu’ils sont envoyés.",
+      "alleOhneHinweis_one": "Vérifier {{count}} sans remarque",
+      "alleOhneHinweis_other": "Vérifier les {{count}} sans remarque",
+      "alleOhneHinweis_zero": "Aucun sans remarque",
+      "position": "{{nr}} sur {{von}}",
+      "tasten": "J/K pour naviguer, P pour vérifier",
+      "tasteWeiter": "Frais suivants",
+      "tasteZurueck": "Frais précédents",
+      "tastePruefen": "Vérifier les frais",
+      "geprueft": "Vérifié",
+      "aendern": "Modifier",
+      "belegAlt": "Justificatif de «{{zweck}}»",
+      "neuesFenster": "Ouvrir dans une nouvelle fenêtre",
+      "kilometerOhneBeleg": "Les kilomètres n’ont pas besoin de justificatif.",
+      "richtwertText": "Au-dessus de la norme de la catégorie. Merci de vérifier la note et le nombre de personnes."
+    },
+    "auswertung": {
+      "jahr": "Année",
+      "total_one": "Frais {{jahr}} ({{count}} justificatif)",
+      "total_other": "Frais {{jahr}} ({{count}} justificatifs)",
+      "proMonat": "par mois (moyenne)",
+      "aufProjekte": "imputés à des projets",
+      "firmenkarte": "avec carte d’entreprise",
+      "nachMonat": "Par mois",
+      "nachKategorie": "Par catégorie",
+      "nachPerson": "Par personne",
+      "nachProjekt": "Par projet"
+    },
+    "regeln": {
+      "titel": "Règles",
+      "kmSatz": "Indemnité km CHF",
+      "kmSatzHinweis": "Par km avec la voiture privée.",
+      "tage": "Envoyer dans les jours",
+      "tageHinweis": "Les frais envoyés plus tard reçoivent une remarque.",
+      "auszahlung": "Versement habituel",
+      "richtwert": "Norme CHF",
+      "belegAb": "Justificatif dès CHF",
+      "kmKategorie": "Kilomètres : montant = km × indemnité, sans justificatif ni TVA."
+    },
+    "pdf": {
+      "titel": "Décompte de frais",
+      "mwst": "TVA",
+      "betrag": "CHF",
+      "total": "Total",
+      "vorsteuer": "TVA incluse (impôt préalable) :",
+      "unterschriftPerson": "Date, signature collaborateur/trice",
+      "unterschriftBuchhaltung": "Vérifié comptabilité",
+      "datei": "Decompte de frais"
     }
   },
   "finanzen": {
@@ -5214,7 +5453,9 @@
     "ansicht": {
       "liste": "Automatisations",
       "protokoll": "Journal",
-      "einstellungen": "Paramètres"
+      "einstellungen": "Paramètres",
+      "uebersicht": "Vue d’ensemble",
+      "geplant": "Planifié"
     },
     "aus": "Désactivée",
     "mitFreigabe": "Avec validation",
@@ -5261,7 +5502,11 @@
       "projekt_frist_ueberfaellig": "Délai du planning dépassé",
       "projekt_material_faellig": "Commande de matériel due",
       "einsatz_morgen": "Montage demain",
-      "service_termin_morgen": "Intervention demain"
+      "service_termin_morgen": "Intervention demain",
+      "lead_ohne_kontakt": "Lead sans contact",
+      "anlage_jahrestag": "Anniversaire de l’installation",
+      "rechnung_bezahlt": "Facture payée",
+      "garantie_laeuft_ab": "La garantie expire"
     },
     "ereignisHilfe": {
       "lead_neu": "Dès qu’un lead est saisi (à la main, site web, téléphone). L’import de l’ancien CRM ne déclenche rien.",
@@ -5284,7 +5529,11 @@
       "projekt_frist_ueberfaellig": "Quand le délai d’une étape est dépassé sans qu’elle soit faite ; les demandes déposées ne comptent pas (suivies par « Demande déposée »).",
       "projekt_material_faellig": "Quand la date « commander avant » (début des travaux moins le délai de livraison des réglages Achats) est atteinte et que le matériel n’est pas commandé.",
       "einsatz_morgen": "La veille d’un montage planifié, dès l’heure du rappel SMS (16h par défaut).",
-      "service_termin_morgen": "La veille d’une intervention de service ou d’entretien, dès l’heure du rappel SMS (16h par défaut)."
+      "service_termin_morgen": "La veille d’une intervention de service ou d’entretien, dès l’heure du rappel SMS (16h par défaut).",
+      "lead_ohne_kontakt": "Quand un lead ouvert reste autant de jours ouvrables sans appel, e-mail ni rendez-vous (règles de protection). Les rappels comptent dès leur date.",
+      "anlage_jahrestag": "Chaque année au jour de la mise en service, une fois par an.",
+      "rechnung_bezahlt": "Quand une facture est entièrement payée (rapprochement AbaNinja ou à la main).",
+      "garantie_laeuft_ab": "Quand la garantie d’une installation entre dans le préavis (règles de protection), une fois par garantie."
     },
     "aktion": {
       "aufgabe": "Créer une tâche",
@@ -5300,7 +5549,9 @@
       "zielgruppe": "Signaler un groupe cible",
       "outlook_termin": "Rendez-vous dans Outlook",
       "sharepoint_ordner": "Dossier SharePoint",
-      "abaninja_kunde": "Client dans AbaNinja"
+      "abaninja_kunde": "Client dans AbaNinja",
+      "wiedervorlage": "Fixer un rappel",
+      "notiz": "Note dans l’historique"
     },
     "aktionKurz": {
       "aufgabe": "Tâche",
@@ -5316,7 +5567,9 @@
       "zielgruppe": "Groupe cible",
       "outlook_termin": "Outlook",
       "sharepoint_ordner": "SharePoint",
-      "abaninja_kunde": "AbaNinja"
+      "abaninja_kunde": "AbaNinja",
+      "wiedervorlage": "Rappel",
+      "notiz": "Note"
     },
     "aktionHilfe": {
       "aufgabe": "La tâche apparaît sous « Tâches » chez la première personne de la liste qui existe.",
@@ -5332,7 +5585,9 @@
       "zielgruppe": "Compte les clients avec ce critère et envoie un lien vers « Écrire aux clients ».",
       "outlook_termin": "Inscrit le rendez-vous dans l’Outlook de la personne responsable (sans invitation au client).",
       "sharepoint_ordner": "Crée le dossier client « K0123 Nom » avec ses sous-dossiers s’il n’existe pas encore.",
-      "abaninja_kunde": "Relie le client à AbaNinja ou l’y crée."
+      "abaninja_kunde": "Relie le client à AbaNinja ou l’y crée.",
+      "wiedervorlage": "Met le lead en rappel ; il réapparaît à la date dans la liste de la vente.",
+      "notiz": "Écrit dans l’historique du client, pour que chacun voie ce qui s’est passé automatiquement."
     },
     "feld": {
       "lead_quelle": "Lead : source",
@@ -5438,7 +5693,23 @@
       "pruefen_ok": "Toujours utile, on continue",
       "nicht_verrechenbar": "Pas payant, pas de projet de facture",
       "schon_verrechnet": "Déjà facturé",
-      "rapport_nicht_verrechenbar": "Rapport non facturable"
+      "rapport_nicht_verrechenbar": "Rapport non facturable",
+      "versandfenster": "Attend la plage d’envoi : {{bis}}",
+      "kontakt_pause": "Pause de contact, part le {{bis}}",
+      "naechster_uebersprungen": "Plus nécessaire, étape suivante sautée",
+      "gestoppt": "Arrêté pour ce cas par {{von}} : {{grund}}",
+      "fortgesetzt": "Repris par {{von}}",
+      "verschoben": "Reporté par {{von}} au {{bis}}",
+      "wiedervorlage": "Rappel le {{am}}",
+      "notiz": "Note dans l’historique",
+      "kein_lead": "Pas de lead associé",
+      "probe_versandfenster": "Hors plage d’envoi : part seulement à l’heure indiquée",
+      "probe_keine_mail": "Pas d’adresse e-mail : serait sauté",
+      "probe_kein_telefon": "Pas de numéro de mobile : serait sauté",
+      "probe_werbesperre": "Le client ne veut pas de publicité : serait sauté",
+      "probe_kein_empfaenger": "Personne trouvée pour le recevoir",
+      "probe_abwesend": "La personne est absente ce jour-là (vérifier la suppléance)",
+      "probe_erst_dann": "Sera vérifié seulement à ce moment ; aujourd’hui c’est le cas"
     },
     "empfaenger": {
       "zustaendig": "Personne responsable",
@@ -5477,7 +5748,8 @@
       "fertig": "Terminé",
       "uebersprungen": "Ignoré",
       "fehler": "Erreur",
-      "abgebrochen": "Arrêté"
+      "abgebrochen": "Arrêté",
+      "gestoppt": "Arrêté"
     },
     "ergebnis": {
       "ok": "Fait",
@@ -5488,7 +5760,10 @@
     },
     "schritt": {
       "bedingungen": "Conditions vérifiées",
-      "ende": "Fin"
+      "ende": "Fin",
+      "gestoppt": "Arrêté",
+      "fortgesetzt": "Repris",
+      "verschoben": "Reporté"
     },
     "editor": {
       "beschreibung": "Quand … (déclencheur), seulement si … (conditions), alors … (actions dans l’ordre).",
@@ -5532,7 +5807,19 @@
       "modus": "Ce qui part à l’extérieur",
       "aktiv": "Activée",
       "weg": "Mettre à la corbeille",
-      "wirklichWeg": "Vraiment à la corbeille ?"
+      "wirklichWeg": "Vraiment à la corbeille ?",
+      "arbeitstage": "En jours ouvrables (sans week-end ni jours fériés)",
+      "ersatzMail": "Sans adresse e-mail : tâche d’appel au lieu de l’e-mail",
+      "ersatzSms": "Sans numéro de mobile : tâche d’appel au lieu du SMS",
+      "sonstWas": "Si plus nécessaire",
+      "sonstArt": {
+        "ende": "Terminer l’exécution",
+        "ueberspringen": "Sauter seulement l’étape suivante"
+      },
+      "schutz": "Protection des clients",
+      "probelauf": "Essai",
+      "aenderungen": "Modifications",
+      "duplizieren": "Dupliquer"
     },
     "protokoll": {
       "zeit": "Démarré",
@@ -5548,7 +5835,8 @@
         "offen": "En cours",
         "fertig": "Terminées",
         "uebersprungen": "Ignorées",
-        "fehler": "Erreurs"
+        "fehler": "Erreurs",
+        "gestoppt": "Arrêtés"
       },
       "leerTitel": "Aucune exécution",
       "leerText": "Dès que quelque chose se passe, chaque exécution apparaît ici avec ses étapes.",
@@ -5569,6 +5857,180 @@
       "bewertung_link_fr": "Lien pour les avis (Romandie)",
       "bewertung_link_hilfe": "P. ex. avis Google ; apparaît dans la variable {Bewertungslink}. Les clients francophones reçoivent le lien de la Romandie.",
       "linkFalsch": "Merci de saisir une adresse avec https://."
+    },
+    "bereich": {
+      "verkauf": "Vente",
+      "offerten": "Offres",
+      "projekte": "Projets",
+      "service": "Service et installations",
+      "finanzen": "Finances",
+      "marketing": "Marketing et autres"
+    },
+    "liste": {
+      "suche": "Rechercher une automatisation",
+      "filterTitel": "Filtrer les automatisations",
+      "keine": "Aucune automatisation ne correspond au filtre.",
+      "zuletzt": "dernière {{zeit}}",
+      "filter": {
+        "alle": "Toutes",
+        "aktiv": "Activées",
+        "aus": "Désactivées",
+        "fehler": "Avec erreurs",
+        "aussen": "Va aux clients"
+      }
+    },
+    "uebersicht": {
+      "motorOk": "Le moteur tourne",
+      "motorStill": "Le moteur est arrêté",
+      "motorZuletzt": "dernière fois {{zeit}}",
+      "motorNie": "jamais exécuté",
+      "aktivVon": "{{aktiv}} sur {{alle}} activées",
+      "wartend_one": "{{count}} exécution en attente",
+      "wartend_other": "{{count}} exécutions en attente",
+      "erledigt": "Fait cette semaine",
+      "gespart": "env. {{dauer}} de travail manuel économisé",
+      "wirkung": {
+        "aufgabe_one": "{{count}} tâche",
+        "aufgabe_other": "{{count}} tâches",
+        "mail_one": "{{count}} e-mail",
+        "mail_other": "{{count}} e-mails",
+        "sms_one": "{{count}} SMS",
+        "sms_other": "{{count}} SMS",
+        "benachrichtigt_one": "{{count}} notification",
+        "benachrichtigt_other": "{{count}} notifications",
+        "rechnung_entwurf_one": "{{count}} projet de facture",
+        "rechnung_entwurf_other": "{{count}} projets de facture",
+        "wiedervorlage_one": "{{count}} rappel",
+        "wiedervorlage_other": "{{count}} rappels"
+      },
+      "mailsWartend": "En attente de validation",
+      "mailsAlt_one": "{{count}} attend depuis plus de 2 jours",
+      "mailsAlt_other": "{{count}} attendent depuis plus de 2 jours",
+      "mailsFreigegeben_one": "{{count}} validé cette semaine",
+      "mailsFreigegeben_other": "{{count}} validés cette semaine",
+      "zumAusgang": "Vers la corbeille de sortie",
+      "rechnungen": "Projets de facture ouverts",
+      "rechnungenHilfe": "préparés par les automatisations, pas encore émis",
+      "probleme": "Problèmes (7 jours)",
+      "vorwoche_one": "Semaine précédente {{count}}",
+      "vorwoche_other": "Semaine précédente {{count}}",
+      "zumProtokoll": "Vers le journal",
+      "aufmerksamkeit": "Demande de l’attention",
+      "siebenTage": "7 derniers jours",
+      "allesGut": "Tout est en ordre : aucune erreur ni adresse manquante.",
+      "beheben": "Corriger",
+      "wiederholen": "Relancer",
+      "naechste": "Prochaines 24 heures",
+      "alleGeplant": "Tout le planifié",
+      "nichtsGeplant": "Rien de planifié dans les prochaines 24 heures.",
+      "ausgeschaltet": "Désactivées",
+      "ausVon": "par {{von}}, {{zeit}}",
+      "ausSeit": "depuis {{zeit}}"
+    },
+    "geplant": {
+      "wann": "Quand",
+      "fuer": "Pour",
+      "knoepfe": "Actions",
+      "suche": "Rechercher client, offre, texte",
+      "filterTitel": "Filtrer le planifié",
+      "leerTitel": "Rien de planifié",
+      "leerText": "Dès qu’une automatisation attend, vous voyez ici ce qu’elle fera ensuite.",
+      "filter": {
+        "alle": "Tout",
+        "heute": "Aujourd’hui",
+        "woche": "7 jours",
+        "aussen": "Aux clients",
+        "gestoppt": "Arrêtés"
+      }
+    },
+    "lesesatz": {
+      "wenn": "Si « {{ausloeser}} »",
+      "bedingungen_one": "et {{count}} condition est remplie",
+      "bedingungen_other": "et {{count}} conditions sont remplies",
+      "sofort": "{{was}} immédiatement",
+      "nachTagen_one": "{{was}} après {{count}} jour",
+      "nachTagen_other": "{{was}} après {{count}} jours",
+      "nachArbeitstagen_one": "{{was}} après {{count}} jour ouvrable",
+      "nachArbeitstagen_other": "{{was}} après {{count}} jours ouvrables",
+      "freigabe": "Les e-mails et SMS attendent une validation.",
+      "automatisch": "Les e-mails et SMS partent sans clic.",
+      "fenster": "Messages aux clients seulement dans la plage d’envoi."
+    },
+    "probe": {
+      "datensatz": "Enregistrement pour l’essai",
+      "keinDatensatz": "Aucun enregistrement",
+      "starten": "Essai",
+      "hinweis": "Calcule l’automatisation pour cet enregistrement, telle qu’elle est dans l’éditeur. Rien n’est créé ni envoyé.",
+      "ohneTabelle": "Ce déclencheur n’a pas d’enregistrement, un essai n’est pas possible.",
+      "an": "à {{an}}",
+      "personen": "pour {{personen}}",
+      "faellig": "échéance le {{am}}",
+      "ergebnis": {
+        "ok": "S’exécuterait",
+        "fehler": "Erreur",
+        "uebersprungen": "Serait sauté",
+        "wartet": "Attend",
+        "server": "Sur le serveur"
+      }
+    },
+    "schutz": {
+      "titel": "Protection des clients",
+      "text": "S’applique à toutes les automatisations qui envoient des e-mails ou SMS aux clients. Une automatisation peut le régler autrement dans l’éditeur.",
+      "fenster": "Plage d’envoi",
+      "von": "De",
+      "bis": "À",
+      "zeitFalsch": "« À » doit être après « De ».",
+      "fensterHilfe": "En dehors, le message attend le prochain moment autorisé. Le SMS la veille d’un rendez-vous est exclu.",
+      "tag": {
+        "1": "Lu",
+        "2": "Ma",
+        "3": "Me",
+        "4": "Je",
+        "5": "Ve",
+        "6": "Sa",
+        "7": "Di"
+      },
+      "kontakt_pause_tage": "Pause de contact (jours)",
+      "kontakt_pause_tage_hilfe": "Au plus un message automatique par client pendant autant de jours. Les rappels de paiement ne comptent pas.",
+      "lead_ohne_kontakt_tage": "Lead sans contact après (jours ouvrables)",
+      "lead_ohne_kontakt_tage_hilfe": "Déclencheur « Lead sans contact » : aussi longtemps sans appel, e-mail ni rendez-vous.",
+      "garantie_vorlauf_tage": "Garantie : préavis (jours)",
+      "garantie_vorlauf_tage_hilfe": "Autant de jours avant la fin de la garantie, « La garantie expire » se déclenche.",
+      "feiertage": "Jours fériés",
+      "feiertageHilfe_one": "{{count}} jour férié, une date par ligne (p. ex. 25.12.2026). Ne compte pas comme jour ouvrable.",
+      "feiertageHilfe_other": "{{count}} jours fériés, une date par ligne (p. ex. 25.12.2026). Ne comptent pas comme jours ouvrables.",
+      "feiertageFalsch": "Illisible : {{liste}}",
+      "jeAutomation": "Standard des règles de protection (paramètres) ou à tout moment.",
+      "wahl": {
+        "standard": "Comme dans les règles de protection",
+        "immer": "Envoyer à tout moment"
+      },
+      "pauseLeer": "Vide = comme dans les règles de protection, 0 = pas de pause."
+    },
+    "aenderungen": {
+      "keine": "Aucune modification pour l’instant.",
+      "aktion": {
+        "erstellt": "créée",
+        "geaendert": "modifiée",
+        "geloescht": "supprimée",
+        "papierkorb": "mise à la corbeille",
+        "wiederhergestellt": "restaurée"
+      },
+      "feld": {
+        "aktiv": "activée/désactivée",
+        "modus": "Mode",
+        "aktionen": "Actions",
+        "bedingungen": "Conditions",
+        "ausloeser": "Déclencheur",
+        "name_de": "Nom DE",
+        "name_fr": "Nom",
+        "beschreibung_de": "Description DE",
+        "beschreibung_fr": "Description",
+        "versandfenster": "Plage d’envoi",
+        "kontakt_pause_tage": "Pause de contact",
+        "reihenfolge": "Ordre",
+        "geloescht_am": "Corbeille"
+      }
     }
   },
   "aufgaben": {
@@ -6106,13 +6568,17 @@
   },
   "handbuch": {
     "titel": "Manuel",
-    "beschreibung": "Mode d’emploi de chaque domaine, nos processus, des vidéos explicatives et tes signalements à l’administration.",
+    "beschreibung": "Comment tout fonctionne : un chapitre par domaine, étape par étape. Avec nos processus, vidéos et tes signalements.",
     "reiter": {
-      "anleitung": "Mode d’emploi",
       "prozesse": "Processus",
       "videos": "Vidéos",
       "meldungen": "Signalements",
-      "start": "Premiers pas"
+      "start": "Premiers pas",
+      "fuerdich": "Pour toi",
+      "kapitel": "Chapitres",
+      "begriffe": "Termes A–Z",
+      "neu": "Nouveautés",
+      "anleitung": "Mode d’emploi"
     },
     "nichtsGefunden": "Aucun résultat",
     "titelFeld": "Titre",
@@ -6244,14 +6710,15 @@
       "keinMobil": "{{name}} n’a pas de numéro de portable sous « Mon compte », donc pas de SMS."
     },
     "anleitung": {
-      "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
-      "suche": "Chercher dans le mode d’emploi",
       "schneller": "Pour aller plus vite",
       "tippSuche": "Chercher un domaine, un contact ou une action",
       "tippSprung": "Aller à, p. ex. aux clients",
       "tippNeu": "Nouvelle entrée dans les listes",
       "tippFilter": "Dans les listes, aller au champ de recherche",
-      "alleKuerzel": "Afficher tous les raccourcis (?)"
+      "alleKuerzel": "Afficher tous les raccourcis (?)",
+      "tippHilfe": "Aide pour le domaine où tu te trouves",
+      "intro": "Tout ce qu’il faut savoir pour travailler avec le CRM. Tu ne vois que les domaines que tu peux utiliser.",
+      "suche": "Chercher dans le mode d’emploi"
     },
     "fehler": {
       "titel": "Saisis un titre.",
@@ -6316,6 +6783,55 @@
           ]
         }
       ]
+    },
+    "bereichFeld": "Domaine",
+    "bereichHinweis": "Apparaît dans le chapitre de ce domaine et dans l’aide (F1).",
+    "keinBereich": "Aucun domaine (seulement ici)",
+    "kapitel": {
+      "intro": "Un chapitre complet par domaine : à quoi il sert, étape par étape, statuts, ce qui est automatique, règles et questions fréquentes.",
+      "alleBereiche": "Afficher aussi les autres domaines",
+      "anleitungen_one": "{{count}} guide",
+      "anleitungen_other": "{{count}} guides",
+      "stand": "État au {{datum}}",
+      "inhalt": "Contenu du chapitre",
+      "alle": "Tous les chapitres",
+      "oeffnen": "Ouvrir {{bereich}}",
+      "drucken": "Imprimer / PDF",
+      "melden": "Quelque chose ne joue pas ? Signaler",
+      "fehlt": "Ce domaine n’a pas encore de chapitre",
+      "fehltText": "Signale-le, il sera complété.",
+      "unterlagen": "Processus et vidéos de ce domaine",
+      "prozess": "Processus · PDF · V{{version}}",
+      "video": "Vidéo · {{dauer}}"
+    },
+    "fuerDich": {
+      "titel": "Ta journée : {{rolle}}",
+      "rolle": "Rôle",
+      "neu": "Nouveau pour toi",
+      "hilfeTitel": "De l’aide là où tu es",
+      "hilfeText1": "Dans chaque domaine,",
+      "hilfeText2": "ou le point d’interrogation en haut à droite affiche le bon chapitre à côté, sans quitter ton travail."
+    },
+    "begriffe": {
+      "intro": "Ce que signifient les mots du CRM, de A à Z.",
+      "suche": "Chercher un terme"
+    },
+    "neu": {
+      "leer": "Pas encore de nouveautés",
+      "ungesehenSr": "nouveautés non lues :"
+    },
+    "suche": {
+      "feld": "Chercher dans le manuel",
+      "beispiel": "p. ex. « envoyer l’offre », « rabais », « MES »",
+      "kuerzel": "Chercher dans le manuel",
+      "anleitungen": "Dans les chapitres",
+      "mehr": "Termes, processus et vidéos",
+      "leerText": "Essaie un autre mot ou signale ce qui manque."
+    },
+    "hilfe": {
+      "knopf": "Aide pour ce domaine (F1)",
+      "titel": "Aide · {{bereich}}",
+      "ganz": "Chapitre complet"
     }
   },
   "update": {
@@ -6492,7 +7008,10 @@
     "reiter": {
       "fahrzeuge": "Véhicules",
       "geraete": "Appareils",
-      "fristen": "Échéances"
+      "fristen": "Échéances",
+      "erledigen": "À faire",
+      "belegung": "Planning",
+      "kosten": "Coûts"
     },
     "spalte": {
       "fahrzeug": "Véhicule",
@@ -6550,7 +7069,11 @@
         "mfk": "Expertise",
         "service": "Service",
         "pruefung": "Contrôle d'appareil",
-        "ausweis": "Permis échu"
+        "ausweis": "Permis échu",
+        "reifen": "Changement de pneus",
+        "vignette": "Vignette",
+        "leasing": "Fin du leasing",
+        "ausleihe": "Retour d’un appareil prêté"
       }
     },
     "akte": {
@@ -6563,7 +7086,27 @@
       "bearbeiten": "Modifier les données",
       "anBord": "Appareils à bord",
       "verlauf": "Historique",
-      "beiKm": "à {{km}} km"
+      "beiKm": "à {{km}} km",
+      "alleFahrzeuge": "Tous les véhicules",
+      "ausgemustert": "Mis hors service le {{datum}} {{grund}}",
+      "belegung": "Planning",
+      "belegungLeer": "Pas planifié ces prochains jours.",
+      "dokumente": "Documents",
+      "gefahren": "Parcourus depuis le début de l’année contractuelle : {{km}} km",
+      "kalibrierungAbgelaufen": "Étalonnage échu : ne pas utiliser les mesures pour les réceptions.",
+      "kosten": "Coûts {{jahr}}",
+      "leasing": "Leasing",
+      "leasingBalken": "Kilomètres parcourus par rapport à la limite du contrat",
+      "mehrKm": "{{chf}} par km supplémentaire",
+      "nutzlast": "charge utile {{kg}}",
+      "proMonat": "{{chf}} par mois",
+      "prognose": "Prévision année contractuelle : {{km}} km",
+      "schaeden": "Dégâts ouverts",
+      "seitTagen_one": "depuis 1 jour",
+      "seitTagen_other": "depuis {{count}} jours",
+      "ueberLimite": "Environ {{km}} km au-dessus de la limite prévus, soit env. {{chf}} de frais supplémentaires.",
+      "unterLimite": "Probablement sous la limite, pas de km supplémentaires.",
+      "versicherung": "Assurance et impôts"
     },
     "feld": {
       "kennzeichen": "Plaques",
@@ -6585,7 +7128,50 @@
       "serienNr": "N° de série",
       "hersteller": "Fabricant",
       "pruefMonate": "Intervalle de contrôle (mois)",
-      "naechste_pruefung": "Prochain contrôle"
+      "naechste_pruefung": "Prochain contrôle",
+      "art": "Type de véhicule",
+      "treibstoff": "Carburant",
+      "standort_id": "Site",
+      "naechster_reifenwechsel": "Prochain changement de pneus",
+      "vignette_bis": "Vignette valable jusqu’au",
+      "erste_inverkehrsetzung": "1re mise en circulation",
+      "stammnummer": "Numéro matricule",
+      "fahrgestell_nr": "N° de châssis",
+      "gesamtgewicht_kg": "Poids total (kg)",
+      "nutzlast_kg": "Charge utile (kg)",
+      "anhaengelast_kg": "Charge remorquable (kg)",
+      "ausweis": "Permis de conduire requis",
+      "tankkarte": "Carte carburant",
+      "schluessel": "Clés",
+      "reifen": "Pneus",
+      "leasinggeber": "Société de leasing",
+      "leasing_vertrag": "N° contrat de leasing",
+      "leasing_beginn": "Leasing dès",
+      "leasing_rate_rappen": "Mensualité de leasing (CHF)",
+      "leasing_km_jahr": "Kilomètres par an selon contrat",
+      "leasing_mehr_km_rappen": "Prix par km supplémentaire (CHF)",
+      "leasing_rate": "Mensualité",
+      "leasing_zeit": "Durée",
+      "kaufdatum": "Date d’achat",
+      "kaufpreis_rappen": "Prix d’achat (CHF)",
+      "kaufpreis": "Prix d’achat (CHF)",
+      "privat_anteil": "Part privée (véhicule utilisé en privé)",
+      "versicherung_police": "N° de police",
+      "versicherung_deckung": "Couverture",
+      "selbstbehalt_rappen": "Franchise (CHF)",
+      "selbstbehalt": "Franchise",
+      "schaden_telefon": "Numéro sinistres",
+      "praemie_rappen": "Prime annuelle (CHF)",
+      "praemie": "Prime annuelle",
+      "verkehrssteuer_rappen": "Impôt sur les véhicules par an (CHF)",
+      "verkehrssteuer": "Impôt sur les véhicules par an",
+      "ausser_betrieb": "Hors service",
+      "lieferant": "Fournisseur",
+      "pruefstelle": "Organisme de contrôle",
+      "garantie_bis": "Garantie jusqu’au",
+      "zurueck_bis": "Retour au plus tard le",
+      "ausgemustert_am": "Mis hors service le",
+      "ungueltig": "Veuillez vérifier"
     },
     "fahrzeug": {
       "neu": "Saisir un véhicule",
@@ -6601,7 +7187,7 @@
       "knopf": "Saisir une entrée",
       "titel": "Saisir une entrée",
       "text": {
-        "fahrzeug": "Noter expertise, service, kilométrage ou dommage.",
+        "fahrzeug": "Saisir kilomètres, plein, expertise, service, pneus, vignette, coûts ou dégât.",
         "geraet": "Noter contrôle, étalonnage, réparation ou dommage."
       },
       "art": "Quoi",
@@ -6613,13 +7199,16 @@
         "mfk": "Prochaine expertise (selon permis)",
         "service": "Prochain service",
         "pruefung": "Prochain contrôle",
-        "kalibrierung": "Prochain étalonnage"
+        "kalibrierung": "Prochain étalonnage",
+        "reifen": "Prochain changement de pneus",
+        "vignette": "Vignette valable jusqu’au"
       },
       "mfkHinweis": "Figure sur le permis de circulation.",
       "automatisch": "Laisser vide : le CRM la calcule selon l'intervalle.",
       "kosten": "Coût (CHF)",
       "bemerkung": "Remarque",
-      "schadenBeispiel": "Que s'est-il passé ? p. ex. couture du harnais ouverte"
+      "schadenBeispiel": "Que s'est-il passé ? p. ex. couture du harnais ouverte",
+      "liter": "Litres"
     },
     "uebergeben": {
       "knopf": "Remettre",
@@ -6627,7 +7216,9 @@
       "an": "À",
       "anMich": "À moi",
       "inFahrzeug": "Dans le véhicule : {{name}}",
-      "niemand": "Personne attitrée"
+      "niemand": "Personne attitrée",
+      "ausweisFehlt": "Attention : aucun permis valable de cette personne n’est enregistré pour ce véhicule.",
+      "bisHinweis": "Laisser vide si l’appareil reste chez cette personne."
     },
     "verlauf": {
       "leer": "Encore aucune entrée.",
@@ -6638,6 +7229,168 @@
       "alle_one": "{{count}} à venir",
       "alle_other": "{{count}} à venir",
       "nichts": "Aucune échéance dans les 30 prochains jours."
+    },
+    "aktion": {
+      "bearbeiten": "Modifier",
+      "eintrag": "Saisir une entrée",
+      "uebergeben": "Remettre",
+      "reservieren": "Réserver",
+      "schaden": "Signaler un dégât"
+    },
+    "abschnitt": {
+      "grund": "Données de base",
+      "technik": "Technique et permis",
+      "leasing": "Leasing ou achat",
+      "versicherung": "Assurance et impôts",
+      "weiteres": "Divers"
+    },
+    "ja": "Oui",
+    "treibstoff": {
+      "diesel": "Diesel",
+      "benzin": "Essence",
+      "elektro": "Électrique",
+      "hybrid": "Hybride",
+      "gas": "Gaz"
+    },
+    "erledigen": {
+      "titel": {
+        "mfk": "Expertise {{name}}",
+        "service": "Service {{name}}",
+        "pruefung": "Contrôle {{name}}",
+        "reifen": "Changement de pneus {{name}}",
+        "vignette": "Vignette {{name}}",
+        "leasing": "Fin du leasing {{name}}",
+        "ausleihe": "Rapporter {{name}}",
+        "ausweis": "Permis échéant : {{name}}",
+        "service_km": "Service selon kilomètres {{name}}",
+        "schaden": "Dégât {{name}}",
+        "konflikt": "Réservé deux fois : {{name}}",
+        "km_fehlt": "Kilométrage manquant {{name}}",
+        "lange_weg": "{{name}} prêté depuis longtemps"
+      },
+      "zeile": {
+        "frist_one": "{{datum}}, échéance demain",
+        "frist_other": "{{datum}}, échéance dans {{count}} jours",
+        "frist_vorbei_one": "en retard depuis le {{datum}} (1 jour)",
+        "frist_vorbei_other": "en retard depuis le {{datum}} ({{count}} jours)",
+        "service_km_one": "dû à {{bei}} km, encore {{count}} km",
+        "service_km_other": "dû à {{bei}} km, encore {{count}} km",
+        "schaden": "{{stand}} depuis le {{datum}} · {{text}} · {{person}}",
+        "konflikt_one": "dès le {{datum}}, réservé deux fois pendant 1 jour",
+        "konflikt_other": "dès le {{datum}}, réservé deux fois pendant {{count}} jours",
+        "km_fehlt": "pas encore saisi ce mois · {{person}}",
+        "lange_weg_one": "depuis 1 jour chez {{person}}",
+        "lange_weg_other": "depuis {{count}} jours chez {{person}}"
+      },
+      "zahl": {
+        "ueberfaellig": "En retard",
+        "bald": "Dans les 30 prochains jours",
+        "schaeden": "Dégâts ouverts",
+        "konflikte": "Réservations en conflit"
+      },
+      "liste": "Ce qui est en attente",
+      "leer": "Tout est en ordre",
+      "leerText": "Aucune échéance, aucun dégât et aucune double réservation.",
+      "oeffnen": "Ouvrir",
+      "heute": "En route aujourd’hui",
+      "frei": "Libre"
+    },
+    "belegung": {
+      "tag": {
+        "0": "Di",
+        "1": "Lu",
+        "2": "Ma",
+        "3": "Me",
+        "4": "Je",
+        "5": "Ve",
+        "6": "Sa"
+      },
+      "art": {
+        "hand": "Réservé",
+        "werkstatt": "Garage",
+        "einsatz": "Intervention"
+      },
+      "legende": {
+        "einsatz": "Intervention (suit l’équipe)",
+        "hand": "Réservé à la main",
+        "werkstatt": "Garage",
+        "konflikt": "Double réservation"
+      },
+      "folgtTeam": "suit l’équipe",
+      "heute": "Cette semaine",
+      "weiter": "Semaine suivante",
+      "zurueck": "Semaine précédente"
+    },
+    "reservieren": {
+      "knopf": "Réserver",
+      "art": "Type",
+      "aufheben": "Annuler la réservation",
+      "von": "Du",
+      "bis": "Au",
+      "fuer": "Pour",
+      "zweck": "Pour quoi",
+      "zweckBeispiel": "p. ex. chercher du matériel à Bulle"
+    },
+    "schaden": {
+      "stand": {
+        "offen": "Ouvert",
+        "in_arbeit": "En cours",
+        "erledigt": "Réglé"
+      },
+      "titel": "Traiter le dégât",
+      "standLabel": "État",
+      "erledigung": "Ce qui a été fait",
+      "erledigungBeispiel": "p. ex. pare-brise remplacé au garage de Muri",
+      "fotos": "Photos",
+      "fotosHinweis": "Photos du dégât, aussi directement avec l’appareil photo du mobile",
+      "ohneText": "Dégât sans description"
+    },
+    "ausmustern": {
+      "grund": {
+        "defekt": "Défectueux",
+        "verloren": "Perdu",
+        "verkauft": "Vendu",
+        "ersetzt": "Remplacé"
+      },
+      "grundLabel": "Motif"
+    },
+    "kosten": {
+      "chfKm": "CHF/km",
+      "fix": "Assurance et impôt",
+      "jahr": "Année",
+      "keinRecht": "Uniquement avec le droit « Finances »",
+      "keinRechtText": "Les coûts par véhicule sont visibles par la direction et la comptabilité.",
+      "leasing": "Leasing",
+      "leer": "Pas encore de coûts cette année.",
+      "privatanteil": "Part privée",
+      "privatanteilText": "0,9 % du prix d’achat par mois, pour le certificat de salaire (chiffre 2.2).",
+      "privatanteilTitel": "Part privée {{jahr}}",
+      "proFahrzeug": "Coûts par véhicule {{jahr}}",
+      "proKm": "CHF {{chf}} par km ({{km}} km)",
+      "rest": "Entretien et divers",
+      "total": "Total",
+      "treibstoff": "Carburant",
+      "uebrige": "Divers",
+      "unterhalt": "Service, réparations, pneus",
+      "verbrauch": "{{l}} l/100 km",
+      "zahlGeraete": "Valeur des appareils",
+      "zahlProKm": "CHF par km en moyenne",
+      "zahlTotal": "Coûts totaux des véhicules",
+      "zahlUnterhalt": "Entretien"
+    },
+    "dateien": {
+      "hochladen": "Ajouter un fichier",
+      "leer": "Pas encore de documents."
+    },
+    "etikett": {
+      "knopf_one": "Imprimer l’étiquette QR",
+      "knopf_other": "Imprimer {{count}} étiquettes QR",
+      "einzeln": "Imprimer l’étiquette QR",
+      "fuss": "Scanner = fiche"
+    },
+    "schnell": {
+      "nehmen": "Je le prends",
+      "zurueck": "Retour au dépôt"
     }
   },
   "grossprojekte": {
@@ -7077,24 +7830,32 @@
   },
   "team": {
     "titel": "Équipe & certificats",
-    "beschreibung": "Qui peut faire quoi : cours et permis de chacun, et son propre dossier du personnel.",
+    "beschreibung": "Qui est où aujourd’hui, qui peut faire quoi : équipe, cours et permis, et le dossier du personnel.",
     "meineAkte": "Mon dossier",
     "filter": "Filtre",
     "filterwert": {
       "alle": "Tous",
-      "probleme": "À régler"
+      "probleme": "À régler",
+      "da": "Présent·es aujourd’hui",
+      "pflicht": "Avec obligation"
     },
     "matrix": "Vue d'ensemble : qui peut faire quoi",
     "spalte": {
-      "person": "Personne"
+      "person": "Personne",
+      "heute": "Aujourd’hui",
+      "telefon": "Téléphone",
+      "vorgesetzt": "Supérieur·e",
+      "ausweise": "Permis"
     },
     "zelle": {
       "fehlt": "manque",
       "abgelaufen": "échu",
       "bis": "jusqu'à {{datum}}",
-      "ja": "oui"
+      "ja": "oui",
+      "kursAm": "Cours {{datum}}",
+      "kurs": "Cours réservé"
     },
-    "legende": "«manque» = obligatoire pour le rôle (réglage dans la liste «Cours et permis»). Jaune = échoit dans 60 jours.",
+    "legende": "Rouge = obligatoire pour le rôle, manquant ou échu. Jaune = échoit dans 60 jours. Bleu = cours réservé. Obligations par rôle dans l’onglet « Exigences ».",
     "leer": "Aucune personne",
     "leerText": "Personne n'a quelque chose à régler dans ce filtre.",
     "ausweise": "Cours et permis",
@@ -7128,7 +7889,7 @@
       "anstellung": "Engagement",
       "anstellungBearbeiten": "Modifier l’engagement",
       "persoenlich": "Personnel",
-      "kleider": "Vêtements de travail et équipement",
+      "kleider": "Vêtements de travail",
       "vorgesetzt": "Supérieur/e",
       "vorgesetzt_id": "Supérieur/e",
       "funktion": "Fonction",
@@ -7249,6 +8010,130 @@
       "bewilligungVorbei": "Permis échu ({{datum}})",
       "gespraech": "Entretien le {{datum}}",
       "gespraechVorbei": "Entretien dû depuis le {{datum}}"
+    },
+    "heute": {
+      "da": "présent·e",
+      "grundBis": "{{grund}} jusqu’au {{datum}}",
+      "abwesendBis": "absent·e jusqu’au {{datum}}",
+      "kurs": "en formation",
+      "baustelleIn": "Chantier {{ort}}",
+      "baustelle": "sur le chantier",
+      "serviceUm": "Service {{zeit}}",
+      "service": "Intervention SAV"
+    },
+    "suchen": "Nom, fonction, téléphone",
+    "reiter": {
+      "team": "Équipe",
+      "ausweise": "Permis",
+      "kurse": "Cours",
+      "anforderungen": "Exigences"
+    },
+    "ohneStandort": "Sans site",
+    "allesGueltig": "tout valable",
+    "summe": "Valables",
+    "summeVon": "{{ok}} sur {{von}}",
+    "vorschlag": {
+      "titel_one": "{{art}} manque ou échoit pour 1 personne :",
+      "titel_other": "{{art}} manque ou échoit pour {{count}} personnes :",
+      "planen_one": "Planifier un cours",
+      "planen_other": "Cours pour {{count}}"
+    },
+    "mail": "E-mail",
+    "seit": "depuis le {{datum}}",
+    "kopieren": "Copier {{was}}",
+    "panel": {
+      "ausweise": "Permis",
+      "kurse": "Cours",
+      "ausruestung": "Équipement",
+      "akte": "Dossier"
+    },
+    "ausruestung": {
+      "leer": "Aucun véhicule ni appareil attribué.",
+      "mfk": "Expertise {{datum}}",
+      "pruefung": "Contrôle {{datum}}"
+    },
+    "anforderung": {
+      "text": "Quels permis sont obligatoires par rôle et leur durée de validité. Une coche enregistre aussitôt. S’il manque une obligation, elle apparaît en rouge et comme proposition « Planifier un cours ».",
+      "ausweis": "Cours ou permis",
+      "gueltig": "Validité (mois)",
+      "monateFuer": "Validité en mois pour {{art}}",
+      "unbefristet": "illimité",
+      "pflichtFuer": "{{art}} obligatoire pour {{rolle}}",
+      "monateHinweis": "Vide = illimité. Le rappel arrive 60 jours avant l’échéance, comme tâche et dans la cloche.",
+      "textDe": "Désignation allemand",
+      "textFr": "Désignation français",
+      "neu": "Ajouter un cours ou permis"
+    },
+    "kurs": {
+      "stand": {
+        "beantragt": "demandé",
+        "bewilligt": "approuvé",
+        "angemeldet": "inscrit",
+        "besucht": "suivi",
+        "abgesagt": "annulé"
+      },
+      "kennzahl": {
+        "geplant": "Cours planifiés",
+        "antraege": "Demandes en attente",
+        "kostenBudget": "Coûts {{jahr}}, budget {{budget}}",
+        "kosten": "Coûts de formation {{jahr}}",
+        "tage": "Jours de cours {{jahr}} dans l’équipe"
+      },
+      "tage_one": "{{count}} jour",
+      "tage_other": "{{count}} jours",
+      "filter": {
+        "offen": "En cours",
+        "antraege": "Demandes",
+        "meine": "Les miens"
+      },
+      "jahrZurueck": "Année précédente",
+      "jahrVor": "Année suivante",
+      "leer": "Aucun cours",
+      "leerText": "Planifie un cours ou demande une formation.",
+      "titel": "Cours",
+      "datum": "Date",
+      "wer": "Qui",
+      "anbieterOrt": "Prestataire, lieu",
+      "kosten": "Coûts",
+      "standTitel": "Statut",
+      "ergibt": "donne « {{art}} »",
+      "weiterbildung": "Formation sans permis",
+      "vereinbarungBis": "Convention jusqu’au {{datum}}",
+      "ohneDatum": "Date ouverte",
+      "wartetAufDich": "attend ta décision",
+      "ohneBudget": "Aucun budget saisi pour cette année (paramètres › team).",
+      "neu": "Planifier un cours",
+      "beantragen": "Demander un cours",
+      "neuText": "Avec une date, le cours est inscrit et le jour bloqué dans la planification.",
+      "beantragenText": "Ta ou ton supérieur·e reçoit la demande dans la cloche, pour des coûts plus élevés la direction.",
+      "ablehnen": "Refuser",
+      "absagen": "Annuler",
+      "bewilligen": "Approuver",
+      "speichernAls": {
+        "beantragt": "Demander",
+        "bewilligt": "Enregistrer (approuvé)",
+        "angemeldet": "Enregistrer (inscrit)"
+      },
+      "grund": "Motif : {{grund}}",
+      "absageGrund": "Motif (envoyé aux personnes concernées)",
+      "absageBestaetigen": "Annuler le cours",
+      "werDabei": "Qui était présent·e ? Le permis sera enregistré.",
+      "besucht": "Marquer comme suivi",
+      "art": "Donne le permis",
+      "artHinweis": "Après le cours, le CRM enregistre le permis avec sa validité.",
+      "von": "Date (premier jour)",
+      "vonHinweis": "Avec date : inscrit",
+      "bis": "Jusqu’au (dernier jour)",
+      "bisHinweis": "Vide pour un jour",
+      "anbieter": "Prestataire",
+      "ort": "Lieu",
+      "kostenChf": "Coûts (CHF)",
+      "vereinbarung": "Remboursement en cas de démission (CHF)",
+      "vereinbarungHinweis": "Convention de formation, diminue linéairement jusqu’à la fin",
+      "bindungBis": "Engagement jusqu’au",
+      "notiz": "Note",
+      "rueckzahlungOffen": "Ouvert selon convention de formation : {{betrag}} (en cas de démission aujourd’hui)",
+      "keineFuerPerson": "Aucun cours cette année."
     }
   },
   "posteingang": {
@@ -7447,7 +8332,8 @@
     "spesen": {
       "erfassen": "Saisir des frais",
       "keine": "Aucun frais saisi.",
-      "offen": "Ouvert {{betrag}}"
+      "offen": "Ouvert {{betrag}}",
+      "wirdAusbezahlt": "{{betrag}} sont vérifiés et seront versés."
     },
     "plan": {
       "titel": "Mon planning",
@@ -7691,5 +8577,38 @@
       "bau_status": "Chantier",
       "paket": "Forfait"
     }
+  },
+  "automatik": {
+    "titel": "Planifié automatiquement",
+    "anzahl_one": "{{count}} étape",
+    "anzahl_other": "{{count}} étapes",
+    "hinweis": "Le client a déjà appelé ? Arrêter ou reporter ici pour ce cas.",
+    "schrittVon": "Étape {{schritt}} sur {{schritte}}",
+    "gestopptAm": "En pause",
+    "grundIst": "Motif : {{grund}}",
+    "plus7": "+7 jours",
+    "jetzt": "Maintenant",
+    "stoppenKurz": "Arrêter",
+    "stoppen": "Arrêter pour ce cas",
+    "stoppenFall": "Arrêter pour ce cas",
+    "stoppenTitel": "Arrêter « {{name}} »",
+    "stoppenText": "Uniquement pour cet enregistrement. L’automatisation continue pour tous les autres. Reprise possible à tout moment.",
+    "grund": "Motif",
+    "grundHinweis": "Figure dans l’historique du client, pour que chacun sache pourquoi plus rien n’arrive.",
+    "grundBeispiel": "p. ex. le client se manifeste lui-même après les vacances",
+    "fortsetzen": "Reprendre",
+    "gestoppt": "Arrêté pour ce cas",
+    "fortgesetzt": "Reprend",
+    "verschoben_one": "Reporté de {{count}} jour",
+    "verschoben_other": "Reporté de {{count}} jours",
+    "jetztOk": "S’exécute dans la minute (la plage d’envoi reste valable)",
+    "fehler": "Cela n’a pas fonctionné. Veuillez réessayer.",
+    "warum": "Pourquoi ?",
+    "warumTitel": "D’où vient cette tâche ?",
+    "warumSatz": "L’automatisation « {{name}} » l’a créée, déclenchée par « {{ausloeser}} » le {{zeit}}.",
+    "fuer": "Pour :",
+    "datensatzOeffnen": "Ouvrir l’enregistrement",
+    "warumHinweis": "Si la règle ne convient pas en général, signalez-le à l’administration. Elle peut adapter l’automatisation.",
+    "warumUnbekannt": "Cette tâche ne provient pas d’une automatisation que vous pouvez voir."
   }
 }

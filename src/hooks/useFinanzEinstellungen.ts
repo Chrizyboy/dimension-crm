@@ -6,6 +6,24 @@ export interface SpesenKategorie {
   schluessel: string
   de: string
   fr: string
+  /** «kilometer»: Privatauto, Betrag = km × Ansatz, ohne Beleg. */
+  art?: 'beleg' | 'kilometer'
+  /** Konto im Kontenplan (KMU), für CSV und Abrechnung. */
+  konto?: string | null
+  /** Übliche MWST in Prozent (Vorschlag beim Erfassen). */
+  mwst_satz?: number | null
+  /** Richtwert in Rappen, je Person oder je Beleg; darüber gibt es einen Hinweis bei der Prüfung. */
+  richtwert_rappen?: number | null
+  richtwert_je?: 'person' | 'beleg' | null
+  /** Ab diesem Betrag braucht es einen Beleg (0 = immer). */
+  beleg_ab_rappen?: number | null
+}
+
+/** Regeln der Spesen: Kilometer-Ansatz, Frist zum Einreichen, Standard der Auszahlung. */
+export interface SpesenRegeln {
+  km_satz_rappen: number
+  einreichen_tage: number
+  auszahlung: 'lohn' | 'ueberweisung'
 }
 
 /** Einstellung «finanzen» (Daten, nicht Code; ändern nur mit Recht «finanzen»). */
@@ -15,6 +33,7 @@ export interface FinanzEinstellungen {
   mahnfrist_tage: number
   buchhaltung_email: string | null
   spesen_kategorien: SpesenKategorie[]
+  spesen: SpesenRegeln
   /** Eingangsrechnungen: ab diesem Betrag braucht es das Zweitvisum der Geschäftsleitung. */
   eingang?: { visum_gl_ab_rappen?: number }
 }
@@ -25,6 +44,7 @@ const STANDARD: FinanzEinstellungen = {
   mahnfrist_tage: 10,
   buchhaltung_email: null,
   spesen_kategorien: [],
+  spesen: { km_satz_rappen: 70, einreichen_tage: 60, auszahlung: 'lohn' },
 }
 
 /**
@@ -44,7 +64,8 @@ export function useFinanzEinstellungen(): FinanzEinstellungen {
         .eq('schluessel', 'finanzen')
         .maybeSingle()
       if (error) throw error
-      return { ...STANDARD, ...((data?.wert ?? {}) as Partial<FinanzEinstellungen>) }
+      const wert = (data?.wert ?? {}) as Partial<FinanzEinstellungen>
+      return { ...STANDARD, ...wert, spesen: { ...STANDARD.spesen, ...(wert.spesen ?? {}) } }
     },
   })
   return abfrage.data ?? STANDARD
