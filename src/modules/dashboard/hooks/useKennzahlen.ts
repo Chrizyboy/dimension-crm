@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabase'
 import {
   ladeBetrieb,
@@ -6,9 +6,13 @@ import {
   ladePersonen,
   ladePipeline,
   ladeQuellenKosten,
+  ladeKzEinstellungen,
   ladeQuellenNamen,
-  ladeZiele,
+  ladeZusatz,
+  setzeKzEinstellungen,
 } from '../services/kennzahlen'
+import { mitStandard } from '../lib/ziele'
+import type { Fakt } from '../types'
 
 const mitDb = supabase !== null
 
@@ -46,6 +50,55 @@ export const usePersonenNamen = () =>
 export const useQuellenNamen = () =>
   useQuery({ queryKey: ['kennzahlen', 'quellen'], queryFn: ladeQuellenNamen, enabled: mitDb, staleTime: 600_000 })
 
-/** Ziele der Abwicklung. */
-export const useZiele = () =>
-  useQuery({ queryKey: ['kennzahlen', 'ziele'], queryFn: ladeZiele, enabled: mitDb, staleTime: 600_000 })
+/** Zusatz-Fakten eines Zeitraums. */
+export const useZusatz = (von: string, bis: string, aktiv = true) =>
+  useQuery({
+    queryKey: ['kennzahlen', 'zusatz', von, bis],
+    queryFn: () => ladeZusatz(von, bis),
+    enabled: mitDb && aktiv,
+    staleTime: 300_000,
+  })
+
+/**
+ * Alle Zeilen eines Zeitraums (Grund- und Zusatz-Fakten zusammen). `aktiv` false lädt nichts (z. B. «Alles» ohne
+ * Vergleich). Fehlen die Zusatz-Fakten (ältere Datenbank), bleiben die Grundzahlen sichtbar.
+ */
+export function useZeilen(von: string, bis: string, aktiv = true) {
+  const grund = useQuery({
+    queryKey: ['kennzahlen', 'fakten', von, bis],
+    queryFn: () => ladeFakten(von, bis),
+    enabled: mitDb && aktiv,
+    staleTime: 300_000,
+  })
+  const zusatz = useZusatz(von, bis, aktiv)
+  // Die IBN liefern beide Abfragen; die Zusatz-Zeile hat zusätzlich die kWp, darum gilt sie, sobald sie da ist.
+  const grundZeilen = zusatz.data ? (grund.data ?? []).filter((f) => f.schluessel !== 'ibn') : grund.data
+  const data: Fakt[] | undefined = grund.data ? [...(grundZeilen ?? []), ...(zusatz.data ?? [])] : undefined
+  return {
+    data,
+    isLoading: grund.isLoading || (zusatz.isLoading && !zusatz.isError),
+    isError: grund.isError,
+    refetch: () => {
+      void grund.refetch()
+      void zusatz.refetch()
+    },
+  }
+}
+
+/** Einstellung «kennzahlen» mit Standardwerten. */
+export const useKzEinstellungen = () =>
+  useQuery({
+    queryKey: ['kennzahlen', 'einstellungen'],
+    queryFn: async () => mitStandard(await ladeKzEinstellungen()),
+    enabled: mitDb,
+    staleTime: 300_000,
+  })
+
+/** Ziele und Wahrscheinlichkeiten speichern; danach Einstellungen neu laden. */
+export function useKzEinstellungenSpeichern() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: setzeKzEinstellungen,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['kennzahlen', 'einstellungen'] }),
+  })
+}
