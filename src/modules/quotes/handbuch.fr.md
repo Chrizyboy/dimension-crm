@@ -15,6 +15,12 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 
 ## Comment faire {#so}
 
+### Lire le travail en cours
+
+1. **Offres** s’ouvre sur le **Travail en cours** : chaque offre est une carte dans sa phase, de « À offrir » à « Gagnée ».
+2. Traiter d’abord les indications rouges et orange : en retard (visite il y a plus de 5 jours ouvrables), relance due, validation nécessaire, question.
+3. Cliquer une carte : l’offre s’ouvre en pleine page avec étapes, variantes, documents et prochaine étape.
+
 ### Préparer une nouvelle offre
 
 1. Ouvrir l’onglet **Nouvelles offres**. Tous les leads au statut « Offre en préparation » y figurent.
@@ -31,9 +37,10 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 
 ### Relancer
 
-1. Onglet **Relances** : en haut, ce qui est dû aujourd’hui.
-2. Appeler le client, noter le résultat dans l’historique, fixer la prochaine date.
-3. **Écrire avec l’IA** crée au besoin un e-mail de relance, que tu vérifies et approuves.
+1. Onglet **Relances** ou carte « relance due » : en haut, ce qui est dû aujourd’hui.
+2. Appeler le client. Pas atteint : **Pas atteint**, l’offre revient dans 2 jours ouvrables.
+3. Atteint : choisir le **Résultat** (compare, intéressé, nouvelle version, plus tard, oui, non). Le CRM fixe la prochaine relance selon le plan (jours 3, 10, 21, 30 après l’envoi). Avec **Oui**, on passe directement au contrat d’entreprise.
+4. **Écrire avec l’IA** crée au besoin un e-mail de relance, que tu vérifies et approuves.
 
 ### Noter la décision
 
@@ -57,7 +64,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 - **En traitement** : quelqu’un du service interne y travaille.
 - **Question** : il manque une information du service externe.
 - **À valider** : terminée, le service externe la vérifie.
-- **Offerte** : chez le client. L’offre passe à Muri ou Bulle, la relance commence après 14 jours.
+- **Offerte** : chez le client. L’offre passe à Muri ou Bulle, la première relance a lieu 3 jours après l’envoi.
 
 ## Automatique {#automatisch}
 
@@ -66,6 +73,10 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 - Les relances dues apparaissent sur Ma journée.
 
 ## Règles {#regeln}
+
+- Dès 5 % de rabais ou sous 18 % de marge, l’offre doit être **validée** avant l’envoi (Chris ou l’administration).
+- Une offre peut avoir plusieurs **variantes** (p. ex. avec et sans batterie). La variante choisie fixe le montant.
+- La **chance** est calculée selon la phase ; on peut la fixer à la main, vide = de nouveau automatique.
 
 - Le montant de l’offre est **hors TVA**. Contrat d’entreprise et valeur du contrat sont TTC.
 - Prix d’achat, marge et calcul seulement avec le droit **Prix**.
@@ -81,5 +92,7 @@ Seuls les PDF d’Eturnity sont lus. Pour d’autres PDF, saisir les valeurs à 
 Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel:pricing).
 
 ## Nouveautés {#neu}
+
+- 03.11.2026: Travail en cours comme vue de départ, offre en pleine page, relance avec résultat selon le plan, variantes, validation et chance.
 
 - 31.10.2026: Les dossiers d’offres dans SharePoint sont créés et déplacés automatiquement.

@@ -7,10 +7,11 @@ import { cn } from '@/lib/utils'
 import { useAktion } from '../hooks/useAktion'
 import { useRegeln } from '../hooks/useGrossprojekte'
 import { zahl } from '../lib/anzeige'
-import { eingaben, rechne, type Eingaben } from '../lib/rechner'
+import { eingaben, rechne, unserAnteil, type Eingaben } from '../lib/rechner'
 import { akteSetzen } from '../services/grossprojekte'
 import type { Grossprojekt, RechnungWerte } from '../types'
 import { Box } from './Box'
+import { PotenzialSenden } from './Versand'
 
 const FELDER: { id: keyof Eingaben; schritt: number }[] = [
   { id: 'kwp', schritt: 1 },
@@ -39,6 +40,7 @@ export function RechnerBox({ g }: { g: Grossprojekt }) {
   const r = rechne(e)
   const jahre = regeln?.annahmen?.laufzeit_jahre ?? 25
   const geaendert = JSON.stringify(eigen) !== JSON.stringify(g.rechnung)
+  const uns = unserAnteil(r.investition_rappen, regeln)
   const anteil = r.heute_rappen > 0 ? (r.mit_rappen / r.heute_rappen) * 100 : 100
 
   return (
@@ -92,6 +94,14 @@ export function RechnerBox({ g }: { g: Grossprojekt }) {
           <span>{t('grossprojekte.rechner.investition')}</span>
           <span className="zahlen">{chf(r.investition_rappen)}</span>
         </p>
+        <p className="text-muted-foreground flex justify-between text-xs">
+          <span>{t('grossprojekte.rechner.bau', { prozent: uns.marge_prozent })}</span>
+          <span className="zahlen">{chf(uns.bau_rappen)}</span>
+        </p>
+        <p className="text-muted-foreground flex justify-between text-xs">
+          <span>{t('grossprojekte.rechner.wartung', { prozent: uns.wartung_prozent })}</span>
+          <span className="zahlen">{chf(uns.wartung_rappen_jahr)}</span>
+        </p>
         {g.schaetzung.waerme_kw ? (
           <p className="text-muted-foreground text-xs">
             {t('grossprojekte.rechner.waerme', {
@@ -101,6 +111,11 @@ export function RechnerBox({ g }: { g: Grossprojekt }) {
           </p>
         ) : null}
       </div>
+      {!geaendert && (
+        <div className="flex justify-end">
+          <PotenzialSenden g={g} />
+        </div>
+      )}
       {geaendert && (
         <div className="flex justify-end gap-2">
           <Button

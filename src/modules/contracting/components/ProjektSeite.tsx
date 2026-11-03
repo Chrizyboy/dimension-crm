@@ -6,6 +6,7 @@ import { useUi } from '@/stores/ui'
 import { kartenLink, zahl } from '../lib/anzeige'
 import type { Grossprojekt } from '../types'
 import { SchrittBox, UnterlagenBox, YouderaBox } from './ArbeitBoxen'
+import { BesichtigungBox } from './BesichtigungBox'
 import { PunkteAufschluesselung } from './Bewertung'
 import { Box, Zeile } from './Box'
 import { KontakteBox } from './KontakteBox'
@@ -103,6 +104,7 @@ export function ProjektSeite({ g, onZurueck }: { g: Grossprojekt; onZurueck: () 
             <VerantwortlichWahl g={g} />
           </div>
           <SchrittBox key={`${g.naechster_schritt ?? ''}${g.naechster_schritt_am ?? ''}`} g={g} />
+          <BesichtigungBox key={JSON.stringify(g.besichtigung)} g={g} />
           <VerlaufBox id={g.id} />
           <Box titel={t('grossprojekte.recherche.titel')}>
             <RechercheAbschnitt g={g} />

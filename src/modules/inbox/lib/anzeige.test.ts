@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Mail } from '../types'
-import { dauer, fristInfo, inAnsicht, kopfzahlen, mitte, sortiere } from './anzeige'
+import { dauer, fristInfo, gruppe, inAnsicht, kopfzahlen, mitte, sortiere } from './anzeige'
 
 const basis: Mail = {
   id: '1',
@@ -26,6 +26,15 @@ const basis: Mail = {
   reaktion_minuten: null,
   zustaendig_id: 'ich',
   zustaendig: 'Chris',
+  zurueck_am: null,
+  warten_bis: null,
+  nachfassen: false,
+  verteilt_am: '2026-11-02T07:05:00Z',
+  vorschlag_id: null,
+  vorschlag: null,
+  ki_werte: {},
+  zahlung_id: null,
+  konversation_id: null,
   vertretung_fuer: null,
   erledigt_von: null,
   kontakt: null,
@@ -70,11 +79,51 @@ describe('Posteingang: Anzeige', () => {
   })
 
   it('filtert nach Ansicht', () => {
-    expect(inAnsicht(basis, 'warten', 'ich')).toBe(true)
-    expect(inAnsicht(mail({ stand: 'info' }), 'warten', 'ich')).toBe(false)
-    expect(inAnsicht(mail({ stand: 'info' }), 'neu', 'ich')).toBe(true)
-    expect(inAnsicht(basis, 'meine', 'andere')).toBe(false)
-    expect(inAnsicht(mail({ stand: 'abgelegt' }), 'abgelegt', null)).toBe(true)
+    const ich = { ich: 'ich', verteile: false }
+    const jetzt = Date.parse('2026-11-02T10:00:00Z')
+    expect(inAnsicht(basis, 'warten', ich, jetzt)).toBe(true)
+    expect(inAnsicht(mail({ stand: 'info' }), 'warten', ich, jetzt)).toBe(false)
+    expect(inAnsicht(mail({ stand: 'info' }), 'meine', ich, jetzt)).toBe(true)
+    expect(inAnsicht(basis, 'meine', { ich: 'andere', verteile: false }, jetzt)).toBe(false)
+    expect(inAnsicht(mail({ stand: 'abgelegt' }), 'abgelegt', ich, jetzt)).toBe(true)
+  })
+
+  it('zeigt Zurückgestellte erst wieder, wenn die Zeit um ist', () => {
+    const ich = { ich: 'ich', verteile: false }
+    const jetzt = Date.parse('2026-11-02T10:00:00Z')
+    const z = mail({ zurueck_am: '2026-11-03T07:00:00Z' })
+    expect(inAnsicht(z, 'meine', ich, jetzt)).toBe(false)
+    expect(inAnsicht(z, 'zurueck', ich, jetzt)).toBe(true)
+    expect(inAnsicht(z, 'meine', ich, Date.parse('2026-11-03T08:00:00Z'))).toBe(true)
+  })
+
+  it('zeigt «Zu verteilen» nur Verteilern und nur Unverteiltes aus Team-Postfächern', () => {
+    const jetzt = Date.parse('2026-11-02T10:00:00Z')
+    const neu = mail({ postfach: 'info@x.ch', verteilt_am: null })
+    expect(inAnsicht(neu, 'verteilen', { ich: 'ich', verteile: true }, jetzt)).toBe(true)
+    expect(inAnsicht(neu, 'verteilen', { ich: 'ich', verteile: false }, jetzt)).toBe(false)
+    expect(
+      inAnsicht(
+        mail({ postfach_person_id: 'p1', verteilt_am: null }),
+        'verteilen',
+        { ich: 'ich', verteile: true },
+        jetzt,
+      ),
+    ).toBe(false)
+  })
+
+  it('zeigt «Warten auf Kunde» nur Erledigte mit Wartezeit', () => {
+    const ich = { ich: 'ich', verteile: false }
+    expect(inAnsicht(mail({ stand: 'erledigt', warten_bis: '2026-11-05T10:00:00Z' }), 'kunde', ich)).toBe(true)
+    expect(inAnsicht(mail({ stand: 'erledigt' }), 'kunde', ich)).toBe(false)
+  })
+
+  it('ordnet nach Dringlichkeit', () => {
+    const jetzt = new Date('2026-11-02T10:00:00Z')
+    expect(gruppe(basis, jetzt)).toBe('ueber')
+    expect(gruppe(mail({ frist_am: '2026-11-02T14:00:00Z' }), jetzt)).toBe('heute')
+    expect(gruppe(mail({ frist_am: '2026-11-04T14:00:00Z' }), jetzt)).toBe('spaeter')
+    expect(gruppe(mail({ stand: 'info', frist_am: null }), jetzt)).toBe('ohne')
   })
 
   it('sortiert Offene nach Frist, den Rest neueste zuerst', () => {
