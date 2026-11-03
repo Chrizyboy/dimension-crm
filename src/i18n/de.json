@@ -2208,6 +2208,15 @@
     "wartung_paket_unbekannt": "Dieses Paket gibt es nicht.",
     "wartung_nicht_gekuendigt": "Der Vertrag ist nicht gekündigt.",
     "wartung_nichts_zu_verrechnen": "Für diesen Vertrag ist nichts zu verrechnen (schon verrechnet oder ohne Preis).",
+    "posteingang_absender_ungueltig": "Bitte eine Mail-Adresse oder @firma.ch eingeben.",
+    "posteingang_bestellung_falsch": "Diese Bestellung gibt es nicht oder sie ist schon geliefert.",
+    "posteingang_kein_recht_finanzen": "Dafür fehlt dir das Recht Finanzen.",
+    "posteingang_kein_recht_preise": "Dafür fehlt dir das Recht Preise (Einkauf).",
+    "posteingang_notiz_leer": "Bitte einen Text für die Notiz eingeben.",
+    "posteingang_nummer_fehlt": "Zu dieser Nummer gibt es keine Akte.",
+    "posteingang_titel_fehlt": "Bitte sagen, was zu tun ist.",
+    "posteingang_zahlung_unvollstaendig": "Bitte Lieferant und Betrag angeben.",
+    "posteingang_zeit_ungueltig": "Bitte einen Zeitpunkt in der Zukunft wählen.",
     "offerte_freigabe_fehlt": "Diese Offerte braucht vor dem Senden eine Freigabe (Rabatt oder Marge).",
     "offerte_freigabe_kein_recht": "Freigeben dürfen nur die Personen aus den Einstellungen.",
     "offerte_varianten_ungueltig": "Jede Variante braucht eine Kennung (A, B …).",
@@ -2238,7 +2247,15 @@
     "automation_lauf_unbekannt": "Diesen Lauf gibt es nicht (mehr).",
     "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
     "einkauf_rechnung_abweichung": "Die Rechnung weicht deutlich ab. Bitte in der Notiz begründen.",
-    "einkauf_rechnung_fehlt": "Bitte eine Lieferantenrechnung wählen oder Nummer und Betrag angeben."
+    "einkauf_rechnung_fehlt": "Bitte eine Lieferantenrechnung wählen oder Nummer und Betrag angeben.",
+    "baustelle_nicht_im_team": "Nur das Team des Einsatzes oder die Projektleitung kann die Zeit fürs Team stempeln.",
+    "baustelle_meldung_leer": "Bitte beschreiben, was los ist.",
+    "baustelle_meldung_nicht_gefunden": "Meldung nicht gefunden.",
+    "baustelle_woche_montag": "Die Woche beginnt am Montag.",
+    "baustelle_zeit_laeuft": "Es läuft noch eine Zeit in dieser Woche. Erst stoppen, dann bestätigen.",
+    "baustelle_soll_negativ": "Soll-Stunden können nicht negativ sein.",
+    "baustelle_projekt_nicht_gefunden": "Projekt nicht gefunden.",
+    "baustelle_kein_recht": "Dafür fehlt das Recht."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -4030,7 +4047,11 @@
       "rapporte": "Rapporte",
       "zeiten": "Zeiten",
       "nachtraege": "Nachträge",
-      "wochenplan": "Wochenplan"
+      "wochenplan": "Wochenplan",
+      "heute": "Baustellen heute",
+      "baustellen": "Baustellen",
+      "meldungen": "Meldungen",
+      "auswertung": "Auswertung"
     },
     "rapportFilter": {
       "offen": "Offen",
@@ -4099,7 +4120,13 @@
         "ibn": "IBN beginnen",
         "service": "Service beginnen",
         "wartung": "Wartung beginnen"
-      }
+      },
+      "fortschritt": "Fortschritt",
+      "dran": "Heute dran:",
+      "fotosFehlen": "Fotos fehlen noch: {{liste}}",
+      "pl": "Projektleitung",
+      "meldungenOffen_one": "{{count}} Meldung offen",
+      "meldungenOffen_other": "{{count}} Meldungen offen"
     },
     "zeit": {
       "titel": "Zeit",
@@ -4207,7 +4234,12 @@
       "unterschriftFehlt": "Es fehlen Name oder Unterschrift.",
       "fotosFehlen": "Pflichtfotos fehlen: {{liste}}",
       "fotosWerbung": "Kunde erlaubt Fotos für Werbung",
-      "fotosWerbungHinweis": "Ohne Namen und Adresse. Nach der Inbetriebnahme entsteht ein Referenz-Post als Entwurf."
+      "fotosWerbungHinweis": "Ohne Namen und Adresse. Nach der Inbetriebnahme entsteht ein Referenz-Post als Entwurf.",
+      "ohneNoetig": "Tagesrapport: keine Unterschrift nötig. Der Kunde unterschreibt bei der Abnahme und für Nachträge.",
+      "vorbehalte": "Vorbehalte bei der Abnahme",
+      "vorbehalt": "Vorbehalt {{nr}}",
+      "vorbehaltDazu": "Vorbehalt hinzufügen",
+      "vorbehalteHinweis": "Jeder Vorbehalt wird eine Aufgabe für die Projektleitung."
     },
     "neu": {
       "knopf": "Neuer Rapport",
@@ -4369,6 +4401,211 @@
       "erfassen": "Erfassen",
       "speichern": "Speichern",
       "abbrechen": "Abbrechen"
+    },
+    "vorlage": {
+      "pv": "PV",
+      "speicher": "Speicher",
+      "wallbox": "Wallbox",
+      "waermepumpe": "Wärmepumpe"
+    },
+    "diktat": {
+      "start": "Diktieren",
+      "stopp": "Diktat stoppen"
+    },
+    "sicherheit": {
+      "titel": "Sicherheits-Check",
+      "text": "Vor Arbeitsbeginn: alles abhaken, dann startet die Zeit für alle Angehakten mit derselben Uhrzeit.",
+      "punkte": "Sicherheit",
+      "team": "Wer arbeitet heute mit?",
+      "ich": "ich",
+      "fehlt": "Alle Punkte abhaken und mindestens eine Person wählen.",
+      "starten_one": "Arbeitsbeginn ({{count}} Person)",
+      "starten_other": "Arbeitsbeginn fürs Team ({{count}})"
+    },
+    "mappe": {
+      "knopf": "Mappe",
+      "titel": "Baustellen-Mappe",
+      "anlage": "Anlage und Dach",
+      "module": "Module",
+      "wechselrichter": "Wechselrichter",
+      "batterie": "Batterie",
+      "dach": "Dach",
+      "material": "Material laden",
+      "fehlt_one": "{{count}} fehlt",
+      "fehlt_other": "{{count}} fehlen",
+      "plaene": "Pläne und Dokumente",
+      "kontakte": "Kontakte",
+      "meldungen": "Offene Meldungen",
+      "rolle": {
+        "kunde": "Kunde",
+        "elektriker": "Elektriker",
+        "architekt": "Architekt",
+        "projektleitung": "Projektleitung"
+      }
+    },
+    "meldung": {
+      "knopf": "Problem melden",
+      "titel": "Problem melden",
+      "text": "Die Projektleitung bekommt die Meldung sofort, auch wenn sie erst später rausgeht (ohne Netz).",
+      "art": "Art",
+      "arten": {
+        "material": "Material",
+        "schaden": "Schaden",
+        "kunde": "Kunde",
+        "wetter": "Wetter",
+        "planung": "Planung",
+        "sicherheit": "Sicherheit"
+      },
+      "was": "Was ist los?",
+      "platzhalter": "z. B. 4 Module fehlen, Ziegel beim Abladen gebrochen …",
+      "foto_one": "Foto ({{count}})",
+      "foto_other": "Fotos ({{count}})",
+      "weiter": "Wir können weiterarbeiten",
+      "steht": "Die Baustelle steht: die Projektleitung bekommt die Meldung als dringend.",
+      "stehtKurz": "Baustelle steht",
+      "senden": "Melden",
+      "stand": "Stand",
+      "offen": "Offen",
+      "alle90": "Alle (90 Tage)",
+      "leer": "Keine Meldungen",
+      "leerText": "Von den Baustellen ist nichts offen.",
+      "erledigen": "Erledigt",
+      "notiz": "Was wurde gemacht? (freiwillig)",
+      "erledigtVon": "Erledigt von {{name}}, {{am}}",
+      "wieder": "Wieder öffnen"
+    },
+    "schritte": {
+      "titel": "Arbeitsschritte",
+      "hinweis": "Hake ab, was heute fertig wurde. Daraus entsteht der Text des Rapports."
+    },
+    "team": {
+      "titel": "Team und Zeit",
+      "check": "Sicherheits-Check um {{zeit}}",
+      "pause": "Pause (Min.)",
+      "feierabend": "Feierabend fürs Team",
+      "pauseHinweis": "Vorschlag nach Arbeitsgesetz: ab 5½ h 15 Min., ab 7 h 30 Min., ab 9 h 60 Min."
+    },
+    "sn": {
+      "titel": "Seriennummern",
+      "geraet": "Gerät",
+      "nummer": "Seriennummer",
+      "dazu": "Hinzufügen",
+      "scannen": "Scannen",
+      "weg": "Seriennummer {{nummer}} entfernen",
+      "art": {
+        "wechselrichter": "Wechselrichter",
+        "batterie": "Batterie",
+        "modul": "Modul",
+        "wallbox": "Wallbox",
+        "waermepumpe": "Wärmepumpe",
+        "optimierer": "Optimierer",
+        "zaehler": "Zähler",
+        "andere": "Anderes"
+      }
+    },
+    "visum": {
+      "rueckfrage": "Rückfrage der Projektleitung:",
+      "visiert": "Visiert von {{name}}, {{am}}",
+      "visieren": "Visieren",
+      "fragen": "Rückfrage",
+      "frageText": "Was ist unklar?",
+      "senden": "Senden",
+      "offen": "Rückfrage offen",
+      "kurz": "visiert"
+    },
+    "leitung": {
+      "k": {
+        "baustellen": "Baustellen heute",
+        "gestempelt": "Gestempelt",
+        "meldungen": "Offene Meldungen",
+        "rapporteFehlen": "Rapporte fehlen",
+        "zeitenPruefen": "Zeiten zu prüfen",
+        "nachtraege": "Nachträge offen"
+      },
+      "baustellen": "Baustellen",
+      "leer": "Heute keine Baustelle",
+      "leerText": "Für heute ist kein Einsatz geplant.",
+      "meldungen": "Meldungen",
+      "keineMeldungen": "Keine offenen Meldungen.",
+      "visieren": "Zu visieren",
+      "allesVisiert": "Alle Rapporte sind visiert.",
+      "nichtGestempelt": "nicht gestempelt",
+      "sollIst": "Ist / Soll",
+      "fotos": "Fotos",
+      "heute": "heute",
+      "gesternFehlt": "Rapport vom letzten Arbeitstag fehlt"
+    },
+    "akte": {
+      "titel": "Baustelle",
+      "suche": "Nummer, Kunde, Ort",
+      "leer": "Keine Baustellen",
+      "leerText": "In den letzten und nächsten Wochen ist nichts geplant.",
+      "zeitraum": "Ab",
+      "speicher": "mit Speicher",
+      "telefon": "Kunde",
+      "stunden": "Stunden",
+      "sollHand": "Soll von Hand",
+      "sollRegel": "Soll nach Faustregel",
+      "reise": "Reise {{h}} h",
+      "sollAendern": "Soll ändern",
+      "sollStunden": "Soll-Stunden",
+      "sollLeer": "leer = Faustregel",
+      "speichern": "Speichern",
+      "einsaetze": "Einsätze",
+      "tagebuch": "Bautagebuch",
+      "keineRapporte": "Noch keine Rapporte.",
+      "check": "Check",
+      "vorbehalte_one": "{{count}} Vorbehalt",
+      "vorbehalte_other": "{{count}} Vorbehalte"
+    },
+    "auswertung": {
+      "zeitraum": "Zeitraum",
+      "monat": "30 Tage",
+      "quartal": "Quartal",
+      "jahr": "12 Monate",
+      "fertig": "Fertige Baustellen",
+      "abweichung": "Ist gegen Soll",
+      "hProKwp": "Stunden pro kWp",
+      "reise": "Anteil Reise",
+      "nachtraege": "Nachträge",
+      "gleicherTag": "Rapport am gleichen Tag",
+      "baustellen": "Fertige Baustellen",
+      "abw": "Abw.",
+      "leer": "Noch nichts fertig",
+      "leerText": "In diesem Zeitraum wurde keine Montage abgeschlossen.",
+      "visiert": "Rapporte visiert"
+    },
+    "wochenblatt": {
+      "titel": "Wochenblatt",
+      "tag": {
+        "mo": "Mo",
+        "di": "Di",
+        "mi": "Mi",
+        "do": "Do",
+        "fr": "Fr",
+        "sa": "Sa",
+        "so": "So"
+      },
+      "istSoll": "Ist / Soll",
+      "saldo": "Saldo Jahr",
+      "stand": "Woche",
+      "bestaetigt": "bestätigt",
+      "bestaetigen": "Bestätigen",
+      "offen": "offen",
+      "abw": {
+        "ferien": "Ferien",
+        "krank": "Krank",
+        "schule": "Schule",
+        "militaer": "Militär",
+        "sonstiges": "Abwesend"
+      },
+      "w": {
+        "pause": "Pause {{min}} Min. zu kurz",
+        "zuLang": "{{h}} h, mehr als erlaubt",
+        "nichtGestempelt": "Einsatz ohne Zeit",
+        "laeuft": "Zeit läuft noch",
+        "saldo": "Saldo {{h}} h"
+      }
     }
   },
   "unterschrift": {
@@ -7295,7 +7532,9 @@
       "kosten": "Kosten (CHF)",
       "bemerkung": "Bemerkung",
       "schadenBeispiel": "Was ist passiert? z. B. Naht am Gurt offen",
-      "liter": "Liter"
+      "liter": "Liter",
+      "beleg": "Beleg (Foto oder PDF)",
+      "belegHinweis": "Mit der Firmenkarte bezahlt? Beleg fotografieren. Er kommt zu den Dokumenten und die Buchhaltung gleicht ihn mit der Kartenabrechnung ab."
     },
     "uebergeben": {
       "knopf": "Übergeben",
@@ -8321,29 +8560,35 @@
     "beschreibung": "Alle Mails aus info@ und euren Postfächern, eingeordnet und der Akte zugeordnet. Wer wartet auf uns, und bis wann antworten wir?",
     "holen": "Jetzt abholen",
     "reiter": {
-      "eingang": "Posteingang",
+      "eingang": "Arbeitsplatz",
       "auswertung": "Reaktionszeit",
-      "einstellungen": "Einstellungen"
+      "einstellungen": "Einstellungen",
+      "team": "Team",
+      "regeln": "Absender-Regeln"
     },
     "filter": "Welche Mails",
     "artFilter": "Art",
     "alleArten": "Alle Arten",
     "ansicht": {
-      "warten": "Wartet auf uns",
-      "neu": "Alle offenen",
-      "meine": "Meine",
+      "warten": "Alle offenen",
+      "meine": "Für mich",
       "erledigt": "Erledigt",
       "abgelegt": "Werbung & Intern",
-      "aeltere": "Ältere"
+      "aeltere": "Ältere",
+      "verteilen": "Zu verteilen",
+      "kunde": "Warten auf Kunde",
+      "zurueck": "Zurückgestellt"
     },
     "leer": {
       "warten": "Niemand wartet auf eine Antwort",
-      "neu": "Keine offenen Mails",
-      "meine": "Dir ist gerade nichts zugeteilt",
+      "meine": "Für dich ist alles erledigt",
       "erledigt": "In den letzten 14 Tagen nichts erledigt",
       "abgelegt": "Nichts abgelegt",
       "text": "Neue Mails kommen alle 5 Minuten aus Outlook. «Jetzt abholen» holt sie sofort.",
-      "aeltere": "Keine älteren Mails gefunden"
+      "aeltere": "Keine älteren Mails gefunden",
+      "verteilen": "Nichts zu verteilen",
+      "kunde": "Du wartest auf keinen Kunden",
+      "zurueck": "Nichts zurückgestellt"
     },
     "art": {
       "anfrage": "Neue Anfrage",
@@ -8414,7 +8659,32 @@
       "outlook": "In Outlook öffnen",
       "mail": "Mail",
       "laedt": "Text wird aus Outlook geladen …",
-      "nurVorschau": "Der ganze Text kommt aus Outlook. Ohne Microsoft-Verbindung steht hier nur der Anfang."
+      "nurVorschau": "Der ganze Text kommt aus Outlook. Ohne Microsoft-Verbindung steht hier nur der Anfang.",
+      "waehlen": "Links eine Mail wählen. J und K springen zur nächsten oder vorherigen.",
+      "unterhaltung": "Unterhaltung ({{anzahl}} Mails)",
+      "wir": "wir",
+      "anhaenge": "Anhänge",
+      "anhaengeOutlook": "Anhänge konnten nicht aus Outlook geladen werden.",
+      "oeffnenDatei": "Öffnen",
+      "ablegenIn": "Ablegen in",
+      "erstZuordnen": "Erst einer Akte zuordnen, dann ablegen.",
+      "notizen": "Interne Notizen",
+      "notizNeu": "Notiz fürs Team, @Name gibt eine Glocke",
+      "notizSenden": "Notiz speichern",
+      "keinKunde": "noch kein Kunde",
+      "zahlungErfasst": "Zahlung erfasst",
+      "nummer": "Oder Nummer eingeben",
+      "nummerHinweis": "Lead, Offerte, Projekt, Service-Fall, Rechnung oder Bestellung, z. B. P-2026-0412",
+      "wartenEnde": "Kunde hat geantwortet",
+      "aufKundeWarten": "Auf Kunde warten",
+      "zurueckHolen": "Zurückholen",
+      "zurueckstellen": "Zurückstellen",
+      "zurueckWann": "Wieder zeigen …",
+      "mehr": "Mehr",
+      "aufgabe": "Aufgabe daraus machen",
+      "regel": "Regel für diesen Absender",
+      "ablegen": "Ablegen",
+      "erledigtWarten": "Erledigt, auf Kunde warten"
     },
     "feld": {
       "kunde": "Kunde",
@@ -8427,7 +8697,8 @@
       "art": "Art",
       "zustaendig": "Zuständig",
       "erledigt": "Erledigt",
-      "betreff": "Betreff"
+      "betreff": "Betreff",
+      "zahlung": "Zahlung"
     },
     "weitergeben": {
       "titel": "Mail weitergeben",
@@ -8463,7 +8734,18 @@
       "eskalation": "Glocke bei doppelter Frist",
       "eskalationHinweis": "Wartet ein Kunde doppelt so lange wie vorgesehen, bekommen diese Personen die Glocke. Niemand gewählt = Administration.",
       "verteilen": "Wer verteilt Mails aus info@",
-      "verteilenHinweis": "Mails im eigenen Postfach bearbeitet jede Person selbst. Mails aus Team-Postfächern wie info@ gehen an die erste angekreuzte Person, die da ist, alle Angekreuzten bekommen die Glocke. Sie geben die Mail mit «Weitergeben» an die richtige Person."
+      "verteilenHinweis": "Mails im eigenen Postfach bearbeitet jede Person selbst. Mails aus Team-Postfächern wie info@ gehen an die erste angekreuzte Person, die da ist, alle Angekreuzten bekommen die Glocke. Sie geben die Mail mit «Weitergeben» an die richtige Person.",
+      "warten": "Warten auf Kunde und Verteilen",
+      "wartenAuto": "Nach unserer Antwort automatisch auf den Kunden warten",
+      "wartenTage": "Arbeitstage, dann nachfassen",
+      "wartenFehler": "1 bis 30 Tage, Frist bis 72 Stunden",
+      "wartenFrist": "Frist beim Nachfassen",
+      "wartenOfferte": "Mails mit Offerte",
+      "wartenHinweis": "Antwortet der Kunde nicht, kommt die Mail mit «Nachfassen» zurück zur zuständigen Person. Eine neue Mail des Kunden beendet das Warten.",
+      "vorschlag": "Vorschlag beim Verteilen",
+      "vorschlagHinweis": "Wen das Verteilen je Art vorschlägt, wenn die Akte niemanden nennt. «Automatisch» folgt den Zuständigkeiten.",
+      "vorschlagFuer": "Vorschlag für {{art}}",
+      "automatisch": "Automatisch"
     },
     "pruefung": {
       "uhrzeit": "Bitte als Zeit eingeben, z. B. 07:30.",
@@ -8483,7 +8765,7 @@
       "fehlt": "Diese Mail ist nicht mehr da.",
       "verknuepft": "Mit der Mail im Posteingang verknüpft"
     },
-    "suche": "In älteren Mails suchen",
+    "suche": "Absender, Betreff oder Kunde suchen",
     "nachholen": {
       "titel": "Ältere Mails",
       "hinweis": "Ältere Mails aus jedem persönlichen Postfach (sobald die Person Microsoft verbunden hat) und aus info@ kommen im Hintergrund nach, als «erledigt» ohne Frist. Sie zählen nicht bei «Wartet auf uns» und nicht bei der Reaktionszeit. Mails mit Kunden kommen auch in den Kundenverlauf.",
@@ -8493,6 +8775,143 @@
       "sentitems": "Gesendet",
       "fertig": "fertig, {{anzahl}} Mails",
       "laeuft": "läuft, bis {{datum}}, {{anzahl}} Mails"
+    },
+    "gruppe": {
+      "ueber": "Über der Frist",
+      "heute": "Heute fällig",
+      "spaeter": "Später",
+      "ohne": "Ohne Frist, zur Kenntnis"
+    },
+    "auswaehlen": "Mail von {{name}} markieren",
+    "nachfassen": "Nachfassen",
+    "wartetBis": "wir warten bis {{datum}}",
+    "zurueckBis": "zurück am {{datum}}",
+    "eigenesPostfach": "eigenes Postfach",
+    "nichtVerteilt": "nicht verteilt",
+    "zurueck": {
+      "nachmittag": "Heute Nachmittag",
+      "morgen": "Nächster Arbeitstag",
+      "montag": "Nächsten Montag",
+      "woche": "In einer Woche"
+    },
+    "verteilen": {
+      "an": "Vorschlag: an {{name}}",
+      "ohneVorschlag": "Kein Vorschlag, bitte selbst wählen",
+      "text": "Aus info@, noch niemandem gegeben.",
+      "knopf": "So verteilen",
+      "andere": "Andere Person",
+      "selbst": "Selbst übernehmen"
+    },
+    "schritt": {
+      "nachfassen": "Nachfassen",
+      "nachfassenText": "Der Kunde hat nicht geantwortet. Kurz nachfragen?",
+      "nachfassenKnopf": "Nachfassen schreiben",
+      "lead": "Neue Anfrage",
+      "leadText": "Daraus einen Lead machen, Angaben aus der Mail sind schon ausgefüllt.",
+      "leadKnopf": "Lead anlegen",
+      "fall": "Störung",
+      "fallText": "Service-Fall eröffnen, Anlage und Garantie sucht das CRM.",
+      "fallKnopf": "Service-Fall eröffnen",
+      "fallOeffnen": "Service-Fall läuft",
+      "fallOeffnenText": "Zu dieser Störung gibt es schon einen Fall.",
+      "fallOeffnenKnopf": "Fall öffnen",
+      "zahlung": "Lieferantenrechnung",
+      "zahlungText": "Als Zahlung erfassen, damit sie in der Liquidität steht.",
+      "zahlungKnopf": "Zahlung erfassen",
+      "liefertermin": "Auftragsbestätigung",
+      "lieferterminText": "Liefertermin in die Bestellung übernehmen.",
+      "lieferterminKnopf": "Liefertermin übernehmen",
+      "rechnung": "Frage zu unserer Rechnung",
+      "rechnungText": "Rechnung öffnen, Stand und Zahlungen prüfen.",
+      "rechnungKnopf": "Rechnung öffnen",
+      "offerte": "Zur Offerte",
+      "offerteText": "Der Kunde hat eine offene Offerte.",
+      "offerteKnopf": "Offerte öffnen",
+      "projekt": "Zum Projekt",
+      "projektText": "Im Fahrplan des Projekts nachsehen oder den Schritt setzen.",
+      "projektKnopf": "Projekt öffnen",
+      "faellig": "fällig {{datum}}",
+      "ohneRecht": {
+        "finanzen": "Erfasst die Buchhaltung (Recht Finanzen).",
+        "preise": "Übernimmt der Einkauf (Recht Preise)."
+      }
+    },
+    "sammel": {
+      "titel_one": "{{count}} markiert",
+      "titel_other": "{{count}} markiert",
+      "geben": "Weitergeben an …",
+      "aufheben": "Markierung aufheben"
+    },
+    "taste": {
+      "naechste": "Nächste Mail",
+      "vorherige": "Vorherige Mail",
+      "erledigt": "Erledigt",
+      "antworten": "Antworten",
+      "weitergeben": "Weitergeben",
+      "markieren": "Mail markieren",
+      "suchen": "Suchen"
+    },
+    "team": {
+      "text": "Wie viele Mails jede Person offen hat. Nur Zahlen, keine Inhalte aus fremden Postfächern.",
+      "person": "Person",
+      "offen": "Offen",
+      "ueber": "Über der Frist",
+      "zurueck": "Zurückgestellt",
+      "warten": "Warten auf Kunde",
+      "mitte": "Reaktion (Mitte, 7 Tage)",
+      "abwesend": "abwesend",
+      "vertreten": "abwesend, vertreten durch {{name}}",
+      "weg": "weg",
+      "leer": "Noch keine Personen mit Mails"
+    },
+    "aufgabe": {
+      "titel": "Aufgabe aus der Mail",
+      "text": "Die Aufgabe ist mit der Mail verknüpft und erscheint unter Aufgaben.",
+      "was": "Was ist zu tun?",
+      "bis": "Bis wann",
+      "wer": "Für wen",
+      "knopf": "Aufgabe anlegen"
+    },
+    "regel": {
+      "titel": "Regel für diesen Absender",
+      "eigen": "Gilt für dein eigenes Postfach, ab der nächsten Mail.",
+      "team": "Gilt für info@ und die Team-Postfächer, ab der nächsten Mail.",
+      "absender": "Absender",
+      "ganzeFirma": "Ganze Firma ({{domain}})",
+      "was": "Was passiert",
+      "aktion": {
+        "zuweisen": "Immer an eine Person",
+        "art": "Immer als Art einordnen",
+        "ablegen": "Still ablegen"
+      },
+      "hinweis": "Kundenmails werden nie still abgelegt, auch wenn eine Regel passt.",
+      "nurVerteiler": "Regeln für info@ legt an, wer verteilt.",
+      "liste": "Jede Person legt Regeln für ihr eigenes Postfach an, wer verteilt auch für info@. Neue Regeln direkt aus einer Mail: «Mehr › Regel für diesen Absender».",
+      "postfach": "Postfach",
+      "loeschen": "Regel für {{absender}} löschen",
+      "zeigeZuweisen": "an {{name}}",
+      "zeigeArt": "als {{art}}",
+      "leer": "Noch keine Regeln",
+      "leerText": "Öffne eine Mail und wähle «Mehr › Regel für diesen Absender»."
+    },
+    "zahlung": {
+      "titel": "Zahlung erfassen",
+      "text": "Kommt in die Liquidität und zur Zahlung. Bitte die gelesenen Werte prüfen.",
+      "firma": "Lieferant",
+      "nummer": "Rechnungsnummer",
+      "datum": "Rechnungsdatum",
+      "betrag": "Betrag (CHF)",
+      "betragFalsch": "Bitte einen Betrag grösser als 0 eingeben.",
+      "faellig": "Fällig am",
+      "gelesen": "Von der KI aus der Mail gelesen, nichts wird ohne deinen Klick gespeichert.",
+      "knopf": "Zahlung erfassen"
+    },
+    "liefertermin": {
+      "titel": "Liefertermin übernehmen",
+      "text": "Der Termin kommt in die Bestellung, der Einkauf sieht ihn sofort.",
+      "waehlen": "Bestellung wählen",
+      "datum": "Liefertermin",
+      "knopf": "Übernehmen"
     }
   },
   "einfach": {
