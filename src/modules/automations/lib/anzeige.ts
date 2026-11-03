@@ -11,10 +11,11 @@ export const STAND_TON: Record<LaufStand, Ton> = {
   uebersprungen: 'neutral',
   fehler: 'kritisch',
   abgebrochen: 'neutral',
+  gestoppt: 'warnung',
 }
 
-/** Offene Läufe kann die Administration abbrechen. */
-export const OFFEN: readonly LaufStand[] = ['laeuft', 'wartet', 'server']
+/** Offene Läufe kann die Administration abbrechen; gestoppte sind angehalten, aber nicht zu Ende. */
+export const OFFEN: readonly LaufStand[] = ['laeuft', 'wartet', 'server', 'gestoppt']
 
 /** Operatoren ohne Wert. */
 export const OHNE_WERT: readonly Operator[] = ['leer', 'nicht_leer']
@@ -63,16 +64,22 @@ export interface AktionsFelder {
   werbung?: boolean
   tranche?: boolean
   merkmal?: boolean
+  /** Warten/Wiedervorlage: in Arbeitstagen rechnen. */
+  arbeitstage?: boolean
+  /** Prüfen: was passiert, wenn es nicht mehr zutrifft. */
+  sonst?: boolean
+  /** Mail/SMS: Anruf-Aufgabe, wenn die Adresse fehlt. */
+  ersatz?: boolean
 }
 
 const FELDER: Record<AktionsArt, AktionsFelder> = {
   aufgabe: { an: true, titel: true, text: true, faellig: true },
   benachrichtigung: { an: true, titel: true, text: true, stufe: true },
-  mail: { absender: true, betreff: true, text: true, werbung: true },
-  sms: { absender: true, text: true, sende: true, werbung: true },
+  mail: { absender: true, betreff: true, text: true, werbung: true, ersatz: true },
+  sms: { absender: true, text: true, sende: true, werbung: true, ersatz: true },
   zahlungserinnerung: { absender: true, betreff: true, text: true },
-  warten: { tage: true },
-  pruefen: { bedingungen: true },
+  warten: { tage: true, arbeitstage: true },
+  pruefen: { bedingungen: true, sonst: true },
   dubletten: { an: true },
   zuteilen: {},
   rechnung_entwurf: { tranche: true },
@@ -80,6 +87,8 @@ const FELDER: Record<AktionsArt, AktionsFelder> = {
   outlook_termin: {},
   sharepoint_ordner: {},
   abaninja_kunde: {},
+  wiedervorlage: { tage: true, arbeitstage: true, text: true },
+  notiz: { text: true },
 }
 
 /** Angaben der Aktion im Editor. */
@@ -98,7 +107,7 @@ export function neueAktion(art: AktionsArt): Aktion {
     ...(f.text ? { text: { ...leer } } : {}),
     ...(f.betreff ? { betreff: { ...leer } } : {}),
     ...(f.faellig ? { faellig_tage: 1 } : {}),
-    ...(f.tage ? { tage: 3 } : {}),
+    ...(f.tage ? { tage: art === 'wiedervorlage' ? 90 : 3 } : {}),
     ...(f.bedingungen ? { bedingungen: [] } : {}),
     ...(f.tranche ? { tranche: 'erste' as const } : {}),
     ...(f.merkmal ? { merkmal: 'ohne_batterie' } : {}),

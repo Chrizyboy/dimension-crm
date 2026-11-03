@@ -27,6 +27,7 @@ import { ladeGeschaeft } from '../services/geschaefte'
 import type { Geschaeft } from '../types'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { AutomatischGeplant } from '@/components/shared/automatik/AutomatischGeplant'
 import { KiKnopf } from '@/components/shared/ki/KiKnopf'
 import { KiLeadBewertung } from '@/components/shared/ki/KiLeadBewertung'
 import { KiZusammenfassung } from '@/components/shared/ki/KiZusammenfassung'
@@ -211,6 +212,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
       <div className="grid items-start gap-4 lg:grid-cols-2 2xl:grid-cols-[22rem_minmax(0,1fr)_22rem]">
         <Karte className="min-w-0 px-3">
           <LeadAngaben g={g} details={akte.details.data} />
+          <AutomatischGeplant tabelle="verkaufschancen" id={g.verkaufschanceId} />
         </Karte>
 
         <div className="flex min-w-0 flex-col gap-4 lg:order-last lg:col-span-2 2xl:order-none 2xl:col-span-1">

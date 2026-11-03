@@ -2,7 +2,7 @@
 
 **Zweck:** Vom ersten Kontakt bis zur Auftragszusage: Leads erfassen und nachfassen, Pipeline, Termine planen (Tagesroute, Tour, Kalender), Regionen und der Lead-Monatsbericht.
 
-**Stand:** Phase 6 gebaut, Phase 8: SMS-Erinnerung senden, Anfragen aus Outlook oder .eml holen, Termin und Kalender aus Outlook. Neu seit 2.11.2026 (Entscheid 0040): Startansicht «Zu tun» mit 15-Minuten-Uhr, Pipeline in sechs Schritten, Lead-Akte als ganze Seite (Dach, Richtpreis nur intern, Herkunft, nächster Schritt), Anruf-Ergebnis mit Rückruf/SMS-Entwurf, Verkaufssteuerung; Website-Anfragen kommen direkt (`docs/website-anfrage.md`).
+**Stand:** Phase 6 gebaut, Phase 8: SMS-Erinnerung senden, Anfragen aus Outlook oder .eml holen, Termin und Kalender aus Outlook. Neu seit 2.11.2026 (Entscheid 0045): Startansicht «Zu tun» mit 15-Minuten-Uhr, Pipeline in sechs Schritten, Lead-Akte als ganze Seite (Dach, Richtpreis nur intern, Herkunft, nächster Schritt), Anruf-Ergebnis mit Rückruf/SMS-Entwurf, Verkaufssteuerung; Website-Anfragen kommen direkt (`docs/website-anfrage.md`).
 
 ## Daten
 

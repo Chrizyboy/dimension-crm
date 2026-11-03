@@ -5,7 +5,7 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte'
@@ -26,12 +26,7 @@ import { UnterschriftKarte } from './UnterschriftKarte'
 const ABSCHNITTE: { titel: string; felder: { name: keyof KontoEingabe; typ?: string; platzhalter?: string }[] }[] = [
   {
     titel: 'konto.abschnittArbeit',
-    felder: [
-      { name: 'position' },
-      { name: 'funktion' },
-      { name: 'pensum', platzhalter: '100%' },
-      { name: 'tage', platzhalter: 'Mo–Fr' },
-    ],
+    felder: [{ name: 'position' }, { name: 'funktion' }, { name: 'tage', platzhalter: 'Mo–Fr' }],
   },
   {
     titel: 'konto.abschnittKontakt',
@@ -43,11 +38,7 @@ const ABSCHNITTE: { titel: string; felder: { name: keyof KontoEingabe; typ?: str
   },
   {
     titel: 'konto.abschnittAdresse',
-    felder: [{ name: 'strasse' }, { name: 'plz', platzhalter: '5630' }, { name: 'ort' }, { name: 'routeStart' }],
-  },
-  {
-    titel: 'konto.abschnittNotfall',
-    felder: [{ name: 'notfallName' }, { name: 'notfallTel', typ: 'tel' }],
+    felder: [{ name: 'routeStart' }],
   },
 ]
 
@@ -197,6 +188,18 @@ function KontoFormular({ ich, children }: { ich: MeineAnmeldung; children: React
           </KarteInhalt>
         </Karte>
       ))}
+
+      <Karte>
+        <KarteKopf>
+          <KarteTitel>{t('konto.privatTitel')}</KarteTitel>
+        </KarteKopf>
+        <KarteInhalt className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-muted-foreground text-sm">{t('konto.privatText')}</p>
+          <a href={`#/staff?person=${ich.id}`} className={buttonVariants({ variant: 'secondary' })}>
+            {t('konto.privatOeffnen')}
+          </a>
+        </KarteInhalt>
+      </Karte>
     </div>
   )
 }

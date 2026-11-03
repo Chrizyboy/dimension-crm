@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
 import { aktionsFelder } from '../lib/anzeige'
 import type { Aktion, Katalog } from '../types'
+import { AktionZusatz } from './AktionZusatz'
 import { BedingungenEditor } from './BedingungenEditor'
 import { EmpfaengerWahl } from './EmpfaengerWahl'
 import { ZweisprachigFeld } from './ZweisprachigFeld'
@@ -207,6 +208,7 @@ export function AktionFelder({ id, aktion: a, katalog, felder, onChange }: Props
           }}
         />
       )}
+      <AktionZusatz id={id} aktion={a} felder={f} onChange={onChange} />
     </div>
   )
 }

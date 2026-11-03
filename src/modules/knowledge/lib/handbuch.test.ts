@@ -23,6 +23,7 @@ const eintrag = (teil: Partial<HandbuchEintrag>): HandbuchEintrag => ({
   dauer_s: null,
   reihenfolge: null,
   sprache: null,
+  bereich: null,
   versionen: [],
   erstellt_am: '',
   geaendert_am: '',

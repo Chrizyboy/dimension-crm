@@ -5,17 +5,25 @@ import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
+import { hatRecht } from '@/lib/rechte'
 import { supabase } from '@/services/supabase'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useFahrzeuge, useGeraete } from '../hooks/useRessourcen'
-import { ANSICHTEN, type Ansicht } from '../types'
+import { ANSICHTEN, type Ansicht, type Belegung, type Schaden } from '../types'
+import { Belegungsplan } from './Belegungsplan'
 import { EintragDialog } from './EintragDialog'
-import { FahrzeugAkte, type AkteAktion } from './FahrzeugAkte'
+import { EtikettenKnopf } from './EtikettenKnopf'
+import { Erledigen } from './Erledigen'
 import { FahrzeugDialog } from './FahrzeugDialog'
 import { FahrzeugListe } from './FahrzeugListe'
+import { FahrzeugSeite, type AkteAktion } from './FahrzeugSeite'
 import { FristenListe } from './FristenListe'
 import { GeraetAkte } from './GeraetAkte'
 import { GeraetDialog } from './GeraetDialog'
 import { GeraeteListe } from './GeraeteListe'
+import { KostenAnsicht } from './KostenAnsicht'
+import { ReservierenDialog } from './ReservierenDialog'
+import { SchadenDialog } from './SchadenDialog'
 import { UebergebenDialog } from './UebergebenDialog'
 
 /** Wohin die Seite springt: Reiter und offene Akte stehen in der Adresse. */
@@ -23,32 +31,50 @@ export interface FuhrparkZiel {
   ansicht?: Ansicht
   fahrzeug?: string | null
   geraet?: string | null
+  km?: boolean
 }
 
-type Fenster = AkteAktion | 'neu' | null
+type Fenster =
+  | { art: AkteAktion | 'neu' }
+  | { art: 'schadenBearbeiten'; schaden: Schaden }
+  | { art: 'einsatz'; belegung: Belegung }
+  | { art: 'planReservieren'; bezug: { fahrzeug?: string; geraet?: string }; tag: string }
+  | null
 
 /**
- * Fahrzeuge & Geräte (ERP-Lückenanalyse, Phase 17): Fahrzeuge mit MFK, Service und Kilometern, Geräte mit
- * Prüftermin und wer sie hat, alle Fristen an einem Ort. Akte als Seitenpanel (#/fleet?fahrzeug=… oder
- * ?ansicht=geraete&geraet=…). Am Handy: Eintrag erfassen und Übergeben direkt aus der Akte.
+ * Fahrzeuge & Geräte: «Zu erledigen» (alles, was ansteht), Fahrzeuge, Geräte, Belegung, Fristen und Kosten.
+ * Ein Fahrzeug öffnet als ganze Seite (#/fleet?fahrzeug=…), ein Gerät als Seitenpanel (?ansicht=geraete&geraet=…).
+ * `km` (aus der Glocke am Monatsanfang) öffnet gleich «Kilometerstand eintragen».
  */
 export default function Fuhrpark({
   ansicht,
   fahrzeugId,
   geraetId,
+  km,
   onNavigation,
 }: {
   ansicht: Ansicht
   fahrzeugId: string | null
   geraetId: string | null
+  km: boolean
   onNavigation: (z: FuhrparkZiel) => void
 }) {
   const { t } = useTranslation()
+  const ich = useAnmeldung((z) => z.ich)
   const [fenster, setFenster] = useState<Fenster>(null)
-  const fahrzeug = useFahrzeuge().data?.find((f) => f.id === fahrzeugId) ?? null
-  const geraet = useGeraete().data?.find((g) => g.id === geraetId) ?? null
+  const alleFahrzeuge = useFahrzeuge().data ?? []
+  const alleGeraete = useGeraete().data ?? []
+  const fahrzeug = alleFahrzeuge.find((f) => f.id === fahrzeugId) ?? null
+  const geraet = alleGeraete.find((g) => g.id === geraetId) ?? null
   const zu = () => {
     setFenster(null)
+    if (km) onNavigation({ km: false })
+  }
+  const aktion = (a: AkteAktion) => {
+    setFenster({ art: a })
+  }
+  const schaden = (s: Schaden) => {
+    setFenster({ art: 'schadenBearbeiten', schaden: s })
   }
 
   if (!supabase) {
@@ -60,92 +86,144 @@ export default function Fuhrpark({
   }
 
   const bezug = fahrzeugId ? { fahrzeug: fahrzeugId } : geraetId ? { geraet: geraetId } : null
-  // «Neu» legt an, was der Reiter zeigt; auf «Fristen» ein Fahrzeug.
   const neuGeraet = ansicht === 'geraete'
+  const art = fenster?.art ?? (km && fahrzeugId ? 'eintrag' : null)
+  const reiter = ANSICHTEN.filter((a) => a !== 'kosten' || hatRecht(ich, 'finanzen'))
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-4 py-6 sm:px-6">
-      <Seitenkopf
-        titel={t('fuhrpark.titel')}
-        beschreibung={t('fuhrpark.beschreibung')}
-        aktionen={
-          <Button
-            onClick={() => {
-              setFenster('neu')
-            }}
-          >
-            <Plus />
-            {t(neuGeraet ? 'fuhrpark.geraet.neu' : 'fuhrpark.fahrzeug.neu')}
-          </Button>
-        }
-      />
-      <Reiter
-        value={ansicht}
-        onValueChange={(a) => {
-          onNavigation({ ansicht: a as Ansicht, fahrzeug: null, geraet: null })
-        }}
-      >
-        <ReiterListe>
-          {ANSICHTEN.map((a) => (
-            <ReiterKnopf key={a} value={a}>
-              {t(`fuhrpark.reiter.${a}`)}
-            </ReiterKnopf>
-          ))}
-        </ReiterListe>
-        <ReiterInhalt value="fahrzeuge" className="pt-4">
-          <FahrzeugListe
-            aktiveId={fahrzeugId}
-            onOeffnen={(id) => {
-              onNavigation({ fahrzeug: id })
-            }}
-          />
-        </ReiterInhalt>
-        <ReiterInhalt value="geraete" className="pt-4">
-          <GeraeteListe
-            aktiveId={geraetId}
-            onOeffnen={(id) => {
-              onNavigation({ geraet: id })
-            }}
-          />
-        </ReiterInhalt>
-        <ReiterInhalt value="fristen" className="pt-4">
-          <FristenListe
-            onOeffnen={(f) => {
-              if (f.bezug_tabelle === 'qualifikationen') window.location.hash = `#/staff?person=${f.person_id ?? ''}`
-              else if (f.bezug_tabelle === 'fahrzeuge') onNavigation({ fahrzeug: f.bezug_id })
-              else onNavigation({ geraet: f.bezug_id })
-            }}
-          />
-        </ReiterInhalt>
-      </Reiter>
-
-      {fahrzeugId && (
-        <FahrzeugAkte
+      {fahrzeugId ? (
+        <FahrzeugSeite
           key={fahrzeugId}
           id={fahrzeugId}
-          onAktion={setFenster}
-          onSchliessen={() => {
-            onNavigation({ fahrzeug: null })
+          onAktion={aktion}
+          onSchaden={schaden}
+          onZurueck={() => {
+            onNavigation({ ansicht: 'fahrzeuge', fahrzeug: null })
           }}
         />
+      ) : (
+        <>
+          <Seitenkopf
+            titel={t('fuhrpark.titel')}
+            beschreibung={t('fuhrpark.beschreibung')}
+            aktionen={
+              <>
+                {ansicht === 'geraete' && (
+                  <EtikettenKnopf
+                    sachen={alleGeraete
+                      .filter((g) => !g.ausgemustert_am)
+                      .map((g) => ({ bezug: { geraet: g.id }, titel: g.bezeichnung, nummer: g.inventar_nr }))}
+                  />
+                )}
+                {ansicht === 'fahrzeuge' && (
+                  <EtikettenKnopf
+                    sachen={alleFahrzeuge.map((f) => ({
+                      bezug: { fahrzeug: f.id },
+                      titel: f.bezeichnung,
+                      nummer: f.kennzeichen,
+                    }))}
+                  />
+                )}
+                <Button
+                  onClick={() => {
+                    setFenster({ art: 'neu' })
+                  }}
+                >
+                  <Plus />
+                  {t(neuGeraet ? 'fuhrpark.geraet.neu' : 'fuhrpark.fahrzeug.neu')}
+                </Button>
+              </>
+            }
+          />
+          <Reiter
+            value={ansicht}
+            onValueChange={(a) => {
+              onNavigation({ ansicht: a as Ansicht, fahrzeug: null, geraet: null })
+            }}
+          >
+            <ReiterListe>
+              {reiter.map((a) => (
+                <ReiterKnopf key={a} value={a}>
+                  {t(`fuhrpark.reiter.${a}`)}
+                </ReiterKnopf>
+              ))}
+            </ReiterListe>
+            <ReiterInhalt value="erledigen" className="pt-4">
+              <Erledigen onOeffnen={onNavigation} />
+            </ReiterInhalt>
+            <ReiterInhalt value="fahrzeuge" className="pt-4">
+              <FahrzeugListe
+                aktiveId={fahrzeugId}
+                onOeffnen={(id) => {
+                  onNavigation({ fahrzeug: id })
+                }}
+              />
+            </ReiterInhalt>
+            <ReiterInhalt value="geraete" className="pt-4">
+              <GeraeteListe
+                aktiveId={geraetId}
+                onOeffnen={(id) => {
+                  onNavigation({ geraet: id })
+                }}
+              />
+            </ReiterInhalt>
+            <ReiterInhalt value="belegung" className="pt-4">
+              <Belegungsplan
+                onEinsatz={(b) => {
+                  setFenster({ art: 'einsatz', belegung: b })
+                }}
+                onReservieren={(bz, tag) => {
+                  setFenster({ art: 'planReservieren', bezug: bz, tag })
+                }}
+              />
+            </ReiterInhalt>
+            <ReiterInhalt value="fristen" className="pt-4">
+              <FristenListe
+                onOeffnen={(f) => {
+                  if (f.bezug_tabelle === 'qualifikationen')
+                    window.location.hash = `#/staff?person=${f.person_id ?? ''}`
+                  else if (f.bezug_tabelle === 'fahrzeuge') onNavigation({ fahrzeug: f.bezug_id })
+                  else onNavigation({ geraet: f.bezug_id })
+                }}
+              />
+            </ReiterInhalt>
+            <ReiterInhalt value="kosten" className="pt-4">
+              <KostenAnsicht />
+            </ReiterInhalt>
+          </Reiter>
+        </>
       )}
+
       {geraetId && (
         <GeraetAkte
           key={geraetId}
           id={geraetId}
-          onAktion={setFenster}
+          onAktion={aktion}
+          onSchaden={schaden}
           onSchliessen={() => {
             onNavigation({ geraet: null })
           }}
         />
       )}
-      {fenster === 'eintrag' && bezug && (
-        <EintragDialog bezug={bezug} kmStand={fahrzeug?.km_stand ?? null} onSchliessen={zu} />
+      {(art === 'eintrag' || art === 'schaden') && bezug && (
+        <EintragDialog
+          bezug={bezug}
+          kmStand={fahrzeug?.km_stand ?? null}
+          {...(art === 'schaden' ? { startArt: 'schaden' } : {})}
+          onSchliessen={zu}
+        />
       )}
-      {fenster === 'uebergeben' && bezug && <UebergebenDialog bezug={bezug} onSchliessen={zu} />}
-      {((fenster === 'neu' && !neuGeraet) || (fenster === 'bearbeiten' && fahrzeug)) && (
+      {art === 'uebergeben' && bezug && <UebergebenDialog bezug={bezug} onSchliessen={zu} />}
+      {art === 'reservieren' && bezug && <ReservierenDialog bezug={bezug} onSchliessen={zu} />}
+      {fenster?.art === 'planReservieren' && (
+        <ReservierenDialog bezug={fenster.bezug} tag={fenster.tag} onSchliessen={zu} />
+      )}
+      {fenster?.art === 'einsatz' && <ReservierenDialog einsatz={fenster.belegung} onSchliessen={zu} />}
+      {fenster?.art === 'schadenBearbeiten' && <SchadenDialog schaden={fenster.schaden} onSchliessen={zu} />}
+      {((art === 'neu' && !neuGeraet) || (art === 'bearbeiten' && fahrzeug)) && (
         <FahrzeugDialog
-          fahrzeug={fenster === 'bearbeiten' ? fahrzeug : null}
+          fahrzeug={art === 'bearbeiten' ? fahrzeug : null}
           onSchliessen={zu}
           onFertig={(id) => {
             zu()
@@ -153,9 +231,9 @@ export default function Fuhrpark({
           }}
         />
       )}
-      {((fenster === 'neu' && neuGeraet) || (fenster === 'bearbeiten' && geraet)) && (
+      {((art === 'neu' && neuGeraet) || (art === 'bearbeiten' && geraet && !fahrzeugId)) && (
         <GeraetDialog
-          geraet={fenster === 'bearbeiten' ? geraet : null}
+          geraet={art === 'bearbeiten' ? geraet : null}
           onSchliessen={zu}
           onFertig={(id) => {
             zu()

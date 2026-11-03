@@ -119,7 +119,12 @@ export async function nachtragErfassen(rapportId: string, n: NachtragEingabe): P
 }
 
 /** Foto oder Unterschrift (Bild) als Dokument des Rapports ablegen. */
-export async function bildAblegen(rapportId: string, blob: Blob, ordner: 'fotos' | 'unterschrift'): Promise<string> {
+export async function bildAblegen(
+  rapportId: string,
+  blob: Blob,
+  ordner: 'fotos' | 'unterschrift',
+  kategorie?: string,
+): Promise<string> {
   const id = crypto.randomUUID()
   const endung = blob.type === 'image/png' ? 'png' : 'jpg'
   const name = `${ordner === 'fotos' ? 'Foto' : 'Unterschrift'}-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}.${endung}`
@@ -127,7 +132,15 @@ export async function bildAblegen(rapportId: string, blob: Blob, ordner: 'fotos'
     art: 'datei',
     blob,
     pfad: `rapporte/${rapportId}/${id}.${endung}`,
-    dokument: { id, name, mime_typ: blob.type, ordner, bezug_tabelle: 'rapporte', bezug_id: rapportId },
+    dokument: {
+      id,
+      name,
+      mime_typ: blob.type,
+      ordner,
+      bezug_tabelle: 'rapporte',
+      bezug_id: rapportId,
+      ...(kategorie ? { kategorie } : {}),
+    },
     bezug: rapportId,
     erstellt: jetzt(),
   })
@@ -146,6 +159,8 @@ export async function rapportAbschliessen(
     verrechnung?: string | null
     montage_fertig?: boolean
     fall_erledigt?: boolean
+    /** Kunde erlaubt Fotos für Werbung (ohne Namen): nach der IBN entsteht ein Referenz-Post als Entwurf. */
+    fotos_werbung?: boolean
   },
 ): Promise<void> {
   let unterschrift: Unterschrift | null = null
@@ -158,6 +173,7 @@ export async function rapportAbschliessen(
     ...(a.verrechnung ? { verrechnung: a.verrechnung } : {}),
     ...(a.montage_fertig !== undefined ? { montage_fertig: a.montage_fertig } : {}),
     ...(a.fall_erledigt ? { fall_erledigt: true } : {}),
+    ...(a.fotos_werbung ? { fotos_werbung: true } : {}),
     stopp: jetzt(),
   }
   await einreihen({ art: 'rpc', name: 'rapport_abschliessen', args: { p_id: id, p }, bezug: id, erstellt: jetzt() })

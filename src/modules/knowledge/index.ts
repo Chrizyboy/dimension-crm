@@ -9,7 +9,10 @@ import type { ModulMeta } from '@/types/modul'
 export const meta: ModulMeta = {
   id: 'knowledge',
   titel: { de: 'Handbuch', fr: 'Manuel' },
-  untertitel: { de: 'Anleitungen, Vorlagen und Know-how', fr: 'Guides, modèles et savoir-faire' },
+  untertitel: {
+    de: 'Wie alles funktioniert: ein Kapitel pro Bereich, Prozesse, Videos und Hilfe',
+    fr: 'Comment tout fonctionne : un chapitre par domaine, processus, vidéos et aide',
+  },
   pfad: '/knowledge',
   icon: 'book-open',
   gruppe: 'weitere',
@@ -17,8 +20,11 @@ export const meta: ModulMeta = {
   immer: true,
 }
 
-/** Die Seite: Anleitung, Prozesse, Videos und Meldungen. */
+/** Die Seite: Für dich, Kapitel, Erste Schritte, Prozesse, Videos, Begriffe, Neu und Meldungen. */
 export const Handbuch = lazy(() => import('./components/Handbuch'))
+
+/** Hilfe im Bereich (F1): das Kapitel des aktuellen Bereichs als Seitenblatt. */
+export const HilfePanel = lazy(() => import('./components/HilfePanel'))
 
 export { ANSICHTEN } from './types'
 export type * from './types'

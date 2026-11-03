@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
+import { AutomatischGeplant } from '@/components/shared/automatik/AutomatischGeplant'
 import { MailDialog } from '@/components/shared/MailDialog'
 import { AblageLink } from '@/components/shared/AblageLink'
 import { Badge } from '@/components/ui/badge'
@@ -226,6 +227,7 @@ export default function OffertAkte({
 
             <OffertAngaben o={o} />
             <PdfWerteAbschnitt o={o} />
+            <AutomatischGeplant tabelle="offerten" id={o.id} />
             {o.wirtschaftlichkeit && Object.keys(o.wirtschaftlichkeit).length > 0 && (
               <AkteAbschnitt titel={t('offerten.wirtschaftlichkeit.titel')}>
                 <WirtschaftlichkeitKarte w={o.wirtschaftlichkeit} />
