@@ -17,6 +17,8 @@ const GUELTIG = new Set<string>(REITER)
 export const Route = createFileRoute('/purchasing')({
   validateSearch: (s: Record<string, unknown>): Suche => ({
     ...(typeof s.reiter === 'string' && GUELTIG.has(s.reiter) ? { reiter: s.reiter as Reiter } : {}),
+    // Früherer Reiter «Zu bestellen» (Links in Glocken und Handbuch) ist jetzt «Bestellen».
+    ...(s.reiter === 'zubestellen' ? { reiter: 'bestellen' } : {}),
     ...(typeof s.bestellung === 'string' && s.bestellung ? { bestellung: s.bestellung } : {}),
     ...(typeof s.projekt === 'string' && s.projekt ? { projekt: s.projekt } : {}),
   }),
@@ -26,7 +28,7 @@ export const Route = createFileRoute('/purchasing')({
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
     // Ein Projekt (Materialliste) gehört zum Reiter «Material», auch wenn es per Link geöffnet wird.
-    const aktiv = reiter ?? (projekt ? 'material' : 'bestellungen')
+    const aktiv = reiter ?? (projekt ? 'material' : 'leitstand')
     return (
       <Suspense>
         <Einkauf
@@ -39,7 +41,7 @@ export const Route = createFileRoute('/purchasing')({
             const p = z.projekt === undefined ? projekt : z.projekt
             void navigate({
               search: {
-                ...(r !== 'bestellungen' ? { reiter: r } : {}),
+                ...(r !== 'leitstand' ? { reiter: r } : {}),
                 ...(b ? { bestellung: b } : {}),
                 ...(p && r === 'material' ? { projekt: p } : {}),
               },
