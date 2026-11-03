@@ -4348,6 +4348,7 @@
       "leer": "Keine Einsätze in den nächsten sieben Tagen",
       "leerText": "Einsätze plant die Projektleitung im Bauplan, Service-Termine kommen aus «Service & Garantie».",
       "tagVon": "Tag {{nr}} von {{von}}",
+      "ueberfaellig": "Überfällig seit {{datum}}",
       "team": "Team",
       "material": "Material",
       "materialFehlt_one": "{{count}} Material fehlt noch",

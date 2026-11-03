@@ -4348,6 +4348,7 @@
       "leer": "Aucune intervention ces sept prochains jours",
       "leerText": "La direction de projet planifie les interventions; les rendez-vous de service viennent de « Service & garantie ».",
       "tagVon": "Jour {{nr}} sur {{von}}",
+      "ueberfaellig": "En retard depuis le {{datum}}",
       "team": "Équipe",
       "material": "Matériel",
       "materialFehlt_one": "{{count}} matériel manque encore",
