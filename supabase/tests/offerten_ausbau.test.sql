@@ -1,4 +1,4 @@
--- Prüft «Offerten vollständig» (Entscheid 0041): Senden setzt Gültigkeit und ersten Nachfass-Schritt, Freigabe bei
+-- Prüft «Offerten vollständig» (Entscheid 0046): Senden setzt Gültigkeit und ersten Nachfass-Schritt, Freigabe bei
 -- Rabatt, Nachfassen mit Ergebnis setzt den nächsten Schritt, Varianten bestimmen den Betrag, Chance und Phase.
 -- Ausführen: npm run db:test
 begin;

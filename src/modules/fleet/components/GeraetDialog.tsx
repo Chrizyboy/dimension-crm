@@ -6,11 +6,12 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
 import { useAuswahl } from '@/hooks/useAuswahl'
+import { formatChf, parseChf } from '@/lib/format'
 import { useAktion } from '../hooks/useAktion'
 import { useWahl } from '../hooks/useRessourcen'
 import { geraetSchema } from '../schema'
 import { entfernen, geraetSpeichern } from '../services/ressourcen'
-import type { Geraet, GeraetZustand } from '../types'
+import { AUSMUSTERGRUENDE, type Ausmustergrund, type Geraet, type GeraetZustand } from '../types'
 
 const KEINE = '-'
 const ZUSTAENDE: GeraetZustand[] = ['ok', 'maengel', 'defekt', 'ausser_betrieb']
@@ -44,12 +45,22 @@ export function GeraetDialog({
     naechste_pruefung: g?.naechste_pruefung ?? '',
     zustand: g?.zustand ?? 'ok',
     notiz: g?.notiz ?? '',
+    pruefstelle: g?.pruefstelle ?? '',
+    lieferant: g?.lieferant ?? '',
+    kaufdatum: g?.kaufdatum ?? '',
+    garantie_bis: g?.garantie_bis ?? '',
+    kaufpreis: g?.kaufpreis_rappen != null ? formatChf(g.kaufpreis_rappen) : '',
+    ausgemustert_am: g?.ausgemustert_am ?? '',
+    ausgemustert_grund: g?.ausgemustert_grund ?? KEINE,
   })
   const setze = (teil: Partial<typeof w>) => {
     setW({ ...w, ...teil })
   }
   const monate = w.pruef_monate.trim() === '' ? null : Number(w.pruef_monate)
-  const gueltig = geraetSchema.safeParse({ art: w.art, bezeichnung: w.bezeichnung, pruef_monate: monate }).success
+  const preis = w.kaufpreis.trim() ? parseChf(w.kaufpreis) : null
+  const gueltig =
+    geraetSchema.safeParse({ art: w.art, bezeichnung: w.bezeichnung, pruef_monate: monate }).success &&
+    (w.kaufpreis.trim() === '' || preis !== null)
 
   async function speichern() {
     const leer = (s: string) => s.trim() || null
@@ -66,7 +77,18 @@ export function GeraetDialog({
             standort_id: w.standort_id === KEINE ? null : w.standort_id,
             pruef_monate: monate,
             notiz: leer(w.notiz),
-            ...(g ? { zustand: w.zustand } : { naechste_pruefung: leer(w.naechste_pruefung) }),
+            pruefstelle: leer(w.pruefstelle),
+            lieferant: leer(w.lieferant),
+            kaufdatum: leer(w.kaufdatum),
+            garantie_bis: leer(w.garantie_bis),
+            kaufpreis_rappen: preis,
+            // Ausmustern statt löschen: Gerät bleibt mit Grund im Verlauf, fällt aus Fristen und Listen.
+            ausgemustert_am: leer(w.ausgemustert_am),
+            ausgemustert_grund:
+              w.ausgemustert_am && w.ausgemustert_grund !== KEINE ? (w.ausgemustert_grund as Ausmustergrund) : null,
+            ...(g
+              ? { zustand: w.ausgemustert_am ? 'ausser_betrieb' : w.zustand }
+              : { naechste_pruefung: leer(w.naechste_pruefung) }),
           },
           g?.id,
         )
@@ -76,10 +98,25 @@ export function GeraetDialog({
     if (ok) onFertig(id)
   }
 
-  const text = (k: 'bezeichnung' | 'inventar_nr' | 'serien_nr' | 'hersteller', pflicht = false) => (
+  const text = (
+    k: 'bezeichnung' | 'inventar_nr' | 'serien_nr' | 'hersteller' | 'pruefstelle' | 'lieferant' | 'kaufpreis',
+    pflicht = false,
+  ) => (
     <Feld id={`ge-${k}`} label={t(`fuhrpark.feld.${k}`)} pflicht={pflicht}>
       <Input
         id={`ge-${k}`}
+        value={w[k]}
+        onChange={(e) => {
+          setze({ [k]: e.target.value })
+        }}
+      />
+    </Feld>
+  )
+  const tag = (k: 'kaufdatum' | 'garantie_bis' | 'ausgemustert_am') => (
+    <Feld id={`ge-${k}`} label={t(`fuhrpark.feld.${k}`)}>
+      <Input
+        id={`ge-${k}`}
+        type="date"
         value={w[k]}
         onChange={(e) => {
           setze({ [k]: e.target.value })
@@ -188,6 +225,27 @@ export function GeraetDialog({
                 onChange={(e) => {
                   setze({ naechste_pruefung: e.target.value })
                 }}
+              />
+            </Feld>
+          )}
+          {text('pruefstelle')}
+          {text('lieferant')}
+          {tag('kaufdatum')}
+          {text('kaufpreis')}
+          {tag('garantie_bis')}
+          {g && tag('ausgemustert_am')}
+          {g && w.ausgemustert_am && (
+            <Feld id="ge-grund" label={t('fuhrpark.ausmustern.grundLabel')}>
+              <Auswahl
+                id="ge-grund"
+                value={w.ausgemustert_grund}
+                onValueChange={(v) => {
+                  setze({ ausgemustert_grund: v })
+                }}
+                optionen={[
+                  { wert: KEINE, text: '–' },
+                  ...AUSMUSTERGRUENDE.map((a) => ({ wert: a, text: t(`fuhrpark.ausmustern.grund.${a}`) })),
+                ]}
               />
             </Feld>
           )}

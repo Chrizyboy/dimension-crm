@@ -2,6 +2,7 @@ import { FileText } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
+import { AutomatischGeplant } from '@/components/shared/automatik/AutomatischGeplant'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { useOffertAkte } from '../hooks/useOfferten'
 import type { Offerte } from '../types'
@@ -42,6 +43,7 @@ export default function OffertSeite({ o, onZurueck }: { o: Offerte | null; onZur
         <div className="flex min-w-0 flex-col gap-4">
           <VariantenBox o={o} />
           <PdfWerteAbschnitt o={o} />
+          <AutomatischGeplant tabelle="offerten" id={o.id} />
           {o.wirtschaftlichkeit && Object.keys(o.wirtschaftlichkeit).length > 0 && (
             <AkteAbschnitt titel={t('offerten.wirtschaftlichkeit.titel')}>
               <WirtschaftlichkeitKarte w={o.wirtschaftlichkeit} />

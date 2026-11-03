@@ -8,7 +8,7 @@ function db() {
   return supabase
 }
 
-/** Standard, solange die Einstellung fehlt (gleich wie in der Migration 20261112010000). */
+/** Standard, solange die Einstellung fehlt (gleich wie in der Migration 20261114010000). */
 export const STANDARD_EINSTELLUNGEN: OffertEinstellungen = {
   gueltigTage: 30,
   zielArbeitstage: 5,

@@ -2,7 +2,7 @@
 
 **Zweck:** Offerten ausarbeiten (Neue Offerten für den Innendienst), offerierte nachfassen und die Werte aus Eturnity übernehmen; von hier geht es zu «Auftrag erstellen».
 
-**Stand:** Phase 7 gebaut, Phase 8: «Per Mail senden» über den Ausgangskorb (Text in der Sprache des Kunden). Seit 2.11.2026 (Entscheid 0041): Arbeitsvorrat als Board (Startansicht), Offert-Akte als ganze Seite, Nachfassen nach Plan mit Ergebnis, Varianten, Freigabe bei Rabatt/Marge, Chance.
+**Stand:** Phase 7 gebaut, Phase 8: «Per Mail senden» über den Ausgangskorb (Text in der Sprache des Kunden). Seit 2.11.2026 (Entscheid 0046): Arbeitsvorrat als Board (Startansicht), Offert-Akte als ganze Seite, Nachfassen nach Plan mit Ergebnis, Varianten, Freigabe bei Rabatt/Marge, Chance.
 
 ## Daten
 

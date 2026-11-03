@@ -1,5 +1,5 @@
 import type { TFunction } from 'i18next'
-import { formatDatum } from '@/lib/format'
+import { formatDatumZeit } from '@/lib/format'
 import type { ProtokollEintrag } from '../types'
 
 /** «rolle:verkauf» → «Rolle Verkauf», «zustaendig» → «Zuständige Person». */
@@ -31,7 +31,9 @@ export function meldungText(t: TFunction, e: ProtokollEintrag): string {
     Object.entries(e.werte ?? {}).map(([k, v]) => [k, Array.isArray(v) ? v.join(', ') : v]),
   ) as Record<string, unknown>
   if (e.ergebnis === 'wartet' && typeof werte.bis === 'string') {
-    return t('automationen.meldung.wartet', { bis: formatDatum(werte.bis) })
+    // Versandfenster und Kontakt-Pause sagen, warum die Nachricht noch wartet.
+    const warum = e.meldung === 'versandfenster' || e.meldung === 'kontakt_pause' ? e.meldung : 'wartet'
+    return t(`automationen.meldung.${warum}`, { bis: formatDatumZeit(werte.bis) })
   }
   if (e.ergebnis === 'server') return t('automationen.meldung.server')
   if (!e.meldung) {
@@ -44,5 +46,6 @@ export function meldungText(t: TFunction, e: ProtokollEintrag): string {
       ist: alsText(werte.ist),
     })
   }
+  if (typeof werte.bis === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(werte.bis)) werte.bis = formatDatumZeit(werte.bis)
   return t(`automationen.meldung.${e.meldung}`, { ...werte, defaultValue: e.meldung })
 }
