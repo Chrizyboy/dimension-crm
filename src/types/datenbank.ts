@@ -2171,6 +2171,176 @@ export type Database = {
           },
         ]
       }
+      baustellen_meldungen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          nummer: string
+          person_id: string | null
+          projekt_id: string | null
+          rapport_id: string | null
+          service_fall_id: string | null
+          text: string
+          weiter: boolean
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          nummer?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          rapport_id?: string | null
+          service_fall_id?: string | null
+          text: string
+          weiter?: boolean
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          art?: string
+          erledigt_am?: string | null
+          erledigt_notiz?: string | null
+          erledigt_von?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          nummer?: string
+          person_id?: string | null
+          projekt_id?: string | null
+          rapport_id?: string | null
+          service_fall_id?: string | null
+          text?: string
+          weiter?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'finanz_projekt_firma'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       benachrichtigungen: {
         Row: {
           art: string
@@ -7800,7 +7970,7 @@ export type Database = {
           hat_anhang: boolean
           id: string
           kennung: string
-          ki_werte: Json
+          ki_werte: NonNullable<Json>
           kontakt_id: string | null
           konversation_id: string | null
           nachfassen: boolean
@@ -7856,7 +8026,7 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung: string
-          ki_werte?: Json
+          ki_werte?: NonNullable<Json>
           kontakt_id?: string | null
           konversation_id?: string | null
           nachfassen?: boolean
@@ -7911,7 +8081,7 @@ export type Database = {
           hat_anhang?: boolean
           id?: string
           kennung?: string
-          ki_werte?: Json
+          ki_werte?: NonNullable<Json>
           kontakt_id?: string | null
           konversation_id?: string | null
           nachfassen?: boolean
@@ -7944,27 +8114,6 @@ export type Database = {
           zustaendig_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: 'posteingang_verteilt_von_fkey'
-            columns: ['verteilt_von']
-            isOneToOne: false
-            referencedRelation: 'personen'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'posteingang_vorschlag_id_fkey'
-            columns: ['vorschlag_id']
-            isOneToOne: false
-            referencedRelation: 'personen'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'posteingang_zahlung_id_fkey'
-            columns: ['zahlung_id']
-            isOneToOne: false
-            referencedRelation: 'kreditor_zahlungen'
-            referencedColumns: ['id']
-          },
           {
             foreignKeyName: 'posteingang_abgeholt_von_fkey'
             columns: ['abgeholt_von']
@@ -8162,6 +8311,20 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'posteingang_verteilt_von_fkey'
+            columns: ['verteilt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_verteilt_von_fkey'
+            columns: ['verteilt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'posteingang_vertretung_fuer_fkey'
             columns: ['vertretung_fuer']
             isOneToOne: false
@@ -8173,6 +8336,27 @@ export type Database = {
             columns: ['vertretung_fuer']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_vorschlag_id_fkey'
+            columns: ['vorschlag_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_vorschlag_id_fkey'
+            columns: ['vorschlag_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_zahlung_id_fkey'
+            columns: ['zahlung_id']
+            isOneToOne: false
+            referencedRelation: 'kreditor_zahlungen'
             referencedColumns: ['id']
           },
           {
@@ -8234,17 +8418,24 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'posteingang_notizen_posteingang_id_fkey'
-            columns: ['posteingang_id']
+            foreignKeyName: 'posteingang_notizen_person_id_fkey'
+            columns: ['person_id']
             isOneToOne: false
-            referencedRelation: 'posteingang'
-            referencedColumns: ['id']
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'posteingang_notizen_person_id_fkey'
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_notizen_posteingang_id_fkey'
+            columns: ['posteingang_id']
+            isOneToOne: false
+            referencedRelation: 'posteingang'
             referencedColumns: ['id']
           },
         ]
@@ -8298,11 +8489,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
-            columns: ['postfach_person_id']
+            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
+            columns: ['angelegt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
+            columns: ['angelegt_von']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
           },
           {
             foreignKeyName: 'posteingang_regeln_person_id_fkey'
@@ -8312,8 +8517,15 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
-            foreignKeyName: 'posteingang_regeln_angelegt_von_fkey'
-            columns: ['angelegt_von']
+            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'posteingang_regeln_postfach_person_id_fkey'
+            columns: ['postfach_person_id']
             isOneToOne: false
             referencedRelation: 'personen'
             referencedColumns: ['id']
@@ -8680,6 +8892,7 @@ export type Database = {
           nummer: string
           objekt_id: string | null
           offerte_id: string | null
+          soll_stunden: number | null
           standort_id: string | null
           status: string
           titel: string | null
@@ -8714,6 +8927,7 @@ export type Database = {
           nummer: string
           objekt_id?: string | null
           offerte_id?: string | null
+          soll_stunden?: number | null
           standort_id?: string | null
           status?: string
           titel?: string | null
@@ -8747,6 +8961,7 @@ export type Database = {
           nummer?: string
           objekt_id?: string | null
           offerte_id?: string | null
+          soll_stunden?: number | null
           standort_id?: string | null
           status?: string
           titel?: string | null
@@ -9039,10 +9254,18 @@ export type Database = {
           person_id: string | null
           projekt_id: string | null
           pruefpunkte: NonNullable<Json>
+          rueckfrage: string | null
+          rueckfrage_am: string | null
+          schritte: NonNullable<Json>
+          seriennummern: NonNullable<Json>
           service_fall_id: string | null
+          sicherheit: Json | null
           team: string[]
           unterschrift_kunde: Json | null
           verrechnung: string | null
+          visiert_am: string | null
+          visiert_von: string | null
+          vorbehalte: NonNullable<Json>
           wartungsvertrag_id: string | null
         }
         ComputedFields: never
@@ -9068,10 +9291,18 @@ export type Database = {
           person_id?: string | null
           projekt_id?: string | null
           pruefpunkte?: NonNullable<Json>
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
+          schritte?: NonNullable<Json>
+          seriennummern?: NonNullable<Json>
           service_fall_id?: string | null
+          sicherheit?: Json | null
           team?: string[]
           unterschrift_kunde?: Json | null
           verrechnung?: string | null
+          visiert_am?: string | null
+          visiert_von?: string | null
+          vorbehalte?: NonNullable<Json>
           wartungsvertrag_id?: string | null
         }
         Update: {
@@ -9096,10 +9327,18 @@ export type Database = {
           person_id?: string | null
           projekt_id?: string | null
           pruefpunkte?: NonNullable<Json>
+          rueckfrage?: string | null
+          rueckfrage_am?: string | null
+          schritte?: NonNullable<Json>
+          seriennummern?: NonNullable<Json>
           service_fall_id?: string | null
+          sicherheit?: Json | null
           team?: string[]
           unterschrift_kunde?: Json | null
           verrechnung?: string | null
+          visiert_am?: string | null
+          visiert_von?: string | null
+          vorbehalte?: NonNullable<Json>
           wartungsvertrag_id?: string | null
         }
         Relationships: [
@@ -9178,6 +9417,20 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -12187,6 +12440,61 @@ export type Database = {
           },
         ]
       }
+      zeiten_wochen: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          bestaetigt_am: string
+          erstellt_am: string
+          erstellt_von: string | null
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          person_id: string
+          woche: string
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bestaetigt_am?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id: string
+          woche: string
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          bestaetigt_am?: string
+          erstellt_am?: string
+          erstellt_von?: string | null
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          person_id?: string
+          woche?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'zeiten_wochen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'zeiten_wochen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
     }
     Views: {
       abwesenheiten_alle: {
@@ -12260,6 +12568,143 @@ export type Database = {
             columns: ['person_id']
             isOneToOne: false
             referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      baustellen_meldungen_liste: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          art: string | null
+          erledigt_am: string | null
+          erledigt_notiz: string | null
+          erledigt_von: string | null
+          erledigt_von_name: string | null
+          erstellt_am: string | null
+          erstellt_von: string | null
+          fotos_anzahl: number | null
+          geaendert_am: string | null
+          geloescht_am: string | null
+          id: string | null
+          kunde: string | null
+          nummer: string | null
+          objekt_ort: string | null
+          person: string | null
+          person_id: string | null
+          projekt_id: string | null
+          projekt_nummer: string | null
+          rapport_id: string | null
+          rapport_nummer: string | null
+          service_fall_id: string | null
+          text: string | null
+          weiter: boolean | null
+        }
+        ComputedFields: never
+        Relationships: [
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_erledigt_von_fkey'
+            columns: ['erledigt_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'finanz_projekt_firma'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'materialplan'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'offerten_liste'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_fahrplan'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekt_stand'
+            referencedColumns: ['projekt_id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_projekt_id_fkey'
+            columns: ['projekt_id']
+            isOneToOne: false
+            referencedRelation: 'projekte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'offene_service_rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_rapport_id_fkey'
+            columns: ['rapport_id']
+            isOneToOne: false
+            referencedRelation: 'rapporte_liste'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'baustellen_meldungen_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
             referencedColumns: ['id']
           },
         ]
@@ -13725,6 +14170,7 @@ export type Database = {
           erstellt_von: string | null
           fotos: string[] | null
           fotos_anzahl: number | null
+          fotos_werbung: boolean | null
           geaendert_am: string | null
           geloescht_am: string | null
           id: string | null
@@ -13742,12 +14188,21 @@ export type Database = {
           projekt_id: string | null
           projekt_nummer: string | null
           pruefpunkte: Json | null
+          rueckfrage: string | null
+          rueckfrage_am: string | null
+          schritte: Json | null
+          seriennummern: Json | null
           service_fall_id: string | null
           service_nummer: string | null
+          sicherheit: Json | null
           stunden: number | null
           team: string[] | null
           unterschrift_kunde: Json | null
           verrechnung: string | null
+          visiert_am: string | null
+          visiert_von: string | null
+          visiert_von_name: string | null
+          vorbehalte: Json | null
           wartungsvertrag_id: string | null
         }
         ComputedFields: never
@@ -13827,6 +14282,20 @@ export type Database = {
             columns: ['service_fall_id']
             isOneToOne: false
             referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'rapporte_visiert_von_fkey'
+            columns: ['visiert_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -14880,6 +15349,13 @@ export type Database = {
       automation_uebersicht: { Args: Record<PropertyKey, never>; Returns: Json }
       automation_warum: { Args: { p_lauf: string }; Returns: Json }
       automationen_abarbeiten: { Args: { p_limit?: number }; Returns: Json }
+      baustelle_akte: { Args: { p_projekt: string }; Returns: Json }
+      baustelle_auswertung: { Args: { p_bis: string; p_von: string }; Returns: Json }
+      baustelle_soll_setzen: { Args: { p_projekt: string; p_stunden: number }; Returns: undefined }
+      baustellen_heute: { Args: { p_tag?: string }; Returns: Json }
+      baustellen_infos: { Args: { p_einsaetze: string[] }; Returns: Json }
+      baustellen_liste: { Args: { p_tage?: number }; Returns: Json }
+      baustellen_mappe: { Args: { p_projekt: string }; Returns: Json }
       benachrichtigung_ausblenden: { Args: { p_id: string }; Returns: undefined }
       benachrichtigungen_gelesen: { Args: { p_ids?: string[] }; Returns: number }
       bestellung_ab_erfassen: { Args: { p: Json; p_id: string }; Returns: number }
@@ -15141,6 +15617,8 @@ export type Database = {
       mein_tag: { Args: { p_bis: string; p_person?: string; p_von: string }; Returns: Json }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_microsoft_verbindung: { Args: Record<PropertyKey, never>; Returns: Json }
+      meldung_erfassen: { Args: { p: Json }; Returns: string }
+      meldung_erledigen: { Args: { p_id: string; p_notiz?: string; p_wieder?: boolean }; Returns: undefined }
       messe_geloescht: { Args: { p_kennung: string; p_sids: string[] }; Returns: number }
       microsoft_verbindungen: {
         Args: Record<PropertyKey, never>
@@ -15277,7 +15755,7 @@ export type Database = {
       }
       posteingang_antworten: { Args: { p_mails: Json }; Returns: number }
       posteingang_aufgabe: {
-        Args: { p_faellig: string | null; p_id: string; p_person: string | null; p_titel: string }
+        Args: { p_faellig: string; p_id: string; p_person: string; p_titel: string }
         Returns: string
       }
       posteingang_aufnehmen: { Args: { p_mails: Json; p_person: string; p_postfach: string }; Returns: number }
@@ -15301,7 +15779,13 @@ export type Database = {
       posteingang_notiz: { Args: { p_id: string; p_text: string }; Returns: string }
       posteingang_notizen_von: {
         Args: { p_id: string }
-        Returns: { am: string; id: string; kuerzel: string; person: string; text: string }[]
+        Returns: {
+          am: string
+          id: string
+          kuerzel: string
+          person: string
+          text: string
+        }[]
       }
       posteingang_regel_loeschen: { Args: { p_id: string }; Returns: undefined }
       posteingang_regel_speichern: { Args: { p: Json }; Returns: string }
@@ -15347,6 +15831,7 @@ export type Database = {
       rapport_abschliessen: { Args: { p?: Json; p_id: string }; Returns: undefined }
       rapport_oeffnen: { Args: { p_id: string }; Returns: undefined }
       rapport_speichern: { Args: { p: Json }; Returns: string }
+      rapport_visieren: { Args: { p_id: string; p_rueckfrage?: string }; Returns: undefined }
       rechnung_entwurf: { Args: { p: Json }; Returns: string }
       rechnung_mahnen: { Args: { p_id: string }; Returns: number }
       rechnung_speichern: { Args: { p: Json; p_id: string }; Returns: undefined }
@@ -15657,9 +16142,13 @@ export type Database = {
       zeit_speichern: { Args: { p: Json }; Returns: string }
       zeit_starten: { Args: { p: Json }; Returns: string }
       zeit_stoppen: { Args: { p: Json }; Returns: undefined }
+      zeit_team_starten: { Args: { p: Json }; Returns: number }
+      zeit_team_stoppen: { Args: { p: Json }; Returns: number }
       zeiten_exportieren: { Args: { p_ids: string[] }; Returns: string }
       zeiten_pruefen: { Args: { p_ids: string[] }; Returns: number }
       zeiten_vergessen_melden: { Args: Record<PropertyKey, never>; Returns: number }
+      zeiten_woche_bestaetigen: { Args: { p_woche: string }; Returns: undefined }
+      zeiten_wochenblatt: { Args: { p_montag: string }; Returns: Json }
       zeitplan_ergebnis: { Args: { p_job: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       zeitplan_faellig: { Args: { p_job: string; p_minuten: number }; Returns: boolean }
       zeitplan_laeufe: {
