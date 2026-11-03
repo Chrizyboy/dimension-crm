@@ -563,7 +563,10 @@
       "erreichbarkeit": "Erreichbarkeit",
       "kommentarKunde": "Kommentar Kunde",
       "wiedervorlage": "Wiedervorlage",
-      "verlauf": "Verlauf (Vorlage)"
+      "verlauf": "Verlauf (Vorlage)",
+      "heizung": "Heizung heute",
+      "vorOrt": "Vor Ort beachten",
+      "vorOrtHinweis": "Zugang, Schlüssel, Parkplatz, Hund, Zähler – sieht die Montage und der Service."
     },
     "abaninja": {
       "nicht": "Noch nicht mit AbaNinja verknüpft. Verknüpfen, damit Rechnungen hier erscheinen und Adressänderungen nach AbaNinja gehen.",
@@ -641,7 +644,51 @@
       "baubeginn": "Nächster Termin: Baubeginn"
     },
     "nurFinanzen": "Rechnungen sieht nur, wer das Recht «Finanzen» hat.",
-    "nurBuchhaltung": "nur Buchhaltung"
+    "nurBuchhaltung": "nur Buchhaltung",
+    "betreuung": {
+      "titel": "Betreuung und Rechnung",
+      "betreuer": "Betreuer bei uns",
+      "keinBetreuer": "Kein fester Betreuer",
+      "herkunft": "Herkunft",
+      "rechnungAn": "Rechnung an",
+      "gleicheAdresse": "Adresse des Kunden",
+      "abweichend": "Abweichende Rechnungsadresse",
+      "rechnungsEmail": "Rechnung per Mail an",
+      "zahlungsfrist": "Zahlungsfrist",
+      "fristFirma": "wie Firma",
+      "tage": "{{count}} Tage",
+      "uid": "UID",
+      "bearbeiten": "Betreuung und Rechnung bearbeiten",
+      "adresse": {
+        "name": "Name / Firma",
+        "zusatz": "Zusatz",
+        "strasse": "Strasse",
+        "plz": "PLZ",
+        "ort": "Ort"
+      }
+    },
+    "personen": {
+      "titel": "Ansprechpersonen",
+      "firmen": "Gehört zu",
+      "keine": "Keine weiteren Personen erfasst.",
+      "hauptkontakt": "Hauptkontakt",
+      "unterschreibt": "Unterschreibt",
+      "rechnungen": "Rechnungen",
+      "vorOrt": "Vor Ort",
+      "imAdressbuch": "Im Adressbuch bearbeiten"
+    },
+    "zusammen": {
+      "menue": "Doppelten zusammenführen",
+      "titel": "Doppelten zusammenführen",
+      "text": "Wähle den doppelt erfassten Kontakt. Alles, was an ihm hängt (Gebäude, Leads, Offerten, Projekte, Rechnungen, Mails, Aufgaben, Dokumente), kommt zu {{name}}. Der Doppelte landet im Papierkorb.",
+      "keine": "Keine möglichen Doppelten gefunden (gleiche Mail, Telefon oder Name).",
+      "bestaetigen": "Zusammenführen",
+      "grund": {
+        "email": "gleiche Mail",
+        "telefon": "gleiches Telefon",
+        "name": "gleicher Name"
+      }
+    }
   },
   "kontakt": {
     "neuTitel": "Neuer Kontakt",
@@ -7955,7 +8002,8 @@
       "staffel": "Preis pro kWp",
       "staffelBis": "bis {{bis}} kWp: CHF {{chf}}",
       "staffelRest": "darüber: CHF {{chf}}",
-      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu."
+      "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu.",
+      "youdera_mail": "Mail Youdera (Dossier)"
     },
     "heute": {
       "titel": "Grossprojekte",
@@ -8143,7 +8191,9 @@
       "ueberLaufzeit": "über {{jahre}} Jahre",
       "investition": "Investition (Bauauftrag)",
       "waerme": "Dazu Wärme: ca. {{kw}} kW, Jahresrate ca. {{rate}}.",
-      "ertrag": "Ertrag sonnendach.ch"
+      "ertrag": "Ertrag sonnendach.ch",
+      "bau": "Für uns: Bau (Marge {{prozent}} %)",
+      "wartung": "Für uns: Wartung pro Jahr ({{prozent}} %)"
     },
     "verlauf": {
       "notiz": "Notiz",
@@ -8155,6 +8205,101 @@
       "platzhalter": "Was ist passiert? Ctrl+Enter hält es fest.",
       "festhalten": "Festhalten",
       "stufe": "Stufe: {{stufe}}"
+    },
+    "pdf": {
+      "titel": "Potenzialanalyse Solarstrom",
+      "einleitung": "Ihr Gebäude hat ein grosses Dach mit viel Sonne. Diese Analyse zeigt, wie viel Solarstrom es liefern kann und was Sie damit sparen. {{firma}} plant, baut und wartet die Anlage. Sie investieren nichts und beziehen den Strom vom eigenen Dach günstiger als aus dem Netz.",
+      "anlage": "Ihre Solaranlage",
+      "dach": "Geeignete Dachfläche",
+      "leistung": "Leistung",
+      "ertrag": "Solarstrom pro Jahr",
+      "eigen": "Davon direkt im Gebäude verbraucht",
+      "kosten": "Ihre Stromkosten pro Jahr",
+      "heute": "Heute",
+      "mit": "Mit Solarstrom vom eigenen Dach",
+      "preise": "Netzstrom {{netz}} Rp./kWh, Solarstrom {{solar}} Rp./kWh",
+      "ersparnis": "Sie sparen pro Jahr",
+      "ueberLaufzeit": "Über {{jahre}} Jahre",
+      "investition": "Ihre Investition",
+      "investitionWert": "CHF 0",
+      "vorteile": "Ihre Vorteile",
+      "vorteil1": "Keine Investition: Bau, Betrieb und Wartung sind im Strompreis enthalten.",
+      "vorteil2": "Fester, tiefer Preis für den Solarstrom über die ganze Laufzeit.",
+      "vorteil3": "Ein Ansprechpartner aus der Region für Planung, Bau und Service.",
+      "vorteil4": "Weniger CO2 und ein sichtbarer Beitrag zur Energiewende.",
+      "weiter": "So geht es weiter",
+      "schritt1": "Besichtigung vor Ort: Dach, Statik und Elektroanschluss.",
+      "schritt2": "Ihre Stromdaten (Rechnungen oder Lastgang) für eine genaue Rechnung.",
+      "schritt3": "Verbindliches Angebot mit festem Preis pro kWh.",
+      "schritt4": "Vertrag, Bewilligung und Bau, meist in wenigen Monaten.",
+      "hinweis": "Schätzung aus öffentlichen Daten (sonnendach.ch, Gebäuderegister) und Erfahrungswerten. Verbindlich ist erst das Angebot nach der Besichtigung.",
+      "kontakt": "Ihre Ansprechperson"
+    },
+    "dossier": {
+      "titel": "Dossier Contracting {{nummer}}",
+      "objekt": "Objekt",
+      "parzelle": "Parzelle",
+      "nutzung": "Nutzung",
+      "baujahr": "Baujahr",
+      "dach": "Dachfläche",
+      "heizung": "Heizung",
+      "geschuetzt": "Geschützt / Inventar",
+      "ja": "Ja",
+      "nein": "Nein",
+      "anlage": "Anlage und Strom",
+      "leistung": "Leistung",
+      "ertrag": "Ertrag",
+      "verbrauch": "Verbrauch Kunde",
+      "schaetzung": "Schätzung",
+      "eigen": "Eigenverbrauch",
+      "strompreis": "Strompreis heute",
+      "zielpreis": "Zielpreis Contracting",
+      "investition": "Investition geschätzt",
+      "rolle": "Bau und Wartung",
+      "rolleWert": "{{firma}}",
+      "kunde": "Kunde und Ansprechpersonen",
+      "keineKontakte": "Noch keine Ansprechperson erfasst",
+      "unterlagen": "Unterlagen",
+      "vorhanden": "vorhanden seit",
+      "fehlt": "fehlt noch",
+      "besichtigung": "Besichtigung vor Ort",
+      "nochNicht": "Noch nicht besichtigt",
+      "besichtigtAm": "Besichtigt am",
+      "ok": "in Ordnung",
+      "problem": "Problem",
+      "kontakt": "Fragen an"
+    },
+    "mail": {
+      "beschreibung": "Prüfe Adresse und Text. «Senden» gibt die Mail frei, sie geht über den Ausgangskorb aus deinem Postfach.",
+      "ansehen": "PDF ansehen",
+      "senden": "Senden",
+      "an": "An",
+      "cc": "Cc",
+      "betreff": "Betreff",
+      "text": "Text",
+      "potenzialKnopf": "Potenzialanalyse",
+      "potenzialTitel": "Potenzialanalyse an den Kunden",
+      "potenzial": {
+        "betreff": "Potenzialanalyse Solarstrom: {{name}}",
+        "text": "Guten Tag{{anrede}}\n\nVielen Dank für das Gespräch. Im Anhang finden Sie die Potenzialanalyse für Ihr Gebäude: wie viel Solarstrom Ihr Dach liefern kann und was Sie damit pro Jahr sparen, ohne eigene Investition.\n\nGerne besprechen wir die Zahlen bei einer Besichtigung vor Ort. Passt Ihnen ein Termin in den nächsten zwei Wochen?\n\nFreundliche Grüsse"
+      },
+      "dossierKnopf": "Dossier an Youdera",
+      "dossierNochmals": "Dossier nochmals senden",
+      "dossierTitel": "Dossier an Youdera",
+      "ohneEinverstaendnis": "Das Einverständnis des Kunden zur Weitergabe der Daten ist noch nicht abgehakt (Unterlagen). Sende das Dossier erst, wenn es vorliegt.",
+      "dossier": {
+        "betreff": "Contracting-Anfrage {{nummer}}: {{name}}",
+        "text": "Hallo zusammen\n\nIm Anhang das Dossier für {{name}} in {{gemeinde}} mit Objekt, Anlage, Verbrauch, Ansprechpersonen, Unterlagen und Besichtigung. Bau und Wartung übernimmt Dimension Solaire.\n\nKönnt ihr uns ein Angebot mit Preis pro kWh und Laufzeit schicken? Fehlt etwas, melden wir uns gleich.\n\nBesten Dank und freundliche Grüsse"
+      }
+    },
+    "besichtigung": {
+      "titel": "Besichtigung vor Ort",
+      "am": "Besichtigt {{datum}}",
+      "ok": "In Ordnung",
+      "problem": "Problem",
+      "notizPunkt": "Was ist das Problem?",
+      "notiz": "Notiz zur Besichtigung",
+      "abschliessen": "Besichtigung abschliessen"
     }
   },
   "team": {
