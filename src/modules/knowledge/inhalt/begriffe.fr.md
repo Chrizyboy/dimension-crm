@@ -88,7 +88,7 @@ Travail ou matériel supplémentaire qui ne figurait pas dans le contrat d’ent
 
 ## Corbeille {#papierkorb}
 
-Dans le CRM, rien n’est supprimé définitivement. Ce qui est supprimé va à la corbeille et peut être restauré. [Paramètres](kapitel:settings)
+Dans le CRM, rien n’est supprimé définitivement. Dans chaque domaine, «Mettre à la corbeille» retire un élément (avec confirmation et «Annuler»); la corbeille dans le menu en haut à droite montre tout ce qui a été retiré et le récupère avec «Restaurer». Les factures émises, les frais, les paiements et les mouvements de stock sont annulés au lieu d’être supprimés.
 
 ## Boîte de réception {#posteingang}
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
@@ -88,6 +89,15 @@ export function KontaktDialog({
         titel={t(kontakt ? 'ausschreibungen.kontakt.aendern' : 'ausschreibungen.kontakt.neu')}
         fuss={
           <>
+            {kontakt && (
+              <InPapierkorbKnopf
+                tabelle="ausschreibung_kontakte"
+                id={kontakt.id}
+                name={kontakt.name}
+                onFertig={onSchliessen}
+                className="mr-auto"
+              />
+            )}
             <Button variant="ghost" onClick={onSchliessen}>
               {t('allgemein.abbrechen')}
             </Button>

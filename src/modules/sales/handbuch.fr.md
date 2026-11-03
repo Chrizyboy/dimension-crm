@@ -115,6 +115,7 @@ La carte vient de swisstopo. Si elle est bloquée ou hors ligne, elle reste gris
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les leads (dans le dossier du lead), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: « Envoyer le lien de rendez-vous » : les clients réservent eux-mêmes la visite sur dimension-solaire.ch.
 - 03.11.2026: Planification dans un onglet (calendrier, tournée du jour, tournée) ; visite avec check-list, appareil photo et « Terminer · Commander l’offre ».
 - 02.11.2026: Vue de départ « À faire » avec chrono de 15 minutes, fiche du lead en pleine page, résultat d’appel avec rappel et brouillon de SMS, pipeline en six étapes, pilotage pour la direction, demandes du site web en direct.

@@ -89,6 +89,7 @@ Seuls les contrats avec formule la reçoivent automatiquement. Pour les anciens 
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les contrats de maintenance (en bas du dossier), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Planifier les inspections avec annonce 14 jours avant, onglet «Sans contrat» avec offre seule ou en série, inspection sur mobile avec les valeurs de la dernière fois.
 - 02.11.2026: Contrats selon les formules du site, tarif selon les kWc avec rabais visible, résiliation avec « résiliable jusqu’au », facture annuelle automatique en brouillon.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.

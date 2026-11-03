@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Check, Languages, LogOut, Monitor, Moon, Search, Sparkles, Sun, UserRound } from 'lucide-react'
+import { Check, Languages, LogOut, Monitor, Moon, Search, Sparkles, Sun, Trash2, UserRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Avatar, Kbd } from '@/components/ui/diverses'
 import {
@@ -114,6 +114,14 @@ export function Kopfzeile() {
             >
               <UserRound />
               {t('konto.meinKonto')}
+            </MenueEintrag>
+            <MenueEintrag
+              onSelect={() => {
+                void navigate({ to: '/papierkorb' })
+              }}
+            >
+              <Trash2 />
+              {t('papierkorb.titel')}
             </MenueEintrag>
             <MenueTrenner />
             <MenueTitel>{t('einstellungen.darstellung')}</MenueTitel>

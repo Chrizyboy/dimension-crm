@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, innendienst, geschaeftsleitung
 ---
 
@@ -99,5 +99,6 @@ Unter **Lieferanten** eintragen oder in der Mail von Hand eingeben.
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Lieferanten; Bestellungen ab freigegeben werden storniert, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 02.11.2026: Leitstand, Bestellen je Lieferant mit Sammelbestellung, Materialplan, Freigabegrenze, Auftragsbestätigung mit KI, Lieferantenrechnung prüfen, Konditionen der Lieferanten.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

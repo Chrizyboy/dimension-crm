@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { PackageX, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Badge } from '@/components/ui/badge'
@@ -139,14 +140,27 @@ export function GarantieAbschnitt({ fall }: { fall: ServiceFall }) {
             titel={t(entwurf.id ? 'service.garantiefall.bearbeiten' : 'service.garantiefall.neu')}
             beschreibung={t('service.garantiefall.beschreibung')}
             fuss={
-              <Button
-                laedt={laeuft}
-                disabled={!entwurf.hersteller.trim() || !entwurf.komponente.trim()}
-                onClick={() => void speichern()}
-              >
-                <PackageX />
-                {t('allgemein.speichern')}
-              </Button>
+              <>
+                {entwurf.id && (
+                  <InPapierkorbKnopf
+                    tabelle="garantiefaelle"
+                    id={entwurf.id}
+                    name={`${entwurf.hersteller} · ${entwurf.komponente}`}
+                    onFertig={() => {
+                      setEntwurf(null)
+                    }}
+                    className="mr-auto"
+                  />
+                )}
+                <Button
+                  laedt={laeuft}
+                  disabled={!entwurf.hersteller.trim() || !entwurf.komponente.trim()}
+                  onClick={() => void speichern()}
+                >
+                  <PackageX />
+                  {t('allgemein.speichern')}
+                </Button>
+              </>
             }
           >
             <div className="grid grid-cols-2 gap-3">

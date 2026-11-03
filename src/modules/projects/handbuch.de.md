@@ -111,5 +111,6 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Projekte (Menü «⋯» in der Projekt-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Leitstand, Meine Woche und Projekt-Akte als ganze Seite; Mängel und Restarbeiten, Beteiligte mit Rolle, Kundeninfo bei Meilensteinen mit Freigabe.
 - 01.11.2026: Zeitplan der Baustellen mit Sicht Baustellen oder Team, Konflikte rot.

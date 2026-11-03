@@ -99,6 +99,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les offres (en-tête du dossier d'offre), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Onglet Analyse (taux, par personne, motifs de perte, concurrence).
 - 03.11.2026: Travail en cours comme vue de départ, offre en pleine page, relance avec résultat selon le plan, variantes, validation et chance.
 

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-03
 rollen: projektleitung, innendienst, geschaeftsleitung
 ---
 
@@ -99,5 +99,6 @@ La saisir sous **Fournisseurs** ou à la main dans l’e-mail.
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les fournisseurs; les commandes dès validation sont annulées, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 02.11.2026: Tableau de bord, commande groupée par fournisseur, plan matériel, limite de validation, confirmation de commande avec IA, contrôle de la facture fournisseur, conditions des fournisseurs.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.

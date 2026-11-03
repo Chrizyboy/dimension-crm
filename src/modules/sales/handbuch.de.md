@@ -115,6 +115,7 @@ Die Karte kommt von swisstopo. Ist sie gesperrt oder offline, bleibt sie grau; R
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Leads (in der Lead-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: «Termin-Link senden»: Kunden buchen die Besichtigung selbst auf dimension-solaire.ch.
 - 03.11.2026: Planung in einem Reiter (Kalender, Tagesroute, Tour); Besichtigung mit Checkliste, Kamera und «Abschliessen · Offerte bestellen».
 - 02.11.2026: Startansicht «Zu tun» mit 15-Minuten-Uhr, Lead-Akte als ganze Seite, Anruf-Ergebnis mit Rückruf und SMS-Entwurf, Pipeline in sechs Schritten, Steuerung für die Geschäftsleitung, Website-Anfragen direkt.

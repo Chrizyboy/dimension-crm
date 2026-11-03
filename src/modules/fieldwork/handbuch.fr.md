@@ -101,6 +101,7 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: «Mettre à la corbeille» pour les rapports et les temps; rapports clôturés seulement par l'administration, temps exportés jamais, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Les cas de service d’hier restent dans le planning («En retard»). Temps de travail et trajet dans **Ma journée** aussi sans rapport ; les modifications partent tout de suite.
 - 03.11.2026: Inspections des contrats d’entretien dans «Ma journée», points de contrôle selon la formule avec les valeurs de la dernière fois.
 - 02.11.2026 : contrôle de sécurité et temps d’équipe, étapes de travail, photos obligatoires du chantier, scanner les numéros de série, dossier, signaler un problème, réception avec réserves ; chantiers du jour, dossier chantier, signalements, feuille hebdomadaire, visa et analyse.

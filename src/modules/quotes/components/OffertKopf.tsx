@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { AblageLink } from '@/components/shared/AblageLink'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
 import { MailDialog } from '@/components/shared/MailDialog'
@@ -227,6 +228,13 @@ export function OffertKopf({
           <Contact />
           {t('offerten.akte.kundenakte')}
         </Button>
+        <InPapierkorbKnopf
+          tabelle="offerten"
+          id={o.id}
+          name={[o.nummer, o.kunde].filter(Boolean).join(' ')}
+          onFertig={onZurueck}
+          size="sm"
+        />
       </Knopfleiste>
       {mail && (
         <MailDialog

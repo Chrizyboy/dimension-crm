@@ -99,6 +99,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
+- 03.11.2026: «In den Papierkorb» für Offerten (Kopf der Offert-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Reiter Auswertung (Quote, je Person, Verlustgründe, Konkurrenz).
 - 03.11.2026: Arbeitsvorrat als Startansicht, Offerte als ganze Seite, Nachfassen mit Ergebnis nach Plan, Varianten, Freigabe und Chance.
 

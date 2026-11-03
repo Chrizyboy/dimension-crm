@@ -17192,6 +17192,18 @@ export type Database = {
         Returns: undefined
       }
       offerte_zurueck: { Args: { p_grund: string; p_offerte: string; p_ziel: string }; Returns: undefined }
+      papierkorb_legen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
+      papierkorb_liste: {
+        Args: { p_grenze?: number }
+        Returns: {
+          geloescht_am: string
+          geloescht_von: string | null
+          id: string
+          tabelle: string
+          titel: string | null
+        }[]
+      }
+      papierkorb_wiederherstellen: { Args: { p_id: string; p_tabelle: string }; Returns: undefined }
       personal_akte: { Args: { p_person: string }; Returns: Json }
       personal_checklisten: { Args: Record<PropertyKey, never>; Returns: number }
       personal_fristen_melden: { Args: { p_heute?: string }; Returns: number }

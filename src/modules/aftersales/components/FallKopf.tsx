@@ -1,5 +1,6 @@
 import { ArrowLeft, CheckCircle2, Globe, ListTodo, Phone, RotateCcw, ShieldCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useAuswahl } from '@/hooks/useAuswahl'
@@ -60,6 +61,12 @@ export function FallKopf({ f, akte, onZurueck }: { f: ServiceFall; akte: Akte | 
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          <InPapierkorbKnopf
+            tabelle="service_faelle"
+            id={f.id}
+            name={[f.nummer, f.titel].filter(Boolean).join(' ')}
+            onFertig={onZurueck}
+          />
           {telefon && (
             <a href={`tel:${telefon.replace(/[^\d+]/g, '')}`} className={buttonVariants({ variant: 'secondary' })}>
               <Phone />
