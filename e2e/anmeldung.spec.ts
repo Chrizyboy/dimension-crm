@@ -90,3 +90,36 @@ test('Abmelden führt zurück zur Anmeldung', async ({ page }) => {
   await page.getByRole('menuitem', { name: 'Abmelden' }).click()
   await expect(page.getByRole('heading', { name: 'Bei Dimension Work anmelden' })).toBeVisible()
 })
+
+test('Registrier-Link: Person ohne Mail registriert sich am Handy mit privater Adresse', async ({ page, browser }) => {
+  const lauf = Date.now()
+  const name = `Diogo Test ${lauf}`
+  const privat = `privat-${lauf}@test.local`
+  await anmelden(page, 'admin@test.local')
+  await page.goto('/#/settings')
+  await page.getByRole('button', { name: 'Person einladen' }).click()
+  const dialog = page.getByRole('dialog')
+  await dialog.getByLabel('Name').fill(name)
+  await dialog.getByText('Ohne Mail: Link fürs Handy').click()
+  await dialog
+    .getByRole('button', { name: /erstellen/ })
+    .last()
+    .click()
+  const linkDialog = page.getByRole('dialog', { name: new RegExp(`Registrier-Link für ${name}`) })
+  const adresse = await linkDialog.getByLabel('Link').inputValue()
+  const schluessel = /registrieren=([a-f0-9]+)/.exec(adresse)?.[1] ?? ''
+  expect(schluessel).not.toBe('')
+
+  // Am Handy: eigener Browser ohne Anmeldung.
+  const handy = await browser.newPage()
+  await handy.goto(`/#/?registrieren=${schluessel}`)
+  await expect(handy.getByRole('heading', { name: 'Willkommen, Diogo' })).toBeVisible()
+  const seit = Date.now() - 1000
+  await handy.getByLabel('Deine Mailadresse').fill(privat)
+  await handy.getByRole('button', { name: 'Code per E-Mail senden' }).click()
+  const code = /\b(\d{6})\b/.exec((await mailAn(privat, seit)).text)?.[1] ?? ''
+  await handy.getByLabel(/Code aus/).fill(code)
+  await handy.getByRole('button', { name: 'Anmelden' }).click()
+  await expect(handy.getByRole('button', { name: 'Konto und Einstellungen' })).toBeVisible()
+  await handy.close()
+})

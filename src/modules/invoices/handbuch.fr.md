@@ -10,7 +10,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 ## Qui travaille ici {#wer}
 
 - **Comptabilité (droit Finances)** : émettre, paiements, rappels, synchronisation AbaNinja ; données des sociétés en lecture seule.
-- **Direction de projet** : voit dans l’onglet **À facturer** quelle tranche est due et crée des brouillons.
+- **Direction de projet** : voit dans l’onglet **À facturer** quelle tranche est due et crée des brouillons. Donne le premier visa pour les brouillons de ses projets.
 - **Direction** : vue d’ensemble de l’ouvert et des retards.
 
 ## Comment faire {#so}
@@ -26,6 +26,13 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 1. Onglet **Factures**, **Nouvelle facture**, choisir le client.
 2. Choisir le **Modèle** : **Acompte (30 %)**, **Montage (60 %)**, **Facture finale (solde avec avenants)**, **Montant total (100 %)**, **Contrat d’entretien** ou **Facture libre**.
 3. **Créer le brouillon**. Dans le brouillon, on peut modifier et ajouter des lignes.
+
+### Donner le premier visa (direction de projet)
+
+1. Sur [Ma journée](kapitel:today), ouvrir la carte **Factures à viser**.
+2. Cliquer sur la facture : contrôler positions, quantité et montant.
+3. Si tout joue : **Donner le premier visa**. Sinon, écrire sous **Correction pour la comptabilité** ce qui ne joue pas et **Signaler une correction**.
+4. La comptabilité reçoit une notification et voit dans le brouillon qui a visé.
 
 ### Émettre et envoyer une facture
 
@@ -93,6 +100,7 @@ Choisir les filtres et **Exporter la liste** (CSV).
 
 ## Nouveautés {#neu}
 
+- 03.11.2026: Premier visa de la direction de projet avant l’émission.
 - 03.11.2026: Seule l’administration modifie les données des sociétés et les réglages des factures ; aussi sous Réglages › Sociétés et banque.
 - 31.10.2026: Le PDF de facture sert aussi pour la facture d’acompte du contrat d’entreprise.
 - 31.10.2026: Recherche et fenêtre de détail uniformes comme dans tous les domaines.

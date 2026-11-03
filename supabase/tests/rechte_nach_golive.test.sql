@@ -27,10 +27,10 @@ select lives_ok($$select public.aendere_mein_konto('{"mobil": "+41 76 000 00 00"
 select is((select plz from public.aussendienst_heim() where person_id = '00000000-0000-0000-0000-0000000043b2'), '5630',
   'Heimadresse für die Tagesroute');
 
--- Andere sehen die Akte nicht (ausser die Administration)
+-- Andere sehen die Akte nicht, ausser wer das Recht «personal» hat (GL, Buchhaltung)
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000043a3", "role": "authenticated"}', true);
-select is((select count(*)::int from public.personal_akten_sicht where person_id = '00000000-0000-0000-0000-0000000043b2'), 0,
-  'Akte fremder Personen unsichtbar');
+select is((select count(*)::int from public.personal_akten_sicht where person_id = '00000000-0000-0000-0000-0000000043b2'), 1,
+  'Buchhaltung sieht die Akte (Recht «personal»)');
 select is((select count(*)::int from public.aussendienst_heim() where person_id = '00000000-0000-0000-0000-0000000043b2'), 1,
   'nur die Heimadresse ist für die Route sichtbar');
 reset role;
@@ -67,9 +67,9 @@ select throws_ok($$insert into public.abwesenheiten (person_id, art, von, bis)
                    values ('00000000-0000-0000-0000-0000000043b3', 'ferien', current_date + 30, current_date + 34)$$,
   '42501', null, 'nicht für andere ohne Planung');
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000043a4", "role": "authenticated"}', true);
-select lives_ok($$insert into public.abwesenheiten (person_id, art, von, bis)
+select throws_ok($$insert into public.abwesenheiten (person_id, art, von, bis)
                   values ('00000000-0000-0000-0000-0000000043b3', 'krank', current_date, current_date)$$,
-  'Projektleitung plant für alle');
+  '42501', null, 'Projektleitung erfasst nicht mehr für alle (nur GL, Buchhaltung, Vorgesetzte)');
 reset role;
 
 select * from finish();

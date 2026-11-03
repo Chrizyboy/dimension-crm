@@ -16,6 +16,7 @@ import type { ModulMeta } from '@/types/modul'
 import { useBenutzerAenderung } from '../hooks/useBenutzer'
 import { ladeEin, speicherePerson } from '../services/benutzer'
 import type { Person, Personenstatus, Rolle, Standort } from '../types'
+import { RegistrierLinkKnopf } from './RegistrierLinkDialog'
 import { BereicheAuswahl } from './BereicheAuswahl'
 import { RechteAuswahl } from './RechteAuswahl'
 
@@ -251,6 +252,14 @@ export function PersonDialog({ person, status, onSchliessen, rollen, standorte, 
             )}
           </section>
 
+          {(status === 'eingeladen' || status === 'bereit') && (
+            <>
+              <Trenner />
+              <div className="flex flex-col gap-2">
+                <RegistrierLinkKnopf personId={entwurf.id} name={entwurf.name} />
+              </div>
+            </>
+          )}
           {entwurf.email && (status === 'eingeladen' || status === 'bereit') && (
             <>
               <Trenner />
