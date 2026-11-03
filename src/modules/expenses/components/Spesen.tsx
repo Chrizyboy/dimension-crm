@@ -1,4 +1,4 @@
-import { Download, Mail, Plus, Wallet, WalletCards } from 'lucide-react'
+import { Car, Download, Plus, Wallet, WalletCards } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -15,38 +15,40 @@ import { supabase } from '@/services/supabase'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useKategorieText } from '../hooks/useKategorieText'
 import { useSpesen } from '../hooks/useSpesen'
-import { filtern, heuteZuerich, offenJePerson, spesenCsv, summe } from '../lib/spesen'
+import { filtern, heuteZuerich, spesenCsv, summe } from '../lib/spesen'
 import type { Ansicht, Spese, SpesenFilter } from '../types'
-import { AnBuchhaltung } from './AnBuchhaltung'
+import { Auswertung } from './Auswertung'
+import { Auszahlen } from './Auszahlen'
 import { AuszahlenDialog } from './AuszahlenDialog'
 import { Kategorien } from './Kategorien'
+import { MeineSpesen } from './MeineSpesen'
+import { Pruefen } from './Pruefen'
 import { SpeseErfassen } from './SpeseErfassen'
 import { SpesenTabelle } from './SpesenTabelle'
-import { SpeseStorno } from './SpeseStorno'
 
-const FILTER: SpesenFilter[] = ['offen', 'ausbezahlt', 'storniert', 'alle']
-type Fenster = 'neu' | 'mail' | 'auszahlen' | { storno: Spese } | null
+const FILTER: SpesenFilter[] = ['offen', 'ausbezahlt', 'firmenkarte', 'abgelehnt', 'alle']
 
 /**
- * Spesen: «Meine» für jede Person (erfassen mit Beleg, an die Buchhaltung senden, stornieren), «Alle» und
- * «Kategorien» für die Buchhaltung (offen je Person, ausbezahlt markieren, Liste exportieren). #/expenses?ansicht=…
+ * Spesen: «Meine» für jede Person (erfassen mit Beleg oder Kilometer, ändern bis zur Prüfung, Rückfragen
+ * beantworten). Die Buchhaltung (Recht «finanzen») hat dazu «Prüfen», «Auszahlen», «Alle», «Auswertung» und
+ * «Regeln». #/expenses?ansicht=…
  */
 export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAnsicht: (a: Ansicht) => void }) {
   const { t, i18n } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const buchhaltung = hatRecht(ich, 'finanzen')
-  const aktiv: Ansicht = buchhaltung ? ansicht : 'meine'
+  const aktiv: Ansicht = buchhaltung ? (ansicht === 'kategorien' ? 'kategorien' : ansicht) : 'meine'
   const einstellungen = useFinanzEinstellungen()
   const kategorie = useKategorieText()
+  const [neu, setNeu] = useState<'beleg' | 'kilometer' | null>(null)
   const [filter, setFilter] = useState<SpesenFilter>('offen')
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
-  const [fenster, setFenster] = useState<Fenster>(null)
-  const daten = useSpesen(aktiv === 'alle' ? null : (ich?.id ?? null), aktiv !== 'kategorien' && Boolean(ich))
-  const liste = useMemo(() => filtern(daten.data ?? [], filter), [daten.data, filter])
-  const gewaehlt = liste.filter((s) => auswahl.has(s.id))
-  const zu = () => {
-    setFenster(null)
-  }
+  const [auszahlen, setAuszahlen] = useState(false)
+  const alleDaten = useSpesen(null, buchhaltung)
+  const alle = useMemo(() => alleDaten.data ?? [], [alleDaten.data])
+  const liste = useMemo(() => filtern(alle, filter), [alle, filter])
+  const zuPruefen = alle.filter((s) => s.status === 'eingereicht').length
+  const zuZahlen = alle.filter((s) => s.status === 'geprueft' && s.bezahlt_mit === 'eigen').length
 
   if (!supabase || !ich) {
     return (
@@ -56,36 +58,31 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
     )
   }
 
-  // Ohne Auswahl gilt «An die Buchhaltung» für alle offenen eigenen Spesen.
-  const fuerMail = gewaehlt.length > 0 ? gewaehlt : filtern(daten.data ?? [], 'offen')
-  const jePerson = aktiv === 'alle' ? offenJePerson(daten.data ?? []) : []
-
-  function exportieren() {
+  function csv(spesen: Spese[], name: string) {
     const sprache = i18n.language === 'fr' ? 'fr' : 'de'
     herunterladen(
-      spesenCsv(liste, sprache, { kategorie, status: (s) => t(`spesen.status.${s}`) }),
-      `${t('spesen.dateiname')}-${heuteZuerich()}.csv`,
+      spesenCsv(spesen, sprache, {
+        kategorie,
+        status: (s) => t(`spesen.status.${s}`),
+        bezahlt: (b) => t(`spesen.bezahlt.${b}`),
+      }),
+      `${t('spesen.dateiname')} ${name} ${heuteZuerich()}.csv`,
       'text/csv;charset=utf-8',
     )
   }
 
-  const inhalt = (
+  const gewaehlt = liste.filter((s) => auswahl.has(s.id))
+  const mitDaten = (inhalt: React.ReactNode) =>
+    alleDaten.error ? (
+      <Fehlerzustand details={String(alleDaten.error)} onNochmal={() => void alleDaten.refetch()} />
+    ) : !alleDaten.data ? (
+      <Skelett className="h-64" />
+    ) : (
+      inhalt
+    )
+
+  const alleAnsicht = (
     <div className="flex flex-col gap-3">
-      {jePerson.length > 0 && (
-        <ul className="flex flex-wrap gap-2" aria-label={t('spesen.offenJePerson')}>
-          {jePerson.map((p) => (
-            <li key={p.person_id} className="bg-surface flex flex-col rounded-lg border px-3 py-2 text-sm">
-              <span className="text-muted-foreground text-xs">{p.person}</span>
-              <span className="zahlen font-medium">
-                {formatChf(p.rappen, { mitWaehrung: true })}
-                <span className="text-muted-foreground ml-1 text-xs font-normal">
-                  {t('spesen.anzahl', { count: p.anzahl })}
-                </span>
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Filterchips
           einzeln
@@ -93,7 +90,7 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
           optionen={FILTER.map((f) => ({
             wert: f,
             text: t(`spesen.filterwert.${f}`),
-            anzahl: filtern(daten.data ?? [], f).length,
+            anzahl: filtern(alle, f).length,
           }))}
           gewaehlt={[filter]}
           onChange={([f]) => {
@@ -105,54 +102,38 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
           <span className="text-muted-foreground zahlen text-sm">
             {t('spesen.summe', { betrag: formatChf(summe(liste), { mitWaehrung: true }) })}
           </span>
-          {aktiv === 'alle' && (
-            <>
-              <Button variant="secondary" size="sm" onClick={exportieren} disabled={liste.length === 0}>
-                <Download />
-                {t('spesen.exportieren')}
-              </Button>
-              <Button
-                size="sm"
-                disabled={gewaehlt.length === 0}
-                onClick={() => {
-                  setFenster('auszahlen')
-                }}
-              >
-                <WalletCards />
-                {t('spesen.auszahlen.knopfAuswahl', { count: gewaehlt.length })}
-              </Button>
-            </>
-          )}
-          {aktiv === 'meine' && (
-            <Button
-              variant="secondary"
-              size="sm"
-              disabled={fuerMail.length === 0}
-              onClick={() => {
-                setFenster('mail')
-              }}
-            >
-              <Mail />
-              {t('spesen.mail.knopf', { count: fuerMail.length })}
-            </Button>
-          )}
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              csv(liste, t(`spesen.filterwert.${filter}`))
+            }}
+            disabled={liste.length === 0}
+          >
+            <Download />
+            {t('spesen.exportieren')}
+          </Button>
+          <Button
+            size="sm"
+            disabled={gewaehlt.length === 0}
+            onClick={() => {
+              setAuszahlen(true)
+            }}
+          >
+            <WalletCards />
+            {t('spesen.auszahlen.knopfAuswahl', { count: gewaehlt.length })}
+          </Button>
         </div>
       </div>
-      {daten.error ? (
-        <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} />
-      ) : !daten.data ? (
-        <Skelett className="h-64" />
-      ) : liste.length === 0 ? (
-        <Leerzustand icon={Wallet} titel={t('spesen.leer')} text={t('spesen.leerText')} />
+      {liste.length === 0 ? (
+        <Leerzustand icon={Wallet} titel={t('spesen.leer')} text={t('spesen.leerTextAlle')} />
       ) : (
         <SpesenTabelle
           liste={liste}
-          mitPerson={aktiv === 'alle'}
+          mitPerson
           auswahl={auswahl}
           onAuswahl={setAuswahl}
-          onStorno={(s) => {
-            setFenster({ storno: s })
-          }}
+          waehlbar={(s) => s.bezahlt_mit === 'eigen' && (s.status === 'eingereicht' || s.status === 'geprueft')}
         />
       )}
     </div>
@@ -164,14 +145,27 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
         titel={t('spesen.titel')}
         beschreibung={t('spesen.beschreibung')}
         aktionen={
-          <Button
-            onClick={() => {
-              setFenster('neu')
-            }}
-          >
-            <Plus />
-            {t('spesen.neu')}
-          </Button>
+          <>
+            {einstellungen.spesen_kategorien.some((k) => k.art === 'kilometer') && (
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setNeu('kilometer')
+                }}
+              >
+                <Car />
+                {t('spesen.kilometerErfassen')}
+              </Button>
+            )}
+            <Button
+              onClick={() => {
+                setNeu('beleg')
+              }}
+            >
+              <Plus />
+              {t('spesen.neu')}
+            </Button>
+          </>
         }
       />
       {buchhaltung ? (
@@ -184,35 +178,61 @@ export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAns
         >
           <ReiterListe>
             <ReiterKnopf value="meine">{t('spesen.ansicht.meine')}</ReiterKnopf>
+            <ReiterKnopf value="pruefen">
+              {t('spesen.ansicht.pruefen')}
+              {zuPruefen > 0 && <span className="bg-muted zahlen ml-1 rounded-full px-1.5 text-xs">{zuPruefen}</span>}
+            </ReiterKnopf>
+            <ReiterKnopf value="auszahlen">
+              {t('spesen.ansicht.auszahlen')}
+              {zuZahlen > 0 && <span className="bg-muted zahlen ml-1 rounded-full px-1.5 text-xs">{zuZahlen}</span>}
+            </ReiterKnopf>
             <ReiterKnopf value="alle">{t('spesen.ansicht.alle')}</ReiterKnopf>
+            <ReiterKnopf value="auswertung">{t('spesen.ansicht.auswertung')}</ReiterKnopf>
             <ReiterKnopf value="kategorien">{t('spesen.ansicht.kategorien')}</ReiterKnopf>
           </ReiterListe>
           <ReiterInhalt value="meine" className="pt-4">
-            {aktiv === 'meine' && inhalt}
+            {aktiv === 'meine' && <MeineSpesen personId={ich.id} />}
+          </ReiterInhalt>
+          <ReiterInhalt value="pruefen" className="pt-4">
+            {aktiv === 'pruefen' && mitDaten(<Pruefen alle={alle} />)}
+          </ReiterInhalt>
+          <ReiterInhalt value="auszahlen" className="pt-4">
+            {aktiv === 'auszahlen' && mitDaten(<Auszahlen alle={alle} onCsv={csv} />)}
           </ReiterInhalt>
           <ReiterInhalt value="alle" className="pt-4">
-            {aktiv === 'alle' && inhalt}
+            {aktiv === 'alle' && mitDaten(alleAnsicht)}
+          </ReiterInhalt>
+          <ReiterInhalt value="auswertung" className="pt-4">
+            {aktiv === 'auswertung' && mitDaten(<Auswertung alle={alle} />)}
           </ReiterInhalt>
           <ReiterInhalt value="kategorien" className="pt-4">
             <Kategorien key={JSON.stringify(einstellungen)} />
           </ReiterInhalt>
         </Reiter>
       ) : (
-        inhalt
+        <MeineSpesen personId={ich.id} />
       )}
-      {fenster === 'neu' && <SpeseErfassen personId={ich.id} onSchliessen={zu} />}
-      {fenster === 'mail' && <AnBuchhaltung spesen={fuerMail} onSchliessen={zu} />}
-      {fenster === 'auszahlen' && (
-        <AuszahlenDialog
-          spesen={gewaehlt}
-          onSchliessen={zu}
-          onFertig={() => {
-            setAuswahl(new Set())
-            zu()
+      {neu && (
+        <SpeseErfassen
+          personId={ich.id}
+          start={neu}
+          onSchliessen={() => {
+            setNeu(null)
           }}
         />
       )}
-      {typeof fenster === 'object' && fenster && <SpeseStorno spese={fenster.storno} onSchliessen={zu} />}
+      {auszahlen && (
+        <AuszahlenDialog
+          spesen={gewaehlt}
+          onSchliessen={() => {
+            setAuszahlen(false)
+          }}
+          onFertig={() => {
+            setAuswahl(new Set())
+            setAuszahlen(false)
+          }}
+        />
+      )}
     </div>
   )
 }

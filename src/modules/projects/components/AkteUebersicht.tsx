@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
+import { AutomatischGeplant } from '@/components/shared/automatik/AutomatischGeplant'
 import { KiAkteAbschnitt } from '@/components/shared/ki/KiAkteAbschnitt'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Input } from '@/components/ui/input'
@@ -58,6 +59,7 @@ export function AkteUebersicht({ projekt: p }: { projekt: Projekt }) {
         art="auftrag"
         mail={{ kontakt_id: p.kontakt_id, projekt_id: p.id }}
       />
+      <AutomatischGeplant tabelle="projekte" id={p.id} />
       <AkteAbschnitt titel={t('projekte.akte.kunde')}>
         <dl>
           <Angabe label={t('projekte.spalte.kunde')}>
