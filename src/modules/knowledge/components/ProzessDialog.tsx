@@ -5,6 +5,7 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
 import { useAktion } from '../hooks/useHandbuch'
+import { BereichFeld } from './BereichFeld'
 import { naechsteVersion, titelAusDateiname } from '../lib/handbuch'
 import { prozessSchema } from '../schema'
 import { speichereEintrag } from '../services/handbuch'
@@ -35,6 +36,7 @@ export function ProzessDialog({
   const [titelFr, setTitelFr] = useState(eintrag?.titel_fr ?? '')
   const [beschreibungFr, setBeschreibungFr] = useState(eintrag?.beschreibung_fr ?? '')
   const [dateiFr, setDateiFr] = useState<File | null>(null)
+  const [bereich, setBereich] = useState<string | null>(eintrag?.bereich ?? null)
   const [gezeigt, setGezeigt] = useState(false)
 
   const pruefung = prozessSchema.safeParse({ neu: !eintrag, titel_de: titel, datei_de: datei })
@@ -62,6 +64,7 @@ export function ProzessDialog({
           datum,
           sprache: null,
           reihenfolge: null,
+          bereich,
           datei_de: datei,
           datei_fr: dateiFr,
         }),
@@ -132,6 +135,7 @@ export function ProzessDialog({
               }}
             />
           </Feld>
+          <BereichFeld id="prozess-bereich" wert={bereich} onWert={setBereich} />
           <Feld id="prozess-beschreibung" label={t('handbuch.beschreibungFeld')} className="sm:col-span-2">
             <Input
               id="prozess-beschreibung"

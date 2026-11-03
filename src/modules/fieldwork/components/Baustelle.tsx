@@ -13,6 +13,7 @@ import { Nachtraege } from './Nachtraege'
 import { Netzstand } from './Netzstand'
 import { RapportAkte } from './RapportAkte'
 import { RapportListe } from './RapportListe'
+import { Wochenplan } from './Wochenplan'
 import { Zeiten } from './Zeiten'
 
 /** Navigation der Seite: Reiter und offener Rapport stehen in der Adresse. */
@@ -71,6 +72,9 @@ export default function Baustelle({
         </ReiterListe>
         <ReiterInhalt value="tag" className="pt-4">
           <MeinTag onRapport={oeffnen} />
+        </ReiterInhalt>
+        <ReiterInhalt value="wochenplan" className="pt-4">
+          <Wochenplan />
         </ReiterInhalt>
         <ReiterInhalt value="rapporte" className="pt-4">
           <RapportListe aktiveId={rapportId} onOeffnen={oeffnen} />

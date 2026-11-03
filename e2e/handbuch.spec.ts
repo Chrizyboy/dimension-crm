@@ -94,6 +94,29 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
   expect(await verstoesse(page)).toEqual([])
 })
 
+test('Handbuch: Hilfe mit F1, ganzes Kapitel, Suche, Begriffe und Neu ohne Verstösse', async ({ page }) => {
+  await anmelden(page, 'verkauf@test.local')
+  await page.goto('/#/quotes')
+  await page.keyboard.press('F1')
+  const hilfe = page.getByRole('dialog', { name: 'Hilfe · Offerten' })
+  await expect(hilfe.getByText('Eine neue Offerte ausarbeiten')).toBeVisible()
+  await hilfe.getByRole('link', { name: 'Ganzes Kapitel' }).click()
+  await expect(page.getByRole('heading', { name: 'Offerten', level: 2 })).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Inhalt des Kapitels' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+
+  await page.getByRole('tab', { name: 'Für dich' }).click()
+  await expect(page.getByText('Dein Arbeitstag: Verkauf')).toBeVisible()
+  await page.getByRole('searchbox', { name: 'Im Handbuch suchen' }).fill('Rabatt')
+  await expect(page.getByText('Warum steht beim Vertrag «Rabatt»?')).toBeVisible()
+  await page.getByRole('searchbox', { name: 'Im Handbuch suchen' }).fill('')
+
+  for (const reiter of ['Begriffe A–Z', 'Neu', 'Kapitel']) {
+    await page.getByRole('tab', { name: new RegExp(`^${reiter}`) }).click()
+    expect(await verstoesse(page), reiter).toEqual([])
+  }
+})
+
 test('Handbuch: Verkauf meldet einen Fehler, Administration antwortet', async ({ browser }) => {
   test.slow()
   const verkauf = await (await browser.newContext()).newPage()

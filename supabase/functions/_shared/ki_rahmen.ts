@@ -17,6 +17,8 @@ export interface KiEinstellung {
   person_limit_rappen: number | null
   funktionen: Record<string, string>
   stil: { de: string; fr: string }
+  /** Funktionen, die die Administration ausgeschaltet hat. */
+  aus: string[]
   /** Preis der Websuche in USD je 1000 Suchen (kommt zu den Tokens dazu). */
   websuche_usd_je_1000: number
 }
@@ -41,6 +43,7 @@ export async function kiEinstellung(): Promise<KiEinstellung> {
     person_limit_rappen: w.person_limit_rappen ?? null,
     funktionen: w.funktionen ?? {},
     stil: { de: w.stil?.de ?? '', fr: w.stil?.fr ?? '' },
+    aus: Array.isArray(w.aus) ? w.aus.filter((x): x is string => typeof x === 'string') : [],
     websuche_usd_je_1000: typeof w.websuche_usd_je_1000 === 'number' ? w.websuche_usd_je_1000 : 10,
   }
 }
@@ -151,6 +154,9 @@ export async function kiAufruf(
 ): Promise<KiAntwort> {
   if (!kiEingerichtet()) throw new DienstFehler('ki_nicht_eingerichtet', 503, 'Kein Schlüssel')
   if (!e.aktiv) throw new DienstFehler('ki_aus', 403, 'KI ausgeschaltet')
+  // Einzelne Funktion ausgeschaltet (Assistent › Im CRM); die Planung einer Frage gehört zur Frage.
+  const name = auftrag.funktion === 'frage_plan' ? 'frage' : auftrag.funktion
+  if (e.aus.includes(name)) throw new DienstFehler('ki_aus', 403, 'Funktion ausgeschaltet')
   const budget = await dienst.rpc<Budget>('ki_budget', { p_person: auftrag.personId })
   if (!budget.frei) throw new DienstFehler('ki_limit', 429, 'Tageslimit erreicht')
   const modell = anfrage.modell ?? modellFuer(e, auftrag.funktion)
