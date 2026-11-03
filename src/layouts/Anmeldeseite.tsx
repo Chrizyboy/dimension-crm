@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { ArrowLeft, Mail } from 'lucide-react'
-import { useState, type SyntheticEvent } from 'react'
+import { useEffect, useState, type SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Logo } from '@/components/shared/Logo'
 import { Button } from '@/components/ui/button'
@@ -10,8 +10,11 @@ import { Karte } from '@/components/ui/karte'
 import { useOberflaeche } from '@/hooks/useOberflaeche'
 import {
   anmeldenMitMicrosoft,
+  loeseRegistrierLinkEin,
   microsoftVerfuegbar,
   pruefeAnmeldecode,
+  pruefeRegistrierLink,
+  registrierSchluessel,
   sendeAnmeldecode,
   type Anmeldefehler,
 } from '@/services/anmeldung'
@@ -31,7 +34,8 @@ function MicrosoftZeichen() {
 
 /**
  * Anmeldung: Standard ist das Microsoft-Firmenkonto, sonst ein Code per E-Mail.
- * Ein Konto entsteht nur für Personen, die die Administration im CRM erfasst hat.
+ * Ein Konto entsteht nur für Personen, die die Administration im CRM erfasst hat. Mit einem Registrier-Link
+ * (`#/?registrieren=…`, z. B. für die Montage) gibt die Person zuerst ihre private Mailadresse ein.
  */
 export function Anmeldeseite() {
   const { t } = useTranslation()
@@ -44,11 +48,33 @@ export function Anmeldeseite() {
   const [code, setCode] = useState('')
   const [fehler, setFehler] = useState<Anmeldefehler | null>(null)
   const [laeuft, setLaeuft] = useState(false)
+  const [schluessel, setSchluessel] = useState(registrierSchluessel)
+  const link = useQuery({
+    queryKey: ['registrier-link', schluessel],
+    queryFn: () => (schluessel ? pruefeRegistrierLink(schluessel) : null),
+    enabled: schluessel !== null,
+    staleTime: Infinity,
+  })
+  const registrieren = schluessel !== null && Boolean(link.data) && schritt === 'email'
+  // Der Link kennt die Sprache der Person (z. B. Französisch für die Romandie): gleich so anzeigen.
+  const linkSprache = link.data?.sprache
+  useEffect(() => {
+    if (linkSprache) setSprache(linkSprache)
+  }, [linkSprache, setSprache])
 
   async function weiter(e: SyntheticEvent) {
     e.preventDefault()
     setLaeuft(true)
     setFehler(null)
+    if (registrieren) {
+      const r = await loeseRegistrierLinkEin(schluessel, email)
+      if (r) {
+        setLaeuft(false)
+        setFehler(r)
+        return
+      }
+      setSchluessel(null)
+    }
     const f = schritt === 'email' ? await sendeAnmeldecode(email, sprache) : await pruefeAnmeldecode(email, code)
     setLaeuft(false)
     setFehler(f)
@@ -83,11 +109,21 @@ export function Anmeldeseite() {
 
         <Karte className="shadow-pop flex flex-col gap-5 rounded-xl p-6">
           <div className="flex flex-col gap-1">
-            <h1 className="font-display text-xl font-semibold">{t('anmeldung.titel')}</h1>
-            <p className="text-muted-foreground text-sm">{t('anmeldung.text')}</p>
+            <h1 className="font-display text-xl font-semibold">
+              {registrieren && link.data
+                ? t('anmeldung.registrieren.titel', { vorname: link.data.vorname })
+                : t('anmeldung.titel')}
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              {registrieren
+                ? t('anmeldung.registrieren.text')
+                : schluessel !== null && link.data === null
+                  ? t('anmeldung.registrieren.ungueltig')
+                  : t('anmeldung.text')}
+            </p>
           </div>
 
-          {microsoft.data && schritt === 'email' && (
+          {microsoft.data && schritt === 'email' && !registrieren && (
             <>
               <Button
                 variant="secondary"
@@ -109,7 +145,11 @@ export function Anmeldeseite() {
 
           <form onSubmit={(e) => void weiter(e)} className="flex flex-col gap-4" noValidate>
             {schritt === 'email' ? (
-              <Feld id="anmeldung-email" label={t('anmeldung.email')} hinweis={t('anmeldung.emailHinweis')}>
+              <Feld
+                id="anmeldung-email"
+                label={registrieren ? t('anmeldung.registrieren.email') : t('anmeldung.email')}
+                hinweis={registrieren ? t('anmeldung.registrieren.emailHinweis') : t('anmeldung.emailHinweis')}
+              >
                 <Input
                   id="anmeldung-email"
                   type="email"
@@ -121,7 +161,7 @@ export function Anmeldeseite() {
                   onChange={(e) => {
                     setEmail(e.target.value)
                   }}
-                  placeholder="vorname@dimension-solaire.ch"
+                  placeholder={registrieren ? 'name@beispiel.ch' : 'vorname@dimension-solaire.ch'}
                 />
               </Feld>
             ) : (

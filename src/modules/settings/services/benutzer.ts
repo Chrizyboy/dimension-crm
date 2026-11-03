@@ -115,3 +115,38 @@ export async function speichereMeinKonto(
   })
   if (error) throw error
 }
+
+/** Web-Adresse der App für Links nach aussen: in der Desktop-App die veröffentlichte Web-App, sonst diese Seite. */
+function webAdresse(): string {
+  const hier = `${window.location.origin}${window.location.pathname}`
+  return /^https?:/.test(window.location.origin) ? hier : 'https://chrizyboy.github.io/dimension-crm/'
+}
+
+/** Registrier-Link fürs Handy aus dem Schlüssel. */
+export function registrierLink(schluessel: string): string {
+  return `${webAdresse()}#/?registrieren=${schluessel}`
+}
+
+/** Neue Person ohne Mail erfassen (z. B. Montage) und gleich den Registrier-Link erstellen. Nur Administration. */
+export async function personMitLinkAnlegen(eingabe: {
+  name: string
+  rolle: string
+  sprache: 'de' | 'fr'
+  standort_id: string | null
+}): Promise<string> {
+  const { data, error } = await db().rpc('person_mit_link_anlegen', {
+    p_name: eingabe.name,
+    p_rolle: eingabe.rolle,
+    p_sprache: eingabe.sprache,
+    ...(eingabe.standort_id ? { p_standort: eingabe.standort_id } : {}),
+  })
+  if (error) throw error
+  return (data as { schluessel: string }).schluessel
+}
+
+/** Neuer Registrier-Link für eine erfasste Person ohne Login (ältere Links verfallen). Nur Administration. */
+export async function registrierLinkErstellen(personId: string): Promise<string> {
+  const { data, error } = await db().rpc('registrier_link_erstellen', { p_person: personId })
+  if (error) throw error
+  return data
+}
