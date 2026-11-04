@@ -5717,6 +5717,7 @@
       "anrufen": "Appeler le client : {{nummer}}",
       "montageRapport": "Rapport de montage",
       "ibnRapport": "Protocole MES",
+      "weiter": "Continuer le rapport",
       "beginnen": {
         "montage": "Commencer le rapport",
         "ibn": "Commencer la MES",

@@ -21,6 +21,8 @@ export const REITER = [
 ] as const
 /** Reiter nur mit Recht «preise». */
 export const REITER_LEITUNG: readonly Reiter[] = ['heute', 'baustellen', 'meldungen', 'auswertung']
+/** Reiter am Handy für Montage (ohne Recht preise). */
+export const REITER_HANDY: readonly Reiter[] = ['tag', 'wochenplan', 'zeiten']
 export type Reiter = (typeof REITER)[number]
 
 export const RAPPORT_ARTEN = ['montage', 'service', 'wartung', 'ibn'] as const

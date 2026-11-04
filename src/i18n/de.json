@@ -5717,6 +5717,7 @@
       "anrufen": "Kunde anrufen: {{nummer}}",
       "montageRapport": "Montage-Rapport",
       "ibnRapport": "IBN-Protokoll",
+      "weiter": "Rapport weiterführen",
       "beginnen": {
         "montage": "Rapport beginnen",
         "ibn": "IBN beginnen",

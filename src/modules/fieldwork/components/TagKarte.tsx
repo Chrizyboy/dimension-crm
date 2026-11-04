@@ -211,7 +211,12 @@ export function TagKarte({
               }}
             >
               <ClipboardPen />
-              {t(`baustelle.tag.beginnen.${hauptArt}`)}
+              {/* Ein Rapport pro Baustelle und Tag fürs ganze Team: ist er schon offen, geht der Knopf hinein. */}
+              {t(
+                rapporte.some((r) => r.art === hauptArt && !r.abgeschlossen_am)
+                  ? 'baustelle.tag.weiter'
+                  : `baustelle.tag.beginnen.${hauptArt}`,
+              )}
             </Button>
           </div>
         )}
