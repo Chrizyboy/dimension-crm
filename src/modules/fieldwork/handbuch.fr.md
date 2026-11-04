@@ -20,7 +20,7 @@ La vue mobile pour le montage et la vue bureau correspondante : planning du jour
 
 1. Onglet **Ma journée** : interventions du jour et des jours suivants, avec équipe, électricien et matériel.
 2. **Navigation** ouvre l’app de cartes, **Appeler le client** compose le numéro.
-   En haut, le **Temps de travail** : sous **Pour quoi**, le chantier du jour est choisi, sinon un cas de service ou **Dépôt / atelier**, **Véhicule**, **Formation**. Puis **Début travail** ou **Début déplacement**.
+   En haut, le **Temps de travail** : sous **Pour quoi**, le chantier du jour est choisi, sinon un cas de service ou **Dépôt / atelier**, **Véhicule**, **Formation**. Puis **Début travail** ou **Début déplacement**. Avec **Pour toute l’équipe** (par défaut), le temps démarre aussi pour les collègues de la même intervention ; au **Stop**, **Arrêter aussi pour …** fait pareil. Chacun peut ensuite corriger son temps dans l’onglet **Heures**.
 3. La carte montre l’avancement du chantier, ce qui est prévu aujourd’hui et les photos obligatoires manquantes. **Dossier** ouvre installation, plans, contacts et matériel à cocher au chargement (aussi sans réseau).
 4. **Commencer le rapport** : pour un montage, d’abord le **Contrôle de sécurité**. Tout cocher, cocher qui travaille aujourd’hui, **Début du travail pour l’équipe**. Le temps démarre pour tous à la même heure.
 5. Un problème (matériel, dégât, météo …) ? **Signaler un problème**, avec photo. Le chef de projet le reçoit tout de suite.
@@ -103,7 +103,7 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 
 ## Nouveautés {#neu}
 
-- 04.11.2026: Chaque temps a besoin d’une affectation (**Pour quoi**) : chantier, cas de service ou dépôt / atelier, véhicule, formation. «Sans chantier» n’existe plus ; l’export salaires montre l’affectation.
+- 04.11.2026: Chaque temps a besoin d’une affectation (**Pour quoi**) : chantier, cas de service ou dépôt / atelier, véhicule, formation. «Sans chantier» n’existe plus ; l’export salaires montre l’affectation. Un bouton démarre et arrête le temps de toute l’équipe.
 - 03.11.2026: «Mettre à la corbeille» pour les rapports et les temps; rapports clôturés seulement par l'administration, temps exportés jamais, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Heures de tous seulement pour la direction et la comptabilité, les supérieur·e·s direct·e·s voient leur équipe.
 - 03.11.2026: Heures : choisir plusieurs personnes à la fois ; l'export des salaires ne contient que celles-ci.

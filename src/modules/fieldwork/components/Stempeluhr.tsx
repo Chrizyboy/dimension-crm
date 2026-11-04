@@ -5,15 +5,16 @@ import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
+import { Checkbox } from '@/components/ui/schalter'
 import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
-import { useInternePosten, useTag, useZeiten } from '../hooks/useBaustelle'
+import { useInternePosten, useTag, useTeamHeute, useZeiten } from '../hooks/useBaustelle'
 import { zielText } from '../lib/anzeige'
 import { PLAN_TAGE, dauerText, heute, minuten, plusTage, wochenStart, zuerich } from '../lib/zeit'
 import { zielAusWert, zielOptionen } from '../lib/ziel'
-import { zeitStarten } from '../services/monteur'
+import { teamZeitStarten, zeitStarten } from '../services/monteur'
 import type { ZeitArt } from '../types'
 import { ZeitLaeuft } from './ZeitLaeuft'
 
@@ -41,12 +42,18 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
   const gewaehlt = wahl ?? (heuteDa ? (optionen[0]?.wert ?? '') : '')
   const ziel = zielAusWert(gewaehlt)
   const [startet, setStartet] = useState<ZeitArt | null>(null)
+  // Team heute (z. B. die beiden Diogos): ein Knopf stempelt alle, Standard an (Chris 4.11.2026).
+  const team = useTeamHeute().data ?? []
+  const andere = team.filter((p) => p.id !== ich?.id)
+  const [fuerTeam, setFuerTeam] = useState(true)
+  const mitTeam = fuerTeam && andere.length > 0 && Boolean(ich)
 
   async function starten(art: ZeitArt) {
     if (!ziel) return
     setStartet(art)
     try {
-      await zeitStarten({ ...ziel, art })
+      if (mitTeam && ich) await teamZeitStarten(ziel, art, [ich.id, ...andere.map((p) => p.id)], ich.id)
+      else await zeitStarten({ ...ziel, art })
       await qc.invalidateQueries({ queryKey: ['baustelle'] })
     } catch {
       melde('kritisch', { de: 'Zeit nicht gestartet', fr: 'Temps non démarré' })
@@ -69,7 +76,7 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
         {plan.isPending ? (
           <Skelett className="h-24" />
         ) : laufend ? (
-          <ZeitLaeuft laufend={laufend} {...(onRapport ? { onRapport } : {})} />
+          <ZeitLaeuft laufend={laufend} andere={andere} {...(onRapport ? { onRapport } : {})} />
         ) : (
           <>
             <Auswahl
@@ -79,6 +86,17 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
               onValueChange={setWahl}
               optionen={optionen}
             />
+            {andere.length > 0 && (
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={fuerTeam}
+                  onCheckedChange={(c) => {
+                    setFuerTeam(c === true)
+                  }}
+                />
+                {t('baustelle.zeit.fuerTeam', { namen: andere.map((p) => p.name).join(', ') })}
+              </label>
+            )}
             <div className="grid gap-3 sm:grid-cols-2">
               <Button
                 size="lg"

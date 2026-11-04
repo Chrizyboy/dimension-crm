@@ -5,9 +5,11 @@ import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
+import { Checkbox } from '@/components/ui/schalter'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { dauerText, minuten, zuerich } from '../lib/zeit'
-import { zeitStoppen } from '../services/monteur'
-import type { LaufendeZeit } from '../types'
+import { teamZeitStoppen, zeitStoppen } from '../services/monteur'
+import type { LaufendeZeit, TeamPerson } from '../types'
 
 const PAUSEN = ['0', '15', '30', '45', '60']
 
@@ -25,16 +27,30 @@ function useJetzt(): Date {
   return jetzt
 }
 
-/** Die laufende Zeit oben im Tagesplan: seit wann, wie lange, und «Stopp» (mit Pause). */
-export function ZeitLaeuft({ laufend, onRapport }: { laufend: LaufendeZeit; onRapport?: (id: string) => void }) {
+/**
+ * Die laufende Zeit oben im Tagesplan: seit wann, wie lange, und «Stopp» (mit Pause). Mit `andere` (Team heute)
+ * stoppt derselbe Knopf auf Wunsch auch die Zeit der Kollegen, mit derselben Pause.
+ */
+export function ZeitLaeuft({
+  laufend,
+  andere = [],
+  onRapport,
+}: {
+  laufend: LaufendeZeit
+  andere?: TeamPerson[]
+  onRapport?: (id: string) => void
+}) {
   const { t } = useTranslation()
   const qc = useQueryClient()
+  const ich = useAnmeldung((z) => z.ich)
   const jetzt = useJetzt()
   const [stopp, setStopp] = useState(false)
   const [pause, setPause] = useState('0')
+  const [fuerTeam, setFuerTeam] = useState(true)
 
   async function stoppen() {
-    await zeitStoppen(laufend.id, Number(pause))
+    if (fuerTeam && andere.length > 0 && ich) await teamZeitStoppen([ich.id, ...andere.map((p) => p.id)], Number(pause))
+    else await zeitStoppen(laufend.id, Number(pause))
     setStopp(false)
     await qc.invalidateQueries({ queryKey: ['baustelle'] })
   }
@@ -90,6 +106,17 @@ export function ZeitLaeuft({ laufend, onRapport }: { laufend: LaufendeZeit; onRa
                 if (p) setPause(p)
               }}
             />
+            {andere.length > 0 && (
+              <label className="mt-3 flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={fuerTeam}
+                  onCheckedChange={(c) => {
+                    setFuerTeam(c === true)
+                  }}
+                />
+                {t('baustelle.zeit.stoppTeam', { namen: andere.map((p) => p.name).join(', ') })}
+              </label>
+            )}
           </DialogInhalt>
         </Dialog>
       )}

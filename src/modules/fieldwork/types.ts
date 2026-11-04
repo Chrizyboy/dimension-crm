@@ -355,3 +355,11 @@ export interface InternerPosten {
 
 /** Worauf eine Zeit geht: genau ein Projekt, ein Service-Fall oder ein interner Posten. */
 export type ZeitZiel = { projekt_id: string } | { service_fall_id: string } | { intern: string }
+
+/** Wer heute mit mir im selben Einsatz ist (für «Für das ganze Team» an der Stempeluhr). */
+export interface TeamPerson {
+  id: string
+  name: string
+  kurzzeichen: string | null
+  laeuft: boolean
+}

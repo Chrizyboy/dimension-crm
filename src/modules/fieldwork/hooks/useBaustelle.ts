@@ -135,6 +135,15 @@ export const usePflichtfotos = () =>
     queryFn: () => mitAblage('pflichtfotos', b.ladePflichtfotos),
   })
 
+/** Mein Team heute für die Stempeluhr; auch ohne Netz aus der Ablage. */
+export const useTeamHeute = () =>
+  useQuery({
+    queryKey: ['baustelle', 'team_heute'],
+    networkMode: 'always',
+    enabled: an,
+    queryFn: () => mitAblage('team_heute', b.ladeTeamHeute),
+  })
+
 /** Interne Posten (Lager, Fahrzeug …) für die Zeit; auch ohne Netz aus der Ablage. */
 export const useInternePosten = () =>
   useQuery({

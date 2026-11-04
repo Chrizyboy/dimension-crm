@@ -20024,6 +20024,7 @@ export type Database = {
           titel: boolean
         }[]
       }
+      mein_team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       mein_tag: { Args: { p_bis: string; p_person?: string; p_von: string }; Returns: Json }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_microsoft_verbindung: { Args: Record<PropertyKey, never>; Returns: Json }
@@ -20769,6 +20770,7 @@ export type Database = {
       zeit_speichern: { Args: { p: Json }; Returns: string }
       zeit_starten: { Args: { p: Json }; Returns: string }
       zeit_stoppen: { Args: { p: Json }; Returns: undefined }
+      zeit_team: { Args: { p: Json }; Returns: number }
       zeit_team_starten: { Args: { p: Json }; Returns: number }
       zeit_team_stoppen: { Args: { p: Json }; Returns: number }
       zeiten_exportieren: { Args: { p_ids: string[] }; Returns: string }

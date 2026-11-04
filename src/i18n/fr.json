@@ -5733,6 +5733,8 @@
       "titel": "Temps",
       "laeuft": "En cours depuis {{start}}",
       "zumRapport": "Vers le rapport",
+      "fuerTeam": "Pour toute l’équipe (aussi {{namen}})",
+      "stoppTeam": "Arrêter aussi pour {{namen}}",
       "stopp": "Stop",
       "stoppTitel": "Arrêter le temps",
       "stoppText": "Combien de temps de pause depuis le début ?",

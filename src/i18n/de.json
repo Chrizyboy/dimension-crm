@@ -5733,6 +5733,8 @@
       "titel": "Zeit",
       "laeuft": "Läuft seit {{start}}",
       "zumRapport": "Zum Rapport",
+      "fuerTeam": "Für das ganze Team (auch {{namen}})",
+      "stoppTeam": "Auch für {{namen}} stoppen",
       "stopp": "Stopp",
       "stoppTitel": "Zeit stoppen",
       "stoppText": "Wie lange war die Pause seit dem Start?",

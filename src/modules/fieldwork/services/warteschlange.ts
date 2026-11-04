@@ -25,6 +25,7 @@ export type RpcName =
   | 'zeit_starten'
   | 'zeit_stoppen'
   | 'zeit_speichern'
+  | 'zeit_team'
   | 'nachtrag_speichern'
   | 'zeit_team_starten'
   | 'zeit_team_stoppen'
