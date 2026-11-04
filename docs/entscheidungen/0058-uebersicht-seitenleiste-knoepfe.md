@@ -36,3 +36,11 @@ jeder Bereich in der Leiste und jeder Knopf in der App; geändert wird nur Ordnu
 - Noch offen, Sache der Modul-Threads nach Chris' Antwort: Zahl-Kacheln mit 0 ausblenden, leere Karten auf «Mein Tag»
   zu einer Zeile zusammenfassen, Reiter je Bereich auf höchstens 5–6 (z. B. «Firmen & Einstellungen» in Rechnungen
   gehört nach Einstellungen).
+
+## Runde 2 (4.11.2026, Empfehlung, Karte offen)
+
+- **`Kennzahlleiste`** (gemeinsam, `src/components/shared/`): die erste Kachel (Gesamtzahl) steht immer, die übrigen
+  nur, wenn sie nicht 0 oder gewählt sind. Projekte und Service nutzen sie.
+- **Leere Karte «Kunden warten auf Antwort»** auf «Mein Tag» wird zu einer schmalen Zeile.
+- **`Seitenkopf zeile`**: kurze Zeile, die sichtbar bleibt (Datum und was ansteht auf «Mein Tag»); `beschreibung`
+  bleibt hinter dem «i».

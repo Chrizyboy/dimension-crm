@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: projektleitung, innendienst, montage, geschaeftsleitung
 ---
 
@@ -85,6 +85,7 @@ Choisir la bonne installation dans le cas. **Cas précédents** montre ce qui s�
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: Le tableau de bord n’affiche que les chiffres différents de 0 ; « cas ouverts » reste toujours affiché.
 - 03.11.2026: «Mettre à la corbeille» pour les cas de service, les installations et les cas de garantie, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 02.11.2026: Centrale en tableau avec délai de réaction, dossier en pleine page avec étapes, liste de contrôle et coûts ; annonces du formulaire de panne du site.
 - 31.10.2026: Cas de service directement depuis un mail de la boîte de réception.

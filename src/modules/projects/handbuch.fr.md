@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,7 @@ Au contrat, à la date, au montage, à la MES et à la réception, l’automatio
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: Le tableau de bord n’affiche que les chiffres différents de 0 ; « projets en cours » reste toujours affiché.
 - 03.11.2026: «Mettre à la corbeille» pour les projets (menu «⋯» dans le dossier du projet), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Les supérieur·e·s direct·e·s saisissent les absences de leur équipe.
 - 03.11.2026: Planning sur mobile : choisir plusieurs personnes à la fois.

@@ -4465,7 +4465,8 @@
       "bewilligung": "Bewilligung überfällig",
       "material": "Material fehlt für die nächsten 14 Tage",
       "woche": "Montagen diese Woche",
-      "verrechnen": "Tranchen fällig, nicht gestellt"
+      "verrechnen": "Tranchen fällig, nicht gestellt",
+      "titel": "Kennzahlen der Projekte"
     },
     "schnell": {
       "meine": "Meine",
@@ -4885,7 +4886,8 @@
       "woche": "Termine diese Woche",
       "teile": "warten auf Teile",
       "rma": "beim Hersteller (RMA)",
-      "verrechnen": "Rapporte zu verrechnen"
+      "verrechnen": "Rapporte zu verrechnen",
+      "titel": "Kennzahlen des Service"
     },
     "planung": {
       "titel": "Einsatz",

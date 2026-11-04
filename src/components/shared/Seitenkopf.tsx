@@ -6,7 +6,10 @@ import { cn } from '@/lib/utils'
 
 interface SeitenkopfProps {
   titel: string
+  /** Was man hier erledigt; steht hinter dem «i». */
   beschreibung?: string
+  /** Kurze Zeile, die immer sichtbar unter dem Titel steht (z. B. Datum und was ansteht auf «Mein Tag»). */
+  zeile?: string
   /** Kleine Zeile über dem Titel, z.B. der Bereich «Verkauf». */
   ueber?: string
   /** Knöpfe rechts; die Hauptaktion zuletzt. */
@@ -19,7 +22,7 @@ interface SeitenkopfProps {
  * dem Titel statt als eigene Zeile (Chris 4.11.2026 «zu unübersichtlich»): wer täglich hier arbeitet, braucht sie nicht. Am Handy stehen die Aktionen darunter,
  * nur die Hauptaktion offen, der Rest unter «Mehr» (siehe `Knopfleiste`).
  */
-export function Seitenkopf({ titel, beschreibung, ueber, aktionen, className }: SeitenkopfProps) {
+export function Seitenkopf({ titel, beschreibung, zeile, ueber, aktionen, className }: SeitenkopfProps) {
   return (
     <header className={cn('flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between', className)}>
       <div className="flex min-w-0 flex-col gap-1">
@@ -38,6 +41,7 @@ export function Seitenkopf({ titel, beschreibung, ueber, aktionen, className }: 
             </Tooltip>
           )}
         </div>
+        {zeile && <p className="text-muted-foreground text-sm">{zeile}</p>}
       </div>
       {aktionen && <Knopfleiste className="shrink-0 sm:justify-end">{aktionen}</Knopfleiste>}
     </header>

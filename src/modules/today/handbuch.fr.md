@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
@@ -97,6 +97,7 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: La date et ce qui est prévu restent sous la salutation ; les cartes vides deviennent une ligne.
 - 03.11.2026: Reporter, motif par ligne, En attente de ta validation, Ma semaine avec objectifs, L'équipe aujourd'hui, Météo sur les chantiers.
 - 03.11.2026 : seule l’administration fixe les objectifs de la semaine.
 - 26.10.2026: Statut sous le titre dans les cartes étroites, date plus courte.

@@ -117,7 +117,7 @@ export default function MeinTag({
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6 px-4 py-6 sm:px-6" data-testid="mein-tag">
       <Seitenkopf
         titel={t(`tag.gruss.${tageszeit()}`, { name: vorname(ich?.name) }).replace(/,\s*$/, '')}
-        {...(d ? { beschreibung: t('tag.zusammenfassung', { datum, count: offen }) } : {})}
+        {...(d ? { zeile: t('tag.zusammenfassung', { datum, count: offen }) } : {})}
         aktionen={
           <>
             {aktionen}
