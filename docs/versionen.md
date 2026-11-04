@@ -5,6 +5,12 @@ Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nic
 Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
 veröffentlichen» starten (docs/installation.md).
 
+## 1.1.1
+
+- Fenster scrollt nicht mehr unter die App ins Leere, auch nicht in der Desktop-App.
+- Download-Seite work.dimension-solaire.ch/download öffnet sich immer, auch ohne Anmeldung.
+- Neues App-Symbol erscheint auch im Browser-Tab.
+
 ## 1.1.0
 
 - Desktop-App: startet automatisch mit Windows (ausschalten unter «Mein Konto»), kein Leer-Scrollen mehr, neues App-Symbol in Fenster, Taskleiste, Browser-Tab und auf dem Handy.
