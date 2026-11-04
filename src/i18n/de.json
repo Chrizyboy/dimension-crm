@@ -5729,6 +5729,12 @@
       "meldungenOffen_one": "{{count}} Meldung offen",
       "meldungenOffen_other": "{{count}} Meldungen offen"
     },
+    "tagesfoto": {
+      "titel": "Foto des Tages",
+      "text": "Vor dem Feierabend ein Foto vom Stand der Baustelle. Einer im Team genügt.",
+      "aufnehmen": "Foto aufnehmen",
+      "da": "Foto bereit"
+    },
     "zeit": {
       "titel": "Zeit",
       "laeuft": "Läuft seit {{start}}",

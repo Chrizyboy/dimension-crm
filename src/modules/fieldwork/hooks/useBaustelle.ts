@@ -144,6 +144,15 @@ export const useTeamHeute = () =>
     queryFn: () => mitAblage('team_heute', b.ladeTeamHeute),
   })
 
+/** Baustellen von heute ohne Foto des Tages; auch ohne Netz aus der Ablage (nach dem Foto am Gerät nachgeführt). */
+export const useTagesfotoOffen = () =>
+  useQuery({
+    queryKey: ['baustelle', 'tagesfoto_offen'],
+    networkMode: 'always',
+    enabled: an,
+    queryFn: () => mitAblage('tagesfoto_offen', b.ladeTagesfotoOffen),
+  })
+
 /** Interne Posten (Lager, Fahrzeug …) für die Zeit; auch ohne Netz aus der Ablage. */
 export const useInternePosten = () =>
   useQuery({

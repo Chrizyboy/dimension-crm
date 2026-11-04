@@ -6,6 +6,7 @@ import type {
   NeuerRapport,
   Rapport,
   RapportEingabe,
+  TagesfotoOffen,
   Unterschrift,
   ZeitArt,
   ZeitZiel,
@@ -203,6 +204,23 @@ export async function bildAblegen(
     erstellt: jetzt(),
   })
   return id
+}
+
+/**
+ * Foto des Tages ablegen: am offenen Rapport von heute, sonst wird der Tagesrapport der Baustelle angelegt.
+ * Die Ablage am Gerät vergisst die Baustelle gleich, damit der Stopp auch ohne Netz weitergeht.
+ */
+export async function tagesfotoAblegen(o: TagesfotoOffen, blob: Blob, tag: string): Promise<void> {
+  let rapportId = o.rapport_id
+  if (!rapportId) {
+    rapportId = crypto.randomUUID()
+    await rapportAnlegen(
+      { id: rapportId, art: 'montage', datum: tag, projekt_id: o.projekt_id, einsatz_id: o.einsatz_id },
+      { projekt_nummer: o.nummer, kunde: o.kunde },
+    )
+  }
+  await bildAblegen(rapportId, blob, 'fotos', { kategorie: 'tagesfoto' })
+  await ablageAendern<TagesfotoOffen[]>('tagesfoto_offen', (alt) => alt?.filter((x) => x.projekt_id !== o.projekt_id))
 }
 
 /**

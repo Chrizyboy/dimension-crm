@@ -33,6 +33,10 @@ Für alle:
   Zeiten je Person erfassen oder korrigieren, prüfen, Lohn-Export (CSV).
   Jede Zeit hat genau ein Ziel: Projekt, Service-Fall (auch über den Rapport) oder einen internen Posten aus
   `einstellungen.baustelle.interne_posten` (Lager, Fahrzeug, Weiterbildung). Der Trigger `intern.zeit_ziel` prüft das.
+  Teamzeit über die Stempeluhr: `mein_team_heute()` und `zeit_team` (Start/Stopp für alle im Einsatz heute).
+- **Foto des Tages**: `tagesfoto_offen()` listet meine Baustellen von heute ohne Foto; der Stopp am Handy
+  verlangt es (Kategorie `tagesfoto` am Tagesrapport, einer im Team genügt). `tagesfoto_erinnern` (Zeitplan, stündlich)
+  gibt ab 18:00 die Glocke ans Team und ab 07:00 an die Projektleitung für gestern.
 - **Nachträge**: Regie-Arbeiten mit Stand (offen, vom Kunden bestätigt, abgelehnt), Betrag (Recht `preise`).
 
 ## Daten

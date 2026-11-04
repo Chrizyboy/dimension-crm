@@ -363,3 +363,13 @@ export interface TeamHeute {
   kurzzeichen: string | null
   laeuft: boolean
 }
+
+/** Baustelle von heute ohne Foto des Tages (Antwort von `tagesfoto_offen`). */
+export interface TagesfotoOffen {
+  einsatz_id: string
+  projekt_id: string
+  nummer: string
+  kunde: string | null
+  /** Offener Rapport von heute, an den das Foto kommt; leer = das Handy legt ihn an. */
+  rapport_id: string | null
+}

@@ -195,6 +195,12 @@ Deno.serve(async (req) => {
     return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
   })
 
+  // Foto des Tages (Chris 4.11.2026): ab 18:00 Glocke ans Team, am Morgen an die Projektleitung, nur Glocke.
+  ergebnis.tagesfoto = await job('tagesfoto', 60, async () => {
+    const n = await dienst.rpc<number>('tagesfoto_erinnern', {})
+    return `${n} ${n === 1 ? 'Erinnerung' : 'Erinnerungen'}`
+  })
+
   // Abgleich AbaNinja jede Nacht (Modul-Prüfung 25A): einmal in der Stunde ab 02:00 Zürich, Änderungen der letzten
   // drei Tage (deckt einen ausgefallenen Lauf ab). Zahlungen und Lieferantenrechnungen setzt die Datenbank.
   if (ein.abaninja) {

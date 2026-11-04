@@ -2,6 +2,7 @@ import { supabase } from '@/services/supabase'
 import type {
   Abwesenheit,
   InternerPosten,
+  TagesfotoOffen,
   TeamHeute,
   MeinTag,
   Nachtrag,
@@ -123,6 +124,13 @@ export async function ladeTeamHeute(): Promise<TeamHeute[]> {
   const { data, error } = await db().rpc('mein_team_heute')
   if (error) throw error
   return (data ?? []) as unknown as TeamHeute[]
+}
+
+/** Meine Baustellen von heute ohne Foto des Tages (einer im Team genügt). */
+export async function ladeTagesfotoOffen(): Promise<TagesfotoOffen[]> {
+  const { data, error } = await db().rpc('tagesfoto_offen')
+  if (error) throw error
+  return (data ?? []) as unknown as TagesfotoOffen[]
 }
 
 /** Interne Posten für Zeit ohne Kunde (Einstellungen › Baustelle). */

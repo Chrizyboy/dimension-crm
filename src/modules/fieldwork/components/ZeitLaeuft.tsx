@@ -7,9 +7,11 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Checkbox } from '@/components/ui/schalter'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { dauerText, minuten, zuerich } from '../lib/zeit'
-import { teamZeitStoppen, zeitStoppen } from '../services/monteur'
+import { useTagesfotoOffen } from '../hooks/useBaustelle'
+import { dauerText, heute, minuten, zuerich } from '../lib/zeit'
+import { tagesfotoAblegen, teamZeitStoppen, zeitStoppen } from '../services/monteur'
 import type { LaufendeZeit, TeamHeute } from '../types'
+import { TagesfotoAbschnitt } from './TagesfotoAbschnitt'
 
 const PAUSEN = ['0', '15', '30', '45', '60']
 
@@ -47,8 +49,26 @@ export function ZeitLaeuft({
   const [stopp, setStopp] = useState(false)
   const [pause, setPause] = useState('0')
   const [fuerTeam, setFuerTeam] = useState(true)
+  // Foto des Tages: Baustellen von heute ohne Foto verlangen vor dem Stopp eines (einer im Team genügt).
+  const offen = useTagesfotoOffen().data ?? []
+  const [fotos, setFotos] = useState<Record<string, Blob>>({})
+  const fotoFehlt = offen.some((o) => !fotos[o.projekt_id])
+  const [laeuft, setLaeuft] = useState(false)
 
   async function stoppen() {
+    setLaeuft(true)
+    try {
+      for (const o of offen) {
+        const f = fotos[o.projekt_id]
+        if (f) await tagesfotoAblegen(o, f, heute())
+      }
+      await stoppenOhneFoto()
+    } finally {
+      setLaeuft(false)
+    }
+  }
+
+  async function stoppenOhneFoto() {
     if (fuerTeam && andere.length > 0 && ich) await teamZeitStoppen([ich.id, ...andere.map((p) => p.id)], Number(pause))
     else await zeitStoppen(laufend.id, Number(pause))
     setStopp(false)
@@ -91,7 +111,7 @@ export function ZeitLaeuft({
             titel={t('baustelle.zeit.stoppTitel')}
             beschreibung={t('baustelle.zeit.stoppText')}
             fuss={
-              <Button variant="danger" onClick={() => void stoppen()}>
+              <Button variant="danger" laedt={laeuft} disabled={fotoFehlt} onClick={() => void stoppen()}>
                 <Square />
                 {t('baustelle.zeit.stopp')}
               </Button>
@@ -117,6 +137,13 @@ export function ZeitLaeuft({
                 {t('baustelle.zeit.stoppTeam', { namen: andere.map((p) => p.name).join(', ') })}
               </label>
             )}
+            <TagesfotoAbschnitt
+              offen={offen}
+              fotos={fotos}
+              onFoto={(id, f) => {
+                setFotos((alt) => ({ ...alt, [id]: f }))
+              }}
+            />
           </DialogInhalt>
         </Dialog>
       )}

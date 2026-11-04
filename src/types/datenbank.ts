@@ -20696,6 +20696,8 @@ export type Database = {
       taetigkeit_anforderung_speichern: { Args: { p: Json; p_schluessel: string }; Returns: undefined }
       tag_erinnern: { Args: { p_jetzt?: string }; Returns: number }
       tag_verschieben: { Args: { p_art: string; p_bis: string; p_id: string }; Returns: undefined }
+      tagesfoto_erinnern: { Args: Record<PropertyKey, never>; Returns: number }
+      tagesfoto_offen: { Args: Record<PropertyKey, never>; Returns: Json }
       team_anlaesse: { Args: { p_tag?: string }; Returns: Json }
       team_anlass_zeigen: { Args: { p_zeigen: boolean }; Returns: undefined }
       team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
