@@ -161,10 +161,15 @@ export async function importiereOfferten(k) {
   // Frühere Importe legten für jetzt nicht mehr gewonnene Offerten ein Projekt an: in den Papierkorb, nie hart löschen.
   const keinAuftrag = projekte.filter(([id]) => !auftraege.some(([a]) => a === id)).map(([id]) => `project:${id}`)
   for (let i = 0; i < keinAuftrag.length; i += 200) {
+    const teil = keinAuftrag.slice(i, i + 200)
+    const geschuetzt = await k.schreiber.geschuetzt('projekte', teil)
     const { error } = await k.db
       .from('projekte')
       .update({ geloescht_am: new Date().toISOString() })
-      .in('alt_id', keinAuftrag.slice(i, i + 200))
+      .in(
+        'alt_id',
+        teil.filter((a) => !geschuetzt.has(a)),
+      )
       .is('geloescht_am', null)
     if (error) throw new Error(`projekte (kein Auftrag mehr): ${error.message}`)
   }
