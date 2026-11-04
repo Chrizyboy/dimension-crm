@@ -13,6 +13,9 @@ Einschätzung als Pop-up schickt. Er ist nicht täglich in der Claude-App.
 - **Antwort im CRM** mit den Knöpfen «Erledige es» oder «Nicht» (Link in der SMS).
 - Claude arbeitet als **geplante Aufgabe stündlich 7 bis 19 Uhr** und erreicht die Datenbank nur über die Edge
   Function `helpdesk` mit eigenem Schlüssel (lesen, einschätzen, nach Entscheid abschliessen).
+- **Nachtrag 04.11.2026 (Chris):** Claude sieht bei der Prüfung auch die Bildschirmfotos der Meldung, damit die
+  Einschätzung zeigt, was nicht geht. Nur Bilder, als Links mit einer Stunde Gültigkeit aus der Edge Function
+  `helpdesk` (Aktion `offen`, Feld `bilder`); nichts wird ausserhalb des CRM gespeichert.
 
 ## Verworfen
 

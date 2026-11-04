@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -68,6 +68,7 @@ Ici, on apprend comment fonctionne le CRM : un chapitre par domaine, pour chaque
 - Seule l’administration dépose processus et vidéos ; rien n’est supprimé définitivement.
 - Les signalements ne sont jamais publics (pas de ticket GitHub), car ils peuvent contenir des données clients.
 - On ne modifie qu’après **Règle-le**.
+- L’examen voit le texte et les captures d’écran du signalement ; les images restent dans le CRM et ne sont enregistrées nulle part ailleurs.
 
 ## Questions fréquentes {#fragen}
 
@@ -85,6 +86,7 @@ Onglet **Premiers pas**.
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: L’examen voit aussi les captures d’écran et peut y renvoyer dans l’évaluation.
 - 03.11.2026: Joindre captures d’écran et photos : Ctrl+V, glisser, appareil photo sur le portable, aperçu dans le signalement et **Joindre une image** pour compléter.
 - 02.11.2026: Un chapitre par domaine, aide avec F1, recherche dans tout, « Pour toi » par rôle, termes A–Z et « Nouveautés ».
 - 31.10.2026: Signalements avec évaluation et décision « Règle-le » / « Non ».
