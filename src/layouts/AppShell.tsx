@@ -53,7 +53,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         {t('nav.zumInhalt')}
       </a>
-      <div className="flex h-full">
+      {/* relative + overflow-hidden: Was sich (absolut platziert) sonst auf die ganze Seite bezieht, bleibt im
+          Rahmen. Ohne das liess sich das Fenster ein Stück nach unten ins Leere scrollen (Chris 4.11.2026). */}
+      <div className="relative flex h-full overflow-hidden">
         {!einfach && (
           <aside
             className={cn('hidden shrink-0 transition-[width] duration-200 md:block', eingeklappt ? 'w-14' : 'w-60')}
