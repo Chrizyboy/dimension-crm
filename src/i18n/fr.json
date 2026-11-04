@@ -2838,6 +2838,9 @@
     "baustelle_zeit_start_fehlt": "Merci d’indiquer le début.",
     "baustelle_zeit_stopp_vor_start": "La fin doit être après le début.",
     "baustelle_zeit_zukunft": "Un temps ne peut pas commencer dans le futur. L’heure du téléphone est-elle juste ?",
+    "baustelle_zeit_ohne_ziel": "Chaque temps a besoin d’une affectation : chantier, cas de service ou dépôt, véhicule, formation.",
+    "baustelle_zeit_ein_ziel": "Un temps va soit sur un chantier ou un cas de service, soit sur un poste interne, pas les deux.",
+    "baustelle_zeit_posten_unbekannt": "Ce poste interne n’existe pas (plus). Merci d’en choisir un autre.",
     "finanzen_kein_recht": "Il faut le droit « Finances ».",
     "finanzen_rechnung_gestellt": "La facture est émise et ne peut plus être modifiée. Merci de l’annuler et d’en créer une nouvelle.",
     "finanzen_nicht_gestellt": "La facture n’est pas encore émise (ou annulée).",
@@ -3374,6 +3377,7 @@
       "kein_recht": "Vous n'avez pas le droit de le faire.",
       "anmeldung": "Veuillez d'abord vous connecter.",
       "sms": "Le SMS n'a pas été accepté (code {{code}}).",
+      "sms_3": "ASPSMS refuse les identifiants. Saisir à nouveau la clé utilisateur et le mot de passe (script integrationen-einrichten.ps1, option 2).",
       "unbekannt": "Cela n'a pas fonctionné (code {{code}}).",
       "nicht_gestellt": "D’abord émettre la facture, puis la transmettre à AbaNinja.",
       "schon_uebergeben": "Cette facture est déjà dans AbaNinja.",
@@ -5718,6 +5722,7 @@
       "anrufen": "Appeler le client : {{nummer}}",
       "montageRapport": "Rapport de montage",
       "ibnRapport": "Protocole MES",
+      "weiter": "Continuer le rapport",
       "beginnen": {
         "montage": "Commencer le rapport",
         "ibn": "Commencer la MES",
@@ -5731,10 +5736,18 @@
       "meldungenOffen_one": "{{count}} signalement ouvert",
       "meldungenOffen_other": "{{count}} signalements ouverts"
     },
+    "tagesfoto": {
+      "titel": "Photo du jour",
+      "text": "Avant de finir, une photo de l’avancement du chantier. Un de l’équipe suffit.",
+      "aufnehmen": "Prendre la photo",
+      "da": "Photo prête"
+    },
     "zeit": {
       "titel": "Temps",
       "laeuft": "En cours depuis {{start}}",
       "zumRapport": "Vers le rapport",
+      "fuerTeam": "Pour toute l’équipe (aussi {{namen}})",
+      "stoppTeam": "Arrêter aussi pour {{namen}}",
       "stopp": "Stop",
       "stoppTitel": "Arrêter le temps",
       "stoppText": "Combien de temps de pause depuis le début ?",
@@ -11557,8 +11570,8 @@
     "text": "Temps de travail d’un clic, frais avec photo du justificatif et ton planning.",
     "zeit": {
       "titel": "Temps de travail",
-      "baustelle": "Chantier",
-      "ohneBaustelle": "Sans chantier",
+      "ziel": "Pour quoi",
+      "zielWaehlen": "Choisir chantier, service ou dépôt",
       "heute": "Aujourd’hui",
       "woche": "Cette semaine",
       "art": {

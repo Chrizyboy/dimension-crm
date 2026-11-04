@@ -5,22 +5,25 @@ import { useTranslation } from 'react-i18next'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
+import { Checkbox } from '@/components/ui/schalter'
 import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { useTag, useZeiten } from '../hooks/useBaustelle'
+import { useUi } from '@/stores/ui'
+import { useInternePosten, useTag, useTeamHeute, useZeiten } from '../hooks/useBaustelle'
+import { zielText } from '../lib/anzeige'
 import { PLAN_TAGE, dauerText, heute, minuten, plusTage, wochenStart, zuerich } from '../lib/zeit'
-import { zeitStarten } from '../services/monteur'
+import { zielAusWert, zielOptionen } from '../lib/ziel'
+import { teamZeitStarten, zeitStarten } from '../services/monteur'
 import type { ZeitArt } from '../types'
 import { ZeitLaeuft } from './ZeitLaeuft'
-
-const OHNE = 'ohne'
 
 /**
  * Stempeluhr: ein Klick startet Arbeit oder Reise, «Stopp» beendet sie. In der einfachen Monteur-Ansicht und
  * oben in «Mein Tag» (Rolle Montage), damit auch die Fahrt ins Lager oder zur Baustelle ohne Rapport zählt.
- * Läuft über dieselbe Warteschlange wie die Baustelle, funktioniert also auch im Funkloch. Hat die Person heute
- * Einsätze, wird die Zeit dem gewählten Projekt zugeordnet, damit die Nachkalkulation stimmt.
+ * Läuft über dieselbe Warteschlange wie die Baustelle, funktioniert also auch im Funkloch. Jede Zeit braucht ein
+ * Ziel (Chris 4.11.2026): die heutige Baustelle steht oben und ist gewählt, sonst ein Service-Fall oder ein
+ * interner Posten wie Lager. Ohne Ziel bleibt der Start gesperrt.
  */
 export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => void }) {
   const { t } = useTranslation()
@@ -30,21 +33,27 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
   // Gleicher Zeitraum wie «Mein Plan», damit beide dieselbe Kopie am Gerät nutzen.
   const plan = useTag(tag, plusTage(tag, PLAN_TAGE - 1), null)
   const woche = useZeiten(wochenStart(tag), tag, ich?.id ?? null)
-  const projekte = [
-    ...new Map(
-      (plan.data?.eintraege ?? [])
-        .filter((e) => e.von <= tag && e.bis >= tag)
-        .flatMap((e) => (e.projekt ? [[e.projekt.id, e] as const] : [])),
-    ).values(),
-  ]
-  const [projekt, setProjekt] = useState<string | null>(null)
-  const gewaehlt = projekt ?? projekte[0]?.projekt?.id ?? OHNE
+  const posten = useInternePosten()
+  const sprache = useUi((z) => z.sprache)
+  const optionen = zielOptionen(plan.data?.eintraege ?? [], posten.data ?? [], sprache, tag)
+  const heuteDa = (plan.data?.eintraege ?? []).some((e) => e.von <= tag && e.bis >= tag)
+  const [wahl, setWahl] = useState<string | null>(null)
+  // Ohne Einsatz heute nichts vorwählen: der Monteur soll bewusst Lager, Fahrzeug … wählen.
+  const gewaehlt = wahl ?? (heuteDa ? (optionen[0]?.wert ?? '') : '')
+  const ziel = zielAusWert(gewaehlt)
   const [startet, setStartet] = useState<ZeitArt | null>(null)
+  // Team heute (z. B. die beiden Diogos): ein Knopf stempelt alle, Standard an (Chris 4.11.2026).
+  const team = useTeamHeute().data ?? []
+  const andere = team.filter((p) => p.id !== ich?.id)
+  const [fuerTeam, setFuerTeam] = useState(true)
+  const mitTeam = fuerTeam && andere.length > 0 && Boolean(ich)
 
   async function starten(art: ZeitArt) {
+    if (!ziel) return
     setStartet(art)
     try {
-      await zeitStarten({ projekt_id: gewaehlt === OHNE ? null : gewaehlt, art })
+      if (mitTeam && ich) await teamZeitStarten(ziel, art, [ich.id, ...andere.map((p) => p.id)], ich.id)
+      else await zeitStarten({ ...ziel, art })
       await qc.invalidateQueries({ queryKey: ['baustelle'] })
     } catch {
       melde('kritisch', { de: 'Zeit nicht gestartet', fr: 'Temps non démarré' })
@@ -67,28 +76,33 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
         {plan.isPending ? (
           <Skelett className="h-24" />
         ) : laufend ? (
-          <ZeitLaeuft laufend={laufend} {...(onRapport ? { onRapport } : {})} />
+          <ZeitLaeuft laufend={laufend} andere={andere} {...(onRapport ? { onRapport } : {})} />
         ) : (
           <>
-            {projekte.length > 0 && (
-              <Auswahl
-                aria-label={t('einfach.zeit.baustelle')}
-                value={gewaehlt}
-                onValueChange={setProjekt}
-                optionen={[
-                  ...projekte.map((e) => ({
-                    wert: e.projekt?.id ?? '',
-                    text: [e.projekt?.nummer, e.kunde.name, e.adresse.ort].filter(Boolean).join(' · '),
-                  })),
-                  { wert: OHNE, text: t('einfach.zeit.ohneBaustelle') },
-                ]}
-              />
+            <Auswahl
+              aria-label={t('einfach.zeit.ziel')}
+              platzhalter={t('einfach.zeit.zielWaehlen')}
+              value={gewaehlt}
+              onValueChange={setWahl}
+              optionen={optionen}
+            />
+            {andere.length > 0 && (
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={fuerTeam}
+                  onCheckedChange={(c) => {
+                    setFuerTeam(c === true)
+                  }}
+                />
+                {t('baustelle.zeit.fuerTeam', { namen: andere.map((p) => p.name).join(', ') })}
+              </label>
             )}
             <div className="grid gap-3 sm:grid-cols-2">
               <Button
                 size="lg"
                 className="h-16 text-base"
                 laedt={startet === 'arbeit'}
+                disabled={!ziel}
                 onClick={() => void starten('arbeit')}
               >
                 <Hammer />
@@ -99,6 +113,7 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
                 variant="secondary"
                 className="h-16 text-base"
                 laedt={startet === 'reise'}
+                disabled={!ziel}
                 onClick={() => void starten('reise')}
               >
                 <Car />
@@ -129,7 +144,7 @@ export default function Stempeluhr({ onRapport }: { onRapport?: (id: string) => 
                   </span>
                   <span className="text-muted-foreground ml-2">
                     {t(`einfach.zeit.art.${z.art}`)}
-                    {z.projekt_nummer ? ` · ${z.projekt_nummer}` : ''}
+                    {zielText(z, sprache) ? ` · ${zielText(z, sprache)}` : ''}
                   </span>
                 </span>
                 <span className="zahlen shrink-0">{dauerText(minuten(z))}</span>

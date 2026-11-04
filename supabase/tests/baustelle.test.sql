@@ -71,7 +71,7 @@ select is((select count(*)::int from public.zeiten where person_id = '00000000-0
   'zweiter Start mit derselben ID legt nichts doppelt an');
 select is((select projekt_id from public.zeiten where id = '00000000-0000-0000-0000-00000000b911'),
   '00000000-0000-0000-0000-00000000b9e1'::uuid, 'Zeit übernimmt das Projekt des Rapports');
-select public.zeit_starten(jsonb_build_object('id', '00000000-0000-0000-0000-00000000b912', 'start', now() - interval '1 hour', 'art', 'reise'));
+select public.zeit_starten(jsonb_build_object('id', '00000000-0000-0000-0000-00000000b912', 'start', now() - interval '1 hour', 'art', 'reise', 'intern', 'lager'));
 select is((select count(*)::int from public.zeiten where person_id = '00000000-0000-0000-0000-00000000b9b1' and stopp is null), 1,
   'neuer Start beendet die laufende Zeit');
 select public.zeit_stoppen(jsonb_build_object('id', '00000000-0000-0000-0000-00000000b912', 'stopp', now() - interval '30 minutes'));

@@ -11,9 +11,9 @@ select is(jsonb_array_length((select wert from public.einstellungen where schlue
 select has_column('public', 'dokumente', 'kategorie', 'Dokument kennt die Foto-Kategorie');
 
 -- Stopp vergessen
-insert into public.zeiten (id, person_id, start) values
-  ('00000000-0000-0000-0000-0000000038d1', (select id from public.personen order by name limit 1), now() - interval '11 hours'),
-  ('00000000-0000-0000-0000-0000000038d2', (select id from public.personen order by name limit 1 offset 1), now() - interval '2 hours');
+insert into public.zeiten (id, person_id, start, intern) values
+  ('00000000-0000-0000-0000-0000000038d1', (select id from public.personen order by name limit 1), now() - interval '11 hours', 'lager'),
+  ('00000000-0000-0000-0000-0000000038d2', (select id from public.personen order by name limit 1 offset 1), now() - interval '2 hours', 'lager');
 select is(public.zeiten_vergessen_melden(), 1, 'nur die Zeit über 10 Stunden wird gemeldet');
 select is(public.zeiten_vergessen_melden(), 0, 'und nur einmal');
 select ok((select popup from public.benachrichtigungen where titel_de = 'Stopp vergessen?' order by erstellt_am desc limit 1),

@@ -24,6 +24,10 @@ test('Monteur: nur Zeit, Spesen und Plan, Arbeit starten und stoppen, Spese erfa
     await stopp.click()
     await page.getByRole('dialog').getByRole('button', { name: 'Stopp' }).click()
   }
+  // Ohne Einsatz heute: erst das Ziel wählen (jede Zeit braucht eines), vorher ist Start gesperrt.
+  await expect(page.getByRole('button', { name: 'Start Arbeit' })).toBeDisabled()
+  await page.getByRole('combobox', { name: 'Wofür' }).click()
+  await page.getByRole('option', { name: 'Lager / Werkstatt' }).click()
   await page.getByRole('button', { name: 'Start Arbeit' }).click()
   await expect(page.getByText(/Läuft seit \d\d:\d\d/)).toBeVisible()
   await page.getByRole('button', { name: 'Stopp' }).click()

@@ -21,6 +21,8 @@ export const REITER = [
 ] as const
 /** Reiter nur mit Recht «preise». */
 export const REITER_LEITUNG: readonly Reiter[] = ['heute', 'baustellen', 'meldungen', 'auswertung']
+/** Reiter am Handy für Montage (ohne Recht preise). */
+export const REITER_HANDY: readonly Reiter[] = ['tag', 'wochenplan', 'zeiten']
 export type Reiter = (typeof REITER)[number]
 
 export const RAPPORT_ARTEN = ['montage', 'service', 'wartung', 'ibn'] as const
@@ -133,6 +135,8 @@ export interface LaufendeZeit {
   start: string
   rapport_id: string | null
   projekt_id: string | null
+  service_fall_id?: string | null
+  intern?: string | null
   art: ZeitArt
 }
 
@@ -244,6 +248,12 @@ export interface Zeit {
   person_kuerzel: string | null
   projekt_id: string | null
   projekt_nummer: string | null
+  service_fall_id?: string | null
+  service_nummer?: string | null
+  /** Interner Posten (Schlüssel aus Einstellungen › Baustelle), z. B. «lager». */
+  intern?: string | null
+  intern_de?: string | null
+  intern_fr?: string | null
   rapport_id: string | null
   rapport_nummer: string | null
   start: string
@@ -336,4 +346,32 @@ export interface NachtragEingabe {
   beschreibung: string
   stunden: number | null
   material: MaterialZeile[]
+}
+
+/** Interner Posten für Zeit ohne Kunde (Lager, Fahrzeug …), Daten aus Einstellungen › Baustelle. */
+export interface InternerPosten {
+  schluessel: string
+  de: string
+  fr: string
+}
+
+/** Worauf eine Zeit geht: genau ein Projekt, ein Service-Fall oder ein interner Posten. */
+export type ZeitZiel = { projekt_id: string } | { service_fall_id: string } | { intern: string }
+
+/** Wer heute mit mir im selben Einsatz ist (für «Für das ganze Team» an der Stempeluhr). */
+export interface TeamHeute {
+  id: string
+  name: string
+  kurzzeichen: string | null
+  laeuft: boolean
+}
+
+/** Baustelle von heute ohne Foto des Tages (Antwort von `tagesfoto_offen`). */
+export interface TagesfotoOffen {
+  einsatz_id: string
+  projekt_id: string
+  nummer: string
+  kunde: string | null
+  /** Offener Rapport von heute, an den das Foto kommt; leer = das Handy legt ihn an. */
+  rapport_id: string | null
 }

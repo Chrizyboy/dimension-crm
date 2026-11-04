@@ -87,7 +87,7 @@ export function PlanZelle({
               {e.zeit ? `${e.zeit} ` : ''}
               {e.titel ?? e.nummer}
             </span>
-            <span className="line-clamp-1 opacity-80">{[e.nummer, e.ort].filter(Boolean).join(' · ')}</span>
+            <span className="line-clamp-1">{[e.nummer, e.ort].filter(Boolean).join(' · ')}</span>
           </a>
         ))}
         {konflikte.map((k) => (

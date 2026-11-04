@@ -1,9 +1,10 @@
 import type { Zeit } from '../types'
+import { zielText } from './anzeige'
 import { minuten, stundenText, zuerich } from './zeit'
 
 const KOPF = {
-  de: ['Kürzel', 'Name', 'Datum', 'Start', 'Stopp', 'Pause (Min.)', 'Stunden', 'Art', 'Projekt', 'Rapport', 'Notiz'],
-  fr: ['Code', 'Nom', 'Date', 'Début', 'Fin', 'Pause (min)', 'Heures', 'Type', 'Projet', 'Rapport', 'Remarque'],
+  de: ['Kürzel', 'Name', 'Datum', 'Start', 'Stopp', 'Pause (Min.)', 'Stunden', 'Art', 'Ziel', 'Rapport', 'Notiz'],
+  fr: ['Code', 'Nom', 'Date', 'Début', 'Fin', 'Pause (min)', 'Heures', 'Type', 'Affectation', 'Rapport', 'Remarque'],
 }
 const ART = { de: { arbeit: 'Arbeit', reise: 'Reise' }, fr: { arbeit: 'Travail', reise: 'Déplacement' } }
 
@@ -39,7 +40,8 @@ export function lohnCsv(zeiten: Zeit[], sprache: 'de' | 'fr' = 'de'): string {
         String(z.pause_min),
         stundenText(minuten(z)),
         ART[sprache][z.art],
-        z.projekt_nummer ?? '',
+        // Ziel = Kostenstelle: Projekt, Service-Fall oder interner Posten (Lager …).
+        zielText(z, sprache),
         z.rapport_nummer ?? '',
         z.notiz ?? '',
       ]

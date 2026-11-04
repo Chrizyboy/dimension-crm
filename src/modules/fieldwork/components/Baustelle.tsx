@@ -7,9 +7,10 @@ import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/
 import { supabase } from '@/services/supabase'
 import { useNachSenden } from '../hooks/useBaustelle'
 import { warteschlangeStarten } from '../services/warteschlange'
+import { useSchmal } from '@/hooks/useSchmal'
 import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
-import { REITER, REITER_LEITUNG, type Reiter as ReiterTyp } from '../types'
+import { REITER, REITER_HANDY, REITER_LEITUNG, type Reiter as ReiterTyp } from '../types'
 import { AuswertungAnsicht } from './AuswertungAnsicht'
 import { BaustellenAkteAnsicht } from './BaustellenAkteAnsicht'
 import { BaustellenListe } from './BaustellenListe'
@@ -50,7 +51,12 @@ export default function Baustelle({
   const ich = useAnmeldung((z) => z.ich)
   const leitung = hatRecht(ich, 'preise')
   // Monteure sehen nur ihre Reiter; Leitstand, Baustellen, Meldungen und Auswertung sind für Leitung und GL.
-  const reiterListe = REITER.filter((r) => leitung || !REITER_LEITUNG.includes(r))
+  // Am Handy bleiben für sie nur Mein Tag, Woche und Zeiten (Chris 4.11.2026: «muss einfach sein»); Rapporte
+  // öffnen sie aus der Tageskarte, Nachträge kommen im Rapport.
+  const schmal = useSchmal()
+  const reiterListe = REITER.filter(
+    (r) => leitung || (!REITER_LEITUNG.includes(r) && (!schmal || REITER_HANDY.includes(r) || r === reiter)),
+  )
   useNachSenden()
   useEffect(() => {
     warteschlangeStarten()
