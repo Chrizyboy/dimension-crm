@@ -27,7 +27,7 @@ describe('Lohn-Export', () => {
   it('schreibt eine Zeile je Zeit in Schweizer Zeit', () => {
     const csv = lohnCsv([zeit({})])
     const [kopf, zeile] = csv.replace('\uFEFF', '').split('\r\n')
-    expect(kopf).toBe('Kürzel;Name;Datum;Start;Stopp;Pause (Min.);Stunden;Art;Projekt;Rapport;Notiz')
+    expect(kopf).toBe('Kürzel;Name;Datum;Start;Stopp;Pause (Min.);Stunden;Art;Ziel;Rapport;Notiz')
     expect(zeile).toBe('MM;Mario Montage;22.10.2026;07:30;17:00;60;8.50;Arbeit;P-1001;R0007;')
     expect(csv.startsWith('\uFEFF')).toBe(true)
   })

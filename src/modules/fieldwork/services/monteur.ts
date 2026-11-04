@@ -102,12 +102,20 @@ export function eingabeAnwenden(alt: Rapport, e: RapportEingabe): Rapport {
 }
 
 /** Zeit starten (Start-Knopf); eine laufende Zeit endet damit. */
-export async function zeitStarten(z: { rapport_id?: string | null; projekt_id?: string | null; art: ZeitArt }) {
+export async function zeitStarten(z: {
+  rapport_id?: string | null
+  projekt_id?: string | null
+  service_fall_id?: string | null
+  intern?: string | null
+  art: ZeitArt
+}) {
   const laufend: LaufendeZeit = {
     id: crypto.randomUUID(),
     start: jetzt(),
     rapport_id: z.rapport_id ?? null,
     projekt_id: z.projekt_id ?? null,
+    service_fall_id: z.service_fall_id ?? null,
+    intern: z.intern ?? null,
     art: z.art,
   }
   await einreihen({ art: 'rpc', name: 'zeit_starten', args: { p: laufend }, erstellt: jetzt() })

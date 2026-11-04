@@ -1,6 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type {
   Abwesenheit,
+  InternerPosten,
   MeinTag,
   Nachtrag,
   NachtragFilter,
@@ -114,6 +115,13 @@ export async function ladePflichtfotos(): Promise<Partial<Record<RapportArt, Pfl
   const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'baustelle').maybeSingle()
   if (error) throw error
   return (data?.wert as { pflichtfotos?: unknown } | null)?.pflichtfotos ?? {}
+}
+
+/** Interne Posten für Zeit ohne Kunde (Einstellungen › Baustelle). */
+export async function ladeInternePosten(): Promise<InternerPosten[]> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'baustelle').maybeSingle()
+  if (error) throw error
+  return (data?.wert as { interne_posten?: InternerPosten[] } | null)?.interne_posten ?? []
 }
 
 /** Prüfpunkte des IBN-Protokolls (Einstellungen). */
@@ -248,6 +256,8 @@ export async function zeitSpeichern(p: {
   pause_min: number
   art: ZeitArt
   projekt_id?: string | null
+  service_fall_id?: string | null
+  intern?: string | null
   rapport_id?: string | null
   notiz?: string | null
 }): Promise<void> {

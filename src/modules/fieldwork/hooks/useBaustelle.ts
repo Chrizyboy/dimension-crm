@@ -135,6 +135,16 @@ export const usePflichtfotos = () =>
     queryFn: () => mitAblage('pflichtfotos', b.ladePflichtfotos),
   })
 
+/** Interne Posten (Lager, Fahrzeug …) für die Zeit; auch ohne Netz aus der Ablage. */
+export const useInternePosten = () =>
+  useQuery({
+    queryKey: ['baustelle', 'interne_posten'],
+    networkMode: 'always',
+    enabled: an,
+    staleTime: 30 * 60_000,
+    queryFn: () => mitAblage('interne_posten', b.ladeInternePosten),
+  })
+
 export const usePruefpunkte = () =>
   useQuery({
     queryKey: ['baustelle', 'pruefpunkte'],

@@ -31,6 +31,8 @@ Für alle:
   oder Wartungsvertrag). Die Akte ist ein Seitenpanel.
 - **Zeiten**: Wochenblatt (Ist/Soll nach Pensum, Jahressaldo, Hinweise nach Arbeitsgesetz, Woche bestätigen),
   Zeiten je Person erfassen oder korrigieren, prüfen, Lohn-Export (CSV).
+  Jede Zeit hat genau ein Ziel: Projekt, Service-Fall (auch über den Rapport) oder einen internen Posten aus
+  `einstellungen.baustelle.interne_posten` (Lager, Fahrzeug, Weiterbildung). Der Trigger `intern.zeit_ziel` prüft das.
 - **Nachträge**: Regie-Arbeiten mit Stand (offen, vom Kunden bestätigt, abgelehnt), Betrag (Recht `preise`).
 
 ## Daten

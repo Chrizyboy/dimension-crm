@@ -12,8 +12,8 @@ insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte, spr
   ('00000000-0000-0000-0000-0000000055b3', 'rz_mo', 'Mo Montage', '00000000-0000-0000-0000-0000000055a3', 'montage', '{}', 'de');
 insert into public.personal_akten (person_id, vorgesetzt_id)
 values ('00000000-0000-0000-0000-0000000055b3', '00000000-0000-0000-0000-0000000055b2');
-insert into public.zeiten (id, person_id, start, stopp, art) values
-  ('00000000-0000-0000-0000-0000000055c1', '00000000-0000-0000-0000-0000000055b3', now() - interval '3 hours', now() - interval '1 hour', 'arbeit');
+insert into public.zeiten (id, person_id, start, stopp, art, intern) values
+  ('00000000-0000-0000-0000-0000000055c1', '00000000-0000-0000-0000-0000000055b3', now() - interval '3 hours', now() - interval '1 hour', 'arbeit', 'lager');
 insert into public.posteingang (id, kennung, outlook_id, postfach, abgeholt_von, postfach_person_id, eingang_am, an) values
   ('00000000-0000-0000-0000-0000000055d1', '<rz1@x>', 'rz1', 'mo@test.local', '00000000-0000-0000-0000-0000000055b3',
    '00000000-0000-0000-0000-0000000055b3', now(), '{}'),

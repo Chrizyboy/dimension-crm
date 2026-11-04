@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: montage, projektleitung, buchhaltung
 ---
 
@@ -20,6 +20,7 @@ Die Handy-Ansicht für die Montage und die Büro-Sicht dazu: Tagesplan, ein Rapp
 
 1. Reiter **Mein Tag**: Einsätze von heute und den nächsten Tagen, mit Team, Elektriker und Material.
 2. **Navigation** öffnet die Karten-App, **Kunde anrufen** wählt die Nummer.
+   Oben steht die **Arbeitszeit**: unter **Wofür** ist die heutige Baustelle gewählt, sonst ein Service-Fall oder **Lager / Werkstatt**, **Fahrzeug**, **Weiterbildung**. Dann **Start Arbeit** oder **Start Reise**.
 3. Die Karte zeigt den Fortschritt der Baustelle, was heute dran ist und welche Pflichtfotos noch fehlen. **Mappe** öffnet Anlage, Pläne, Kontakte und Material zum Abhaken beim Laden (geht auch ohne Netz).
 4. **Rapport beginnen**: bei Montagen kommt zuerst der **Sicherheits-Check**. Alles abhaken, wer heute mitarbeitet anhaken, **Arbeitsbeginn fürs Team**. Die Zeit läuft dann für alle mit derselben Uhrzeit.
 5. Etwas stimmt nicht (Material, Schaden, Wetter …)? **Problem melden**, mit Foto. Die Projektleitung bekommt es sofort.
@@ -86,6 +87,7 @@ Die Handy-Ansicht für die Montage und die Büro-Sicht dazu: Tagesplan, ein Rapp
 ## Regeln {#regeln}
 
 - Abschluss, Zeiten prüfen und Nachtrag-Stand nur über die Knöpfe hier, damit nichts doppelt gezählt wird.
+- Jede Zeit hat ein Ziel: Baustelle, Service-Fall oder ein interner Posten. Die internen Posten ändert nur die Administration.
 - Beträge von Nachträgen sieht nur, wer das Recht Preise hat. Dasselbe gilt für Baustellen heute, Meldungen und Auswertung.
 - Der Sicherheits-Check ist Pflicht vor dem Teamstart. Schritte, Pflichtfotos und Sicherheits-Punkte ändert nur die Administration.
 
@@ -101,6 +103,7 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
+- 04.11.2026: Jede Zeit braucht ein Ziel (**Wofür**): Baustelle, Service-Fall oder Lager / Werkstatt, Fahrzeug, Weiterbildung. «Ohne Baustelle» gibt es nicht mehr; der Lohn-Export zeigt das Ziel.
 - 03.11.2026: «In den Papierkorb» für Rapporte und Zeiten; abgeschlossene Rapporte nur die Administration, exportierte Zeiten gar nicht, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Zeiten aller nur für Geschäftsleitung und Buchhaltung, direkte Vorgesetzte sehen ihr Team.
 - 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.

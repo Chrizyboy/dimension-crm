@@ -133,6 +133,8 @@ export interface LaufendeZeit {
   start: string
   rapport_id: string | null
   projekt_id: string | null
+  service_fall_id?: string | null
+  intern?: string | null
   art: ZeitArt
 }
 
@@ -244,6 +246,12 @@ export interface Zeit {
   person_kuerzel: string | null
   projekt_id: string | null
   projekt_nummer: string | null
+  service_fall_id?: string | null
+  service_nummer?: string | null
+  /** Interner Posten (Schlüssel aus Einstellungen › Baustelle), z. B. «lager». */
+  intern?: string | null
+  intern_de?: string | null
+  intern_fr?: string | null
   rapport_id: string | null
   rapport_nummer: string | null
   start: string
@@ -337,3 +345,13 @@ export interface NachtragEingabe {
   stunden: number | null
   material: MaterialZeile[]
 }
+
+/** Interner Posten für Zeit ohne Kunde (Lager, Fahrzeug …), Daten aus Einstellungen › Baustelle. */
+export interface InternerPosten {
+  schluessel: string
+  de: string
+  fr: string
+}
+
+/** Worauf eine Zeit geht: genau ein Projekt, ein Service-Fall oder ein interner Posten. */
+export type ZeitZiel = { projekt_id: string } | { service_fall_id: string } | { intern: string }

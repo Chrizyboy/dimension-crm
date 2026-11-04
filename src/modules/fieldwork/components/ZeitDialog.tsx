@@ -5,10 +5,15 @@ import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKn
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
+import { Auswahl } from '@/components/ui/auswahl'
 import { Input } from '@/components/ui/input'
 import { formatDatum } from '@/lib/format'
+import { useUi } from '@/stores/ui'
 import { useAktion } from '../hooks/useAktion'
-import { heute, zuerich } from '../lib/zeit'
+import { useInternePosten, useTag } from '../hooks/useBaustelle'
+import { zielText } from '../lib/anzeige'
+import { heute, plusTage, zuerich } from '../lib/zeit'
+import { zielAusWert, zielOptionen, zielVonZeit, zielWert } from '../lib/ziel'
 import { zeitSpeichern } from '../services/baustelle'
 import { zeitSchema } from '../schema'
 import type { Zeit, ZeitArt } from '../types'
@@ -27,6 +32,17 @@ export function ZeitDialog({ zeit, onSchliessen }: { zeit: Zeit | null; onSchlie
   const [pause, setPause] = useState(String(zeit?.pause_min ?? 60))
   const [art, setArt] = useState<ZeitArt>(zeit?.art ?? 'arbeit')
   const [notiz, setNotiz] = useState(zeit?.notiz ?? '')
+  const sprache = useUi((z) => z.sprache)
+  // Ziel: Einsätze der Person rund um das Datum und die internen Posten; das bisherige Ziel bleibt wählbar.
+  const plan = useTag(plusTage(datum, -7), plusTage(datum, 7), zeit?.person_id ?? null)
+  const posten = useInternePosten()
+  const bisher = zeit ? zielVonZeit(zeit) : null
+  const optionen = zielOptionen(plan.data?.eintraege ?? [], posten.data ?? [], sprache, datum)
+  if (bisher && zeit && !optionen.some((o) => o.wert === zielWert(bisher))) {
+    optionen.unshift({ wert: zielWert(bisher), text: zielText(zeit, sprache) || zielWert(bisher) })
+  }
+  const [wahl, setWahl] = useState(bisher ? zielWert(bisher) : '')
+  const ziel = zielAusWert(wahl)
 
   const pruefung = zeitSchema.safeParse({ datum, start, stopp, pause_min: Number(pause) || 0 })
   const fehler = pruefung.success ? null : (pruefung.error.issues[0]?.message ?? null)
@@ -35,9 +51,16 @@ export function ZeitDialog({ zeit, onSchliessen }: { zeit: Zeit | null; onSchlie
     const ok = await aus(
       () =>
         zeitSpeichern({
-          ...(zeit
-            ? { id: zeit.id, person_id: zeit.person_id, projekt_id: zeit.projekt_id, rapport_id: zeit.rapport_id }
-            : {}),
+          ...(zeit ? { id: zeit.id, person_id: zeit.person_id } : {}),
+          // Neues Ziel gewählt: Rapport-Bezug fällt weg, sonst zöge die Datenbank das alte Projekt nach.
+          ...(ziel && wahl !== (bisher ? zielWert(bisher) : '')
+            ? { projekt_id: null, service_fall_id: null, intern: null, rapport_id: null, ...ziel }
+            : {
+                projekt_id: zeit?.projekt_id ?? null,
+                service_fall_id: zeit?.service_fall_id ?? null,
+                intern: zeit?.intern ?? null,
+                rapport_id: zeit?.rapport_id ?? null,
+              }),
           start: zeitpunkt(datum, start),
           stopp: zeitpunkt(datum, stopp),
           pause_min: Number(pause) || 0,
@@ -72,7 +95,7 @@ export function ZeitDialog({ zeit, onSchliessen }: { zeit: Zeit | null; onSchlie
                 className="mr-auto"
               />
             )}
-            <Button laedt={laeuft} disabled={Boolean(fehler)} onClick={() => void speichern()}>
+            <Button laedt={laeuft} disabled={Boolean(fehler) || !ziel} onClick={() => void speichern()}>
               {t('allgemein.speichern')}
             </Button>
           </>
@@ -87,6 +110,15 @@ export function ZeitDialog({ zeit, onSchliessen }: { zeit: Zeit | null; onSchlie
               onChange={(e) => {
                 setDatum(e.target.value)
               }}
+            />
+          </Feld>
+          <Feld id="z-ziel" label={t('einfach.zeit.ziel')} className="col-span-2">
+            <Auswahl
+              id="z-ziel"
+              platzhalter={t('einfach.zeit.zielWaehlen')}
+              value={wahl}
+              onValueChange={setWahl}
+              optionen={optionen}
             />
           </Feld>
           <Feld id="z-start" label={t('baustelle.zeiten.start')}>
