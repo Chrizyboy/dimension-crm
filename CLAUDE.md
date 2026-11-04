@@ -71,7 +71,7 @@ docs/                   # Architektur, Entscheidungen, Modul-Vorlage
 ## So fügst du ein Modul hinzu
 
 1. `npm run modul:neu -- lager "Lager" "Stock" package abwicklung 17`
-   (id, Titel DE, Titel FR, Icon aus [lucide.dev](https://lucide.dev), Gruppe `uebersicht|verkauf|abwicklung|verwaltung|weitere`, Phase als Zahl oder eingeschoben mit Buchstabe wie `8b`)
+   (id, Titel DE, Titel FR, Icon aus [lucide.dev](https://lucide.dev), Gruppe `uebersicht|kontakte|verkauf|akquise|abwicklung|finanzen|betrieb|hilfe`, Phase als Zahl oder eingeschoben mit Buchstabe wie `8b`)
 2. Die vom Skript angezeigte Zeile in `src/lib/navigation.ts` eintragen. Das Modul erscheint sofort in der Seitenleiste.
    In `index.ts` den `untertitel` (DE/FR, ein Satz: was tut man hier?) ausfüllen. Namen müssen eindeutig sein, siehe `docs/entscheidungen/0008`.
 3. `src/modules/lager/README.md` ausfüllen: Zweck, Daten, Abhängigkeiten, Ereignisse. Dazu das Handbuch-Kapitel `handbuch.de.md`/`handbuch.fr.md` (Gerüst kommt mit, Aufbau siehe Entscheid 0043).

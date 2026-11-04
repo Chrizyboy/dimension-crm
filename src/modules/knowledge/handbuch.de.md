@@ -84,8 +84,13 @@ Am Ende des Kapitels **Stimmt etwas nicht? Melden**. Fehlende Anleitungen werden
 
 Reiter **Erste Schritte**.
 
+### Ich finde einen Bereich in der Seitenleiste nicht mehr.
+
+Die Bereiche stehen in kleinen Gruppen (Übersicht, Kontakte, Verkauf, Akquise, Abwicklung, Finanzen, Betrieb, Hilfe). Tippe auf den Namen der Gruppe, dann klappt sie auf. Oder **Ctrl K** und den Namen tippen. Was du auf- oder zuklappst, bleibt so.
+
 ## Neu {#neu}
 
+- 04.11.2026: Seitenleiste in kleinen Gruppen zum Auf- und Zuklappen, alles passt ohne Scrollen. Seltene Knöpfe stehen unter **Mehr**, Filter ohne Treffer bleiben weg, die Erklärung einer Seite steht hinter dem **i** neben dem Titel.
 - 04.11.2026: Die Prüfung sieht auch die Bildschirmfotos und kann in der Einschätzung darauf verweisen.
 - 03.11.2026: Bildschirmfotos und Fotos anhängen: Strg+V, Hineinziehen, Kamera am Handy, Vorschau in der Meldung und **Bild anhängen** zum Nachreichen.
 - 02.11.2026: Kapitel zu jedem Bereich, Hilfe mit F1, Suche über alles, «Für dich» je Rolle, Begriffe A–Z und «Neu».

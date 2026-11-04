@@ -12,7 +12,7 @@ export const meta: ModulMeta = {
   untertitel: { de: 'Belege fotografieren und abrechnen', fr: 'Photographier et décompter les justificatifs' },
   pfad: '/expenses',
   icon: 'wallet',
-  gruppe: 'verwaltung',
+  gruppe: 'finanzen',
   phase: 10,
 }
 

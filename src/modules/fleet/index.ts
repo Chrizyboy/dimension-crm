@@ -15,7 +15,7 @@ export const meta: ModulMeta = {
   },
   pfad: '/fleet',
   icon: 'truck',
-  gruppe: 'abwicklung',
+  gruppe: 'betrieb',
   phase: 17,
 }
 

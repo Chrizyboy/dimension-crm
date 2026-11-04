@@ -47,3 +47,6 @@ export function PapierkorbMenueEintrag({ onSelect }: { onSelect: () => void }) {
     </MenueEintrag>
   )
 }
+
+// Löschen braucht man selten: in einer Knopfleiste steht der Knopf am PC immer unter «Mehr» (Entscheid 0058).
+InPapierkorbKnopf.selten = true

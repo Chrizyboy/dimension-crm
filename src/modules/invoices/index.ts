@@ -15,7 +15,7 @@ export const meta: ModulMeta = {
   },
   pfad: '/invoices',
   icon: 'receipt',
-  gruppe: 'abwicklung',
+  gruppe: 'finanzen',
   phase: 10,
   // Kein Recht nötig: Projektleitung und Verkauf sehen ihren Zahlungsstand und ihre Visa (Bereich in der Rolle).
 }

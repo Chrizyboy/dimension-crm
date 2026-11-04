@@ -15,7 +15,7 @@ export const meta: ModulMeta = {
   },
   pfad: '/ai',
   icon: 'sparkles',
-  gruppe: 'weitere',
+  gruppe: 'hilfe',
   phase: 13,
 }
 

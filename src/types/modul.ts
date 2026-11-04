@@ -6,8 +6,9 @@ export type Sprache = 'de' | 'fr'
 /** Text in beiden Sprachen. */
 export type Zweisprachig = Record<Sprache, string>
 
-/** Navigations-Gruppen der Seitenleiste (wie in der Vorlage: Übersicht, Verkauf, Abwicklung …). */
-export type NavGruppe = 'uebersicht' | 'verkauf' | 'abwicklung' | 'verwaltung' | 'weitere'
+/** Navigations-Gruppen der Seitenleiste, nach Arbeitsschritt (Entscheid 0058). */
+export type NavGruppe =
+  'uebersicht' | 'kontakte' | 'verkauf' | 'akquise' | 'abwicklung' | 'finanzen' | 'betrieb' | 'hilfe'
 
 /** Kenndaten, die jedes Fachmodul in seiner index.ts exportiert. */
 export interface ModulMeta {

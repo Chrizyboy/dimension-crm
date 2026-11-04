@@ -15,7 +15,7 @@ export const meta: ModulMeta = {
   },
   pfad: '/finance',
   icon: 'landmark',
-  gruppe: 'verwaltung',
+  gruppe: 'finanzen',
   phase: 10,
   recht: 'finanzen',
 }

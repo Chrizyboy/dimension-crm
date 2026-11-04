@@ -12,7 +12,7 @@ export const meta: ModulMeta = {
   untertitel: { de: 'Haushalte und Firmen mit ihren Gebäuden', fr: 'Ménages et entreprises avec leurs bâtiments' },
   pfad: '/customers',
   icon: 'contact',
-  gruppe: 'verkauf',
+  gruppe: 'kontakte',
   phase: 5,
 }
 
