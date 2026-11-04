@@ -22,7 +22,7 @@ jeder Bereich in der Leiste und jeder Knopf in der App; geändert wird nur Ordnu
   Rapporte, Einkauf & Material, Service & Garantie, Wartungsverträge) · Finanzen (Rechnungen, Finanzen, Spesen) ·
   Betrieb (Team & Ausweise, Fahrzeuge & Geräte, Automationen, Einstellungen) · Hilfe (Handbuch, Assistent).
 - **Gruppen klappen auf und zu** (Klick auf den Namen). Ohne eigene Wahl offen: «Übersicht» und die Gruppe des
-  offenen Bereichs. Die eigene Wahl bleibt im Gerät (`useUi.gruppenOffen`). Eine zugeklappte Gruppe zeigt den offenen
+  offenen Bereichs; dazu die Gruppen der eigenen Rolle (Verkauf: Kontakte + Verkauf, Innendienst: Kontakte + Abwicklung, Projektleitung/Montage: Abwicklung, Buchhaltung: Finanzen); wer höchstens 16 Bereiche sieht, hat alles offen. Die eigene Wahl bleibt im Gerät (`useUi.gruppenOffen`). Eine zugeklappte Gruppe zeigt den offenen
   Bereich trotzdem. Eingeklappte Leiste (nur Icons) und Befehlspalette zeigen weiterhin alle Bereiche.
 - **Knopfleiste am PC höchstens 4 Elemente** (`KNOEPFE_AM_PC`): bis 4 Knöpfe stehen alle da, bei mehr die
   Hauptaktion, die zwei vorderen und «Mehr» für den Rest. Reihenfolge der Knöpfe bestimmt, was offen bleibt: häufige nach vorn.

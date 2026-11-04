@@ -44,7 +44,8 @@ test.describe('Desktop', () => {
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
     // Ohne eigene Wahl ist nur «Übersicht» offen (Entscheid 0058); jede Gruppe klappt mit einem Klick auf.
     await expect(nav.getByRole('link')).toHaveCount(5)
-    for (const gruppe of await nav.getByRole('button', { expanded: false }).all()) await gruppe.click()
+    const zu = nav.getByRole('button', { expanded: false })
+    while ((await zu.count()) > 0) await zu.first().click()
     await expect(nav.getByRole('link')).toHaveCount(28)
     await nav.getByRole('link', { name: 'Anfragen & Leads' }).click()
     await expect(page).toHaveURL(/#\/sales$/)

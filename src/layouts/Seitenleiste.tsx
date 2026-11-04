@@ -9,10 +9,24 @@ import { findeModul, GRUPPEN } from '@/lib/navigation'
 import { SPRUENGE } from '@/lib/spruenge'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { cn } from '@/lib/utils'
+import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
+import type { NavGruppe } from '@/types/modul'
 
 const LINK =
   'flex h-[30px] items-center gap-2.5 rounded-md px-2 text-[13px] text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-active/70 hover:text-sidebar-active-foreground focus-visible:ring-2 focus-visible:ring-ring'
+/** Bis so viele sichtbare Bereiche passt die Leiste auf einen Laptop, ohne dass Gruppen zu sein müssen. */
+const ALLES_OFFEN_BIS = 16
+
+/** Ohne eigene Wahl offen je Rolle: die Gruppen, in denen diese Rolle täglich arbeitet (nur Darstellung). */
+const OFFEN_JE_ROLLE: Partial<Record<string, readonly NavGruppe[]>> = {
+  verkauf: ['kontakte', 'verkauf'],
+  innendienst: ['kontakte', 'abwicklung'],
+  projektleitung: ['abwicklung'],
+  montage: ['abwicklung'],
+  buchhaltung: ['finanzen'],
+}
+
 // Variante C (Chris 31.10.2026): Blau wie bisher, Orange als Akzent: Linie links am aktiven Punkt, Icon orange.
 const AKTIV = {
   className:
@@ -37,6 +51,10 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
   const setGruppeOffen = useUi((z) => z.setGruppeOffen)
   const pfad = useRouterState({ select: (z) => z.location.pathname })
   const aktiv = findeModul(pfad.split('/')[1] ?? '')
+  // Wer wenige Bereiche sieht (z. B. Verkauf), hat ohnehin Platz: dann ist ohne eigene Wahl alles offen.
+  const allesOffen = sichtbar.length <= ALLES_OFFEN_BIS
+  const rolle = useAnmeldung((z) => z.ich?.rolle ?? '')
+  const rollenGruppen = OFFEN_JE_ROLLE[rolle] ?? []
 
   // Eingeklappt zeigt der Hinweis Name + Erklärung, ausgeklappt nur zusätzlich die Erklärung.
   // Mit Sprung-Taste steht «G K» rechts im Hinweis (nicht im Handy-Menü, dort gibt es keine Tastatur).
@@ -81,7 +99,10 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
         )}
       >
         {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g)).map((gruppe) => {
-          const offen = eingeklappt || (gruppenOffen[gruppe] ?? (gruppe === 'uebersicht' || gruppe === aktiv?.gruppe))
+          const offen =
+            eingeklappt ||
+            (gruppenOffen[gruppe] ??
+              (allesOffen || gruppe === 'uebersicht' || gruppe === aktiv?.gruppe || rollenGruppen.includes(gruppe)))
           const name = t(`nav.${gruppe}`)
           // Zugeklappt bleibt der offene Bereich stehen, sonst wüsste man nicht mehr, wo man ist.
           const module = sichtbar.filter((m) => m.gruppe === gruppe && (offen || m.id === aktiv?.id))
