@@ -662,6 +662,8 @@
     }
   },
   "akte": {
+    "leereFelder_one": "{{count}} weitere Angabe",
+    "leereFelder_other": "{{count}} weitere Angaben",
     "titel": "Kundenakte",
     "nichtGefunden": "Dieser Kontakt existiert nicht oder du darfst ihn nicht sehen.",
     "wasJetzt": "Was jetzt?",

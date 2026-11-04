@@ -44,3 +44,10 @@ jeder Bereich in der Leiste und jeder Knopf in der App; geändert wird nur Ordnu
 - **Leere Karte «Kunden warten auf Antwort»** auf «Mein Tag» wird zu einer schmalen Zeile.
 - **`Seitenkopf zeile`**: kurze Zeile, die sichtbar bleibt (Datum und was ansteht auf «Mein Tag»); `beschreibung`
   bleibt hinter dem «i».
+- **Reiter höchstens sechs** (`REITER_HOECHSTENS` in `src/components/ui/reiter.tsx`): Bei mehr stehen die vorderen
+  fünf und der gewählte da, der Rest unter «Mehr ▾» (Menü neben der Liste, weil eine `tablist` nur Reiter enthalten
+  darf). Gilt automatisch für jede `ReiterListe`; Ansichten als Adresse (Verkauf, Offerten) nutzen `teileReiter` und
+  `ReiterMehr`. Browser-Tests wählen Reiter mit `waehleReiter` aus `e2e/hilfen.ts`.
+- **Leere Felder erst beim Bearbeiten** (`LeereFelder` in `src/components/shared/AkteAbschnitt.tsx`): gefüllte
+  Angaben stehen da, leere klappen mit «+ n weitere Angaben» auf. Zuerst in Lead-Akte (Auswahlfelder unter
+  «Interesse») und Offert-Akte («Chance und Angaben»).

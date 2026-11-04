@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, geschaeftsleitung
 ---
 
@@ -115,6 +115,7 @@ Le CRM mémorise tout seul personne, source, région et colonnes. Pour plusieurs
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: Six onglets au plus : **Rapport mensuel** et **Pilotage** sont sous **Plus** (touches 1–7 comme avant). Dans la fiche du lead, les listes vides (source, joignabilité, financement, horizon, subvention) n’apparaissent qu’après **+ autres informations**.
 - 03.11.2026: «Mettre à la corbeille» pour les leads (dans le dossier du lead), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Personne, source et région avec des cases à cocher (plusieurs, **seul**, « Tous sauf … ») ; le bouton **Colonnes** affiche ou masque les étapes du pipeline. Le choix est mémorisé.
 - 03.11.2026: « Envoyer le lien de rendez-vous » : les clients réservent eux-mêmes la visite sur dimension-solaire.ch.

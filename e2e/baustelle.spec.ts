@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 9b: Baustelle am Handy (Pixel 7). Das Büro gibt dem Testmonteur einen Service-Termin für heute;
 // der Monteur beginnt den Rapport (Zeit läuft), schreibt Arbeiten, Material, Foto und Nachtrag, verliert das
@@ -50,7 +50,7 @@ test('Büro: Reiter ohne Verstösse, Service-Termin für den Monteur', async ({ 
   await expect(page.getByRole('heading', { name: 'Baustelle & Rapporte', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   for (const reiter of ['Wochenplan', 'Rapporte', 'Zeiten', 'Nachträge']) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
@@ -194,7 +194,7 @@ test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ pa
   await expect(rapport.getByRole('button', { name: 'PDF' })).toBeVisible()
   await page.keyboard.press('Escape')
 
-  await page.getByRole('tab', { name: 'Zeiten' }).click()
+  await waehleReiter(page, 'Zeiten')
   await page.getByRole('button', { name: /^Person:/ }).click()
   const personen = page.getByRole('group', { name: 'Person' })
   await personen.getByText('Mario Montage').hover()
@@ -214,7 +214,7 @@ test('Büro: Rapport, Zeit prüfen, Lohn-Export, Nachtrag bewerten', async ({ pa
   expect(readFileSync(pfad, 'utf8')).toContain('Mario Montage')
   await expect(page.getByText('Exportiert').first()).toBeVisible()
 
-  await page.getByRole('tab', { name: 'Nachträge' }).click()
+  await waehleReiter(page, 'Nachträge')
   await page.getByRole('button', { name: 'Vom Kunden bestätigt' }).click()
   await page.getByRole('cell', { name: `Zusätzlicher Überspannungsschutz ${lauf}` }).click()
   const n = page.getByRole('dialog')

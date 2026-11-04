@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -100,6 +100,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
+- 04.11.2026: Höchstens sechs Ansichten, **PDF-Import** steht unter **Mehr**. In «Chance und Angaben» stehen nur ausgefüllte Felder, die leeren nach **+ weitere Angaben**.
 - 03.11.2026: «In den Papierkorb» für Offerten (Kopf der Offert-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Stückliste aus dem Eturnity-PDF in der Offerte, daraus die Materialliste im Einkauf; Offerten ohne CRM-Nummer werden über das Eturnity-Projekt («hyd-…») zugeordnet.
 - 03.11.2026: Reiter Auswertung (Quote, je Person, Verlustgründe, Konkurrenz).

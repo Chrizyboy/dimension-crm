@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, API, brauchtDatenbank } from './hilfen'
+import { anmelden, API, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 15: Handbuch und Tastatur. Administration legt einen Prozess ab, lädt eine neue Version hoch (die alte
 // steht unter «Frühere Versionen») und entfernt ihn; alle Reiter ohne Verstösse. Verkauf meldet einen Fehler
@@ -59,7 +59,7 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
   await expect(page.getByRole('main').getByRole('button', { name: 'Kapitel' }).first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Prozesse' }).click()
+  await waehleReiter(page, 'Prozesse')
   await page.getByRole('button', { name: 'Prozess hinzufügen' }).click()
   const dialog = page.getByRole('dialog', { name: 'Prozess hinzufügen' })
   await dialog
@@ -89,7 +89,7 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
   await zeile.getByRole('button', { name: 'Wirklich entfernen?' }).click()
   await expect(page.getByRole('listitem').filter({ hasText: `Testablauf-${lauf}` })).toHaveCount(0)
 
-  await page.getByRole('tab', { name: 'Videos' }).click()
+  await waehleReiter(page, 'Videos')
   await expect(page.getByRole('button', { name: 'Video hinzufügen' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 })
@@ -105,14 +105,14 @@ test('Handbuch: Hilfe mit F1, ganzes Kapitel, Suche, Begriffe und Neu ohne Verst
   await expect(page.getByRole('navigation', { name: 'Inhalt des Kapitels' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Für dich' }).click()
+  await waehleReiter(page, 'Für dich')
   await expect(page.getByText('Dein Arbeitstag: Verkauf')).toBeVisible()
   await page.getByRole('searchbox', { name: 'Im Handbuch suchen' }).fill('Rabatt')
   await expect(page.getByText('Warum steht beim Vertrag «Rabatt»?')).toBeVisible()
   await page.getByRole('searchbox', { name: 'Im Handbuch suchen' }).fill('')
 
   for (const reiter of ['Begriffe A–Z', 'Neu', 'Kapitel']) {
-    await page.getByRole('tab', { name: new RegExp(`^${reiter}`) }).click()
+    await waehleReiter(page, new RegExp(`^${reiter}`))
     expect(await verstoesse(page), reiter).toEqual([])
   }
 })
