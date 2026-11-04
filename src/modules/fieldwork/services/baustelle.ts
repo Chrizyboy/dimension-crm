@@ -1,6 +1,9 @@
 import { supabase } from '@/services/supabase'
 import type {
   Abwesenheit,
+  InternerPosten,
+  TagesfotoOffen,
+  TeamHeute,
   MeinTag,
   Nachtrag,
   NachtragFilter,
@@ -114,6 +117,27 @@ export async function ladePflichtfotos(): Promise<Partial<Record<RapportArt, Pfl
   const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'baustelle').maybeSingle()
   if (error) throw error
   return (data?.wert as { pflichtfotos?: unknown } | null)?.pflichtfotos ?? {}
+}
+
+/** Mein Team heute (alle im selben Einsatz oder Service-Termin, ich zuerst), mit «Zeit läuft». */
+export async function ladeTeamHeute(): Promise<TeamHeute[]> {
+  const { data, error } = await db().rpc('mein_team_heute')
+  if (error) throw error
+  return (data ?? []) as unknown as TeamHeute[]
+}
+
+/** Meine Baustellen von heute ohne Foto des Tages (einer im Team genügt). */
+export async function ladeTagesfotoOffen(): Promise<TagesfotoOffen[]> {
+  const { data, error } = await db().rpc('tagesfoto_offen')
+  if (error) throw error
+  return (data ?? []) as unknown as TagesfotoOffen[]
+}
+
+/** Interne Posten für Zeit ohne Kunde (Einstellungen › Baustelle). */
+export async function ladeInternePosten(): Promise<InternerPosten[]> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'baustelle').maybeSingle()
+  if (error) throw error
+  return (data?.wert as { interne_posten?: InternerPosten[] } | null)?.interne_posten ?? []
 }
 
 /** Prüfpunkte des IBN-Protokolls (Einstellungen). */
@@ -248,6 +272,8 @@ export async function zeitSpeichern(p: {
   pause_min: number
   art: ZeitArt
   projekt_id?: string | null
+  service_fall_id?: string | null
+  intern?: string | null
   rapport_id?: string | null
   notiz?: string | null
 }): Promise<void> {

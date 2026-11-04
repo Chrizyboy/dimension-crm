@@ -2833,6 +2833,9 @@
     "baustelle_zeit_start_fehlt": "Bitte den Start angeben.",
     "baustelle_zeit_stopp_vor_start": "Stopp muss nach dem Start liegen.",
     "baustelle_zeit_zukunft": "Eine Zeit kann nicht in der Zukunft beginnen. Stimmt die Uhr des Handys?",
+    "baustelle_zeit_ohne_ziel": "Jede Zeit braucht ein Ziel: Baustelle, Service-Fall oder Lager, Fahrzeug, Weiterbildung.",
+    "baustelle_zeit_ein_ziel": "Eine Zeit geht entweder auf eine Baustelle bzw. einen Service-Fall oder auf einen internen Posten, nicht auf beides.",
+    "baustelle_zeit_posten_unbekannt": "Diesen internen Posten gibt es nicht (mehr). Bitte einen anderen wählen.",
     "finanzen_kein_recht": "Dafür braucht es das Recht «Finanzen».",
     "finanzen_rechnung_gestellt": "Die Rechnung ist gestellt und lässt sich nicht mehr ändern. Bitte stornieren und neu erstellen.",
     "finanzen_nicht_gestellt": "Die Rechnung ist noch nicht gestellt (oder storniert).",
@@ -5727,10 +5730,18 @@
       "meldungenOffen_one": "{{count}} Meldung offen",
       "meldungenOffen_other": "{{count}} Meldungen offen"
     },
+    "tagesfoto": {
+      "titel": "Foto des Tages",
+      "text": "Vor dem Feierabend ein Foto vom Stand der Baustelle. Einer im Team genügt.",
+      "aufnehmen": "Foto aufnehmen",
+      "da": "Foto bereit"
+    },
     "zeit": {
       "titel": "Zeit",
       "laeuft": "Läuft seit {{start}}",
       "zumRapport": "Zum Rapport",
+      "fuerTeam": "Für das ganze Team (auch {{namen}})",
+      "stoppTeam": "Auch für {{namen}} stoppen",
       "stopp": "Stopp",
       "stoppTitel": "Zeit stoppen",
       "stoppText": "Wie lange war die Pause seit dem Start?",
@@ -11553,8 +11564,8 @@
     "text": "Arbeitszeit per Knopfdruck, Spesen mit Belegfoto und dein Plan.",
     "zeit": {
       "titel": "Arbeitszeit",
-      "baustelle": "Baustelle",
-      "ohneBaustelle": "Ohne Baustelle",
+      "ziel": "Wofür",
+      "zielWaehlen": "Baustelle, Service oder Lager wählen",
       "heute": "Heute",
       "woche": "Diese Woche",
       "art": {

@@ -135,6 +135,34 @@ export const usePflichtfotos = () =>
     queryFn: () => mitAblage('pflichtfotos', b.ladePflichtfotos),
   })
 
+/** Mein Team heute für die Stempeluhr; auch ohne Netz aus der Ablage. */
+export const useTeamHeute = () =>
+  useQuery({
+    queryKey: ['baustelle', 'team_heute'],
+    networkMode: 'always',
+    enabled: an,
+    queryFn: () => mitAblage('team_heute', b.ladeTeamHeute),
+  })
+
+/** Baustellen von heute ohne Foto des Tages; auch ohne Netz aus der Ablage (nach dem Foto am Gerät nachgeführt). */
+export const useTagesfotoOffen = () =>
+  useQuery({
+    queryKey: ['baustelle', 'tagesfoto_offen'],
+    networkMode: 'always',
+    enabled: an,
+    queryFn: () => mitAblage('tagesfoto_offen', b.ladeTagesfotoOffen),
+  })
+
+/** Interne Posten (Lager, Fahrzeug …) für die Zeit; auch ohne Netz aus der Ablage. */
+export const useInternePosten = () =>
+  useQuery({
+    queryKey: ['baustelle', 'interne_posten'],
+    networkMode: 'always',
+    enabled: an,
+    staleTime: 30 * 60_000,
+    queryFn: () => mitAblage('interne_posten', b.ladeInternePosten),
+  })
+
 export const usePruefpunkte = () =>
   useQuery({
     queryKey: ['baustelle', 'pruefpunkte'],

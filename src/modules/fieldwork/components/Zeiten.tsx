@@ -14,6 +14,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { useAktion } from '../hooks/useAktion'
 import { useMeineMitarbeitenden, usePersonen, useZeiten } from '../hooks/useBaustelle'
+import { zielText } from '../lib/anzeige'
 import { lohnCsv } from '../lib/lohnExport'
 import { dauerText, heute, minuten, plusTage, summeJePerson, wochenStart, zuerich } from '../lib/zeit'
 import { ladeZeiten, zeitenExportieren, zeitenPruefen } from '../services/baustelle'
@@ -259,8 +260,8 @@ export function Zeiten() {
                   <Zelle>
                     <span className="text-muted-foreground text-xs">
                       {t(`baustelle.zeitart.${z.art}`)}
-                      {[z.projekt_nummer, z.rapport_nummer].filter(Boolean).length > 0 &&
-                        ` · ${[z.projekt_nummer, z.rapport_nummer].filter(Boolean).join(' · ')}`}
+                      {[zielText(z, sprache), z.rapport_nummer].filter(Boolean).length > 0 &&
+                        ` · ${[zielText(z, sprache), z.rapport_nummer].filter(Boolean).join(' · ')}`}
                     </span>
                   </Zelle>
                   <Zelle>{stand(z)}</Zelle>

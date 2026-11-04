@@ -6,8 +6,10 @@ import type {
   NeuerRapport,
   Rapport,
   RapportEingabe,
+  TagesfotoOffen,
   Unterschrift,
   ZeitArt,
+  ZeitZiel,
 } from '../types'
 import { ablageAendern, einreihen } from './warteschlange'
 
@@ -102,17 +104,56 @@ export function eingabeAnwenden(alt: Rapport, e: RapportEingabe): Rapport {
 }
 
 /** Zeit starten (Start-Knopf); eine laufende Zeit endet damit. */
-export async function zeitStarten(z: { rapport_id?: string | null; projekt_id?: string | null; art: ZeitArt }) {
+export async function zeitStarten(z: {
+  rapport_id?: string | null
+  projekt_id?: string | null
+  service_fall_id?: string | null
+  intern?: string | null
+  art: ZeitArt
+}) {
   const laufend: LaufendeZeit = {
     id: crypto.randomUUID(),
     start: jetzt(),
     rapport_id: z.rapport_id ?? null,
     projekt_id: z.projekt_id ?? null,
+    service_fall_id: z.service_fall_id ?? null,
+    intern: z.intern ?? null,
     art: z.art,
   }
   await einreihen({ art: 'rpc', name: 'zeit_starten', args: { p: laufend }, erstellt: jetzt() })
   await tagAendern((t) => ({ ...t, laufend }))
   return laufend
+}
+
+/**
+ * Zeit fürs ganze Team starten (Stempeluhr, «Pour toute l'équipe»): ein Auftrag in der Warteschlange,
+ * jede Person bekommt ihre eigene Zeit mit ID vom Handy. Meine läuft sofort auch in der Ansicht.
+ */
+export async function teamZeitStarten(ziel: ZeitZiel, art: ZeitArt, personen: string[], ich: string | null) {
+  const start = jetzt()
+  const liste = personen.map((person_id) => ({ person_id, id: crypto.randomUUID() }))
+  const p = { aktion: 'start', ...ziel, art, start, personen: liste }
+  await einreihen({ art: 'rpc', name: 'zeit_team', args: { p }, erstellt: start })
+  const meine = liste.find((x) => x.person_id === ich)
+  if (meine) {
+    const laufend: LaufendeZeit = {
+      id: meine.id,
+      start,
+      rapport_id: null,
+      projekt_id: 'projekt_id' in ziel ? ziel.projekt_id : null,
+      service_fall_id: 'service_fall_id' in ziel ? ziel.service_fall_id : null,
+      intern: 'intern' in ziel ? ziel.intern : null,
+      art,
+    }
+    await tagAendern((t) => ({ ...t, laufend }))
+  }
+}
+
+/** Laufende Zeiten des Teams stoppen (mit derselben Pause für alle); jede Person kann danach korrigieren. */
+export async function teamZeitStoppen(personen: string[], pause_min?: number): Promise<void> {
+  const p = { aktion: 'stopp', stopp: jetzt(), personen, ...(pause_min ? { pause_min } : {}) }
+  await einreihen({ art: 'rpc', name: 'zeit_team', args: { p }, erstellt: jetzt() })
+  await tagAendern((t) => ({ ...t, laufend: null }))
 }
 
 /** Laufende Zeit stoppen, auf Wunsch mit Pause in Minuten. */
@@ -163,6 +204,23 @@ export async function bildAblegen(
     erstellt: jetzt(),
   })
   return id
+}
+
+/**
+ * Foto des Tages ablegen: am offenen Rapport von heute, sonst wird der Tagesrapport der Baustelle angelegt.
+ * Die Ablage am Gerät vergisst die Baustelle gleich, damit der Stopp auch ohne Netz weitergeht.
+ */
+export async function tagesfotoAblegen(o: TagesfotoOffen, blob: Blob, tag: string): Promise<void> {
+  let rapportId = o.rapport_id
+  if (!rapportId) {
+    rapportId = crypto.randomUUID()
+    await rapportAnlegen(
+      { id: rapportId, art: 'montage', datum: tag, projekt_id: o.projekt_id, einsatz_id: o.einsatz_id },
+      { projekt_nummer: o.nummer, kunde: o.kunde },
+    )
+  }
+  await bildAblegen(rapportId, blob, 'fotos', { kategorie: 'tagesfoto' })
+  await ablageAendern<TagesfotoOffen[]>('tagesfoto_offen', (alt) => alt?.filter((x) => x.projekt_id !== o.projekt_id))
 }
 
 /**
