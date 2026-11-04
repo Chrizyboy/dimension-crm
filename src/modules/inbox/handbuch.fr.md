@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -121,6 +121,7 @@ Onglet **Délai de réponse** : médiane du temps de travail jusqu’à la répo
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: Si personne n’attend de réponse, « Ma journée » n’affiche qu’une ligne au lieu d’une carte vide.
 - 03.11.2026: Poste de travail : Pour moi, À attribuer, En attente du client, Mis de côté, étape suivante, conversation et pièces jointes, notes avec @, règles d’expéditeur, vue d’équipe.
 - 02.11.2026: Les anciens e-mails de toutes les boîtes arrivent comme archive, sans délai.
 - 01.11.2026: Chacun traite ses propres e-mails, info@ est réparti par Davis ou Chris.

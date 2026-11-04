@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -121,6 +121,7 @@ Reiter **Reaktionszeit**: Mitte der Arbeitszeit bis zur Antwort und Anteil in de
 
 ## Neu {#neu}
 
+- 04.11.2026: Wartet niemand auf eine Antwort, zeigt «Mein Tag» nur eine schmale Zeile statt einer leeren Karte.
 - 03.11.2026: Arbeitsplatz: Für mich, Zu verteilen, Warten auf Kunde, Zurückgestellt, nächster Schritt, Unterhaltung und Anhänge, Notizen mit @, Absender-Regeln, Team-Übersicht.
 - 02.11.2026: Ältere Mails aus allen Postfächern kommen als Archiv nach, ohne Frist.
 - 01.11.2026: Jede Person bearbeitet ihre eigenen Mails, info@ verteilen Davis oder Chris.

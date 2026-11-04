@@ -4465,7 +4465,8 @@
       "bewilligung": "autorisation en retard",
       "material": "matériel manquant pour les 14 prochains jours",
       "woche": "montages cette semaine",
-      "verrechnen": "tranches dues, non facturées"
+      "verrechnen": "tranches dues, non facturées",
+      "titel": "Chiffres des projets"
     },
     "schnell": {
       "meine": "Les miens",
@@ -4885,7 +4886,8 @@
       "woche": "rendez-vous cette semaine",
       "teile": "attendent des pièces",
       "rma": "chez le fabricant (RMA)",
-      "verrechnen": "rapports à facturer"
+      "verrechnen": "rapports à facturer",
+      "titel": "Chiffres du service"
     },
     "planung": {
       "titel": "Intervention",

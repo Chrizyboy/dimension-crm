@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CheckCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -11,6 +11,7 @@ import { FristMarke } from './FristMarke'
 /**
  * «Kunden warten auf Antwort» für «Mein Tag»: meine offenen Mails nach Frist, die dringendste zuerst (höchstens fünf).
  * Hat niemand mir etwas zugeteilt, die offenen des Teams, damit nichts liegen bleibt.
+ * Wartet niemand, nur eine schmale Zeile statt einer leeren Karte (Entscheid 0058).
  */
 export default function HeuteKarte() {
   const { t } = useTranslation()
@@ -19,6 +20,15 @@ export default function HeuteKarte() {
   const offen = (useMails(Boolean(ich)).data ?? []).filter((m) => m.stand === 'offen' && !istZurueck(m))
   const meine = offen.filter((m) => m.zustaendig_id === ich?.id)
   const liste = sortiere(meine.length ? meine : offen)
+
+  if (liste.length === 0) {
+    return (
+      <p className="text-muted-foreground bg-surface flex items-center gap-2 rounded-lg border px-4 py-2 text-sm">
+        <CheckCheck className="text-ok size-4 shrink-0" aria-hidden="true" />
+        {t('posteingang.heute.nichts')}
+      </p>
+    )
+  }
 
   return (
     <Karte className="overflow-hidden">
@@ -33,26 +43,22 @@ export default function HeuteKarte() {
           <ArrowRight className="size-3.5" />
         </Link>
       </KarteKopf>
-      {liste.length === 0 ? (
-        <p className="text-muted-foreground px-4 py-3 text-sm">{t('posteingang.heute.nichts')}</p>
-      ) : (
-        <ul className="divide-y">
-          {liste.slice(0, 5).map((m) => (
-            <li key={m.id}>
-              <a href={`#/inbox?mail=${m.id}`} className="hover:bg-surface-2 flex flex-col gap-1 px-4 py-2 text-sm">
-                <span className="line-clamp-2">
-                  <span className="font-medium">{absender(m)}</span>
-                  {m.betreff ? ` · ${m.betreff}` : ''}
-                </span>
-                <span className="flex flex-wrap items-center gap-2">
-                  <FristMarke m={m} t={t} sprache={sprache} />
-                  {m.zustaendig && <span className="text-muted-foreground text-xs">{m.zustaendig}</span>}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="divide-y">
+        {liste.slice(0, 5).map((m) => (
+          <li key={m.id}>
+            <a href={`#/inbox?mail=${m.id}`} className="hover:bg-surface-2 flex flex-col gap-1 px-4 py-2 text-sm">
+              <span className="line-clamp-2">
+                <span className="font-medium">{absender(m)}</span>
+                {m.betreff ? ` · ${m.betreff}` : ''}
+              </span>
+              <span className="flex flex-wrap items-center gap-2">
+                <FristMarke m={m} t={t} sprache={sprache} />
+                {m.zustaendig && <span className="text-muted-foreground text-xs">{m.zustaendig}</span>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </Karte>
   )
 }

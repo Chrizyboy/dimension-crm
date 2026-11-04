@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
@@ -97,6 +97,7 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 04.11.2026: Datum und was ansteht stehen weiter unter dem Gruss; leere Karten werden zu einer Zeile.
 - 03.11.2026: Verschieben, Gründe je Zeile, Wartet auf deine Freigabe, Meine Woche mit Zielen, Team heute, Wetter auf den Baustellen.
 - 03.11.2026: Wochenziele legt nur noch die Administration fest.
 - 26.10.2026: Status unter dem Titel in schmalen Karten, kürzeres Datum.

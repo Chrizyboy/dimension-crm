@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: projektleitung, innendienst, montage, geschaeftsleitung
 ---
 
@@ -85,6 +85,7 @@ Beim Fall die richtige Anlage wählen. **Frühere Fälle** zeigt, was an dieser 
 
 ## Neu {#neu}
 
+- 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «offene Fälle» steht immer da.
 - 03.11.2026: «In den Papierkorb» für Service-Fälle, Anlagen und Garantiefälle, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 02.11.2026: Leitstand als Board mit Reaktionszeit, Fall-Akte als ganze Seite mit Arbeitsschritten, Checkliste und Kosten; Meldungen aus dem Störungsformular der Website.
 - 31.10.2026: Service-Fall direkt aus einer Mail im Posteingang.
