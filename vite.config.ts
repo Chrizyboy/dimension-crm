@@ -46,7 +46,7 @@ export default defineConfig({
       includeAssets: ['icon.svg', 'apple-touch-icon.png', 'logo/*.png'],
       // Die Download-Seite ist eine eigene Seite, nicht die App: der Service Worker darf sie nicht
       // durch die App ersetzen, sonst sieht man dort nach einem Besuch der Web-App nur noch das CRM.
-      workbox: { navigateFallbackDenylist: [/\/download\//] },
+      workbox: { navigateFallbackDenylist: [/\/download(\/|$)/] },
       manifest: {
         name: 'Dimension Work',
         short_name: 'Dimension',
