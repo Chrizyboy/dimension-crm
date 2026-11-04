@@ -25,7 +25,7 @@ export const OPERATOREN = [
 type Operator = (typeof OPERATOREN)[number]
 
 /** Besondere Filter über die Einbettung: Kunde (Name/Firma), Ort (PLZ/Ort), Person (Kürzel/Name), Lieferant, Projekt. */
-export const SONDERFELDER = ['kunde', 'ort', 'person', 'lieferant', 'projekt'] as const
+export const SONDERFELDER = ['kunde', 'ort', 'person', 'lieferant', 'projekt', 'artikel'] as const
 
 export interface Filter {
   feld: string
@@ -79,6 +79,9 @@ export const VORSCHLAG_BEZUEGE = [
   'grossprojekte',
   'ausschreibungen',
   'anlagen',
+  'fahrzeuge',
+  'geraete',
+  'marketing_kampagnen',
 ] as const
 
 /** Antwort-Schema: Text, welche Abfrage als Tabelle mit welchen Spalten, Vorschläge, kurzer Titel. */
@@ -211,7 +214,7 @@ function name(k: unknown): string | null {
 /** Zeilen flach machen: Kunde, Ort und Person als Text, damit KI und App dieselben Felder sehen. */
 export function flach(zeilen: Roh[]): Roh[] {
   return zeilen.map((z) => {
-    const { kunde, objekt: o, person, lieferant, projekt, ...rest } = z
+    const { kunde, objekt: o, person, lieferant, projekt, artikel, ...rest } = z
     const r: Roh = { ...rest }
     if ('kunde' in z) r.kunde = name(kunde)
     if ('objekt' in z) {
@@ -219,6 +222,10 @@ export function flach(zeilen: Roh[]): Roh[] {
       r.ort = x ? [x.plz, x.ort].filter(Boolean).join(' ') || null : null
     }
     if ('person' in z) r.person = (person as { name?: string } | null)?.name ?? null
+    if ('artikel' in z) {
+      const x = artikel as { artikelnummer?: string | null; name?: string | null } | null
+      r.artikel = x ? [x.artikelnummer, x.name].filter(Boolean).join(' ') || null : null
+    }
     if ('lieferant' in z) r.lieferant = (lieferant as { name?: string } | null)?.name ?? null
     if ('projekt' in z) {
       const x = projekt as { nummer?: string | null; titel?: string | null } | null
@@ -277,7 +284,7 @@ Regeln:
 – Daten als JJJJ-MM-TT, relative Angaben («letzte Woche», «seit 2 Wochen») selbst in Daten umrechnen.
 – Beträge sind in Rappen (CHF 30'000 = 3000000).
 – «meine»/«ich» heisst: Filter person mit dem Kürzel der fragenden Person (bei «fristen»: person_id = person.id).
-– «kunde», «ort», «person», «lieferant», «projekt» filtern mit Namen/Nummer («enthaelt»), nie mit IDs.
+– «kunde», «ort», «person», «lieferant», «projekt», «artikel» filtern mit Namen/Nummer («enthaelt»), nie mit IDs.
 – Posteingang/Mails: offene Mails = stand in neu,offen. «Nach Dringlichkeit», «was ist dringend», «was zuerst»:
   sortierung dringlichkeit, limit 30. «Mein Posteingang» = Filter person (zuständig) mit dem Kürzel.
 – Ist die Frage keine Datenfrage (z. B. Erklärung, Text schreiben) oder genügt der mitgegebene Datensatz, gib eine leere Liste.

@@ -16,6 +16,11 @@ const ZIELE = new Set([
   'ausschreibungen',
   'anlagen',
   'spesen',
+  'fahrzeuge',
+  'geraete',
+  'marketing_kampagnen',
+  'lagerbestand',
+  'nachtraege',
 ])
 
 /** Kann eine Zeile dieser Tabelle direkt geöffnet werden? */

@@ -11800,7 +11800,12 @@
       "ausschreibungen": "Appels d'offres",
       "anlagen": "Installations",
       "einsaetze": "Interventions",
-      "fristen": "Échéances"
+      "fristen": "Échéances",
+      "lagerbestand": "Stock",
+      "fahrzeuge": "Véhicules",
+      "geraete": "Appareils",
+      "marketing_kampagnen": "Campagnes",
+      "nachtraege": "Avenants"
     },
     "feld": {
       "nummer": "Numéro",
@@ -11873,7 +11878,28 @@
       "an": "À",
       "kanal": "Canal",
       "gesendet_am": "Envoyé",
-      "sende_ab": "Envoi dès"
+      "sende_ab": "Envoi dès",
+      "artikel": "Article",
+      "menge": "Quantité",
+      "reserviert": "Réservé",
+      "mindestmenge": "Quantité min.",
+      "lagerplatz": "Emplacement",
+      "bezeichnung": "Désignation",
+      "kennzeichen": "Plaque / code",
+      "km_stand": "km",
+      "naechste_mfk": "Prochaine expertise",
+      "naechster_service": "Prochain service",
+      "vignette_bis": "Vignette jusqu'au",
+      "naechste_pruefung": "Prochain contrôle",
+      "inventar_nr": "N° d'inventaire",
+      "zustand": "État",
+      "name": "Nom",
+      "start_am": "Début",
+      "ende_am": "Fin",
+      "ziel_leads": "Objectif leads",
+      "beschreibung": "Description",
+      "stunden": "Heures",
+      "bestaetigt_am": "Confirmé"
     }
   },
   "automatik": {
