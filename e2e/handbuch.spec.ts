@@ -56,7 +56,7 @@ test('Handbuch: Prozess ablegen, neue Version, entfernen; Reiter ohne Verstösse
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/knowledge')
   await expect(page.getByRole('heading', { name: 'Handbuch', level: 1 })).toBeVisible()
-  await expect(page.getByRole('link', { name: /Kunden/ }).first()).toBeVisible()
+  await expect(page.getByRole('main').getByRole('button', { name: 'Kapitel' }).first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await page.getByRole('tab', { name: 'Prozesse' }).click()

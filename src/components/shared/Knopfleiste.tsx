@@ -19,6 +19,13 @@ function knoepfe(inhalt: ReactNode): ReactNode[] {
   )
 }
 
+/** Knöpfe, deren Komponente `selten = true` trägt (z. B. `InPapierkorbKnopf`), stehen am PC immer unter «Mehr». */
+function istSelten(knopf: ReactNode): boolean {
+  return (
+    isValidElement(knopf) && typeof knopf.type === 'function' && (knopf.type as { selten?: boolean }).selten === true
+  )
+}
+
 /**
  * Knöpfe einer Seite oder Akte in einer Reihe, die Hauptaktion zuletzt (Chris 31.10.2026, Frage 2 A):
  * Am Handy steht nur die Hauptaktion da, alle anderen klappen mit «⋯ Mehr» auf. Am PC stehen höchstens
@@ -43,10 +50,9 @@ export function Knopfleiste({
   const hauptIndex = haupt === 'erste' ? 0 : liste.length - 1
   const amHandyZu = liste.length > 2
   const amPcZu = liste.length > KNOEPFE_AM_PC
-  // Am PC offen: die Hauptaktion und die ersten anderen Knöpfe in ihrer Reihenfolge.
-  const amPcOffen = new Set(
-    [hauptIndex, ...liste.map((_, i) => i).filter((i) => i !== hauptIndex)].slice(0, KNOEPFE_AM_PC - 1),
-  )
+  // Am PC offen: die Hauptaktion und die ersten anderen Knöpfe in ihrer Reihenfolge; seltene (Papierkorb) nie.
+  const andere = liste.map((_, i) => i).filter((i) => i !== hauptIndex && !istSelten(liste[i]))
+  const amPcOffen = new Set([hauptIndex, ...andere].slice(0, KNOEPFE_AM_PC - 1))
 
   const mehr = (amHandyZu || amPcZu) && (
     <Button
