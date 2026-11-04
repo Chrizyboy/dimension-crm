@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: administration
 ---
 
@@ -75,6 +75,7 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 1. Bereich **Verbindungen & Dienste**: Microsoft 365, AbaNinja und SMS mit **Eingerichtet** oder **Nicht eingerichtet**.
 2. **Jetzt testen** prüft die Verbindung. **Wer ist mit Microsoft verbunden?** zeigt das Team.
 3. Darunter **Hintergrund-Jobs** und **Letzte Aufrufe**. Die Pfade in SharePoint stehen im eigenen Bereich **Dateiablage**.
+4. Ist ein Dienst gestört, kommt eine Glocke an die Administration. Ändert sich der Grund, kommt eine neue Glocke; massgebend ist der Text unter **Jetzt testen**.
 
 ### Eine Datensicherung herunterladen oder zurückspielen
 
@@ -128,6 +129,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 04.11.2026: Ändert sich bei einem gestörten Dienst der Grund, kommt eine neue Glocke mit dem neuen Grund. SMS: abgelehnte Zugangsdaten werden als solche gemeldet.
 - 03.11.2026: Zusätze Geschäftsleitung und Administration, Link fürs Handy für Personen ohne Firmen-Mail.
 - 03.11.2026: Alle Einstellungen an einem Ort mit Suche; neu Auswahllisten, Standorte & Regionen (PLZ-Regeln), Änderungsprotokoll und Papierkorb; Firmen-Einstellungen ändert nur noch die Administration; Einstellungen von Rechnungen, Posteingang, Automationen, Spesen, Assistent und Helpdesk auch hier.
 - 31.10.2026: Reiter Zuständigkeiten für Leads, Offerten und Stellvertretung.

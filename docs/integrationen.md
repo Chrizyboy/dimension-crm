@@ -90,7 +90,7 @@ prüfen, ob Beträge und Zuordnung stimmen.
 
 ## 3. SMS über ASPSMS (Erinnerung am Vortag)
 
-1. ASPSMS-Konto › **Userkey** und **Passwort** (API).
+1. ASPSMS-Konto › **Userkey** (nicht der Login-Name) und das **Passwort** des Kontos. Abgelehnte Zugangsdaten meldet «Jetzt testen» als eigenen Fehler (Code `sms_3`).
 2. Secrets:
    ```bash
    npx supabase secrets set ASPSMS_USERKEY=<Userkey>

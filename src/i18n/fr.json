@@ -3369,6 +3369,7 @@
       "kein_recht": "Vous n'avez pas le droit de le faire.",
       "anmeldung": "Veuillez d'abord vous connecter.",
       "sms": "Le SMS n'a pas été accepté (code {{code}}).",
+      "sms_3": "ASPSMS refuse les identifiants. Saisir à nouveau la clé utilisateur et le mot de passe (script integrationen-einrichten.ps1, option 2).",
       "unbekannt": "Cela n'a pas fonctionné (code {{code}}).",
       "nicht_gestellt": "D’abord émettre la facture, puis la transmettre à AbaNinja.",
       "schon_uebergeben": "Cette facture est déjà dans AbaNinja.",
