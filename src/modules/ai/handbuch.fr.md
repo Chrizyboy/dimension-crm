@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -14,6 +14,14 @@ Rédiger, lire les e-mails, ta journée en un coup d’œil et les coûts sous c
 - **Administration** : paramètres (modèles, limites, style de l’entreprise).
 
 ## Comment faire {#so}
+
+### Poser des questions au CRM
+
+1. Onglet **Questions** (ou partout **Ctrl J**) et taper la question avec tes mots, p. ex. « Trie ma boîte de réception par urgence » ou « Quelles commandes sont en retard ? ».
+2. La réponse arrive avec un tableau tiré du CRM. Cliquer sur le numéro, l’objet, le client ou le projet ouvre la fiche.
+3. En dessous, des propositions (**Créer une tâche**, **Rédiger un e-mail**, **Ouvrir**). Rien n’est enregistré avant ton clic.
+4. L’assistant connaît : clients, leads, offres, projets, cas de service, installations, factures, contrats de maintenance, tâches, historique, **boîte de réception**, **boîte d’envoi**, commandes, factures fournisseurs, frais, grands projets, appels d’offres, interventions et échéances.
+5. Boîte de réception par urgence : en haut les mails dont le délai de réponse est dépassé, les pannes, les mails reconnus urgents et les clients qui n’ont pas répondu. Les mails reportés ou en attente sont plus bas. Le motif est indiqué pour chaque mail.
 
 ### Rédiger un texte pour un client
 
@@ -66,11 +74,16 @@ Rédiger, lire les e-mails, ta journée en un coup d’œil et les coûts sous c
 
 L’IA est désactivée ou la limite journalière est atteinte. L’administration le voit sous **Coûts** et **Paramètres**.
 
+### L’assistant voit-il les mails des autres ?
+
+Non. Il lit avec ton identifiant et voit exactement ce que tu vois dans la [Boîte de réception](kapitel:inbox) : ta propre boîte, les boîtes d’équipe et les mails où tu es mentionné. Il en va de même pour les frais, les finances et tous les autres domaines.
+
 ### Puis-je donner des données clients à l’IA ?
 
 Oui, via les boutons IA du CRM. L’appel passe par notre serveur avec la clé de l’entreprise ; le journal note seulement qu’un appel a eu lieu, pas le contenu. Ne pas copier de données clients dans des sites IA externes.
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: L’assistant lit aussi la boîte de réception (triée par urgence), la boîte d’envoi, les commandes, les factures fournisseurs, les frais, les grands projets, les appels d’offres, les installations, les interventions et les échéances.
 - 24.10.2026: Texte de lecture dès 12 px, tableaux au clavier.
 - 23.10.2026: Assistant IA avec coûts, Mon style, paramètres et briefing « Ta journée ».

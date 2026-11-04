@@ -14,6 +14,11 @@ describe('zellwert', () => {
     expect(zellwert('interesse', ['pv', 'speicher'], 'de')).toBe('pv, speicher')
     expect(zellwert('nummer', 'OF-2026-0412', 'de')).toBe('OF-2026-0412')
   })
+  it('zeigt Liefertermin als Datum und die Dringlichkeit einer Mail in der Sprache', () => {
+    expect(zellwert('liefertermin', '2026-11-12', 'de')).toBe('12.11.2026')
+    expect(zellwert('dringlichkeit', 'hoch', 'de')).toBe('hoch')
+    expect(zellwert('dringlichkeit', 'hoch', 'fr')).toBe('haute')
+  })
   it('richtet Beträge rechts aus und rechnet Tausendstel-Rappen', () => {
     expect(rechtsbuendig('total_rappen')).toBe(true)
     expect(rechtsbuendig('kunde')).toBe(false)

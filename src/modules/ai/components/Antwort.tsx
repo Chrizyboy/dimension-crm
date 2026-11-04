@@ -11,13 +11,19 @@ import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { rechtsbuendig, zellwert } from '../lib/anzeige'
+import { hatZiel } from '../lib/ziele'
 import { legeAufgabeAn } from '../services/assistent'
 import type { Runde, Vorschlag } from '../types'
 import { ZielLink } from './ZielLink'
 
 const BEZUEGE = new Set<string>(['kontakte', 'verkaufschancen', 'offerten', 'projekte', 'service_faelle'])
 /** Feld, das in der Tabelle auf die Akte verlinkt. */
-const LINKFELD = new Set(['nummer', 'titel', 'kunde'])
+const LINKFELD = new Set(['nummer', 'titel', 'betreff', 'kunde', 'projekt'])
+/** Spalten, die auf einen verknüpften Datensatz zeigen (Kunde, Projekt) statt auf die Zeile selbst. */
+const VERWEIS: Record<string, { tabelle: string; feld: string }> = {
+  kunde: { tabelle: 'kontakte', feld: 'kontakt_id' },
+  projekt: { tabelle: 'projekte', feld: 'projekt_id' },
+}
 
 function bezugVon(v: { tabelle: string | null; id: string | null }): KiBezug | null {
   return v.tabelle && v.id && BEZUEGE.has(v.tabelle) ? { tabelle: v.tabelle as KiBezugTabelle, id: v.id } : null
@@ -52,8 +58,9 @@ export function Antwort({ runde }: { runde: Runde }) {
                     <Zeile key={typeof z.id === 'string' ? z.id : i}>
                       {tab.spalten.map((s) => {
                         const text = zellwert(s, z[s], sprache)
-                        const linkTabelle = s === 'kunde' && s !== erstesLink ? 'kontakte' : tab.tabelle
-                        const linkId = s === 'kunde' && s !== erstesLink ? z.kontakt_id : z.id
+                        const verweis = s !== erstesLink || !hatZiel(tab.tabelle) ? VERWEIS[s] : undefined
+                        const linkTabelle = verweis ? verweis.tabelle : tab.tabelle
+                        const linkId = verweis ? z[verweis.feld] : z.id
                         return (
                           <Zelle
                             key={s}
