@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: projektleitung, montage, buchhaltung, geschaeftsleitung
 ---
 
@@ -77,6 +77,7 @@ Dans la fiche sous **Documents**, avec la date et le type dans le nom.
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: Justificatif (photo ou PDF) pour le plein et les coûts payés avec la carte d’entreprise ; véhicules réservés uniquement à la main.
 - 02.11.2026: À faire, fiche véhicule avec leasing, assurance et coûts, planning, dégâts avec état, étiquettes QR.
 - 26.10.2026: Nouveau domaine Véhicules & appareils avec échéances et remises.

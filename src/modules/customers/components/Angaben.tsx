@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
+import { useLeerZeile } from '@/components/shared/leereZeile'
 
 /**
  * Eine Angabe mit Beschriftung, gleich wie in allen anderen Akten (`Angabe` in `AkteAbschnitt`):
@@ -8,8 +9,9 @@ import { cn } from '@/lib/utils'
  */
 export function Angabe({ label, children }: { label: string; children: ReactNode; breit?: boolean }) {
   const leer = children === null || children === undefined || children === ''
+  const marke = useLeerZeile(children)
   return (
-    <div className="grid grid-cols-[8rem_1fr] items-start gap-2 py-1 text-sm sm:grid-cols-[10.5rem_1fr]">
+    <div className="grid grid-cols-[8rem_1fr] items-start gap-2 py-1 text-sm sm:grid-cols-[10.5rem_1fr]" {...marke}>
       <dt className="text-muted-foreground pt-0.5 text-xs">{label}</dt>
       <dd className={cn('min-w-0 break-words', leer && 'text-muted-foreground')}>{leer ? '–' : children}</dd>
     </div>

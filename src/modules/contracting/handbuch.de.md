@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -84,6 +84,7 @@ Youdera finanziert und besitzt die Anlage, wir bauen und warten sie. Der Rechner
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: «In den Papierkorb» für Grossprojekte (Akte und Seite), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Potenzialanalyse, Dossier an Youdera und Besichtigung am Handy.
 - 02.11.2026: Pipeline bis zum Vertrag, Reiter «Zu entscheiden» und Projekt-Akte mit Rechner.

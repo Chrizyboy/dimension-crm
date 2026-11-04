@@ -112,6 +112,7 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «laufende Projekte» steht immer da.
 - 03.11.2026: «In den Papierkorb» für Projekte (Menü «⋯» in der Projekt-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Direkte Vorgesetzte erfassen Abwesenheiten ihrer Mitarbeitenden.

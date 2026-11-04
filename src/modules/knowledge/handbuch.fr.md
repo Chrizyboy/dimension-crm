@@ -90,6 +90,7 @@ Les domaines sont rangés en petits groupes (Aperçu, Contacts, Vente, Prospecti
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: Toutes les fiches (client, projet, cas de service, contrat d’entreprise, facture, véhicule …) n’affichent les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Les domaines avec beaucoup d’onglets en montrent six au plus, le reste est sous **Plus ▾** (l’onglet choisi reste toujours visible). Les fiches montrent les champs vides seulement après **+ autres informations**.
 - 04.11.2026: Barre latérale en petits groupes à déplier et replier, tout tient sans défiler. Les boutons rares sont sous **Plus**, les filtres sans résultat disparaissent, l’explication d’une page est derrière le **i** à côté du titre.
 - 04.11.2026: L’examen voit aussi les captures d’écran et peut y renvoyer dans l’évaluation.

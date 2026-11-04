@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: innendienst, verkauf, geschaeftsleitung, buchhaltung
 ---
 
@@ -89,6 +89,7 @@ Im Reiter **Auswertung**, zusammen mit Quote, Mitbewerbern und No-Go-Gründen.
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: «In den Papierkorb» für Ausschreibungen, Kontakte und Nachweise, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Leitstand, Akte als ganze Seite, Go/No-Go, Checkliste, Vier-Augen-Prüfung, Öffnungsprotokoll, Zuschlag legt das Projekt an, Fristen, Nachweise, Referenzen, Auswertung, KI-Erfassung.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.

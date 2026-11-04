@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: innendienst, verkauf, geschaeftsleitung, buchhaltung
 ---
 
@@ -89,6 +89,7 @@ Dans l’onglet **Analyse**, avec le taux de succès, les concurrents et les mot
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: «Mettre à la corbeille» pour les appels d'offres, les contacts et les attestations, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026 : tableau de bord, dossier en pleine page, Go/No-Go, liste de contrôle, contrôle à quatre yeux, procès-verbal d’ouverture, l’adjudication crée le projet, délais, attestations, références, analyse, saisie par IA.
 - 31.10.2026 : recherche et fenêtre de détail uniformes dans tous les domaines.

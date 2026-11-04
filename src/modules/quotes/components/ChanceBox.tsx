@@ -2,7 +2,6 @@ import { ShieldCheck } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
-import { LeereFelder } from '@/components/shared/AkteAbschnitt'
 import { Input } from '@/components/ui/input'
 import { hatRecht } from '@/lib/rechte'
 import { formatChf, formatDatum } from '@/lib/format'
@@ -70,14 +69,11 @@ export function ChanceBox({ o }: { o: Offerte }) {
     wert: string,
     typ: 'text' | 'date' | 'number',
     onSpeichern: (w: string) => void,
-  ) => ({
-    gefuellt: wert !== '',
-    zeile: (
-      <Zeile key={key} label={label}>
-        <Inline label={label} typ={typ} wert={wert} onSpeichern={onSpeichern} />
-      </Zeile>
-    ) as ReactNode,
-  })
+  ): ReactNode => (
+    <Zeile key={key} label={label} leer={wert === ''}>
+      <Inline label={label} typ={typ} wert={wert} onSpeichern={onSpeichern} />
+    </Zeile>
+  )
   const felder = [
     ...(offen
       ? [
@@ -130,10 +126,7 @@ export function ChanceBox({ o }: { o: Offerte }) {
           </p>
         </>
       )}
-      <dl className="flex flex-col gap-1.5">{felder.filter((f) => f.gefuellt).map((f) => f.zeile)}</dl>
-      <LeereFelder anzahl={felder.filter((f) => !f.gefuellt).length}>
-        <dl className="flex flex-col gap-1.5">{felder.filter((f) => !f.gefuellt).map((f) => f.zeile)}</dl>
-      </LeereFelder>
+      <dl className="flex flex-col gap-1.5">{felder}</dl>
       {o.freigabe ? (
         <p className="text-ok flex items-center gap-1.5 text-xs">
           <ShieldCheck className="size-4" aria-hidden="true" />
