@@ -3369,6 +3369,7 @@
       "kein_recht": "Dafür fehlt dir das Recht.",
       "anmeldung": "Bitte zuerst anmelden.",
       "sms": "Die SMS wurde nicht angenommen (Code {{code}}).",
+      "sms_3": "ASPSMS lehnt die Zugangsdaten ab. Userkey und Passwort neu eintragen (Skript integrationen-einrichten.ps1, Option 2).",
       "unbekannt": "Das hat nicht geklappt (Code {{code}}).",
       "nicht_gestellt": "Erst die Rechnung stellen, dann an AbaNinja übergeben.",
       "schon_uebergeben": "Diese Rechnung ist schon in AbaNinja.",

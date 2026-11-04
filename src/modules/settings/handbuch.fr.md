@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: administration
 ---
 
@@ -75,6 +75,7 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 1. Domaine **Connexions et services** : Microsoft 365, AbaNinja et SMS avec **Configuré** ou **Non configuré**.
 2. **Tester maintenant** vérifie la connexion. **Qui est connecté à Microsoft ?** montre l’équipe.
 3. En dessous, **Tâches en arrière-plan** et **Derniers appels**. Les chemins SharePoint sont dans le domaine **Classement des fichiers**.
+4. Si un service est perturbé, une cloche part à l’administration. Si la cause change, une nouvelle cloche arrive ; le texte sous **Tester maintenant** fait foi.
 
 ### Télécharger ou restaurer une sauvegarde
 
@@ -128,6 +129,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 
 ## Nouveautés {#neu}
 
+- 04.11.2026 : Si la cause d’une panne de service change, une nouvelle cloche arrive avec la nouvelle cause. SMS : les identifiants refusés sont signalés comme tels.
 - 03.11.2026: Compléments direction et administration, lien pour le téléphone pour les personnes sans e-mail de l’entreprise.
 - 03.11.2026: Tous les réglages au même endroit avec recherche ; nouveau listes de choix, sites et régions (règles NPA), journal des modifications et corbeille ; seule l’administration modifie les réglages de l’entreprise ; réglages des factures, boîte de réception, automatisations, frais, assistant et helpdesk aussi ici.
 - 31.10.2026: Onglet Responsabilités pour leads, offres et remplacement.

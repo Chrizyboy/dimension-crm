@@ -1,7 +1,7 @@
 -- Prüft den Dienst-Wächter (Microsoft je Person, Zeitplan-Job, Sicherung, SMS-Guthaben, AbaNinja), den Zustand der
 -- Dienste und die Checklisten Eintritt/Austritt (Modul-Prüfung 28A). Ausführen: npm run db:test
 begin;
-select plan(14);
+select plan(16);
 
 delete from intern.dienst_meldungen;
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000042a1', 'p42-ad@test.local'),
@@ -41,6 +41,16 @@ select ok(not exists (select 1 from intern.dienst_meldungen where schluessel = '
 select public.dienste_pruefen('{"sms": {"ok": true, "credits": 10}}');
 select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000042b1'
              and titel_de like 'SMS-Guthaben%'), 2, 'neuer Ausfall läutet wieder');
+
+-- Anderer Grund bei laufendem Ausfall: neue Glocke, gleicher Grund: keine
+select public.dienste_pruefen('{"sms": {"ok": false, "meldung": "netzwerk"}}');
+select public.dienste_pruefen('{"sms": {"ok": false, "meldung": "netzwerk"}}');
+select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000042b1'
+             and titel_de = 'SMS-Versand gestört'), 1, 'gleicher Grund läutet nur einmal');
+select public.dienste_pruefen('{"sms": {"ok": false, "meldung": "sms_3"}}');
+select is((select count(*)::int from public.benachrichtigungen where person_id = '00000000-0000-0000-0000-0000000042b1'
+             and titel_de = 'SMS-Versand gestört' and text_de = 'ASPSMS antwortet nicht: sms_3'), 1,
+  'neuer Grund läutet mit neuem Text');
 
 -- Checkliste «Neue Person»: fünf Aufgaben an die Administration, nur einmal
 select is((select count(*)::int from public.aufgaben where bezug_tabelle = 'personen'
