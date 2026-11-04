@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, geschaeftsleitung
 ---
 
@@ -115,6 +115,7 @@ Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für
 
 ## Neu {#neu}
 
+- 04.11.2026: Höchstens sechs Reiter: **Monatsbericht** und **Steuerung** stehen unter **Mehr** (Tasten 1–7 wie bisher). In der Lead-Akte stehen leere Auswahlfelder (Quelle, Erreichbarkeit, Finanzierung, Zeithorizont, Förderung) erst nach **+ weitere Angaben**.
 - 03.11.2026: «In den Papierkorb» für Leads (in der Lead-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Person, Quelle und Region mit Häkchen (mehrere, **nur**, «Alle ausser …»); Knopf **Spalten** blendet Schritte der Pipeline ein und aus. Die Auswahl bleibt gemerkt.
 - 03.11.2026: «Termin-Link senden»: Kunden buchen die Besichtigung selbst auf dimension-solaire.ch.

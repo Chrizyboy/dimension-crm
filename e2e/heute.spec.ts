@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 14: «Mein Tag» und Kennzahlen. Die Startseite ist «Mein Tag» mit eigener Aufgabe (anlegen, abhaken,
 // «Von mir vergeben»), die Übersicht per Mail zeigt den Text vor dem Senden; Kennzahlen mit sieben Reitern, Klick auf eine
@@ -96,7 +96,7 @@ test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({
   await expect(page.getByTestId('kz-ueberblick')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Verkauf' }).click()
+  await waehleReiter(page, 'Verkauf')
   await expect(page).toHaveURL(/reiter=verkauf/)
   await page
     .getByTestId('kz-kacheln')
@@ -111,11 +111,11 @@ test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({
   await expect(page.getByTestId('kz-trichter')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Pipeline & Prognose' }).click()
+  await waehleReiter(page, 'Pipeline & Prognose')
   await expect(page.getByTestId('kz-pipeline-kacheln')).toBeVisible()
   await expect(page.getByTestId('kz-pipeline')).toBeVisible()
 
-  await page.getByRole('tab', { name: 'Abwicklung' }).click()
+  await waehleReiter(page, 'Abwicklung')
   await expect(page.getByTestId('kz-abwicklung')).toBeVisible()
   await expect(page.getByTestId('kz-auftragsbestand')).toBeVisible()
   await expect(page.getByTestId('kz-auslastung')).toBeVisible()
@@ -127,11 +127,11 @@ test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({
   await expect(tabelle.getByText('≤ 90 Tage')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: 'Finanzen' }).click()
+  await waehleReiter(page, 'Finanzen')
   await expect(page.getByTestId('kz-finanzen')).toBeVisible()
-  await page.getByRole('tab', { name: 'Service & Wartung' }).click()
+  await waehleReiter(page, 'Service & Wartung')
   await expect(page.getByTestId('kz-service')).toBeVisible()
-  await page.getByRole('tab', { name: 'Alle Zahlen' }).click()
+  await waehleReiter(page, 'Alle Zahlen')
   await expect(page.getByTestId('kz-standort')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 

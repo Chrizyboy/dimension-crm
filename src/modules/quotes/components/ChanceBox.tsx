@@ -1,7 +1,8 @@
 import { ShieldCheck } from 'lucide-react'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
+import { LeereFelder } from '@/components/shared/AkteAbschnitt'
 import { Input } from '@/components/ui/input'
 import { hatRecht } from '@/lib/rechte'
 import { formatChf, formatDatum } from '@/lib/format'
@@ -62,6 +63,54 @@ export function ChanceBox({ o }: { o: Offerte }) {
   const zahl = (w: string) => (w === '' ? null : Number(w.replace(',', '.')))
   const offen = o.status !== 'angenommen' && o.status !== 'verloren'
   const darfFreigeben = !!ich && (hatRecht(ich, 'admin') || (cfg?.freigabe.durch ?? []).includes(ich.kuerzel))
+  /** Angaben der Offerte: gefüllte stehen da, leere erst nach «+ weitere Angaben» (Entscheid 0058). */
+  const feld = (
+    key: string,
+    label: string,
+    wert: string,
+    typ: 'text' | 'date' | 'number',
+    onSpeichern: (w: string) => void,
+  ) => ({
+    gefuellt: wert !== '',
+    zeile: (
+      <Zeile key={key} label={label}>
+        <Inline label={label} typ={typ} wert={wert} onSpeichern={onSpeichern} />
+      </Zeile>
+    ) as ReactNode,
+  })
+  const felder = [
+    ...(offen
+      ? [
+          feld(
+            'chance',
+            t('offerten.chance.vonHandFeld'),
+            o.chanceProzent === null ? '' : String(o.chanceProzent),
+            'number',
+            (w) => {
+              speichere({ chance_prozent: zahl(w) })
+            },
+          ),
+        ]
+      : []),
+    feld('erwartet', t('offerten.chance.erwartet'), o.entscheidErwartet ?? '', 'date', (w) => {
+      speichere({ entscheid_erwartet: w || null })
+    }),
+    feld('gueltig', t('offerten.chance.gueltig'), o.gueltigBis ?? '', 'date', (w) => {
+      speichere({ gueltig_bis: w || null })
+    }),
+    feld('konkurrenz', t('offerten.chance.konkurrenz'), o.konkurrenz ?? '', 'text', (w) => {
+      speichere({ konkurrenz: w || null })
+    }),
+    feld(
+      'rabatt',
+      t('offerten.chance.rabatt'),
+      o.rabattProzent === null ? '' : String(o.rabattProzent),
+      'number',
+      (w) => {
+        speichere({ rabatt_prozent: zahl(w) })
+      },
+    ),
+  ]
   return (
     <Box titel={t('offerten.chance.titel')}>
       {offen && (
@@ -81,59 +130,10 @@ export function ChanceBox({ o }: { o: Offerte }) {
           </p>
         </>
       )}
-      <dl className="flex flex-col gap-1.5">
-        {offen && (
-          <Zeile label={t('offerten.chance.vonHandFeld')}>
-            <Inline
-              label={t('offerten.chance.vonHandFeld')}
-              typ="number"
-              wert={o.chanceProzent === null ? '' : String(o.chanceProzent)}
-              onSpeichern={(w) => {
-                speichere({ chance_prozent: zahl(w) })
-              }}
-            />
-          </Zeile>
-        )}
-        <Zeile label={t('offerten.chance.erwartet')}>
-          <Inline
-            label={t('offerten.chance.erwartet')}
-            typ="date"
-            wert={o.entscheidErwartet ?? ''}
-            onSpeichern={(w) => {
-              speichere({ entscheid_erwartet: w || null })
-            }}
-          />
-        </Zeile>
-        <Zeile label={t('offerten.chance.gueltig')}>
-          <Inline
-            label={t('offerten.chance.gueltig')}
-            typ="date"
-            wert={o.gueltigBis ?? ''}
-            onSpeichern={(w) => {
-              speichere({ gueltig_bis: w || null })
-            }}
-          />
-        </Zeile>
-        <Zeile label={t('offerten.chance.konkurrenz')}>
-          <Inline
-            label={t('offerten.chance.konkurrenz')}
-            wert={o.konkurrenz ?? ''}
-            onSpeichern={(w) => {
-              speichere({ konkurrenz: w || null })
-            }}
-          />
-        </Zeile>
-        <Zeile label={t('offerten.chance.rabatt')}>
-          <Inline
-            label={t('offerten.chance.rabatt')}
-            typ="number"
-            wert={o.rabattProzent === null ? '' : String(o.rabattProzent)}
-            onSpeichern={(w) => {
-              speichere({ rabatt_prozent: zahl(w) })
-            }}
-          />
-        </Zeile>
-      </dl>
+      <dl className="flex flex-col gap-1.5">{felder.filter((f) => f.gefuellt).map((f) => f.zeile)}</dl>
+      <LeereFelder anzahl={felder.filter((f) => !f.gefuellt).length}>
+        <dl className="flex flex-col gap-1.5">{felder.filter((f) => !f.gefuellt).map((f) => f.zeile)}</dl>
+      </LeereFelder>
       {o.freigabe ? (
         <p className="text-ok flex items-center gap-1.5 text-xs">
           <ShieldCheck className="size-4" aria-hidden="true" />

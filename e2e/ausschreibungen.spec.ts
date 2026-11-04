@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 8b: Ausschreibungs-Monitor. Ein Baugesuch von Hand erfassen, den Architekten als Kontakt
 // eintragen, Notiz in der Akte, den Entwurf bewilligen und in «Senden» wiederfinden; dazu Sperrliste, Quellen,
@@ -66,12 +66,12 @@ test('Baugesuch erfassen, Kontakt eintragen, Entwurf bewilligen', async ({ page 
   await akte.getByRole('button', { name: 'Zurück' }).click()
   await expect(page.getByRole('tab', { name: /Leitstand/ })).toBeVisible()
 
-  await page.getByRole('tab', { name: /Bewilligen/ }).click()
+  await waehleReiter(page, /Bewilligen/)
   await page.getByRole('checkbox', { name: new RegExp(lauf) }).check()
   expect(await verstoesse(page)).toEqual([])
   await page.getByRole('button', { name: /^Bewilligen/ }).click()
 
-  await page.getByRole('tab', { name: /Senden/ }).click()
+  await waehleReiter(page, /Senden/)
   await expect(page.getByText(new RegExp(`AS-\\d{4}-\\d{4}.*${lauf}|${lauf}`)).first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 })
@@ -87,11 +87,11 @@ test('Sperrliste, Quellen, Fristen, Nachweise und Auswertung ohne Verstösse', a
   await expect(page.getByText('Regeln', { exact: true })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: /Fristen/ }).click()
+  await waehleReiter(page, /Fristen/)
   await expect(page.getByText(/KW \d+|Keine offenen Fristen/).first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  await page.getByRole('tab', { name: /Nachweise/ }).click()
+  await waehleReiter(page, /Nachweise/)
   await expect(page.getByText('Nachweise der Firmen')).toBeVisible()
   await expect(page.getByText('Referenzen für Eingaben')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
@@ -100,7 +100,7 @@ test('Sperrliste, Quellen, Fristen, Nachweise und Auswertung ohne Verstösse', a
   expect(await verstoesse(page)).toEqual([])
   await page.keyboard.press('Escape')
 
-  await page.getByRole('tab', { name: 'Auswertung' }).click()
+  await waehleReiter(page, 'Auswertung')
   await expect(page.getByText('Mitbewerber', { exact: true })).toBeVisible()
   await expect(page.getByText('Gefunden').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])

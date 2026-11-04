@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test, type Locator, type Page } from '@playwright/test'
 
 // Gemeinsame Hilfen für Browser-Tests mit der lokalen Supabase (Anmeldung, Kunden …).
 // Die Mails mit dem Anmeldecode landen lokal im Testpostfach Mailpit; die Tests lesen den Code dort aus.
@@ -62,4 +62,20 @@ export async function anmelden(page: Page, email: string, einfach = false) {
       .getByRole('navigation', { name: /Hauptnavigation|Navigation principale|Schnellnavigation|Navigation rapide/ })
       .first(),
   ).toBeVisible()
+}
+
+/**
+ * Wählt einen Reiter. Hat eine Leiste mehr als sechs Reiter, stehen hintere unter «Mehr» (Entscheid 0058);
+ * dann klappt die Hilfe «Mehr» auf und wählt den Reiter dort.
+ */
+export async function waehleReiter(ort: Page | Locator, name: string | RegExp) {
+  await expect(ort.getByRole('tab').first()).toBeVisible()
+  const reiter = ort.getByRole('tab', { name })
+  if ((await reiter.count()) > 0) {
+    await reiter.click()
+    return
+  }
+  await ort.locator('[data-reiter-mehr]').click()
+  const seite = 'page' in ort ? ort.page() : ort
+  await seite.getByRole('menuitem', { name }).click()
 }

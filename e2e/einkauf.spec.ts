@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 9a: Einkauf & Material. Alle Reiter ohne Verstösse; ein Testlieferant; eine Bestellung vom Entwurf
 // über Freigabe, «ohne Mail bestellt» und Auftragsbestätigung bis zum Wareneingang in zwei Teilen mit Lieferschein; eine zweite Bestellung per Mail
@@ -59,7 +59,7 @@ test('Einkauf: Reiter ohne Verstösse, Testlieferant anlegen', async ({ page }) 
   await expect(page.getByText('Montagen in Gefahr')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   for (const reiter of ['Materialplan', 'Bestellen', 'Bestellungen', 'Lager', 'Lieferanten']) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }

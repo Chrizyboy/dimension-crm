@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -100,6 +100,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: Six vues au plus, **Import PDF** est sous **Plus**. Dans « Chance et indications », seuls les champs remplis s’affichent, les vides après **+ autres informations**.
 - 03.11.2026: «Mettre à la corbeille» pour les offres (en-tête du dossier d'offre), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Liste de matériel du PDF Eturnity dans l’offre, puis liste de matériel aux achats ; les offres sans numéro CRM sont attribuées via le projet Eturnity (« hyd-… »).
 - 03.11.2026: Onglet Analyse (taux, par personne, motifs de perte, concurrence).

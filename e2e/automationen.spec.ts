@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 12: Automationen. Entscheid 0039: Übersicht als Start, Geplant, Probelauf im Editor, Schutzregeln. Reiter ohne Verstösse; eine eigene Automation im Editor anlegen (Auslöser, Bedingung,
 // Aufgabe mit Platzhalter), ausschalten und in den Papierkorb legen; Verkauf sieht den Bereich nicht. Aufgaben:
@@ -38,7 +38,7 @@ test('Automationen: Vorlagen, Reiter und Editor ohne Verstösse', async ({ page 
   await expect(page.getByTestId('motor')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Braucht Aufmerksamkeit' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  await page.getByRole('tab', { name: 'Automationen' }).click()
+  await waehleReiter(page, 'Automationen')
   // Nach Bereich gruppiert, mit Suche
   await expect(page.getByRole('heading', { name: 'Verkauf', level: 2 })).toBeVisible()
   await expect(
@@ -63,7 +63,7 @@ test('Automationen: Vorlagen, Reiter und Editor ohne Verstösse', async ({ page 
   await editor.getByRole('button', { name: 'Abbrechen' }).click()
 
   for (const reiter of ['Geplant', 'Protokoll', 'Einstellungen']) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }

@@ -662,6 +662,8 @@
     }
   },
   "akte": {
+    "leereFelder_one": "{{count}} autre information",
+    "leereFelder_other": "{{count}} autres informations",
     "titel": "Dossier client",
     "nichtGefunden": "Ce contact n'existe pas ou vous n'avez pas le droit de le voir.",
     "wasJetzt": "Et maintenant ?",

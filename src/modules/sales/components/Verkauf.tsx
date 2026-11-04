@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Kbd, Skelett } from '@/components/ui/diverses'
 import { useGemerkterFilter } from '@/hooks/useGemerkterFilter'
 import { useKuerzelAnzeige, useTaste } from '@/hooks/useTaste'
-import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
+import { ReiterMehr, reiterKnopfKlasse, reiterListeKlasse, teileReiter } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useGeschaefte } from '../hooks/useVerkauf'
 import { passtZuFilter } from '../lib/geschaeft'
@@ -193,12 +193,12 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
       />
 
       <nav aria-label={t('verkauf.ansichten')} className={reiterListeKlasse}>
-        {VERKAUF_REITER.map((r, i) => (
+        {teileReiter(VERKAUF_REITER, reiterVon(ansicht)).sichtbar.map((r) => (
           <button
             key={r}
             type="button"
             aria-current={r === reiterVon(ansicht) ? 'page' : undefined}
-            title={String(i + 1)}
+            title={String(VERKAUF_REITER.indexOf(r) + 1)}
             onClick={() => {
               if (r !== reiterVon(ansicht)) onAdresse({ ansicht: ansichtVon(r) })
             }}
@@ -207,6 +207,15 @@ export default function Verkauf({ ansicht, leadId, neu, ausMail = null, onAdress
             {t(`verkauf.reiter.${r}`)}
           </button>
         ))}
+        <ReiterMehr
+          eintraege={teileReiter(VERKAUF_REITER, reiterVon(ansicht)).mehr.map((r) => ({
+            wert: r,
+            inhalt: t(`verkauf.reiter.${r}`),
+            onWahl: () => {
+              onAdresse({ ansicht: ansichtVon(r) })
+            },
+          }))}
+        />
       </nav>
 
       {reiterVon(ansicht) === 'planung' && (

@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page, type Route } from '@playwright/test'
-import { anmelden, API, brauchtDatenbank } from './hilfen'
+import { anmelden, API, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 13: KI-Funktionen in der Oberfläche. Die Edge Function «ki» wird hier im Browser ersetzt (erfundene
 // Antworten), damit der Test nichts kostet und ohne Schlüssel läuft; den Server selbst (Limit, Kosten, Modelle,
@@ -173,7 +173,7 @@ test('KI-Seite: Briefing, Reiter ohne Verstösse', async ({ page }) => {
     'Mein Schreibstil',
     'Einstellungen',
   ]) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }

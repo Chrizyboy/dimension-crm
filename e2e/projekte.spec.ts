@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 9: Projekte & Montage, Service & Garantie, Wartungsverträge. Reiter des Projekt-Boards und die
 // Projekt-Akte ohne Verstösse; einen Service-Fall mit Notiz erfassen und erledigen; einen Wartungsvertrag
@@ -50,7 +50,7 @@ test('Projekte: Leitstand, Meine Woche, Zeitplan, Bewilligungen und Akte', async
     'Abwesenheiten',
     'Alle Projekte',
   ]) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
@@ -63,7 +63,7 @@ test('Projekte: Leitstand, Meine Woche, Zeitplan, Bewilligungen und Akte', async
     await page.getByRole('button', { name: 'Im Verlauf festhalten' }).click()
     await expect(page.getByText(`Gerüst bestellt ${lauf}`)).toBeVisible()
     expect(await verstoesse(page)).toEqual([])
-    await page.getByRole('tab', { name: 'Fahrplan' }).click()
+    await waehleReiter(page, 'Fahrplan')
     await expect(page.getByText('Bewilligungen').first()).toBeVisible()
     expect(await verstoesse(page)).toEqual([])
     await page.getByRole('button', { name: /Projekte & Montage/ }).click()
@@ -99,7 +99,7 @@ test('Service-Fall erfassen, Notiz, erledigen', async ({ page }) => {
   await page.getByRole('button', { name: 'Zurück zum Leitstand' }).click()
   await expect(page.getByRole('region', { name: 'Board' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  await page.getByRole('tab', { name: 'Anlagen' }).click()
+  await waehleReiter(page, 'Anlagen')
   expect(await verstoesse(page)).toEqual([])
   // Anlage-Akte als ganze Seite (nur wenn die Testdatenbank schon eine Anlage hat, z. B. aus der IBN).
   const zeile = page.getByRole('row').nth(1)
@@ -147,9 +147,9 @@ test('Wartungsvertrag anlegen und Wartung eintragen', async ({ page }) => {
   await page.keyboard.press('Escape')
 
   // Wartung Teil 2: Reiter Inspektionen und Ohne Vertrag
-  await page.getByRole('tab', { name: /Inspektionen/ }).click()
+  await waehleReiter(page, /Inspektionen/)
   await expect(page.getByRole('button', { name: 'Ohne Termin' })).toBeVisible()
-  await page.getByRole('tab', { name: /Ohne Vertrag/ }).click()
+  await waehleReiter(page, /Ohne Vertrag/)
   await expect(page.getByRole('button', { name: 'Noch nie angeboten' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 })

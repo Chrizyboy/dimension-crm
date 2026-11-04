@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 10: Rechnungen, Spesen, Finanzen. Alle Reiter ohne Verstösse; eine freie Rechnung vom Entwurf über
 // «Stellen» bis «bezahlt»; eine Spese mit Beleg erfassen, als Buchhaltung prüfen und auszahlen; in den Finanzen eine
@@ -35,7 +35,7 @@ test('Rechnungen: Reiter ohne Verstösse, freie Rechnung stellen und bezahlen', 
   await expect(page.getByRole('heading', { name: 'Rechnungen', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   for (const reiter of ['Rechnungen', 'Zu verrechnen', 'Firmen & Einstellungen']) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
@@ -93,7 +93,7 @@ test('Spesen: mit Beleg erfassen, Buchhaltung zahlt aus', async ({ page }) => {
   await expect(zeile.getByRole('button', { name: 'Ansehen' })).toBeVisible()
 
   // Prüfen: Spese in der Liste wählen und als geprüft markieren.
-  await page.getByRole('tab', { name: /^Prüfen/ }).click()
+  await waehleReiter(page, /^Prüfen/)
   expect(await verstoesse(page), 'Prüfen').toEqual([])
   await page
     .getByRole('list', { name: 'Prüfen' })
@@ -103,9 +103,9 @@ test('Spesen: mit Beleg erfassen, Buchhaltung zahlt aus', async ({ page }) => {
   await page.getByRole('button', { name: 'Geprüft', exact: true }).click()
 
   // Auszahlen als Lauf «mit dem Lohn».
-  await page.getByRole('tab', { name: /^Auszahlen/ }).click()
+  await waehleReiter(page, /^Auszahlen/)
   expect(await verstoesse(page), 'Auszahlen').toEqual([])
-  await page.getByRole('tab', { name: 'Alle Spesen' }).click()
+  await waehleReiter(page, 'Alle Spesen')
   expect(await verstoesse(page), 'Alle Spesen').toEqual([])
   const alle = page.getByRole('row', { name: new RegExp(`E2E Parkhaus ${lauf}`) })
   await expect(alle.getByText('Geprüft')).toBeVisible()
@@ -121,7 +121,7 @@ test('Spesen: mit Beleg erfassen, Buchhaltung zahlt aus', async ({ page }) => {
   ).toBeVisible()
 
   for (const reiter of ['Firmenkarte', 'Auswertung', 'Regeln']) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     expect(await verstoesse(page), reiter).toEqual([])
   }
 })
@@ -141,18 +141,18 @@ test('Finanzen: Reiter ohne Verstösse, Zahlung erfassen, einplanen und bezahlen
     'Projekte & Marge',
     'Konten, MWST & Abschluss',
   ]) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
   // Liquidität: die früheren Reiter sind Unterteile.
-  await page.getByRole('tab', { name: 'Liquidität' }).click()
+  await waehleReiter(page, 'Liquidität')
   for (const teil of ['Material je Baustelle', 'Fixkosten', 'Erwartete Eingänge', 'Woche für Woche']) {
     await page.getByRole('button', { name: new RegExp(`^${teil}`) }).click()
     expect(await verstoesse(page), teil).toEqual([])
   }
   // Zahllauf: Vorschlag öffnet sich ohne Verstösse.
-  await page.getByRole('tab', { name: 'Zahllauf' }).click()
+  await waehleReiter(page, 'Zahllauf')
   await page.getByRole('button', { name: 'Zahllauf vorbereiten' }).click()
   await expect(page.getByRole('dialog')).toBeVisible()
   expect(await verstoesse(page), 'Zahllauf vorbereiten').toEqual([])

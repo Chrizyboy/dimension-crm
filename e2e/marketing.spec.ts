@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 11: Marketing. Alle Reiter ohne Verstösse; einen eigenen Testkontakt mit Einwilligung per Serien-Mail
 // anschreiben (Mail landet freigegeben im Ausgangskorb), über den Abmelde-Link abmelden und wieder anmelden;
@@ -48,7 +48,7 @@ test('Marketing: alle Reiter ohne Verstösse', async ({ page }) => {
     'Mediathek',
     'Vorlagen',
   ]) {
-    await page.getByRole('tab', { name: reiter }).click()
+    await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
   }
@@ -152,7 +152,7 @@ test('Messe: Kampagne anlegen, Lead am Stand erfassen, Lead zählt in der Kampag
   await erfassen.getByRole('button', { name: 'Speichern und nächster' }).click()
   await expect(page.getByText('Lead gespeichert')).toBeVisible()
   await page.keyboard.press('Escape')
-  await akte.getByRole('tab', { name: 'Ergebnis' }).click()
+  await waehleReiter(akte, 'Ergebnis')
   await expect(akte.getByText(`Mia Messetest${lauf}`)).toBeVisible()
 
   // Aufräumen: Kampagne in den Papierkorb (der Lead bleibt, wie jeder echte)

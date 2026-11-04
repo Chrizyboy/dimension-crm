@@ -5,7 +5,7 @@ import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Skelett } from '@/components/ui/diverses'
-import { reiterKnopfKlasse, reiterListeKlasse } from '@/components/ui/reiter'
+import { ReiterMehr, reiterKnopfKlasse, reiterListeKlasse, teileReiter } from '@/components/ui/reiter'
 import { supabase } from '@/services/supabase'
 import { useEingang, useOfferten } from '../hooks/useOfferten'
 import { treffer, zaehleTreffer } from '../lib/suche'
@@ -86,7 +86,7 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
       <Seitenkopf titel={t('offerten.titel')} beschreibung={t('offerten.beschreibung')} />
 
       <nav aria-label={t('offerten.ansichten')} className={reiterListeKlasse}>
-        {OFFERT_ANSICHTEN.map((a) => (
+        {teileReiter(OFFERT_ANSICHTEN, ansicht).sichtbar.map((a) => (
           <button
             key={a}
             type="button"
@@ -102,6 +102,15 @@ export default function Offerten({ ansicht, offerteId, leadId, onAdresse }: Offe
             )}
           </button>
         ))}
+        <ReiterMehr
+          eintraege={teileReiter(OFFERT_ANSICHTEN, ansicht).mehr.map((a) => ({
+            wert: a,
+            inhalt: t(`offerten.ansicht.${a}`),
+            onWahl: () => {
+              onAdresse({ ansicht: a })
+            },
+          }))}
+        />
       </nav>
       <Suchfeld
         beschriftung={t('offerten.suche')}

@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { devices, expect, test, type Page } from '@playwright/test'
 import { execFileSync } from 'node:child_process'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 18 (Arbeitsplatz 2.11.2026): Zwei erfundene Mails kommen wie vom Server (abholen + einordnen) ins persönliche
 // Postfach der Administration: eine Anfrage und eine Frage eines Kunden. «Für mich» zeigt Frist und Art, die Mail
@@ -129,7 +129,7 @@ test.describe('PC', () => {
     const regel = page.getByRole('dialog', { name: 'Regel für diesen Absender' })
     await regel.getByRole('button', { name: 'Speichern' }).click()
     await expect(regel).toBeHidden()
-    await page.getByRole('tab', { name: 'Absender-Regeln' }).click()
+    await waehleReiter(page, 'Absender-Regeln')
     await expect(page.getByRole('cell', { name: `e2e-${lauf}@beispiel.test` })).toBeVisible()
     expect(await verstoesse(page)).toEqual([])
   })

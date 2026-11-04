@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { devices, expect, test, type Page } from '@playwright/test'
-import { anmelden, brauchtDatenbank } from './hilfen'
+import { anmelden, brauchtDatenbank, waehleReiter } from './hilfen'
 
 // Phase 17: Fahrzeuge, Geräte, Team. Administration legt ein Fahrzeug an, erfasst Kilometer und Service (nächster
 // Service wird gerechnet, Verlauf zeigt beides) und legt es wieder in den Papierkorb. Am Handy nimmt die Montage
@@ -115,14 +115,14 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await page.goto('/#/staff')
   await expect(page.getByRole('heading', { name: 'Team & Ausweise', level: 1 })).toBeVisible()
   // Übersicht «wer darf was» steht im Reiter Ausweise, die Personal-Akte im gleichnamigen Reiter des Panels.
-  await page.getByRole('tab', { name: 'Ausweise' }).click()
+  await waehleReiter(page, 'Ausweise')
   await expect(page.getByRole('table', { name: 'Übersicht: wer darf was' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await page.getByRole('button', { name: 'Meine Akte' }).click()
   const akte = page.getByRole('dialog', { name: 'Mario Montage' })
   // Personal-Akte ist ein eigener Reiter; die Person selbst ändert nur «Persönlich» (Entscheid 0040).
-  await akte.getByRole('tab', { name: 'Personal-Akte' }).click()
+  await waehleReiter(akte, 'Personal-Akte')
   await akte.getByRole('button', { name: 'Bearbeiten' }).first().click()
   const form = page.getByRole('dialog', { name: 'Persönlich' })
   await expect(form.getByLabel('Pensum (%)')).toHaveCount(0)
@@ -130,7 +130,7 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await form.getByRole('button', { name: 'Speichern' }).click()
   await expect(akte).toContainText(`Notfall ${kennung}`)
 
-  await akte.getByRole('tab', { name: 'Ausweise' }).click()
+  await waehleReiter(akte, 'Ausweise')
   await akte.getByRole('button', { name: 'Kurs oder Ausweis erfassen' }).click()
   const ausweis = page.getByRole('dialog', { name: 'Kurs oder Ausweis erfassen' })
   await ausweis.getByRole('combobox', { name: /Art/ }).click()
@@ -152,7 +152,7 @@ test('Team: eigene Akte und Ausweis, fremde Akte bleibt privat', async ({ page, 
   await verkauf.goto('/#/staff')
   await verkauf.getByRole('row', { name: /Mario Montage/ }).click()
   const fremd = verkauf.getByRole('dialog', { name: 'Mario Montage' })
-  await fremd.getByRole('tab', { name: 'Personal-Akte' }).click()
+  await waehleReiter(fremd, 'Personal-Akte')
   await expect(fremd).toContainText('Nur für die Person selbst, die Geschäftsleitung')
   await expect(fremd).not.toContainText(`Notfall ${kennung}`)
   await expect(fremd.getByRole('button', { name: 'Kurs oder Ausweis erfassen' })).toHaveCount(0)
