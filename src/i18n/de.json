@@ -6258,7 +6258,8 @@
     "entwurfAnlegen": "Entwurf anlegen",
     "entwurf": "Entwurf",
     "abgleich": "Abgleich AbaNinja",
-    "abgleichFertig": "Abgleich fertig: {{rechnungen}} Rechnungen, {{zahlungen}} neue Zahlungen, {{belege_neu}} neue Lieferantenrechnungen ({{belege_zugeordnet}} einem Projekt zugeordnet).",
+    "abgleichFertig": "Abgleich fertig: {{gelesen}} Rechnungen in AbaNinja gelesen, {{rechnungen_neu}} neu übernommen, {{zahlungen}} neue Zahlungen, {{belege_neu}} neue Lieferantenrechnungen ({{belege_zugeordnet}} einem Projekt zugeordnet).",
+    "abgleichOhneKunde": "{{ohne_kunde}} Rechnungen aus AbaNinja haben keinen passenden Kunden im CRM. In der Kundenakte «In AbaNinja suchen» wählen und verknüpfen, dann erneut abgleichen.",
     "reiter": {
       "rechnungen": "Rechnungen",
       "verrechnen": "Zu verrechnen",

@@ -100,6 +100,7 @@ export default function Rechnungen({
                     void aus(async () => {
                       const n = await abgleichen()
                       melde('ok', zweisprachig('rechnungen.abgleichFertig', n))
+                      if (n.ohne_kunde > 0) melde('warnung', zweisprachig('rechnungen.abgleichOhneKunde', n))
                     })
                   }
                 >

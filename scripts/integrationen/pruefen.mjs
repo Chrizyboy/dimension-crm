@@ -553,6 +553,16 @@ try {
     JSON.stringify({ angewendet, bezahlt }),
   )
   ok(beleg?.betrag_rappen === 1081000 && beleg.quelle === 'abaninja', 'Abgleich: Lieferantenrechnung übernommen')
+  // Direkt in AbaNinja gestellte Rechnung (inv-1, Kunde aba-1) kommt als Rechnung mit Quelle «abaninja» ins CRM.
+  const [ausAba] = await rest('rechnungen?abaninja_uuid=eq.inv-1&select=quelle,status,total_rappen,bezahlt_rappen')
+  ok(
+    angewendet?.rechnungen_neu >= 1 &&
+      ausAba?.quelle === 'abaninja' &&
+      ausAba.status === 'teilbezahlt' &&
+      ausAba.total_rappen - ausAba.bezahlt_rappen === 250000,
+    "Abgleich: Rechnung aus AbaNinja übernommen (offen CHF 2'500.00)",
+    JSON.stringify({ angewendet, ausAba }),
+  )
   await rest(`rechnungen?id=eq.${rechnung}`, {
     method: 'PATCH',
     body: JSON.stringify({ geloescht_am: new Date().toISOString() }),

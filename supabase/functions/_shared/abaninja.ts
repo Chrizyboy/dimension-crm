@@ -186,8 +186,11 @@ export interface AbaRechnung {
 const rappen = (v: unknown) => Math.round(Number(v ?? 0) * 100) || 0
 
 /** Antwort von AbaNinja (Rechnung) → AbaRechnung. Feldnamen tolerant (API v2 und ältere Antworten). */
-export function rechnungLesen(r: Roh): AbaRechnung & { referenz: string; empfaenger: string[] } {
+export function rechnungLesen(
+  r: Roh,
+): AbaRechnung & { referenz: string; empfaenger: string[]; kundennummer: string; kunde: string; titel: string } {
   const e = (r.receiver ?? {}) as Roh
+  const info = (e.receiverInformation ?? {}) as Roh
   return {
     uuid: text(r.uuid),
     nummer: text(
@@ -205,6 +208,9 @@ export function rechnungLesen(r: Roh): AbaRechnung & { referenz: string; empfaen
     status: text(r.status),
     referenz: text(r.reference),
     empfaenger: [e.personUuid, e.companyUuid, e.person_uuid, e.company_uuid, e.uuid].map(text).filter(Boolean),
+    kundennummer: text(e.customerNumber ?? e.customer_number ?? info.customerNumber).trim(),
+    kunde: text(info.companyName ?? info.name ?? e.name ?? [info.firstName, info.lastName].map(text).join(' ')).trim(),
+    titel: text(r.title),
   }
 }
 
@@ -231,7 +237,17 @@ async function alleRechnungen(maxSeiten: number, seit?: string): Promise<ReturnT
 /** Rechnungen eines Kunden (neueste zuerst). AbaNinja filtert nicht nach Kunde, darum seitenweise. */
 export async function rechnungen(kundeUuid: string, maxSeiten = 5): Promise<AbaRechnung[]> {
   const treffer = (await alleRechnungen(maxSeiten)).filter((r) => r.empfaenger.includes(kundeUuid))
-  return treffer.map(({ referenz: _r, empfaenger: _e, ...rest }) => rest).sort((a, b) => b.datum.localeCompare(a.datum))
+  return treffer
+    .map(({ uuid, nummer, datum, faellig, total_rappen, offen_rappen, status }) => ({
+      uuid,
+      nummer,
+      datum,
+      faellig,
+      total_rappen,
+      offen_rappen,
+      status,
+    }))
+    .sort((a, b) => b.datum.localeCompare(a.datum))
 }
 
 /** Rechnung aus dem CRM (Ausschnitt), die als Entwurf an AbaNinja geht. */
@@ -312,7 +328,11 @@ export function belegLesen(r: Roh): AbaBeleg {
   }
 }
 
-/** Abgleich: Rechnungen (für Zahlungen) und Lieferantenrechnungen, optional nur seit einem Zeitpunkt geänderte. */
+/**
+ * Abgleich: alle Rechnungen und Lieferantenrechnungen, optional nur seit einem Zeitpunkt geänderte. Auch Rechnungen,
+ * die direkt in AbaNinja entstanden sind (ohne Referenz aus dem CRM): die Datenbank übernimmt sie, wenn sie den
+ * Kunden findet (abaninja_abgleich_anwenden), sonst bleiben sie aus Rechnungen › Offen ausgeblendet.
+ */
 export async function abgleichDaten(seit?: string, maxSeiten = 10) {
   const re = await alleRechnungen(maxSeiten, seit)
   const belege: AbaBeleg[] = []
@@ -324,7 +344,7 @@ export async function abgleichDaten(seit?: string, maxSeiten = 10) {
   }
   return {
     rechnungen: re
-      .filter((r) => r.referenz)
+      .filter((r) => r.uuid)
       .map((r) => ({
         uuid: r.uuid,
         reference: r.referenz,
@@ -333,6 +353,11 @@ export async function abgleichDaten(seit?: string, maxSeiten = 10) {
         total_rappen: r.total_rappen,
         offen_rappen: r.offen_rappen,
         datum: r.datum,
+        faellig_am: r.faellig,
+        titel: r.titel,
+        kunde: r.kunde,
+        kundennummer: r.kundennummer,
+        empfaenger: r.empfaenger,
       })),
     belege,
   }

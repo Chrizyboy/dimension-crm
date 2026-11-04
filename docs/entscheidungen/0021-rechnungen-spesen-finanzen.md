@@ -42,3 +42,9 @@ bleiben in AbaNinja. Phase 10 wurde von Chris am 22.10.2026 mit «weiter» gesta
 sie jemand speichert. Bankbuchungen direkt aus dem E-Banking (V233 hatte einen Anfang über AbaNinja) kommen erst,
 wenn ein Zugang feststeht; bis dahin wird der Kontostand von Hand eingetragen. Echte Konten (AbaNinja) sind in
 der Cloud-Sandbox gesperrt; geprüft wird gegen Ersatz-Server (`npm run integrationen:pruefen`).
+
+**Nachtrag 04.11.2026 (Chris: «Rechnungen › Offen ist leer»):** Die Buchhaltung stellt in AbaNinja, der Abgleich
+kannte aber nur Rechnungen, die im CRM entstanden und übergeben worden waren; Rechnungen › Offen blieb darum leer.
+Neu übernimmt `abaninja_abgleich_anwenden` jede gestellte Rechnung aus AbaNinja, deren Kunden es findet (Verknüpfung
+oder Kundennummer), als Rechnung mit `quelle = 'abaninja'` (Nummer, Total inkl. MWST als eine Position, bezahlter
+Teil als Zahlung, Storno von dort). Keine Automation für diese Rechnungen, weil ihre Mahnung in AbaNinja läuft.

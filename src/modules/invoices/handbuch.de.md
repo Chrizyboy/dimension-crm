@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: buchhaltung, projektleitung, geschaeftsleitung
 ---
 
@@ -105,6 +105,7 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 
 - Jeden Montag bereitet das CRM den Mahnlauf vor; hinaus geht er erst nach der Freigabe.
 - Neue Rechnungen übernehmen Rechnungsadresse, Rechnungs-Mail und Zahlungsfrist des Kunden.
+- **Abgleich AbaNinja** (jede Nacht und auf Klick) übernimmt auch Rechnungen, die direkt in AbaNinja gestellt wurden, mit Nummer, Betrag und Zahlungsstand von dort. Der Kunde wird über die Verknüpfung mit AbaNinja oder die gleiche Kundennummer gefunden, das Projekt über die Projektnummer im Titel. Entwürfe aus AbaNinja kommen nicht. Für diese Rechnungen startet keine Automation; gemahnt wird weiter in AbaNinja.
 
 ## Regeln {#regeln}
 
@@ -122,6 +123,10 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 
 **Abgleich AbaNinja** ausführen. Kommt nichts, die Zahlung von Hand erfassen.
 
+### Eine Rechnung aus AbaNinja fehlt.
+
+**Abgleich AbaNinja** ausführen. Meldet er Rechnungen ohne passenden Kunden, in der Kundenakte **In AbaNinja suchen** wählen und den Kunden verknüpfen, dann nochmals abgleichen. Entwürfe aus AbaNinja erscheinen erst, wenn sie dort gestellt sind.
+
 ### Die IBAN wird nicht angenommen.
 
 Die Prüfziffer stimmt nicht. IBAN Ziffer für Ziffer mit dem Bankauszug vergleichen.
@@ -132,6 +137,7 @@ Filter setzen und **Liste exportieren** (CSV).
 
 ## Neu {#neu}
 
+- 04.11.2026: **Abgleich AbaNinja** übernimmt auch Rechnungen, die direkt in AbaNinja gestellt wurden; die Meldung zeigt, wie viele gelesen und übernommen wurden und welche keinen Kunden haben.
 - 03.11.2026: Rechnungsadresse, Rechnungs-Mail und Zahlungsfrist aus der Kundenakte gelten für neue Rechnungen.
 - 03.11.2026: Übersicht, Mahnlauf mit Freigabe, Meine Projekte mit Verrechnen auslösen, Eingangsrechnungen mit Visum, Mahnsperre, Zusage und Ausbuchen.
 - 03.11.2026: Von Hand erfasste Lieferantenrechnungen (noch nicht bezahlt) «In den Papierkorb», mit Rückfrage und «Rückgängig»; gestellte Rechnungen werden storniert. Zurückholen unter Papierkorb (Menü oben rechts).
