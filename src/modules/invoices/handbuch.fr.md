@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: buchhaltung, projektleitung, geschaeftsleitung
 ---
 
@@ -105,6 +105,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 - Chaque lundi, le CRM prépare les relances ; elles ne partent qu’après validation.
 - Les nouvelles factures reprennent l’adresse de facturation, l’e-mail de facturation et le délai de paiement du client.
+- **Synchroniser AbaNinja** (chaque nuit et sur clic) reprend aussi les factures émises directement dans AbaNinja, avec numéro, montant et état de paiement. Le client est trouvé par le lien avec AbaNinja ou le même numéro client, le projet par le numéro de projet dans le titre. Les brouillons d’AbaNinja ne sont pas repris. Aucune automatisation ne démarre pour ces factures ; les rappels restent dans AbaNinja.
 
 ## Règles {#regeln}
 
@@ -122,6 +123,10 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 Lancer **Synchroniser AbaNinja**. Si rien n’arrive, saisir le paiement à la main.
 
+### Une facture d’AbaNinja manque.
+
+Lancer **Synchroniser AbaNinja**. S’il signale des factures sans client correspondant, choisir **Chercher dans AbaNinja** dans la fiche client et lier le client, puis relancer. Les brouillons d’AbaNinja n’apparaissent qu’une fois émis.
+
 ### L’IBAN n’est pas accepté.
 
 Le chiffre de contrôle est faux. Comparer l’IBAN chiffre par chiffre avec le relevé bancaire.
@@ -132,6 +137,7 @@ Choisir les filtres et **Exporter la liste** (CSV).
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: **Synchroniser AbaNinja** reprend aussi les factures émises directement dans AbaNinja ; le message indique combien ont été lues et reprises et lesquelles n’ont pas de client.
 - 03.11.2026: L’adresse de facturation, l’e-mail de facturation et le délai de paiement de la fiche client valent pour les nouvelles factures.
 - 03.11.2026: Aperçu, relances avec validation, Mes projets avec Lancer la facturation, factures fournisseurs avec visa, blocage, promesse et passage en perte.
 - 03.11.2026: Factures fournisseurs saisies à la main (pas encore payées) «Mettre à la corbeille», avec confirmation et «Annuler» ; les factures émises sont annulées. Restaurer depuis la corbeille (menu en haut à droite).

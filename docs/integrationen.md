@@ -86,6 +86,12 @@ die Finanzen; steht eine Projektnummer in der Referenz, wird der Beleg dem Proje
 bezahlen geschieht in AbaNinja selbst (die API bietet dafür nichts Verlässliches). Beim ersten echten Abgleich
 prüfen, ob Beträge und Zuordnung stimmen.
 
+**Ab 04.11.2026:** Der Abgleich übernimmt auch Rechnungen, die direkt in AbaNinja gestellt wurden (ohne Referenz aus
+dem CRM), als Rechnung mit `quelle = 'abaninja'`: Kunde über `kontakte.abaninja_id` oder gleiche Kundennummer (dann
+wird er gleich verknüpft), Projekt über die Projektnummer in Titel oder Referenz, bezahlter Teil als Zahlung. Entwürfe
+und stornierte bleiben draussen; Rechnungen ohne passenden Kunden zählt die Meldung als «ohne Kunde». Für übernommene
+Rechnungen startet keine Automation (Signale als Basis vermerkt).
+
 ---
 
 ## 3. SMS über ASPSMS (Erinnerung am Vortag)

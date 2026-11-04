@@ -12055,6 +12055,7 @@ export type Database = {
           nummer: string | null
           positionen: NonNullable<Json>
           projekt_id: string | null
+          quelle: string
           rapport_id: string | null
           rechnung_an: Json | null
           service_fall_id: string | null
@@ -12111,6 +12112,7 @@ export type Database = {
           nummer?: string | null
           positionen?: NonNullable<Json>
           projekt_id?: string | null
+          quelle?: string
           rapport_id?: string | null
           rechnung_an?: Json | null
           service_fall_id?: string | null
@@ -12166,6 +12168,7 @@ export type Database = {
           nummer?: string | null
           positionen?: NonNullable<Json>
           projekt_id?: string | null
+          quelle?: string
           rapport_id?: string | null
           rechnung_an?: Json | null
           service_fall_id?: string | null

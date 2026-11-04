@@ -277,6 +277,22 @@ describe('AbaNinja', () => {
     ).toMatchObject({ nummer: 'RE-9', referenz: 'R2026-17', datum: '2026-10-01' })
   })
 
+  it('liest Kunde und Kundennummer einer Rechnung, die direkt in AbaNinja entstand', () => {
+    expect(
+      rechnungLesen({
+        uuid: 'r2',
+        title: 'Service 200005',
+        receiver: { companyUuid: 'c-1', customerNumber: 1042, receiverInformation: { companyName: 'Muster AG' } },
+      }),
+    ).toMatchObject({
+      empfaenger: ['c-1'],
+      kundennummer: '1042',
+      kunde: 'Muster AG',
+      titel: 'Service 200005',
+      referenz: '',
+    })
+  })
+
   it('Rechnung als Entwurf für AbaNinja: freie Positionen mit MWST, Referenz = CRM-Nummer', () => {
     const d = rechnungFuerAbaninja(
       {

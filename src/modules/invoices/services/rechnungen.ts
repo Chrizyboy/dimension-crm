@@ -130,10 +130,14 @@ export const anAbaninja = (id: string) => abaninja.rechnungUebergeben(id)
 
 /**
  * Abgleich mit AbaNinja: Rechnungen und Lieferantenrechnungen lesen (Server-Funktion) und mit dem eigenen
- * Login anwenden. Gibt die Zähler zurück (Rechnungen, neue Zahlungen, neue Lieferantenrechnungen).
+ * Login anwenden. Rechnungen, die direkt in AbaNinja gestellt wurden, übernimmt die Datenbank, wenn sie den Kunden
+ * findet. Gibt die Zähler zurück (gelesen, abgeglichen, neu übernommen, ohne Kunde, Zahlungen, Lieferantenrechnungen).
  */
 export async function abgleichen(): Promise<{
+  gelesen: number
   rechnungen: number
+  rechnungen_neu: number
+  ohne_kunde: number
   zahlungen: number
   belege_neu: number
   belege_zugeordnet: number

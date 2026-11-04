@@ -6258,7 +6258,8 @@
     "entwurfAnlegen": "Créer le brouillon",
     "entwurf": "Brouillon",
     "abgleich": "Synchroniser AbaNinja",
-    "abgleichFertig": "Synchronisation terminée : {{rechnungen}} factures, {{zahlungen}} nouveaux paiements, {{belege_neu}} nouvelles factures fournisseurs ({{belege_zugeordnet}} attribuées à un projet).",
+    "abgleichFertig": "Synchronisation terminée : {{gelesen}} factures lues dans AbaNinja, {{rechnungen_neu}} reprises, {{zahlungen}} nouveaux paiements, {{belege_neu}} nouvelles factures fournisseurs ({{belege_zugeordnet}} attribuées à un projet).",
+    "abgleichOhneKunde": "{{ohne_kunde}} factures d’AbaNinja n’ont pas de client correspondant dans le CRM. Dans la fiche client, choisir « Chercher dans AbaNinja » et lier, puis relancer la synchronisation.",
     "reiter": {
       "rechnungen": "Factures",
       "verrechnen": "À facturer",
