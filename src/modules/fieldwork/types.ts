@@ -357,7 +357,7 @@ export interface InternerPosten {
 export type ZeitZiel = { projekt_id: string } | { service_fall_id: string } | { intern: string }
 
 /** Wer heute mit mir im selben Einsatz ist (für «Für das ganze Team» an der Stempeluhr). */
-export interface TeamPerson {
+export interface TeamHeute {
   id: string
   name: string
   kurzzeichen: string | null

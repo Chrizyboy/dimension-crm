@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/schalter'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { dauerText, minuten, zuerich } from '../lib/zeit'
 import { teamZeitStoppen, zeitStoppen } from '../services/monteur'
-import type { LaufendeZeit, TeamPerson } from '../types'
+import type { LaufendeZeit, TeamHeute } from '../types'
 
 const PAUSEN = ['0', '15', '30', '45', '60']
 
@@ -37,7 +37,7 @@ export function ZeitLaeuft({
   onRapport,
 }: {
   laufend: LaufendeZeit
-  andere?: TeamPerson[]
+  andere?: TeamHeute[]
   onRapport?: (id: string) => void
 }) {
   const { t } = useTranslation()
