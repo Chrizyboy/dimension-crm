@@ -6,7 +6,7 @@ export interface Etikett {
 }
 
 /** Feste Adresse der Web-App: Etiketten aus der Desktop-App müssen auch am Handy öffnen. */
-export const WEB_APP = 'https://chrizyboy.github.io/dimension-crm/'
+export const WEB_APP = 'https://work.dimension-solaire.ch/'
 
 /**
  * Adresse hinter dem QR-Code. Aus dem Browser gedruckt nimmt sie die aktuelle Adresse (auch lokal zum Testen),
