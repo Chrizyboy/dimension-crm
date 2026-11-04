@@ -71,17 +71,28 @@ Datensicherung jede Minute. Kontrolle: Einstellungen › Betrieb › «Zeitplan�
 ## 5. Daten übernehmen (Probe)
 
 1. Im bisherigen CRM (V233) den Export «Für Web-App» machen (ZIP).
-2. Im eigenen Terminal, nur für diesen Aufruf (Werte aus Dashboard › **Project Settings › API**):
+2. Aus den Projektdateien (Library, Ordner `datenabgleich`) zwei Dateien in einen eigenen Ordner ausserhalb des
+   Repos legen, z. B. `C:\Umzug\`: `sharepoint-adjudications.json` (Ordnerliste aus SharePoint: gewonnen ist nur,
+   was in Adjudications liegt) und `korrekturen.json` (vertauschte Nummern, Aufträge nur in SharePoint,
+   Vertragsdaten). Beide enthalten Kundennamen: nie ins Repo oder weitergeben. Ohne sie bricht der Schritt ab.
+3. Im eigenen Terminal, nur für diesen Aufruf (Werte aus Dashboard › **Project Settings › API**):
    ```bash
-   SUPABASE_URL=https://<projekt>.supabase.co SUPABASE_SERVICE_ROLE_KEY=<service_role> npm run umzug -- daten "CRM bisher.zip"
+   SUPABASE_URL=https://<projekt>.supabase.co SUPABASE_SERVICE_ROLE_KEY=<service_role> npm run umzug -- daten "CRM bisher.zip" --ablage C:\Umzug\sharepoint-adjudications.json --korrekturen C:\Umzug\korrekturen.json
    ```
    Unter Windows (PowerShell) zuerst `$env:SUPABASE_URL="…"` und `$env:SUPABASE_SERVICE_ROLE_KEY="…"`, dann
-   `npm run umzug -- daten "CRM bisher.zip"`. Terminal danach schliessen.
-3. `umzug-bericht.md` öffnen: Jede Sammlung muss «stimmt» zeigen (wie beim lokalen Import: 32 von 32).
-4. Einmal anmelden und stichprobenweise prüfen: drei Kunden, drei Offerten, ein Projekt mit Fahrplan.
+   `npm run umzug -- daten "CRM bisher.zip" --ablage … --korrekturen …`. Terminal danach schliessen.
+4. `umzug-bericht.md` öffnen: Jede Sammlung muss «stimmt» zeigen (wie beim lokalen Import: 32 von 32).
+5. Abgleich mit denselben Dateien (gleiches Terminal):
+   `npm run import:abgleich -- "CRM bisher.zip" --ablage … --korrekturen …`. Erwartet sind nur die bekannten
+   Abweichungen aus falschen Daten im alten CRM (`abgleich-bericht.md`).
+6. Einmal anmelden und stichprobenweise prüfen: drei Kunden, drei Offerten, ein Projekt mit Fahrplan.
 
 Der Import ist wiederholbar: Ein zweiter Lauf aktualisiert, statt zu verdoppeln. Darum ist der Probe-Umzug
-gefahrlos, und am Stichtag läuft derselbe Befehl nochmals mit dem neusten Export.
+gefahrlos, und am Stichtag läuft derselbe Befehl nochmals mit dem neusten Export. **Was im neuen CRM schon von
+Hand geändert, in den Papierkorb gelegt oder wiederhergestellt wurde, bleibt so** (laut Änderungsprotokoll mit
+Person). Diese Datensätze stehen im Bericht unter «Hinweise»; wurden sie auch im alten CRM noch geändert, dort
+nachschauen und von Hand nachtragen. Nur mit `--ueberschreiben` gewinnt das alte CRM. Von Hand neu Erfasstes
+bleibt immer.
 
 ## 6. Dienste
 
@@ -102,7 +113,9 @@ Am besten Freitagabend bis Montagmorgen.
 
 1. **Freitag 17:00:** Im Team ankündigen: ab jetzt nichts mehr im alten CRM erfassen.
 2. Letzten Export aus V233 machen. V233 bleibt 30 Tage zum Nachschauen offen, aber nur noch lesen.
-3. `npm run umzug -- daten "<neuer Export>.zip"`, Zählbericht prüfen.
+3. Ordnerliste aus SharePoint neu lesen lassen (neue Aufträge seit dem letzten Stand), dann
+   `npm run umzug -- daten "<neuer Export>.zip" --ablage … --korrekturen …` und den Abgleich wie in Schritt 5.
+   Zählbericht und «Hinweise» (von Hand Geändertes) prüfen.
 4. Einstellungen › Betrieb: alles grün? Einstellungen › Datensicherung › «Jetzt sichern».
 5. Im Reiter «Personen» allen eine Rolle geben (die 5 importierten Personen stehen noch auf «Mitarbeit») und
    Einladungen senden.

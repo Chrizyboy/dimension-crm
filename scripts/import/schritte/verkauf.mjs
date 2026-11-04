@@ -36,10 +36,14 @@ export async function importiereVerkauf(k) {
   }
   // Ein früherer Import (Probe-Import) hatte sie als Lead angelegt: in den Papierkorb, nie hart löschen.
   if (nurKontakt.length) {
+    const geschuetzt = await k.schreiber.geschuetzt('verkaufschancen', nurKontakt)
     const { error } = await k.db
       .from('verkaufschancen')
       .update({ geloescht_am: new Date().toISOString() })
-      .in('alt_id', nurKontakt)
+      .in(
+        'alt_id',
+        nurKontakt.filter((a) => !geschuetzt.has(a)),
+      )
       .is('geloescht_am', null)
     if (error) throw new Error(`verkaufschancen (Messe ohne Wunsch): ${error.message}`)
     k.hinweis(`${nurKontakt.length} Messe-Teilnahmen ohne Beratungswunsch nur als Kontakt übernommen (kein Lead).`)

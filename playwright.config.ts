@@ -172,12 +172,15 @@ export default defineConfig({
       // Leere Werte gehen vor .env.local: diese Fassung läuft bewusst ohne Datenbank.
       command: 'npm run build && npm run preview -- --port 4173',
       port: 4173,
+      // Erst bauen (tsc + vite), das dauert auf dem CI-Rechner inzwischen über eine Minute.
+      timeout: 300_000,
       reuseExistingServer: !process.env.CI,
       env: { VITE_SUPABASE_URL: '', VITE_SUPABASE_ANON_KEY: '' },
     },
     {
       command: 'npx vite build --outDir dist-db && npx vite preview --outDir dist-db --port 4174',
       port: 4174,
+      timeout: 300_000,
       reuseExistingServer: !process.env.CI,
     },
   ],
