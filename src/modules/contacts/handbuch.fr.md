@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: innendienst, projektleitung, verkauf, buchhaltung, administration
 ---
 
@@ -92,5 +92,6 @@ Dans certaines communes, plusieurs gestionnaires desservent chacun une partie. L
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026 : carnet d’adresses réservé aux partenaires commerciaux, avec rôles et fiche, page entière par partenaire, attestations avec échéances, demandes réseau ouvertes, évaluation des sous-traitants, commission des apporteurs, registre IDE et répertoire ElCom.
 - 31.10.2026 : recherche et fenêtre de détail uniformes comme dans tous les domaines.

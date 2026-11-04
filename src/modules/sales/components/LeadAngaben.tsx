@@ -11,7 +11,7 @@ import { melde } from '@/services/meldungen'
 import { useAussendienst, useRegionen, useVerkaufAenderung } from '../hooks/useVerkauf'
 import { aendereLead, type LeadFelder } from '../services/leads'
 import type { Geschaeft } from '../types'
-import { AkteAbschnitt, Angabe, LeereFelder } from '@/components/shared/AkteAbschnitt'
+import { AkteAbschnitt, Angabe } from '@/components/shared/AkteAbschnitt'
 
 const LEER = '_leer'
 
@@ -78,7 +78,7 @@ export function LeadAngaben({ g, details }: LeadAngabenProps) {
     }
   }
 
-  /** Auswahlfelder unter «Interesse»: gefüllte stehen da, leere erst nach «+ weitere Angaben». */
+  /** Auswahlfelder unter «Interesse»; leere stehen erst nach «+ weitere Angaben». */
   const auswahlFelder: {
     liste: string
     label: string
@@ -107,7 +107,7 @@ export function LeadAngaben({ g, details }: LeadAngabenProps) {
     { liste: 'foerderung', label: t('verkauf.akte.foerderung'), wert: details?.foerderung ?? null, feld: 'foerderung' },
   ]
   const auswahlZeile = (f: (typeof auswahlFelder)[number]) => (
-    <Angabe key={f.feld} label={f.label}>
+    <Angabe key={f.feld} label={f.label} leer={f.wert === null}>
       <SofortAuswahl liste={f.liste} label={f.label} wert={f.wert} onWert={(w) => void setze({ [f.feld]: w })} />
     </Angabe>
   )
@@ -170,7 +170,7 @@ export function LeadAngaben({ g, details }: LeadAngabenProps) {
           <Angabe label={t('verkauf.akte.hoehe')}>{g.hoehe ? `${g.hoehe} m ü. M.` : '–'}</Angabe>
           <Angabe label={t('verkauf.standort')}>{g.standort ? (g.standort === 'muri' ? 'Muri' : 'Bulle') : '–'}</Angabe>
           {lead && (
-            <Angabe label={t('verkauf.region')}>
+            <Angabe label={t('verkauf.region')} leer={!g.regionId}>
               <Auswahl
                 aria-label={t('verkauf.region')}
                 className="h-7"
@@ -214,14 +214,9 @@ export function LeadAngaben({ g, details }: LeadAngabenProps) {
           </div>
           {lead && (
             <dl>
-              {auswahlFelder.filter((f) => f.wert !== null).map(auswahlZeile)}
+              {auswahlFelder.map(auswahlZeile)}
               <Angabe label={t('verkauf.akte.eingang')}>{g.eingangAm ? formatDatum(g.eingangAm) : '–'}</Angabe>
             </dl>
-          )}
-          {lead && (
-            <LeereFelder anzahl={auswahlFelder.filter((f) => f.wert === null).length}>
-              <dl>{auswahlFelder.filter((f) => f.wert === null).map(auswahlZeile)}</dl>
-            </LeereFelder>
           )}
           {g.kommentarKunde && (
             <blockquote className="bg-muted/60 rounded-md p-2 text-sm whitespace-pre-wrap">

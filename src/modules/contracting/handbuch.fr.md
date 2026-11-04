@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -84,6 +84,7 @@ Youdera finance et possède l’installation, nous la construisons et l’entret
 
 ## Nouveautés {#neu}
 
+- 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: «Mettre à la corbeille» pour les grands projets (dossier et page), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Analyse de potentiel, dossier à Youdera et visite sur le portable.
 - 02.11.2026: Pipeline jusqu’au contrat, onglet « À décider » et dossier du projet avec calculateur.

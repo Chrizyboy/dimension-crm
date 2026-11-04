@@ -10,6 +10,8 @@ import { useVerkaufEinstellung } from '../hooks/useVerkauf'
 import { VERKAUF_STANDARD } from '../lib/einstellung'
 import { richtpreis } from '../lib/richtpreis'
 import type { Geschaeft } from '../types'
+import { LeereFelderBereich } from '@/components/shared/leereFelder'
+import { useLeerZeile } from '@/components/shared/leereZeile'
 
 /** Block der Lead-Akte: Titel (h2), rechts ein Zusatz, darunter der Inhalt. */
 export function Box({
@@ -29,15 +31,16 @@ export function Box({
         <KarteTitel>{titel}</KarteTitel>
         {rechts && <div className="text-muted-foreground flex items-center gap-2 text-xs">{rechts}</div>}
       </KarteKopf>
-      <div className="flex flex-col gap-2 p-3 text-sm">{children}</div>
+      <LeereFelderBereich className="flex flex-col gap-2 p-3 text-sm">{children}</LeereFelderBereich>
     </Karte>
   )
 }
 
 /** Beschriftung und Wert nebeneinander, kompakt für die schmale Spalte. */
 export function Wert({ label, children }: { label: string; children: ReactNode }) {
+  const marke = useLeerZeile(children)
   return (
-    <div className="grid grid-cols-[8rem_1fr] items-baseline gap-2">
+    <div className="grid grid-cols-[8rem_1fr] items-baseline gap-2" {...marke}>
       <dt className="text-muted-foreground text-xs">{label}</dt>
       <dd className="zahlen min-w-0 break-words">{children}</dd>
     </div>

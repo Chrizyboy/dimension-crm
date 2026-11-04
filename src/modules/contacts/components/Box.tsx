@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { cn } from '@/lib/utils'
+import { LeereFelderBereich } from '@/components/shared/leereFelder'
+import { useLeerZeile } from '@/components/shared/leereZeile'
 
 /** Block der Partner-Akte: Titel (h2), rechts Zusatz oder Knopf, darunter der Inhalt (gleich wie die Kundenakte). */
 export function Box({
@@ -20,7 +22,7 @@ export function Box({
         <KarteTitel>{titel}</KarteTitel>
         {rechts && <div className="text-muted-foreground flex items-center gap-2 text-xs">{rechts}</div>}
       </KarteKopf>
-      <div className="flex flex-col gap-2 p-3 text-sm">{children}</div>
+      <LeereFelderBereich className="flex flex-col gap-2 p-3 text-sm">{children}</LeereFelderBereich>
     </Karte>
   )
 }
@@ -58,9 +60,10 @@ export function Leer({ children }: { children: ReactNode }) {
 }
 
 /** Beschriftung und Wert als Zeile einer Liste (dl). */
-export function Zeile({ label, children }: { label: string; children: ReactNode }) {
+export function Zeile({ label, children, leer }: { label: string; children: ReactNode; leer?: boolean }) {
+  const marke = useLeerZeile(children, leer)
   return (
-    <div className="grid grid-cols-[9rem_minmax(0,1fr)] items-start gap-2">
+    <div className="grid grid-cols-[9rem_minmax(0,1fr)] items-start gap-2" {...marke}>
       <dt className="text-muted-foreground text-xs leading-5">{label}</dt>
       <dd className="min-w-0 break-words whitespace-pre-line">{children}</dd>
     </div>

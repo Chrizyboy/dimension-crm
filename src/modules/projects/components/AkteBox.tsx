@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { cn } from '@/lib/utils'
+import { LeereFelderBereich } from '@/components/shared/leereFelder'
 
 /** Block der Projekt-Akte: Titel (h2), rechts Zusatz oder Knopf, darunter der Inhalt. */
 export function Box({
@@ -20,7 +21,7 @@ export function Box({
         <KarteTitel>{titel}</KarteTitel>
         {rechts && <div className="text-muted-foreground flex items-center gap-2 text-xs">{rechts}</div>}
       </KarteKopf>
-      <div className="flex flex-col gap-2 p-3 text-sm">{children}</div>
+      <LeereFelderBereich className="flex flex-col gap-2 p-3 text-sm">{children}</LeereFelderBereich>
     </Karte>
   )
 }

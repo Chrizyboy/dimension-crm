@@ -51,3 +51,12 @@ jeder Bereich in der Leiste und jeder Knopf in der App; geändert wird nur Ordnu
 - **Leere Felder erst beim Bearbeiten** (`LeereFelder` in `src/components/shared/AkteAbschnitt.tsx`): gefüllte
   Angaben stehen da, leere klappen mit «+ n weitere Angaben» auf. Zuerst in Lead-Akte (Auswahlfelder unter
   «Interesse») und Offert-Akte («Chance und Angaben»).
+
+## Leere Felder in allen Akten (4.11.2026, Chris «Ja, in allen Akten»)
+
+- **`LeereFelderBereich`** (`src/components/shared/leereFelder.tsx`) steckt in `AkteAbschnitt` und in den
+  `Box`-Bausteinen der Module (Kunden, Adressbuch, Offerten, Leads, Projekte, Service, Ausschreibungen, Grossprojekte,
+  Fahrzeuge). Zeilen (`Angabe`, `Zeile`, `Wert`) melden sich mit `useLeerZeile` als leer: Text leer oder «–», oder ein
+  Eingabefeld mit leerem `wert`/`value`. Sie sind versteckt, bis man «+ n weitere Angaben» klickt.
+- Auswahlfelder mit eigenem Platzhalter-Wert sagen es selbst: `<Angabe leer={!wert}>`.
+- Ersetzt den ersten `LeereFelder`-Baustein aus Runde 2b.

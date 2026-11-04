@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: projektleitung, montage, buchhaltung, geschaeftsleitung
 ---
 
@@ -77,6 +77,7 @@ In der Akte unter **Dokumente**, mit Datum und Art im Namen.
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: Beleg (Foto oder PDF) beim Tanken und bei Kosten für die Firmenkarte; Fahrzeuge nur noch von Hand reservieren.
 - 02.11.2026: Zu erledigen, Fahrzeug-Akte mit Leasing, Versicherung und Kosten, Belegung, Schäden mit Stand, QR-Etiketten.
 - 26.10.2026: Neuer Bereich Fahrzeuge & Geräte mit Fristen und Übergaben.

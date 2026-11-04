@@ -90,6 +90,7 @@ Die Bereiche stehen in kleinen Gruppen (Übersicht, Kontakte, Verkauf, Akquise, 
 
 ## Neu {#neu}
 
+- 04.11.2026: Alle Akten (Kunde, Projekt, Service-Fall, Werkvertrag, Rechnung, Fahrzeug …) zeigen leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Bereiche mit vielen Reitern zeigen höchstens sechs, der Rest steht unter **Mehr ▾** (der gewählte bleibt immer sichtbar). Akten zeigen leere Felder erst nach **+ weitere Angaben**.
 - 04.11.2026: Seitenleiste in kleinen Gruppen zum Auf- und Zuklappen, alles passt ohne Scrollen. Seltene Knöpfe stehen unter **Mehr**, Filter ohne Treffer bleiben weg, die Erklärung einer Seite steht hinter dem **i** neben dem Titel.
 - 04.11.2026: Die Prüfung sieht auch die Bildschirmfotos und kann in der Einschätzung darauf verweisen.

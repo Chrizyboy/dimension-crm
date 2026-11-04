@@ -85,6 +85,7 @@ Beim Fall die richtige Anlage wählen. **Frühere Fälle** zeigt, was an dieser 
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «offene Fälle» steht immer da.
 - 03.11.2026: «In den Papierkorb» für Service-Fälle, Anlagen und Garantiefälle, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 02.11.2026: Leitstand als Board mit Reaktionszeit, Fall-Akte als ganze Seite mit Arbeitsschritten, Checkliste und Kosten; Meldungen aus dem Störungsformular der Website.

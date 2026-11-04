@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: innendienst, projektleitung, verkauf, buchhaltung, administration
 ---
 
@@ -92,5 +92,6 @@ In manchen Gemeinden versorgen mehrere Netzbetreiber je einen Teil. Dann wählt 
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: Adressbuch nur noch für Geschäftspartner, mit Rollen und Steckbrief, ganzer Seite je Partner, Nachweisen mit Fristen, offenen Netzgesuchen, Bewertung der Subunternehmer, Provision der Vermittler, UID-Register und ElCom-Verzeichnis.
 - 31.10.2026: Suche und Detailfenster einheitlich wie in allen Bereichen.
