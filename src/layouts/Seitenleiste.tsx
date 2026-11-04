@@ -68,7 +68,10 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
 
       <nav
         aria-label={t('nav.haupt')}
-        className={cn('flex flex-1 flex-col gap-3 overflow-y-auto py-2.5', eingeklappt ? 'px-2' : 'px-3')}
+        className={cn(
+          'relative flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto py-2.5',
+          eingeklappt ? 'px-2' : 'px-3',
+        )}
       >
         {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g)).map((gruppe) => (
           <div key={gruppe} className="flex flex-col gap-0.5">
