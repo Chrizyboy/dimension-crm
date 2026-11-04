@@ -1,4 +1,4 @@
-import { Suspense, type ReactNode } from 'react'
+import { Suspense, useEffect, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Toaster } from 'sonner'
 import { TooltipAnbieter } from '@/components/ui/tooltip'
@@ -30,6 +30,16 @@ export function AppShell({ children }: { children: ReactNode }) {
   const einfach = useAnmeldung((z) => z.ich?.ansicht === 'einfach')
   // Erst laden, wenn jemand Ctrl J drückt (spart Startzeit).
   const assistent = useUi((z) => z.assistentOffen)
+
+  // Das Fenster selbst scrollt nie: Inhalt und Seitenleiste haben eigene Scrollbereiche. Sonst liess sich die
+  // Desktop-App über die App hinaus ins Leere scrollen, sobald irgendein Element über den Rand ragte.
+  useEffect(() => {
+    const wurzeln = [document.documentElement, document.body]
+    for (const w of wurzeln) w.style.overflow = 'hidden'
+    return () => {
+      for (const w of wurzeln) w.style.overflow = ''
+    }
+  }, [])
 
   return (
     <TooltipAnbieter delayDuration={300}>
