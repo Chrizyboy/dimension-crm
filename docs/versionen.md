@@ -10,6 +10,10 @@ veröffentlichen» starten (docs/installation.md).
 - Fenster scrollt nicht mehr unter die App ins Leere, auch nicht in der Desktop-App.
 - Download-Seite work.dimension-solaire.ch/download öffnet sich immer, auch ohne Anmeldung.
 - Neues App-Symbol erscheint auch im Browser-Tab.
+- Baustelle: jede Zeit hat ein Ziel (Projekt, Service-Fall oder intern), das Team stempelt gemeinsam, ein Rapport pro Team, Foto des Tages mit Erinnerung.
+- Baustelle am Handy einfacher: weniger Reiter für die Montage.
+- Übersichtlicher: Seitenleiste in kleinen Gruppen, höchstens sechs Reiter, Knöpfe unter «Mehr», Filter und Kacheln ohne Nullen, leere Felder erst beim Bearbeiten.
+- Dienst-Wächter: neue Glocke bei anderem Grund, klarer Text bei abgelehnten SMS-Zugangsdaten.
 
 ## 1.1.0
 
