@@ -104,7 +104,7 @@ Im Reiter **Zeiten** nachtragen oder dem Büro melden; die Buchhaltung korrigier
 
 ## Neu {#neu}
 
-- 04.11.2026: Jede Zeit braucht ein Ziel (**Wofür**): Baustelle, Service-Fall oder Lager / Werkstatt, Fahrzeug, Weiterbildung. «Ohne Baustelle» gibt es nicht mehr; der Lohn-Export zeigt das Ziel. Ein Knopf startet und stoppt die Zeit fürs ganze Team. Foto des Tages pro Baustelle: ohne Foto kein Stopp, Erinnerung um 18:00.
+- 04.11.2026: Jede Zeit braucht ein Ziel (**Wofür**): Baustelle, Service-Fall oder Lager / Werkstatt, Fahrzeug, Weiterbildung. «Ohne Baustelle» gibt es nicht mehr; der Lohn-Export zeigt das Ziel. Ein Knopf startet und stoppt die Zeit fürs ganze Team. Foto des Tages pro Baustelle: ohne Foto kein Stopp, Erinnerung um 18:00. Ein Rapport pro Baustelle und Tag fürs Team (**Rapport weiterführen**); am Handy zeigt die Montage nur **Mein Tag**, **Wochenplan** und **Zeiten**.
 - 03.11.2026: «In den Papierkorb» für Rapporte und Zeiten; abgeschlossene Rapporte nur die Administration, exportierte Zeiten gar nicht, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Zeiten aller nur für Geschäftsleitung und Buchhaltung, direkte Vorgesetzte sehen ihr Team.
 - 03.11.2026: Zeiten: mehrere Personen zugleich wählen; der Lohn-Export enthält nur die gewählten.
