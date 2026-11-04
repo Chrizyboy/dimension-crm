@@ -24,4 +24,15 @@ describe('Filterchips', () => {
     expect(onChange).toHaveBeenLastCalledWith(['bau'])
     expect(screen.getByText('13')).toBeInTheDocument()
   })
+
+  it('blendet Filter ohne Treffer aus, ausser sie sind gewählt', () => {
+    const mitNull = [
+      ...optionen,
+      { wert: 'service', text: 'Service', anzahl: 0 },
+      { wert: 'alt', text: 'Alt', anzahl: 0 },
+    ]
+    render(<Filterchips beschriftung="Stand" optionen={mitNull} gewaehlt={['alt']} onChange={vi.fn()} />)
+    expect(screen.queryByRole('button', { name: /Service/ })).toBeNull()
+    expect(screen.getByRole('button', { name: /Alt/ })).toHaveAttribute('aria-pressed', 'true')
+  })
 })

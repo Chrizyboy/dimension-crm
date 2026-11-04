@@ -20,6 +20,8 @@ interface FilterchipsProps {
  * Filter als runde Knöpfe über Listen. Ein Klick schaltet ein und aus; die Zahl zeigt,
  * wie viele Einträge der Filter trifft. Für Stand, Kontaktart, Zeitachse und spätere Listen.
  * Am Handy eine Zeile zum Wischen, am PC dürfen viele Knöpfe umbrechen.
+ * Filter, die gerade nichts treffen (Zahl 0), bleiben weg, solange sie nicht gewählt sind (Chris 4.11.2026
+ * «zu unübersichtlich»); bei «nur einer zugleich» bleiben alle stehen, weil dort die Wahl selbst die Ansicht ist.
  */
 export function Filterchips({ optionen, gewaehlt, onChange, beschriftung, einzeln = false }: FilterchipsProps) {
   return (
@@ -30,6 +32,7 @@ export function Filterchips({ optionen, gewaehlt, onChange, beschriftung, einzel
     >
       {optionen.map((o) => {
         const an = gewaehlt.includes(o.wert)
+        if (!einzeln && !an && o.anzahl === 0) return null
         return (
           <button
             key={o.wert}

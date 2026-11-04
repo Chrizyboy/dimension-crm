@@ -42,6 +42,9 @@ test.describe('Desktop', () => {
   test('Alle 28 Bereiche sind über die Seitenleiste erreichbar', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
+    // Ohne eigene Wahl ist nur «Übersicht» offen (Entscheid 0058); jede Gruppe klappt mit einem Klick auf.
+    await expect(nav.getByRole('link')).toHaveCount(5)
+    for (const gruppe of await nav.getByRole('button', { expanded: false }).all()) await gruppe.click()
     await expect(nav.getByRole('link')).toHaveCount(28)
     await nav.getByRole('link', { name: 'Anfragen & Leads' }).click()
     await expect(page).toHaveURL(/#\/sales$/)
@@ -49,6 +52,17 @@ test.describe('Desktop', () => {
     await expect(
       page.getByText(/Vorschau ohne Datenbank|Vom ersten Kontakt bis zur Auftragszusage/).first(),
     ).toBeVisible()
+  })
+
+  test('Zugeklappte Gruppe zeigt den offenen Bereich und bleibt nach dem Neuladen zu', async ({ page }) => {
+    await page.goto('/#/invoices')
+    const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
+    await expect(nav.getByRole('link', { name: 'Spesen' })).toBeVisible()
+    await nav.getByRole('button', { name: 'Finanzen' }).click()
+    await expect(nav.getByRole('link', { name: 'Spesen' })).toHaveCount(0)
+    await expect(nav.getByRole('link', { name: 'Rechnungen' })).toBeVisible()
+    await page.reload()
+    await expect(nav.getByRole('button', { name: 'Finanzen' })).toHaveAttribute('aria-expanded', 'false')
   })
 
   test('Seitenleiste lässt sich mit Ctrl B einklappen', async ({ page }) => {
@@ -68,6 +82,7 @@ test.describe('Handy', () => {
     await leiste.getByRole('link', { name: 'Projekte & Montage' }).click()
     await expect(page).toHaveURL(/#\/projects$/)
     await leiste.getByRole('button', { name: 'Mehr' }).click()
+    await page.getByRole('dialog').getByRole('button', { name: 'Finanzen' }).click()
     await page.getByRole('dialog').getByRole('link', { name: 'Rechnungen' }).click()
     await expect(page).toHaveURL(/#\/invoices$/)
     await expect(page.getByRole('dialog')).toBeHidden()

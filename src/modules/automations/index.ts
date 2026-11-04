@@ -12,7 +12,7 @@ export const meta: ModulMeta = {
   untertitel: { de: 'Abläufe, die von selbst laufen', fr: 'Processus qui tournent tout seuls' },
   pfad: '/automations',
   icon: 'workflow',
-  gruppe: 'verwaltung',
+  gruppe: 'betrieb',
   phase: 12,
   // Automationen handeln im Namen der Firma; einrichten nur die Administration (RLS prüft zusätzlich).
   recht: 'admin',

@@ -5,10 +5,13 @@
   },
   "nav": {
     "uebersicht": "Aperçu",
+    "kontakte": "Contacts",
     "verkauf": "Vente",
+    "akquise": "Prospection",
     "abwicklung": "Réalisation",
-    "verwaltung": "Administration",
-    "weitere": "Autres",
+    "finanzen": "Finances",
+    "betrieb": "Entreprise",
+    "hilfe": "Aide",
     "suchen": "Rechercher ou commande …",
     "haupt": "Navigation principale",
     "einklappen": "Réduire",
@@ -16,7 +19,9 @@
     "handy": "Navigation rapide",
     "mehr": "Plus",
     "zumInhalt": "Aller au contenu",
-    "assistent": "Assistant"
+    "assistent": "Assistant",
+    "gruppeAuf": "Déplier {{gruppe}}",
+    "gruppeZu": "Replier {{gruppe}}"
   },
   "start": {
     "titel": "Bienvenue dans le nouveau CRM",

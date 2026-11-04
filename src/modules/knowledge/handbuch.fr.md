@@ -84,8 +84,13 @@ Ouvre ton signalement sous **Signalements** et appuie sur **Joindre une image**.
 
 Onglet **Premiers pas**.
 
+### Je ne trouve plus un domaine dans la barre latérale.
+
+Les domaines sont rangés en petits groupes (Aperçu, Contacts, Vente, Prospection, Réalisation, Finances, Entreprise, Aide). Touche le nom du groupe pour le déplier. Ou **Ctrl K** et tape le nom. Ce que tu déplies ou replies reste ainsi.
+
 ## Nouveautés {#neu}
 
+- 04.11.2026: Barre latérale en petits groupes à déplier et replier, tout tient sans défiler. Les boutons rares sont sous **Plus**, les filtres sans résultat disparaissent, l’explication d’une page est derrière le **i** à côté du titre.
 - 04.11.2026: L’examen voit aussi les captures d’écran et peut y renvoyer dans l’évaluation.
 - 03.11.2026: Joindre captures d’écran et photos : Ctrl+V, glisser, appareil photo sur le portable, aperçu dans le signalement et **Joindre une image** pour compléter.
 - 02.11.2026: Un chapitre par domaine, aide avec F1, recherche dans tout, « Pour toi » par rôle, termes A–Z et « Nouveautés ».

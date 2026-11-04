@@ -14,7 +14,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const [id, titel, titelFr, icon = 'square', gruppe = 'weitere', phase = '0'] = process.argv.slice(2)
+const [id, titel, titelFr, icon = 'square', gruppe = 'hilfe', phase = '0'] = process.argv.slice(2)
 
 if (!id || !titel || !titelFr) {
   console.error('Bitte angeben: <id> "<Titel DE>" "<Titel FR>" [icon] [gruppe] [phase]')

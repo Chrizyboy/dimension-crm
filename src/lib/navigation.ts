@@ -32,36 +32,48 @@ import type { ModulMeta, NavGruppe } from '@/types/modul'
 export const MODULE: readonly ModulMeta[] = [
   today,
   inbox,
-  dashboard,
   tasks,
   outbox,
-  sales,
-  quotes,
-  pricing,
-  workcontracts,
-  tenders,
-  contracting,
+  dashboard,
   customers,
   contacts,
+  sales,
+  quotes,
+  workcontracts,
+  pricing,
+  tenders,
+  contracting,
   marketing,
   projects,
-  purchasing,
   fieldwork,
-  fleet,
+  purchasing,
+  aftersales,
   contracts,
   invoices,
-  aftersales,
   finance,
   expenses,
   staff,
+  fleet,
   automations,
   settings,
   knowledge,
   ai,
 ]
 
-/** Reihenfolge der Gruppen in der Seitenleiste. */
-export const GRUPPEN: readonly NavGruppe[] = ['uebersicht', 'verkauf', 'abwicklung', 'verwaltung', 'weitere']
+/**
+ * Reihenfolge der Gruppen in der Seitenleiste. Kleine Gruppen nach Arbeitsschritt (Chris 4.11.2026 «zu unübersichtlich»):
+ * jede lässt sich zuklappen, damit die ganze Leiste ohne Scrollen Platz hat.
+ */
+export const GRUPPEN: readonly NavGruppe[] = [
+  'uebersicht',
+  'kontakte',
+  'verkauf',
+  'akquise',
+  'abwicklung',
+  'finanzen',
+  'betrieb',
+  'hilfe',
+]
 
 /** Module einer Gruppe, in Seitenleisten-Reihenfolge. */
 export function moduleDerGruppe(gruppe: NavGruppe): ModulMeta[] {

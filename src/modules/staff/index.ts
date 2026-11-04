@@ -15,7 +15,7 @@ export const meta: ModulMeta = {
   },
   pfad: '/staff',
   icon: 'id-card',
-  gruppe: 'verwaltung',
+  gruppe: 'betrieb',
   phase: 17,
   immer: true,
 }

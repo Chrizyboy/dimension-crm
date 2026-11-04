@@ -5,10 +5,13 @@
   },
   "nav": {
     "uebersicht": "Übersicht",
+    "kontakte": "Kontakte",
     "verkauf": "Verkauf",
+    "akquise": "Akquise",
     "abwicklung": "Abwicklung",
-    "verwaltung": "Verwaltung",
-    "weitere": "Weitere",
+    "finanzen": "Finanzen",
+    "betrieb": "Betrieb",
+    "hilfe": "Hilfe",
     "suchen": "Suchen oder Befehl …",
     "haupt": "Hauptnavigation",
     "einklappen": "Einklappen",
@@ -16,7 +19,9 @@
     "handy": "Schnellnavigation",
     "mehr": "Mehr",
     "zumInhalt": "Zum Inhalt springen",
-    "assistent": "Assistent"
+    "assistent": "Assistent",
+    "gruppeAuf": "{{gruppe}} aufklappen",
+    "gruppeZu": "{{gruppe}} zuklappen"
   },
   "start": {
     "titel": "Willkommen im neuen CRM",

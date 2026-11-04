@@ -1,11 +1,11 @@
-import { Link } from '@tanstack/react-router'
-import { Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { Link, useRouterState } from '@tanstack/react-router'
+import { ChevronRight, Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Logo, SIGNET } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
-import { GRUPPEN } from '@/lib/navigation'
+import { findeModul, GRUPPEN } from '@/lib/navigation'
 import { SPRUENGE } from '@/lib/spruenge'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { cn } from '@/lib/utils'
@@ -20,7 +20,10 @@ const AKTIV = {
 }
 
 /**
- * Linke Navigation in Marineblau: Module nach Gruppen wie in der Vorlage.
+ * Linke Navigation in Marineblau: Module in kleinen Gruppen nach Arbeitsschritt (Entscheid 0058).
+ * Jede Gruppe klappt mit einem Klick auf ihren Namen auf und zu; ohne eigene Wahl sind nur «Übersicht» und die Gruppe
+ * des offenen Bereichs offen, so passt die Leiste ohne Scrollen auf einen Laptop. Die Wahl bleibt im Gerät gespeichert.
+ * Eine zugeklappte Gruppe zeigt den offenen Bereich trotzdem, damit man immer sieht, wo man ist.
  * Eingeklappt bleiben nur die Icons (mit Tooltip), damit mehr Platz für Tabellen bleibt.
  * `imMenue`: Darstellung im Handy-Menü (immer ausgeklappt, schliesst nach dem Klick).
  */
@@ -30,6 +33,10 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
   const sichtbar = useSichtbareModule()
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt) && !imMenue
   const toggle = useUi((z) => z.toggleSeitenleiste)
+  const gruppenOffen = useUi((z) => z.gruppenOffen)
+  const setGruppeOffen = useUi((z) => z.setGruppeOffen)
+  const pfad = useRouterState({ select: (z) => z.location.pathname })
+  const aktiv = findeModul(pfad.split('/')[1] ?? '')
 
   // Eingeklappt zeigt der Hinweis Name + Erklärung, ausgeklappt nur zusätzlich die Erklärung.
   // Mit Sprung-Taste steht «G K» rechts im Hinweis (nicht im Handy-Menü, dort gibt es keine Tastatur).
@@ -69,22 +76,37 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
       <nav
         aria-label={t('nav.haupt')}
         className={cn(
-          'relative flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto py-2.5',
+          'relative flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto py-2.5',
           eingeklappt ? 'px-2' : 'px-3',
         )}
       >
-        {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g)).map((gruppe) => (
-          <div key={gruppe} className="flex flex-col gap-0.5">
-            {eingeklappt ? (
-              <div className="bg-sidebar-border mx-2 mb-1 h-px first:hidden" aria-hidden="true" />
-            ) : (
-              <div className="text-sidebar-muted px-2 pb-1 text-xs font-semibold tracking-[0.08em] uppercase">
-                {t(`nav.${gruppe}`)}
-              </div>
-            )}
-            {sichtbar
-              .filter((m) => m.gruppe === gruppe)
-              .map((m) =>
+        {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g)).map((gruppe) => {
+          const offen = eingeklappt || (gruppenOffen[gruppe] ?? (gruppe === 'uebersicht' || gruppe === aktiv?.gruppe))
+          const name = t(`nav.${gruppe}`)
+          // Zugeklappt bleibt der offene Bereich stehen, sonst wüsste man nicht mehr, wo man ist.
+          const module = sichtbar.filter((m) => m.gruppe === gruppe && (offen || m.id === aktiv?.id))
+          return (
+            <div key={gruppe} className="flex flex-col gap-0.5">
+              {eingeklappt ? (
+                <div className="bg-sidebar-border mx-2 mb-1 h-px first:hidden" aria-hidden="true" />
+              ) : (
+                <button
+                  type="button"
+                  aria-expanded={offen}
+                  title={offen ? t('nav.gruppeZu', { gruppe: name }) : t('nav.gruppeAuf', { gruppe: name })}
+                  onClick={() => {
+                    setGruppeOffen(gruppe, !offen)
+                  }}
+                  className="text-sidebar-muted hover:text-sidebar-foreground focus-visible:ring-ring group/gruppe flex h-6 items-center gap-1 rounded-md px-2 text-left text-xs font-semibold tracking-[0.08em] uppercase outline-none focus-visible:ring-2"
+                >
+                  <span className="flex-1 truncate">{name}</span>
+                  <ChevronRight
+                    aria-hidden="true"
+                    className={cn('size-3.5 shrink-0 transition-transform', offen && 'rotate-90')}
+                  />
+                </button>
+              )}
+              {module.map((m) =>
                 eintrag(
                   m.id,
                   <Link
@@ -103,8 +125,9 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
                   m.untertitel[sprache],
                 ),
               )}
-          </div>
-        ))}
+            </div>
+          )
+        })}
       </nav>
 
       <div

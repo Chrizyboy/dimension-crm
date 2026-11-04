@@ -12,7 +12,7 @@ export const meta: ModulMeta = {
   untertitel: { de: 'Öffentliche Aufträge und Baugesuche finden', fr: 'Marchés publics et permis de construire' },
   pfad: '/tenders',
   icon: 'gavel',
-  gruppe: 'verkauf',
+  gruppe: 'akquise',
   phase: '8b',
 }
 
