@@ -20,7 +20,7 @@ La vue mobile pour le montage et la vue bureau correspondante : planning du jour
 
 1. Onglet **Ma journée** : interventions du jour et des jours suivants, avec équipe, électricien et matériel.
 2. **Navigation** ouvre l’app de cartes, **Appeler le client** compose le numéro.
-   En haut, le **Temps de travail** : sous **Pour quoi**, le chantier du jour est choisi, sinon un cas de service ou **Dépôt / atelier**, **Véhicule**, **Formation**. Puis **Début travail** ou **Début déplacement**. Avec **Pour toute l’équipe** (par défaut), le temps démarre aussi pour les collègues de la même intervention ; au **Stop**, **Arrêter aussi pour …** fait pareil. Chacun peut ensuite corriger son temps dans l’onglet **Heures**.
+   En haut, le **Temps de travail** : sous **Pour quoi**, le chantier du jour est choisi, sinon un cas de service ou **Dépôt / atelier**, **Véhicule**, **Formation**. Puis **Début travail** ou **Début déplacement**. Avec **Pour toute l’équipe** (par défaut), le temps démarre aussi pour les collègues de la même intervention ; au **Stop**, **Arrêter aussi pour …** fait pareil. Chacun peut ensuite corriger son temps dans l’onglet **Temps**.
 3. La carte montre l’avancement du chantier, ce qui est prévu aujourd’hui et les photos obligatoires manquantes. **Dossier** ouvre installation, plans, contacts et matériel à cocher au chargement (aussi sans réseau).
 4. **Commencer le rapport** : pour un montage, d’abord le **Contrôle de sécurité**. Tout cocher, cocher qui travaille aujourd’hui, **Début du travail pour l’équipe**. Le temps démarre pour tous à la même heure.
 5. Un problème (matériel, dégât, météo …) ? **Signaler un problème**, avec photo. Le chef de projet le reçoit tout de suite.
