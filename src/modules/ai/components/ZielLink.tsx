@@ -36,6 +36,12 @@ export function ZielLink({ tabelle, id, children }: { tabelle: string; id: strin
           {children}
         </Link>
       )
+    case 'anlagen':
+      return (
+        <Link to="/aftersales" search={{ anlage: id }} className={K}>
+          {children}
+        </Link>
+      )
     case 'rechnungen':
       return (
         <Link to="/invoices" search={{ rechnung: id }} className={K}>
@@ -51,6 +57,48 @@ export function ZielLink({ tabelle, id, children }: { tabelle: string; id: strin
     case 'aufgaben':
       return (
         <Link to="/tasks" className={K}>
+          {children}
+        </Link>
+      )
+    case 'posteingang':
+      return (
+        <Link to="/inbox" search={{ mail: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'ausgangskorb':
+      return (
+        <Link to="/outbox" search={{ eintrag: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'bestellungen':
+      return (
+        <Link to="/purchasing" search={{ bestellung: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'kreditor_zahlungen':
+      return (
+        <Link to="/finance" search={{ reiter: 'lieferanten' }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'grossprojekte':
+      return (
+        <Link to="/contracting" search={{ projekt: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'ausschreibungen':
+      return (
+        <Link to="/tenders" search={{ dossier: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'spesen':
+      return (
+        <Link to="/expenses" className={K}>
           {children}
         </Link>
       )

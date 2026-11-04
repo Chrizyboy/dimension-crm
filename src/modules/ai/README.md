@@ -14,7 +14,7 @@ liegen in `src/components/shared/ki/` und `src/services/ki.ts`.
 - `ki_gespraeche` (eigene Gespräche, privat, 90 Tage), `ki_vorlagen` (Aufträge: Firma und eigene)
 - `einstellungen.ki` (ändern nur `admin`, inkl. `aus`), `ki_aufrufe` über `ki_kosten()`, `schreibstile`
 - Tagesbriefing in `ki_ergebnisse` (art `briefing`)
-- Fragen ans CRM: Edge Function `ki` Aktion `frage` (Katalog in `supabase/functions/_shared/ki_fragen.ts`),
+- Fragen ans CRM: Edge Function `ki` Aktion `frage` (Katalog in `supabase/functions/_shared/ki_katalog.ts`, Dringlichkeit im Posteingang `ki_dringlichkeit.ts`),
   Dokumente: Aktion `dokument`
 
 ## Abhängigkeiten

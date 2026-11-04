@@ -4,6 +4,7 @@
 
 import { alsPerson, dienst, type Ich } from '../_shared/datenbank.ts'
 import { DienstFehler } from '../_shared/http.ts'
+import { ergaenze } from '../_shared/ki_dringlichkeit.ts'
 import * as F from '../_shared/ki_fragen.ts'
 import { daten, kiAufruf, kiEinstellung } from '../_shared/ki_rahmen.ts'
 import { erlaubt, kurz, liste, objekt, oderNull, text, janein, wahl } from '../_shared/ki_schema.ts'
@@ -89,7 +90,7 @@ export async function frage(e: Eingabe, ich: Ich) {
     bezug ? person.rpc('ki_kontext', { p_tabelle: bezug.tabelle, p_id: bezug.id }) : Promise.resolve(null),
   ])
   const bisher = (alt?.nachrichten ?? []).slice(-4).map((r) => ({ frage: r.frage, antwort: r.antwort }))
-  const wer = { name: ich.name, kuerzel: ich.kuerzel, rechte: ich.rechte, heute: heute() }
+  const wer = { id: ich.id, name: ich.name, kuerzel: ich.kuerzel, rechte: ich.rechte, heute: heute() }
   const cfg = await kiEinstellung()
   const auftrag = { personId: ich.id, bezugTabelle: bezug?.tabelle, bezugId: bezug?.id }
 
@@ -110,7 +111,12 @@ export async function frage(e: Eingabe, ich: Ich) {
       const p = F.abfragePfad(a)
       if (!p) return { tabelle: a.tabelle, zeilen: [], mehr: false, verworfen: [], fehler: 'tabelle' }
       try {
-        const zeilen = F.flach(await person.lies<Record<string, unknown>[]>(p.pfad))
+        const zeilen = ergaenze(
+          a.tabelle,
+          F.flach(await person.lies<Record<string, unknown>[]>(p.pfad)),
+          a.sortierung?.feld ?? null,
+          new Date(),
+        )
         const limit = Math.max(1, Math.min(50, Math.round(a.limit || 20)))
         return {
           tabelle: a.tabelle,
