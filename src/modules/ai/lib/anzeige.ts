@@ -1,7 +1,7 @@
 import { formatChf, formatDatum, formatDatumZeit } from '@/lib/format'
 
 /** Felder mit Datum ohne Uhrzeit. */
-const DATUM = /(_am|^datum|^baubeginn|_wartung|_bis|^liefertermin|_termin|_kontrolle)$/
+const DATUM = /(_am|^datum|^baubeginn|_wartung|_bis|^liefertermin|_termin|_kontrolle|_mfk|_service|_pruefung)$/
 
 /** Dringlichkeit einer Mail (vom Server gerechnet) in der Sprache der Person. */
 const STUFE_FR: Record<string, string> = { hoch: 'haute', mittel: 'moyenne', tief: 'basse' }

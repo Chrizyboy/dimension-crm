@@ -11800,7 +11800,12 @@
       "ausschreibungen": "Ausschreibungen",
       "anlagen": "Anlagen",
       "einsaetze": "Einsätze",
-      "fristen": "Fristen"
+      "fristen": "Fristen",
+      "lagerbestand": "Lager",
+      "fahrzeuge": "Fahrzeuge",
+      "geraete": "Geräte",
+      "marketing_kampagnen": "Kampagnen",
+      "nachtraege": "Nachträge"
     },
     "feld": {
       "nummer": "Nummer",
@@ -11873,7 +11878,28 @@
       "an": "An",
       "kanal": "Kanal",
       "gesendet_am": "Gesendet",
-      "sende_ab": "Senden ab"
+      "sende_ab": "Senden ab",
+      "artikel": "Artikel",
+      "menge": "Menge",
+      "reserviert": "Reserviert",
+      "mindestmenge": "Mindestmenge",
+      "lagerplatz": "Lagerplatz",
+      "bezeichnung": "Bezeichnung",
+      "kennzeichen": "Kennzeichen",
+      "km_stand": "km",
+      "naechste_mfk": "Nächste MFK",
+      "naechster_service": "Nächster Service",
+      "vignette_bis": "Vignette bis",
+      "naechste_pruefung": "Nächste Prüfung",
+      "inventar_nr": "Inventar-Nr.",
+      "zustand": "Zustand",
+      "name": "Name",
+      "start_am": "Start",
+      "ende_am": "Ende",
+      "ziel_leads": "Ziel Leads",
+      "beschreibung": "Beschreibung",
+      "stunden": "Stunden",
+      "bestaetigt_am": "Bestätigt"
     }
   },
   "automatik": {

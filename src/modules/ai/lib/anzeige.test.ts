@@ -16,6 +16,7 @@ describe('zellwert', () => {
   })
   it('zeigt Liefertermin als Datum und die Dringlichkeit einer Mail in der Sprache', () => {
     expect(zellwert('liefertermin', '2026-11-12', 'de')).toBe('12.11.2026')
+    expect(zellwert('naechste_mfk', '2027-03-01', 'de')).toBe('01.03.2027')
     expect(zellwert('dringlichkeit', 'hoch', 'de')).toBe('hoch')
     expect(zellwert('dringlichkeit', 'hoch', 'fr')).toBe('haute')
   })

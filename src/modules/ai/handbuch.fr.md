@@ -20,7 +20,7 @@ Rédiger, lire les e-mails, ta journée en un coup d’œil et les coûts sous c
 1. Onglet **Questions** (ou partout **Ctrl J**) et taper la question avec tes mots, p. ex. « Trie ma boîte de réception par urgence » ou « Quelles commandes sont en retard ? ».
 2. La réponse arrive avec un tableau tiré du CRM. Cliquer sur le numéro, l’objet, le client ou le projet ouvre la fiche.
 3. En dessous, des propositions (**Créer une tâche**, **Rédiger un e-mail**, **Ouvrir**). Rien n’est enregistré avant ton clic.
-4. L’assistant connaît : clients, leads, offres, projets, cas de service, installations, factures, contrats de maintenance, tâches, historique, **boîte de réception**, **boîte d’envoi**, commandes, factures fournisseurs, frais, grands projets, appels d’offres, interventions et échéances.
+4. L’assistant connaît : clients, leads, offres, projets, cas de service, installations, factures, contrats de maintenance, tâches, historique, **boîte de réception**, **boîte d’envoi**, commandes, factures fournisseurs, frais, grands projets, appels d’offres, interventions, échéances, stock, véhicules, appareils, campagnes et avenants.
 5. Boîte de réception par urgence : en haut les mails dont le délai de réponse est dépassé, les pannes, les mails reconnus urgents et les clients qui n’ont pas répondu. Les mails reportés ou en attente sont plus bas. Le motif est indiqué pour chaque mail.
 
 ### Rédiger un texte pour un client
@@ -84,6 +84,6 @@ Oui, via les boutons IA du CRM. L’appel passe par notre serveur avec la clé d
 
 ## Nouveautés {#neu}
 
-- 04.11.2026: L’assistant lit aussi la boîte de réception (triée par urgence), la boîte d’envoi, les commandes, les factures fournisseurs, les frais, les grands projets, les appels d’offres, les installations, les interventions et les échéances.
+- 04.11.2026: L’assistant lit aussi la boîte de réception (triée par urgence), la boîte d’envoi, les commandes, les factures fournisseurs, les frais, les grands projets, les appels d’offres, les installations, les interventions, les échéances, le stock, les véhicules, les appareils, les campagnes et les avenants.
 - 24.10.2026: Texte de lecture dès 12 px, tableaux au clavier.
 - 23.10.2026: Assistant IA avec coûts, Mon style, paramètres et briefing « Ta journée ».

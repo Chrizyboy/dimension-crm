@@ -9,6 +9,7 @@ export interface Einbettung {
   person?: string
   lieferant?: string
   projekt?: string
+  artikel?: string
 }
 export type EinbettungArt = keyof Einbettung
 
@@ -31,6 +32,12 @@ export const VERKNUEPFUNG: Record<
     oder: (v) => `(kuerzel.ilike.${v},name.ilike.*${v}*)`,
   },
   lieferant: { alias: 'lieferant', ziel: 'lieferanten', felder: 'name', oder: (v) => `(name.ilike.*${v}*)` },
+  artikel: {
+    alias: 'artikel',
+    ziel: 'artikel',
+    felder: 'artikelnummer,name',
+    oder: (v) => `(artikelnummer.ilike.*${v}*,name.ilike.*${v}*)`,
+  },
   projekt: {
     alias: 'projekt',
     ziel: 'projekte',
@@ -354,6 +361,71 @@ export const KATALOG: Record<string, Tabelle> = {
     felder: { art: 'Text', von: 'Zeitpunkt', bis: 'Zeitpunkt', notiz: 'Text' },
     einbettung: { projekt: 'einsaetze_projekt_id_fkey' },
     standardSortierung: 'von',
+  },
+  lagerbestand: {
+    beschreibung: 'Lagerbestand in Bulle je Artikel. Frei = menge minus reserviert; knapp, wenn unter mindestmenge',
+    felder: { menge: 'Zahl', reserviert: 'Zahl (für Projekte)', mindestmenge: 'Zahl', lagerplatz: 'Text' },
+    einbettung: { artikel: 'lagerbestand_artikel_id_fkey' },
+    standardSortierung: 'menge',
+  },
+  fahrzeuge: {
+    beschreibung: 'Fahrzeuge: MFK, Service, Vignette, Leasing, Kilometer. person = fährt es meistens',
+    felder: {
+      bezeichnung: 'Text',
+      kennzeichen: 'Text',
+      marke_modell: 'Text',
+      km_stand: 'Zahl',
+      naechste_mfk: 'Datum',
+      naechster_service: 'Datum',
+      vignette_bis: 'Datum',
+      leasing_bis: 'Datum',
+      ausser_betrieb: 'true/false',
+    },
+    einbettung: { person: 'fahrzeuge_person_id_fkey' },
+    standardSortierung: 'naechste_mfk',
+  },
+  geraete: {
+    beschreibung: 'Geräte und Werkzeuge mit Prüffrist. person = hat es gerade',
+    felder: {
+      bezeichnung: 'Text',
+      art: 'Text',
+      inventar_nr: 'Text',
+      zustand: 'Text',
+      naechste_pruefung: 'Datum',
+      zurueck_bis: 'Datum (ausgeliehen bis)',
+    },
+    einbettung: { person: 'geraete_person_id_fkey' },
+    standardSortierung: 'naechste_pruefung',
+  },
+  marketing_kampagnen: {
+    beschreibung: 'Marketing-Kampagnen (Messe, Mailing, Social, Inserat …). person = verantwortlich',
+    felder: {
+      name: 'Text',
+      art: 'Text',
+      status: 'Text',
+      kennzeichen: 'Text',
+      start_am: 'Datum',
+      ende_am: 'Datum',
+      ziel_leads: 'Zahl',
+      sprache: 'de oder fr',
+    },
+    einbettung: { person: 'marketing_kampagnen_verantwortlich_id_fkey' },
+    standardSortierung: 'start_am',
+  },
+  nachtraege: {
+    beschreibung:
+      'Nachträge auf Baustellen (Mehraufwand). status: offen, vom_kunden_bestaetigt, verrechnet, abgelehnt …',
+    felder: {
+      nummer: 'Text',
+      beschreibung: 'Text',
+      status: 'Text',
+      betrag_rappen: 'Rappen exkl. MWST',
+      stunden: 'Zahl',
+      bestaetigt_am: 'Zeitpunkt',
+      erstellt_am: 'Zeitpunkt',
+    },
+    einbettung: { projekt: 'nachtraege_projekt_id_fkey', person: 'nachtraege_person_id_fkey' },
+    standardSortierung: 'erstellt_am',
   },
   fristen: {
     beschreibung: 'Fristen von Fahrzeugen, Geräten und Personal (MFK, Service, Prüfung, Ausweise)',

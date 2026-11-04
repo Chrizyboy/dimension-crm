@@ -84,6 +84,22 @@ describe('Katalog für Posteingang und weitere Bereiche', () => {
     expect(z[0]).toMatchObject({ lieferant: 'Solarmarkt', projekt: 'P-2026-014 Muster' })
   })
 
+  it('liest Lager mit Artikel und filtert nach Artikelname', () => {
+    const p = dec(
+      abfragePfad({
+        tabelle: 'lagerbestand',
+        filter: [{ feld: 'artikel', op: 'enthaelt', wert: 'Modul' }],
+        sortierung: null,
+        limit: 20,
+      })?.pfad ?? '',
+    )
+    expect(p).toContain('artikel:artikel!lagerbestand_artikel_id_fkey!inner(artikelnummer,name)')
+    expect(p).toContain('artikel.or=(artikelnummer.ilike.*Modul*,name.ilike.*Modul*)')
+    expect(flach([{ id: 'l1', artikel: { artikelnummer: 'M-450', name: 'Modul 450 W' } }])[0]).toMatchObject({
+      artikel: 'M-450 Modul 450 W',
+    })
+  })
+
   it('Fristen ist eine Sicht ohne Papierkorb, und der Katalog nennt die Dringlichkeit', () => {
     const p = dec(abfragePfad({ tabelle: 'fristen', filter: [], sortierung: null, limit: 5 })?.pfad ?? '')
     expect(p).not.toContain('geloescht_am')

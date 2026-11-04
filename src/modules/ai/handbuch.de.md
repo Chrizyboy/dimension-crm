@@ -20,7 +20,7 @@ Texte entwerfen, Mails lesen, dein Tag auf einen Blick und die Kosten im Griff. 
 1. Reiter **Fragen** (oder überall **Ctrl J**) und die Frage in eigenen Worten eintippen, z. B. «Sortier meinen Posteingang nach Dringlichkeit» oder «Welche Bestellungen sind überfällig?».
 2. Die Antwort kommt mit einer Tabelle aus dem CRM. Nummer, Betreff, Kunde oder Projekt in der Tabelle anklicken öffnet den Datensatz.
 3. Darunter stehen Vorschläge (**Aufgabe anlegen**, **Mail entwerfen**, **Öffnen**). Gespeichert wird erst nach deinem Klick.
-4. Der Assistent kennt: Kunden, Leads, Offerten, Projekte, Service-Fälle, Anlagen, Rechnungen, Wartungsverträge, Aufgaben, Verlauf, **Posteingang**, **Ausgangskorb**, Bestellungen, Lieferantenrechnungen, Spesen, Grossprojekte, Ausschreibungen, Einsätze und Fristen.
+4. Der Assistent kennt: Kunden, Leads, Offerten, Projekte, Service-Fälle, Anlagen, Rechnungen, Wartungsverträge, Aufgaben, Verlauf, **Posteingang**, **Ausgangskorb**, Bestellungen, Lieferantenrechnungen, Spesen, Grossprojekte, Ausschreibungen, Einsätze, Fristen, Lager, Fahrzeuge, Geräte, Kampagnen und Nachträge.
 5. Posteingang nach Dringlichkeit: Ganz oben stehen Mails mit abgelaufener Antwortfrist, Störungen, als dringend erkannte Mails und Kunden, die nicht geantwortet haben. Zurückgestellte und wartende Mails stehen weiter unten. Pro Mail steht der Grund.
 
 ### Einen Text an einen Kunden schreiben
@@ -84,6 +84,6 @@ Ja, über die KI-Knöpfe im CRM. Der Aufruf läuft über unseren Server mit dem 
 
 ## Neu {#neu}
 
-- 04.11.2026: Der Assistent liest jetzt auch Posteingang (sortiert nach Dringlichkeit), Ausgangskorb, Bestellungen, Lieferantenrechnungen, Spesen, Grossprojekte, Ausschreibungen, Anlagen, Einsätze und Fristen.
+- 04.11.2026: Der Assistent liest jetzt auch Posteingang (sortiert nach Dringlichkeit), Ausgangskorb, Bestellungen, Lieferantenrechnungen, Spesen, Grossprojekte, Ausschreibungen, Anlagen, Einsätze, Fristen, Lager, Fahrzeuge, Geräte, Kampagnen und Nachträge.
 - 24.10.2026: Lesetext ab 12 px, Tabellen mit Tastatur.
 - 23.10.2026: KI-Assistent mit Kosten, Mein Schreibstil, Einstellungen und Briefing «Dein Tag».

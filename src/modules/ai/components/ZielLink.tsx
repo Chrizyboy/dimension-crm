@@ -102,6 +102,36 @@ export function ZielLink({ tabelle, id, children }: { tabelle: string; id: strin
           {children}
         </Link>
       )
+    case 'fahrzeuge':
+      return (
+        <Link to="/fleet" search={{ fahrzeug: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'geraete':
+      return (
+        <Link to="/fleet" search={{ geraet: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'marketing_kampagnen':
+      return (
+        <Link to="/marketing" search={{ kampagne: id }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'lagerbestand':
+      return (
+        <Link to="/purchasing" search={{ reiter: 'lager' }} className={K}>
+          {children}
+        </Link>
+      )
+    case 'nachtraege':
+      return (
+        <Link to="/fieldwork" className={K}>
+          {children}
+        </Link>
+      )
     default:
       return <>{children}</>
   }

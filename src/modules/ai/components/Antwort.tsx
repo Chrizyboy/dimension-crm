@@ -18,7 +18,7 @@ import { ZielLink } from './ZielLink'
 
 const BEZUEGE = new Set<string>(['kontakte', 'verkaufschancen', 'offerten', 'projekte', 'service_faelle'])
 /** Feld, das in der Tabelle auf die Akte verlinkt. */
-const LINKFELD = new Set(['nummer', 'titel', 'betreff', 'kunde', 'projekt'])
+const LINKFELD = new Set(['nummer', 'titel', 'betreff', 'bezeichnung', 'name', 'artikel', 'kunde', 'projekt'])
 /** Spalten, die auf einen verknüpften Datensatz zeigen (Kunde, Projekt) statt auf die Zeile selbst. */
 const VERWEIS: Record<string, { tabelle: string; feld: string }> = {
   kunde: { tabelle: 'kontakte', feld: 'kontakt_id' },
