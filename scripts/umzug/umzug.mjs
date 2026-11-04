@@ -6,7 +6,8 @@
 //   npm run umzug -- datenbank          Tabellen und Regeln anlegen (supabase db push)
 //   npm run umzug -- funktionen         Server-Funktionen hochladen (supabase functions deploy)
 //   npm run umzug -- tresor             zeigt, welche zwei Einträge der Zeitplan im Tresor (Vault) braucht
-//   npm run umzug -- daten "CRM bisher.zip"   Daten aus V233 übernehmen, mit Zählbericht
+//   npm run umzug -- daten "CRM bisher.zip" --ablage <ordnerliste.json> --korrekturen <korrekturen.json>
+//                                       Daten aus V233 übernehmen, mit Zählbericht (Entscheide aus dem Datenabgleich)
 //
 // Schlüssel liest das Skript nur aus der Umgebung (SUPABASE_SERVICE_ROLE_KEY) und gibt sie nie aus.
 
@@ -154,10 +155,47 @@ function tresor() {
 Danach läuft der Zeitplan jede Minute. Kontrolle: im CRM Einstellungen › Betrieb.`)
 }
 
-function daten(zip) {
+/** Schalter, die `daten` an den Import weitergibt; die mit Wert brauchen eine Datei bzw. Zahl dahinter. */
+const DATEN_SCHALTER = { '--ablage': true, '--korrekturen': true, '--gebaut-bis': true, '--ueberschreiben': false }
+
+/**
+ * Baut den Aufruf des Imports für den Umzug. Ordnerliste (SharePoint) und Korrekturen sind Pflicht: ohne sie
+ * gelten die Entscheide aus dem Datenabgleich nicht (gewonnen nur mit Ordner, nachgetragene Aufträge, Nummern).
+ * @param {string[]} rest Argumente nach «daten»
+ * @param {(pfad: string) => boolean} [gibt] prüft, ob eine Datei existiert
+ * @returns {{ argumente: string[] } | { fehler: string }}
+ */
+export function datenAufruf(rest, gibt = existsSync) {
+  const [zip, ...schalter] = rest
+  if (!zip || !gibt(zip)) return { fehler: 'Bitte den Export angeben: npm run umzug -- daten "CRM bisher.zip" …' }
+  /** @type {string[]} */
+  const weiter = []
+  for (let i = 0; i < schalter.length; i++) {
+    const s = schalter[i] ?? ''
+    if (!(s in DATEN_SCHALTER)) return { fehler: `Unbekannter Schalter ${s}` }
+    weiter.push(s)
+    if (DATEN_SCHALTER[/** @type {keyof typeof DATEN_SCHALTER} */ (s)]) {
+      const w = schalter[++i]
+      if (!w) return { fehler: `${s} braucht einen Wert` }
+      if (s !== '--gebaut-bis' && !gibt(w)) return { fehler: `Datei nicht gefunden: ${w}` }
+      weiter.push(w)
+    }
+  }
+  for (const pflicht of ['--ablage', '--korrekturen'])
+    if (!weiter.includes(pflicht))
+      return {
+        fehler: `${pflicht} fehlt. Die Dateien sharepoint-adjudications.json und korrekturen.json kommen aus den Projektdateien (Ordner datenabgleich), siehe docs/umzug.md.`,
+      }
+  return {
+    argumente: ['scripts/import/import-vorlage.mjs', zip, '--umzug', '--bericht', 'umzug-bericht.md', ...weiter],
+  }
+}
+
+function daten(/** @type {string[]} */ rest) {
   const url = process.env.SUPABASE_URL ?? ''
-  if (!zip || !existsSync(zip)) {
-    console.error('Bitte den Export angeben: npm run umzug -- daten "CRM bisher.zip"')
+  const aufruf = datenAufruf(rest)
+  if ('fehler' in aufruf) {
+    console.error(aufruf.fehler)
     process.exit(1)
   }
   if (!/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(url) || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -167,7 +205,7 @@ function daten(zip) {
     console.error('Anleitung: docs/umzug.md, Schritt 5. Den Schlüssel nie speichern oder weitergeben.')
     process.exit(1)
   }
-  ausfuehren('node', ['scripts/import/import-vorlage.mjs', zip, '--umzug', '--bericht', 'umzug-bericht.md'])
+  ausfuehren('node', aufruf.argumente)
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -176,7 +214,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   else if (schritt === 'datenbank') ausfuehren(NPX, ['supabase', 'db', 'push'])
   else if (schritt === 'funktionen') ausfuehren(NPX, ['supabase', 'functions', 'deploy'])
   else if (schritt === 'tresor') tresor()
-  else if (schritt === 'daten') daten(rest[0])
+  else if (schritt === 'daten') daten(rest)
   else {
     console.log('Schritte: pruefen, datenbank, funktionen, tresor, daten "<Export.zip>". Anleitung: docs/umzug.md')
     process.exit(schritt ? 1 : 0)
