@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-04
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -68,6 +68,7 @@ Hier steht, wie das CRM funktioniert: zu jedem Bereich ein Kapitel, für jede Ro
 - Prozesse und Videos legt nur die Administration ab; nichts wird hart gelöscht.
 - Meldungen werden nie öffentlich (kein GitHub-Issue), weil sie Kundendaten enthalten können.
 - Geändert wird erst nach **Erledige es**.
+- Die Prüfung sieht Text und Bildschirmfotos der Meldung; die Bilder bleiben im CRM und werden nirgends sonst gespeichert.
 
 ## Häufige Fragen {#fragen}
 
@@ -85,6 +86,7 @@ Reiter **Erste Schritte**.
 
 ## Neu {#neu}
 
+- 04.11.2026: Die Prüfung sieht auch die Bildschirmfotos und kann in der Einschätzung darauf verweisen.
 - 03.11.2026: Bildschirmfotos und Fotos anhängen: Strg+V, Hineinziehen, Kamera am Handy, Vorschau in der Meldung und **Bild anhängen** zum Nachreichen.
 - 02.11.2026: Kapitel zu jedem Bereich, Hilfe mit F1, Suche über alles, «Für dich» je Rolle, Begriffe A–Z und «Neu».
 - 31.10.2026: Meldungen mit Einschätzung und Entscheid «Erledige es» / «Nicht».
