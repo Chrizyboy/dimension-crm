@@ -119,7 +119,7 @@ export async function speichereMeinKonto(
 /** Web-Adresse der App für Links nach aussen: in der Desktop-App die veröffentlichte Web-App, sonst diese Seite. */
 function webAdresse(): string {
   const hier = `${window.location.origin}${window.location.pathname}`
-  return /^https?:/.test(window.location.origin) ? hier : 'https://chrizyboy.github.io/dimension-crm/'
+  return /^https?:/.test(window.location.origin) ? hier : 'https://work.dimension-solaire.ch/'
 }
 
 /** Registrier-Link fürs Handy aus dem Schlüssel. */

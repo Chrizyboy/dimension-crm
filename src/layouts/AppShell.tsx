@@ -1,4 +1,4 @@
-import { Suspense, type ReactNode } from 'react'
+import { Suspense, useEffect, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Toaster } from 'sonner'
 import { TooltipAnbieter } from '@/components/ui/tooltip'
@@ -31,6 +31,16 @@ export function AppShell({ children }: { children: ReactNode }) {
   // Erst laden, wenn jemand Ctrl J drückt (spart Startzeit).
   const assistent = useUi((z) => z.assistentOffen)
 
+  // Das Fenster selbst scrollt nie: Inhalt und Seitenleiste haben eigene Scrollbereiche. Sonst liess sich die
+  // Desktop-App über die App hinaus ins Leere scrollen, sobald irgendein Element über den Rand ragte.
+  useEffect(() => {
+    const wurzeln = [document.documentElement, document.body]
+    for (const w of wurzeln) w.style.overflow = 'hidden'
+    return () => {
+      for (const w of wurzeln) w.style.overflow = ''
+    }
+  }, [])
+
   return (
     <TooltipAnbieter delayDuration={300}>
       <a
@@ -43,7 +53,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         {t('nav.zumInhalt')}
       </a>
-      <div className="flex h-full">
+      {/* relative + overflow-hidden: Was sich (absolut platziert) sonst auf die ganze Seite bezieht, bleibt im
+          Rahmen. Ohne das liess sich das Fenster ein Stück nach unten ins Leere scrollen (Chris 4.11.2026). */}
+      <div className="relative flex h-full overflow-hidden">
         {!einfach && (
           <aside
             className={cn('hidden shrink-0 transition-[width] duration-200 md:block', eingeklappt ? 'w-14' : 'w-60')}

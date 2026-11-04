@@ -138,6 +138,14 @@ export async function pruefeLiquiditaet(b, daten, neu, heute) {
     tranchen: [],
     kundenzahlungen: [],
     einstellungen: neu.tabellen.finanz_einstellungen.find((f) => f.schluessel === 'vorlage.main')?.wert ?? {},
+    // Gibt es in V233 nicht. Ohne Bankkonten rechnet die App mit dem eingetragenen Kontostand wie V233.
+    konten: [],
+    firmen: [],
+    projektFirma: {},
+    mwst: [],
+    zahllaeufe: [],
+    bestellungen: {},
+    personen: {},
   }
   /** @type {Record<string, any>[]} */
   const tabelle = []

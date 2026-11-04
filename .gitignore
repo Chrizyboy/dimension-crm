@@ -20,3 +20,8 @@ messungen/
 # Veröffentlichen (Phase 16): entsteht im Workflow, nie einchecken
 src-tauri/tauri.release.conf.json
 versionsnotizen.md
+
+# Berichte von Import und Abgleich enthalten Kundennamen (Repository öffentlich)
+abgleich-bericht.md
+abgleich-bericht.json
+umzug-bericht.md

@@ -68,4 +68,4 @@ export async function setzeAutostart(an: boolean): Promise<void> {
  * Eigene Download-Seite (public/download/) mit Knopf auf den Installer der neusten Version und Anleitung
  * DE/FR. Für die Web-App: «Desktop-App herunterladen».
  */
-export const DOWNLOAD_SEITE = 'https://chrizyboy.github.io/dimension-crm/download/'
+export const DOWNLOAD_SEITE = 'https://work.dimension-solaire.ch/download/'

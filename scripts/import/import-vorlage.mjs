@@ -3,8 +3,10 @@
 //
 //   SUPABASE_SERVICE_ROLE_KEY=… npm run import:vorlage -- "CRM bisher.zip" [--bericht import-bericht.md]
 //     [--ablage sharepoint-adjudications.json] [--gebaut-bis 2025] [--korrekturen korrekturen.json]   (gewonnen nur mit Ordner in Adjudications, siehe ablage.mjs)
+//     [--ueberschreiben]   (auch Zeilen, die im neuen CRM von Hand geändert wurden, siehe schreiber.mjs)
 //
 // Wiederholbar: jede Zeile hat eine alt_id; ein zweiter Lauf aktualisiert statt zu verdoppeln.
+// Was im neuen CRM von Hand geändert wurde, bleibt ohne --ueberschreiben und steht im Bericht.
 // Standardmässig nur gegen die lokale Datenbank; der echte Umzug (Phase 16) braucht --umzug.
 
 import { writeFileSync } from 'node:fs'
@@ -44,7 +46,9 @@ import { importiereUebrige } from './schritte/uebrige.mjs'
 
 const argumente = process.argv.slice(2)
 const wert = (/** @type {string} */ n) => (argumente.includes(n) ? argumente[argumente.indexOf(n) + 1] : undefined)
-const pfad = argumente.find((a, i) => !a.startsWith('--') && !argumente[i - 1]?.startsWith('--'))
+// Nur diese Schalter haben einen Wert dahinter; --umzug und --ueberschreiben stehen allein.
+const MIT_WERT = ['--bericht', '--ablage', '--gebaut-bis', '--korrekturen']
+const pfad = argumente.find((a, i) => !a.startsWith('--') && !MIT_WERT.includes(argumente[i - 1] ?? ''))
 const berichtDatei = wert('--bericht') ?? 'import-bericht.md'
 const ablageDatei = wert('--ablage')
 const url = process.env.SUPABASE_URL ?? 'http://127.0.0.1:54321'
@@ -120,7 +124,7 @@ const k = {
   db,
   daten,
   datei,
-  schreiber: new Schreiber(db),
+  schreiber: new Schreiber(db, { ueberschreiben: argumente.includes('--ueberschreiben') }),
   zuordner: new Zuordner(/** @type {any} */ (auswahl)),
   ids: Object.fromEntries(namen.map((n) => [n, new Map()])),
   bericht: { dateienHochgeladen: 0 },
@@ -165,6 +169,12 @@ for (const [name, schritt] of schritte) {
   console.log(`✓ ${name} (${((Date.now() - t) / 1000).toFixed(1)} s)`)
 }
 await k.schreiber.speichereAbgleich()
+for (const v of k.schreiber.vonHand)
+  hinweise.push(
+    `${v.tabelle} ${v.alt_id}: im neuen CRM von Hand geändert (${v.zuletzt.slice(0, 10)}), nicht überschrieben`,
+  )
+if (k.schreiber.vonHand.length)
+  console.log(`! ${k.schreiber.vonHand.length} von Hand geänderte Datensätze nicht überschrieben (siehe Bericht)`)
 
 const naechste = Number(daten.cols.meta?.counters?.kundenSeq ?? 0) + 1
 const { error: seqFehler } = await db.rpc('setze_naechste_kundennummer', { p_naechste: naechste })
