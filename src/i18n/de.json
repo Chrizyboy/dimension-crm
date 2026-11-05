@@ -1014,8 +1014,9 @@
     }
   },
   "dokument": {
+    "backupOrdner": "Ordner im alten CRM-Backup",
     "leer": "Keine Dokumente",
-    "leerText": "Hochladen nach SharePoint kommt mit Phase 8. Dateien aus der Vorlage erscheinen hier automatisch.",
+    "leerText": "Dateien aus dem alten CRM und neue Uploads erscheinen hier, nach Ordnern sortiert.",
     "ordner": {
       "angebot": "Angebot",
       "werkvertrag": "Werkvertrag",

@@ -120,7 +120,7 @@ export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: Kunde
                   <AkteZeitachse eintraege={zeitachse.data} laedt={zeitachse.isPending} />
                 </ReiterInhalt>
                 <ReiterInhalt value="dokumente">
-                  <AkteDokumente dokumente={akte.data.dokumente} />
+                  <AkteDokumente dokumente={akte.data.dokumente} backupOrdner={akte.data.backupOrdner} />
                 </ReiterInhalt>
               </Reiter>
               {druck.aktiv && <Kundenblatt kopf={k} akte={akte.data} />}

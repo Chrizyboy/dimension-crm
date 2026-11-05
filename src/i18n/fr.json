@@ -1014,8 +1014,9 @@
     }
   },
   "dokument": {
+    "backupOrdner": "Dossier de l'ancienne sauvegarde CRM",
     "leer": "Aucun document",
-    "leerText": "Le téléversement vers SharePoint arrive avec la phase 8. Les fichiers du modèle apparaissent ici automatiquement.",
+    "leerText": "Les fichiers de l’ancien CRM et les nouveaux envois apparaissent ici, classés par dossier.",
     "ordner": {
       "angebot": "Offre",
       "werkvertrag": "Contrat d'entreprise",

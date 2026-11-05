@@ -11,6 +11,7 @@ const akte = (offerten: Partial<Offerte>[] = []) =>
     objekte: [],
     werkvertraege: [],
     dokumente: [],
+    backupOrdner: [],
   }) as unknown as Kundenakte
 
 describe('naechsterSchritt', () => {

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-05
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -44,6 +44,7 @@ Alle Haushalte und Firmen mit Stand, letztem Kontakt und allen Geschäften. Die 
 
 1. Reiter **Dokumente**: Dateien hineinziehen oder öffnen.
 2. Offerten- und Projektdateien liegen in SharePoint; der Link führt direkt in den Ordner.
+3. Fotos und PDFs aus dem alten CRM stehen hier beim Kunden, auch die von seinen Leads und Offerten. **Ordner im alten CRM-Backup** öffnet den Kundenordner, den das alte CRM in SharePoint angelegt hat.
 
 ### Kundenblatt drucken
 
@@ -77,6 +78,7 @@ Rechnungen sieht nur, wer das Recht Finanzen hat.
 
 ## Neu {#neu}
 
+- 05.11.2026: Anhänge aus dem alten CRM stehen nur noch einmal beim Kunden, Links nach SharePoint öffnen wieder, neu **Ordner im alten CRM-Backup**.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: «In den Papierkorb» für Gebäude, Dokumente und eigene Verlauf-Einträge, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 31.10.2026: Detailfenster und Suche einheitlich wie in allen Bereichen.

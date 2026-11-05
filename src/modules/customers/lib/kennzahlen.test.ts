@@ -10,6 +10,7 @@ const akte = (teil: Partial<Record<keyof Kundenakte, unknown>>) =>
     objekte: [],
     werkvertraege: [],
     dokumente: [],
+    backupOrdner: [],
     ...teil,
   }) as unknown as Kundenakte
 const nach = (teil: Partial<Record<keyof Nachverkauf, unknown>>) =>

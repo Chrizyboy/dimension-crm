@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
 import { meldeFehler } from '@/services/fehler'
 import { meldeIntegrationsFehler, microsoft, useMeineMicrosoftVerbindung } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { datumOderLeer } from '../lib/anzeige'
 import { dokumentAdresse } from '../services/kundenakte'
-import type { Dokument } from '../types'
+import type { BackupOrdner, Dokument } from '../types'
 
 /** Die 11 Ordner der Vorlage in ihrer gewohnten Reihenfolge; Unbekanntes kommt ans Ende. */
 const ORDNER = [
@@ -98,11 +98,42 @@ function SharepointSichern({ offen }: { offen: Dokument[] }) {
   )
 }
 
+/** Links auf den Kundenordner im SharePoint-Backup des alten CRM; dort liegt, was V233 kopiert hat. */
+function BackupLinks({ ordner }: { ordner: BackupOrdner[] }) {
+  const { t } = useTranslation()
+  const mitLink = ordner.filter((o) => o.url)
+  if (mitLink.length === 0) return null
+  return (
+    <div className="flex flex-wrap gap-2">
+      {mitLink.map((o) => (
+        <a
+          key={o.id}
+          href={o.url ?? undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={o.name}
+          className={buttonVariants({ variant: 'secondary', size: 'sm' })}
+        >
+          <FolderOpen />
+          {t('dokument.backupOrdner')}
+          <ExternalLink className="size-3.5" aria-hidden="true" />
+        </a>
+      ))}
+    </div>
+  )
+}
+
 /**
  * Reiter «Dokumente»: alle Dateien des Kunden nach den Ordnern der Vorlage. Dateien aus V233 liegen
- * schon in SharePoint; neue Dateien aus dem CRM lassen sich dorthin sichern.
+ * im CRM-Speicher oder in SharePoint; neue Dateien aus dem CRM lassen sich dorthin sichern.
  */
-export function AkteDokumente({ dokumente }: { dokumente: Dokument[] }) {
+export function AkteDokumente({
+  dokumente,
+  backupOrdner = [],
+}: {
+  dokumente: Dokument[]
+  backupOrdner?: BackupOrdner[]
+}) {
   const { t } = useTranslation()
   const nurImCrm = useMemo(() => dokumente.filter((d) => d.speicher === 'intern' && !d.sharepoint_url), [dokumente])
   const gruppen = useMemo(() => {
@@ -119,11 +150,17 @@ export function AkteDokumente({ dokumente }: { dokumente: Dokument[] }) {
   }, [dokumente])
 
   if (dokumente.length === 0) {
-    return <Leerzustand icon={FolderOpen} titel={t('dokument.leer')} text={t('dokument.leerText')} />
+    return (
+      <div className="flex flex-col gap-3">
+        <BackupLinks ordner={backupOrdner} />
+        <Leerzustand icon={FolderOpen} titel={t('dokument.leer')} text={t('dokument.leerText')} />
+      </div>
+    )
   }
 
   return (
     <div className="flex flex-col gap-5">
+      <BackupLinks ordner={backupOrdner} />
       <SharepointSichern offen={nurImCrm} />
       {gruppen.map(([ordner, liste]) => (
         <section key={ordner} className="flex flex-col gap-1.5">
