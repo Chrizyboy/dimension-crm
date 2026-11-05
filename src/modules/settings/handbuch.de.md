@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-05
 rollen: administration
 ---
 
@@ -129,6 +129,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 05.11.2026: Lehnt ASPSMS die Zugangsdaten ab, prüft das CRM die SMS-Verbindung nur noch einmal am Tag statt stündlich, bis **Jetzt testen** wieder klappt.
 - 04.11.2026: Ändert sich bei einem gestörten Dienst der Grund, kommt eine neue Glocke mit dem neuen Grund. SMS: abgelehnte Zugangsdaten werden als solche gemeldet.
 - 03.11.2026: Zusätze Geschäftsleitung und Administration, Link fürs Handy für Personen ohne Firmen-Mail.
 - 03.11.2026: Alle Einstellungen an einem Ort mit Suche; neu Auswahllisten, Standorte & Regionen (PLZ-Regeln), Änderungsprotokoll und Papierkorb; Firmen-Einstellungen ändert nur noch die Administration; Einstellungen von Rechnungen, Posteingang, Automationen, Spesen, Assistent und Helpdesk auch hier.

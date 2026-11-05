@@ -86,3 +86,16 @@ export async function guthaben(): Promise<number> {
   const d = await aufruf('/CheckCredits', {}, 2)
   return Number(d.Credits ?? 0)
 }
+
+/**
+ * Hat ASPSMS die Zugangsdaten in den letzten 24 Stunden abgelehnt (sms_3)? Dann misst der Wächter nicht jede Stunde
+ * neu: ASPSMS schickt bei jedem Fehlversuch eine Mail und kann das Konto sperren. «Jetzt testen» nach dem Korrigieren
+ * setzt den Stand zurück, danach misst der Wächter wieder stündlich.
+ */
+export async function zugangAbgelehnt(): Promise<boolean> {
+  const [z] = await dienst.lies<
+    { zuletzt_ok: boolean | null; meldung: string | null; zuletzt_geprueft_am: string | null }[]
+  >('integrationen?dienst=eq.sms&select=zuletzt_ok,meldung,zuletzt_geprueft_am')
+  if (!z || z.zuletzt_ok !== false || z.meldung !== 'sms_3' || !z.zuletzt_geprueft_am) return false
+  return Date.now() - Date.parse(z.zuletzt_geprueft_am) < 86_400_000
+}

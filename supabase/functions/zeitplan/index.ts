@@ -42,7 +42,7 @@ import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
 import { bewertungenEinschaetzen } from '../_shared/bewertung.ts'
-import { guthaben } from '../_shared/aspsms.ts'
+import { guthaben, zugangAbgelehnt } from '../_shared/aspsms.ts'
 import { serverSchritteAbarbeiten } from '../_shared/automation_server.ts'
 import { antwort } from '../_shared/antwort.ts'
 import { posteingangAbholen, posteingangEinordnen } from '../_shared/posteingang.ts'
@@ -227,7 +227,8 @@ Deno.serve(async (req) => {
     const extern: Record<string, { ok: boolean; credits?: number; meldung?: string }> = {}
     const code = (f: unknown) =>
       f instanceof DienstFehler ? f.code : f instanceof Error ? f.message.slice(0, 80) : 'fehler'
-    if (ein.sms) {
+    // Abgelehnte Zugangsdaten: höchstens einmal pro Tag neu versuchen (siehe zugangAbgelehnt)
+    if (ein.sms && !(await zugangAbgelehnt())) {
       try {
         extern.sms = { ok: true, credits: await guthaben() }
       } catch (f) {

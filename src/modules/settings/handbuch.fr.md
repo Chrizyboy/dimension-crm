@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-05
 rollen: administration
 ---
 
@@ -129,6 +129,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 
 ## Nouveautés {#neu}
 
+- 05.11.2026 : Si ASPSMS refuse les identifiants, le CRM ne vérifie plus la connexion SMS qu’une fois par jour au lieu de chaque heure, jusqu’à ce que **Tester maintenant** réussisse.
 - 04.11.2026 : Si la cause d’une panne de service change, une nouvelle cloche arrive avec la nouvelle cause. SMS : les identifiants refusés sont signalés comme tels.
 - 03.11.2026: Compléments direction et administration, lien pour le téléphone pour les personnes sans e-mail de l’entreprise.
 - 03.11.2026: Tous les réglages au même endroit avec recherche ; nouveau listes de choix, sites et régions (règles NPA), journal des modifications et corbeille ; seule l’administration modifie les réglages de l’entreprise ; réglages des factures, boîte de réception, automatisations, frais, assistant et helpdesk aussi ici.
