@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-05
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -44,6 +44,7 @@ Tous les ménages et entreprises avec statut, dernier contact et toutes les affa
 
 1. Onglet **Documents** : glisser des fichiers ou les ouvrir.
 2. Les fichiers d’offres et de projets sont dans SharePoint ; le lien mène directement au dossier.
+3. Les photos et PDF de l’ancien CRM figurent ici chez le client, y compris ceux de ses leads et offres. **Dossier de l'ancienne sauvegarde CRM** ouvre le dossier client que l’ancien CRM a créé dans SharePoint.
 
 ### Imprimer la fiche client
 
@@ -77,6 +78,7 @@ Les factures ne sont visibles qu’avec le droit Finances.
 
 ## Nouveautés {#neu}
 
+- 05.11.2026: Les pièces jointes de l’ancien CRM n’apparaissent plus qu’une fois chez le client, les liens vers SharePoint s’ouvrent à nouveau, nouveau **Dossier de l'ancienne sauvegarde CRM**.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: «Mettre à la corbeille» pour les bâtiments, les documents et ses propres entrées d'historique, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 31.10.2026: Fenêtre de détail et recherche uniformes comme dans tous les domaines.

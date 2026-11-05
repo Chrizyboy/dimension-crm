@@ -62,6 +62,12 @@ export async function ladeKundenakte(id: string): Promise<Kundenakte | null> {
     .is('geloescht_am', null)
     .order('hochgeladen_am', { ascending: false, nullsFirst: false })
   if (dokumente.error) throw dokumente.error
+  const backupOrdner = await c
+    .from('sharepoint_ordner')
+    .select('id, name, url')
+    .eq('kontakt_id', id)
+    .is('geloescht_am', null)
+  if (backupOrdner.error) throw backupOrdner.error
   return {
     kontakt: kontakt.data,
     objekte: objekte.data ?? [],
@@ -70,6 +76,7 @@ export async function ladeKundenakte(id: string): Promise<Kundenakte | null> {
     projekte: projekte.data ?? [],
     werkvertraege: werkvertraege.data ?? [],
     dokumente: dokumente.data,
+    backupOrdner: backupOrdner.data,
   }
 }
 

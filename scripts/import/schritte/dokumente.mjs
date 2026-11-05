@@ -1,5 +1,7 @@
 // Schritt 6: Dateien. Die 90 Dateien aus blobs/ kommen in den privaten Speicher «dokumente»;
-// Verweise auf SharePoint (sp.files, kbfiles, kbfolders) bleiben Verweise, die Datei bleibt in SharePoint.
+// Verweise auf SharePoint (sp.files, kbfolders) bleiben Verweise, die Datei bleibt in SharePoint.
+// kbfiles (Kunden-Backup) ist die SharePoint-Kopie einer Datei aus blobs/ (gleiche id): kein eigenes
+// Dokument, sonst stünde jede Datei doppelt beim Kunden (Migration 20261117130511).
 
 import { text, zuZeitstempel } from '../umwandeln.mjs'
 import { alleLeads } from './kunden.mjs'
@@ -33,10 +35,11 @@ function dateiBezuege(k, spaeter) {
     for (const f of p.files ?? []) datei(f, 'offerten', k.ids.offerten.get(id) ?? null)
   for (const t of Object.values(k.sammlung('trash'))) {
     if (t.kind !== 'attachment' || !t.file) continue
-    const lead = t.parentKind === 'lead' ? k.ids.verkaufschancen.get(String(t.parentId)) : null
+    const lead = t.parentKind === 'lead' ? k.ids.verkaufschancen.get(String(t.parentId)) : undefined
+    const offerte = t.parentKind === 'project' ? k.ids.offerten.get(String(t.parentId)) : undefined
     merke(t.file.id, {
-      tabelle: lead ? 'verkaufschancen' : 'papierkorb',
-      id: lead ?? null,
+      tabelle: lead ? 'verkaufschancen' : offerte ? 'offerten' : 'papierkorb',
+      id: lead ?? offerte ?? null,
       ordner: text(t.file.folder),
       von: text(t.file.by),
       am: zuZeitstempel(t.file.uploadedAt),
@@ -91,8 +94,12 @@ export async function importiereDokumente(k) {
   }
   k.bericht.dateienHochgeladen = hochgeladen
 
+  const kbfiles = k.sammlung('kbfiles')
   const intern = k.daten.blobs.map((b) => {
-    const bezug = bezuege.get(b.id)
+    const kb = kbfiles[b.id]
+    const kunde = kb ? kundeAusSchluessel(k, kb.key) : null
+    const bezug =
+      bezuege.get(b.id) ?? (kunde ? { tabelle: 'kontakte', id: kunde, ordner: text(kb?.folder) } : undefined)
     return {
       sammlung: 'blobs',
       schluessel: b.id,
@@ -104,6 +111,8 @@ export async function importiereDokumente(k) {
         ordner: bezug?.ordner ?? null,
         speicher: 'intern',
         speicher_pfad: `vorlage/${b.id}`,
+        sharepoint_url: kb?.ok ? text(kb.url) : null,
+        sharepoint_status: kb ? backupStand(kb) : null,
         bezug_tabelle: bezug?.tabelle ?? null,
         bezug_id: bezug?.id ?? null,
         hochgeladen_von: bezug?.von ?? null,
@@ -119,12 +128,47 @@ export async function importiereDokumente(k) {
     const id = t.kind === 'attachment' ? k.ids.dokumente.get(String(t.file?.id)) : undefined
     if (id) k.schreiber.merke('trash', schluessel, 'dokumente', id)
   }
+  for (const id of Object.keys(kbfiles)) {
+    const dokument = k.ids.dokumente.get(id)
+    if (dokument) k.schreiber.merke('kbfiles', id, 'dokumente', dokument)
+    else k.hinweis(`Kunden-Backup ${id}: Datei fehlt im Export`)
+  }
 
   await importiereSharePoint(k)
 }
 
 /**
- * SharePoint-Verweise aus Leads, Offerten, kbfiles und kbfolders.
+ * Kunde zu einem Schlüssel der Vorlage («K0638»).
+ * @param {Kontext} k
+ * @param {unknown} key
+ * @returns {string | null}
+ */
+function kundeAusSchluessel(k, key) {
+  return k.ids.kontakte.get(Number(String(key ?? '').slice(1))) ?? null
+}
+
+/**
+ * Sicherungsstand aus dem Kunden-Backup der Vorlage.
+ * @param {any} f
+ */
+function backupStand(f) {
+  return { ok: f.ok ?? null, fehler: f.err ?? null, zu_gross: f.tooBig ?? null, verkleinert: f.shrunk ?? null }
+}
+
+/**
+ * Web-Adresse einer Datei in der Bibliothek «Public». V233 speicherte nur die Graph-Adresse
+ * (`file:///…`), die kein Browser öffnet. Gleiche Regel wie `intern.public_web_url`.
+ * @param {string | null} pfad
+ * @returns {string | null}
+ */
+export function webAdresse(pfad) {
+  if (!pfad) return null
+  const kodiert = pfad.replaceAll('%', '%25').replaceAll('#', '%23').replaceAll('?', '%3F').replaceAll(' ', '%20')
+  return `https://dimensionsolaire.sharepoint.com/sites/Dimension-Solaire/Public/${kodiert}`
+}
+
+/**
+ * SharePoint-Verweise aus Leads, Offerten und kbfolders.
  * @param {Kontext} k
  */
 async function importiereSharePoint(k) {
@@ -160,7 +204,7 @@ async function importiereSharePoint(k) {
           ordner: text(f.folder),
           speicher: 'sharepoint',
           sharepoint_pfad: text(f.path),
-          sharepoint_url: text(f.uri),
+          sharepoint_url: webAdresse(text(f.path)) ?? text(f.uri),
           bezug_tabelle: vertrag ? 'werkvertraege' : q.tabelle,
           bezug_id: vertrag ?? q.id,
           hochgeladen_am: zuZeitstempel(q.d.sp?.syncedAt),
@@ -182,33 +226,7 @@ async function importiereSharePoint(k) {
     if (error) throw new Error(`werkvertraege dokument: ${error.message}`)
   }
 
-  const kunde = (/** @type {unknown} */ key) => k.ids.kontakte.get(Number(String(key ?? '').slice(1))) ?? null
-  await k.schreiber.schreibe(
-    'dokumente',
-    Object.entries(k.sammlung('kbfiles')).map(([id, f]) => ({
-      sammlung: 'kbfiles',
-      schluessel: id,
-      zeile: {
-        alt_id: `kbfile:${id}`,
-        name: text(f.name) ?? text(f.file) ?? id,
-        bytes: f.bytes ?? null,
-        ordner: text(f.folder),
-        speicher: 'sharepoint',
-        sharepoint_url: text(f.url),
-        sharepoint_status: {
-          ok: f.ok ?? null,
-          fehler: f.err ?? null,
-          zu_gross: f.tooBig ?? null,
-          verkleinert: f.shrunk ?? null,
-        },
-        bezug_tabelle: 'kontakte',
-        bezug_id: kunde(f.key),
-        hochgeladen_von: text(f.by),
-        hochgeladen_am: zuZeitstempel(f.at),
-        alt_daten: f,
-      },
-    })),
-  )
+  const kunde = (/** @type {unknown} */ key) => kundeAusSchluessel(k, key)
   await k.schreiber.schreibe(
     'sharepoint_ordner',
     Object.entries(k.sammlung('kbfolders')).map(([key, o]) => ({

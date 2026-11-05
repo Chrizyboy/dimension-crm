@@ -88,7 +88,12 @@ export interface Kundenakte {
   projekte: Projekt[]
   werkvertraege: Werkvertrag[]
   dokumente: Dokument[]
+  /** Kundenordner im SharePoint-Backup des alten CRM (V233 «Kunden Backup»), meist einer. */
+  backupOrdner: BackupOrdner[]
 }
+
+/** Ordner im SharePoint-Backup des alten CRM. */
+export type BackupOrdner = Pick<Tabelle<'sharepoint_ordner'>, 'id' | 'name' | 'url'>
 
 /** Was nach dem Verkauf am Kontakt hängt: Anlagen, Service, Wartung, Rechnungen, Aufgaben, Mails. */
 export interface Nachverkauf {
