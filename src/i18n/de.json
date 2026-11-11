@@ -3070,7 +3070,16 @@
     "papierkorb_zusammengefuehrt": "Dieser Kontakt wurde zusammengeführt und bleibt im Papierkorb.",
     "papierkorb_unbekannt": "Dieser Eintrag lässt sich nicht in den Papierkorb legen.",
     "papierkorb_kein_recht": "Nicht möglich: Dafür fehlt dir das Recht, oder der Eintrag ist schon weg.",
-    "papierkorb_nur_eigene": "Zurückholen kann nur, wer es weggelegt hat, oder die Administration."
+    "papierkorb_nur_eigene": "Zurückholen kann nur, wer es weggelegt hat, oder die Administration.",
+    "zeit_kein_recht": "Dafür fehlt dir das Recht (nur Zeit-Leitung).",
+    "zeit_zeitraum": "Bitte einen gültigen Zeitraum wählen.",
+    "zeit_art_unbekannt": "Diese Art von Abwesenheit gibt es nicht.",
+    "zeit_ueberschneidung": "In diesem Zeitraum ist schon eine Abwesenheit eingetragen.",
+    "zeit_nicht_gefunden": "Diese Abwesenheit gibt es nicht mehr.",
+    "zeit_grund_fehlt": "Bitte einen Grund angeben.",
+    "zeit_kurs": "Kurstage ändert man im Kurs unter «Team & Ausweise».",
+    "zeit_schon_begonnen": "Die Abwesenheit hat schon begonnen; bitte die Zeit-Leitung fragen.",
+    "zeit_woche_montag": "Die Woche beginnt am Montag."
   },
   "ausgang": {
     "titel": "Ausgangskorb",
@@ -12487,6 +12496,173 @@
       "dankeText": "Dankes-Mail Messe, Text",
       "dankePlatzhalter": "Platzhalter: {Messe}, {Anrede}, {Absender}",
       "datenschutz": "Hinweis unter gezählten Mails"
+    }
+  },
+  "zeit": {
+    "titel": "Zeiterfassung",
+    "beschreibung": "Arbeitszeit stempeln, Saldo und Ferien im Blick, Abwesenheiten beantragen und bewilligen.",
+    "reiter": {
+      "meine": "Meine Zeit",
+      "abwesenheiten": "Abwesenheiten",
+      "team": "Team"
+    },
+    "person": "Person",
+    "nachtragen": "Zeit nachtragen",
+    "entfernen": "In den Papierkorb",
+    "woche": {
+      "titel": "Woche",
+      "vorher": "Vorherige Woche",
+      "nachher": "Nächste Woche",
+      "tag": "Tag",
+      "soll": "Soll",
+      "ist": "Gearbeitet",
+      "vermerk": "Abwesenheit / Feiertag",
+      "differenz": "Differenz",
+      "summe": "Woche"
+    },
+    "wochentag": {
+      "0": "So",
+      "1": "Mo",
+      "2": "Di",
+      "3": "Mi",
+      "4": "Do",
+      "5": "Fr",
+      "6": "Sa"
+    },
+    "konto": {
+      "titel": "Zeitkonto",
+      "woche": "Diese Woche (Ist / Soll)",
+      "saldo": "Saldo",
+      "ferienRest": "Ferien übrig",
+      "ferienBezogen": "Ferien bezogen",
+      "ferienGeplant": "Ferien geplant",
+      "ferienBeantragt": "Ferien beantragt"
+    },
+    "stempel": {
+      "titel": "Stempeluhr",
+      "start": "Start",
+      "stopp": "Stopp",
+      "seit": "seit {{zeit}}",
+      "baustelle": "Baustelle / Service",
+      "hinweis": "Zeit auf eine Baustelle oder einen Service-Fall stempelt man in «Baustelle & Rapporte»."
+    },
+    "feld": {
+      "tag": "Tag",
+      "von": "Von",
+      "bis": "Bis",
+      "vonDatum": "Von",
+      "bisDatum": "Bis",
+      "pause": "Pause (Minuten)",
+      "posten": "Wofür",
+      "notiz": "Notiz",
+      "art": "Art",
+      "halbtag": "Nur halbe Tage",
+      "bemerkung": "Bemerkung"
+    },
+    "dialog": {
+      "neu": "Zeit nachtragen",
+      "bearbeiten": "Zeit korrigieren",
+      "text": "Für vergessene Stempel. Zeiten auf Projekte korrigiert man in «Baustelle & Rapporte»."
+    },
+    "liste": {
+      "titel": "Gestempelt",
+      "leer": "Diese Woche noch nichts gestempelt",
+      "leerText": "Mit «Start» oder «Zeit nachtragen» erfassen.",
+      "projekt": "Projekt {{nummer}}",
+      "service": "Service",
+      "reise": "Reise",
+      "pause": "Pause {{min}} Min.",
+      "laeuft": "läuft",
+      "geprueft": "geprüft",
+      "bearbeiten": "Bearbeiten",
+      "zurueckziehen": "Zurückziehen",
+      "abwesenheiten": "Abwesenheiten {{jahr}}",
+      "keineAbwesenheit": "Keine Abwesenheiten",
+      "keineAbwesenheitText": "Ferien und Abwesenheiten oben mit «Abwesenheit beantragen» erfassen."
+    },
+    "abwesenheit": {
+      "beantragen": "Abwesenheit beantragen",
+      "erfassen": "Abwesenheit erfassen",
+      "bearbeiten": "Abwesenheit ändern",
+      "text": "Ferien, Krank, Militär und mehr. Ferien und Übriges bewilligt die Zeit-Leitung.",
+      "senden": "Antrag senden",
+      "tage": "{{tage}} Arbeitstage",
+      "brauchtBewilligung": "wird von der Zeit-Leitung bewilligt",
+      "sofort": "gilt sofort"
+    },
+    "antraege": {
+      "titel_one": "{{count}} Antrag zu bewilligen",
+      "titel_other": "{{count}} Anträge zu bewilligen",
+      "tage": "{{tage}} Arbeitstage",
+      "restDanach": "danach {{tage}} Ferientage übrig",
+      "bewilligen": "Bewilligen",
+      "ablehnen": "Ablehnen"
+    },
+    "ablehnen": {
+      "titel": "Antrag ablehnen",
+      "text": "Die Person sieht den Grund in ihrer Glocke.",
+      "grund": "Grund"
+    },
+    "stand": {
+      "beantragt": "beantragt",
+      "bewilligt": "bewilligt",
+      "abgelehnt": "abgelehnt"
+    },
+    "kalender": {
+      "titel": "Kalender",
+      "vorher": "Vorheriger Monat",
+      "nachher": "Nächster Monat",
+      "anderesJahr": "Abwesenheiten für dieses Jahr oben beim Jahr wechseln (Woche)",
+      "legende": "Farbig = bewilligt, gestrichelt = beantragt, ½ = halber Tag, grau = Wochenende oder Feiertag."
+    },
+    "team": {
+      "jetzt": "Jetzt",
+      "woche": "Woche",
+      "ferienBezogen": "Ferien bezogen + geplant",
+      "antraege": "Anträge",
+      "arbeitet": "arbeitet seit {{seit}} ({{dauer}})",
+      "nichtGestempelt": "nicht gestempelt",
+      "offen_one": "{{count}} offen",
+      "offen_other": "{{count}} offen"
+    },
+    "uebertrag": {
+      "titel": "Übertrag",
+      "text": "{{name}}, ins Jahr {{jahr}}: Restferien und Überstunden vom Vorjahr bzw. aus der Zeit vor dem CRM.",
+      "ferien": "Ferientage",
+      "saldo": "Saldo in Stunden (minus = Minusstunden)"
+    },
+    "fehler": {
+      "datum": "Bitte ein Datum wählen.",
+      "uhrzeit": "Bitte eine Uhrzeit angeben.",
+      "person": "Bitte eine Person wählen.",
+      "art": "Bitte eine Art wählen.",
+      "bisVorVon": "«Bis» liegt vor «Von».",
+      "pause": "Pause zwischen 0 und 600 Minuten.",
+      "posten": "Bitte wählen, wofür."
+    },
+    "einstellungen": {
+      "leitung": "Zeit-Leitung",
+      "leitungText": "Sieht die Zeiten und Abwesenheiten aller Mitarbeitenden und bewilligt Anträge.",
+      "wochenstunden": "Wochenstunden bei 100 %",
+      "ferientage": "Ferientage pro Jahr (Standard)",
+      "aktivSeit": "Zeiterfassung zählt ab",
+      "feiertage": "Feiertage je Standort"
+    },
+    "feiertag": {
+      "neujahr": "Neujahr",
+      "berchtoldstag": "Berchtoldstag",
+      "karfreitag": "Karfreitag",
+      "ostermontag": "Ostermontag",
+      "tag_der_arbeit": "Tag der Arbeit",
+      "auffahrt": "Auffahrt",
+      "pfingstmontag": "Pfingstmontag",
+      "fronleichnam": "Fronleichnam",
+      "bundesfeier": "Bundesfeier",
+      "maria_himmelfahrt": "Mariä Himmelfahrt",
+      "allerheiligen": "Allerheiligen",
+      "maria_empfaengnis": "Mariä Empfängnis",
+      "weihnachten": "Weihnachten",
+      "stephanstag": "Stephanstag"
     }
   }
 }

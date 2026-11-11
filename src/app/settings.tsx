@@ -10,6 +10,7 @@ import { einstellungen as posteingang } from '@/modules/inbox'
 import { einstellungen as rechnungen } from '@/modules/invoices'
 import { einstellungen as handbuch } from '@/modules/knowledge'
 import { ALTE_REITER, eigeneBereiche, Einstellungen } from '@/modules/settings'
+import { einstellungen as zeiterfassung } from '@/modules/time'
 import { useAnmeldung } from '@/stores/anmeldung'
 import type { EinstellungsBereich } from '@/types/einstellungen'
 
@@ -23,6 +24,7 @@ const BEREICHE: readonly EinstellungsBereich[] = [
   ...posteingang,
   ...automationen,
   ...spesen,
+  ...zeiterfassung,
   ...assistent,
   ...handbuch,
 ]

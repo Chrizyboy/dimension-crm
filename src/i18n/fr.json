@@ -3070,7 +3070,16 @@
     "papierkorb_zusammengefuehrt": "Ce contact a été fusionné et reste dans la corbeille.",
     "papierkorb_unbekannt": "Cet élément ne peut pas être mis à la corbeille.",
     "papierkorb_kein_recht": "Impossible : il te manque le droit, ou l'élément n'existe plus.",
-    "papierkorb_nur_eigene": "Seule la personne qui l'a mis à la corbeille, ou l'administration, peut le restaurer."
+    "papierkorb_nur_eigene": "Seule la personne qui l'a mis à la corbeille, ou l'administration, peut le restaurer.",
+    "zeit_kein_recht": "Tu n’as pas le droit pour cela (direction du temps seulement).",
+    "zeit_zeitraum": "Veuillez choisir une période valable.",
+    "zeit_art_unbekannt": "Ce type d’absence n’existe pas.",
+    "zeit_ueberschneidung": "Une absence est déjà saisie sur cette période.",
+    "zeit_nicht_gefunden": "Cette absence n’existe plus.",
+    "zeit_grund_fehlt": "Veuillez indiquer un motif.",
+    "zeit_kurs": "Les jours de cours se modifient dans le cours sous « Équipe & certificats ».",
+    "zeit_schon_begonnen": "L’absence a déjà commencé ; veuillez demander à la direction du temps.",
+    "zeit_woche_montag": "La semaine commence le lundi."
   },
   "ausgang": {
     "titel": "Boîte d'envoi",
@@ -12487,6 +12496,173 @@
       "dankeText": "E-mail de remerciement salon, texte",
       "dankePlatzhalter": "Variables : {Messe}, {Anrede}, {Absender}",
       "datenschutz": "Mention sous les e-mails mesurés"
+    }
+  },
+  "zeit": {
+    "titel": "Saisie du temps",
+    "beschreibung": "Pointer le temps de travail, suivre solde et vacances, demander et valider les absences.",
+    "reiter": {
+      "meine": "Mon temps",
+      "abwesenheiten": "Absences",
+      "team": "Équipe"
+    },
+    "person": "Personne",
+    "nachtragen": "Ajouter un temps",
+    "entfernen": "Mettre à la corbeille",
+    "woche": {
+      "titel": "Semaine",
+      "vorher": "Semaine précédente",
+      "nachher": "Semaine suivante",
+      "tag": "Jour",
+      "soll": "Prévu",
+      "ist": "Travaillé",
+      "vermerk": "Absence / jour férié",
+      "differenz": "Différence",
+      "summe": "Semaine"
+    },
+    "wochentag": {
+      "0": "di",
+      "1": "lu",
+      "2": "ma",
+      "3": "me",
+      "4": "je",
+      "5": "ve",
+      "6": "sa"
+    },
+    "konto": {
+      "titel": "Compte temps",
+      "woche": "Cette semaine (réel / prévu)",
+      "saldo": "Solde",
+      "ferienRest": "Vacances restantes",
+      "ferienBezogen": "Vacances prises",
+      "ferienGeplant": "Vacances planifiées",
+      "ferienBeantragt": "Vacances demandées"
+    },
+    "stempel": {
+      "titel": "Pointeuse",
+      "start": "Démarrer",
+      "stopp": "Arrêter",
+      "seit": "depuis {{zeit}}",
+      "baustelle": "Chantier / service",
+      "hinweis": "Le temps sur un chantier ou un cas de service se pointe dans « Chantier & rapports »."
+    },
+    "feld": {
+      "tag": "Jour",
+      "von": "De",
+      "bis": "À",
+      "vonDatum": "Du",
+      "bisDatum": "Au",
+      "pause": "Pause (minutes)",
+      "posten": "Pour quoi",
+      "notiz": "Note",
+      "art": "Type",
+      "halbtag": "Demi-journées seulement",
+      "bemerkung": "Remarque"
+    },
+    "dialog": {
+      "neu": "Ajouter un temps",
+      "bearbeiten": "Corriger un temps",
+      "text": "Pour un pointage oublié. Les temps sur projets se corrigent dans « Chantier & rapports »."
+    },
+    "liste": {
+      "titel": "Pointé",
+      "leer": "Rien de pointé cette semaine",
+      "leerText": "Saisir avec « Démarrer » ou « Ajouter un temps ».",
+      "projekt": "Projet {{nummer}}",
+      "service": "Service",
+      "reise": "Trajet",
+      "pause": "Pause {{min}} min",
+      "laeuft": "en cours",
+      "geprueft": "contrôlé",
+      "bearbeiten": "Modifier",
+      "zurueckziehen": "Retirer",
+      "abwesenheiten": "Absences {{jahr}}",
+      "keineAbwesenheit": "Aucune absence",
+      "keineAbwesenheitText": "Saisir vacances et absences avec « Demander une absence »."
+    },
+    "abwesenheit": {
+      "beantragen": "Demander une absence",
+      "erfassen": "Saisir une absence",
+      "bearbeiten": "Modifier l’absence",
+      "text": "Vacances, maladie, armée et plus. Vacances et autres sont validées par la direction du temps.",
+      "senden": "Envoyer la demande",
+      "tage": "{{tage}} jours ouvrables",
+      "brauchtBewilligung": "sera validée par la direction du temps",
+      "sofort": "valable tout de suite"
+    },
+    "antraege": {
+      "titel_one": "{{count}} demande à valider",
+      "titel_other": "{{count}} demandes à valider",
+      "tage": "{{tage}} jours ouvrables",
+      "restDanach": "ensuite {{tage}} jours de vacances restants",
+      "bewilligen": "Valider",
+      "ablehnen": "Refuser"
+    },
+    "ablehnen": {
+      "titel": "Refuser la demande",
+      "text": "La personne voit le motif dans sa cloche.",
+      "grund": "Motif"
+    },
+    "stand": {
+      "beantragt": "demandée",
+      "bewilligt": "validée",
+      "abgelehnt": "refusée"
+    },
+    "kalender": {
+      "titel": "Calendrier",
+      "vorher": "Mois précédent",
+      "nachher": "Mois suivant",
+      "anderesJahr": "Pour les absences de cette année, changer l’année en haut (semaine)",
+      "legende": "En couleur = validée, pointillé = demandée, ½ = demi-journée, gris = week-end ou jour férié."
+    },
+    "team": {
+      "jetzt": "Maintenant",
+      "woche": "Semaine",
+      "ferienBezogen": "Vacances prises + planifiées",
+      "antraege": "Demandes",
+      "arbeitet": "travaille depuis {{seit}} ({{dauer}})",
+      "nichtGestempelt": "pas pointé",
+      "offen_one": "{{count}} ouverte",
+      "offen_other": "{{count}} ouvertes"
+    },
+    "uebertrag": {
+      "titel": "Report",
+      "text": "{{name}}, sur l’année {{jahr}} : vacances restantes et heures supplémentaires de l’année précédente ou d’avant le CRM.",
+      "ferien": "Jours de vacances",
+      "saldo": "Solde en heures (moins = heures en négatif)"
+    },
+    "fehler": {
+      "datum": "Veuillez choisir une date.",
+      "uhrzeit": "Veuillez indiquer une heure.",
+      "person": "Veuillez choisir une personne.",
+      "art": "Veuillez choisir un type.",
+      "bisVorVon": "« Au » est avant « Du ».",
+      "pause": "Pause entre 0 et 600 minutes.",
+      "posten": "Veuillez choisir pour quoi."
+    },
+    "einstellungen": {
+      "leitung": "Direction du temps",
+      "leitungText": "Voit les temps et absences de tous les collaborateurs et valide les demandes.",
+      "wochenstunden": "Heures hebdomadaires à 100 %",
+      "ferientage": "Jours de vacances par an (par défaut)",
+      "aktivSeit": "La saisie compte dès le",
+      "feiertage": "Jours fériés par site"
+    },
+    "feiertag": {
+      "neujahr": "Nouvel An",
+      "berchtoldstag": "Saint-Berchtold",
+      "karfreitag": "Vendredi saint",
+      "ostermontag": "Lundi de Pâques",
+      "tag_der_arbeit": "Fête du travail",
+      "auffahrt": "Ascension",
+      "pfingstmontag": "Lundi de Pentecôte",
+      "fronleichnam": "Fête-Dieu",
+      "bundesfeier": "Fête nationale",
+      "maria_himmelfahrt": "Assomption",
+      "allerheiligen": "Toussaint",
+      "maria_empfaengnis": "Immaculée Conception",
+      "weihnachten": "Noël",
+      "stephanstag": "Saint-Étienne"
     }
   }
 }

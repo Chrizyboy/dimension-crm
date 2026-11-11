@@ -41,6 +41,7 @@ import { Route as SettingsRouteImport } from './app/settings'
 import { Route as StaffRouteImport } from './app/staff'
 import { Route as TasksRouteImport } from './app/tasks'
 import { Route as TendersRouteImport } from './app/tenders'
+import { Route as TimeRouteImport } from './app/time'
 import { Route as TodayRouteImport } from './app/today'
 import { Route as WorkcontractsRouteImport } from './app/workcontracts'
 
@@ -204,6 +205,11 @@ const TendersRoute = TendersRouteImport.update({
   path: '/tenders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TimeRoute = TimeRouteImport.update({
+  id: '/time',
+  path: '/time',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
@@ -248,6 +254,7 @@ export interface FileRoutesByFullPath {
   '/staff': typeof StaffRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
+  '/time': typeof TimeRoute
   '/today': typeof TodayRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
@@ -284,6 +291,7 @@ export interface FileRoutesByTo {
   '/staff': typeof StaffRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
+  '/time': typeof TimeRoute
   '/today': typeof TodayRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
@@ -321,6 +329,7 @@ export interface FileRoutesById {
   '/staff': typeof StaffRoute
   '/tasks': typeof TasksRoute
   '/tenders': typeof TendersRoute
+  '/time': typeof TimeRoute
   '/today': typeof TodayRoute
   '/workcontracts': typeof WorkcontractsRoute
 }
@@ -359,6 +368,7 @@ export interface FileRouteTypes {
     | '/staff'
     | '/tasks'
     | '/tenders'
+    | '/time'
     | '/today'
     | '/workcontracts'
   fileRoutesByTo: FileRoutesByTo
@@ -395,6 +405,7 @@ export interface FileRouteTypes {
     | '/staff'
     | '/tasks'
     | '/tenders'
+    | '/time'
     | '/today'
     | '/workcontracts'
   id:
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/staff'
     | '/tasks'
     | '/tenders'
+    | '/time'
     | '/today'
     | '/workcontracts'
   fileRoutesById: FileRoutesById
@@ -468,6 +480,7 @@ export interface RootRouteChildren {
   StaffRoute: typeof StaffRoute
   TasksRoute: typeof TasksRoute
   TendersRoute: typeof TendersRoute
+  TimeRoute: typeof TimeRoute
   TodayRoute: typeof TodayRoute
   WorkcontractsRoute: typeof WorkcontractsRoute
 }
@@ -698,6 +711,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TendersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/time': {
+      id: '/time'
+      path: '/time'
+      fullPath: '/time'
+      preLoaderRoute: typeof TimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/today': {
       id: '/today'
       path: '/today'
@@ -748,6 +768,7 @@ const rootRouteChildren: RootRouteChildren = {
   StaffRoute: StaffRoute,
   TasksRoute: TasksRoute,
   TendersRoute: TendersRoute,
+  TimeRoute: TimeRoute,
   TodayRoute: TodayRoute,
   WorkcontractsRoute: WorkcontractsRoute,
 }

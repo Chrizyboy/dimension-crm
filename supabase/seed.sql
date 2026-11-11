@@ -27,3 +27,7 @@ insert into public.kreditor_zahlungen (firma, betrag_rappen, alt_id) values
   ('Testlieferant Solar AG', 1250000, 'seed:kreditor:1'),
   ('Testlieferant Gerüst GmbH', 380000, 'seed:kreditor:2')
 on conflict (alt_id) do nothing;
+
+-- Zeiterfassung (Entscheid 0059): lokal ist die Test-Administration Zeit-Leitung, damit Browser-Tests bewilligen.
+update public.einstellungen set wert = jsonb_set(wert, '{leitung}', (wert -> 'leitung') || '["seed_admin"]')
+ where schluessel = 'zeiterfassung' and not (wert -> 'leitung') ? 'seed_admin';

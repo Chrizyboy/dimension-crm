@@ -90,11 +90,14 @@ export async function ladeAbwesenheiten(von: string, bis: string): Promise<Abwes
   return data as Abwesenheit[]
 }
 
-/** Abwesenheit erfassen. */
+/**
+ * Abwesenheit erfassen, über denselben Ablauf wie die Zeiterfassung: Arten mit Bewilligung bleiben «beantragt»,
+ * bis die Zeit-Leitung entscheidet (Glocke an sie), Doppelte lehnt die Datenbank ab.
+ */
 export async function abwesenheitAnlegen(a: Omit<Abwesenheit, 'id' | 'quelle'>): Promise<void> {
-  const { error } = await db()
-    .from('abwesenheiten')
-    .insert({ ...a, quelle: 'crm' })
+  const { error } = await db().rpc('abwesenheit_speichern', {
+    p: { person_id: a.person_id, art: a.art, von: a.von, bis: a.bis, halbtag: a.halbtag },
+  })
   if (error) throw error
 }
 
