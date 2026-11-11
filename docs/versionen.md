@@ -5,6 +5,15 @@ Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nic
 Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
 veröffentlichen» starten (docs/installation.md).
 
+## 1.2.0
+
+- Neu: Zeiterfassung und Abwesenheiten (Stempeln, Saldo, Ferienkonto, Antrag und Bewilligung).
+- Rechnungen aus AbaNinja erscheinen im CRM, der «Abgleich AbaNinja» übernimmt sie.
+- Assistent kennt mehr Bereiche: Posteingang nach Dringlichkeit, Lager, Fahrzeuge, Geräte, Kampagnen und Nachträge.
+- Anhänge aus dem alten CRM hängen richtig beim Kunden.
+- Übersichtlicher: leere Felder in allen Akten erst nach «+ weitere Angaben».
+- SMS-Wächter prüft nach abgelehnten Zugangsdaten nur noch einmal pro Tag.
+
 ## 1.1.1
 
 - Fenster scrollt nicht mehr unter die App ins Leere, auch nicht in der Desktop-App.
