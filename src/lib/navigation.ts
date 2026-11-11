@@ -24,6 +24,7 @@ import { meta as settings } from '@/modules/settings'
 import { meta as staff } from '@/modules/staff'
 import { meta as tasks } from '@/modules/tasks'
 import { meta as tenders } from '@/modules/tenders'
+import { meta as time } from '@/modules/time'
 import { meta as today } from '@/modules/today'
 import { meta as workcontracts } from '@/modules/workcontracts'
 import type { ModulMeta, NavGruppe } from '@/types/modul'
@@ -52,6 +53,7 @@ export const MODULE: readonly ModulMeta[] = [
   invoices,
   finance,
   expenses,
+  time,
   staff,
   fleet,
   automations,

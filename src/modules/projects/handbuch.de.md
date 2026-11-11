@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-11
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,7 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 11.11.2026: Abwesenheiten, die hier erfasst werden, gehen wie in der «Zeiterfassung» als Antrag an die Zeit-Leitung (Chris, Loris); Krank und Unfall gelten sofort.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «laufende Projekte» steht immer da.
 - 03.11.2026: «In den Papierkorb» für Projekte (Menü «⋯» in der Projekt-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).

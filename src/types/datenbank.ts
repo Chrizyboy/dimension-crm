@@ -287,7 +287,11 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string
+          bemerkung: string | null
           bis: string
+          entscheid_am: string | null
+          entscheid_grund: string | null
+          entscheid_von: string | null
           erstellt_am: string
           erstellt_von: string | null
           geaendert_am: string
@@ -298,6 +302,7 @@ export type Database = {
           outlook_id: string | null
           person_id: string
           quelle: string
+          status: string
           von: string
         }
         ComputedFields: never
@@ -305,7 +310,11 @@ export type Database = {
           alt_daten?: Json | null
           alt_id?: string | null
           art: string
+          bemerkung?: string | null
           bis: string
+          entscheid_am?: string | null
+          entscheid_grund?: string | null
+          entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
@@ -316,13 +325,18 @@ export type Database = {
           outlook_id?: string | null
           person_id: string
           quelle?: string
+          status?: string
           von: string
         }
         Update: {
           alt_daten?: Json | null
           alt_id?: string | null
           art?: string
+          bemerkung?: string | null
           bis?: string
+          entscheid_am?: string | null
+          entscheid_grund?: string | null
+          entscheid_von?: string | null
           erstellt_am?: string
           erstellt_von?: string | null
           geaendert_am?: string
@@ -333,9 +347,24 @@ export type Database = {
           outlook_id?: string | null
           person_id?: string
           quelle?: string
+          status?: string
           von?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'abwesenheiten_entscheid_von_fkey'
+            columns: ['entscheid_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'abwesenheiten_entscheid_von_fkey'
+            columns: ['entscheid_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'abwesenheiten_kurs_id_fkey'
             columns: ['kurs_id']
@@ -15552,11 +15581,13 @@ export type Database = {
           geaendert_am: string
           geloescht_am: string | null
           id: string
+          intern: string | null
           notiz: string | null
           pause_min: number
           person_id: string
           projekt_id: string | null
           rapport_id: string | null
+          service_fall_id: string | null
           start: string
           stopp: string | null
           taetigkeit: string | null
@@ -15575,11 +15606,13 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          intern?: string | null
           notiz?: string | null
           pause_min?: number
           person_id: string
           projekt_id?: string | null
           rapport_id?: string | null
+          service_fall_id?: string | null
           start: string
           stopp?: string | null
           taetigkeit?: string | null
@@ -15597,11 +15630,13 @@ export type Database = {
           geaendert_am?: string
           geloescht_am?: string | null
           id?: string
+          intern?: string | null
           notiz?: string | null
           pause_min?: number
           person_id?: string
           projekt_id?: string | null
           rapport_id?: string | null
+          service_fall_id?: string | null
           start?: string
           stopp?: string | null
           taetigkeit?: string | null
@@ -15712,6 +15747,20 @@ export type Database = {
             referencedRelation: 'rapporte_liste'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'zeiten_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
         ]
       }
       zeiten_wochen: {
@@ -15769,6 +15818,67 @@ export type Database = {
           },
         ]
       }
+      zeitkonten: {
+        Row: {
+          alt_daten: Json | null
+          alt_id: string | null
+          erstellt_am: string
+          erstellt_von: string | null
+          ferien_uebertrag: number
+          geaendert_am: string
+          geloescht_am: string | null
+          id: string
+          jahr: number
+          notiz: string | null
+          person_id: string
+          saldo_uebertrag_min: number
+        }
+        ComputedFields: never
+        Insert: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          ferien_uebertrag?: number
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          jahr: number
+          notiz?: string | null
+          person_id: string
+          saldo_uebertrag_min?: number
+        }
+        Update: {
+          alt_daten?: Json | null
+          alt_id?: string | null
+          erstellt_am?: string
+          erstellt_von?: string | null
+          ferien_uebertrag?: number
+          geaendert_am?: string
+          geloescht_am?: string | null
+          id?: string
+          jahr?: number
+          notiz?: string | null
+          person_id?: string
+          saldo_uebertrag_min?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'zeitkonten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'zeitkonten_person_id_fkey'
+            columns: ['person_id']
+            isOneToOne: false
+            referencedRelation: 'personen'
+            referencedColumns: ['id']
+          },
+        ]
+      }
     }
     Views: {
       abwesenheiten_alle: {
@@ -15779,6 +15889,7 @@ export type Database = {
           id: string | null
           person_id: string | null
           quelle: string | null
+          status: string | null
           von: string | null
         }
         ComputedFields: never
@@ -19182,6 +19293,7 @@ export type Database = {
           alt_daten: Json | null
           alt_id: string | null
           art: string | null
+          erinnert_am: string | null
           erstellt_am: string | null
           erstellt_von: string | null
           exportiert_am: string | null
@@ -19190,6 +19302,9 @@ export type Database = {
           geaendert_am: string | null
           geloescht_am: string | null
           id: string | null
+          intern: string | null
+          intern_de: string | null
+          intern_fr: string | null
           notiz: string | null
           pause_min: number | null
           person: string | null
@@ -19199,6 +19314,8 @@ export type Database = {
           projekt_nummer: string | null
           rapport_id: string | null
           rapport_nummer: string | null
+          service_fall_id: string | null
+          service_nummer: string | null
           start: string | null
           stopp: string | null
           stunden: number | null
@@ -19312,6 +19429,20 @@ export type Database = {
             referencedRelation: 'rapporte_liste'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'zeiten_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_faelle'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'zeiten_service_fall_id_fkey'
+            columns: ['service_fall_id']
+            isOneToOne: false
+            referencedRelation: 'service_termine'
+            referencedColumns: ['id']
+          },
         ]
       }
     }
@@ -19357,6 +19488,9 @@ export type Database = {
           url: string
         }[]
       }
+      abwesenheit_entscheiden: { Args: { p_bewilligt: boolean; p_grund?: string; p_id: string }; Returns: undefined }
+      abwesenheit_speichern: { Args: { p: Json }; Returns: string }
+      abwesenheit_zurueckziehen: { Args: { p_id: string }; Returns: undefined }
       aendere_mein_konto: {
         Args: { p_darstellung?: string; p_profil: Json; p_sprache?: string; p_standort_id?: string }
         Returns: undefined
@@ -19727,6 +19861,13 @@ export type Database = {
       helpdesk_offen: { Args: Record<PropertyKey, never>; Returns: Json }
       helpdesk_stand: { Args: Record<PropertyKey, never>; Returns: Json }
       heute_fuer_mich: { Args: Record<PropertyKey, never>; Returns: Json }
+      import_von_hand_geaendert: {
+        Args: { p_alt_ids: string[]; p_tabelle: string }
+        Returns: {
+          alt_id: string
+          zuletzt: string
+        }[]
+      }
       integration_geprueft: { Args: { p_dienst: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       inventur_buchen: { Args: { p: Json; p_lagerort: string; p_notiz?: string }; Returns: number }
       kalender_abgleichen: {
@@ -20027,8 +20168,8 @@ export type Database = {
           titel: boolean
         }[]
       }
-      mein_team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       mein_tag: { Args: { p_bis: string; p_person?: string; p_von: string }; Returns: Json }
+      mein_team_heute: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_anmeldung: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_microsoft_verbindung: { Args: Record<PropertyKey, never>; Returns: Json }
       meine_mitarbeitenden: { Args: Record<PropertyKey, never>; Returns: string[] }
@@ -20775,6 +20916,7 @@ export type Database = {
       zeit_speichern: { Args: { p: Json }; Returns: string }
       zeit_starten: { Args: { p: Json }; Returns: string }
       zeit_stoppen: { Args: { p: Json }; Returns: undefined }
+      zeit_tage: { Args: { p_bis: string; p_person: string; p_von: string }; Returns: Json }
       zeit_team: { Args: { p: Json }; Returns: number }
       zeit_team_starten: { Args: { p: Json }; Returns: number }
       zeit_team_stoppen: { Args: { p: Json }; Returns: number }
@@ -20783,6 +20925,11 @@ export type Database = {
       zeiten_vergessen_melden: { Args: Record<PropertyKey, never>; Returns: number }
       zeiten_woche_bestaetigen: { Args: { p_woche: string }; Returns: undefined }
       zeiten_wochenblatt: { Args: { p_montag: string }; Returns: Json }
+      zeiterfassung: { Args: { p_jahr: number; p_montag: string }; Returns: Json }
+      zeitkonto_setzen: {
+        Args: { p_ferien: number; p_jahr: number; p_notiz?: string; p_person: string; p_saldo_min: number }
+        Returns: undefined
+      }
       zeitplan_ergebnis: { Args: { p_job: string; p_meldung: string; p_ok: boolean }; Returns: undefined }
       zeitplan_faellig: { Args: { p_job: string; p_minuten: number }; Returns: boolean }
       zeitplan_laeufe: {

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-11
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,7 @@ Au contrat, à la date, au montage, à la MES et à la réception, l’automatio
 
 ## Nouveautés {#neu}
 
+- 11.11.2026: Les absences saisies ici partent comme dans « Saisie du temps » en demande à la direction du temps (Chris, Loris) ; maladie et accident valent tout de suite.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Le tableau de bord n’affiche que les chiffres différents de 0 ; « projets en cours » reste toujours affiché.
 - 03.11.2026: «Mettre à la corbeille» pour les projets (menu «⋯» dans le dossier du projet), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).

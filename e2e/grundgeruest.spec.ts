@@ -39,14 +39,14 @@ test('Unbekannte Adresse zeigt eine verständliche Seite', async ({ page }) => {
 test.describe('Desktop', () => {
   test.skip(({ isMobile }) => isMobile, 'nur Desktop')
 
-  test('Alle 28 Bereiche sind über die Seitenleiste erreichbar', async ({ page }) => {
+  test('Alle 29 Bereiche sind über die Seitenleiste erreichbar', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
     // Ohne eigene Wahl ist nur «Übersicht» offen (Entscheid 0058); jede Gruppe klappt mit einem Klick auf.
     await expect(nav.getByRole('link')).toHaveCount(5)
     const zu = nav.getByRole('button', { expanded: false })
     while ((await zu.count()) > 0) await zu.first().click()
-    await expect(nav.getByRole('link')).toHaveCount(28)
+    await expect(nav.getByRole('link')).toHaveCount(29)
     await nav.getByRole('link', { name: 'Anfragen & Leads' }).click()
     await expect(page).toHaveURL(/#\/sales$/)
     // Ohne Datenbank zeigt der Bereich einen Hinweis, mit Datenbank die Pipeline (seit Phase 6).
