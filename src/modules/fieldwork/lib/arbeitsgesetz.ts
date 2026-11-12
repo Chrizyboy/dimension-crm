@@ -12,7 +12,7 @@ export interface ZeitRegeln {
 }
 
 export const STANDARD_REGELN: ZeitRegeln = {
-  woche_soll_h: 42.5,
+  woche_soll_h: 40,
   pausen: [
     { ab_h: 5.5, min: 15 },
     { ab_h: 7, min: 30 },

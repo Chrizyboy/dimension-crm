@@ -18,7 +18,7 @@ export const ANSTELLUNG: AkteFeld[] = [
   { k: 'eintritt', typ: 'datum' },
   { k: 'probezeit_bis', typ: 'datum' },
   { k: 'pensum', typ: 'zahl', platzhalter: '100' },
-  { k: 'wochenstunden', typ: 'zahl', platzhalter: '42.5' },
+  { k: 'wochenstunden', typ: 'zahl', platzhalter: '40' },
   { k: 'ferientage', typ: 'zahl', platzhalter: '25' },
   { k: 'kuendigungsfrist_monate', typ: 'zahl', platzhalter: '2' },
   { k: 'vertrag_unterschrieben_am', typ: 'datum' },

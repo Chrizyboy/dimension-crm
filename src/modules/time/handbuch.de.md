@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-11
+stand: 2026-11-12
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -58,10 +58,10 @@ Hier stempelt jede Person ihre Arbeitszeit, sieht Soll, Saldo und Ferienkonto un
 
 ## Läuft automatisch {#automatisch}
 
-- Soll pro Tag = Wochenstunden aus der Personal-Akte (sonst 42.5 Stunden × Pensum) geteilt durch 5, Montag bis Freitag.
+- Soll pro Tag = Wochenstunden aus der Personal-Akte (sonst 40 Stunden × Pensum) geteilt durch 5, Montag bis Freitag.
 - Feiertage des Standorts (Muri oder Bulle) haben kein Soll.
 - Ferien, Krank, Unfall, Militär und Weiterbildung zählen als gearbeitet; Kompensation und unbezahlter Urlaub nicht.
-- Der Ferienanspruch kommt aus der Personal-Akte (sonst 25 Tage), anteilig ab Eintritt.
+- Der Ferienanspruch kommt aus der Personal-Akte (sonst 25 Tage = 5 Wochen), anteilig ab Eintritt.
 - Kurstage aus «Team & Ausweise» werden von selbst als Weiterbildung eingetragen.
 
 ## Regeln {#regeln}
@@ -87,4 +87,5 @@ Sie sind noch **beantragt**. Sobald die Zeit-Leitung bewilligt, zählen sie.
 
 ## Neu {#neu}
 
+- 12.11.2026: Standard ist jetzt die 40-Stunden-Woche (8 Stunden pro Tag bei 100 %) und 5 Wochen Ferien.
 - 11.11.2026: Bereich angelegt: Stempeluhr fürs Büro, Woche mit Soll und Saldo, Ferienkonto, Anträge mit Bewilligung, Kalender und Team-Übersicht für die Zeit-Leitung.

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-11
+stand: 2026-11-12
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -58,10 +58,10 @@ Ici, chaque personne pointe son temps de travail, voit le prévu, le solde et so
 
 ## Automatique {#automatisch}
 
-- Prévu par jour = heures hebdomadaires du dossier personnel (sinon 42.5 heures × taux) divisées par 5, du lundi au vendredi.
+- Prévu par jour = heures hebdomadaires du dossier personnel (sinon 40 heures × taux) divisées par 5, du lundi au vendredi.
 - Les jours fériés du site (Muri ou Bulle) n’ont pas de prévu.
 - Vacances, maladie, accident, armée et formation comptent comme travaillé ; compensation et congé non payé non.
-- Le droit aux vacances vient du dossier personnel (sinon 25 jours), au prorata dès l’entrée.
+- Le droit aux vacances vient du dossier personnel (sinon 25 jours = 5 semaines), au prorata dès l’entrée.
 - Les jours de cours de « Équipe & certificats » sont inscrits d’eux-mêmes comme formation.
 
 ## Règles {#regeln}
@@ -87,4 +87,5 @@ Elles sont encore **demandées**. Dès que la direction du temps valide, elles c
 
 ## Nouveautés {#neu}
 
+- 12.11.2026 : la norme est maintenant la semaine de 40 heures (8 heures par jour à 100 %) et 5 semaines de vacances.
 - 11.11.2026: Domaine créé : pointeuse pour le bureau, semaine avec prévu et solde, compte de vacances, demandes avec validation, calendrier et vue d’équipe pour la direction du temps.
