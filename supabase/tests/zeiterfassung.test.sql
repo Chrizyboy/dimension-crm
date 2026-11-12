@@ -71,9 +71,9 @@ select is((select status from public.abwesenheiten where id = (select id from k 
           'Leitung trägt eigene Ferien direkt ein');
 select lives_ok($$ select public.zeitkonto_setzen('00000000-0000-0000-0000-0000000fe0b1', 2026, 3.5, 120) $$, 'Übertrag gesetzt');
 
--- Rechnen: Mia (Bulle, 80 %) arbeitet am 9.11. 8.5 Std., Soll 42.5 × 0.8 / 5 = 6.8; 8.12. ist Feiertag.
+-- Rechnen: Mia (Bulle, 80 %) arbeitet am 9.11. 8.5 Std., Soll 40 × 0.8 / 5 = 6.4; 8.12. ist Feiertag.
 select is((public.zeit_tage('00000000-0000-0000-0000-0000000fe0b3', '2026-11-09', '2026-11-09') -> 0 ->> 'soll_h')::numeric,
-          6.8::numeric, 'Soll nach Pensum');
+          6.4::numeric, 'Soll nach Pensum');
 select is((public.zeit_tage('00000000-0000-0000-0000-0000000fe0b3', '2026-11-09', '2026-11-09') -> 0 ->> 'ist_h')::numeric,
           8.5::numeric, 'Ist ohne Pause');
 select is((public.zeit_tage('00000000-0000-0000-0000-0000000fe0b3', '2026-12-08', '2026-12-08') -> 0 ->> 'soll_h')::numeric,

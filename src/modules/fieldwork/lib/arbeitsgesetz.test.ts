@@ -47,7 +47,7 @@ describe('Arbeitsgesetz', () => {
   it('rechnet Soll nach Pensum, Ferien zählen als erfüllt', () => {
     const tage = ['02', '03', '04', '05', '06', '07', '08'].map((d) => tag(`2026-11-${d}`, { stunden: 8.5 }))
     tage[0] = tag('2026-11-02', { abwesenheit: { art: 'ferien', halbtag: false } })
-    expect(wochenSoll({ ...person(tage), pensum: 80 })).toBe(27.2)
+    expect(wochenSoll({ ...person(tage), pensum: 80 })).toBe(25.6)
     expect(wochenIst(person(tage))).toBe(51)
   })
 })
