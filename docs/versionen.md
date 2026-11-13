@@ -5,6 +5,10 @@ Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nic
 Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
 veröffentlichen» starten (docs/installation.md).
 
+## 1.2.1
+
+- Automationen: die Übersicht öffnet wieder, auch wenn schon Automationen gelaufen sind.
+
 ## 1.2.0
 
 - Neu: Zeiterfassung und Abwesenheiten (Stempeln, Saldo, Ferienkonto, Antrag und Bewilligung).
