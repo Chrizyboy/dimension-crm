@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-13
 rollen: administration
 ---
 
@@ -66,6 +66,7 @@ Neue Auslöser baut die Entwicklung in der Datenbank. Über **Fehler melden** im
 
 ## Neu {#neu}
 
+- 13.11.2026: Die Übersicht öffnet wieder, auch wenn schon Automationen gelaufen sind.
 - 24.10.2026: Fehler in der Liste mit «Nochmals versuchen» und «Fehler melden».
 - 23.10.2026: KI schreibt Mail- und SMS-Texte in der Sprache des Kunden.
 - 23.10.2026: Automationen mit Protokoll; Aufgaben und Glocke kommen vom Server.
