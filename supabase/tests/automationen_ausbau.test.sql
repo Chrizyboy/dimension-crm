@@ -4,7 +4,7 @@
 -- Übersicht und Probelauf nur Administration, neuer Auslöser «Lead ohne Kontakt» (nur Neues).
 -- Ausführen: npm run db:test
 begin;
-select plan(36);
+select plan(37);
 
 update public.automationen set aktiv = false where vorlage is not null;
 update intern.automation_signale set verteilt = true where not verteilt;
@@ -73,6 +73,16 @@ reset role;
 create temp table l39 on commit drop as
   select l.* from public.automation_laeufe l where l.automation_id = '00000000-0000-0000-0000-0000000039d1';
 grant select on l39 to authenticated, service_role;
+
+-- Helpdesk T001: ein erledigter Schritt ohne Meldung (z. B. «Bedingungen geprüft») darf die Übersicht nicht abbrechen
+update public.automation_laeufe set protokoll = protokoll || jsonb_build_array(jsonb_build_object(
+    'nr', 99, 'art', 'pruefen', 'ergebnis', 'ok', 'zeit', now()))
+ where id = (select id from l39);
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a2", "role": "authenticated"}', true),
+       set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000039a2', true);
+select lives_ok($$ select public.automation_uebersicht() $$, 'Übersicht mit Schritten ohne Meldung');
+reset role;
 select is((select stand from l39), 'wartet', 'Lauf wartet nach dem Warten in Arbeitstagen');
 select is((select count(*)::int from public.aktivitaeten a where (a.details ->> 'lauf_id')::uuid = (select id from l39)
             and a.text = 'Automatisch: neuer Lead Otto Ohnemail'), 1, 'Notiz in der Zeitachse');

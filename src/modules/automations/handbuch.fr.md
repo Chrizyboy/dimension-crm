@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-02
+stand: 2026-11-13
 rollen: administration
 ---
 
@@ -66,6 +66,7 @@ Les nouveaux déclencheurs sont construits par le développement dans la base de
 
 ## Nouveautés {#neu}
 
+- 13.11.2026: La vue d’ensemble s’ouvre à nouveau, même quand des automatisations ont déjà tourné.
 - 24.10.2026: Erreurs dans la liste avec « Réessayer » et « Signaler un problème ».
 - 23.10.2026: L’IA rédige les textes de mail et SMS dans la langue du client.
 - 23.10.2026: Automatisations avec journal ; tâches et notifications viennent du serveur.
