@@ -2,8 +2,9 @@
 
 Was in jeder Version neu ist. Der Abschnitt der aktuellen Version (`version` in `package.json`) erscheint in der
 Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nicht für Entwickler.
-Neue Version: Abschnitt oben ergänzen, `version` in `package.json` erhöhen, dann auf GitHub «Neue Version
-veröffentlichen» starten (docs/installation.md).
+Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen; beim Merge auf main startet die
+Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
+(docs/installation.md).
 
 ## 1.2.1
 

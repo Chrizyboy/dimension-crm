@@ -1,9 +1,13 @@
-﻿# Dimension Work Vorschau: die neuste Fassung (oder eine einzelne Änderung) am PC anschauen, bevor sie
-# veröffentlicht wird. Gestartet über die Desktop-Verknüpfung «Dimension Work Vorschau» (einrichten.ps1).
+﻿# Dimension Work Vorschau: die neuste Fassung am PC anschauen und am Schluss entscheiden, ob sie veröffentlicht wird.
+# Gestartet über die Desktop-Verknüpfung «Dimension Work Vorschau» (einrichten.ps1).
 #
-# Läuft in einem eigenen Ordner (%USERPROFILE%\dimension-crm-vorschau, git worktree), damit der Ordner für
-# «Dimension Work aktualisieren» immer sauber auf main bleibt. Öffnet http://localhost:1420 mit den echten
-# Cloud-Daten und holt jede Minute den neusten Stand derselben Fassung; die Seite lädt dann von selbst neu.
+# Neuste Fassung = main plus alle offenen Änderungen (Pull Requests), zusammengestellt von vorschau-bauen.ps1 in
+# einem eigenen Ordner (%USERPROFILE%\dimension-crm-vorschau, git worktree), damit der Ordner für «Dimension Work
+# aktualisieren» sauber auf main bleibt. Öffnet http://localhost:1420 mit den echten Cloud-Daten und holt jede Minute
+# den neusten Stand; die Seite lädt dann von selbst neu.
+# Am Schluss: J = die gezeigten Änderungen mit dem eigenen GitHub-Login zusammenführen (nur mit grüner Prüfung),
+# Version erhöhen (startet die App-Veröffentlichung) und bei Datenbank-/Server-Änderungen die Cloud aktualisieren.
+# N = nichts veröffentlichen, auf Wunsch einen kurzen Grund an die Änderung schreiben.
 # Achtung: Echte Daten. Was man in der Vorschau speichert, ist wirklich gespeichert.
 
 $ErrorActionPreference = 'Continue'
@@ -11,46 +15,43 @@ $Projekt = 'iklwyrbktotucwewkxlj'
 $Repo = 'Chrizyboy/dimension-crm'
 $Haupt = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $Vorschau = Join-Path $env:USERPROFILE 'dimension-crm-vorschau'
+$Bauen = Join-Path $PSScriptRoot 'vorschau-bauen.ps1'
+$StandDatei = Join-Path $Vorschau '.vorschau-stand.json'
 $Port = 1420
 
 function Schritt($text) { Write-Host ''; Write-Host "== $text" -ForegroundColor Cyan }
-function Abbruch($text) {
-  Write-Host ''; Write-Host "FEHLER: $text" -ForegroundColor Red
-  Write-Host 'Bitte Screenshot in den Thread «Go-live» schicken.'
+function Ende($text, $farbe) {
+  Write-Host ''; Write-Host $text -ForegroundColor $farbe
   Read-Host 'Enter drücken zum Schliessen' | Out-Null
-  exit 1
+  exit 0
+}
+function Abbruch($text) { Ende "FEHLER: $text`nBitte Screenshot in den Thread «Go-live» schicken." Red }
+function Stand { try { return Get-Content -Raw -Encoding UTF8 $StandDatei | ConvertFrom-Json } catch { return $null } }
+function GithubBereit {
+  if (-not (Get-Command gh -ErrorAction SilentlyContinue)) { return $false }
+  gh auth status 2>$null | Out-Null
+  return ($LASTEXITCODE -eq 0)
 }
 
 Write-Host 'Dimension Work Vorschau' -ForegroundColor Cyan
 
-# Welche Fassung? Offene Änderungen (Pull Requests) kommen ohne Anmeldung von GitHub, das Repository ist öffentlich.
-Schritt '1/4 Fassung wählen'
-$offen = @()
-try { $offen = @(Invoke-RestMethod "https://api.github.com/repos/$Repo/pulls?state=open&per_page=20" -TimeoutSec 15) } catch { }
-if ($offen.Count -gt 0) {
-  Write-Host 'Offene Änderungen, noch nicht veröffentlicht:'
-  foreach ($pr in $offen) { Write-Host ("  {0,4}  {1}" -f $pr.number, $pr.title) }
+Schritt '1/4 Neuste Fassung zusammenstellen'
+Remove-Item $StandDatei -ErrorAction SilentlyContinue
+& $Bauen -Haupt $Haupt -Vorschau $Vorschau -Repo $Repo
+$stand = Stand
+if (-not $stand) { Abbruch 'Die neuste Fassung liess sich nicht holen (Internet?).' }
+if (@($stand.prs).Count -gt 0) {
+  Write-Host 'Darin sind diese Änderungen, noch nicht veröffentlicht:'
+  foreach ($pr in @($stand.prs)) { Write-Host ("  #{0}  {1}" -f $pr.nummer, $pr.titel) }
+} else {
+  Write-Host 'Keine offenen Änderungen: Das ist der veröffentlichte Stand.'
 }
-$wahl = Read-Host 'Nummer einer Änderung eintippen, oder einfach Enter für den neusten Stand (main)'
-if ($wahl -match '^\d+$') { $ref = "pull/$wahl/head"; $name = "Änderung #$wahl" } else { $ref = 'main'; $name = 'neuster Stand (main)' }
+foreach ($pr in @($stand.uebersprungen)) {
+  Write-Host ("  Weggelassen (passt nicht mit den anderen zusammen): #{0}  {1}" -f $pr.nummer, $pr.titel) -ForegroundColor Yellow
+}
 
-Schritt "2/4 Vorschau-Ordner vorbereiten ($name)"
-Set-Location $Haupt
-git fetch -q origin $ref
-if ($LASTEXITCODE -ne 0) { Abbruch "Fassung $ref nicht gefunden." }
-# FETCH_HEAD gilt nur im Hauptordner, darum gleich die Commit-Nummer merken.
-$sha = git rev-parse FETCH_HEAD
-if (-not (Test-Path (Join-Path $Vorschau '.git'))) {
-  git worktree prune
-  git worktree add --detach $Vorschau $sha
-  if ($LASTEXITCODE -ne 0) { Abbruch 'Vorschau-Ordner liess sich nicht anlegen.' }
-}
+Schritt '2/4 Werkzeuge (npm install)'
 Set-Location $Vorschau
-# Der Vorschau-Ordner ist nur eine Kopie zum Anschauen: lokale Reste werden verworfen.
-git checkout -q --detach -f $sha
-git log -1 --format='Stand: %h %s'
-
-Schritt '3/4 Werkzeuge (npm install)'
 npm.cmd install --no-audit --no-fund --loglevel=error
 if ($LASTEXITCODE -ne 0) { Abbruch 'npm install ging nicht.' }
 
@@ -72,25 +73,53 @@ if ($belegt) {
   Start-Sleep -Seconds 2
 }
 
-# Immer live: jede Minute den neusten Stand derselben Fassung holen. Vite merkt die geänderten Dateien
-# und lädt die Seite im Browser neu. Kommen neue Pakete dazu, die Vorschau einmal neu starten.
-$live = Start-Job -ArgumentList $Vorschau, $Haupt, $ref -ScriptBlock {
-  param($vorschau, $haupt, $ref)
+Schritt "3/4 Vorschau starten: http://localhost:$Port"
+# Im selben Fenster, aber leise: Schliesst man das Fenster, endet auch die Vorschau.
+$vite = Start-Process -FilePath 'npx.cmd' -WorkingDirectory $Vorschau -NoNewWindow -PassThru `
+  -ArgumentList 'vite', '--mode', 'cloud', '--port', $Port, '--strictPort', '--logLevel', 'error'
+for ($i = 0; $i -lt 60; $i++) {
+  if (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue) { break }
+  Start-Sleep -Seconds 1
+}
+Start-Process "http://localhost:$Port"
+
+# Immer live: jede Minute neu zusammenstellen, wenn sich main oder eine Änderung bewegt hat.
+$live = Start-Job -ArgumentList $Bauen, $Haupt, $Vorschau, $Repo, $StandDatei -ScriptBlock {
+  param($bauen, $haupt, $vorschau, $repo, $datei)
   while ($true) {
     Start-Sleep -Seconds 60
-    Set-Location $haupt
-    git fetch -q origin $ref 2>$null
-    $neu = git rev-parse FETCH_HEAD
-    Set-Location $vorschau
-    if ($neu -and $neu -ne (git rev-parse HEAD)) { git checkout -q --detach -f $neu 2>$null }
+    $bisher = ''
+    try { $bisher = (Get-Content -Raw -Encoding UTF8 $datei | ConvertFrom-Json).kennung } catch { }
+    & $bauen -Haupt $haupt -Vorschau $vorschau -Repo $repo -Bisher $bisher
   }
 }
 
-Schritt "4/4 Vorschau läuft: http://localhost:$Port"
-Write-Host 'Der Browser öffnet sich gleich. Echte Daten: Was du speicherst, ist wirklich gespeichert.' -ForegroundColor Yellow
-Write-Host 'Neue Stände kommen jede Minute von selbst. Zum Beenden dieses Fenster schliessen.'
-try {
-  npx.cmd vite --mode cloud --port $Port --strictPort --open
-} finally {
-  Stop-Job $live -ErrorAction SilentlyContinue; Remove-Job $live -Force -ErrorAction SilentlyContinue
+Schritt '4/4 Anschauen'
+Write-Host 'Der Browser zeigt die Vorschau. Echte Daten: Was du speicherst, ist wirklich gespeichert.' -ForegroundColor Yellow
+Write-Host 'Neue Stände kommen jede Minute von selbst. Lass dieses Fenster offen, bis du fertig bist.'
+Write-Host ''
+$antwort = Read-Host 'Fertig? Passt alles und soll es veröffentlicht werden? (J = veröffentlichen, N = noch nicht)'
+
+Stop-Job $live -ErrorAction SilentlyContinue; Remove-Job $live -Force -ErrorAction SilentlyContinue
+if ($vite) { taskkill.exe /PID $vite.Id /T /F 2>$null | Out-Null }
+
+# Was du zuletzt gesehen hast (der Hintergrund kann seit dem Start Neues dazugenommen haben).
+$prs = @((Stand).prs | Where-Object { $_ })
+if ($antwort -match '^[jJyY]') {
+  & (Join-Path $PSScriptRoot 'veroeffentlichen.ps1') -Haupt $Haupt -Repo $Repo -Prs $prs
+  exit 0
 }
+
+if ($prs.Count -gt 0 -and (GithubBereit)) {
+  $grund = Read-Host 'Was passt noch nicht? (kurz beschreiben, oder einfach Enter)'
+  if ($grund) {
+    $ziel = $prs
+    if ($prs.Count -gt 1) {
+      $nr = Read-Host 'Welche Änderung betrifft es? (Nummer, oder Enter für alle)'
+      if ($nr -match '^\d+$') { $ziel = @($prs | Where-Object { "$($_.nummer)" -eq $nr }) }
+    }
+    foreach ($pr in $ziel) { gh pr comment $pr.nummer --repo $Repo --body "Vorschau: passt noch nicht. $grund" | Out-Null }
+    Write-Host 'Weitergegeben. Claude passt die Änderung an und meldet sich im Thread.'
+  }
+}
+Ende 'Nichts veröffentlicht.' Green

@@ -3,8 +3,9 @@
 # Aufruf (PowerShell, kein Admin nötig):
 #   irm https://raw.githubusercontent.com/Chrizyboy/dimension-crm/main/scripts/windows/einrichten.ps1 | iex
 # Was passiert: Git und Node.js installieren (falls nötig), Projekt nach %USERPROFILE%\dimension-crm holen,
-# bei Supabase anmelden (Browser), mit der Cloud verbinden (Datenbank-Passwort selbst eintippen) und auf dem
-# Desktop die Verknüpfung «Dimension Work aktualisieren» anlegen. Keine Geheimwerte im Skript oder in Git.
+# bei Supabase anmelden (Browser), mit der Cloud verbinden (Datenbank-Passwort selbst eintippen), bei GitHub anmelden
+# (für «Veröffentlichen» am Ende der Vorschau) und auf dem Desktop «Dimension Work aktualisieren» und
+# «Dimension Work Vorschau» anlegen. Keine Geheimwerte im Skript oder in Git.
 # Mehrfach ausführen schadet nicht: Vorhandenes wird nur aktualisiert.
 
 $ErrorActionPreference = 'Continue'
@@ -34,11 +35,12 @@ function Installiere($befehl, $paket, $name) {
 
 Write-Host 'Dimension Work: Aktualisieren einrichten' -ForegroundColor Cyan
 
-Schritt '1/5 Programme prüfen (Git, Node.js)'
+Schritt '1/6 Programme prüfen (Git, Node.js, GitHub CLI)'
 Installiere 'git' 'Git.Git' 'Git'
 Installiere 'node' 'OpenJS.NodeJS.LTS' 'Node.js'
+Installiere 'gh' 'GitHub.cli' 'GitHub CLI'
 
-Schritt "2/5 Projekt holen nach $Ordner"
+Schritt "2/6 Projekt holen nach $Ordner"
 if (Test-Path (Join-Path $Ordner '.git')) {
   Set-Location $Ordner
   git checkout -- src/routeTree.gen.ts
@@ -55,20 +57,32 @@ if ($LASTEXITCODE -ne 0) { Abbruch 'npm install ging nicht.' }
 
 # Schon verbunden (zweiter Lauf, z. B. um die Vorschau-Verknüpfung nachzuholen): Anmeldung überspringen.
 if (Test-Path (Join-Path $Ordner 'supabase\.temp\project-ref')) {
-  Schritt '3-4/5 Mit der Cloud schon verbunden, übersprungen'
+  Schritt '3-4/6 Mit der Cloud schon verbunden, übersprungen'
 } else {
-  Schritt '3/5 Bei Supabase anmelden'
+  Schritt '3/6 Bei Supabase anmelden'
   Write-Host 'Es öffnet sich der Browser. Mit deinem Supabase-Konto anmelden und bestätigen.'
   npx.cmd supabase login
   if ($LASTEXITCODE -ne 0) { Abbruch 'Anmeldung bei Supabase ging nicht.' }
 
-  Schritt '4/5 Mit der Cloud verbinden'
+  Schritt '4/6 Mit der Cloud verbinden'
   Write-Host 'Jetzt das Datenbank-Passwort eintippen (es wird nicht angezeigt).'
   npx.cmd supabase link --project-ref $Projekt
   if ($LASTEXITCODE -ne 0) { Abbruch 'Verbindung zur Cloud ging nicht (Passwort falsch oder kein Zugriff aufs Projekt).' }
 }
 
-Schritt '5/5 Verknüpfungen auf dem Desktop'
+# Mit dem eigenen GitHub-Konto: «J» am Ende der Vorschau führt die Änderungen damit zusammen.
+gh auth status 2>$null | Out-Null
+if ($LASTEXITCODE -eq 0) {
+  Schritt '5/6 Bei GitHub schon angemeldet, übersprungen'
+} else {
+  Schritt '5/6 Bei GitHub anmelden'
+  Write-Host 'Es erscheint ein Code. Enter drücken, im Browser mit deinem GitHub-Konto anmelden und den Code eintippen.'
+  gh auth login --hostname github.com --git-protocol https --web
+  if ($LASTEXITCODE -ne 0) { Abbruch 'Anmeldung bei GitHub ging nicht.' }
+}
+gh auth setup-git
+
+Schritt '6/6 Verknüpfungen auf dem Desktop'
 $desktop = [Environment]::GetFolderPath('Desktop')
 $shell = New-Object -ComObject WScript.Shell
 function Verknuepfung($name, $skriptName, $beschreibung) {
@@ -81,7 +95,7 @@ function Verknuepfung($name, $skriptName, $beschreibung) {
   $link.Save()
 }
 Verknuepfung 'Dimension Work aktualisieren' 'aktualisieren.ps1' 'Neusten Stand von GitHub holen und in die Cloud hochladen'
-Verknuepfung 'Dimension Work Vorschau' 'vorschau.ps1' 'Neuste Fassung oder eine offene Änderung am PC anschauen'
+Verknuepfung 'Dimension Work Vorschau' 'vorschau.ps1' 'Neuste Fassung am PC anschauen und veröffentlichen'
 
 Write-Host ''
 Write-Host 'FERTIG. Auf dem Desktop liegen jetzt «Dimension Work aktualisieren» und «Dimension Work Vorschau».' -ForegroundColor Green
