@@ -72,6 +72,21 @@ GitHub.
 Fehlt eine Einstellung, bricht der Lauf am Anfang mit einer klaren Meldung ab. Eine Version gibt es nur einmal:
 Wer zweimal mit derselben Nummer startet, bekommt die Meldung «Version gibt es schon».
 
+## Cloud aktualisieren per Doppelklick
+
+Auf jedem PC, der Updates in die Cloud bringen soll (Chris, Loris), einmal in PowerShell:
+
+```
+irm https://raw.githubusercontent.com/Chrizyboy/dimension-crm/main/scripts/windows/einrichten.ps1 | iex
+```
+
+Das Skript installiert bei Bedarf Git und Node.js, holt das Projekt nach `%USERPROFILE%\dimension-crm`, meldet bei
+Supabase an (Browser), verbindet mit der Cloud (Datenbank-Passwort selbst eintippen) und legt auf dem Desktop
+«Dimension Work aktualisieren» an. Die Verknüpfung startet `scripts/windows/aktualisieren.ps1`: `git pull`,
+`npm install`, `supabase db push --include-all` (bestätigen, Passwort eintippen) und alle Edge Functions. Nie
+`db reset` oder `config push`. Protokoll in `%USERPROFILE%\dimension-work-aktualisieren.log`. Voraussetzung: Die
+Person ist im Supabase-Team des Projekts und kennt das Datenbank-Passwort (persönlich weitergeben, nie im Chat).
+
 ## Am PC installieren
 
 1. Die Download-Seite (`…/download/`, siehe oben) öffnen und «Für Windows herunterladen» klicken, oder unter
