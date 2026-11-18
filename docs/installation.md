@@ -89,11 +89,19 @@ Supabase an (Browser), verbindet mit der Cloud (Datenbank-Passwort selbst eintip
 `db reset` oder `config push`. Protokoll in `%USERPROFILE%\dimension-work-aktualisieren.log`. Voraussetzung: Die
 Person ist im Supabase-Team des Projekts und kennt das Datenbank-Passwort (persönlich weitergeben, nie im Chat).
 
-Dieselbe Einrichtung legt auch «Dimension Work Vorschau» an (`scripts/windows/vorschau.ps1`): Sie zeigt den neusten
-Stand von `main` oder eine offene Änderung (Nummer des Pull Requests eintippen) auf http://localhost:1420, bevor sie
-veröffentlicht wird. Eigener Ordner `%USERPROFILE%\dimension-crm-vorschau` (git worktree), holt jede Minute den
-neusten Stand derselben Fassung, die Seite lädt von selbst neu. Arbeitet mit den echten Cloud-Daten. Wer
-«aktualisieren» schon eingerichtet hat, startet den Einrichtungs-Befehl einfach nochmals (Anmeldung wird übersprungen).
+Dieselbe Einrichtung legt auch «Dimension Work Vorschau» an (`scripts/windows/vorschau.ps1`) und meldet bei GitHub an.
+Ein Doppelklick zeigt ohne Eingabe immer die neuste Fassung: `main` plus alle offenen Änderungen (Pull Requests ohne
+Entwürfe, zusammengestellt von `vorschau-bauen.ps1`; was nicht zusammenpasst, wird weggelassen und genannt). Eigener
+Ordner `%USERPROFILE%\dimension-crm-vorschau` (git worktree), http://localhost:1420 mit den echten Cloud-Daten, jede
+Minute neu zusammengestellt. Am Schluss fragt das Fenster «Veröffentlichen? (J/N)»:
+
+- **J** (`veroeffentlichen.ps1`): führt die gezeigten Änderungen mit dem eigenen GitHub-Login zusammen (genau der
+  gezeigte Stand, nur mit grüner Prüfung), erhöht die Version samt Abschnitt in `docs/versionen.md` (aus den Titeln),
+  was die Veröffentlichung startet, und ruft bei Datenbank-/Server-Änderungen gleich «aktualisieren» auf.
+- **N**: nichts passiert; ein kurzer Grund geht als Kommentar an die Änderung, Claude passt sie an.
+
+Darum: Titel von Pull Requests mit sichtbaren Änderungen so schreiben, dass sie als Zeile im Fenster «Neue Version»
+taugen. Wer schon eingerichtet hat, startet den Einrichtungs-Befehl einfach nochmals (Vorhandenes wird übersprungen).
 
 ## Am PC installieren
 
