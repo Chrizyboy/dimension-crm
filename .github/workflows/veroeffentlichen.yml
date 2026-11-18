@@ -1,4 +1,5 @@
-# «Neue Version veröffentlichen» (Phase 16): auf GitHub unter Actions › Neue Version veröffentlichen › Run workflow.
+# «Neue Version veröffentlichen» (Phase 16): startet von selbst, sobald auf main eine höhere Version in package.json
+# ankommt (sonst nichts tun). Von Hand weiterhin unter Actions › Neue Version veröffentlichen › Run workflow.
 # Baut die Desktop-App mit Update-Signatur, legt sie als Release «v<version>» ab (dort holen die installierten
 # Apps ihre Updates) und stellt die Web-App fürs Handy auf GitHub Pages. Version und Notizen kommen aus
 # package.json und docs/versionen.md. Einrichten (einmal): docs/installation.md.
@@ -6,14 +7,45 @@ name: Neue Version veröffentlichen
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [package.json]
 
 concurrency:
   group: veroeffentlichen
   cancel-in-progress: false
 
 jobs:
+  pruefen:
+    name: Neue Version?
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      neu: ${{ steps.p.outputs.neu }}
+    steps:
+      - uses: actions/checkout@v4
+      # Bei einem Push ohne neue Version (z. B. nur Abhängigkeiten in package.json) still nichts tun;
+      # von Hand gestartet mit vorhandener Version soll es wie bisher rot werden, damit man es merkt.
+      - name: Gibt es die Version schon?
+        id: p
+        shell: bash
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if git ls-remote --exit-code --tags origin "refs/tags/v$version" >/dev/null; then
+            echo "neu=false" >> "$GITHUB_OUTPUT"
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              echo "Version $version gibt es schon. Bitte in package.json erhöhen."; exit 1
+            fi
+            echo "Version $version gibt es schon, nichts zu tun."
+          else
+            echo "neu=true" >> "$GITHUB_OUTPUT"
+            echo "Neue Version $version wird veröffentlicht."
+          fi
+
   windows:
     name: Desktop-App (Windows) mit Update
+    needs: pruefen
+    if: needs.pruefen.outputs.neu == 'true'
     runs-on: windows-latest
     timeout-minutes: 60
     permissions:
@@ -36,12 +68,6 @@ jobs:
       - name: Einstellungen prüfen, Version und Notizen lesen
         id: v
         run: node scripts/veroeffentlichen/vorbereiten.mjs
-      - name: Gibt es die Version schon?
-        shell: bash
-        run: |
-          if git ls-remote --exit-code --tags origin "refs/tags/v${{ steps.v.outputs.version }}" >/dev/null; then
-            echo "Version ${{ steps.v.outputs.version }} gibt es schon. Bitte in package.json erhöhen."; exit 1
-          fi
       - uses: dtolnay/rust-toolchain@stable
       - uses: swatinem/rust-cache@v2
         with:

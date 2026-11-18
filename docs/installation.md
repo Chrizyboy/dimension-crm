@@ -66,11 +66,13 @@ GitHub.
 1. In `docs/versionen.md` oben einen Abschnitt `## <neue Version>` mit 2–4 Zeilen für das Team schreiben.
 2. In `package.json` die `version` erhöhen (z. B. `0.16.0` → `0.16.1` für Korrekturen, `0.17.0` für Neues).
 3. Beides in `main` bringen (Pull Request).
-4. GitHub › **Actions › Neue Version veröffentlichen › Run workflow**. Nach etwa 20 Minuten liegt die Version
-   unter **Releases**, und die Web-App ist aktualisiert.
+4. Fertig: Sobald die höhere Version auf `main` ankommt, startet «Neue Version veröffentlichen» von selbst. Nach etwa
+   20 Minuten liegt die Version unter **Releases**, die Web-App ist aktualisiert, und die installierten Apps zeigen
+   das Update. Von Hand geht es weiterhin über GitHub › **Actions › Neue Version veröffentlichen › Run workflow**.
 
-Fehlt eine Einstellung, bricht der Lauf am Anfang mit einer klaren Meldung ab. Eine Version gibt es nur einmal:
-Wer zweimal mit derselben Nummer startet, bekommt die Meldung «Version gibt es schon».
+Fehlt eine Einstellung, bricht der Lauf am Anfang mit einer klaren Meldung ab. Eine Version gibt es nur einmal: Ändert
+ein Push `package.json` ohne neue Version, passiert nichts; von Hand mit derselben Nummer gestartet, kommt die Meldung
+«Version gibt es schon».
 
 ## Cloud aktualisieren per Doppelklick
 
