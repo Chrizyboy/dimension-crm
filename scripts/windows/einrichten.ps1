@@ -53,27 +53,36 @@ if (Test-Path (Join-Path $Ordner '.git')) {
 npm.cmd install --no-audit --no-fund --loglevel=error
 if ($LASTEXITCODE -ne 0) { Abbruch 'npm install ging nicht.' }
 
-Schritt '3/5 Bei Supabase anmelden'
-Write-Host 'Es öffnet sich der Browser. Mit deinem Supabase-Konto anmelden und bestätigen.'
-npx.cmd supabase login
-if ($LASTEXITCODE -ne 0) { Abbruch 'Anmeldung bei Supabase ging nicht.' }
+# Schon verbunden (zweiter Lauf, z. B. um die Vorschau-Verknüpfung nachzuholen): Anmeldung überspringen.
+if (Test-Path (Join-Path $Ordner 'supabase\.temp\project-ref')) {
+  Schritt '3-4/5 Mit der Cloud schon verbunden, übersprungen'
+} else {
+  Schritt '3/5 Bei Supabase anmelden'
+  Write-Host 'Es öffnet sich der Browser. Mit deinem Supabase-Konto anmelden und bestätigen.'
+  npx.cmd supabase login
+  if ($LASTEXITCODE -ne 0) { Abbruch 'Anmeldung bei Supabase ging nicht.' }
 
-Schritt '4/5 Mit der Cloud verbinden'
-Write-Host 'Jetzt das Datenbank-Passwort eintippen (es wird nicht angezeigt).'
-npx.cmd supabase link --project-ref $Projekt
-if ($LASTEXITCODE -ne 0) { Abbruch 'Verbindung zur Cloud ging nicht (Passwort falsch oder kein Zugriff aufs Projekt).' }
+  Schritt '4/5 Mit der Cloud verbinden'
+  Write-Host 'Jetzt das Datenbank-Passwort eintippen (es wird nicht angezeigt).'
+  npx.cmd supabase link --project-ref $Projekt
+  if ($LASTEXITCODE -ne 0) { Abbruch 'Verbindung zur Cloud ging nicht (Passwort falsch oder kein Zugriff aufs Projekt).' }
+}
 
-Schritt '5/5 Verknüpfung auf dem Desktop'
-$skript = Join-Path $Ordner 'scripts\windows\aktualisieren.ps1'
+Schritt '5/5 Verknüpfungen auf dem Desktop'
 $desktop = [Environment]::GetFolderPath('Desktop')
-$link = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desktop 'Dimension Work aktualisieren.lnk'))
-$link.TargetPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
-$link.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$skript`""
-$link.WorkingDirectory = $Ordner
-$link.IconLocation = Join-Path $Ordner 'src-tauri\icons\icon.ico'
-$link.Description = 'Neusten Stand von GitHub holen und in die Cloud hochladen'
-$link.Save()
+$shell = New-Object -ComObject WScript.Shell
+function Verknuepfung($name, $skriptName, $beschreibung) {
+  $link = $shell.CreateShortcut((Join-Path $desktop "$name.lnk"))
+  $link.TargetPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
+  $link.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$(Join-Path $Ordner "scripts\windows\$skriptName")`""
+  $link.WorkingDirectory = $Ordner
+  $link.IconLocation = Join-Path $Ordner 'src-tauri\icons\icon.ico'
+  $link.Description = $beschreibung
+  $link.Save()
+}
+Verknuepfung 'Dimension Work aktualisieren' 'aktualisieren.ps1' 'Neusten Stand von GitHub holen und in die Cloud hochladen'
+Verknuepfung 'Dimension Work Vorschau' 'vorschau.ps1' 'Neuste Fassung oder eine offene Änderung am PC anschauen'
 
 Write-Host ''
-Write-Host 'FERTIG. Auf dem Desktop liegt jetzt «Dimension Work aktualisieren».' -ForegroundColor Green
+Write-Host 'FERTIG. Auf dem Desktop liegen jetzt «Dimension Work aktualisieren» und «Dimension Work Vorschau».' -ForegroundColor Green
 Read-Host 'Enter drücken zum Schliessen' | Out-Null

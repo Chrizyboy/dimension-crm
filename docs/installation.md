@@ -89,6 +89,12 @@ Supabase an (Browser), verbindet mit der Cloud (Datenbank-Passwort selbst eintip
 `db reset` oder `config push`. Protokoll in `%USERPROFILE%\dimension-work-aktualisieren.log`. Voraussetzung: Die
 Person ist im Supabase-Team des Projekts und kennt das Datenbank-Passwort (persönlich weitergeben, nie im Chat).
 
+Dieselbe Einrichtung legt auch «Dimension Work Vorschau» an (`scripts/windows/vorschau.ps1`): Sie zeigt den neusten
+Stand von `main` oder eine offene Änderung (Nummer des Pull Requests eintippen) auf http://localhost:1420, bevor sie
+veröffentlicht wird. Eigener Ordner `%USERPROFILE%\dimension-crm-vorschau` (git worktree), holt jede Minute den
+neusten Stand derselben Fassung, die Seite lädt von selbst neu. Arbeitet mit den echten Cloud-Daten. Wer
+«aktualisieren» schon eingerichtet hat, startet den Einrichtungs-Befehl einfach nochmals (Anmeldung wird übersprungen).
+
 ## Am PC installieren
 
 1. Die Download-Seite (`…/download/`, siehe oben) öffnen und «Für Windows herunterladen» klicken, oder unter
