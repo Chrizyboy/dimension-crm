@@ -95,7 +95,7 @@ Entwürfe, zusammengestellt von `vorschau-bauen.ps1`; was nicht zusammenpasst, w
 Ordner `%USERPROFILE%\dimension-crm-vorschau` (git worktree), http://localhost:1420 mit den echten Cloud-Daten, jede
 Minute neu zusammengestellt. Am Schluss fragt das Fenster «Veröffentlichen? (J/N)»:
 
-- **J** (`veroeffentlichen.ps1`): führt die gezeigten Änderungen mit dem eigenen GitHub-Login zusammen (genau der
+- **J** (`veroeffentlichen.ps1`): bei mehreren fragt das Fenster, welche (Nummern mit Komma, Enter = alle); führt diese Änderungen mit dem eigenen GitHub-Login zusammen (genau der
   gezeigte Stand, nur mit grüner Prüfung), erhöht die Version samt Abschnitt in `docs/versionen.md` (aus den Titeln),
   was die Veröffentlichung startet, und ruft bei Datenbank-/Server-Änderungen gleich «aktualisieren» auf.
 - **N**: nichts passiert; ein kurzer Grund geht als Kommentar an die Änderung, Claude passt sie an.

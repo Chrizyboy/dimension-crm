@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
 (docs/installation.md).
 
+## 1.3.2
+
+- Grossprojekte: nur noch Projekte, die für Kunde, Youdera und uns passen; Dächer mit bestehender Solaranlage fallen weg.
+- Grossprojekte: neuer Block «Warum und wie» mit Verkaufsblatt, Grundbuch-Link und Youdera-Prüfung (Ampel).
+- Grossprojekte: Ladefehler werden angezeigt statt «Nichts zu prüfen».
+
 ## 1.3.1
 
 - Rechtsklick in den Listen (am Handy lange drücken): Google Maps, Anrufen, E-Mail, Kundenakte, bei Leads auch Terminblatt.
