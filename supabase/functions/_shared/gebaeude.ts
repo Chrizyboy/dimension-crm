@@ -23,6 +23,9 @@ export interface Gebaeude {
   egid?: string
   baujahr?: number
   wohnungen?: number
+  grundflaeche_m2?: number
+  geschosse?: number
+  egrid?: string
   heizung?: string
   heizung_jahr?: number
   nutzung?: string
@@ -48,6 +51,9 @@ export interface GwrGebaeude {
   gklas?: number | null
   genh1?: number | null
   gwaerdath1?: string | null
+  garea?: number | null
+  gastw?: number | null
+  egrid?: string | null
 }
 
 const SONNENDACH = 'ch.bfe.solarenergie-eignung-daecher'
@@ -109,6 +115,9 @@ export function gwrFelder(g: GwrGebaeude): Gebaeude {
   return {
     ...(g.egid !== undefined ? { egid: String(g.egid) } : {}),
     ...(g.gbauj ? { baujahr: g.gbauj } : {}),
+    ...(g.garea ? { grundflaeche_m2: Math.round(g.garea) } : {}),
+    ...(g.gastw ? { geschosse: g.gastw } : {}),
+    ...(g.egrid ? { egrid: g.egrid } : {}),
     ...(wohnungen !== undefined ? { wohnungen } : {}),
     ...(heizungAusGwr(g.genh1) ? { heizung: heizungAusGwr(g.genh1) } : {}),
     ...(Number.isFinite(jahr) && jahr > 1900 ? { heizung_jahr: jahr } : {}),

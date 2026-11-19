@@ -85,6 +85,8 @@ const server = createServer((req, res) => {
     return json(200, { results: [] })
   }
   if (url.pathname.endsWith('/MapServer/identify')) {
+    // PV-Register (seit 19.11.2026): im Testgebiet steht noch keine Anlage, die Halle bleibt ein Treffer.
+    if (q.get('layers') === 'all:ch.bfe.elektrizitaetsproduktionsanlagen') return json(200, { results: [] })
     if (q.get('layers') === 'all:ch.bfe.solarenergie-eignung-daecher') {
       return json(200, {
         results: [{ attributes: { building_id: 4711, flaeche: 900, klasse: 4, stromertrag: 150000 } }],
