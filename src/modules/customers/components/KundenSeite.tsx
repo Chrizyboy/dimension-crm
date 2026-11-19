@@ -187,7 +187,12 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
           {n && <ServiceBox faelle={n.serviceFaelle} vertraege={n.wartungsvertraege} heute={heute} />}
           {n && <RechnungenBox rechnungen={n.rechnungen} finanzen={finanzen} />}
           <Box titel={t('akte.reiter.dokumente')} rechts={<span className="zahlen">{a.dokumente.length}</span>}>
-            <AkteDokumente dokumente={a.dokumente} backupOrdner={a.backupOrdner} />
+            <AkteDokumente
+              dokumente={a.dokumente}
+              backupOrdner={a.backupOrdner}
+              mail={{ an: k.email, sprache: k.sprache, kontakt_id: k.id }}
+              zipName={`${formatKundennummer(k.kundennummer)} ${k.name}`}
+            />
           </Box>
         </div>
       </div>

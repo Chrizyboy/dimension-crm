@@ -1,22 +1,36 @@
 import { ImagePlus, Paperclip } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import {
+  DateiFenster,
+  DateiMailKnopf,
+  ZipKnopf,
+  type DateiFensterZustand,
+  type DateiMailEmpfaenger,
+} from '@/components/shared/dateien/DateiFenster'
 import { Button } from '@/components/ui/button'
 import { formatDatum } from '@/lib/format'
-import { dokumentAdresse } from '@/services/dokumente'
 import { useAktion } from '../hooks/useAktion'
 import { anhangHochladen } from '../services/service'
 import { Box } from './Box'
 
-/** Fotos und Dateien des Falls (privater Speicher); mehrere auf einmal, am Handy direkt mit der Kamera. */
+/**
+ * Fotos und Dateien des Falls (privater Speicher); mehrere auf einmal, am Handy direkt mit der Kamera.
+ * Klick zeigt sie in der App, ✉ schickt eine an den Kunden, «Alle als ZIP» z. B. für den Hersteller.
+ */
 export function AnhaengeBox({
   id,
   anhaenge,
+  mail,
+  zipName,
 }: {
   id: string
+  mail?: DateiMailEmpfaenger | null | undefined
+  zipName: string
   anhaenge: {
     id: string
     name: string
+    mime_typ?: string | null
     erstellt_am: string
     sharepoint_url: string | null
     speicher_pfad: string | null
@@ -25,14 +39,18 @@ export function AnhaengeBox({
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
   const datei = useRef<HTMLInputElement>(null)
+  const [fenster, setFenster] = useState<DateiFensterZustand>(null)
   return (
     <Box
       titel={t('service.akte.anhaenge')}
       rechts={
-        <Button variant="ghost" size="sm" laedt={laeuft} onClick={() => datei.current?.click()}>
-          <ImagePlus />
-          {t('service.akte.hochladen')}
-        </Button>
+        <span className="flex items-center gap-1">
+          <ZipKnopf dateien={anhaenge} name={zipName} />
+          <Button variant="ghost" size="sm" laedt={laeuft} onClick={() => datei.current?.click()}>
+            <ImagePlus />
+            {t('service.akte.hochladen')}
+          </Button>
+        </span>
       }
     >
       <input
@@ -64,19 +82,29 @@ export function AnhaengeBox({
                 type="button"
                 className="text-accent-ink inline-flex min-w-0 items-center gap-1 truncate underline"
                 onClick={() => {
-                  void dokumentAdresse(d).then((u) => {
-                    if (u) window.open(u, '_blank', 'noopener')
-                  })
+                  if (!d.speicher_pfad && d.sharepoint_url) window.open(d.sharepoint_url, '_blank', 'noopener')
+                  else setFenster({ art: 'vorschau', id: d.id })
                 }}
               >
                 <Paperclip className="size-3.5 shrink-0" aria-hidden="true" />
                 <span className="truncate">{d.name}</span>
               </button>
-              <span className="text-muted-foreground text-xs">{formatDatum(d.erstellt_am)}</span>
+              <span className="flex shrink-0 items-center gap-1">
+                <span className="text-muted-foreground text-xs">{formatDatum(d.erstellt_am)}</span>
+                {mail?.an && (
+                  <DateiMailKnopf
+                    name={d.name}
+                    onClick={() => {
+                      setFenster({ art: 'mail', id: d.id })
+                    }}
+                  />
+                )}
+              </span>
             </li>
           ))}
         </ul>
       )}
+      <DateiFenster dateien={anhaenge} zustand={fenster} onZustand={setFenster} mail={mail} />
     </Box>
   )
 }

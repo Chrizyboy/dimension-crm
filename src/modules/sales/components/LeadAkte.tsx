@@ -39,7 +39,8 @@ import { OutlookTermin } from './OutlookTermin'
 import { besichtigungStand, type Besichtigung } from '../lib/besichtigung'
 import { LeadBesichtigung } from './LeadBesichtigung'
 import { TerminLinkKnopf } from './TerminLinkKnopf'
-import { LeadDateien, LeadVerlauf } from './LeadVerlauf'
+import { LeadDateien } from './LeadDateien'
+import { LeadVerlauf } from './LeadVerlauf'
 import { DachBox, HerkunftBox, RichtpreisBox } from './LeadBoxen'
 import { LeadSchritte } from './LeadSchritte'
 import { NaechsterSchritt } from './NaechsterSchritt'
@@ -276,7 +277,16 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
             )}
             {g.verkaufschanceId && (
               <AkteAbschnitt titel={t('verkauf.akte.dateien')} zusatz={akte.dateien.data?.length} offen={false}>
-                <LeadDateien dateien={akte.dateien.data ?? []} />
+                <LeadDateien
+                  dateien={akte.dateien.data ?? []}
+                  zipName={g.name}
+                  mail={{
+                    an: g.email,
+                    sprache: g.sprache,
+                    kontakt_id: g.kontaktId,
+                    verkaufschance_id: g.verkaufschanceId,
+                  }}
+                />
               </AkteAbschnitt>
             )}
             <AkteAbschnitt titel={t('ki.abschnitt')} offen={false}>

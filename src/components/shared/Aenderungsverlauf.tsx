@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { History } from 'lucide-react'
 import { useState } from 'react'
+import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
@@ -20,7 +21,7 @@ const TON = {
 } as const
 
 /** Lesbarer Feldname: bekannte Felder übersetzt, sonst «nachfassen_am» → «Nachfassen am». */
-function feldName(feld: string, t: (k: string, o?: Record<string, unknown>) => string): string {
+function feldName(feld: string, t: TFunction): string {
   const kurz = feld.replace(/_id$/, '').replace(/_rappen$/, '')
   const roh = kurz.replace(/_/g, ' ')
   return t(`verlauf.feld.${kurz}`, { defaultValue: roh.charAt(0).toUpperCase() + roh.slice(1) })

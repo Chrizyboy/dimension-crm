@@ -1047,7 +1047,8 @@
     },
     "nichtInSharepoint_one": "{{count}} fichier n'est que dans le CRM.",
     "nichtInSharepoint_other": "{{count}} fichiers ne sont que dans le CRM.",
-    "inSharepoint": "Sauvegarder dans SharePoint"
+    "inSharepoint": "Sauvegarder dans SharePoint",
+    "zipName": "Documents"
   },
   "kundenblatt": {
     "titel": "Fiche client",
@@ -3182,7 +3183,9 @@
       "tagesuebersicht": "Résumé du jour",
       "anlagedossier": "Dossier d'installation",
       "baugesuch": "Demande de permis",
-      "brief": "Lettre"
+      "brief": "Lettre",
+      "datei": "Fichiers",
+      "newsletter_test": "Newsletter : e-mail de test"
     },
     "titelMail": "Vérifier l'e-mail",
     "titelSms": "Vérifier le SMS",
@@ -12927,5 +12930,29 @@
       "prioritaet": "Priorité",
       "geloescht_am": "Corbeille"
     }
+  },
+  "datei": {
+    "vorschau": "Aperçu",
+    "nummer": "Fichier {{nr}} sur {{von}}",
+    "zurueck": "Fichier précédent",
+    "weiter": "Fichier suivant",
+    "zoomRein": "Agrandir",
+    "zoomRaus": "Réduire",
+    "zoomZurueck": "Afficher en entier",
+    "kopieren": "Copier l'image",
+    "mail": "Envoyer par e-mail",
+    "mailFuer": "Envoyer {{name}} par e-mail",
+    "mailTitel": "Envoyer le fichier par e-mail",
+    "herunterladen": "Télécharger",
+    "inSharepoint": "Ouvrir dans SharePoint",
+    "sharepoint": "Dans SharePoint",
+    "sharepointText": "Ce fichier se trouve uniquement dans SharePoint. Il s'y ouvre avec ta connexion Microsoft.",
+    "keineVorschau": "Pas d'aperçu",
+    "keineVorschauText": "L'app n'affiche pas d'aperçu pour ce type de fichier. Télécharger l'ouvre dans le bon programme.",
+    "nichtGeladen": "Fichier non chargé",
+    "nichtGeladenText": "Le fichier n'a pas pu être chargé. Réessaie ou télécharge-le.",
+    "zip_one": "En ZIP",
+    "zip_other": "Les {{count}} en ZIP",
+    "mailText": "Bonjour,\n\nVous trouverez ci-joint les documents souhaités.\n\nMeilleures salutations"
   }
 }

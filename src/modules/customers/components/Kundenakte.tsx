@@ -120,7 +120,12 @@ export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: Kunde
                   <AkteZeitachse eintraege={zeitachse.data} laedt={zeitachse.isPending} />
                 </ReiterInhalt>
                 <ReiterInhalt value="dokumente">
-                  <AkteDokumente dokumente={akte.data.dokumente} backupOrdner={akte.data.backupOrdner} />
+                  <AkteDokumente
+                    dokumente={akte.data.dokumente}
+                    backupOrdner={akte.data.backupOrdner}
+                    mail={{ an: k.email, sprache: k.sprache, kontakt_id: k.id }}
+                    zipName={`${formatKundennummer(k.kundennummer)} ${k.name}`}
+                  />
                 </ReiterInhalt>
               </Reiter>
               {druck.aktiv && <Kundenblatt kopf={k} akte={akte.data} />}

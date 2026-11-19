@@ -1047,7 +1047,8 @@
     },
     "nichtInSharepoint_one": "{{count}} Datei liegt nur im CRM.",
     "nichtInSharepoint_other": "{{count}} Dateien liegen nur im CRM.",
-    "inSharepoint": "In SharePoint sichern"
+    "inSharepoint": "In SharePoint sichern",
+    "zipName": "Dokumente"
   },
   "kundenblatt": {
     "titel": "Kundenblatt",
@@ -3182,7 +3183,9 @@
       "tagesuebersicht": "Tagesübersicht",
       "anlagedossier": "Anlagedossier",
       "baugesuch": "Baugesuch",
-      "brief": "Brief"
+      "brief": "Brief",
+      "datei": "Dateien",
+      "newsletter_test": "Newsletter-Testmail"
     },
     "titelMail": "Mail prüfen",
     "titelSms": "SMS prüfen",
@@ -12927,5 +12930,29 @@
       "prioritaet": "Priorität",
       "geloescht_am": "Papierkorb"
     }
+  },
+  "datei": {
+    "vorschau": "Vorschau",
+    "nummer": "Datei {{nr}} von {{von}}",
+    "zurueck": "Vorherige Datei",
+    "weiter": "Nächste Datei",
+    "zoomRein": "Vergrössern",
+    "zoomRaus": "Verkleinern",
+    "zoomZurueck": "Ganz zeigen",
+    "kopieren": "Bild kopieren",
+    "mail": "Per Mail senden",
+    "mailFuer": "{{name}} per Mail senden",
+    "mailTitel": "Datei per Mail senden",
+    "herunterladen": "Herunterladen",
+    "inSharepoint": "In SharePoint öffnen",
+    "sharepoint": "Liegt in SharePoint",
+    "sharepointText": "Diese Datei liegt nur in SharePoint. Dort öffnet sie sich mit deiner Microsoft-Anmeldung.",
+    "keineVorschau": "Keine Vorschau",
+    "keineVorschauText": "Für diese Art Datei zeigt die App keine Vorschau. Herunterladen öffnet sie im passenden Programm.",
+    "nichtGeladen": "Datei nicht geladen",
+    "nichtGeladenText": "Die Datei liess sich nicht laden. Bitte nochmals öffnen oder herunterladen.",
+    "zip_one": "Als ZIP",
+    "zip_other": "Alle {{count}} als ZIP",
+    "mailText": "Guten Tag\n\nIm Anhang erhalten Sie die gewünschten Unterlagen.\n\nFreundliche Grüsse"
   }
 }
