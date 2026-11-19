@@ -75,4 +75,10 @@ describe('margeAuswerten', () => {
     expect(a.angefangen).toBe(20_000)
     expect(a.anzahl).toEqual({ laufend: 1, abgeschlossen: 3, unterSoll: 1, alle: 4 })
   })
+
+  it('zeigt ohne erfasste Kosten keine Marge statt 100 %', () => {
+    const a = margeAuswerten([zeile({ status: 'abgeschlossen', umsatz_rappen: 50_000, schlussrechnung: true })], 'alle')
+    expect(a.zeilen[0]?.prozent).toBeNull()
+    expect(a.produkte.find((p) => p.produkt === 'pv')?.prozent).toBeNull()
+  })
 })
