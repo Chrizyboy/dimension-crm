@@ -5369,6 +5369,12 @@ export type Database = {
           dach_klasse: number | null
           dachflaeche_m2: number | null
           egid: string | null
+          egrid: string | null
+          eignung: NonNullable<Json>
+          geschosse: number | null
+          grundflaeche_m2: number | null
+          pv_bestand_kw: number | null
+          pv_geprueft_am: string | null
           entschieden_am: string | null
           entschieden_von: string | null
           erstellt_am: string
@@ -5441,6 +5447,12 @@ export type Database = {
           dach_klasse?: number | null
           dachflaeche_m2?: number | null
           egid?: string | null
+          egrid?: string | null
+          eignung?: Json
+          geschosse?: number | null
+          grundflaeche_m2?: number | null
+          pv_bestand_kw?: number | null
+          pv_geprueft_am?: string | null
           entschieden_am?: string | null
           entschieden_von?: string | null
           erstellt_am?: string
@@ -5512,6 +5524,12 @@ export type Database = {
           dach_klasse?: number | null
           dachflaeche_m2?: number | null
           egid?: string | null
+          egrid?: string | null
+          eignung?: Json
+          geschosse?: number | null
+          grundflaeche_m2?: number | null
+          pv_bestand_kw?: number | null
+          pv_geprueft_am?: string | null
           entschieden_am?: string | null
           entschieden_von?: string | null
           erstellt_am?: string
@@ -19804,6 +19822,8 @@ export type Database = {
       grossprojekt_akte_setzen: { Args: { p: Json; p_id: string }; Returns: undefined }
       grossprojekt_anreichern: { Args: { p: Json; p_id: string; p_meldung: string }; Returns: undefined }
       grossprojekt_aus_suche: { Args: { p: Json; p_meldung?: string }; Returns: string }
+      grossprojekt_pv_offen: { Args: { p_limit?: number }; Returns: Json }
+      grossprojekt_pv_setzen: { Args: { p: Json; p_id: string }; Returns: undefined }
       grossprojekt_entscheiden: { Args: { p_angaben?: Json; p_entscheid: string; p_id: string }; Returns: string }
       grossprojekt_in_vorrat: { Args: { p: Json; p_meldung?: string }; Returns: boolean }
       grossprojekt_recherche_anfordern: { Args: { p_id: string }; Returns: undefined }
