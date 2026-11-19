@@ -69,7 +69,13 @@ export default function NachfassKnoepfe({ offerteId }: { offerteId: string }) {
       {knopf('vertagt', CalendarClock, t('offerten.nachfassen.vertagt'))}
       <Menue>
         <MenueAusloeser asChild>
-          <Button size="sm" variant="ghost" className="px-1.5" aria-label={t('knopfleiste.mehr')} title={t('knopfleiste.mehr')}>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="px-1.5"
+            aria-label={t('knopfleiste.mehr')}
+            title={t('knopfleiste.mehr')}
+          >
             <MoreHorizontal />
           </Button>
         </MenueAusloeser>
