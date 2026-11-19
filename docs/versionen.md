@@ -6,6 +6,11 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
 (docs/installation.md).
 
+## 1.3.0
+
+- Neues Aussehen wie V234: Glasoptik, Seitenleiste mit Apps (Website, Eturnity, AbaNinja, Leads, Akquise, Messe).
+- Neue Knöpfe oben: Vollbild (F11) und Aktualisieren.
+
 ## 1.2.1
 
 - Automationen: die Übersicht öffnet wieder, auch wenn schon Automationen gelaufen sind.
