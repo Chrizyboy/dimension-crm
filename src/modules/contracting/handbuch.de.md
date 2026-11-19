@@ -101,6 +101,7 @@ Youdera finanziert und besitzt die Anlage, wir bauen und warten sie. Der Rechner
 
 ## Neu {#neu}
 
+- 19.11.2026: «Zu entscheiden» zeigt einen Ladefehler als Fehler mit «Nochmals versuchen» statt als «Nichts zu prüfen».
 - 19.11.2026: **Warum und wie** in jeder Akte: Youdera-Prüfung mit Ampel (Kunde, Youdera, Dimension), Anlage passend zum Verbrauch, Ersparnis, Verkaufsblatt und Grundbuch-Link. Dächer mit bestehender PV fallen heraus.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: «In den Papierkorb» für Grossprojekte (Akte und Seite), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
