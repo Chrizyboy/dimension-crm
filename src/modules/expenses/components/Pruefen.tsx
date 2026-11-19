@@ -187,7 +187,8 @@ export function Pruefen({ alle }: { alle: Spese[] }) {
             </AkteAbschnitt>
           </div>
         </div>
-        <div className="flex flex-wrap justify-end gap-2 border-t pt-3">
+        {/* Bleibt unten im Bild, auch wenn der Beleg hoch ist: Prüfen geht ohne Scrollen. */}
+        <div className="bg-surface sticky bottom-0 -mx-4 -mb-4 flex flex-wrap justify-end gap-2 rounded-b-lg border-t px-4 py-3">
           <Button
             variant="ghost"
             onClick={() => {

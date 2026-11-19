@@ -206,7 +206,11 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
           leer={<Leerzustand icon={HardHat} titel={t('projekte.leer')} text={t('projekte.leerText')} />}
         />
       ) : (
-        <div className="wischzeile flex gap-3 overflow-x-auto pb-2">
+        // Mit der Tastatur scrollbar (Tab, dann Pfeiltasten), wenn die Spalten nicht in die Breite passen.
+        <div
+          tabIndex={0}
+          className="wischzeile focus-visible:ring-ring flex gap-3 overflow-x-auto rounded-lg pb-2 outline-none focus-visible:ring-2"
+        >
           {(ansicht === 'standort'
             ? orteSpalten
             : PHASEN.map((ph) => ({ id: ph, titel: t(`projekte.phase.${ph}`), projekte: spalten[ph] }))
