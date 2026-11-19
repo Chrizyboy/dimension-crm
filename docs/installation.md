@@ -97,7 +97,9 @@ Minute neu zusammengestellt. Am Schluss fragt das Fenster «Veröffentlichen? (J
 
 - **J** (`veroeffentlichen.ps1`): führt die gezeigten Änderungen mit dem eigenen GitHub-Login zusammen (genau der
   gezeigte Stand, nur mit grüner Prüfung), erhöht die Version samt Abschnitt in `docs/versionen.md` (aus den Titeln),
-  was die Veröffentlichung startet, und ruft bei Datenbank-/Server-Änderungen gleich «aktualisieren» auf.
+  was die Veröffentlichung startet, und ruft gleich «aktualisieren» auf, wenn die Cloud nicht auf dem Stand von
+  main ist (verglichen mit dem zuletzt hochgeladenen Stand in `%USERPROFILE%\.dimension-work-cloud-stand`, auch
+  wenn eine Änderung direkt auf GitHub zusammengeführt wurde; auch bei «nichts Neues»).
 - **N**: nichts passiert; ein kurzer Grund geht als Kommentar an die Änderung, Claude passt sie an.
 
 Darum: Titel von Pull Requests mit sichtbaren Änderungen so schreiben, dass sie als Zeile im Fenster «Neue Version»
