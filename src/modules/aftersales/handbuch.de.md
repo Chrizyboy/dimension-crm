@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-19
 rollen: projektleitung, innendienst, montage, geschaeftsleitung
 ---
 
@@ -10,6 +10,7 @@ Alles nach dem Bau: Störungen, Reklamationen, Garantiefälle beim Hersteller un
 ## Wer arbeitet hier {#wer}
 
 - **Innendienst**: nimmt Anrufe und Mails auf, erfasst den Fall, plant den Termin.
+- **Andy (teilt zu)**: bekommt jeden neuen Fall und wählt den Mitarbeiter, der ihn übernimmt.
 - **Projektleitung und Service-Verantwortliche**: Diagnose, Garantiefall beim Hersteller, Abschluss und Verrechnung.
 - **Montage**: sieht den Einsatz am Handy und schreibt den [Rapport](kapitel:fieldwork).
 
@@ -20,7 +21,13 @@ Alles nach dem Bau: Störungen, Reklamationen, Garantiefälle beim Hersteller un
 1. **Neuer Fall**, bei **Woher?** die Quelle wählen (Anruf, Mail …).
 2. Kunde und Anlage wählen. Das CRM zeigt sofort, ob noch **Garantie** läuft.
 3. **Wie schlimm?** setzen (zum Beispiel «Anlage steht»), dazu **Komponente**, **Fehlercode**, **Vor Ort**, **Zugang** und Fotos.
-4. **Speichern**. Nummer (S001 …), Priorität, Reaktionszeit und Checkliste setzt das CRM.
+4. **Speichern**. Nummer (S001 …), Priorität, Reaktionszeit und Checkliste setzt das CRM. Der Fall geht zuerst an Andy zum Zuteilen.
+
+### Einen Fall zuteilen
+
+1. Im Leitstand **Zuzuteilen** wählen. Diese Karten tragen das Schild **Zuteilen**.
+2. Karte öffnen. Oben steht «Wer übernimmt den Fall?»: bei **Mitarbeiter wählen** die Person wählen.
+3. Sie bekommt eine Glocke, der Verlauf zeigt «Zugeteilt an …». Später umteilen geht oben rechts mit **Zuteilen an**.
 
 ### Einen Fall durcharbeiten
 
@@ -62,6 +69,7 @@ Alles nach dem Bau: Störungen, Reklamationen, Garantiefälle beim Hersteller un
 
 ## Läuft automatisch {#automatisch}
 
+- Jeder neue Fall, auch von der Website oder aus einer Mail, geht zuerst an Andy (bei Abwesenheit an die Stellvertretung). Er bekommt eine Glocke.
 - Projekt, Ort, Priorität, Reaktionszeit, Checkliste und Garantie ergänzt das CRM beim Speichern.
 - Meldungen aus dem Störungsformular der Website werden zum Fall; der Kunde bekommt eine Bestätigung über den [Ausgangskorb](kapitel:outbox), Zuständige eine Glocke.
 - Ein Fall kann direkt aus einer Mail im [Posteingang](kapitel:inbox) entstehen.
@@ -85,6 +93,7 @@ Beim Fall die richtige Anlage wählen. **Frühere Fälle** zeigt, was an dieser 
 
 ## Neu {#neu}
 
+- 19.11.2026: Alle neuen Fälle gehen zuerst an Andy; er wählt mit **Mitarbeiter wählen** in der Akte, wer übernimmt. Neuer Filter **Zuzuteilen**.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «offene Fälle» steht immer da.
 - 03.11.2026: «In den Papierkorb» für Service-Fälle, Anlagen und Garantiefälle, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).

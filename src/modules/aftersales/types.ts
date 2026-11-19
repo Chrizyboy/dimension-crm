@@ -22,7 +22,15 @@ export const BOARD = [
 ] as const
 
 /** Schnellfilter im Leitstand (mehrere zugleich). */
-export const SCHNELLFILTER = ['meine', 'ueberfaellig', 'steht', 'garantie', 'website', 'ohne_kunde'] as const
+export const SCHNELLFILTER = [
+  'zuteilen',
+  'meine',
+  'ueberfaellig',
+  'steht',
+  'garantie',
+  'website',
+  'ohne_kunde',
+] as const
 export type Schnellfilter = (typeof SCHNELLFILTER)[number]
 
 export const AUSWIRKUNGEN = ['steht', 'teilweise', 'keine'] as const
@@ -93,6 +101,8 @@ export interface ServiceFall {
   anlage_id: string | null
   projekt_id: string | null
   person_id: string | null
+  /** null = liegt beim Verteiler (Andy) zum Zuteilen. */
+  zugeteilt_am: string | null
   verlauf: Verlaufseintrag[]
   quelle: string
   auswirkung: string | null

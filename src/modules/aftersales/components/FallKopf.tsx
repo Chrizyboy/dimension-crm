@@ -8,8 +8,9 @@ import { tonVonFarbe } from '@/lib/kontakt'
 import { useAktion } from '../hooks/useAktion'
 import { aufgabeZumFall, fallSpeichern } from '../services/service'
 import type { Akte, ServiceFall } from '../types'
+import { Zuteilen } from './Zuteilen'
 
-/** Kopf der Fall-Akte: zurück zum Leitstand, Nummer und Titel, Merkmale, Anrufen, Aufgabe, Erledigt. */
+/** Kopf der Fall-Akte: zurück zum Leitstand, Nummer und Titel, Merkmale, Zuteilen, Anrufen, Aufgabe, Erledigt. */
 export function FallKopf({ f, akte, onZurueck }: { f: ServiceFall; akte: Akte | undefined; onZurueck: () => void }) {
   const { t } = useTranslation()
   const { laeuft, aus } = useAktion()
@@ -61,6 +62,7 @@ export function FallKopf({ f, akte, onZurueck }: { f: ServiceFall; akte: Akte | 
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          {f.zugeteilt_am && <Zuteilen f={f} />}
           <InPapierkorbKnopf
             tabelle="service_faelle"
             id={f.id}
@@ -109,6 +111,7 @@ export function FallKopf({ f, akte, onZurueck }: { f: ServiceFall; akte: Akte | 
           )}
         </div>
       </div>
+      {!f.zugeteilt_am && f.status !== 'erledigt' && <Zuteilen f={f} />}
     </header>
   )
 }

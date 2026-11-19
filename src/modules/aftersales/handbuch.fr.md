@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-19
 rollen: projektleitung, innendienst, montage, geschaeftsleitung
 ---
 
@@ -10,6 +10,7 @@ Tout ce qui suit la construction : pannes, réclamations, cas de garantie chez l
 ## Qui travaille ici {#wer}
 
 - **Service interne** : prend les appels et mails, saisit le cas, planifie le rendez-vous.
+- **Andy (attribue)** : reçoit chaque nouveau cas et choisit le collaborateur qui le reprend.
 - **Direction de projet et responsables du service** : diagnostic, cas de garantie chez le fabricant, clôture et facturation.
 - **Montage** : voit l’intervention sur le portable et rédige le [Rapport](kapitel:fieldwork).
 
@@ -20,7 +21,13 @@ Tout ce qui suit la construction : pannes, réclamations, cas de garantie chez l
 1. **Nouveau cas**, choisir la source sous **Provenance ?** (appel, mail …).
 2. Choisir client et installation. Le CRM indique tout de suite si une **Garantie** court encore.
 3. Fixer **Gravité ?** (par exemple « Installation à l’arrêt »), puis **Composant**, **Code d’erreur**, **Sur place**, **Accès** et photos.
-4. **Enregistrer**. Numéro (S001 …), priorité, délai de réaction et liste de contrôle sont fixés par le CRM.
+4. **Enregistrer**. Numéro (S001 …), priorité, délai de réaction et liste de contrôle sont fixés par le CRM. Le cas va d’abord à Andy pour attribution.
+
+### Attribuer un cas
+
+1. Dans la centrale, choisir **À attribuer**. Ces cartes portent l’étiquette **À attribuer**.
+2. Ouvrir la carte. En haut : « Qui reprend le cas ? » : choisir la personne sous **Choisir le collaborateur**.
+3. Elle reçoit une cloche, l’historique indique « Zugeteilt an … ». Pour réattribuer plus tard : en haut à droite **Attribuer à**.
 
 ### Traiter un cas
 
@@ -62,6 +69,7 @@ Tout ce qui suit la construction : pannes, réclamations, cas de garantie chez l
 
 ## Automatique {#automatisch}
 
+- Chaque nouveau cas, aussi du site ou d’un mail, va d’abord à Andy (en cas d’absence au remplaçant). Il reçoit une cloche.
 - Le CRM complète projet, lieu, priorité, délai de réaction, liste de contrôle et garantie à l’enregistrement.
 - Les annonces du formulaire de panne du site deviennent des cas ; le client reçoit une confirmation via la [Boîte d’envoi](kapitel:outbox), les responsables une notification.
 - Un cas peut naître directement d’un mail dans la [Boîte de réception](kapitel:inbox).
@@ -85,6 +93,7 @@ Choisir la bonne installation dans le cas. **Cas précédents** montre ce qui s�
 
 ## Nouveautés {#neu}
 
+- 19.11.2026: Tous les nouveaux cas vont d’abord à Andy ; dans le dossier, il choisit avec **Choisir le collaborateur** qui reprend. Nouveau filtre **À attribuer**.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Le tableau de bord n’affiche que les chiffres différents de 0 ; « cas ouverts » reste toujours affiché.
 - 03.11.2026: «Mettre à la corbeille» pour les cas de service, les installations et les cas de garantie, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).

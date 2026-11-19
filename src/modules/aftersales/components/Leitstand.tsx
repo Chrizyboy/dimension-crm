@@ -21,6 +21,8 @@ import { LeitstandZahlen } from './LeitstandZahlen'
 /** Trifft ein Schnellfilter auf einen Fall zu? */
 function trifft(f: ServiceFall, filter: Schnellfilter, ich: string | null): boolean {
   switch (filter) {
+    case 'zuteilen':
+      return !f.zugeteilt_am && f.status !== 'erledigt'
     case 'meine':
       return f.person_id === ich
     case 'ueberfaellig':

@@ -22,7 +22,7 @@ const kundeName = (k: Kontakt) =>
   k ? k.firma?.trim() || [k.vorname, k.nachname].filter(Boolean).join(' ') || '–' : '–'
 
 const FALL_FELDER =
-  'id, nummer, titel, beschreibung, kategorie, prioritaet, status, garantie, termin_am, erledigt_am, erstellt_am, kontakt_id, anlage_id, projekt_id, person_id, verlauf, ' +
+  'id, nummer, titel, beschreibung, kategorie, prioritaet, status, garantie, termin_am, erledigt_am, erstellt_am, kontakt_id, anlage_id, projekt_id, person_id, zugeteilt_am, verlauf, ' +
   'quelle, auswirkung, reaktion_bis, objekt_id, vor_ort_name, vor_ort_telefon, zugang, komponente, fehlercode, checkliste, meldung, zuordnung, team, dauer_minuten, ' +
   'kontakt:kontakte(vorname, nachname, firma, sprache), anlage:anlagen(leistung_kwp), einsatzort:objekte(strasse, plz, ort), ' +
   'projekt:projekte(nummer), person:personen(name)'
@@ -105,6 +105,12 @@ export async function fallSpeichern(e: Partial<FallEingabe>, id?: string): Promi
     .single()
   if (error) throw error
   return data.id
+}
+
+/** Mitarbeiter für einen Fall wählen; Vermerk im Verlauf und Glocke macht die Datenbank. */
+export async function fallZuteilen(id: string, personId: string): Promise<void> {
+  const { error } = await db().rpc('service_zuteilen', { p_fall: id, p_person: personId })
+  if (error) throw error
 }
 
 /** Eintrag im Verlauf (mit Datum und Person, von der Datenbank gesetzt). */
