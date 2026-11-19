@@ -21,15 +21,17 @@ function staffel(kwp: number, regeln: GrossprojektRegeln | undefined): number {
 }
 
 /**
- * Vorschläge für alle Eingaben: eigene Werte des Projekts zuerst, sonst Schätzung und Annahmen. Verbrauch,
- * Eigenverbrauch und Strompreis haben ohne Unterlagen nur grobe Standards und sind darum als Vorschlag markiert.
+ * Vorschläge für alle Eingaben: eigene Werte des Projekts zuerst, dann die Youdera-Prüfung der Datenbank (Anlage auf
+ * den Verbrauch ausgelegt, Verbrauch, Eigenverbrauch, Strompreis), sonst Schätzung und Annahmen. Ohne Unterlagen sind
+ * das grobe Werte und darum als Vorschlag markiert.
  */
 export function eingaben(
-  g: Pick<Grossprojekt, 'rechnung' | 'schaetzung'>,
+  g: Pick<Grossprojekt, 'rechnung' | 'schaetzung'> & Partial<Pick<Grossprojekt, 'eignung'>>,
   regeln: GrossprojektRegeln | undefined,
 ): Eingaben {
   const r = g.rechnung
-  const kwp = r.kwp ?? g.schaetzung.kwp ?? 0
+  const y = g.eignung ?? {}
+  const kwp = r.kwp ?? y.kwp_empfohlen ?? g.schaetzung.kwp ?? 0
   const kwhProKwp =
     r.kwh_pro_kwp ??
     (g.schaetzung.kwp && g.schaetzung.ertrag_kwh
@@ -38,9 +40,9 @@ export function eingaben(
   return {
     kwp,
     kwh_pro_kwp: kwhProKwp,
-    verbrauch_kwh: r.verbrauch_kwh ?? Math.round(kwp * kwhProKwp),
-    eigenverbrauch_prozent: r.eigenverbrauch_prozent ?? 50,
-    strompreis_rp: r.strompreis_rp ?? 22,
+    verbrauch_kwh: r.verbrauch_kwh ?? y.verbrauch_kwh ?? Math.round(kwp * kwhProKwp),
+    eigenverbrauch_prozent: r.eigenverbrauch_prozent ?? y.eigenverbrauch_prozent ?? 50,
+    strompreis_rp: r.strompreis_rp ?? y.strompreis_rp ?? 22,
     preis_rp: r.preis_rp ?? g.schaetzung.preis_rp_kwh ?? 16,
     chf_pro_kwp: r.chf_pro_kwp ?? staffel(kwp, regeln),
   }

@@ -104,6 +104,15 @@ describe('Rechner', () => {
     expect(eingaben(gp({ rechnung: { strompreis_rp: 25 } }), regeln).strompreis_rp).toBe(25)
   })
 
+  it('Vorschläge aus der Youdera-Prüfung vor groben Standards', () => {
+    const g = gp({
+      eignung: { kwp_empfohlen: 233, verbrauch_kwh: 360_000, eigenverbrauch_prozent: 70, strompreis_rp: 24 },
+    })
+    const e = eingaben(g, undefined)
+    expect([e.kwp, e.verbrauch_kwh, e.eigenverbrauch_prozent, e.strompreis_rp]).toEqual([233, 360_000, 70, 24])
+    expect(eingaben({ ...g, rechnung: { kwp: 300 } }, undefined).kwp).toBe(300)
+  })
+
   it('Bauen und warten: Marge am Bau, Betrieb pro Jahr', () => {
     const u = unserAnteil(504_000_00, { annahmen: { marge_prozent: 20, betrieb_prozent: 1.5 } })
     expect(u.bau_rappen).toBe(100_800_00)

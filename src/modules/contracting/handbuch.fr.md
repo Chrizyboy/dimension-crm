@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-19
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -19,6 +19,14 @@ Trouve les bâtiments et projets où le contracting PV ou chaleur peut valoir la
 1. Onglet **À décider** : une carte par résultat avec points, toit, chauffage, propriétaire et interlocuteur.
 2. **Oui, y aller** (touche J, Andy ou remplaçant) : le grand projet entre dans le pipeline, étape « Qualifier ». **Observer** (B) avec rappel, **Non …** (N) avec motif.
 3. Reprendre les propositions de recherche d’un clic ; ce qui a été saisi à la main reste toujours.
+
+### Pourquoi et comment : la fiche de vente
+
+1. Chaque dossier montre en haut **Pourquoi et comment** : l’installation adaptée à la consommation, ce que le client économise par an, le mandat pour nous et un feu (**Convient**, **À clarifier**, **Ne convient pas ainsi**).
+2. En dessous, l’évaluation de trois côtés : **Client** (économie, toit), **Youdera** (30 kWc à 4 MWc, au moins 70 % d’autoconsommation, le propriétaire utilise lui-même l’électricité, solvabilité), **Dimension** (toit encore libre, trajet, mandat).
+3. **Comment procéder** : pourquoi ce bâtiment, qui contacter, première phrase (avec **Copier**), arguments et réponses aux objections.
+4. **Ouvrir le registre foncier** : consultation du canton ; copier et coller parcelle et EGRID.
+5. Dès que la facture d’électricité est là, saisir la consommation dans le **calculateur** : le feu et les chiffres utilisent alors les vraies valeurs.
 
 ### Travailler dans le pipeline jusqu’au contrat
 
@@ -64,6 +72,7 @@ Trouve les bâtiments et projets où le contracting PV ou chaleur peut valoir la
 ## Automatique {#automatisch}
 
 - Chaque heure, la recherche de toits parcourt des zones autour de Muri et Bulle à la recherche de grands bâtiments très consommateurs.
+- Chaque toit est comparé au registre fédéral des installations PV : là où une grande installation existe déjà, rien n’entre dans la liste.
 - Les résultats vont d’abord dans une réserve ; chaque semaine, seuls les meilleurs entrent dans la liste.
 - L’IA recherche en arrière-plan propriétaire, interlocuteur et étapes.
 - La cloche signale une fois les résultats forts, la carte sur Ma journée montre les meilleurs.
@@ -73,6 +82,14 @@ Trouve les bâtiments et projets où le contracting PV ou chaleur peut valoir la
 ### D’où viennent les points ?
 
 De la taille du toit, de la consommation, du chauffage, du type de bâtiment et des mots-clés. Les poids figurent sous **Hypothèses**.
+
+### Pourquoi « Ne convient pas ainsi » ou « Déjà PV » ?
+
+Youdera ne finance que si le propriétaire utilise lui-même l’électricité (au moins 70 %) et si l’installation fait entre 30 kWc et 4 MWc. Si le bâtiment est loué et le toit petit, il n’y a aucune voie ; si une grande installation PV existe déjà, le toit est occupé. Les valeurs figurent sous **Hypothèses**.
+
+### Comment trouver le propriétaire ?
+
+L’IA le propose, il est confirmé au registre foncier : **Ouvrir le registre foncier** dans le dossier. Beaucoup de cantons exigent un code SMS ou un captcha et n’autorisent que peu de consultations par jour ; en Argovie, il n’y a pas de consultation en ligne, il faut demander au registre foncier.
 
 ### Pourquoi pas d’e-mail ?
 
@@ -84,6 +101,7 @@ Youdera finance et possède l’installation, nous la construisons et l’entret
 
 ## Nouveautés {#neu}
 
+- 19.11.2026: **Pourquoi et comment** dans chaque dossier : évaluation Youdera avec feu (client, Youdera, Dimension), installation adaptée à la consommation, économie, fiche de vente et lien vers le registre foncier. Les toits avec PV existant sont écartés.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: «Mettre à la corbeille» pour les grands projets (dossier et page), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Analyse de potentiel, dossier à Youdera et visite sur le portable.

@@ -15,6 +15,7 @@ import { RechercheAbschnitt } from './RechercheAbschnitt'
 import { RechnerBox } from './RechnerBox'
 import { VerantwortlichWahl } from './VerantwortlichWahl'
 import { VerlaufBox } from './VerlaufBox'
+import { Verkaufsblatt } from './Verkaufsblatt'
 
 /** Gebäude in Kürze: Dach, Ertrag, Heizung, Baujahr, Parzelle, EGID, Link zur Karte des Bundes. */
 function GebaeudeBox({ g }: { g: Grossprojekt }) {
@@ -103,6 +104,9 @@ export function ProjektSeite({ g, onZurueck }: { g: Grossprojekt; onZurueck: () 
           <div className="bg-surface rounded-lg border px-3 pt-2">
             <VerantwortlichWahl g={g} />
           </div>
+          <Box titel={t('grossprojekte.eignung.titel')}>
+            <Verkaufsblatt g={g} />
+          </Box>
           <SchrittBox key={`${g.naechster_schritt ?? ''}${g.naechster_schritt_am ?? ''}`} g={g} />
           <BesichtigungBox key={JSON.stringify(g.besichtigung)} g={g} />
           <VerlaufBox id={g.id} />

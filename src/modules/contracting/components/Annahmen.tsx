@@ -10,6 +10,7 @@ import { hatRecht } from '@/lib/rechte'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { DachsucheKarte } from './DachsucheKarte'
+import { EignungKarte } from './EignungKarte'
 import { SuchgebietKarte } from './SuchgebietKarte'
 import { useRegeln } from '../hooks/useGrossprojekte'
 import { speichereAnnahmen } from '../services/grossprojekte'
@@ -127,7 +128,7 @@ function AnnahmenFormular({ regeln }: { regeln: GrossprojektRegeln }) {
         <div className="flex flex-col gap-2 px-4 pb-4 text-sm">
           <p>{t('grossprojekte.annahmen.punkteText')}</p>
           <ul className="text-muted-foreground list-disc pl-5">
-            {(['dach', 'nutzung', 'heizung', 'bauherr', 'fahrzeit', 'wohnungen'] as const).map((x) => (
+            {(['dach', 'nutzung', 'heizung', 'bauherr', 'fahrzeit', 'wohnungen', 'youdera'] as const).map((x) => (
               <li key={x}>{t(`grossprojekte.annahmen.teil.${x}`)}</li>
             ))}
           </ul>
@@ -144,6 +145,7 @@ function AnnahmenFormular({ regeln }: { regeln: GrossprojektRegeln }) {
           <p className="text-muted-foreground pt-2 text-xs">{t('grossprojekte.annahmen.neuRechnen')}</p>
         </div>
       </Karte>
+      <EignungKarte regeln={regeln} admin={admin} />
     </div>
   )
 }

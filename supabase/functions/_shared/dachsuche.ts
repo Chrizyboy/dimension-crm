@@ -3,9 +3,11 @@
 // Gebäuderegister, behält die grossen mit viel Stromverbrauch (Gebäudeklasse und Grundfläche aus den Einstellungen)
 // und fragt für diese das Dach bei sonnendach.ch ab. Ob ein Gebäude in den Vorrat kommt (Punkte, schon bekannt), entscheidet
 // die Datenbank in grossprojekt_in_vorrat; in die Liste kommen pro Woche nur die besten. Die Antworten des Bundes sind Daten (Regel 7).
+// Seit 19.11.2026 auch die schon gebauten PV-Anlagen der Kachel (Register des Bundes): ein belegtes Dach ist kein Projekt.
 
 import { dienst } from './datenbank.ts'
 import { dachZusammenfassen, GeoAdmin, gwrFelder, istDienstAusfall, type GwrGebaeude } from './gebaeude.ts'
+import { pvAmGebaeude, pvImRechteck } from './pv_register.ts'
 
 /** Eine Kachel in LV95 (Meter). */
 export interface Kachel {
@@ -27,7 +29,6 @@ export interface SucheRegeln {
 export interface GwrEintrag extends GwrGebaeude {
   gkode?: number | null
   gkodn?: number | null
-  garea?: number | null
   strname_deinr?: string | null
   strname?: string[] | string | null
   deinr?: string[] | string | null
@@ -53,8 +54,12 @@ export function istKandidat(g: GwrEintrag, r: SucheRegeln): boolean {
   )
 }
 
-/** Felder für grossprojekt_aus_suche aus Gebäuderegister und Dach. */
-export function sucheFelder(g: GwrEintrag, dach: ReturnType<typeof dachZusammenfassen>): Record<string, unknown> {
+/** Felder für grossprojekt_aus_suche aus Gebäuderegister, Dach und PV-Bestand (kW, 0 = keine Anlage). */
+export function sucheFelder(
+  g: GwrEintrag,
+  dach: ReturnType<typeof dachZusammenfassen>,
+  pvBestandKw?: number,
+): Record<string, unknown> {
   const strasse =
     g.strname_deinr?.trim() || [erstes(g.strname), erstes(g.deinr)].filter(Boolean).join(' ').trim() || undefined
   const plz = erstes(g.dplz4)
@@ -69,6 +74,7 @@ export function sucheFelder(g: GwrEintrag, dach: ReturnType<typeof dachZusammenf
     parzelle: g.lparz ?? undefined,
     lage_e: e,
     lage_n: n,
+    ...(pvBestandKw !== undefined ? { pv_bestand_kw: pvBestandKw } : {}),
     quell_url: `https://map.geo.admin.ch/#/map?lang=de&center=${e},${n}&z=12&layers=ch.bfe.solarenergie-eignung-daecher`,
   }
 }
@@ -102,13 +108,26 @@ export async function gebaeudeInKachel(k: Kachel, geo = new GeoAdmin()): Promise
 export async function kachelDurchsuchen(k: Kachel, r: SucheRegeln, geo = new GeoAdmin()) {
   const gebaeude = await gebaeudeInKachel(k, geo)
   const kandidaten = gebaeude.filter((g) => istKandidat(g, r))
+  // PV-Anlagen nur abfragen, wenn es Kandidaten gibt; 100 m Rand, weil die Adresse am Rand der Kachel liegen kann.
+  const pv = kandidaten.length
+    ? await pvImRechteck(
+        { e_min: k.e_min - 100, n_min: k.n_min - 100, e_max: k.e_max + 100, n_max: k.n_max + 100 },
+        geo,
+      )
+    : []
   let treffer = 0
   for (const g of kandidaten) {
     const dach = dachZusammenfassen(await geo.dach(g.gkode ?? 0, g.gkodn ?? 0))
     if ((dach.dachflaeche_m2 ?? 0) < r.min_dach_m2) continue
-    const meldung = `Dachsuche: Dach ${tausender(dach.dachflaeche_m2 ?? 0)} m² geeignet, Gebäuderegister EGID ${g.egid ?? '–'}`
+    const pvKw = pvAmGebaeude(pv, { egid: g.egid ?? null, e: g.gkode ?? 0, n: g.gkodn ?? 0, grundflaeche_m2: g.garea })
+    const meldung =
+      `Dachsuche: Dach ${tausender(dach.dachflaeche_m2 ?? 0)} m² geeignet, Gebäuderegister EGID ${g.egid ?? '–'}` +
+      (pvKw > 0 ? `, schon ${tausender(pvKw)} kW PV` : '')
     // Erst in den Vorrat: der Zeitplan gibt pro Woche nur die besten frei (grossprojekt_vorrat_freigeben).
-    const neu = await dienst.rpc<boolean>('grossprojekt_in_vorrat', { p: sucheFelder(g, dach), p_meldung: meldung })
+    const neu = await dienst.rpc<boolean>('grossprojekt_in_vorrat', {
+      p: sucheFelder(g, dach, pvKw),
+      p_meldung: meldung,
+    })
     if (neu) treffer++
   }
   await dienst.rpc('grossprojekt_suche_kachel_fertig', {

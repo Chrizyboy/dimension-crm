@@ -26,6 +26,8 @@ function wert(teil: PunkteTeil, t: TFunction): string {
       return t('grossprojekte.fahrzeit', { min: teil.wert })
     case 'wohnungen':
       return String(teil.wert)
+    case 'youdera':
+      return t(`grossprojekte.eignung.ampel.${String(teil.wert ?? 'gelb')}`)
   }
 }
 
@@ -43,6 +45,7 @@ export function PunkteAufschluesselung({ g }: { g: Grossprojekt }) {
     bauherr: 15,
     fahrzeit: 10,
     wohnungen: 5,
+    youdera: 10,
   }
   return (
     <div className="flex flex-col gap-2">
@@ -64,7 +67,7 @@ export function PunkteAufschluesselung({ g }: { g: Grossprojekt }) {
             <span className="bg-surface-2 col-span-2 h-1.5 overflow-hidden rounded-full" aria-hidden="true">
               <span
                 className="bg-reihe-1 block h-full rounded-full"
-                style={{ width: `${Math.min(100, (100 * teil.punkte) / max[teil.was])}%` }}
+                style={{ width: `${Math.max(0, Math.min(100, (100 * teil.punkte) / max[teil.was]))}%` }}
               />
             </span>
           </li>

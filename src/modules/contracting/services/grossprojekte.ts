@@ -22,7 +22,7 @@ function db() {
 }
 
 const FELDER =
-  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, stufe, stufe_seit, naechster_schritt, naechster_schritt_am, kontakte, unterlagen, rechnung, youdera, besichtigung, vertrag_am, vertrag_kwp, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
+  'id, nummer, titel, beschreibung, quelle, quell_url, ausschreibung_id, strasse, plz, gemeinde, kanton, parzelle, sprache, fahrzeit_min, lage_e, lage_n, bauherr, bauherr_art, nutzung, geschuetzt, heizungsersatz, dachflaeche_m2, dach_klasse, stromertrag_kwh, heizung, heizung_jahr, waermeleistung_kw, wohnungen, baujahr, egid, angereichert_am, anreicherung, punkte, punkte_details, art, ausschluss, schaetzung, stand, wiedervorlage_am, grund, entschieden_am, verkaufschance_id, notiz, erstellt_am, recherche, recherche_stand, recherche_am, ansprechperson, verantwortlich_id, stufe, stufe_seit, naechster_schritt, naechster_schritt_am, kontakte, unterlagen, rechnung, youdera, besichtigung, vertrag_am, vertrag_kwp, pv_bestand_kw, grundflaeche_m2, geschosse, egrid, eignung, standort:standorte(name), entschieder:personen!grossprojekte_entschieden_von_fkey(name)'
 
 type Roh = Omit<Grossprojekt, 'standort' | 'entschieden_von'> & {
   standort: { name: string } | null
@@ -92,6 +92,18 @@ export async function speichereAnnahmen(
   const r = await db()
     .from('einstellungen')
     .update({ wert: neu as never })
+    .eq('schluessel', 'grossprojekte')
+  if (r.error) throw r.error
+}
+
+/** Schwellen der Youdera-Prüfung speichern (nur Administration); die Datenbank rechnet danach alles Offene neu. */
+export async function speichereEignung(werte: NonNullable<GrossprojektRegeln['eignung']>): Promise<void> {
+  const { data, error } = await db().from('einstellungen').select('wert').eq('schluessel', 'grossprojekte').single()
+  if (error) throw error
+  const alt = data.wert as GrossprojektRegeln
+  const r = await db()
+    .from('einstellungen')
+    .update({ wert: { ...alt, eignung: { ...alt.eignung, ...werte } } as never })
     .eq('schluessel', 'grossprojekte')
   if (r.error) throw r.error
 }

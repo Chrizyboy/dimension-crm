@@ -143,3 +143,43 @@ in der Vorschau. Die Potenzialanalyse für den Kunden nennt nur Dimension Solair
   das Einverständnis des Kunden, steht ein Hinweis im Fenster.
 - Die **Besichtigung** ist eine Checkliste in der Akte (Spalte `besichtigung`, Punkte in `pipeline.besichtigung`), mit
   grossen Knöpfen fürs Handy. «Abschliessen» schreibt das Ergebnis in den Verlauf.
+
+## Nachtrag 19.11.2026: Youdera-Prüfung und Verkaufsblatt
+
+**Kontext:** Chris: «Er muss viel besser sein und nur Projekte bringen, die auch wirklich interessant sind, für den
+Kunden, Youdera und für uns», «ich möchte bei jedem Projekt wissen, warum und wie es angegangen werden soll» und «es muss
+für mich sehr einfach sein, diesen Leuten das zu verkaufen». Bisher fehlten drei Dinge: Dächer mit schon gebauter PV
+kamen in die Liste, die Bedingungen von Youdera (Strom-Contracting von 30 kWp bis 4 MWp, Abnehmer ist Eigentümer und
+braucht mindestens 70 % des Stroms selbst, Bonität, siehe FAQ auf youdera.com) wurden nicht geprüft, und die meisten
+Punkte gab es für Pensionskassen und Immobilienfirmen, die meist vermieten. Die Schätzung legte die Anlage immer aufs
+ganze Dach, was bei wenig Verbrauch den Eigenverbrauch und damit Youdera verfehlt.
+
+**Entscheid:**
+
+- **PV-Bestand:** Die Dachsuche fragt pro Kachel das Register der Elektrizitätsproduktionsanlagen des Bundes ab
+  (`_shared/pv_register.ts`, gleiche EGID oder nahe am Gebäude) und gibt `pv_bestand_kw` mit. Grossprojekte von vorher
+  und von Hand trägt der Zeitplan nach (`grossprojekt_pv_offen`/`grossprojekt_pv_setzen`), «Gebäudedaten holen» prüft
+  sofort. Liegt schon mehr als `eignung.pv_bestand_max_anteil` (30 %) des Potenzials auf dem Dach: Ausschluss
+  `pv_vorhanden`.
+- **Youdera-Prüfung in der Datenbank** (`intern.gp_eignung`, Spalte `eignung`, rechnet der Trigger): Verbrauch aus der
+  Stromrechnung (Rechner) oder geschätzt aus Grundfläche × Geschosse × kWh/m² je Nutzung (GWR `garea`, `gastw`); Anlage
+  so gross, dass der Ertrag höchstens `anteil_ertrag` des Verbrauchs ist (dann rund 70 % Eigenverbrauch); Weg `ppa`,
+  `zev` (Überbauung ab 6 Wohnungen) oder `dachmiete` (vermietet oder zu wenig Verbrauch, Dach ab 300 kWp); Ersparnis des
+  Kunden, Bauvolumen, Marge und Wartung; neun Prüfpunkte auf drei Seiten (Kunde, Youdera, Dimension) und Ampel. Grün
+  gibt +10 Punkte, Rot −15; ohne Weg Ausschluss `kein_weg` (nur wenn kein Wärme-Contracting möglich ist). Die Recherche
+  der KI zählt nur mit Sicherheit «hoch».
+- **Bauherrschaft neu gewichtet:** Gewerbe 15, Landwirtschaft und Gemeinde 13, Kanton 12, Kirche und Genossenschaft
+  10, unbekannt 7, Privat, Pensionskasse und Immobilien 5. Bewusst überschrieben, in Annahmen änderbar.
+- **Verkaufsblatt:** Die Recherche liefert zusätzlich, ob der Eigentümer das Gebäude selbst nutzt, Hinweise zur Bonität
+  (nur öffentliche Quellen, SHAB) und ein Gesprächsblatt (warum, wen ansprechen, Kanal, erster Satz, 3 Argumente,
+  3 Einwände mit Antwort) aus den Zahlen der Prüfung (`_shared/gp_verkauf.ts`). Die Akte, die Projektseite und die
+  Karten «Zu entscheiden» zeigen «Warum und wie»; ohne Recherche steht das Warum aus den Zahlen da.
+- **Eigentümer im Grundbuch:** Link zur Abfrage des Kantons mit Parzelle und EGRID zum Kopieren
+  (`einstellungen.grossprojekte.grundbuch`). Die Abfragen verlangen meist SMS-Code oder Captcha und erlauben wenige pro
+  Tag; das macht ein Mensch, der Server fragt nie automatisch ab. Aargau hat keine Online-Abfrage.
+
+**Folgen:** Migration `20261117191143_grossprojekte_youdera`, Edge Functions `zeitplan` und `grossprojekte` neu
+hochladen. Mehr Abfragen beim Bund (pro Kachel mit Kandidaten 1–2 fürs PV-Register). Feldnamen des Registers
+(`sub_category_de`, `total_power`, `egid`) und des GWR (`garea`, `gastw`, `egrid`) beim ersten echten Lauf bestätigen;
+die Links der Kantone (vor allem Luzern und Bern) in Annahmen prüfen. Die Annahmen zum Verbrauch je m² und zum Anteil
+des Ertrags sind grobe Erfahrungswerte; mit echten Stromrechnungen nachschärfen.
