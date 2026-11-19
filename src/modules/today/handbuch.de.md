@@ -39,6 +39,18 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 3. Eine eigene Aufgabe bekommt das neue Fälligkeitsdatum. Alles andere (Nachfassen, Anfrage, Frist …) verschwindet nur bei dir bis zu diesem Tag; am Datensatz ändert sich nichts.
 4. Termine und Freigaben lassen sich nicht verschieben.
 
+### Nachfassen direkt entscheiden
+
+1. In der Karte **Offerten nachfassen** steht unter jedem Kunden **Angenommen**, **Abgelehnt** und **Vertagt**.
+2. Unter **⋯** gibt es **Ergebnis**, **Nachfass-Mail**, **Bereits verbaut** und **Zurück zur Offerte**.
+3. Das Fenster ist dasselbe wie in den Offerten; nach dem Speichern verschwindet die Zeile.
+
+### Nach dem Termin und Offerten prüfen
+
+1. **Nach dem Termin: wie weiter?** zeigt deine Leads, deren Besuch vorbei ist: **Zur Offerte** oder **Kein Interesse**.
+2. **Offerten prüfen & senden** zeigt Offerten, die dir der Innendienst zur Prüfung gegeben hat, und deine Richtofferten.
+3. **Prüfen** öffnet sie in den Neuen Offerten, **Versendet** hält den Versand mit Datum fest.
+
 ### Wochenziele festlegen (Administration)
 
 1. In der Karte **Meine Woche** auf **Ziele festlegen** klicken.
@@ -97,6 +109,7 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 19.11.2026: Wie V234: **Offerten nachfassen** mit **Angenommen**, **Abgelehnt**, **Vertagt** und unter **⋯** **Ergebnis**, **Nachfass-Mail**, **Bereits verbaut**, **Zurück zur Offerte** direkt in der Zeile. Neue Karten **Nach dem Termin: wie weiter?** und **Offerten prüfen & senden**.
 - 19.11.2026: Knopf **Handy-Ansicht** / **PC-Ansicht** oben: in der Windows-App wird das Fenster handygross, am Handy zeigt er die PC-Ansicht (bleibt gemerkt). Abgeschnittene Texte zeigen beim Darüberfahren den ganzen Text.
 - 19.11.2026: Neues Aussehen wie V234: Glasoptik mit Farbverlauf, schwebende Seitenleiste mit Apps (Website, Eturnity, AbaNinja, Leads, Akquise, Messe), runde Knöpfe oben für **Vollbild** (F11) und **Aktualisieren**.
 - 04.11.2026: Datum und was ansteht stehen weiter unter dem Gruss; leere Karten werden zu einer Zeile.

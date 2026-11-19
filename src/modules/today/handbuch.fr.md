@@ -39,6 +39,18 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 3. Une tâche à toi reçoit la nouvelle échéance. Tout le reste (relance, demande, délai …) disparaît seulement chez toi jusqu’à ce jour ; l’enregistrement ne change pas.
 4. Les rendez-vous et les validations ne se reportent pas.
 
+### Décider directement d’une relance
+
+1. Dans la carte **Offres à relancer**, chaque client affiche **Acceptée**, **Refusée** et **Reportée**.
+2. Sous **⋯** se trouvent **Résultat**, **E-mail de relance**, **Déjà construite** et **Retour à l'offre**.
+3. La fenêtre est la même que dans les offres ; après l’enregistrement, la ligne disparaît.
+
+### Après la visite et offres à vérifier
+
+1. **Après la visite : quelle suite ?** montre tes leads dont la visite est passée : **Vers l'offre** ou **Pas intéressé**.
+2. **Offres à vérifier et envoyer** montre les offres que le service interne t’a transmises et tes offres indicatives.
+3. **Vérifier** les ouvre dans les nouvelles offres, **Envoyée** enregistre l’envoi avec la date.
+
 ### Fixer les objectifs de la semaine (administration)
 
 1. Dans la carte **Ma semaine**, cliquer **Fixer les objectifs**.
@@ -97,6 +109,7 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : Comme V234 : **Offres à relancer** avec **Acceptée**, **Refusée**, **Reportée** et sous **⋯** **Résultat**, **E-mail de relance**, **Déjà construite**, **Retour à l'offre** directement dans la ligne. Nouvelles cartes **Après la visite : quelle suite ?** et **Offres à vérifier et envoyer**.
 - 19.11.2026 : bouton **Affichage smartphone** / **Affichage ordinateur** en haut : dans l’app Windows, la fenêtre prend la taille d’un mobile ; sur mobile, il affiche la vue ordinateur (mémorisée). Les textes coupés s’affichent en entier au survol.
 - 19.11.2026 : nouvel aspect comme V234 : effet verre avec dégradé, barre latérale flottante avec Apps (site web, Eturnity, AbaNinja, Leads, Acquisition, Salon), boutons ronds en haut pour **Plein écran** (F11) et **Actualiser**.
 - 04.11.2026: La date et ce qui est prévu restent sous la salutation ; les cartes vides deviennent une ligne.

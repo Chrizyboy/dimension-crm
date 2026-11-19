@@ -93,6 +93,7 @@ Beim Fall die richtige Anlage wählen. **Frühere Fälle** zeigt, was an dieser 
 
 ## Neu {#neu}
 
+- 19.11.2026: In der Fall-Akte **Änderungsverlauf**: wer hat wann was am Fall geändert.
 - 19.11.2026: Alle neuen Fälle gehen zuerst an Andy; er wählt mit **Mitarbeiter wählen** in der Akte, wer übernimmt. Neuer Filter **Zuzuteilen**.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «offene Fälle» steht immer da.
