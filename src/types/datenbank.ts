@@ -13007,6 +13007,7 @@ export type Database = {
           vor_ort_name: string | null
           vor_ort_telefon: string | null
           zugang: string | null
+          zugeteilt_am: string | null
           zuordnung: string | null
         }
         ComputedFields: never
@@ -13047,6 +13048,7 @@ export type Database = {
           vor_ort_name?: string | null
           vor_ort_telefon?: string | null
           zugang?: string | null
+          zugeteilt_am?: string | null
           zuordnung?: string | null
         }
         Update: {
@@ -13086,6 +13088,7 @@ export type Database = {
           vor_ort_name?: string | null
           vor_ort_telefon?: string | null
           zugang?: string | null
+          zugeteilt_am?: string | null
           zuordnung?: string | null
         }
         Relationships: [
@@ -15896,6 +15899,43 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      zuteilung_korrekturen: {
+        Row: {
+          am: string
+          datensatz: string
+          grund: string
+          id: number
+          nachher: string | null
+          rueckgaengig_am: string | null
+          spalte: string
+          tabelle: string
+          vorher: string | null
+        }
+        ComputedFields: never
+        Insert: {
+          am?: string
+          datensatz: string
+          grund: string
+          id?: never
+          nachher?: string | null
+          rueckgaengig_am?: string | null
+          spalte: string
+          tabelle: string
+          vorher?: string | null
+        }
+        Update: {
+          am?: string
+          datensatz?: string
+          grund?: string
+          id?: never
+          nachher?: string | null
+          rueckgaengig_am?: string | null
+          spalte?: string
+          tabelle?: string
+          vorher?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -20663,6 +20703,7 @@ export type Database = {
         Args: { p_anlage?: string; p_id: string; p_kontakt: string; p_objekt?: string }
         Returns: undefined
       }
+      service_zuteilen: { Args: { p_fall: string; p_person: string }; Returns: undefined }
       setze_naechste_kundennummer: { Args: { p_naechste: number }; Returns: undefined }
       setze_stand: { Args: { p_angaben?: Json; p_geschaeft: string; p_ziel: string }; Returns: string }
       show_limit: { Args: Record<PropertyKey, never>; Returns: number }
@@ -20974,6 +21015,7 @@ export type Database = {
           zeilen_ohne_artikel: number
         }[]
       }
+      zuteilung_korrektur_rueckgaengig: { Args: Record<PropertyKey, never>; Returns: number }
     }
     Enums: {
       [_ in never]: never

@@ -44,9 +44,11 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 ### Régler les responsabilités
 
 1. Domaine **Responsabilités**.
-2. Sous **Vente : nouveaux leads**, des règles selon **Langue**, **Site**, **Région** et **Produit** avec **Ajouter une règle**. Aujourd’hui : français à Filipe, allemand à Loris.
-3. **Établir les offres** : qui reçoit les nouvelles offres (aujourd’hui Andy).
-4. **Remplacement en cas d'absence** par personne.
+2. Sous **Vente : nouveaux leads**, des règles selon **Langue**, **Site**, **Région** et **Produit** avec **Ajouter une règle**. Aujourd’hui comme dans l’ancien CRM : site Bulle (NPA francophone) à Filipe, site Muri (NPA germanophone) à Loris ; sans adresse, la langue compte.
+3. **Offres indicatives (service interne)** : qui suit les offres sans rendez-vous sur place (aujourd’hui Andy). Les autres offres sont suivies par qui s’est rendu sur place ; à Bulle toujours la vente de Bulle. Le projet reprend la personne de l’offre.
+4. **Attribuer les cas SAV** : qui reçoit chaque nouveau cas SAV et choisit le collaborateur (aujourd’hui Andy).
+5. **Remplacement en cas d'absence** par personne.
+6. L’encadré **Attribution corrigée le 19.11.2026** montre ce qui a été réattribué selon le principe de l’ancien CRM. **Annuler la correction** rétablit tout ce que personne n’a modifié depuis.
 
 ### Adapter les listes de choix
 
@@ -103,7 +105,7 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 
 - Une nouvelle adresse sans région la reçoit à l’enregistrement selon le NPA (première région correspondante par numéro). Un choix manuel reste.
 - Chaque modification va dans le journal, aussi les automatiques (comme « Système »).
-- La base de données attribue les nouveaux leads et offres selon les responsabilités, pas l’app.
+- La base de données attribue les nouveaux leads, offres et cas SAV selon les responsabilités, pas l’app.
 - La sauvegarde tourne sur le serveur, même si personne n’est connecté, et dépose une copie dans SharePoint.
 - Les mises à jour de l’app Windows arrivent toutes seules ; la version figure dans Mon compte sous « Cette app ».
 
@@ -129,6 +131,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : Attribution de nouveau comme dans l’ancien CRM (leads selon le site du NPA, offres à qui s’est rendu sur place, offres indicatives à Andy) ; nouveau **Attribuer les cas SAV** ; fiches mal attribuées corrigées, avec **Annuler la correction**.
 - 19.11.2026 : **Personnes › Domaines par personne** : toutes les personnes et tous les domaines d’un coup d’œil, avec des coches comme dans la gestion des utilisateurs de l’ancien CRM. Retour au rôle en un clic.
 - 05.11.2026 : Si ASPSMS refuse les identifiants, le CRM ne vérifie plus la connexion SMS qu’une fois par jour au lieu de chaque heure, jusqu’à ce que **Tester maintenant** réussisse.
 - 04.11.2026 : Si la cause d’une panne de service change, une nouvelle cloche arrive avec la nouvelle cause. SMS : les identifiants refusés sont signalés comme tels.

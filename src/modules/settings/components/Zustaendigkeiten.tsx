@@ -10,6 +10,7 @@ import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { ladeRegionen, ladeZustaendigkeiten, speichereZustaendigkeiten } from '../services/zustaendigkeiten'
+import { Korrektur } from './ZuteilungKorrektur'
 import type { Person, Standort, VerkaufRegel, Zustaendigkeiten as Werte } from '../types'
 
 const ALLE = '_alle'
@@ -58,7 +59,9 @@ function Formular({
   }
   const wert = (v: string) => (v === ALLE ? null : v)
   // Wer vertreten werden kann: alle, die in einer Regel oder bei den Offerten stehen.
-  const vertretene = [...new Set([...w.verkauf.map((r) => r.person), w.offerten].filter((k): k is string => !!k))]
+  const vertretene = [
+    ...new Set([...w.verkauf.map((r) => r.person), w.offerten, w.service].filter((k): k is string => !!k)),
+  ]
 
   async function sichern() {
     setSpeichert(true)
@@ -169,15 +172,30 @@ function Formular({
         </section>
 
         <section className="grid gap-2 sm:grid-cols-2">
-          <h3 className="font-medium sm:col-span-2">{t('zust.offerten')}</h3>
-          <Auswahl
-            aria-label={t('zust.offerten')}
-            value={w.offerten ?? ALLE}
-            onValueChange={(v) => {
-              setW({ ...w, offerten: wert(v) })
-            }}
-            optionen={personWahl}
-          />
+          <div className="flex flex-col gap-1">
+            <h3 className="font-medium">{t('zust.offerten')}</h3>
+            <p className="text-muted-foreground text-xs">{t('zust.offertenHinweis')}</p>
+            <Auswahl
+              aria-label={t('zust.offerten')}
+              value={w.offerten ?? ALLE}
+              onValueChange={(v) => {
+                setW({ ...w, offerten: wert(v) })
+              }}
+              optionen={personWahl}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="font-medium">{t('zust.service')}</h3>
+            <p className="text-muted-foreground text-xs">{t('zust.serviceHinweis')}</p>
+            <Auswahl
+              aria-label={t('zust.service')}
+              value={w.service ?? ALLE}
+              onValueChange={(v) => {
+                setW({ ...w, service: wert(v) })
+              }}
+              optionen={personWahl}
+            />
+          </div>
         </section>
 
         <section className="flex flex-col gap-2">
@@ -197,6 +215,7 @@ function Formular({
             </div>
           ))}
         </section>
+        <Korrektur />
       </KarteInhalt>
     </Karte>
   )

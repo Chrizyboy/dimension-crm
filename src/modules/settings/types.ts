@@ -153,7 +153,10 @@ export interface VerkaufRegel {
 /** Einstellung «zustaendigkeiten»: Verkauf nach Regeln, Offerten, Stellvertretung bei Abwesenheit (Kürzel). */
 export interface Zustaendigkeiten {
   verkauf: VerkaufRegel[]
+  /** Richtofferten ohne Termin (Innendienst), wie «Andreas» in der Vorlage. */
   offerten: string | null
+  /** Wer neue Service-Fälle bekommt und den Mitarbeiter wählt (Chris 19.11.2026: Andy). */
+  service: string | null
   stellvertretung: Record<string, string>
 }
 

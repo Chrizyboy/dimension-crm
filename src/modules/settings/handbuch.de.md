@@ -44,9 +44,11 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 ### Zuständigkeiten einstellen
 
 1. Bereich **Zuständigkeiten**.
-2. Unter **Verkauf: neue Leads** Regeln nach **Sprache**, **Standort**, **Region** und **Produkt** mit **Regel hinzufügen**. Heute: Französisch an Filipe, Deutsch an Loris.
-3. **Offerten erstellen**: wer neue Offerten bekommt (heute Andy).
-4. **Stellvertretung bei Abwesenheit** je Person.
+2. Unter **Verkauf: neue Leads** Regeln nach **Sprache**, **Standort**, **Region** und **Produkt** mit **Regel hinzufügen**. Heute wie im alten CRM: Standort Bulle (PLZ französisch) an Filipe, Standort Muri (PLZ deutsch) an Loris; ohne Adresse zählt die Sprache.
+3. **Richtofferten (Innendienst)**: wer Offerten ohne Termin vor Ort nachfasst (heute Andy). Alle anderen Offerten fasst nach, wer vor Ort war; in Bulle immer der Verkauf Bulle. Das Projekt übernimmt die Person der Offerte.
+4. **Service-Fälle zuteilen**: wer jeden neuen Service-Fall bekommt und den Mitarbeiter wählt (heute Andy).
+5. **Stellvertretung bei Abwesenheit** je Person.
+6. Der Kasten **Zuteilung am 19.11.2026 korrigiert** zeigt, was nach dem Prinzip des alten CRM umgeteilt wurde. **Korrektur rückgängig machen** setzt alles zurück, was seither niemand geändert hat.
 
 ### Auswahllisten anpassen
 
@@ -103,7 +105,7 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 
 - Eine neue Adresse ohne Region bekommt sie beim Speichern aus der PLZ (erste passende Region nach Nummer). Von Hand Gewähltes bleibt.
 - Jede Änderung landet im Änderungsprotokoll, auch automatische (als «System»).
-- Neue Leads und Offerten teilt die Datenbank nach den Zuständigkeiten zu, nicht die App.
+- Neue Leads, Offerten und Service-Fälle teilt die Datenbank nach den Zuständigkeiten zu, nicht die App.
 - Die Datensicherung läuft auf dem Server, auch wenn niemand angemeldet ist, und legt eine Kopie in SharePoint.
 - Updates der Windows-App kommen von selbst; die Version steht in Mein Konto unter «Diese App».
 
@@ -129,6 +131,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 19.11.2026: Zuteilung wieder wie im alten CRM (Leads nach Standort der PLZ, Offerten an wer vor Ort war, Richtofferten an Andy); neu **Service-Fälle zuteilen**; falsch zugeteilte Datensätze korrigiert, mit **Korrektur rückgängig machen**.
 - 19.11.2026: **Personen › Bereiche je Person**: alle Personen und Bereiche auf einen Blick, mit Häkchen wie in der Nutzerverwaltung des alten CRM. Zurück auf die Rolle mit einem Klick.
 - 05.11.2026: Lehnt ASPSMS die Zugangsdaten ab, prüft das CRM die SMS-Verbindung nur noch einmal am Tag statt stündlich, bis **Jetzt testen** wieder klappt.
 - 04.11.2026: Ändert sich bei einem gestörten Dienst der Grund, kommt eine neue Glocke mit dem neuen Grund. SMS: abgelehnte Zugangsdaten werden als solche gemeldet.

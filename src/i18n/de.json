@@ -4875,7 +4875,8 @@
       "steht": "Anlage steht",
       "garantie": "Garantie",
       "website": "Website",
-      "ohne_kunde": "Ohne Kunde"
+      "ohne_kunde": "Ohne Kunde",
+      "zuteilen": "Zuzuteilen"
     },
     "schritte": {
       "titel": "Arbeitsschritte",
@@ -4934,6 +4935,13 @@
         "baustelle": "{{name}} ist auf der Baustelle {{was}} eingeteilt",
         "service": "{{name}} hat schon den Service-Termin {{was}}"
       }
+    },
+    "zuteilen": {
+      "an": "Zuteilen an",
+      "waehlen": "Mitarbeiter wählen",
+      "hinweis": "Liegt bei {{name}} zum Zuteilen: Wer übernimmt den Fall?",
+      "hinweisOhne": "Noch niemand zugeteilt: Wer übernimmt den Fall?",
+      "badge": "Zuteilen"
     }
   },
   "wartung": {
@@ -11777,7 +11785,7 @@
   "zust": {
     "reiter": "Zuständigkeiten",
     "titel": "Wer ist zuständig?",
-    "zweck": "Neue Leads, auch von der Webseite, bekommen die Person automatisch nach diesen Regeln; Aufgabe und Glocke gehen direkt an sie. Neue Offerten gehen an die Person für Offerten. Ist jemand abwesend, übernimmt die Stellvertretung. Im Lead und in der Offerte lässt sich die Person jederzeit ändern.",
+    "zweck": "Wie im alten CRM: Neue Leads gehen nach dem Standort ihrer PLZ an den Verkauf (Muri deutsch, Bulle französisch); Aufgabe und Glocke gehen direkt an diese Person. Offerten fasst nach, wer vor Ort war; in Bulle der Verkauf Bulle, Richtofferten ohne Termin der Innendienst. Das Projekt übernimmt die Person der Offerte. Neue Service-Fälle gehen an die Person für Service, die den Mitarbeiter wählt. Ist jemand abwesend, übernimmt die Stellvertretung. In jedem Datensatz lässt sich die Person jederzeit ändern.",
     "verkauf": "Verkauf: neue Leads",
     "verkaufHinweis": "Alle gewählten Bedingungen müssen passen. Genauere Regeln (mehr Bedingungen) gelten zuerst.",
     "sprache": "Sprache",
@@ -11794,10 +11802,29 @@
     },
     "regelNeu": "Regel hinzufügen",
     "regelWeg": "Regel entfernen",
-    "offerten": "Offerten erstellen",
+    "offerten": "Richtofferten (Innendienst)",
     "stellvertretung": "Stellvertretung bei Abwesenheit",
     "stellvertretungHinweis": "Gilt, wenn jemand in den Abwesenheiten (Ferien, krank …) eingetragen ist.",
-    "vertretungFuer": "Stellvertretung für {{name}}"
+    "vertretungFuer": "Stellvertretung für {{name}}",
+    "offertenHinweis": "Offerten ohne Termin vor Ort. Alle anderen fasst nach, wer vor Ort war (Bulle: Verkauf Bulle).",
+    "service": "Service-Fälle zuteilen",
+    "serviceHinweis": "Bekommt jeden neuen Service-Fall und wählt den Mitarbeiter.",
+    "korrektur": {
+      "titel": "Zuteilung am 19.11.2026 korrigiert",
+      "text": "Nach dem Prinzip des alten CRM neu zugeteilt: {{liste}}. Von Hand gewählte Personen blieben unverändert.",
+      "verkaufschancen_one": "{{count}} Lead",
+      "verkaufschancen_other": "{{count}} Leads",
+      "offerten_one": "{{count}} Offerte",
+      "offerten_other": "{{count}} Offerten",
+      "projekte_one": "{{count}} Projekt",
+      "projekte_other": "{{count}} Projekte",
+      "service_faelle_one": "{{count}} Service-Fall",
+      "service_faelle_other": "{{count}} Service-Fälle",
+      "aufgaben_one": "{{count}} Ausschreibungs-Aufgabe",
+      "aufgaben_other": "{{count}} Ausschreibungs-Aufgaben",
+      "rueckgaengig": "Korrektur rückgängig machen",
+      "sicher": "Wirklich zurücksetzen?"
+    }
   },
   "assistent": {
     "titel": "Assistent",

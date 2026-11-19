@@ -21,11 +21,29 @@ type Kontakt = { vorname: string | null; nachname: string | null; firma: string 
 const kundeName = (k: Kontakt) =>
   k ? k.firma?.trim() || [k.vorname, k.nachname].filter(Boolean).join(' ') || '–' : '–'
 
-const FALL_FELDER =
+const FALL_FELDER_BASIS =
   'id, nummer, titel, beschreibung, kategorie, prioritaet, status, garantie, termin_am, erledigt_am, erstellt_am, kontakt_id, anlage_id, projekt_id, person_id, verlauf, ' +
   'quelle, auswirkung, reaktion_bis, objekt_id, vor_ort_name, vor_ort_telefon, zugang, komponente, fehlercode, checkliste, meldung, zuordnung, team, dauer_minuten, ' +
   'kontakt:kontakte(vorname, nachname, firma, sprache), anlage:anlagen(leistung_kwp), einsatzort:objekte(strasse, plz, ort), ' +
   'projekt:projekte(nummer), person:personen(name)'
+const FALL_FELDER = `${FALL_FELDER_BASIS}, zugeteilt_am`
+
+/**
+ * Spalte zugeteilt_am kommt erst mit der Migration «zuteilung_wie_vorlage». Bis die Cloud aktualisiert ist,
+ * fragt die App ohne sie (PostgREST-Fehler 42703 = Spalte fehlt) und zeigt alle Fälle als zugeteilt.
+ */
+let ohneZuteilung = false
+async function frageFaelle<T>(
+  abfrage: (felder: string) => PromiseLike<{ data: T | null; error: { code?: string } | null }>,
+): Promise<T> {
+  let r = await abfrage(ohneZuteilung ? FALL_FELDER_BASIS : FALL_FELDER)
+  if (r.error?.code === '42703' && !ohneZuteilung) {
+    ohneZuteilung = true
+    r = await abfrage(FALL_FELDER_BASIS)
+  }
+  if (r.error) throw r.error as Error
+  return r.data as T
+}
 
 type Roh = 'kunde' | 'ort' | 'adresse' | 'sprache' | 'projekt' | 'person' | 'verlauf' | 'checkliste' | 'meldung' | 'kwp'
 type FallRoh = Omit<ServiceFall, Roh> & {
@@ -54,6 +72,9 @@ function alsFall({
   const plzOrt = [einsatzort?.plz, einsatzort?.ort].filter(Boolean).join(' ')
   return {
     ...f,
+    // Alte Cloud ohne Spalte: als zugeteilt behandeln, damit kein falscher Hinweis «Zuteilen» erscheint.
+    zugeteilt_am:
+      (f as Partial<Pick<ServiceFall, 'zugeteilt_am'>>).zugeteilt_am ?? (ohneZuteilung ? f.erstellt_am : null),
     verlauf: Array.isArray(verlauf) ? (verlauf as Verlaufseintrag[]) : [],
     checkliste: Array.isArray(checkliste) ? (checkliste as Checkpunkt[]) : [],
     meldung: m,
@@ -70,24 +91,24 @@ function alsFall({
 
 /** Service-Fälle nach Filter, neueste zuerst. */
 export async function ladeFaelle(filter: FallFilter): Promise<ServiceFall[]> {
-  let q = db().from('service_faelle').select(FALL_FELDER).is('geloescht_am', null)
   // Leitstand: alles Offene und was in den letzten 14 Tagen erledigt wurde (Spalte «Erledigt»).
   const vor14 = new Date(Date.now() - 14 * 86_400_000).toISOString().slice(0, 10)
-  if (filter === 'leitstand') q = q.or(`status.neq.erledigt,erledigt_am.gte.${vor14}`)
-  if (filter === 'offen') q = q.neq('status', 'erledigt')
-  if (filter === 'hoch') q = q.neq('status', 'erledigt').eq('prioritaet', 'hoch')
-  if (filter === 'garantie') q = q.eq('garantie', true)
-  if (filter === 'erledigt') q = q.eq('status', 'erledigt')
-  const { data, error } = await q.order('erstellt_am', { ascending: false }).limit(500)
-  if (error) throw error
-  return (data as unknown as FallRoh[]).map(alsFall)
+  const daten = await frageFaelle((felder) => {
+    let q = db().from('service_faelle').select(felder).is('geloescht_am', null)
+    if (filter === 'leitstand') q = q.or(`status.neq.erledigt,erledigt_am.gte.${vor14}`)
+    if (filter === 'offen') q = q.neq('status', 'erledigt')
+    if (filter === 'hoch') q = q.neq('status', 'erledigt').eq('prioritaet', 'hoch')
+    if (filter === 'garantie') q = q.eq('garantie', true)
+    if (filter === 'erledigt') q = q.eq('status', 'erledigt')
+    return q.order('erstellt_am', { ascending: false }).limit(500)
+  })
+  return (daten as unknown as FallRoh[]).map(alsFall)
 }
 
 /** Ein Fall für die Akte. */
 export async function ladeFall(id: string): Promise<ServiceFall> {
-  const { data, error } = await db().from('service_faelle').select(FALL_FELDER).eq('id', id).single()
-  if (error) throw error
-  return alsFall(data as unknown as FallRoh)
+  const daten = await frageFaelle((felder) => db().from('service_faelle').select(felder).eq('id', id).single())
+  return alsFall(daten as unknown as FallRoh)
 }
 
 /** Fall anlegen (gibt die ID zurück) oder ändern. */
@@ -105,6 +126,18 @@ export async function fallSpeichern(e: Partial<FallEingabe>, id?: string): Promi
     .single()
   if (error) throw error
   return data.id
+}
+
+/** Mitarbeiter für einen Fall wählen; Vermerk im Verlauf und Glocke macht die Datenbank. */
+export async function fallZuteilen(id: string, personId: string): Promise<void> {
+  const { error } = await db().rpc('service_zuteilen', { p_fall: id, p_person: personId })
+  // Alte Cloud ohne die Funktion (PGRST202): Person direkt setzen.
+  if (error?.code === 'PGRST202') {
+    const r = await db().from('service_faelle').update({ person_id: personId }).eq('id', id)
+    if (r.error) throw r.error
+    return
+  }
+  if (error) throw error
 }
 
 /** Eintrag im Verlauf (mit Datum und Person, von der Datenbank gesetzt). */

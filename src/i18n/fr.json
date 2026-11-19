@@ -4875,7 +4875,8 @@
       "steht": "Installation à l’arrêt",
       "garantie": "Garantie",
       "website": "Site web",
-      "ohne_kunde": "Sans client"
+      "ohne_kunde": "Sans client",
+      "zuteilen": "À attribuer"
     },
     "schritte": {
       "titel": "Étapes",
@@ -4934,6 +4935,13 @@
         "baustelle": "{{name}} est prévu·e sur le chantier {{was}}",
         "service": "{{name}} a déjà l’intervention {{was}}"
       }
+    },
+    "zuteilen": {
+      "an": "Attribuer à",
+      "waehlen": "Choisir le collaborateur",
+      "hinweis": "Chez {{name}} pour attribution : qui reprend le cas ?",
+      "hinweisOhne": "Personne n’est encore attribué : qui reprend le cas ?",
+      "badge": "À attribuer"
     }
   },
   "wartung": {
@@ -11777,7 +11785,7 @@
   "zust": {
     "reiter": "Responsabilités",
     "titel": "Qui est responsable ?",
-    "zweck": "Les nouveaux leads, y compris ceux du site web, reçoivent automatiquement la personne selon ces règles ; la tâche et la cloche lui arrivent directement. Les nouvelles offres vont à la personne responsable des offres. En cas d'absence, le remplaçant prend le relais. Dans le lead et l'offre, la personne peut être changée à tout moment.",
+    "zweck": "Comme dans l’ancien CRM : les nouveaux leads vont à la vente selon le site de leur NPA (Muri allemand, Bulle français) ; tâche et cloche vont directement à cette personne. Le suivi d’une offre revient à qui s’est rendu sur place ; à Bulle à la vente de Bulle, les offres indicatives sans rendez-vous au service interne. Le projet reprend la personne de l’offre. Les nouveaux cas SAV vont à la personne SAV, qui choisit le collaborateur. En cas d’absence, le remplacement prend le relais. Dans chaque fiche, la personne reste modifiable.",
     "verkauf": "Vente : nouveaux leads",
     "verkaufHinweis": "Toutes les conditions choisies doivent correspondre. Les règles plus précises (plus de conditions) passent en premier.",
     "sprache": "Langue",
@@ -11794,10 +11802,29 @@
     },
     "regelNeu": "Ajouter une règle",
     "regelWeg": "Supprimer la règle",
-    "offerten": "Établir les offres",
+    "offerten": "Offres indicatives (service interne)",
     "stellvertretung": "Remplacement en cas d'absence",
     "stellvertretungHinweis": "S'applique quand quelqu'un est inscrit dans les absences (vacances, maladie …).",
-    "vertretungFuer": "Remplaçant de {{name}}"
+    "vertretungFuer": "Remplaçant de {{name}}",
+    "offertenHinweis": "Offres sans rendez-vous sur place. Les autres sont suivies par qui s’est rendu sur place (Bulle : vente Bulle).",
+    "service": "Attribuer les cas SAV",
+    "serviceHinweis": "Reçoit chaque nouveau cas SAV et choisit le collaborateur.",
+    "korrektur": {
+      "titel": "Attribution corrigée le 19.11.2026",
+      "text": "Réattribué selon le principe de l’ancien CRM : {{liste}}. Les personnes choisies à la main sont restées inchangées.",
+      "verkaufschancen_one": "{{count}} lead",
+      "verkaufschancen_other": "{{count}} leads",
+      "offerten_one": "{{count}} offre",
+      "offerten_other": "{{count}} offres",
+      "projekte_one": "{{count}} projet",
+      "projekte_other": "{{count}} projets",
+      "service_faelle_one": "{{count}} cas SAV",
+      "service_faelle_other": "{{count}} cas SAV",
+      "aufgaben_one": "{{count}} tâche d’appel d’offres",
+      "aufgaben_other": "{{count}} tâches d’appels d’offres",
+      "rueckgaengig": "Annuler la correction",
+      "sicher": "Vraiment rétablir ?"
+    }
   },
   "assistent": {
     "titel": "Assistant",

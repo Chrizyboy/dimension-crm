@@ -1,8 +1,9 @@
--- Prüft die Zuständigkeiten: Lead nach Sprache zu Filipe oder Loris, Regel mit Produkt geht vor, Stellvertretung
--- bei Abwesenheit, Person von Hand bleibt, Import bleibt, Offerte zu Andy, Regeln nur Administration.
+-- Prüft die Zuständigkeiten: Lead nach Standort der PLZ (sonst Sprache) zu Filipe oder Loris, Regel mit Produkt geht
+-- vor, Stellvertretung bei Abwesenheit, Person von Hand bleibt, Import bleibt, Offerte wie in der Vorlage (Bulle →
+-- Filipe, vor Ort → wer dort war, Richtofferte → Andy), Regeln nur Administration.
 -- Ausführen: npm run db:test
 begin;
-select plan(9);
+select plan(13);
 
 insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000031a1', 'p31-vk@test.local');
 insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte, sprache) values
@@ -24,6 +25,20 @@ select is((select k.kuerzel from public.verkaufschancen v join public.personen k
             where v.id = (select id from ids where sprache = 'fr')), 'filipe', 'französisch → Filipe');
 select is((select k.kuerzel from public.verkaufschancen v join public.personen k on k.id = v.tour_person_id
             where v.id = (select id from ids where sprache = 'de')), 'loris', 'deutsch → Loris');
+
+-- Französischer Kontakt mit Adresse in Muri → Loris (Vorlage: Standort der PLZ zählt, nicht die Sprache).
+select lives_ok($$ select public.lead_anlegen(
+  '{"kontakt": {"vorname": "Anne", "nachname": "Muri", "sprache": "fr"}, "objekt": {"plz": "5630"}, "lead": {"quelle": "website"}}'::jsonb) $$,
+  'Lead mit französischem Kontakt in Muri');
+select is((select k.kuerzel from public.verkaufschancen v join public.personen k on k.id = v.tour_person_id
+            join public.kontakte c on c.id = v.kontakt_id where c.vorname = 'Anne' and c.nachname = 'Muri'), 'loris',
+  'französisch, aber PLZ Muri → Loris');
+
+-- Offerte wie in der Vorlage (vor den Abwesenheiten)
+select is(intern.offerte_verantwortlich((select id from public.standorte where kuerzel = 'bulle'),
+  '00000000-0000-0000-0000-0000000031b4', false), '00000000-0000-0000-0000-0000000031b1'::uuid, 'Offerte Bulle → Filipe');
+select is(intern.offerte_verantwortlich((select id from public.standorte where kuerzel = 'muri'),
+  '00000000-0000-0000-0000-0000000031b4', false), '00000000-0000-0000-0000-0000000031b4'::uuid, 'Offerte Muri → wer vor Ort war');
 
 -- Regel mit Produkt vor der Sprache
 update public.einstellungen
@@ -54,13 +69,13 @@ insert into public.verkaufschancen (id, kontakt_id, alt_id) values
 select is((select tour_person_id from public.verkaufschancen where id = '00000000-0000-0000-0000-0000000031d4'), null,
   'Import behält seine Zuteilung');
 
--- Offerte → Andy
-select is(intern.offerte_verantwortlich(null, '00000000-0000-0000-0000-0000000031b1', false),
-  '00000000-0000-0000-0000-0000000031b3'::uuid, 'Offerten → Andy');
+-- Richtofferte → Andy
+select is(intern.offerte_verantwortlich((select id from public.standorte where kuerzel = 'muri'), null, true),
+  '00000000-0000-0000-0000-0000000031b3'::uuid, 'Richtofferte → Andy');
 insert into public.abwesenheiten (person_id, art, von, bis) values
   ('00000000-0000-0000-0000-0000000031b3', 'krank', current_date, current_date);
-select is(intern.offerte_verantwortlich(null, null, false), '00000000-0000-0000-0000-0000000031b4'::uuid,
-  'Andy krank → Chris');
+select is(intern.offerte_verantwortlich((select id from public.standorte where kuerzel = 'muri'), null, true),
+  '00000000-0000-0000-0000-0000000031b4'::uuid, 'Andy krank → Chris');
 
 -- Rechte
 set local role authenticated;

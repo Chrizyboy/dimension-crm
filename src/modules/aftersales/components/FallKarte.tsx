@@ -102,6 +102,7 @@ export const FallKarte = memo(function FallKarte({
         {[kunde, f.ort, f.kwp ? `${String(f.kwp)} kWp` : null].filter(Boolean).join(' · ')}
       </p>
       <div className="flex flex-wrap items-center gap-1">
+        {!f.zugeteilt_am && f.status !== 'erledigt' && <Badge ton="warnung">{t('service.zuteilen.badge')}</Badge>}
         {r.laeuft && r.minuten !== null && (
           <Badge ton={r.ueberfaellig ? 'kritisch' : r.minuten < 240 ? 'warnung' : 'neutral'}>
             {r.ueberfaellig
