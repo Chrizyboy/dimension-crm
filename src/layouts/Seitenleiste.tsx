@@ -1,5 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { ChevronRight, Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Logo, SIGNET } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
@@ -105,7 +105,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
       <nav
         aria-label={t('nav.haupt')}
         className={cn(
-          'relative flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto py-2.5',
+          'leiste-bild relative flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto py-2.5',
           eingeklappt ? 'px-2' : 'px-3',
         )}
       >
@@ -177,23 +177,8 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
 
       <div className={cn('mx-3 flex shrink-0 flex-col gap-0.5 border-t !border-white/10 py-3')}>
         <AppKacheln eingeklappt={eingeklappt} />
-        <div className="h-2" aria-hidden="true" />
-        {/* Design-System ist eine Hilfe für die Entwicklung, im Betrieb braucht sie niemand. */}
-        {import.meta.env.DEV &&
-          eintrag(
-            'design',
-            <Link
-              to="/design"
-              onClick={onNavigiert}
-              className={cn(LINK, eingeklappt && 'justify-center px-0')}
-              activeProps={AKTIV}
-              aria-label={eingeklappt ? t('befehle.design') : undefined}
-            >
-              <Palette className="text-sidebar-muted size-4 shrink-0" aria-hidden="true" />
-              {!eingeklappt && <span className="truncate">{t('befehle.design')}</span>}
-            </Link>,
-            t('befehle.design'),
-          )}
+        <div className="h-1" aria-hidden="true" />
+        {/* Design-System nur über Ctrl K (beim Entwickeln) oder #/design, nicht in der Leiste (19.11.2026). */}
         {!imMenue &&
           eintrag(
             'einklappen',

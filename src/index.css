@@ -298,6 +298,29 @@ h3 {
   display: none;
 }
 
+/*
+ * Bildlaufleisten passend zur Glasoptik (Chris 19.11.2026: grelle weisse Windows-Leiste in der Seitenleiste).
+ * Im Dunkeln zeichnet Windows sie dunkel (color-scheme), überall schmal und halbdurchsichtig.
+ */
+:root {
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 45%, transparent) transparent;
+}
+/* Seitenleiste: Balken erst beim Darüberfahren sichtbar. */
+.leiste-bild {
+  scrollbar-color: transparent transparent;
+}
+.leiste-bild:hover,
+.leiste-bild:focus-within {
+  scrollbar-color: rgb(255 255 255 / 0.22) transparent;
+}
+
 ::selection {
   background: var(--accent-soft);
   color: var(--foreground);
