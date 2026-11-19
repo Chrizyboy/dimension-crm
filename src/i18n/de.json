@@ -12903,5 +12903,31 @@
     "vollbild": "Vollbild",
     "vollbildAus": "Vollbild beenden",
     "aktualisieren": "Aktualisieren"
+  },
+  "verlauf": {
+    "knopf": "Änderungsverlauf",
+    "titel": "Änderungsverlauf",
+    "leer": "Noch keine Änderungen",
+    "leerText": "Sobald jemand hier etwas ändert, steht es in diesem Verlauf.",
+    "feld": {
+      "stufe": "Stand",
+      "status": "Status",
+      "termin_am": "Termin",
+      "tour_person": "Termin bei",
+      "person": "Zuständig",
+      "verantwortlich": "Verantwortlich",
+      "betrag": "Betrag",
+      "nachfassen_am": "Nachfassen am",
+      "entscheid": "Entscheid",
+      "entscheid_am": "Entscheid am",
+      "verlustgrund": "Grund",
+      "wiedervorlage_am": "Wiedervorlage",
+      "wiedervorlage_grund": "Grund Wiedervorlage",
+      "angebot_am": "Angebot am",
+      "titel": "Titel",
+      "notiz": "Notiz",
+      "prioritaet": "Priorität",
+      "geloescht_am": "Papierkorb"
+    }
   }
 }

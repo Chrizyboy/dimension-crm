@@ -13,6 +13,8 @@ import {
 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Aenderungsverlauf } from '@/components/shared/Aenderungsverlauf'
+import { AufgabeKnopf } from '@/components/shared/AufgabeKnopf'
 import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
@@ -152,6 +154,12 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 onFertig={onSchliessen}
               />
             )}
+            {g.verkaufschanceId && (
+              <Aenderungsverlauf
+                bezuege={[{ tabelle: 'verkaufschancen', id: g.verkaufschanceId }]}
+                titel={[g.nummer, g.name].filter(Boolean).join(' · ')}
+              />
+            )}
             {g.telefon && (
               <a href={`tel:${g.telefon.replace(/[^\d+]/g, '')}`} className={buttonVariants({ variant: 'secondary' })}>
                 <Phone />
@@ -181,6 +189,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 {t('verkauf.akte.richtofferte')}
               </Button>
             )}
+            {g.verkaufschanceId && <AufgabeKnopf bezugTabelle="verkaufschancen" bezugId={g.verkaufschanceId} />}
             {ziele.size > 0 && (
               <Menue>
                 <MenueAusloeser asChild>

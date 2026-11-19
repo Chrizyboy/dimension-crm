@@ -1,14 +1,16 @@
-import { ArrowLeft, CalendarPlus, FileText, MoreHorizontal, Undo2 } from 'lucide-react'
+import { ArrowLeft, CalendarPlus, FileText, History, MoreHorizontal, Plus, Undo2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PapierkorbMenueEintrag } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { usePapierkorb } from '@/components/shared/papierkorb/usePapierkorb'
 import { AblageLink } from '@/components/shared/AblageLink'
+import { AenderungsverlaufDialog } from '@/components/shared/Aenderungsverlauf'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt, MenueTrenner } from '@/components/ui/menue'
 import { useDrucken } from '@/hooks/useDrucken'
 import { formatChf, formatDatum } from '@/lib/format'
+import { sende } from '@/services/ereignisse'
 import { melde } from '@/services/meldungen'
 import { useAktion } from '../hooks/useAktion'
 import { useNeuLaden } from '../hooks/useProjekte'
@@ -38,6 +40,7 @@ export function SeiteKopf({
   const { laeuft, aus } = useAktion()
   const neuLaden = useNeuLaden()
   const [planen, setPlanen] = useState(false)
+  const [verlauf, setVerlauf] = useState(false)
   const [gesuch, setGesuch] = useState<Gesuch | null>(null)
   const { aktiv: druckt, drucke } = useDrucken()
   const papierkorb = usePapierkorb({
@@ -119,6 +122,23 @@ export function SeiteKopf({
             </Button>
           </MenueAusloeser>
           <MenueInhalt align="end">
+            <MenueEintrag
+              onSelect={() => {
+                sende('aufgabe.neu', { bezugTabelle: 'projekte', bezugId: p.id })
+              }}
+            >
+              <Plus />
+              {t('aufgaben.neuKurz')}
+            </MenueEintrag>
+            <MenueEintrag
+              onSelect={() => {
+                setVerlauf(true)
+              }}
+            >
+              <History />
+              {t('verlauf.knopf')}
+            </MenueEintrag>
+            <MenueTrenner />
             {GESUCHE.map((g) => (
               <MenueEintrag
                 key={g}
@@ -176,6 +196,12 @@ export function SeiteKopf({
       )}
       {gesuch && druckt && <GesuchDruck projekt={p} gesuch={gesuch} />}
       {papierkorb.dialog}
+      <AenderungsverlaufDialog
+        bezuege={[{ tabelle: 'projekte', id: p.id }]}
+        titel={[p.nummer, p.kunde].filter(Boolean).join(' · ')}
+        offen={verlauf}
+        onOffen={setVerlauf}
+      />
     </div>
   )
 }

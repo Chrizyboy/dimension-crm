@@ -8,6 +8,7 @@ import { useUpdatePruefung } from '@/hooks/useUpdatePruefung'
 import { useVolltext } from '@/hooks/useVolltext'
 import { cn } from '@/lib/utils'
 import { AssistentFenster } from '@/modules/ai'
+import { AufgabeAusAkte } from '@/modules/tasks'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { Befehlspalette } from './Befehlspalette'
@@ -94,6 +95,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           <AssistentFenster />
         </Suspense>
       )}
+      <Suspense>
+        <AufgabeAusAkte />
+      </Suspense>
       <KuerzelHilfe />
       <Toaster
         position="bottom-right"

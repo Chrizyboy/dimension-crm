@@ -12903,5 +12903,31 @@
     "vollbild": "Plein écran",
     "vollbildAus": "Quitter le plein écran",
     "aktualisieren": "Actualiser"
+  },
+  "verlauf": {
+    "knopf": "Historique des modifications",
+    "titel": "Historique des modifications",
+    "leer": "Aucune modification",
+    "leerText": "Dès que quelqu’un modifie quelque chose ici, cela apparaît dans cet historique.",
+    "feld": {
+      "stufe": "Statut",
+      "status": "Statut",
+      "termin_am": "Rendez-vous",
+      "tour_person": "RDV avec",
+      "person": "Responsable",
+      "verantwortlich": "Responsable",
+      "betrag": "Montant",
+      "nachfassen_am": "Relance le",
+      "entscheid": "Décision",
+      "entscheid_am": "Décision le",
+      "verlustgrund": "Motif",
+      "wiedervorlage_am": "Rappel",
+      "wiedervorlage_grund": "Motif du rappel",
+      "angebot_am": "Offre du",
+      "titel": "Titre",
+      "notiz": "Note",
+      "prioritaet": "Priorité",
+      "geloescht_am": "Corbeille"
+    }
   }
 }
