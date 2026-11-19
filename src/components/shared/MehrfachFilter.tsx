@@ -162,7 +162,7 @@ function Zeile({
         <button
           type="button"
           onClick={onNur}
-          className="text-accent-ink focus-visible:ring-ring hidden rounded px-1 text-xs font-medium outline-none group-focus-within:inline group-hover:inline hover:underline focus-visible:ring-2"
+          className="text-accent-ink focus-visible:ring-ring hidden rounded px-1 text-xs font-medium outline-none group-focus-within:inline group-hover:inline hover:underline focus-visible:ring-2 pointer-coarse:inline"
         >
           {nurText}
         </button>

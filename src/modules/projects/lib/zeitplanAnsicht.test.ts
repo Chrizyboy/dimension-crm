@@ -78,8 +78,8 @@ describe('Zeitplan-Ansicht', () => {
 
   it('Team-Sicht: Monteure immer, andere nur mit Einsatz, Abwesenheit als Balken', () => {
     const personen: Person[] = [
-      { id: 'm', kuerzel: 'MM', name: 'Milo', rolle: 'monteur' },
-      { id: 'v', kuerzel: 'VV', name: 'Vera', rolle: 'verkauf' },
+      { id: 'm', kuerzel: 'MM', kurzzeichen: 'MM', name: 'Milo', rolle: 'monteur' },
+      { id: 'v', kuerzel: 'VV', kurzzeichen: 'VV', name: 'Vera', rolle: 'verkauf' },
     ]
     const g = teamSicht({
       projekte: [projekt({})],
@@ -133,8 +133,8 @@ describe('Zeitplan-Ansicht', () => {
     expect(b.art).toBe('service')
     expect(b.konflikt).toEqual([{ kuerzel: 'MARCO', grund: 'doppelt' }])
     const personen = [
-      { id: 'marco', kuerzel: 'MK', name: 'Marco', rolle: 'verkauf' },
-      { id: 'luca', kuerzel: 'LB', name: 'Luca', rolle: 'verkauf' },
+      { id: 'marco', kuerzel: 'MK', kurzzeichen: 'MK', name: 'Marco', rolle: 'verkauf' },
+      { id: 'luca', kuerzel: 'LB', kurzzeichen: 'LB', name: 'Luca', rolle: 'verkauf' },
     ] as Person[]
     const team = teamSicht({
       projekte: [projekt({})],

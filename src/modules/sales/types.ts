@@ -172,6 +172,8 @@ export const LEERER_FILTER: VerkaufFilter = { suche: '', standorte: [], personen
 export interface Aussendienst {
   id: string
   kuerzel: string
+  /** Anzeige-Kürzel («LP»); `kuerzel` ist nur der technische Schlüssel. */
+  kurzzeichen: string | null
   name: string
   vorname: string
   standort: 'muri' | 'bulle' | null

@@ -69,7 +69,7 @@ export function BenachrichtigungsListe({ onOeffnen }: { onOeffnen?: () => void }
               onClick={() => {
                 entfernen(b)
               }}
-              className="text-muted-foreground hover:bg-muted absolute top-2 right-2 rounded p-1 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+              className="text-muted-foreground hover:bg-muted absolute top-2 right-2 rounded p-1 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
               aria-label={t('benachrichtigungen.entfernen')}
             >
               <X className="size-3.5" />

@@ -51,12 +51,12 @@ test('Aufgaben: schnell erfassen, in der Akte bearbeiten, mit Notiz erledigen', 
 
   // Erledigt mit Notiz.
   await akte.getByRole('button', { name: 'Erledigt …' }).click()
-  await akte.getByPlaceholder(/Was kam heraus/).fill('Offerte B gewünscht')
+  await akte.getByPlaceholder(/Was kam heraus/).fill(`Offerte B gewünscht ${lauf}`)
   await akte.getByRole('button', { name: 'Erledigt', exact: true }).click()
   await expect(akte.getByRole('button', { name: 'Wieder öffnen' })).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(heute.getByRole('button', { name: new RegExp(`^(Wichtig: )?Testaufgabe ${lauf}`) })).toHaveCount(0)
 
   await page.getByRole('button', { name: 'Erledigt', exact: true }).click()
-  await expect(page.getByText('Offerte B gewünscht')).toBeVisible()
+  await expect(page.getByText(`Offerte B gewünscht ${lauf}`)).toBeVisible()
 })

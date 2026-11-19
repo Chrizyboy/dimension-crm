@@ -2,6 +2,7 @@ import { TriangleAlert, Users } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { cn } from '@/lib/utils'
 import { alsDatum, alsIso, plusTage, ueberschneidet } from '../lib/zeitplan'
 import { konfliktText, tagImEinsatz, type PlanBalken, type PlanGruppe } from '../lib/zeitplanAnsicht'
@@ -51,7 +52,10 @@ export function ZeitplanAgenda({
       .filter((b) => b.einsatz && (wahl.length === 0 || b.einsatz.personen.some((id) => wahl.includes(id)))),
     ...service.filter((b) => wahl.length === 0 || b.service?.personen.some((id) => wahl.includes(id))),
   ]
-  const kuerzel = (id: string) => personen.find((p) => p.id === id)?.kuerzel ?? '?'
+  const kuerzel = (id: string) => {
+    const p = personen.find((x) => x.id === id)
+    return p ? kurzzeichenVon(p) : '?'
+  }
 
   const tage = Array.from({ length: 7 }, (_, i) => alsIso(plusTage(alsDatum(montag), i)))
     .map((tag) => ({

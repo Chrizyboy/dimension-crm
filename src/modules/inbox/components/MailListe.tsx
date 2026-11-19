@@ -68,10 +68,13 @@ export function MailListe({
       {gruppen.map(([g, l]) => (
         <div key={g ?? 'alle'} role="presentation">
           {g && (
-            <h3 className="bg-surface-2 text-muted-foreground flex justify-between border-b px-3.5 py-1.5 text-xs font-medium tracking-wide uppercase">
-              <span>{t(`posteingang.gruppe.${g}`)}</span>
-              <span className="zahlen">{l.length}</span>
-            </h3>
+            // Die Überschrift steht in einem eigenen Listeneintrag: eine Liste darf direkt nur Einträge enthalten.
+            <div role="listitem">
+              <h3 className="bg-surface-2 text-muted-foreground flex justify-between border-b px-3.5 py-1.5 text-xs font-medium tracking-wide uppercase">
+                <span>{t(`posteingang.gruppe.${g}`)}</span>
+                <span className="zahlen">{l.length}</span>
+              </h3>
+            </div>
           )}
           {l.map((m) => (
             <MailZeile

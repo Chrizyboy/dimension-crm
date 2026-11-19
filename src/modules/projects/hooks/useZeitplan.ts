@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatDatum } from '@/lib/format'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { melde } from '@/services/meldungen'
 import { alsDatum, alsIso, auslastung, plusTage, wochen as wochenAb } from '../lib/zeitplan'
 import {
@@ -64,7 +65,10 @@ export function useZeitplan(start: string, anzahlWochen: number, f: ZeitplanFilt
     const e = (einsaetze.data ?? []).map((x) => ({ ...x, ...vorschau[x.id] }))
     const p = projekte.data ?? []
     const wort = f.suche.trim().toLowerCase()
-    const kuerzel = (id: string) => personen.data?.find((x) => x.id === id)?.kuerzel ?? '?'
+    const kuerzel = (id: string) => {
+      const x = personen.data?.find((y) => y.id === id)
+      return x ? kurzzeichenVon(x) : '?'
+    }
     const passt = (x: Projekt) =>
       (f.standorte.length === 0 || f.standorte.includes(x.standort_id ?? '')) &&
       (f.bau.length === 0 || f.bau.includes(x.bau_status ?? 'ausstehend')) &&

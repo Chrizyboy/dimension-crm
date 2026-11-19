@@ -30,7 +30,7 @@ export function TeilschritteBox({
           <button
             type="button"
             aria-label={t('aufgaben.akte.schrittEntfernen', { text: s.text })}
-            className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded p-0.5 opacity-0 outline-none group-hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2"
+            className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded p-0.5 opacity-0 outline-none group-hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 pointer-coarse:opacity-100"
             onClick={() => {
               onAendern(schritte.filter((x) => x.id !== s.id))
             }}

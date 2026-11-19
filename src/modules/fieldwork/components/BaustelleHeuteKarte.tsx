@@ -2,6 +2,7 @@ import { AlertTriangle, Camera, Clock } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Karte } from '@/components/ui/karte'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { zuerich } from '../lib/zeit'
 import type { BaustelleHeute } from '../types'
 import { sollTon } from '../lib/auswertung'
@@ -26,7 +27,9 @@ export function BaustelleHeuteKarte({ b, onOeffnen }: { b: BaustelleHeute; onOef
         {b.team.map((p) => (
           <li key={p.id}>
             <Badge ton={p.laeuft ? 'ok' : p.seit ? 'neutral' : 'warnung'} punkt>
-              {p.kuerzel ?? p.name}
+              <abbr title={p.name} className="no-underline">
+                {kurzzeichenVon(p)}
+              </abbr>
               {p.seit ? ` ${zuerich(p.seit).zeit}` : ` ${t('baustelle.leitung.nichtGestempelt')}`}
             </Badge>
           </li>

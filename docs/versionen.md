@@ -6,6 +6,13 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
 (docs/installation.md).
 
+## 1.3.5
+
+- Fehler behoben: Nach «Mehr › …» mit einem Fenster liess sich die App manchmal nicht mehr anklicken.
+- Am Handy: «nur» im Personen-Filter und Löschen in Glocke und Teilschritten sind jetzt erreichbar.
+- Kurzzeichen statt technischer Namen in Zeiten, Baustelle heute, Planung und Pipeline; Ctrl K findet «Fehler melden» zuerst.
+- Schneller: Kundenliste, Leads, Preisliste, Zeiterfassung und Marketing-Zielgruppe laden bis zu zehnmal schneller (nach dem Cloud-Update).
+
 ## 1.3.4
 
 - Zuteilung wieder wie im alten CRM: Leads nach PLZ (Bulle Filipe, Muri Loris), Offerten an wer vor Ort war, Richtofferten an Andy.

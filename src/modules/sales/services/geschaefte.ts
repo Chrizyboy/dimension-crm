@@ -143,7 +143,7 @@ export async function ladeAussendienst(): Promise<Aussendienst[]> {
   const [personen, heime] = await Promise.all([
     db()
       .from('personen')
-      .select('id, kuerzel, name, profil, standorte(kuerzel)')
+      .select('id, kuerzel, kurzzeichen, name, profil, standorte(kuerzel)')
       .eq('aussendienst', true)
       .eq('aktiv', true)
       .is('geloescht_am', null)
@@ -160,6 +160,7 @@ export async function ladeAussendienst(): Promise<Aussendienst[]> {
     return {
       id: p.id,
       kuerzel: p.kuerzel,
+      kurzzeichen: p.kurzzeichen,
       name: p.name,
       vorname: p.name.split(' ')[0] ?? p.name,
       standort: standortVon(p.standorte?.kuerzel ?? vomProfil),

@@ -38,9 +38,9 @@ jobs:
           retention-days: 7
 
   datenbank:
-    name: Datenbank (Migrationen, pgTAP, Anmeldung, Kunden)
+    name: Datenbank (Migrationen, pgTAP, Browser-Tests mit Datenbank)
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: supabase/setup-cli@v1
@@ -55,10 +55,17 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Adresse und öffentlichen Schlüssel der lokalen Supabase übernehmen
+      - name: Adresse und Schlüssel der lokalen Supabase übernehmen
         run: |
-          supabase status -o env | grep -E '^(API_URL|ANON_KEY)=' | sed -e 's/^API_URL=/VITE_SUPABASE_URL=/' -e 's/^ANON_KEY=/VITE_SUPABASE_ANON_KEY=/' -e 's/"//g' >> "$GITHUB_ENV"
-      - run: npx playwright test --project=anmeldung --project=kunden
+          supabase status -o env | grep -E '^(API_URL|ANON_KEY|SERVICE_ROLE_KEY)=' | sed -e 's/^API_URL=/VITE_SUPABASE_URL=/' -e 's/^ANON_KEY=/VITE_SUPABASE_ANON_KEY=/' -e 's/^SERVICE_ROLE_KEY=/SUPABASE_SERVICE_ROLE_KEY=/' -e 's/"//g' >> "$GITHUB_ENV"
+      # Edge Functions für Einladung und Helpdesk im Hintergrund.
+      - run: supabase functions serve > functions.log 2>&1 &
+      # Alle Abläufe mit Datenbank (Anmeldung bis Zeiterfassung). Früher liefen hier nur Anmeldung und Kunden,
+      # die übrigen 22 Gruppen nur von Hand; so blieben Fehler wie die gesperrte Seite nach einem Menü unbemerkt.
+      - name: Browser-Tests mit Datenbank
+        run: |
+          projekte=$(grep -oE "name: '[a-z]+'" playwright.config.ts | sed -E "s/name: '([a-z]+)'/\1/" | grep -vE '^(desktop|handy)$' | sed 's/^/--project=/' | tr '\n' ' ')
+          npx playwright test $projekte
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
