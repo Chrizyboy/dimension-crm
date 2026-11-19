@@ -1,4 +1,4 @@
-import { HardHat, LayoutGrid, List } from 'lucide-react'
+import { Columns2, HardHat, LayoutGrid, List } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
@@ -7,16 +7,28 @@ import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
+import { useGemerkterFilter } from '@/hooks/useGemerkterFilter'
 import { formatChf } from '@/lib/format'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useLieferfrist, useProjekte, useSignale, useStandorte } from '../hooks/useProjekte'
-import { hinweise, heuteIso, nachPhase, nochOffen, trifft, woche } from '../lib/leitstand'
+import {
+  aktuellePhase as phaseVon,
+  hinweise,
+  heuteIso,
+  nachPhase,
+  nachStandort,
+  nochOffen,
+  trifft,
+  woche,
+} from '../lib/leitstand'
 import { PHASEN, SCHNELLFILTER, type Projekt, type Schnellfilter, type Signale } from '../types'
 import { Kennzahlen } from './Kennzahlen'
 import { LeitstandKarte } from './LeitstandKarte'
 import { projektSpalten } from './projektSpalten'
 
 const STATUS = ['auftrag', 'im_bau', 'abgeschlossen'] as const
+const DARSTELLUNGEN = ['standort', 'board', 'liste'] as const
+type Darstellung = (typeof DARSTELLUNGEN)[number]
 
 /**
  * Leitstand der Projekte: Kennzahlen (setzen den Filter), Suche, Schnellfilter und Standort, alle laufenden
@@ -29,7 +41,14 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
   const signale = useSignale()
   const lieferfrist = useLieferfrist().data
   const standorte = useStandorte()
-  const [ansicht, setAnsicht] = useState<'board' | 'liste'>('board')
+  // «Muri · Bulle» wie die Bauplanung in V234 zuerst; die gewählte Darstellung bleibt je Person gemerkt.
+  const [darstellung, setDarstellung] = useGemerkterFilter<{ ansicht: Darstellung }>('projekte.leitstand', {
+    ansicht: 'standort',
+  })
+  const ansicht = DARSTELLUNGEN.includes(darstellung.ansicht) ? darstellung.ansicht : 'standort'
+  const setAnsicht = (a: Darstellung) => {
+    setDarstellung({ ansicht: a })
+  }
   const [filter, setFilter] = useState<Schnellfilter[]>([])
   const [orte, setOrte] = useState<string[]>([])
   const [suche, setSuche] = useState('')
@@ -54,6 +73,10 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
     )
   }, [laufend, filter, orte, suche, sig, ich, heute, lieferfrist])
   const spalten = useMemo(() => nachPhase(daten, sig, heute, lieferfrist), [daten, sig, heute, lieferfrist])
+  const orteSpalten = useMemo(
+    () => nachStandort(daten, standorte.data ?? [], sig, t('projekte.leitstand.ohneStandort')),
+    [daten, standorte.data, sig, t],
+  )
   const tabelle = useMemo(() => projektSpalten(t), [t])
 
   if (projekte.error)
@@ -136,7 +159,7 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
         }
         rechts={
           <div className="flex gap-1" role="group" aria-label={t('projekte.leitstand.ansicht')}>
-            {(['board', 'liste'] as const).map((a) => (
+            {DARSTELLUNGEN.map((a) => (
               <Button
                 key={a}
                 size="sm"
@@ -146,7 +169,7 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
                   setAnsicht(a)
                 }}
               >
-                {a === 'board' ? <LayoutGrid /> : <List />}
+                {a === 'standort' ? <Columns2 /> : a === 'board' ? <LayoutGrid /> : <List />}
                 {t(`projekte.leitstand.${a}`)}
               </Button>
             ))}
@@ -184,24 +207,28 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
         />
       ) : (
         <div className="wischzeile flex gap-3 overflow-x-auto pb-2">
-          {PHASEN.map((ph) => (
+          {(ansicht === 'standort'
+            ? orteSpalten
+            : PHASEN.map((ph) => ({ id: ph, titel: t(`projekte.phase.${ph}`), projekte: spalten[ph] }))
+          ).map((sp) => (
             <section
-              key={ph}
-              aria-label={t(`projekte.phase.${ph}`)}
+              key={sp.id}
+              aria-label={sp.titel}
               className="bg-muted/50 flex min-w-60 flex-1 basis-0 flex-col rounded-xl border"
             >
               <header className="flex items-center justify-between gap-2 border-b px-3 py-2">
-                <h2 className="text-sm font-semibold">{t(`projekte.phase.${ph}`)}</h2>
-                <span className="zahlen text-muted-foreground font-mono text-xs">{spalten[ph].length}</span>
+                <h2 className="text-sm font-semibold">{sp.titel}</h2>
+                <span className="zahlen text-muted-foreground font-mono text-xs">{sp.projekte.length}</span>
               </header>
               <div className="flex max-h-[calc(100vh-24rem)] min-h-24 flex-col gap-2 overflow-y-auto p-2">
-                {spalten[ph].length === 0 ? (
+                {sp.projekte.length === 0 ? (
                   <p className="text-muted-foreground px-1 py-6 text-center text-xs">{t('projekte.leitstand.leer')}</p>
                 ) : (
-                  spalten[ph].map((p) => (
+                  sp.projekte.map((p) => (
                     <LeitstandKarte
                       key={p.id}
                       p={p}
+                      {...(ansicht === 'standort' ? { phase: t(`projekte.phase.${phaseVon(p)}`) } : {})}
                       hinweise={hinweise(p, sig.get(p.id), heute, lieferfrist)}
                       aktiv={p.id === aktiveId}
                       onOeffnen={() => {

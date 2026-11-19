@@ -13,6 +13,8 @@ export const meta: ModulMeta = {
     de: 'Vertrag zur angenommenen Offerte erstellen, senden, unterschreiben lassen',
     fr: 'Établir, envoyer et faire signer le contrat de l’offre acceptée',
   },
+  sammeltitel: { de: 'Verträge', fr: 'Contrats' },
+  auchGenannt: ['Verträge', 'Contrats'],
   pfad: '/workcontracts',
   icon: 'signature',
   gruppe: 'verkauf',

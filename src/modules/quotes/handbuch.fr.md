@@ -17,7 +17,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 
 ### Lire le travail en cours
 
-1. **Offres** s’ouvre sur le **Travail en cours** : chaque offre est une carte dans sa phase, de « À offrir » à « Gagnée ».
+1. **Travail en cours** montre chaque offre comme une carte dans sa phase, de « À offrir » à « Gagnée ». **Offres** s’ouvre la première fois sur **Nouvelles offres** (comme dans l’ancien CRM), ensuite sur la dernière vue utilisée.
 2. Traiter d’abord les indications rouges et orange : en retard (visite il y a plus de 5 jours ouvrables), relance due, validation nécessaire, question.
 3. Cliquer une carte : l’offre s’ouvre en pleine page avec étapes, variantes, documents et prochaine étape.
 
@@ -100,6 +100,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 19.11.2026: **Offres** s’ouvre la première fois sur **Nouvelles offres**, ensuite sur la dernière vue utilisée (mémorisée par personne).
 - 19.11.2026: **Clic droit** sur une offre dans les listes Muri et Bulle (sur mobile, appui long) : ouvrir, ouvrir le dossier client, ouvrir dans Google Maps, appeler, écrire un e-mail.
 - 04.11.2026: Six vues au plus, **Import PDF** est sous **Plus**. Dans « Chance et indications », seuls les champs remplis s’affichent, les vides après **+ autres informations**.
 - 03.11.2026: «Mettre à la corbeille» pour les offres (en-tête du dossier d'offre), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).

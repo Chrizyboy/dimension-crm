@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
+import { Bereichsumschalter } from '@/layouts/Bereichsumschalter'
 import { KeinZugriff } from '@/layouts/KeinZugriff'
 import { darfModul } from '@/lib/rechte'
 import { meta, Vertraege, WARTUNG_REITER, type WartungReiter } from '@/modules/contracts'
@@ -24,20 +25,23 @@ export const Route = createFileRoute('/contracts')({
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
     return (
-      <Suspense>
-        <Vertraege
-          vertragId={vertrag ?? null}
-          reiter={reiter ?? 'vertraege'}
-          onOeffnen={(id) => {
-            void navigate({
-              search: (s) => ({ ...(s.reiter ? { reiter: s.reiter } : {}), ...(id ? { vertrag: id } : {}) }),
-            })
-          }}
-          onReiter={(r) => {
-            void navigate({ search: r === 'vertraege' ? {} : { reiter: r } })
-          }}
-        />
-      </Suspense>
+      <>
+        <Bereichsumschalter modulId="contracts" />
+        <Suspense>
+          <Vertraege
+            vertragId={vertrag ?? null}
+            reiter={reiter ?? 'vertraege'}
+            onOeffnen={(id) => {
+              void navigate({
+                search: (s) => ({ ...(s.reiter ? { reiter: s.reiter } : {}), ...(id ? { vertrag: id } : {}) }),
+              })
+            }}
+            onReiter={(r) => {
+              void navigate({ search: r === 'vertraege' ? {} : { reiter: r } })
+            }}
+          />
+        </Suspense>
+      </>
     )
   },
 })

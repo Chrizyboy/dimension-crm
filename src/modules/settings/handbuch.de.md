@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-05
+stand: 2026-11-19
 rollen: administration
 ---
 
@@ -38,7 +38,7 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 
 1. Bereich **Rollen & Rechte**: je Rolle die **Rechte der Rolle** und die sichtbaren Bereiche.
 2. Bereich **Personen**, Person öffnen, unter **Zusätze**: **Zusatz Geschäftsleitung** (sieht alles inkl. Finanzen) und **Zusatz Administration** (richtet das System ein, sieht keine Finanzen und keine fremden Personal-Akten).
-3. Für eine einzelne Person: Person öffnen, **Eigene Auswahl für diese Person**.
+3. Für eine einzelne Person: Person öffnen, **Eigene Auswahl für diese Person**. Für alle auf einmal: in **Personen** oben **Bereiche je Person**, dort Häkchen setzen (speichert sofort). Blasse Häkchen kommen von der Rolle, der Pfeil im Kreis setzt eine Person wieder auf ihre Rolle zurück.
 4. **Einfache Ansicht (nur Arbeitszeit und Spesen)** bei der Rolle: nur Arbeitszeit, Spesen und Plan. Die Montage arbeitet mit der normalen Ansicht, damit sie Rapporte, Service und Fahrzeuge erreicht.
 
 ### Zuständigkeiten einstellen
@@ -129,6 +129,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 19.11.2026: **Personen › Bereiche je Person**: alle Personen und Bereiche auf einen Blick, mit Häkchen wie in der Nutzerverwaltung des alten CRM. Zurück auf die Rolle mit einem Klick.
 - 05.11.2026: Lehnt ASPSMS die Zugangsdaten ab, prüft das CRM die SMS-Verbindung nur noch einmal am Tag statt stündlich, bis **Jetzt testen** wieder klappt.
 - 04.11.2026: Ändert sich bei einem gestörten Dienst der Grund, kommt eine neue Glocke mit dem neuen Grund. SMS: abgelehnte Zugangsdaten werden als solche gemeldet.
 - 03.11.2026: Zusätze Geschäftsleitung und Administration, Link fürs Handy für Personen ohne Firmen-Mail.

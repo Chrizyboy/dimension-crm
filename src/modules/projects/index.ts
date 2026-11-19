@@ -11,6 +11,7 @@ export const meta: ModulMeta = {
   titel: { de: 'Projekte & Montage', fr: 'Projets & montage' },
   kurztitel: { de: 'Projekte', fr: 'Projets' },
   untertitel: { de: 'Vom Auftrag bis zur Inbetriebnahme', fr: 'De la commande à la mise en service' },
+  auchGenannt: ['Bauplanung', 'Montageplanung', 'Planification'],
   pfad: '/projects',
   icon: 'hard-hat',
   gruppe: 'abwicklung',

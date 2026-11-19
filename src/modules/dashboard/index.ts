@@ -13,6 +13,7 @@ export const meta: ModulMeta = {
     de: 'Wie läuft es, wo hakt es, was kommt: Verkauf, Abwicklung, Finanzen und Service mit Ziel und Vorjahr',
     fr: 'Où en est-on, où ça coince, que vient-il : vente, réalisation, finances et service, avec objectif et an passé',
   },
+  auchGenannt: ['Dashboard', 'Tableau de bord'],
   pfad: '/dashboard',
   icon: 'chart-column',
   gruppe: 'uebersicht',

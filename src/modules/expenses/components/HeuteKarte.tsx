@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { formatChf } from '@/lib/format'
 import { hatRecht } from '@/lib/rechte'
@@ -81,10 +82,21 @@ export default function HeuteKarte() {
     <Karte className="overflow-hidden">
       <KarteKopf className="flex items-center justify-between">
         <KarteTitel>{t('spesen.titel')}</KarteTitel>
-        <Link to="/expenses" className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs">
-          {t('spesen.heute.oeffnen')}
-          <ArrowRight className="size-3.5" />
-        </Link>
+        <div className="flex items-center gap-3">
+          {/* Wie V234: Spesen gleich von «Mein Tag» aus erfassen (19.11.2026). */}
+          <Link
+            to="/expenses"
+            search={{ neu: 'beleg' }}
+            className={buttonVariants({ variant: 'secondary', size: 'sm' })}
+          >
+            <Plus />
+            {t('spesen.neu')}
+          </Link>
+          <Link to="/expenses" className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs">
+            {t('spesen.heute.oeffnen')}
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
       </KarteKopf>
       {zeilen.length === 0 ? (
         <p className="text-muted-foreground px-4 py-3 text-sm">{t('spesen.heute.nichts')}</p>

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-19
 rollen: verkauf, innendienst, buchhaltung, geschaeftsleitung
 ---
 
@@ -68,6 +68,7 @@ Déposer ta signature sous **Mon compte**, puis recréer le contrat.
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : contrats d’entreprise et contrats d’entretien forment une seule entrée **Contrats** dans la barre latérale (comme dans l’ancien CRM) ; en haut, on passe de **Contrats d’entreprise** à **Contrats d’entretien**.
 - 03.11.2026: «Mettre à la corbeille» pour les contrats d'entreprise; signés seulement par l'administration, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 02.11.2026: Bouton « Nouveau contrat » avec choix de l’offre.
 - 31.10.2026: Modèle de Muri, conditions de paiement d’un clic et facture d’acompte.

@@ -11,6 +11,7 @@ export const meta: ModulMeta = {
   titel: { de: 'Anfragen & Leads', fr: 'Demandes & leads' },
   kurztitel: { de: 'Anfragen', fr: 'Demandes' },
   untertitel: { de: 'Vom ersten Kontakt bis zur Auftragszusage', fr: 'Du premier contact à la commande' },
+  auchGenannt: ['Leads'],
   pfad: '/sales',
   icon: 'users',
   gruppe: 'verkauf',

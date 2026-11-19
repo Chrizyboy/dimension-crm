@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
+import { Bereichsumschalter } from '@/layouts/Bereichsumschalter'
 import { KeinZugriff } from '@/layouts/KeinZugriff'
 import { darfModul } from '@/lib/rechte'
 import { meta, Werkvertraege } from '@/modules/workcontracts'
@@ -24,18 +25,21 @@ export const Route = createFileRoute('/workcontracts')({
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
     return (
-      <Suspense>
-        <Werkvertraege
-          vertragId={vertrag ?? null}
-          auftragOfferteId={auftrag ?? null}
-          onAdresse={(a) => {
-            const n = { vertrag: vertrag ?? null, auftrag: auftrag ?? null, ...a }
-            void navigate({
-              search: { ...(n.vertrag ? { vertrag: n.vertrag } : {}), ...(n.auftrag ? { auftrag: n.auftrag } : {}) },
-            })
-          }}
-        />
-      </Suspense>
+      <>
+        <Bereichsumschalter modulId="workcontracts" />
+        <Suspense>
+          <Werkvertraege
+            vertragId={vertrag ?? null}
+            auftragOfferteId={auftrag ?? null}
+            onAdresse={(a) => {
+              const n = { vertrag: vertrag ?? null, auftrag: auftrag ?? null, ...a }
+              void navigate({
+                search: { ...(n.vertrag ? { vertrag: n.vertrag } : {}), ...(n.auftrag ? { auftrag: n.auftrag } : {}) },
+              })
+            }}
+          />
+        </Suspense>
+      </>
     )
   },
 })

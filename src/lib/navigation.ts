@@ -82,6 +82,16 @@ export function moduleDerGruppe(gruppe: NavGruppe): ModulMeta[] {
   return MODULE.filter((m) => m.gruppe === gruppe)
 }
 
+/**
+ * Bereiche, die in der Seitenleiste einen Eintrag teilen (`teilVon`), mit dem Hauptbereich zuerst.
+ * Nur die, die `sichtbar` enthält; leer, wenn der Bereich keine Teile hat.
+ */
+export function bereichsTeile(id: string, sichtbar: readonly ModulMeta[]): ModulMeta[] {
+  const haupt = findeModul(id)?.teilVon ?? id
+  const teile = sichtbar.filter((m) => m.id === haupt || m.teilVon === haupt)
+  return teile.length > 1 ? teile : []
+}
+
 /** Findet ein Modul über seine id (z.B. aus der Adresse). */
 export function findeModul(id: string): ModulMeta | undefined {
   return MODULE.find((m) => m.id === id)
