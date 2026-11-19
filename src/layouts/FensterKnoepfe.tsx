@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { istDesktopApp } from '@/lib/plattform'
 import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
+import { AnsichtKnopf } from './AnsichtKnopf'
 
 /** Schaltet das Fenster in den Vollbildmodus und zurück: in der Windows-App das ganze Fenster, im Browser die Seite. */
 async function vollbildUmschalten(): Promise<boolean> {
@@ -25,7 +26,7 @@ async function vollbildUmschalten(): Promise<boolean> {
 }
 
 /**
- * Runde Knöpfe oben rechts wie in V234: Vollbild und Aktualisieren.
+ * Runde Knöpfe oben rechts wie in V234: PC/Handy, Vollbild und Aktualisieren.
  * «Aktualisieren» lädt alle Daten der offenen Ansicht neu vom Server, ohne die Seite neu zu laden (Eingaben bleiben).
  */
 export function FensterKnoepfe() {
@@ -63,6 +64,7 @@ export function FensterKnoepfe() {
   const vollbildText = vollbild ? t('fenster.vollbildAus') : t('fenster.vollbild')
   return (
     <>
+      <AnsichtKnopf />
       <Button
         variant="glas"
         size="rund"

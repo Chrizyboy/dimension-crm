@@ -1528,7 +1528,7 @@
     "anfragen": {
       "knopf": "Anfragen holen",
       "outlook": "Aus Outlook abholen",
-      "datei": "Mail-Datei einlesen (.eml)"
+      "datei": "Mail-Datei einlesen (.msg oder .eml)"
     },
     "outlook": {
       "titel": "Outlook",
@@ -8763,11 +8763,11 @@
     "mail": {
       "menue": "Mail mit KI lesen",
       "titel": "Mail mit KI lesen",
-      "beschreibung": "Text einfügen oder .eml-Datei wählen. Die KI erkennt Lead oder Anliegen; passende Kunden sucht das CRM.",
+      "beschreibung": "Text einfügen oder Mail-Datei (.msg oder .eml) wählen. Die KI erkennt Lead oder Anliegen; passende Kunden sucht das CRM.",
       "text": "Mail-Text",
       "textHilfe": "Am besten mit Absender und Betreff kopieren.",
       "datei": "Datei «{{name}}»",
-      "eml": ".eml-Datei wählen",
+      "eml": "Mail-Datei wählen (.msg oder .eml)",
       "lesen": "Mit KI lesen",
       "antworten": "Antwort schreiben",
       "alsLead": "Als Lead erfassen",
@@ -12665,6 +12665,19 @@
       "stephanstag": "Stephanstag"
     }
   },
+  "kontextmenue": {
+    "oeffnen": "Öffnen",
+    "maps": "In Google Maps öffnen",
+    "keineAdresse": "keine Adresse erfasst",
+    "anrufen": "Anrufen",
+    "mail": "E-Mail schreiben",
+    "kunde": "Kundenakte öffnen",
+    "terminblatt": "Terminblatt drucken",
+    "terminblattHinweis": "PDF mit Luftbild",
+    "lead": "Lead öffnen",
+    "offerte": "Offerte öffnen",
+    "projekt": "Projekt öffnen"
+  },
   "apps": {
     "titel": "Apps",
     "neuerTab": "öffnet in neuem Tab",
@@ -12676,6 +12689,8 @@
     "messe": "Messe"
   },
   "fenster": {
+    "ansichtHandy": "Handy-Ansicht",
+    "ansichtPc": "PC-Ansicht",
     "vollbild": "Vollbild",
     "vollbildAus": "Vollbild beenden",
     "aktualisieren": "Aktualisieren"

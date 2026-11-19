@@ -97,6 +97,7 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 19.11.2026: Knopf **Handy-Ansicht** / **PC-Ansicht** oben: in der Windows-App wird das Fenster handygross, am Handy zeigt er die PC-Ansicht (bleibt gemerkt). Abgeschnittene Texte zeigen beim Darüberfahren den ganzen Text.
 - 19.11.2026: Neues Aussehen wie V234: Glasoptik mit Farbverlauf, schwebende Seitenleiste mit Apps (Website, Eturnity, AbaNinja, Leads, Akquise, Messe), runde Knöpfe oben für **Vollbild** (F11) und **Aktualisieren**.
 - 04.11.2026: Datum und was ansteht stehen weiter unter dem Gruss; leere Karten werden zu einer Zeile.
 - 03.11.2026: Verschieben, Gründe je Zeile, Wartet auf deine Freigabe, Meine Woche mit Zielen, Team heute, Wetter auf den Baustellen.

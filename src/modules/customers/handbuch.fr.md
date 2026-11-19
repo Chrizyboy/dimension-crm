@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-05
+stand: 2026-11-19
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -78,6 +78,7 @@ Les factures ne sont visibles qu’avec le droit Finances.
 
 ## Nouveautés {#neu}
 
+- 19.11.2026: **Clic droit** sur un client (sur mobile, appui long) : ouvrir, ouvrir dans Google Maps, appeler, écrire un e-mail. Ce menu existe dans toutes les listes avec **Ouvrir**.
 - 05.11.2026: Les pièces jointes de l’ancien CRM n’apparaissent plus qu’une fois chez le client, les liens vers SharePoint s’ouvrent à nouveau, nouveau **Dossier de l'ancienne sauvegarde CRM**.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: «Mettre à la corbeille» pour les bâtiments, les documents et ses propres entrées d'historique, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).

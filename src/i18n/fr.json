@@ -1528,7 +1528,7 @@
     "anfragen": {
       "knopf": "Récupérer les demandes",
       "outlook": "Récupérer depuis Outlook",
-      "datei": "Lire un fichier e-mail (.eml)"
+      "datei": "Lire un fichier e-mail (.msg ou .eml)"
     },
     "outlook": {
       "titel": "Outlook",
@@ -8763,11 +8763,11 @@
     "mail": {
       "menue": "Lire un e-mail avec l’IA",
       "titel": "Lire un e-mail avec l’IA",
-      "beschreibung": "Coller le texte ou choisir un fichier .eml. L’IA reconnaît une demande ou une requête ; le CRM cherche les clients correspondants.",
+      "beschreibung": "Coller le texte ou choisir un fichier e-mail (.msg ou .eml). L’IA reconnaît une demande ou une requête ; le CRM cherche les clients correspondants.",
       "text": "Texte de l’e-mail",
       "textHilfe": "Idéalement copié avec l’expéditeur et l’objet.",
       "datei": "Fichier « {{name}} »",
-      "eml": "Choisir un fichier .eml",
+      "eml": "Choisir un fichier e-mail (.msg ou .eml)",
       "lesen": "Lire avec l’IA",
       "antworten": "Rédiger une réponse",
       "alsLead": "Saisir comme lead",
@@ -12665,6 +12665,19 @@
       "stephanstag": "Saint-Étienne"
     }
   },
+  "kontextmenue": {
+    "oeffnen": "Ouvrir",
+    "maps": "Ouvrir dans Google Maps",
+    "keineAdresse": "aucune adresse saisie",
+    "anrufen": "Appeler",
+    "mail": "Écrire un e-mail",
+    "kunde": "Ouvrir le dossier client",
+    "terminblatt": "Imprimer la fiche de visite",
+    "terminblattHinweis": "PDF avec vue aérienne",
+    "lead": "Ouvrir le lead",
+    "offerte": "Ouvrir l’offre",
+    "projekt": "Ouvrir le projet"
+  },
   "apps": {
     "titel": "Apps",
     "neuerTab": "s’ouvre dans un nouvel onglet",
@@ -12676,6 +12689,8 @@
     "messe": "Salon"
   },
   "fenster": {
+    "ansichtHandy": "Affichage smartphone",
+    "ansichtPc": "Affichage ordinateur",
     "vollbild": "Plein écran",
     "vollbildAus": "Quitter le plein écran",
     "aktualisieren": "Actualiser"

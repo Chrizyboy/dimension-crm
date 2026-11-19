@@ -14,6 +14,7 @@ import { supabase } from '@/services/supabase'
 import { VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
 import { leadAusMail } from '../lib/kiLead'
 import type { LeadEingabe } from '../schema'
+import { MAIL_DATEIEN, mailDateiAlsEml } from '@/lib/mailDatei'
 
 const LeadDialog = lazy(() => import('./LeadDialog'))
 
@@ -36,7 +37,7 @@ function zusammenfassung(r: AnfragenErgebnis): { de: string; fr: string } {
 
 /**
  * «Anfragen holen» (V78, V233 sgSearch/lpImport/mxImport): Anfragen von solar-guide.ch, der Landingpage
- * und der Messe-App aus Outlook abholen, oder eine gespeicherte Mail (.eml) einlesen. Der Server
+ * und der Messe-App aus Outlook abholen, oder eine gespeicherte Mail (.eml oder Outlook-.msg) einlesen. Der Server
  * erkennt Dubletten; dieselbe Mail legt nie zweimal einen Lead an. Läuft zusätzlich alle 5 Minuten.
  * Mit `ausMail` (aus dem Posteingang) öffnet sich gleich «Mail mit KI lesen» mit dieser Mail; der neue Lead wird
  * danach mit der Mail verknüpft.
@@ -104,7 +105,7 @@ export function AnfragenKnopf({
   async function einlesen(dateien: FileList) {
     const summe: AnfragenErgebnis = { neu: 0, ergaenzt: 0, geloescht: 0, uebersprungen: 0, postfach_anfragen: 'aus' }
     for (const d of Array.from(dateien)) {
-      const r = await microsoft.mailEinlesen(await d.text())
+      const r = await microsoft.mailEinlesen(await mailDateiAlsEml(d))
       summe.neu += r.neu
       summe.ergaenzt += r.ergaenzt
       summe.geloescht += r.geloescht
@@ -146,7 +147,7 @@ export function AnfragenKnopf({
       <input
         ref={datei}
         type="file"
-        accept=".eml,message/rfc822"
+        accept={MAIL_DATEIEN}
         multiple
         hidden
         aria-label={t('verkauf.anfragen.datei')}
