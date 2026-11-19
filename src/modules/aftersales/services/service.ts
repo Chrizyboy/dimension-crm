@@ -41,7 +41,7 @@ async function frageFaelle<T>(
     ohneZuteilung = true
     r = await abfrage(FALL_FELDER_BASIS)
   }
-  if (r.error) throw r.error
+  if (r.error) throw r.error as Error
   return r.data as T
 }
 
@@ -73,7 +73,8 @@ function alsFall({
   return {
     ...f,
     // Alte Cloud ohne Spalte: als zugeteilt behandeln, damit kein falscher Hinweis «Zuteilen» erscheint.
-    zugeteilt_am: f.zugeteilt_am === undefined ? f.erstellt_am : f.zugeteilt_am,
+    zugeteilt_am:
+      (f as Partial<Pick<ServiceFall, 'zugeteilt_am'>>).zugeteilt_am ?? (ohneZuteilung ? f.erstellt_am : null),
     verlauf: Array.isArray(verlauf) ? (verlauf as Verlaufseintrag[]) : [],
     checkliste: Array.isArray(checkliste) ? (checkliste as Checkpunkt[]) : [],
     meldung: m,
