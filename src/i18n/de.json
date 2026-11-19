@@ -12876,7 +12876,16 @@
     "terminblattHinweis": "PDF mit Luftbild",
     "lead": "Lead öffnen",
     "offerte": "Offerte öffnen",
-    "projekt": "Projekt öffnen"
+    "projekt": "Projekt öffnen",
+    "schritt": {
+      "termin": "Erreicht: Termin vereinbaren …",
+      "nichtErreicht": "Nicht erreicht …",
+      "rueckruf": "Rückruf vereinbart …",
+      "keinInteresse": "Kein Interesse …",
+      "kontakt": "Kontakt erfassen …",
+      "verschieben": "Termin verschieben …",
+      "absagen": "Termin absagen …"
+    }
   },
   "apps": {
     "titel": "Apps",

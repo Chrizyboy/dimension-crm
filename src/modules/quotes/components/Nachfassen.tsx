@@ -26,12 +26,10 @@ import { imNachfassen, treffer } from '../lib/suche'
 import { erfasseNachfassen } from '../services/ablauf'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
+import { NachfassDialoge, type NachfassWahl } from './NachfassDialoge'
 import { NachfassZeile, type NachfassAktion } from './NachfassZeile'
 
 const EntscheidDialog = lazy(() => import('./EntscheidDialog'))
-const ErgebnisDialog = lazy(() => import('./ErgebnisDialog'))
-const NachfassMail = lazy(() => import('./NachfassMail'))
-const ZurueckDialog = lazy(() => import('./ZurueckDialog'))
 
 const SEITE = 50
 const SORTIERUNGEN: readonly NachfassSortierung[] = ['neu', 'alt', 'betrag', 'name', 'nr']
@@ -63,7 +61,7 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
   const [anzahl, setAnzahl] = useState(SEITE)
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
   const [dialog, setDialog] = useState<{ ziel: Entscheid; liste: Offerte[] } | null>(null)
-  const [einzeln, setEinzeln] = useState<{ art: 'ergebnis' | 'mail' | 'zurueck'; o: Offerte } | null>(null)
+  const [einzeln, setEinzeln] = useState<{ wahl: NachfassWahl; o: Offerte } | null>(null)
   const nichtErreicht = useOffertAenderung((id: string) => erfasseNachfassen(id, 'nicht_erreicht'))
   const zu = () => {
     setEinzeln(null)
@@ -77,8 +75,7 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
           meldeFehler(e)
         },
       })
-    } else if (a === 'ergebnis' || a === 'mail' || a === 'zurueck') setEinzeln({ art: a, o })
-    else setDialog({ ziel: a, liste: [o] })
+    } else setEinzeln({ wahl: a, o })
   }
 
   const offen = useMemo(() => offerten.filter(imNachfassen), [offerten])
@@ -278,9 +275,7 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
       )}
 
       <Suspense>
-        {einzeln?.art === 'ergebnis' && <ErgebnisDialog o={einzeln.o} onSchliessen={zu} />}
-        {einzeln?.art === 'mail' && <NachfassMail o={einzeln.o} onSchliessen={zu} />}
-        {einzeln?.art === 'zurueck' && <ZurueckDialog o={einzeln.o} onSchliessen={zu} />}
+        <NachfassDialoge offen={einzeln} onSchliessen={zu} />
         {dialog && (
           <EntscheidDialog
             offerten={dialog.liste}

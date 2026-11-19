@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { CalendarClock, Check, Hammer, Mail, MessageSquareText, MoreHorizontal, Undo2, X } from 'lucide-react'
-import { Suspense, lazy, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/ui/menue'
@@ -10,13 +10,9 @@ import { OFFERTEN_SCHLUESSEL } from '../hooks/useOfferten'
 import { ladeOfferte } from '../services/offerten'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
+import { NachfassDialoge, type NachfassWahl } from './NachfassDialoge'
 
-const EntscheidDialog = lazy(() => import('./EntscheidDialog'))
-const ErgebnisDialog = lazy(() => import('./ErgebnisDialog'))
-const ZurueckDialog = lazy(() => import('./ZurueckDialog'))
-const NachfassMail = lazy(() => import('./NachfassMail'))
-
-type Wahl = Entscheid | 'ergebnis' | 'mail' | 'zurueck'
+type Wahl = NachfassWahl
 
 /**
  * Entscheid direkt in einer Zeile von «Mein Tag» (V234 Nachfassen auf der Startseite): Angenommen, Abgelehnt,
@@ -111,14 +107,7 @@ export default function NachfassKnoepfe({ offerteId }: { offerteId: string }) {
         </MenueInhalt>
       </Menue>
 
-      <Suspense>
-        {offen?.wahl === 'ergebnis' && <ErgebnisDialog o={offen.o} onSchliessen={zu} />}
-        {offen?.wahl === 'mail' && <NachfassMail o={offen.o} onSchliessen={zu} />}
-        {offen?.wahl === 'zurueck' && <ZurueckDialog o={offen.o} onSchliessen={zu} />}
-        {offen && !['ergebnis', 'mail', 'zurueck'].includes(offen.wahl) && (
-          <EntscheidDialog offerten={[offen.o]} ziel={offen.wahl as Entscheid} onSchliessen={zu} />
-        )}
-      </Suspense>
+      <NachfassDialoge offen={offen} onSchliessen={zu} />
     </div>
   )
 }

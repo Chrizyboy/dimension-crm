@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Contact, FileText } from 'lucide-react'
+import { CalendarClock, Check, Contact, FileText, Hammer, Mail, MessageSquareText, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
@@ -9,10 +9,11 @@ import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatChf } from '@/lib/format'
 import { formatKundennummer } from '@/lib/kontakt'
 import { spaltenHelfer } from '@/lib/tabelle'
-import { kontaktAktionen } from '@/lib/zeilenAktionen'
+import { kontaktAktionen, type ZeilenAktion } from '@/lib/zeilenAktionen'
 import { inListe } from '../lib/suche'
 import { OFFERT_STAENDE } from '../lib/status'
 import type { Offerte } from '../types'
+import { NachfassDialoge, type NachfassWahl } from './NachfassDialoge'
 import { NachfassChip, OffertStand } from './OffertStand'
 import { DatumZelle, EinzeilerZelle, NummerZelle } from '@/components/shared/Zellen'
 
@@ -37,6 +38,29 @@ export default function OffertListe({
   const staende = useAuswahl('kundenstand')
   const navigate = useNavigate()
   const [stand, setStand] = useState<string[]>([])
+  const [offen, setOffen] = useState<{ wahl: NachfassWahl; o: Offerte } | null>(null)
+
+  /** Rechtsklick auf eine versendete Offerte: entscheiden oder nachfassen, ohne sie zu öffnen (V234). */
+  const entscheiden = (o: Offerte): ZeilenAktion[] => {
+    if (o.status !== 'offeriert') return []
+    const e = (wahl: NachfassWahl, text: string, icon: typeof Check, aus = false): ZeilenAktion => ({
+      text,
+      icon,
+      aus,
+      aktion: () => {
+        setOffen({ wahl, o })
+      },
+    })
+    return [
+      e('ergebnis', t('offerten.ergebnis.knopf'), MessageSquareText),
+      e('angenommen', t('offerten.nachfassen.angenommen'), Check),
+      e('verloren', t('offerten.nachfassen.abgelehnt'), X),
+      e('vertagt', t('offerten.nachfassen.vertagt'), CalendarClock),
+      e('verbaut', t('offerten.nachfassen.verbaut'), Hammer),
+      e('mail', t('offerten.nachfassen.mail'), Mail, !o.email),
+      'trenner',
+    ]
+  }
   const hier = useMemo(() => offerten.filter((o) => inListe(o, standort)), [offerten, standort])
   const sichtbar = useMemo(() => hier.filter((o) => stand.length === 0 || stand.includes(o.stand)), [hier, stand])
 
@@ -116,8 +140,9 @@ export default function OffertListe({
         onOeffnen={(o) => {
           onOeffnen(o.id)
         }}
-        // Rechtsklick wie V234: Google Maps, Kundenakte, Anrufen, E-Mail.
+        // Rechtsklick wie V234: bei versendeten Entscheid und Nachfassen, dann Kundenakte, Maps, Anrufen, E-Mail.
         aktionen={(o) => [
+          ...entscheiden(o),
           {
             text: t('kontextmenue.kunde'),
             icon: Contact,
@@ -129,6 +154,12 @@ export default function OffertListe({
         ]}
         beschriftung={t(`offerten.ansicht.${standort}`)}
         leer={<Leerzustand icon={FileText} titel={t('offerten.liste.leer')} text={t('offerten.liste.leerText')} />}
+      />
+      <NachfassDialoge
+        offen={offen}
+        onSchliessen={() => {
+          setOffen(null)
+        }}
       />
     </div>
   )

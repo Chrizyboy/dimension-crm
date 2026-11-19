@@ -12876,7 +12876,16 @@
     "terminblattHinweis": "PDF avec vue aérienne",
     "lead": "Ouvrir le lead",
     "offerte": "Ouvrir l’offre",
-    "projekt": "Ouvrir le projet"
+    "projekt": "Ouvrir le projet",
+    "schritt": {
+      "termin": "Joint : fixer un RDV …",
+      "nichtErreicht": "Pas joint …",
+      "rueckruf": "Rappel convenu …",
+      "keinInteresse": "Pas intéressé …",
+      "kontakt": "Saisir un contact …",
+      "verschieben": "Déplacer le RDV …",
+      "absagen": "Annuler le RDV …"
+    }
   },
   "apps": {
     "titel": "Apps",
