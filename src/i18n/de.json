@@ -4465,10 +4465,12 @@
       "bau": "Bau {{datum}}",
       "suche": "Projekt, Kunde, Ort, Elektriker oder Nummer suchen",
       "ansicht": "Ansicht",
-      "board": "Board",
+      "board": "Nach Phase",
       "liste": "Liste",
       "filter": "Schnellfilter",
-      "leer": "Nichts in dieser Phase."
+      "leer": "Nichts in dieser Phase.",
+      "standort": "Muri · Bulle",
+      "ohneStandort": "Ohne Standort"
     },
     "zahl": {
       "laufend": "laufende Projekte",

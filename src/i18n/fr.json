@@ -4465,10 +4465,12 @@
       "bau": "Chantier {{datum}}",
       "suche": "Chercher projet, client, lieu, électricien ou numéro",
       "ansicht": "Affichage",
-      "board": "Tableau",
+      "board": "Par phase",
       "liste": "Liste",
       "filter": "Filtres rapides",
-      "leer": "Rien dans cette phase."
+      "leer": "Rien dans cette phase.",
+      "standort": "Muri · Bulle",
+      "ohneStandort": "Sans site"
     },
     "zahl": {
       "laufend": "projets en cours",

@@ -124,6 +124,28 @@ export function nachPhase(
   return leer
 }
 
+/**
+ * Spalten je Standort (Bauplanung wie in V234: Muri | Bulle), in jeder Spalte nach dem nächsten Bautag
+ * (nächster Einsatz, sonst Baubeginn), Projekte ohne Termin zuletzt. Ohne Standort nur als Spalte, wenn es welche gibt.
+ */
+export function nachStandort(
+  projekte: Projekt[],
+  standorte: readonly { id: string; name: string }[],
+  signale: Map<string, Signale>,
+  ohneTitel: string,
+): { id: string; titel: string; projekte: Projekt[] }[] {
+  const datum = (p: Projekt) => signale.get(p.id)?.naechster_einsatz ?? p.baubeginn ?? '9999'
+  const sortiert = [...projekte].sort((a, b) => datum(a).localeCompare(datum(b)) || a.nummer.localeCompare(b.nummer))
+  const bekannt = new Set(standorte.map((o) => o.id))
+  const spalten = standorte.map((o) => ({
+    id: o.id,
+    titel: o.name,
+    projekte: sortiert.filter((p) => p.standort_id === o.id),
+  }))
+  const ohne = sortiert.filter((p) => p.standort_id == null || !bekannt.has(p.standort_id))
+  return ohne.length > 0 ? [...spalten, { id: 'ohne', titel: ohneTitel, projekte: ohne }] : spalten
+}
+
 /** Montag und Sonntag der Woche eines Datums (ISO). */
 export function woche(heute: string): { von: string; bis: string } {
   const d = new Date(`${heute}T12:00:00Z`)

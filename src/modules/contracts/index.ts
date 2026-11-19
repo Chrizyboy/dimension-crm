@@ -10,6 +10,7 @@ export const meta: ModulMeta = {
   id: 'contracts',
   titel: { de: 'Wartungsverträge', fr: 'Contrats d’entretien' },
   untertitel: { de: 'Wiederkehrende Wartung und Abos', fr: 'Entretien récurrent et abonnements' },
+  teilVon: 'workcontracts',
   auchGenannt: ['Verträge', 'Wartung', 'Contrats', 'Entretien'],
   pfad: '/contracts',
   icon: 'file-signature',

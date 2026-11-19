@@ -40,6 +40,10 @@ test('Projekte: Leitstand, Meine Woche, Zeitplan, Bewilligungen und Akte', async
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/projects')
   await expect(page.getByRole('heading', { name: 'Projekte & Montage', level: 1 })).toBeVisible()
+  // Zuerst «Muri · Bulle» (Bauplanung wie V234), dann nach Phase.
+  await expect(page.getByRole('region', { name: 'Muri' })).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
+  await page.getByRole('button', { name: 'Nach Phase' }).click()
   await expect(page.getByRole('region', { name: 'Bewilligungen' })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   for (const reiter of [

@@ -58,4 +58,10 @@ Chris: «besser als V234, aber alles davon». Darum keine 1:1-Gliederung, sonder
   Werk- und Wartungsverträge, «Aftersales» Service & Garantie, «Dashboard» Kennzahlen, «Leads» Anfragen & Leads.
   Die Seitenleiste behält die heutigen Namen (eindeutig, Entscheid 0008).
 - **Spesen auf «Mein Tag»**: die Spesen-Karte hat «Spese erfassen» (`#/expenses?neu=beleg` öffnet das Erfassen).
-- Bauplanung mit Bulle/Muri: der Leitstand der Projekte filtert bereits nach Standort; nichts Neues nötig.
+- **Bauplanung Muri | Bulle**: Der Leitstand der Projekte hat die Darstellung «Muri · Bulle» (eine Spalte je
+  Standort, nach nächstem Bautag, Phase auf der Karte; `nachStandort` in `lib/leitstand.ts`). Beim ersten Mal diese,
+  danach die gemerkte (Nach Phase, Liste).
+- **Verträge als ein Bereich**: `ModulMeta.teilVon`/`sammeltitel`. Wartungsverträge sind Teil von «Verträge»
+  (Werkverträge); die Seitenleiste zeigt einen Eintrag, beide Seiten oben den `Bereichsumschalter`
+  (`src/layouts/`). Module bleiben getrennt (Regel 2), nur die Navigation fasst zusammen. Wer nur einen Teil sehen
+  darf, sieht ihn unter seinem eigenen Namen.
