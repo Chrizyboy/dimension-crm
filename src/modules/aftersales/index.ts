@@ -10,6 +10,7 @@ export const meta: ModulMeta = {
   id: 'aftersales',
   titel: { de: 'Service & Garantie', fr: 'Service & garantie' },
   untertitel: { de: 'Störungen, Reklamationen und Nachkontrollen', fr: 'Pannes, réclamations et contrôles' },
+  auchGenannt: ['Aftersales', 'Service après-vente', 'SAV'],
   pfad: '/aftersales',
   icon: 'wrench',
   gruppe: 'abwicklung',

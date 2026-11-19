@@ -47,3 +47,15 @@ Chris: «besser als V234, aber alles davon». Darum keine 1:1-Gliederung, sonder
 - **Outlook-Mails (.msg)**: werden im Browser mit `@kenjiuno/msgreader` (erst bei Bedarf geladen) in eine .eml
   umgebaut (`src/lib/mailDatei.ts`); Server und KI lesen weiter nur .eml. `iconv-lite` ist im Browser durch
   `src/lib/iconvErsatz.ts` ersetzt (sonst fehlt Node-«Buffer»).
+
+## Nachtrag 19.11.2026: Startansichten und Namen aus V234
+
+- **Letzte Ansicht gemerkt** (`src/hooks/useLetzteAnsicht.ts`, je Person über den Filter-Speicher): Anfragen & Leads
+  und Offerten öffnen ohne `?ansicht=` dort, wo die Person zuletzt war. Beim ersten Mal wie V234: Leads mit der
+  **Liste**, Offerten mit **Neue Offerten**. «Zu tun» und «Arbeitsvorrat» bleiben einen Klick entfernt. Besser als
+  V234, weil wer mit «Zu tun» arbeitet, nicht jedes Mal umschalten muss. Die Adresse trägt die Ansicht jetzt immer.
+- **Alte Namen in der Suche** (`ModulMeta.auchGenannt`): «Bauplanung» findet Projekte & Montage, «Verträge»
+  Werk- und Wartungsverträge, «Aftersales» Service & Garantie, «Dashboard» Kennzahlen, «Leads» Anfragen & Leads.
+  Die Seitenleiste behält die heutigen Namen (eindeutig, Entscheid 0008).
+- **Spesen auf «Mein Tag»**: die Spesen-Karte hat «Spese erfassen» (`#/expenses?neu=beleg` öffnet das Erfassen).
+- Bauplanung mit Bulle/Muri: der Leitstand der Projekte filtert bereits nach Standort; nichts Neues nötig.

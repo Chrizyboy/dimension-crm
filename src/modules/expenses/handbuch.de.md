@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-19
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung
 ---
 
@@ -97,6 +97,7 @@ Als CSV herunterladen, nicht als PDF. Die Kopfzeile braucht ein Datum und einen 
 
 ## Neu {#neu}
 
+- 19.11.2026: Auf **Mein Tag** hat die Spesen-Karte den Knopf **Spese erfassen**; er öffnet gleich das Erfassen.
 - 03.11.2026: Regeln und Kategorien ändert nur noch die Administration; auch unter Einstellungen › Spesen-Kategorien.
 - 03.11.2026: Firmenkarte mit dem Kartenauszug abgleichen, fehlende Belege nachfordern.
 - 02.11.2026: Prüfen mit Rückfrage und Ablehnen, Kilometer, Firmenkarte, Projekt, MWST, Auszahlung als Lauf mit Abrechnung PDF, Auswertung und Regeln.

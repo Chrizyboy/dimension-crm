@@ -33,6 +33,8 @@ export interface ModulMeta {
   recht?: Recht | readonly Recht[]
   /** Immer sichtbar, unabhängig von der Bereichs-Auswahl (wie «Mein Tag» in der Vorlage). */
   immer?: boolean
+  /** Namen aus V234 (z. B. «Bauplanung»), damit die Suche (Ctrl K) den Bereich auch unter dem alten Namen findet. */
+  auchGenannt?: readonly string[]
 }
 
 /**

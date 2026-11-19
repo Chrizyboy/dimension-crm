@@ -5,7 +5,7 @@ rollen: verkauf, geschaeftsleitung
 
 # Anfragen & Leads
 
-Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbaren und planen, nachfassen und zur Offerte weitergeben. Startansicht ist «Zu tun»: wer jetzt anzurufen ist, was heute fällig ist und was diese Woche ansteht. Dazu Planung (Kalender, Tagesroute, Tour), Regionen, der Monatsbericht für die Lead-Anbieter und die Steuerung für die Geschäftsleitung.
+Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbaren und planen, nachfassen und zur Offerte weitergeben. Beim ersten Öffnen kommt die **Liste** (wie im alten CRM), danach immer die Ansicht, in der man zuletzt war. «Zu tun» zeigt, wer jetzt anzurufen ist, was heute fällig ist und was diese Woche ansteht. Dazu Planung (Kalender, Tagesroute, Tour), Regionen, der Monatsbericht für die Lead-Anbieter und die Steuerung für die Geschäftsleitung.
 
 ## Wer arbeitet hier {#wer}
 
@@ -115,6 +115,7 @@ Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für
 
 ## Neu {#neu}
 
+- 19.11.2026: **Anfragen** öffnet beim ersten Mal mit der **Liste**, danach mit der Ansicht, in der du zuletzt warst (je Person gemerkt). In der Suche (Ctrl K) findet «Leads» diesen Bereich.
 - 19.11.2026: **Rechtsklick** auf einen Lead (am Handy lange drücken): Lead öffnen, In Google Maps öffnen, Terminblatt drucken, Kundenakte öffnen, Anrufen, E-Mail schreiben. **Anfragen holen › Mail-Datei einlesen** nimmt jetzt auch Outlook-Mails (.msg), die man aus Outlook auf den Desktop gezogen hat.
 - 04.11.2026: Höchstens sechs Reiter: **Monatsbericht** und **Steuerung** stehen unter **Mehr** (Tasten 1–7 wie bisher). In der Lead-Akte stehen leere Auswahlfelder (Quelle, Erreichbarkeit, Finanzierung, Zeithorizont, Förderung) erst nach **+ weitere Angaben**.
 - 03.11.2026: «In den Papierkorb» für Leads (in der Lead-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
