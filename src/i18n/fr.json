@@ -12664,5 +12664,20 @@
       "weihnachten": "Noël",
       "stephanstag": "Saint-Étienne"
     }
+  },
+  "apps": {
+    "titel": "Apps",
+    "neuerTab": "s’ouvre dans un nouvel onglet",
+    "website": "Site web",
+    "eturnity": "Eturnity",
+    "abaninja": "AbaNinja",
+    "landingpage": "Leads",
+    "akquise": "Acquisition",
+    "messe": "Salon"
+  },
+  "fenster": {
+    "vollbild": "Plein écran",
+    "vollbildAus": "Quitter le plein écran",
+    "aktualisieren": "Actualiser"
   }
 }

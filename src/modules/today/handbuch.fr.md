@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-19
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
@@ -97,6 +97,7 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : nouvel aspect comme V234 : effet verre avec dégradé, barre latérale flottante avec Apps (site web, Eturnity, AbaNinja, Leads, Acquisition, Salon), boutons ronds en haut pour **Plein écran** (F11) et **Actualiser**.
 - 04.11.2026: La date et ce qui est prévu restent sous la salutation ; les cartes vides deviennent une ligne.
 - 03.11.2026: Reporter, motif par ligne, En attente de ta validation, Ma semaine avec objectifs, L'équipe aujourd'hui, Météo sur les chantiers.
 - 03.11.2026 : seule l’administration fixe les objectifs de la semaine.

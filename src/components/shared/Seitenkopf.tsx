@@ -28,7 +28,7 @@ export function Seitenkopf({ titel, beschreibung, zeile, ueber, aktionen, classN
       <div className="flex min-w-0 flex-col gap-1">
         {ueber && <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">{ueber}</p>}
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-semibold">{titel}</h1>
+          <h1 className="text-[28px] leading-tight font-extrabold tracking-[-0.025em]">{titel}</h1>
           {beschreibung && (
             <Tooltip text={titel} untertitel={beschreibung} seite="bottom">
               <button

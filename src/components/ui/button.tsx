@@ -12,14 +12,26 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary text-primary-foreground hover:bg-primary-hover',
-        accent: 'bg-accent text-accent-foreground hover:brightness-105',
-        secondary: 'border border-border bg-surface text-foreground hover:bg-muted',
+        // Hauptaktion orange mit Verlauf wie V234; dunkle Schrift, damit der Kontrast über 6:1 bleibt.
+        primary:
+          'bg-[image:var(--akzent-verlauf)] text-[#120a00] font-semibold shadow-[var(--akzent-schatten)] hover:brightness-105',
+        accent:
+          'bg-[image:var(--akzent-verlauf)] text-[#120a00] font-semibold shadow-[var(--akzent-schatten)] hover:brightness-105',
+        secondary:
+          'border border-[var(--glas-rand)] bg-[var(--glas-feld)] text-foreground shadow-[var(--glas-schatten-klein)] hover:bg-[var(--glas-wahl)]',
         ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground',
         danger: 'bg-bad text-white hover:brightness-110 dark:text-[#1a0806]',
         link: 'h-auto px-0 text-primary underline-offset-4 hover:underline dark:text-accent',
+        glas: 'glas !shadow-[var(--glas-schatten-klein)] text-foreground hover:bg-[var(--glas-wahl)]',
       },
-      size: { sm: 'h-7 px-2.5 text-xs', md: 'h-8 px-3 text-sm', lg: 'h-10 px-4 text-sm', icon: 'size-8' },
+      size: {
+        sm: 'h-7 px-2.5 text-xs',
+        md: 'h-9 px-3.5 text-sm',
+        lg: 'h-10 px-4 text-sm',
+        icon: 'size-8',
+        // Runde Glas-Knöpfe oben rechts (V234): Glocke, Vollbild, Aktualisieren, Hilfe.
+        rund: 'size-10 rounded-full',
+      },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
   },

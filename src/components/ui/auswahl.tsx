@@ -31,7 +31,7 @@ export function Auswahl({ id, optionen, platzhalter, className, 'aria-label': ar
         id={id}
         {...(ariaLabel ? { 'aria-labelledby': `${kennung}-name ${kennung}-wert` } : {})}
         className={cn(
-          'border-border bg-surface hover:border-border-strong focus-visible:border-ring focus-visible:ring-ring/30 data-placeholder:text-muted-foreground flex h-8 w-full min-w-0 items-center justify-between gap-2 rounded-md border px-2.5 text-left text-sm whitespace-nowrap shadow-xs outline-none focus-visible:ring-2',
+          'hover:border-border-strong focus-visible:border-ring focus-visible:ring-ring/30 data-placeholder:text-muted-foreground flex h-9 w-full min-w-0 items-center justify-between gap-2 rounded-xl border border-[var(--glas-rand)] bg-[var(--glas-feld)] px-3 text-left text-sm whitespace-nowrap shadow-xs outline-none focus-visible:ring-2',
           className,
         )}
       >

@@ -39,8 +39,8 @@ export function HilfeKnopf() {
   return (
     <>
       <Button
-        variant="ghost"
-        size="icon"
+        variant="glas"
+        size="rund"
         aria-label={t('handbuch.hilfe.knopf')}
         title={t('handbuch.hilfe.knopf')}
         onClick={() => {

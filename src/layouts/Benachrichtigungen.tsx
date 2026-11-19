@@ -100,8 +100,8 @@ export function Glocke() {
     <PopoverPrimitive.Root open={offen} onOpenChange={setOffen}>
       <PopoverPrimitive.Trigger asChild>
         <Button
-          variant="ghost"
-          size="icon"
+          variant="glas"
+          size="rund"
           className="relative"
           aria-label={
             ungelesen > 0 ? t('benachrichtigungen.mitZahl', { anzahl: ungelesen }) : t('benachrichtigungen.titel')

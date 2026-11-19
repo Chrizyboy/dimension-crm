@@ -11,10 +11,11 @@ import { kuerzelText } from '@/lib/tastenkuerzel'
 import { cn } from '@/lib/utils'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
+import { AppKacheln } from './AppKacheln'
 import type { NavGruppe } from '@/types/modul'
 
 const LINK =
-  'flex h-[30px] items-center gap-2.5 rounded-md px-2 text-[13px] text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-active/70 hover:text-sidebar-active-foreground focus-visible:ring-2 focus-visible:ring-ring'
+  'flex h-[30px] items-center gap-2.5 rounded-xl px-3 text-[13px] font-semibold text-sidebar-foreground outline-none transition-colors hover:bg-white/[0.07] hover:text-sidebar-active-foreground focus-visible:ring-2 focus-visible:ring-ring'
 /** Bis so viele sichtbare Bereiche passt die Leiste auf einen Laptop, ohne dass Gruppen zu sein müssen. */
 const ALLES_OFFEN_BIS = 16
 
@@ -27,10 +28,9 @@ const OFFEN_JE_ROLLE: Partial<Record<string, readonly NavGruppe[]>> = {
   buchhaltung: ['finanzen'],
 }
 
-// Variante C (Chris 31.10.2026): Blau wie bisher, Orange als Akzent: Linie links am aktiven Punkt, Icon orange.
+// Wie V234: aktiver Bereich als helle Glas-Pille, Icon orange als Akzent (Variante C von Chris 31.10.2026).
 const AKTIV = {
-  className:
-    'relative !bg-sidebar-active !text-sidebar-active-foreground font-medium [&_svg]:!text-accent before:absolute before:inset-y-1 before:left-0 before:w-[3px] before:rounded-full before:bg-accent',
+  className: '!bg-sidebar-active !text-sidebar-active-foreground [&_svg]:!text-accent',
 }
 
 /**
@@ -76,12 +76,18 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
   }
 
   return (
-    <div className="bg-sidebar text-sidebar-foreground flex h-full flex-col">
+    <div
+      className={cn(
+        'bg-sidebar text-sidebar-foreground flex h-full flex-col',
+        // Schwebende Glas-Leiste mit runden Ecken (V234); im Handy-Menü flach über die ganze Höhe.
+        !imMenue &&
+          'border-sidebar-border rounded-[28px] border shadow-[var(--glas-schatten)] backdrop-blur-[26px] backdrop-saturate-[1.6]',
+      )}
+    >
       <div
         className={cn(
-          // Orange Linie unter dem Logo (Variante C); «!», weil die Grundregel «* { border-color }» ausserhalb der Ebenen steht.
-          '!border-accent flex h-12 shrink-0 items-center border-b-2',
-          eingeklappt ? 'justify-center' : 'px-4',
+          'mx-3 flex h-16 shrink-0 items-center border-b !border-white/10',
+          eingeklappt ? 'justify-center' : 'px-2',
         )}
       >
         {eingeklappt ? (
@@ -118,7 +124,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
                   onClick={() => {
                     setGruppeOffen(gruppe, !offen)
                   }}
-                  className="text-sidebar-muted hover:text-sidebar-foreground focus-visible:ring-ring group/gruppe flex h-6 items-center gap-1 rounded-md px-2 text-left text-xs font-semibold tracking-[0.08em] uppercase outline-none focus-visible:ring-2"
+                  className="text-sidebar-muted hover:text-sidebar-foreground focus-visible:ring-ring group/gruppe mt-1 flex h-6 items-center gap-1 rounded-md px-3 text-left text-xs font-bold tracking-[0.07em] uppercase outline-none focus-visible:ring-2"
                 >
                   <span className="flex-1 truncate">{name}</span>
                   <ChevronRight
@@ -151,12 +157,9 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
         })}
       </nav>
 
-      <div
-        className={cn(
-          'border-sidebar-border flex shrink-0 flex-col gap-0.5 border-t py-2',
-          eingeklappt ? 'px-2' : 'px-3',
-        )}
-      >
+      <div className={cn('mx-3 flex shrink-0 flex-col gap-0.5 border-t !border-white/10 py-3')}>
+        <AppKacheln eingeklappt={eingeklappt} />
+        <div className="h-2" aria-hidden="true" />
         {/* Design-System ist eine Hilfe für die Entwicklung, im Betrieb braucht sie niemand. */}
         {import.meta.env.DEV &&
           eintrag(
