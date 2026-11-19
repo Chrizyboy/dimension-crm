@@ -75,7 +75,12 @@ if ($belegt) {
 
 Schritt "3/4 Vorschau starten: http://localhost:$Port"
 # Im selben Fenster, aber leise: Schliesst man das Fenster, endet auch die Vorschau.
+# Eingabe aus einer leeren Datei: Sonst liest Vite die Tastatur mit (Kürzel h, r, q …) und schluckt das «J»
+# der Schlussfrage, die dann leer ankommt (Chris 19.11.2026: «ich klicke auf J und es passiert nichts»).
+$leer = Join-Path $env:TEMP 'dimension-work-vorschau-leer.txt'
+Set-Content -Path $leer -Value '' -Encoding ASCII
 $vite = Start-Process -FilePath 'npx.cmd' -WorkingDirectory $Vorschau -NoNewWindow -PassThru `
+  -RedirectStandardInput $leer `
   -ArgumentList 'vite', '--mode', 'cloud', '--port', $Port, '--strictPort', '--logLevel', 'error'
 for ($i = 0; $i -lt 60; $i++) {
   if (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue) { break }
@@ -98,7 +103,12 @@ Schritt '4/4 Anschauen'
 Write-Host 'Der Browser zeigt die Vorschau. Echte Daten: Was du speicherst, ist wirklich gespeichert.' -ForegroundColor Yellow
 Write-Host 'Neue Stände kommen jede Minute von selbst. Lass dieses Fenster offen, bis du fertig bist.'
 Write-Host ''
-$antwort = Read-Host 'Fertig? Passt alles und soll es veröffentlicht werden? (J = veröffentlichen, N = noch nicht)'
+# Nur J oder N gilt; alles andere (auch ein leeres Enter) fragt nochmals, statt still «nicht veröffentlichen».
+do {
+  try { $Host.UI.RawUI.FlushInputBuffer() } catch { }
+  $antwort = "$(Read-Host 'Fertig? Passt alles und soll es veröffentlicht werden? (J = veröffentlichen, N = noch nicht)')".Trim()
+  if ($antwort -notmatch '^[jJyYnN]') { Write-Host 'Bitte J oder N eingeben und Enter drücken.' -ForegroundColor Yellow }
+} until ($antwort -match '^[jJyYnN]')
 
 Stop-Job $live -ErrorAction SilentlyContinue; Remove-Job $live -Force -ErrorAction SilentlyContinue
 if ($vite) { taskkill.exe /PID $vite.Id /T /F 2>$null | Out-Null }
