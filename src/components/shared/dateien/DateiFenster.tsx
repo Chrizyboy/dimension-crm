@@ -103,7 +103,7 @@ export function DateiMailKnopf({ name, onClick }: { name: string; onClick: () =>
 
 /**
  * «Alle als ZIP» (V234): alle Dateien der Akte in einem Download, z. B. für den Netzbetreiber oder die
- * Förderung. Erst ab zwei Dateien im CRM-Speicher sichtbar; Dateien nur in SharePoint nennt die Meldung.
+ * Förderung. Erst ab zwei Dateien im CRM-Speicher sichtbar; was fehlt (nur in SharePoint), nennt die Meldung.
  */
 export function ZipKnopf({ dateien, name }: { dateien: DokumentQuelle[]; name: string }) {
   const { t } = useTranslation()
@@ -121,8 +121,8 @@ export function ZipKnopf({ dateien, name }: { dateien: DokumentQuelle[]; name: s
             herunterladen(zip as BlobPart, `${name.replace(/[\\/:*?"<>|]/g, '_')}.zip`, 'application/zip')
             if (ohne.length > 0)
               melde('info', {
-                de: `${String(ohne.length)} Datei(en) liegen nur in SharePoint und fehlen im ZIP`,
-                fr: `${String(ohne.length)} fichier(s) seulement dans SharePoint, absent(s) du ZIP`,
+                de: `Nicht im ZIP (nur in SharePoint oder nicht gefunden): ${ohne.join(', ')}`,
+                fr: `Pas dans le ZIP (seulement dans SharePoint ou introuvable) : ${ohne.join(', ')}`,
               })
           })
           .catch((f: unknown) => {

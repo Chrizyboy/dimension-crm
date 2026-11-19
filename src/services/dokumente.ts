@@ -39,7 +39,7 @@ export async function dokumentInhalt(d: Pick<DokumentQuelle, 'speicher_pfad'>): 
 
 /**
  * Mehrere Dateien als ein ZIP (V234 «Alle herunterladen»). Gleiche Namen werden nummeriert; Dateien nur in
- * SharePoint fehlen im ZIP und werden gezählt, damit die Meldung sie nennen kann.
+ * SharePoint oder nicht mehr im Speicher fehlen im ZIP und werden zurückgegeben, damit die Meldung sie nennt.
  */
 export async function dokumenteAlsZip(liste: DokumentQuelle[]): Promise<{ zip: Uint8Array; ohne: string[] }> {
   // fflate erst beim ersten ZIP laden, nicht mit der App.
@@ -47,10 +47,12 @@ export async function dokumenteAlsZip(liste: DokumentQuelle[]): Promise<{ zip: U
   const geladen: { name: string; daten: Uint8Array }[] = []
   const ohne: string[] = []
   for (const d of liste) {
-    const blob = await dokumentInhalt(d)
+    // Eine fehlende Datei soll nicht das ganze ZIP verhindern; sie steht danach in der Meldung.
+    const blob = await dokumentInhalt(d).catch(() => null)
     if (blob) geladen.push({ name: d.name, daten: new Uint8Array(await blob.arrayBuffer()) })
     else ohne.push(d.name)
   }
+  if (geladen.length === 0) throw new Error('zip.leer')
   const namen = eindeutigeNamen(geladen.map((g) => g.name))
   // Bilder und PDF sind schon gepackt: nur speichern (level 0) ist viel schneller und kaum grösser.
   const zip = zipSync(Object.fromEntries(geladen.map((g, i) => [namen[i] ?? g.name, [g.daten, { level: 0 }]])))
