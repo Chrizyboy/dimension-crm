@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { KeinZugriff } from '@/layouts/KeinZugriff'
+import { useLetzteAnsicht } from '@/hooks/useLetzteAnsicht'
 import { darfModul } from '@/lib/rechte'
 import { meta, Verkauf, VERKAUF_ANSICHTEN, type VerkaufAnsicht } from '@/modules/sales'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -31,8 +32,13 @@ export const Route = createFileRoute('/sales')({
     const { ansicht, lead, neu, ausMail } = Route.useSearch()
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
+    // Ohne Ansicht in der Adresse: die zuletzt benutzte, beim ersten Mal die Liste wie in V234 (19.11.2026).
+    const [letzte, merke] = useLetzteAnsicht<VerkaufAnsicht>('sales', 'liste', VERKAUF_ANSICHTEN)
+    useEffect(() => {
+      if (ansicht && ansicht !== letzte) merke(ansicht)
+    }, [ansicht, letzte, merke])
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const ziel = ansicht ?? 'zutun'
+    const ziel = ansicht ?? letzte
     return (
       <Suspense>
         <Verkauf
@@ -44,7 +50,7 @@ export const Route = createFileRoute('/sales')({
             const n = { ansicht: ziel, lead: lead ?? null, neu: false, ausMail: null as string | null, ...a }
             void navigate({
               search: {
-                ...(n.ansicht !== 'zutun' ? { ansicht: n.ansicht } : {}),
+                ansicht: n.ansicht,
                 ...(n.lead ? { lead: n.lead } : {}),
                 ...(n.neu ? { neu: true } : {}),
                 ...(n.ausMail ? { ausMail: n.ausMail } : {}),

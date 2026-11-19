@@ -6,6 +6,19 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
 (docs/installation.md).
 
+## 1.3.4
+
+- Zuteilung wieder wie im alten CRM: Leads nach PLZ (Bulle Filipe, Muri Loris), Offerten an wer vor Ort war, Richtofferten an Andy.
+- Service-Fälle gehen zuerst an Andy; er wählt in der Akte bei «Mitarbeiter wählen», wer übernimmt.
+- Ausschreibungen: «Kontakt suchen» an Andy statt Loris; falsch Zugeteilte korrigiert (rückgängig in Einstellungen › Zuständigkeiten).
+
+## 1.3.3
+
+- Projekte: Leitstand neu mit Spalten Muri | Bulle (wie die Bauplanung), nach dem nächsten Bautag.
+- Werk- und Wartungsverträge sind ein Eintrag «Verträge» mit Umschalter oben.
+- Einstellungen › Personen: «Bereiche je Person» zeigt alle Personen mit Häkchen je Bereich.
+- Leads und Offerten öffnen dort, wo man zuletzt war; Seitenleiste ruhiger (dunkle Bildlaufleiste, Apps als Reihe).
+
 ## 1.3.2
 
 - Grossprojekte: nur noch Projekte, die für Kunde, Youdera und uns passen; Dächer mit bestehender Solaranlage fallen weg.

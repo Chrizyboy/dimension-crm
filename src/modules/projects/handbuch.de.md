@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-11
+stand: 2026-11-19
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -17,7 +17,7 @@ Jeder unterschriebene Auftrag läuft hier über Bewilligungen, Vorbereitung und 
 
 ### Den Tag im Leitstand beginnen
 
-1. Ansicht **Leitstand**: alle Projekte als **Board** nach Phase oder als **Liste**. Karten mit rotem Hinweis sind blockiert (Material bestellen, Bewilligung überfällig, Zahlung offen, Mängel).
+1. Ansicht **Leitstand**: alle laufenden Projekte als **Muri · Bulle** (eine Spalte je Standort, nach dem nächsten Bautag, wie die Bauplanung im alten CRM), **Nach Phase** oder als **Liste**. Die Wahl bleibt gemerkt. Karten mit rotem Hinweis sind blockiert (Material bestellen, Bewilligung überfällig, Zahlung offen, Mängel).
 2. Ansicht **Meine Woche**: was diese und nächste Woche fällig ist, oben **Überfällig und blockiert**. Umschalten zwischen **Meine Projekte** und **Alle Projekte**.
 3. Klick auf eine Karte öffnet die Projekt-Akte als ganze Seite.
 
@@ -112,6 +112,7 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 19.11.2026: Leitstand neu mit **Muri · Bulle**: eine Spalte je Standort, sortiert nach dem nächsten Bautag, auf jeder Karte die Phase. In der Suche (Ctrl K) findet «Bauplanung» diesen Bereich.
 - 11.11.2026: Abwesenheiten, die hier erfasst werden, gehen wie in der «Zeiterfassung» als Antrag an die Zeit-Leitung (Chris, Loris); Krank und Unfall gelten sofort.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Im Leitstand stehen nur Zahlen, die nicht 0 sind; «laufende Projekte» steht immer da.

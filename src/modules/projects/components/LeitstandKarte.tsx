@@ -20,11 +20,14 @@ const RAND: Record<Hinweis['ton'], string> = {
  */
 export function LeitstandKarte({
   p,
+  phase,
   hinweise,
   aktiv,
   onOeffnen,
 }: {
   p: Projekt
+  /** Phase als Text, wenn die Spalten nicht nach Phase sind (Muri · Bulle). */
+  phase?: string
   hinweise: Hinweis[]
   aktiv: boolean
   onOeffnen: () => void
@@ -48,6 +51,7 @@ export function LeitstandKarte({
             ? t('projekte.leitstand.bau', { datum: formatDatum(p.baubeginn) })
             : t('projekte.baubeginnOffen')}
           {p.verantwortlich ? ` · ${p.verantwortlich}` : ''}
+          {phase ? ` · ${phase}` : ''}
         </span>
         <span className="zahlen shrink-0 font-mono whitespace-nowrap">{p.nummer}</span>
       </span>

@@ -1,5 +1,5 @@
 import { Car, Download, Plus, Wallet, WalletCards } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
@@ -34,14 +34,27 @@ const FILTER: SpesenFilter[] = ['offen', 'ausbezahlt', 'firmenkarte', 'abgelehnt
  * beantworten). Die Buchhaltung (Recht «finanzen») hat dazu «Prüfen», «Auszahlen», «Alle», «Auswertung» und
  * «Regeln». #/expenses?ansicht=…
  */
-export default function Spesen({ ansicht, onAnsicht }: { ansicht: Ansicht; onAnsicht: (a: Ansicht) => void }) {
+export default function Spesen({
+  ansicht,
+  erfassen = null,
+  onAnsicht,
+}: {
+  ansicht: Ansicht
+  /** Aus der Adresse (`?neu=beleg`, z. B. vom Knopf auf «Mein Tag»): Erfassen gleich öffnen. */
+  erfassen?: 'beleg' | 'kilometer' | null
+  onAnsicht: (a: Ansicht) => void
+}) {
   const { t, i18n } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const buchhaltung = hatRecht(ich, 'finanzen')
   const aktiv: Ansicht = buchhaltung ? (ansicht === 'kategorien' ? 'kategorien' : ansicht) : 'meine'
   const einstellungen = useFinanzEinstellungen()
   const kategorie = useKategorieText()
-  const [neu, setNeu] = useState<'beleg' | 'kilometer' | null>(null)
+  const [neu, setNeu] = useState<'beleg' | 'kilometer' | null>(erfassen)
+  // «neu» aus der Adresse nehmen, damit Neuladen das Erfassen nicht wieder öffnet.
+  useEffect(() => {
+    if (erfassen) onAnsicht(ansicht)
+  }, [erfassen, ansicht, onAnsicht])
   const [filter, setFilter] = useState<SpesenFilter>('offen')
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
   const [auszahlen, setAuszahlen] = useState(false)

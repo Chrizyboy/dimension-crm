@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-11
+stand: 2026-11-19
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -17,7 +17,7 @@ Chaque commande signée passe ici par les autorisations, la préparation et le m
 
 ### Commencer la journée au poste de pilotage
 
-1. Vue **Poste de pilotage** : tous les projets en **Tableau** par phase ou en **Liste**. Les cartes avec une indication rouge sont bloquées (commander le matériel, autorisation en retard, paiement ouvert, défauts).
+1. Vue **Poste de pilotage** : tous les projets en cours en **Muri · Bulle** (une colonne par site, selon le prochain jour de chantier, comme la planification de l’ancien CRM), **Par phase** ou en **Liste**. Le choix reste mémorisé. Les cartes avec une indication rouge sont bloquées (commander le matériel, autorisation en retard, paiement ouvert, défauts).
 2. Vue **Ma semaine** : ce qui est dû cette semaine et la suivante, en haut **En retard et bloqués**. Basculer entre **Mes projets** et **Tous les projets**.
 3. Un clic sur une carte ouvre le dossier du projet en pleine page.
 
@@ -112,6 +112,7 @@ Au contrat, à la date, au montage, à la MES et à la réception, l’automatio
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : poste de pilotage avec **Muri · Bulle** : une colonne par site, triée selon le prochain jour de chantier, la phase sur chaque carte. Dans la recherche (Ctrl K), « Bauplanung » trouve ce domaine.
 - 11.11.2026: Les absences saisies ici partent comme dans « Saisie du temps » en demande à la direction du temps (Chris, Loris) ; maladie et accident valent tout de suite.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Le tableau de bord n’affiche que les chiffres différents de 0 ; « projets en cours » reste toujours affiché.

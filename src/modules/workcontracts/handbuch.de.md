@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-19
 rollen: verkauf, innendienst, buchhaltung, geschaeftsleitung
 ---
 
@@ -68,6 +68,7 @@ Unter **Mein Konto** die eigene Unterschrift ablegen, dann den Vertrag neu erste
 
 ## Neu {#neu}
 
+- 19.11.2026: Werkverträge und Wartungsverträge sind in der Seitenleiste ein Eintrag **Verträge** (wie im alten CRM); oben wechselt man zwischen **Werkverträge** und **Wartungsverträge**.
 - 03.11.2026: «In den Papierkorb» für Werkverträge; unterschriebene nur die Administration, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 02.11.2026: Knopf «Neuer Werkvertrag» mit Auswahl der Offerte.
 - 31.10.2026: Vorlage Muri, Zahlungsbedingungen per Klick und Anzahlungsrechnung.

@@ -47,3 +47,29 @@ Chris: «besser als V234, aber alles davon». Darum keine 1:1-Gliederung, sonder
 - **Outlook-Mails (.msg)**: werden im Browser mit `@kenjiuno/msgreader` (erst bei Bedarf geladen) in eine .eml
   umgebaut (`src/lib/mailDatei.ts`); Server und KI lesen weiter nur .eml. `iconv-lite` ist im Browser durch
   `src/lib/iconvErsatz.ts` ersetzt (sonst fehlt Node-«Buffer»).
+
+## Nachtrag 19.11.2026: Startansichten und Namen aus V234
+
+- **Letzte Ansicht gemerkt** (`src/hooks/useLetzteAnsicht.ts`, je Person über den Filter-Speicher): Anfragen & Leads
+  und Offerten öffnen ohne `?ansicht=` dort, wo die Person zuletzt war. Beim ersten Mal wie V234: Leads mit der
+  **Liste**, Offerten mit **Neue Offerten**. «Zu tun» und «Arbeitsvorrat» bleiben einen Klick entfernt. Besser als
+  V234, weil wer mit «Zu tun» arbeitet, nicht jedes Mal umschalten muss. Die Adresse trägt die Ansicht jetzt immer.
+- **Alte Namen in der Suche** (`ModulMeta.auchGenannt`): «Bauplanung» findet Projekte & Montage, «Verträge»
+  Werk- und Wartungsverträge, «Aftersales» Service & Garantie, «Dashboard» Kennzahlen, «Leads» Anfragen & Leads.
+  Die Seitenleiste behält die heutigen Namen (eindeutig, Entscheid 0008).
+- **Spesen auf «Mein Tag»**: die Spesen-Karte hat «Spese erfassen» (`#/expenses?neu=beleg` öffnet das Erfassen).
+- **Bauplanung Muri | Bulle**: Der Leitstand der Projekte hat die Darstellung «Muri · Bulle» (eine Spalte je
+  Standort, nach nächstem Bautag, Phase auf der Karte; `nachStandort` in `lib/leitstand.ts`). Beim ersten Mal diese,
+  danach die gemerkte (Nach Phase, Liste).
+- **Verträge als ein Bereich**: `ModulMeta.teilVon`/`sammeltitel`. Wartungsverträge sind Teil von «Verträge»
+  (Werkverträge); die Seitenleiste zeigt einen Eintrag, beide Seiten oben den `Bereichsumschalter`
+  (`src/layouts/`). Module bleiben getrennt (Regel 2), nur die Navigation fasst zusammen. Wer nur einen Teil sehen
+  darf, sieht ihn unter seinem eigenen Namen.
+
+## Nachtrag 19.11.2026: Bereiche pro Person
+
+V234 hatte in der Nutzerverwaltung Häkchen je Register und Person. Dimension Work konnte das schon (eigene Auswahl
+an `personen.bereiche`, sonst die Rolle, mit «gl» alles; `meine_anmeldung`), aber nur Person für Person. Neu:
+**Einstellungen › Personen › Bereiche je Person** (`BereicheMatrix.tsx`), Zeile je aktive Person, Spalte je
+wählbarer Bereich, speichert sofort; blasse Häkchen = von der Rolle, «Wie Rolle» setzt zurück. Die Regel steht in
+`lib/sichtbareBereiche.ts` gleich wie in der Datenbank. Keine Migration nötig. Daten schützt weiter RLS.

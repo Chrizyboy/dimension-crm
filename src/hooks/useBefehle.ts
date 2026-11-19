@@ -77,7 +77,7 @@ export function useBefehle(onGewaehlt?: () => void): Befehl[] {
       untertitel: m.untertitel[sprache],
       gruppe: 'gehe-zu',
       icon: m.icon,
-      stichworte: [m.titel.de, m.titel.fr, m.id],
+      stichworte: [m.titel.de, m.titel.fr, m.id, ...(m.auchGenannt ?? [])],
       ...sprungTasten(m.id),
       ausfuehren: gehe(m.pfad),
     })),

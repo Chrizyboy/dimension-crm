@@ -1,4 +1,4 @@
-import { UserPlus } from 'lucide-react'
+import { LayoutGrid, List, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
@@ -10,6 +10,7 @@ import { useBenutzerDaten } from '../hooks/useBenutzer'
 import { statusVon } from '../services/benutzer'
 import type { Person } from '../types'
 import { BenutzerTabelle } from './BenutzerTabelle'
+import { BereicheMatrix } from './BereicheMatrix'
 import { EinladungDialog } from './EinladungDialog'
 import { PersonDialog } from './PersonDialog'
 
@@ -22,13 +23,30 @@ export default function Personen({ module }: EinstellungsInhaltProps) {
   const { personen, rollen, standorte, einladungen } = useBenutzerDaten()
   const [einladen, setEinladen] = useState(false)
   const [person, setPerson] = useState<Person | null>(null)
+  const [ansicht, setAnsicht] = useState<'liste' | 'bereiche'>('liste')
   const status = (p: Person) => statusVon(p, einladungen.data ?? [])
   const liste = personen.data ?? []
   const fehler = personen.error ?? rollen.error
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-end">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex gap-1" role="group" aria-label={t('benutzer.matrix.titel')}>
+          {(['liste', 'bereiche'] as const).map((a) => (
+            <Button
+              key={a}
+              size="sm"
+              variant={ansicht === a ? 'secondary' : 'ghost'}
+              aria-pressed={ansicht === a}
+              onClick={() => {
+                setAnsicht(a)
+              }}
+            >
+              {a === 'liste' ? <List /> : <LayoutGrid />}
+              {t(a === 'liste' ? 'benutzer.ansichtListe' : 'benutzer.ansichtBereiche')}
+            </Button>
+          ))}
+        </div>
         <Button
           onClick={() => {
             setEinladen(true)
@@ -48,6 +66,8 @@ export default function Personen({ module }: EinstellungsInhaltProps) {
               <Skelett key={i} className="h-10" />
             ))}
           </div>
+        ) : ansicht === 'bereiche' ? (
+          <BereicheMatrix personen={liste} rollen={rollen.data ?? []} module={module} />
         ) : (
           <BenutzerTabelle
             personen={liste}

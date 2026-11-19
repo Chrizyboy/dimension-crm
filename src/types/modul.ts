@@ -33,6 +33,15 @@ export interface ModulMeta {
   recht?: Recht | readonly Recht[]
   /** Immer sichtbar, unabhängig von der Bereichs-Auswahl (wie «Mein Tag» in der Vorlage). */
   immer?: boolean
+  /** Namen aus V234 (z. B. «Bauplanung»), damit die Suche (Ctrl K) den Bereich auch unter dem alten Namen findet. */
+  auchGenannt?: readonly string[]
+  /**
+   * Gehört in der Seitenleiste zu einem anderen Bereich (id), z. B. Wartungsverträge zu den Werkverträgen («Verträge»
+   * wie in V234). Beide Seiten zeigen oben den Umschalter, die Seitenleiste nur einen Eintrag.
+   */
+  teilVon?: string
+  /** Name des Eintrags in der Seitenleiste, wenn andere Bereiche `teilVon` hierher zeigen (z. B. «Verträge»). */
+  sammeltitel?: Zweisprachig
 }
 
 /**

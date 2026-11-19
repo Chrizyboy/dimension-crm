@@ -38,7 +38,7 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 
 1. Domaine **Rôles et droits** : par rôle, les **Droits du rôle** et les domaines visibles.
 2. Domaine **Personnes**, ouvrir la personne, sous **Compléments** : **Complément direction** (voit tout, finances comprises) et **Complément administration** (configure le système, ne voit ni les finances ni les dossiers du personnel des autres).
-3. Pour une seule personne : ouvrir la personne, **Sélection propre pour cette personne**.
+3. Pour une seule personne : ouvrir la personne, **Sélection propre pour cette personne**. Pour tout le monde à la fois : dans **Personnes**, en haut **Domaines par personne**, cocher (enregistre tout de suite). Les coches pâles viennent du rôle, la flèche en cercle remet une personne sur son rôle.
 4. **Vue simple (uniquement temps et frais)** sur le rôle : seulement temps de travail, frais et planning. Le montage travaille avec la vue normale pour accéder aux rapports, au service et aux véhicules.
 
 ### Régler les responsabilités
@@ -132,6 +132,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 ## Nouveautés {#neu}
 
 - 19.11.2026 : Attribution de nouveau comme dans l’ancien CRM (leads selon le site du NPA, offres à qui s’est rendu sur place, offres indicatives à Andy) ; nouveau **Attribuer les cas SAV** ; fiches mal attribuées corrigées, avec **Annuler la correction**.
+- 19.11.2026 : **Personnes › Domaines par personne** : toutes les personnes et tous les domaines d’un coup d’œil, avec des coches comme dans la gestion des utilisateurs de l’ancien CRM. Retour au rôle en un clic.
 - 05.11.2026 : Si ASPSMS refuse les identifiants, le CRM ne vérifie plus la connexion SMS qu’une fois par jour au lieu de chaque heure, jusqu’à ce que **Tester maintenant** réussisse.
 - 04.11.2026 : Si la cause d’une panne de service change, une nouvelle cloche arrive avec la nouvelle cause. SMS : les identifiants refusés sont signalés comme tels.
 - 03.11.2026: Compléments direction et administration, lien pour le téléphone pour les personnes sans e-mail de l’entreprise.

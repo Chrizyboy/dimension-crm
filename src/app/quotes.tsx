@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { KeinZugriff } from '@/layouts/KeinZugriff'
+import { useLetzteAnsicht } from '@/hooks/useLetzteAnsicht'
 import { darfModul } from '@/lib/rechte'
 import { meta, Offerten, OFFERT_ANSICHTEN, type OffertAnsicht } from '@/modules/quotes'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -27,8 +28,13 @@ export const Route = createFileRoute('/quotes')({
     const { ansicht, offerte, lead } = Route.useSearch()
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
+    // Ohne Ansicht in der Adresse: die zuletzt benutzte, beim ersten Mal «Neue Offerten» wie in V234 (19.11.2026).
+    const [letzte, merke] = useLetzteAnsicht<OffertAnsicht>('quotes', 'eingang', OFFERT_ANSICHTEN)
+    useEffect(() => {
+      if (ansicht && ansicht !== letzte) merke(ansicht)
+    }, [ansicht, letzte, merke])
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const ziel = ansicht ?? 'vorrat'
+    const ziel = ansicht ?? letzte
     return (
       <Suspense>
         <Offerten
@@ -39,7 +45,7 @@ export const Route = createFileRoute('/quotes')({
             const n = { ansicht: ziel, offerte: offerte ?? null, lead: lead ?? null, ...a }
             void navigate({
               search: {
-                ...(n.ansicht !== 'vorrat' ? { ansicht: n.ansicht } : {}),
+                ansicht: n.ansicht,
                 ...(n.offerte ? { offerte: n.offerte } : {}),
                 ...(n.lead ? { lead: n.lead } : {}),
               },

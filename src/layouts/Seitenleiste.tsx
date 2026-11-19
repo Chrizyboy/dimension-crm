@@ -1,5 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { ChevronRight, Palette, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Logo, SIGNET } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
@@ -50,7 +50,12 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
   const gruppenOffen = useUi((z) => z.gruppenOffen)
   const setGruppeOffen = useUi((z) => z.setGruppeOffen)
   const pfad = useRouterState({ select: (z) => z.location.pathname })
-  const aktiv = findeModul(pfad.split('/')[1] ?? '')
+  const offenesModul = findeModul(pfad.split('/')[1] ?? '')
+  // Auf einem Teil (z. B. Wartungsverträge) gilt der Eintrag des Hauptbereichs («Verträge») als aktiv.
+  const aktiv =
+    offenesModul?.teilVon && sichtbar.some((m) => m.id === offenesModul.teilVon)
+      ? findeModul(offenesModul.teilVon)
+      : offenesModul
   // Wer wenige Bereiche sieht (z. B. Verkauf), hat ohnehin Platz: dann ist ohne eigene Wahl alles offen.
   const allesOffen = sichtbar.length <= ALLES_OFFEN_BIS
   const rolle = useAnmeldung((z) => z.ich?.rolle ?? '')
@@ -100,7 +105,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
       <nav
         aria-label={t('nav.haupt')}
         className={cn(
-          'relative flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto py-2.5',
+          'leiste-bild relative flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto py-2.5',
           eingeklappt ? 'px-2' : 'px-3',
         )}
       >
@@ -111,7 +116,13 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
               (allesOffen || gruppe === 'uebersicht' || gruppe === aktiv?.gruppe || rollenGruppen.includes(gruppe)))
           const name = t(`nav.${gruppe}`)
           // Zugeklappt bleibt der offene Bereich stehen, sonst wüsste man nicht mehr, wo man ist.
-          const module = sichtbar.filter((m) => m.gruppe === gruppe && (offen || m.id === aktiv?.id))
+          // Teile eines Bereichs (z. B. Wartungsverträge unter «Verträge») haben keinen eigenen Eintrag.
+          const module = sichtbar.filter(
+            (m) =>
+              m.gruppe === gruppe &&
+              !(m.teilVon && sichtbar.some((h) => h.id === m.teilVon)) &&
+              (offen || m.id === aktiv?.id),
+          )
           return (
             <div key={gruppe} className="flex flex-col gap-0.5">
               {eingeklappt ? (
@@ -133,25 +144,32 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
                   />
                 </button>
               )}
-              {module.map((m) =>
-                eintrag(
+              {module.map((m) => {
+                const titel = (m.sammeltitel && sichtbar.some((x) => x.teilVon === m.id) ? m.sammeltitel : m.titel)[
+                  sprache
+                ]
+                return eintrag(
                   m.id,
                   <Link
                     key={m.id}
                     to="/$modul"
                     params={{ modul: m.id }}
                     onClick={onNavigiert}
-                    className={cn(LINK, eingeklappt && 'justify-center px-0')}
+                    className={cn(
+                      LINK,
+                      eingeklappt && 'justify-center px-0',
+                      m.id === aktiv?.id && m.id !== offenesModul?.id && AKTIV.className,
+                    )}
                     activeProps={AKTIV}
-                    aria-label={eingeklappt ? m.titel[sprache] : undefined}
+                    aria-label={eingeklappt ? titel : undefined}
                   >
                     <ModulIcon name={m.icon} className="text-sidebar-muted size-4 shrink-0" />
-                    {!eingeklappt && <span className="truncate">{m.titel[sprache]}</span>}
+                    {!eingeklappt && <span className="truncate">{titel}</span>}
                   </Link>,
-                  m.titel[sprache],
+                  titel,
                   m.untertitel[sprache],
-                ),
-              )}
+                )
+              })}
             </div>
           )
         })}
@@ -159,23 +177,8 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
 
       <div className={cn('mx-3 flex shrink-0 flex-col gap-0.5 border-t !border-white/10 py-3')}>
         <AppKacheln eingeklappt={eingeklappt} />
-        <div className="h-2" aria-hidden="true" />
-        {/* Design-System ist eine Hilfe für die Entwicklung, im Betrieb braucht sie niemand. */}
-        {import.meta.env.DEV &&
-          eintrag(
-            'design',
-            <Link
-              to="/design"
-              onClick={onNavigiert}
-              className={cn(LINK, eingeklappt && 'justify-center px-0')}
-              activeProps={AKTIV}
-              aria-label={eingeklappt ? t('befehle.design') : undefined}
-            >
-              <Palette className="text-sidebar-muted size-4 shrink-0" aria-hidden="true" />
-              {!eingeklappt && <span className="truncate">{t('befehle.design')}</span>}
-            </Link>,
-            t('befehle.design'),
-          )}
+        <div className="h-1" aria-hidden="true" />
+        {/* Design-System nur über Ctrl K (beim Entwickeln) oder #/design, nicht in der Leiste (19.11.2026). */}
         {!imMenue &&
           eintrag(
             'einklappen',

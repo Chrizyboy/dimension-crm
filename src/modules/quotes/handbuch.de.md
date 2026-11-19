@@ -17,7 +17,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 
 ### Den Arbeitsvorrat lesen
 
-1. **Offerten** öffnet mit dem **Arbeitsvorrat**: jede Offerte als Karte in ihrer Phase, von «Zu offerieren» bis «Gewonnen».
+1. **Arbeitsvorrat** zeigt jede Offerte als Karte in ihrer Phase, von «Zu offerieren» bis «Gewonnen». **Offerten** öffnet beim ersten Mal mit **Neue Offerten** (wie im alten CRM), danach mit der Ansicht, in der du zuletzt warst.
 2. Rote und orange Hinweise zuerst: überfällig (Termin länger als 5 Arbeitstage her), Nachfassen fällig, Freigabe nötig, Rückfrage.
 3. Karte anklicken: die Offerte öffnet als ganze Seite mit Schritten, Varianten, Unterlagen und dem nächsten Schritt.
 
@@ -100,6 +100,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
+- 19.11.2026: **Offerten** öffnet beim ersten Mal mit **Neue Offerten**, danach mit der Ansicht, in der du zuletzt warst (je Person gemerkt).
 - 19.11.2026: **Rechtsklick** auf eine Offerte in den Listen Muri und Bulle (am Handy lange drücken): Öffnen, Kundenakte öffnen, In Google Maps öffnen, Anrufen, E-Mail schreiben.
 - 04.11.2026: Höchstens sechs Ansichten, **PDF-Import** steht unter **Mehr**. In «Chance und Angaben» stehen nur ausgefüllte Felder, die leeren nach **+ weitere Angaben**.
 - 03.11.2026: «In den Papierkorb» für Offerten (Kopf der Offert-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
