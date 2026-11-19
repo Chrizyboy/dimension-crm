@@ -97,6 +97,7 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : ce qui a des points à traiter passe en premier. Si les rendez-vous et les tâches sont vides, les domaines avec des points ouverts (p. ex. Nouvelles demandes) viennent d’abord ; les cartes de « Équipe et exploitation » sans point ouvert passent à la fin.
 - 19.11.2026 : bouton **Affichage smartphone** / **Affichage ordinateur** en haut : dans l’app Windows, la fenêtre prend la taille d’un mobile ; sur mobile, il affiche la vue ordinateur (mémorisée). Les textes coupés s’affichent en entier au survol.
 - 19.11.2026 : nouvel aspect comme V234 : effet verre avec dégradé, barre latérale flottante avec Apps (site web, Eturnity, AbaNinja, Leads, Acquisition, Salon), boutons ronds en haut pour **Plein écran** (F11) et **Actualiser**.
 - 04.11.2026: La date et ce qui est prévu restent sous la salutation ; les cartes vides deviennent une ligne.

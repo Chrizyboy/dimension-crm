@@ -57,7 +57,9 @@ export default function HeuteKarte() {
         </div>
       )}
       {faellig.length === 0 ? (
-        <p className="text-muted-foreground px-4 py-3 text-sm">{t('finanzen.heute.nichts')}</p>
+        <p data-leer className="text-muted-foreground px-4 py-3 text-sm">
+          {t('finanzen.heute.nichts')}
+        </p>
       ) : (
         <ul className="divide-y border-t">
           {faellig.slice(0, 6).map((b) => (

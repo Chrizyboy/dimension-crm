@@ -63,6 +63,8 @@ export function Avatar({
     <span
       className={cn(
         'inline-flex size-7 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold',
+        // Kurzzeichen dürfen bis vier Zeichen haben («MMO»): enger setzen, damit sie im Kreis bleiben.
+        (zeichen ?? '').length > 2 && 'text-[9px] tracking-tighter',
         farbe,
         className,
       )}

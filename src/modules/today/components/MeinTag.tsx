@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { cn } from '@/lib/utils'
 import {
   BellRing,
   CalendarDays,
@@ -112,6 +113,48 @@ export default function MeinTag({
     : ''
   const offen = d ? anzahlOffen(d) : 0
   const weitere = d ? WEITERE.filter((w) => listeVon(d, w.liste).anzahl > 0) : []
+  const kernLeer = d ? d.termine.anzahl + d.aufgaben.anzahl + d.vergeben.anzahl === 0 : false
+
+  // Termine und Aufgaben; steht oben, ausser beide sind leer.
+  const kern = d && (
+    <div className="grid items-start gap-4 lg:grid-cols-2">
+      <TagKarte
+        icon={CalendarDays}
+        titel={t('tag.liste.termine')}
+        liste={d.termine}
+        heute={d.heute}
+        max={8}
+        testId="tag-termine"
+      />
+      <TagKarte
+        icon={ListChecks}
+        titel={t('tag.liste.aufgaben')}
+        liste={d[aufgabenSicht]}
+        heute={d.heute}
+        max={8}
+        alleZiel={aufgabenSicht === 'vergeben' ? '/tasks?wer=vergeben' : '/tasks'}
+        onAbhaken={(z) => void abhaken(z)}
+        {...(aufgabenSicht === 'aufgaben'
+          ? { onVerschieben: (z: TagZeile, bis: string) => void verschiebe(z, bis) }
+          : {})}
+        testId="tag-aufgaben"
+        kopf={
+          <Filterchips
+            einzeln
+            beschriftung={t('tag.liste.aufgaben')}
+            gewaehlt={[aufgabenSicht]}
+            optionen={[
+              { wert: 'aufgaben', text: t('tag.aufgabenFilter.fuerMich'), anzahl: d.aufgaben.anzahl },
+              { wert: 'vergeben', text: t('tag.aufgabenFilter.vergeben'), anzahl: d.vergeben.anzahl },
+            ]}
+            onChange={([w]) => {
+              setAufgabenSicht(w === 'vergeben' ? 'vergeben' : 'aufgaben')
+            }}
+          />
+        }
+      />
+    </div>
+  )
 
   return (
     <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6 px-4 py-6 sm:px-6" data-testid="mein-tag">
@@ -149,52 +192,17 @@ export default function MeinTag({
 
       {d && (
         <>
-          <div className="grid items-start gap-4 lg:grid-cols-2">
-            <TagKarte
-              icon={CalendarDays}
-              titel={t('tag.liste.termine')}
-              liste={d.termine}
-              heute={d.heute}
-              max={8}
-              testId="tag-termine"
-            />
-            <TagKarte
-              icon={ListChecks}
-              titel={t('tag.liste.aufgaben')}
-              liste={d[aufgabenSicht]}
-              heute={d.heute}
-              max={8}
-              alleZiel={aufgabenSicht === 'vergeben' ? '/tasks?wer=vergeben' : '/tasks'}
-              onAbhaken={(z) => void abhaken(z)}
-              {...(aufgabenSicht === 'aufgaben'
-                ? { onVerschieben: (z: TagZeile, bis: string) => void verschiebe(z, bis) }
-                : {})}
-              testId="tag-aufgaben"
-              kopf={
-                <Filterchips
-                  einzeln
-                  beschriftung={t('tag.liste.aufgaben')}
-                  gewaehlt={[aufgabenSicht]}
-                  optionen={[
-                    { wert: 'aufgaben', text: t('tag.aufgabenFilter.fuerMich'), anzahl: d.aufgaben.anzahl },
-                    { wert: 'vergeben', text: t('tag.aufgabenFilter.vergeben'), anzahl: d.vergeben.anzahl },
-                  ]}
-                  onChange={([w]) => {
-                    setAufgabenSicht(w === 'vergeben' ? 'vergeben' : 'aufgaben')
-                  }}
-                />
-              }
-            />
-          </div>
-
-          <div className="grid items-start gap-4 lg:grid-cols-2">
-            <ZieleKarte ziele={d.ziele ?? null} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />
-            <TeamHeute />
-            <WetterKarte />
-          </div>
+          {/* Was Punkte hat, steht oben: Sind Termine und Aufgaben leer, rücken die Bereiche mit offenen Punkten nach vorn. */}
+          {!kernLeer && kern}
 
           {weitere.length > 0 && (
-            <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div
+              className={cn(
+                'grid items-start gap-4 md:grid-cols-2',
+                // Drei Spalten erst ab drei Karten, sonst bliebe rechts eine leere Lücke.
+                weitere.length >= 3 && 'xl:grid-cols-3',
+              )}
+            >
               {weitere.map((w) => (
                 <TagKarte
                   key={w.liste}
@@ -209,6 +217,14 @@ export default function MeinTag({
               ))}
             </div>
           )}
+
+          <div className="grid items-start gap-4 lg:grid-cols-2">
+            <ZieleKarte ziele={d.ziele ?? null} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />
+            <TeamHeute />
+            <WetterKarte />
+          </div>
+
+          {kernLeer && kern}
 
           {offen === 0 && <Leerzustand icon={Sun} titel={t('tag.leerTitel')} text={t('tag.leerText')} />}
         </>

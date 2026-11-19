@@ -27,7 +27,9 @@ export default function HeuteKarte() {
         </Link>
       </KarteKopf>
       {wichtig.length === 0 && unter === 0 ? (
-        <p className="text-muted-foreground px-4 py-3 text-sm">{t('einkauf.heute.nichts')}</p>
+        <p data-leer className="text-muted-foreground px-4 py-3 text-sm">
+          {t('einkauf.heute.nichts')}
+        </p>
       ) : (
         <ul className="divide-y">
           {wichtig.slice(0, 5).map((b) => (

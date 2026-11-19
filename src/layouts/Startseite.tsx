@@ -104,7 +104,8 @@ export function Startseite() {
                       <AusschreibungenHeute />
                     </Suspense>
                   )}
-                  <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  {/* Karten ohne Punkte («nichts offen», `data-leer`) rutschen ans Ende: oben steht, was heute zu tun ist. */}
+                  <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4 [&>*:has([data-leer])]:order-last">
                     {hatRecht(ich, 'visum') && (
                       <Suspense>
                         <VisumHeute />
