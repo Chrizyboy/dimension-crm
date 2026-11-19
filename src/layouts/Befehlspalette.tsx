@@ -8,6 +8,7 @@ import { Kbd } from '@/components/ui/diverses'
 import { useBefehle, type Befehl } from '@/hooks/useBefehle'
 import { useKontaktBefehle } from '@/hooks/useKontaktBefehle'
 import { useLeadBefehle } from '@/hooks/useLeadBefehle'
+import { befehlTreffer } from '@/lib/befehlSuche'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { useUi } from '@/stores/ui'
 
@@ -50,7 +51,12 @@ export function Befehlspalette() {
           aria-describedby={undefined}
         >
           <DialogPrimitive.Title className="sr-only">{t('befehle.titel')}</DialogPrimitive.Title>
-          <Command loop label={t('befehle.titel')} className="flex flex-col">
+          <Command
+            loop
+            label={t('befehle.titel')}
+            className="flex flex-col"
+            filter={(_wert, suche, stichworte) => befehlTreffer(suche, stichworte)}
+          >
             <div className="flex items-center gap-2 border-b px-3">
               <Search className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
               <Command.Input
