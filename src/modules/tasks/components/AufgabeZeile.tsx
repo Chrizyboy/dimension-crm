@@ -146,7 +146,7 @@ export function AufgabeZeile({
             onClick={() => void morgen()}
             title={t('aufgaben.morgenVerschieben')}
             aria-label={t('aufgaben.morgenVerschiebenFuer', { titel: a.titel })}
-            className="text-muted-foreground hover:text-foreground focus-visible:ring-ring hidden rounded p-1 outline-none group-hover:inline-flex focus-visible:inline-flex focus-visible:ring-2 md:inline-flex md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
+            className="text-muted-foreground hover:text-foreground focus-visible:ring-ring hidden rounded p-1 outline-none group-hover:inline-flex focus-visible:inline-flex focus-visible:ring-2 md:inline-flex md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100 pointer-coarse:inline-flex"
           >
             <CalendarClock className="size-4" />
           </button>
