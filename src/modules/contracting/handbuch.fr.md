@@ -101,6 +101,7 @@ Youdera finance et possède l’installation, nous la construisons et l’entret
 
 ## Nouveautés {#neu}
 
+- 19.11.2026: « À décider » affiche une erreur de chargement comme erreur avec « Réessayer » au lieu de « Rien à vérifier ».
 - 19.11.2026: **Pourquoi et comment** dans chaque dossier : évaluation Youdera avec feu (client, Youdera, Dimension), installation adaptée à la consommation, économie, fiche de vente et lien vers le registre foncier. Les toits avec PV existant sont écartés.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 03.11.2026: «Mettre à la corbeille» pour les grands projets (dossier et page), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).

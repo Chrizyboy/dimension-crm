@@ -1,7 +1,7 @@
 import { Building2, Check, Eye, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Leerzustand } from '@/components/shared/Zustaende'
+import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Karte } from '@/components/ui/karte'
@@ -222,7 +222,10 @@ export function Auswahl({ onOeffnen }: { onOeffnen: (id: string) => void }) {
         <p className="text-muted-foreground text-xs">
           {t('grossprojekte.auswahl.tasten')} <Kbd>J</Kbd> <Kbd>B</Kbd> <Kbd>N</Kbd> <Kbd>↓</Kbd>
         </p>
-        {offen.length === 0 && !daten.isPending ? (
+        {/* Ein Ladefehler (z. B. Datenbank noch nicht aktualisiert) darf nie wie «Nichts zu prüfen» aussehen. */}
+        {daten.error ? (
+          <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} />
+        ) : offen.length === 0 && !daten.isPending ? (
           <Leerzustand
             icon={Building2}
             titel={t('grossprojekte.leer.pruefen')}
