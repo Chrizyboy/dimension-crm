@@ -1,13 +1,15 @@
 import { useTable, type RowData, type SortingState } from '@tanstack/react-table'
-import { ArrowDown, ArrowUp } from 'lucide-react'
+import { ArrowDown, ArrowUp, SquareArrowOutUpRight } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
+import { KontextmenueEintraege, KontextmenueInhalt, KontextmenuePrimitiv as KM } from '@/components/ui/kontextmenue'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zelle, Zeile } from '@/components/ui/tabelle'
 import { tabellenFunktionen, type Spalten } from '@/lib/tabelle'
 import { cn } from '@/lib/utils'
+import type { ZeilenAktion } from '@/lib/zeilenAktionen'
 
 interface DatentabelleProps<T extends RowData> {
   daten: T[]
@@ -24,6 +26,8 @@ interface DatentabelleProps<T extends RowData> {
   fehler?: unknown
   onNochmal?: () => void
   beschriftung: string
+  /** Weitere Einträge im Rechtsklick-Menü einer Zeile (Google Maps, Anrufen …); «Öffnen» kommt von selbst dazu. */
+  aktionen?: (zeile: T) => ZeilenAktion[]
 }
 
 const KEINE_SORTIERUNG: SortingState = []
@@ -77,6 +81,7 @@ export function Datentabelle<T extends RowData>({
   fehler,
   onNochmal,
   beschriftung,
+  aktionen,
 }: DatentabelleProps<T>) {
   const { t } = useTranslation()
   const tabelle = useTable({
@@ -87,6 +92,8 @@ export function Datentabelle<T extends RowData>({
     getRowId: kennung,
   })
   const [zeigen, setZeigen] = useState(SCHRITT)
+  // Zeile unter dem letzten Rechtsklick; ein Menü für die ganze Tabelle statt eines pro Zeile (lange Listen).
+  const [menueZeile, setMenueZeile] = useState<T | null>(null)
 
   if (fehler)
     return (
@@ -98,6 +105,24 @@ export function Datentabelle<T extends RowData>({
   if (!laedt && daten.length === 0 && leer) return <>{leer}</>
 
   const zeilen = tabelle.getRowModel().rows
+  const mitMenue = !laedt && Boolean(onOeffnen ?? aktionen)
+  const menueEintraege: ZeilenAktion[] =
+    menueZeile === null
+      ? []
+      : [
+          ...(onOeffnen
+            ? [
+                {
+                  text: t('kontextmenue.oeffnen'),
+                  icon: SquareArrowOutUpRight,
+                  aktion: () => {
+                    onOeffnen(menueZeile)
+                  },
+                },
+              ]
+            : []),
+          ...(aktionen?.(menueZeile) ?? []),
+        ]
 
   return (
     <>
@@ -137,62 +162,83 @@ export function Datentabelle<T extends RowData>({
               </tr>
             ))}
           </TabelleKopf>
-          <TabelleKoerper>
-            {laedt
-              ? Array.from({ length: 8 }, (_, i) => (
-                  <Zeile key={i}>
-                    {spalten.map((s, j) => (
-                      <Zelle key={j} className={cn(s.meta?.nurBreit && 'hidden md:table-cell')}>
-                        <Skelett className="h-4 w-3/4" />
-                      </Zelle>
+          <KM.Root
+            modal={false}
+            onOpenChange={(offen) => {
+              if (!offen) setMenueZeile(null)
+            }}
+          >
+            <KM.Trigger asChild disabled={!mitMenue}>
+              <TabelleKoerper>
+                {laedt
+                  ? Array.from({ length: 8 }, (_, i) => (
+                      <Zeile key={i}>
+                        {spalten.map((s, j) => (
+                          <Zelle key={j} className={cn(s.meta?.nurBreit && 'hidden md:table-cell')}>
+                            <Skelett className="h-4 w-3/4" />
+                          </Zelle>
+                        ))}
+                      </Zeile>
+                    ))
+                  : zeilen.slice(0, zeigen).map((zeile) => (
+                      <Zeile
+                        key={zeile.id}
+                        data-aktiv={zeile.id === aktiveId}
+                        onContextMenu={
+                          mitMenue
+                            ? () => {
+                                setMenueZeile(zeile.original)
+                              }
+                            : undefined
+                        }
+                        tabIndex={onOeffnen ? 0 : undefined}
+                        className={cn(onOeffnen && 'focus-visible:bg-muted cursor-pointer outline-none')}
+                        onClick={
+                          onOeffnen
+                            ? () => {
+                                onOeffnen(zeile.original)
+                              }
+                            : undefined
+                        }
+                        onKeyDown={
+                          onOeffnen
+                            ? (e) => {
+                                if (e.key === 'Enter') onOeffnen(zeile.original)
+                                // Pfeiltasten springen zur nächsten Zeile, wie in einer Tabellenkalkulation.
+                                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                                  e.preventDefault()
+                                  const ziel =
+                                    e.key === 'ArrowDown'
+                                      ? e.currentTarget.nextElementSibling
+                                      : e.currentTarget.previousElementSibling
+                                  if (ziel instanceof HTMLElement) ziel.focus()
+                                }
+                              }
+                            : undefined
+                        }
+                      >
+                        {zeile.getAllCells().map((zelle) => {
+                          const meta = zelle.column.columnDef.meta
+                          return (
+                            <Zelle
+                              key={zelle.id}
+                              zahl={meta?.zahl ?? false}
+                              className={cn(meta?.nurBreit && 'hidden md:table-cell')}
+                            >
+                              <tabelle.FlexRender cell={zelle} />
+                            </Zelle>
+                          )
+                        })}
+                      </Zeile>
                     ))}
-                  </Zeile>
-                ))
-              : zeilen.slice(0, zeigen).map((zeile) => (
-                  <Zeile
-                    key={zeile.id}
-                    data-aktiv={zeile.id === aktiveId}
-                    tabIndex={onOeffnen ? 0 : undefined}
-                    className={cn(onOeffnen && 'focus-visible:bg-muted cursor-pointer outline-none')}
-                    onClick={
-                      onOeffnen
-                        ? () => {
-                            onOeffnen(zeile.original)
-                          }
-                        : undefined
-                    }
-                    onKeyDown={
-                      onOeffnen
-                        ? (e) => {
-                            if (e.key === 'Enter') onOeffnen(zeile.original)
-                            // Pfeiltasten springen zur nächsten Zeile, wie in einer Tabellenkalkulation.
-                            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                              e.preventDefault()
-                              const ziel =
-                                e.key === 'ArrowDown'
-                                  ? e.currentTarget.nextElementSibling
-                                  : e.currentTarget.previousElementSibling
-                              if (ziel instanceof HTMLElement) ziel.focus()
-                            }
-                          }
-                        : undefined
-                    }
-                  >
-                    {zeile.getAllCells().map((zelle) => {
-                      const meta = zelle.column.columnDef.meta
-                      return (
-                        <Zelle
-                          key={zelle.id}
-                          zahl={meta?.zahl ?? false}
-                          className={cn(meta?.nurBreit && 'hidden md:table-cell')}
-                        >
-                          <tabelle.FlexRender cell={zelle} />
-                        </Zelle>
-                      )
-                    })}
-                  </Zeile>
-                ))}
-          </TabelleKoerper>
+              </TabelleKoerper>
+            </KM.Trigger>
+            {menueEintraege.length > 0 && (
+              <KontextmenueInhalt>
+                <KontextmenueEintraege aktionen={menueEintraege} />
+              </KontextmenueInhalt>
+            )}
+          </KM.Root>
         </Tabelle>
       </div>
       {!laedt && zeilen.length > zeigen && (

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-05
+stand: 2026-11-19
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -78,6 +78,7 @@ Rechnungen sieht nur, wer das Recht Finanzen hat.
 
 ## Neu {#neu}
 
+- 19.11.2026: **Rechtsklick** auf einen Kunden (am Handy lange drücken): Öffnen, In Google Maps öffnen, Anrufen, E-Mail schreiben. Das Menü gibt es in allen Listen mit **Öffnen**.
 - 05.11.2026: Anhänge aus dem alten CRM stehen nur noch einmal beim Kunden, Links nach SharePoint öffnen wieder, neu **Ordner im alten CRM-Backup**.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 03.11.2026: «In den Papierkorb» für Gebäude, Dokumente und eigene Verlauf-Einträge, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).

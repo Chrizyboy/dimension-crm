@@ -16,6 +16,7 @@ import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { KiAssistent } from './KiAssistent'
 import { KiHinweis } from './KiHinweis'
+import { MAIL_DATEIEN, mailDateiAlsEml } from '@/lib/mailDatei'
 
 const TON = { lead: 'ok', anliegen: 'info', rechnung: 'warnung', werbung: 'neutral', sonstiges: 'neutral' } as const
 
@@ -140,13 +141,13 @@ export function KiMailLesen({
               <input
                 ref={datei}
                 type="file"
-                accept=".eml,message/rfc822"
+                accept={MAIL_DATEIEN}
                 className="hidden"
                 data-testid="ki-mail-datei"
                 onChange={(x) => {
                   const f = x.target.files?.[0]
                   if (f)
-                    void f.text().then((inhalt) => {
+                    void mailDateiAlsEml(f).then((inhalt) => {
                       setEml({ name: f.name, inhalt })
                     })
                 }}

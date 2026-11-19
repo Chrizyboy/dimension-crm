@@ -5,6 +5,7 @@ import { TooltipAnbieter } from '@/components/ui/tooltip'
 import { useOberflaeche } from '@/hooks/useOberflaeche'
 import { useTastenkuerzel } from '@/hooks/useTastenkuerzel'
 import { useUpdatePruefung } from '@/hooks/useUpdatePruefung'
+import { useVolltext } from '@/hooks/useVolltext'
 import { cn } from '@/lib/utils'
 import { AssistentFenster } from '@/modules/ai'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -25,6 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   useOberflaeche()
   useTastenkuerzel()
   useUpdatePruefung()
+  useVolltext()
   const eingeklappt = useUi((z) => z.seitenleisteEingeklappt)
   const darstellung = useUi((z) => z.darstellung)
   const einfach = useAnmeldung((z) => z.ich?.ansicht === 'einfach')

@@ -14,6 +14,7 @@ import { supabase } from '@/services/supabase'
 import type { AkteReiter } from '../types'
 import { kundenSpalten } from './kundenSpalten'
 import { StandFilter } from './StandFilter'
+import { kontaktAktionen } from '@/lib/zeilenAktionen'
 
 const KundenSeite = lazy(() => import('./KundenSeite'))
 const KontaktDialog = lazy(() => import('./KontaktDialog'))
@@ -144,6 +145,7 @@ export default function Kunden({ kundeId, onAkte }: KundenProps) {
             onOeffnen={(k) => {
               onAkte(k.id)
             }}
+            aktionen={(k) => kontaktAktionen(t, k)}
             sortierung={[{ id: 'name', desc: false }]}
             laedt={kontakte.isPending}
             leer={

@@ -1,5 +1,5 @@
 import { ChevronRight, SearchX } from 'lucide-react'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -13,6 +13,9 @@ import type { Geschaeft, VerkaufFilter } from '../types'
 import { AnsichtenMenue } from './AnsichtenMenue'
 import { geschaeftSpalten } from './geschaeftSpalten'
 import { LeadZeile } from './LeadZeile'
+import { useLeadAktionen } from './useLeadAktionen'
+
+const TerminblattDialog = lazy(() => import('./TerminblattDialog'))
 import { Sammelaenderung } from './Sammelaenderung'
 
 interface LeadListeProps {
@@ -105,6 +108,8 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
     [t, staende.werte, quellen.werte, vorname],
   )
   const gewaehlt = geschaefte.filter((g) => wahl.has(g.id))
+  const { aktionen, blatt, schliessen } = useLeadAktionen(onOeffnen)
+  const tabellenAktionen = useCallback((g: Geschaeft) => aktionen(g, false), [aktionen])
   const aktuell: GespeicherteAnsicht['einstellungen'] = { filter, art }
 
   return (
@@ -141,6 +146,7 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
           onOeffnen={(g) => {
             onOeffnen(g.id)
           }}
+          aktionen={tabellenAktionen}
           sortierung={[{ id: 'datum', desc: true }]}
           leer={<Leerzustand icon={SearchX} titel={t('verkauf.keineTreffer')} text={t('verkauf.keineTrefferText')} />}
         />
@@ -195,6 +201,7 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
                         person={vorname.get(g.terminPersonId ?? g.personId ?? '') ?? null}
                         onWahl={waehle}
                         onOeffnen={onOeffnen}
+                        aktionen={aktionen}
                       />
                     ))}
                   </ul>
@@ -211,6 +218,11 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
             setWahl(new Set())
           }}
         />
+      )}
+      {blatt && (
+        <Suspense>
+          <TerminblattDialog g={blatt} onSchliessen={schliessen} />
+        </Suspense>
       )}
     </div>
   )

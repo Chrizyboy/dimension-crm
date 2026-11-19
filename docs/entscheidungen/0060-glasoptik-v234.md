@@ -30,3 +30,20 @@ der grösste Unterschied ist das Aussehen. Darum kommt zuerst die Optik (Etappe 
 
 Neue Ansichten nehmen weiter nur Tokens und Bausteine; wer eine grosse Fläche baut, nimmt `Karte` (Glas) statt eigener
 Rahmen. Glas nie auf Elemente legen, die pro Zeile vorkommen.
+
+## Nachtrag 19.11.2026: Bedienung wie V234, besser
+
+Chris: «besser als V234, aber alles davon». Darum keine 1:1-Gliederung, sondern die fehlenden Bedienwege:
+
+- **Rechtsklick-Menü** (`src/components/ui/kontextmenue.tsx`, Radix ContextMenu; am Handy lange drücken, Tastatur
+  Shift F10). Jede `Datentabelle` mit `onOeffnen` hat es von selbst mit «Öffnen»; weitere Einträge über die Prop
+  `aktionen`, gemeinsame Kontakt-Einträge (Google Maps, Anrufen, E-Mail) aus `kontaktAktionen` in
+  `src/lib/zeilenAktionen.ts`. Ein Menü pro Tabelle, nicht pro Zeile (lange Listen). Leads zusätzlich Terminblatt
+  und Kundenakte, Offerten Kundenakte.
+- **Ganzer Text beim Darüberfahren** für abgeschnittene Texte (`truncate`, `line-clamp-*`) in der ganzen App über
+  `useVolltext` (setzt ein `title`).
+- **PC/Handy-Umschalter**: Windows-App verkleinert das Fenster auf 430×900 und zurück, Handy zeigt die PC-Ansicht
+  (Viewport 1280, gemerkt), Browser am PC öffnet ein Fenster in Handy-Grösse.
+- **Outlook-Mails (.msg)**: werden im Browser mit `@kenjiuno/msgreader` (erst bei Bedarf geladen) in eine .eml
+  umgebaut (`src/lib/mailDatei.ts`); Server und KI lesen weiter nur .eml. `iconv-lite` ist im Browser durch
+  `src/lib/iconvErsatz.ts` ersetzt (sonst fehlt Node-«Buffer»).

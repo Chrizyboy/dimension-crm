@@ -34,7 +34,13 @@ export default defineConfig({
   clearScreen: false,
   server: { port: 1420, strictPort: true },
   envPrefix: ['VITE_', 'TAURI_ENV_'],
-  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Der .msg-Leser braucht iconv-lite, das im Browser Node-«Buffer» verlangt (src/lib/iconvErsatz.ts).
+      'iconv-lite': fileURLToPath(new URL('./src/lib/iconvErsatz.ts', import.meta.url)),
+    },
+  },
   plugins: [
     tanstackRouter({ target: 'react', autoCodeSplitting: true, routesDirectory: './src/app' }),
     react(),

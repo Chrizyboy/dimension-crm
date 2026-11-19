@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
 (docs/installation.md).
 
+## 1.3.1
+
+- Rechtsklick in den Listen (am Handy lange drücken): Google Maps, Anrufen, E-Mail, Kundenakte, bei Leads auch Terminblatt.
+- Abgeschnittene Texte zeigen beim Darüberfahren den ganzen Text; neuer Knopf PC/Handy oben.
+- Outlook-Mails (.msg) lassen sich bei «Anfragen holen» einlesen.
+
 ## 1.3.0
 
 - Neues Aussehen wie V234: Glasoptik, Seitenleiste mit Apps (Website, Eturnity, AbaNinja, Leads, Akquise, Messe).

@@ -35,6 +35,25 @@ function GithubBereit {
 
 Write-Host 'Dimension Work Vorschau' -ForegroundColor Cyan
 
+# Dieses Skript selbst auf den neusten Stand bringen. Sonst läuft die Verknüpfung mit der alten Fassung aus dem
+# Ordner dimension-crm, bis jemand «Dimension Work aktualisieren» startet (Chris 19.11.2026: «wieder nicht erkannt»).
+# Nur wenn der Ordner sauber auf main steht; sonst einfach mit der vorhandenen Fassung weiter.
+if (-not $env:DW_VORSCHAU_NEU) {
+  Push-Location $Haupt
+  git checkout -q -- src/routeTree.gen.ts 2>$null
+  $vorher = (Get-FileHash $PSCommandPath).Hash
+  if (-not (git status --porcelain --untracked-files=no) -and (git rev-parse --abbrev-ref HEAD) -eq 'main') {
+    git pull -q --ff-only 2>$null
+  }
+  Pop-Location
+  if ((Get-FileHash $PSCommandPath).Hash -ne $vorher) {
+    Write-Host 'Die Vorschau hat sich selbst aktualisiert und startet neu.' -ForegroundColor Yellow
+    $env:DW_VORSCHAU_NEU = '1'
+    & $PSCommandPath
+    exit $LASTEXITCODE
+  }
+}
+
 Schritt '1/4 Neuste Fassung zusammenstellen'
 Remove-Item $StandDatei -ErrorAction SilentlyContinue
 & $Bauen -Haupt $Haupt -Vorschau $Vorschau -Repo $Repo

@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-19
 rollen: verkauf, geschaeftsleitung
 ---
 
@@ -115,6 +115,7 @@ Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für
 
 ## Neu {#neu}
 
+- 19.11.2026: **Rechtsklick** auf einen Lead (am Handy lange drücken): Lead öffnen, In Google Maps öffnen, Terminblatt drucken, Kundenakte öffnen, Anrufen, E-Mail schreiben. **Anfragen holen › Mail-Datei einlesen** nimmt jetzt auch Outlook-Mails (.msg), die man aus Outlook auf den Desktop gezogen hat.
 - 04.11.2026: Höchstens sechs Reiter: **Monatsbericht** und **Steuerung** stehen unter **Mehr** (Tasten 1–7 wie bisher). In der Lead-Akte stehen leere Auswahlfelder (Quelle, Erreichbarkeit, Finanzierung, Zeithorizont, Förderung) erst nach **+ weitere Angaben**.
 - 03.11.2026: «In den Papierkorb» für Leads (in der Lead-Akte), mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Person, Quelle und Region mit Häkchen (mehrere, **nur**, «Alle ausser …»); Knopf **Spalten** blendet Schritte der Pipeline ein und aus. Die Auswahl bleibt gemerkt.

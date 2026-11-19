@@ -47,10 +47,12 @@ export function Kopfzeile() {
           onClick={() => {
             setBefehlspalette(true)
           }}
-          className="glas text-muted-foreground hover:text-foreground focus-visible:ring-ring flex h-10 max-w-md min-w-0 flex-1 items-center gap-2 rounded-full px-4 text-sm !shadow-[var(--glas-schatten-klein)] transition-colors outline-none focus-visible:ring-2"
+          aria-label={t('nav.suchen')}
+          // Am Handy nur die Lupe (rund wie die anderen Knöpfe), sonst bliebe vom Text nur «S.».
+          className="glas text-muted-foreground hover:text-foreground focus-visible:ring-ring flex h-10 w-10 max-w-md min-w-0 flex-none items-center justify-center gap-2 rounded-full text-sm !shadow-[var(--glas-schatten-klein)] transition-colors outline-none focus-visible:ring-2 sm:w-auto sm:flex-1 sm:justify-start sm:px-4"
         >
           <Search className="size-4 shrink-0" aria-hidden="true" />
-          <span className="flex-1 truncate text-left">{t('nav.suchen')}</span>
+          <span className="hidden flex-1 truncate text-left sm:block">{t('nav.suchen')}</span>
           <Kbd className="hidden sm:inline-flex">{kuerzelText('k')}</Kbd>
         </button>
       )}
