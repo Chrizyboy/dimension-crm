@@ -39,14 +39,15 @@ export function DialogInhalt({
   const { t } = useTranslation()
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="animate-einblenden fixed inset-0 z-50 bg-[rgb(2_10_24/0.45)] backdrop-blur-[2px]" />
+      <DialogPrimitive.Overlay className="animate-einblenden fixed inset-0 z-50 bg-[rgb(11_27_46/0.32)] backdrop-blur-[4px]" />
       <DialogPrimitive.Content
         className={cn(
           'animate-hochgleiten bg-surface shadow-pop fixed z-50 flex flex-col outline-none',
           art === 'mitte' &&
-            'top-1/2 left-1/2 max-h-[85vh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border',
+            'top-1/2 left-1/2 max-h-[85vh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-[var(--glas-rand)]',
           art === 'seite' &&
-            'inset-x-0 bottom-0 max-h-[90vh] rounded-t-xl border-t md:inset-y-0 md:right-0 md:left-auto md:max-h-none md:w-[40rem] md:max-w-[calc(100vw-4rem)] md:rounded-none md:border-t-0 md:border-l',
+            // Am PC schwebend mit Abstand und runden Ecken wie die Seitenleiste (V234).
+            'inset-x-0 bottom-0 max-h-[90vh] rounded-t-[24px] border-t md:inset-y-3.5 md:right-3.5 md:left-auto md:max-h-none md:w-[40rem] md:max-w-[calc(100vw-4rem)] md:rounded-[24px] md:border md:border-[var(--glas-rand)]',
           art === 'seite' && breite === 'breit' && 'md:w-[48rem]',
           className,
         )}

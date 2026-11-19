@@ -7,6 +7,8 @@
     "core:default",
     "notification:default",
     "window-state:default",
+    "core:window:allow-set-fullscreen",
+    "core:window:allow-is-fullscreen",
     "autostart:allow-enable",
     "autostart:allow-disable",
     "autostart:allow-is-enabled",

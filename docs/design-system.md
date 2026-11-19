@@ -4,8 +4,10 @@ Sichtbar in der App unter **Design-System** (`#/design`, unten in der Seitenleis
 
 ## Grundsätze
 
-- **Ruhig und dicht:** Viel Information auf einem Bildschirm, wenig Dekoration. Weisse Flächen auf leicht bläulichem Grau.
-- **Marke sofort erkennbar:** Seitenleiste immer Marineblau `#02224F`, Akzent Sonnen-Orange `#EF7C00` (beide aus dem Logo gemessen).
+- **Glasoptik wie V234** (Entscheid 0060): Milchglas-Flächen auf einem weichen Farbverlauf, grosse Rundungen,
+  schwebende Seitenleiste. Unschärfe nur auf grossen Flächen (`glas`), Listen mit `liste-glas` ohne Unschärfe.
+- **Marke sofort erkennbar:** Seitenleiste Marineblau-Glas, Akzent Sonnen-Orange `#EF7C00` (beide aus dem Logo
+  gemessen); Hauptknopf orange mit Verlauf und dunkler Schrift.
 - **Zustände unabhängig von der Marke:** Grün = gut, Orange-Braun = Achtung, Rot = kritisch, Blau = Info. Orange wird nie für Fehler verwendet.
 - **Alles mit der Tastatur:** Ctrl K öffnet die Befehlspalette, Ctrl B klappt die Seitenleiste ein. Jeder Knopf hat einen sichtbaren Fokus-Ring.
 - **Zugänglich:** WCAG 2.1 AA, automatisch geprüft mit axe in Hell und Dunkel (`e2e/barrierefreiheit.spec.ts`).
@@ -18,28 +20,29 @@ Sichtbar in der App unter **Design-System** (`#/design`, unten in der Seitenleis
 
 Komponenten nutzen nie feste Farbwerte, nur Tokens wie `bg-surface`, `text-muted-foreground`, `bg-primary`, `text-ok`, `bg-bad-soft`. Hell/Dunkel wechselt über die Klasse `.dark` auf `<html>`.
 
-| Gruppe       | Tokens                                                                               |
-| ------------ | ------------------------------------------------------------------------------------ |
-| Flächen      | `background`, `surface`, `surface-2`, `muted`, `border`, `border-strong`             |
-| Text         | `foreground`, `muted-foreground`                                                     |
-| Aktionen     | `primary`, `primary-hover`, `accent`, `accent-soft`, `accent-ink`, `ring`            |
-| Zustände     | `ok`, `warn`, `bad`, `info`, je mit `-soft`                                          |
-| Seitenleiste | `sidebar`, `sidebar-foreground`, `sidebar-active`, `sidebar-muted`, `sidebar-border` |
+| Gruppe       | Tokens                                                                                                                 |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| Flächen      | `background`, `surface`, `surface-2`, `muted`, `border`, `border-strong`                                               |
+| Text         | `foreground`, `muted-foreground`                                                                                       |
+| Aktionen     | `primary`, `primary-hover`, `accent`, `accent-soft`, `accent-ink`, `ring`                                              |
+| Zustände     | `ok`, `warn`, `bad`, `info`, je mit `-soft`                                                                            |
+| Seitenleiste | `sidebar`, `sidebar-foreground`, `sidebar-active`, `sidebar-muted`, `sidebar-border`                                   |
+| Glas         | `--wand`, `--glas`, `--glas-stark`, `--glas-feld`, `--glas-rand`, `--glas-wahl`, `--glas-schatten`, `--akzent-verlauf` |
 
-Schriften: `font-display` (Schibsted Grotesk, Titel), `font-sans` (Public Sans, Text), `font-mono` (JetBrains Mono, Nummern). Beträge mit Klasse `zahlen`.
+Schriften: `font-display` und `font-sans` sind die Systemschrift (Segoe UI Variable, SF Pro; Rückfall Public Sans), `font-mono` (JetBrains Mono, Nummern). Beträge mit Klasse `zahlen`.
 
 ## Bausteine (`src/components/ui/`)
 
-| Datei                                    | Inhalt                                                                                     |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `button.tsx`                             | Knopf in 6 Arten (primary, accent, secondary, ghost, danger, link), 4 Grössen, mit `laedt` |
-| `input.tsx`, `feld.tsx`                  | Eingabefeld, Textfeld, `Feld` mit Beschriftung, Hinweis und Fehlermeldung                  |
-| `auswahl.tsx`, `schalter.tsx`            | Auswahlliste, Kästchen, Schalter                                                           |
-| `badge.tsx`, `karte.tsx`                 | Statusmarke, Karte mit Kopf                                                                |
-| `dialog.tsx`                             | Dialog in der Mitte oder als Seitenblatt                                                   |
-| `menue.tsx`, `tooltip.tsx`, `reiter.tsx` | Menü, Hinweis beim Darüberfahren, Reiter                                                   |
-| `tabelle.tsx`                            | Tabelle, Zahlenspalten rechtsbündig                                                        |
-| `diverses.tsx`                           | Skelett (Ladeanzeige), Tastenkürzel, Trenner, Avatar                                       |
+| Datei                                    | Inhalt                                                                                                         |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `button.tsx`                             | Knopf in 7 Arten (primary, accent, secondary, ghost, danger, link, glas), 5 Grössen (auch `rund`), mit `laedt` |
+| `input.tsx`, `feld.tsx`                  | Eingabefeld, Textfeld, `Feld` mit Beschriftung, Hinweis und Fehlermeldung                                      |
+| `auswahl.tsx`, `schalter.tsx`            | Auswahlliste, Kästchen, Schalter                                                                               |
+| `badge.tsx`, `karte.tsx`                 | Statusmarke, Karte mit Kopf                                                                                    |
+| `dialog.tsx`                             | Dialog in der Mitte oder als Seitenblatt                                                                       |
+| `menue.tsx`, `tooltip.tsx`, `reiter.tsx` | Menü, Hinweis beim Darüberfahren, Reiter                                                                       |
+| `tabelle.tsx`                            | Tabelle, Zahlenspalten rechtsbündig                                                                            |
+| `diverses.tsx`                           | Skelett (Ladeanzeige), Tastenkürzel, Trenner, Avatar                                                           |
 
 Gemeinsame Bausteine in `src/components/shared/`: `Seitenkopf`, `Knopfleiste`, `Werkzeugleiste`, `Suchfeld`,
 `Datentabelle`, Listenzellen in `Zellen.tsx` (`NameZelle`, `DatumZelle`, `BetragZelle`, `NummerZelle`,

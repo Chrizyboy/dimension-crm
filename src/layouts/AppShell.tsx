@@ -58,7 +58,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="relative flex h-full overflow-hidden">
         {!einfach && (
           <aside
-            className={cn('hidden shrink-0 transition-[width] duration-200 md:block', eingeklappt ? 'w-14' : 'w-60')}
+            // Schwebend mit 14 px Abstand zum Fensterrand (V234).
+            className={cn(
+              'hidden shrink-0 py-3.5 pl-3.5 transition-[width] duration-200 md:block',
+              eingeklappt ? 'w-[78px]' : 'w-[246px]',
+            )}
           >
             <Seitenleiste />
           </aside>

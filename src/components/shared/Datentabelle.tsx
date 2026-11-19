@@ -102,7 +102,7 @@ export function Datentabelle<T extends RowData>({
   return (
     <>
       {/* Jede Liste steht auf einer weissen Fläche mit Rahmen, damit alle Bereiche gleich aussehen. */}
-      <div className="bg-surface overflow-hidden rounded-xl border">
+      <div className="liste-glas overflow-hidden rounded-lg">
         <Tabelle aria-label={beschriftung} aria-rowcount={daten.length}>
           <TabelleKopf>
             {tabelle.getHeaderGroups().map((gruppe) => (

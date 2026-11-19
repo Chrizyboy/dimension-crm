@@ -12664,5 +12664,20 @@
       "weihnachten": "Weihnachten",
       "stephanstag": "Stephanstag"
     }
+  },
+  "apps": {
+    "titel": "Apps",
+    "neuerTab": "öffnet in neuem Tab",
+    "website": "Website",
+    "eturnity": "Eturnity",
+    "abaninja": "AbaNinja",
+    "landingpage": "Leads",
+    "akquise": "Akquise",
+    "messe": "Messe"
+  },
+  "fenster": {
+    "vollbild": "Vollbild",
+    "vollbildAus": "Vollbild beenden",
+    "aktualisieren": "Aktualisieren"
   }
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router'
 import { Check, Languages, LogOut, Monitor, Moon, Search, Sparkles, Sun, Trash2, UserRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Avatar, Kbd } from '@/components/ui/diverses'
+import { Kbd } from '@/components/ui/diverses'
 import {
   Menue,
   MenueAusloeser,
@@ -13,6 +13,7 @@ import {
   MenueTrenner,
 } from '@/components/ui/menue'
 import { Logo, SIGNET } from '@/components/shared/Logo'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { darfModul } from '@/lib/rechte'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { meta as assistentMeta } from '@/modules/ai'
@@ -21,6 +22,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
 import { UpdateKnopf } from './Aktualisierung'
 import { Glocke } from './Benachrichtigungen'
+import { FensterKnoepfe } from './FensterKnoepfe'
 import { HilfeKnopf } from './HilfeKnopf'
 
 /** Obere Leiste: Suche/Befehlspalette, Assistent (Ctrl J), Sprache, Benachrichtigungen, Konto-Menü. */
@@ -34,7 +36,8 @@ export function Kopfzeile() {
   const einfach = ich?.ansicht === 'einfach'
 
   return (
-    <header className="bg-surface flex h-12 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
+    // Ohne eigene Fläche: Suche und runde Glas-Knöpfe stehen direkt auf dem Farbverlauf (V234).
+    <header className="flex h-14 shrink-0 items-center gap-2 px-3 pt-2 sm:px-6 md:h-[72px] md:pt-3.5">
       {/* Am Handy fehlt die Seitenleiste mit dem Logo, deshalb hier das Zeichen. */}
       {einfach ? <Logo kurz className="h-7" /> : <img src={SIGNET} alt="Dimension Work" className="size-7 md:hidden" />}
 
@@ -44,7 +47,7 @@ export function Kopfzeile() {
           onClick={() => {
             setBefehlspalette(true)
           }}
-          className="bg-surface-2 text-muted-foreground hover:border-border-strong focus-visible:ring-ring flex h-8 max-w-md min-w-0 flex-1 items-center gap-2 rounded-md border px-2.5 text-sm transition-colors outline-none focus-visible:ring-2"
+          className="glas text-muted-foreground hover:text-foreground focus-visible:ring-ring flex h-10 max-w-md min-w-0 flex-1 items-center gap-2 rounded-full px-4 text-sm !shadow-[var(--glas-schatten-klein)] transition-colors outline-none focus-visible:ring-2"
         >
           <Search className="size-4 shrink-0" aria-hidden="true" />
           <span className="flex-1 truncate text-left">{t('nav.suchen')}</span>
@@ -52,7 +55,7 @@ export function Kopfzeile() {
         </button>
       )}
 
-      <div className="ml-auto flex items-center gap-1">
+      <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
         {!einfach && ich && darfModul(assistentMeta, ich) && (
           <button
             type="button"
@@ -60,7 +63,7 @@ export function Kopfzeile() {
               setAssistent(true)
             }}
             title={`${t('nav.assistent')} (${kuerzelText('j')})`}
-            className="text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:ring-ring flex h-8 items-center gap-1.5 rounded-md px-2 text-sm outline-none focus-visible:ring-2"
+            className="glas text-foreground focus-visible:ring-ring flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-semibold !shadow-[var(--glas-schatten-klein)] outline-none hover:bg-[var(--glas-wahl)] focus-visible:ring-2"
           >
             <Sparkles className="text-accent size-4" aria-hidden="true" />
             <span className="hidden lg:inline">{t('nav.assistent')}</span>
@@ -69,7 +72,7 @@ export function Kopfzeile() {
         <div
           role="group"
           aria-label={t('einstellungen.sprache')}
-          className="hidden h-7 items-center rounded-md border p-0.5 text-xs font-semibold sm:flex"
+          className="glas hidden h-10 items-center rounded-full p-1 text-xs font-semibold !shadow-[var(--glas-schatten-klein)] sm:flex"
         >
           {(['de', 'fr'] as const).map((s) => (
             <button
@@ -79,7 +82,7 @@ export function Kopfzeile() {
               onClick={() => {
                 setSprache(s)
               }}
-              className="text-muted-foreground focus-visible:ring-ring aria-pressed:bg-primary aria-pressed:text-primary-foreground h-full rounded px-2 outline-none focus-visible:ring-2"
+              className="text-muted-foreground focus-visible:ring-ring aria-pressed:text-foreground h-full rounded-full px-2.5 outline-none focus-visible:ring-2 aria-pressed:bg-[var(--glas-wahl)] aria-pressed:shadow-[0_1px_2px_rgb(11_27_46/0.1)]"
             >
               {s.toUpperCase()}
             </button>
@@ -88,6 +91,7 @@ export function Kopfzeile() {
 
         <UpdateKnopf />
         <HilfeKnopf />
+        <FensterKnoepfe />
         <Glocke />
 
         <Menue>
@@ -95,8 +99,12 @@ export function Kopfzeile() {
             className="focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
             aria-label={t('konto.menue')}
           >
-            <span aria-hidden="true">
-              <Avatar name={name} />
+            {/* Orange Kreis mit Kurzzeichen wie V234. */}
+            <span
+              aria-hidden="true"
+              className="flex size-10 items-center justify-center rounded-full bg-[image:var(--akzent-verlauf)] text-[13px] font-bold text-[#120a00] shadow-[var(--glas-schatten)]"
+            >
+              {kurzzeichenVon({ name })}
             </span>
           </MenueAusloeser>
           <MenueInhalt align="end" className="w-56">

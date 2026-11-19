@@ -52,16 +52,15 @@ export function Reiter({ value, defaultValue, onValueChange, ...props }: Compone
 }
 
 /**
- * Aussehen der Reiterleiste, auch für Ansichten, die als Adresse statt als Reiter umschalten (Offerten, Verkauf).
- * Immer eine Zeile: Was nicht Platz hat, schiebt man seitlich (Handy, schmales Seitenpanel). Die Linie unten
- * ist ein Schatten statt Rahmen, damit die orange Linie des aktiven Reiters beim Wischen nicht abgeschnitten wird.
+ * Aussehen der Reiterleiste als Segment-Pille aus Glas (V234), auch für Ansichten, die als Adresse statt als Reiter
+ * umschalten (Offerten, Verkauf). Immer eine Zeile: Was nicht Platz hat, schiebt man seitlich (Handy, schmales Panel).
  */
 export const reiterListeKlasse =
-  'wischzeile flex flex-nowrap gap-x-1 overflow-x-auto overflow-y-hidden shadow-[inset_0_-1px_0_var(--border)]'
+  'wischzeile glas inline-flex w-fit max-w-full flex-nowrap items-center gap-x-0.5 overflow-x-auto overflow-y-hidden rounded-[18px] p-[5px]'
 
-/** Aussehen eines Reiters; aktiv über `data-state="active"` (Radix) oder `aria-current` (Ansichten). */
+/** Aussehen eines Reiters; aktiv (weisse Pille) über `data-state="active"` (Radix) oder `aria-current` (Ansichten). */
 export const reiterKnopfKlasse =
-  'text-muted-foreground hover:text-foreground focus-visible:ring-ring data-[state=active]:border-accent data-[state=active]:text-foreground data-[state=active]:font-medium aria-[current=page]:border-accent aria-[current=page]:text-foreground aria-[current=page]:font-medium inline-flex h-9 shrink-0 items-center gap-1.5 border-b-2 border-transparent px-3 text-sm whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-inset'
+  'text-foreground/85 hover:text-foreground hover:bg-[var(--glas-feld)] focus-visible:ring-ring data-[state=active]:bg-[var(--glas-wahl)] data-[state=active]:text-foreground data-[state=active]:shadow-[0_1px_2px_rgb(11_27_46/0.08),0_2px_8px_-3px_rgb(11_27_46/0.12)] aria-[current=page]:bg-[var(--glas-wahl)] aria-[current=page]:text-foreground aria-[current=page]:shadow-[0_1px_2px_rgb(11_27_46/0.08),0_2px_8px_-3px_rgb(11_27_46/0.12)] inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[14px] px-4 text-sm font-semibold whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset'
 
 /** Löst Fragmente auf, damit `<>…</>` als einzelne Reiter zählt. */
 function eintraege(inhalt: ReactNode): ReactNode[] {

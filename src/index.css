@@ -18,14 +18,15 @@
   --navy: #02224f;
 
   /* Flächen: leicht ins Marineblau gestimmte Neutraltöne statt reinem Grau */
-  --background: #f5f7fa;
-  --surface: #ffffff;
-  --surface-2: #f9fafc;
+  --background: #edf0f5;
+  /* Flächen sind Milchglas (V234): halb durchsichtiges Weiss auf dem Farbverlauf. */
+  --surface: rgb(255 255 255 / 0.62);
+  --surface-2: rgb(255 255 255 / 0.55);
   --foreground: #08182b;
-  --muted: #edf0f5;
+  --muted: rgb(118 124 140 / 0.13);
   --muted-foreground: #465163;
-  --border: #d9dee6;
-  --border-strong: #c0c8d3;
+  --border: rgb(10 26 48 / 0.1);
+  --border-strong: rgb(10 26 48 / 0.2);
 
   /* Aktionen */
   --primary: var(--navy);
@@ -50,26 +51,53 @@
   --info: #1c4c84;
   --info-soft: #dce7f5;
 
-  /* Seitenleiste: immer Marineblau, damit das CRM sofort als Dimension Solaire erkennbar ist */
-  --sidebar: #02224f;
+  /* Seitenleiste: schwebendes Marineblau-Glas (V234), damit das CRM sofort als Dimension Solaire erkennbar ist */
+  --sidebar: rgb(11 37 69 / 0.9);
   --sidebar-foreground: #d3dcea;
-  --sidebar-active: #0d3a75;
+  --sidebar-active: rgb(255 255 255 / 0.15);
   --sidebar-active-foreground: #ffffff;
-  --sidebar-muted: #93a5bf;
-  --sidebar-border: #12346a;
+  --sidebar-muted: #a9b8cc;
+  --sidebar-border: rgb(255 255 255 / 0.1);
 
   --shadow-pop: 0 1px 2px rgb(2 34 79 / 0.06), 0 8px 24px rgb(2 34 79 / 0.12);
+
+  /*
+   * Glasoptik nach V234 (Chris 19.11.2026): weicher Farbverlauf als Wand, darauf Milchglas.
+   * Glas nur auf grossen Flächen (Seitenleiste, Karten, Reiter, Fenster), nie auf jeder Zeile, sonst wird die App
+   * am PC langsam. Texte stehen auf fast deckendem Glas, damit der Kontrast mindestens 6:1 bleibt.
+   */
+  --wand:
+    radial-gradient(1100px 760px at -6% -12%, rgb(255 160 64 / 0.42), transparent 62%),
+    radial-gradient(900px 720px at 104% -6%, rgb(86 152 255 / 0.34), transparent 60%),
+    radial-gradient(1000px 820px at 70% 112%, rgb(42 186 170 / 0.26), transparent 62%),
+    radial-gradient(700px 600px at 18% 96%, rgb(255 120 150 / 0.14), transparent 60%),
+    linear-gradient(170deg, #f5f7fb 0%, #e8ecf3 100%);
+  --glas: rgb(255 255 255 / 0.62);
+  --glas-stark: rgb(252 253 255 / 0.9);
+  --glas-feld: rgb(255 255 255 / 0.72);
+  --glas-rand: rgb(255 255 255 / 0.72);
+  --glas-wahl: rgb(255 255 255 / 0.96);
+  --glas-unschaerfe: blur(24px) saturate(175%);
+  --glas-kante: inset 0 1px 0 rgb(255 255 255 / 0.85), inset 0 0 0 0.5px rgb(255 255 255 / 0.4);
+  --glas-schatten:
+    var(--glas-kante), 0 0 0 0.5px rgb(11 37 69 / 0.1), 0 1px 2px rgb(11 37 69 / 0.06),
+    0 12px 30px -12px rgb(11 37 69 / 0.28);
+  --glas-schatten-klein:
+    inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 -1px 0 rgb(11 37 69 / 0.04), 0 1px 2px rgb(11 37 69 / 0.06),
+    0 6px 16px -8px rgb(11 37 69 / 0.18);
+  --akzent-verlauf: linear-gradient(180deg, #ffa13d 0%, #f37d12 100%);
+  --akzent-schatten: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 8px 20px -8px rgb(242 122 12 / 0.7);
 }
 
 .dark {
-  --background: #0f151e;
-  --surface: #141c27;
-  --surface-2: #18212d;
-  --foreground: #edf1f6;
-  --muted: #1f2a3a;
-  --muted-foreground: #aeb8c5;
-  --border: #2b3749;
-  --border-strong: #3d4c62;
+  --background: #06080c;
+  --surface: rgb(30 34 44 / 0.6);
+  --surface-2: rgb(255 255 255 / 0.06);
+  --foreground: #f2f4f7;
+  --muted: rgb(118 124 140 / 0.24);
+  --muted-foreground: #b1bac6;
+  --border: rgb(255 255 255 / 0.09);
+  --border-strong: rgb(255 255 255 / 0.17);
   --reihe-1: #5f93dd;
   --reihe-2: #d27c20;
 
@@ -91,14 +119,35 @@
   --info: #93bdf0;
   --info-soft: #182c43;
 
-  --sidebar: #0a1424;
-  --sidebar-foreground: #c3cedc;
-  --sidebar-active: #13233a;
+  --sidebar: rgb(30 34 44 / 0.6);
+  --sidebar-foreground: #c9d1db;
+  --sidebar-active: rgb(255 159 46 / 0.17);
   --sidebar-active-foreground: #ffffff;
-  --sidebar-muted: #8797ad;
-  --sidebar-border: #17263b;
+  --sidebar-muted: #a3acb9;
+  --sidebar-border: rgb(255 255 255 / 0.12);
 
   --shadow-pop: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.45);
+
+  --wand:
+    radial-gradient(1100px 760px at -6% -12%, rgb(255 138 30 / 0.26), transparent 62%),
+    radial-gradient(900px 720px at 104% -6%, rgb(64 120 255 / 0.28), transparent 60%),
+    radial-gradient(1000px 820px at 70% 112%, rgb(20 170 150 / 0.18), transparent 62%),
+    radial-gradient(700px 600px at 18% 96%, rgb(200 70 140 / 0.12), transparent 60%),
+    linear-gradient(170deg, #0b0e14 0%, #05070a 100%);
+  --glas: rgb(30 34 44 / 0.62);
+  --glas-stark: rgb(26 29 37 / 0.94);
+  --glas-feld: rgb(255 255 255 / 0.085);
+  --glas-rand: rgb(255 255 255 / 0.12);
+  --glas-wahl: rgb(255 255 255 / 0.17);
+  --glas-unschaerfe: blur(26px) saturate(185%);
+  --glas-kante: inset 0 1px 0 rgb(255 255 255 / 0.1), inset 0 0 0 0.5px rgb(255 255 255 / 0.05);
+  --glas-schatten:
+    var(--glas-kante), 0 0 0 0.5px rgb(0 0 0 / 0.4), 0 1px 2px rgb(0 0 0 / 0.35), 0 12px 34px -10px rgb(0 0 0 / 0.6);
+  --glas-schatten-klein:
+    inset 0 1px 0 rgb(255 255 255 / 0.12), inset 0 -1px 0 rgb(0 0 0 / 0.18), 0 1px 2px rgb(0 0 0 / 0.25),
+    0 8px 20px -10px rgb(0 0 0 / 0.5);
+  --akzent-verlauf: linear-gradient(180deg, #ffa43a 0%, #f07a0a 100%);
+  --akzent-schatten: inset 0 1px 0 rgb(255 255 255 / 0.3), 0 8px 20px -8px rgb(255 159 46 / 0.45);
 }
 
 @theme inline {
@@ -137,14 +186,20 @@
   --color-sidebar-muted: var(--sidebar-muted);
   --color-sidebar-border: var(--sidebar-border);
 
-  --font-sans: 'Public Sans Variable', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
-  --font-display: 'Schibsted Grotesk Variable', 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  /* Systemschrift wie V234: unter Windows Segoe UI Variable, am Mac SF Pro; Public Sans nur als Rückfall. */
+  --font-sans:
+    'Segoe UI Variable Text', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', 'Public Sans Variable',
+    system-ui, sans-serif;
+  --font-display:
+    'Segoe UI Variable Display', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI',
+    'Public Sans Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, Consolas, monospace;
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.625rem;
-  --radius-xl: 0.875rem;
+  /* Grosse, weiche Rundungen wie V234 (Knöpfe 12 px, Listen 16 px, Karten 20 px). */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
 
   --shadow-pop: var(--shadow-pop);
 
@@ -172,7 +227,9 @@ body,
 }
 
 body {
-  background: var(--background);
+  background:
+    var(--wand) fixed,
+    var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   font-size: 0.875rem;
@@ -190,6 +247,38 @@ h3 {
   font-family: var(--font-display);
   text-wrap: balance;
   letter-spacing: -0.01em;
+}
+
+/*
+ * Glas-Bausteine (V234). `glas` für grosse Flächen (Karte, Liste, Reiterleiste), `glas-rund` für runde Knöpfe.
+ * Unschärfe nur hier, damit das Scrollen in langen Listen flüssig bleibt.
+ */
+.glas {
+  background-color: var(--glas);
+  -webkit-backdrop-filter: var(--glas-unschaerfe);
+  backdrop-filter: var(--glas-unschaerfe);
+  border: 1px solid var(--glas-rand);
+  box-shadow: var(--glas-schatten);
+}
+
+/* Listen und Tabellen: helles Glas ohne Unschärfe (lange Listen scrollen flüssig), Kopfzeile etwas heller. */
+.liste-glas {
+  background-color: var(--glas-feld);
+  border: 1px solid var(--glas-rand);
+  box-shadow: var(--glas-schatten-klein);
+}
+
+/* Schwebende Teile (Menüs, Fenster, Auswahl, klebende Köpfe) brauchen fast deckendes Glas, sonst scheint Text durch. */
+.bg-surface.shadow-pop,
+.bg-surface.fixed {
+  background-color: var(--glas-stark);
+  -webkit-backdrop-filter: var(--glas-unschaerfe);
+  backdrop-filter: var(--glas-unschaerfe);
+}
+
+/* Klebende Spalten und Köpfe (z. B. Zeitplan) gibt es pro Zeile: deckend, aber ohne Unschärfe. */
+.bg-surface.sticky {
+  background-color: var(--glas-stark);
 }
 
 /* Zahlen in Tabellen und Beträgen stehen sauber untereinander. */
