@@ -89,3 +89,20 @@ export async function gibFrei(offerteId: string, notiz?: string): Promise<void> 
   const { error } = await db().rpc('offerte_freigeben', { p_offerte: offerteId, ...(notiz ? { p_notiz: notiz } : {}) })
   if (error) throw error
 }
+
+/**
+ * Nachfass-Mail im Verlauf festhalten und das nächste Nachfassen hinausschieben (V234 «✉ Nachfass-Mail»).
+ * Kennt die Datenbank das Ergebnis «mail» noch nicht (vor dem Cloud-Update), wird es als «nicht erreicht» per
+ * Mail in 5 Tagen erfasst, damit nichts verloren geht.
+ */
+export async function erfasseNachfassMail(offerteId: string): Promise<string | null> {
+  const { data, error } = await db().rpc('offerte_nachfassen', {
+    p_offerte: offerteId,
+    p_ergebnis: 'mail',
+    p: {} as Json,
+  })
+  if (!error) return data
+  if (!error.message.includes('stand.unbekannt')) throw error
+  const bis = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10)
+  return erfasseNachfassen(offerteId, 'nicht_erreicht', { art: 'mail', datum: bis, notiz: 'Nachfass-Mail gesendet' })
+}

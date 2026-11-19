@@ -1,4 +1,4 @@
-import { BellRing, CalendarClock, Check, Hammer, MessageSquareText, PhoneMissed, X } from 'lucide-react'
+import { BellRing, CalendarClock, X } from 'lucide-react'
 import { Suspense, lazy, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -7,28 +7,31 @@ import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/schalter'
-import { formatChf, parseChf } from '@/lib/format'
+import { formatChf } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useOffertAenderung } from '../hooks/useOfferten'
 import {
+  BETRAG_STUFEN,
   FAELLIG_SEIT,
   nachfassKennzahlen,
+  nachfassPersonen,
   nachfassStand,
   passtFaelligSeit,
   sortiereNachfassen,
   type FaelligSeit,
   type NachfassSortierung,
 } from '../lib/nachfassen'
-import { imNachfassen } from '../lib/suche'
+import { imNachfassen, treffer } from '../lib/suche'
 import { erfasseNachfassen } from '../services/ablauf'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
-import { NachfassChip } from './OffertStand'
+import { NachfassZeile, type NachfassAktion } from './NachfassZeile'
 
 const EntscheidDialog = lazy(() => import('./EntscheidDialog'))
 const ErgebnisDialog = lazy(() => import('./ErgebnisDialog'))
+const NachfassMail = lazy(() => import('./NachfassMail'))
+const ZurueckDialog = lazy(() => import('./ZurueckDialog'))
 
 const SEITE = 50
 const SORTIERUNGEN: readonly NachfassSortierung[] = ['neu', 'alt', 'betrag', 'name', 'nr']
@@ -44,49 +47,77 @@ function Kennzahl({ titel, wert }: { titel: string; wert: string | number }) {
 
 /**
  * Nachfassen (V45, V193): versendete Offerten 14 Tage nach dem Angebot oder am vertagten Datum.
- * Filter nach Standort, «fällig seit», Mindestbetrag und eigener Zuständigkeit; je Zeile Angenommen,
- * Abgelehnt oder Vertagt sowie «Ergebnis» (Gespräch erfassen, nächster Schritt nach Plan) und «nicht erreicht», mit Mehrfachauswahl für mehrere auf einmal. Zeigt 50, dann «Weitere laden».
+ * Filter nach Standort, «fällig seit» (auch bald fällige), Betrag ab, Person (mit Zahl, wie V234) und Suche;
+ * je Zeile Ergebnis, Angenommen, Abgelehnt, Vertagt und unter «⋯» nicht erreicht, Nachfass-Mail, Bereits verbaut,
+ * Zurück zur Offerte; Mehrfachauswahl für mehrere auf einmal. Zeigt 50, dann «Weitere laden».
  */
 export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[]; onOeffnen: (id: string) => void }) {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
   const [standort, setStandort] = useState('alle')
   const [seit, setSeit] = useState<FaelligSeit>('alle')
-  const [nurMeine, setNurMeine] = useState(false)
-  const [minBetrag, setMinBetrag] = useState('')
+  const [person, setPerson] = useState('alle')
+  const [betragAb, setBetragAb] = useState(0)
+  const [suche, setSuche] = useState('')
   const [sortierung, setSortierung] = useState<NachfassSortierung>('alt')
   const [anzahl, setAnzahl] = useState(SEITE)
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
   const [dialog, setDialog] = useState<{ ziel: Entscheid; liste: Offerte[] } | null>(null)
-  const [gespraech, setGespraech] = useState<Offerte | null>(null)
+  const [einzeln, setEinzeln] = useState<{ art: 'ergebnis' | 'mail' | 'zurueck'; o: Offerte } | null>(null)
   const nichtErreicht = useOffertAenderung((id: string) => erfasseNachfassen(id, 'nicht_erreicht'))
+  const zu = () => {
+    setEinzeln(null)
+  }
+
+  /** Knopf einer Zeile: Entscheide über den Entscheid-Dialog, der Rest direkt oder im eigenen Dialog. */
+  function aktion(o: Offerte, a: NachfassAktion) {
+    if (a === 'nicht_erreicht') {
+      nichtErreicht.mutate(o.id, {
+        onError: (e) => {
+          meldeFehler(e)
+        },
+      })
+    } else if (a === 'ergebnis' || a === 'mail' || a === 'zurueck') setEinzeln({ art: a, o })
+    else setDialog({ ziel: a, liste: [o] })
+  }
 
   const offen = useMemo(() => offerten.filter(imNachfassen), [offerten])
   const kennzahlen = nachfassKennzahlen(offen)
-  const min = parseChf(minBetrag) ?? 0
+  // Jeder Filter zählt die Chips der anderen mit (V234): so sieht man, wie viele bei «Loris» übrig bleiben.
+  const passt = useMemo(() => {
+    const p = (o: Offerte, ohne?: 'person' | 'betrag' | 'seit') =>
+      (standort === 'alle' || o.standort === standort) &&
+      (ohne === 'seit' || passtFaelligSeit(nachfassStand(o), seit)) &&
+      (ohne === 'person' ||
+        person === 'alle' ||
+        (person === 'meine' ? o.verantwortlichId === ich?.id : (o.verantwortlichId ?? 'niemand') === person)) &&
+      (ohne === 'betrag' || (o.betragRappen ?? 0) >= betragAb) &&
+      (!suche.trim() || treffer(o.suchtext, suche))
+    return p
+  }, [standort, seit, person, ich?.id, betragAb, suche])
   const liste = useMemo(
     () =>
       sortiereNachfassen(
-        offen.filter(
-          (o) =>
-            (standort === 'alle' || o.standort === standort) &&
-            passtFaelligSeit(nachfassStand(o), seit) &&
-            (!nurMeine || o.verantwortlichId === ich?.id) &&
-            (o.betragRappen ?? 0) >= min,
-        ),
+        offen.filter((o) => passt(o)),
         sortierung,
       ),
-    [offen, standort, seit, nurMeine, ich?.id, min, sortierung],
+    [offen, passt, sortierung],
   )
+  const personen = nachfassPersonen(offen.filter((o) => passt(o, 'person')))
   const gewaehlt = liste.filter((o) => auswahl.has(o.id))
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         <Kennzahl titel={t('offerten.nachfassen.kFaellig')} wert={kennzahlen.faellig} />
         <Kennzahl titel={t('offerten.nachfassen.kHeute')} wert={kennzahlen.heute} />
         <Kennzahl titel={t('offerten.nachfassen.kBald')} wert={kennzahlen.bald} />
         <Kennzahl titel={t('offerten.nachfassen.kSumme')} wert={formatChf(kennzahlen.summeRappen)} />
+        <Kennzahl
+          titel={t('offerten.nachfassen.kSchnitt')}
+          wert={t('offerten.nachfassen.tage', { count: kennzahlen.schnittTage })}
+        />
+        <Kennzahl titel={t('offerten.nachfassen.k180')} wert={kennzahlen.ueber180} />
       </div>
 
       <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end">
@@ -114,24 +145,27 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
         />
         <Filterchips
           einzeln
-          beschriftung={t('offerten.nachfassen.person')}
-          gewaehlt={[nurMeine ? 'meine' : 'alle']}
+          beschriftung={t('offerten.nachfassen.betrag')}
+          gewaehlt={[String(betragAb)]}
           onChange={(w) => {
-            setNurMeine(w[0] === 'meine')
+            setBetragAb(Number(w[0] ?? 0))
           }}
-          optionen={[
-            { wert: 'alle', text: t('offerten.nachfassen.alle') },
-            { wert: 'meine', text: t('offerten.nachfassen.meine') },
-          ]}
+          optionen={BETRAG_STUFEN.map((b) => ({
+            wert: String(b),
+            text: b
+              ? t('offerten.nachfassen.ab', { betrag: formatChf(b).replace(/\.00$/, '') })
+              : t('offerten.nachfassen.alle'),
+            anzahl: offen.filter((o) => passt(o, 'betrag') && (o.betragRappen ?? 0) >= b).length,
+          }))}
         />
-        <Feld id="nachfassen-min" label={t('offerten.nachfassen.minBetrag')} className="w-36">
+        <Feld id="nachfassen-suche" label={t('offerten.nachfassen.suche')} className="w-56">
           <Input
-            id="nachfassen-min"
-            inputMode="decimal"
-            placeholder="0"
-            value={minBetrag}
+            id="nachfassen-suche"
+            type="search"
+            placeholder={t('offerten.nachfassen.sucheHinweis')}
+            value={suche}
             onChange={(e) => {
-              setMinBetrag(e.target.value)
+              setSuche(e.target.value)
             }}
           />
         </Feld>
@@ -146,6 +180,34 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
           />
         </Feld>
       </div>
+
+      <Filterchips
+        einzeln
+        beschriftung={t('offerten.nachfassen.person')}
+        gewaehlt={[person]}
+        onChange={(w) => {
+          setPerson(w[0] ?? 'alle')
+        }}
+        optionen={[
+          { wert: 'alle', text: t('offerten.nachfassen.alle'), anzahl: personen.reduce((n, p) => n + p.anzahl, 0) },
+          ...(ich
+            ? [
+                {
+                  wert: 'meine',
+                  text: t('offerten.nachfassen.meine'),
+                  anzahl: personen.find((p) => p.id === ich.id)?.anzahl ?? 0,
+                },
+              ]
+            : []),
+          ...personen
+            .filter((p) => p.id !== ich?.id)
+            .map((p) => ({
+              wert: p.id ?? 'niemand',
+              text: p.id ? p.name : t('offerten.nachfassen.niemand'),
+              anzahl: p.anzahl,
+            })),
+        ]}
+      />
 
       {gewaehlt.length > 0 && (
         <div
@@ -182,111 +244,24 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
       ) : (
         <ul className="bg-surface divide-y rounded-xl border" aria-label={t('offerten.ansicht.nachfassen')}>
           {liste.slice(0, anzahl).map((o) => (
-            <li key={o.id} className="flex flex-col gap-2 p-3 md:flex-row md:items-center">
-              <div className="flex min-w-0 flex-1 items-start gap-3">
-                <Checkbox
-                  className="mt-1"
-                  aria-label={t('offerten.eingang.waehlenName', { name: o.name })}
-                  checked={auswahl.has(o.id)}
-                  onCheckedChange={(an) => {
-                    const neu = new Set(auswahl)
-                    if (an === true) neu.add(o.id)
-                    else neu.delete(o.id)
-                    setAuswahl(neu)
-                  }}
-                />
-                <button
-                  type="button"
-                  className="focus-visible:ring-ring flex min-w-0 flex-1 flex-col rounded text-left outline-none focus-visible:ring-2"
-                  onClick={() => {
-                    onOeffnen(o.id)
-                  }}
-                >
-                  <span className="flex flex-wrap items-center gap-2">
-                    <span className="zahlen font-mono text-[13px]">{o.nummer}</span>
-                    <span className="line-clamp-2 font-medium">{o.name}</span>
-                    <NachfassChip offerte={o} />
-                  </span>
-                  <span className="text-muted-foreground line-clamp-2 text-xs">
-                    {[
-                      [o.plz, o.ort].filter(Boolean).join(' '),
-                      o.betragRappen ? formatChf(o.betragRappen, { mitWaehrung: true }) : null,
-                      o.kwp ? `${o.kwp} kWp` : null,
-                      o.verantwortlichName,
-                      o.entscheid === 'vertagt' && o.vertagtGrund ? o.vertagtGrund : null,
-                    ]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </span>
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pl-7 md:pl-0">
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    setGespraech(o)
-                  }}
-                >
-                  <MessageSquareText />
-                  {t('offerten.ergebnis.knopf')}
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  laedt={nichtErreicht.isPending && nichtErreicht.variables === o.id}
-                  onClick={() => {
-                    nichtErreicht.mutate(o.id, {
-                      onError: (e) => {
-                        meldeFehler(e)
-                      },
-                    })
-                  }}
-                >
-                  <PhoneMissed />
-                  {t('offerten.ergebnis.e_nicht_erreicht')}
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => {
-                    setDialog({ ziel: 'angenommen', liste: [o] })
-                  }}
-                >
-                  <Check />
-                  {t('offerten.nachfassen.angenommen')}
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => {
-                    setDialog({ ziel: 'verloren', liste: [o] })
-                  }}
-                >
-                  <X />
-                  {t('offerten.nachfassen.abgelehnt')}
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => {
-                    setDialog({ ziel: 'vertagt', liste: [o] })
-                  }}
-                >
-                  <CalendarClock />
-                  {t('offerten.nachfassen.vertagt')}
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => {
-                    setDialog({ ziel: 'verbaut', liste: [o] })
-                  }}
-                >
-                  <Hammer />
-                  {t('offerten.nachfassen.verbaut')}
-                </Button>
-              </div>
-            </li>
+            <NachfassZeile
+              key={o.id}
+              o={o}
+              gewaehlt={auswahl.has(o.id)}
+              onWaehlen={(an) => {
+                const neu = new Set(auswahl)
+                if (an) neu.add(o.id)
+                else neu.delete(o.id)
+                setAuswahl(neu)
+              }}
+              onOeffnen={() => {
+                onOeffnen(o.id)
+              }}
+              laedt={nichtErreicht.isPending && nichtErreicht.variables === o.id}
+              onAktion={(a) => {
+                aktion(o, a)
+              }}
+            />
           ))}
         </ul>
       )}
@@ -303,14 +278,9 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
       )}
 
       <Suspense>
-        {gespraech && (
-          <ErgebnisDialog
-            o={gespraech}
-            onSchliessen={() => {
-              setGespraech(null)
-            }}
-          />
-        )}
+        {einzeln?.art === 'ergebnis' && <ErgebnisDialog o={einzeln.o} onSchliessen={zu} />}
+        {einzeln?.art === 'mail' && <NachfassMail o={einzeln.o} onSchliessen={zu} />}
+        {einzeln?.art === 'zurueck' && <ZurueckDialog o={einzeln.o} onSchliessen={zu} />}
         {dialog && (
           <EntscheidDialog
             offerten={dialog.liste}

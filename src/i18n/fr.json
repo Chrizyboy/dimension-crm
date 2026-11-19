@@ -1702,6 +1702,14 @@
       "mail": "Par e-mail",
       "bereit": "Le lien de rendez-vous attend la validation dans la boîte d’envoi",
       "zumAusgang": "Vers la boîte d’envoi"
+    },
+    "heute": {
+      "nachTermin": "Après la visite : quelle suite ?",
+      "alle": "À faire",
+      "terminAm": "Visite le {{datum}}",
+      "ohneDatum": "Visite sans date",
+      "zurOfferte": "Vers l'offre",
+      "keinInteresse": "Pas intéressé"
     }
   },
   "offerten": {
@@ -1912,7 +1920,18 @@
       "weitere_one": "Charger {{count}} de plus",
       "weitere_other": "Charger {{count}} de plus",
       "leer": "Rien à relancer",
-      "leerText": "Toutes les offres envoyées sont décidées ou pas encore échues."
+      "leerText": "Toutes les offres envoyées sont décidées ou pas encore échues.",
+      "mail": "E-mail de relance",
+      "zurueck": "Retour à l'offre",
+      "kSchnitt": "Échue depuis (Ø)",
+      "k180": "Plus de 180 jours",
+      "tage_one": "{{count}} jour",
+      "tage_other": "{{count}} jours",
+      "betrag": "Montant",
+      "ab": "dès {{betrag}}",
+      "suche": "Rechercher",
+      "sucheHinweis": "Nom, lieu, numéro …",
+      "niemand": "Sans responsable"
     },
     "entscheid": {
       "titel_angenommen": "Offre acceptée",
@@ -2165,6 +2184,18 @@
       "stand": "{{material}} matériel · {{alle}} positions",
       "option": "Option : {{gruppe}}",
       "imPdf": "Liste de matériel avec {{anzahl}} positions reconnue, elle sera enregistrée."
+    },
+    "heute": {
+      "pruefen": "Offres à vérifier et envoyer",
+      "alle": "Nouvelles offres",
+      "richt_bearbeitung": "Offre indicative en cours",
+      "richt_rueckfrage": "Offre indicative, question ouverte",
+      "richt_bereit": "Offre indicative prête à l'envoi",
+      "zurPruefung": "à vérifier",
+      "seit": "depuis le {{datum}}",
+      "hinweis": "Remarque : {{text}}",
+      "pruefenKnopf": "Vérifier",
+      "versendet": "Envoyée"
     }
   },
   "werkvertraege": {
@@ -3515,6 +3546,11 @@
       "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire",
       "betreffMitRechnung": "Votre contrat d'entreprise {{nummer}} et la facture d'acompte de Dimension Solaire",
       "textMitRechnung": "Bonjour\n\nMerci pour votre commande. Vous trouverez en pièce jointe le contrat d'entreprise et la facture d'acompte de {{betrag}}. Merci de nous retourner le contrat signé et de régler l'acompte avec la QR-facture. Dès réception de l'acompte, nous commandons le matériel et convenons avec vous de la date de montage.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    },
+    "nachfassTitel": "E-mail de relance pour l'offre {{nummer}}",
+    "nachfassen": {
+      "betreff": "Votre offre {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nLe {{datum}}, nous vous avons envoyé notre offre. Avez-vous pu la consulter tranquillement ? Nous répondons volontiers à vos questions ou adaptons l'offre à vos souhaits.\n\nDans l'attente de votre retour.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {

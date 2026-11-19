@@ -58,11 +58,17 @@ export default function MeinTag({
   aktionen,
   oben,
   unten,
+  zeilenKnoepfe,
+  verkaufKarten,
 }: {
   /** Weitere Knöpfe im Kopf (z. B. neue Aufgabe, Kennzahlen). */
   aktionen?: ReactNode
   oben?: ReactNode
   unten?: ReactNode
+  /** Knöpfe je Zeile einer Liste aus anderen Bereichen (z. B. Entscheid beim Nachfassen aus den Offerten). */
+  zeilenKnoepfe?: Partial<Record<TagListeName, (z: TagZeile) => ReactNode>>
+  /** Karten aus dem Verkauf vor den Listen (Offerten prüfen, Nach dem Termin); leere zeigen sich nicht. */
+  verkaufKarten?: ReactNode
 }) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
@@ -193,8 +199,9 @@ export default function MeinTag({
             <WetterKarte />
           </div>
 
-          {weitere.length > 0 && (
+          {(weitere.length > 0 || verkaufKarten) && (
             <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {verkaufKarten}
               {weitere.map((w) => (
                 <TagKarte
                   key={w.liste}
@@ -204,6 +211,7 @@ export default function MeinTag({
                   heute={d.heute}
                   alleZiel={w.ziel}
                   onVerschieben={(z, bis) => void verschiebe(z, bis)}
+                  {...(zeilenKnoepfe?.[w.liste] ? { zeilenZusatz: zeilenKnoepfe[w.liste] } : {})}
                   testId={`tag-${w.liste}`}
                 />
               ))}

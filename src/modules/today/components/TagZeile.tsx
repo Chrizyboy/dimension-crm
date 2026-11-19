@@ -1,4 +1,5 @@
 import { Phone } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { warum } from '../lib/tag'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
@@ -31,9 +32,12 @@ export function TagZeile({
   heute,
   onAbhaken,
   onVerschieben,
+  zusatz,
 }: {
   zeile: Zeile
   heute: string
+  /** Knöpfe unter dem Titel, z. B. Angenommen/Abgelehnt/Vertagt beim Nachfassen. */
+  zusatz?: ReactNode
   onAbhaken?: (z: Zeile) => void
   /** Ohne: Zeile ist nicht verschiebbar (Termine, Freigaben). */
   onVerschieben?: (z: Zeile, bis: string) => void
@@ -70,8 +74,8 @@ export function TagZeile({
     </span>
   )
 
-  return (
-    <li className="hover:bg-surface-2 flex items-center gap-3 px-4 py-2 text-sm">
+  const zeileInhalt = (
+    <span className="flex items-center gap-3">
       {onAbhaken && (
         <Checkbox
           aria-label={t('tag.abhaken', { titel: zeile.titel })}
@@ -126,6 +130,15 @@ export function TagZeile({
           />
         )}
       </span>
+    </span>
+  )
+
+  if (!zusatz) return <li className="hover:bg-surface-2 px-4 py-2 text-sm">{zeileInhalt}</li>
+  return (
+    <li className="hover:bg-surface-2 flex flex-col gap-1.5 px-4 py-2 text-sm">
+      {zeileInhalt}
+      {/* Eingerückt unter den Titel, damit die Knöpfe zur Zeile gehören und nicht unter das Datum rutschen. */}
+      <div className="pl-[4.75rem] sm:pl-[5.75rem]">{zusatz}</div>
     </li>
   )
 }

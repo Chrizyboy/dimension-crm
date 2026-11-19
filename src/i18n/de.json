@@ -1702,6 +1702,14 @@
       "mail": "Per Mail",
       "bereit": "Termin-Link liegt im Ausgangskorb zur Freigabe",
       "zumAusgang": "Zum Ausgangskorb"
+    },
+    "heute": {
+      "nachTermin": "Nach dem Termin: wie weiter?",
+      "alle": "Zu tun",
+      "terminAm": "Termin {{datum}}",
+      "ohneDatum": "Termin ohne Datum",
+      "zurOfferte": "Zur Offerte",
+      "keinInteresse": "Kein Interesse"
     }
   },
   "offerten": {
@@ -1912,7 +1920,18 @@
       "weitere_one": "{{count}} weitere laden",
       "weitere_other": "{{count}} weitere laden",
       "leer": "Nichts nachzufassen",
-      "leerText": "Alle offerierten Offerten sind entschieden oder noch nicht fällig."
+      "leerText": "Alle offerierten Offerten sind entschieden oder noch nicht fällig.",
+      "mail": "Nachfass-Mail",
+      "zurueck": "Zurück zur Offerte",
+      "kSchnitt": "Ø fällig seit",
+      "k180": "Über 180 Tage",
+      "tage_one": "{{count}} Tag",
+      "tage_other": "{{count}} Tage",
+      "betrag": "Betrag",
+      "ab": "ab {{betrag}}",
+      "suche": "Suchen",
+      "sucheHinweis": "Name, Ort, Nummer …",
+      "niemand": "Ohne Zuständige"
     },
     "entscheid": {
       "titel_angenommen": "Offerte angenommen",
@@ -2165,6 +2184,18 @@
       "stand": "{{material}} Material · {{alle}} Positionen",
       "option": "Option: {{gruppe}}",
       "imPdf": "Stückliste mit {{anzahl}} Positionen erkannt, sie wird mitgespeichert."
+    },
+    "heute": {
+      "pruefen": "Offerten prüfen & senden",
+      "alle": "Neue Offerten",
+      "richt_bearbeitung": "Richtofferte in Bearbeitung",
+      "richt_rueckfrage": "Richtofferte, Rückfrage offen",
+      "richt_bereit": "Richtofferte bereit zum Senden",
+      "zurPruefung": "zur Prüfung",
+      "seit": "seit {{datum}}",
+      "hinweis": "Hinweis: {{text}}",
+      "pruefenKnopf": "Prüfen",
+      "versendet": "Versendet"
     }
   },
   "werkvertraege": {
@@ -3515,6 +3546,11 @@
       "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire",
       "betreffMitRechnung": "Ihr Werkvertrag {{nummer}} und die Anzahlungsrechnung von Dimension Solaire",
       "textMitRechnung": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag und die Anzahlungsrechnung über {{betrag}}. Bitte senden Sie uns den Werkvertrag unterschrieben zurück und überweisen Sie die Anzahlung mit dem QR-Zahlteil. Nach Eingang der Anzahlung bestellen wir das Material und vereinbaren mit Ihnen den Montagetermin.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    },
+    "nachfassTitel": "Nachfass-Mail zur Offerte {{nummer}}",
+    "nachfassen": {
+      "betreff": "Ihre Offerte {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nAm {{datum}} haben wir Ihnen unsere Offerte geschickt. Haben Sie sie in Ruhe anschauen können? Gerne beantworten wir Ihre Fragen oder passen die Offerte an Ihre Wünsche an.\n\nWir freuen uns auf Ihre Rückmeldung.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
