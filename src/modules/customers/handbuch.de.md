@@ -78,6 +78,7 @@ Rechnungen sieht nur, wer das Recht Finanzen hat.
 
 ## Neu {#neu}
 
+- 19.11.2026: Reiter **Dokumente**: Klick auf eine Datei zeigt sie direkt in der App (Bilder mit Vergrössern und **Bild kopieren**, PDF eingebettet, mit ← → zur nächsten). Der Brief-Knopf ✉ schickt eine Datei per Mail an den Kunden, **Alle als ZIP** lädt alle auf einmal. **Mails aus Outlook laden** holt jetzt den ganzen Mailverlauf mit diesem Kunden, nicht nur die letzten Tage.
 - 19.11.2026: **Rechtsklick** auf einen Kunden (am Handy lange drücken): Öffnen, In Google Maps öffnen, Anrufen, E-Mail schreiben. Das Menü gibt es in allen Listen mit **Öffnen**.
 - 05.11.2026: Anhänge aus dem alten CRM stehen nur noch einmal beim Kunden, Links nach SharePoint öffnen wieder, neu **Ordner im alten CRM-Backup**.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.

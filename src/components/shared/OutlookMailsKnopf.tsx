@@ -1,17 +1,17 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useQueryClient, type QueryKey } from '@tanstack/react-query'
 import { MailSearch } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
-import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
 import { meldeIntegrationsFehler, microsoft, useMeineMicrosoftVerbindung } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 
 /**
- * «Mails aus Outlook laden» (V81, V227): Mails der letzten Tage mit Kunden in die Zeitachse übernehmen
- * (nur Betreff, Richtung und Zeitpunkt). Läuft zusätzlich alle 15 Minuten für alle Verbundenen.
+ * «E-Mails aus Outlook laden» (V81, V227, V234) in Kundenakte und Lead-Akte: mit Adresse der ganze Mailverlauf mit
+ * diesem Kunden (alle Ordner, auch Team-Postfächer), sonst die Mails der letzten Tage mit allen Kunden. Übernommen
+ * werden Betreff, Vorschau, Richtung und Zeitpunkt. Läuft zusätzlich alle 15 Minuten für alle Verbundenen.
  */
-export function OutlookMailsKnopf() {
+export function OutlookMailsKnopf({ adresse, neuLaden }: { adresse?: string | null | undefined; neuLaden: QueryKey }) {
   const { t } = useTranslation()
   const qc = useQueryClient()
   const verbindung = useMeineMicrosoftVerbindung()
@@ -25,11 +25,13 @@ export function OutlookMailsKnopf() {
       laedt={laeuft}
       onClick={() => {
         setLaeuft(true)
-        microsoft
-          .mailsAbgleichen()
+        ;(adresse ? microsoft.mailsKontakt(adresse) : microsoft.mailsAbgleichen())
           .then((r) => {
-            melde('ok', { de: `${r.anzahl} Mails übernommen`, fr: `${r.anzahl} e-mails repris` })
-            return qc.invalidateQueries({ queryKey: KONTAKT_SCHLUESSEL })
+            melde('ok', {
+              de: r.anzahl ? `${String(r.anzahl)} Mails übernommen` : 'Keine neuen Mails',
+              fr: r.anzahl ? `${String(r.anzahl)} e-mails repris` : 'Aucun nouvel e-mail',
+            })
+            return qc.invalidateQueries({ queryKey: neuLaden })
           })
           .catch(meldeIntegrationsFehler)
           .finally(() => {

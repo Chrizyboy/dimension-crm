@@ -12,7 +12,8 @@ import { AkteDokumente } from './AkteDokumente'
 import { AkteKopf } from './AkteKopf'
 import { AkteUebersicht } from './AkteUebersicht'
 import { AkteZeitachse } from './AkteZeitachse'
-import { OutlookMailsKnopf } from './OutlookMailsKnopf'
+import { OutlookMailsKnopf } from '@/components/shared/OutlookMailsKnopf'
+import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
 import { Kundenblatt } from './Kundenblatt'
 
 export interface KundenakteProps {
@@ -116,7 +117,7 @@ export default function Kundenakte({ id, reiter, onReiter, onSchliessen }: Kunde
                   />
                 </ReiterInhalt>
                 <ReiterInhalt value="zeitachse" className="flex flex-col gap-2">
-                  <OutlookMailsKnopf />
+                  <OutlookMailsKnopf adresse={k.email} neuLaden={KONTAKT_SCHLUESSEL} />
                   <AkteZeitachse eintraege={zeitachse.data} laedt={zeitachse.isPending} />
                 </ReiterInhalt>
                 <ReiterInhalt value="dokumente">

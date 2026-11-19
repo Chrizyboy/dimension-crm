@@ -7915,7 +7915,9 @@
         "zuLang": "{{sprache}}: {{wert}} Wörter, empfohlen höchstens {{max}}.",
         "ohneAnrede": "{{sprache}}: ohne {Anrede} fehlt die persönliche Anrede.",
         "platzhalterText": "{{sprache}}: Der Text enthält noch «…»."
-      }
+      },
+      "testmail": "Testmail an mich",
+      "nochKeinTest": "Tipp: vor dem Senden eine Testmail an dich schicken und im Postfach prüfen."
     },
     "vorlagen": {
       "platzhalter": "Platzhalter in allen Texten: {{liste}}",

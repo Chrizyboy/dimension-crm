@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-19
 rollen: verkauf, innendienst, geschaeftsleitung, buchhaltung
 ---
 
@@ -58,6 +58,7 @@ Planifier campagnes et salons, écrire de façon ciblée aux clients (lettre en 
 ### Envoyer une newsletter
 
 1. Onglet **Newsletter**, nouvelle newsletter : thème, campagne, public, date prévue, texte, contrôle, envoi.
+   Avant : **E-mail de test à moi**, un e-mail par langue tel que le client le reçoit.
 2. L’envoi ne va qu’aux clients ou aux personnes ayant donné leur accord. Ensuite tu vois ouverts, cliqués et désinscrits.
 3. Réutiliser une bonne newsletter avec **Utiliser comme modèle**.
 
@@ -108,6 +109,7 @@ Sous **Réseaux sociaux**, l’erreur figure au post. Le plus souvent, la connex
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : Newsletter : **E-mail de test à moi** t’envoie un e-mail de test par langue (salutation à ton nom, lien de désinscription sans effet).
 - 03.11.2026: Aperçu avec « À faire aujourd’hui », calendrier, campagnes avec résultat, salons avec saisie des leads sur le portable, tableau des réseaux sociaux avec validation, médiathèque, groupes cibles enregistrés, pause publicitaire, ouvertures et clics.
 - 03.11.2026: Seule l’administration modifie les modèles ; les autres les voient en lecture seule et les utilisent à l’envoi.
 - 02.11.2026: Instagram et LinkedIn avec un compte allemand et un compte français, deux pages Facebook.

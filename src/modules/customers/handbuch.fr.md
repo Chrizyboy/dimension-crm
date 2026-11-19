@@ -78,6 +78,7 @@ Les factures ne sont visibles qu’avec le droit Finances.
 
 ## Nouveautés {#neu}
 
+- 19.11.2026: Onglet **Documents** : un clic sur un fichier l’affiche directement dans l’app (images avec agrandissement et **Copier l'image**, PDF intégré, ← → pour le suivant). Le bouton ✉ envoie un fichier par e-mail au client, **Les … en ZIP** les télécharge tous d’un coup. **Charger les e-mails d'Outlook** récupère maintenant tout l’historique des e-mails avec ce client, pas seulement les derniers jours.
 - 19.11.2026: **Clic droit** sur un client (sur mobile, appui long) : ouvrir, ouvrir dans Google Maps, appeler, écrire un e-mail. Ce menu existe dans toutes les listes avec **Ouvrir**.
 - 05.11.2026: Les pièces jointes de l’ancien CRM n’apparaissent plus qu’une fois chez le client, les liens vers SharePoint s’ouvrent à nouveau, nouveau **Dossier de l'ancienne sauvegarde CRM**.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.

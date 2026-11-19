@@ -7915,7 +7915,9 @@
         "zuLang": "{{sprache}} : {{wert}} mots, conseillé au plus {{max}}.",
         "ohneAnrede": "{{sprache}} : sans {Anrede}, la salutation personnelle manque.",
         "platzhalterText": "{{sprache}} : le texte contient encore « … »."
-      }
+      },
+      "testmail": "E-mail de test à moi",
+      "nochKeinTest": "Conseil : avant l’envoi, envoie-toi un e-mail de test et vérifie-le dans ta boîte."
     },
     "vorlagen": {
       "platzhalter": "Champs dans tous les textes : {{liste}}",

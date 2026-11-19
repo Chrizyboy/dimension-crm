@@ -24,6 +24,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/ui/menue'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatKundennummer, tonVonFarbe } from '@/lib/kontakt'
+import { OutlookMailsKnopf } from '@/components/shared/OutlookMailsKnopf'
 import { useLeadAkte, VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
 import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import { ladeGeschaeft } from '../services/geschaefte'
@@ -244,11 +245,22 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
           <Karte className="min-w-0 px-3">
             {g.verkaufschanceId && (
               <AkteAbschnitt titel={t('verkauf.akte.verlauf')} zusatz={akte.verlauf.data?.length}>
-                {akte.verlauf.isPending ? (
-                  <Skelett className="h-24" />
-                ) : (
-                  <LeadVerlauf eintraege={akte.verlauf.data ?? []} altText={akte.details.data?.verlauf_text ?? null} />
-                )}
+                <div className="flex flex-col gap-2">
+                  {g.email && (
+                    <OutlookMailsKnopf
+                      adresse={g.email}
+                      neuLaden={[...VERKAUF_SCHLUESSEL, 'akte', g.verkaufschanceId]}
+                    />
+                  )}
+                  {akte.verlauf.isPending ? (
+                    <Skelett className="h-24" />
+                  ) : (
+                    <LeadVerlauf
+                      eintraege={akte.verlauf.data ?? []}
+                      altText={akte.details.data?.verlauf_text ?? null}
+                    />
+                  )}
+                </div>
               </AkteAbschnitt>
             )}
             {g.verkaufschanceId && (
