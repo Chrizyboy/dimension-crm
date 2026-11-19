@@ -393,6 +393,17 @@
       "ohneMail": "Ohne Mail: Link fürs Handy",
       "ohneMailText": "Für Personen mit privater Mail (z. B. Montage): Sie registrieren sich selbst über einen persönlichen Link.",
       "nachricht": "Hallo {{name}}, hier ist dein Zugang zu Dimension Work. Öffne den Link am Handy und gib deine Mailadresse ein: {{adresse}}"
+    },
+    "ansichtListe": "Liste",
+    "ansichtBereiche": "Bereiche je Person",
+    "matrix": {
+      "titel": "Bereiche je Person",
+      "hinweis": "Welche Bereiche jede Person in der Seitenleiste sieht. Ohne eigene Auswahl gilt die Rolle; das erste Häkchen macht daraus eine eigene Auswahl. Speichert sofort.",
+      "eigene": "eigene Auswahl",
+      "wieRolle": "wie Rolle",
+      "gl": "Geschäftsleitung, sieht alles",
+      "zuruecksetzen": "{{name}}: wieder wie die Rolle",
+      "legende": "Blasse Häkchen kommen von der Rolle. Daten schützt zusätzlich die Datenbank (Rechte)."
     }
   },
   "rechte": {

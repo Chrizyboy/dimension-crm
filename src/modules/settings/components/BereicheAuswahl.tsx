@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/feld'
 import { Checkbox } from '@/components/ui/schalter'
 import { useUi } from '@/stores/ui'
 import type { ModulMeta } from '@/types/modul'
+import { waehlbareBereiche } from '../lib/sichtbareBereiche'
 
 interface BereicheAuswahlProps {
   id: string
@@ -20,9 +21,7 @@ interface BereicheAuswahlProps {
 export function BereicheAuswahl({ id, module, wert, onChange }: BereicheAuswahlProps) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
-  const waehlbar = module.filter(
-    (m) => !m.immer && !(m.recht === 'admin' || (Array.isArray(m.recht) && m.recht.includes('admin'))),
-  )
+  const waehlbar = waehlbareBereiche(module)
   return (
     <div className="grid gap-x-4 gap-y-2 sm:grid-cols-2">
       {waehlbar.map((m) => {

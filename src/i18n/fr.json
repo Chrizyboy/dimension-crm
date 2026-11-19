@@ -393,6 +393,17 @@
       "ohneMail": "Sans e-mail: lien pour le téléphone",
       "ohneMailText": "Pour les personnes avec une adresse privée (p. ex. montage): elles s’inscrivent elles-mêmes via un lien personnel.",
       "nachricht": "Salut {{name}}, voici ton accès à Dimension Work. Ouvre le lien sur ton téléphone et saisis ton adresse e-mail: {{adresse}}"
+    },
+    "ansichtListe": "Liste",
+    "ansichtBereiche": "Domaines par personne",
+    "matrix": {
+      "titel": "Domaines par personne",
+      "hinweis": "Les domaines que chaque personne voit dans la barre latérale. Sans choix propre, le rôle s’applique ; la première coche en fait un choix propre. Enregistre tout de suite.",
+      "eigene": "choix propre",
+      "wieRolle": "comme le rôle",
+      "gl": "Direction, voit tout",
+      "zuruecksetzen": "{{name}} : de nouveau comme le rôle",
+      "legende": "Les coches pâles viennent du rôle. La base de données protège en plus les données (droits)."
     }
   },
   "rechte": {

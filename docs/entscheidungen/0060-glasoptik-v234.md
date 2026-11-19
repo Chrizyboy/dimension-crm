@@ -65,3 +65,11 @@ Chris: «besser als V234, aber alles davon». Darum keine 1:1-Gliederung, sonder
   (Werkverträge); die Seitenleiste zeigt einen Eintrag, beide Seiten oben den `Bereichsumschalter`
   (`src/layouts/`). Module bleiben getrennt (Regel 2), nur die Navigation fasst zusammen. Wer nur einen Teil sehen
   darf, sieht ihn unter seinem eigenen Namen.
+
+## Nachtrag 19.11.2026: Bereiche pro Person
+
+V234 hatte in der Nutzerverwaltung Häkchen je Register und Person. Dimension Work konnte das schon (eigene Auswahl
+an `personen.bereiche`, sonst die Rolle, mit «gl» alles; `meine_anmeldung`), aber nur Person für Person. Neu:
+**Einstellungen › Personen › Bereiche je Person** (`BereicheMatrix.tsx`), Zeile je aktive Person, Spalte je
+wählbarer Bereich, speichert sofort; blasse Häkchen = von der Rolle, «Wie Rolle» setzt zurück. Die Regel steht in
+`lib/sichtbareBereiche.ts` gleich wie in der Datenbank. Keine Migration nötig. Daten schützt weiter RLS.
