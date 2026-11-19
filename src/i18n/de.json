@@ -10406,13 +10406,17 @@
       "geschuetzt": "Geschützt",
       "efh": "Einfamilienhaus",
       "fahrzeit": "Zu weit",
-      "zu_klein": "Zu klein"
+      "zu_klein": "Zu klein",
+      "pv_vorhanden": "Schon PV",
+      "kein_weg": "Kein Weg"
     },
     "ausschlussText": {
       "geschuetzt": "Geschütztes Gebäude: Solaranlage und Heizungsersatz sind schwierig. Darum 0 Punkte.",
       "efh": "Einfamilienhaus: für Contracting zu klein. Darum 0 Punkte.",
       "fahrzeit": "Mehr als 60 Minuten von Muri und Bulle entfernt. Darum 0 Punkte.",
-      "zu_klein": "Dach unter 200 m² und keine grosse Heizung. Darum 0 Punkte."
+      "zu_klein": "Dach unter 200 m² und keine grosse Heizung. Darum 0 Punkte.",
+      "pv_vorhanden": "Auf dem Dach steht schon eine grosse PV-Anlage (Bundesregister). Darum 0 Punkte.",
+      "kein_weg": "Weder Strom-Contracting, ZEV noch Dachmiete möglich (zu wenig Verbrauch oder vermietet, Dach zu klein). Darum 0 Punkte."
     },
     "teil": {
       "dach": "Dach",
@@ -10421,7 +10425,8 @@
       "heizungsersatz": "Heizungsersatz geplant",
       "bauherr": "Bauherrschaft",
       "fahrzeit": "Fahrzeit",
-      "wohnungen": "Wohnungen (ZEV)"
+      "wohnungen": "Wohnungen (ZEV)",
+      "youdera": "Youdera-Prüfung"
     },
     "bauherrArt": {
       "gemeinde": "Gemeinde",
@@ -10573,20 +10578,31 @@
       "laufzeit_waerme_jahre": "Laufzeit Wärme (Jahre)",
       "nurAdmin": "Ändern darf nur die Administration.",
       "punkteTitel": "So entstehen die Punkte (0 bis 100)",
-      "punkteText": "Jeder Treffer bekommt Punkte aus sechs Bausteinen. Ab 70 Punkten sehr gut, ab 50 gut.",
+      "punkteText": "Jeder Treffer bekommt Punkte aus sieben Bausteinen. Ab 70 Punkten sehr gut, ab 50 gut.",
       "teil": {
         "dach": "Dach: ab 500 m² geeigneter Fläche, volle 30 Punkte ab 1'500 m² (sonnendach.ch)",
         "nutzung": "Eigenverbrauch: Industrie, Kühlung, Spital 20, Gewerbe 18, Heim 16, Schule und Überbauung 14",
         "heizung": "Heizung: Öl 20, Gas 16, Elektro 14; halb so viel, wenn sie jünger als 15 Jahre oder kleiner als 50 kW ist",
-        "bauherr": "Bauherrschaft: Gemeinde, Kanton, Genossenschaft, Pensionskasse 15, Immobilienfirma 13, Firma 10",
+        "bauherr": "Bauherrschaft: Firma 15, Landwirtschaft und Gemeinde 13, Kanton 12, Kirche und Genossenschaft 10, unbekannt 7, Privat, Pensionskasse und Immobilienfirma 5 (vermieten meist)",
         "fahrzeit": "Fahrzeit: bis 30 Min. 10, bis 45 Min. 7, bis 60 Min. 4",
-        "wohnungen": "Wohnungen für einen Zusammenschluss zum Eigenverbrauch (ZEV): ab 6 Wohnungen 3, ab 20 Wohnungen 5"
+        "wohnungen": "Wohnungen für einen Zusammenschluss zum Eigenverbrauch (ZEV): ab 6 Wohnungen 3, ab 20 Wohnungen 5",
+        "youdera": "Youdera-Prüfung: Ampel grün +10, gelb 0, rot −15; belegtes Dach oder kein Weg: ausgeschlossen"
       },
       "staffel": "Preis pro kWp",
       "staffelBis": "bis {{bis}} kWp: CHF {{chf}}",
       "staffelRest": "darüber: CHF {{chf}}",
       "neuRechnen": "Nach dem Speichern rechnet das CRM alle offenen Grossprojekte neu.",
-      "youdera_mail": "Mail Youdera (Dossier)"
+      "youdera_mail": "Mail Youdera (Dossier)",
+      "eignungTitel": "Youdera-Prüfung",
+      "eignungText": "Youdera kauft Strom-Contracting von 30 kWp bis 4 MWp, wenn der Eigentümer mindestens 70 % des Stroms selbst braucht. Die Anlage wird auf den Verbrauch ausgelegt.",
+      "eignung": {
+        "strompreis_rp_kwh": "Strompreis des Kunden heute (Rp./kWh)",
+        "eigenverbrauch_min_prozent": "Eigenverbrauch mindestens (%)",
+        "kwp_min": "Youdera ab kWp",
+        "kwp_max": "Youdera bis kWp",
+        "dachmiete_ab_kwp": "Dachmiete ab kWp",
+        "pv_bestand_max_anteil": "Bestehende PV höchstens (Anteil, 0.3 = 30 %)"
+      }
     },
     "heute": {
       "titel": "Grossprojekte",
@@ -10883,6 +10899,114 @@
       "notizPunkt": "Was ist das Problem?",
       "notiz": "Notiz zur Besichtigung",
       "abschliessen": "Besichtigung abschliessen"
+    },
+    "eignung": {
+      "titel": "Warum und wie",
+      "keine": "Noch keine Prüfung: Dach und Gebäude fehlen (Gebäudedaten holen).",
+      "hinweis": "Grobe Prüfung aus Bundesdaten und Annahmen (Einstellungen). Mit der Stromrechnung im Rechner wird sie genau.",
+      "kunde_spart": "Kunde spart CHF {{chf}}/Jahr",
+      "kopieren": "Kopieren",
+      "ampel": {
+        "gruen": "Passt",
+        "gelb": "Noch klären",
+        "rot": "Passt so nicht"
+      },
+      "weg": {
+        "ppa": "Strom-Contracting",
+        "zev": "ZEV mit Mietern",
+        "dachmiete": "Dachmiete",
+        "keiner": "Kein Weg"
+      },
+      "seite": {
+        "kunde": "Kunde",
+        "youdera": "Youdera",
+        "wir": "Dimension"
+      },
+      "kanal": {
+        "telefon": "Telefon",
+        "besuch": "Besuch",
+        "mail": "Mail",
+        "brief": "Brief"
+      },
+      "zahl": {
+        "anlage": "Anlage",
+        "vomDach": "von {{kwp}} kWp Dach",
+        "ersparnis": "Kunde spart",
+        "proJahr": "pro Jahr, ohne Investition",
+        "eigenverbrauch": "Eigenverbrauch",
+        "verbrauch_schaetzung": "Verbrauch geschätzt {{kwh}} kWh",
+        "verbrauch_rechnung": "Verbrauch {{kwh}} kWh (Stromrechnung)",
+        "auftrag": "Auftrag für uns",
+        "margeWartung": "Marge CHF {{marge}}, Wartung CHF {{wartung}}/Jahr"
+      },
+      "punkt": {
+        "ersparnis": {
+          "ok": "Spart rund CHF {{wert}} pro Jahr, ohne selbst zu investieren",
+          "offen": "Ersparnis offen (Dachmiete oder Preis fehlt)",
+          "nein": "Contracting-Preis höher als Netzstrom"
+        },
+        "dach": {
+          "ok": "Gebäude von {{wert}}: Dach hält die Vertragsdauer",
+          "offen": "Dach prüfen (Baujahr {{wert}}): hält es 25 Jahre? Sonst Sanierung mitverkaufen",
+          "nein": "Dach ungeeignet"
+        },
+        "groesse": {
+          "ok": "{{wert}} kWp: passt zu Youdera (30 kWp bis 4 MWp)",
+          "offen": "Grösse offen",
+          "nein": "{{wert}} kWp: ausserhalb von 30 kWp bis 4 MWp"
+        },
+        "eigenverbrauch": {
+          "ok": "Rund {{wert}} % Eigenverbrauch (Youdera will mind. 70 %)",
+          "offen": "Dachmiete: Strom geht ins Netz, bei Youdera anfragen",
+          "nein": "Zu wenig Eigenverbrauch ({{wert}} %)"
+        },
+        "eigentuemer": {
+          "ok": "Eigentümer braucht den Strom selbst",
+          "offen": "Klären: nutzt der Eigentümer das Gebäude selbst?",
+          "nein": "Vermietet: kein Vertrag mit dem Eigentümer als Abnehmer"
+        },
+        "bonitaet": {
+          "ok": "Bonität in Ordnung",
+          "offen": "Bonität klären: Jahresabschlüsse einholen",
+          "nein": "Bonität auffällig (Handelsamtsblatt)"
+        },
+        "pv_bestand": {
+          "ok": "Noch keine PV auf dem Dach",
+          "offen": "PV auf dem Dach noch nicht geprüft",
+          "teil": "Schon {{wert}} kW PV: Erweiterung möglich",
+          "nein": "Schon {{wert}} kW PV: Dach belegt"
+        },
+        "distanz": {
+          "ok": "{{wert}} Min. von unserem Standort",
+          "offen": "{{wert}} Min. Fahrzeit: Montage gut planen",
+          "nein": "Zu weit"
+        },
+        "auftrag": {
+          "ok": "Bauauftrag rund CHF {{wert}} plus Wartung",
+          "offen": "Auftrag offen",
+          "nein": "Kein Auftrag möglich"
+        }
+      },
+      "vorgehen": {
+        "warum": "Warum dieses Gebäude",
+        "warum_ppa": "Rund {{kwp}} kWp auf dem eigenen Dach für den eigenen Verbrauch: Der Kunde spart rund CHF {{chf}} pro Jahr, ohne selbst zu investieren. Youdera finanziert und betreibt die Anlage, wir bauen und warten sie.",
+        "warum_zev": "Rund {{kwp}} kWp für die Mieter (ZEV): Der Eigentümer verkauft Solarstrom an seine Mieter, ohne selbst zu investieren; die Mieter sparen rund CHF {{chf}} pro Jahr. Youdera finanziert, wir bauen und warten.",
+        "warum_dachmiete": "Grosses Dach mit wenig eigenem Verbrauch: Der Eigentümer vermietet das Dach für rund {{kwp}} kWp und bekommt eine Miete, ohne Aufwand. Bei Youdera anfragen, ob sie die Volleinspeisung übernimmt.",
+        "warum_keiner": "So passt es nicht: zu wenig Verbrauch oder vermietet, und für eine Dachmiete zu klein.",
+        "wer": "Wen ansprechen",
+        "einstieg": "Erster Satz",
+        "argumente": "Argumente",
+        "einwaende": "Einwände und Antworten",
+        "fehlt": "Wen anrufen, erster Satz und Antworten auf Einwände kommen mit der Recherche.",
+        "bonitaet": "Bonität"
+      },
+      "grundbuch": {
+        "titel": "Eigentümer im Grundbuch bestätigen",
+        "oeffnen": "Grundbuch {{kanton}} öffnen",
+        "keine": "Für diesen Kanton ist keine Online-Abfrage hinterlegt: beim Grundbuchamt anfragen (Einstellungen › Annahmen).",
+        "parzelle": "Parzelle",
+        "egrid": "EGRID"
+      }
     }
   },
   "team": {

@@ -111,7 +111,7 @@ export type Heizung = (typeof HEIZUNGEN)[number]
 
 /** Ein Baustein der Punkte («Warum passt es?»). */
 export interface PunkteTeil {
-  was: 'dach' | 'nutzung' | 'heizung' | 'heizungsersatz' | 'bauherr' | 'fahrzeit' | 'wohnungen'
+  was: 'dach' | 'nutzung' | 'heizung' | 'heizungsersatz' | 'bauherr' | 'fahrzeit' | 'wohnungen' | 'youdera'
   punkte: number
   wert: string | number | null
   jahr?: number | null
@@ -127,6 +127,46 @@ export interface Schaetzung {
   waerme_kw?: number
   waerme_investition_rappen?: number
   waerme_rate_rappen?: number
+}
+
+/** Ampel der Youdera-Prüfung: grün = passt, gelb = noch klären, rot = passt so nicht. */
+export type Ampel = 'gruen' | 'gelb' | 'rot'
+/** Weg zum Vertrag: Strom an den Eigentümer (ppa), an Mieter (zev), Dach vermieten (dachmiete) oder keiner. */
+export type EignungWeg = 'ppa' | 'zev' | 'dachmiete' | 'keiner'
+/** Ein Prüfpunkt der Ampel. */
+export interface Pruefpunkt {
+  code:
+    | 'ersparnis'
+    | 'dach'
+    | 'groesse'
+    | 'eigenverbrauch'
+    | 'eigentuemer'
+    | 'bonitaet'
+    | 'pv_bestand'
+    | 'distanz'
+    | 'auftrag'
+  stand: 'ok' | 'offen' | 'nein'
+  wert?: string | number | null
+}
+
+/** Youdera-Prüfung der Datenbank (intern.gp_eignung): passt es für Kunde, Youdera und uns? Beträge in CHF. */
+export interface Eignung {
+  weg?: EignungWeg
+  ampel?: Ampel
+  ausschluss?: string | null
+  kwp_empfohlen?: number
+  kwp_dach?: number
+  ertrag_kwh?: number
+  verbrauch_kwh?: number
+  verbrauch_quelle?: 'rechnung' | 'schaetzung'
+  eigenverbrauch_prozent?: number
+  strompreis_rp?: number
+  preis_rp?: number | null
+  ersparnis_chf?: number
+  investition_chf?: number
+  marge_chf?: number
+  wartung_chf?: number
+  pruefungen?: { kunde: Pruefpunkt[]; youdera: Pruefpunkt[]; wir: Pruefpunkt[] }
 }
 
 /** Ein Grossprojekt, wie die Liste und die Akte es zeigen. */
@@ -166,7 +206,7 @@ export interface Grossprojekt {
   punkte: number
   punkte_details: PunkteTeil[]
   art: ContractingArt | null
-  ausschluss: 'geschuetzt' | 'efh' | 'fahrzeit' | 'zu_klein' | null
+  ausschluss: 'geschuetzt' | 'efh' | 'fahrzeit' | 'zu_klein' | 'pv_vorhanden' | 'kein_weg' | null
   schaetzung: Schaetzung
   stand: Stand
   wiedervorlage_am: string | null
@@ -195,6 +235,13 @@ export interface Grossprojekt {
   besichtigung: Besichtigung
   vertrag_am: string | null
   vertrag_kwp: number | null
+  /** Schon gebaute PV laut Bundesregister (kW, 0 = keine; leer = noch nicht geprüft). */
+  pv_bestand_kw: number | null
+  grundflaeche_m2: number | null
+  geschosse: number | null
+  /** Grundstück-ID fürs Grundbuch. */
+  egrid: string | null
+  eignung: Eignung
 }
 
 /** Eine Ansprechperson (aus der Recherche vorgeschlagen oder übernommen). */
@@ -221,6 +268,40 @@ export interface Recherche {
   ansprechpersonen?: Ansprechperson[]
   naechste_schritte?: { titel: string; text: string; in_tagen: number }[]
   quellen?: { titel: string; url: string }[]
+  /** Nutzt der Eigentümer das Gebäude selbst? (Bedingung von Youdera; null = unklar) */
+  eigentuemer_nutzt_selbst?: boolean | null
+  bonitaet?: 'unauffaellig' | 'auffaellig' | 'unbekannt'
+  bonitaet_hinweis?: string | null
+  /** Verkaufsblatt: warum dieses Gebäude, wen anrufen, erster Satz, Argumente, Einwände. */
+  verkauf?: Verkauf | null
+}
+
+/** Verkaufsblatt der Recherche (Vorschlag der KI). */
+export interface Verkauf {
+  warum: string
+  wer: string
+  kanal: 'telefon' | 'besuch' | 'mail' | 'brief'
+  einstieg: string
+  argumente: string[]
+  einwaende: { einwand: string; antwort: string }[]
+}
+
+/** Einstellbare Zahlen der Youdera-Prüfung (Reiter Annahmen). */
+export const EIGNUNG_WERTE = [
+  'strompreis_rp_kwh',
+  'eigenverbrauch_min_prozent',
+  'kwp_min',
+  'kwp_max',
+  'dachmiete_ab_kwp',
+  'pv_bestand_max_anteil',
+] as const
+export type EignungWert = (typeof EIGNUNG_WERTE)[number]
+
+/** Grundbuch-Abfrage eines Kantons (einstellungen.grossprojekte.grundbuch). */
+export interface GrundbuchLink {
+  url: string
+  de: string
+  fr: string
 }
 
 /** Eintrag im Verlauf. */
@@ -257,6 +338,10 @@ export interface GrossprojektRegeln {
   }
   /** Kürzel der Person, die neue Grossprojekte betreut. */
   verantwortlich?: string[]
+  /** Online-Abfrage des Grundbuchs je Kanton (Kürzel wie «FR»). */
+  grundbuch?: Record<string, GrundbuchLink>
+  /** Schwellen der Youdera-Prüfung (intern.gp_eignung); Tabellen je Nutzung bleiben in der Datenbank. */
+  eignung?: Partial<Record<EignungWert, number>>
   suche?: SucheRegeln
   pipeline?: PipelineRegeln
 }

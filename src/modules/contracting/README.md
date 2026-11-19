@@ -15,7 +15,10 @@ Wunsch von Chris am 30.10.2026. Entscheid: `docs/entscheidungen/0029-grossprojek
    Gebäuderegister, Dach von sonnendach.ch; aufgenommen wird nur, was genug Punkte hat (Nachtrag in Entscheid 0029).
 2. Der Server holt mit Adresse oder Parzelle Dach (sonnendach.ch) und Heizung (Gebäuderegister), sofort nach dem
    Erfassen und sonst stündlich.
-3. Die Datenbank rechnet Punkte und Schätzung bei jedem Speichern neu (`intern.gp_bewerten`).
+3. Die Datenbank rechnet Punkte und Schätzung bei jedem Speichern neu (`intern.gp_bewerten`), dazu die
+   Youdera-Prüfung (`intern.gp_eignung`: Anlage passend zum Verbrauch, Weg, Ersparnis, Ampel von drei Seiten). Dächer
+   mit schon gebauter PV (Bundesregister, `_shared/pv_register.ts`) fallen heraus (Nachtrag 19.11.2026).
+   Die Akte zeigt «Warum und wie» mit Verkaufsblatt der Recherche und Link zum Grundbuch des Kantons.
 4. Starke Treffer meldet die Glocke einmal; die Karte auf «Mein Tag» zeigt die besten.
 5. Andy bewilligt (Lead entsteht), beobachtet (Wiedervorlage) oder verwirft (mit Grund); schnell im Reiter
    «Zu entscheiden» mit den Tasten J/B/N.
