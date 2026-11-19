@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { Dialog, DialogInhalt } from '@/components/ui/dialog'
-import { formatChf, formatDatumZeit } from '@/lib/format'
+import { formatChf, formatDatum, formatDatumZeit } from '@/lib/format'
 import { geaenderteFelder } from '@/lib/protokoll'
 import { ladeKontoNamen, ladeVerlauf } from '@/services/protokoll'
 
@@ -26,9 +26,13 @@ function feldName(feld: string, t: (k: string, o?: Record<string, unknown>) => s
   return t(`verlauf.feld.${kurz}`, { defaultValue: roh.charAt(0).toUpperCase() + roh.slice(1) })
 }
 
-/** Beträge in Rappen als CHF zeigen, sonst den Text unverändert. */
+/** Werte wie im Rest des CRM: Rappen als CHF, Datum 21.10.2026, Zeitpunkt mit Uhrzeit, «zur_offerte» → «zur offerte». */
 function wert(feld: string, text: string): string {
-  return feld.endsWith('_rappen') && /^-?\d+$/.test(text) ? formatChf(Number(text), { mitWaehrung: true }) : text
+  if (feld.endsWith('_rappen') && /^-?\d+$/.test(text)) return formatChf(Number(text), { mitWaehrung: true })
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return formatDatum(text)
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(text)) return formatDatumZeit(text)
+  if (/^[a-z]+(_[a-z]+)+$/.test(text)) return text.replace(/_/g, ' ')
+  return text
 }
 
 type Bezuege = { tabelle: string; id: string }[]

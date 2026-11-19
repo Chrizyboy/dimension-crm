@@ -1,4 +1,4 @@
-import { ArrowRight, FileSearch, Send } from 'lucide-react'
+import { FileSearch, Send } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
@@ -32,13 +32,6 @@ export default function PruefenHeute() {
           {t('offerten.heute.pruefen')}
           <Badge ton="marke">{String(liste.length)}</Badge>
         </KarteTitel>
-        <a
-          href="#/quotes?ansicht=eingang"
-          className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs"
-        >
-          {t('offerten.heute.alle')}
-          <ArrowRight className="size-3.5" />
-        </a>
       </KarteKopf>
       <ul className="divide-y">
         {liste.slice(0, 6).map((e) => (
@@ -84,6 +77,14 @@ export default function PruefenHeute() {
           </li>
         ))}
       </ul>
+      {liste.length > 6 && (
+        <a
+          href="#/quotes?ansicht=eingang"
+          className="text-primary dark:text-accent border-t px-4 py-2 text-xs font-medium hover:underline"
+        >
+          {t('offerten.heute.alle', { count: liste.length })}
+        </a>
+      )}
       <Suspense>
         {versendet && (
           <EingangStatusDialog

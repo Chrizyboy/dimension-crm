@@ -45,7 +45,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 ### Die Nachfass-Liste filtern
 
 1. Oben stehen Fällig, Heute, In 14 Tagen, Offen, **Ø fällig seit** und **Über 180 Tage**.
-2. Filtern nach Standort, **Fällig seit** (auch **Bald fällig**), **Betrag** ab 10'000, 25'000 oder 50'000 und mit **Suchen**.
+2. Filtern nach Standort, **Fällig seit** (auch **Bald fällig**), **Betrag** ab 10'000, 25'000 oder 50'000; die Suche oben gilt für alle Reiter.
 3. Darunter die Personen mit Anzahl: ein Klick zeigt nur ihre Offerten, **Meine** nur deine.
 4. Unter **⋯** je Zeile: **Nicht erreicht**, **Nachfass-Mail** (fertiger Text in der Sprache des Kunden, das nächste Nachfassen rückt 5 Arbeitstage nach hinten), **Bereits verbaut**, **Zurück zur Offerte**.
 
@@ -107,7 +107,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
-- 19.11.2026: Nachfassen wie V234 und besser: Personen mit Anzahl, Suche, Betrag ab 10'000/25'000/50'000, Kennzahlen **Ø fällig seit** und **Über 180 Tage**, je Zeile **Nachfass-Mail** und **Zurück zur Offerte**. **Rechtsklick** auf eine versendete Offerte: **Ergebnis**, **Angenommen**, **Abgelehnt**, **Vertagt**, **Bereits verbaut**, **Nachfass-Mail**. In der Offert-Akte **+ Aufgabe** und **Änderungsverlauf** (wer hat wann was geändert, auch am Lead).
+- 19.11.2026: Nachfassen wie V234 und besser: Personen mit Anzahl, Betrag ab 10'000/25'000/50'000, Kennzahlen **Ø fällig seit** und **Über 180 Tage**, je Zeile **Nachfass-Mail** und **Zurück zur Offerte**. **Rechtsklick** auf eine versendete Offerte: **Ergebnis**, **Angenommen**, **Abgelehnt**, **Vertagt**, **Bereits verbaut**, **Nachfass-Mail**. In der Offert-Akte **+ Aufgabe** und **Änderungsverlauf** (wer hat wann was geändert, auch am Lead).
 - 19.11.2026: **Offerten** öffnet beim ersten Mal mit **Neue Offerten**, danach mit der Ansicht, in der du zuletzt warst (je Person gemerkt).
 - 19.11.2026: **Rechtsklick** auf eine Offerte in den Listen Muri und Bulle (am Handy lange drücken): Öffnen, Kundenakte öffnen, In Google Maps öffnen, Anrufen, E-Mail schreiben.
 - 04.11.2026: Höchstens sechs Ansichten, **PDF-Import** steht unter **Mehr**. In «Chance und Angaben» stehen nur ausgefüllte Felder, die leeren nach **+ weitere Angaben**.

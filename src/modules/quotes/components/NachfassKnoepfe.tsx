@@ -50,6 +50,8 @@ export default function NachfassKnoepfe({ offerteId }: { offerteId: string }) {
     <Button
       size="sm"
       variant="secondary"
+      // Schmal, damit alle drei und «⋯» in einer Karte von «Mein Tag» auf eine Zeile passen.
+      className="gap-1 px-2"
       laedt={laedt === w}
       onClick={() => {
         void waehle(w)
@@ -61,13 +63,13 @@ export default function NachfassKnoepfe({ offerteId }: { offerteId: string }) {
   )
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5" data-testid="nachfass-knoepfe">
+    <div className="flex flex-wrap items-center gap-1" data-testid="nachfass-knoepfe">
       {knopf('angenommen', Check, t('offerten.nachfassen.angenommen'))}
       {knopf('verloren', X, t('offerten.nachfassen.abgelehnt'))}
       {knopf('vertagt', CalendarClock, t('offerten.nachfassen.vertagt'))}
       <Menue>
         <MenueAusloeser asChild>
-          <Button size="sm" variant="ghost" aria-label={t('knopfleiste.mehr')} title={t('knopfleiste.mehr')}>
+          <Button size="sm" variant="ghost" className="px-1.5" aria-label={t('knopfleiste.mehr')} title={t('knopfleiste.mehr')}>
             <MoreHorizontal />
           </Button>
         </MenueAusloeser>

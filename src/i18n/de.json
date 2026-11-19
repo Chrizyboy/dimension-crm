@@ -1705,7 +1705,7 @@
     },
     "heute": {
       "nachTermin": "Nach dem Termin: wie weiter?",
-      "alle": "Zu tun",
+      "alle": "Alle {{count}} in «Zu tun»",
       "terminAm": "Termin {{datum}}",
       "ohneDatum": "Termin ohne Datum",
       "zurOfferte": "Zur Offerte",
@@ -1929,8 +1929,6 @@
       "tage_other": "{{count}} Tage",
       "betrag": "Betrag",
       "ab": "ab {{betrag}}",
-      "suche": "Suchen",
-      "sucheHinweis": "Name, Ort, Nummer …",
       "niemand": "Ohne Zuständige"
     },
     "entscheid": {
@@ -2187,7 +2185,7 @@
     },
     "heute": {
       "pruefen": "Offerten prüfen & senden",
-      "alle": "Neue Offerten",
+      "alle": "Alle {{count}} in «Neue Offerten»",
       "richt_bearbeitung": "Richtofferte in Bearbeitung",
       "richt_rueckfrage": "Richtofferte, Rückfrage offen",
       "richt_bereit": "Richtofferte bereit zum Senden",

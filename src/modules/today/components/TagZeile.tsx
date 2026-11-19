@@ -137,8 +137,8 @@ export function TagZeile({
   return (
     <li className="hover:bg-surface-2 flex flex-col gap-1.5 px-4 py-2 text-sm">
       {zeileInhalt}
-      {/* Eingerückt unter den Titel, damit die Knöpfe zur Zeile gehören und nicht unter das Datum rutschen. */}
-      <div className="pl-[4.75rem] sm:pl-[5.75rem]">{zusatz}</div>
+      {/* In breiten Karten unter den Titel eingerückt, in schmalen über die ganze Breite, damit sie auf eine Zeile passen. */}
+      <div className="@[30rem]:pl-[5.75rem]">{zusatz}</div>
     </li>
   )
 }

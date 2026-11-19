@@ -6,7 +6,6 @@ import { Leerzustand } from '@/components/shared/Zustaende'
 import { Auswahl } from '@/components/ui/auswahl'
 import { Button } from '@/components/ui/button'
 import { Feld } from '@/components/ui/feld'
-import { Input } from '@/components/ui/input'
 import { formatChf } from '@/lib/format'
 import { meldeFehler } from '@/services/fehler'
 import { useAnmeldung } from '@/stores/anmeldung'
@@ -22,7 +21,7 @@ import {
   type FaelligSeit,
   type NachfassSortierung,
 } from '../lib/nachfassen'
-import { imNachfassen, treffer } from '../lib/suche'
+import { imNachfassen } from '../lib/suche'
 import { erfasseNachfassen } from '../services/ablauf'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
@@ -45,7 +44,7 @@ function Kennzahl({ titel, wert }: { titel: string; wert: string | number }) {
 
 /**
  * Nachfassen (V45, V193): versendete Offerten 14 Tage nach dem Angebot oder am vertagten Datum.
- * Filter nach Standort, «fällig seit» (auch bald fällige), Betrag ab, Person (mit Zahl, wie V234) und Suche;
+ * Filter nach Standort, «fällig seit» (auch bald fällige), Betrag ab, Person (mit Zahl, wie V234); die Suche oben gilt für alle Reiter;
  * je Zeile Ergebnis, Angenommen, Abgelehnt, Vertagt und unter «⋯» nicht erreicht, Nachfass-Mail, Bereits verbaut,
  * Zurück zur Offerte; Mehrfachauswahl für mehrere auf einmal. Zeigt 50, dann «Weitere laden».
  */
@@ -56,7 +55,6 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
   const [seit, setSeit] = useState<FaelligSeit>('alle')
   const [person, setPerson] = useState('alle')
   const [betragAb, setBetragAb] = useState(0)
-  const [suche, setSuche] = useState('')
   const [sortierung, setSortierung] = useState<NachfassSortierung>('alt')
   const [anzahl, setAnzahl] = useState(SEITE)
   const [auswahl, setAuswahl] = useState<Set<string>>(new Set())
@@ -88,10 +86,9 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
       (ohne === 'person' ||
         person === 'alle' ||
         (person === 'meine' ? o.verantwortlichId === ich?.id : (o.verantwortlichId ?? 'niemand') === person)) &&
-      (ohne === 'betrag' || (o.betragRappen ?? 0) >= betragAb) &&
-      (!suche.trim() || treffer(o.suchtext, suche))
+      (ohne === 'betrag' || (o.betragRappen ?? 0) >= betragAb)
     return p
-  }, [standort, seit, person, ich?.id, betragAb, suche])
+  }, [standort, seit, person, ich?.id, betragAb])
   const liste = useMemo(
     () =>
       sortiereNachfassen(
@@ -155,17 +152,6 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
             anzahl: offen.filter((o) => passt(o, 'betrag') && (o.betragRappen ?? 0) >= b).length,
           }))}
         />
-        <Feld id="nachfassen-suche" label={t('offerten.nachfassen.suche')} className="w-56">
-          <Input
-            id="nachfassen-suche"
-            type="search"
-            placeholder={t('offerten.nachfassen.sucheHinweis')}
-            value={suche}
-            onChange={(e) => {
-              setSuche(e.target.value)
-            }}
-          />
-        </Feld>
         <Feld id="nachfassen-sort" label={t('offerten.nachfassen.sortierung')} className="w-44">
           <Auswahl
             id="nachfassen-sort"

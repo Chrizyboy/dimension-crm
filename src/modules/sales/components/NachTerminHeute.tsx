@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, FileText, ThumbsDown } from 'lucide-react'
+import { CalendarCheck, FileText, ThumbsDown } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
@@ -34,13 +34,6 @@ export default function NachTerminHeute() {
           {t('verkauf.heute.nachTermin')}
           <Badge ton="marke">{String(liste.length)}</Badge>
         </KarteTitel>
-        <a
-          href="#/sales?ansicht=zutun"
-          className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs"
-        >
-          {t('verkauf.heute.alle')}
-          <ArrowRight className="size-3.5" />
-        </a>
       </KarteKopf>
       <ul className="divide-y">
         {liste.slice(0, 6).map((g) => (
@@ -83,6 +76,14 @@ export default function NachTerminHeute() {
           </li>
         ))}
       </ul>
+      {liste.length > 6 && (
+        <a
+          href="#/sales?ansicht=zutun"
+          className="text-primary dark:text-accent border-t px-4 py-2 text-xs font-medium hover:underline"
+        >
+          {t('verkauf.heute.alle', { count: liste.length })}
+        </a>
+      )}
       <Suspense>
         {wechsel && (
           <StandWechselDialog

@@ -45,7 +45,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 ### Filtrer la liste de relance
 
 1. En haut : Échues, Aujourd’hui, Dans 14 jours, Ouvert, **Échue depuis (Ø)** et **Plus de 180 jours**.
-2. Filtrer par site, **Échue depuis** (aussi **Bientôt échue**), **Montant** dès 10'000, 25'000 ou 50'000 et avec **Rechercher**.
+2. Filtrer par site, **Échue depuis** (aussi **Bientôt échue**), **Montant** dès 10'000, 25'000 ou 50'000 ; la recherche en haut vaut pour tous les onglets.
 3. En dessous, les personnes avec leur nombre : un clic n’affiche que leurs offres, **Les miennes** seulement les tiennes.
 4. Sous **⋯** par ligne : **Pas joint**, **E-mail de relance** (texte prêt dans la langue du client, la prochaine relance recule de 5 jours ouvrables), **Déjà construite**, **Retour à l'offre**.
 
@@ -107,7 +107,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
-- 19.11.2026 : Relance comme V234 et mieux : personnes avec nombre, recherche, montant dès 10'000/25'000/50'000, indicateurs **Échue depuis (Ø)** et **Plus de 180 jours**, par ligne **E-mail de relance** et **Retour à l'offre**. **Clic droit** sur une offre envoyée : **Résultat**, **Acceptée**, **Refusée**, **Reportée**, **Déjà construite**, **E-mail de relance**. Dans le dossier de l’offre **+ Tâche** et **Historique des modifications** (qui a modifié quoi et quand, aussi sur le lead).
+- 19.11.2026 : Relance comme V234 et mieux : personnes avec nombre, montant dès 10'000/25'000/50'000, indicateurs **Échue depuis (Ø)** et **Plus de 180 jours**, par ligne **E-mail de relance** et **Retour à l'offre**. **Clic droit** sur une offre envoyée : **Résultat**, **Acceptée**, **Refusée**, **Reportée**, **Déjà construite**, **E-mail de relance**. Dans le dossier de l’offre **+ Tâche** et **Historique des modifications** (qui a modifié quoi et quand, aussi sur le lead).
 - 19.11.2026: **Offres** s’ouvre la première fois sur **Nouvelles offres**, ensuite sur la dernière vue utilisée (mémorisée par personne).
 - 19.11.2026: **Clic droit** sur une offre dans les listes Muri et Bulle (sur mobile, appui long) : ouvrir, ouvrir le dossier client, ouvrir dans Google Maps, appeler, écrire un e-mail.
 - 04.11.2026: Six vues au plus, **Import PDF** est sous **Plus**. Dans « Chance et indications », seuls les champs remplis s’affichent, les vides après **+ autres informations**.

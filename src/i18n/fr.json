@@ -1705,7 +1705,7 @@
     },
     "heute": {
       "nachTermin": "Après la visite : quelle suite ?",
-      "alle": "À faire",
+      "alle": "Les {{count}} dans « À faire »",
       "terminAm": "Visite le {{datum}}",
       "ohneDatum": "Visite sans date",
       "zurOfferte": "Vers l'offre",
@@ -1929,8 +1929,6 @@
       "tage_other": "{{count}} jours",
       "betrag": "Montant",
       "ab": "dès {{betrag}}",
-      "suche": "Rechercher",
-      "sucheHinweis": "Nom, lieu, numéro …",
       "niemand": "Sans responsable"
     },
     "entscheid": {
@@ -2187,7 +2185,7 @@
     },
     "heute": {
       "pruefen": "Offres à vérifier et envoyer",
-      "alle": "Nouvelles offres",
+      "alle": "Les {{count}} dans « Nouvelles offres »",
       "richt_bearbeitung": "Offre indicative en cours",
       "richt_rueckfrage": "Offre indicative, question ouverte",
       "richt_bereit": "Offre indicative prête à l'envoi",
