@@ -131,7 +131,8 @@ test('Aufgaben: anlegen, erledigen, unter «Erledigt» wiederfinden', async ({ p
   await anmelden(page, 'montage@test.local')
   await page.goto('/#/tasks')
   await expect(page.getByRole('heading', { name: 'Aufgaben', level: 1 })).toBeVisible()
-  await page.getByRole('button', { name: 'Neue Aufgabe' }).click()
+  // Das ganze Formular öffnet «Mehr» neben der Schnelleingabe (seit Entscheid 0045).
+  await page.getByLabel('Neue Aufgabe schnell erfassen').locator('..').getByRole('button', { name: 'Mehr' }).click()
   const dialog = page.getByRole('dialog', { name: 'Neue Aufgabe' })
   await dialog.getByRole('button', { name: 'Speichern' }).click()
   await expect(dialog.getByText('Bitte einen Titel eingeben.')).toBeVisible()
@@ -140,12 +141,13 @@ test('Aufgaben: anlegen, erledigen, unter «Erledigt» wiederfinden', async ({ p
   await dialog.getByRole('button', { name: 'Speichern' }).click()
   await expect(dialog).toBeHidden()
 
-  const zeile = page.getByRole('row').filter({ hasText: titel })
+  // Die Liste ist nach Fälligkeit gruppiert (Entscheid 0045), eine Aufgabe ist ein Listeneintrag.
+  const zeile = page.getByRole('listitem').filter({ hasText: titel })
   await expect(zeile).toBeVisible()
   await expect(zeile.getByText('01.12.2026')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
-  await zeile.getByRole('checkbox').click()
-  await expect(page.getByRole('row').filter({ hasText: titel })).toHaveCount(0)
+  await zeile.getByRole('checkbox', { name: `«${titel}» erledigt` }).click()
+  await expect(page.getByRole('listitem').filter({ hasText: titel })).toHaveCount(0)
   await page.getByRole('button', { name: 'Erledigt', exact: true }).click()
-  await expect(page.getByRole('row').filter({ hasText: titel })).toBeVisible()
+  await expect(page.getByRole('listitem').filter({ hasText: titel })).toBeVisible()
 })

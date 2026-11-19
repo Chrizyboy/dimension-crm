@@ -96,6 +96,8 @@ test.describe('PC', () => {
     await weiter.getByRole('button', { name: 'Weitergeben' }).click()
     await expect(weiter).toBeHidden()
     await expect(mail).toContainText('Vera Verkauf')
+    // Leere Abschnitte sind zugeklappt (Entscheid 0058).
+    await mail.getByRole('button', { name: 'Interne Notizen' }).click()
     await mail.getByRole('textbox', { name: /Notiz fürs Team/ }).fill(`@Vera bitte kurz prüfen ${lauf}`)
     await mail.getByRole('button', { name: 'Notiz speichern' }).click()
     await expect(mail).toContainText(`bitte kurz prüfen ${lauf}`)
@@ -120,6 +122,7 @@ test.describe('PC', () => {
   })
 
   test('Absender-Regel aus der Mail und im Reiter Regeln', async ({ page }) => {
+    test.slow()
     await anmelden(page, 'admin@test.local')
     await page.goto('/#/inbox')
     await page.getByRole('listitem').filter({ hasText: anfrage }).getByRole('button').click()
@@ -130,7 +133,7 @@ test.describe('PC', () => {
     await regel.getByRole('button', { name: 'Speichern' }).click()
     await expect(regel).toBeHidden()
     await waehleReiter(page, 'Absender-Regeln')
-    await expect(page.getByRole('cell', { name: `e2e-${lauf}@beispiel.test` })).toBeVisible()
+    await expect(page.getByRole('cell', { name: `e2e-${lauf}@beispiel.test`, exact: true })).toBeVisible()
     expect(await verstoesse(page)).toEqual([])
   })
 })

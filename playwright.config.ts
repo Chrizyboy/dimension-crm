@@ -16,6 +16,8 @@ const MIT_DATENBANK =
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
+  // Anmeldung mit Code aus Mailpit plus Prüfung der Barrierefreiheit braucht unter Last mehr als die üblichen 30 s.
+  timeout: 60_000,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
