@@ -10419,13 +10419,17 @@
       "geschuetzt": "Protégé",
       "efh": "Maison individuelle",
       "fahrzeit": "Trop loin",
-      "zu_klein": "Trop petit"
+      "zu_klein": "Trop petit",
+      "pv_vorhanden": "Déjà PV",
+      "kein_weg": "Aucune voie"
     },
     "ausschlussText": {
       "geschuetzt": "Bâtiment protégé : installation solaire et remplacement du chauffage difficiles. D’où 0 point.",
       "efh": "Maison individuelle : trop petite pour un contracting. D’où 0 point.",
       "fahrzeit": "À plus de 60 minutes de Muri et de Bulle. D’où 0 point.",
-      "zu_klein": "Toit de moins de 200 m² et pas de grand chauffage. D’où 0 point."
+      "zu_klein": "Toit de moins de 200 m² et pas de grand chauffage. D’où 0 point.",
+      "pv_vorhanden": "Une grande installation PV existe déjà sur le toit (registre fédéral). D’où 0 point.",
+      "kein_weg": "Ni contracting électrique, ni RCP, ni location de toit possible (trop peu de consommation ou loué, toit trop petit). D’où 0 point."
     },
     "teil": {
       "dach": "Toit",
@@ -10434,7 +10438,8 @@
       "heizungsersatz": "Remplacement du chauffage prévu",
       "bauherr": "Maître d’ouvrage",
       "fahrzeit": "Temps de trajet",
-      "wohnungen": "Logements (RCP)"
+      "wohnungen": "Logements (RCP)",
+      "youdera": "Évaluation Youdera"
     },
     "bauherrArt": {
       "gemeinde": "Commune",
@@ -10586,20 +10591,31 @@
       "laufzeit_waerme_jahre": "Durée chaleur (années)",
       "nurAdmin": "Seule l’administration peut modifier.",
       "punkteTitel": "Comment naissent les points (0 à 100)",
-      "punkteText": "Chaque résultat reçoit des points de six éléments. Dès 70 points très bien, dès 50 bien.",
+      "punkteText": "Chaque résultat reçoit des points de sept éléments. Dès 70 points très bien, dès 50 bien.",
       "teil": {
         "dach": "Toit : dès 500 m² de surface adaptée, 30 points dès 1'500 m² (sonnendach.ch)",
         "nutzung": "Autoconsommation : industrie, froid, hôpital 20, artisanat 18, EMS 16, école et lotissement 14",
         "heizung": "Chauffage : mazout 20, gaz 16, électrique 14 ; moitié s’il a moins de 15 ans ou moins de 50 kW",
-        "bauherr": "Maître d’ouvrage : commune, canton, coopérative, caisse de pension 15, société immobilière 13, entreprise 10",
+        "bauherr": "Maître d’ouvrage : entreprise 15, agriculture et commune 13, canton 12, église et coopérative 10, inconnu 7, privé, caisse de pension et société immobilière 5 (louent souvent)",
         "fahrzeit": "Trajet : jusqu’à 30 min 10, jusqu’à 45 min 7, jusqu’à 60 min 4",
-        "wohnungen": "Logements pour un regroupement dans le cadre de la consommation propre (RCP) : dès 6 logements 3, dès 20 logements 5"
+        "wohnungen": "Logements pour un regroupement dans le cadre de la consommation propre (RCP) : dès 6 logements 3, dès 20 logements 5",
+        "youdera": "Évaluation Youdera : feu vert +10, orange 0, rouge −15 ; toit occupé ou aucune voie : écarté"
       },
       "staffel": "Prix par kWc",
       "staffelBis": "jusqu’à {{bis}} kWc : CHF {{chf}}",
       "staffelRest": "au-delà : CHF {{chf}}",
       "neuRechnen": "Après l’enregistrement, le CRM recalcule tous les grands projets ouverts.",
-      "youdera_mail": "E-mail Youdera (dossier)"
+      "youdera_mail": "E-mail Youdera (dossier)",
+      "eignungTitel": "Évaluation Youdera",
+      "eignungText": "Youdera achète du contracting électrique de 30 kWc à 4 MWc si le propriétaire utilise lui-même au moins 70 % de l’électricité. L’installation est dimensionnée selon la consommation.",
+      "eignung": {
+        "strompreis_rp_kwh": "Prix actuel de l’électricité du client (ct./kWh)",
+        "eigenverbrauch_min_prozent": "Autoconsommation minimale (%)",
+        "kwp_min": "Youdera dès kWc",
+        "kwp_max": "Youdera jusqu’à kWc",
+        "dachmiete_ab_kwp": "Location de toit dès kWc",
+        "pv_bestand_max_anteil": "PV existant au maximum (part, 0.3 = 30 %)"
+      }
     },
     "heute": {
       "titel": "Grands projets",
@@ -10896,6 +10912,114 @@
       "notizPunkt": "Quel est le problème ?",
       "notiz": "Note sur la visite",
       "abschliessen": "Terminer la visite"
+    },
+    "eignung": {
+      "titel": "Pourquoi et comment",
+      "keine": "Pas encore d’évaluation : toit et bâtiment manquent (récupérer les données du bâtiment).",
+      "hinweis": "Évaluation grossière à partir des données fédérales et des hypothèses (réglages). Avec la facture d’électricité dans le calculateur, elle devient précise.",
+      "kunde_spart": "Le client économise CHF {{chf}}/an",
+      "kopieren": "Copier",
+      "ampel": {
+        "gruen": "Convient",
+        "gelb": "À clarifier",
+        "rot": "Ne convient pas ainsi"
+      },
+      "weg": {
+        "ppa": "Contracting électrique",
+        "zev": "RCP avec locataires",
+        "dachmiete": "Location de toit",
+        "keiner": "Aucune voie"
+      },
+      "seite": {
+        "kunde": "Client",
+        "youdera": "Youdera",
+        "wir": "Dimension"
+      },
+      "kanal": {
+        "telefon": "Téléphone",
+        "besuch": "Visite",
+        "mail": "E-mail",
+        "brief": "Lettre"
+      },
+      "zahl": {
+        "anlage": "Installation",
+        "vomDach": "sur {{kwp}} kWc de toit",
+        "ersparnis": "Le client économise",
+        "proJahr": "par an, sans investissement",
+        "eigenverbrauch": "Autoconsommation",
+        "verbrauch_schaetzung": "Consommation estimée {{kwh}} kWh",
+        "verbrauch_rechnung": "Consommation {{kwh}} kWh (facture)",
+        "auftrag": "Mandat pour nous",
+        "margeWartung": "Marge CHF {{marge}}, entretien CHF {{wartung}}/an"
+      },
+      "punkt": {
+        "ersparnis": {
+          "ok": "Économise environ CHF {{wert}} par an, sans investir",
+          "offen": "Économie ouverte (location de toit ou prix manquant)",
+          "nein": "Prix du contracting plus élevé que le réseau"
+        },
+        "dach": {
+          "ok": "Bâtiment de {{wert}} : le toit tient la durée du contrat",
+          "offen": "Vérifier le toit (construit en {{wert}}) : tient-il 25 ans ? Sinon vendre aussi la rénovation",
+          "nein": "Toit inadapté"
+        },
+        "groesse": {
+          "ok": "{{wert}} kWc : convient à Youdera (30 kWc à 4 MWc)",
+          "offen": "Taille ouverte",
+          "nein": "{{wert}} kWc : hors de 30 kWc à 4 MWc"
+        },
+        "eigenverbrauch": {
+          "ok": "Environ {{wert}} % d’autoconsommation (Youdera exige au moins 70 %)",
+          "offen": "Location de toit : l’électricité va au réseau, demander à Youdera",
+          "nein": "Trop peu d’autoconsommation ({{wert}} %)"
+        },
+        "eigentuemer": {
+          "ok": "Le propriétaire utilise lui-même l’électricité",
+          "offen": "À clarifier : le propriétaire utilise-t-il lui-même le bâtiment ?",
+          "nein": "Loué : pas de contrat avec le propriétaire comme preneur"
+        },
+        "bonitaet": {
+          "ok": "Solvabilité en ordre",
+          "offen": "Clarifier la solvabilité : demander les comptes annuels",
+          "nein": "Solvabilité douteuse (FOSC)"
+        },
+        "pv_bestand": {
+          "ok": "Pas encore de PV sur le toit",
+          "offen": "PV sur le toit pas encore vérifié",
+          "teil": "Déjà {{wert}} kW de PV : extension possible",
+          "nein": "Déjà {{wert}} kW de PV : toit occupé"
+        },
+        "distanz": {
+          "ok": "{{wert}} min. de notre site",
+          "offen": "{{wert}} min. de trajet : bien planifier le montage",
+          "nein": "Trop loin"
+        },
+        "auftrag": {
+          "ok": "Mandat de construction d’environ CHF {{wert}} plus entretien",
+          "offen": "Mandat ouvert",
+          "nein": "Aucun mandat possible"
+        }
+      },
+      "vorgehen": {
+        "warum": "Pourquoi ce bâtiment",
+        "warum_ppa": "Environ {{kwp}} kWc sur son propre toit pour sa propre consommation : le client économise environ CHF {{chf}} par an, sans investir. Youdera finance et exploite l’installation, nous la construisons et l’entretenons.",
+        "warum_zev": "Environ {{kwp}} kWc pour les locataires (RCP) : le propriétaire vend l’électricité solaire à ses locataires sans investir ; les locataires économisent environ CHF {{chf}} par an. Youdera finance, nous construisons et entretenons.",
+        "warum_dachmiete": "Grand toit avec peu de consommation propre : le propriétaire loue le toit pour environ {{kwp}} kWc et reçoit un loyer, sans effort. Demander à Youdera si elle reprend l’injection totale.",
+        "warum_keiner": "Ainsi, cela ne convient pas : trop peu de consommation ou loué, et trop petit pour une location de toit.",
+        "wer": "Qui contacter",
+        "einstieg": "Première phrase",
+        "argumente": "Arguments",
+        "einwaende": "Objections et réponses",
+        "fehlt": "Qui appeler, la première phrase et les réponses aux objections arrivent avec la recherche.",
+        "bonitaet": "Solvabilité"
+      },
+      "grundbuch": {
+        "titel": "Confirmer le propriétaire au registre foncier",
+        "oeffnen": "Ouvrir le registre foncier {{kanton}}",
+        "keine": "Aucune consultation en ligne enregistrée pour ce canton : demander au registre foncier (Réglages › Hypothèses).",
+        "parzelle": "Parcelle",
+        "egrid": "EGRID"
+      }
     }
   },
   "team": {

@@ -21,6 +21,7 @@ import { PunkteMarke } from './PunkteMarke'
 import { PunkteAufschluesselung, SchaetzungAngaben } from './Bewertung'
 import { RechercheAbschnitt } from './RechercheAbschnitt'
 import { VerantwortlichWahl } from './VerantwortlichWahl'
+import { Verkaufsblatt } from './Verkaufsblatt'
 import { Verlauf } from './Verlauf'
 
 export type AkteAktion = 'bearbeiten' | 'verwerfen' | 'beobachten'
@@ -166,6 +167,9 @@ export function GrossprojektAkte({
             {g.grund && <p className="text-muted-foreground pb-2 text-sm">{g.grund}</p>}
             <VerantwortlichWahl g={g} />
 
+            <AkteAbschnitt titel={t('grossprojekte.eignung.titel')}>
+              <Verkaufsblatt g={g} />
+            </AkteAbschnitt>
             <AkteAbschnitt titel={t('grossprojekte.akte.warum')} zusatz={t('grossprojekte.punkte', { n: g.punkte })}>
               <PunkteAufschluesselung g={g} />
             </AkteAbschnitt>

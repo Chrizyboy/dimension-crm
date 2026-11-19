@@ -1,7 +1,7 @@
 import { Building2, Check, Eye, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Leerzustand } from '@/components/shared/Zustaende'
+import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Karte } from '@/components/ui/karte'
@@ -17,6 +17,7 @@ import { entscheiden, rechercheUebernehmen } from '../services/grossprojekte'
 import type { Grossprojekt } from '../types'
 import { EntscheidDialog } from './EntscheidDialog'
 import { PunkteMarke } from './PunkteMarke'
+import { EignungMarken } from './Verkaufsblatt'
 
 /** Montag dieser Woche als JJJJ-MM-TT (Entscheide «diese Woche»). */
 function montag(): string {
@@ -44,6 +45,8 @@ function AuswahlKarte({
   const eigentuemer = g.bauherr ?? r?.eigentuemer?.name
   const person = g.ansprechperson ?? r?.ansprechpersonen?.[0]
   const inv = investition(g)
+  // Warum dieses Gebäude: aus dem Verkaufsblatt der Recherche, sonst die Zusammenfassung.
+  const warum = r?.verkauf?.warum ?? r?.zusammenfassung
   return (
     <Karte
       className={cn('grid gap-3 p-3 sm:grid-cols-[minmax(0,1fr)_auto]', aktiv && 'ring-accent ring-2')}
@@ -52,6 +55,7 @@ function AuswahlKarte({
       <div className="flex min-w-0 flex-col gap-1">
         <div className="flex flex-wrap items-center gap-1.5">
           <PunkteMarke g={g} t={t} />
+          <EignungMarken g={g} />
           {g.art && <Badge ton="marke">{t(`grossprojekte.art.${g.art}`)}</Badge>}
           <Badge ton="neutral">{t(`grossprojekte.quelle.${g.quelle}`, { defaultValue: g.quelle })}</Badge>
         </div>
@@ -68,6 +72,9 @@ function AuswahlKarte({
             g.dachflaeche_m2 ? `${zahl(g.dachflaeche_m2)} m²` : null,
             groesse(g, t('grossprojekte.waerme')) || null,
             inv > 0 ? `CHF ${zahl(inv / 100)}` : null,
+            g.eignung.ersparnis_chf
+              ? t('grossprojekte.eignung.kunde_spart', { chf: zahl(g.eignung.ersparnis_chf) })
+              : null,
             g.fahrzeit_min != null ? t('grossprojekte.fahrzeit', { min: g.fahrzeit_min }) : null,
           ]
             .filter(Boolean)
@@ -88,7 +95,7 @@ function AuswahlKarte({
             </>
           )}
         </p>
-        {r?.zusammenfassung && <p className="text-muted-foreground line-clamp-2 text-sm">{r.zusammenfassung}</p>}
+        {warum && <p className="text-muted-foreground line-clamp-2 text-sm">{warum}</p>}
       </div>
       <div className="flex flex-row flex-wrap items-start gap-2 sm:flex-col">
         {darf && (
@@ -215,7 +222,10 @@ export function Auswahl({ onOeffnen }: { onOeffnen: (id: string) => void }) {
         <p className="text-muted-foreground text-xs">
           {t('grossprojekte.auswahl.tasten')} <Kbd>J</Kbd> <Kbd>B</Kbd> <Kbd>N</Kbd> <Kbd>↓</Kbd>
         </p>
-        {offen.length === 0 && !daten.isPending ? (
+        {/* Ein Ladefehler (z. B. Datenbank noch nicht aktualisiert) darf nie wie «Nichts zu prüfen» aussehen. */}
+        {daten.error ? (
+          <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} />
+        ) : offen.length === 0 && !daten.isPending ? (
           <Leerzustand
             icon={Building2}
             titel={t('grossprojekte.leer.pruefen')}

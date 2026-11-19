@@ -29,7 +29,8 @@
 //  * aufgaben     stündlich       Morgen-Glocke «heute fällig/überfällig», einmal pro Person und Arbeitstag (Entscheid 0045)
 //  * fuhrpark_km  stündlich       Kilometerstand am Monatsanfang nachfragen (Glocke, einmal pro Fahrzeug und Monat)
 //  * personal_fristen stündlich   Probezeit, Befristung, Bewilligung, Gespräch aus der Personal-Akte
-//  * grossprojekte stündlich      Gebäudedaten holen, Dachsuche (einige Gebiete), Vorrat freigeben (max. pro Woche),
+//  * grossprojekte stündlich      Gebäudedaten holen, bestehende PV prüfen, Dachsuche (einige Gebiete), Vorrat
+//                                 freigeben (max. pro Woche),
 //                                 Wiedervorlagen, starke Treffer in die Glocke (Phase 8c)
 //  * grossprojekte_recherche      KI sucht Eigentümer, Ansprechperson und nächste Schritte (eins pro halbe Stunde)
 
@@ -38,6 +39,7 @@ import { dachsuche } from '../_shared/dachsuche.ts'
 import { grossprojekteAnreichern } from '../_shared/gebaeude.ts'
 import { leadsDachAnreichern } from '../_shared/leads_dach.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
+import { grossprojektePvNachtragen } from '../_shared/pv_register.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
@@ -290,11 +292,13 @@ Deno.serve(async (req) => {
   // starke Treffer melden (nur Glocke), damit auch die neuen aus der Dachsuche gleich in der Glocke stehen.
   ergebnis.grossprojekte = await job('grossprojekte', 60, async () => {
     const angereichert = await grossprojekteAnreichern(20)
+    // Bestehende PV (Bundesregister) für Grossprojekte, die noch nie geprüft wurden: ein belegtes Dach fällt heraus.
+    const pv = await grossprojektePvNachtragen(20)
     const gesucht = await dachsuche()
     // Pro Woche nur die besten aus dem Vorrat in die Liste (einstellungen.grossprojekte.suche.pro_woche).
     const frei = await dienst.rpc<number>('grossprojekt_vorrat_freigeben', {})
     const r = await dienst.rpc<{ wieder: number; gemeldet: number }>('grossprojekte_melden', {})
-    return `${angereichert}, ${gesucht}, ${frei} freigegeben, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
+    return `${angereichert}, ${pv}, ${gesucht}, ${frei} freigegeben, ${r.wieder} wieder zum Prüfen, ${r.gemeldet} gemeldet`
   })
 
   // Recherche zu neuen Grossprojekten (Eigentümer, Ansprechperson, nächste Schritte); eine pro halbe Stunde, weil die
