@@ -135,6 +135,15 @@ if ($vite) { taskkill.exe /PID $vite.Id /T /F 2>$null | Out-Null }
 # Was du zuletzt gesehen hast (der Hintergrund kann seit dem Start Neues dazugenommen haben).
 $prs = @((Stand).prs | Where-Object { $_ })
 if ($antwort -match '^[jJyY]') {
+  # Mehrere Änderungen: nur die gewünschten veröffentlichen, der Rest bleibt offen (Chris 19.11.2026: «nur Grossprojekte»).
+  if ($prs.Count -gt 1) {
+    Write-Host ''
+    foreach ($pr in $prs) { Write-Host ("  #{0}  {1}" -f $pr.nummer, $pr.titel) }
+    $wahl = Read-Host 'Welche veröffentlichen? Nummern mit Komma (z. B. 155,157), oder einfach Enter für alle'
+    $nummern = @([regex]::Matches($wahl, '\d+') | ForEach-Object { $_.Value })
+    if ($nummern.Count -gt 0) { $prs = @($prs | Where-Object { $nummern -contains "$($_.nummer)" }) }
+    if ($prs.Count -eq 0) { Ende 'Keine dieser Nummern ist in der Vorschau. Nichts veröffentlicht.' Yellow }
+  }
   & (Join-Path $PSScriptRoot 'veroeffentlichen.ps1') -Haupt $Haupt -Repo $Repo -Prs $prs
   exit 0
 }
