@@ -19,6 +19,9 @@ const pfad = (personId: string) => `${personId}/unterschrift.png`
 /** Eigene Unterschrift als PNG-Bytes, oder null, wenn keine abgelegt ist. */
 export async function ladeUnterschrift(personId: string): Promise<Uint8Array | null> {
   if (!supabase) return null
+  // Erst nachsehen, ob es die Datei gibt: ein Download ins Leere erscheint sonst als roter Fehler in der Konsole.
+  const { data: liste } = await supabase.storage.from(BUCKET).list(personId, { search: 'unterschrift.png', limit: 1 })
+  if (liste && !liste.some((d) => d.name === 'unterschrift.png')) return null
   const { data, error } = await supabase.storage.from(BUCKET).download(pfad(personId))
   if (error) {
     // «nicht gefunden» heisst: noch keine Unterschrift. Andere Fehler melden.
