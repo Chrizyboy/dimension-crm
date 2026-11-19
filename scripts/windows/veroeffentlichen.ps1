@@ -4,7 +4,9 @@
 # 2. Ist die Version auf main schon veröffentlicht, Version erhöhen (package.json, package-lock.json,
 #    Abschnitt in docs/versionen.md aus den Titeln) und auf main schieben. Das startet die GitHub-Action
 #    «Neue Version veröffentlichen» von selbst (Windows-Installer, Auto-Update, Web-App).
-# 3. Sind Datenbank-Änderungen oder Server-Funktionen dabei, gleich «Dimension Work aktualisieren» starten.
+# 3. Ist die Cloud nicht auf dem Stand von main (Datenbank-Änderungen oder Server-Funktionen seit dem letzten
+#    erfolgreichen «aktualisieren», auch direkt auf GitHub Zusammengeführtes), gleich aktualisieren.ps1 starten.
+#    Den letzten Stand der Cloud merkt sich aktualisieren.ps1 in %USERPROFILE%\.dimension-work-cloud-stand.
 param([string]$Haupt, [string]$Repo, [object[]]$Prs = @())
 
 $ErrorActionPreference = 'Continue'
@@ -13,10 +15,29 @@ function Ende($text, $farbe) {
   Read-Host 'Enter drücken zum Schliessen' | Out-Null
   exit 0
 }
+# Braucht die Cloud ein Update? Verglichen wird mit dem Stand, den aktualisieren.ps1 zuletzt hochgeladen hat, nicht nur
+# mit dem, was gerade zusammengeführt wurde (Chris 19.11.2026: Änderung war direkt auf GitHub gemergt, die Cloud blieb
+# alt und die Grossprojekte luden nicht). Unbekannter Stand: lieber einmal aktualisieren.
+function CloudVeraltet {
+  $datei = Join-Path $env:USERPROFILE '.dimension-work-cloud-stand'
+  $basis = ''
+  if (Test-Path $datei) { $basis = "$(Get-Content -Raw $datei)".Trim() }
+  if ($basis) { git cat-file -e "$basis^{commit}" 2>$null; if ($LASTEXITCODE -ne 0) { $basis = '' } }
+  if (-not $basis) { return $true }
+  return [bool](git diff --name-only $basis HEAD -- supabase/migrations supabase/functions)
+}
+function CloudNachziehen($sonst, $farbe) {
+  if (CloudVeraltet) {
+    Write-Host ''
+    Write-Host 'Die Cloud ist nicht auf dem neusten Stand. Jetzt folgt «Dimension Work aktualisieren».' -ForegroundColor Cyan
+    & (Join-Path $PSScriptRoot 'aktualisieren.ps1')
+    exit 0
+  }
+  Ende $sonst $farbe
+}
 
 Write-Host ''
 Write-Host '== Veröffentlichen' -ForegroundColor Cyan
-if ($Prs.Count -eq 0) { Ende 'Es gibt nichts Neues: Alles ist schon veröffentlicht.' Green }
 if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
   Ende "GitHub-Anmeldung fehlt noch. Bitte den Einrichtungs-Befehl einmal nochmals starten (siehe Thread «Go-live»).`nNichts veröffentlicht." Red
 }
@@ -32,7 +53,7 @@ git checkout -q -- src/routeTree.gen.ts
 if (git status --porcelain --untracked-files=no) { Ende 'Im Ordner dimension-crm sind Dateien von Hand geändert. Nichts veröffentlicht. Bitte Screenshot schicken.' Red }
 git checkout -q main
 git pull -q --ff-only
-$vorher = git rev-parse HEAD
+if ($Prs.Count -eq 0) { CloudNachziehen 'Es gibt nichts Neues: Alles ist schon veröffentlicht.' Green }
 
 $gemergt = @()
 foreach ($pr in $Prs) {
@@ -44,7 +65,7 @@ foreach ($pr in $Prs) {
   if ($LASTEXITCODE -eq 0) { $gemergt += $pr; Write-Host '   zusammengeführt' -ForegroundColor Green }
   else { Write-Host '   ging nicht (inzwischen geändert oder Konflikt), bleibt offen.' -ForegroundColor Yellow }
 }
-if ($gemergt.Count -eq 0) { Ende 'Nichts veröffentlicht.' Yellow }
+if ($gemergt.Count -eq 0) { CloudNachziehen 'Nichts veröffentlicht.' Yellow }
 
 git pull -q --ff-only
 $version = (Get-Content -Raw package.json | ConvertFrom-Json).version
@@ -73,11 +94,4 @@ if ($LASTEXITCODE -eq 0) {
 }
 Write-Host "Version $version wird jetzt gebaut (etwa 15 Minuten), danach meldet die App das Update." -ForegroundColor Green
 
-$cloud = git diff --name-only $vorher HEAD -- supabase/migrations supabase/functions
-if ($cloud) {
-  Write-Host ''
-  Write-Host 'Dabei sind auch Änderungen für die Cloud. Jetzt folgt «Dimension Work aktualisieren».' -ForegroundColor Cyan
-  & (Join-Path $PSScriptRoot 'aktualisieren.ps1')
-  exit 0
-}
-Ende 'FERTIG. Die Cloud braucht diesmal nichts.' Green
+CloudNachziehen 'FERTIG. Die Cloud braucht diesmal nichts.' Green

@@ -56,4 +56,7 @@ Schritt '4/4 Server-Funktionen hochladen'
 # --use-api: Supabase baut die Funktionen selbst, Docker ist auf dem PC nicht nötig.
 npx.cmd supabase functions deploy --project-ref $Projekt --use-api; Pruefe 'functions deploy'
 
+# Merken, welcher Stand jetzt in der Cloud ist; «Veröffentlichen» in der Vorschau vergleicht damit.
+git rev-parse HEAD | Set-Content -Encoding ascii (Join-Path $env:USERPROFILE '.dimension-work-cloud-stand')
+
 Ende $true 'FERTIG. Die Cloud ist aktuell. Schreib «fertig» in den Thread «Go-live».'
