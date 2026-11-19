@@ -39,25 +39,26 @@ export default function Auswahllisten() {
     <Karte className="grid overflow-hidden md:grid-cols-[14rem_minmax(0,1fr)]">
       <div className="border-border max-h-[32rem] overflow-y-auto border-b md:border-r md:border-b-0" role="list">
         {namen.map((n) => (
-          <button
-            key={n}
-            type="button"
-            role="listitem"
-            aria-current={n === offen ? 'true' : undefined}
-            onClick={() => {
-              setListe(n)
-            }}
-            className={cn(
-              'border-border hover:bg-muted flex w-full items-center justify-between gap-2 border-b px-3 py-2 text-left text-sm',
-              n === offen && 'bg-muted font-semibold',
-            )}
-          >
-            <span className="min-w-0 truncate">{t(`auswahllisten.namen.${n}`, n)}</span>
-            <span className="text-muted-foreground flex items-center gap-1 text-xs">
-              {!FREIE_LISTEN.has(n) && <Lock className="size-3" aria-label={t('auswahllisten.fest')} />}
-              {werte.data.filter((w) => w.liste === n).length}
-            </span>
-          </button>
+          // Eintrag und Knopf getrennt, damit der Screenreader «Knopf» ansagt und die Liste gültig bleibt.
+          <div key={n} role="listitem">
+            <button
+              type="button"
+              aria-current={n === offen ? 'true' : undefined}
+              onClick={() => {
+                setListe(n)
+              }}
+              className={cn(
+                'border-border hover:bg-muted flex w-full items-center justify-between gap-2 border-b px-3 py-2 text-left text-sm',
+                n === offen && 'bg-muted font-semibold',
+              )}
+            >
+              <span className="min-w-0 truncate">{t(`auswahllisten.namen.${n}`, n)}</span>
+              <span className="text-muted-foreground flex items-center gap-1 text-xs">
+                {!FREIE_LISTEN.has(n) && <Lock className="size-3" aria-label={t('auswahllisten.fest')} />}
+                {werte.data.filter((w) => w.liste === n).length}
+              </span>
+            </button>
+          </div>
         ))}
       </div>
       <Liste key={`${offen}-${JSON.stringify(eintraege)}`} liste={offen} eintraege={eintraege} />
