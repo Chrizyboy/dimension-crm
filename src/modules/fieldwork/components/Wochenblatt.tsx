@@ -94,7 +94,7 @@ export function Wochenblatt({ montag }: { montag: string }) {
                 const eigene = p.person_id === ich?.id
                 return (
                   <Zeile key={p.person_id}>
-                    <Zelle className="font-medium">{p.kuerzel ?? p.name}</Zelle>
+                    <Zelle className="font-medium">{p.name}</Zelle>
                     {p.tage.map((d) => (
                       <Zelle key={d.tag} className="zahlen text-right">
                         {zelle(d)}
@@ -131,7 +131,7 @@ export function Wochenblatt({ montag }: { montag: string }) {
           {personen.flatMap((p) =>
             warnungen(p, jetzt, regeln).map((w, i) => (
               <li key={`${p.person_id}-${String(i)}`} className="text-warn">
-                <span className="font-medium">{p.kuerzel ?? p.name}</span> {text(w)}
+                <span className="font-medium">{p.name}</span> {text(w)}
               </li>
             )),
           )}

@@ -75,7 +75,7 @@ export async function ladeMeineMitarbeitenden(): Promise<string[]> {
 export async function ladePersonen(): Promise<Person[]> {
   const { data, error } = await db()
     .from('personen')
-    .select('id, kuerzel, name, rolle')
+    .select('id, kuerzel, kurzzeichen, name, rolle')
     .eq('aktiv', true)
     .is('geloescht_am', null)
     .order('name')

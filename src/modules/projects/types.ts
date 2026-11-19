@@ -163,6 +163,8 @@ export interface Abwesenheit {
 export interface Person {
   id: string
   kuerzel: string
+  /** Anzeige-Kürzel («CR»); `kuerzel` ist nur der technische Schlüssel. */
+  kurzzeichen: string | null
   name: string
   rolle: string | null
 }

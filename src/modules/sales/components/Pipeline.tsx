@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/schalter'
 import { formatChf } from '@/lib/format'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
@@ -93,10 +94,7 @@ export default function Pipeline({ geschaefte, aktiveId, onOeffnen }: PipelinePr
   // Welche Schritte man sieht, wählt «Spalten» in der Filterleiste (SpaltenWahl); «Aus» kommt mit dem Schalter.
   const [sichtbar] = useSpaltenWahl()
   const spalten = useMemo(() => verteile(geschaefte, abgeschlossen, sichtbar), [geschaefte, abgeschlossen, sichtbar])
-  const kuerzel = useMemo(
-    () => new Map((personen.data ?? []).map((p) => [p.id, p.kuerzel.slice(0, 3)])),
-    [personen.data],
-  )
+  const kuerzel = useMemo(() => new Map((personen.data ?? []).map((p) => [p.id, kurzzeichenVon(p)])), [personen.data])
 
   /** Stand ohne Rückfrage setzen: sofort verschieben, bei einem Fehler zurück. */
   async function direkt(g: Geschaeft, ziel: string) {

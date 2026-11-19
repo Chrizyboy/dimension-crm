@@ -1,3 +1,4 @@
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import type { Abwesenheit, Einsatz, EinsatzArt, Person, Projekt, ServiceTermin, Subunternehmer } from '../types'
 import { alsDatum, alsIso, plusTage, ueberschneidet } from './zeitplan'
 
@@ -141,7 +142,11 @@ export function serviceBalken(
 }
 
 function helfer({ projekte, einsaetze, abwesend, personen, subunternehmer, ausweisFehlt }: Eingabe) {
-  const kuerzel = (id: string) => personen.find((p) => p.id === id)?.kuerzel ?? '?'
+  // Angezeigt wird das Kurzzeichen («CR»), nie der technische Schlüssel `kuerzel`.
+  const kuerzel = (id: string) => {
+    const p = personen.find((x) => x.id === id)
+    return p ? kurzzeichenVon(p) : '?'
+  }
   const sub = (id: string | null) => subunternehmer.find((s) => s.id === id)?.name ?? null
   const projekt = (id: string) => projekte.find((p) => p.id === id) ?? null
   const team = (e: Einsatz) =>
@@ -216,7 +221,7 @@ export function teamSicht(
           .filter((x) => x.personen.includes(p.id))
           .map((x) => {
             const b = h.balken(x, titel(x))
-            return { ...b, konflikt: b.konflikt.filter((k) => k.kuerzel === p.kuerzel) }
+            return { ...b, konflikt: b.konflikt.filter((k) => k.kuerzel === h.kuerzel(p.id)) }
           }),
         ...service
           .filter((x) => x.personen.includes(p.id))
@@ -228,7 +233,7 @@ export function teamSicht(
               h.kuerzel,
               `${terminZeit(x.termin_am)} ${x.kunde ?? x.nummer}`,
             )
-            return { ...b, konflikt: b.konflikt.filter((k) => k.kuerzel === p.kuerzel) }
+            return { ...b, konflikt: b.konflikt.filter((k) => k.kuerzel === h.kuerzel(p.id)) }
           }),
         ...e.abwesend
           .filter((a) => a.person_id === p.id)
@@ -244,7 +249,14 @@ export function teamSicht(
             spur: 0,
           })),
       ]
-      return { id: p.id, titel: p.name, unter: p.kuerzel, projekt: null, balken, spuren: spurenVerteilen(balken) }
+      return {
+        id: p.id,
+        titel: p.name,
+        unter: kurzzeichenVon(p),
+        projekt: null,
+        balken,
+        spuren: spurenVerteilen(balken),
+      }
     })
   const subs = new Map<string, Einsatz[]>()
   for (const x of einsaetze.filter((y) => y.art === 'extern')) {

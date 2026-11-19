@@ -8,6 +8,7 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Skelett } from '@/components/ui/diverses'
 import { Feld } from '@/components/ui/feld'
 import { Input } from '@/components/ui/input'
+import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { useAktion } from '../hooks/useAktion'
 import { useAusweisPflicht } from '../hooks/useAusweisPflicht'
 import { useAbwesenheiten, usePersonen, useProjektEinsaetze, useSubunternehmer } from '../hooks/useProjekte'
@@ -161,7 +162,10 @@ function Formular({
     if (ok) onSchliessen()
   }
 
-  const name = (id: string) => personen.data?.find((p) => p.id === id)?.kuerzel ?? '?'
+  const name = (id: string) => {
+    const p = personen.data?.find((x) => x.id === id)
+    return p ? kurzzeichenVon(p) : '?'
+  }
 
   return (
     <Rahmen
@@ -265,7 +269,7 @@ function Formular({
                 ) : null}
                 <Filterchips
                   beschriftung={t('projekte.feld.personen')}
-                  optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.kuerzel || p.name }))}
+                  optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.name }))}
                   gewaehlt={e.personen}
                   onChange={(p) => {
                     aendern(i, { personen: p })
