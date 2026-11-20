@@ -1,7 +1,7 @@
 import { Info } from 'lucide-react'
+import { Popover } from 'radix-ui'
 import type { ReactNode } from 'react'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
-import { Tooltip } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 interface SeitenkopfProps {
@@ -30,15 +30,27 @@ export function Seitenkopf({ titel, beschreibung, zeile, ueber, aktionen, classN
         <div className="flex items-center gap-2">
           <h1 className="text-[28px] leading-tight font-extrabold tracking-[-0.025em]">{titel}</h1>
           {beschreibung && (
-            <Tooltip text={titel} untertitel={beschreibung} seite="bottom">
-              <button
-                type="button"
+            // Auf Klick statt nur beim Darüberfahren: ein Tooltip schliesst sich beim Klick und erscheint am Handy nie
+            // (Chris 20.11.2026: «jeder Knopf mit nachvollziehbarer Funktion»).
+            <Popover.Root>
+              <Popover.Trigger
                 aria-label={beschreibung}
-                className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
+                className="text-muted-foreground hover:text-foreground focus-visible:ring-ring data-[state=open]:text-foreground rounded-full outline-none focus-visible:ring-2"
               >
                 <Info className="size-4" aria-hidden="true" />
-              </button>
-            </Tooltip>
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  side="bottom"
+                  align="start"
+                  sideOffset={6}
+                  className="animate-einblenden bg-surface shadow-pop z-50 flex max-w-80 flex-col gap-1 rounded-lg border px-3 py-2 text-sm outline-none"
+                >
+                  <span className="font-semibold">{titel}</span>
+                  <span className="text-muted-foreground">{beschreibung}</span>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
           )}
         </div>
         {zeile && <p className="text-muted-foreground text-sm">{zeile}</p>}

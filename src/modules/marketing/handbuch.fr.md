@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: verkauf, innendienst, geschaeftsleitung, buchhaltung
 ---
 
@@ -109,6 +109,7 @@ Sous **Réseaux sociaux**, l’erreur figure au post. Le plus souvent, la connex
 
 ## Nouveautés {#neu}
 
+- 20.11.2026 : Dans « À faire aujourd’hui », la flèche des factures qui ressemblent à de la publicité mène directement à **Attribuer les coûts**.
 - 19.11.2026 : Newsletter : **E-mail de test à moi** t’envoie un e-mail de test par langue (salutation à ton nom, lien de désinscription sans effet).
 - 03.11.2026: Aperçu avec « À faire aujourd’hui », calendrier, campagnes avec résultat, salons avec saisie des leads sur le portable, tableau des réseaux sociaux avec validation, médiathèque, groupes cibles enregistrés, pause publicitaire, ouvertures et clics.
 - 03.11.2026: Seule l’administration modifie les modèles ; les autres les voient en lecture seule et les utilisent à l’envoi.

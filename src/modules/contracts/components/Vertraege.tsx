@@ -109,7 +109,7 @@ export default function Vertraege({
           ))}
         </ReiterListe>
         <ReiterInhalt value="vertraege" className="flex flex-col gap-4">
-          {liste.data && <KopfZahlen zahlen={zahlen} onFilter={setFilter} />}
+          {liste.data && <KopfZahlen zahlen={zahlen} filter={filter} onFilter={setFilter} />}
           <Werkzeugleiste
             suche={
               <Suchfeld

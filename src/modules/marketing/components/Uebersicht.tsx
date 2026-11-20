@@ -117,7 +117,12 @@ export function Uebersicht({ onAnsicht }: { onAnsicht: (a: Ansicht) => void }) {
                         variant="ghost"
                         aria-label={t('werbung.oeffnen')}
                         onClick={() => {
-                          onAnsicht(v.ansicht)
+                          // «Kosten zuordnen» steht auf dieser Seite: dorthin scrollen statt auf dieselbe Ansicht zu wechseln.
+                          const ziel = v.schluessel === 'kosten' ? document.getElementById('marketing-kosten') : null
+                          if (ziel) {
+                            ziel.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                            ziel.focus({ preventScroll: true })
+                          } else onAnsicht(v.ansicht)
                         }}
                       >
                         <ArrowRight />
@@ -128,7 +133,11 @@ export function Uebersicht({ onAnsicht }: { onAnsicht: (a: Ansicht) => void }) {
               )}
             </KarteInhalt>
           </Karte>
-          {finanzen && <KostenZuordnen belege={kostenOffen} />}
+          {finanzen && kostenOffen.length > 0 && (
+            <div id="marketing-kosten" tabIndex={-1} className="scroll-mt-4 outline-none">
+              <KostenZuordnen belege={kostenOffen} />
+            </div>
+          )}
           {meine.length > 0 && (
             <Karte>
               <KarteKopf>

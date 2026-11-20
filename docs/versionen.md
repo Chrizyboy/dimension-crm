@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.7
+
+- Jeder Knopf tut etwas Sichtbares: Das «i» neben dem Seitentitel zeigt die Erklärung jetzt auch beim Klick (auch am Handy).
+- Wartungsverträge: Die Kacheln oben zeigen, welcher Filter gewählt ist; «Alle gelesen» erscheint nur, wenn es Ungelesenes gibt.
+- «Filter» lässt sich auch zuklappen, wenn ein Filter gesetzt ist; Marketing springt direkt zu «Kosten zuordnen».
+
 ## 1.3.6
 
 - Übersichtlicher: Seltene Filter liegen hinter «Filter» (Anfragen, Nachfassen, Kennzahlen, Projekte, Zeitplan); Kacheln mit 0 sind weg.

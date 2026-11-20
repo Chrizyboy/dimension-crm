@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 /**
  * Seltener gebrauchte Filter hinter einem Knopf «Filter» (Chris 20.11.2026: «übersichtlicher»). Der Knopf zeigt,
  * wie viele davon aktiv sind, damit nichts versteckt wirkt; «Zurücksetzen» stellt alle auf «Alle».
- * Offen bleibt der Bereich, solange ein Filter aktiv ist, damit man sieht, warum die Liste kürzer ist.
+ * Offen, solange ein Filter aktiv ist (man sieht, warum die Liste kürzer ist); der Knopf schliesst ihn trotzdem.
  */
 export function FilterBereich({
   aktiv,
@@ -28,8 +28,9 @@ export function FilterBereich({
   children: ReactNode
 }) {
   const { t } = useTranslation()
-  const [offen, setOffen] = useState(false)
-  const sichtbar = offen || aktiv > 0
+  // Ohne eigene Wahl offen, solange ein Filter aktiv ist; ein Klick auf «Filter» klappt danach immer auf oder zu.
+  const [offen, setOffen] = useState<boolean | null>(null)
+  const sichtbar = offen ?? aktiv > 0
   return (
     <div className="flex w-full flex-col gap-3">
       <div className="flex flex-wrap items-end gap-2">
@@ -38,7 +39,7 @@ export function FilterBereich({
           variant="secondary"
           aria-expanded={sichtbar}
           onClick={() => {
-            setOffen(!offen)
+            setOffen(!sichtbar)
           }}
         >
           <ListFilter />
