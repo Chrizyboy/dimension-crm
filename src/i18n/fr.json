@@ -2141,6 +2141,7 @@
       "gewaehlt": "Variante choisie",
       "waehlen": "Choisir",
       "nettoTitel": "Ce que paie le client (variante {{k}})",
+      "nettoTitelOhne": "Ce que paie le client",
       "inkl": "Prix TTC {{satz}} % TVA",
       "eiv": "Rétribution unique (RU)",
       "steuer": "Économie d'impôts (estimée)",

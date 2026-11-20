@@ -50,7 +50,8 @@ export function GeschaefteBox({ akte }: { akte: Kundenakte }) {
       ),
     })),
     ...akte.offerten.map((o) => ({
-      fertig: Boolean(o.entscheid) || OFFERTE_FERTIG.has(o.status),
+      // «Vertagt» heisst: später wieder nachfassen, das Geschäft läuft also noch.
+      fertig: (Boolean(o.entscheid) && o.entscheid !== 'vertagt') || OFFERTE_FERTIG.has(o.status),
       el: (
         <Posten
           key={o.id}

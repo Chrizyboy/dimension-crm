@@ -129,7 +129,11 @@ export function VariantenBox({ o }: { o: Offerte }) {
       )}
       {betrag > 0 && (
         <div className="bg-muted/40 rounded-lg p-2.5">
-          <h3 className="mb-1 text-xs font-semibold">{t('offerten.varianten.nettoTitel', { k: o.variante ?? '' })}</h3>
+          <h3 className="mb-1 text-xs font-semibold">
+            {o.variante
+              ? t('offerten.varianten.nettoTitel', { k: o.variante })
+              : t('offerten.varianten.nettoTitelOhne')}
+          </h3>
           <Netto o={o} betrag={betrag} />
         </div>
       )}

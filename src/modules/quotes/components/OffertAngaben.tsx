@@ -23,9 +23,9 @@ export function OffertAngaben({ o }: { o: Offerte }) {
       <dl>
         <Angabe label={t('offerten.akte.betrag')}>
           {o.betragRappen ? (
-            <span className="zahlen font-mono">
+            <span className="zahlen">
               {formatChf(o.betragRappen, { mitWaehrung: true })}{' '}
-              <span className="text-muted-foreground text-xs">
+              <span className="text-muted-foreground block text-xs">
                 {t('offerten.akte.exkl')} · {formatChf(mitMwst(o.betragRappen, mwst), { mitWaehrung: true })}{' '}
                 {t('offerten.akte.inkl', { satz: mwst })}
               </span>

@@ -180,7 +180,7 @@ export function AkteDokumente({
                       if (nurSharepoint(d)) window.open(d.sharepoint_url ?? '', '_blank', 'noopener')
                       else setFenster({ art: 'vorschau', id: d.id })
                     }}
-                    className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-3 px-3 py-2 text-left text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset"
+                    className="hover:bg-muted focus-visible:ring-ring flex min-w-0 flex-1 items-center gap-3 px-3 py-2 text-left text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset"
                   >
                     <Icon className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
                     <span className="min-w-0 flex-1 truncate">{d.name}</span>

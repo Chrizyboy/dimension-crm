@@ -102,7 +102,7 @@ export function NachfassZeile({
         </button>
       </div>
       <div className="flex flex-wrap gap-1.5 pl-7 md:pl-0">
-        {knopf('ergebnis', MessageSquareText, t('offerten.ergebnis.knopf'), true)}
+        {knopf('ergebnis', MessageSquareText, t('offerten.ergebnis.knopf'))}
         {knopf('angenommen', Check, t('offerten.nachfassen.angenommen'))}
         {knopf('verloren', X, t('offerten.nachfassen.abgelehnt'))}
         {knopf('vertagt', CalendarClock, t('offerten.nachfassen.vertagt'))}

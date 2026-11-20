@@ -58,9 +58,10 @@ export function AkteAbschnitt({
 export function Angabe({ label, children, leer }: { label: string; children: ReactNode; leer?: boolean }) {
   const marke = useLeerZeile(children, leer)
   return (
-    <div className="grid grid-cols-[8rem_1fr] items-start gap-2 py-1 text-sm sm:grid-cols-[10.5rem_1fr]" {...marke}>
+    // Beschriftung höchstens 38 % breit: in schmalen Spalten (rechte Spalte einer Akte) bleibt Platz für den Wert.
+    <div className="grid grid-cols-[min(10.5rem,38%)_minmax(0,1fr)] items-start gap-2 py-1 text-sm" {...marke}>
       <dt className="text-muted-foreground pt-1 text-xs">{label}</dt>
-      <dd className="min-w-0">{children ?? '–'}</dd>
+      <dd className="min-w-0 break-words">{children ?? '–'}</dd>
     </div>
   )
 }

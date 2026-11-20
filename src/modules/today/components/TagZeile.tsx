@@ -45,7 +45,11 @@ export function TagZeile({
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const ziel = zielVon(zeile.tabelle, zeile.id)
-  const unter = sprache === 'fr' && zeile.name_fr ? zeile.name_fr : zeile.unter
+  // Die Datenbank hängt den Standort als Schlüssel an («200001 · muri»); angezeigt wird er wie überall gross.
+  const unter = (sprache === 'fr' && zeile.name_fr ? zeile.name_fr : zeile.unter)?.replace(
+    / · (muri|bulle)\b/g,
+    (_, o: string) => ` · ${o.charAt(0).toUpperCase()}${o.slice(1)}`,
+  )
   const datum = wann(zeile.datum, heute, t)
   const grund = warum(zeile)
 
@@ -58,7 +62,9 @@ export function TagZeile({
       {zeile.prioritaet === 'hoch' && <Badge ton="kritisch">{t('tag.hoch')}</Badge>}
       {zeile.ueberfaellig && <Badge ton="kritisch">{t('tag.ueberfaellig')}</Badge>}
       {zeile.betrag_rappen != null && (
-        <span className="zahlen font-mono text-xs whitespace-nowrap">{formatChf(zeile.betrag_rappen)}</span>
+        <span className="zahlen text-xs whitespace-nowrap">
+          {formatChf(zeile.betrag_rappen, { mitWaehrung: true })}
+        </span>
       )}
     </>
   )

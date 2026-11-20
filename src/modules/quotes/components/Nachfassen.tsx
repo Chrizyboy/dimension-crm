@@ -1,6 +1,7 @@
 import { BellRing, CalendarClock, X } from 'lucide-react'
 import { Suspense, lazy, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ReactNode } from 'react'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Auswahl } from '@/components/ui/auswahl'
@@ -33,11 +34,21 @@ const EntscheidDialog = lazy(() => import('./EntscheidDialog'))
 const SEITE = 50
 const SORTIERUNGEN: readonly NachfassSortierung[] = ['neu', 'alt', 'betrag', 'name', 'nr']
 
+/** Filtergruppe mit sichtbarer Überschrift: sonst stehen drei «Alle» nebeneinander, ohne dass man weiss, wofür. */
+function Gruppe({ titel, children }: { titel: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="text-muted-foreground text-xs">{titel}</span>
+      {children}
+    </div>
+  )
+}
+
 function Kennzahl({ titel, wert }: { titel: string; wert: string | number }) {
   return (
     <div className="bg-surface rounded-xl border p-3">
       <p className="text-muted-foreground text-xs">{titel}</p>
-      <p className="zahlen font-mono text-2xl font-semibold">{wert}</p>
+      <p className="zahlen font-display text-2xl font-semibold whitespace-nowrap">{wert}</p>
     </div>
   )
 }
@@ -106,7 +117,11 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
         <Kennzahl titel={t('offerten.nachfassen.kFaellig')} wert={kennzahlen.faellig} />
         <Kennzahl titel={t('offerten.nachfassen.kHeute')} wert={kennzahlen.heute} />
         <Kennzahl titel={t('offerten.nachfassen.kBald')} wert={kennzahlen.bald} />
-        <Kennzahl titel={t('offerten.nachfassen.kSumme')} wert={formatChf(kennzahlen.summeRappen)} />
+        <Kennzahl
+          titel={t('offerten.nachfassen.kSumme')}
+          // Auf Franken gerundet, damit die Summe in die Kachel passt.
+          wert={formatChf(Math.round(kennzahlen.summeRappen / 100) * 100, { mitWaehrung: true }).replace(/\.00$/, '')}
+        />
         <Kennzahl
           titel={t('offerten.nachfassen.kSchnitt')}
           wert={t('offerten.nachfassen.tage', { count: kennzahlen.schnittTage })}
@@ -115,43 +130,49 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
       </div>
 
       <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end">
-        <Filterchips
-          einzeln
-          beschriftung={t('offerten.nachfassen.standort')}
-          gewaehlt={[standort]}
-          onChange={(w) => {
-            setStandort(w[0] ?? 'alle')
-          }}
-          optionen={['alle', 'muri', 'bulle'].map((s) => ({ wert: s, text: t(`offerten.standort.${s}`) }))}
-        />
-        <Filterchips
-          einzeln
-          beschriftung={t('offerten.nachfassen.seit')}
-          gewaehlt={[seit]}
-          onChange={(w) => {
-            setSeit((w[0] as FaelligSeit | undefined) ?? 'alle')
-          }}
-          optionen={FAELLIG_SEIT.map((s) => ({
-            wert: s,
-            text: t(`offerten.nachfassen.seit_${s}`),
-            anzahl: offen.filter((o) => passtFaelligSeit(nachfassStand(o), s)).length,
-          }))}
-        />
-        <Filterchips
-          einzeln
-          beschriftung={t('offerten.nachfassen.betrag')}
-          gewaehlt={[String(betragAb)]}
-          onChange={(w) => {
-            setBetragAb(Number(w[0] ?? 0))
-          }}
-          optionen={BETRAG_STUFEN.map((b) => ({
-            wert: String(b),
-            text: b
-              ? t('offerten.nachfassen.ab', { betrag: formatChf(b).replace(/\.00$/, '') })
-              : t('offerten.nachfassen.alle'),
-            anzahl: offen.filter((o) => passt(o, 'betrag') && (o.betragRappen ?? 0) >= b).length,
-          }))}
-        />
+        <Gruppe titel={t('offerten.nachfassen.standort')}>
+          <Filterchips
+            einzeln
+            beschriftung={t('offerten.nachfassen.standort')}
+            gewaehlt={[standort]}
+            onChange={(w) => {
+              setStandort(w[0] ?? 'alle')
+            }}
+            optionen={['alle', 'muri', 'bulle'].map((s) => ({ wert: s, text: t(`offerten.standort.${s}`) }))}
+          />
+        </Gruppe>
+        <Gruppe titel={t('offerten.nachfassen.seit')}>
+          <Filterchips
+            einzeln
+            beschriftung={t('offerten.nachfassen.seit')}
+            gewaehlt={[seit]}
+            onChange={(w) => {
+              setSeit((w[0] as FaelligSeit | undefined) ?? 'alle')
+            }}
+            optionen={FAELLIG_SEIT.map((s) => ({
+              wert: s,
+              text: t(`offerten.nachfassen.seit_${s}`),
+              anzahl: offen.filter((o) => passtFaelligSeit(nachfassStand(o), s)).length,
+            }))}
+          />
+        </Gruppe>
+        <Gruppe titel={t('offerten.nachfassen.betrag')}>
+          <Filterchips
+            einzeln
+            beschriftung={t('offerten.nachfassen.betrag')}
+            gewaehlt={[String(betragAb)]}
+            onChange={(w) => {
+              setBetragAb(Number(w[0] ?? 0))
+            }}
+            optionen={BETRAG_STUFEN.map((b) => ({
+              wert: String(b),
+              text: b
+                ? t('offerten.nachfassen.ab', { betrag: formatChf(b).replace(/\.00$/, '') })
+                : t('offerten.nachfassen.alle'),
+              anzahl: offen.filter((o) => passt(o, 'betrag') && (o.betragRappen ?? 0) >= b).length,
+            }))}
+          />
+        </Gruppe>
         <Feld id="nachfassen-sort" label={t('offerten.nachfassen.sortierung')} className="w-44">
           <Auswahl
             id="nachfassen-sort"
@@ -164,33 +185,35 @@ export default function Nachfassen({ offerten, onOeffnen }: { offerten: Offerte[
         </Feld>
       </div>
 
-      <Filterchips
-        einzeln
-        beschriftung={t('offerten.nachfassen.person')}
-        gewaehlt={[person]}
-        onChange={(w) => {
-          setPerson(w[0] ?? 'alle')
-        }}
-        optionen={[
-          { wert: 'alle', text: t('offerten.nachfassen.alle'), anzahl: personen.reduce((n, p) => n + p.anzahl, 0) },
-          ...(ich
-            ? [
-                {
-                  wert: 'meine',
-                  text: t('offerten.nachfassen.meine'),
-                  anzahl: personen.find((p) => p.id === ich.id)?.anzahl ?? 0,
-                },
-              ]
-            : []),
-          ...personen
-            .filter((p) => p.id !== ich?.id)
-            .map((p) => ({
-              wert: p.id ?? 'niemand',
-              text: p.id ? p.name : t('offerten.nachfassen.niemand'),
-              anzahl: p.anzahl,
-            })),
-        ]}
-      />
+      <Gruppe titel={t('offerten.nachfassen.person')}>
+        <Filterchips
+          einzeln
+          beschriftung={t('offerten.nachfassen.person')}
+          gewaehlt={[person]}
+          onChange={(w) => {
+            setPerson(w[0] ?? 'alle')
+          }}
+          optionen={[
+            { wert: 'alle', text: t('offerten.nachfassen.alle'), anzahl: personen.reduce((n, p) => n + p.anzahl, 0) },
+            ...(ich
+              ? [
+                  {
+                    wert: 'meine',
+                    text: t('offerten.nachfassen.meine'),
+                    anzahl: personen.find((p) => p.id === ich.id)?.anzahl ?? 0,
+                  },
+                ]
+              : []),
+            ...personen
+              .filter((p) => p.id !== ich?.id)
+              .map((p) => ({
+                wert: p.id ?? 'niemand',
+                text: p.id ? p.name : t('offerten.nachfassen.niemand'),
+                anzahl: p.anzahl,
+              })),
+          ]}
+        />
+      </Gruppe>
 
       {gewaehlt.length > 0 && (
         <div

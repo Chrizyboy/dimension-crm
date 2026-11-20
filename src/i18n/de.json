@@ -2141,6 +2141,7 @@
       "gewaehlt": "Gewählte Variante",
       "waehlen": "Wählen",
       "nettoTitel": "Was der Kunde zahlt (Variante {{k}})",
+      "nettoTitelOhne": "Was der Kunde zahlt",
       "inkl": "Preis inkl. {{satz}} % MWST",
       "eiv": "Einmalvergütung (EIV)",
       "steuer": "Steuerersparnis (geschätzt)",

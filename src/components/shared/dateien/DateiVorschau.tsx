@@ -238,7 +238,8 @@ function Inhalt({
       ) : art === 'pdf' ? (
         <iframe
           title={d.name}
-          src={adresse.data}
+          // Ohne Seitenleiste mit Vorschaubildern und auf Breite: das Dokument selbst bekommt den Platz.
+          src={`${adresse.data}#navpanes=0&view=FitH`}
           className="bg-muted h-[calc(100vh-14rem)] min-h-96 w-full rounded-lg"
         />
       ) : (

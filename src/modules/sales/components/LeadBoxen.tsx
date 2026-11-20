@@ -174,7 +174,10 @@ export function HerkunftBox({ g }: { g: Geschaeft }) {
         <Wert label={t('verkauf.herkunft.erstkontakt')}>
           {g.erstkontaktAm
             ? `${formatDatum(g.erstkontaktAm)} ${new Date(g.erstkontaktAm).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })}`
-            : t('verkauf.herkunft.nochNicht')}
+            : // Übernommene Leads aus dem alten CRM haben keinen Zeitpunkt, sind aber längst kontaktiert.
+              g.stand === 'lead_neu'
+              ? t('verkauf.herkunft.nochNicht')
+              : '–'}
         </Wert>
         {h.formular && (
           <Wert label={t('verkauf.herkunft.formular')}>
