@@ -6,15 +6,24 @@ import type { Filter } from '../types'
 /** Kopfzahlen über der Liste; ein Klick setzt den passenden Filter. */
 export function KopfZahlen({
   zahlen,
+  filter,
   onFilter,
 }: {
   zahlen: { aktiv: number; wiederkehrend: number; faellig: number; rechnung: number; gekuendigt: number }
+  /** Gesetzter Filter: die passende Kachel ist hervorgehoben, damit man sieht, was der Klick bewirkt hat. */
+  filter: Filter
   onFilter: (f: Filter) => void
 }) {
   const { t } = useTranslation()
-  const kacheln: { f: Filter; zahl: string; text: string; ton?: 'warn' | 'bad' | 'ok' }[] = [
+  const kacheln: { f: Filter; zahl: string; text: string; ton?: 'warn' | 'bad' | 'ok'; nurZahl?: boolean }[] = [
     { f: 'aktiv', zahl: String(zahlen.aktiv), text: t('wartung.kz.aktiv') },
-    { f: 'aktiv', zahl: `CHF ${formatChf(zahlen.wiederkehrend)}`, text: t('wartung.kz.wiederkehrend'), ton: 'ok' },
+    {
+      f: 'aktiv',
+      zahl: `CHF ${formatChf(zahlen.wiederkehrend)}`,
+      text: t('wartung.kz.wiederkehrend'),
+      ton: 'ok',
+      nurZahl: true,
+    },
     {
       f: 'faellig',
       zahl: String(zahlen.faellig),
@@ -31,28 +40,44 @@ export function KopfZahlen({
   ]
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-      {kacheln.map((k) => (
-        <button
-          key={k.text}
-          type="button"
-          onClick={() => {
-            onFilter(k.f)
-          }}
-          className="bg-surface hover:border-border-strong focus-visible:ring-ring flex flex-col gap-0.5 rounded-lg border px-3 py-2.5 text-left outline-none focus-visible:ring-2"
-        >
-          <span
-            className={cn(
-              'font-display zahlen text-xl font-semibold',
-              k.ton === 'warn' && 'text-warn',
-              k.ton === 'bad' && 'text-bad',
-              k.ton === 'ok' && 'text-ok',
-            )}
+      {kacheln.map((k) => {
+        const inhalt = (
+          <>
+            <span
+              className={cn(
+                'font-display zahlen text-xl font-semibold',
+                k.ton === 'warn' && 'text-warn',
+                k.ton === 'bad' && 'text-bad',
+                k.ton === 'ok' && 'text-ok',
+              )}
+            >
+              {k.zahl}
+            </span>
+            <span className="text-muted-foreground text-xs">{k.text}</span>
+          </>
+        )
+        // Der Jahreswert filtert nichts Eigenes (gleich wie «aktive Verträge»), darum keine Schaltfläche.
+        if (k.nurZahl) {
+          return (
+            <div key={k.text} className="bg-surface flex flex-col gap-0.5 rounded-lg border px-3 py-2.5">
+              {inhalt}
+            </div>
+          )
+        }
+        return (
+          <button
+            key={k.text}
+            type="button"
+            aria-pressed={filter === k.f}
+            onClick={() => {
+              onFilter(k.f)
+            }}
+            className="bg-surface hover:border-border-strong focus-visible:ring-ring aria-pressed:border-primary aria-pressed:ring-primary/30 flex flex-col gap-0.5 rounded-lg border px-3 py-2.5 text-left outline-none focus-visible:ring-2 aria-pressed:ring-2"
           >
-            {k.zahl}
-          </span>
-          <span className="text-muted-foreground text-xs">{k.text}</span>
-        </button>
-      ))}
+            {inhalt}
+          </button>
+        )
+      })}
     </div>
   )
 }

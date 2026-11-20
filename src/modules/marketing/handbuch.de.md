@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: verkauf, innendienst, geschaeftsleitung, buchhaltung
 ---
 
@@ -109,6 +109,7 @@ Unter **Social Media** steht beim Post der Fehler. Meist ist die Verbindung abge
 
 ## Neu {#neu}
 
+- 20.11.2026: In «Heute zu tun» springt der Pfeil bei Rechnungen, die nach Werbung aussehen, direkt zu **Kosten zuordnen**.
 - 19.11.2026: Newsletter: **Testmail an mich** schickt dir je Sprache eine Testmail (Anrede mit deinem Namen, Abmelde-Link ohne Wirkung).
 - 03.11.2026: Übersicht mit «Heute zu tun», Kalender, Kampagnen mit Ergebnis, Messen mit Lead-Erfassung am Handy, Social-Media-Board mit Freigabe, Mediathek, gespeicherte Zielgruppen, Werbe-Pause, Öffnungen und Klicks.
 - 03.11.2026: Vorlagen ändert nur noch die Administration; alle anderen sehen sie zum Lesen und brauchen sie beim Senden.

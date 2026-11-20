@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: innendienst, verkauf, buchhaltung, geschaeftsleitung
 ---
 
@@ -89,6 +89,7 @@ Seuls les contrats avec formule la reçoivent automatiquement. Pour les anciens 
 
 ## Nouveautés {#neu}
 
+- 20.11.2026 : Les tuiles du haut montrent le filtre choisi (encadré) ; la valeur annuelle est un simple chiffre, pas un bouton.
 - 19.11.2026 : les contrats d’entretien se trouvent dans la barre latérale sous **Contrats** ; en haut, on passe de **Contrats d’entreprise** à **Contrats d’entretien**.
 - 03.11.2026: «Mettre à la corbeille» pour les contrats de maintenance (en bas du dossier), avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Planifier les inspections avec annonce 14 jours avant, onglet «Sans contrat» avec offre seule ou en série, inspection sur mobile avec les valeurs de la dernière fois.
