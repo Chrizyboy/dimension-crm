@@ -7225,6 +7225,8 @@
     "ohneDatumAnzahl_one": "{{count}} mouvement sans date compte dans cette semaine",
     "ohneDatumAnzahl_other": "{{count}} mouvements sans date comptent dans cette semaine",
     "chartTitel": "Solde à la fin de chaque semaine (semaine calendaire)",
+    "tiefsterStand": "Solde le plus bas",
+    "reserveLinie": "Réserve {{betrag}}",
     "keineBewegung": "Aucun mouvement.",
     "faelligKurz": "échéance {{datum}}",
     "quelle": {

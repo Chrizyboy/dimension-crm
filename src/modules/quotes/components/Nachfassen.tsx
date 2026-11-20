@@ -48,7 +48,7 @@ function Kennzahl({ titel, wert }: { titel: string; wert: string | number }) {
   return (
     <div className="bg-surface rounded-xl border p-3">
       <p className="text-muted-foreground text-xs">{titel}</p>
-      <p className="zahlen font-display text-2xl font-semibold whitespace-nowrap">{wert}</p>
+      <p className="zahlen font-display text-xl font-semibold whitespace-nowrap md:text-2xl">{wert}</p>
     </div>
   )
 }

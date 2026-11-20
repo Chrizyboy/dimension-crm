@@ -56,10 +56,6 @@ export default function Automationen({ ansicht, automationId, onAdresse }: Props
           </Button>
         }
       />
-      <p className="bg-info-soft text-info flex items-start gap-2 rounded-lg px-3 py-2 text-xs">
-        <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-        {t('automationen.regel')}
-      </p>
       <Reiter
         value={ansicht}
         onValueChange={(a) => {
@@ -74,7 +70,16 @@ export default function Automationen({ ansicht, automationId, onAdresse }: Props
           <ReiterKnopf value="einstellungen">{t('automationen.ansicht.einstellungen')}</ReiterKnopf>
         </ReiterListe>
         <ReiterInhalt value="uebersicht" className="pt-4">
-          {ansicht === 'uebersicht' && <Uebersicht onAdresse={onAdresse} />}
+          {ansicht === 'uebersicht' && (
+            <div className="flex flex-col gap-4">
+              {/* Die Schutzregel einmal in der Übersicht statt über jedem Reiter. */}
+              <p className="bg-info-soft text-info flex items-start gap-2 rounded-lg px-3 py-2 text-xs">
+                <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                {t('automationen.regel')}
+              </p>
+              <Uebersicht onAdresse={onAdresse} />
+            </div>
+          )}
         </ReiterInhalt>
         <ReiterInhalt value="liste" className="pt-4">
           {ansicht === 'liste' && (

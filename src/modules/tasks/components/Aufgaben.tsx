@@ -90,7 +90,7 @@ export default function Aufgaben({
   const personName = personen.data?.find((p) => p.id === person)?.name
 
   return (
-    <div className="mx-auto flex w-full max-w-[72rem] flex-col gap-4 px-4 py-6 sm:px-6">
+    <div className="flex w-full max-w-[72rem] flex-col gap-4 px-4 py-6 sm:px-6">
       <Seitenkopf
         titel={personName ? t('aufgaben.vonPerson', { name: personName }) : t('aufgaben.titel')}
         beschreibung={t('aufgaben.beschreibung')}

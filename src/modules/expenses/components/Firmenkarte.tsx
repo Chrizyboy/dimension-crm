@@ -126,7 +126,8 @@ export function Firmenkarte({ alle }: { alle: Spese[] }) {
           />
         </div>
       </div>
-      <p className="text-muted-foreground text-xs">{t('spesen.karte.hinweis')}</p>
+      {/* Vor dem ersten Auszug sagt der Leerzustand dasselbe. */}
+      {buchungen.length > 0 && <p className="text-muted-foreground text-xs">{t('spesen.karte.hinweis')}</p>}
       {daten.error ? (
         <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} />
       ) : !daten.data ? (

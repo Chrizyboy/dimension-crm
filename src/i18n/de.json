@@ -7225,6 +7225,8 @@
     "ohneDatumAnzahl_one": "{{count}} Bewegung ohne Datum zählt in diese Woche",
     "ohneDatumAnzahl_other": "{{count}} Bewegungen ohne Datum zählen in diese Woche",
     "chartTitel": "Kontostand am Ende jeder Woche (Kalenderwoche)",
+    "tiefsterStand": "Tiefster Stand",
+    "reserveLinie": "Reserve {{betrag}}",
     "keineBewegung": "Keine Bewegungen.",
     "faelligKurz": "fällig {{datum}}",
     "quelle": {
