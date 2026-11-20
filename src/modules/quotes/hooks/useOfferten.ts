@@ -51,7 +51,7 @@ export function useEturnityMeldungen() {
 
 /**
  * Änderung an Offerten: lädt danach Offerten, Pipeline (Anfragen & Leads) und Kundenakten neu,
- * weil derselbe Stand dort ebenfalls erscheint.
+ * und «Mein Tag» neu, weil derselbe Stand dort ebenfalls erscheint.
  */
 export function useOffertAenderung<A, R = unknown>(aktion: (a: A) => Promise<R>) {
   const qc = useQueryClient()
@@ -62,6 +62,7 @@ export function useOffertAenderung<A, R = unknown>(aktion: (a: A) => Promise<R>)
         qc.invalidateQueries({ queryKey: OFFERTEN_SCHLUESSEL }),
         qc.invalidateQueries({ queryKey: ['verkauf'] }),
         qc.invalidateQueries({ queryKey: ['kontakte'] }),
+        qc.invalidateQueries({ queryKey: ['mein-tag'] }),
       ])
     },
   })

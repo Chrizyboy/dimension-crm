@@ -2,16 +2,21 @@ import { useQueryClient } from '@tanstack/react-query'
 import { CloudUpload, ExternalLink, FileText, FolderOpen, Image as Bild } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import {
+  DateiFenster,
+  DateiMailKnopf,
+  ZipKnopf,
+  type DateiFensterZustand,
+  type DateiMailEmpfaenger,
+} from '@/components/shared/dateien/DateiFenster'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
 import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
-import { meldeFehler } from '@/services/fehler'
 import { meldeIntegrationsFehler, microsoft, useMeineMicrosoftVerbindung } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { datumOderLeer } from '../lib/anzeige'
-import { dokumentAdresse } from '../services/kundenakte'
 import type { BackupOrdner, Dokument } from '../types'
 
 /** Die 11 Ordner der Vorlage in ihrer gewohnten Reihenfolge; Unbekanntes kommt ans Ende. */
@@ -36,25 +41,9 @@ function groesse(bytes: number | null): string {
     : `${String(Math.max(1, Math.round(bytes / 1000)))} kB`
 }
 
-/** Öffnet ein Dokument in einem neuen Fenster (SharePoint oder kurz gültiger Link). */
-async function oeffne(d: Dokument) {
-  // Fenster sofort öffnen, sonst blockiert der Browser es nach dem Warten auf den Link.
-  const fenster = window.open('', '_blank')
-  if (fenster) fenster.opener = null
-  try {
-    const adresse = await dokumentAdresse(d)
-    if (!adresse) {
-      fenster?.close()
-      melde('warnung', { de: 'Datei nicht gefunden', fr: 'Fichier introuvable' })
-      return
-    }
-    if (fenster) fenster.location.href = adresse
-    else window.open(adresse, '_blank', 'noopener')
-  } catch (f) {
-    fenster?.close()
-    meldeFehler(f, 'dokument')
-    melde('kritisch', { de: 'Datei konnte nicht geöffnet werden', fr: "Impossible d'ouvrir le fichier" })
-  }
+/** Dateien nur in SharePoint öffnen direkt dort (eigene Vorschau mit Microsoft-Anmeldung), alle anderen in der App. */
+function nurSharepoint(d: Dokument): boolean {
+  return !d.speicher_pfad && Boolean(d.sharepoint_url)
 }
 
 /**
@@ -130,11 +119,18 @@ function BackupLinks({ ordner }: { ordner: BackupOrdner[] }) {
 export function AkteDokumente({
   dokumente,
   backupOrdner = [],
+  mail,
+  zipName,
 }: {
   dokumente: Dokument[]
   backupOrdner?: BackupOrdner[]
+  /** Empfänger für «Per Mail senden» (Kunde mit Mail-Adresse). */
+  mail?: DateiMailEmpfaenger | null | undefined
+  /** Name des ZIP, z. B. «K0123 Muster». */
+  zipName?: string | undefined
 }) {
   const { t } = useTranslation()
+  const [fenster, setFenster] = useState<DateiFensterZustand>(null)
   const nurImCrm = useMemo(() => dokumente.filter((d) => d.speicher === 'intern' && !d.sharepoint_url), [dokumente])
   const gruppen = useMemo(() => {
     const nach = new Map<string, Dokument[]>()
@@ -149,6 +145,8 @@ export function AkteDokumente({
     return [...nach.entries()].sort(([a], [b]) => rang(a) - rang(b))
   }, [dokumente])
 
+  const reihenfolge = useMemo(() => gruppen.flatMap(([, liste]) => liste), [gruppen])
+
   if (dokumente.length === 0) {
     return (
       <div className="flex flex-col gap-3">
@@ -160,7 +158,10 @@ export function AkteDokumente({
 
   return (
     <div className="flex flex-col gap-5">
-      <BackupLinks ordner={backupOrdner} />
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <BackupLinks ordner={backupOrdner} />
+        <ZipKnopf dateien={reihenfolge} name={zipName ?? t('dokument.zipName')} />
+      </div>
       <SharepointSichern offen={nurImCrm} />
       {gruppen.map(([ordner, liste]) => (
         <section key={ordner} className="flex flex-col gap-1.5">
@@ -175,7 +176,10 @@ export function AkteDokumente({
                 <li key={d.id} className="flex items-center pr-1">
                   <button
                     type="button"
-                    onClick={() => void oeffne(d)}
+                    onClick={() => {
+                      if (nurSharepoint(d)) window.open(d.sharepoint_url ?? '', '_blank', 'noopener')
+                      else setFenster({ art: 'vorschau', id: d.id })
+                    }}
                     className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-3 px-3 py-2 text-left text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset"
                   >
                     <Icon className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
@@ -187,6 +191,14 @@ export function AkteDokumente({
                       <ExternalLink className="text-muted-foreground size-3.5 shrink-0" aria-label="SharePoint" />
                     )}
                   </button>
+                  {mail?.an && (
+                    <DateiMailKnopf
+                      name={d.name}
+                      onClick={() => {
+                        setFenster({ art: 'mail', id: d.id })
+                      }}
+                    />
+                  )}
                   <InPapierkorbKnopf tabelle="dokumente" id={d.id} name={d.name} nurSymbol />
                 </li>
               )
@@ -194,6 +206,7 @@ export function AkteDokumente({
           </ul>
         </section>
       ))}
+      <DateiFenster dateien={reihenfolge} zustand={fenster} onZustand={setFenster} mail={mail} />
     </div>
   )
 }

@@ -93,6 +93,8 @@ Choisir la bonne installation dans le cas. **Cas précédents** montre ce qui s�
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : Les **pièces jointes** du cas s’ouvrent dans l’app (photo avec agrandissement et copie, PDF), ✉ envoie un fichier au client, **Les … en ZIP** par ex. pour le fabricant.
+- 19.11.2026 : Dans le dossier du cas **Historique des modifications** : qui a modifié quoi et quand.
 - 19.11.2026: Tous les nouveaux cas vont d’abord à Andy ; dans le dossier, il choisit avec **Choisir le collaborateur** qui reprend. Nouveau filtre **À attribuer**.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Le tableau de bord n’affiche que les chiffres différents de 0 ; « cas ouverts » reste toujours affiché.

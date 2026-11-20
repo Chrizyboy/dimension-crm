@@ -1047,7 +1047,8 @@
     },
     "nichtInSharepoint_one": "{{count}} fichier n'est que dans le CRM.",
     "nichtInSharepoint_other": "{{count}} fichiers ne sont que dans le CRM.",
-    "inSharepoint": "Sauvegarder dans SharePoint"
+    "inSharepoint": "Sauvegarder dans SharePoint",
+    "zipName": "Documents"
   },
   "kundenblatt": {
     "titel": "Fiche client",
@@ -1702,6 +1703,14 @@
       "mail": "Par e-mail",
       "bereit": "Le lien de rendez-vous attend la validation dans la boîte d’envoi",
       "zumAusgang": "Vers la boîte d’envoi"
+    },
+    "heute": {
+      "nachTermin": "Après la visite : quelle suite ?",
+      "alle": "Les {{count}} dans « À faire »",
+      "terminAm": "Visite le {{datum}}",
+      "ohneDatum": "Visite sans date",
+      "zurOfferte": "Vers l'offre",
+      "keinInteresse": "Pas intéressé"
     }
   },
   "offerten": {
@@ -1912,7 +1921,16 @@
       "weitere_one": "Charger {{count}} de plus",
       "weitere_other": "Charger {{count}} de plus",
       "leer": "Rien à relancer",
-      "leerText": "Toutes les offres envoyées sont décidées ou pas encore échues."
+      "leerText": "Toutes les offres envoyées sont décidées ou pas encore échues.",
+      "mail": "E-mail de relance",
+      "zurueck": "Retour à l'offre",
+      "kSchnitt": "Échue depuis (Ø)",
+      "k180": "Plus de 180 jours",
+      "tage_one": "{{count}} jour",
+      "tage_other": "{{count}} jours",
+      "betrag": "Montant",
+      "ab": "dès {{betrag}}",
+      "niemand": "Sans responsable"
     },
     "entscheid": {
       "titel_angenommen": "Offre acceptée",
@@ -2165,6 +2183,18 @@
       "stand": "{{material}} matériel · {{alle}} positions",
       "option": "Option : {{gruppe}}",
       "imPdf": "Liste de matériel avec {{anzahl}} positions reconnue, elle sera enregistrée."
+    },
+    "heute": {
+      "pruefen": "Offres à vérifier et envoyer",
+      "alle": "Les {{count}} dans « Nouvelles offres »",
+      "richt_bearbeitung": "Offre indicative en cours",
+      "richt_rueckfrage": "Offre indicative, question ouverte",
+      "richt_bereit": "Offre indicative prête à l'envoi",
+      "zurPruefung": "à vérifier",
+      "seit": "depuis le {{datum}}",
+      "hinweis": "Remarque : {{text}}",
+      "pruefenKnopf": "Vérifier",
+      "versendet": "Envoyée"
     }
   },
   "werkvertraege": {
@@ -3153,7 +3183,9 @@
       "tagesuebersicht": "Résumé du jour",
       "anlagedossier": "Dossier d'installation",
       "baugesuch": "Demande de permis",
-      "brief": "Lettre"
+      "brief": "Lettre",
+      "datei": "Fichiers",
+      "newsletter_test": "Newsletter : e-mail de test"
     },
     "titelMail": "Vérifier l'e-mail",
     "titelSms": "Vérifier le SMS",
@@ -3515,6 +3547,11 @@
       "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez le contrat d'entreprise en pièce jointe. Merci de nous retourner un exemplaire signé.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire",
       "betreffMitRechnung": "Votre contrat d'entreprise {{nummer}} et la facture d'acompte de Dimension Solaire",
       "textMitRechnung": "Bonjour\n\nMerci pour votre commande. Vous trouverez en pièce jointe le contrat d'entreprise et la facture d'acompte de {{betrag}}. Merci de nous retourner le contrat signé et de régler l'acompte avec la QR-facture. Dès réception de l'acompte, nous commandons le matériel et convenons avec vous de la date de montage.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    },
+    "nachfassTitel": "E-mail de relance pour l'offre {{nummer}}",
+    "nachfassen": {
+      "betreff": "Votre offre {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nLe {{datum}}, nous vous avons envoyé notre offre. Avez-vous pu la consulter tranquillement ? Nous répondons volontiers à vos questions ou adaptons l'offre à vos souhaits.\n\nDans l'attente de votre retour.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
@@ -7878,7 +7915,9 @@
         "zuLang": "{{sprache}} : {{wert}} mots, conseillé au plus {{max}}.",
         "ohneAnrede": "{{sprache}} : sans {Anrede}, la salutation personnelle manque.",
         "platzhalterText": "{{sprache}} : le texte contient encore « … »."
-      }
+      },
+      "testmail": "E-mail de test à moi",
+      "nochKeinTest": "Conseil : avant l’envoi, envoie-toi un e-mail de test et vérifie-le dans ta boîte."
     },
     "vorlagen": {
       "platzhalter": "Champs dans tous les textes : {{liste}}",
@@ -12840,7 +12879,16 @@
     "terminblattHinweis": "PDF avec vue aérienne",
     "lead": "Ouvrir le lead",
     "offerte": "Ouvrir l’offre",
-    "projekt": "Ouvrir le projet"
+    "projekt": "Ouvrir le projet",
+    "schritt": {
+      "termin": "Joint : fixer un RDV …",
+      "nichtErreicht": "Pas joint …",
+      "rueckruf": "Rappel convenu …",
+      "keinInteresse": "Pas intéressé …",
+      "kontakt": "Saisir un contact …",
+      "verschieben": "Déplacer le RDV …",
+      "absagen": "Annuler le RDV …"
+    }
   },
   "apps": {
     "titel": "Apps",
@@ -12858,5 +12906,55 @@
     "vollbild": "Plein écran",
     "vollbildAus": "Quitter le plein écran",
     "aktualisieren": "Actualiser"
+  },
+  "verlauf": {
+    "knopf": "Historique des modifications",
+    "titel": "Historique des modifications",
+    "leer": "Aucune modification",
+    "leerText": "Dès que quelqu’un modifie quelque chose ici, cela apparaît dans cet historique.",
+    "feld": {
+      "stufe": "Statut",
+      "status": "Statut",
+      "termin_am": "Rendez-vous",
+      "tour_person": "RDV avec",
+      "person": "Responsable",
+      "verantwortlich": "Responsable",
+      "betrag": "Montant",
+      "nachfassen_am": "Relance le",
+      "entscheid": "Décision",
+      "entscheid_am": "Décision le",
+      "verlustgrund": "Motif",
+      "wiedervorlage_am": "Rappel",
+      "wiedervorlage_grund": "Motif du rappel",
+      "angebot_am": "Offre du",
+      "titel": "Titre",
+      "notiz": "Note",
+      "prioritaet": "Priorité",
+      "geloescht_am": "Corbeille"
+    }
+  },
+  "datei": {
+    "vorschau": "Aperçu",
+    "nummer": "Fichier {{nr}} sur {{von}}",
+    "zurueck": "Fichier précédent",
+    "weiter": "Fichier suivant",
+    "zoomRein": "Agrandir",
+    "zoomRaus": "Réduire",
+    "zoomZurueck": "Afficher en entier",
+    "kopieren": "Copier l'image",
+    "mail": "Envoyer par e-mail",
+    "mailFuer": "Envoyer {{name}} par e-mail",
+    "mailTitel": "Envoyer le fichier par e-mail",
+    "herunterladen": "Télécharger",
+    "inSharepoint": "Ouvrir dans SharePoint",
+    "sharepoint": "Dans SharePoint",
+    "sharepointText": "Ce fichier se trouve uniquement dans SharePoint. Il s'y ouvre avec ta connexion Microsoft.",
+    "keineVorschau": "Pas d'aperçu",
+    "keineVorschauText": "L'app n'affiche pas d'aperçu pour ce type de fichier. Télécharger l'ouvre dans le bon programme.",
+    "nichtGeladen": "Fichier non chargé",
+    "nichtGeladenText": "Le fichier n'a pas pu être chargé. Réessaie ou télécharge-le.",
+    "zip_one": "En ZIP",
+    "zip_other": "Les {{count}} en ZIP",
+    "mailText": "Bonjour,\n\nVous trouverez ci-joint les documents souhaités.\n\nMeilleures salutations"
   }
 }

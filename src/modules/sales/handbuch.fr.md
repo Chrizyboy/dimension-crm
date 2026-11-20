@@ -115,6 +115,8 @@ Le CRM mémorise tout seul personne, source, région et colonnes. Pour plusieurs
 
 ## Nouveautés {#neu}
 
+- 19.11.2026 : Dans le dossier du lead, sous **Historique des contacts**, nouveau **Charger les e-mails d'Outlook** : récupère tous les e-mails avec le client dans ta boîte et les boîtes d’équipe. Sous **Fichiers**, un clic affiche le fichier dans l’app, ✉ l’envoie au client, **Les … en ZIP** les télécharge tous.
+- 19.11.2026 : Le **clic droit** sur un lead montre d’abord les prochaines étapes : **Joint : fixer un RDV**, **Pas joint**, **Rappel convenu**, **Pas intéressé**, **Saisir un contact** ; pour les rendez-vous **Déplacer le RDV** et **Annuler le RDV** ; après la visite **Vers l'offre** ou **Pas intéressé**. Un rendez-vous déplacé (aussi dans le calendrier de la semaine) est maintenant enregistré. Dans le dossier du lead **+ Tâche** et **Historique des modifications**.
 - 19.11.2026: **Demandes** s’ouvre la première fois sur la **Liste**, ensuite sur la dernière vue utilisée (mémorisée par personne). Dans la recherche (Ctrl K), « Leads » trouve ce domaine.
 - 19.11.2026: **Clic droit** sur un lead (sur mobile, appui long) : ouvrir le lead, ouvrir dans Google Maps, imprimer la fiche de visite, ouvrir le dossier client, appeler, écrire un e-mail. **Récupérer les demandes › Lire un fichier e-mail** accepte aussi les e-mails Outlook (.msg) glissés depuis Outlook.
 - 04.11.2026: Six onglets au plus : **Rapport mensuel** et **Pilotage** sont sous **Plus** (touches 1–7 comme avant). Dans la fiche du lead, les listes vides (source, joignabilité, financement, horizon, subvention) n’apparaissent qu’après **+ autres informations**.

@@ -21,5 +21,8 @@ export const meta: ModulMeta = {
 /** Der ganze Bereich: Pipeline, Liste, Tagesroute, Tour, Kalender, Regionen, Monatsbericht. */
 export const Verkauf = lazy(() => import('./components/Verkauf'))
 
+/** «Nach dem Termin: wie weiter?» für «Mein Tag»: Zur Offerte oder Kein Interesse direkt in der Zeile. */
+export const NachTerminHeute = lazy(() => import('./components/NachTerminHeute'))
+
 export { VERKAUF_ANSICHTEN } from './types'
 export type * from './types'

@@ -77,6 +77,33 @@ export async function mailsAbgleichen(personId: string, tage: number, teamPostfa
   return n
 }
 
+/**
+ * Ganzer Mailverlauf mit einer Adresse (V234 «E-Mails aus Outlook laden»): sucht im eigenen Postfach und in den
+ * Team-Postfächern über alle Ordner, nicht nur die letzten Tage, und vermerkt die Mails beim Kunden und seinem Lead.
+ * Schon vermerkte Mails (gleiche Kennung) überspringt `mails_vermerken`.
+ */
+export async function mailsMitAdresse(
+  personId: string,
+  adresse: string,
+  teamPostfaecher: string[] = [],
+): Promise<number> {
+  const sauber = adresse.trim().toLowerCase()
+  // Nur eine echte Adresse darf in die Suche, sonst liesse sich die Abfrage verändern.
+  if (!/^[^@\s"()]+@[^@\s"()]+\.[a-z]{2,}$/.test(sauber)) throw new DienstFehler('eingabe', 400, 'adresse')
+  const q = new URLSearchParams({ $search: `"participants:${sauber}"`, $select: MAIL_FELDER, $top: '50' })
+  let n = 0
+  for (const postfach of ['/me', ...teamPostfaecher.map((p) => `/users/${encodeURIComponent(p)}`)]) {
+    try {
+      const mails = await graphAlle<OutlookMail>(personId, `${postfach}/messages?${q}`, 4)
+      n += await dienst.rpc<number>('mails_vermerken', { p_person: personId, p_mails: mails.map(mailZuVerlauf) })
+    } catch (f) {
+      if (postfach === '/me' || !(f instanceof DienstFehler && ['kein_zugriff', 'nicht_gefunden'].includes(f.code)))
+        throw f
+    }
+  }
+  return n
+}
+
 /** Ergebnis des Abholens von Anfragen. */
 export interface AnfragenErgebnis {
   neu: number

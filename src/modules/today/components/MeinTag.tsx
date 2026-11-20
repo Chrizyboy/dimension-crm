@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { cn } from '@/lib/utils'
 import {
   BellRing,
   CalendarDays,
@@ -59,11 +58,17 @@ export default function MeinTag({
   aktionen,
   oben,
   unten,
+  zeilenKnoepfe,
+  verkaufKarten,
 }: {
   /** Weitere Knöpfe im Kopf (z. B. neue Aufgabe, Kennzahlen). */
   aktionen?: ReactNode
   oben?: ReactNode
   unten?: ReactNode
+  /** Knöpfe je Zeile einer Liste aus anderen Bereichen (z. B. Entscheid beim Nachfassen aus den Offerten). */
+  zeilenKnoepfe?: Partial<Record<TagListeName, (z: TagZeile) => ReactNode>>
+  /** Karten aus dem Verkauf vor den Listen (Offerten prüfen, Nach dem Termin); leere zeigen sich nicht. */
+  verkaufKarten?: ReactNode
 }) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
@@ -195,14 +200,10 @@ export default function MeinTag({
           {/* Was Punkte hat, steht oben: Sind Termine und Aufgaben leer, rücken die Bereiche mit offenen Punkten nach vorn. */}
           {!kernLeer && kern}
 
-          {weitere.length > 0 && (
-            <div
-              className={cn(
-                'grid items-start gap-4 md:grid-cols-2',
-                // Drei Spalten erst ab drei Karten, sonst bliebe rechts eine leere Lücke.
-                weitere.length >= 3 && 'xl:grid-cols-3',
-              )}
-            >
+          {(weitere.length > 0 || verkaufKarten) && (
+            // auto-fit: leere Spuren fallen weg, zwei Karten füllen die Breite statt rechts eine Lücke zu lassen.
+            <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))]">
+              {verkaufKarten}
               {weitere.map((w) => (
                 <TagKarte
                   key={w.liste}
@@ -212,6 +213,7 @@ export default function MeinTag({
                   heute={d.heute}
                   alleZiel={w.ziel}
                   onVerschieben={(z, bis) => void verschiebe(z, bis)}
+                  {...(zeilenKnoepfe?.[w.liste] ? { zeilenZusatz: zeilenKnoepfe[w.liste] } : {})}
                   testId={`tag-${w.liste}`}
                 />
               ))}

@@ -20,7 +20,8 @@ import { Gebaeude, KontaktAngaben } from './AkteUebersicht'
 import { AkteZeitachse } from './AkteZeitachse'
 import { Kundenblatt } from './Kundenblatt'
 import { NaechsterSchritt } from './NaechsterSchritt'
-import { OutlookMailsKnopf } from './OutlookMailsKnopf'
+import { OutlookMailsKnopf } from '@/components/shared/OutlookMailsKnopf'
+import { KONTAKT_SCHLUESSEL } from '@/hooks/useKontakte'
 import { AkteZahlenLeiste } from './AkteZahlenLeiste'
 import { AnlagenBox } from './AnlagenBox'
 import { AufgabenBox } from './AufgabenBox'
@@ -170,7 +171,10 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
             }}
           />
           {n && <AufgabenBox kontaktId={k.id} aufgaben={n.aufgaben} heute={heute} />}
-          <Box titel={t('kundenseite.verlauf')} rechts={<OutlookMailsKnopf />}>
+          <Box
+            titel={t('kundenseite.verlauf')}
+            rechts={<OutlookMailsKnopf adresse={k.email} neuLaden={KONTAKT_SCHLUESSEL} />}
+          >
             <AkteZeitachse eintraege={zeitachse.data} mails={n?.mails} laedt={zeitachse.isPending} />
           </Box>
           <Box
@@ -187,7 +191,12 @@ export default function KundenSeite({ id, onZurueck }: { id: string; onZurueck: 
           {n && <ServiceBox faelle={n.serviceFaelle} vertraege={n.wartungsvertraege} heute={heute} />}
           {n && <RechnungenBox rechnungen={n.rechnungen} finanzen={finanzen} />}
           <Box titel={t('akte.reiter.dokumente')} rechts={<span className="zahlen">{a.dokumente.length}</span>}>
-            <AkteDokumente dokumente={a.dokumente} backupOrdner={a.backupOrdner} />
+            <AkteDokumente
+              dokumente={a.dokumente}
+              backupOrdner={a.backupOrdner}
+              mail={{ an: k.email, sprache: k.sprache, kontakt_id: k.id }}
+              zipName={`${formatKundennummer(k.kundennummer)} ${k.name}`}
+            />
           </Box>
         </div>
       </div>

@@ -9,7 +9,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { Karte } from '@/components/ui/karte'
 import { formatDatumZeit } from '@/lib/format'
 import { useBenutzerDaten } from '../hooks/useBenutzer'
-import { datensatzText, geaenderteFelder } from '../lib/protokoll'
+import { datensatzText, geaenderteFelder } from '@/lib/protokoll'
 import { ladeProtokoll } from '../services/stammdaten'
 
 const ALLE = '_alle'

@@ -339,6 +339,26 @@ try {
     JSON.stringify(r.daten),
   )
 
+  // --- Ganzer Mailverlauf mit dem Kunden (Lead/Kundenakte «E-Mails aus Outlook laden») -----------------
+  z.mails.push({
+    postfach: 'me',
+    id: 'alt-1',
+    internetMessageId: `<alt-${kennung}@kunde>`,
+    subject: 'Anfrage Solaranlage',
+    bodyPreview: 'Guten Tag, wir interessieren uns …',
+    receivedDateTime: new Date(Date.now() - 200 * 86_400_000).toISOString(),
+    from: { emailAddress: { address: kundenMail } },
+    toRecipients: [{ emailAddress: { address: EMAIL } }],
+  })
+  r = await funktion('microsoft', { aktion: 'mails_kontakt', adresse: kundenMail }, token)
+  ok(
+    r.daten?.anzahl === 1,
+    'Mailverlauf mit dem Kunden: alte Mail geholt, schon Vermerktes nicht doppelt',
+    JSON.stringify(r.daten),
+  )
+  r = await funktion('microsoft', { aktion: 'mails_kontakt', adresse: 'x" OR "y' }, token)
+  ok(r.status === 400, 'Mailverlauf: ungültige Adresse abgelehnt', JSON.stringify(r))
+
   // --- Anfragen aus dem Postfach (solar-guide, Landingpage, Messe) --------------------------------------
   const sgName = `Sola ${kennung}`
   z.anfragen.push({

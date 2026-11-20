@@ -19,6 +19,13 @@ export async function ladeOfferten(): Promise<Offerte[]> {
   return data.map(offerteAusZeile)
 }
 
+/** Eine Offerte (z. B. für die Knöpfe auf «Mein Tag»), ohne die ganze Liste zu laden. */
+export async function ladeOfferte(id: string): Promise<Offerte | null> {
+  const { data, error } = await db().from('offerten_liste').select('*').eq('id', id).maybeSingle()
+  if (error) throw error
+  return data ? offerteAusZeile(data) : null
+}
+
 /** «Neue Offerten»: alle Leads, die zur Offerte gegeben wurden. */
 export async function ladeEingang(): Promise<Eingang[]> {
   const { data, error } = await db().from('offerten_eingang').select('*')

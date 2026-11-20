@@ -1,5 +1,6 @@
 import { ArrowLeft, CheckCircle2, Globe, ListTodo, Phone, RotateCcw, ShieldCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Aenderungsverlauf } from '@/components/shared/Aenderungsverlauf'
 import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -68,6 +69,10 @@ export function FallKopf({ f, akte, onZurueck }: { f: ServiceFall; akte: Akte | 
             id={f.id}
             name={[f.nummer, f.titel].filter(Boolean).join(' ')}
             onFertig={onZurueck}
+          />
+          <Aenderungsverlauf
+            bezuege={[{ tabelle: 'service_faelle', id: f.id }]}
+            titel={[f.nummer, f.titel].filter(Boolean).join(' · ')}
           />
           {telefon && (
             <a href={`tel:${telefon.replace(/[^\d+]/g, '')}`} className={buttonVariants({ variant: 'secondary' })}>

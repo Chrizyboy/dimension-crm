@@ -126,6 +126,16 @@ export const microsoft = {
   kalenderLaden: (tage?: number) =>
     rufeFunktion<{ anzahl: number }>('microsoft', 'kalender_laden', tage ? { tage } : {}),
   mailsAbgleichen: () => rufeFunktion<{ anzahl: number }>('microsoft', 'mails_abgleichen'),
+  /**
+   * Ganzer Mailverlauf mit einer Adresse. Kennt die Cloud die Aktion noch nicht (vor dem nächsten Update),
+   * holt sie wie bisher die Mails der letzten Tage.
+   */
+  mailsKontakt: (adresse: string) =>
+    rufeFunktion<{ anzahl: number }>('microsoft', 'mails_kontakt', { adresse }).catch((f: unknown) => {
+      if (f instanceof IntegrationsFehler && f.code === 'aktion')
+        return rufeFunktion<{ anzahl: number }>('microsoft', 'mails_abgleichen')
+      throw f
+    }),
   anfragenAbholen: () => rufeFunktion<AnfragenErgebnis>('microsoft', 'anfragen_abholen'),
   /** Eine Anfrage aus einer .eml-Datei übernehmen (braucht keine Microsoft-Verbindung). */
   mailEinlesen: (eml: string) => rufeFunktion<AnfragenErgebnis>('microsoft', 'mail_einlesen', { eml }),
