@@ -71,8 +71,13 @@ foreach ($pr in @($stand.uebersprungen)) {
 
 Schritt '2/4 Werkzeuge (npm install)'
 Set-Location $Vorschau
-npm.cmd install --no-audit --no-fund --loglevel=error
-if ($LASTEXITCODE -ne 0) { Abbruch 'npm install ging nicht.' }
+# Eingabe aus einer leeren Datei: npm darf die Tastatur dieses Fensters nicht anfassen. Sonst kam danach kein
+# Tastendruck mehr an (Chris 20.11.2026: «wenn ich j oder n eingebe passiert nichts»).
+$leer = Join-Path $env:TEMP 'dimension-work-vorschau-leer.txt'
+Set-Content -Path $leer -Value '' -Encoding ASCII
+$npm = Start-Process -FilePath 'npm.cmd' -WorkingDirectory $Vorschau -NoNewWindow -Wait -PassThru `
+  -RedirectStandardInput $leer -ArgumentList 'install', '--no-audit', '--no-fund', '--loglevel=error'
+if ($npm.ExitCode -ne 0) { Abbruch 'npm install ging nicht.' }
 
 # Verbindung zur Cloud: nur die öffentlichen Werte (Adresse + anon-Schlüssel, stehen auch in der Web-App).
 $envDatei = Join-Path $Vorschau '.env.cloud.local'
@@ -83,21 +88,27 @@ if (-not (Test-Path $envDatei)) {
   "VITE_SUPABASE_URL=https://$Projekt.supabase.co`nVITE_SUPABASE_ANON_KEY=$anon" | Set-Content -Encoding ASCII $envDatei
 }
 
-# Port belegt? Meist eine alte Vorschau, die noch offen ist.
-$belegt = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
-if ($belegt) {
-  $antwort = Read-Host "Auf Port $Port läuft schon etwas (alte Vorschau?). Beenden und neu starten? (J/N)"
-  if ($antwort -notmatch '^[jJyY]') { Abbruch "Port $Port ist belegt." }
-  Stop-Process -Id $belegt.OwningProcess -Force -ErrorAction SilentlyContinue
-  Start-Sleep -Seconds 2
+# Port belegt? Fast immer eine alte Vorschau (Fenster geschlossen, ohne J/N zu antworten). Ohne Rückfrage beenden,
+# wenn es Node ist; nur etwas Fremdes lassen wir stehen.
+$belegt = @(Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue)
+foreach ($verbindung in $belegt) {
+  $prozess = Get-Process -Id $verbindung.OwningProcess -ErrorAction SilentlyContinue
+  if ($prozess -and $prozess.ProcessName -notmatch '^node') {
+    Abbruch "Port $Port ist von «$($prozess.ProcessName)» belegt. Bitte dieses Programm schliessen und die Vorschau neu starten."
+  }
+  Write-Host "Alte Vorschau auf Port $Port wird beendet." -ForegroundColor Yellow
+  taskkill.exe /PID $verbindung.OwningProcess /T /F 2>$null | Out-Null
+}
+if ($belegt.Count -gt 0) {
+  for ($i = 0; $i -lt 10 -and (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue); $i++) {
+    Start-Sleep -Seconds 1
+  }
 }
 
 Schritt "3/4 Vorschau starten: http://localhost:$Port"
-# Im selben Fenster, aber leise: Schliesst man das Fenster, endet auch die Vorschau.
+# Im selben Fenster, aber leise. Schliesst man das Fenster ohne J/N, kann Vite weiterlaufen; der nächste Start beendet es.
 # Eingabe aus einer leeren Datei: Sonst liest Vite die Tastatur mit (Kürzel h, r, q …) und schluckt das «J»
 # der Schlussfrage, die dann leer ankommt (Chris 19.11.2026: «ich klicke auf J und es passiert nichts»).
-$leer = Join-Path $env:TEMP 'dimension-work-vorschau-leer.txt'
-Set-Content -Path $leer -Value '' -Encoding ASCII
 $vite = Start-Process -FilePath 'npx.cmd' -WorkingDirectory $Vorschau -NoNewWindow -PassThru `
   -RedirectStandardInput $leer `
   -ArgumentList 'vite', '--mode', 'cloud', '--port', $Port, '--strictPort', '--logLevel', 'error'
