@@ -48,7 +48,18 @@ export function FallSeite({ id, onZurueck }: { id: string; onZurueck: () => void
             </Karte>
           )}
           <VerlaufBox f={f} akte={a} />
-          <AnhaengeBox id={f.id} anhaenge={anhaenge.data ?? []} />
+          <AnhaengeBox
+            id={f.id}
+            anhaenge={anhaenge.data ?? []}
+            zipName={`${f.nummer} ${f.kunde}`}
+            mail={{
+              an: a?.kunde?.email ?? f.meldung?.email,
+              sprache: f.sprache,
+              ...(f.kontakt_id ? { kontakt_id: f.kontakt_id } : {}),
+              bezug_tabelle: 'service_faelle',
+              bezug_id: f.id,
+            }}
+          />
           <Karte className="px-3">
             <KiAkteAbschnitt
               bezug={{ tabelle: 'service_faelle', id: f.id }}

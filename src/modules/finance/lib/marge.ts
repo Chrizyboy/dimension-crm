@@ -17,7 +17,8 @@ export function margeAuswerten(liste: MargeZeile[], ansicht: MargeAnsicht) {
   const zeilen = liste
     .filter((m) => m.umsatz_rappen > 0 || m.kosten_rappen > 0)
     .map((m) => {
-      const prozent = prozentVon(m.umsatz_rappen - m.kosten_rappen, m.umsatz_rappen)
+      // Ohne erfasste Kosten wäre die Marge immer 100 %: «–» zeigen, bis Kosten da sind.
+      const prozent = m.kosten_rappen > 0 ? prozentVon(m.umsatz_rappen - m.kosten_rappen, m.umsatz_rappen) : null
       const soll =
         m.soll_verkauf_rappen && m.soll_einkauf_rappen !== null
           ? prozentVon(m.soll_verkauf_rappen - m.soll_einkauf_rappen, m.soll_verkauf_rappen)
@@ -37,8 +38,9 @@ export function margeAuswerten(liste: MargeZeile[], ansicht: MargeAnsicht) {
   const produkte = (['pv', 'waermepumpe', 'batterie'] as const).map((produkt) => {
     const l = zeilen.filter((z) => z.fertig && z.m.produkt === produkt)
     const umsatz = l.reduce((s, z) => s + z.m.umsatz_rappen, 0)
-    const marge = l.reduce((s, z) => s + z.m.umsatz_rappen - z.m.kosten_rappen, 0)
-    return { produkt, anzahl: l.length, umsatz, marge, prozent: prozentVon(marge, umsatz) }
+    const kosten = l.reduce((s, z) => s + z.m.kosten_rappen, 0)
+    const marge = umsatz - kosten
+    return { produkt, anzahl: l.length, umsatz, marge, prozent: kosten > 0 ? prozentVon(marge, umsatz) : null }
   })
   const angefangen = zeilen
     .filter((z) => !z.fertig)

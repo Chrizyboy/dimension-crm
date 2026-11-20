@@ -60,7 +60,7 @@ export const reiterListeKlasse =
 
 /** Aussehen eines Reiters; aktiv (weisse Pille) über `data-state="active"` (Radix) oder `aria-current` (Ansichten). */
 export const reiterKnopfKlasse =
-  'text-foreground/85 hover:text-foreground hover:bg-[var(--glas-feld)] focus-visible:ring-ring data-[state=active]:bg-[var(--glas-wahl)] data-[state=active]:text-foreground data-[state=active]:shadow-[0_1px_2px_rgb(11_27_46/0.08),0_2px_8px_-3px_rgb(11_27_46/0.12)] aria-[current=page]:bg-[var(--glas-wahl)] aria-[current=page]:text-foreground aria-[current=page]:shadow-[0_1px_2px_rgb(11_27_46/0.08),0_2px_8px_-3px_rgb(11_27_46/0.12)] inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[14px] px-4 text-sm font-semibold whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset'
+  'text-foreground/85 hover:text-foreground hover:bg-foreground/[0.06] data-[state=active]:hover:bg-[var(--glas-wahl)] focus-visible:ring-ring data-[state=active]:bg-[var(--glas-wahl)] data-[state=active]:text-foreground data-[state=active]:shadow-[0_1px_2px_rgb(11_27_46/0.08),0_2px_8px_-3px_rgb(11_27_46/0.12)] aria-[current=page]:bg-[var(--glas-wahl)] aria-[current=page]:text-foreground aria-[current=page]:shadow-[0_1px_2px_rgb(11_27_46/0.08),0_2px_8px_-3px_rgb(11_27_46/0.12)] inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[14px] px-4 text-sm font-semibold whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset'
 
 /** Löst Fragmente auf, damit `<>…</>` als einzelne Reiter zählt. */
 function eintraege(inhalt: ReactNode): ReactNode[] {

@@ -165,7 +165,7 @@ export async function aufgabeZumFall(f: ServiceFall, faellig: string): Promise<v
 export async function ladeAnhaenge(id: string) {
   const { data, error } = await db()
     .from('dokumente')
-    .select('id, name, erstellt_am, sharepoint_url, speicher_pfad')
+    .select('id, name, mime_typ, erstellt_am, sharepoint_url, speicher_pfad')
     .eq('bezug_tabelle', 'service_faelle')
     .eq('bezug_id', id)
     .is('geloescht_am', null)

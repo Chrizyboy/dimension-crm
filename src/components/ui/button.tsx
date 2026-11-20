@@ -14,9 +14,9 @@ export const buttonVariants = cva(
       variant: {
         // Hauptaktion orange mit Verlauf wie V234; dunkle Schrift, damit der Kontrast über 6:1 bleibt.
         primary:
-          'bg-[image:var(--akzent-verlauf)] text-[#120a00] font-semibold shadow-[var(--akzent-schatten)] hover:brightness-105',
+          'bg-[image:var(--akzent-verlauf)] text-[#120a00] font-semibold shadow-[var(--akzent-schatten)] hover:brightness-105 disabled:not-aria-busy:bg-none disabled:not-aria-busy:bg-muted disabled:not-aria-busy:text-muted-foreground disabled:not-aria-busy:shadow-none disabled:not-aria-busy:opacity-100',
         accent:
-          'bg-[image:var(--akzent-verlauf)] text-[#120a00] font-semibold shadow-[var(--akzent-schatten)] hover:brightness-105',
+          'bg-[image:var(--akzent-verlauf)] text-[#120a00] font-semibold shadow-[var(--akzent-schatten)] hover:brightness-105 disabled:not-aria-busy:bg-none disabled:not-aria-busy:bg-muted disabled:not-aria-busy:text-muted-foreground disabled:not-aria-busy:shadow-none disabled:not-aria-busy:opacity-100',
         secondary:
           'border border-[var(--glas-rand)] bg-[var(--glas-feld)] text-foreground shadow-[var(--glas-schatten-klein)] hover:bg-[var(--glas-wahl)]',
         ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground',

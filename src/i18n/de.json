@@ -1,4 +1,8 @@
 {
+  "filter": {
+    "knopf": "Filter",
+    "zuruecksetzen": "Zurücksetzen"
+  },
   "app": {
     "name": "Dimension Work",
     "firma": "Dimension Solaire"
@@ -1047,7 +1051,8 @@
     },
     "nichtInSharepoint_one": "{{count}} Datei liegt nur im CRM.",
     "nichtInSharepoint_other": "{{count}} Dateien liegen nur im CRM.",
-    "inSharepoint": "In SharePoint sichern"
+    "inSharepoint": "In SharePoint sichern",
+    "zipName": "Dokumente"
   },
   "kundenblatt": {
     "titel": "Kundenblatt",
@@ -1702,6 +1707,14 @@
       "mail": "Per Mail",
       "bereit": "Termin-Link liegt im Ausgangskorb zur Freigabe",
       "zumAusgang": "Zum Ausgangskorb"
+    },
+    "heute": {
+      "nachTermin": "Nach dem Termin: wie weiter?",
+      "alle": "Alle {{count}} in «Zu tun»",
+      "terminAm": "Termin {{datum}}",
+      "ohneDatum": "Termin ohne Datum",
+      "zurOfferte": "Zur Offerte",
+      "keinInteresse": "Kein Interesse"
     }
   },
   "offerten": {
@@ -1912,7 +1925,16 @@
       "weitere_one": "{{count}} weitere laden",
       "weitere_other": "{{count}} weitere laden",
       "leer": "Nichts nachzufassen",
-      "leerText": "Alle offerierten Offerten sind entschieden oder noch nicht fällig."
+      "leerText": "Alle offerierten Offerten sind entschieden oder noch nicht fällig.",
+      "mail": "Nachfass-Mail",
+      "zurueck": "Zurück zur Offerte",
+      "kSchnitt": "Ø fällig seit",
+      "k180": "Über 180 Tage",
+      "tage_one": "{{count}} Tag",
+      "tage_other": "{{count}} Tage",
+      "betrag": "Betrag",
+      "ab": "ab {{betrag}}",
+      "niemand": "Ohne Zuständige"
     },
     "entscheid": {
       "titel_angenommen": "Offerte angenommen",
@@ -2123,6 +2145,7 @@
       "gewaehlt": "Gewählte Variante",
       "waehlen": "Wählen",
       "nettoTitel": "Was der Kunde zahlt (Variante {{k}})",
+      "nettoTitelOhne": "Was der Kunde zahlt",
       "inkl": "Preis inkl. {{satz}} % MWST",
       "eiv": "Einmalvergütung (EIV)",
       "steuer": "Steuerersparnis (geschätzt)",
@@ -2165,6 +2188,18 @@
       "stand": "{{material}} Material · {{alle}} Positionen",
       "option": "Option: {{gruppe}}",
       "imPdf": "Stückliste mit {{anzahl}} Positionen erkannt, sie wird mitgespeichert."
+    },
+    "heute": {
+      "pruefen": "Offerten prüfen & senden",
+      "alle": "Alle {{count}} in «Neue Offerten»",
+      "richt_bearbeitung": "Richtofferte in Bearbeitung",
+      "richt_rueckfrage": "Richtofferte, Rückfrage offen",
+      "richt_bereit": "Richtofferte bereit zum Senden",
+      "zurPruefung": "zur Prüfung",
+      "seit": "seit {{datum}}",
+      "hinweis": "Hinweis: {{text}}",
+      "pruefenKnopf": "Prüfen",
+      "versendet": "Versendet"
     }
   },
   "werkvertraege": {
@@ -3153,7 +3188,9 @@
       "tagesuebersicht": "Tagesübersicht",
       "anlagedossier": "Anlagedossier",
       "baugesuch": "Baugesuch",
-      "brief": "Brief"
+      "brief": "Brief",
+      "datei": "Dateien",
+      "newsletter_test": "Newsletter-Testmail"
     },
     "titelMail": "Mail prüfen",
     "titelSms": "SMS prüfen",
@@ -3515,6 +3552,11 @@
       "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag. Bitte senden Sie uns ein unterschriebenes Exemplar zurück.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire",
       "betreffMitRechnung": "Ihr Werkvertrag {{nummer}} und die Anzahlungsrechnung von Dimension Solaire",
       "textMitRechnung": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie den Werkvertrag und die Anzahlungsrechnung über {{betrag}}. Bitte senden Sie uns den Werkvertrag unterschrieben zurück und überweisen Sie die Anzahlung mit dem QR-Zahlteil. Nach Eingang der Anzahlung bestellen wir das Material und vereinbaren mit Ihnen den Montagetermin.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    },
+    "nachfassTitel": "Nachfass-Mail zur Offerte {{nummer}}",
+    "nachfassen": {
+      "betreff": "Ihre Offerte {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nAm {{datum}} haben wir Ihnen unsere Offerte geschickt. Haben Sie sie in Ruhe anschauen können? Gerne beantworten wir Ihre Fragen oder passen die Offerte an Ihre Wünsche an.\n\nWir freuen uns auf Ihre Rückmeldung.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
@@ -7187,6 +7229,8 @@
     "ohneDatumAnzahl_one": "{{count}} Bewegung ohne Datum zählt in diese Woche",
     "ohneDatumAnzahl_other": "{{count}} Bewegungen ohne Datum zählen in diese Woche",
     "chartTitel": "Kontostand am Ende jeder Woche (Kalenderwoche)",
+    "tiefsterStand": "Tiefster Stand",
+    "reserveLinie": "Reserve {{betrag}}",
     "keineBewegung": "Keine Bewegungen.",
     "faelligKurz": "fällig {{datum}}",
     "quelle": {
@@ -7373,6 +7417,7 @@
     },
     "reserve": {
       "knapp": "Knapp in KW {{kw}}: Stand {{stand}}, {{fehlt}} unter der Reserve.",
+      "unterNull": "Unter null in KW {{kw}}: Stand {{stand}}.",
       "vorschlag": "Vorschlag: «{{titel}}» ({{betrag}}) früher stellen oder nachfassen."
     },
     "gesellschaft": "Gesellschaft",
@@ -7878,7 +7923,9 @@
         "zuLang": "{{sprache}}: {{wert}} Wörter, empfohlen höchstens {{max}}.",
         "ohneAnrede": "{{sprache}}: ohne {Anrede} fehlt die persönliche Anrede.",
         "platzhalterText": "{{sprache}}: Der Text enthält noch «…»."
-      }
+      },
+      "testmail": "Testmail an mich",
+      "nochKeinTest": "Tipp: vor dem Senden eine Testmail an dich schicken und im Postfach prüfen."
     },
     "vorlagen": {
       "platzhalter": "Platzhalter in allen Texten: {{liste}}",
@@ -12840,7 +12887,16 @@
     "terminblattHinweis": "PDF mit Luftbild",
     "lead": "Lead öffnen",
     "offerte": "Offerte öffnen",
-    "projekt": "Projekt öffnen"
+    "projekt": "Projekt öffnen",
+    "schritt": {
+      "termin": "Erreicht: Termin vereinbaren …",
+      "nichtErreicht": "Nicht erreicht …",
+      "rueckruf": "Rückruf vereinbart …",
+      "keinInteresse": "Kein Interesse …",
+      "kontakt": "Kontakt erfassen …",
+      "verschieben": "Termin verschieben …",
+      "absagen": "Termin absagen …"
+    }
   },
   "apps": {
     "titel": "Apps",
@@ -12858,5 +12914,55 @@
     "vollbild": "Vollbild",
     "vollbildAus": "Vollbild beenden",
     "aktualisieren": "Aktualisieren"
+  },
+  "verlauf": {
+    "knopf": "Änderungsverlauf",
+    "titel": "Änderungsverlauf",
+    "leer": "Noch keine Änderungen",
+    "leerText": "Sobald jemand hier etwas ändert, steht es in diesem Verlauf.",
+    "feld": {
+      "stufe": "Stand",
+      "status": "Status",
+      "termin_am": "Termin",
+      "tour_person": "Termin bei",
+      "person": "Zuständig",
+      "verantwortlich": "Verantwortlich",
+      "betrag": "Betrag",
+      "nachfassen_am": "Nachfassen am",
+      "entscheid": "Entscheid",
+      "entscheid_am": "Entscheid am",
+      "verlustgrund": "Grund",
+      "wiedervorlage_am": "Wiedervorlage",
+      "wiedervorlage_grund": "Grund Wiedervorlage",
+      "angebot_am": "Angebot am",
+      "titel": "Titel",
+      "notiz": "Notiz",
+      "prioritaet": "Priorität",
+      "geloescht_am": "Papierkorb"
+    }
+  },
+  "datei": {
+    "vorschau": "Vorschau",
+    "nummer": "Datei {{nr}} von {{von}}",
+    "zurueck": "Vorherige Datei",
+    "weiter": "Nächste Datei",
+    "zoomRein": "Vergrössern",
+    "zoomRaus": "Verkleinern",
+    "zoomZurueck": "Ganz zeigen",
+    "kopieren": "Bild kopieren",
+    "mail": "Per Mail senden",
+    "mailFuer": "{{name}} per Mail senden",
+    "mailTitel": "Datei per Mail senden",
+    "herunterladen": "Herunterladen",
+    "inSharepoint": "In SharePoint öffnen",
+    "sharepoint": "Liegt in SharePoint",
+    "sharepointText": "Diese Datei liegt nur in SharePoint. Dort öffnet sie sich mit deiner Microsoft-Anmeldung.",
+    "keineVorschau": "Keine Vorschau",
+    "keineVorschauText": "Für diese Art Datei zeigt die App keine Vorschau. Herunterladen öffnet sie im passenden Programm.",
+    "nichtGeladen": "Datei nicht geladen",
+    "nichtGeladenText": "Die Datei liess sich nicht laden. Bitte nochmals öffnen oder herunterladen.",
+    "zip_one": "Als ZIP",
+    "zip_other": "Alle {{count}} als ZIP",
+    "mailText": "Guten Tag\n\nIm Anhang erhalten Sie die gewünschten Unterlagen.\n\nFreundliche Grüsse"
   }
 }

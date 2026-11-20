@@ -22,6 +22,8 @@ import { TeamHeute, meta as teamMeta } from '@/modules/staff'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { KiBriefing } from '@/modules/ai'
 import { NeueAufgabeKnopf } from '@/modules/tasks'
+import { NachfassKnoepfe, PruefenHeute, meta as offertenMeta } from '@/modules/quotes'
+import { NachTerminHeute, meta as verkaufMeta } from '@/modules/sales'
 import { MeinTag } from '@/modules/today'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { supabase } from '@/services/supabase'
@@ -54,6 +56,35 @@ export function Startseite() {
   return (
     <Suspense>
       <MeinTag
+        verkaufKarten={
+          mitDb && (
+            <>
+              {darfModul(offertenMeta, ich) && (
+                <Suspense>
+                  <PruefenHeute />
+                </Suspense>
+              )}
+              {darfModul(verkaufMeta, ich) && (
+                <Suspense>
+                  <NachTerminHeute />
+                </Suspense>
+              )}
+            </>
+          )
+        }
+        {...(mitDb && darfModul(offertenMeta, ich)
+          ? {
+              zeilenKnoepfe: {
+                // Nachfassen direkt entscheiden (V234 Startseite), ohne in die Offerten zu wechseln.
+                nachfassen: (z) =>
+                  z.id && (
+                    <Suspense>
+                      <NachfassKnoepfe offerteId={z.id} />
+                    </Suspense>
+                  ),
+              },
+            }
+          : {})}
         aktionen={
           mitDb && (
             <>
@@ -104,7 +135,8 @@ export function Startseite() {
                       <AusschreibungenHeute />
                     </Suspense>
                   )}
-                  <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  {/* Karten ohne Punkte («nichts offen», `data-leer`) rutschen ans Ende: oben steht, was heute zu tun ist. */}
+                  <div className="grid items-start gap-4 min-[1800px]:grid-cols-4 md:grid-cols-2 xl:grid-cols-3 [&>*:has([data-leer])]:order-last">
                     {hatRecht(ich, 'visum') && (
                       <Suspense>
                         <VisumHeute />

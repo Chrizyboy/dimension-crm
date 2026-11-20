@@ -16,7 +16,7 @@ function Spalte({ spalte, anzahl, children }: { spalte: Spalte; anzahl: number; 
       ref={setNodeRef}
       aria-label={t(`service.board.${spalte.id}`)}
       className={cn(
-        'bg-muted/50 flex w-72 shrink-0 flex-col rounded-xl border',
+        'bg-muted/50 flex max-w-sm min-w-52 flex-1 basis-0 flex-col rounded-xl border',
         isOver && 'border-accent bg-accent-soft/40',
       )}
     >

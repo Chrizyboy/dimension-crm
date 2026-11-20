@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-20
 rollen: buchhaltung, geschaeftsleitung
 ---
 
@@ -76,6 +76,8 @@ En haut **Masquer les salaires**. La somme reste dans le calcul, seules les lign
 
 ## Nouveautés {#neu}
 
+- 20.11.2026 : Liquidités : graphique avec axe, ligne zéro nette et solde le plus bas ; la société est à côté des onglets.
+- 19.11.2026 : Projets & marge affiche « – » au lieu de 100 % tant qu’aucun coût n’est saisi pour un projet.
 - 03.11.2026 : Nouvelle construction : cockpit, factures fournisseurs avec validation, ordre de paiement à deux personnes, comptes avec relevé, estimation TVA, projets & marge, clôture mensuelle, choix de la société.
 - 03.11.2026: Paiements : cliquer plusieurs catégories à la fois ; **D’Excel, non vérifiés** filtre en plus.
 - 26.10.2026: Colonnes regroupées sur le portable, noms sur deux lignes.

@@ -2,10 +2,6 @@ import { FileText, Mail, MessageSquare, NotebookPen, Phone, Smartphone, Users, t
 import { useTranslation } from 'react-i18next'
 import { Zeitachse, type Zeitpunkt } from '@/components/shared/Zeitachse'
 import { useAuswahl } from '@/hooks/useAuswahl'
-import { formatDatum } from '@/lib/format'
-import { dokumentAdresse } from '@/services/dokumente'
-import { meldeFehler } from '@/services/fehler'
-import { melde } from '@/services/meldungen'
 import { useUi } from '@/stores/ui'
 
 const ICONS: Partial<Record<string, LucideIcon>> = {
@@ -59,58 +55,5 @@ export function LeadVerlauf({ eintraege, altText }: { eintraege: Aktivitaet[]; a
         </details>
       )}
     </div>
-  )
-}
-
-interface Datei {
-  id: string
-  name: string
-  bytes: number | null
-  hochgeladen_am: string | null
-  sharepoint_url: string | null
-  speicher_pfad: string | null
-}
-
-/** Öffnet eine Datei in einem neuen Fenster; das Fenster geht sofort auf, damit der Browser es nicht blockiert. */
-async function oeffne(d: Datei) {
-  const fenster = window.open('', '_blank')
-  if (fenster) fenster.opener = null
-  try {
-    const adresse = await dokumentAdresse(d)
-    if (!adresse) {
-      fenster?.close()
-      melde('warnung', { de: 'Datei nicht gefunden', fr: 'Fichier introuvable' })
-      return
-    }
-    if (fenster) fenster.location.href = adresse
-  } catch (f) {
-    fenster?.close()
-    meldeFehler(f, 'datei')
-    melde('kritisch', { de: 'Datei konnte nicht geöffnet werden', fr: "Impossible d'ouvrir le fichier" })
-  }
-}
-
-/** Dateien des Leads (Fotos, Stromrechnung, Pläne). Hochladen nach SharePoint folgt in Phase 8. */
-export function LeadDateien({ dateien }: { dateien: Datei[] }) {
-  const { t } = useTranslation()
-  if (!dateien.length) return <p className="text-muted-foreground text-sm">{t('verkauf.akte.keineDateien')}</p>
-  return (
-    <ul className="flex flex-col gap-1">
-      {dateien.map((d) => (
-        <li key={d.id}>
-          <button
-            type="button"
-            onClick={() => void oeffne(d)}
-            className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm outline-none focus-visible:ring-2"
-          >
-            <FileText className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
-            <span className="min-w-0 flex-1 truncate">{d.name}</span>
-            <span className="text-muted-foreground zahlen font-mono text-xs">
-              {d.hochgeladen_am ? formatDatum(d.hochgeladen_am) : ''}
-            </span>
-          </button>
-        </li>
-      ))}
-    </ul>
   )
 }

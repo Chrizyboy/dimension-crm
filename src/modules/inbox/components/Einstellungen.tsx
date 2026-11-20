@@ -122,16 +122,12 @@ function Formular({ regeln, personen }: { regeln: PosteingangRegeln; personen: P
       <Karte>
         <KarteKopf>
           <KarteTitel>{t('posteingang.einst.fristen')}</KarteTitel>
+          {/* Einmal für alle Felder statt unter jedem der acht. */}
+          <p className="text-muted-foreground text-xs">{t('posteingang.einst.stunden')}</p>
         </KarteKopf>
         <KarteInhalt className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {FRIST_ARTEN.map((a) => (
-            <Feld
-              key={a}
-              id={`pe-frist-${a}`}
-              label={t(`posteingang.art.${a}`)}
-              fehler={fehler[`fristen.${a}`]}
-              hinweis={t('posteingang.einst.stunden')}
-            >
+            <Feld key={a} id={`pe-frist-${a}`} label={t(`posteingang.art.${a}`)} fehler={fehler[`fristen.${a}`]}>
               <Input
                 id={`pe-frist-${a}`}
                 inputMode="decimal"

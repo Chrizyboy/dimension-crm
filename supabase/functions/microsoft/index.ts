@@ -1,5 +1,6 @@
 // Edge Function «microsoft»: alles, was die App mit Microsoft 365 tut, immer im Namen der angemeldeten Person.
-// Aktionen: verbinden, trennen, testen, kalender_laden, mails_abgleichen, anfragen_abholen,
+// Aktionen: verbinden, trennen, testen, kalender_laden, mails_abgleichen, mails_kontakt (ganzer Verlauf mit
+// einer Adresse), anfragen_abholen,
 // termin_eintragen, termin_absagen, sharepoint_sichern (alle offenen oder nur dokument_ids),
 // posteingang_abholen (jetzt statt in 5 Minuten), posteingang_text (Volltext einer Mail im Posteingang),
 // posteingang_verlauf, posteingang_anhaenge, posteingang_anhang, posteingang_anhang_ablegen (Mail-Akte).
@@ -11,6 +12,7 @@ import {
   anfrageVerarbeiten,
   kalenderAbgleichen,
   mailsAbgleichen,
+  mailsMitAdresse,
   msEinstellungen,
   type AnfragenErgebnis,
 } from '../_shared/abgleich.ts'
@@ -65,6 +67,16 @@ starte({
       const s = await msEinstellungen()
       const n = await gemessen('microsoft', 'mails', ich.id, () =>
         mailsAbgleichen(ich.id, s.mail_tage ?? 7, s.team_postfaecher ?? []),
+      )
+      return { anzahl: n }
+    },
+  },
+  mails_kontakt: {
+    recht: 'basis',
+    f: async (e, ich) => {
+      const s = await msEinstellungen()
+      const n = await gemessen('microsoft', 'mails', ich.id, () =>
+        mailsMitAdresse(ich.id, textFeld(e, 'adresse'), s.team_postfaecher ?? []),
       )
       return { anzahl: n }
     },

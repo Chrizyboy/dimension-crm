@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: verkauf, geschaeftsleitung
 ---
 
@@ -115,6 +115,9 @@ Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für
 
 ## Neu {#neu}
 
+- 20.11.2026: Über den Listen bleiben Suche, Standort und Person sichtbar; **Quelle** und **Region** liegen hinter **Filter** (die Zahl am Knopf zeigt, wie viele gesetzt sind). **Zurücksetzen** stellt alles auf «alle».
+- 19.11.2026: In der Lead-Akte unter **Kontaktverlauf** neu **Mails aus Outlook laden**: holt alle Mails mit dem Kunden aus deinem Postfach und den Team-Postfächern. Unter **Dateien** zeigt ein Klick die Datei in der App, ✉ schickt sie dem Kunden, **Alle als ZIP** lädt alle.
+- 19.11.2026: **Rechtsklick** auf einen Lead zeigt zuerst die nächsten Schritte: **Erreicht: Termin vereinbaren**, **Nicht erreicht**, **Rückruf vereinbart**, **Kein Interesse**, **Kontakt erfassen**; bei Terminen **Termin verschieben** und **Termin absagen**; nach dem Termin **Zur Offerte** oder **Kein Interesse**. Ein verschobener Termin (auch im Wochenkalender) wird jetzt gespeichert. In der Lead-Akte **+ Aufgabe** und **Änderungsverlauf**.
 - 19.11.2026: **Anfragen** öffnet beim ersten Mal mit der **Liste**, danach mit der Ansicht, in der du zuletzt warst (je Person gemerkt). In der Suche (Ctrl K) findet «Leads» diesen Bereich.
 - 19.11.2026: **Rechtsklick** auf einen Lead (am Handy lange drücken): Lead öffnen, In Google Maps öffnen, Terminblatt drucken, Kundenakte öffnen, Anrufen, E-Mail schreiben. **Anfragen holen › Mail-Datei einlesen** nimmt jetzt auch Outlook-Mails (.msg), die man aus Outlook auf den Desktop gezogen hat.
 - 04.11.2026: Höchstens sechs Reiter: **Monatsbericht** und **Steuerung** stehen unter **Mehr** (Tasten 1–7 wie bisher). In der Lead-Akte stehen leere Auswahlfelder (Quelle, Erreichbarkeit, Finanzierung, Zeithorizont, Förderung) erst nach **+ weitere Angaben**.

@@ -21,6 +21,7 @@ export function TagKarte({
   kopf,
   onAbhaken,
   onVerschieben,
+  zeilenZusatz,
   testId,
 }: {
   icon: LucideIcon
@@ -33,6 +34,8 @@ export function TagKarte({
   kopf?: ReactNode
   onAbhaken?: (z: Zeile) => void
   onVerschieben?: (z: Zeile, bis: string) => void
+  /** Knöpfe je Zeile (z. B. Entscheid beim Nachfassen); kommt von der Startseite. */
+  zeilenZusatz?: (z: Zeile) => ReactNode
   testId?: string
 }) {
   const { t } = useTranslation()
@@ -57,6 +60,7 @@ export function TagKarte({
               heute={heute}
               {...(onAbhaken ? { onAbhaken } : {})}
               {...(onVerschieben && verschiebbar(z) ? { onVerschieben } : {})}
+              {...(zeilenZusatz ? { zusatz: zeilenZusatz(z) } : {})}
             />
           ))}
         </ul>

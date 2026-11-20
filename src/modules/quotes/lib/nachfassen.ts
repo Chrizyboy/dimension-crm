@@ -81,21 +81,54 @@ export function sortiereNachfassen(liste: Offerte[], wie: NachfassSortierung): O
   }
 }
 
-/** Kennzahlen über der Nachfass-Liste: Anzahl fällig, davon heute, Summe offen. */
+/** Kennzahlen über der Nachfass-Liste: Anzahl fällig, davon heute, bald, Summe offen, Ø Tage und über 180 Tage. */
 export function nachfassKennzahlen(liste: Offerte[], heute = heuteIso()) {
   let faellig = 0
   let heuteZahl = 0
   let bald = 0
   let summe = 0
+  let tageSumme = 0
+  let ueber180 = 0
   for (const o of liste) {
     const s = nachfassStand(o, heute)
     if (!s) continue
     if (s.art === 'faellig' || s.art === 'heute') {
       faellig++
       summe += o.betragRappen ?? 0
+      tageSumme += s.tage
+      if (s.tage > 180) ueber180++
     }
     if (s.art === 'heute') heuteZahl++
     if ((s.art === 'in' || s.art === 'vertagt') && s.tage <= 14) bald++
   }
-  return { faellig, heute: heuteZahl, bald, summeRappen: summe }
+  return {
+    faellig,
+    heute: heuteZahl,
+    bald,
+    summeRappen: summe,
+    /** Ø Tage seit fällig (V234 «Ø fällig seit»), 0 ohne fällige. */
+    schnittTage: faellig ? Math.round(tageSumme / faellig) : 0,
+    ueber180,
+  }
+}
+
+/** Betrag-Stufen für «ab CHF …» (V234): 10'000, 25'000, 50'000, in Rappen. */
+export const BETRAG_STUFEN = [0, 1_000_000, 2_500_000, 5_000_000] as const
+
+/**
+ * Personen mit fälligen Offerten für die Chips «Person» (V234: Chris 8, Loris 9 …), meiste zuerst.
+ * Offerten ohne Zuständige stehen unter `null`, zuletzt.
+ */
+export function nachfassPersonen(liste: readonly Offerte[]): { id: string | null; name: string; anzahl: number }[] {
+  const je = new Map<string | null, { id: string | null; name: string; anzahl: number }>()
+  for (const o of liste) {
+    const id = o.verantwortlichId
+    const e = je.get(id) ?? { id, name: o.verantwortlichName ?? '', anzahl: 0 }
+    e.anzahl++
+    je.set(id, e)
+  }
+  return [...je.values()].sort(
+    (a, b) =>
+      Number(a.id === null) - Number(b.id === null) || b.anzahl - a.anzahl || a.name.localeCompare(b.name, 'de-CH'),
+  )
 }

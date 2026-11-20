@@ -1,4 +1,5 @@
 import { Phone } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { warum } from '../lib/tag'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
@@ -31,9 +32,12 @@ export function TagZeile({
   heute,
   onAbhaken,
   onVerschieben,
+  zusatz,
 }: {
   zeile: Zeile
   heute: string
+  /** Knöpfe unter dem Titel, z. B. Angenommen/Abgelehnt/Vertagt beim Nachfassen. */
+  zusatz?: ReactNode
   onAbhaken?: (z: Zeile) => void
   /** Ohne: Zeile ist nicht verschiebbar (Termine, Freigaben). */
   onVerschieben?: (z: Zeile, bis: string) => void
@@ -41,20 +45,23 @@ export function TagZeile({
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const ziel = zielVon(zeile.tabelle, zeile.id)
-  const unter = sprache === 'fr' && zeile.name_fr ? zeile.name_fr : zeile.unter
+  // Die Datenbank hängt den Standort als Schlüssel an («200001 · muri»); angezeigt wird er wie überall gross.
+  const unter = (sprache === 'fr' && zeile.name_fr ? zeile.name_fr : zeile.unter)?.replace(
+    / · (muri|bulle)\b/g,
+    (_, o: string) => ` · ${o.charAt(0).toUpperCase()}${o.slice(1)}`,
+  )
   const datum = wann(zeile.datum, heute, t)
   const grund = warum(zeile)
 
-  const status = (zeile.bewilligung ||
-    zeile.prioritaet === 'hoch' ||
-    zeile.ueberfaellig ||
-    zeile.betrag_rappen != null) && (
+  // «Überfällig» zeigt das rote Datum links; ein zusätzliches rotes Schild auf jeder Zeile machte die Karten unruhig.
+  const status = (zeile.bewilligung || zeile.prioritaet === 'hoch' || zeile.betrag_rappen != null) && (
     <>
       {zeile.bewilligung && <Badge ton="info">{t('tag.bewilligung')}</Badge>}
       {zeile.prioritaet === 'hoch' && <Badge ton="kritisch">{t('tag.hoch')}</Badge>}
-      {zeile.ueberfaellig && <Badge ton="kritisch">{t('tag.ueberfaellig')}</Badge>}
       {zeile.betrag_rappen != null && (
-        <span className="zahlen font-mono text-xs whitespace-nowrap">{formatChf(zeile.betrag_rappen)}</span>
+        <span className="zahlen text-xs whitespace-nowrap">
+          {formatChf(zeile.betrag_rappen, { mitWaehrung: true })}
+        </span>
       )}
     </>
   )
@@ -70,8 +77,8 @@ export function TagZeile({
     </span>
   )
 
-  return (
-    <li className="hover:bg-surface-2 flex items-center gap-3 px-4 py-2 text-sm">
+  const zeileInhalt = (
+    <span className="flex items-center gap-3">
       {onAbhaken && (
         <Checkbox
           aria-label={t('tag.abhaken', { titel: zeile.titel })}
@@ -86,6 +93,7 @@ export function TagZeile({
           zeile.ueberfaellig ? 'text-bad font-medium' : 'text-muted-foreground',
         )}
       >
+        {zeile.ueberfaellig && <span className="sr-only">{t('tag.ueberfaellig')}: </span>}
         {zeile.zeit ? (
           <>
             <span className="block">{datum}</span>
@@ -126,6 +134,15 @@ export function TagZeile({
           />
         )}
       </span>
+    </span>
+  )
+
+  if (!zusatz) return <li className="hover:bg-surface-2 px-4 py-2 text-sm">{zeileInhalt}</li>
+  return (
+    <li className="hover:bg-surface-2 flex flex-col gap-1.5 px-4 py-2 text-sm">
+      {zeileInhalt}
+      {/* In breiten Karten unter den Titel eingerückt, in schmalen über die ganze Breite, damit sie auf eine Zeile passen. */}
+      <div className="@[30rem]:pl-[5.75rem]">{zusatz}</div>
     </li>
   )
 }

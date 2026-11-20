@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-19
 rollen: verkauf, innendienst, geschaeftsleitung, buchhaltung
 ---
 
@@ -58,6 +58,7 @@ Kampagnen und Messen planen, Kunden gezielt anschreiben (Serienbrief, Serien-Mai
 ### Einen Newsletter senden
 
 1. Reiter **Newsletter**, neuer Newsletter: Thema, Kampagne, Zielgruppe, geplantes Datum, Text, Prüfung, Senden.
+   Vorher **Testmail an mich**: je Sprache eine Mail an dich, so wie sie beim Kunden ankommt.
 2. Gesendet wird nur an Kunden oder an Personen mit Einwilligung. Danach siehst du Geöffnet, Geklickt und Abgemeldet.
 3. Einen guten Newsletter mit **Als Vorlage verwenden** wiederverwenden.
 
@@ -108,6 +109,7 @@ Unter **Social Media** steht beim Post der Fehler. Meist ist die Verbindung abge
 
 ## Neu {#neu}
 
+- 19.11.2026: Newsletter: **Testmail an mich** schickt dir je Sprache eine Testmail (Anrede mit deinem Namen, Abmelde-Link ohne Wirkung).
 - 03.11.2026: Übersicht mit «Heute zu tun», Kalender, Kampagnen mit Ergebnis, Messen mit Lead-Erfassung am Handy, Social-Media-Board mit Freigabe, Mediathek, gespeicherte Zielgruppen, Werbe-Pause, Öffnungen und Klicks.
 - 03.11.2026: Vorlagen ändert nur noch die Administration; alle anderen sehen sie zum Lesen und brauchen sie beim Senden.
 - 02.11.2026: Instagram und LinkedIn je mit deutschem und französischem Konto, zwei Facebook-Seiten.

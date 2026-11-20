@@ -2,10 +2,11 @@ import { FileText, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
+import { DateiFenster, type DateiFensterZustand } from '@/components/shared/dateien/DateiFenster'
 import { Button } from '@/components/ui/button'
 import { formatChf, formatDatum } from '@/lib/format'
 import { hatRecht } from '@/lib/rechte'
-import { dokumentAdresse } from '@/services/dokumente'
+import type { DokumentQuelle } from '@/services/dokumente'
 import { meldeFehler } from '@/services/fehler'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { melde } from '@/services/meldungen'
@@ -22,21 +23,6 @@ interface Dokument {
   speicher_pfad: string | null
 }
 
-async function oeffne(d: { sharepoint_url: string | null; speicher_pfad: string | null }) {
-  // Fenster vorher öffnen, sonst blockiert der Browser das Pop-up nach dem Warten.
-  const fenster = window.open('', '_blank')
-  if (fenster) fenster.opener = null
-  try {
-    const adresse = await dokumentAdresse(d)
-    if (adresse && fenster) fenster.location.href = adresse
-    else fenster?.close()
-  } catch (f) {
-    fenster?.close()
-    meldeFehler(f, 'offerten.dokument')
-    melde('kritisch', { de: 'Dokument nicht geöffnet', fr: 'Document non ouvert' })
-  }
-}
-
 /** Versionen der Offerte (V67), neueste zuoberst, mit PDF; dazu alle Dokumente der Offerte. */
 export function OffertVersionen({ o, dokumente }: { o: Offerte; dokumente: Dokument[] }) {
   const { t } = useTranslation()
@@ -45,6 +31,26 @@ export function OffertVersionen({ o, dokumente }: { o: Offerte; dokumente: Dokum
   const versionen = [...o.versionen].sort((a, b) => b.v - a.v)
   // Zweimal klicken statt Bestätigungsfenster (das in der Desktop-App nicht überall erscheint).
   const [sicher, setSicher] = useState(false)
+  const [fenster, setFenster] = useState<DateiFensterZustand>(null)
+  // PDFs der Versionen und alle Dokumente der Offerte: eine Liste, damit man in der Vorschau mit ← → durchblättert.
+  const versionDateien: DokumentQuelle[] = versionen.flatMap((v) =>
+    v.dokument?.name && v.dokument.pfad
+      ? [{ id: `v${String(v.v)}`, name: v.dokument.name, sharepoint_url: null, speicher_pfad: v.dokument.pfad }]
+      : [],
+  )
+  // Das PDF einer Version liegt meist auch unter den Dokumenten: nur einmal zeigen.
+  const dateien: DokumentQuelle[] = [
+    ...versionDateien,
+    ...dokumente.filter((d) => !versionDateien.some((v) => v.speicher_pfad === d.speicher_pfad)),
+  ]
+  const zeige = (id: string) => {
+    // Ein Dokument, das schon als Version in der Liste steht, öffnet dort.
+    const pfad = dokumente.find((d) => d.id === id)?.speicher_pfad
+    const ziel = dateien.some((d) => d.id === id)
+      ? id
+      : (versionDateien.find((v) => v.speicher_pfad === pfad)?.id ?? id)
+    setFenster({ art: 'vorschau', id: ziel })
+  }
 
   async function letzteEntfernen() {
     if (!sicher) {
@@ -87,16 +93,18 @@ export function OffertVersionen({ o, dokumente }: { o: Offerte; dokumente: Dokum
                   {v.dokument.pfad ? (
                     <button
                       type="button"
-                      className="text-primary dark:text-accent inline-flex items-center gap-1 text-xs hover:underline"
-                      onClick={() => void oeffne({ sharepoint_url: null, speicher_pfad: v.dokument?.pfad ?? null })}
+                      className="text-primary dark:text-accent flex items-start gap-1 text-left text-xs hover:underline"
+                      onClick={() => {
+                        zeige(`v${String(v.v)}`)
+                      }}
                     >
-                      <FileText className="size-3.5" aria-hidden="true" />
-                      {v.dokument.name}
+                      <FileText className="mt-px size-3.5 shrink-0" aria-hidden="true" />
+                      <span className="min-w-0 break-words">{v.dokument.name}</span>
                     </button>
                   ) : (
-                    <span className="text-muted-foreground inline-flex items-center gap-1 text-xs">
-                      <FileText className="size-3.5" aria-hidden="true" />
-                      {v.dokument.name}
+                    <span className="text-muted-foreground flex items-start gap-1 text-xs">
+                      <FileText className="mt-px size-3.5 shrink-0" aria-hidden="true" />
+                      <span className="min-w-0 break-words">{v.dokument.name}</span>
                     </span>
                   )}
                 </p>
@@ -125,18 +133,30 @@ export function OffertVersionen({ o, dokumente }: { o: Offerte; dokumente: Dokum
               <li key={d.id}>
                 <button
                   type="button"
-                  className="text-primary dark:text-accent inline-flex items-center gap-1 text-sm hover:underline"
-                  onClick={() => void oeffne(d)}
+                  className="group flex w-full items-start gap-1.5 text-left text-sm"
+                  onClick={() => {
+                    zeige(d.id)
+                  }}
                 >
-                  <FileText className="size-4" aria-hidden="true" />
-                  {d.name}
-                  <span className="text-muted-foreground text-xs">· {formatDatum(d.erstellt_am)}</span>
+                  <FileText className="text-muted-foreground mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                  <span className="text-primary dark:text-accent min-w-0 flex-1 break-words group-hover:underline">
+                    {d.name}
+                  </span>
+                  <span className="text-muted-foreground zahlen shrink-0 pt-0.5 text-xs">
+                    {formatDatum(d.erstellt_am)}
+                  </span>
                 </button>
               </li>
             ))}
           </ul>
         </div>
       )}
+      <DateiFenster
+        dateien={dateien}
+        zustand={fenster}
+        onZustand={setFenster}
+        mail={{ an: o.email, sprache: o.sprache, kontakt_id: o.kontaktId, offerte_id: o.id }}
+      />
     </AkteAbschnitt>
   )
 }

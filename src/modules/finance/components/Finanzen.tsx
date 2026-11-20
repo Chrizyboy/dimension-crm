@@ -69,33 +69,36 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
           </Button>
         }
       />
-      {alle && alle.firmen.length > 1 && (
-        <Filterchips
-          einzeln
-          beschriftung={t('finanzen.gesellschaft')}
-          optionen={[
-            { wert: 'beide', text: t('finanzen.firmaWahl.beide') },
-            ...alle.firmen.map((f) => ({ wert: f.id, text: f.name })),
-          ]}
-          gewaehlt={[firma ?? 'beide']}
-          onChange={([f]) => {
-            if (f) setFirma(f === 'beide' ? null : f)
-          }}
-        />
-      )}
       <Reiter
         value={reiter}
         onValueChange={(r) => {
           onReiter(r as ReiterTyp)
         }}
       >
-        <ReiterListe>
-          {REITER.map((r) => (
-            <ReiterKnopf key={r} value={r}>
-              {t(`finanzen.reiter.${r}`)}
-            </ReiterKnopf>
-          ))}
-        </ReiterListe>
+        {/* Gesellschaft neben den Reitern statt darüber: der Kopf ist so in jedem Bereich gleich aufgebaut. */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <ReiterListe>
+            {REITER.map((r) => (
+              <ReiterKnopf key={r} value={r}>
+                {t(`finanzen.reiter.${r}`)}
+              </ReiterKnopf>
+            ))}
+          </ReiterListe>
+          {alle && alle.firmen.length > 1 && (
+            <Filterchips
+              einzeln
+              beschriftung={t('finanzen.gesellschaft')}
+              optionen={[
+                { wert: 'beide', text: t('finanzen.firmaWahl.beide') },
+                ...alle.firmen.map((f) => ({ wert: f.id, text: f.name })),
+              ]}
+              gewaehlt={[firma ?? 'beide']}
+              onChange={([f]) => {
+                if (f) setFirma(f === 'beide' ? null : f)
+              }}
+            />
+          )}
+        </div>
         {daten.error ? (
           <Fehlerzustand details={String(daten.error)} onNochmal={() => void daten.refetch()} className="mt-4" />
         ) : !d || !alle ? (

@@ -1,5 +1,5 @@
 import { ChevronRight, SearchX } from 'lucide-react'
-import { Suspense, lazy, useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -13,9 +13,9 @@ import type { Geschaeft, VerkaufFilter } from '../types'
 import { AnsichtenMenue } from './AnsichtenMenue'
 import { geschaeftSpalten } from './geschaeftSpalten'
 import { LeadZeile } from './LeadZeile'
+import { LeadAktionenDialoge } from './LeadAktionenDialoge'
 import { useLeadAktionen } from './useLeadAktionen'
 
-const TerminblattDialog = lazy(() => import('./TerminblattDialog'))
 import { Sammelaenderung } from './Sammelaenderung'
 
 interface LeadListeProps {
@@ -108,7 +108,7 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
     [t, staende.werte, quellen.werte, vorname],
   )
   const gewaehlt = geschaefte.filter((g) => wahl.has(g.id))
-  const { aktionen, blatt, schliessen } = useLeadAktionen(onOeffnen)
+  const { aktionen, dialog, schliessen } = useLeadAktionen(onOeffnen)
   const tabellenAktionen = useCallback((g: Geschaeft) => aktionen(g, false), [aktionen])
   const aktuell: GespeicherteAnsicht['einstellungen'] = { filter, art }
 
@@ -219,11 +219,7 @@ export default function LeadListe({ geschaefte, filter, onFilter, aktiveId, onOe
           }}
         />
       )}
-      {blatt && (
-        <Suspense>
-          <TerminblattDialog g={blatt} onSchliessen={schliessen} />
-        </Suspense>
-      )}
+      <LeadAktionenDialoge dialog={dialog} onSchliessen={schliessen} />
     </div>
   )
 }

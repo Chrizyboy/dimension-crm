@@ -3,8 +3,16 @@
 Was in jeder Version neu ist. Der Abschnitt der aktuellen Version (`version` in `package.json`) erscheint in der
 Desktop-App im Fenster «Neue Version». Kurz und für das Team geschrieben, nicht für Entwickler.
 Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen; beim Merge auf main startet die
-Veröffentlichung von selbst. «J» am Ende der «Dimension Work Vorschau» macht beides aus den Titeln der Änderungen
-(docs/installation.md).
+Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
+die Änderung mit Version und Abschnitt hier (docs/installation.md).
+
+## 1.3.6
+
+- Übersichtlicher: Seltene Filter liegen hinter «Filter» (Anfragen, Nachfassen, Kennzahlen, Projekte, Zeitplan); Kacheln mit 0 sind weg.
+- Ruhiger: Hintergrund und Schatten gedämpft; «Mein Tag» zeigt volle Karten zuerst, überfällig zeigt das rote Datum.
+- Weniger Klicks wie V234: Nachfassen direkt auf «Mein Tag», Rechtsklick-Schritte bei Leads, + Aufgabe und Änderungsverlauf in den Akten.
+- Dateien und PDFs in der App ansehen, per Mail senden oder als ZIP laden; ganzer Outlook-Mailverlauf beim Kunden.
+- Liquidität mit Nulllinie, Achse und tiefstem Stand.
 
 ## 1.3.5
 

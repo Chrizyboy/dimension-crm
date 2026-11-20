@@ -2,6 +2,7 @@ import { Columns2, HardHat, LayoutGrid, List } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
+import { FilterBereich } from '@/components/shared/FilterBereich'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
@@ -176,20 +177,30 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
           </div>
         }
       >
-        <Filterchips
-          beschriftung={t('projekte.leitstand.filter')}
-          optionen={SCHNELLFILTER.map((x) => ({ wert: x, text: t(`projekte.schnell.${x}`), anzahl: zaehle(x) }))}
-          gewaehlt={filter}
-          onChange={(w) => {
-            setFilter(w as Schnellfilter[])
+        {/* Die Kacheln oben filtern schon; die Schnellfilter zum Kombinieren liegen hinter «Filter». */}
+        <FilterBereich
+          aktiv={filter.length}
+          onZuruecksetzen={() => {
+            setFilter([])
           }}
-        />
-        <Filterchips
-          beschriftung={t('projekte.feld.standort')}
-          optionen={(standorte.data ?? []).map((s) => ({ wert: s.id, text: s.name }))}
-          gewaehlt={orte}
-          onChange={setOrte}
-        />
+          vorne={
+            <Filterchips
+              beschriftung={t('projekte.feld.standort')}
+              optionen={(standorte.data ?? []).map((s) => ({ wert: s.id, text: s.name }))}
+              gewaehlt={orte}
+              onChange={setOrte}
+            />
+          }
+        >
+          <Filterchips
+            beschriftung={t('projekte.leitstand.filter')}
+            optionen={SCHNELLFILTER.map((x) => ({ wert: x, text: t(`projekte.schnell.${x}`), anzahl: zaehle(x) }))}
+            gewaehlt={filter}
+            onChange={(w) => {
+              setFilter(w as Schnellfilter[])
+            }}
+          />
+        </FilterBereich>
       </Werkzeugleiste>
       {projekte.isPending ? (
         <Skelett className="h-96" />
@@ -206,7 +217,11 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
           leer={<Leerzustand icon={HardHat} titel={t('projekte.leer')} text={t('projekte.leerText')} />}
         />
       ) : (
-        <div className="wischzeile flex gap-3 overflow-x-auto pb-2">
+        // Mit der Tastatur scrollbar (Tab, dann Pfeiltasten), wenn die Spalten nicht in die Breite passen.
+        <div
+          tabIndex={0}
+          className="wischzeile focus-visible:ring-ring flex gap-3 overflow-x-auto rounded-lg pb-2 outline-none focus-visible:ring-2"
+        >
           {(ansicht === 'standort'
             ? orteSpalten
             : PHASEN.map((ph) => ({ id: ph, titel: t(`projekte.phase.${ph}`), projekte: spalten[ph] }))

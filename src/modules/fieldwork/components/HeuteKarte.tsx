@@ -58,7 +58,9 @@ export default function HeuteKarte() {
         </Link>
       </KarteKopf>
       {zeilen.length === 0 ? (
-        <p className="text-muted-foreground px-4 py-3 text-sm">{t('baustelle.heute.nichts')}</p>
+        <p data-leer className="text-muted-foreground px-4 py-3 text-sm">
+          {t('baustelle.heute.nichts')}
+        </p>
       ) : (
         <ul className="divide-y">
           {zeilen.map((z) => (

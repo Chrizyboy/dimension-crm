@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-20
 rollen: buchhaltung, geschaeftsleitung
 ---
 
@@ -76,6 +76,8 @@ Oben **Löhne verbergen**. Die Summe bleibt in der Rechnung, nur die Zeilen sind
 
 ## Neu {#neu}
 
+- 20.11.2026: Liquidität: Diagramm mit Achse, deutlicher Nulllinie und tiefstem Stand; Gesellschaft steht neben den Reitern.
+- 19.11.2026: Projekte & Marge zeigt «–» statt 100 %, solange für ein Projekt noch keine Kosten erfasst sind.
 - 03.11.2026: Neu aufgebaut: Cockpit, Lieferantenrechnungen mit Freigabe, Zahllauf mit zweiter Person, Konten mit Kontoauszug, MWST-Schätzung, Projekte & Marge, Monatsabschluss, Wahl der Gesellschaft.
 - 03.11.2026: Zahlungen: mehrere Kategorien zugleich anklicken; **Aus Excel, ungeprüft** schränkt zusätzlich ein.
 - 26.10.2026: Spalten am Handy zusammengelegt, Namen zweizeilig.

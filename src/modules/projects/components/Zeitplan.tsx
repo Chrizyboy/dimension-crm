@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight, Printer, TriangleAlert } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FilterBereich } from '@/components/shared/FilterBereich'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
@@ -168,21 +169,32 @@ export function Zeitplan() {
               </>
             }
           >
-            {standortChips}
-            <Filterchips
-              beschriftung={t('projekte.feld.bauStatus')}
-              optionen={BAU.map((b) => ({ wert: b, text: t(`projekte.bauStatus.${b}`) }))}
-              gewaehlt={f.bau}
-              onChange={(bau) => {
-                setF({ ...f, bau })
+            <FilterBereich
+              aktiv={f.bau.length}
+              onZuruecksetzen={() => {
+                setF({ ...f, bau: [] })
               }}
-            />
-            {z.konflikte > 0 && (
-              <Badge ton="kritisch" className="ml-auto">
-                <TriangleAlert aria-hidden />
-                {t('projekte.zeitplan.konflikte', { count: z.konflikte })}
-              </Badge>
-            )}
+              vorne={
+                <>
+                  {standortChips}
+                  {z.konflikte > 0 && (
+                    <Badge ton="kritisch" className="self-center">
+                      <TriangleAlert aria-hidden />
+                      {t('projekte.zeitplan.konflikte', { count: z.konflikte })}
+                    </Badge>
+                  )}
+                </>
+              }
+            >
+              <Filterchips
+                beschriftung={t('projekte.feld.bauStatus')}
+                optionen={BAU.map((b) => ({ wert: b, text: t(`projekte.bauStatus.${b}`) }))}
+                gewaehlt={f.bau}
+                onChange={(bau) => {
+                  setF({ ...f, bau })
+                }}
+              />
+            </FilterBereich>
           </Werkzeugleiste>
 
           <div className="grid gap-4 xl:grid-cols-[1fr_16rem]">

@@ -5,9 +5,8 @@
 # einem eigenen Ordner (%USERPROFILE%\dimension-crm-vorschau, git worktree), damit der Ordner für «Dimension Work
 # aktualisieren» sauber auf main bleibt. Öffnet http://localhost:1420 mit den echten Cloud-Daten und holt jede Minute
 # den neusten Stand; die Seite lädt dann von selbst neu.
-# Am Schluss: J = die gezeigten Änderungen mit dem eigenen GitHub-Login zusammenführen (nur mit grüner Prüfung),
-# Version erhöhen (startet die App-Veröffentlichung) und bei Datenbank-/Server-Änderungen die Cloud aktualisieren.
-# N = nichts veröffentlichen, auf Wunsch einen kurzen Grund an die Änderung schreiben.
+# Nur zum Anschauen: Freigabe gibt Chris im Chat, Claude führt dann zusammen und erhöht die Version
+# (Chris 20.11.2026: «vergiss J und N»). veroeffentlichen.ps1 bleibt für den Notfall von Hand.
 # Achtung: Echte Daten. Was man in der Vorschau speichert, ist wirklich gespeichert.
 
 $ErrorActionPreference = 'Continue'
@@ -27,11 +26,6 @@ function Ende($text, $farbe) {
 }
 function Abbruch($text) { Ende "FEHLER: $text`nBitte Screenshot in den Thread «Go-live» schicken." Red }
 function Stand { try { return Get-Content -Raw -Encoding UTF8 $StandDatei | ConvertFrom-Json } catch { return $null } }
-function GithubBereit {
-  if (-not (Get-Command gh -ErrorAction SilentlyContinue)) { return $false }
-  gh auth status 2>$null | Out-Null
-  return ($LASTEXITCODE -eq 0)
-}
 
 Write-Host 'Dimension Work Vorschau' -ForegroundColor Cyan
 
@@ -131,44 +125,11 @@ $live = Start-Job -ArgumentList $Bauen, $Haupt, $Vorschau, $Repo, $StandDatei -S
 
 Schritt '4/4 Anschauen'
 Write-Host 'Der Browser zeigt die Vorschau. Echte Daten: Was du speicherst, ist wirklich gespeichert.' -ForegroundColor Yellow
-Write-Host 'Neue Stände kommen jede Minute von selbst. Lass dieses Fenster offen, bis du fertig bist.'
+Write-Host 'Neue Stände kommen jede Minute von selbst.'
+Write-Host 'Passt es? Schreib es einfach im Chat («passt»); Claude übernimmt die Änderung dann selbst.' -ForegroundColor Green
 Write-Host ''
-# Nur J oder N gilt; alles andere (auch ein leeres Enter) fragt nochmals, statt still «nicht veröffentlichen».
-do {
-  try { $Host.UI.RawUI.FlushInputBuffer() } catch { }
-  $antwort = "$(Read-Host 'Fertig? Passt alles und soll es veröffentlicht werden? (J = veröffentlichen, N = noch nicht)')".Trim()
-  if ($antwort -notmatch '^[jJyYnN]') { Write-Host 'Bitte J oder N eingeben und Enter drücken.' -ForegroundColor Yellow }
-} until ($antwort -match '^[jJyYnN]')
-
+# Keine J/N-Frage mehr (Chris 20.11.2026: «vergiss J und N»). Das Fenster bleibt offen, bis man es schliesst
+# oder Enter drückt; dann endet auch die Vorschau.
+Read-Host 'Enter drücken (oder Fenster schliessen), um die Vorschau zu beenden' | Out-Null
 Stop-Job $live -ErrorAction SilentlyContinue; Remove-Job $live -Force -ErrorAction SilentlyContinue
 if ($vite) { taskkill.exe /PID $vite.Id /T /F 2>$null | Out-Null }
-
-# Was du zuletzt gesehen hast (der Hintergrund kann seit dem Start Neues dazugenommen haben).
-$prs = @((Stand).prs | Where-Object { $_ })
-if ($antwort -match '^[jJyY]') {
-  # Mehrere Änderungen: nur die gewünschten veröffentlichen, der Rest bleibt offen (Chris 19.11.2026: «nur Grossprojekte»).
-  if ($prs.Count -gt 1) {
-    Write-Host ''
-    foreach ($pr in $prs) { Write-Host ("  #{0}  {1}" -f $pr.nummer, $pr.titel) }
-    $wahl = Read-Host 'Welche veröffentlichen? Nummern mit Komma (z. B. 155,157), oder einfach Enter für alle'
-    $nummern = @([regex]::Matches($wahl, '\d+') | ForEach-Object { $_.Value })
-    if ($nummern.Count -gt 0) { $prs = @($prs | Where-Object { $nummern -contains "$($_.nummer)" }) }
-    if ($prs.Count -eq 0) { Ende 'Keine dieser Nummern ist in der Vorschau. Nichts veröffentlicht.' Yellow }
-  }
-  & (Join-Path $PSScriptRoot 'veroeffentlichen.ps1') -Haupt $Haupt -Repo $Repo -Prs $prs
-  exit 0
-}
-
-if ($prs.Count -gt 0 -and (GithubBereit)) {
-  $grund = Read-Host 'Was passt noch nicht? (kurz beschreiben, oder einfach Enter)'
-  if ($grund) {
-    $ziel = $prs
-    if ($prs.Count -gt 1) {
-      $nr = Read-Host 'Welche Änderung betrifft es? (Nummer, oder Enter für alle)'
-      if ($nr -match '^\d+$') { $ziel = @($prs | Where-Object { "$($_.nummer)" -eq $nr }) }
-    }
-    foreach ($pr in $ziel) { gh pr comment $pr.nummer --repo $Repo --body "Vorschau: passt noch nicht. $grund" | Out-Null }
-    Write-Host 'Weitergegeben. Claude passt die Änderung an und meldet sich im Thread.'
-  }
-}
-Ende 'Nichts veröffentlicht.' Green

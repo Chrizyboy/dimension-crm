@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import type { Offerte } from '../types'
-import { inTagen, nachfassStand, passtFaelligSeit, sortiereNachfassen, tageZwischen } from './nachfassen'
+import {
+  inTagen,
+  nachfassKennzahlen,
+  nachfassPersonen,
+  nachfassStand,
+  passtFaelligSeit,
+  sortiereNachfassen,
+  tageZwischen,
+} from './nachfassen'
 
 const HEUTE = '2026-10-21'
 const o = (p: Partial<Offerte>) => ({ status: 'offeriert', faelligAm: null, entscheid: null, ...p }) as Offerte
@@ -39,5 +47,34 @@ describe('Nachfassen', () => {
     ]
     expect(sortiereNachfassen(liste, 'betrag').map((x) => x.nummer)).toEqual(['200002', '200010'])
     expect(sortiereNachfassen(liste, 'nr').map((x) => x.nummer)).toEqual(['200002', '200010'])
+  })
+
+  it('rechnet Ø fällig seit und über 180 Tage', () => {
+    const liste = [
+      o({ faelligAm: inTagen(-10, HEUTE), betragRappen: 100 }),
+      o({ faelligAm: inTagen(-200, HEUTE), betragRappen: 300 }),
+      o({ faelligAm: inTagen(5, HEUTE) }),
+    ]
+    expect(nachfassKennzahlen(liste, HEUTE)).toMatchObject({
+      faellig: 2,
+      bald: 1,
+      summeRappen: 400,
+      schnittTage: 105,
+      ueber180: 1,
+    })
+  })
+
+  it('zählt Personen, meiste zuerst', () => {
+    const liste = [
+      o({ verantwortlichId: 'a', verantwortlichName: 'Loris' }),
+      o({ verantwortlichId: 'b', verantwortlichName: 'Chris' }),
+      o({ verantwortlichId: 'a', verantwortlichName: 'Loris' }),
+      o({ verantwortlichId: null, verantwortlichName: null }),
+    ]
+    expect(nachfassPersonen(liste).map((p) => [p.id, p.anzahl])).toEqual([
+      ['a', 2],
+      ['b', 1],
+      [null, 1],
+    ])
   })
 })

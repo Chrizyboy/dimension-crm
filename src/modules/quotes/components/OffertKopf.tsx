@@ -18,6 +18,8 @@ import { useTranslation } from 'react-i18next'
 import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { AblageLink } from '@/components/shared/AblageLink'
 import { Knopfleiste } from '@/components/shared/Knopfleiste'
+import { Aenderungsverlauf } from '@/components/shared/Aenderungsverlauf'
+import { AufgabeKnopf } from '@/components/shared/AufgabeKnopf'
 import { MailDialog } from '@/components/shared/MailDialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -228,6 +230,14 @@ export function OffertKopf({
           <Contact />
           {t('offerten.akte.kundenakte')}
         </Button>
+        <AufgabeKnopf bezugTabelle="offerten" bezugId={o.id} />
+        <Aenderungsverlauf
+          bezuege={[
+            { tabelle: 'offerten', id: o.id },
+            ...(o.verkaufschanceId ? [{ tabelle: 'verkaufschancen', id: o.verkaufschanceId }] : []),
+          ]}
+          titel={[o.nummer, o.name].filter(Boolean).join(' · ')}
+        />
         <InPapierkorbKnopf
           tabelle="offerten"
           id={o.id}

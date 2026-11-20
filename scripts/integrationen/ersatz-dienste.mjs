@@ -204,6 +204,16 @@ export function starteErsatz({ port, tenant, email }) {
         const postfach = g.startsWith('/me') ? 'me' : decodeURIComponent(g.split('/')[2])
         if (postfach === 'gesperrt@ersatz.test') return json(res, 403, { error: { code: 'ErrorAccessDenied' } })
         const suche = url.searchParams.get('$search')
+        // «E-Mails aus Outlook laden» beim Kunden: alle Mails mit dieser Adresse, egal wie alt.
+        const mitAdresse = suche ? /^"participants:(.+)"$/.exec(suche) : null
+        if (mitAdresse)
+          return json(res, 200, {
+            value: z.mails.filter(
+              (a) =>
+                a.postfach === postfach &&
+                [a.from, ...(a.toRecipients ?? [])].some((x) => x?.emailAddress?.address === mitAdresse[1]),
+            ),
+          })
         if (suche)
           return json(res, 200, { value: z.anfragen.filter((a) => a.postfach === postfach && suche.includes(a.suche)) })
         return json(res, 200, { value: z.mails.filter((a) => a.postfach === postfach) })

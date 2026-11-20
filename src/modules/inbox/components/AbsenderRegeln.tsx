@@ -68,7 +68,10 @@ export function AbsenderRegeln() {
   const { aus } = useAktion()
   return (
     <div className="flex flex-col gap-3">
-      <p className="text-muted-foreground text-sm">{t('posteingang.regel.liste')}</p>
+      {/* Leer erklärt der Leerzustand, wie eine Regel entsteht; der Satz erst, wenn es Regeln gibt. */}
+      {(regeln.data?.length ?? 0) > 0 && (
+        <p className="text-muted-foreground text-sm">{t('posteingang.regel.liste')}</p>
+      )}
       <Datentabelle
         daten={regeln.data ?? []}
         spalten={regelSpalten(t, personen, (id) => {

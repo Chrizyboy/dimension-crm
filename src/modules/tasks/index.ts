@@ -23,6 +23,9 @@ export const Aufgaben = lazy(() => import('./components/Aufgaben'))
 /** Knopf «+ Aufgabe» mit Dialog, für «Mein Tag». */
 export const NeueAufgabeKnopf = lazy(() => import('./components/NeueAufgabeKnopf'))
 
+/** Öffnet «Neue Aufgabe», wenn eine Akte über `AufgabeKnopf` (Ereignis «aufgabe.neu») darum bittet; einmal im App-Rahmen. */
+export const AufgabeAusAkte = lazy(() => import('./components/AufgabeAusAkte'))
+
 export { ANSICHTEN } from './types'
 export type * from './types'
 export type { AufgabenNavigation } from './components/Aufgaben'

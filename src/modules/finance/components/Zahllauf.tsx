@@ -118,8 +118,13 @@ export function Zahllauf({ daten, onNeu }: { daten: Finanzdaten; onNeu: () => vo
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Die Erklärung erst, wenn es Zahlläufe gibt; leer erklärt der Leerzustand dasselbe. */}
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-muted-foreground max-w-2xl text-sm">{t('finanzen.zl.erklaerung')}</p>
+        {offen.length > 0 || alt.length > 0 ? (
+          <p className="text-muted-foreground max-w-2xl text-sm">{t('finanzen.zl.erklaerung')}</p>
+        ) : (
+          <span />
+        )}
         <Button onClick={onNeu}>
           <ListChecks />
           {t('finanzen.zl.neu')}

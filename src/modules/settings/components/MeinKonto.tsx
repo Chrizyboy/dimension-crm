@@ -104,7 +104,7 @@ function KontoFormular({ ich, children }: { ich: MeineAnmeldung; children: React
   }
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6">
+    <div className="flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6">
       <Seitenkopf
         titel={t('konto.meinKonto')}
         beschreibung={t('konto.beschreibung')}

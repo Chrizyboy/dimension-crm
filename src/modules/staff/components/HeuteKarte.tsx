@@ -39,7 +39,9 @@ export default function HeuteKarte() {
         <KarteTitel>{t('team.anlass.titel')}</KarteTitel>
       </KarteKopf>
       {anlaesse.length === 0 ? (
-        <p className="text-muted-foreground px-4 py-3 text-sm">{t('team.anlass.nichts')}</p>
+        <p data-leer className="text-muted-foreground px-4 py-3 text-sm">
+          {t('team.anlass.nichts')}
+        </p>
       ) : (
         <ul className="divide-y">
           {anlaesse.slice(0, 6).map((a) => (

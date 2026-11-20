@@ -8,6 +8,8 @@
 export interface EreignisKatalog {
   'navigation.befehlspalette': undefined
   'daten.geaendert': { tabelle: string; id: string }
+  /** «+ Aufgabe» aus einer Akte: die Aufgaben öffnen ihr Fenster mit diesem Bezug. */
+  'aufgabe.neu': { bezugTabelle: string; bezugId: string; titel?: string }
 }
 
 type Name = keyof EreignisKatalog

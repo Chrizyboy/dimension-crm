@@ -13,6 +13,8 @@ import {
 } from 'lucide-react'
 import { Suspense, lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Aenderungsverlauf } from '@/components/shared/Aenderungsverlauf'
+import { AufgabeKnopf } from '@/components/shared/AufgabeKnopf'
 import { InPapierkorbKnopf } from '@/components/shared/papierkorb/InPapierkorbKnopf'
 import { Fehlerzustand } from '@/components/shared/Zustaende'
 import { Badge } from '@/components/ui/badge'
@@ -22,6 +24,7 @@ import { Skelett } from '@/components/ui/diverses'
 import { Menue, MenueAusloeser, MenueEintrag, MenueInhalt } from '@/components/ui/menue'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { formatKundennummer, tonVonFarbe } from '@/lib/kontakt'
+import { OutlookMailsKnopf } from '@/components/shared/OutlookMailsKnopf'
 import { useLeadAkte, VERKAUF_SCHLUESSEL } from '../hooks/useVerkauf'
 import { erlaubteZiele, istLiegengeblieben, liegtSeit } from '../lib/geschaeft'
 import { ladeGeschaeft } from '../services/geschaefte'
@@ -37,7 +40,8 @@ import { OutlookTermin } from './OutlookTermin'
 import { besichtigungStand, type Besichtigung } from '../lib/besichtigung'
 import { LeadBesichtigung } from './LeadBesichtigung'
 import { TerminLinkKnopf } from './TerminLinkKnopf'
-import { LeadDateien, LeadVerlauf } from './LeadVerlauf'
+import { LeadDateien } from './LeadDateien'
+import { LeadVerlauf } from './LeadVerlauf'
 import { DachBox, HerkunftBox, RichtpreisBox } from './LeadBoxen'
 import { LeadSchritte } from './LeadSchritte'
 import { NaechsterSchritt } from './NaechsterSchritt'
@@ -152,6 +156,12 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 onFertig={onSchliessen}
               />
             )}
+            {g.verkaufschanceId && (
+              <Aenderungsverlauf
+                bezuege={[{ tabelle: 'verkaufschancen', id: g.verkaufschanceId }]}
+                titel={[g.nummer, g.name].filter(Boolean).join(' · ')}
+              />
+            )}
             {g.telefon && (
               <a href={`tel:${g.telefon.replace(/[^\d+]/g, '')}`} className={buttonVariants({ variant: 'secondary' })}>
                 <Phone />
@@ -181,6 +191,7 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
                 {t('verkauf.akte.richtofferte')}
               </Button>
             )}
+            {g.verkaufschanceId && <AufgabeKnopf bezugTabelle="verkaufschancen" bezugId={g.verkaufschanceId} />}
             {ziele.size > 0 && (
               <Menue>
                 <MenueAusloeser asChild>
@@ -234,11 +245,22 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
           <Karte className="min-w-0 px-3">
             {g.verkaufschanceId && (
               <AkteAbschnitt titel={t('verkauf.akte.verlauf')} zusatz={akte.verlauf.data?.length}>
-                {akte.verlauf.isPending ? (
-                  <Skelett className="h-24" />
-                ) : (
-                  <LeadVerlauf eintraege={akte.verlauf.data ?? []} altText={akte.details.data?.verlauf_text ?? null} />
-                )}
+                <div className="flex flex-col gap-2">
+                  {g.email && (
+                    <OutlookMailsKnopf
+                      adresse={g.email}
+                      neuLaden={[...VERKAUF_SCHLUESSEL, 'akte', g.verkaufschanceId]}
+                    />
+                  )}
+                  {akte.verlauf.isPending ? (
+                    <Skelett className="h-24" />
+                  ) : (
+                    <LeadVerlauf
+                      eintraege={akte.verlauf.data ?? []}
+                      altText={akte.details.data?.verlauf_text ?? null}
+                    />
+                  )}
+                </div>
               </AkteAbschnitt>
             )}
             {g.verkaufschanceId && (
@@ -267,7 +289,16 @@ export default function LeadAkte({ id, geschaeft, onSchliessen }: LeadAkteProps)
             )}
             {g.verkaufschanceId && (
               <AkteAbschnitt titel={t('verkauf.akte.dateien')} zusatz={akte.dateien.data?.length} offen={false}>
-                <LeadDateien dateien={akte.dateien.data ?? []} />
+                <LeadDateien
+                  dateien={akte.dateien.data ?? []}
+                  zipName={g.name}
+                  mail={{
+                    an: g.email,
+                    sprache: g.sprache,
+                    kontakt_id: g.kontaktId,
+                    verkaufschance_id: g.verkaufschanceId,
+                  }}
+                />
               </AkteAbschnitt>
             )}
             <AkteAbschnitt titel={t('ki.abschnitt')} offen={false}>

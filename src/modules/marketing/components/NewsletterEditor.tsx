@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { AlertTriangle, Send, Trash2, Users } from 'lucide-react'
+import { AlertTriangle, FlaskConical, Send, Trash2, Users } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
@@ -9,6 +9,8 @@ import { Dialog, DialogInhalt } from '@/components/ui/dialog'
 import { Feld } from '@/components/ui/feld'
 import { Input, Textarea } from '@/components/ui/input'
 import { Switch } from '@/components/ui/schalter'
+import { mailVorbereiten } from '@/services/ausgang'
+import { ausgangJetztSenden } from '@/services/integrationen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useAktion } from '../hooks/useAktion'
 import { useVorlagen } from '../hooks/useMarketing'
@@ -49,6 +51,7 @@ export function NewsletterEditor({
     fr: { betreff: newsletter.betreff_fr ?? '', text: newsletter.text_fr ?? '{Anrede}\n\n' },
   })
   const fest = newsletter.status === 'versendet'
+  const [getestet, setGetestet] = useState(false)
   const empf = useQuery({
     queryKey: ['marketing', 'empfaenger', id],
     queryFn: () => ladeEmpfaenger(id ?? ''),
@@ -86,6 +89,42 @@ export function NewsletterEditor({
     const person = { vorname: e.vorname, nachname: e.nachname, firma: e.firma, name: e.name ?? '' }
     const fuss = fuellen(vorlagen.data?.abmelden[e.sprache] ?? '', person, e.sprache, { abmeldelink: link })
     return `${fuellen(texte[e.sprache].text, person, e.sprache, { absender: unterschrift, abmeldelink: link })}\n\n—\n${fuss}`
+  }
+  /**
+   * «Testmail an mich» (V234): je Sprache eine Mail an die eigene Adresse, so wie sie beim Kunden ankommt. Anrede
+   * mit dem eigenen Namen und ein Abmelde-Link ohne Wirkung, damit kein Kunde aus Versehen abgemeldet wird.
+   */
+  async function testmail() {
+    const an = ich?.email
+    if (!an) return
+    const [vorname = '', ...rest] = (ich.name || '').split(' ')
+    const person = { vorname, nachname: rest.join(' '), firma: null, name: ich.name }
+    const link = abmeldeLink('test')
+    const r = await aus(
+      async () => {
+        for (const s of sprachen) {
+          const fuss = fuellen(vorlagen.data?.abmelden[s] ?? '', person, s, { abmeldelink: link })
+          await mailVorbereiten(
+            {
+              an,
+              betreff: `[Test] ${texte[s].betreff || t('marketing.newsletter.ohneThema')}`,
+              text: `${fuellen(texte[s].text, person, s, { absender: unterschrift, abmeldelink: link })}\n\n—\n${fuss}`,
+              sprache: s,
+              art: 'newsletter_test',
+              anhaenge: [],
+            },
+            true,
+          )
+        }
+        await ausgangJetztSenden().catch(() => null)
+        return true
+      },
+      {
+        de: sprachen.length > 1 ? `Zwei Testmails (DE und FR) an ${an}` : `Testmail an ${an}`,
+        fr: sprachen.length > 1 ? `Deux e-mails de test (DE et FR) à ${an}` : `E-mail de test à ${an}`,
+      },
+    )
+    if (r) setGetestet(true)
   }
   async function los() {
     const nid = await speichern()
@@ -137,6 +176,16 @@ export function NewsletterEditor({
             )}
             {!fest && (
               <>
+                {ich?.email && (
+                  <Button
+                    variant="secondary"
+                    disabled={laeuft || !sprachen.some((s) => texte[s].text.trim().length > 12)}
+                    onClick={() => void testmail()}
+                  >
+                    <FlaskConical />
+                    {t('marketing.newsletter.testmail')}
+                  </Button>
+                )}
                 <Button variant="secondary" disabled={laeuft} onClick={() => void speichern()}>
                   <Users />
                   {t('marketing.newsletter.speichernPruefen')}
@@ -282,6 +331,9 @@ export function NewsletterEditor({
                   })}
                 </p>
               ))}
+              {!getestet && ich?.email && (
+                <p className="text-muted-foreground text-sm">{t('marketing.newsletter.nochKeinTest')}</p>
+              )}
               {beispiel && (
                 <div className="bg-muted/40 rounded-md border p-3 text-sm">
                   <p className="text-muted-foreground mb-1 text-xs">

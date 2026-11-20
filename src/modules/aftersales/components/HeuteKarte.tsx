@@ -42,7 +42,9 @@ export default function HeuteKarte() {
         </Link>
       </KarteKopf>
       {offen.length === 0 ? (
-        <p className="text-muted-foreground px-4 py-3 text-sm">{t('service.heute.nichts')}</p>
+        <p data-leer className="text-muted-foreground px-4 py-3 text-sm">
+          {t('service.heute.nichts')}
+        </p>
       ) : (
         <ul className="divide-y">
           {offen.map((p) => (

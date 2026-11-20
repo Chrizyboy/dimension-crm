@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,8 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 20.11.2026: Im Leitstand filtern die Kacheln oben; die Schnellfilter zum Kombinieren liegen hinter **Filter**. Im **Zeitplan** liegt der Bau-Status hinter **Filter**, Konflikte stehen neben dem Standort.
+- 19.11.2026: Im Menü **⋯** der Projekt-Akte: **+ Aufgabe** (hängt am Projekt) und **Änderungsverlauf** (wer hat wann was geändert).
 - 19.11.2026: Leitstand neu mit **Muri · Bulle**: eine Spalte je Standort, sortiert nach dem nächsten Bautag, auf jeder Karte die Phase. In der Suche (Ctrl K) findet «Bauplanung» diesen Bereich.
 - 11.11.2026: Abwesenheiten, die hier erfasst werden, gehen wie in der «Zeiterfassung» als Antrag an die Zeit-Leitung (Chris, Loris); Krank und Unfall gelten sofort.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.

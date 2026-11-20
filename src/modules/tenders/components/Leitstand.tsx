@@ -51,6 +51,7 @@ export function Leitstand({ onOeffnen, onReiter }: { onOeffnen: (id: string) => 
               <span
                 className={cn(
                   'zahlen text-xl font-semibold',
+                  z.wert === 0 && 'text-muted-foreground font-normal',
                   aktiv && z.ton === 'kritisch' && 'text-bad',
                   aktiv && z.ton === 'warnung' && 'text-warn',
                 )}
@@ -140,8 +141,8 @@ export function Leitstand({ onOeffnen, onReiter }: { onOeffnen: (id: string) => 
               key={spalte.id}
               aria-label={t(`ausschreibungen.board.${spalte.id}`)}
               className={cn(
-                'bg-muted/50 flex shrink-0 flex-col rounded-xl border',
-                spur === 'beobachten' ? 'w-full max-w-3xl' : 'w-72',
+                'bg-muted/50 flex flex-col rounded-xl border',
+                spur === 'beobachten' ? 'w-full max-w-3xl shrink-0' : 'max-w-sm min-w-60 flex-1 basis-0',
               )}
             >
               <header className="flex items-center justify-between gap-2 border-b px-3 py-2">
