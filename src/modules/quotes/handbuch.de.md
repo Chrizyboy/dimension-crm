@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -107,6 +107,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
+- 20.11.2026: Nachfassen: seltene Filter (Fällig seit, Betrag, Person) unter **Filter**, Kacheln mit 0 bleiben weg. Dokumente der Offerte öffnen in der Vorschau mit ← → und **Per Mail senden**.
 - 19.11.2026: Nachfassen wie V234 und besser: Personen mit Anzahl, Betrag ab 10'000/25'000/50'000, Kennzahlen **Ø fällig seit** und **Über 180 Tage**, je Zeile **Nachfass-Mail** und **Zurück zur Offerte**. **Rechtsklick** auf eine versendete Offerte: **Ergebnis**, **Angenommen**, **Abgelehnt**, **Vertagt**, **Bereits verbaut**, **Nachfass-Mail**. In der Offert-Akte **+ Aufgabe** und **Änderungsverlauf** (wer hat wann was geändert, auch am Lead).
 - 19.11.2026: **Offerten** öffnet beim ersten Mal mit **Neue Offerten**, danach mit der Ansicht, in der du zuletzt warst (je Person gemerkt).
 - 19.11.2026: **Rechtsklick** auf eine Offerte in den Listen Muri und Bulle (am Handy lange drücken): Öffnen, Kundenakte öffnen, In Google Maps öffnen, Anrufen, E-Mail schreiben.

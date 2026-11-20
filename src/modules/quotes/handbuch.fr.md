@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -107,6 +107,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 20.11.2026 : Relances : filtres moins utilisés (Échue depuis, Montant, Personne) sous **Filtres**, les tuiles à 0 disparaissent. Les documents de l’offre s’ouvrent dans l’aperçu avec ← → et **Envoyer par e-mail**.
 - 19.11.2026 : Relance comme V234 et mieux : personnes avec nombre, montant dès 10'000/25'000/50'000, indicateurs **Échue depuis (Ø)** et **Plus de 180 jours**, par ligne **E-mail de relance** et **Retour à l'offre**. **Clic droit** sur une offre envoyée : **Résultat**, **Acceptée**, **Refusée**, **Reportée**, **Déjà construite**, **E-mail de relance**. Dans le dossier de l’offre **+ Tâche** et **Historique des modifications** (qui a modifié quoi et quand, aussi sur le lead).
 - 19.11.2026: **Offres** s’ouvre la première fois sur **Nouvelles offres**, ensuite sur la dernière vue utilisée (mémorisée par personne).
 - 19.11.2026: **Clic droit** sur une offre dans les listes Muri et Bulle (sur mobile, appui long) : ouvrir, ouvrir le dossier client, ouvrir dans Google Maps, appeler, écrire un e-mail.

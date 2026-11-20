@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-20
 rollen: geschaeftsleitung, verkauf, buchhaltung
 ---
 
@@ -59,5 +59,6 @@ Les offres avec la décision « Gagnée » dans la période choisie. Le taux ne 
 
 ## Nouveautés {#neu}
 
+- 20.11.2026 : Sous les onglets la période ; comparaison, domaine et personne sous **Filtres**.
 - 03.11.2026: Seule l’administration modifie le coût par lead, les objectifs et les probabilités.
 - 24.10.2026: Indicateurs avec listes au clic, pipeline par région et charge.

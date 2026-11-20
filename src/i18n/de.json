@@ -1,4 +1,8 @@
 {
+  "filter": {
+    "knopf": "Filter",
+    "zuruecksetzen": "Zurücksetzen"
+  },
   "app": {
     "name": "Dimension Work",
     "firma": "Dimension Solaire"
@@ -7413,6 +7417,7 @@
     },
     "reserve": {
       "knapp": "Knapp in KW {{kw}}: Stand {{stand}}, {{fehlt}} unter der Reserve.",
+      "unterNull": "Unter null in KW {{kw}}: Stand {{stand}}.",
       "vorschlag": "Vorschlag: «{{titel}}» ({{betrag}}) früher stellen oder nachfassen."
     },
     "gesellschaft": "Gesellschaft",

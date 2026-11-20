@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-20
 rollen: geschaeftsleitung, verkauf, buchhaltung
 ---
 
@@ -59,5 +59,6 @@ Offerten mit Entscheid «Gewonnen» im gewählten Zeitraum. Die Quote rechnet nu
 
 ## Neu {#neu}
 
+- 20.11.2026: Unter den Reitern steht der Zeitraum; Vergleich, Bereich und Person unter **Filter**.
 - 03.11.2026: Kosten pro Lead, Ziele und Wahrscheinlichkeiten ändert nur noch die Administration.
 - 24.10.2026: Kennzahlen mit Klick-Listen, Pipeline pro Region und Auslastung.

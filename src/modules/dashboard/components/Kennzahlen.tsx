@@ -2,6 +2,7 @@ import { useIstAdmin } from '@/hooks/useIstAdmin'
 import { ChartColumn, Target } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FilterBereich } from '@/components/shared/FilterBereich'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
@@ -162,52 +163,6 @@ export default function Kennzahlen({
           ) : undefined
         }
       />
-      <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
-        <Filterchips
-          einzeln
-          beschriftung={t('kz.zeitraum.titel')}
-          gewaehlt={[auswahl.zeitraum]}
-          optionen={ZEITRAEUME.map((z) => ({ wert: z, text: t(`kz.zeitraum.${z}`) }))}
-          onChange={([z]) => {
-            onAuswahl({ zeitraum: (z ?? 'jahr') as Zeitraum })
-          }}
-        />
-        {auswahl.zeitraum !== 'alle' && (
-          <Filterchips
-            einzeln
-            beschriftung={t('kz.vergleich.titel')}
-            gewaehlt={[auswahl.vergleich]}
-            optionen={VERGLEICHE.map((v) => ({ wert: v, text: t(`kz.vergleich.${v}`) }))}
-            onChange={([v]) => {
-              onAuswahl({ vergleich: (v ?? 'vorjahr') as Vergleich })
-            }}
-          />
-        )}
-        <Filterchips
-          einzeln
-          beschriftung={t('kz.bereich.titel')}
-          gewaehlt={[auswahl.bereich]}
-          optionen={BEREICHE.map((b) => ({ wert: b, text: t(`kz.bereich.${b}`) }))}
-          onChange={([b]) => {
-            onAuswahl({ bereich: (b ?? 'alle') as Bereich })
-          }}
-        />
-        <div className="w-48">
-          <Auswahl
-            aria-label={t('kz.person.titel')}
-            value={auswahl.person ?? ALLE}
-            optionen={[
-              { wert: ALLE, text: t('kz.person.alle') },
-              ...(ich ? [{ wert: ich.id, text: t('kz.person.ich') }] : []),
-              ...verkaeufer.filter((p) => p.id !== ich?.id).map((p) => ({ wert: p.id, text: p.name })),
-            ]}
-            onValueChange={(w) => {
-              onAuswahl({ person: w === ALLE ? null : w })
-            }}
-          />
-        </div>
-      </div>
-
       <Reiter
         value={auswahl.reiter}
         onValueChange={(r) => {
@@ -221,6 +176,66 @@ export default function Kennzahlen({
             </ReiterKnopf>
           ))}
         </ReiterListe>
+        {/* Unter den Reitern wie in jedem Bereich; Zeitraum offen, der Rest hinter «Filter». */}
+        <div className="pt-4">
+          <FilterBereich
+            aktiv={
+              [auswahl.vergleich !== 'vorjahr', auswahl.bereich !== 'alle', Boolean(auswahl.person)].filter(Boolean)
+                .length
+            }
+            onZuruecksetzen={() => {
+              onAuswahl({ vergleich: 'vorjahr', bereich: 'alle', person: null })
+            }}
+            vorne={
+              <Filterchips
+                einzeln
+                beschriftung={t('kz.zeitraum.titel')}
+                gewaehlt={[auswahl.zeitraum]}
+                optionen={ZEITRAEUME.map((z) => ({ wert: z, text: t(`kz.zeitraum.${z}`) }))}
+                onChange={([z]) => {
+                  onAuswahl({ zeitraum: (z ?? 'jahr') as Zeitraum })
+                }}
+              />
+            }
+          >
+            <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
+              {auswahl.zeitraum !== 'alle' && (
+                <Filterchips
+                  einzeln
+                  beschriftung={t('kz.vergleich.titel')}
+                  gewaehlt={[auswahl.vergleich]}
+                  optionen={VERGLEICHE.map((v) => ({ wert: v, text: t(`kz.vergleich.${v}`) }))}
+                  onChange={([v]) => {
+                    onAuswahl({ vergleich: (v ?? 'vorjahr') as Vergleich })
+                  }}
+                />
+              )}
+              <Filterchips
+                einzeln
+                beschriftung={t('kz.bereich.titel')}
+                gewaehlt={[auswahl.bereich]}
+                optionen={BEREICHE.map((b) => ({ wert: b, text: t(`kz.bereich.${b}`) }))}
+                onChange={([b]) => {
+                  onAuswahl({ bereich: (b ?? 'alle') as Bereich })
+                }}
+              />
+              <div className="w-48">
+                <Auswahl
+                  aria-label={t('kz.person.titel')}
+                  value={auswahl.person ?? ALLE}
+                  optionen={[
+                    { wert: ALLE, text: t('kz.person.alle') },
+                    ...(ich ? [{ wert: ich.id, text: t('kz.person.ich') }] : []),
+                    ...verkaeufer.filter((p) => p.id !== ich?.id).map((p) => ({ wert: p.id, text: p.name })),
+                  ]}
+                  onValueChange={(w) => {
+                    onAuswahl({ person: w === ALLE ? null : w })
+                  }}
+                />
+              </div>
+            </div>
+          </FilterBereich>
+        </div>
         {KENNZAHLEN_REITER.map((r) => (
           <ReiterInhalt key={r} value={r} className="pt-4">
             {auswahl.reiter === r && inhalt(r)}

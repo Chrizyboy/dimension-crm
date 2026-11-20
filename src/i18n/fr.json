@@ -1,4 +1,8 @@
 {
+  "filter": {
+    "knopf": "Filtres",
+    "zuruecksetzen": "Réinitialiser"
+  },
   "app": {
     "name": "Dimension Work",
     "firma": "Dimension Solaire"
@@ -7413,6 +7417,7 @@
     },
     "reserve": {
       "knapp": "Juste en semaine {{kw}} : solde {{stand}}, {{fehlt}} sous la réserve.",
+      "unterNull": "Négatif en semaine {{kw}} : solde {{stand}}.",
       "vorschlag": "Suggestion : émettre plus tôt ou relancer « {{titel}} » ({{betrag}})."
     },
     "gesellschaft": "Société",
