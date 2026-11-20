@@ -63,14 +63,15 @@
 
   /*
    * Glasoptik nach V234 (Chris 19.11.2026): weicher Farbverlauf als Wand, darauf Milchglas.
+   * Seit 20.11. («übersichtlicher») gedämpfter Verlauf und flachere Schatten, damit der Inhalt vorne steht.
    * Glas nur auf grossen Flächen (Seitenleiste, Karten, Reiter, Fenster), nie auf jeder Zeile, sonst wird die App
    * am PC langsam. Texte stehen auf fast deckendem Glas, damit der Kontrast mindestens 6:1 bleibt.
    */
   --wand:
-    radial-gradient(1100px 760px at -6% -12%, rgb(255 160 64 / 0.42), transparent 62%),
-    radial-gradient(900px 720px at 104% -6%, rgb(86 152 255 / 0.34), transparent 60%),
-    radial-gradient(1000px 820px at 70% 112%, rgb(42 186 170 / 0.26), transparent 62%),
-    radial-gradient(700px 600px at 18% 96%, rgb(255 120 150 / 0.14), transparent 60%),
+    radial-gradient(1100px 760px at -6% -12%, rgb(255 160 64 / 0.3), transparent 62%),
+    radial-gradient(900px 720px at 104% -6%, rgb(86 152 255 / 0.24), transparent 60%),
+    radial-gradient(1000px 820px at 70% 112%, rgb(42 186 170 / 0.17), transparent 62%),
+    radial-gradient(700px 600px at 18% 96%, rgb(255 120 150 / 0.08), transparent 60%),
     linear-gradient(170deg, #f5f7fb 0%, #e8ecf3 100%);
   --glas: rgb(255 255 255 / 0.62);
   --glas-stark: rgb(252 253 255 / 0.9);
@@ -81,10 +82,10 @@
   --glas-kante: inset 0 1px 0 rgb(255 255 255 / 0.85), inset 0 0 0 0.5px rgb(255 255 255 / 0.4);
   --glas-schatten:
     var(--glas-kante), 0 0 0 0.5px rgb(11 37 69 / 0.1), 0 1px 2px rgb(11 37 69 / 0.06),
-    0 12px 30px -12px rgb(11 37 69 / 0.28);
+    0 10px 26px -14px rgb(11 37 69 / 0.2);
   --glas-schatten-klein:
     inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 -1px 0 rgb(11 37 69 / 0.04), 0 1px 2px rgb(11 37 69 / 0.06),
-    0 6px 16px -8px rgb(11 37 69 / 0.18);
+    0 4px 12px -8px rgb(11 37 69 / 0.12);
   --akzent-verlauf: linear-gradient(180deg, #ffa13d 0%, #f37d12 100%);
   --akzent-schatten: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 8px 20px -8px rgb(242 122 12 / 0.7);
 }
@@ -129,10 +130,10 @@
   --shadow-pop: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.45);
 
   --wand:
-    radial-gradient(1100px 760px at -6% -12%, rgb(255 138 30 / 0.26), transparent 62%),
-    radial-gradient(900px 720px at 104% -6%, rgb(64 120 255 / 0.28), transparent 60%),
-    radial-gradient(1000px 820px at 70% 112%, rgb(20 170 150 / 0.18), transparent 62%),
-    radial-gradient(700px 600px at 18% 96%, rgb(200 70 140 / 0.12), transparent 60%),
+    radial-gradient(1100px 760px at -6% -12%, rgb(255 138 30 / 0.18), transparent 62%),
+    radial-gradient(900px 720px at 104% -6%, rgb(64 120 255 / 0.2), transparent 60%),
+    radial-gradient(1000px 820px at 70% 112%, rgb(20 170 150 / 0.12), transparent 62%),
+    radial-gradient(700px 600px at 18% 96%, rgb(200 70 140 / 0.07), transparent 60%),
     linear-gradient(170deg, #0b0e14 0%, #05070a 100%);
   --glas: rgb(30 34 44 / 0.62);
   --glas-stark: rgb(26 29 37 / 0.94);

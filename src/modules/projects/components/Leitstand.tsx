@@ -2,6 +2,7 @@ import { Columns2, HardHat, LayoutGrid, List } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Datentabelle } from '@/components/shared/Datentabelle'
+import { FilterBereich } from '@/components/shared/FilterBereich'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
@@ -176,20 +177,30 @@ export function Leitstand({ aktiveId, onOeffnen }: { aktiveId: string | null; on
           </div>
         }
       >
-        <Filterchips
-          beschriftung={t('projekte.leitstand.filter')}
-          optionen={SCHNELLFILTER.map((x) => ({ wert: x, text: t(`projekte.schnell.${x}`), anzahl: zaehle(x) }))}
-          gewaehlt={filter}
-          onChange={(w) => {
-            setFilter(w as Schnellfilter[])
+        {/* Die Kacheln oben filtern schon; die Schnellfilter zum Kombinieren liegen hinter «Filter». */}
+        <FilterBereich
+          aktiv={filter.length}
+          onZuruecksetzen={() => {
+            setFilter([])
           }}
-        />
-        <Filterchips
-          beschriftung={t('projekte.feld.standort')}
-          optionen={(standorte.data ?? []).map((s) => ({ wert: s.id, text: s.name }))}
-          gewaehlt={orte}
-          onChange={setOrte}
-        />
+          vorne={
+            <Filterchips
+              beschriftung={t('projekte.feld.standort')}
+              optionen={(standorte.data ?? []).map((s) => ({ wert: s.id, text: s.name }))}
+              gewaehlt={orte}
+              onChange={setOrte}
+            />
+          }
+        >
+          <Filterchips
+            beschriftung={t('projekte.leitstand.filter')}
+            optionen={SCHNELLFILTER.map((x) => ({ wert: x, text: t(`projekte.schnell.${x}`), anzahl: zaehle(x) }))}
+            gewaehlt={filter}
+            onChange={(w) => {
+              setFilter(w as Schnellfilter[])
+            }}
+          />
+        </FilterBereich>
       </Werkzeugleiste>
       {projekte.isPending ? (
         <Skelett className="h-96" />

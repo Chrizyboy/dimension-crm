@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-20
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,7 @@ Au contrat, à la date, au montage, à la MES et à la réception, l’automatio
 
 ## Nouveautés {#neu}
 
+- 20.11.2026 : Dans le poste de pilotage, les tuiles du haut filtrent ; les filtres rapides à combiner se trouvent sous **Filtres**. Dans le **Planning**, l’état du chantier est sous **Filtres**, les conflits à côté du site.
 - 19.11.2026 : Dans le menu **⋯** du dossier projet : **+ Tâche** (liée au projet) et **Historique des modifications** (qui a modifié quoi et quand).
 - 19.11.2026 : poste de pilotage avec **Muri · Bulle** : une colonne par site, triée selon le prochain jour de chantier, la phase sur chaque carte. Dans la recherche (Ctrl K), « Bauplanung » trouve ce domaine.
 - 11.11.2026: Les absences saisies ici partent comme dans « Saisie du temps » en demande à la direction du temps (Chris, Loris) ; maladie et accident valent tout de suite.

@@ -49,9 +49,10 @@ export default function NachfassKnoepfe({ offerteId }: { offerteId: string }) {
   const knopf = (w: Entscheid, Icon: typeof Check, text: string) => (
     <Button
       size="sm"
-      variant="secondary"
-      // Schmal, damit alle drei und «⋯» in einer Karte von «Mein Tag» auf eine Zeile passen.
-      className="gap-1 px-2"
+      variant="ghost"
+      // Schmal, damit alle drei und «⋯» in einer Karte von «Mein Tag» auf eine Zeile passen; ohne Rahmen, damit
+      // die Karte bei vielen Zeilen ruhig bleibt (Chris 20.11.2026: «übersichtlicher»).
+      className="text-muted-foreground hover:text-foreground gap-1 px-2"
       laedt={laedt === w}
       onClick={() => {
         void waehle(w)

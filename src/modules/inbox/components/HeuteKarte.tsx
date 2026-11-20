@@ -23,7 +23,8 @@ export default function HeuteKarte() {
 
   if (liste.length === 0) {
     return (
-      <p className="text-muted-foreground bg-surface flex items-center gap-2 rounded-lg border px-4 py-2 text-sm">
+      // Ohne Rahmen: eine Erfolgsmeldung soll nicht wie eine Karte Platz und Aufmerksamkeit nehmen.
+      <p className="text-muted-foreground flex items-center gap-2 px-1 text-sm">
         <CheckCheck className="text-ok size-4 shrink-0" aria-hidden="true" />
         {t('posteingang.heute.nichts')}
       </p>

@@ -53,14 +53,11 @@ export function TagZeile({
   const datum = wann(zeile.datum, heute, t)
   const grund = warum(zeile)
 
-  const status = (zeile.bewilligung ||
-    zeile.prioritaet === 'hoch' ||
-    zeile.ueberfaellig ||
-    zeile.betrag_rappen != null) && (
+  // «Überfällig» zeigt das rote Datum links; ein zusätzliches rotes Schild auf jeder Zeile machte die Karten unruhig.
+  const status = (zeile.bewilligung || zeile.prioritaet === 'hoch' || zeile.betrag_rappen != null) && (
     <>
       {zeile.bewilligung && <Badge ton="info">{t('tag.bewilligung')}</Badge>}
       {zeile.prioritaet === 'hoch' && <Badge ton="kritisch">{t('tag.hoch')}</Badge>}
-      {zeile.ueberfaellig && <Badge ton="kritisch">{t('tag.ueberfaellig')}</Badge>}
       {zeile.betrag_rappen != null && (
         <span className="zahlen text-xs whitespace-nowrap">
           {formatChf(zeile.betrag_rappen, { mitWaehrung: true })}
@@ -96,6 +93,7 @@ export function TagZeile({
           zeile.ueberfaellig ? 'text-bad font-medium' : 'text-muted-foreground',
         )}
       >
+        {zeile.ueberfaellig && <span className="sr-only">{t('tag.ueberfaellig')}: </span>}
         {zeile.zeit ? (
           <>
             <span className="block">{datum}</span>

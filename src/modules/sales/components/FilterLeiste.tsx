@@ -1,10 +1,9 @@
-import { X } from 'lucide-react'
 import { useRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FilterBereich } from '@/components/shared/FilterBereich'
 import { Suchfeld } from '@/components/shared/Werkzeugleiste'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { MehrfachFilter } from '@/components/shared/MehrfachFilter'
-import { Button } from '@/components/ui/button'
 import { useAuswahl } from '@/hooks/useAuswahl'
 import { useTaste } from '@/hooks/useTaste'
 import { useAussendienst, useRegionen } from '../hooks/useVerkauf'
@@ -24,7 +23,7 @@ const ALLE = '_alle'
 /**
  * Filter über Pipeline, Liste und Regionen (V233: Suche, Region Alle/Muri/Bulle, Person, Quelle, Tour).
  * Person, Quelle und Region mit Häkchen (mehrere oder «alle ausser»). Leer heisst «alle»;
- * «Zurücksetzen» erscheint erst, wenn etwas gefiltert ist.
+ * «Zurücksetzen» erscheint erst, wenn etwas gefiltert ist. Quelle und Region liegen hinter «Filter».
  */
 export function FilterLeiste({ filter, onChange, anzahl, zusatz }: FilterLeisteProps) {
   const { t } = useTranslation()
@@ -39,43 +38,66 @@ export function FilterLeiste({ filter, onChange, anzahl, zusatz }: FilterLeisteP
     onChange({ ...filter, [feld]: w })
   }
 
+  const versteckt = (filter.quellen.length > 0 ? 1 : 0) + (filter.regionen.length > 0 ? 1 : 0)
+
+  // Suche, Standort und Person bleiben sichtbar; Quelle und Region (seltener) hinter «Filter» (Chris 20.11.2026).
   return (
-    <div className="flex flex-col gap-2 lg:flex-row lg:flex-wrap lg:items-center">
-      <Suchfeld
-        ref={suchfeld}
-        kuerzel="/"
-        beschriftung={t('verkauf.suche')}
-        value={filter.suche}
-        onChange={(e) => {
-          onChange({ ...filter, suche: e.target.value })
-        }}
-      />
-      <Filterchips
-        beschriftung={t('verkauf.standort')}
-        einzeln
-        optionen={[
-          { wert: ALLE, text: t('verkauf.alle') },
-          { wert: 'muri', text: 'Muri' },
-          { wert: 'bulle', text: 'Bulle' },
-        ]}
-        gewaehlt={[eins(filter.standorte)]}
-        onChange={(w) => {
-          setze('standorte')(w[0] === ALLE || !w[0] ? [] : w)
-        }}
-      />
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:flex">
-        <MehrfachFilter
-          beschriftung={t('verkauf.person')}
-          alleText={t('verkauf.allePersonen')}
-          className="lg:w-40"
-          gewaehlt={filter.personen}
-          onChange={setze('personen')}
-          optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.vorname }))}
-        />
+    <FilterBereich
+      aktiv={versteckt}
+      zuruecksetzen={gefiltert}
+      onZuruecksetzen={() => {
+        onChange(LEERER_FILTER)
+      }}
+      vorne={
+        <>
+          <Suchfeld
+            ref={suchfeld}
+            kuerzel="/"
+            beschriftung={t('verkauf.suche')}
+            value={filter.suche}
+            onChange={(e) => {
+              onChange({ ...filter, suche: e.target.value })
+            }}
+          />
+          <Filterchips
+            beschriftung={t('verkauf.standort')}
+            einzeln
+            optionen={[
+              { wert: ALLE, text: t('verkauf.alle') },
+              { wert: 'muri', text: 'Muri' },
+              { wert: 'bulle', text: 'Bulle' },
+            ]}
+            gewaehlt={[eins(filter.standorte)]}
+            onChange={(w) => {
+              setze('standorte')(w[0] === ALLE || !w[0] ? [] : w)
+            }}
+          />
+          <MehrfachFilter
+            beschriftung={t('verkauf.person')}
+            alleText={t('verkauf.allePersonen')}
+            className="w-40"
+            gewaehlt={filter.personen}
+            onChange={setze('personen')}
+            optionen={(personen.data ?? []).map((p) => ({ wert: p.id, text: p.vorname }))}
+          />
+        </>
+      }
+      hinten={
+        <>
+          {zusatz}
+          {anzahl && (
+            <p className="text-muted-foreground ml-auto self-center text-sm" aria-live="polite">
+              {anzahl}
+            </p>
+          )}
+        </>
+      }
+    >
+      <div className="grid grid-cols-1 gap-2 sm:flex">
         <MehrfachFilter
           beschriftung={t('verkauf.quelle')}
           alleText={t('verkauf.alleQuellen')}
-          className="lg:w-40"
+          className="sm:w-48"
           gewaehlt={filter.quellen}
           onChange={setze('quellen')}
           optionen={quellen.werte.map((q) => ({ wert: q.schluessel, text: quellen.text(q.schluessel) }))}
@@ -83,30 +105,12 @@ export function FilterLeiste({ filter, onChange, anzahl, zusatz }: FilterLeisteP
         <MehrfachFilter
           beschriftung={t('verkauf.region')}
           alleText={t('verkauf.alleRegionen')}
-          className="lg:w-48"
+          className="sm:w-56"
           gewaehlt={filter.regionen}
           onChange={setze('regionen')}
           optionen={(regionen.data ?? []).map((r) => ({ wert: r.id, text: `${r.nummer ?? ''} ${r.name}`.trim() }))}
         />
       </div>
-      {gefiltert && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => {
-            onChange(LEERER_FILTER)
-          }}
-        >
-          <X />
-          {t('verkauf.zuruecksetzen')}
-        </Button>
-      )}
-      {zusatz}
-      {anzahl && (
-        <p className="text-muted-foreground text-sm lg:ml-auto" aria-live="polite">
-          {anzahl}
-        </p>
-      )}
-    </div>
+    </FilterBereich>
   )
 }
