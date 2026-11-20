@@ -1,4 +1,4 @@
-# Einmalige Einrichtung auf einem Windows-PC: «Dimension Work aktualisieren» per Doppelklick.
+﻿# Einmalige Einrichtung auf einem Windows-PC: «Dimension Work aktualisieren» per Doppelklick.
 #
 # Aufruf (PowerShell, kein Admin nötig):
 #   irm https://raw.githubusercontent.com/Chrizyboy/dimension-crm/main/scripts/windows/einrichten.ps1 | iex
@@ -70,7 +70,7 @@ if (Test-Path (Join-Path $Ordner 'supabase\.temp\project-ref')) {
   if ($LASTEXITCODE -ne 0) { Abbruch 'Verbindung zur Cloud ging nicht (Passwort falsch oder kein Zugriff aufs Projekt).' }
 }
 
-# Mit dem eigenen GitHub-Konto: «J» am Ende der Vorschau führt die Änderungen damit zusammen.
+# Mit dem eigenen GitHub-Konto (für veroeffentlichen.ps1 im Notfall; normal übernimmt Claude nach «passt» im Chat).
 gh auth status 2>$null | Out-Null
 if ($LASTEXITCODE -eq 0) {
   Schritt '5/6 Bei GitHub schon angemeldet, übersprungen'
