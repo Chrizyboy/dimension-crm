@@ -64,6 +64,8 @@ describe('Rechte in der Oberfläche', () => {
     expect(darfModul(modul({ id: 'settings', recht: ['admin', 'gl'] }), gina)).toBe(true)
     expect(darfModul(modul({ id: 'automations', recht: 'admin' }), gina)).toBe(false)
     expect(darfModul(modul({ id: 'projects' }), person({ rechte: ['gl'], bereiche: ['sales'] }))).toBe(false)
+    // Übergang bis zum Cloud-Update: alte Anmeldung liefert für «gl» eine leere Liste.
+    expect(darfModul(modul({ id: 'projects' }), person({ rechte: ['gl'], bereiche: [] }))).toBe(true)
   })
 
   it('ohne Datenbank (Vorschau) ist alles sichtbar', () => {

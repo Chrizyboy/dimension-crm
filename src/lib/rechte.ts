@@ -23,5 +23,8 @@ export function darfModul(modul: ModulMeta, anmeldung: MeineAnmeldung | null): b
     modul.recht === undefined ? [] : typeof modul.recht === 'string' ? [modul.recht] : modul.recht
   if (rechte.length > 0 && !rechte.some((r) => hatRecht(anmeldung, r))) return false
   if (modul.immer || rechte.includes('admin') || hatRecht(anmeldung, 'admin')) return true
+  // Übergang: Bis die Migration `bereiche_pro_person` in der Cloud ist, liefert die Anmeldung für «gl» noch eine leere
+  // Liste (früher = alle). Sonst sähen Andy und Erich bis zum Cloud-Update nur Mein Tag.
+  if (anmeldung.bereiche.length === 0 && hatRecht(anmeldung, 'gl')) return true
   return anmeldung.bereiche.includes(modul.id)
 }
