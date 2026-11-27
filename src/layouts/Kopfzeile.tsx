@@ -1,5 +1,21 @@
 import { useNavigate } from '@tanstack/react-router'
-import { Check, Languages, LogOut, Monitor, Moon, Search, Sparkles, Sun, Trash2, UserRound } from 'lucide-react'
+import {
+  Check,
+  CircleHelp,
+  Languages,
+  LogOut,
+  Maximize,
+  Minimize,
+  Monitor,
+  Moon,
+  RefreshCw,
+  Search,
+  Smartphone,
+  Sparkles,
+  Sun,
+  Trash2,
+  UserRound,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Kbd } from '@/components/ui/diverses'
 import {
@@ -22,10 +38,14 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
 import { UpdateKnopf } from './Aktualisierung'
 import { Glocke } from './Benachrichtigungen'
-import { FensterKnoepfe } from './FensterKnoepfe'
-import { HilfeKnopf } from './HilfeKnopf'
+import { useAnsicht } from './AnsichtKnopf'
+import { useFenster } from './FensterKnoepfe'
+import { useHilfe } from './HilfeKnopf'
 
-/** Obere Leiste: Suche/Befehlspalette, Assistent (Ctrl J), Sprache, Benachrichtigungen, Konto-Menü. */
+/**
+ * Obere Leiste: Suche/Befehlspalette, Assistent (Ctrl J), Benachrichtigungen, Konto-Menü. Sprache, Hilfe (F1),
+ * PC/Handy, Vollbild (F11) und Aktualisieren stehen seit 27.11.2026 im Konto-Menü (Chris: so wenig wie möglich oben).
+ */
 export function Kopfzeile() {
   const { t } = useTranslation()
   const { sprache, darstellung, setSprache, setDarstellung, setBefehlspalette, setAssistent } = useUi()
@@ -34,6 +54,9 @@ export function Kopfzeile() {
   const name = ich?.name ?? t('konto.vorschau')
   // Einfache Ansicht (Monteure): keine Seitenleiste und keine Suche, das Logo steht immer hier.
   const einfach = ich?.ansicht === 'einfach'
+  const hilfe = useHilfe()
+  const fenster = useFenster()
+  const ansicht = useAnsicht()
 
   return (
     // Ohne eigene Fläche: Suche und runde Glas-Knöpfe stehen direkt auf dem Farbverlauf (V234).
@@ -71,30 +94,9 @@ export function Kopfzeile() {
             <span className="hidden lg:inline">{t('nav.assistent')}</span>
           </button>
         )}
-        <div
-          role="group"
-          aria-label={t('einstellungen.sprache')}
-          className="glas hidden h-10 items-center rounded-full p-1 text-xs font-semibold !shadow-[var(--glas-schatten-klein)] sm:flex"
-        >
-          {(['de', 'fr'] as const).map((s) => (
-            <button
-              key={s}
-              type="button"
-              aria-pressed={sprache === s}
-              onClick={() => {
-                setSprache(s)
-              }}
-              className="text-muted-foreground focus-visible:ring-ring aria-pressed:text-foreground h-full rounded-full px-2.5 outline-none focus-visible:ring-2 aria-pressed:bg-[var(--glas-wahl)] aria-pressed:shadow-[0_1px_2px_rgb(11_27_46/0.1)]"
-            >
-              {s.toUpperCase()}
-            </button>
-          ))}
-        </div>
-
         <UpdateKnopf />
-        <HilfeKnopf />
-        <FensterKnoepfe />
         <Glocke />
+        {hilfe.panel}
 
         <Menue>
           <MenueAusloeser
@@ -132,6 +134,25 @@ export function Kopfzeile() {
             >
               <Trash2 />
               {t('papierkorb.titel')}
+            </MenueEintrag>
+            <MenueEintrag onSelect={hilfe.oeffnen}>
+              <CircleHelp />
+              <span className="flex-1">{t('handbuch.hilfe.knopf')}</span>
+              <span className="text-muted-foreground text-xs">F1</span>
+            </MenueEintrag>
+            <MenueTrenner />
+            <MenueEintrag onSelect={fenster.aktualisieren}>
+              <RefreshCw className={fenster.laedt ? 'animate-spin' : undefined} />
+              {t('fenster.aktualisieren')}
+            </MenueEintrag>
+            <MenueEintrag onSelect={fenster.vollbildUmschalten}>
+              {fenster.vollbild ? <Minimize /> : <Maximize />}
+              <span className="flex-1">{fenster.vollbildText}</span>
+              <span className="text-muted-foreground text-xs">F11</span>
+            </MenueEintrag>
+            <MenueEintrag onSelect={ansicht.umschalten}>
+              {ansicht.zeigtHandy ? <Monitor /> : <Smartphone />}
+              {ansicht.text}
             </MenueEintrag>
             <MenueTrenner />
             <MenueTitel>{t('einstellungen.darstellung')}</MenueTitel>
