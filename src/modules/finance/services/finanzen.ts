@@ -76,7 +76,7 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
     projektFirma: Object.fromEntries(
       (pf.data ?? []).filter((x) => x.projekt_id && x.firma_id).map((x) => [x.projekt_id, x.firma_id]),
     ) as Record<string, string>,
-    mwst: (mw.data ?? []) as unknown as MwstZeile[],
+    mwst: mw.data as unknown as MwstZeile[],
     zahllaeufe: zl.data as Zahllauf[],
     bestellungen: Object.fromEntries(
       be.data.map((b) => [b.id, { nummer: b.nummer, total_rappen: b.total_rappen, bestellt_am: b.bestellt_am }]),

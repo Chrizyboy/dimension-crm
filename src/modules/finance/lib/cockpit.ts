@@ -17,7 +17,7 @@ const offenBetrag = (z: Zahlung) => z.offen_rappen ?? z.betrag_rappen ?? 0
  * droht, Freigaben, zu klären, Kontostand alt, Posten ohne Gesellschaft. Zahllauf und MWST sind seit 27.11.2026
  * ausgeblendet (nie besprochen).
  */
-export function heuteZuTun(d: Finanzdaten, heute: string, _ichId: string | null): ZuTun[] {
+export function heuteZuTun(d: Finanzdaten, heute: string): ZuTun[] {
   const liste: ZuTun[] = []
   const offen = d.zahlungen.filter((z) => z.status === 'offen')
 

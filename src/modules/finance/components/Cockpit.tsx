@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { useAnmeldung } from '@/stores/anmeldung'
 import { heuteZuTun, nachAlter } from '../lib/cockpit'
 import { heuteZuerich, plusTage } from '../lib/datum'
 import { vorschau } from '../lib/vorschau'
@@ -30,7 +29,6 @@ export function Cockpit({
   onReiter: (r: Reiter) => void
 }) {
   const { t } = useTranslation()
-  const ich = useAnmeldung((z) => z.ich)
   const [szenario, setSzenario] = useState<Szenario>('real')
   const heute = heuteZuerich()
   const v = vorschau(daten, heute, szenario)
@@ -42,7 +40,7 @@ export function Cockpit({
     .filter((r) => r.faellig_am && r.faellig_am < heute)
     .reduce((s, r) => s + r.offen_rappen, 0)
   const tranchen = daten.tranchen.reduce((s, x) => s + x.betrag_rappen, 0)
-  const zuTun = heuteZuTun(daten, heute, ich?.id ?? null)
+  const zuTun = heuteZuTun(daten, heute)
   const alter = nachAlter(daten.rechnungen, heute)
   const maxAlter = Math.max(1, ...alter.map((a) => a.rappen))
   const altKonto = daten.konten.filter((k) => k.aktiv && k.stand_am && k.stand_am < plusTage(heute, -4)).length

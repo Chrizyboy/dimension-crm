@@ -3,4 +3,4 @@
  * besprochen). Die Chance gilt nur noch, wenn jemand sie von Hand einträgt. Die Freigabe bei Rabatt/Marge ist über
  * `einstellungen.offerten.freigabe.aktiv` ausgeschaltet. Code und Daten bleiben; mit `true` kommt alles zurück.
  */
-export const OFFERTEN_ZUSAETZE = false
+export const OFFERTEN_ZUSAETZE: boolean = false

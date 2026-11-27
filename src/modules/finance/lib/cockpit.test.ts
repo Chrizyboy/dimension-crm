@@ -65,7 +65,6 @@ describe('Heute zu tun', () => {
         ],
       }),
       HEUTE,
-      null,
     )
     expect(l.map((x) => x.schluessel)).toEqual(['skonto', 'freigabe', 'kontoAlt'])
     expect(l[0]?.werte.betrag).toBe(2000)

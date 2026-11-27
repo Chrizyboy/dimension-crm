@@ -3,4 +3,4 @@
  * besprochen. Seit 27.11.2026 ausgeblendet (Chris: «Alle fünf ausblenden»); Daten und Funktionen bleiben,
  * mit `true` sind sie wieder da.
  */
-export const EINKAUF_ZUSAETZE = false
+export const EINKAUF_ZUSAETZE: boolean = false
