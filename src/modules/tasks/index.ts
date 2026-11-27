@@ -13,6 +13,7 @@ export const meta: ModulMeta = {
   pfad: '/tasks',
   icon: 'square-check',
   gruppe: 'uebersicht',
+  teilVon: 'today',
   phase: 6,
   immer: true,
 }

@@ -67,7 +67,7 @@ Du kümmerst dich um Rechnungen, Zahlungen, Liquidität und Spesen.
 Du behältst den Überblick und entscheidest.
 
 1. **Mein Tag**: Was deine Freigabe oder deinen Entscheid braucht. [Kapitel](kapitel:today)
-2. **Kennzahlen**: Leads, Offerten, Abschlüsse, Auftragsbestand und Marge. [Kapitel](kapitel:dashboard)
+2. **Dashboard**: Leads, Offerten, Abschlüsse, Auftragsbestand und Marge. [Kapitel](kapitel:dashboard)
 3. **Grossprojekte**: Treffer der Woche bewerten und bewilligen. [Kapitel](kapitel:contracting)
 4. **Ausschreibungen**: Was wir anschreiben, bewilligen. [Kapitel](kapitel:tenders)
 5. **Finanzen**: Liquidität und Nachkalkulation. [Kapitel](kapitel:finance)

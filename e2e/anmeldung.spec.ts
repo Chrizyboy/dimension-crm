@@ -32,7 +32,7 @@ test('Unbekannte Adresse bekommt kein Konto', async ({ page }) => {
 test('Verkauf sieht Leads, aber keine Finanzen und keine Einstellungen', async ({ page }) => {
   await anmelden(page, 'verkauf@test.local')
   const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
-  await expect(nav.getByRole('link', { name: 'Anfragen & Leads' })).toBeVisible()
+  await expect(nav.getByRole('link', { name: 'Leads' })).toBeVisible()
   await expect(nav.getByRole('link', { name: 'Finanzen' })).toHaveCount(0)
   await expect(nav.getByRole('link', { name: 'Einstellungen' })).toHaveCount(0)
   await page.goto('/#/finance')
@@ -46,8 +46,9 @@ test('Buchhaltung sieht Finanzen, aber keine Leads', async ({ page }) => {
   await anmelden(page, 'buchhaltung@test.local')
   // Benoît hat Französisch eingestellt; die Oberfläche folgt der Person.
   const nav = page.getByRole('navigation', { name: 'Navigation principale' })
-  await expect(nav.getByRole('link', { name: 'Finances' })).toBeVisible()
-  await expect(nav.getByRole('link', { name: 'Demandes & leads' })).toHaveCount(0)
+  // Finanzen ist seit 27.11.2026 ein Reiter unter «Rechnungen» (Leiste wie V234).
+  await expect(nav.getByRole('link', { name: 'Factures' })).toBeVisible()
+  await expect(nav.getByRole('link', { name: 'Leads' })).toHaveCount(0)
   expect(await zaehle(page, 'kreditor_zahlungen')).toBeGreaterThan(0)
 })
 

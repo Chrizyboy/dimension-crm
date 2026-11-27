@@ -16,6 +16,7 @@ export const meta: ModulMeta = {
   pfad: '/knowledge',
   icon: 'book-open',
   gruppe: 'hilfe',
+  ohneEintrag: true,
   phase: 15,
   immer: true,
 }

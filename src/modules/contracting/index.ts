@@ -15,7 +15,8 @@ export const meta: ModulMeta = {
   },
   pfad: '/contracting',
   icon: 'building-2',
-  gruppe: 'akquise',
+  gruppe: 'verkauf',
+  teilVon: 'tenders',
   phase: '8c',
 }
 

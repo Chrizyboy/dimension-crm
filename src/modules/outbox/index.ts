@@ -16,6 +16,7 @@ export const meta: ModulMeta = {
   pfad: '/outbox',
   icon: 'send',
   gruppe: 'uebersicht',
+  ohneEintrag: true,
   phase: 8,
 }
 
@@ -24,6 +25,9 @@ export const Ausgangskorb = lazy(() => import('./components/Ausgangskorb'))
 
 /** Karte «Wartet auf deine Freigabe» für «Mein Tag» (erscheint nur, wenn etwas offen ist). */
 export const AusgangHeute = lazy(() => import('./components/HeuteKarte'))
+
+/** Runder Knopf neben der Glocke mit Zahl «wartet auf mich» (Ausgangskorb hat keinen Eintrag in der Leiste). */
+export const AusgangKnopf = lazy(() => import('./components/AusgangKnopf'))
 
 export { AUSGANG_ORDNER } from './types'
 

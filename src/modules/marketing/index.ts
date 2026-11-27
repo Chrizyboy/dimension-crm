@@ -15,7 +15,7 @@ export const meta: ModulMeta = {
   },
   pfad: '/marketing',
   icon: 'megaphone',
-  gruppe: 'akquise',
+  gruppe: 'verkauf',
   phase: 11,
 }
 

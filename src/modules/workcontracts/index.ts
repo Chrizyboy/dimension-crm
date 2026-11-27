@@ -17,7 +17,7 @@ export const meta: ModulMeta = {
   auchGenannt: ['Verträge', 'Contrats'],
   pfad: '/workcontracts',
   icon: 'signature',
-  gruppe: 'verkauf',
+  gruppe: 'abwicklung',
   phase: 7,
 }
 

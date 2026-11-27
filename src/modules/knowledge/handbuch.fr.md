@@ -90,6 +90,7 @@ Les domaines sont rangés en petits groupes (Aperçu, Contacts, Vente, Prospecti
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Barre latérale comme dans l’ancien CRM : **Signaler un problème** et **Paramètres** sont en bas, le manuel s’ouvre via **Aide** dans le menu du compte ou F1.
 - 27.11.2026 : L’aide se trouve dans le menu derrière tes initiales en haut à droite, avec langue, actualiser, plein écran et PC/mobile. En haut ne restent que recherche, assistant et notifications.
 - 04.11.2026: Toutes les fiches (client, projet, cas de service, contrat d’entreprise, facture, véhicule …) n’affichent les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Les domaines avec beaucoup d’onglets en montrent six au plus, le reste est sous **Plus ▾** (l’onglet choisi reste toujours visible). Les fiches montrent les champs vides seulement après **+ autres informations**.

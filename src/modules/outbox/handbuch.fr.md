@@ -84,6 +84,7 @@ Oui, les e-mails partent de ta propre boîte et y figurent sous « Éléments en
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: La boîte d’envoi n’a plus d’entrée dans la barre latérale : le bouton rond **Boîte d’envoi** en haut, à côté de la cloche, montre ce qui vous attend.
 - 27.11.2026 : Les séries sont masquées, chaque message est affiché seul. Pour les courriers, **Revenue signée** n’existe plus (jamais convenu).
 - 03.11.2026: Boîte d’envoi comme établi : dossier « À valider par moi », vérifications avant l’envoi, annuler, envoyer plus tard, renvoyer à, erreurs avec solution, séries et courriers.
 - 23.10.2026: Les brouillons de l’IA (réponses, relances, rendez-vous) arrivent aussi dans la boîte d’envoi.

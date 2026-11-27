@@ -14,7 +14,7 @@
     "akquise": "Akquise",
     "abwicklung": "Abwicklung",
     "finanzen": "Finanzen",
-    "betrieb": "Betrieb",
+    "betrieb": "Team",
     "hilfe": "Hilfe",
     "suchen": "Suchen oder Befehl …",
     "haupt": "Hauptnavigation",
@@ -3128,6 +3128,11 @@
     "zeit_woche_montag": "Die Woche beginnt am Montag."
   },
   "ausgang": {
+    "knopf": {
+      "titel": "Ausgangskorb",
+      "mitZahl_one": "Ausgangskorb, {{count}} wartet auf dich",
+      "mitZahl_other": "Ausgangskorb, {{count}} warten auf dich"
+    },
     "titel": "Ausgangskorb",
     "beschreibung": "Alles, was das CRM per Mail, SMS oder Brief verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
     "ohneDatenbank": "Der Ausgangskorb braucht die Datenbank. In der Vorschau ohne Datenbank ist er leer.",

@@ -16,7 +16,8 @@ export const meta: ModulMeta = {
   },
   pfad: '/fieldwork',
   icon: 'clipboard-check',
-  gruppe: 'abwicklung',
+  gruppe: 'verkauf',
+  teilVon: 'projects',
   phase: '9b',
 }
 

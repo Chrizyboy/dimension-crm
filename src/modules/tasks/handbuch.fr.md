@@ -51,6 +51,7 @@ L’administration règle les règles dans le chapitre [Automatisations](kapitel
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Les tâches n’ont plus d’entrée propre : ouvrir **Ma journée**, puis **Tâches** en haut, comme dans l’ancien CRM.
 - 27.11.2026 : Comme dans l’ancien CRM : répétition, étapes, commentaires et la vue **Équipe** sont masqués.
 - 03.11.2026 : Liste par échéance, saisie rapide avec @initiales, fiche avec étapes et commentaires, transmettre, répétition, remplacement, vue équipe et cloche du matin.
 - 24.10.2026: Filtre « Confiées par moi ».

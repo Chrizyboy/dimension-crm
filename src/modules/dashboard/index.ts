@@ -8,12 +8,12 @@ import type { ModulMeta } from '@/types/modul'
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
 export const meta: ModulMeta = {
   id: 'dashboard',
-  titel: { de: 'Kennzahlen', fr: 'Indicateurs' },
+  titel: { de: 'Dashboard', fr: 'Tableau de bord' },
   untertitel: {
     de: 'Wie läuft es, wo hakt es, was kommt: Verkauf, Abwicklung, Finanzen und Service mit Ziel und Vorjahr',
     fr: 'Où en est-on, où ça coince, que vient-il : vente, réalisation, finances et service, avec objectif et an passé',
   },
-  auchGenannt: ['Dashboard', 'Tableau de bord'],
+  auchGenannt: ['Kennzahlen', 'Indicateurs'],
   pfad: '/dashboard',
   icon: 'chart-column',
   gruppe: 'uebersicht',

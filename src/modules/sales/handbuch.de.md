@@ -1,9 +1,9 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: verkauf, geschaeftsleitung
 ---
 
-# Anfragen & Leads
+# Leads
 
 Vom ersten Kontakt bis zur Zusage: Leads erfassen und anrufen, Termine vereinbaren und planen, nachfassen und zur Offerte weitergeben. Beim ersten Öffnen kommt die **Liste** (wie im alten CRM), danach immer die Ansicht, in der man zuletzt war. «Zu tun» zeigt, wer jetzt anzurufen ist, was heute fällig ist und was diese Woche ansteht. Dazu Planung (Kalender, Tagesroute, Tour), Regionen, der Monatsbericht für die Lead-Anbieter und die Steuerung für die Geschäftsleitung.
 
@@ -115,6 +115,7 @@ Person, Quelle, Region und Spalten merkt sich das CRM für dich von selbst. Für
 
 ## Neu {#neu}
 
+- 27.11.2026: «Anfragen & Leads» heisst in der Seitenleiste wieder **Leads**, wie im alten CRM.
 - 20.11.2026: Über den Listen bleiben Suche, Standort und Person sichtbar; **Quelle** und **Region** liegen hinter **Filter** (die Zahl am Knopf zeigt, wie viele gesetzt sind). **Zurücksetzen** stellt alles auf «alle».
 - 19.11.2026: In der Lead-Akte unter **Kontaktverlauf** neu **Mails aus Outlook laden**: holt alle Mails mit dem Kunden aus deinem Postfach und den Team-Postfächern. Unter **Dateien** zeigt ein Klick die Datei in der App, ✉ schickt sie dem Kunden, **Alle als ZIP** lädt alle.
 - 19.11.2026: **Rechtsklick** auf einen Lead zeigt zuerst die nächsten Schritte: **Erreicht: Termin vereinbaren**, **Nicht erreicht**, **Rückruf vereinbart**, **Kein Interesse**, **Kontakt erfassen**; bei Terminen **Termin verschieben** und **Termin absagen**; nach dem Termin **Zur Offerte** oder **Kein Interesse**. Ein verschobener Termin (auch im Wochenkalender) wird jetzt gespeichert. In der Lead-Akte **+ Aufgabe** und **Änderungsverlauf**.

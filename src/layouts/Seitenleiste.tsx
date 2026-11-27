@@ -1,11 +1,11 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { Bug, ChevronRight, PanelLeftClose, PanelLeftOpen, Settings } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Logo, SIGNET } from '@/components/shared/Logo'
 import { ModulIcon } from '@/components/shared/ModulIcon'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useSichtbareModule } from '@/hooks/useSichtbareModule'
-import { findeModul, GRUPPEN } from '@/lib/navigation'
+import { findeModul, GRUPPEN, hatEintrag } from '@/lib/navigation'
 import { SPRUENGE } from '@/lib/spruenge'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { cn } from '@/lib/utils'
@@ -16,16 +16,16 @@ import type { NavGruppe } from '@/types/modul'
 
 const LINK =
   'flex h-[30px] items-center gap-2.5 rounded-xl px-3 text-[13px] font-semibold text-sidebar-foreground outline-none transition-colors hover:bg-white/[0.07] hover:text-sidebar-active-foreground focus-visible:ring-2 focus-visible:ring-ring'
-/** Bis so viele sichtbare Bereiche passt die Leiste auf einen Laptop, ohne dass Gruppen zu sein müssen. */
-const ALLES_OFFEN_BIS = 16
+/** Bis so viele Einträge passt die Leiste auf einen Laptop, ohne dass Gruppen zu sein müssen (V234: alles offen). */
+const ALLES_OFFEN_BIS = 18
 
 /** Ohne eigene Wahl offen je Rolle: die Gruppen, in denen diese Rolle täglich arbeitet (nur Darstellung). */
 const OFFEN_JE_ROLLE: Partial<Record<string, readonly NavGruppe[]>> = {
-  verkauf: ['kontakte', 'verkauf'],
-  innendienst: ['kontakte', 'abwicklung'],
-  projektleitung: ['abwicklung'],
-  montage: ['abwicklung'],
-  buchhaltung: ['finanzen'],
+  verkauf: ['verkauf'],
+  innendienst: ['verkauf', 'abwicklung'],
+  projektleitung: ['verkauf', 'abwicklung'],
+  montage: ['verkauf'],
+  buchhaltung: ['abwicklung'],
 }
 
 // Wie V234: aktiver Bereich als helle Glas-Pille, Icon orange als Akzent (Variante C von Chris 31.10.2026).
@@ -34,7 +34,8 @@ const AKTIV = {
 }
 
 /**
- * Linke Navigation in Marineblau: Module in kleinen Gruppen nach Arbeitsschritt (Entscheid 0058).
+ * Linke Navigation in Marineblau, aufgebaut wie das alte CRM V234 (Entscheid 0062): Übersicht, Verkauf, Abwicklung,
+ * dazu «Team»; unten «Fehler melden», Einstellungen und die Apps.
  * Jede Gruppe klappt mit einem Klick auf ihren Namen auf und zu; ohne eigene Wahl sind nur «Übersicht» und die Gruppe
  * des offenen Bereichs offen, so passt die Leiste ohne Scrollen auf einen Laptop. Die Wahl bleibt im Gerät gespeichert.
  * Eine zugeklappte Gruppe zeigt den offenen Bereich trotzdem, damit man immer sieht, wo man ist.
@@ -57,9 +58,11 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
       ? findeModul(offenesModul.teilVon)
       : offenesModul
   // Wer wenige Bereiche sieht (z. B. Verkauf), hat ohnehin Platz: dann ist ohne eigene Wahl alles offen.
-  const allesOffen = sichtbar.length <= ALLES_OFFEN_BIS
+  const allesOffen = sichtbar.filter((m) => hatEintrag(m, sichtbar)).length <= ALLES_OFFEN_BIS
   const rolle = useAnmeldung((z) => z.ich?.rolle ?? '')
   const rollenGruppen = OFFEN_JE_ROLLE[rolle] ?? []
+  // Einstellungen unten in der Leiste wie in V234 (nur wer sie sehen darf).
+  const einstellungen = sichtbar.find((m) => m.id === 'settings')
 
   // Eingeklappt zeigt der Hinweis Name + Erklärung, ausgeklappt nur zusätzlich die Erklärung.
   // Mit Sprung-Taste steht «G K» rechts im Hinweis (nicht im Handy-Menü, dort gibt es keine Tastatur).
@@ -109,7 +112,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
           eingeklappt ? 'px-2' : 'px-3',
         )}
       >
-        {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g)).map((gruppe) => {
+        {GRUPPEN.filter((g) => sichtbar.some((m) => m.gruppe === g && hatEintrag(m, sichtbar))).map((gruppe) => {
           const offen =
             eingeklappt ||
             (gruppenOffen[gruppe] ??
@@ -118,10 +121,7 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
           // Zugeklappt bleibt der offene Bereich stehen, sonst wüsste man nicht mehr, wo man ist.
           // Teile eines Bereichs (z. B. Wartungsverträge unter «Verträge») haben keinen eigenen Eintrag.
           const module = sichtbar.filter(
-            (m) =>
-              m.gruppe === gruppe &&
-              !(m.teilVon && sichtbar.some((h) => h.id === m.teilVon)) &&
-              (offen || m.id === aktiv?.id),
+            (m) => m.gruppe === gruppe && hatEintrag(m, sichtbar) && (offen || m.id === aktiv?.id),
           )
           return (
             <div key={gruppe} className="flex flex-col gap-0.5">
@@ -176,6 +176,41 @@ export function Seitenleiste({ imMenue = false, onNavigiert }: { imMenue?: boole
       </nav>
 
       <div className={cn('mx-3 flex shrink-0 flex-col gap-0.5 border-t !border-white/10 py-3')}>
+        {eintrag(
+          'fehler-melden',
+          <Link
+            to="/knowledge"
+            search={{ ansicht: 'meldungen', neu: offenesModul?.id ?? 'anderes' }}
+            onClick={onNavigiert}
+            className={cn(LINK, eingeklappt && 'justify-center px-0')}
+            aria-label={eingeklappt ? t('befehle.fehlerMelden') : undefined}
+          >
+            <Bug className="text-sidebar-muted size-4 shrink-0" />
+            {!eingeklappt && <span className="truncate">{t('befehle.fehlerMelden')}</span>}
+          </Link>,
+          t('befehle.fehlerMelden'),
+        )}
+        {einstellungen &&
+          eintrag(
+            'settings',
+            <Link
+              to="/$modul"
+              params={{ modul: 'settings' }}
+              onClick={onNavigiert}
+              className={cn(
+                LINK,
+                eingeklappt && 'justify-center px-0',
+                aktiv?.id === 'settings' && offenesModul?.id !== 'settings' && AKTIV.className,
+              )}
+              activeProps={AKTIV}
+              aria-label={eingeklappt ? einstellungen.titel[sprache] : undefined}
+            >
+              <Settings className="text-sidebar-muted size-4 shrink-0" />
+              {!eingeklappt && <span className="truncate">{einstellungen.titel[sprache]}</span>}
+            </Link>,
+            einstellungen.titel[sprache],
+          )}
+        <div className="h-1" aria-hidden="true" />
         <AppKacheln eingeklappt={eingeklappt} />
         <div className="h-1" aria-hidden="true" />
         {/* Design-System nur über Ctrl K (beim Entwickeln) oder #/design, nicht in der Leiste (19.11.2026). */}

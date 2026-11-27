@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung
 ---
 
@@ -97,6 +97,7 @@ Le télécharger en CSV, pas en PDF. La ligne d’en-tête doit contenir une dat
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Les frais n’ont plus d’entrée propre : ouvrir **Factures**, puis **Frais** en haut, comme dans l’ancien CRM.
 - 19.11.2026 : sur **Ma journée**, la carte des frais a le bouton **Saisir des frais** ; il ouvre directement la saisie.
 - 03.11.2026 : seule l’administration modifie règles et catégories ; aussi sous Réglages › Catégories de frais.
 - 03.11.2026 : rapprocher la carte d’entreprise du relevé, demander les justificatifs manquants.

@@ -15,7 +15,8 @@ export const meta: ModulMeta = {
   },
   pfad: '/contacts',
   icon: 'book-user',
-  gruppe: 'kontakte',
+  gruppe: 'verkauf',
+  teilVon: 'customers',
   phase: 5,
 }
 

@@ -13,6 +13,7 @@ export const meta: ModulMeta = {
   pfad: '/automations',
   icon: 'workflow',
   gruppe: 'betrieb',
+  teilVon: 'settings',
   phase: 12,
   // Automationen handeln im Namen der Firma; einrichten nur die Administration (RLS prüft zusätzlich).
   recht: 'admin',

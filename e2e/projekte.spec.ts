@@ -78,7 +78,7 @@ test('Projekte: Leitstand, Meine Woche, Zeitplan, Bewilligungen und Akte', async
 test('Service-Fall erfassen, Notiz, erledigen', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/aftersales')
-  await expect(page.getByRole('heading', { name: 'Service & Garantie', level: 1 })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Aftersales', level: 1 })).toBeVisible()
   await page.getByRole('button', { name: 'Neuer Fall' }).click()
   await testkunde(page)
   await page.getByLabel('Worum geht es?').fill(`Wechselrichter meldet Fehler ${lauf}`)

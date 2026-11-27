@@ -31,51 +31,52 @@ import type { ModulMeta, NavGruppe } from '@/types/modul'
 
 /** Alle Module in der Reihenfolge der Seitenleiste. Einziger Ort, der alle Module kennt. */
 export const MODULE: readonly ModulMeta[] = [
+  // Übersicht
   today,
-  inbox,
   tasks,
+  inbox,
   outbox,
   dashboard,
-  customers,
-  contacts,
+  // Verkauf (wie V234)
+  marketing,
   sales,
-  quotes,
-  workcontracts,
-  pricing,
   tenders,
   contracting,
-  marketing,
+  quotes,
+  pricing,
+  customers,
+  contacts,
   projects,
   fieldwork,
   purchasing,
-  aftersales,
+  // Abwicklung (wie V234)
+  workcontracts,
   contracts,
   invoices,
-  finance,
   expenses,
+  finance,
+  aftersales,
+  // Team (besprochene Zusätze)
   time,
-  staff,
   fleet,
-  automations,
+  staff,
   settings,
+  automations,
   knowledge,
   ai,
 ]
 
 /**
- * Reihenfolge der Gruppen in der Seitenleiste. Kleine Gruppen nach Arbeitsschritt (Chris 4.11.2026 «zu unübersichtlich»):
- * jede lässt sich zuklappen, damit die ganze Leiste ohne Scrollen Platz hat.
+ * Reihenfolge der Gruppen in der Seitenleiste wie im alten CRM V234 (Chris 27.11.2026: «das alte crm war viel besser
+ * und übersichtlicher»): Übersicht, Verkauf, Abwicklung, dazu «Team» mit den besprochenen Zusätzen. Handbuch und
+ * Assistent («hilfe») haben keinen Eintrag; Einstellungen stehen unten in der Leiste.
  */
-export const GRUPPEN: readonly NavGruppe[] = [
-  'uebersicht',
-  'kontakte',
-  'verkauf',
-  'akquise',
-  'abwicklung',
-  'finanzen',
-  'betrieb',
-  'hilfe',
-]
+export const GRUPPEN: readonly NavGruppe[] = ['uebersicht', 'verkauf', 'abwicklung', 'betrieb', 'hilfe']
+
+/** Hat der Bereich einen eigenen Eintrag in der Seitenleiste (nicht Teil eines sichtbaren Bereichs, nicht `ohneEintrag`)? */
+export function hatEintrag(m: ModulMeta, sichtbar: readonly ModulMeta[]): boolean {
+  return !m.ohneEintrag && !(m.teilVon && sichtbar.some((h) => h.id === m.teilVon))
+}
 
 /** Module einer Gruppe, in Seitenleisten-Reihenfolge. */
 export function moduleDerGruppe(gruppe: NavGruppe): ModulMeta[] {

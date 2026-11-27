@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -101,6 +101,7 @@ Youdera finance et possède l’installation, nous la construisons et l’entret
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Les grands projets n’ont plus d’entrée propre : ouvrir **Appels d’offres**, puis **Grands projets** en haut.
 - 19.11.2026: « À décider » affiche une erreur de chargement comme erreur avec « Réessayer » au lieu de « Rien à vérifier ».
 - 19.11.2026: **Pourquoi et comment** dans chaque dossier : évaluation Youdera avec feu (client, Youdera, Dimension), installation adaptée à la consommation, économie, fiche de vente et lien vers le registre foncier. Les toits avec PV existant sont écartés.
 - 04.11.2026: La fiche n’affiche les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.

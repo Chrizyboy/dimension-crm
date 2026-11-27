@@ -1,9 +1,9 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: verkauf, geschaeftsleitung
 ---
 
-# Demandes & leads
+# Leads
 
 Du premier contact à l’accord : saisir et appeler les leads, fixer et planifier les rendez-vous, relancer et transmettre pour l’offre. À la première ouverture, la **Liste** s’affiche (comme dans l’ancien CRM), ensuite toujours la dernière vue utilisée. « À faire » montre qui appeler maintenant, ce qui est échu aujourd’hui et ce qui vient cette semaine. Avec la planification (calendrier, tournée du jour, tournée), les régions, le rapport mensuel pour les fournisseurs de leads et le pilotage pour la direction.
 
@@ -115,6 +115,7 @@ Le CRM mémorise tout seul personne, source, région et colonnes. Pour plusieurs
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: « Demandes & leads » s’appelle de nouveau **Leads** dans la barre latérale, comme dans l’ancien CRM.
 - 20.11.2026 : Au-dessus des listes, la recherche, le site et la personne restent visibles ; **Source** et **Région** se trouvent sous **Filtres** (le chiffre sur le bouton indique combien sont actifs). **Réinitialiser** remet tout sur « tous ».
 - 19.11.2026 : Dans le dossier du lead, sous **Historique des contacts**, nouveau **Charger les e-mails d'Outlook** : récupère tous les e-mails avec le client dans ta boîte et les boîtes d’équipe. Sous **Fichiers**, un clic affiche le fichier dans l’app, ✉ l’envoie au client, **Les … en ZIP** les télécharge tous.
 - 19.11.2026 : Le **clic droit** sur un lead montre d’abord les prochaines étapes : **Joint : fixer un RDV**, **Pas joint**, **Rappel convenu**, **Pas intéressé**, **Saisir un contact** ; pour les rendez-vous **Déplacer le RDV** et **Annuler le RDV** ; après la visite **Vers l'offre** ou **Pas intéressé**. Un rendez-vous déplacé (aussi dans le calendrier de la semaine) est maintenant enregistré. Dans le dossier du lead **+ Tâche** et **Historique des modifications**.

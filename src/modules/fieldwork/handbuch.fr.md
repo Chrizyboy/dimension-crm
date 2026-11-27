@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: montage, projektleitung, buchhaltung
 ---
 
@@ -104,6 +104,7 @@ Le rattraper dans l’onglet **Heures** ou le signaler au bureau ; la comptabili
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Chantier & rapports se trouve sous **Planification** (bascule en haut). Les monteurs sans Planification le voient toujours directement.
 - 04.11.2026: Chaque temps a besoin d’une affectation (**Pour quoi**) : chantier, cas de service ou dépôt / atelier, véhicule, formation. «Sans chantier» n’existe plus ; l’export salaires montre l’affectation. Un bouton démarre et arrête le temps de toute l’équipe. Photo du jour par chantier : pas de stop sans photo, rappel à 18:00. Un rapport par chantier et par jour pour l’équipe (**Continuer le rapport**) ; sur mobile, le montage ne voit que **Ma journée**, **Planning** et **Temps**.
 - 03.11.2026: «Mettre à la corbeille» pour les rapports et les temps; rapports clôturés seulement par l'administration, temps exportés jamais, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Heures de tous seulement pour la direction et la comptabilité, les supérieur·e·s direct·e·s voient leur équipe.

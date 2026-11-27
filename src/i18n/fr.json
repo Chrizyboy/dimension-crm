@@ -14,7 +14,7 @@
     "akquise": "Prospection",
     "abwicklung": "Réalisation",
     "finanzen": "Finances",
-    "betrieb": "Entreprise",
+    "betrieb": "Équipe",
     "hilfe": "Aide",
     "suchen": "Rechercher ou commande …",
     "haupt": "Navigation principale",
@@ -3128,6 +3128,11 @@
     "zeit_woche_montag": "La semaine commence le lundi."
   },
   "ausgang": {
+    "knopf": {
+      "titel": "Boîte d'envoi",
+      "mitZahl_one": "Boîte d'envoi, {{count}} vous attend",
+      "mitZahl_other": "Boîte d'envoi, {{count}} vous attendent"
+    },
     "titel": "Boîte d'envoi",
     "beschreibung": "Tout ce que le CRM veut envoyer par e-mail, SMS ou lettre attend ici. Rien ne part sans ta validation.",
     "ohneDatenbank": "La boîte d'envoi a besoin de la base de données. Dans l'aperçu sans base, elle est vide.",

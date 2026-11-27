@@ -1,9 +1,9 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: projektleitung, innendienst, montage, geschaeftsleitung
 ---
 
-# Service & garantie
+# Après-vente
 
 Tout ce qui suit la construction : pannes, réclamations, cas de garantie chez le fabricant et contrôles. La **Centrale** montre chaque cas ouvert par étape et le temps restant jusqu’à la réaction. L’onglet **Installations** contient les données de chaque installation construite avec garantie et composants.
 
@@ -93,6 +93,7 @@ Choisir la bonne installation dans le cas. **Cas précédents** montre ce qui s�
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: « Service & garantie » s’appelle de nouveau **Après-vente**, sous Réalisation, comme dans l’ancien CRM.
 - 19.11.2026 : Les **pièces jointes** du cas s’ouvrent dans l’app (photo avec agrandissement et copie, PDF), ✉ envoie un fichier au client, **Les … en ZIP** par ex. pour le fabricant.
 - 19.11.2026 : Dans le dossier du cas **Historique des modifications** : qui a modifié quoi et quand.
 - 19.11.2026: Tous les nouveaux cas vont d’abord à Andy ; dans le dossier, il choisit avec **Choisir le collaborateur** qui reprend. Nouveau filtre **À attribuer**.

@@ -99,6 +99,7 @@ Onglet **Stock**, cliquer l’article, **Comptabiliser le stock** avec le type i
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Achats & matériel se trouve sous **Planification** (bascule en haut).
 - 27.11.2026 : Emplacement, inventaire en un passage, liste de préparation, retour du chantier et réclamations sont masqués (jamais convenus).
 - 03.11.2026: «Mettre à la corbeille» pour les fournisseurs et les commandes en brouillon; les commandes dès validation sont annulées, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 03.11.2026: Emplacement, liste de préparation imprimable, retour du chantier, inventaire en un passage, réclamations au fournisseur.

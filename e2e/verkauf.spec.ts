@@ -35,7 +35,7 @@ async function verstoesse(page: Page): Promise<string[]> {
 test('Lead anlegen und Kontakt erfassen', async ({ page }) => {
   await anmelden(page, 'verkauf@test.local')
   await page.goto('/#/sales')
-  await expect(page.getByRole('heading', { name: 'Anfragen & Leads', level: 1 })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Leads', level: 1 })).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
   await page.keyboard.press('n')

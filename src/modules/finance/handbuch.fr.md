@@ -53,6 +53,7 @@ En haut **Masquer les salaires**. La somme reste dans le calcul, seules les lign
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Les finances n’ont plus d’entrée propre : ouvrir **Factures**, puis **Finances** en haut.
 - 27.11.2026 : Ordre de paiement, import du relevé, estimation TVA et clôture mensuelle masqués (jamais convenus ; la TVA se fait dans AbaNinja). Les soldes des comptes sont maintenant sous **Liquidités**.
 - 20.11.2026 : Liquidités : graphique avec axe, ligne zéro nette et solde le plus bas ; la société est à côté des onglets.
 - 19.11.2026 : Projets & marge affiche « – » au lieu de 100 % tant qu’aucun coût n’est saisi pour un projet.
