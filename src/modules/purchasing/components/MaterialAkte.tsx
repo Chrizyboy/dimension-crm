@@ -19,6 +19,7 @@ import { MaterialTabelle } from './MaterialTabelle'
 import { MaterialZeileDialog } from './MaterialZeileDialog'
 import { NeueBestellungDialog } from './NeueBestellungDialog'
 import { RuestlisteDialog } from './RuestlisteDialog'
+import { EINKAUF_ZUSAETZE } from '../lib/zusaetze'
 
 /**
  * Materialliste eines Projekts: Vorschlag aus Kalkulation oder Offerte, von Hand ergänzen, Deckung je Zeile
@@ -59,16 +60,18 @@ export function MaterialAkte({
   const titel = projekt ? `${projekt.nummer} · ${projekt.kunde}` : t('einkauf.material.titel')
   const fuss = (
     <>
-      <Button
-        variant="ghost"
-        disabled={!zeilen.some((z) => z.menge > z.entnommen)}
-        onClick={() => {
-          setRuestliste(true)
-        }}
-      >
-        <ClipboardList />
-        {t('einkauf.ruest.knopf')}
-      </Button>
+      {EINKAUF_ZUSAETZE && (
+        <Button
+          variant="ghost"
+          disabled={!zeilen.some((z) => z.menge > z.entnommen)}
+          onClick={() => {
+            setRuestliste(true)
+          }}
+        >
+          <ClipboardList />
+          {t('einkauf.ruest.knopf')}
+        </Button>
+      )}
       <Button
         variant="ghost"
         onClick={() => {

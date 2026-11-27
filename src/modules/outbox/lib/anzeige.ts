@@ -59,6 +59,12 @@ export function wartetStunden(e: Pick<AusgangEintrag, 'erstellt_am' | 'zurueck_a
 /** Ab so vielen gleichen Einträgen (gleiche Kampagne oder automatisch gleiche Art am gleichen Tag) zeigt die Liste eine Serie. */
 export const SERIE_AB = 3
 
+/**
+ * Serien-Gruppen sind ausgeblendet (Chris 27.11.2026: nie besprochen). Jede Nachricht steht einzeln in der Liste;
+ * mehrere ankreuzen und freigeben geht weiterhin. Mit `true` kommen die Serien zurück.
+ */
+export const SERIEN_AN = false
+
 function serieSchluessel(e: AusgangEintrag): string | null {
   // Serien-Mails und Newsletter tragen die Kampagne als Bezug; Mahnläufe usw. entstehen automatisch am selben Tag.
   // Von Hand vorbereitete Einzelmails (z. B. Offerten an verschiedene Kunden) sind nie eine Serie: jede braucht
@@ -72,10 +78,10 @@ function serieSchluessel(e: AusgangEintrag): string | null {
  * Teilt die Liste in Gruppen: zuerst Serien (ab SERIE_AB gleichen offenen Einträgen), dann nach Alter
  * (heute, gestern, älter). Gesendete und Verworfene nur nach Tag. Reihenfolge innerhalb: neueste zuerst.
  */
-export function gruppiere(liste: AusgangEintrag[], jetzt = new Date()): AusgangGruppe[] {
+export function gruppiere(liste: AusgangEintrag[], jetzt = new Date(), serienAn = SERIEN_AN): AusgangGruppe[] {
   const serien = new Map<string, AusgangEintrag[]>()
   for (const e of liste) {
-    if (e.status !== 'wartet' || e.zurueck_am) continue
+    if (!serienAn || e.status !== 'wartet' || e.zurueck_am) continue
     const s = serieSchluessel(e)
     if (!s) continue
     serien.set(s, [...(serien.get(s) ?? []), e])

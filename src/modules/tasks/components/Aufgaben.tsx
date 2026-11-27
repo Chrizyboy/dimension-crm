@@ -16,6 +16,7 @@ import { AufgabeAkte } from './AufgabeAkte'
 import { AufgabenListe } from './AufgabenListe'
 import { Schnelleingabe } from './Schnelleingabe'
 import { TeamSicht } from './TeamSicht'
+import { AUFGABEN_ZUSAETZE } from '../lib/zusaetze'
 
 /** Schnellfilter innerhalb einer Ansicht. */
 type Filter = 'wichtig' | 'automation' | 'mit_bezug'
@@ -84,7 +85,7 @@ export default function Aufgaben({
     'vergeben',
     'vertretung',
     'alle',
-    ...(leitung ? (['team'] as const) : []),
+    ...(leitung && AUFGABEN_ZUSAETZE ? (['team'] as const) : []),
     'erledigt',
   ]
   const personName = personen.data?.find((p) => p.id === person)?.name
@@ -104,7 +105,7 @@ export default function Aufgaben({
           onNavigation({ ansicht: (a as Ansicht | undefined) ?? 'meine', person: null, aufgabe: null })
         }}
       />
-      {ansicht === 'team' ? (
+      {ansicht === 'team' && AUFGABEN_ZUSAETZE ? (
         <TeamSicht
           onPerson={(p) => {
             onNavigation({ ansicht: 'alle', person: p })

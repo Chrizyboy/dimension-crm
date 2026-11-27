@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
+import { OFFERTEN_ZUSAETZE } from '../lib/zusaetze'
 import type { VorratHinweis, VorratKarte as Karte } from '../lib/vorrat'
 
 function HinweisBadge({ h }: { h: VorratHinweis }) {
@@ -64,9 +65,9 @@ export function VorratKarte({ k, onOeffnen }: { k: Karte; onOeffnen: (k: Karte) 
       {(k.betragRappen ?? 0) > 0 && (
         <span className="flex justify-between gap-2 text-xs">
           <span className="text-muted-foreground">
-            {k.variante
+            {OFFERTEN_ZUSAETZE && k.variante
               ? t('offerten.vorrat.variante', { k: k.variante })
-              : k.anzahlVarianten > 1
+              : OFFERTEN_ZUSAETZE && k.anzahlVarianten > 1
                 ? t('offerten.vorrat.varianten', { count: k.anzahlVarianten })
                 : t('offerten.akte.exkl')}
           </span>

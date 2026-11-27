@@ -10,6 +10,7 @@ import { alsZahl, formatMenge } from '../lib/anzeige'
 import { lagerBuchen, lagerplatzSetzen, mindestmengeSetzen } from '../services/lager'
 import type { ArtikelTreffer, LagerZeile } from '../types'
 import { ArtikelWahl } from './ArtikelWahl'
+import { EINKAUF_ZUSAETZE } from '../lib/zusaetze'
 
 const ARTEN = ['eingang', 'entnahme', 'korrektur', 'inventur'] as const
 type Art = (typeof ARTEN)[number]
@@ -147,15 +148,17 @@ export function LagerBuchenDialog({
                   }}
                 />
               </Feld>
-              <Feld id="lb-platz" label={t('einkauf.lager.platz')} hinweis={t('einkauf.lager.platzHinweis')}>
-                <Input
-                  id="lb-platz"
-                  value={platz}
-                  onChange={(e) => {
-                    setPlatz(e.target.value)
-                  }}
-                />
-              </Feld>
+              {EINKAUF_ZUSAETZE && (
+                <Feld id="lb-platz" label={t('einkauf.lager.platz')} hinweis={t('einkauf.lager.platzHinweis')}>
+                  <Input
+                    id="lb-platz"
+                    value={platz}
+                    onChange={(e) => {
+                      setPlatz(e.target.value)
+                    }}
+                  />
+                </Feld>
+              )}
             </div>
           )}
         </div>

@@ -80,7 +80,8 @@ test('Werkbank: Für mich, Akte, Freigeben mit Rückgängig, Fehler, Brief', asy
   const spalte = (name: string) => page.getByRole('region', { name, exact: true })
   let liste = spalte('Für mich zur Freigabe')
   await expect(liste.getByText(offerte)).toBeVisible()
-  await expect(liste.getByText(/Serie .* 3 Nachrichten/).first()).toBeVisible()
+  // Serien sind seit 27.11.2026 ausgeblendet (Entscheid 0061): jede Nachricht steht einzeln.
+  await expect(liste.getByText(/Serie .* 3 Nachrichten/)).toHaveCount(0)
   await expect(liste.getByText('Zurück von Benoît Buchhaltung').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await foto(page, '1-fuer-mich')

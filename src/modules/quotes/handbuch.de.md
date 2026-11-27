@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -18,8 +18,8 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 ### Den Arbeitsvorrat lesen
 
 1. **Arbeitsvorrat** zeigt jede Offerte als Karte in ihrer Phase, von «Zu offerieren» bis «Gewonnen». **Offerten** öffnet beim ersten Mal mit **Neue Offerten** (wie im alten CRM), danach mit der Ansicht, in der du zuletzt warst.
-2. Rote und orange Hinweise zuerst: überfällig (Termin länger als 5 Arbeitstage her), Nachfassen fällig, Freigabe nötig, Rückfrage.
-3. Karte anklicken: die Offerte öffnet als ganze Seite mit Schritten, Varianten, Unterlagen und dem nächsten Schritt.
+2. Rote und orange Hinweise zuerst: überfällig (Termin länger als 5 Arbeitstage her), Nachfassen fällig, Rückfrage.
+3. Karte anklicken: die Offerte öffnet als ganze Seite mit Schritten, Unterlagen und dem nächsten Schritt.
 
 ### Eine neue Offerte ausarbeiten
 
@@ -88,9 +88,7 @@ Hier wird aus einem Lead eine Offerte: der Innendienst arbeitet sie aus, der Aus
 
 ## Regeln {#regeln}
 
-- Ab 5 % Rabatt oder unter 18 % Marge braucht die Offerte vor dem Senden eine **Freigabe** (Chris oder Administration).
-- Eine Offerte kann mehrere **Varianten** haben (z. B. mit und ohne Batterie). Die gewählte Variante bestimmt den Betrag.
-- Die **Chance** rechnet das CRM aus der Phase; von Hand überschreiben geht, leer setzt sie wieder auf automatisch.
+- Die **Chance** setzt du von Hand; leer heisst: keine Chance eingetragen.
 
 - Der Betrag der Offerte ist **exkl. MWST**. Werkvertrag und Vertragswert sind inkl.
 - Einkaufspreise, Marge und Kalkulation sieht nur, wer das Recht **Preise** hat.
@@ -107,6 +105,7 @@ In der Offerte **Kalkulation** wählen. Sie öffnet sich im Kapitel [Preise](kap
 
 ## Neu {#neu}
 
+- 27.11.2026: Varianten, Rabatt-/Marge-Freigabe und die automatische Chance sind ausgeblendet (nie so besprochen). Die Chance trägst du von Hand ein.
 - 20.11.2026: Nachfassen: seltene Filter (Fällig seit, Betrag, Person) unter **Filter**, Kacheln mit 0 bleiben weg. Dokumente der Offerte öffnen in der Vorschau mit ← → und **Per Mail senden**.
 - 19.11.2026: Nachfassen wie V234 und besser: Personen mit Anzahl, Betrag ab 10'000/25'000/50'000, Kennzahlen **Ø fällig seit** und **Über 180 Tage**, je Zeile **Nachfass-Mail** und **Zurück zur Offerte**. **Rechtsklick** auf eine versendete Offerte: **Ergebnis**, **Angenommen**, **Abgelehnt**, **Vertagt**, **Bereits verbaut**, **Nachfass-Mail**. In der Offert-Akte **+ Aufgabe** und **Änderungsverlauf** (wer hat wann was geändert, auch am Lead).
 - 19.11.2026: **Offerten** öffnet beim ersten Mal mit **Neue Offerten**, danach mit der Ansicht, in der du zuletzt warst (je Person gemerkt).

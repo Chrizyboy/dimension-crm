@@ -134,13 +134,10 @@ test('Finanzen: Reiter ohne Verstösse, Zahlung erfassen, einplanen und bezahlen
   await expect(page.getByText('Tiefster Stand').first()).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
   await expect(page.getByRole('heading', { name: 'Heute zu tun' })).toBeVisible()
-  for (const reiter of [
-    'Lieferantenrechnungen',
-    'Zahllauf',
-    'Liquidität',
-    'Projekte & Marge',
-    'Konten, MWST & Abschluss',
-  ]) {
+  // Zahllauf und Konten/MWST/Abschluss sind seit 27.11.2026 ausgeblendet (Entscheid 0061).
+  await expect(page.getByRole('tab', { name: 'Zahllauf' })).toHaveCount(0)
+  await expect(page.getByRole('tab', { name: 'Konten, MWST & Abschluss' })).toHaveCount(0)
+  for (const reiter of ['Lieferantenrechnungen', 'Liquidität', 'Projekte & Marge']) {
     await waehleReiter(page, reiter)
     await expect(page.getByRole('tab', { name: reiter })).toHaveAttribute('aria-selected', 'true')
     expect(await verstoesse(page), reiter).toEqual([])
@@ -151,12 +148,6 @@ test('Finanzen: Reiter ohne Verstösse, Zahlung erfassen, einplanen und bezahlen
     await page.getByRole('button', { name: new RegExp(`^${teil}`) }).click()
     expect(await verstoesse(page), teil).toEqual([])
   }
-  // Zahllauf: Vorschlag öffnet sich ohne Verstösse.
-  await waehleReiter(page, 'Zahllauf')
-  await page.getByRole('button', { name: 'Zahllauf vorbereiten' }).click()
-  await expect(page.getByRole('dialog')).toBeVisible()
-  expect(await verstoesse(page), 'Zahllauf vorbereiten').toEqual([])
-  await page.keyboard.press('Escape')
   // Alte Adresse führt weiter.
   await page.goto('/#/finance?reiter=zahlungen')
   await expect(page.getByRole('tab', { name: 'Lieferantenrechnungen' })).toHaveAttribute('aria-selected', 'true')

@@ -14,7 +14,6 @@ import type {
   OffeneTranche,
   Zahllauf,
 } from '../types'
-import { plusTage } from '../lib/datum'
 
 /**
  * Datenzugriff der Finanzen. Alle Tabellen hier liest und ändert nur, wer das Recht «finanzen» hat
@@ -27,14 +26,14 @@ function db() {
 
 const EINSTELLUNG = 'vorlage.main'
 
-/** Alles für Cockpit, Listen und Liquidität in einem Zug (MWST vom letzten bis zum nächsten Jahr). */
+/** Alles für Cockpit, Listen und Liquidität in einem Zug (MWST-Schätzung seit 27.11.2026 ausgeblendet). */
 export async function ladeFinanzen(): Promise<Finanzdaten> {
-  const heute = new Date().toISOString().slice(0, 10)
   const [ko, fi, pf, mw, zl, pe] = await Promise.all([
     db().from('finanz_konten').select('*').is('geloescht_am', null).order('reihenfolge').order('name'),
     db().from('firmen').select('id, kuerzel, name').is('geloescht_am', null).order('kuerzel'),
     db().from('finanz_projekt_firma').select('projekt_id, firma_id'),
-    db().rpc('mwst_schaetzung', { p_von: plusTage(heute, -200), p_bis: plusTage(heute, 200) }),
+    // MWST-Schätzung ausgeblendet (27.11.2026, nie besprochen; MWST läuft in AbaNinja).
+    Promise.resolve({ data: [] as unknown[], error: null }),
     db().from('zahllaeufe').select('*').is('geloescht_am', null).order('ausfuehren_am', { ascending: false }).limit(60),
     db().from('personen').select('id, name').is('geloescht_am', null),
   ])
@@ -77,7 +76,7 @@ export async function ladeFinanzen(): Promise<Finanzdaten> {
     projektFirma: Object.fromEntries(
       (pf.data ?? []).filter((x) => x.projekt_id && x.firma_id).map((x) => [x.projekt_id, x.firma_id]),
     ) as Record<string, string>,
-    mwst: (mw.data ?? []) as unknown as MwstZeile[],
+    mwst: mw.data as unknown as MwstZeile[],
     zahllaeufe: zl.data as Zahllauf[],
     bestellungen: Object.fromEntries(
       be.data.map((b) => [b.id, { nummer: b.nummer, total_rappen: b.total_rappen, bestellt_am: b.bestellt_am }]),

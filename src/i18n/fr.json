@@ -7499,7 +7499,7 @@
       "freigabeOffen": "Validation de la comptabilité en attente",
       "bezahltAm": "Payé le {{datum}}",
       "imZahllauf": "Dans l’ordre de paiement du {{datum}}",
-      "zahllaufOffen": "Pas encore dans un ordre de paiement",
+      "zahllaufOffen": "Pas encore payée",
       "grund": "Motif (obligatoire)",
       "knopf": {
         "bearbeiten": "Modifier",

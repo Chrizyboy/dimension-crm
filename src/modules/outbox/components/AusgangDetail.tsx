@@ -12,7 +12,7 @@ import { useAusgangAkte } from '../hooks/useAusgang'
 import { useAusgangAktionen } from '../hooks/useAusgangAktionen'
 import { alsText, STATUS_TON, zeitpunkt } from '../lib/anzeige'
 import { aenderungSchema, type AusgangAenderung } from '../schema'
-import { absenderIch, aendern, alsGesendet, ruecklauf, verwerfen, zurueckAn, zurueckholen } from '../services/ausgang'
+import { absenderIch, aendern, alsGesendet, verwerfen, zurueckAn, zurueckholen } from '../services/ausgang'
 import type { AusgangEintrag } from '../types'
 import { DetailFuss } from './DetailFuss'
 import { FehlerLoesung } from './FehlerLoesung'
@@ -223,21 +223,6 @@ export function AusgangDetail({
             >
               <Send />
               {t('ausgang.jetztSenden')}
-            </Button>
-          </div>
-        ) : e.kanal === 'brief' && e.status === 'gesendet' ? (
-          <div className="flex justify-end">
-            <Button
-              variant={e.ruecklauf_am ? 'secondary' : 'primary'}
-              laedt={laeuft}
-              onClick={() =>
-                void ausfuehren(async () => {
-                  await ruecklauf(e.id, !e.ruecklauf_am)
-                })
-              }
-            >
-              <CheckCheck />
-              {t(e.ruecklauf_am ? 'ausgang.brief.ruecklaufNein' : 'ausgang.brief.ruecklaufJa')}
             </Button>
           </div>
         ) : (

@@ -34,6 +34,12 @@ import { Systemstatus } from './Systemstatus'
  * Startseite = «Mein Tag» (Phase 14). Setzt zusammen, was aus verschiedenen Bereichen kommt: KI-Briefing, wer auf
  * eine Antwort wartet (Posteingang), Ausschreibungen, die Karten der Bereiche («Team und Betrieb») und für die Administration Systemstatus und Bauplan.
  */
+/**
+ * Karten «Kunden warten auf Antwort» (Posteingang) und «Wartet auf deine Freigabe» (Ausgangskorb) auf «Mein Tag»:
+ * nie mit Chris besprochen, seit 27.11.2026 ausgeblendet (Entscheid 0061). Beide Bereiche bleiben in der Seitenleiste.
+ */
+const POST_KARTEN: boolean = false
+
 export function Startseite() {
   const { t } = useTranslation()
   const ich = useAnmeldung((z) => z.ich)
@@ -107,13 +113,13 @@ export function Startseite() {
                 <KiBriefing />
               </Suspense>
               {/* Wer auf eine Antwort wartet, gehört ganz nach oben: dafür gibt es den Posteingang. */}
-              {darfModul(posteingangMeta, ich) && (
+              {POST_KARTEN && darfModul(posteingangMeta, ich) && (
                 <Suspense>
                   <PosteingangHeute />
                 </Suspense>
               )}
               {/* Was auf meine Freigabe wartet, erscheint nur, wenn etwas offen ist. */}
-              {darfModul(ausgangMeta, ich) && (
+              {POST_KARTEN && darfModul(ausgangMeta, ich) && (
                 <Suspense>
                   <AusgangHeute />
                 </Suspense>

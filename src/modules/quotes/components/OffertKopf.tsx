@@ -30,6 +30,7 @@ import { formatKundennummer } from '@/lib/kontakt'
 import { useAnmeldung } from '@/stores/anmeldung'
 import type { Offerte } from '../types'
 import type { Entscheid } from './EntscheidDialog'
+import { OFFERTEN_ZUSAETZE } from '../lib/zusaetze'
 import { NachfassChip, OffertStand } from './OffertStand'
 
 const EntscheidDialog = lazy(() => import('./EntscheidDialog'))
@@ -81,7 +82,7 @@ export function OffertKopf({
           <OffertStand stand={o.stand} />
           {versendet && <NachfassChip offerte={o} />}
           {o.imEingang && <Badge ton="info">{t('offerten.akte.imEingang')}</Badge>}
-          {o.status !== 'angenommen' && o.status !== 'verloren' && (
+          {o.status !== 'angenommen' && o.status !== 'verloren' && (OFFERTEN_ZUSAETZE || o.chanceProzent !== null) && (
             <Badge>{t('offerten.chance.kurz', { p: o.chance })}</Badge>
           )}
           {versendet && o.gueltigBis && (

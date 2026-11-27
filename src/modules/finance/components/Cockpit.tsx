@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button'
 import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { useAnmeldung } from '@/stores/anmeldung'
 import { heuteZuTun, nachAlter } from '../lib/cockpit'
 import { heuteZuerich, plusTage } from '../lib/datum'
 import { vorschau } from '../lib/vorschau'
@@ -30,7 +29,6 @@ export function Cockpit({
   onReiter: (r: Reiter) => void
 }) {
   const { t } = useTranslation()
-  const ich = useAnmeldung((z) => z.ich)
   const [szenario, setSzenario] = useState<Szenario>('real')
   const heute = heuteZuerich()
   const v = vorschau(daten, heute, szenario)
@@ -41,12 +39,8 @@ export function Cockpit({
   const ueberfaellig = daten.rechnungen
     .filter((r) => r.faellig_am && r.faellig_am < heute)
     .reduce((s, r) => s + r.offen_rappen, 0)
-  const mwst = daten.mwst
-    .filter((m) => !m.bezahlt_am && m.zahllast_rappen > 0 && m.faellig_am >= plusTage(heute, -30))
-    .sort((a, b) => a.faellig_am.localeCompare(b.faellig_am))
-  const naechsteMwst = mwst.filter((m) => m.faellig_am === mwst[0]?.faellig_am)
   const tranchen = daten.tranchen.reduce((s, x) => s + x.betrag_rappen, 0)
-  const zuTun = heuteZuTun(daten, heute, ich?.id ?? null)
+  const zuTun = heuteZuTun(daten, heute)
   const alter = nachAlter(daten.rechnungen, heute)
   const maxAlter = Math.max(1, ...alter.map((a) => a.rappen))
   const altKonto = daten.konten.filter((k) => k.aktiv && k.stand_am && k.stand_am < plusTage(heute, -4)).length
@@ -88,32 +82,11 @@ export function Cockpit({
         ),
       }),
     },
-    {
-      label: naechsteMwst[0]
-        ? t('finanzen.cockpit.mwst', { periode: naechsteMwst[0].periode })
-        : t('finanzen.cockpit.mwstLeer'),
-      wert: naechsteMwst.length
-        ? formatChf(
-            naechsteMwst.reduce((s, m) => s + m.zahllast_rappen, 0),
-            { mitWaehrung: true },
-          )
-        : '–',
-      klein: naechsteMwst[0]
-        ? t(
-            naechsteMwst.every((m) => m.verbindlich)
-              ? 'finanzen.cockpit.mwstFaellig'
-              : 'finanzen.cockpit.mwstGeschaetzt',
-            {
-              datum: formatDatum(naechsteMwst[0].faellig_am),
-            },
-          )
-        : '',
-    },
   ]
 
   return (
     <div className="flex flex-col gap-4">
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-5" aria-label={t('finanzen.kennzahlen')}>
+      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label={t('finanzen.kennzahlen')}>
         {kacheln.map((k) => (
           <div key={k.label} className="bg-surface flex flex-col gap-1 rounded-lg border p-3">
             <span className="text-muted-foreground text-xs">{k.label}</span>
@@ -210,12 +183,6 @@ export function Cockpit({
                 {t('finanzen.cockpit.rechnungenOffen', { count: daten.rechnungen.length })}
               </dt>
               <dd className="zahlen font-semibold">{formatChf(debitoren, { mitWaehrung: true })}</dd>
-            </div>
-            <div>
-              <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.zahllaeufe')}</dt>
-              <dd className="zahlen font-semibold">
-                {daten.zahllaeufe.filter((z) => z.status === 'zur_freigabe' || z.status === 'freigegeben').length}
-              </dd>
             </div>
             <div>
               <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.pruefungOffen')}</dt>

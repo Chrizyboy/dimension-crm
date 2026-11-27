@@ -6,6 +6,14 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.8
+
+- Nur noch, was wir besprochen haben: Funktionen, die nie abgesprochen waren, sind ausgeblendet (Daten bleiben erhalten).
+- Finanzen ohne Zahllauf, Kontoauszug, MWST-Schätzung und Monatsabschluss; die Kontostände stehen unter Liquidität.
+- Ausgangskorb ohne Serien und Brief-Rücklauf; Aufgaben wie im alten CRM (ohne Wiederholung, Teilschritte, Kommentare, Team-Sicht).
+- Mein Tag ohne die Karten «Kunden warten auf Antwort» und «Wartet auf deine Freigabe».
+- Offerten ohne Varianten, Rabatt-/Marge-Freigabe und automatische Chance; Einkauf ohne Lagerplatz, Inventur, Rüstliste, Rückgabe und Reklamationen.
+
 ## 1.3.7
 
 - Jeder Knopf tut etwas Sichtbares: Das «i» neben dem Seitentitel zeigt die Erklärung jetzt auch beim Klick (auch am Handy).
