@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -11,7 +11,7 @@ Was wer bis wann erledigt. Viele Aufgaben kommen von selbst aus Automationen, Fr
 
 - **Alle**: sehen ihre eigenen Aufgaben, die sie vergeben haben, und die noch niemandem zugeteilten.
 - **Vertretung**: Ist jemand abwesend, siehst du als Stellvertretung seine Aufgaben unter **Vertretung**.
-- **Geschäftsleitung**: sieht unter **Alle** jede Aufgabe und unter **Team**, wer wie viel offen hat.
+- **Geschäftsleitung**: sieht unter **Alle** jede Aufgabe.
 
 ## So geht's {#so}
 
@@ -19,24 +19,18 @@ Was wer bis wann erledigt. Viele Aufgaben kommen von selbst aus Automationen, Fr
 
 1. Oben ins Feld tippen, zum Beispiel «Offerte Baumann nachfassen morgen @LP !».
 2. «morgen», «Freitag» oder «14.11.» setzen das Datum, «@LP» die Person (Kurzzeichen), «!» macht sie wichtig.
-3. **Enter** legt sie an. Für Notiz, Bezug oder Wiederholung **Mehr** wählen.
+3. **Enter** legt sie an. Für Notiz oder Bezug **Mehr** wählen.
 
 ### Eine Aufgabe bearbeiten
 
 1. Auf die Aufgabe klicken. Rechts öffnet sich die Akte.
-2. **Teilschritte** abhaken, **Kommentar** schreiben (mit @Kurzzeichen bekommt die Person eine Glocke).
-3. **Weitergeben** an eine andere Person, mit Notiz. Das Kalender-Symbol in der Liste verschiebt **Auf den nächsten Arbeitstag**.
+2. **Weitergeben** an eine andere Person, mit Notiz. Das Kalender-Symbol in der Liste verschiebt **Auf den nächsten Arbeitstag**.
 
 ### Erledigen
 
 1. Häkchen in der Liste, oder in der Akte **Erledigt …** mit einer Notiz, was herauskam.
 2. Die Notiz steht auch im Verlauf des Leads, der Offerte oder des Service-Falls.
 3. Rückgängig: Ansicht **Erledigt**, Aufgabe öffnen, **Wieder öffnen**.
-
-### Wiederkehrende Aufgaben
-
-1. In der Akte oder unter **Mehr** eine Wiederholung wählen (jede Woche, jeden Monat, jedes Quartal, jedes Jahr).
-2. Beim Erledigen legt das CRM die nächste mit dem neuen Datum für dieselbe Person an.
 
 ## Läuft automatisch {#automatisch}
 
@@ -57,5 +51,6 @@ Die Regeln stellt die Administration im Kapitel [Automationen](kapitel:automatio
 
 ## Neu {#neu}
 
+- 27.11.2026: Wie im alten CRM: Wiederholung, Teilschritte, Kommentare und die Sicht **Team** sind ausgeblendet.
 - 03.11.2026: Liste nach Fälligkeit, Schnelleingabe mit @Kurzzeichen, Akte mit Teilschritten und Kommentaren, Weitergeben, Wiederholung, Vertretung, Team-Sicht und Morgen-Glocke.
 - 24.10.2026: Filter «Von mir vergeben».

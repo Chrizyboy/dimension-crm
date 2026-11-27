@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: innendienst, verkauf, geschaeftsleitung
 ---
 
@@ -18,8 +18,8 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 ### Lire le travail en cours
 
 1. **Travail en cours** montre chaque offre comme une carte dans sa phase, de « À offrir » à « Gagnée ». **Offres** s’ouvre la première fois sur **Nouvelles offres** (comme dans l’ancien CRM), ensuite sur la dernière vue utilisée.
-2. Traiter d’abord les indications rouges et orange : en retard (visite il y a plus de 5 jours ouvrables), relance due, validation nécessaire, question.
-3. Cliquer une carte : l’offre s’ouvre en pleine page avec étapes, variantes, documents et prochaine étape.
+2. Traiter d’abord les indications rouges et orange : en retard (visite il y a plus de 5 jours ouvrables), relance due, question.
+3. Cliquer une carte : l’offre s’ouvre en pleine page avec étapes, documents et prochaine étape.
 
 ### Préparer une nouvelle offre
 
@@ -88,9 +88,7 @@ Ici, un lead devient une offre : le service interne la prépare, le service exte
 
 ## Règles {#regeln}
 
-- Dès 5 % de rabais ou sous 18 % de marge, l’offre doit être **validée** avant l’envoi (Chris ou l’administration).
-- Une offre peut avoir plusieurs **variantes** (p. ex. avec et sans batterie). La variante choisie fixe le montant.
-- La **chance** est calculée selon la phase ; on peut la fixer à la main, vide = de nouveau automatique.
+- La **chance** se saisit à la main ; vide = aucune chance saisie.
 
 - Le montant de l’offre est **hors TVA**. Contrat d’entreprise et valeur du contrat sont TTC.
 - Prix d’achat, marge et calcul seulement avec le droit **Prix**.
@@ -107,6 +105,7 @@ Dans l’offre, choisir **Calcul**. Il s’ouvre dans le chapitre [Prix](kapitel
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : Variantes, validation rabais/marge et chance automatique sont masquées (jamais convenues). La chance se saisit à la main.
 - 20.11.2026 : Relances : filtres moins utilisés (Échue depuis, Montant, Personne) sous **Filtres**, les tuiles à 0 disparaissent. Les documents de l’offre s’ouvrent dans l’aperçu avec ← → et **Envoyer par e-mail**.
 - 19.11.2026 : Relance comme V234 et mieux : personnes avec nombre, montant dès 10'000/25'000/50'000, indicateurs **Échue depuis (Ø)** et **Plus de 180 jours**, par ligne **E-mail de relance** et **Retour à l'offre**. **Clic droit** sur une offre envoyée : **Résultat**, **Acceptée**, **Refusée**, **Reportée**, **Déjà construite**, **E-mail de relance**. Dans le dossier de l’offre **+ Tâche** et **Historique des modifications** (qui a modifié quoi et quand, aussi sur le lead).
 - 19.11.2026: **Offres** s’ouvre la première fois sur **Nouvelles offres**, ensuite sur la dernière vue utilisée (mémorisée par personne).

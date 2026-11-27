@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -28,11 +28,6 @@ Tout ce que le CRM veut envoyer par e-mail, SMS ou courrier attend ici : offres,
 1. Ouvrir l’entrée, **Envoyer plus tard** : aujourd’hui 17:00, demain 08:00, lundi 08:00 ou une heure au choix.
 2. L’entrée figure alors sous **Planifiés** et part à l’heure choisie.
 
-### Approuver une série
-
-1. Les newsletters et e-mails en série d’une campagne sont regroupés en haut comme **Série**.
-2. **Choisir les …**, puis en haut **Valider …**. Les entrées que tu ne peux pas approuver restent en attente.
-
 ### Renvoyer à la personne qui a préparé
 
 1. Ouvrir l’entrée, **Renvoyer à …**, écrire brièvement ce qui manque (p. ex. « acompte 30 % au lieu de 40 % »).
@@ -50,7 +45,7 @@ Tout ce que le CRM veut envoyer par e-mail, SMS ou courrier attend ici : offres,
 ### Envoyer un courrier
 
 1. Pour un courrier (p. ex. contrat d’entreprise à signer), vérifier et approuver veut dire : imprimer.
-2. Après l’envoi, cliquer **Imprimée et envoyée** ; s’il revient signé, **Revenue signée**.
+2. Après l’envoi, cliquer **Imprimée et envoyée**.
 
 ## Statuts {#staende}
 
@@ -89,5 +84,6 @@ Oui, les e-mails partent de ta propre boîte et y figurent sous « Éléments en
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : Les séries sont masquées, chaque message est affiché seul. Pour les courriers, **Revenue signée** n’existe plus (jamais convenu).
 - 03.11.2026: Boîte d’envoi comme établi : dossier « À valider par moi », vérifications avant l’envoi, annuler, envoyer plus tard, renvoyer à, erreurs avec solution, séries et courriers.
 - 23.10.2026: Les brouillons de l’IA (réponses, relances, rendez-vous) arrivent aussi dans la boîte d’envoi.

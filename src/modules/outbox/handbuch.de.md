@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-03
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -28,11 +28,6 @@ Alles, was das CRM per Mail, SMS oder Brief nach aussen schicken will, wartet hi
 1. Eintrag öffnen, **Später senden**: heute 17:00, morgen 08:00, Montag 08:00 oder eine eigene Zeit.
 2. Der Eintrag steht dann unter **Geplant** und geht zur gewählten Zeit raus.
 
-### Eine Serie freigeben
-
-1. Newsletter und Serien-Mails einer Kampagne stehen oben als **Serie** zusammen.
-2. **Alle … wählen**, dann oben **… freigeben**. Einträge, die du nicht freigeben darfst, bleiben stehen.
-
 ### Zurück an die Person, die vorbereitet hat
 
 1. Eintrag öffnen, **Zurück an …**, kurz schreiben, was fehlt (z. B. «Anzahlung 30 % statt 40 %»).
@@ -50,7 +45,7 @@ Alles, was das CRM per Mail, SMS oder Brief nach aussen schicken will, wartet hi
 ### Einen Brief verschicken
 
 1. Briefe (z. B. Werkvertrag zur Unterschrift) prüfen und freigeben heisst: drucken.
-2. Nach dem Versand **Gedruckt und versendet** klicken; kommt er unterschrieben zurück, **Unterschrieben zurück**.
+2. Nach dem Versand **Gedruckt und versendet** klicken.
 
 ## Stände {#staende}
 
@@ -89,5 +84,6 @@ Ja, Mails gehen aus deinem eigenen Postfach und stehen dort unter «Gesendete El
 
 ## Neu {#neu}
 
+- 27.11.2026: Serien sind ausgeblendet, jede Nachricht steht einzeln. Bei Briefen gibt es kein **Unterschrieben zurück** mehr (nie so besprochen).
 - 03.11.2026: Ausgangskorb als Werkbank: Ordner «Für mich zur Freigabe», Prüfungen vor dem Senden, Rückgängig, Später senden, Zurück an, Fehler mit Lösung, Serien und Briefe.
 - 23.10.2026: Entwürfe der KI (Antworten, Nachfassen, Termine) kommen ebenfalls in den Ausgangskorb.
