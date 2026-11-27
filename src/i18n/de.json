@@ -9190,6 +9190,7 @@
     "titel": "Dashboard",
     "beschreibung": "Wie läuft es? Jede Zahl lässt sich anklicken und zeigt, was dahinter steht.",
     "reiter": {
+      "start": "Start",
       "verkauf": "Verkauf",
       "pipeline": "Pipeline & Prognose",
       "ueberblick": "Überblick",
@@ -9585,7 +9586,8 @@
       "titel": "Person",
       "alle": "Alle Personen",
       "ich": "Nur ich",
-      "hinweis": "Für diese Person gibt es im Zeitraum keine Leads."
+      "hinweis": "Für diese Person gibt es im Zeitraum keine Leads.",
+      "alleKurz": "Alle"
     },
     "bericht": {
       "knopf": "Monatsbericht PDF",
@@ -9636,6 +9638,10 @@
         "faelle_dauer": "Ø Service-Fall bis erledigt"
       },
       "titel": "Abläufe und Richtwerte"
+    },
+    "start": {
+      "standorte": "Muri · Bulle",
+      "personen": "Pro Person"
     }
   },
   "handbuch": {

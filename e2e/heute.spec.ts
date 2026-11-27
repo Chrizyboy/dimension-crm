@@ -90,6 +90,12 @@ test('Mein Tag: Aufgabe anlegen, vergeben sehen, abhaken; Mail-Vorschau', async 
 test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({ page }) => {
   test.slow()
   await anmelden(page, 'admin@test.local')
+  // Start wie im alten CRM: Person, Muri/Bulle, Zeitraum und die Tabellen «Muri · Bulle» und «Pro Person».
+  await page.goto('/#/dashboard')
+  await expect(page.getByTestId('kz-start')).toBeVisible()
+  await expect(page.getByTestId('kz-start-filter')).toBeVisible()
+  await expect(page.getByTestId('kz-person')).toBeVisible()
+  expect(await verstoesse(page)).toEqual([])
   await page.goto('/#/dashboard?zeitraum=alle&reiter=ueberblick')
   await expect(page.getByRole('heading', { name: 'Dashboard', level: 1 })).toBeVisible()
   await expect(page.getByTestId('kz-ueberblick')).toBeVisible()

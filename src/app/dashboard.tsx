@@ -56,10 +56,10 @@ export const Route = createFileRoute('/dashboard')({
     const navigate = Route.useNavigate()
     const ich = useAnmeldung((z) => z.ich)
     if (!darfModul(meta, ich)) return <KeinZugriff />
-    const start = startReiter(ich)
+    const start = startReiter()
     const auswahl = {
       reiter: suche.reiter ?? start,
-      zeitraum: suche.zeitraum ?? 'jahr',
+      zeitraum: suche.zeitraum ?? 'monat',
       bereich: suche.bereich ?? 'alle',
       vergleich: suche.vergleich ?? 'vorjahr',
       person: suche.person ?? null,
@@ -74,7 +74,7 @@ export const Route = createFileRoute('/dashboard')({
             void navigate({
               search: {
                 ...(n.reiter !== start ? { reiter: n.reiter } : {}),
-                ...(n.zeitraum !== 'jahr' ? { zeitraum: n.zeitraum } : {}),
+                ...(n.zeitraum !== 'monat' ? { zeitraum: n.zeitraum } : {}),
                 ...(n.bereich !== 'alle' ? { bereich: n.bereich } : {}),
                 ...(n.vergleich !== 'vorjahr' ? { vergleich: n.vergleich } : {}),
                 ...(n.person ? { person: n.person } : {}),

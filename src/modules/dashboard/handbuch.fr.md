@@ -17,13 +17,13 @@ Où en sommes-nous ? Vente, pipeline ouvert par région, carnet de commandes, ch
 
 ### Regarder le mois
 
-1. Onglet **Vente**, **Période** sur **Mois**, **Société** sur **Les deux**, **Muri** ou **Bulle**.
+1. Le tableau de bord s’ouvre sur l’onglet **Départ** comme dans l’ancien CRM, période **Mois**. En haut, choisir la personne (**Tous** ou un nom), **Les deux**, **Muri** ou **Bulle** et la période.
 2. Les tuiles montrent nouveaux leads, offres envoyées, acceptées, taux de conclusion et relances dues.
 3. Un clic sur un chiffre ouvre la liste derrière. De là, un clic ouvre la fiche.
 
 ### Qui a fait combien
 
-1. En bas, choisir **Par personne** ou **Par site**.
+1. Dans **Départ**, en bas, les tableaux **Muri · Bulle** et **Par personne** (dans l’onglet **Tous les chiffres** avec l’année précédente).
 2. Le tableau montre leads, offres, paiements et service par personne ou par site.
 
 ### Sources de leads et coût par lead
@@ -59,6 +59,7 @@ Les offres avec la décision « Gagnée » dans la période choisie. Le taux ne 
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: Nouvel onglet **Départ** comme dans l’ancien CRM : personne, Muri/Bulle et période en haut, cinq chiffres, offres envoyées par jour, tableaux **Muri · Bulle** et **Par personne**, sources de leads. Les autres onglets restent derrière.
 - 27.11.2026: « Indicateurs » s’appelle de nouveau **Tableau de bord**, sous Aperçu, comme dans l’ancien CRM.
 - 20.11.2026 : Sous les onglets la période ; comparaison, domaine et personne sous **Filtres**.
 - 03.11.2026: Seule l’administration modifie le coût par lead, les objectifs et les probabilités.
