@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
-import { Bereichsumschalter } from '@/layouts/Bereichsumschalter'
 import { KeinZugriff } from '@/layouts/KeinZugriff'
 import { darfModul } from '@/lib/rechte'
 import { meta, Werkvertraege } from '@/modules/workcontracts'
@@ -26,7 +25,6 @@ export const Route = createFileRoute('/workcontracts')({
     if (!darfModul(meta, ich)) return <KeinZugriff />
     return (
       <>
-        <Bereichsumschalter modulId="workcontracts" />
         <Suspense>
           <Werkvertraege
             vertragId={vertrag ?? null}

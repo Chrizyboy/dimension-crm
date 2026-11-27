@@ -1085,7 +1085,7 @@
     "bemerkungen": "Bemerkungen vor Ort"
   },
   "verkauf": {
-    "titel": "Anfragen & Leads",
+    "titel": "Leads",
     "beschreibung": "Vom ersten Kontakt bis zur Auftragszusage: Pipeline, Leads, Route und Kalender.",
     "vorschau": "Vorschau ohne Datenbank",
     "vorschauText": "Leads und Pipeline erscheinen, sobald die App mit Supabase verbunden ist.",
@@ -4679,7 +4679,7 @@
     "keine": "Keine Treffer"
   },
   "service": {
-    "titel": "Service & Garantie",
+    "titel": "Aftersales",
     "beschreibung": "Störungen, Reklamationen, Garantiefälle und Nachkontrollen der gebauten Anlagen.",
     "neu": "Neuer Fall",
     "filter": "Fälle",
@@ -9133,7 +9133,7 @@
     }
   },
   "kz": {
-    "titel": "Kennzahlen",
+    "titel": "Dashboard",
     "beschreibung": "Wie läuft es? Jede Zahl lässt sich anklicken und zeigt, was dahinter steht.",
     "reiter": {
       "verkauf": "Verkauf",
