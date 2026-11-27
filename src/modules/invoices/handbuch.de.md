@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: buchhaltung, projektleitung, geschaeftsleitung
 ---
 
@@ -72,6 +72,19 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 2. Die Projektleitung prüft gegen die Bestellung und klickt **Visum geben** oder **Ablehnen** mit Grund.
 3. Ab CHF 5'000 oder ohne Bestellung braucht es zusätzlich das Visum der Geschäftsleitung. Danach steht sie auf **Zur Zahlung bereit**; bezahlt wird in AbaNinja.
 
+### Eine Lieferantenrechnung hochladen (alle)
+
+1. Reiter **Eingangsrechnungen**. Das PDF (Scan vom Brief oder aus der Mail) oder ein Foto in das Feld **Rechnung hierher ziehen oder auswählen** ziehen. Mehrere gehen nacheinander.
+2. Das CRM liest die Rechnung: Rechnungssteller, Rechnungsnummer, Datum, Grund, Betrag, MWST, Fälligkeit, Skonto, IBAN, Referenz und die Leistungsperiode. Alles prüfen, bei Bedarf korrigieren, **PDF ansehen** zum Vergleichen.
+3. Unten stehen der Dateiname (z. B. «20261106_Strassenverkehrsamt Kanton Aargau_2026-1511295_KIA EV9.pdf»), der Ablageort in Compta und, falls nötig, der Hinweis **Abgrenzung** mit dem Betrag je Jahr.
+4. **Zur Freigabe**. Erich und Chris bekommen eine Glocke.
+
+### Eine hochgeladene Rechnung freigeben (Erich oder Chris)
+
+1. Glocke oder Reiter **Eingangsrechnungen**, Filter **Meine Visa**. Rechnung öffnen, mit **Beleg öffnen** vergleichen, bei Bedarf **Ändern**.
+2. **Freigeben**, oder **Ablehnen** mit Grund (die Person, die hochgeladen hat, bekommt eine Glocke). Eine Freigabe reicht, aber nie von der Person, die hochgeladen hat.
+3. Danach steht sie auf **Zur Zahlung bereit**; bezahlt wird in AbaNinja.
+
 ### Rechnungsadresse, Mahnsperre, Zusage, Ausbuchen
 
 1. Rechnung öffnen, **Angaben ändern**: abweichende Rechnungsadresse, Mail für Rechnungen, Referenz des Kunden, Versand.
@@ -105,6 +118,8 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 
 - Jeden Montag bereitet das CRM den Mahnlauf vor; hinaus geht er erst nach der Freigabe.
 - Neue Rechnungen übernehmen Rechnungsadresse, Rechnungs-Mail und Zahlungsfrist des Kunden.
+- Hochgeladene Rechnungen legt das CRM innert Minuten in SharePoint ab: **Administration › Compta › factures <Jahr>**, Jahr der Leistungsperiode (Verkehrssteuer 2027 kommt zu 2027, auch wenn die Rechnung von 2026 ist). Wird der Name oder das Jahr später korrigiert, benennt es die Datei um oder verschiebt sie.
+- Nach der Freigabe geht das PDF an AbaNinja, sobald unter den Finanz-Einstellungen eine Beleg-Adresse (z. B. DeepBox) eingetragen ist. Kommt die Rechnung mit dem Abgleich zurück, verknüpft das CRM sie über Nummer und Betrag statt sie doppelt anzulegen.
 - **Abgleich AbaNinja** (jede Nacht und auf Klick) übernimmt auch Rechnungen, die direkt in AbaNinja gestellt wurden, mit Nummer, Betrag und Zahlungsstand von dort. Der Kunde wird über die Verknüpfung mit AbaNinja oder die gleiche Kundennummer gefunden, das Projekt über die Projektnummer im Titel. Entwürfe aus AbaNinja kommen nicht. Für diese Rechnungen startet keine Automation; gemahnt wird weiter in AbaNinja.
 
 ## Regeln {#regeln}
@@ -114,6 +129,7 @@ Rechnungen aus dem Zahlungsplan eines Projekts (Anzahlung, Montage, Schlussrechn
 - Gesendet wird nur über AbaNinja oder den Ausgangskorb mit Freigabe.
 - Firmenangaben und Einstellungen ändert nur die Administration, auch unter Einstellungen › **Firmen & Bank**. Die Buchhaltung sieht sie zum Lesen.
 - Erinnerungen und Mahnungen gibt nur die Freigabe-Person frei.
+- Hochgeladene Lieferantenrechnungen gibt Erich oder Chris frei (eine Freigabe reicht, nie die Person, die hochgeladen hat). Wird eine freigegebene Rechnung geändert, braucht sie wieder die Freigabe.
 - Eingangsrechnungen: Erstvisum Projektleitung, Zweitvisum Geschäftsleitung ab CHF 5'000 oder ohne Bestellung.
 - Verrechnen auslösen darf nur der zuständige Projektleiter, und erst wenn der Meilenstein erreicht ist.
 
@@ -137,6 +153,7 @@ Filter setzen und **Liste exportieren** (CSV).
 
 ## Neu {#neu}
 
+- 27.11.2026: Lieferantenrechnungen als PDF hineinziehen: das CRM liest sie, benennt die Datei, legt sie in Compta ab, zeigt Abgrenzungen und schickt sie zur Freigabe an Erich oder Chris.
 - 04.11.2026: **Abgleich AbaNinja** übernimmt auch Rechnungen, die direkt in AbaNinja gestellt wurden; die Meldung zeigt, wie viele gelesen und übernommen wurden und welche keinen Kunden haben.
 - 03.11.2026: Rechnungsadresse, Rechnungs-Mail und Zahlungsfrist aus der Kundenakte gelten für neue Rechnungen.
 - 03.11.2026: Übersicht, Mahnlauf mit Freigabe, Meine Projekte mit Verrechnen auslösen, Eingangsrechnungen mit Visum, Mahnsperre, Zusage und Ausbuchen.

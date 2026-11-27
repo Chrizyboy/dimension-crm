@@ -41,6 +41,7 @@ import { leadsDachAnreichern } from '../_shared/leads_dach.ts'
 import { grossprojekteRecherchieren } from '../_shared/gp_recherche.ts'
 import { grossprojektePvNachtragen } from '../_shared/pv_register.ts'
 import { ablageAbarbeiten } from '../_shared/ablage.ts'
+import { eingangAblegen } from '../_shared/eingang_ablage.ts'
 import { anfragenAbholen, kalenderAbgleichen, mailsAbgleichen, msEinstellungen } from '../_shared/abgleich.ts'
 import { abgleichDaten, testen as abaTesten } from '../_shared/abaninja.ts'
 import { bewertungenEinschaetzen } from '../_shared/bewertung.ts'
@@ -427,6 +428,8 @@ Deno.serve(async (req) => {
 
     // Ablage vor der Sicherung: Dateien von Offerten und Projekten gehören in deren Ordner, nicht ins Kunden-Backup.
     ergebnis.ablage = await job('ablage', 5, () => ablageAbarbeiten(s))
+    // Eingangsrechnungen in Compta (Administration › Compta › factures <Jahr>).
+    ergebnis.eingang_ablage = await job('eingang_ablage', 2, () => eingangAblegen(s))
     ergebnis.sicherung = await job('sicherung', 30, async () => {
       const [p] = await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})
       if (!p) return 'keine verbundene Person'

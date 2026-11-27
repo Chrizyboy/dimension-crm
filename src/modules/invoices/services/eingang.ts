@@ -118,3 +118,54 @@ export async function belegAdresse(dokumentId: string): Promise<string | null> {
   const { dokumentAdresse } = await import('@/services/dokumente')
   return dokumentAdresse(data)
 }
+
+/** Was beim Hochladen gespeichert wird (eingang_hochladen); Datum JJJJ-MM-TT, leer = unbekannt. */
+export interface UploadDaten {
+  lieferant: string
+  nummer: string
+  datum: string
+  faellig_am: string
+  betrag_rappen: number
+  mwst_rappen: number | null
+  skonto_prozent: string
+  skonto_bis: string
+  iban: string
+  referenz: string
+  grund: string
+  periode_von: string
+  periode_bis: string
+  text: string
+  dokument_id?: string | null
+}
+
+/** Hochgeladene Rechnung speichern (ohne ID neu, sonst ändern). Gibt die ID zurück. */
+export async function eingangHochladen(id: string | null, p: UploadDaten): Promise<string> {
+  const { data, error } = await db().rpc('eingang_hochladen', { p_id: id as never, p: p as never })
+  if (error) throw error
+  return data
+}
+
+/** Was die KI auf der Rechnung liest (Vorschlag; Beträge in Rappen). */
+export interface GelesenRechnung {
+  lieferant: string | null
+  nummer: string | null
+  datum: string | null
+  faellig_am: string | null
+  betrag_rappen: number | null
+  mwst_rappen: number | null
+  waehrung: string | null
+  skonto_prozent: number | null
+  skonto_bis: string | null
+  iban: string | null
+  referenz: string | null
+  grund: string | null
+  periode_von: string | null
+  periode_bis: string | null
+  bemerkung: string | null
+}
+
+/** PDF oder Foto der Rechnung lesen lassen. */
+export async function rechnungLesen(datei: File): Promise<GelesenRechnung> {
+  const { kiDatei, rufeKi } = await import('@/services/ki')
+  return rufeKi<GelesenRechnung>('eingangsrechnung', { datei: await kiDatei(datei) })
+}
