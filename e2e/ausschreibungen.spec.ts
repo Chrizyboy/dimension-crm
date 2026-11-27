@@ -108,6 +108,6 @@ test('Sperrliste, Quellen, Fristen, Nachweise und Auswertung ohne Verstösse', a
   await page.goto('/#/')
   // Die Karten der Bereiche laden erst, wenn man hinscrollt (gleiches Raster wie die eigenen Karten, V234).
   await expect(page.getByTestId('mein-tag')).toBeVisible()
-  await page.getByTestId('mein-tag').locator(':scope > *').last().scrollIntoViewIfNeeded()
+  await page.getByTestId('tag-bereiche').scrollIntoViewIfNeeded()
   await expect(page.getByText('Ausschreibungen heute')).toBeVisible()
 })

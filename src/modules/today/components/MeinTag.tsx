@@ -237,7 +237,7 @@ export default function MeinTag({
             <WetterKarte />
           </div>
 
-          {bereichKarten}
+          {bereichKarten && <div data-testid="tag-bereiche">{bereichKarten}</div>}
 
           {leer.length > 0 && (
             <Karte className="max-w-3xl" data-testid="tag-nichts-offen">
