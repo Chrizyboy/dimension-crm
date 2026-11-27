@@ -209,27 +209,30 @@ export function EingangAkte({
                 )}
               </dl>
             </AkteAbschnitt>
-            <AkteAbschnitt
-              titel={
-                e.bestellung_nummer
-                  ? t(`${a}.bestellung`, { nummer: e.bestellung_nummer })
-                  : t('rechnungen.eingang.spalte.bestellung')
-              }
-            >
-              {!e.bestellung_id ? (
-                <p className="text-muted-foreground text-sm">{t(`${a}.keineBestellung`)}</p>
-              ) : vergleich.error ? (
-                <Fehlerzustand
-                  details={String(vergleich.error)}
-                  onNochmal={() => void vergleich.refetch()}
-                  ebene="h2"
-                />
-              ) : !vergleich.data?.bestellung ? (
-                <Skelett className="h-24" />
-              ) : (
-                <Vergleich b={vergleich.data.bestellung} />
-              )}
-            </AkteAbschnitt>
+            {/* Hochgeladene ohne Bestellung: der Hinweis aufs GL-Visum gilt dort nicht (Freigabe Erich oder Chris). */}
+            {!(e.quelle === 'upload' && !e.bestellung_id) && (
+              <AkteAbschnitt
+                titel={
+                  e.bestellung_nummer
+                    ? t(`${a}.bestellung`, { nummer: e.bestellung_nummer })
+                    : t('rechnungen.eingang.spalte.bestellung')
+                }
+              >
+                {!e.bestellung_id ? (
+                  <p className="text-muted-foreground text-sm">{t(`${a}.keineBestellung`)}</p>
+                ) : vergleich.error ? (
+                  <Fehlerzustand
+                    details={String(vergleich.error)}
+                    onNochmal={() => void vergleich.refetch()}
+                    ebene="h2"
+                  />
+                ) : !vergleich.data?.bestellung ? (
+                  <Skelett className="h-24" />
+                ) : (
+                  <Vergleich b={vergleich.data.bestellung} />
+                )}
+              </AkteAbschnitt>
+            )}
           </div>
         )}
         {e && aendern && e.quelle === 'upload' && (
