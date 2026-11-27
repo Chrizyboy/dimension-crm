@@ -37,16 +37,12 @@ test('Aufgaben: schnell erfassen, in der Akte bearbeiten, mit Notiz erledigen', 
   await expect(zeile).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 
-  // Akte: Teilschritt und Kommentar.
+  // Akte wie im alten CRM: ohne Teilschritte und Kommentare (Entscheid 0061).
   await zeile.click()
   const akte = page.getByRole('dialog')
   await expect(akte.getByLabel('Was ist zu tun?')).toHaveValue(`Testaufgabe ${lauf}`)
-  await akte.getByLabel('Teilschritt hinzufügen (Enter)').fill('Unterlagen prüfen')
-  await akte.getByLabel('Teilschritt hinzufügen (Enter)').press('Enter')
-  await expect(akte.getByRole('checkbox', { name: 'Unterlagen prüfen' })).toBeVisible()
-  await akte.getByLabel('Kommentar', { exact: true }).fill('Kunde ruft morgen zurück')
-  await akte.getByRole('button', { name: 'Kommentieren' }).click()
-  await expect(akte.getByText('Kunde ruft morgen zurück')).toBeVisible()
+  await expect(akte.getByLabel('Teilschritt hinzufügen (Enter)')).toHaveCount(0)
+  await expect(akte.getByRole('button', { name: 'Kommentieren' })).toHaveCount(0)
   expect(await verstoesse(page)).toEqual([])
 
   // Erledigt mit Notiz.
