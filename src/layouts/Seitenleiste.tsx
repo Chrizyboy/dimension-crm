@@ -34,7 +34,7 @@ const AKTIV = {
 }
 
 /**
- * Linke Navigation in Marineblau, aufgebaut wie das alte CRM V234 (Entscheid 0062): Übersicht, Verkauf, Abwicklung,
+ * Linke Navigation in Marineblau, aufgebaut wie das alte CRM V234 (Entscheid 0063): Übersicht, Verkauf, Abwicklung,
  * dazu «Team»; unten «Fehler melden», Einstellungen und die Apps.
  * Jede Gruppe klappt mit einem Klick auf ihren Namen auf und zu; ohne eigene Wahl sind nur «Übersicht» und die Gruppe
  * des offenen Bereichs offen, so passt die Leiste ohne Scrollen auf einen Laptop. Die Wahl bleibt im Gerät gespeichert.

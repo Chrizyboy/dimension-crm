@@ -44,15 +44,43 @@ export interface Zahlung {
   raten?: EigeneRate[]
 }
 
+/** Welches Dokument der Kunde nach der unterschriebenen Offerte bekommt. */
+export type DokumentArt = 'werkvertrag' | 'auftragsbestaetigung'
+
 /** Angaben im Vertrag (Seite 1 und 2 der Vorlage Muri); leere Felder nehmen den Vorschlag aus der Offerte. */
 export interface VertragAngaben {
+  /** Werkvertrag (Kunde unterschreibt) oder Auftragsbestätigung (ohne Unterschrift); fehlt = Werkvertrag. */
+  art?: DokumentArt
   gegenstand?: string
   material?: string
   beginn?: string
   fertig?: string
   ansprechperson?: string
+  /** Zusätzlich vereinbart; steht im Dokument als Leistung, nicht mehr als «optional». */
   optionen?: { monitoring?: boolean; wartung?: boolean; divers?: string }
+  /** Vereinbarte Funktionen (Kundenziele), als Funktion formuliert, nie als garantierter Prozentwert. */
+  ziele?: string[]
+  /** Bemerkungen des Kunden vom Bestellschein. */
+  bemerkungen?: string
+  /** Bezeichnungen der optionalen Offert-Positionen, die der Kunde bestellt hat. */
+  gewaehlt?: string[]
   zahlung?: Zahlung
+}
+
+/** Eine Position der Offerte (Stückliste aus Eturnity), wie sie ins Dokument kommt. */
+export interface OffertPosition {
+  bezeichnung: string
+  menge: number
+  einheit: string
+  art: 'material' | 'leistung'
+  optional: boolean
+}
+
+/** Ein Schritt im Stand des Auftrags (Offerte unterschrieben bis Schlussrechnung). */
+export interface AuftragSchritt {
+  schluessel: 'offerte' | 'versendet' | 'unterschrieben' | 'anzahlung' | 'montage' | 'ibn' | 'schluss'
+  erledigt: boolean
+  datum: string | null
 }
 
 /** Erste Rate (Anzahlung) mit ihrer Rechnung, falls es schon eine gibt. */
@@ -146,6 +174,8 @@ export interface AuftragsOfferte {
   ort?: string | null
   wechselrichter?: string | null
   titel?: string | null
+  /** Positionen der Offerte (Stückliste); leer, wenn die Offerte keine hat. */
+  positionen?: OffertPosition[]
   /** Bestehender Vertrag zur Offerte (für «Bearbeiten»): Angaben und Wert inkl. MWST. */
   vertrag?: { angaben: VertragAngaben; betragRappen: number | null; unterzeichnet: string | null } | null
 }

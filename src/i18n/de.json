@@ -2275,13 +2275,13 @@
       "wert": "Vertragswert inkl. MWST",
       "wertHinweis": "Offerte CHF {{betrag}} exkl. + {{satz}} % MWST",
       "datum": "Unterzeichnet am",
-      "mitVertrag": "Werkvertrag erstellen",
+      "mitVertrag": "Werkvertrag oder Auftragsbestätigung erstellen",
       "pflicht": "Bitte Standort, Vertragswert und Datum angeben.",
       "zahlung": "Zahlungsbedingung",
       "anzahlung": "Anzahlung in CHF",
       "anzahlungHinweis": "Bei Unterzeichnung fällig, der Rest nach Inbetriebnahme",
       "anzahlungFehlt": "Bitte den Betrag der Anzahlung angeben.",
-      "imVertrag": "Im Vertrag",
+      "imVertrag": "Im Dokument",
       "bearbeiten": "Werkvertrag bearbeiten",
       "speichern": "Speichern",
       "raten": "Raten",
@@ -2296,14 +2296,26 @@
       "gegenstand": "Gegenstand (Zeile unter den Parteien)",
       "material": "Material",
       "materialLeer": "gemäss Offerte",
-      "beginn": "Baubeginn",
+      "beginn": "Montagetermin",
       "fertig": "Fertigstellung & Inbetriebnahme",
       "nachAbsprache": "nach Absprache",
-      "optionen": "Optionale Leistungen (im Vertrag angekreuzt)",
+      "optionen": "Zusätzlich vereinbart",
       "monitoring": "Energiemessung / Monitoring",
       "wartung": "Wartungsvertrag",
-      "batterie": "Batteriespeicher (aus der Offerte)",
-      "divers": "Diverses"
+      "divers": "Diverses",
+      "art": "Dokument",
+      "artHinweis": {
+        "werkvertrag": "Der Kunde unterschreibt den Werkvertrag und schickt ihn zurück.",
+        "auftragsbestaetigung": "Ohne Unterschrift des Kunden: bestätigt die unterschriebene Offerte."
+      },
+      "positionen": "Positionen der Offerte ({{anzahl}})",
+      "optionaleHinweis": "Optionen der Offerte: ankreuzen, was der Kunde bestellt hat. Nicht angekreuzte stehen im Dokument als «nicht bestellt».",
+      "ziele": "Kundenziele / vereinbarte Funktionen",
+      "zieleHinweis": "Als Funktion formulieren, nie als garantierten Prozentwert.",
+      "zielEigenes": "Eigenes Ziel",
+      "zielHinzu": "Hinzufügen",
+      "zielEntfernen": "Ziel entfernen",
+      "bemerkungen": "Bemerkungen des Kunden"
     },
     "senden": {
       "titel": "Werkvertrag an Kunden senden",
@@ -2320,7 +2332,20 @@
       },
       "mitUnterschrift": "Mit meiner Unterschrift unterschreiben",
       "unterschriftHinweis": "Deine Unterschrift steht im Kasten «Unterschrift Dimension Solaire», dein Name darunter.",
-      "keineUnterschrift": "Noch keine Unterschrift hinterlegt: unter Mein Konto › Meine Unterschrift. Ohne sie bleibt der Kasten leer."
+      "keineUnterschrift": "Noch keine Unterschrift hinterlegt: unter Mein Konto › Meine Unterschrift. Ohne sie bleibt der Kasten leer.",
+      "titelAb": "Auftragsbestätigung an Kunden senden",
+      "ab": "Auftragsbestätigung mit AGB als PDF ({{sprache}})",
+      "pruefen": "Vor dem Versand prüfen",
+      "punkt": {
+        "positionen": "Positionen entsprechen der unterschriebenen Offerte {{nummer}}",
+        "ziele": "Kundenziele erfasst",
+        "termin": "Montagetermin erfasst",
+        "sprache": "Sprache stimmt: {{sprache}}"
+      },
+      "fehlt": {
+        "ziele": "Noch keine Ziele: unter «Bearbeiten» nachtragen oder bewusst ohne senden.",
+        "termin": "Noch kein Termin: im Dokument steht «nach Absprache»."
+      }
     },
     "einstellung": {
       "titel": "Einstellungen",
@@ -2343,6 +2368,28 @@
       "liste": "Offerten ohne Werkvertrag",
       "leer": "Keine passende Offerte ohne Werkvertrag.",
       "exkl": "exkl. MWST"
+    },
+    "art": {
+      "werkvertrag": "Werkvertrag",
+      "auftragsbestaetigung": "Auftragsbestätigung",
+      "kurzAb": "Auftragsbestätigung"
+    },
+    "ziele": {
+      "eigenverbrauch": "Eigenverbrauch erhöhen",
+      "ueberschussladen": "Laden mit Solarüberschuss",
+      "monitoring": "Monitoring in der App",
+      "notstrom": "Notstrom"
+    },
+    "stand": {
+      "titel": "Stand des Auftrags",
+      "offerte": "Offerte unterschrieben",
+      "versendet": "Werkvertrag versendet",
+      "versendetAb": "Auftragsbestätigung versendet",
+      "unterschrieben": "Werkvertrag unterschrieben",
+      "anzahlung": "Anzahlung bezahlt",
+      "montage": "Montage",
+      "ibn": "Inbetriebnahme",
+      "schluss": "Schlussrechnung"
     }
   },
   "preise": {
@@ -3562,6 +3609,12 @@
     "nachfassen": {
       "betreff": "Ihre Offerte {{nummer}} von Dimension Solaire",
       "text": "Guten Tag\n\nAm {{datum}} haben wir Ihnen unsere Offerte geschickt. Haben Sie sie in Ruhe anschauen können? Gerne beantworten wir Ihre Fragen oder passen die Offerte an Ihre Wünsche an.\n\nWir freuen uns auf Ihre Rückmeldung.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
+    },
+    "auftragsbestaetigung": {
+      "betreff": "Ihre Auftragsbestätigung {{nummer}} von Dimension Solaire",
+      "text": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie die Auftragsbestätigung zu Ihrer unterschriebenen Offerte. Bitte prüfen Sie die Angaben und melden Sie sich, falls etwas nicht stimmt.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire",
+      "betreffMitRechnung": "Ihre Auftragsbestätigung {{nummer}} und die Anzahlungsrechnung von Dimension Solaire",
+      "textMitRechnung": "Guten Tag\n\nVielen Dank für Ihren Auftrag. Im Anhang finden Sie die Auftragsbestätigung zu Ihrer unterschriebenen Offerte und die Anzahlungsrechnung über {{betrag}}. Bitte prüfen Sie die Angaben und überweisen Sie die Anzahlung mit dem QR-Zahlteil. Nach Eingang der Anzahlung bestellen wir das Material und vereinbaren mit Ihnen den Montagetermin.\n\nFreundliche Grüsse\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {

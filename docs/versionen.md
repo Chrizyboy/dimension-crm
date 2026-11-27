@@ -12,6 +12,12 @@ die Änderung mit Version und Abschnitt hier (docs/installation.md).
 - Aufgaben, Grossprojekte, Adressbuch, Spesen und Finanzen findest du oben im passenden Bereich. Der Ausgangskorb ist der Knopf neben der Glocke.
 - Die Geschäftsleitung sieht in «Preise» wieder die internen Preise.
 
+## 1.3.11
+
+- Werkverträge: Das Dokument übernimmt die Positionen 1:1 aus der Offerte; bei Optionen kreuzt man an, was bestellt ist.
+- Neu wählbar: Auftragsbestätigung ohne Unterschrift des Kunden. Dazu Kundenziele, Montagetermin und Bemerkungen.
+- Vor dem Versand eine kurze Prüfliste, in der Akte der Stand des Auftrags bis zur Schlussrechnung.
+
 ## 1.3.10
 
 - Einfacher und ruhiger: Oben stehen nur noch Suche, Assistent, Glocke und dein Kürzel. Sprache, Hilfe, Aktualisieren, Vollbild und PC/Handy findest du im Menü hinter deinem Kürzel.

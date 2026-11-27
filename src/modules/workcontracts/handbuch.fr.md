@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: verkauf, innendienst, buchhaltung, geschaeftsleitung
 ---
 
@@ -19,18 +19,22 @@ L’offre acceptée devient la commande : projet, plan de paiement et contrat d�
 
 1. **Nouveau contrat**, choisir l’offre acceptée (ou **Créer la commande** dans l’offre).
 2. Choisir les conditions de paiement d’un clic : standard 40/30/30, batteries 70/30, 100 %, acompte propre en CHF ou tranches propres avec libellé et pourcentage.
-3. Vérifier les données (installation, début des travaux, particularités). Le CRM arrondit les tranches au franc.
-4. **Créer**. Projet, plan de paiement et PDF du contrat sont créés en une étape.
+3. Sous **Dans le document**, vérifier :
+   - **Document** : normalement **Contrat d’entreprise** (le client signe). **Confirmation de commande** seulement si le client a déjà signé l’offre et ne doit plus rien signer.
+   - **Positions de l’offre** : reprises 1:1 de l’offre. Pour les options, cocher ce que le client a commandé ; les autres figurent dans le document comme « non commandées ».
+   - **Date de montage**, **Objectifs du client / fonctionnalités convenues** (d’un clic ou texte libre) et **Remarques du client**.
+   - **Convenu en plus** : monitoring, contrat d’entretien, divers.
+4. **Créer**. Projet, plan de paiement et PDF du contrat sont créés en une étape. Le CRM arrondit les tranches au franc.
 
 ### Envoyer contrat et facture d’acompte
 
 1. Ouvrir le contrat. Le CRM crée la **Facture d’acompte** à l’envoi (droit Finances) ; si elle existe déjà, elle est jointe.
-2. **Envoyer au client**, **Préparer l’e-mail** : contrat et facture avec section de paiement QR sont dans la [Boîte d’envoi](kapitel:outbox) pour approbation.
+2. **Envoyer au client** et cocher les points sous **À vérifier avant l’envoi** (positions = offre signée, objectifs du client, date de montage, langue). Ensuite seulement **Préparer l’e-mail** : contrat et facture avec section de paiement QR sont dans la [Boîte d’envoi](kapitel:outbox) pour approbation.
 3. Après l’envoi, le contrat est **Envoyé**.
 
 ### Noter la signature
 
-1. Quand le contrat revient signé : **Signé**, saisir la date, joindre le PDF signé.
+1. Seulement pour le contrat d’entreprise (le client ne signe pas une confirmation de commande). Quand le contrat revient signé : **Signé**, saisir la date, joindre le PDF signé.
 2. Le projet passe ainsi à la planification, voir [Projets & montage](kapitel:projects).
 
 ### Modifier ou annuler la commande
@@ -46,6 +50,8 @@ L’offre acceptée devient la commande : projet, plan de paiement et contrat d�
 - **Signé** : en vigueur, le projet démarre.
 - **Annulé** : tombe, avec motif.
 
+En haut du dossier, **Avancement de la commande** montre où en est la commande : offre signée, contrat (ou confirmation) envoyé, contrat signé, acompte payé, montage, mise en service, facture finale. Montage et mise en service viennent du planning du projet, l’acompte du plan de paiement.
+
 ## Automatique {#automatisch}
 
 - Le plan de paiement génère ensuite les factures des tranches dans le chapitre [Factures](kapitel:invoices).
@@ -55,6 +61,8 @@ L’offre acceptée devient la commande : projet, plan de paiement et contrat d�
 
 - Contrat et valeur du contrat sont **TTC**, l’offre hors TVA.
 - Les tranches propres doivent faire 100 % ensemble.
+- Formuler les objectifs du client comme fonctionnalité (« utiliser l’électricité solaire le soir »), **jamais** comme pourcentage garanti. Le document le précise de lui-même.
+- Ne jamais promettre « en une seule intervention » : montage, raccordement par l’électricien et mise en service ont souvent lieu à des jours différents ; c’est aussi écrit dans le document.
 
 ## Questions fréquentes {#fragen}
 
@@ -62,12 +70,17 @@ L’offre acceptée devient la commande : projet, plan de paiement et contrat d�
 
 Dans la langue du client, avec les CG dans la même langue.
 
+### Contrat d’entreprise ou confirmation de commande ?
+
+Le standard est le contrat d’entreprise. La confirmation de commande est pour les clients qui ont déjà signé l’offre ; elle confirme l’offre et ne demande pas de deuxième signature. La direction clarifie si une offre signée suffit seule comme contrat.
+
 ### Ma signature manque dans le PDF.
 
 Déposer ta signature sous **Mon compte**, puis recréer le contrat.
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : document repris 1:1 de l’offre (cocher les options, seules celles non commandées apparaissent comme options), au choix **Confirmation de commande** sans signature du client, **Objectifs du client**, **Date de montage** et **Remarques**, liste de contrôle avant l’envoi et **Avancement de la commande** dans le dossier.
 - 19.11.2026 : contrats d’entreprise et contrats d’entretien forment une seule entrée **Contrats** dans la barre latérale (comme dans l’ancien CRM) ; en haut, on passe de **Contrats d’entreprise** à **Contrats d’entretien**.
 - 03.11.2026: «Mettre à la corbeille» pour les contrats d'entreprise; signés seulement par l'administration, avec confirmation et «Annuler». Restaurer depuis la corbeille (menu en haut à droite).
 - 02.11.2026: Bouton « Nouveau contrat » avec choix de l’offre.

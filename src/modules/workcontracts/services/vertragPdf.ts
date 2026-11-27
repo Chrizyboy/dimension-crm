@@ -204,9 +204,15 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
   luecke(5)
   absatz([{ text: v.leistungenTitel }])
   luecke(4)
-  ;[...v.leistungen, [{ text: v.optionenTitel }]].forEach((teile, i) => {
+  v.leistungen.forEach((teile, i) => {
     punkt(`${String(i + 1)}.`, teile, 12.7 * MM, 6 * MM, 3.2)
   })
+  // Nicht bestellte Optionen nur, wenn es welche gibt (Bestelltes steht nie als «optional», Fall Weller).
+  if (v.optionen.length) {
+    luecke(2)
+    absatz([{ text: v.optionenTitel }], { x: 6 * MM })
+    luecke(1)
+  }
   for (const o of v.optionen) {
     if (y - 10.5 < UNTEN) neueSeite()
     const start = y
@@ -218,8 +224,22 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
     y -= 3.6
   }
 
-  // Seite 2: Termine, Werklohn, Unterschriften
+  // Seite 2: vereinbarte Funktionen, Termine, Werklohn, Unterschriften
   neueSeite(15 * MM)
+  if (v.ziele) {
+    fett(v.ziele.titel)
+    luecke(2)
+    if (v.ziele.intro.length) {
+      absatz(v.ziele.intro)
+      luecke(2)
+    }
+    for (const t of v.ziele.punkte) punkt('•', t, 12.7 * MM, 6 * MM, 2)
+    if (v.ziele.hinweis?.length) {
+      luecke(1)
+      absatz(v.ziele.hinweis)
+    }
+    luecke(5)
+  }
   fett(v.abschnitt2)
   luecke(2)
   for (const [l, w] of v.termine) punkt('•', [{ text: `${l} `, fett: true }, { text: w }], 12.7 * MM, 6 * MM, 1)
@@ -234,15 +254,19 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
   absatz([{ text: v.planTitel }])
   luecke(2)
   for (const [l, w] of v.raten) betrag([{ text: `${l} ` }, { text: w, fett: true }])
-  if (y - 75 * MM < UNTEN) neueSeite()
-  luecke(30)
-  const reihe = y
-  absatz([{ text: v.ortDatum }])
-  y = reihe
-  absatz([{ text: v.name }], { x: 62.5 * MM })
-  luecke(8)
-  kasten(v.unterschrift, 23.5 * MM)
-  luecke(20)
+  // Auftragsbestätigung: nur Dimension Solaire unterschreibt.
+  const kunde = v.kundeUnterschreibt
+  if (y - (kunde ? (v.ziele ? 62 : 75) : 35) * MM < UNTEN) neueSeite()
+  luecke(kunde ? (v.ziele ? 8 : 30) : 14)
+  if (kunde) {
+    const reihe = y
+    absatz([{ text: v.ortDatum }])
+    y = reihe
+    absatz([{ text: v.name }], { x: 62.5 * MM })
+    luecke(8)
+    kasten(v.unterschrift, 23.5 * MM)
+    luecke(20)
+  }
   absatz([{ text: v.firmaOrtDatum }])
   luecke(6)
   let bild: PDFImage | null = null
@@ -304,17 +328,21 @@ export async function werkvertragPdf(v: VertragInhalt): Promise<Uint8Array> {
     )
     for (const a of absaetze) agbAbsatz([{ text: a }])
   }
-  if (y - 55 * MM < UNTEN) weiter()
-  agbAbsatz([{ text: v.unterschrift.replace(/\s*:$/, v.sprache === 'fr' ? ' :' : ':'), fett: true }], { vorher: 9 })
-  agbAbsatz([{ text: v.agbSchluss }])
-  y -= 8 * MM
-  const x0 = spalteX() - LR
-  const reiheAgb = y
-  absatz([{ text: v.ortDatum }], { x: x0, breite: 44 * MM })
-  y = reiheAgb
-  absatz([{ text: v.name }], { x: x0 + 45 * MM, breite: SP - 45 * MM })
-  y -= 8 * MM
-  kasten(v.unterschrift, 21 * MM, { breite: SP - 22 * MM, x: x0 })
+  if (!v.kundeUnterschreibt) {
+    agbAbsatz([{ text: v.agbSchluss }], { vorher: 9 })
+  } else {
+    if (y - 55 * MM < UNTEN) weiter()
+    agbAbsatz([{ text: v.unterschrift.replace(/\s*:$/, v.sprache === 'fr' ? ' :' : ':'), fett: true }], { vorher: 9 })
+    agbAbsatz([{ text: v.agbSchluss }])
+    y -= 8 * MM
+    const x0 = spalteX() - LR
+    const reiheAgb = y
+    absatz([{ text: v.ortDatum }], { x: x0, breite: 44 * MM })
+    y = reiheAgb
+    absatz([{ text: v.name }], { x: x0 + 45 * MM, breite: SP - 45 * MM })
+    y -= 8 * MM
+    kasten(v.unterschrift, 21 * MM, { breite: SP - 22 * MM, x: x0 })
+  }
 
   // Kopf und Fuss auf jeder Seite
   doc.getPages().forEach((p, i) => {

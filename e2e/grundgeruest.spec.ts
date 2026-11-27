@@ -42,7 +42,7 @@ test.describe('Desktop', () => {
   test('Seitenleiste wie im alten CRM: 16 Einträge, Teile hängen am Hauptbereich', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
-    // Wie V234 sind alle Gruppen offen (Entscheid 0062); jede lässt sich weiter zuklappen.
+    // Wie V234 sind alle Gruppen offen (Entscheid 0063); jede lässt sich weiter zuklappen.
     await expect(nav.getByRole('link')).toHaveCount(16)
     await nav.getByRole('link', { name: 'Verträge' }).click()
     await page.getByRole('link', { name: 'Wartungsverträge' }).click()

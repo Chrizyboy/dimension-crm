@@ -2275,13 +2275,13 @@
       "wert": "Valeur du contrat TVA incl.",
       "wertHinweis": "Offre CHF {{betrag}} hors TVA + {{satz}} % TVA",
       "datum": "Signé le",
-      "mitVertrag": "Établir le contrat d’entreprise",
+      "mitVertrag": "Créer le contrat ou la confirmation de commande",
       "pflicht": "Merci d’indiquer le site, la valeur du contrat et la date.",
       "zahlung": "Conditions de paiement",
       "anzahlung": "Acompte en CHF",
       "anzahlungHinweis": "Dû à la signature, le solde après la mise en service",
       "anzahlungFehlt": "Veuillez indiquer le montant de l’acompte.",
-      "imVertrag": "Dans le contrat",
+      "imVertrag": "Dans le document",
       "bearbeiten": "Modifier le contrat d’entreprise",
       "speichern": "Enregistrer",
       "raten": "Échéances",
@@ -2296,14 +2296,26 @@
       "gegenstand": "Objet (ligne sous les parties)",
       "material": "Matériel",
       "materialLeer": "selon l’offre",
-      "beginn": "Début des travaux",
+      "beginn": "Date de montage",
       "fertig": "Achèvement & mise en service",
       "nachAbsprache": "à convenir",
-      "optionen": "Prestations optionnelles (cochées dans le contrat)",
+      "optionen": "Convenu en plus",
       "monitoring": "Mesure d’énergie / monitoring",
       "wartung": "Contrat de maintenance",
-      "batterie": "Batterie (selon l’offre)",
-      "divers": "Divers"
+      "divers": "Divers",
+      "art": "Document",
+      "artHinweis": {
+        "werkvertrag": "Le client signe le contrat d’entreprise et le renvoie.",
+        "auftragsbestaetigung": "Sans signature du client : confirme l’offre signée."
+      },
+      "positionen": "Positions de l’offre ({{anzahl}})",
+      "optionaleHinweis": "Options de l’offre : cocher ce que le client a commandé. Les autres figurent dans le document comme « non commandées ».",
+      "ziele": "Objectifs du client / fonctionnalités convenues",
+      "zieleHinweis": "Formuler comme fonctionnalité, jamais comme pourcentage garanti.",
+      "zielEigenes": "Autre objectif",
+      "zielHinzu": "Ajouter",
+      "zielEntfernen": "Retirer l’objectif",
+      "bemerkungen": "Remarques du client"
     },
     "senden": {
       "titel": "Envoyer le contrat au client",
@@ -2320,7 +2332,20 @@
       },
       "mitUnterschrift": "Signer avec ma signature",
       "unterschriftHinweis": "Ta signature figure dans la case « Signature Dimension Solaire », ton nom en dessous.",
-      "keineUnterschrift": "Aucune signature enregistrée : sous Mon compte › Ma signature. Sans elle, la case reste vide."
+      "keineUnterschrift": "Aucune signature enregistrée : sous Mon compte › Ma signature. Sans elle, la case reste vide.",
+      "titelAb": "Envoyer la confirmation de commande au client",
+      "ab": "Confirmation de commande avec CG en PDF ({{sprache}})",
+      "pruefen": "À vérifier avant l’envoi",
+      "punkt": {
+        "positionen": "Les positions correspondent à l’offre signée {{nummer}}",
+        "ziele": "Objectifs du client saisis",
+        "termin": "Date de montage saisie",
+        "sprache": "Langue correcte : {{sprache}}"
+      },
+      "fehlt": {
+        "ziele": "Pas encore d’objectifs : compléter sous « Modifier » ou envoyer sciemment sans.",
+        "termin": "Pas encore de date : le document indique « à convenir »."
+      }
     },
     "einstellung": {
       "titel": "Réglages",
@@ -2343,6 +2368,28 @@
       "liste": "Offres sans contrat d'entreprise",
       "leer": "Aucune offre correspondante sans contrat.",
       "exkl": "HT"
+    },
+    "art": {
+      "werkvertrag": "Contrat d’entreprise",
+      "auftragsbestaetigung": "Confirmation de commande",
+      "kurzAb": "Confirmation"
+    },
+    "ziele": {
+      "eigenverbrauch": "Augmenter l’autoconsommation",
+      "ueberschussladen": "Recharge avec le surplus solaire",
+      "monitoring": "Suivi dans l’application",
+      "notstrom": "Courant de secours"
+    },
+    "stand": {
+      "titel": "Avancement de la commande",
+      "offerte": "Offre signée",
+      "versendet": "Contrat envoyé",
+      "versendetAb": "Confirmation envoyée",
+      "unterschrieben": "Contrat signé",
+      "anzahlung": "Acompte payé",
+      "montage": "Montage",
+      "ibn": "Mise en service",
+      "schluss": "Facture finale"
     }
   },
   "preise": {
@@ -3562,6 +3609,12 @@
     "nachfassen": {
       "betreff": "Votre offre {{nummer}} de Dimension Solaire",
       "text": "Bonjour\n\nLe {{datum}}, nous vous avons envoyé notre offre. Avez-vous pu la consulter tranquillement ? Nous répondons volontiers à vos questions ou adaptons l'offre à vos souhaits.\n\nDans l'attente de votre retour.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
+    },
+    "auftragsbestaetigung": {
+      "betreff": "Votre confirmation de commande {{nummer}} de Dimension Solaire",
+      "text": "Bonjour\n\nMerci pour votre commande. Vous trouverez en pièce jointe la confirmation de commande relative à votre offre signée. Merci de vérifier les indications et de nous contacter si quelque chose ne correspond pas.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire",
+      "betreffMitRechnung": "Votre confirmation de commande {{nummer}} et la facture d'acompte de Dimension Solaire",
+      "textMitRechnung": "Bonjour\n\nMerci pour votre commande. Vous trouverez en pièce jointe la confirmation de commande relative à votre offre signée et la facture d'acompte de {{betrag}}. Merci de vérifier les indications et de régler l'acompte avec la QR-facture. Dès réception de l'acompte, nous commandons le matériel et convenons avec vous de la date de montage.\n\nMeilleures salutations\n{{absender}}\nDimension Solaire"
     }
   },
   "ausschreibungen": {
