@@ -1,12 +1,8 @@
 import { useIsFetching, useQueryClient } from '@tanstack/react-query'
-import { Maximize, Minimize, RefreshCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/button'
 import { istDesktopApp } from '@/lib/plattform'
-import { cn } from '@/lib/utils'
 import { meldeFehler } from '@/services/fehler'
-import { AnsichtKnopf } from './AnsichtKnopf'
 
 /** Schaltet das Fenster in den Vollbildmodus und zurück: in der Windows-App das ganze Fenster, im Browser die Seite. */
 async function vollbildUmschalten(): Promise<boolean> {
@@ -26,10 +22,11 @@ async function vollbildUmschalten(): Promise<boolean> {
 }
 
 /**
- * Runde Knöpfe oben rechts wie in V234: PC/Handy, Vollbild und Aktualisieren.
- * «Aktualisieren» lädt alle Daten der offenen Ansicht neu vom Server, ohne die Seite neu zu laden (Eingaben bleiben).
+ * Vollbild (F11) und Aktualisieren wie in V234, seit 27.11.2026 im Konto-Menü statt als runde Knöpfe (Chris: Kopfzeile
+ * nur Suche, Assistent, Glocke, Profil). «Aktualisieren» lädt alle Daten der offenen Ansicht neu vom Server, ohne die
+ * Seite neu zu laden (Eingaben bleiben).
  */
-export function FensterKnoepfe() {
+export function useFenster() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const laedt = useIsFetching() > 0
@@ -62,34 +59,17 @@ export function FensterKnoepfe() {
   }, [])
 
   const vollbildText = vollbild ? t('fenster.vollbildAus') : t('fenster.vollbild')
-  return (
-    <>
-      <AnsichtKnopf />
-      <Button
-        variant="glas"
-        size="rund"
-        className="hidden sm:inline-flex"
-        aria-label={vollbildText}
-        title={`${vollbildText} (F11)`}
-        onClick={() => {
-          vollbildUmschalten().then(setVollbild, (e: unknown) => {
-            meldeFehler(e)
-          })
-        }}
-      >
-        {vollbild ? <Minimize aria-hidden="true" /> : <Maximize aria-hidden="true" />}
-      </Button>
-      <Button
-        variant="glas"
-        size="rund"
-        aria-label={t('fenster.aktualisieren')}
-        title={t('fenster.aktualisieren')}
-        onClick={() => {
-          void queryClient.invalidateQueries()
-        }}
-      >
-        <RefreshCw aria-hidden="true" className={cn(laedt && 'animate-spin')} />
-      </Button>
-    </>
-  )
+  return {
+    vollbild,
+    vollbildText,
+    laedt,
+    vollbildUmschalten: () => {
+      vollbildUmschalten().then(setVollbild, (e: unknown) => {
+        meldeFehler(e)
+      })
+    },
+    aktualisieren: () => {
+      void queryClient.invalidateQueries()
+    },
+  }
 }

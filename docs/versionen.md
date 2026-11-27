@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.10
+
+- Einfacher und ruhiger: Oben stehen nur noch Suche, Assistent, Glocke und dein Kürzel. Sprache, Hilfe, Aktualisieren, Vollbild und PC/Handy findest du im Menü hinter deinem Kürzel.
+- Der Posteingang zeigt nur noch den Arbeitsplatz; Absender-Regeln stehen unter Einstellungen.
+- Mein Tag zeigt keine leeren Karten mehr, nur was wirklich ansteht.
+
 ## 1.3.8
 
 - Nur noch, was wir besprochen haben: Funktionen, die nie abgesprochen waren, sind ausgeblendet (Daten bleiben erhalten).

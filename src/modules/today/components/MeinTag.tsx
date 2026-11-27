@@ -119,44 +119,49 @@ export default function MeinTag({
   const weitere = d ? WEITERE.filter((w) => listeVon(d, w.liste).anzahl > 0) : []
   const kernLeer = d ? d.termine.anzahl + d.aufgaben.anzahl + d.vergeben.anzahl === 0 : false
 
-  // Termine und Aufgaben; steht oben, ausser beide sind leer.
+  // Termine und Aufgaben; nur was Punkte hat (Chris 27.11.2026: keine leeren Karten).
+  const aufgabenLeer = d ? d.aufgaben.anzahl + d.vergeben.anzahl === 0 : true
   const kern = d && (
     <div className="grid items-start gap-4 lg:grid-cols-2">
-      <TagKarte
-        icon={CalendarDays}
-        titel={t('tag.liste.termine')}
-        liste={d.termine}
-        heute={d.heute}
-        max={8}
-        testId="tag-termine"
-      />
-      <TagKarte
-        icon={ListChecks}
-        titel={t('tag.liste.aufgaben')}
-        liste={d[aufgabenSicht]}
-        heute={d.heute}
-        max={8}
-        alleZiel={aufgabenSicht === 'vergeben' ? '/tasks?wer=vergeben' : '/tasks'}
-        onAbhaken={(z) => void abhaken(z)}
-        {...(aufgabenSicht === 'aufgaben'
-          ? { onVerschieben: (z: TagZeile, bis: string) => void verschiebe(z, bis) }
-          : {})}
-        testId="tag-aufgaben"
-        kopf={
-          <Filterchips
-            einzeln
-            beschriftung={t('tag.liste.aufgaben')}
-            gewaehlt={[aufgabenSicht]}
-            optionen={[
-              { wert: 'aufgaben', text: t('tag.aufgabenFilter.fuerMich'), anzahl: d.aufgaben.anzahl },
-              { wert: 'vergeben', text: t('tag.aufgabenFilter.vergeben'), anzahl: d.vergeben.anzahl },
-            ]}
-            onChange={([w]) => {
-              setAufgabenSicht(w === 'vergeben' ? 'vergeben' : 'aufgaben')
-            }}
-          />
-        }
-      />
+      {d.termine.anzahl > 0 && (
+        <TagKarte
+          icon={CalendarDays}
+          titel={t('tag.liste.termine')}
+          liste={d.termine}
+          heute={d.heute}
+          max={8}
+          testId="tag-termine"
+        />
+      )}
+      {!aufgabenLeer && (
+        <TagKarte
+          icon={ListChecks}
+          titel={t('tag.liste.aufgaben')}
+          liste={d[aufgabenSicht]}
+          heute={d.heute}
+          max={8}
+          alleZiel={aufgabenSicht === 'vergeben' ? '/tasks?wer=vergeben' : '/tasks'}
+          onAbhaken={(z) => void abhaken(z)}
+          {...(aufgabenSicht === 'aufgaben'
+            ? { onVerschieben: (z: TagZeile, bis: string) => void verschiebe(z, bis) }
+            : {})}
+          testId="tag-aufgaben"
+          kopf={
+            <Filterchips
+              einzeln
+              beschriftung={t('tag.liste.aufgaben')}
+              gewaehlt={[aufgabenSicht]}
+              optionen={[
+                { wert: 'aufgaben', text: t('tag.aufgabenFilter.fuerMich'), anzahl: d.aufgaben.anzahl },
+                { wert: 'vergeben', text: t('tag.aufgabenFilter.vergeben'), anzahl: d.vergeben.anzahl },
+              ]}
+              onChange={([w]) => {
+                setAufgabenSicht(w === 'vergeben' ? 'vergeben' : 'aufgaben')
+              }}
+            />
+          }
+        />
+      )}
     </div>
   )
 
@@ -196,7 +201,7 @@ export default function MeinTag({
 
       {d && (
         <>
-          {/* Was Punkte hat, steht oben: Sind Termine und Aufgaben leer, rücken die Bereiche mit offenen Punkten nach vorn. */}
+          {/* Was Punkte hat, steht oben; leere Karten bleiben ganz weg. */}
           {!kernLeer && kern}
 
           {(weitere.length > 0 || verkaufKarten) && (
@@ -224,8 +229,6 @@ export default function MeinTag({
             <TeamHeute />
             <WetterKarte />
           </div>
-
-          {kernLeer && kern}
 
           {offen === 0 && <Leerzustand icon={Sun} titel={t('tag.leerTitel')} text={t('tag.leerText')} />}
         </>

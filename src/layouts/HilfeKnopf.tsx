@@ -1,8 +1,5 @@
 import { useNavigate, useRouterState } from '@tanstack/react-router'
-import { CircleHelp } from 'lucide-react'
 import { Suspense, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/button'
 import { MODULE } from '@/lib/navigation'
 import { HilfePanel } from '@/modules/knowledge'
 
@@ -13,11 +10,10 @@ function bereichZu(pfad: string): string | null {
 }
 
 /**
- * «?» in der Kopfzeile und F1 überall (wie unter Windows gewohnt): öffnet das Handbuch-Kapitel des Bereichs, in dem
+ * «Hilfe» im Konto-Menü und F1 überall (wie unter Windows gewohnt): öffnet das Handbuch-Kapitel des Bereichs, in dem
  * die Person gerade ist, als Seitenblatt. Ausserhalb eines Bereichs (Mein Konto, Handbuch) öffnet es das Handbuch.
  */
-export function HilfeKnopf() {
-  const { t } = useTranslation()
+export function useHilfe() {
   const navigate = useNavigate()
   const pfad = useRouterState({ select: (s) => s.location.pathname })
   const [offen, setOffen] = useState<string | null>(null)
@@ -36,31 +32,22 @@ export function HilfeKnopf() {
     }
   }, [pfad, navigate])
 
-  return (
-    <>
-      <Button
-        variant="glas"
-        size="rund"
-        aria-label={t('handbuch.hilfe.knopf')}
-        title={t('handbuch.hilfe.knopf')}
-        onClick={() => {
-          const b = bereichZu(pfad)
-          if (b) setOffen(b)
-          else void navigate({ to: '/knowledge' })
+  const panel = offen && (
+    <Suspense>
+      <HilfePanel
+        bereich={offen}
+        onSchliessen={() => {
+          setOffen(null)
         }}
-      >
-        <CircleHelp aria-hidden="true" />
-      </Button>
-      {offen && (
-        <Suspense>
-          <HilfePanel
-            bereich={offen}
-            onSchliessen={() => {
-              setOffen(null)
-            }}
-          />
-        </Suspense>
-      )}
-    </>
+      />
+    </Suspense>
   )
+  return {
+    panel,
+    oeffnen: () => {
+      const b = bereichZu(pfad)
+      if (b) setOffen(b)
+      else void navigate({ to: '/knowledge' })
+    },
+  }
 }

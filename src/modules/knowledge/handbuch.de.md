@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -17,7 +17,7 @@ Hier steht, wie das CRM funktioniert: zu jedem Bereich ein Kapitel, für jede Ro
 
 ### Hilfe genau dort, wo du bist
 
-1. In jedem Bereich **F1** drücken oder oben rechts auf **?** klicken.
+1. In jedem Bereich **F1** drücken oder oben rechts dein Kürzel und **Hilfe zu diesem Bereich (F1)** wählen.
 2. Rechts öffnet sich die Hilfe zu diesem Bereich mit den häufigsten Anleitungen.
 3. **Ganzes Kapitel** öffnet das Kapitel im Handbuch.
 
@@ -90,6 +90,7 @@ Die Bereiche stehen in kleinen Gruppen (Übersicht, Kontakte, Verkauf, Akquise, 
 
 ## Neu {#neu}
 
+- 27.11.2026: Die Hilfe steht im Menü hinter deinem Kürzel oben rechts, zusammen mit Sprache, Aktualisieren, Vollbild und PC/Handy. Oben bleiben nur Suche, Assistent und Glocke.
 - 04.11.2026: Alle Akten (Kunde, Projekt, Service-Fall, Werkvertrag, Rechnung, Fahrzeug …) zeigen leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Bereiche mit vielen Reitern zeigen höchstens sechs, der Rest steht unter **Mehr ▾** (der gewählte bleibt immer sichtbar). Akten zeigen leere Felder erst nach **+ weitere Angaben**.
 - 04.11.2026: Seitenleiste in kleinen Gruppen zum Auf- und Zuklappen, alles passt ohne Scrollen. Seltene Knöpfe stehen unter **Mehr**, Filter ohne Treffer bleiben weg, die Erklärung einer Seite steht hinter dem **i** neben dem Titel.

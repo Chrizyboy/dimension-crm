@@ -1,7 +1,5 @@
-import { Monitor, Smartphone } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/button'
 import { istDesktopApp } from '@/lib/plattform'
 import { meldeFehler } from '@/services/fehler'
 
@@ -51,10 +49,10 @@ async function fensterUmschalten(): Promise<boolean> {
 }
 
 /**
- * Umschalter PC/Handy wie in V234: am Handy auf die PC-Ansicht (bleibt gespeichert), in der Windows-App das
+ * Umschalter PC/Handy wie in V234 (seit 27.11.2026 im Konto-Menü): am Handy auf die PC-Ansicht (bleibt gespeichert), in der Windows-App das
  * Fenster auf Handy-Grösse, im Browser am PC ein Fenster in Handy-Grösse daneben.
  */
-export function AnsichtKnopf() {
+export function useAnsicht() {
   const { t } = useTranslation()
   const handyGeraet = istHandyGeraet()
   const [pcAmHandy, setPcAmHandy] = useState(() => handyGeraet && leseWahl() === 'pc')
@@ -92,9 +90,5 @@ export function AnsichtKnopf() {
     )
   }
 
-  return (
-    <Button variant="glas" size="rund" aria-label={text} title={text} onClick={umschalten}>
-      {zeigtHandy ? <Monitor aria-hidden="true" /> : <Smartphone aria-hidden="true" />}
-    </Button>
-  )
+  return { zeigtHandy, text, umschalten }
 }

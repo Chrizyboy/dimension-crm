@@ -4,51 +4,38 @@ import { useTranslation } from 'react-i18next'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Leerzustand } from '@/components/shared/Zustaende'
 import { Button } from '@/components/ui/button'
-import { Reiter, ReiterInhalt, ReiterKnopf, ReiterListe } from '@/components/ui/reiter'
-import { hatRecht } from '@/lib/rechte'
 import { meldeIntegrationsFehler } from '@/services/integrationen'
 import { melde } from '@/services/meldungen'
 import { supabase } from '@/services/supabase'
-import { useAnmeldung } from '@/stores/anmeldung'
 import { useNeuLaden } from '../hooks/usePosteingang'
 import { jetztAbholen } from '../services/posteingang'
-import { REITER, type Ansicht, type Reiter as ReiterTyp } from '../types'
-import { AbsenderRegeln } from './AbsenderRegeln'
+import type { Ansicht } from '../types'
 import { Arbeitsplatz } from './Arbeitsplatz'
-import { Auswertung } from './Auswertung'
-import { Einstellungen } from './Einstellungen'
-import { TeamUebersicht } from './TeamUebersicht'
 
-/** Wohin die Seite springt: Reiter, Filter und offene Mail stehen in der Adresse. */
+/** Wohin die Seite springt: Filter und offene Mail stehen in der Adresse. */
 export interface PosteingangZiel {
-  reiter?: ReiterTyp
   ansicht?: Ansicht
   mail?: string | null
 }
 
 /**
  * Posteingang (Phase 18, Arbeitsplatz seit 2.11.2026): alle Mails aus info@ und den persönlichen Postfächern,
- * eingeordnet, der Akte zugeordnet, mit zuständiger Person und Antwortfrist in Arbeitszeit. Reiter: Arbeitsplatz
- * (Liste und Mail nebeneinander), Team (Geschäftsleitung), Absender-Regeln, Reaktionszeit, Einstellungen (Administration).
+ * eingeordnet, der Akte zugeordnet, mit zuständiger Person und Antwortfrist in Arbeitszeit. Seit 27.11.2026 nur noch
+ * der Arbeitsplatz (Liste und Mail nebeneinander, Chris: simpel); Absender-Regeln und Einstellungen stehen unter
+ * Einstellungen › Posteingang, Team-Übersicht und Reaktionszeit sind ausgeblendet.
  */
 export default function Posteingang({
-  reiter,
   ansicht,
   mailId,
   onNavigation,
 }: {
-  reiter: ReiterTyp
   ansicht: Ansicht
   mailId: string | null
   onNavigation: (z: PosteingangZiel) => void
 }) {
   const { t } = useTranslation()
-  const ich = useAnmeldung((z) => z.ich)
   const neuLaden = useNeuLaden()
   const [holt, setHolt] = useState(false)
-  const admin = hatRecht(ich, 'admin')
-  // Team-Übersicht nur für die Geschäftsleitung (Chris 3.11.2026, P5); bis es das Recht «gl» gibt, die Administration.
-  const sichtbar = (r: ReiterTyp) => (r === 'einstellungen' || r === 'team' ? admin : true)
 
   if (!supabase) {
     return (
@@ -86,48 +73,16 @@ export default function Posteingang({
           </Button>
         }
       />
-      <Reiter
-        value={reiter}
-        onValueChange={(r) => {
-          onNavigation({ reiter: r as ReiterTyp, mail: null })
+      <Arbeitsplatz
+        ansicht={ansicht}
+        mailId={mailId}
+        onAnsicht={(a) => {
+          onNavigation({ ansicht: a, mail: null })
         }}
-      >
-        <ReiterListe>
-          {REITER.filter(sichtbar).map((r) => (
-            <ReiterKnopf key={r} value={r}>
-              {t(`posteingang.reiter.${r}`)}
-            </ReiterKnopf>
-          ))}
-        </ReiterListe>
-        <ReiterInhalt value="eingang" className="pt-4">
-          <Arbeitsplatz
-            ansicht={ansicht}
-            mailId={mailId}
-            onAnsicht={(a) => {
-              onNavigation({ ansicht: a, mail: null })
-            }}
-            onMail={(id) => {
-              onNavigation({ mail: id })
-            }}
-          />
-        </ReiterInhalt>
-        {admin && (
-          <ReiterInhalt value="team" className="pt-4">
-            <TeamUebersicht />
-          </ReiterInhalt>
-        )}
-        <ReiterInhalt value="regeln" className="pt-4">
-          <AbsenderRegeln />
-        </ReiterInhalt>
-        <ReiterInhalt value="auswertung" className="pt-4">
-          <Auswertung />
-        </ReiterInhalt>
-        {admin && (
-          <ReiterInhalt value="einstellungen" className="pt-4">
-            <Einstellungen />
-          </ReiterInhalt>
-        )}
-      </Reiter>
+        onMail={(id) => {
+          onNavigation({ mail: id })
+        }}
+      />
     </div>
   )
 }

@@ -33,16 +33,13 @@ export const Route = createFileRoute('/inbox')({
     return (
       <Suspense>
         <Posteingang
-          reiter={suche.reiter ?? 'eingang'}
           ansicht={suche.ansicht ?? 'meine'}
           mailId={suche.mail ?? null}
           onNavigation={(z) => {
-            const r = z.reiter ?? suche.reiter ?? 'eingang'
             const a = z.ansicht ?? suche.ansicht ?? 'meine'
             const m = z.mail === undefined ? suche.mail : z.mail
             void navigate({
               search: {
-                ...(r !== 'eingang' ? { reiter: r } : {}),
                 ...(a !== 'meine' ? { ansicht: a } : {}),
                 ...(m ? { mail: m } : {}),
               },
