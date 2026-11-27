@@ -110,6 +110,19 @@ describe('Werkvertrag nach Vorlage Muri', () => {
     const texte = v.leistungen.map((l) => l.map((t) => t.text).join(''))
     expect(texte.some((t) => t.includes('2 × Batterie Beispiel 5 kWh') && t.includes('Wallbox Beispiel'))).toBe(true)
     expect(texte).toContain('Montage und Anschluss')
+    expect(texte.some((t) => t.startsWith('Inbetriebnahme'))).toBe(true)
+    // Steht die Inbetriebnahme schon in der Offerte, kommt sie nicht doppelt
+    const mitIbn = vertragInhalt(w, EINSTELLUNG, [
+      ...positionen,
+      {
+        bezeichnung: 'Kalibrierung und Inbetriebnahme',
+        menge: 1,
+        einheit: 'pauschal',
+        art: 'leistung',
+        optional: false,
+      },
+    ]).leistungen.map((l) => l.map((t) => t.text).join(''))
+    expect(mitIbn.filter((t) => /Inbetriebnahme/.test(t))).toEqual(['Kalibrierung und Inbetriebnahme'])
     expect(v.optionen.map((o) => o.text)).toEqual(['Erweiterungsmodul 5 kWh'])
     // Alles bestellt: der Abschnitt «Optionen» fällt weg
     const alle = vertragInhalt(

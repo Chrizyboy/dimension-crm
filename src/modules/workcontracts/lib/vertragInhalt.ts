@@ -142,8 +142,12 @@ export function vertragInhalt(
   const leistungenOfferte = bestellt.filter((p) => p.art === 'leistung').map((p) => [{ text: positionText(p, fr) }])
   const ibn = B(T('Inbetriebnahme', 'Mise en service'), T(' inkl. Protokoll', ' y c. procès-verbal'))
   const doku = B(T('Übergabe der Dokumentation', 'Remise de la documentation'))
+  // Nennt die Offerte die Inbetriebnahme schon als Leistung, nicht ein zweites Mal aufzählen.
+  const ibnInOfferte = bestellt.some(
+    (p) => p.art === 'leistung' && /inbetriebnahme|mise en service/i.test(p.bezeichnung),
+  )
   const leistungen: Teil[][] = leistungenOfferte.length
-    ? [materialZeile, ...leistungenOfferte, ...extras, ibn, doku]
+    ? [materialZeile, ...leistungenOfferte, ...extras, ...(ibnInOfferte ? [] : [ibn]), doku]
     : nurBatterie
       ? [
           B(T('Planung & Auslegung', 'Étude & dimensionnement'), T(' des Speichersystems', ' du système de stockage')),
