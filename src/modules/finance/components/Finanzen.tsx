@@ -11,19 +11,18 @@ import { supabase } from '@/services/supabase'
 import { useFinanzen } from '../hooks/useFinanzen'
 import { fuerFirma, reserveFuer } from '../lib/firma'
 import { REITER, type Bewegung, type Reiter as ReiterTyp } from '../types'
-import { Abschluss } from './Abschluss'
+import { Kontostand } from './Abschluss'
 import type { BewegungAktion } from './BewegungZeile'
 import { Cockpit } from './Cockpit'
 import { Fenster, type FinanzFenster } from './Fenster'
 import { Liquiditaet } from './Liquiditaet'
 import { Marge } from './Marge'
-import { Zahllauf } from './Zahllauf'
 import { Zahlungen } from './Zahlungen'
 
 /**
  * Finanzen für Geschäftsleitung und Buchhaltung (nur mit Recht «finanzen», Entscheid 0057): Cockpit,
- * Lieferantenrechnungen mit Freigabe, Zahllauf mit zweiter Person, Liquidität, Projekte & Marge sowie
- * Konten, MWST und Monatsabschluss. Oben die Wahl der Gesellschaft (Muri GmbH, Bulle Sàrl oder beide).
+ * Lieferantenrechnungen mit Freigabe, Liquidität (mit Kontostand) sowie Projekte & Marge. Zahllauf, Kontoauszug,
+ * MWST-Schätzung und Monatsabschluss sind seit 27.11.2026 ausgeblendet (nie besprochen). Oben die Wahl der Gesellschaft (Muri GmbH, Bulle Sàrl oder beide).
  * #/finance?reiter=…
  */
 export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onReiter: (r: ReiterTyp) => void }) {
@@ -116,17 +115,6 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
                 onNeu={() => {
                   setFenster({ art: 'zahlung', id: null })
                 }}
-                onZahllauf={() => {
-                  setFenster({ art: 'zahllauf', firma })
-                }}
-              />
-            </ReiterInhalt>
-            <ReiterInhalt value="zahllauf" className="pt-4">
-              <Zahllauf
-                daten={d}
-                onNeu={() => {
-                  setFenster({ art: 'zahllauf', firma })
-                }}
               />
             </ReiterInhalt>
             <ReiterInhalt value="liquiditaet" className="pt-4">
@@ -137,12 +125,13 @@ export default function Finanzen({ reiter, onReiter }: { reiter: ReiterTyp; onRe
                 onAktion={aktion}
                 onFenster={setFenster}
               />
+              {/* Kontostand: Konten je Gesellschaft (von Hand) und der Kontostand wie in V233. */}
+              <div className="mt-4">
+                <Kontostand daten={d} onFenster={setFenster} />
+              </div>
             </ReiterInhalt>
             <ReiterInhalt value="marge" className="pt-4">
               <Marge daten={d} firmaId={firma} />
-            </ReiterInhalt>
-            <ReiterInhalt value="abschluss" className="pt-4">
-              <Abschluss daten={d} onFenster={setFenster} />
             </ReiterInhalt>
             {/* Dialoge sehen immer alle Daten, damit eine Änderung der Gesellschaft im Formular möglich bleibt. */}
             <Fenster

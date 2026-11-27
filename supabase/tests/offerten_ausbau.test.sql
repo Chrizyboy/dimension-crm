@@ -2,7 +2,7 @@
 -- Rabatt, Nachfassen mit Ergebnis setzt den nächsten Schritt, Varianten bestimmen den Betrag, Chance und Phase.
 -- Ausführen: npm run db:test
 begin;
-select plan(26);
+select plan(27);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000039a1', 'of-andy@test.local'),
@@ -10,7 +10,10 @@ insert into auth.users (id, email) values
 insert into public.personen (id, kuerzel, name, auth_user_id, rolle, rechte) values
   ('00000000-0000-0000-0000-0000000039b1', 'of_andy', 'Andy Offerten', '00000000-0000-0000-0000-0000000039a1', 'innendienst', '{}'),
   ('00000000-0000-0000-0000-0000000039b2', 'of_chris', 'Chris Freigabe', '00000000-0000-0000-0000-0000000039a2', 'innendienst', '{}');
-update public.einstellungen set wert = jsonb_set(wert, '{freigabe,durch}', '["of_chris"]') where schluessel = 'offerten';
+select is((select (wert -> 'freigabe' ->> 'aktiv')::boolean from public.einstellungen where schluessel = 'offerten'), false,
+  'Freigabe vor dem Senden ist ausgeschaltet (27.11.2026)');
+-- Freigabe ist seit 27.11.2026 ausgeschaltet; der Test prüft den Ablauf mit eingeschaltetem Schalter.
+update public.einstellungen set wert = jsonb_set(jsonb_set(wert, '{freigabe,durch}', '["of_chris"]'), '{freigabe,aktiv}', 'true') where schluessel = 'offerten';
 
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000039a1", "role": "authenticated"}', true);

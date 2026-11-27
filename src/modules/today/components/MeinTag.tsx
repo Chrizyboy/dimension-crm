@@ -5,7 +5,6 @@ import {
   Inbox,
   ListChecks,
   Mail,
-  MailCheck,
   PhoneOutgoing,
   ShieldCheck,
   Stamp,
@@ -40,7 +39,7 @@ import { ZieleKarte } from './ZieleKarte'
 
 /** Karten unter Termine und Aufgaben: Symbol und wohin «Alle anzeigen» führt. Leere Karten bleiben weg. */
 const WEITERE: { liste: TagListeName; icon: LucideIcon; ziel: string }[] = [
-  { liste: 'freigaben', icon: MailCheck, ziel: '/outbox' },
+  // «Wartet auf deine Freigabe» ist seit 27.11.2026 ausgeblendet (nie besprochen, Entscheid 0061).
   { liste: 'nachfassen', icon: PhoneOutgoing, ziel: '/quotes?ansicht=nachfassen' },
   { liste: 'neue_leads', icon: Inbox, ziel: '/sales' },
   { liste: 'wiedervorlagen', icon: BellRing, ziel: '/sales' },

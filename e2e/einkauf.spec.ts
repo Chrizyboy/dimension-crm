@@ -134,7 +134,7 @@ test('Bestellung per Mail mit PDF in den Ausgangskorb, dann stornieren', async (
   await expect(akte.getByText('Mail verworfen')).toBeVisible()
 })
 
-test('Handy: Wareneingang und Reklamation bis erledigt', async ({ page }) => {
+test('Handy: Wareneingang, ohne Reklamationen', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
   const text = `E2E Klemmen ${lauf}`
   let akte = await bestellungMitPosition(page, text)
@@ -152,31 +152,15 @@ test('Handy: Wareneingang und Reklamation bis erledigt', async ({ page }) => {
   await eingang.getByRole('button', { name: 'Wareneingang buchen' }).click()
   await expect(akte.getByText('Geliefert', { exact: true }).first()).toBeVisible()
 
-  await akte.getByRole('button', { name: 'Reklamation erfassen' }).click()
-  const rek = page.getByRole('dialog').last()
-  await rek.getByLabel('Menge').fill('2')
-  await rek.getByLabel('Beschreibung').fill('Zwei Klemmen verbogen')
-  expect(await verstoesse(page), 'Reklamation').toEqual([])
-  await rek.getByRole('button', { name: 'Speichern' }).click()
-  await expect(akte.getByText('Zwei Klemmen verbogen')).toBeVisible()
-  await akte.getByRole('button', { name: 'Beim Lieferanten gemeldet' }).click()
-  await expect(akte.getByText('Gemeldet', { exact: true })).toBeVisible()
-  await akte.getByRole('button', { name: 'Erledigt' }).click()
-  const fertig = page.getByRole('dialog').last()
-  await fertig.getByLabel('Antwort des Lieferanten').fill('Gutschrift folgt')
-  await fertig.getByRole('button', { name: 'Speichern' }).click()
-  await expect(akte.getByText(/Gutschrift · .* · Gutschrift folgt/)).toBeVisible()
+  // Reklamationen sind seit 27.11.2026 ausgeblendet (Entscheid 0061).
+  await expect(akte.getByRole('button', { name: 'Reklamation erfassen' })).toHaveCount(0)
 })
 
-test('Lager: Spalte Lagerplatz und Inventur', async ({ page }) => {
+test('Lager: ohne Lagerplatz und Inventur (Entscheid 0061)', async ({ page }) => {
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/purchasing?reiter=lager')
-  await expect(page.getByRole('button', { name: 'Inventur' })).toBeVisible()
-  const leer = await page.getByText('Lager ist leer').isVisible()
-  test.skip(leer, 'Kein Bestand in der lokalen Datenbank')
-  await expect(page.getByRole('columnheader', { name: 'Lagerplatz' })).toBeVisible()
-  await page.getByRole('button', { name: 'Inventur' }).click()
-  const inv = page.getByRole('dialog')
-  await expect(inv.getByRole('button', { name: /Abweichungen? buchen/ })).toBeDisabled()
-  expect(await verstoesse(page), 'Inventur').toEqual([])
+  await expect(page.getByRole('button', { name: 'Lager buchen' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Inventur' })).toHaveCount(0)
+  await expect(page.getByRole('columnheader', { name: 'Lagerplatz' })).toHaveCount(0)
+  expect(await verstoesse(page), 'Lager').toEqual([])
 })

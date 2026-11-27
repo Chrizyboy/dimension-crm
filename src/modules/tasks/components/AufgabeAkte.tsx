@@ -18,6 +18,7 @@ import { useAufgabe, useNeuLaden } from '../hooks/useAufgaben'
 import { aendere, loesche } from '../services/aufgaben'
 import type { AufgabeAenderung, Person, Wiederholung } from '../types'
 import { AkteAktionen } from './AkteAktionen'
+import { AUFGABEN_ZUSAETZE } from '../lib/zusaetze'
 import { KommentarBox } from './KommentarBox'
 import { TeilschritteBox } from './TeilschritteBox'
 
@@ -133,15 +134,17 @@ export function AufgabeAkte({
                   onCheckedChange={(wichtig) => void speichere({ wichtig })}
                 />
               </Angabe>
-              <Angabe label={t('aufgaben.feld.wiederholung')}>
-                <Auswahl
-                  aria-label={t('aufgaben.feld.wiederholung')}
-                  className="w-44"
-                  value={a.wiederholung ?? 'nie'}
-                  optionen={WIEDERHOLUNGEN.map((w) => ({ wert: w, text: t(`aufgaben.wiederholung.${w}`) }))}
-                  onValueChange={(w) => void speichere({ wiederholung: w === 'nie' ? null : (w as Wiederholung) })}
-                />
-              </Angabe>
+              {AUFGABEN_ZUSAETZE && (
+                <Angabe label={t('aufgaben.feld.wiederholung')}>
+                  <Auswahl
+                    aria-label={t('aufgaben.feld.wiederholung')}
+                    className="w-44"
+                    value={a.wiederholung ?? 'nie'}
+                    optionen={WIEDERHOLUNGEN.map((w) => ({ wert: w, text: t(`aufgaben.wiederholung.${w}`) }))}
+                    onValueChange={(w) => void speichere({ wiederholung: w === 'nie' ? null : (w as Wiederholung) })}
+                  />
+                </Angabe>
+              )}
               <Angabe label={t('aufgaben.akte.herkunft')}>
                 <span className="text-sm">
                   {t(`aufgaben.herkunft.${a.herkunft}`)}
@@ -173,15 +176,19 @@ export function AufgabeAkte({
                 {ziel && <ArrowUpRight className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />}
               </a>
             )}
-            <AkteAbschnitt titel={t('aufgaben.akte.teilschritte')} zusatz={a.teilschritte.length || undefined}>
-              <TeilschritteBox
-                schritte={a.teilschritte}
-                onAendern={(teilschritte) => void speichere({ teilschritte })}
-              />
-            </AkteAbschnitt>
-            <AkteAbschnitt titel={t('aufgaben.akte.verlauf')} zusatz={a.kommentare || undefined}>
-              <KommentarBox aufgabeId={a.id} personen={personen} />
-            </AkteAbschnitt>
+            {AUFGABEN_ZUSAETZE && (
+              <>
+                <AkteAbschnitt titel={t('aufgaben.akte.teilschritte')} zusatz={a.teilschritte.length || undefined}>
+                  <TeilschritteBox
+                    schritte={a.teilschritte}
+                    onAendern={(teilschritte) => void speichere({ teilschritte })}
+                  />
+                </AkteAbschnitt>
+                <AkteAbschnitt titel={t('aufgaben.akte.verlauf')} zusatz={a.kommentare || undefined}>
+                  <KommentarBox aufgabeId={a.id} personen={personen} />
+                </AkteAbschnitt>
+              </>
+            )}
             <div className="flex justify-end">
               <Button variant="ghost" size="sm" onClick={() => void wegwerfen()}>
                 <Trash2 />

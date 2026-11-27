@@ -12,6 +12,14 @@ die Änderung mit Version und Abschnitt hier (docs/installation.md).
 - Neu wählbar: Auftragsbestätigung ohne Unterschrift des Kunden. Dazu Kundenziele, Montagetermin und Bemerkungen.
 - Vor dem Versand eine kurze Prüfliste, in der Akte der Stand des Auftrags bis zur Schlussrechnung.
 
+## 1.3.8
+
+- Nur noch, was wir besprochen haben: Funktionen, die nie abgesprochen waren, sind ausgeblendet (Daten bleiben erhalten).
+- Finanzen ohne Zahllauf, Kontoauszug, MWST-Schätzung und Monatsabschluss; die Kontostände stehen unter Liquidität.
+- Ausgangskorb ohne Serien und Brief-Rücklauf; Aufgaben wie im alten CRM (ohne Wiederholung, Teilschritte, Kommentare, Team-Sicht).
+- Mein Tag ohne die Karten «Kunden warten auf Antwort» und «Wartet auf deine Freigabe».
+- Offerten ohne Varianten, Rabatt-/Marge-Freigabe und automatische Chance; Einkauf ohne Lagerplatz, Inventur, Rüstliste, Rückgabe und Reklamationen.
+
 ## 1.3.7
 
 - Jeder Knopf tut etwas Sichtbares: Das «i» neben dem Seitentitel zeigt die Erklärung jetzt auch beim Klick (auch am Handy).

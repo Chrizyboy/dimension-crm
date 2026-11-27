@@ -16,7 +16,7 @@ import type { Finanzdaten, Pruefung, Zahlung } from '../types'
 
 /**
  * Akte einer Lieferantenrechnung als Seitenblatt: Angaben, Vergleich mit der Bestellung, Ablauf (geprüft bzw.
- * Visum der Eingangsrechnung → Freigabe → Zahllauf → bezahlt) und die Schritte, die gerade möglich sind.
+ * Visum der Eingangsrechnung → Freigabe → bezahlt) und die Schritte, die gerade möglich sind.
  * Das Visum der Projektleitung läuft unter «Rechnungen › Eingangsrechnungen»; danach ist die Zahlung hier frei.
  */
 export function KreditorAkte({

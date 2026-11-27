@@ -309,7 +309,11 @@ export interface Woche {
   bewegungen: Bewegung[]
 }
 
-export const REITER = ['cockpit', 'lieferanten', 'zahllauf', 'liquiditaet', 'marge', 'abschluss'] as const
+/**
+ * Zahllauf und «Konten, MWST, Abschluss» sind ausgeblendet (Chris 27.11.2026: nie besprochen, AbaNinja macht
+ * Zahlung, MWST und Abschluss). Code und Daten bleiben, damit sie bei Bedarf zurückkommen.
+ */
+export const REITER = ['cockpit', 'lieferanten', 'liquiditaet', 'marge'] as const
 export type Reiter = (typeof REITER)[number]
 
 /** Frühere Reiter-Adressen (Lesezeichen, Glocke) auf die neuen Reiter. */
@@ -319,7 +323,9 @@ export const ALTE_REITER: Record<string, Reiter> = {
   material: 'liquiditaet',
   fixkosten: 'liquiditaet',
   eingaenge: 'liquiditaet',
-  bank: 'abschluss',
+  bank: 'liquiditaet',
+  zahllauf: 'lieferanten',
+  abschluss: 'liquiditaet',
   nachkalkulation: 'marge',
 }
 

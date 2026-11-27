@@ -75,7 +75,7 @@ describe('Ausgangskorb-Anzeige', () => {
     )
     const alt = eintrag({ erstellt_am: '2026-10-30T09:00:00Z' })
     const gestern = eintrag({ erstellt_am: '2026-11-01T12:00:00' })
-    const g = gruppiere([...mahnungen, alt, gestern, eintrag({})], jetzt)
+    const g = gruppiere([...mahnungen, alt, gestern, eintrag({})], jetzt, true)
     expect(g.map((x) => x.schluessel)).toEqual(['serie:mahnung:2026-11-02', 'heute', 'gestern', 'aelter'])
     expect(g[0]?.serie).toBe(true)
     expect(g[0]?.eintraege).toHaveLength(3)
@@ -83,7 +83,7 @@ describe('Ausgangskorb-Anzeige', () => {
 
   it('Gruppen: von Hand vorbereitete Offerten sind nie eine Serie', () => {
     const offerten = [1, 2, 3].map(() => eintrag({ art: 'offerte', erstellt_am: '2026-11-02T06:00:00Z' }))
-    expect(gruppiere(offerten, jetzt).some((g) => g.serie)).toBe(false)
+    expect(gruppiere(offerten, jetzt, true).some((g) => g.serie)).toBe(false)
   })
 
   it('Gruppen: Newsletter derselben Kampagne bleiben zusammen, auch über Tage', () => {
@@ -95,7 +95,14 @@ describe('Ausgangskorb-Anzeige', () => {
         erstellt_am: `2026-10-2${i}T08:00:00Z`,
       }),
     )
-    expect(gruppiere(nl, jetzt)[0]?.schluessel).toBe('serie:newsletter:k1')
+    expect(gruppiere(nl, jetzt, true)[0]?.schluessel).toBe('serie:newsletter:k1')
+  })
+
+  it('Gruppen: ohne Serien (Standard seit 27.11.2026) steht jede Nachricht einzeln nach Alter', () => {
+    const mahnungen = [1, 2, 3].map(() =>
+      eintrag({ art: 'mahnung', automatisch: true, erstellt_am: '2026-11-02T06:00:00Z' }),
+    )
+    expect(gruppiere(mahnungen, jetzt).some((g) => g.serie)).toBe(false)
   })
 
   it('Später senden: Montag nicht doppelt, am Nachmittag kein «heute 17:00»', () => {

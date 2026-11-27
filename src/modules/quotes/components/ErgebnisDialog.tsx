@@ -16,6 +16,7 @@ import { melde } from '@/services/meldungen'
 import { useOffertAenderung } from '../hooks/useOfferten'
 import { inTagen } from '../lib/nachfassen'
 import { erfasseNachfassen } from '../services/ablauf'
+import { OFFERTEN_ZUSAETZE } from '../lib/zusaetze'
 import type { NachfassErgebnis, Offerte } from '../types'
 
 const ERGEBNISSE: readonly NachfassErgebnis[] = ['vergleicht', 'interessiert', 'neue_version', 'spaeter', 'ja', 'nein']
@@ -202,7 +203,7 @@ export default function ErgebnisDialog({
               />
             </Feld>
           )}
-          {ergebnis === 'ja' && o.varianten.length > 0 && (
+          {OFFERTEN_ZUSAETZE && ergebnis === 'ja' && o.varianten.length > 0 && (
             <Feld id="ergebnis-variante" label={t('offerten.varianten.gewaehlt')}>
               <Auswahl
                 id="ergebnis-variante"

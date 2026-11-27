@@ -1,88 +1,30 @@
-import { ChevronDown, ChevronRight, FileUp, Plus } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Karte, KarteInhalt, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { formatChf, formatDatum } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { melde } from '@/services/meldungen'
-import { useAktion } from '../hooks/useAktion'
 import { useBuchungen } from '../hooks/useFinanzen'
-import { gleicheIban, leseCamt } from '../lib/camt'
 import { heuteZuerich, plusTage } from '../lib/datum'
-import { auszugEinlesen } from '../services/ablaeufe'
 import type { Finanzdaten, Konto } from '../types'
 import type { FinanzFenster } from './Fenster'
 
 /**
- * Bankkonten je Gesellschaft. Der Stand kommt aus dem Kontoauszug (camt.053 aus dem E-Banking): Buchungen werden
- * ohne Doppelte übernommen, Belastungen eines freigegebenen Zahllaufs als bezahlt erkannt. Die Datei wird nur im
- * Browser gelesen; übernommen werden Datum, Betrag, Text, Gegenpartei und Referenz.
+ * Bankkonten je Gesellschaft mit Stand von Hand. Das Einlesen des Kontoauszugs (camt.053) ist seit 27.11.2026
+ * ausgeblendet (Chris: nie besprochen); `lib/camt.ts` und `auszugEinlesen` bleiben für eine spätere Rückkehr.
  */
 export function Konten({ daten, onFenster }: { daten: Finanzdaten; onFenster: (f: FinanzFenster) => void }) {
   const { t } = useTranslation()
-  const { laeuft, aus } = useAktion()
-  const datei = useRef<HTMLInputElement>(null)
   const [offen, setOffen] = useState<string | null>(null)
   const heute = heuteZuerich()
-
-  const einlesen = async (f: File) => {
-    let auszuege
-    try {
-      auszuege = leseCamt(await f.text())
-    } catch {
-      melde('kritisch', { de: 'Keine camt.053-Datei', fr: 'Pas un fichier camt.053' })
-      return
-    }
-    let neu = 0
-    let bezahlt = 0
-    const fremd: string[] = []
-    await aus(async () => {
-      for (const a of auszuege) {
-        const konto = daten.konten.find((k) => gleicheIban(k.iban, a.iban))
-        if (!konto) {
-          fremd.push(a.iban)
-          continue
-        }
-        const r = await auszugEinlesen(konto.id, a.stand_rappen, a.stand_am, a.buchungen)
-        neu += r.neu
-        bezahlt += r.bezahlt
-      }
-    })
-    melde(fremd.length ? 'warnung' : 'ok', {
-      de: `${String(neu)} neue Buchungen, ${String(bezahlt)} Zahlungen erkannt${fremd.length ? `; ohne Konto: ${fremd.join(', ')}` : ''}`,
-      fr: `${String(neu)} nouvelles écritures, ${String(bezahlt)} paiements reconnus${fremd.length ? `; sans compte : ${fremd.join(', ')}` : ''}`,
-    })
-  }
 
   return (
     <Karte>
       <KarteKopf>
         <KarteTitel>{t('finanzen.abschluss.konten')}</KarteTitel>
         <div className="flex gap-2">
-          <input
-            ref={datei}
-            type="file"
-            accept=".xml,application/xml,text/xml"
-            className="hidden"
-            aria-label={t('finanzen.abschluss.auszug')}
-            onChange={(e) => {
-              const f = e.target.files?.[0]
-              e.target.value = ''
-              if (f) void einlesen(f)
-            }}
-          />
-          <Button
-            size="sm"
-            variant="secondary"
-            laedt={laeuft}
-            disabled={!daten.konten.length}
-            onClick={() => datei.current?.click()}
-          >
-            <FileUp />
-            {t('finanzen.abschluss.auszug')}
-          </Button>
           <Button
             size="sm"
             variant="secondary"
@@ -121,7 +63,6 @@ export function Konten({ daten, onFenster }: { daten: Finanzdaten; onFenster: (f
             )}
           </ul>
         )}
-        <p className="text-muted-foreground mt-3 text-xs">{t('finanzen.abschluss.auszugHinweis')}</p>
       </KarteInhalt>
     </Karte>
   )

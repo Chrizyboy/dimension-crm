@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
@@ -78,8 +78,6 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 - **Zahlungen (7 Tage)**: was in den nächsten 7 Tagen bezahlt werden muss (nur mit Recht Finanzen).
 - **Service und Garantie**: offene Fälle, dringende zuerst.
 - **Kontrollen und Wartungen (30 Tage)**: anstehende Wartungen aus den Verträgen.
-- **Posteingang**: Kunden, die auf deine Antwort warten.
-- **Wartet auf deine Freigabe**: deine Mails und SMS im Ausgangskorb.
 - **Meine Woche**: deine Wochenziele mit Stand.
 - **Team heute**: wer auf der Baustelle, beim Kunden, im Service, da oder abwesend ist (ohne Grund).
 - **Wetter auf den Baustellen**: für Montage und Projektleitung die Prognose der nächsten 5 Tage je Baustelle; «Achtung» bei viel Regen, Wind, Frost oder Hitze.
@@ -109,6 +107,7 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 27.11.2026: Die Karten «Kunden warten auf Antwort» und «Wartet auf deine Freigabe» sind ausgeblendet (nie so besprochen). Posteingang und Ausgangskorb findest du in der Seitenleiste.
 - 19.11.2026: Was Punkte hat, steht oben. Sind Termine und Aufgaben leer, kommen zuerst die Bereiche mit offenen Punkten (z. B. Neue Anfragen); Karten unter «Team und Betrieb» ohne offene Punkte rücken ans Ende.
 - 19.11.2026: Wie V234: **Offerten nachfassen** mit **Angenommen**, **Abgelehnt**, **Vertagt** und unter **⋯** **Ergebnis**, **Nachfass-Mail**, **Bereits verbaut**, **Zurück zur Offerte** direkt in der Zeile. Neue Karten **Nach dem Termin: wie weiter?** und **Offerten prüfen & senden**.
 - 19.11.2026: Knopf **Handy-Ansicht** / **PC-Ansicht** oben: in der Windows-App wird das Fenster handygross, am Handy zeigt er die PC-Ansicht (bleibt gemerkt). Abgeschnittene Texte zeigen beim Darüberfahren den ganzen Text.

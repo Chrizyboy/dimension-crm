@@ -1,4 +1,5 @@
 import type { Eingang, Offerte, OffertPhase } from '../types'
+import { OFFERTEN_ZUSAETZE } from './zusaetze'
 import { heuteIso, nachfassStand, tageZwischen } from './nachfassen'
 
 /** Arbeitstage (Mo–Fr) von a bis b, a nicht mitgezählt; negativ wird 0. */
@@ -123,7 +124,7 @@ export function vorratKarten(
       betragRappen: o.betragRappen,
       kwp: o.kwp,
       person: o.verantwortlichName,
-      chance: o.phase === 'gewonnen' ? null : o.chance,
+      chance: o.phase === 'gewonnen' || (!OFFERTEN_ZUSAETZE && o.chanceProzent === null) ? null : o.chance,
       seit: o.phase === 'gewonnen' ? o.entscheidAm : o.angebotAm,
       richtofferte: false,
       hinweis,

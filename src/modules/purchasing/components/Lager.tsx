@@ -16,6 +16,7 @@ import type { LagerZeile } from '../types'
 import { InventurDialog } from './InventurDialog'
 import { LagerBuchenDialog } from './LagerBuchenDialog'
 import { Suchfeld, Werkzeugleiste } from '@/components/shared/Werkzeugleiste'
+import { EINKAUF_ZUSAETZE } from '../lib/zusaetze'
 
 const FILTER = ['alle', 'unter', 'reserviert'] as const
 type Filter = (typeof FILTER)[number]
@@ -49,11 +50,15 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
             </span>
           ),
         }),
-        spalte.accessor((z) => z.lagerplatz ?? '', {
-          id: 'lagerplatz',
-          header: t('einkauf.lager.platz'),
-          cell: (c) => <span className="font-mono text-xs">{c.getValue() || '–'}</span>,
-        }),
+        ...(EINKAUF_ZUSAETZE
+          ? [
+              spalte.accessor((z) => z.lagerplatz ?? '', {
+                id: 'lagerplatz',
+                header: t('einkauf.lager.platz'),
+                cell: (c) => <span className="font-mono text-xs">{c.getValue() || '–'}</span>,
+              }),
+            ]
+          : []),
         spalte.accessor('menge', {
           header: t('einkauf.lager.bestand'),
           cell: (c) => <span className="zahlen">{formatMenge(c.getValue())}</span>,
@@ -129,16 +134,18 @@ export function Lager({ onBestellung }: { onBestellung: (id: string) => void }) 
               <ListPlus />
               {t('einkauf.lager.nachbestellen')}
             </Button>
-            <Button
-              variant="secondary"
-              disabled={!lager.data?.length}
-              onClick={() => {
-                setInventur(true)
-              }}
-            >
-              <ClipboardCheck />
-              {t('einkauf.inventur.knopf')}
-            </Button>
+            {EINKAUF_ZUSAETZE && (
+              <Button
+                variant="secondary"
+                disabled={!lager.data?.length}
+                onClick={() => {
+                  setInventur(true)
+                }}
+              >
+                <ClipboardCheck />
+                {t('einkauf.inventur.knopf')}
+              </Button>
+            )}
             <Button
               onClick={() => {
                 setBuchen('neu')

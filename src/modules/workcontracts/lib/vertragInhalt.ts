@@ -102,7 +102,7 @@ export function vorschlagMaterial(
  * Inhalt des Dokuments nach der Vorlage Muri (Chris, 26./31.10.2026): Seite 1 Parteien und Leistungen,
  * Seite 2 vereinbarte Funktionen, Termine, Preis mit Zahlungsplan und Unterschriften, danach die AGB.
  *
- * Seit 27.11.2026 (Fall Weller, Entscheid 0061): Die Leistungen kommen 1:1 aus der Offerte (Stückliste), Bestelltes
+ * Seit 27.11.2026 (Fall Weller, Entscheid 0062): Die Leistungen kommen 1:1 aus der Offerte (Stückliste), Bestelltes
  * steht nie mehr als «optional»; nur wirklich nicht bestellte Optionen stehen in einem eigenen Abschnitt.
  * Als Auftragsbestätigung bestätigt das Dokument die unterschriebene Offerte und braucht keine Unterschrift
  * des Kunden. Termine versprechen nie einen einzigen Einsatz (Elektriker und Inbetriebnahme kommen separat).

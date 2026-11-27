@@ -7552,7 +7552,7 @@
       "freigabeOffen": "Freigabe der Buchhaltung offen",
       "bezahltAm": "Bezahlt am {{datum}}",
       "imZahllauf": "Im Zahllauf vom {{datum}}",
-      "zahllaufOffen": "Noch in keinem Zahllauf",
+      "zahllaufOffen": "Noch nicht bezahlt",
       "grund": "Grund (Pflicht)",
       "knopf": {
         "bearbeiten": "Bearbeiten",

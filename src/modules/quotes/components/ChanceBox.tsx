@@ -11,6 +11,7 @@ import { useAnmeldung } from '@/stores/anmeldung'
 import { useOffertAenderung, useOffertEinstellungen } from '../hooks/useOfferten'
 import { gibFrei, setzeAngaben } from '../services/ablauf'
 import type { Offerte } from '../types'
+import { OFFERTEN_ZUSAETZE } from '../lib/zusaetze'
 import { Box, Zeile } from './Box'
 
 type Angaben = Parameters<typeof setzeAngaben>[1]
@@ -109,7 +110,7 @@ export function ChanceBox({ o }: { o: Offerte }) {
   ]
   return (
     <Box titel={t('offerten.chance.titel')}>
-      {offen && (
+      {offen && (OFFERTEN_ZUSAETZE || o.chanceProzent !== null) && (
         <>
           <div className="flex items-center justify-between gap-2">
             <span>{t('offerten.chance.chance')}</span>
