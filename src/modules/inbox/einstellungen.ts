@@ -20,4 +20,22 @@ export const einstellungen: EinstellungsBereich[] = [
     modulPfad: '/inbox',
     Inhalt: lazy(() => import('./components/Einstellungen').then((m) => ({ default: m.Einstellungen }))),
   },
+  {
+    // Seit 27.11.2026 hier statt als Reiter im Posteingang (Chris: Posteingang nur Arbeitsplatz).
+    id: 'posteingang_regeln',
+    gruppe: 'ablaeufe',
+    titel: { de: 'Absender-Regeln', fr: 'Règles d’expéditeur' },
+    beschreibung: {
+      de: 'Mails bestimmter Absender automatisch einordnen, zuteilen oder als Werbung ablegen.',
+      fr: 'Classer, attribuer ou ranger comme publicité les e-mails de certains expéditeurs.',
+    },
+    stichworte: {
+      de: 'Absender Regel Werbung Newsletter automatisch Posteingang',
+      fr: 'expéditeur règle publicité newsletter automatique boîte',
+    },
+    icon: 'filter',
+    recht: 'admin',
+    modulPfad: '/inbox',
+    Inhalt: lazy(() => import('./components/AbsenderRegeln').then((m) => ({ default: m.AbsenderRegeln }))),
+  },
 ]
