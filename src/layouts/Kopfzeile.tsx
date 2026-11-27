@@ -137,8 +137,7 @@ export function Kopfzeile() {
             </MenueEintrag>
             <MenueEintrag onSelect={hilfe.oeffnen}>
               <CircleHelp />
-              <span className="flex-1">{t('handbuch.hilfe.knopf')}</span>
-              <span className="text-muted-foreground text-xs">F1</span>
+              {t('handbuch.hilfe.knopf')}
             </MenueEintrag>
             <MenueTrenner />
             <MenueEintrag onSelect={fenster.aktualisieren}>

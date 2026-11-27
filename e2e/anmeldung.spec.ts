@@ -72,13 +72,16 @@ test('Gewählte Sprache bleibt nach dem Neustart, mit passendem Logo', async ({ 
   const logoFr = page.getByRole('img', { name: /systèmes solaires intelligents/ }).first()
   const logoDe = page.getByRole('img', { name: /smarte Solaranlagen/ }).first()
   await expect(logoFr).toBeVisible()
-  await page.getByRole('group', { name: 'Langue' }).getByRole('button', { name: 'DE' }).click()
+  // Sprache steht seit 27.11.2026 im Konto-Menü oben rechts.
+  await page.getByRole('button', { name: 'Compte et réglages' }).click()
+  await page.getByRole('menuitem', { name: 'Deutsch' }).click()
   await expect(logoDe).toBeVisible()
   // Beim Start übernimmt die App die Sprache aus dem Profil; die Wahl muss dort gespeichert sein.
   await page.waitForTimeout(500)
   await page.reload()
   await expect(logoDe).toBeVisible()
-  await page.getByRole('group', { name: 'Sprache' }).getByRole('button', { name: 'FR' }).click()
+  await page.getByRole('button', { name: 'Konto und Einstellungen' }).click()
+  await page.getByRole('menuitem', { name: 'Français' }).click()
   await page.waitForTimeout(500)
   await page.reload()
   await expect(logoFr).toBeVisible()

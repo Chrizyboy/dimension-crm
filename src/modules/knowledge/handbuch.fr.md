@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, montage, buchhaltung, geschaeftsleitung, administration
 ---
 
@@ -17,7 +17,7 @@ Ici, on apprend comment fonctionne le CRM : un chapitre par domaine, pour chaque
 
 ### De l’aide là où tu es
 
-1. Dans chaque domaine, appuyer sur **F1** ou cliquer sur **?** en haut à droite.
+1. Dans chaque domaine, appuyer sur **F1** ou cliquer en haut à droite sur tes initiales puis **Aide pour ce domaine (F1)**.
 2. L’aide de ce domaine s’ouvre à droite avec les guides les plus fréquents.
 3. **Chapitre complet** ouvre le chapitre dans le manuel.
 
@@ -90,6 +90,7 @@ Les domaines sont rangés en petits groupes (Aperçu, Contacts, Vente, Prospecti
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : L’aide se trouve dans le menu derrière tes initiales en haut à droite, avec langue, actualiser, plein écran et PC/mobile. En haut ne restent que recherche, assistant et notifications.
 - 04.11.2026: Toutes les fiches (client, projet, cas de service, contrat d’entreprise, facture, véhicule …) n’affichent les champs vides qu’après **+ autres informations** ; les champs remplis restent visibles.
 - 04.11.2026: Les domaines avec beaucoup d’onglets en montrent six au plus, le reste est sous **Plus ▾** (l’onglet choisi reste toujours visible). Les fiches montrent les champs vides seulement après **+ autres informations**.
 - 04.11.2026: Barre latérale en petits groupes à déplier et replier, tout tient sans défiler. Les boutons rares sont sous **Plus**, les filtres sans résultat disparaissent, l’explication d’une page est derrière le **i** à côté du titre.

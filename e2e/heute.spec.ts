@@ -33,8 +33,7 @@ test('Mein Tag: Aufgabe anlegen, vergeben sehen, abhaken; Mail-Vorschau', async 
   await anmelden(page, 'admin@test.local')
   await expect(page).toHaveURL(/#\/today$/)
   await expect(page.getByRole('heading', { name: /^Guten (Morgen|Tag|Abend)/, level: 1 })).toBeVisible()
-  const termine = page.getByTestId('tag-termine')
-  await expect(termine).toBeVisible()
+  // Leere Karten bleiben weg (27.11.2026): ohne Termine keine Termin-Karte.
   expect(await verstoesse(page)).toEqual([])
 
   // Eine Aufgabe für mich …
