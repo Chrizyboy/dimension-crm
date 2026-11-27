@@ -3124,6 +3124,7 @@
     "finanzen_vier_augen": "Das Zweitvisum muss eine andere Person geben als das Erstvisum.",
     "finanzen_visum_nicht_offen": "Diese Rechnung wartet auf kein Visum.",
     "finanzen_eingang_fest": "Bezahlte oder stornierte Eingangsrechnungen lassen sich nicht mehr ändern.",
+    "finanzen_eingang_angaben": "Bitte Rechnungssteller und Betrag angeben.",
     "finanzen_nicht_bereit": "Erst nach allen Visa als bezahlt markieren.",
     "preise_nur_admin": "Das darf nur die Administration.",
     "einkauf_freigabe_grenze": "Über der Freigabegrenze: bitte zur Freigabe vorlegen.",
@@ -6847,7 +6848,7 @@
     },
     "eingang": {
       "titel": "Eingangsrechnungen",
-      "text": "Lieferantenrechnungen aus AbaNinja und von Hand. Erstvisum durch die Projektleitung, ab {{betrag}} oder ohne Bestellung zusätzlich durch die Geschäftsleitung. Bezahlt wird in AbaNinja.",
+      "text": "Lieferantenrechnungen hineinziehen, aus AbaNinja oder von Hand. Hochgeladene gibt Erich oder Chris frei; mit Projekt Erstvisum durch die Projektleitung, ab {{betrag}} oder ohne Bestellung zusätzlich durch die Geschäftsleitung. Bezahlt wird in AbaNinja.",
       "neu": "Rechnung erfassen",
       "filter": "Eingangsrechnungen filtern",
       "filterwert": {
@@ -6866,7 +6867,8 @@
         "bereit": "Zur Zahlung bereit",
         "bezahlt": "Bezahlt",
         "abgelehnt": "Abgelehnt",
-        "storniert": "Storniert"
+        "storniert": "Storniert",
+        "freigabe": "Zur Freigabe"
       },
       "spalte": {
         "lieferant": "Lieferant",
@@ -6905,7 +6907,11 @@
         "abgelehnt": "Abgelehnt von {{wer}}: {{grund}}",
         "visiert": "{{wer}} am {{datum}}",
         "ok": "Visum gegeben",
-        "abgelehntOk": "Abgelehnt, die Buchhaltung klärt es mit dem Lieferanten"
+        "abgelehntOk": "Abgelehnt, die Buchhaltung klärt es mit dem Lieferanten",
+        "freigabe": "Freigabe",
+        "freigeben": "Freigeben",
+        "freigegeben": "Freigegeben von {{wer}} am {{datum}}",
+        "wartetFreigabe": "wartet auf Erich oder Chris"
       },
       "dialog": {
         "titel": "Eingangsrechnung erfassen",
@@ -6924,6 +6930,47 @@
         "speichern": "Speichern",
         "projektUnbekannt": "Projekt {{nummer}} gibt es nicht.",
         "bestellungUnbekannt": "Bestellung {{nummer}} gibt es nicht."
+      },
+      "hochladen": {
+        "ziehen": "Rechnung hierher ziehen oder auswählen",
+        "liest": "Rechnung wird gelesen …",
+        "warten": "noch {{n}} in der Schlange",
+        "hinweis": "PDF (Scan oder aus der Mail) oder Foto. Das CRM liest die Angaben, benennt die Datei und legt sie in Compta ab."
+      },
+      "upload": {
+        "titel": "Rechnung prüfen",
+        "aendern": "Rechnung ändern",
+        "gelesen": "Vom PDF gelesen. Bitte prüfen, dann zur Freigabe.",
+        "vonHand": "Konnte nicht gelesen werden. Bitte von Hand ausfüllen.",
+        "lieferant": "Rechnungssteller",
+        "nummer": "Rechnungsnummer",
+        "datum": "Rechnungsdatum",
+        "grund": "Grund (kurz, für den Dateinamen)",
+        "betrag": "Betrag inkl. MWST (CHF)",
+        "mwst": "davon MWST (CHF)",
+        "faellig": "Fällig am",
+        "skonto": "Skonto %",
+        "skontoBis": "Skonto bis",
+        "periodeVon": "Leistung von",
+        "periodeBis": "Leistung bis",
+        "iban": "IBAN / QR-IBAN",
+        "referenz": "Referenz (QR/ESR)",
+        "text": "Bemerkung",
+        "pdf": "PDF ansehen",
+        "speichern": "Speichern",
+        "zurFreigabe": "Zur Freigabe",
+        "ablage": "Ablage: Administration › Compta › factures {{jahr}}",
+        "abgrenzung": "Abgrenzung: Leistung {{von}} – {{bis}}, Rechnung im Jahr {{jahr}}.",
+        "abgrenzungKurz": "Abgrenzung nötig (Rechnung {{jahr}}):",
+        "rechnung": "Rechnung",
+        "zahlung": "Zahlung",
+        "periode": "Leistungsperiode",
+        "datei": "Datei",
+        "inCompta": "in Compta › factures {{jahr}}",
+        "ablageGleich": "wird gleich in Compta › factures {{jahr}} abgelegt",
+        "ablageFehler": "Ablage in Compta hat nicht geklappt, wird stündlich neu versucht",
+        "von": "Hochgeladen von",
+        "anAbaninja": "PDF an AbaNinja geschickt"
       }
     },
     "visum": {

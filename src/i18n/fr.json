@@ -3124,6 +3124,7 @@
     "finanzen_vier_augen": "Le second visa doit être donné par une autre personne que le premier.",
     "finanzen_visum_nicht_offen": "Cette facture n’attend aucun visa.",
     "finanzen_eingang_fest": "Les factures fournisseurs payées ou annulées ne sont plus modifiables.",
+    "finanzen_eingang_angaben": "Merci d'indiquer l'émetteur et le montant.",
     "finanzen_nicht_bereit": "Marquer comme payée seulement après tous les visas.",
     "preise_nur_admin": "Seule l'administration peut faire cela.",
     "einkauf_freigabe_grenze": "Au-dessus de la limite : merci de soumettre pour validation.",
@@ -6847,7 +6848,7 @@
     },
     "eingang": {
       "titel": "Factures fournisseurs",
-      "text": "Factures fournisseurs d’AbaNinja et saisies à la main. Premier visa par la direction de projet, dès {{betrag}} ou sans commande aussi par la direction. Le paiement se fait dans AbaNinja.",
+      "text": "Glisser les factures fournisseurs ici, depuis AbaNinja ou à la main. Les factures déposées sont validées par Erich ou Chris ; avec projet, premier visa par la direction de projet, dès {{betrag}} ou sans commande aussi par la direction. Le paiement se fait dans AbaNinja.",
       "neu": "Saisir une facture",
       "filter": "Filtrer les factures fournisseurs",
       "filterwert": {
@@ -6866,7 +6867,8 @@
         "bereit": "Prête au paiement",
         "bezahlt": "Payée",
         "abgelehnt": "Refusée",
-        "storniert": "Annulée"
+        "storniert": "Annulée",
+        "freigabe": "À valider"
       },
       "spalte": {
         "lieferant": "Fournisseur",
@@ -6905,7 +6907,11 @@
         "abgelehnt": "Refusée par {{wer}} : {{grund}}",
         "visiert": "{{wer}} le {{datum}}",
         "ok": "Visa donné",
-        "abgelehntOk": "Refusée, la comptabilité clarifie avec le fournisseur"
+        "abgelehntOk": "Refusée, la comptabilité clarifie avec le fournisseur",
+        "freigabe": "Validation",
+        "freigeben": "Valider",
+        "freigegeben": "Validée par {{wer}} le {{datum}}",
+        "wartetFreigabe": "attend Erich ou Chris"
       },
       "dialog": {
         "titel": "Saisir une facture fournisseur",
@@ -6924,6 +6930,47 @@
         "speichern": "Enregistrer",
         "projektUnbekannt": "Le projet {{nummer}} n’existe pas.",
         "bestellungUnbekannt": "La commande {{nummer}} n’existe pas."
+      },
+      "hochladen": {
+        "ziehen": "Glisser la facture ici ou la choisir",
+        "liest": "Lecture de la facture …",
+        "warten": "encore {{n}} en attente",
+        "hinweis": "PDF (scan ou reçu par mail) ou photo. Le CRM lit les données, nomme le fichier et le classe dans Compta."
+      },
+      "upload": {
+        "titel": "Vérifier la facture",
+        "aendern": "Modifier la facture",
+        "gelesen": "Lu depuis le PDF. Merci de vérifier, puis envoyer en validation.",
+        "vonHand": "Lecture impossible. Merci de remplir à la main.",
+        "lieferant": "Émetteur",
+        "nummer": "N° de facture",
+        "datum": "Date de facture",
+        "grund": "Objet (court, pour le nom du fichier)",
+        "betrag": "Montant TTC (CHF)",
+        "mwst": "dont TVA (CHF)",
+        "faellig": "Échéance",
+        "skonto": "Escompte %",
+        "skontoBis": "Escompte jusqu'au",
+        "periodeVon": "Prestation du",
+        "periodeBis": "Prestation au",
+        "iban": "IBAN / QR-IBAN",
+        "referenz": "Référence (QR/BVR)",
+        "text": "Remarque",
+        "pdf": "Voir le PDF",
+        "speichern": "Enregistrer",
+        "zurFreigabe": "En validation",
+        "ablage": "Classement : Administration › Compta › factures {{jahr}}",
+        "abgrenzung": "Régularisation : prestation {{von}} – {{bis}}, facture de l'année {{jahr}}.",
+        "abgrenzungKurz": "Régularisation nécessaire (facture {{jahr}}) :",
+        "rechnung": "Facture",
+        "zahlung": "Paiement",
+        "periode": "Période de prestation",
+        "datei": "Fichier",
+        "inCompta": "dans Compta › factures {{jahr}}",
+        "ablageGleich": "sera classée sous peu dans Compta › factures {{jahr}}",
+        "ablageFehler": "Le classement dans Compta a échoué, nouvel essai chaque heure",
+        "von": "Déposée par",
+        "anAbaninja": "PDF envoyé à AbaNinja"
       }
     },
     "visum": {

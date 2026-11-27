@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.15
+
+- Lieferantenrechnungen einfach ins CRM ziehen (Rechnungen › Eingangsrechnungen): das CRM liest Rechnungssteller, Nummer, Betrag, MWST, Fälligkeit, Skonto, IBAN und Leistungsperiode.
+- Die Datei heisst danach wie in Compta («20261106_Strassenverkehrsamt Kanton Aargau_2026-1511295_KIA EV9.pdf») und liegt in Administration › Compta › factures im Jahr der Leistung; Abgrenzungen werden angezeigt.
+- Erich oder Chris geben frei (nie wer hochgeladen hat). Braucht das Cloud-Update.
+
 ## 1.3.14
 
 - Wer was sieht, pro Person: alles sieht nur die Administration (Chris, Loris), alle anderen nur, was unter Einstellungen › Personen › «Bereiche je Person» angehakt ist.

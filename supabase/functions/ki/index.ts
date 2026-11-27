@@ -8,6 +8,7 @@ import { starte } from '../_shared/funktion.ts'
 import { kiEingerichtet, kiEinstellung } from '../_shared/ki_rahmen.ts'
 import { briefing, leadBewertung, zusammenfassung } from './bewerten.ts'
 import { auftragsbestaetigung } from './einkauf.ts'
+import { eingangsrechnung } from './eingang.ts'
 import { dokument, frage } from './fragen.ts'
 import { beleg, luftbild, mailErkennen, notiz, offertePdf, publikation } from './lesen.ts'
 import { entwurf, marketingText, monatsbericht, social, stilLernen } from './texte.ts'
@@ -42,4 +43,5 @@ starte({
   frage: { recht: 'basis', f: frage },
   dokument: { recht: 'basis', f: dokument },
   auftragsbestaetigung: { recht: 'preise', f: auftragsbestaetigung },
+  eingangsrechnung: { recht: 'basis', f: eingangsrechnung },
 })

@@ -1,5 +1,5 @@
 import type { BadgeProps } from '@/components/ui/badge'
-import type { EingangStatus, Rechnung } from '../types'
+import type { EingangStatus, Eingangsrechnung, Rechnung } from '../types'
 
 /** Farbe des Stands; überfällige Rechnungen sind immer rot. */
 export function statusTon(r: Pick<Rechnung, 'status' | 'ueberfaellig'>): NonNullable<BadgeProps['ton']> {
@@ -23,4 +23,9 @@ export function eingangTon(s: EingangStatus): NonNullable<BadgeProps['ton']> {
   if (s === 'abgelehnt') return 'kritisch'
   if (s === 'visum_pl' || s === 'visum_gl') return 'info'
   return 'neutral'
+}
+
+/** Schlüssel des Stands; hochgeladene warten nicht auf ein Visum, sondern auf die Freigabe. */
+export function statusSchluessel(e: Pick<Eingangsrechnung, 'quelle' | 'status'>): string {
+  return e.quelle === 'upload' && e.status === 'visum_pl' ? 'freigabe' : e.status
 }

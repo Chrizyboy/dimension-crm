@@ -19,7 +19,9 @@ import { heuteZuerich } from '../lib/rechnung'
 import { belegAdresse, eingangBezahlt, visieren } from '../services/eingang'
 import type { Eingangsrechnung } from '../types'
 import { EingangDialog } from './EingangDialog'
-import { eingangTon } from './status'
+import { eingangTon, statusSchluessel } from './status'
+import { UploadAngaben } from './UploadAngaben'
+import { UploadDialog } from './UploadDialog'
 
 /**
  * Akte einer Eingangsrechnung: Angaben, Beleg, Vergleich mit der Bestellung (bestellt, geliefert, Differenz) und
@@ -70,7 +72,7 @@ export function EingangAkte({
           onFertig={onSchliessen}
         />
       )}
-      {finanzen && e.status !== 'bezahlt' && e.quelle === 'hand' && (
+      {(finanzen || e.quelle === 'upload') && e.status !== 'bezahlt' && e.quelle !== 'abaninja' && (
         <Button
           variant="ghost"
           onClick={() => {
@@ -112,7 +114,7 @@ export function EingangAkte({
             }
           >
             <CheckCircle2 />
-            {t(`${a}.visieren`)}
+            {e.quelle === 'upload' ? t(`${a}.freigeben`) : t(`${a}.visieren`)}
           </Button>
         </>
       )}
@@ -140,7 +142,7 @@ export function EingangAkte({
           <div className="flex flex-col">
             <div className="flex flex-wrap items-center gap-1.5 pb-3">
               <Badge ton={eingangTon(e.status)} punkt>
-                {t(`rechnungen.eingang.status.${e.status}`)}
+                {t(`rechnungen.eingang.status.${statusSchluessel(e)}`)}
               </Badge>
               {e.ueberfaellig && <Badge ton="kritisch">{t('rechnungen.ueberfaellig')}</Badge>}
               {e.quelle === 'abaninja' && <Badge ton="neutral">AbaNinja</Badge>}
@@ -183,7 +185,8 @@ export function EingangAkte({
                 </div>
               </Feld>
             )}
-            <Visa e={e} />
+            {e.quelle === 'upload' ? <Freigabe e={e} /> : <Visa e={e} />}
+            {e.quelle === 'upload' && <UploadAngaben e={e} />}
             <AkteAbschnitt titel={t(`${a}.angaben`)}>
               <dl>
                 <Angabe label={t('rechnungen.eingang.dialog.datum')}>{e.datum ? formatDatum(e.datum) : '–'}</Angabe>
@@ -206,30 +209,44 @@ export function EingangAkte({
                 )}
               </dl>
             </AkteAbschnitt>
-            <AkteAbschnitt
-              titel={
-                e.bestellung_nummer
-                  ? t(`${a}.bestellung`, { nummer: e.bestellung_nummer })
-                  : t('rechnungen.eingang.spalte.bestellung')
-              }
-            >
-              {!e.bestellung_id ? (
-                <p className="text-muted-foreground text-sm">{t(`${a}.keineBestellung`)}</p>
-              ) : vergleich.error ? (
-                <Fehlerzustand
-                  details={String(vergleich.error)}
-                  onNochmal={() => void vergleich.refetch()}
-                  ebene="h2"
-                />
-              ) : !vergleich.data?.bestellung ? (
-                <Skelett className="h-24" />
-              ) : (
-                <Vergleich b={vergleich.data.bestellung} />
-              )}
-            </AkteAbschnitt>
+            {/* Hochgeladene ohne Bestellung: der Hinweis aufs GL-Visum gilt dort nicht (Freigabe Erich oder Chris). */}
+            {!(e.quelle === 'upload' && !e.bestellung_id) && (
+              <AkteAbschnitt
+                titel={
+                  e.bestellung_nummer
+                    ? t(`${a}.bestellung`, { nummer: e.bestellung_nummer })
+                    : t('rechnungen.eingang.spalte.bestellung')
+                }
+              >
+                {!e.bestellung_id ? (
+                  <p className="text-muted-foreground text-sm">{t(`${a}.keineBestellung`)}</p>
+                ) : vergleich.error ? (
+                  <Fehlerzustand
+                    details={String(vergleich.error)}
+                    onNochmal={() => void vergleich.refetch()}
+                    ebene="h2"
+                  />
+                ) : !vergleich.data?.bestellung ? (
+                  <Skelett className="h-24" />
+                ) : (
+                  <Vergleich b={vergleich.data.bestellung} />
+                )}
+              </AkteAbschnitt>
+            )}
           </div>
         )}
-        {e && aendern && (
+        {e && aendern && e.quelle === 'upload' && (
+          <UploadDialog
+            eingang={e}
+            onSchliessen={() => {
+              setAendern(false)
+            }}
+            onGespeichert={() => {
+              setAendern(false)
+            }}
+          />
+        )}
+        {e && aendern && e.quelle !== 'upload' && (
           <EingangDialog
             eingang={e}
             onSchliessen={() => {
@@ -242,6 +259,31 @@ export function EingangAkte({
         )}
       </DialogInhalt>
     </Dialog>
+  )
+}
+
+/** Hochgeladene Rechnung: eine Freigabe durch Erich oder Chris (nie die Person, die hochgeladen hat). */
+function Freigabe({ e }: { e: Eingangsrechnung }) {
+  const { t } = useTranslation()
+  const a = 'rechnungen.eingang.akte'
+  return (
+    <AkteAbschnitt titel={t(`${a}.freigabe`)}>
+      <dl>
+        <Angabe label={t(`${a}.freigabe`)}>
+          {e.visum_pl_am ? (
+            <span className="text-ok">
+              {t(`${a}.freigegeben`, {
+                wer: e.visum_pl_von_name ?? '–',
+                datum: formatDatum(e.visum_pl_am.slice(0, 10)),
+              })}
+              {e.visum_pl_bemerkung ? <span className="text-muted-foreground"> · {e.visum_pl_bemerkung}</span> : null}
+            </span>
+          ) : (
+            <span className="text-muted-foreground">{t(`${a}.wartetFreigabe`)}</span>
+          )}
+        </Angabe>
+      </dl>
+    </AkteAbschnitt>
   )
 }
 

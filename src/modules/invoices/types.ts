@@ -202,7 +202,7 @@ export type EingangFilter = (typeof EINGANG_FILTER)[number]
 /** Eingangsrechnung (Lieferant) mit Visa (Sicht eingangsrechnungen_liste). */
 export interface Eingangsrechnung {
   id: string
-  quelle: 'hand' | 'abaninja'
+  quelle: 'hand' | 'abaninja' | 'upload'
   lieferant: string
   nummer: string | null
   datum: string | null
@@ -238,6 +238,29 @@ export interface Eingangsrechnung {
   ueberfaellig: boolean
   /** Wartet auf mein Visum (Datenbank rechnet wie eingang_visieren). */
   ich_visiere: boolean
+  /** Hochgeladene Rechnung (Chris 27.11.2026): Angaben aus dem PDF, Ablage in Compta, Abgrenzung. */
+  grund: string | null
+  mwst_rappen: number | null
+  iban: string | null
+  referenz: string | null
+  periode_von: string | null
+  periode_bis: string | null
+  hochgeladen_von: string | null
+  hochgeladen_von_name: string | null
+  dateiname: string
+  ablage_jahr: number
+  abgrenzung: Abgrenzung | null
+  ablage_url: string | null
+  ablage_fehler: string | null
+  abgelegt: boolean
+  an_abaninja: boolean
+}
+
+/** Anteil der Leistungsperiode je Jahr (intern.eingang_abgrenzung). */
+export interface Abgrenzung {
+  noetig: boolean
+  buchungsjahr: number | null
+  jahre: { jahr: number; tage: number; rappen: number }[]
 }
 
 /** Vergleich mit der Bestellung für das Visum (eingang_vergleich); Preise nur mit Recht «preise». */

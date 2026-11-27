@@ -38,7 +38,7 @@ async function ordnerSicher(personId: string, laufwerk: string, elternId: string
 }
 
 /** Ganzen Pfad sicherstellen (fehlende Ordner wie «A 2027» legt er an). Merkt sich Gefundenes pro Lauf. */
-async function pfadSicher(personId: string, laufwerk: string, pfad: string, cache: Map<string, Eintrag>) {
+export async function pfadSicher(personId: string, laufwerk: string, pfad: string, cache: Map<string, Eintrag>) {
   let eltern = cache.get('') ?? (await graph<Eintrag>(personId, `/drives/${laufwerk}/root?$select=id,webUrl`))
   cache.set('', eltern)
   let bisher = ''
@@ -136,7 +136,7 @@ async function dateiAblegen(
 }
 
 /** Person für die Ablage: die eingestellte (Kürzel), wenn sie mit Microsoft verbunden ist, sonst die erste verbundene. */
-async function ablagePerson(e: AblageEinstellung): Promise<string | null> {
+export async function ablagePerson(e: Pick<AblageEinstellung, 'person'>): Promise<string | null> {
   const verbundene = (await dienst.rpc<{ person_id: string }[]>('ms_verbundene', {})).map((p) => p.person_id)
   if (e.person) {
     const [p] = await dienst.lies<{ id: string }[]>(

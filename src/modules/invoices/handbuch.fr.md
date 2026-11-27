@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: buchhaltung, projektleitung, geschaeftsleitung
 ---
 
@@ -72,6 +72,19 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 2. La direction de projet compare avec la commande et clique **Viser** ou **Refuser** avec motif.
 3. Dès CHF 5'000 ou sans commande, le visa de la direction est aussi nécessaire. Ensuite elle passe à **Prête au paiement** ; le paiement se fait dans AbaNinja.
 
+### Déposer une facture fournisseur (tous)
+
+1. Onglet **Factures fournisseurs**. Glisser le PDF (scan de la lettre ou reçu par mail) ou une photo dans le champ **Glisser la facture ici ou la choisir**. Plusieurs fichiers passent l’un après l’autre.
+2. Le CRM lit la facture : émetteur, n° de facture, date, objet, montant, TVA, échéance, escompte, IBAN, référence et période de prestation. Tout vérifier, corriger si besoin, **Voir le PDF** pour comparer.
+3. En bas figurent le nom du fichier (p. ex. «20261106_Strassenverkehrsamt Kanton Aargau_2026-1511295_KIA EV9.pdf»), le classement dans Compta et, si nécessaire, la **Régularisation** avec le montant par année.
+4. **En validation**. Erich et Chris reçoivent une cloche.
+
+### Valider une facture déposée (Erich ou Chris)
+
+1. Cloche ou onglet **Factures fournisseurs**, filtre **Mes visas**. Ouvrir la facture, comparer avec **Ouvrir le justificatif**, **Modifier** si besoin.
+2. **Valider**, ou **Refuser** avec motif (la personne qui l’a déposée reçoit une cloche). Une validation suffit, mais jamais par la personne qui l’a déposée.
+3. Ensuite elle passe à **Prête au paiement** ; le paiement se fait dans AbaNinja.
+
 ### Adresse de facturation, blocage, promesse, perte
 
 1. Ouvrir la facture, **Modifier** : adresse de facturation différente, e-mail pour les factures, référence du client, envoi.
@@ -105,6 +118,8 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 
 - Chaque lundi, le CRM prépare les relances ; elles ne partent qu’après validation.
 - Les nouvelles factures reprennent l’adresse de facturation, l’e-mail de facturation et le délai de paiement du client.
+- Le CRM classe les factures déposées en quelques minutes dans SharePoint : **Administration › Compta › factures <année>**, année de la période de prestation (l’impôt sur les véhicules 2027 va dans 2027, même si la facture date de 2026). Si le nom ou l’année est corrigé plus tard, il renomme ou déplace le fichier.
+- Après la validation, le PDF part vers AbaNinja dès qu’une adresse pour les justificatifs (p. ex. DeepBox) est saisie dans les réglages financiers. Quand la facture revient avec la synchronisation, le CRM la relie par numéro et montant au lieu de la créer deux fois.
 - **Synchroniser AbaNinja** (chaque nuit et sur clic) reprend aussi les factures émises directement dans AbaNinja, avec numéro, montant et état de paiement. Le client est trouvé par le lien avec AbaNinja ou le même numéro client, le projet par le numéro de projet dans le titre. Les brouillons d’AbaNinja ne sont pas repris. Aucune automatisation ne démarre pour ces factures ; les rappels restent dans AbaNinja.
 
 ## Règles {#regeln}
@@ -114,6 +129,7 @@ Factures issues du plan de paiement d’un projet (acompte, montage, facture fin
 - L’envoi se fait uniquement via AbaNinja ou la boîte d’envoi avec validation.
 - Seule l’administration modifie les données des sociétés et les réglages, aussi sous Réglages › **Sociétés et banque**. La comptabilité les voit en lecture seule.
 - Seule la personne qui valide les relances valide rappels et relances.
+- Les factures fournisseurs déposées sont validées par Erich ou Chris (une validation suffit, jamais par la personne qui l’a déposée). Si une facture validée est modifiée, elle doit être validée à nouveau.
 - Factures fournisseurs : premier visa direction de projet, second visa direction dès CHF 5'000 ou sans commande.
 - Seul le chef de projet responsable peut lancer la facturation, et seulement quand le jalon est atteint.
 
@@ -137,6 +153,7 @@ Choisir les filtres et **Exporter la liste** (CSV).
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: glisser les factures fournisseurs en PDF : le CRM les lit, nomme le fichier, le classe dans Compta, signale les régularisations et les envoie en validation à Erich ou Chris.
 - 04.11.2026: **Synchroniser AbaNinja** reprend aussi les factures émises directement dans AbaNinja ; le message indique combien ont été lues et reprises et lesquelles n’ont pas de client.
 - 03.11.2026: L’adresse de facturation, l’e-mail de facturation et le délai de paiement de la fiche client valent pour les nouvelles factures.
 - 03.11.2026: Aperçu, relances avec validation, Mes projets avec Lancer la facturation, factures fournisseurs avec visa, blocage, promesse et passage en perte.

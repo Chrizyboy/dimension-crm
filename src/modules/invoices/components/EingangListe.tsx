@@ -16,7 +16,8 @@ import { useEingang } from '../hooks/useRechnungen'
 import { EINGANG_FILTER, type EingangFilter, type Eingangsrechnung } from '../types'
 import { EingangAkte } from './EingangAkte'
 import { EingangDialog } from './EingangDialog'
-import { eingangTon } from './status'
+import { EingangHochladen } from './EingangHochladen'
+import { eingangTon, statusSchluessel } from './status'
 
 const spalte = spaltenHelfer<Eingangsrechnung>()
 
@@ -68,11 +69,11 @@ function eingangSpalten(t: TFunction): Spalten<Eingangsrechnung> {
       header: t('rechnungen.eingang.spalte.visum'),
       cell: (c) => {
         const e = c.row.original
-        const wer = e.status === 'visum_pl' ? e.visum_pl_person : null
+        const wer = e.status === 'visum_pl' && e.quelle !== 'upload' ? e.visum_pl_person : null
         return (
           <span className="flex flex-col gap-0.5">
             <Badge ton={eingangTon(e.status)} punkt>
-              {t(`rechnungen.eingang.status.${e.status}`)}
+              {t(`rechnungen.eingang.status.${statusSchluessel(e)}`)}
             </Badge>
             {wer && <span className="text-muted-foreground text-xs">{t('rechnungen.eingang.wartetAuf', { wer })}</span>}
           </span>
@@ -118,6 +119,7 @@ export function EingangListe({
           betrag: formatChf(einstellungen.eingang?.visum_gl_ab_rappen ?? 500000, { mitWaehrung: true }),
         })}
       </p>
+      <EingangHochladen onGespeichert={onOeffnen} />
       <Werkzeugleiste
         suche={
           <Suchfeld

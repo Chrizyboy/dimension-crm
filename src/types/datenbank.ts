@@ -3515,9 +3515,16 @@ export type Database = {
       }
       eingangsrechnungen: {
         Row: {
+          abaninja_ausgang_id: string | null
           abaninja_uuid: string | null
           abgelehnt_grund: string | null
           abgelehnt_von: string | null
+          ablage_fehler: string | null
+          ablage_item_id: string | null
+          ablage_jahr_ist: number | null
+          ablage_name: string | null
+          ablage_url: string | null
+          ablage_versucht_am: string | null
           alt_daten: Json | null
           alt_id: string | null
           bestellung_id: string | null
@@ -3530,14 +3537,21 @@ export type Database = {
           faellig_am: string | null
           geaendert_am: string
           geloescht_am: string | null
+          grund: string | null
+          hochgeladen_von: string | null
+          iban: string | null
           id: string
           kreditor_zahlung_id: string | null
           lieferant: string
           lieferant_id: string | null
+          mwst_rappen: number | null
           nummer: string | null
           offen_rappen: number | null
+          periode_bis: string | null
+          periode_von: string | null
           projekt_id: string | null
           quelle: string
+          referenz: string | null
           skonto_bis: string | null
           skonto_prozent: number | null
           status: string
@@ -3553,9 +3567,16 @@ export type Database = {
         }
         ComputedFields: never
         Insert: {
+          abaninja_ausgang_id?: string | null
           abaninja_uuid?: string | null
           abgelehnt_grund?: string | null
           abgelehnt_von?: string | null
+          ablage_fehler?: string | null
+          ablage_item_id?: string | null
+          ablage_jahr_ist?: number | null
+          ablage_name?: string | null
+          ablage_url?: string | null
+          ablage_versucht_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           bestellung_id?: string | null
@@ -3568,14 +3589,21 @@ export type Database = {
           faellig_am?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          grund?: string | null
+          hochgeladen_von?: string | null
+          iban?: string | null
           id?: string
           kreditor_zahlung_id?: string | null
           lieferant: string
           lieferant_id?: string | null
+          mwst_rappen?: number | null
           nummer?: string | null
           offen_rappen?: number | null
+          periode_bis?: string | null
+          periode_von?: string | null
           projekt_id?: string | null
           quelle?: string
+          referenz?: string | null
           skonto_bis?: string | null
           skonto_prozent?: number | null
           status?: string
@@ -3590,9 +3618,16 @@ export type Database = {
           visum_pl_von?: string | null
         }
         Update: {
+          abaninja_ausgang_id?: string | null
           abaninja_uuid?: string | null
           abgelehnt_grund?: string | null
           abgelehnt_von?: string | null
+          ablage_fehler?: string | null
+          ablage_item_id?: string | null
+          ablage_jahr_ist?: number | null
+          ablage_name?: string | null
+          ablage_url?: string | null
+          ablage_versucht_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           bestellung_id?: string | null
@@ -3605,14 +3640,21 @@ export type Database = {
           faellig_am?: string | null
           geaendert_am?: string
           geloescht_am?: string | null
+          grund?: string | null
+          hochgeladen_von?: string | null
+          iban?: string | null
           id?: string
           kreditor_zahlung_id?: string | null
           lieferant?: string
           lieferant_id?: string | null
+          mwst_rappen?: number | null
           nummer?: string | null
           offen_rappen?: number | null
+          periode_bis?: string | null
+          periode_von?: string | null
           projekt_id?: string | null
           quelle?: string
+          referenz?: string | null
           skonto_bis?: string | null
           skonto_prozent?: number | null
           status?: string
@@ -3627,6 +3669,20 @@ export type Database = {
           visum_pl_von?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'eingangsrechnungen_abaninja_ausgang_id_fkey'
+            columns: ['abaninja_ausgang_id']
+            isOneToOne: false
+            referencedRelation: 'ausgang_ansicht'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_abaninja_ausgang_id_fkey'
+            columns: ['abaninja_ausgang_id']
+            isOneToOne: false
+            referencedRelation: 'ausgangskorb'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'eingangsrechnungen_abgelehnt_von_fkey'
             columns: ['abgelehnt_von']
@@ -3660,6 +3716,20 @@ export type Database = {
             columns: ['dokument_id']
             isOneToOne: false
             referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_hochgeladen_von_fkey'
+            columns: ['hochgeladen_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_hochgeladen_von_fkey'
+            columns: ['hochgeladen_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -16695,26 +16765,41 @@ export type Database = {
       }
       eingangsrechnungen_liste: {
         Row: {
+          abgelegt: boolean | null
           abgelehnt_grund: string | null
           abgelehnt_von_name: string | null
+          abgrenzung: Json | null
+          ablage_fehler: string | null
+          ablage_jahr: number | null
+          ablage_url: string | null
+          an_abaninja: boolean | null
           bestellung_id: string | null
           bestellung_nummer: string | null
           betrag_rappen: number | null
           bezahlt_am: string | null
+          dateiname: string | null
           datum: string | null
           dokument_id: string | null
           erstellt_am: string | null
           faellig_am: string | null
+          grund: string | null
+          hochgeladen_von: string | null
+          hochgeladen_von_name: string | null
+          iban: string | null
           ich_visiere: boolean | null
           id: string | null
           kunde: string | null
           lieferant: string | null
+          mwst_rappen: number | null
           nummer: string | null
           offen_rappen: number | null
+          periode_bis: string | null
+          periode_von: string | null
           projekt_id: string | null
           projekt_nummer: string | null
           projekt_titel: string | null
           quelle: string | null
+          referenz: string | null
           skonto_bis: string | null
           skonto_prozent: number | null
           status: string | null
@@ -16753,6 +16838,20 @@ export type Database = {
             columns: ['dokument_id']
             isOneToOne: false
             referencedRelation: 'dokumente'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_hochgeladen_von_fkey'
+            columns: ['hochgeladen_von']
+            isOneToOne: false
+            referencedRelation: 'aufgaben_liste'
+            referencedColumns: ['ersteller_id']
+          },
+          {
+            foreignKeyName: 'eingangsrechnungen_hochgeladen_von_fkey'
+            columns: ['hochgeladen_von']
+            isOneToOne: false
+            referencedRelation: 'personen'
             referencedColumns: ['id']
           },
           {
@@ -19833,7 +19932,30 @@ export type Database = {
       dienste_pruefen: { Args: { p_extern?: Json }; Returns: number }
       dienste_zustand: { Args: Record<PropertyKey, never>; Returns: Json }
       dossier_kontakt_speichern: { Args: { p: Json }; Returns: string }
+      eingang_ablage_ergebnis: {
+        Args: {
+          p_fehler: string
+          p_id: string
+          p_item: string
+          p_jahr: number
+          p_name: string
+          p_ok: boolean
+          p_url: string
+        }
+        Returns: undefined
+      }
+      eingang_ablage_offen: {
+        Args: { p_limit: number }
+        Returns: {
+          dateiname: string
+          id: string
+          item_id: string
+          jahr: number
+          speicher_pfad: string
+        }[]
+      }
       eingang_bezahlt: { Args: { p_datum: string; p_id: string }; Returns: undefined }
+      eingang_hochladen: { Args: { p: Json; p_id: string }; Returns: string }
       eingang_speichern: { Args: { p: Json; p_id: string }; Returns: string }
       eingang_vergleich: { Args: { p_id: string }; Returns: Json }
       eingang_visieren: { Args: { p_bemerkung: string; p_id: string; p_ok: boolean }; Returns: string }
