@@ -10,7 +10,7 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 ## Wer arbeitet hier {#wer}
 
 - **Alle**: Mein Tag zeigt nur, was dich betrifft und was du sehen darfst.
-- **Geschäftsleitung**: sieht zusätzlich die Karten «Team und Betrieb» und die Kennzahlen.
+- **Geschäftsleitung**: sieht zusätzlich die Karten der Bereiche (Bau, Finanzen, Spesen …) und den Knopf **Dashboard**.
 
 ## So geht's {#so}
 
@@ -64,7 +64,7 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 
 ### Die Übersicht per Mail an mich senden
 
-1. **Übersicht per Mail** wählen.
+1. **Per E-Mail senden** wählen.
 2. Die Mail geht über den [Ausgangskorb](kapitel:outbox) aus deinem Postfach an dich selbst, zum Beispiel für unterwegs.
 
 ## Was steht auf Mein Tag {#staende}
@@ -76,8 +76,8 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 - **Wiedervorlagen**: Leads, die du auf ein späteres Datum gelegt hast.
 - **Bewilligungen und Fristen**: Fristen aus Projekten, Fahrzeugen, Geräten und Ausweisen.
 - **Zahlungen (7 Tage)**: was in den nächsten 7 Tagen bezahlt werden muss (nur mit Recht Finanzen).
-- **Service und Garantie**: offene Fälle, dringende zuerst.
-- **Kontrollen und Wartungen (30 Tage)**: anstehende Wartungen aus den Verträgen.
+- **Aftersales**: offene Fälle, dringende zuerst.
+- **Service und Kontrollen (30 Tage)**: anstehende Wartungen aus den Verträgen.
 - **Meine Woche**: deine Wochenziele mit Stand (nur wenn Ziele gesetzt sind).
 - **Team heute**: wer auf der Baustelle, beim Kunden, im Service, da oder abwesend ist (ohne Grund).
 - **Wetter auf den Baustellen**: für Montage und Projektleitung die Prognose der nächsten 5 Tage je Baustelle; «Achtung» bei viel Regen, Wind, Frost oder Hitze.
@@ -107,6 +107,7 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 27.11.2026: Aufbau wie V234: alle Karten in einem Raster ohne Zwischentitel, leere Listen stehen als Häkchen in der Karte **Nichts offen**. Knöpfe oben **Aufgabe**, **Dashboard**, **Per E-Mail senden**. Die Version steht unter Einstellungen.
 - 27.11.2026: Leere Karten (Termine, Aufgaben, Meine Woche, Team und Betrieb) erscheinen nicht mehr.
 - 27.11.2026: Die Karten «Kunden warten auf Antwort» und «Wartet auf deine Freigabe» sind ausgeblendet (nie so besprochen). Posteingang und Ausgangskorb findest du in der Seitenleiste.
 - 19.11.2026: Was Punkte hat, steht oben. Sind Termine und Aufgaben leer, kommen zuerst die Bereiche mit offenen Punkten (z. B. Neue Anfragen); Karten unter «Team und Betrieb» ohne offene Punkte rücken ans Ende.

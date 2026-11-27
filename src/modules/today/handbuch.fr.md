@@ -10,7 +10,7 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 ## Qui travaille ici {#wer}
 
 - **Tout le monde** : Ma journée ne montre que ce qui te concerne et ce que tu as le droit de voir.
-- **Direction** : voit en plus les cartes « Équipe et exploitation » et les indicateurs.
+- **Direction** : voit en plus les cartes des domaines (chantier, finances, frais …) et le bouton **Tableau de bord**.
 
 ## Comment faire {#so}
 
@@ -64,7 +64,7 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 
 ### M’envoyer l’aperçu par e-mail
 
-1. Choisir **Aperçu par e-mail**.
+1. Choisir **Envoyer par e-mail**.
 2. L’e-mail part via la [Boîte d’envoi](kapitel:outbox) de ta boîte à toi-même, par exemple pour la route.
 
 ## Ce qui figure sur Ma journée {#staende}
@@ -76,8 +76,8 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 - **Rappels** : leads que tu as reportés à une date ultérieure.
 - **Autorisations et échéances** : échéances des projets, véhicules, appareils et certificats.
 - **Paiements (7 jours)** : ce qui doit être payé dans les 7 prochains jours (seulement avec le droit Finances).
-- **Service et garantie** : cas ouverts, les urgents d’abord.
-- **Contrôles et maintenances (30 jours)** : maintenances à venir selon les contrats.
+- **Après-vente** : cas ouverts, les urgents d’abord.
+- **Service et contrôles (30 jours)** : maintenances à venir selon les contrats.
 - **Ma semaine** : tes objectifs de la semaine avec l’état (seulement si des objectifs sont fixés).
 - **L'équipe aujourd'hui** : qui est sur un chantier, chez un client, au service, présent ou absent (sans motif).
 - **Météo sur les chantiers** : pour le montage et la direction de projet, la prévision des 5 prochains jours par chantier ; « Attention » en cas de forte pluie, de vent, de gel ou de chaleur.
@@ -107,6 +107,7 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : Structure comme V234 : toutes les cartes dans une seule grille sans intertitre, les listes vides apparaissent cochées dans la carte **Rien en attente**. Boutons en haut **Tâche**, **Tableau de bord**, **Envoyer par e-mail**. La version se trouve sous Paramètres.
 - 27.11.2026 : Les cartes vides (rendez-vous, tâches, ma semaine, équipe et exploitation) n’apparaissent plus.
 - 27.11.2026 : Les cartes « Clients en attente de réponse » et « En attente de ta validation » sont masquées (jamais convenues). Boîte de réception et boîte d’envoi restent dans la barre latérale.
 - 19.11.2026 : ce qui a des points à traiter passe en premier. Si les rendez-vous et les tâches sont vides, les domaines avec des points ouverts (p. ex. Nouvelles demandes) viennent d’abord ; les cartes de « Équipe et exploitation » sans point ouvert passent à la fin.

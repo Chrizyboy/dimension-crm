@@ -18,6 +18,7 @@ export const meta: ModulMeta = {
 }
 
 /** Die Seite «Mein Tag»; die Startseite setzt KI-Briefing und Karten der Bereiche dazu. */
+export { RASTER } from './lib/raster'
 export const MeinTag = lazy(() => import('./components/MeinTag'))
 
 export type * from './types'

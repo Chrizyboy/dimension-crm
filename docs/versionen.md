@@ -6,6 +6,11 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.13
+
+- «Mein Tag» wie im alten CRM: alle Karten in einem Raster ohne Zwischentitel, leere Listen als Häkchen in «Nichts offen».
+- Knöpfe oben «Aufgabe», «Dashboard», «Per E-Mail senden»; Systemstatus nur noch ohne Anmeldung.
+
 ## 1.3.12
 
 - Die Seitenleiste ist wieder aufgebaut wie im alten CRM: Übersicht, Verkauf, Abwicklung mit den bekannten Namen (Leads, Dashboard, Bauplanung, Verträge, Aftersales), dazu «Team» mit Zeiterfassung, Fahrzeugen und Team & Ausweise.

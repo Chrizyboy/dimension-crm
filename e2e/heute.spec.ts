@@ -79,8 +79,8 @@ test('Mein Tag: Aufgabe anlegen, vergeben sehen, abhaken; Mail-Vorschau', async 
   expect(await verstoesse(page)).toEqual([])
   await page.keyboard.press('Escape')
 
-  // Übersicht per Mail: Text sichtbar, nichts wird ohne Klick gesendet.
-  await page.getByRole('button', { name: 'Übersicht per Mail' }).click()
+  // «Per E-Mail senden» (wie V234): Text sichtbar, nichts wird ohne Klick gesendet.
+  await page.getByRole('button', { name: 'Per E-Mail senden' }).click()
   const dialog = page.getByRole('dialog', { name: 'Übersicht per Mail an mich' })
   await expect(dialog.getByRole('textbox', { name: 'Übersicht per Mail an mich' })).toHaveValue(/Mein Tag – /)
   expect(await verstoesse(page)).toEqual([])

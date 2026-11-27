@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import {
   BellRing,
   CalendarDays,
+  Check,
   Inbox,
   ListChecks,
   Mail,
@@ -18,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { Filterchips } from '@/components/shared/Filterchips'
 import { Seitenkopf } from '@/components/shared/Seitenkopf'
 import { Fehlerzustand, Leerzustand } from '@/components/shared/Zustaende'
+import { Karte, KarteKopf, KarteTitel } from '@/components/ui/karte'
 import { Button } from '@/components/ui/button'
 import { Skelett } from '@/components/ui/diverses'
 import { meldeFehler } from '@/services/fehler'
@@ -27,6 +29,7 @@ import { melde } from '@/services/meldungen'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { useMeinTag } from '../hooks/useMeinTag'
+import { RASTER } from '../lib/raster'
 import { anzahlOffen, listeVon, tageszeit, vorname } from '../lib/tag'
 import { fachFehlerSchluessel, zweisprachig } from '@/services/fachfehler'
 import { aufgabeErledigt, verschieben } from '../services/meinTag'
@@ -59,6 +62,8 @@ export default function MeinTag({
   unten,
   zeilenKnoepfe,
   verkaufKarten,
+  bereichKarten,
+  listeErlaubt = () => true,
 }: {
   /** Weitere Knöpfe im Kopf (z. B. neue Aufgabe, Kennzahlen). */
   aktionen?: ReactNode
@@ -68,6 +73,10 @@ export default function MeinTag({
   zeilenKnoepfe?: Partial<Record<TagListeName, (z: TagZeile) => ReactNode>>
   /** Karten aus dem Verkauf vor den Listen (Offerten prüfen, Nach dem Termin); leere zeigen sich nicht. */
   verkaufKarten?: ReactNode
+  /** Karten anderer Bereiche (Projekte, Finanzen, Spesen …) im selben Raster wie die eigenen, wie in V234. */
+  bereichKarten?: ReactNode
+  /** Ob die Person den Bereich einer Liste hat; nur dann steht sie leer unter «Nichts offen». */
+  listeErlaubt?: (liste: TagListeName) => boolean
 }) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
@@ -117,12 +126,17 @@ export default function MeinTag({
     : ''
   const offen = d ? anzahlOffen(d) : 0
   const weitere = d ? WEITERE.filter((w) => listeVon(d, w.liste).anzahl > 0) : []
-  const kernLeer = d ? d.termine.anzahl + d.aufgaben.anzahl + d.vergeben.anzahl === 0 : false
 
-  // Termine und Aufgaben; nur was Punkte hat (Chris 27.11.2026: keine leeren Karten).
+  // V234: Termine und Aufgaben zuerst, dann die übrigen Karten; nur was Punkte hat.
   const aufgabenLeer = d ? d.aufgaben.anzahl + d.vergeben.anzahl === 0 : true
+  /** V234 «Nichts offen»: leere Listen als Häkchen in einer kleinen Karte statt als leere Karten. */
+  const leer: TagListeName[] = d
+    ? (['termine', 'aufgaben', ...WEITERE.map((w) => w.liste)] as TagListeName[]).filter(
+        (l) => listeErlaubt(l) && (l === 'aufgaben' ? aufgabenLeer : listeVon(d, l).anzahl === 0),
+      )
+    : []
   const kern = d && (
-    <div className="grid items-start gap-4 lg:grid-cols-2">
+    <>
       {d.termine.anzahl > 0 && (
         <TagKarte
           icon={CalendarDays}
@@ -162,7 +176,7 @@ export default function MeinTag({
           }
         />
       )}
-    </div>
+    </>
   )
 
   return (
@@ -201,40 +215,55 @@ export default function MeinTag({
 
       {d && (
         <>
-          {/* Was Punkte hat, steht oben; leere Karten bleiben ganz weg. */}
-          {!kernLeer && kern}
-
-          {(weitere.length > 0 || verkaufKarten) && (
-            // auto-fit: leere Spuren fallen weg, zwei Karten füllen die Breite statt rechts eine Lücke zu lassen.
-            <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))]">
-              {verkaufKarten}
-              {weitere.map((w) => (
-                <TagKarte
-                  key={w.liste}
-                  icon={w.icon}
-                  titel={t(`tag.liste.${w.liste}`)}
-                  liste={listeVon(d, w.liste)}
-                  heute={d.heute}
-                  alleZiel={w.ziel}
-                  onVerschieben={(z, bis) => void verschiebe(z, bis)}
-                  {...(zeilenKnoepfe?.[w.liste] ? { zeilenZusatz: zeilenKnoepfe[w.liste] } : {})}
-                  testId={`tag-${w.liste}`}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="grid items-start gap-4 lg:grid-cols-2">
-            <ZieleKarte ziele={d.ziele ?? null} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />
+          {/* Ein Raster wie V234: was Punkte hat, steht oben; leere Karten fehlen und stehen unter «Nichts offen». */}
+          <div className={RASTER}>
+            {kern}
+            {verkaufKarten}
+            {weitere.map((w) => (
+              <TagKarte
+                key={w.liste}
+                icon={w.icon}
+                titel={t(`tag.liste.${w.liste}`)}
+                liste={listeVon(d, w.liste)}
+                heute={d.heute}
+                alleZiel={w.ziel}
+                onVerschieben={(z, bis) => void verschiebe(z, bis)}
+                {...(zeilenKnoepfe?.[w.liste] ? { zeilenZusatz: zeilenKnoepfe[w.liste] } : {})}
+                testId={`tag-${w.liste}`}
+              />
+            ))}
+            {d.ziele && <ZieleKarte ziele={d.ziele} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />}
             <TeamHeute />
             <WetterKarte />
           </div>
 
-          {offen === 0 && <Leerzustand icon={Sun} titel={t('tag.leerTitel')} text={t('tag.leerText')} />}
+          {bereichKarten}
+
+          {leer.length > 0 && (
+            <Karte className="max-w-3xl" data-testid="tag-nichts-offen">
+              <KarteKopf>
+                <KarteTitel>{t('tag.nichts')}</KarteTitel>
+              </KarteKopf>
+              <ul className="flex flex-wrap gap-2 px-4 pb-4">
+                {leer.map((l) => (
+                  <li
+                    key={l}
+                    className="bg-muted text-muted-foreground flex items-center gap-1.5 rounded-full px-3 py-1 text-sm"
+                  >
+                    <Check className="text-ok size-3.5" aria-hidden="true" />
+                    {t(`tag.liste.${l}`)}
+                  </li>
+                ))}
+              </ul>
+            </Karte>
+          )}
+
+          {/* Ohne Ziele nur der Knopf «Ziele festlegen» (Administration), unten statt als Lücke im Raster. */}
+          {!d.ziele && <ZieleKarte ziele={null} darfSetzen={Boolean(d.darf_ziele as boolean | undefined)} />}
         </>
       )}
 
-      {/* Erst nach den eigenen Karten: Sonst ist «Team und Betrieb» beim Laden kurz im Bild und lädt sofort mit. */}
+      {/* Erst nach den eigenen Karten: sonst ist der Systemstatus beim Laden kurz im Bild. */}
       {!tag.isLoading && unten}
 
       {mail && d && (
