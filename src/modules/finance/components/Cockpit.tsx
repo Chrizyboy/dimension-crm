@@ -185,12 +185,6 @@ export function Cockpit({
               <dd className="zahlen font-semibold">{formatChf(debitoren, { mitWaehrung: true })}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.zahllaeufe')}</dt>
-              <dd className="zahlen font-semibold">
-                {daten.zahllaeufe.filter((z) => z.status === 'zur_freigabe' || z.status === 'freigegeben').length}
-              </dd>
-            </div>
-            <div>
               <dt className="text-muted-foreground text-xs">{t('finanzen.cockpit.pruefungOffen')}</dt>
               <dd className="zahlen font-semibold">
                 {offen.filter((z) => z.pruefung === 'freigabe' || z.pruefung === 'klaeren').length}
