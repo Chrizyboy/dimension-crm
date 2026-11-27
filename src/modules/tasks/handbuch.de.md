@@ -51,6 +51,7 @@ Die Regeln stellt die Administration im Kapitel [Automationen](kapitel:automatio
 
 ## Neu {#neu}
 
+- 27.11.2026: Aufgaben haben keinen eigenen Eintrag mehr: **Mein Tag** öffnen, oben **Aufgaben** wählen, wie im alten CRM.
 - 27.11.2026: Wie im alten CRM: Wiederholung, Teilschritte, Kommentare und die Sicht **Team** sind ausgeblendet.
 - 03.11.2026: Liste nach Fälligkeit, Schnelleingabe mit @Kurzzeichen, Akte mit Teilschritten und Kommentaren, Weitergeben, Wiederholung, Vertretung, Team-Sicht und Morgen-Glocke.
 - 24.10.2026: Filter «Von mir vergeben».

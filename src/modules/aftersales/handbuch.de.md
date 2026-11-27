@@ -1,9 +1,9 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: projektleitung, innendienst, montage, geschaeftsleitung
 ---
 
-# Service & Garantie
+# Aftersales
 
 Alles nach dem Bau: Störungen, Reklamationen, Garantiefälle beim Hersteller und Kontrollen. Der **Leitstand** zeigt jeden offenen Fall nach Arbeitsschritt und wie viel Zeit bis zur Reaktion bleibt. Im Reiter **Anlagen** stehen die Daten jeder gebauten Anlage mit Garantie und Komponenten.
 
@@ -93,6 +93,7 @@ Beim Fall die richtige Anlage wählen. **Frühere Fälle** zeigt, was an dieser 
 
 ## Neu {#neu}
 
+- 27.11.2026: «Service & Garantie» heisst wieder **Aftersales** und steht unter Abwicklung, wie im alten CRM.
 - 19.11.2026: **Anhänge** des Falls öffnen in der App (Foto mit Vergrössern und Kopieren, PDF), ✉ schickt eine Datei dem Kunden, **Alle als ZIP** z. B. für den Hersteller.
 - 19.11.2026: In der Fall-Akte **Änderungsverlauf**: wer hat wann was am Fall geändert.
 - 19.11.2026: Alle neuen Fälle gehen zuerst an Andy; er wählt mit **Mitarbeiter wählen** in der Akte, wer übernimmt. Neuer Filter **Zuzuteilen**.

@@ -14,7 +14,8 @@ export const meta: ModulMeta = {
   auchGenannt: ['Bauplanung', 'Montageplanung', 'Planification'],
   pfad: '/projects',
   icon: 'hard-hat',
-  gruppe: 'abwicklung',
+  gruppe: 'verkauf',
+  sammeltitel: { de: 'Bauplanung', fr: 'Planification' },
   phase: 9,
 }
 

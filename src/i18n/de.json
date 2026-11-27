@@ -14,7 +14,7 @@
     "akquise": "Akquise",
     "abwicklung": "Abwicklung",
     "finanzen": "Finanzen",
-    "betrieb": "Betrieb",
+    "betrieb": "Team",
     "hilfe": "Hilfe",
     "suchen": "Suchen oder Befehl …",
     "haupt": "Hauptnavigation",
@@ -1085,7 +1085,7 @@
     "bemerkungen": "Bemerkungen vor Ort"
   },
   "verkauf": {
-    "titel": "Anfragen & Leads",
+    "titel": "Leads",
     "beschreibung": "Vom ersten Kontakt bis zur Auftragszusage: Pipeline, Leads, Route und Kalender.",
     "vorschau": "Vorschau ohne Datenbank",
     "vorschauText": "Leads und Pipeline erscheinen, sobald die App mit Supabase verbunden ist.",
@@ -3175,6 +3175,11 @@
     "zeit_woche_montag": "Die Woche beginnt am Montag."
   },
   "ausgang": {
+    "knopf": {
+      "titel": "Ausgangskorb",
+      "mitZahl_one": "Ausgangskorb, {{count}} wartet auf dich",
+      "mitZahl_other": "Ausgangskorb, {{count}} warten auf dich"
+    },
     "titel": "Ausgangskorb",
     "beschreibung": "Alles, was das CRM per Mail, SMS oder Brief verschicken will, wartet hier. Erst nach deiner Freigabe geht es raus.",
     "ohneDatenbank": "Der Ausgangskorb braucht die Datenbank. In der Vorschau ohne Datenbank ist er leer.",
@@ -4727,7 +4732,7 @@
     "keine": "Keine Treffer"
   },
   "service": {
-    "titel": "Service & Garantie",
+    "titel": "Aftersales",
     "beschreibung": "Störungen, Reklamationen, Garantiefälle und Nachkontrollen der gebauten Anlagen.",
     "neu": "Neuer Fall",
     "filter": "Fälle",
@@ -9181,7 +9186,7 @@
     }
   },
   "kz": {
-    "titel": "Kennzahlen",
+    "titel": "Dashboard",
     "beschreibung": "Wie läuft es? Jede Zahl lässt sich anklicken und zeigt, was dahinter steht.",
     "reiter": {
       "verkauf": "Verkauf",

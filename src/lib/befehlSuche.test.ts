@@ -22,6 +22,16 @@ describe('befehlTreffer', () => {
     expect(tipp).toBeGreaterThan(0)
     expect(tipp).toBeLessThan(befehlTreffer('kund', ['Kunden']))
   })
+  it('setzt den Titel der anderen Sprache vor Teil-Treffer', () => {
+    const offerten = befehlTreffer('offres', ['Offerten', 'Offerten', 'Offres', 'quotes'])
+    const ausschreibungen = befehlTreffer('offres', [
+      'Ausschreibungen',
+      'Ausschreibungen',
+      'Appels d’offres',
+      'tenders',
+    ])
+    expect(offerten).toBeGreaterThan(ausschreibungen)
+  })
   it('zeigt bei leerer Suche alles', () => {
     expect(befehlTreffer('', ['X'])).toBe(1)
   })

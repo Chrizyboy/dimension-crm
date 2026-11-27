@@ -8,9 +8,9 @@ import type { ModulMeta } from '@/types/modul'
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
 export const meta: ModulMeta = {
   id: 'aftersales',
-  titel: { de: 'Service & Garantie', fr: 'Service & garantie' },
+  titel: { de: 'Aftersales', fr: 'Après-vente' },
   untertitel: { de: 'Störungen, Reklamationen und Nachkontrollen', fr: 'Pannes, réclamations et contrôles' },
-  auchGenannt: ['Aftersales', 'Service après-vente', 'SAV'],
+  auchGenannt: ['Service & Garantie', 'Service après-vente', 'SAV'],
   pfad: '/aftersales',
   icon: 'wrench',
   gruppe: 'abwicklung',

@@ -16,6 +16,7 @@ export const meta: ModulMeta = {
   pfad: '/settings',
   icon: 'settings',
   gruppe: 'betrieb',
+  ohneEintrag: true,
   phase: 4,
   recht: ['admin', 'gl'],
 }

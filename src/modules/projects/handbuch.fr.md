@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,7 @@ Au contrat, à la date, au montage, à la MES et à la réception, l’automatio
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: L’entrée de la barre latérale s’appelle **Planification**. En haut, on passe à Chantier & rapports et Achats & matériel.
 - 20.11.2026 : Dans le poste de pilotage, les tuiles du haut filtrent ; les filtres rapides à combiner se trouvent sous **Filtres**. Dans le **Planning**, l’état du chantier est sous **Filtres**, les conflits à côté du site.
 - 19.11.2026 : Dans le menu **⋯** du dossier projet : **+ Tâche** (liée au projet) et **Historique des modifications** (qui a modifié quoi et quand).
 - 19.11.2026 : poste de pilotage avec **Muri · Bulle** : une colonne par site, triée selon le prochain jour de chantier, la phase sur chaque carte. Dans la recherche (Ctrl K), « Bauplanung » trouve ce domaine.

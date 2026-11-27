@@ -40,6 +40,11 @@ export interface ModulMeta {
    * wie in V234). Beide Seiten zeigen oben den Umschalter, die Seitenleiste nur einen Eintrag.
    */
   teilVon?: string
+  /**
+   * Kein eigener Eintrag in der Seitenleiste (Chris 27.11.2026: Leiste wie im alten CRM). Erreichbar über Kopfzeile,
+   * Konto-Menü oder Ctrl K, z. B. Handbuch, Assistent, Ausgangskorb; Einstellungen stehen unten in der Leiste.
+   */
+  ohneEintrag?: boolean
   /** Name des Eintrags in der Seitenleiste, wenn andere Bereiche `teilVon` hierher zeigen (z. B. «Verträge»). */
   sammeltitel?: Zweisprachig
 }

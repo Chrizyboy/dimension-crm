@@ -1,9 +1,9 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: geschaeftsleitung, verkauf, buchhaltung
 ---
 
-# Indicateurs
+# Tableau de bord
 
 Où en sommes-nous ? Vente, pipeline ouvert par région, carnet de commandes, charge du montage et marge par projet. Chaque chiffre est cliquable et montre les entrées dont il est fait. Ainsi, chiffre et liste concordent toujours.
 
@@ -59,6 +59,7 @@ Les offres avec la décision « Gagnée » dans la période choisie. Le taux ne 
 
 ## Nouveautés {#neu}
 
+- 27.11.2026: « Indicateurs » s’appelle de nouveau **Tableau de bord**, sous Aperçu, comme dans l’ancien CRM.
 - 20.11.2026 : Sous les onglets la période ; comparaison, domaine et personne sous **Filtres**.
 - 03.11.2026: Seule l’administration modifie le coût par lead, les objectifs et les probabilités.
 - 24.10.2026: Indicateurs avec listes au clic, pipeline par région et charge.

@@ -91,7 +91,7 @@ test('Kennzahlen: Überblick, Klick auf eine Zahl, alle Reiter, Ziele', async ({
   test.slow()
   await anmelden(page, 'admin@test.local')
   await page.goto('/#/dashboard?zeitraum=alle&reiter=ueberblick')
-  await expect(page.getByRole('heading', { name: 'Kennzahlen', level: 1 })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Dashboard', level: 1 })).toBeVisible()
   await expect(page.getByTestId('kz-ueberblick')).toBeVisible()
   expect(await verstoesse(page)).toEqual([])
 

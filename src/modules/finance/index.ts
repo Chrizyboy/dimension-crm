@@ -15,7 +15,8 @@ export const meta: ModulMeta = {
   },
   pfad: '/finance',
   icon: 'landmark',
-  gruppe: 'finanzen',
+  gruppe: 'abwicklung',
+  teilVon: 'invoices',
   phase: 10,
   recht: 'finanzen',
 }

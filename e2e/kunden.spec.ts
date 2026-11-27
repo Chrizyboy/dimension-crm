@@ -107,7 +107,9 @@ test('Ctrl K findet den Kunden, Papierkorb und Wiederherstellen', async ({ page 
   await expect(akte).toBeHidden()
   await expect(page.getByRole('row', { name: new RegExp(nachname) })).toHaveCount(0)
 
-  await page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link', { name: 'Adressbuch' }).click()
+  // Adressbuch hängt seit 27.11.2026 an «Kunden» (Leiste wie V234), erreichbar über den Umschalter oben.
+  await page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link', { name: 'Kunden' }).click()
+  await page.getByRole('link', { name: 'Adressbuch' }).click()
   await page.getByRole('button', { name: 'Papierkorb', exact: true }).click()
   // Im Papierkorb des Adressbuchs stehen auch Kunden; sie öffnen sich in ihrer Kundenakte (Entscheid 0049).
   await page.getByRole('row', { name: new RegExp(nachname) }).click()

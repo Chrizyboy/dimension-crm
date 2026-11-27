@@ -90,6 +90,7 @@ Die Bereiche stehen in kleinen Gruppen (Übersicht, Kontakte, Verkauf, Akquise, 
 
 ## Neu {#neu}
 
+- 27.11.2026: Seitenleiste wie im alten CRM: **Fehler melden** und **Einstellungen** stehen unten, das Handbuch öffnet man über **Hilfe** im Konto-Menü oder F1.
 - 27.11.2026: Die Hilfe steht im Menü hinter deinem Kürzel oben rechts, zusammen mit Sprache, Aktualisieren, Vollbild und PC/Handy. Oben bleiben nur Suche, Assistent und Glocke.
 - 04.11.2026: Alle Akten (Kunde, Projekt, Service-Fall, Werkvertrag, Rechnung, Fahrzeug …) zeigen leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.
 - 04.11.2026: Bereiche mit vielen Reitern zeigen höchstens sechs, der Rest steht unter **Mehr ▾** (der gewählte bleibt immer sichtbar). Akten zeigen leere Felder erst nach **+ weitere Angaben**.

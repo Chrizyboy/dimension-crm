@@ -1,9 +1,9 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: geschaeftsleitung, verkauf, buchhaltung
 ---
 
-# Kennzahlen
+# Dashboard
 
 Wie läuft es? Verkauf, offene Pipeline pro Region, Auftragsbestand, Auslastung der Montage und Marge je Projekt. Jede Zahl lässt sich anklicken und zeigt die Einträge, aus denen sie besteht. So stimmen Zahl und Liste immer überein.
 
@@ -59,6 +59,7 @@ Offerten mit Entscheid «Gewonnen» im gewählten Zeitraum. Die Quote rechnet nu
 
 ## Neu {#neu}
 
+- 27.11.2026: «Kennzahlen» heisst wieder **Dashboard** und steht unter Übersicht, wie im alten CRM.
 - 20.11.2026: Unter den Reitern steht der Zeitraum; Vergleich, Bereich und Person unter **Filter**.
 - 03.11.2026: Kosten pro Lead, Ziele und Wahrscheinlichkeiten ändert nur noch die Administration.
 - 24.10.2026: Kennzahlen mit Klick-Listen, Pipeline pro Region und Auslastung.

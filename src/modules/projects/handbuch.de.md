@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-20
+stand: 2026-11-27
 rollen: projektleitung, geschaeftsleitung, innendienst
 ---
 
@@ -112,6 +112,7 @@ Bei Vertrag, Termin, Montage, IBN und Abnahme bereitet die Automation eine Info 
 
 ## Neu {#neu}
 
+- 27.11.2026: Der Eintrag in der Seitenleiste heisst wieder **Bauplanung**, wie im alten CRM. Oben wechselt man zu Baustelle & Rapporte und Einkauf & Material.
 - 20.11.2026: Im Leitstand filtern die Kacheln oben; die Schnellfilter zum Kombinieren liegen hinter **Filter**. Im **Zeitplan** liegt der Bau-Status hinter **Filter**, Konflikte stehen neben dem Standort.
 - 19.11.2026: Im Menü **⋯** der Projekt-Akte: **+ Aufgabe** (hängt am Projekt) und **Änderungsverlauf** (wer hat wann was geändert).
 - 19.11.2026: Leitstand neu mit **Muri · Bulle**: eine Spalte je Standort, sortiert nach dem nächsten Bautag, auf jeder Karte die Phase. In der Suche (Ctrl K) findet «Bauplanung» diesen Bereich.

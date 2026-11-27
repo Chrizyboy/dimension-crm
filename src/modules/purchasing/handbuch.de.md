@@ -99,6 +99,7 @@ Reiter **Lager**, Artikel anklicken, **Lager buchen** mit Art Inventur und dem g
 
 ## Neu {#neu}
 
+- 27.11.2026: Einkauf & Material steht unter **Bauplanung** (oben umschalten).
 - 27.11.2026: Lagerplatz, Inventur in einem Durchgang, Rüstliste, Rückgabe von der Baustelle und Reklamationen sind ausgeblendet (nie so besprochen).
 - 03.11.2026: «In den Papierkorb» für Lieferanten und Bestellungen im Entwurf; Bestellungen ab freigegeben werden storniert, mit Rückfrage und «Rückgängig». Zurückholen unter Papierkorb (Menü oben rechts).
 - 03.11.2026: Lagerplatz, Rüstliste mit Druck, Rückgabe von der Baustelle, Inventur in einem Durchgang, Reklamationen beim Lieferanten.

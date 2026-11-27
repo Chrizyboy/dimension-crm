@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: geschaeftsleitung, verkauf
 ---
 
@@ -101,6 +101,7 @@ Youdera finanziert und besitzt die Anlage, wir bauen und warten sie. Der Rechner
 
 ## Neu {#neu}
 
+- 27.11.2026: Grossprojekte haben keinen eigenen Eintrag mehr: **Ausschreibungen** öffnen, oben **Grossprojekte** wählen.
 - 19.11.2026: «Zu entscheiden» zeigt einen Ladefehler als Fehler mit «Nochmals versuchen» statt als «Nichts zu prüfen».
 - 19.11.2026: **Warum und wie** in jeder Akte: Youdera-Prüfung mit Ampel (Kunde, Youdera, Dimension), Anlage passend zum Verbrauch, Ersparnis, Verkaufsblatt und Grundbuch-Link. Dächer mit bestehender PV fallen heraus.
 - 04.11.2026: Die Akte zeigt leere Felder erst nach **+ weitere Angaben**; ausgefüllte stehen wie bisher da.

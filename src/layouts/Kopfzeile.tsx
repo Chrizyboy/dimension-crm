@@ -16,6 +16,7 @@ import {
   Trash2,
   UserRound,
 } from 'lucide-react'
+import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Kbd } from '@/components/ui/diverses'
 import {
@@ -33,6 +34,7 @@ import { kurzzeichenVon } from '@/lib/kurzzeichen'
 import { darfModul } from '@/lib/rechte'
 import { kuerzelText } from '@/lib/tastenkuerzel'
 import { meta as assistentMeta } from '@/modules/ai'
+import { AusgangKnopf, meta as ausgangMeta } from '@/modules/outbox'
 import { abmelden } from '@/services/anmeldung'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi, type Darstellung } from '@/stores/ui'
@@ -95,6 +97,11 @@ export function Kopfzeile() {
           </button>
         )}
         <UpdateKnopf />
+        {!einfach && ich && darfModul(ausgangMeta, ich) && (
+          <Suspense fallback={null}>
+            <AusgangKnopf />
+          </Suspense>
+        )}
         <Glocke />
         {hilfe.panel}
 

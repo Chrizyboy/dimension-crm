@@ -24,6 +24,9 @@ export function befehlTreffer(suche: string, stichworte: readonly string[] = [])
   if (titel.includes(q)) return 0.85
   const woerter = q.split(/\s+/)
   if (woerter.every((w) => titel.includes(w))) return 0.8
+  // Stichwort genau getroffen (z. B. der Titel in der anderen Sprache) schlägt Teil-Treffer,
+  // sonst gewinnt bei Gleichstand einfach das Modul, das in der Liste weiter oben steht.
+  if (rest.includes(q)) return 0.75
   const alles = [titel, ...rest].join(' ')
   if (woerter.every((w) => alles.includes(w))) return 0.6
   // Tippfehler und Abkürzungen («kndn» → Kunden) nur noch im Titel, und immer hinter echten Wort-Treffern.

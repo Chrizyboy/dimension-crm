@@ -15,7 +15,8 @@ export const meta: ModulMeta = {
   },
   pfad: '/purchasing',
   icon: 'package',
-  gruppe: 'abwicklung',
+  gruppe: 'verkauf',
+  teilVon: 'projects',
   phase: '9a',
 }
 

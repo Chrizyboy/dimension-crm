@@ -56,7 +56,7 @@ Une demande qui peut devenir une commande. Un lead a une étape et un état et d
 
 ## Centrale {#leitstand}
 
-Le tableau du service avec tous les cas ouverts par étape et le temps jusqu’à la réaction. [Service & garantie](kapitel:aftersales)
+Le tableau du service avec tous les cas ouverts par étape et le temps jusqu’à la réaction. [Après-vente](kapitel:aftersales)
 
 ## Niveau de rappel {#mahnstufe}
 
@@ -104,7 +104,7 @@ Compte rendu après une intervention : temps, matériel, photos, points de contr
 
 ## RMA {#rma}
 
-Numéro de retour du fabricant pour une pièce défectueuse en cas de garantie. [Service & garantie](kapitel:aftersales)
+Numéro de retour du fabricant pour une pièce défectueuse en cas de garantie. [Après-vente](kapitel:aftersales)
 
 ## État {#stand}
 

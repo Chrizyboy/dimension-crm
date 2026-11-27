@@ -84,6 +84,7 @@ Ja, Mails gehen aus deinem eigenen Postfach und stehen dort unter «Gesendete El
 
 ## Neu {#neu}
 
+- 27.11.2026: Der Ausgangskorb hat keinen Eintrag mehr in der Seitenleiste: der runde Knopf **Ausgangskorb** oben neben der Glocke zeigt, was auf dich wartet.
 - 27.11.2026: Serien sind ausgeblendet, jede Nachricht steht einzeln. Bei Briefen gibt es kein **Unterschrieben zurück** mehr (nie so besprochen).
 - 03.11.2026: Ausgangskorb als Werkbank: Ordner «Für mich zur Freigabe», Prüfungen vor dem Senden, Rückgängig, Später senden, Zurück an, Fehler mit Lösung, Serien und Briefe.
 - 23.10.2026: Entwürfe der KI (Antworten, Nachfassen, Termine) kommen ebenfalls in den Ausgangskorb.

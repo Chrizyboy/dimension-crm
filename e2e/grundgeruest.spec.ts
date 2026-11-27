@@ -39,21 +39,20 @@ test('Unbekannte Adresse zeigt eine verständliche Seite', async ({ page }) => {
 test.describe('Desktop', () => {
   test.skip(({ isMobile }) => isMobile, 'nur Desktop')
 
-  test('Alle 28 Einträge der Seitenleiste sind erreichbar (Verträge fasst zwei Bereiche zusammen)', async ({
-    page,
-  }) => {
+  test('Seitenleiste wie im alten CRM: 16 Einträge, Teile hängen am Hauptbereich', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
-    // Ohne eigene Wahl ist nur «Übersicht» offen (Entscheid 0058); jede Gruppe klappt mit einem Klick auf.
-    await expect(nav.getByRole('link')).toHaveCount(5)
-    const zu = nav.getByRole('button', { expanded: false })
-    while ((await zu.count()) > 0) await zu.first().click()
-    await expect(nav.getByRole('link')).toHaveCount(28)
+    // Wie V234 sind alle Gruppen offen (Entscheid 0063); jede lässt sich weiter zuklappen.
+    await expect(nav.getByRole('link')).toHaveCount(16)
     await nav.getByRole('link', { name: 'Verträge' }).click()
     await page.getByRole('link', { name: 'Wartungsverträge' }).click()
     await expect(page).toHaveURL(/#\/contracts$/)
     await expect(nav.getByRole('link', { name: 'Verträge' })).toHaveClass(/bg-sidebar-active/)
-    await nav.getByRole('link', { name: 'Anfragen & Leads' }).click()
+    await nav.getByRole('link', { name: 'Rechnungen' }).click()
+    await page.getByRole('link', { name: 'Spesen' }).click()
+    await expect(page).toHaveURL(/#\/expenses$/)
+    await expect(nav.getByRole('link', { name: 'Rechnungen' })).toHaveClass(/bg-sidebar-active/)
+    await nav.getByRole('link', { name: 'Leads' }).click()
     await expect(page).toHaveURL(/#\/sales$/)
     // Ohne Datenbank zeigt der Bereich einen Hinweis, mit Datenbank die Pipeline (seit Phase 6).
     await expect(
@@ -64,12 +63,12 @@ test.describe('Desktop', () => {
   test('Zugeklappte Gruppe zeigt den offenen Bereich und bleibt nach dem Neuladen zu', async ({ page }) => {
     await page.goto('/#/invoices')
     const nav = page.getByRole('navigation', { name: 'Hauptnavigation' })
-    await expect(nav.getByRole('link', { name: 'Spesen' })).toBeVisible()
-    await nav.getByRole('button', { name: 'Finanzen' }).click()
-    await expect(nav.getByRole('link', { name: 'Spesen' })).toHaveCount(0)
+    await expect(nav.getByRole('link', { name: 'Aftersales' })).toBeVisible()
+    await nav.getByRole('button', { name: 'Abwicklung' }).click()
+    await expect(nav.getByRole('link', { name: 'Aftersales' })).toHaveCount(0)
     await expect(nav.getByRole('link', { name: 'Rechnungen' })).toBeVisible()
     await page.reload()
-    await expect(nav.getByRole('button', { name: 'Finanzen' })).toHaveAttribute('aria-expanded', 'false')
+    await expect(nav.getByRole('button', { name: 'Abwicklung' })).toHaveAttribute('aria-expanded', 'false')
   })
 
   test('Seitenleiste lässt sich mit Ctrl B einklappen', async ({ page }) => {
@@ -89,7 +88,6 @@ test.describe('Handy', () => {
     await leiste.getByRole('link', { name: 'Projekte & Montage' }).click()
     await expect(page).toHaveURL(/#\/projects$/)
     await leiste.getByRole('button', { name: 'Mehr' }).click()
-    await page.getByRole('dialog').getByRole('button', { name: 'Finanzen' }).click()
     await page.getByRole('dialog').getByRole('link', { name: 'Rechnungen' }).click()
     await expect(page).toHaveURL(/#\/invoices$/)
     await expect(page.getByRole('dialog')).toBeHidden()

@@ -53,6 +53,7 @@ Oben **Löhne verbergen**. Die Summe bleibt in der Rechnung, nur die Zeilen sind
 
 ## Neu {#neu}
 
+- 27.11.2026: Finanzen hat keinen eigenen Eintrag mehr: **Rechnungen** öffnen, oben **Finanzen** wählen.
 - 27.11.2026: Zahllauf, Kontoauszug einlesen, MWST-Schätzung und Monatsabschluss ausgeblendet (nie so besprochen; MWST läuft in AbaNinja). Kontostände stehen jetzt unter **Liquidität**.
 - 20.11.2026: Liquidität: Diagramm mit Achse, deutlicher Nulllinie und tiefstem Stand; Gesellschaft steht neben den Reitern.
 - 19.11.2026: Projekte & Marge zeigt «–» statt 100 %, solange für ein Projekt noch keine Kosten erfasst sind.

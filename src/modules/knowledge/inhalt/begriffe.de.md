@@ -56,7 +56,7 @@ Eine Anfrage, aus der ein Auftrag werden kann. Ein Lead hat eine Stufe und einen
 
 ## Leitstand {#leitstand}
 
-Das Board im Service mit allen offenen Fällen nach Arbeitsschritt und der Zeit bis zur Reaktion. [Service & Garantie](kapitel:aftersales)
+Das Board im Service mit allen offenen Fällen nach Arbeitsschritt und der Zeit bis zur Reaktion. [Aftersales](kapitel:aftersales)
 
 ## Mahnstufe {#mahnstufe}
 
@@ -104,7 +104,7 @@ Bericht nach einem Einsatz: Zeit, Material, Fotos, Prüfpunkte und Unterschrift.
 
 ## RMA {#rma}
 
-Rücksendenummer des Herstellers für ein defektes Teil im Garantiefall. [Service & Garantie](kapitel:aftersales)
+Rücksendenummer des Herstellers für ein defektes Teil im Garantiefall. [Aftersales](kapitel:aftersales)
 
 ## Stand {#stand}
 

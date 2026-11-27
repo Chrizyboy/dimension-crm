@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.12
+
+- Die Seitenleiste ist wieder aufgebaut wie im alten CRM: Übersicht, Verkauf, Abwicklung mit den bekannten Namen (Leads, Dashboard, Bauplanung, Verträge, Aftersales), dazu «Team» mit Zeiterfassung, Fahrzeugen und Team & Ausweise.
+- Aufgaben, Grossprojekte, Adressbuch, Spesen und Finanzen findest du oben im passenden Bereich. Der Ausgangskorb ist der Knopf neben der Glocke.
+- Die Geschäftsleitung sieht in «Preise» wieder die internen Preise.
+
 ## 1.3.11
 
 - Werkverträge: Das Dokument übernimmt die Positionen 1:1 aus der Offerte; bei Optionen kreuzt man an, was bestellt ist.

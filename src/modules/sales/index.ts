@@ -8,10 +8,10 @@ import type { ModulMeta } from '@/types/modul'
 /** Kenndaten für Navigation, Berechtigungen und Befehlspalette. */
 export const meta: ModulMeta = {
   id: 'sales',
-  titel: { de: 'Anfragen & Leads', fr: 'Demandes & leads' },
+  titel: { de: 'Leads', fr: 'Leads' },
   kurztitel: { de: 'Anfragen', fr: 'Demandes' },
   untertitel: { de: 'Vom ersten Kontakt bis zur Auftragszusage', fr: 'Du premier contact à la commande' },
-  auchGenannt: ['Leads'],
+  auchGenannt: ['Anfragen & Leads', 'Anfragen', 'Demandes'],
   pfad: '/sales',
   icon: 'users',
   gruppe: 'verkauf',

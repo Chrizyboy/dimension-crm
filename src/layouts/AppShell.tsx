@@ -1,3 +1,4 @@
+import { useRouterState } from '@tanstack/react-router'
 import { Suspense, useEffect, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Toaster } from 'sonner'
@@ -12,6 +13,7 @@ import { AufgabeAusAkte } from '@/modules/tasks'
 import { useAnmeldung } from '@/stores/anmeldung'
 import { useUi } from '@/stores/ui'
 import { Befehlspalette } from './Befehlspalette'
+import { Bereichsumschalter } from './Bereichsumschalter'
 import { KuerzelHilfe } from './KuerzelHilfe'
 import { HandyNavigation } from './HandyNavigation'
 import { Kopfzeile } from './Kopfzeile'
@@ -33,6 +35,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const einfach = useAnmeldung((z) => z.ich?.ansicht === 'einfach')
   // Erst laden, wenn jemand Ctrl J drückt (spart Startzeit).
   const assistent = useUi((z) => z.assistentOffen)
+  // Bereich der Adresse (#/invoices → «invoices»): Teile eines Eintrags bekommen oben den Umschalter (Entscheid 0063).
+  const modulId = useRouterState({ select: (z) => z.location.pathname.split('/')[1] ?? '' })
 
   // Das Fenster selbst scrollt nie: Inhalt und Seitenleiste haben eigene Scrollbereiche. Sonst liess sich die
   // Desktop-App über die App hinaus ins Leere scrollen, sobald irgendein Element über den Rand ragte.
@@ -84,6 +88,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 : 'pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] md:pb-0',
             )}
           >
+            {!einfach && modulId && <Bereichsumschalter modulId={modulId} />}
             {children}
           </main>
         </div>

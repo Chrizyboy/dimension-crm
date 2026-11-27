@@ -67,7 +67,7 @@ Tu t’occupes des factures, paiements, liquidités et frais.
 Tu gardes la vue d’ensemble et tu décides.
 
 1. **Ma journée** : ce qui attend ta validation ou ta décision. [Chapitre](kapitel:today)
-2. **Chiffres clés** : leads, offres, conclusions, carnet de commandes et marge. [Chapitre](kapitel:dashboard)
+2. **Tableau de bord** : leads, offres, conclusions, carnet de commandes et marge. [Chapitre](kapitel:dashboard)
 3. **Grands projets** : évaluer et approuver les résultats de la semaine. [Chapitre](kapitel:contracting)
 4. **Appels d’offres** : approuver ceux auxquels nous écrivons. [Chapitre](kapitel:tenders)
 5. **Finances** : liquidité et post-calcul. [Chapitre](kapitel:finance)
