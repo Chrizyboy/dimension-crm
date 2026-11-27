@@ -9071,8 +9071,8 @@
       "wiedervorlagen": "Wiedervorlagen",
       "fristen": "Bewilligungen und Fristen",
       "zahlungen": "Zahlungen (7 Tage)",
-      "service": "Service und Garantie",
-      "kontrollen": "Kontrollen und Wartungen (30 Tage)"
+      "service": "Aftersales",
+      "kontrollen": "Service und Kontrollen (30 Tage)"
     },
     "aufgabenFilter": {
       "fuerMich": "Für mich",
@@ -9107,7 +9107,7 @@
     "leerText": "Keine Termine, Aufgaben oder Fristen. Neue Anfragen und Aufgaben erscheinen hier von selbst.",
     "nichts": "Nichts offen",
     "mail": {
-      "knopf": "Übersicht per Mail",
+      "knopf": "Per E-Mail senden",
       "titel": "Übersicht per Mail an mich",
       "beschreibung": "Geht über den Ausgangskorb aus deinem Postfach an dich selbst.",
       "an": "An",
@@ -9117,7 +9117,7 @@
       "ohneAdresse": "Für deine Person ist keine Mail-Adresse erfasst.",
       "gesendet": "Übersicht liegt im Ausgangskorb und wird gleich gesendet"
     },
-    "kennzahlen": "Kennzahlen",
+    "kennzahlen": "Dashboard",
     "team": "Team und Betrieb",
     "system": "System und Bauplan",
     "warum": {

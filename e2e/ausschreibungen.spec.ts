@@ -106,7 +106,8 @@ test('Sperrliste, Quellen, Fristen, Nachweise und Auswertung ohne Verstösse', a
   expect(await verstoesse(page)).toEqual([])
 
   await page.goto('/#/')
-  // Die Karten unter «Team und Betrieb» laden erst, wenn man hinscrollt.
-  await page.getByRole('heading', { name: 'Team und Betrieb' }).scrollIntoViewIfNeeded()
+  // Die Karten der Bereiche laden erst, wenn man hinscrollt (gleiches Raster wie die eigenen Karten, V234).
+  await expect(page.getByTestId('mein-tag')).toBeVisible()
+  await page.getByTestId('tag-bereiche').scrollIntoViewIfNeeded()
   await expect(page.getByText('Ausschreibungen heute')).toBeVisible()
 })

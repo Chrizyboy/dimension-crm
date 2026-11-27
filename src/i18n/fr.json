@@ -9071,8 +9071,8 @@
       "wiedervorlagen": "Rappels",
       "fristen": "Autorisations et délais",
       "zahlungen": "Paiements (7 jours)",
-      "service": "Service et garantie",
-      "kontrollen": "Contrôles et entretiens (30 jours)"
+      "service": "Après-vente",
+      "kontrollen": "Service et contrôles (30 jours)"
     },
     "aufgabenFilter": {
       "fuerMich": "Pour moi",
@@ -9107,7 +9107,7 @@
     "leerText": "Aucun rendez-vous, tâche ou délai. Les nouvelles demandes et tâches apparaissent ici automatiquement.",
     "nichts": "Rien en attente",
     "mail": {
-      "knopf": "Résumé par e-mail",
+      "knopf": "Envoyer par e-mail",
       "titel": "Résumé par e-mail à moi-même",
       "beschreibung": "Passe par la corbeille de sortie, depuis ta boîte, à toi-même.",
       "an": "À",
@@ -9117,7 +9117,7 @@
       "ohneAdresse": "Aucune adresse e-mail n’est saisie pour ta personne.",
       "gesendet": "Le résumé est dans la corbeille de sortie et part dans un instant"
     },
-    "kennzahlen": "Indicateurs",
+    "kennzahlen": "Tableau de bord",
     "team": "Équipe et exploitation",
     "system": "Système et plan de construction",
     "warum": {

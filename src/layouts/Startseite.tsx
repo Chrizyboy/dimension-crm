@@ -17,28 +17,40 @@ import { AusgangHeute, meta as ausgangMeta } from '@/modules/outbox'
 import { EinkaufHeute, meta as einkaufMeta } from '@/modules/purchasing'
 import { SpesenHeute, meta as spesenMeta } from '@/modules/expenses'
 import { FinanzenHeute, meta as finanzenMeta } from '@/modules/finance'
-import { VisumHeute } from '@/modules/invoices'
+import { VisumHeute, meta as rechnungenMeta } from '@/modules/invoices'
 import { TeamHeute, meta as teamMeta } from '@/modules/staff'
 import { AusschreibungenHeute, meta as ausschreibungenMeta } from '@/modules/tenders'
 import { KiBriefing } from '@/modules/ai'
 import { NeueAufgabeKnopf } from '@/modules/tasks'
 import { NachfassKnoepfe, PruefenHeute, meta as offertenMeta } from '@/modules/quotes'
 import { NachTerminHeute, meta as verkaufMeta } from '@/modules/sales'
-import { MeinTag } from '@/modules/today'
+import { MeinTag, RASTER, type TagListeName } from '@/modules/today'
 import { useAnmeldung } from '@/stores/anmeldung'
+import type { ModulMeta } from '@/types/modul'
 import { supabase } from '@/services/supabase'
 import { EinfachStart } from './EinfachStart'
 import { Systemstatus } from './Systemstatus'
 
 /**
  * Startseite = «Mein Tag» (Phase 14). Setzt zusammen, was aus verschiedenen Bereichen kommt: KI-Briefing, wer auf
- * eine Antwort wartet (Posteingang), Ausschreibungen, die Karten der Bereiche («Team und Betrieb») und für die Administration Systemstatus und Bauplan.
+ * eine Antwort wartet (Posteingang), Ausschreibungen und die Karten der Bereiche, alles in einem Raster wie V234.
  */
 /**
  * Karten «Kunden warten auf Antwort» (Posteingang) und «Wartet auf deine Freigabe» (Ausgangskorb) auf «Mein Tag»:
  * nie mit Chris besprochen, seit 27.11.2026 ausgeblendet (Entscheid 0061). Beide Bereiche bleiben in der Seitenleiste.
  */
 const POST_KARTEN: boolean = false
+
+/** Zu welchem Bereich eine Liste von «Mein Tag» gehört (für «Nichts offen»); Termine und Aufgaben hat jede Person. */
+const LISTE_MODUL: Partial<Record<TagListeName, ModulMeta>> = {
+  nachfassen: offertenMeta,
+  neue_leads: verkaufMeta,
+  wiedervorlagen: verkaufMeta,
+  fristen: projekteMeta,
+  zahlungen: rechnungenMeta,
+  service: serviceMeta,
+  kontrollen: serviceMeta,
+}
 
 export function Startseite() {
   const { t } = useTranslation()
@@ -127,41 +139,40 @@ export function Startseite() {
             </>
           )
         }
-        unten={
-          <>
-            {mitDb && (
-              <section aria-labelledby="team-betrieb" className="flex flex-col gap-3">
-                <h2 id="team-betrieb" className="font-display text-base font-semibold">
-                  {t('tag.team')}
-                </h2>
-                {/* Die Karten holen je eigene Daten (Projekte, Finanzen …); erst laden, wenn man hinscrollt. */}
-                <ErstWennSichtbar minHoehe={400}>
-                  {darfModul(ausschreibungenMeta, ich) && (
-                    <Suspense>
-                      <AusschreibungenHeute />
+        listeErlaubt={(l) => {
+          // Leere Listen unter «Nichts offen» nur aus Bereichen, die die Person hat (wie V234 nach Register).
+          const modul = LISTE_MODUL[l]
+          return !modul || darfModul(modul, ich)
+        }}
+        bereichKarten={
+          mitDb && (
+            // Die Karten holen je eigene Daten (Projekte, Finanzen …); erst laden, wenn man hinscrollt.
+            <ErstWennSichtbar minHoehe={200}>
+              {/* Ohne Zwischentitel im selben Raster wie die eigenen Karten (V234); Karten ohne Punkte bleiben weg. */}
+              <div className={RASTER}>
+                {darfModul(ausschreibungenMeta, ich) && (
+                  <Suspense>
+                    <AusschreibungenHeute />
+                  </Suspense>
+                )}
+                {hatRecht(ich, 'visum') && (
+                  <Suspense>
+                    <VisumHeute />
+                  </Suspense>
+                )}
+                {karten
+                  .filter(([m]) => darfModul(m, ich))
+                  .map(([m, Karte]) => (
+                    <Suspense key={m.id}>
+                      <Karte />
                     </Suspense>
-                  )}
-                  {/* Karten ohne Punkte («nichts offen», `data-leer`) bleiben weg (Chris 27.11.2026: keine leeren Karten). */}
-                  <div className="grid items-start gap-4 min-[1800px]:grid-cols-4 md:grid-cols-2 xl:grid-cols-3 [&>*:has([data-leer])]:hidden">
-                    {hatRecht(ich, 'visum') && (
-                      <Suspense>
-                        <VisumHeute />
-                      </Suspense>
-                    )}
-                    {karten
-                      .filter(([m]) => darfModul(m, ich))
-                      .map(([m, Karte]) => (
-                        <Suspense key={m.id}>
-                          <Karte />
-                        </Suspense>
-                      ))}
-                  </div>
-                </ErstWennSichtbar>
-              </section>
-            )}
-            {(!ich || hatRecht(ich, 'admin')) && <Systemstatus />}
-          </>
+                  ))}
+              </div>
+            </ErstWennSichtbar>
+          )
         }
+        // Systemstatus und Bauplan nur ohne Anmeldung (Einrichten); im Alltag steht die Version unter Einstellungen.
+        unten={!ich && <Systemstatus />}
       />
     </Suspense>
   )
