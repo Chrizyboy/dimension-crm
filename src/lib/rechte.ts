@@ -13,13 +13,15 @@ export function hatRecht(anmeldung: MeineAnmeldung | null, recht: Recht): boolea
 
 /**
  * Darf die Person diesen Bereich in der Seitenleiste sehen? System-Bereiche (Recht «admin») nach Recht, sonst nach
- * den Bereichen der Rolle; mit «gl» alle. Ohne Anmeldung (Vorschau ohne Datenbank) ist alles sichtbar.
+ * den freigegebenen Bereichen (Person, sonst Rolle). Alles sieht nur die Administration (Chris 27.11.2026: «Loris
+ * und Chris sehen alles, der Rest muss von uns freigegeben werden»); ohne Freigabe nur, was «immer» gilt (Mein Tag).
+ * Ohne Anmeldung (Vorschau ohne Datenbank) ist alles sichtbar.
  */
 export function darfModul(modul: ModulMeta, anmeldung: MeineAnmeldung | null): boolean {
   if (!anmeldung) return true
   const rechte: readonly Recht[] =
     modul.recht === undefined ? [] : typeof modul.recht === 'string' ? [modul.recht] : modul.recht
   if (rechte.length > 0 && !rechte.some((r) => hatRecht(anmeldung, r))) return false
-  if (modul.immer || rechte.includes('admin') || hatRecht(anmeldung, 'gl')) return true
-  return anmeldung.bereiche.length === 0 || anmeldung.bereiche.includes(modul.id)
+  if (modul.immer || rechte.includes('admin') || hatRecht(anmeldung, 'admin')) return true
+  return anmeldung.bereiche.includes(modul.id)
 }

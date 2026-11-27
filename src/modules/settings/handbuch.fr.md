@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: administration
 ---
 
@@ -10,7 +10,7 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 ## Qui travaille ici {#wer}
 
 - **Administration** : tous les domaines, modifie tout.
-- **Direction** : voit tous les domaines, ne modifie rien.
+- **Direction** : voit les domaines autorisés avec tous les chiffres, ne modifie rien. Seule l’administration voit tout.
 - **Tous les autres** : aucun réglage de l’entreprise, seulement le leur dans [Mon compte](/konto).
 - **Tout le monde** : [Mon compte](/konto) via la photo en haut à droite.
 
@@ -37,8 +37,8 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 ### Fixer les droits et les domaines visibles
 
 1. Domaine **Rôles et droits** : par rôle, les **Droits du rôle** et les domaines visibles.
-2. Domaine **Personnes**, ouvrir la personne, sous **Compléments** : **Complément direction** (voit tout, finances comprises) et **Complément administration** (configure le système, ne voit ni les finances ni les dossiers du personnel des autres).
-3. Pour une seule personne : ouvrir la personne, **Sélection propre pour cette personne**. Pour tout le monde à la fois : dans **Personnes**, en haut **Domaines par personne**, cocher (enregistre tout de suite). Les coches pâles viennent du rôle, la flèche en cercle remet une personne sur son rôle.
+2. Domaine **Personnes**, ouvrir la personne, sous **Compléments** : **Complément direction** (voit tout dans les domaines autorisés, finances comprises) et **Complément administration** (configure le système, ne voit ni les finances ni les dossiers du personnel des autres).
+3. Pour une seule personne : ouvrir la personne, **Sélection propre pour cette personne**. Pour tout le monde à la fois : dans **Personnes**, en haut **Domaines par personne**, cocher (enregistre tout de suite). Les coches pâles viennent du rôle, la flèche en cercle remet une personne sur son rôle. Sans coche propre ni rôle avec domaines, la personne ne voit que Ma journée.
 4. **Vue simple (uniquement temps et frais)** sur le rôle : seulement temps de travail, frais et planning. Le montage travaille avec la vue normale pour accéder aux rapports, au service et aux véhicules.
 
 ### Régler les responsabilités
@@ -131,6 +131,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : Seule l’administration (Chris et Loris) voit tout. Tous les autres, direction comprise, ne voient que les domaines autorisés sous **Personnes › Domaines par personne** ; sans autorisation, seulement Ma journée. Rôles du 2.11 enregistrés (Andy et José gestion de projet, Filipe vente, Erich comptabilité, Davis service interne).
 - 19.11.2026 : Attribution de nouveau comme dans l’ancien CRM (leads selon le site du NPA, offres à qui s’est rendu sur place, offres indicatives à Andy) ; nouveau **Attribuer les cas SAV** ; fiches mal attribuées corrigées, avec **Annuler la correction**.
 - 19.11.2026 : **Personnes › Domaines par personne** : toutes les personnes et tous les domaines d’un coup d’œil, avec des coches comme dans la gestion des utilisateurs de l’ancien CRM. Retour au rôle en un clic.
 - 05.11.2026 : Si ASPSMS refuse les identifiants, le CRM ne vérifie plus la connexion SMS qu’une fois par jour au lieu de chaque heure, jusqu’à ce que **Tester maintenant** réussisse.
