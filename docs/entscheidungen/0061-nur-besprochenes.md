@@ -29,3 +29,10 @@ ausdrückliches Ja von Chris.
 - Ausblenden statt löschen: Tabellen, Funktionen und Daten bleiben. Ein Schalter je Bereich (`lib/zusaetze.ts`)
   holt alles zurück.
 - Neue Funktionen nur mit ausdrücklichem Ja von Chris oder aus V233/V234.
+
+## Nachtrag 27.11.2026: simpel und effizient
+
+Chris: «das crm soll attraktiv aussehen und simpel sein … effizienz steht an oberster stelle.» Per Pop-up bestätigt:
+Kopfzeile nur Suche, Assistent, Glocke, Konto-Menü (Sprache, Hilfe F1, Aktualisieren, Vollbild F11, PC/Handy im Menü);
+Posteingang nur Arbeitsplatz (Absender-Regeln als Einstellungs-Bereich `posteingang_regeln`, Team-Übersicht und
+Reaktionszeit ausgeblendet); Mein Tag ohne leere Karten (auch in «Team und Betrieb», `data-leer` ausgeblendet).

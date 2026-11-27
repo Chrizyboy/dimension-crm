@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -11,13 +11,13 @@ Ton poste de travail pour les e-mails : tout ce qui vient de ta boîte et d’in
 
 - **Tout le monde** : traite les e-mails de sa propre boîte dans la vue **Pour moi**.
 - **Attribuer (aujourd’hui Davis et Chris)** : transmet les e-mails d’info@ à la bonne personne dans la vue **À attribuer**.
-- **Direction** : voit dans l’onglet **Équipe** combien d’e-mails chaque personne a en cours, et reçoit la notification quand un client attend deux fois plus longtemps que prévu.
+- **Direction** : reçoit la notification quand un client attend deux fois plus longtemps que prévu.
 
 ## Comment faire {#so}
 
 ### Traiter mes e-mails
 
-1. Onglet **Poste de travail**, vue **Pour moi**. La liste est triée : **Délai dépassé**, **À faire aujourd’hui**, **Plus tard**.
+1. Vue **Pour moi**. La liste est triée : **Délai dépassé**, **À faire aujourd’hui**, **Plus tard**.
 2. Clique sur un e-mail. Sur PC, il s’affiche à droite de la liste, sur mobile il s’ouvre en page.
 3. **En bref** le résume. En dessous, l’**étape suivante** avec un bouton, par exemple **Créer un lead**, **Ouvrir un cas SAV** ou **Saisir le paiement**.
 4. **Répondre** ouvre la fenêtre de mail. La réponse passe par la [corbeille de sortie](kapitel:outbox) et termine l’e-mail.
@@ -66,7 +66,7 @@ Clavier : J et K passent au suivant ou au précédent, E termine, R répond, W t
 ### Règles pour un expéditeur
 
 1. **Plus › Règle pour cet expéditeur** : toujours classer sans bruit, toujours comme type ou (pour info@) toujours à une personne.
-2. Toutes les règles figurent dans l’onglet **Règles d’expéditeur**, on peut aussi les y supprimer.
+2. Toutes les règles figurent sous **Paramètres › Règles d’expéditeur** (administration), on peut aussi les y supprimer.
 
 ### Plusieurs e-mails à la fois
 
@@ -100,10 +100,9 @@ Clavier : J et K passent au suivant ou au précédent, E termine, R répond, W t
 ## Règles {#regeln}
 
 - Chaque personne voit sa propre boîte et les boîtes d’équipe, jamais la boîte des autres.
-- Les chiffres de toutes les personnes dans l’onglet **Équipe**, seule la direction les voit, sans contenu.
 - Les règles pour info@ sont créées par qui attribue. Les e-mails de clients ne sont jamais classés sans bruit.
 - Ce que l’IA lit dans les factures n’est enregistré qu’après ton clic.
-- Délais par type, horaires de travail, attente client, proposition d’attribution, remplacements et qui attribue info@ : réglés par l’administration sous **Paramètres** dans la boîte de réception.
+- Délais par type, horaires de travail, attente client, proposition d’attribution, remplacements et qui attribue info@ : réglés par l’administration sous **Paramètres › Boîte de réception**.
 
 ## Questions fréquentes {#fragen}
 
@@ -115,12 +114,9 @@ Tu dois être connecté à Microsoft sous **Mon compte**. Ensuite, les e-mails a
 
 Ouvre l’e-mail et change le **Type** sous **Rattaché à**. Le délai suit alors le nouveau type.
 
-### Où voir à quelle vitesse nous répondons ?
-
-Onglet **Délai de réponse** : médiane du temps de travail jusqu’à la réponse et part dans le délai, par semaine et par personne.
-
 ## Nouveautés {#neu}
 
+- 27.11.2026 : La boîte de réception ne montre plus que le poste de travail. Règles d’expéditeur et paramètres sont sous **Paramètres** ; vue équipe et délai de réponse sont masqués.
 - 04.11.2026: Si personne n’attend de réponse, « Ma journée » n’affiche qu’une ligne au lieu d’une carte vide.
 - 03.11.2026: Poste de travail : Pour moi, À attribuer, En attente du client, Mis de côté, étape suivante, conversation et pièces jointes, notes avec @, règles d’expéditeur, vue d’équipe.
 - 02.11.2026: Les anciens e-mails de toutes les boîtes arrivent comme archive, sans délai.

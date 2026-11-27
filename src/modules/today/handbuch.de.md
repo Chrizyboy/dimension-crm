@@ -78,11 +78,11 @@ Die Startseite für alle. Sie zeigt beim Öffnen, was heute ansteht: Termine, Au
 - **Zahlungen (7 Tage)**: was in den nächsten 7 Tagen bezahlt werden muss (nur mit Recht Finanzen).
 - **Service und Garantie**: offene Fälle, dringende zuerst.
 - **Kontrollen und Wartungen (30 Tage)**: anstehende Wartungen aus den Verträgen.
-- **Meine Woche**: deine Wochenziele mit Stand.
+- **Meine Woche**: deine Wochenziele mit Stand (nur wenn Ziele gesetzt sind).
 - **Team heute**: wer auf der Baustelle, beim Kunden, im Service, da oder abwesend ist (ohne Grund).
 - **Wetter auf den Baustellen**: für Montage und Projektleitung die Prognose der nächsten 5 Tage je Baustelle; «Achtung» bei viel Regen, Wind, Frost oder Hitze.
 
-Unter einer Zeile steht, warum sie hier ist, zum Beispiel «Seit 14 Tagen ohne Antwort» oder «Von Andy».
+Karten ohne offene Punkte erscheinen nicht. Unter einer Zeile steht, warum sie hier ist, zum Beispiel «Seit 14 Tagen ohne Antwort» oder «Von Andy».
 
 ## Läuft automatisch {#automatisch}
 
@@ -107,6 +107,7 @@ Ja, die Karten stehen untereinander. Telefonnummern lassen sich direkt antippen.
 
 ## Neu {#neu}
 
+- 27.11.2026: Leere Karten (Termine, Aufgaben, Meine Woche, Team und Betrieb) erscheinen nicht mehr.
 - 27.11.2026: Die Karten «Kunden warten auf Antwort» und «Wartet auf deine Freigabe» sind ausgeblendet (nie so besprochen). Posteingang und Ausgangskorb findest du in der Seitenleiste.
 - 19.11.2026: Was Punkte hat, steht oben. Sind Termine und Aufgaben leer, kommen zuerst die Bereiche mit offenen Punkten (z. B. Neue Anfragen); Karten unter «Team und Betrieb» ohne offene Punkte rücken ans Ende.
 - 19.11.2026: Wie V234: **Offerten nachfassen** mit **Angenommen**, **Abgelehnt**, **Vertagt** und unter **⋯** **Ergebnis**, **Nachfass-Mail**, **Bereits verbaut**, **Zurück zur Offerte** direkt in der Zeile. Neue Karten **Nach dem Termin: wie weiter?** und **Offerten prüfen & senden**.

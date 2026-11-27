@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-04
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung
 ---
 
@@ -11,13 +11,13 @@ Dein Arbeitsplatz für Mails: alles aus deinem Postfach und aus info@ an einem O
 
 - **Alle**: bearbeiten die Mails aus ihrem eigenen Postfach in der Ansicht **Für mich**.
 - **Verteilen (heute Davis und Chris)**: geben Mails aus info@ in der Ansicht **Zu verteilen** an die richtige Person.
-- **Geschäftsleitung**: sieht im Reiter **Team**, wie viele Mails jede Person offen hat, und bekommt die Glocke, wenn ein Kunde doppelt so lange wartet wie vorgesehen.
+- **Geschäftsleitung**: bekommt die Glocke, wenn ein Kunde doppelt so lange wartet wie vorgesehen.
 
 ## So geht's {#so}
 
 ### Meine Mails abarbeiten
 
-1. Reiter **Arbeitsplatz**, Ansicht **Für mich**. Die Liste ist geordnet: **Über der Frist**, **Heute fällig**, **Später**.
+1. Ansicht **Für mich**. Die Liste ist geordnet: **Über der Frist**, **Heute fällig**, **Später**.
 2. Mail anklicken. Am PC steht sie rechts neben der Liste, am Handy öffnet sie sich als Seite.
 3. **Kurz gesagt** fasst sie zusammen. Darunter steht der **Nächste Schritt** mit einem Knopf, zum Beispiel **Lead anlegen**, **Service-Fall eröffnen** oder **Zahlung erfassen**.
 4. **Antworten** öffnet das Mail-Fenster. Die Antwort geht über den [Ausgangskorb](kapitel:outbox) und erledigt die Mail.
@@ -66,7 +66,7 @@ Tastatur: J und K springen zur nächsten oder vorherigen Mail, E erledigt, R ant
 ### Regeln für einen Absender
 
 1. **Mehr › Regel für diesen Absender**: immer still ablegen, immer als Art einordnen oder (bei info@) immer an eine Person.
-2. Alle Regeln stehen im Reiter **Absender-Regeln**, dort auch löschen.
+2. Alle Regeln stehen unter **Einstellungen › Absender-Regeln** (Administration), dort auch löschen.
 
 ### Mehrere Mails auf einmal
 
@@ -100,10 +100,9 @@ Tastatur: J und K springen zur nächsten oder vorherigen Mail, E erledigt, R ant
 ## Regeln {#regeln}
 
 - Jede Person sieht ihr eigenes Postfach und die Team-Postfächer, nie das Postfach anderer.
-- Die Zahlen aller Personen im Reiter **Team** sieht nur die Geschäftsleitung, keine Inhalte.
 - Regeln für info@ legt an, wer verteilt. Kundenmails werden nie still abgelegt.
 - Was die KI aus Rechnungen liest, wird nur nach deinem Klick gespeichert.
-- Fristen je Art, Arbeitszeit, Warten auf Kunde, Vorschlag beim Verteilen, Stellvertretung und wer info@ verteilt, stellt die Administration unter **Einstellungen** im Posteingang ein.
+- Fristen je Art, Arbeitszeit, Warten auf Kunde, Vorschlag beim Verteilen, Stellvertretung und wer info@ verteilt, stellt die Administration unter **Einstellungen › Posteingang** ein.
 
 ## Häufige Fragen {#fragen}
 
@@ -115,12 +114,9 @@ Du musst unter **Mein Konto** mit Microsoft verbunden sein. Danach kommen die Ma
 
 Mail öffnen und unter **Zugeordnet** die **Art** ändern. Die Frist richtet sich dann nach der neuen Art.
 
-### Wo sehe ich, wie schnell wir antworten?
-
-Reiter **Reaktionszeit**: Mitte der Arbeitszeit bis zur Antwort und Anteil in der Frist, je Woche und Person.
-
 ## Neu {#neu}
 
+- 27.11.2026: Der Posteingang zeigt nur noch den Arbeitsplatz. Absender-Regeln und Einstellungen stehen unter **Einstellungen**; Team-Übersicht und Reaktionszeit sind ausgeblendet.
 - 04.11.2026: Wartet niemand auf eine Antwort, zeigt «Mein Tag» nur eine schmale Zeile statt einer leeren Karte.
 - 03.11.2026: Arbeitsplatz: Für mich, Zu verteilen, Warten auf Kunde, Zurückgestellt, nächster Schritt, Unterhaltung und Anhänge, Notizen mit @, Absender-Regeln, Team-Übersicht.
 - 02.11.2026: Ältere Mails aus allen Postfächern kommen als Archiv nach, ohne Frist.

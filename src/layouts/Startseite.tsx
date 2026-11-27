@@ -141,8 +141,8 @@ export function Startseite() {
                       <AusschreibungenHeute />
                     </Suspense>
                   )}
-                  {/* Karten ohne Punkte («nichts offen», `data-leer`) rutschen ans Ende: oben steht, was heute zu tun ist. */}
-                  <div className="grid items-start gap-4 min-[1800px]:grid-cols-4 md:grid-cols-2 xl:grid-cols-3 [&>*:has([data-leer])]:order-last">
+                  {/* Karten ohne Punkte («nichts offen», `data-leer`) bleiben weg (Chris 27.11.2026: keine leeren Karten). */}
+                  <div className="grid items-start gap-4 min-[1800px]:grid-cols-4 md:grid-cols-2 xl:grid-cols-3 [&>*:has([data-leer])]:hidden">
                     {hatRecht(ich, 'visum') && (
                       <Suspense>
                         <VisumHeute />
