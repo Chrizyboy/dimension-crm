@@ -1,6 +1,7 @@
 import { supabase } from '@/services/supabase'
 import type { Database, Json } from '@/types/datenbank'
 import { alleSeiten } from '@/services/seiten'
+import { ladePositionen } from './auftragsdaten'
 import {
   WERKVERTRAG_STATUS,
   type Anzahlung,
@@ -117,6 +118,13 @@ export function angabenAus(roh: Json | null): VertragAngaben {
       ...(typeof o.divers === 'string' ? { divers: o.divers } : {}),
     }
   }
+  if (a.art === 'werkvertrag' || a.art === 'auftragsbestaetigung') r.art = a.art
+  const bemerkungen = text('bemerkungen')
+  if (bemerkungen) r.bemerkungen = bemerkungen
+  const liste = (k: string) =>
+    Array.isArray(a[k]) ? (a[k] as unknown[]).filter((x): x is string => typeof x === 'string' && !!x.trim()) : []
+  if (liste('ziele').length) r.ziele = liste('ziele')
+  if (liste('gewaehlt').length) r.gewaehlt = liste('gewaehlt')
   if (z && typeof z.kondition === 'string') {
     r.zahlung = {
       kondition: z.kondition,
@@ -182,6 +190,7 @@ export async function ladeAuftragsOfferte(offerteId: string): Promise<AuftragsOf
   const p = data.projekt_id
     ? await db().from('projekte').select('unterzeichnet_am').eq('id', data.projekt_id).maybeSingle()
     : null
+  const positionen = await ladePositionen(offerteId)
   return {
     id: data.id ?? offerteId,
     nummer: data.nummer ?? '',
@@ -198,6 +207,7 @@ export async function ladeAuftragsOfferte(offerteId: string): Promise<AuftragsOf
     ort: data.ort,
     wechselrichter: data.wechselrichter,
     titel: data.titel,
+    positionen,
     vertrag: v.data
       ? {
           angaben: angabenAus(v.data.angaben),
@@ -310,7 +320,16 @@ export async function anzahlungsrechnung(werkvertragId: string): Promise<string>
 
 /** Vertrags-PDF hochladen und beim Werkvertrag ablegen; gibt Dokument-ID und Dateiname zurück. */
 export async function vertragPdfAblegen(w: Werkvertrag, bytes: Uint8Array): Promise<{ id: string; name: string }> {
-  const name = `${w.sprache === 'fr' ? 'Contrat-entreprise' : 'Werkvertrag'}-${w.nummer}${w.version > 1 ? `-V${String(w.version)}` : ''}.pdf`
+  const ab = w.angaben.art === 'auftragsbestaetigung'
+  const art =
+    w.sprache === 'fr'
+      ? ab
+        ? 'Confirmation-commande'
+        : 'Contrat-entreprise'
+      : ab
+        ? 'Auftragsbestaetigung'
+        : 'Werkvertrag'
+  const name = `${art}-${w.nummer}${w.version > 1 ? `-V${String(w.version)}` : ''}.pdf`
   const pfad = `werkvertraege/${w.id}/${String(Date.now())}-${name}`
   const hoch = await db()
     .storage.from('dokumente')

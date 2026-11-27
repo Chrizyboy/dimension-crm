@@ -234,7 +234,7 @@ function Formular({ o, onSchliessen }: { o: AuftragsOfferte; onSchliessen: (vert
             <VertragFelder
               angaben={angaben}
               vorschlag={{ gegenstand: vorschlagGegenstand(fuerVorschlag), material: vorschlagMaterial(fuerVorschlag) }}
-              batterie={!!o.batterie}
+              positionen={o.positionen ?? []}
               onChange={setAngaben}
             />
           </AkteAbschnitt>

@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.8
+
+- Werkverträge: Das Dokument übernimmt die Positionen 1:1 aus der Offerte; bei Optionen kreuzt man an, was bestellt ist.
+- Neu wählbar: Auftragsbestätigung ohne Unterschrift des Kunden. Dazu Kundenziele, Montagetermin und Bemerkungen.
+- Vor dem Versand eine kurze Prüfliste, in der Akte der Stand des Auftrags bis zur Schlussrechnung.
+
 ## 1.3.7
 
 - Jeder Knopf tut etwas Sichtbares: Das «i» neben dem Seitentitel zeigt die Erklärung jetzt auch beim Klick (auch am Handy).

@@ -25,4 +25,23 @@ describe('Werkvertrag-PDF', () => {
     const mit = await werkvertragPdf({ ...vertragInhalt(BEISPIEL, EINSTELLUNG), unterschriftBild: png })
     expect(mit.byteLength).toBeGreaterThan(ohne.byteLength)
   })
+
+  it('Auftragsbestätigung mit Zielen, Positionen und offenen Optionen', async () => {
+    const w = {
+      ...BEISPIEL,
+      angaben: {
+        art: 'auftragsbestaetigung' as const,
+        ziele: ['eigenverbrauch', 'ueberschussladen'],
+        bemerkungen: 'Accès par la cour',
+      },
+    }
+    const positionen = [
+      { bezeichnung: 'Batterie 5 kWh', menge: 2, einheit: 'Stk', art: 'material' as const, optional: false },
+      { bezeichnung: 'Module 5 kWh', menge: 1, einheit: 'Stk', art: 'material' as const, optional: true },
+      { bezeichnung: 'Montage', menge: 1, einheit: 'pauschal', art: 'leistung' as const, optional: false },
+    ]
+    const bytes = await werkvertragPdf(vertragInhalt(w, EINSTELLUNG, positionen))
+    const { PDFDocument } = await import('pdf-lib')
+    expect((await PDFDocument.load(bytes)).getPageCount()).toBeGreaterThanOrEqual(4)
+  })
 })
