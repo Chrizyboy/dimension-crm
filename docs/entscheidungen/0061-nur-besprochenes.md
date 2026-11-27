@@ -19,6 +19,9 @@ ausdrückliches Ja von Chris.
   Chance ausgeblendet (`OFFERTEN_ZUSAETZE`); Chance nur von Hand.
 - **Einkauf**: Lagerplatz, Inventur in einem Durchgang, Rüstliste, Rückgabe und Reklamationen ausgeblendet
   (`EINKAUF_ZUSAETZE`). Die Lagerbuchung mit Art «Inventur» aus Phase 9a bleibt.
+- **Mein Tag**: Karten «Kunden warten auf Antwort» (Posteingang) und «Wartet auf deine Freigabe» (Ausgangskorb)
+  ausgeblendet (`POST_KARTEN` in `src/layouts/Startseite.tsx`, Liste `freigaben` in `MeinTag.tsx`). Vorschlag per
+  Pop-up an Chris am 27.11.2026.
 - **Baustelle** und **Team & Ausweise**: alles bleibt.
 
 ## Folgen

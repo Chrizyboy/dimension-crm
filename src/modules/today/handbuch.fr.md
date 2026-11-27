@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: verkauf, innendienst, projektleitung, buchhaltung, geschaeftsleitung, montage
 ---
 
@@ -78,8 +78,6 @@ La page d’accueil de tous. À l’ouverture, elle montre ce qui est prévu auj
 - **Paiements (7 jours)** : ce qui doit être payé dans les 7 prochains jours (seulement avec le droit Finances).
 - **Service et garantie** : cas ouverts, les urgents d’abord.
 - **Contrôles et maintenances (30 jours)** : maintenances à venir selon les contrats.
-- **Boîte de réception** : clients qui attendent ta réponse.
-- **En attente de ta validation** : tes e-mails et SMS dans la boîte d’envoi.
 - **Ma semaine** : tes objectifs de la semaine avec l’état.
 - **L'équipe aujourd'hui** : qui est sur un chantier, chez un client, au service, présent ou absent (sans motif).
 - **Météo sur les chantiers** : pour le montage et la direction de projet, la prévision des 5 prochains jours par chantier ; « Attention » en cas de forte pluie, de vent, de gel ou de chaleur.
@@ -109,6 +107,7 @@ Oui, les cartes sont les unes sous les autres. Les numéros de téléphone se to
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : Les cartes « Clients en attente de réponse » et « En attente de ta validation » sont masquées (jamais convenues). Boîte de réception et boîte d’envoi restent dans la barre latérale.
 - 19.11.2026 : ce qui a des points à traiter passe en premier. Si les rendez-vous et les tâches sont vides, les domaines avec des points ouverts (p. ex. Nouvelles demandes) viennent d’abord ; les cartes de « Équipe et exploitation » sans point ouvert passent à la fin.
 - 19.11.2026 : Comme V234 : **Offres à relancer** avec **Acceptée**, **Refusée**, **Reportée** et sous **⋯** **Résultat**, **E-mail de relance**, **Déjà construite**, **Retour à l'offre** directement dans la ligne. Nouvelles cartes **Après la visite : quelle suite ?** et **Offres à vérifier et envoyer**.
 - 19.11.2026 : bouton **Affichage smartphone** / **Affichage ordinateur** en haut : dans l’app Windows, la fenêtre prend la taille d’un mobile ; sur mobile, il affiche la vue ordinateur (mémorisée). Les textes coupés s’affichent en entier au survol.
