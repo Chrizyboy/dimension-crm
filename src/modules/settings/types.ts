@@ -20,6 +20,8 @@ export type Person = Pick<
   | 'zuletzt_aktiv'
   | 'auth_user_id'
   | 'profil'
+  | 'austritt_am'
+  | 'nachfolge_id'
 >
 
 /** Rolle mit mitgegebenen Rechten und sichtbaren Bereichen (Konfiguration als Daten). */

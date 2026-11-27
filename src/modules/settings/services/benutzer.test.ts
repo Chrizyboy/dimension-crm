@@ -18,6 +18,8 @@ const p = (teil: Partial<Person>): Person => ({
   zuletzt_aktiv: null,
   auth_user_id: null,
   profil: {},
+  austritt_am: null,
+  nachfolge_id: null,
   ...teil,
 })
 const einladung = (teil: Partial<Einladung>): Einladung => ({

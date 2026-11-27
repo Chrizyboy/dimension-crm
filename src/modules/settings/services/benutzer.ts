@@ -13,7 +13,7 @@ export async function ladePersonen(): Promise<Person[]> {
   const { data, error } = await db()
     .from('personen')
     .select(
-      'id, kuerzel, kurzzeichen, name, email, rolle, rechte, bereiche, aktiv, sprache, standort_id, zuletzt_aktiv, auth_user_id, profil',
+      'id, kuerzel, kurzzeichen, name, email, rolle, rechte, bereiche, aktiv, sprache, standort_id, zuletzt_aktiv, auth_user_id, profil, austritt_am, nachfolge_id',
     )
     .is('geloescht_am', null)
     .order('aktiv', { ascending: false })
@@ -80,6 +80,19 @@ export async function speicherePerson(
   >,
 ): Promise<void> {
   const { error } = await db().from('personen').update(aenderung).eq('id', id)
+  if (error) throw error
+}
+
+/**
+ * Kündigung erfassen, ändern oder zurücknehmen (`austritt` leer). Nur Administration (prüft die Datenbank).
+ * Nach dem Austrittstag erlischt der Zugang, die Nachfolge übernimmt Offenes; die Daten bleiben.
+ */
+export async function setzeAustritt(id: string, austritt: string | null, nachfolge: string | null): Promise<void> {
+  const { error } = await db().rpc('person_austritt_setzen', {
+    p_person: id,
+    p_austritt: austritt,
+    p_nachfolge: austritt ? nachfolge : null,
+  })
   if (error) throw error
 }
 

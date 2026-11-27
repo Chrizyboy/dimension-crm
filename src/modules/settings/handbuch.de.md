@@ -34,6 +34,12 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 3. **Link kopieren** oder **Per WhatsApp** schicken. Die Person öffnet den Link am Handy, gibt ihre private Mail ein und meldet sich mit dem Code an.
 4. Der Link gilt 14 Tage und nur einmal. Für einen neuen Link die Person öffnen, **Registrier-Link erstellen**.
 
+### Eine Kündigung erfassen
+
+1. Bereich **Personen**, Person öffnen, **Kündigung erfassen** (nur Administration).
+2. **Letzter Arbeitstag** eintragen und bei Bedarf die **Nachfolge** wählen, dann **Speichern**. In der Liste steht danach «Austritt» mit Datum.
+3. Bis und mit dem letzten Arbeitstag arbeitet die Person normal. Ab dem Tag danach kann sie sich nicht mehr anmelden; ihre Daten bleiben im CRM. Ein Irrtum? **Kündigung zurücknehmen**.
+
 ### Rechte und sichtbare Bereiche festlegen
 
 1. Bereich **Rollen & Rechte**: je Rolle die **Rechte der Rolle** und die sichtbaren Bereiche.
@@ -105,6 +111,7 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 
 - Eine neue Adresse ohne Region bekommt sie beim Speichern aus der PLZ (erste passende Region nach Nummer). Von Hand Gewähltes bleibt.
 - Jede Änderung landet im Änderungsprotokoll, auch automatische (als «System»).
+- Nach dem letzten Arbeitstag schaltet der Server die Person aus und beendet ihre Anmeldung. Die Nachfolge übernimmt offene Offerten, laufende Projekte, offene Service-Fälle, Aufgaben, Mails, Kunden und die Zuständigkeiten; Erledigtes bleibt bei der Person.
 - Neue Leads, Offerten und Service-Fälle teilt die Datenbank nach den Zuständigkeiten zu, nicht die App.
 - Die Datensicherung läuft auf dem Server, auch wenn niemand angemeldet ist, und legt eine Kopie in SharePoint.
 - Updates der Windows-App kommen von selbst; die Version steht in Mein Konto unter «Diese App».
@@ -131,6 +138,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 27.11.2026: **Kündigung erfassen** bei der Person: letzter Arbeitstag und Nachfolge. Danach erlischt der Zugang von selbst, die Daten bleiben.
 - 27.11.2026: Alles sieht nur noch die Administration (Chris und Loris). Alle anderen, auch die Geschäftsleitung, sehen nur die Bereiche, die unter **Personen › Bereiche je Person** freigegeben sind; ohne Freigabe nur Mein Tag. Rollen vom 2.11. eingetragen (Andy und José Projektleitung, Filipe Verkauf, Erich Buchhaltung, Davis Innendienst).
 - 19.11.2026: Zuteilung wieder wie im alten CRM (Leads nach Standort der PLZ, Offerten an wer vor Ort war, Richtofferten an Andy); neu **Service-Fälle zuteilen**; falsch zugeteilte Datensätze korrigiert, mit **Korrektur rückgängig machen**.
 - 19.11.2026: **Personen › Bereiche je Person**: alle Personen und Bereiche auf einen Blick, mit Häkchen wie in der Nutzerverwaltung des alten CRM. Zurück auf die Rolle mit einem Klick.

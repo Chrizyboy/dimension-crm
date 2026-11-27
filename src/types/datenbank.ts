@@ -9732,6 +9732,7 @@ export type Database = {
       personen: {
         Row: {
           aktiv: boolean
+          austritt_am: string | null
           alt_daten: Json | null
           alt_id: string | null
           aussendienst: boolean
@@ -9747,6 +9748,7 @@ export type Database = {
           kuerzel: string
           kurzzeichen: string | null
           name: string
+          nachfolge_id: string | null
           profil: NonNullable<Json>
           rechte: string[]
           rolle: string
@@ -9757,6 +9759,7 @@ export type Database = {
         ComputedFields: never
         Insert: {
           aktiv?: boolean
+          austritt_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           aussendienst?: boolean
@@ -9772,6 +9775,7 @@ export type Database = {
           kuerzel: string
           kurzzeichen?: string | null
           name: string
+          nachfolge_id?: string | null
           profil?: NonNullable<Json>
           rechte?: string[]
           rolle?: string
@@ -9781,6 +9785,7 @@ export type Database = {
         }
         Update: {
           aktiv?: boolean
+          austritt_am?: string | null
           alt_daten?: Json | null
           alt_id?: string | null
           aussendienst?: boolean
@@ -9796,6 +9801,7 @@ export type Database = {
           kuerzel?: string
           kurzzeichen?: string | null
           name?: string
+          nachfolge_id?: string | null
           profil?: NonNullable<Json>
           rechte?: string[]
           rolle?: string
@@ -20401,6 +20407,10 @@ export type Database = {
         }[]
       }
       partner_fristen_melden: { Args: { p_heute?: string }; Returns: number }
+      person_austritt_setzen: {
+        Args: { p_austritt: string | null; p_nachfolge?: string | null; p_person: string }
+        Returns: undefined
+      }
       person_mit_link_anlegen: {
         Args: { p_name: string; p_rolle: string; p_sprache?: string; p_standort?: string }
         Returns: Json
