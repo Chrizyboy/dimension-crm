@@ -7,6 +7,7 @@ import { useOffertEinstellungen } from '../hooks/useOfferten'
 import { sortiereKarten, vorratKarten, vorratZahlen, type VorratKarte as Karte } from '../lib/vorrat'
 import { OFFERT_PHASEN, type Eingang, type Offerte } from '../types'
 import { Kachel } from './Box'
+import { OFFERTEN_ZUSAETZE } from '../lib/zusaetze'
 import { VorratKarte } from './VorratKarte'
 
 type Filter = 'alle' | 'meine' | 'muri' | 'bulle'
@@ -49,12 +50,14 @@ export default function Arbeitsvorrat({
           text={t('offerten.vorrat.kOffen', { count: z.offenAnzahl, kwp: Math.round(z.offenKwp) })}
           nurGross
         />
-        <Kachel
-          zahl={`CHF ${formatChf(z.gewichtetRappen).replace(/\.\d\d$/, '')}`}
-          text={t('offerten.vorrat.kGewichtet')}
-          ton="warn"
-          nurGross
-        />
+        {OFFERTEN_ZUSAETZE && (
+          <Kachel
+            zahl={`CHF ${formatChf(z.gewichtetRappen).replace(/\.\d\d$/, '')}`}
+            text={t('offerten.vorrat.kGewichtet')}
+            ton="warn"
+            nurGross
+          />
+        )}
         <Kachel
           zahl={String(z.ueberfaellig)}
           text={t('offerten.vorrat.kUeberfaellig', { tage: ziel })}

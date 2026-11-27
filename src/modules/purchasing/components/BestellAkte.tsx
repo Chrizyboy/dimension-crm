@@ -28,6 +28,7 @@ import { PdfAnsehen } from './PdfAnsehen'
 import { Positionen } from './Positionen'
 import { StornoDialog } from './StornoDialog'
 import { WareneingangDialog } from './WareneingangDialog'
+import { EINKAUF_ZUSAETZE } from '../lib/zusaetze'
 
 /**
  * Akte einer Bestellung: Angaben, Positionen (im Entwurf bearbeitbar) und die nächsten Schritte je Stand:
@@ -185,7 +186,7 @@ export function BestellAkte({ id, onSchliessen }: { id: string; onSchliessen: ()
                 setDialog('ab')
               }}
             />
-            <ReklamationAbschnitt bestellung={b} positionen={positionen} />
+            {EINKAUF_ZUSAETZE && <ReklamationAbschnitt bestellung={b} positionen={positionen} />}
             <RechnungAbschnitt bestellung={b} />
             <MailsAbschnitt id={b.id} />
             {b.status === 'freigegeben' && !b.email_bestellung && (

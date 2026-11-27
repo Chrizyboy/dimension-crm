@@ -12,6 +12,7 @@ import { lagerBuchen } from '../services/lager'
 import { zeileEntfernen } from '../services/material'
 import type { MaterialZeile } from '../types'
 import { RueckgabeDialog } from './RueckgabeDialog'
+import { EINKAUF_ZUSAETZE } from '../lib/zusaetze'
 
 /**
  * Zeilen der Materialliste mit Deckung: «da» (reserviert, entnommen oder direkt geliefert), «unterwegs»
@@ -125,7 +126,7 @@ export function MaterialTabelle({
                         </MenueEintrag>
                       </>
                     )}
-                    {z.entnommen > 0 && z.artikel_id && (
+                    {EINKAUF_ZUSAETZE && z.entnommen > 0 && z.artikel_id && (
                       <MenueEintrag
                         onSelect={() => {
                           setRueckgabe(z)
