@@ -367,6 +367,17 @@
     "ohneEmail": "Aucune adresse e-mail",
     "aktiv": "Actif",
     "aktivText": "Désactivée, la personne ne peut plus se connecter. Ses données sont conservées.",
+    "kuendigung": {
+      "titel": "Départ",
+      "text": "Jusqu'au dernier jour de travail inclus, la personne travaille normalement. Ensuite son accès expire automatiquement, ses données restent dans le CRM.",
+      "erfassen": "Saisir un départ",
+      "zuruecknehmen": "Annuler le départ",
+      "austritt": "Dernier jour de travail",
+      "nachfolge": "Successeur",
+      "keineNachfolge": "Pas de successeur",
+      "nachfolgeHinweis": "Reprend le lendemain les offres, projets, cas de service, tâches et responsabilités ouverts.",
+      "austrittAm": "Départ le {{datum}}"
+    },
     "zusatzrechte": "Droits",
     "bereiche": "Domaines visibles",
     "eigeneBereiche": "Sélection propre pour cette personne",

@@ -14,10 +14,11 @@ import { melde } from '@/services/meldungen'
 import { useUi } from '@/stores/ui'
 import type { ModulMeta } from '@/types/modul'
 import { useBenutzerAenderung } from '../hooks/useBenutzer'
-import { ladeEin, speicherePerson } from '../services/benutzer'
+import { ladeEin, setzeAustritt, speicherePerson } from '../services/benutzer'
 import type { Person, Personenstatus, Rolle, Standort } from '../types'
 import { RegistrierLinkKnopf } from './RegistrierLinkDialog'
 import { BereicheAuswahl } from './BereicheAuswahl'
+import { KuendigungAbschnitt } from './KuendigungAbschnitt'
 import { RechteAuswahl } from './RechteAuswahl'
 
 interface PersonDialogProps {
@@ -29,18 +30,29 @@ interface PersonDialogProps {
   module: readonly ModulMeta[]
   /** Kurzzeichen der anderen Personen, für den Vorschlag im leeren Feld. */
   vergeben: readonly string[]
+  /** Mögliche Nachfolge bei einer Kündigung (aktive Personen ohne diese). */
+  kandidaten: readonly Pick<Person, 'id' | 'name'>[]
 }
 
 /**
  * Seitenblatt zum Bearbeiten einer Person: Rolle, Zusatzrechte, sichtbare Bereiche, aktiv.
  * Die Liste setzt `key` auf die Person, damit der Entwurf bei jeder neuen Person frisch beginnt.
  */
-export function PersonDialog({ person, status, onSchliessen, rollen, standorte, module, vergeben }: PersonDialogProps) {
+export function PersonDialog({
+  person,
+  status,
+  onSchliessen,
+  rollen,
+  standorte,
+  module,
+  vergeben,
+  kandidaten,
+}: PersonDialogProps) {
   const { t } = useTranslation()
   const sprache = useUi((z) => z.sprache)
   const [entwurf, setEntwurf] = useState<Person | null>(person)
-  const speichern = useBenutzerAenderung((p: Person) =>
-    speicherePerson(p.id, {
+  const speichern = useBenutzerAenderung(async (p: Person) => {
+    await speicherePerson(p.id, {
       name: p.name,
       // Leer: die Datenbank setzt den Vorschlag aus dem Namen.
       kurzzeichen: p.kurzzeichen || null,
@@ -50,8 +62,12 @@ export function PersonDialog({ person, status, onSchliessen, rollen, standorte, 
       standort_id: p.standort_id,
       aktiv: p.aktiv,
       sprache: p.sprache,
-    }),
-  )
+    })
+    // Kündigung über die Datenbank-Funktion: sie gleicht die Personal-Akte ab und vollzieht einen vergangenen Austritt.
+    if (p.austritt_am !== person?.austritt_am || p.nachfolge_id !== person.nachfolge_id) {
+      await setzeAustritt(p.id, p.austritt_am, p.nachfolge_id)
+    }
+  })
   const einladen = useBenutzerAenderung(ladeEin)
 
   if (!entwurf) return null
@@ -199,6 +215,15 @@ export function PersonDialog({ person, status, onSchliessen, rollen, standorte, 
               <span className="text-muted-foreground text-xs">{t('benutzer.aktivText')}</span>
             </div>
           </div>
+
+          <KuendigungAbschnitt
+            austritt={entwurf.austritt_am}
+            nachfolge={entwurf.nachfolge_id}
+            kandidaten={kandidaten}
+            onChange={(austritt_am, nachfolge_id) => {
+              setze({ austritt_am, nachfolge_id })
+            }}
+          />
 
           <Trenner />
           <section className="flex flex-col gap-3" aria-labelledby="person-rechte-titel">

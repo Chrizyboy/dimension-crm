@@ -6,6 +6,10 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.15
+
+- Kündigung erfassen: unter Einstellungen › Personen den letzten Arbeitstag und die Nachfolge eintragen. Danach erlischt der Zugang von selbst, die Daten bleiben, die Nachfolge übernimmt das Offene. Braucht das Cloud-Update.
+
 ## 1.3.14
 
 - Wer was sieht, pro Person: alles sieht nur die Administration (Chris, Loris), alle anderen nur, was unter Einstellungen › Personen › «Bereiche je Person» angehakt ist.

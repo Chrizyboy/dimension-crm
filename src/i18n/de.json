@@ -367,6 +367,17 @@
     "ohneEmail": "Keine E-Mail hinterlegt",
     "aktiv": "Aktiv",
     "aktivText": "Ausgeschaltet kann sich die Person nicht mehr anmelden. Ihre Daten bleiben erhalten.",
+    "kuendigung": {
+      "titel": "Kündigung",
+      "text": "Bis und mit dem letzten Arbeitstag arbeitet die Person normal. Danach erlischt ihr Zugang automatisch, ihre Daten bleiben im CRM.",
+      "erfassen": "Kündigung erfassen",
+      "zuruecknehmen": "Kündigung zurücknehmen",
+      "austritt": "Letzter Arbeitstag",
+      "nachfolge": "Nachfolge",
+      "keineNachfolge": "Keine Nachfolge",
+      "nachfolgeHinweis": "Übernimmt am Tag danach die offenen Offerten, Projekte, Service-Fälle, Aufgaben und Zuständigkeiten.",
+      "austrittAm": "Austritt {{datum}}"
+    },
     "zusatzrechte": "Rechte",
     "bereiche": "Sichtbare Bereiche",
     "eigeneBereiche": "Eigene Auswahl für diese Person",

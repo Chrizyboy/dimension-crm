@@ -95,6 +95,7 @@ export default function Personen({ module }: EinstellungsInhaltProps) {
         standorte={standorte.data ?? []}
         module={module}
         vergeben={liste.flatMap((p) => (p.id !== person?.id && p.kurzzeichen ? [p.kurzzeichen] : []))}
+        kandidaten={liste.filter((p) => p.aktiv && p.id !== person?.id)}
       />
     </div>
   )

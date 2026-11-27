@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Kurzzeichen } from '@/components/shared/Kurzzeichen'
 import { Badge } from '@/components/ui/badge'
 import { Kopfzelle, Tabelle, TabelleKoerper, TabelleKopf, Zeile, Zelle } from '@/components/ui/tabelle'
-import { formatRelativ } from '@/lib/format'
+import { formatDatum, formatRelativ } from '@/lib/format'
 import { useUi } from '@/stores/ui'
 import type { Person, Personenstatus, Rolle, Standort } from '../types'
 
@@ -86,6 +86,11 @@ export function BenutzerTabelle({ personen, status, rollen, standorte, onWaehle 
                 <Badge ton={TON[s]} punkt>
                   {t(`benutzer.status.${s}`)}
                 </Badge>
+                {p.austritt_am && (
+                  <span className="text-muted-foreground block text-xs">
+                    {t('benutzer.kuendigung.austrittAm', { datum: formatDatum(p.austritt_am) })}
+                  </span>
+                )}
               </Zelle>
               <Zelle className="text-muted-foreground hidden lg:table-cell">
                 {p.zuletzt_aktiv ? formatRelativ(p.zuletzt_aktiv, sprache) : '–'}

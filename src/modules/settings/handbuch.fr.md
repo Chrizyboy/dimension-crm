@@ -34,6 +34,12 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 3. **Copier le lien** ou l’envoyer **Par WhatsApp**. La personne ouvre le lien sur son téléphone, saisit son e-mail privé et se connecte avec le code.
 4. Le lien vaut 14 jours et une seule fois. Pour un nouveau lien, ouvrir la personne, **Créer un lien d’inscription**.
 
+### Saisir un départ
+
+1. Domaine **Personnes**, ouvrir la personne, **Saisir un départ** (administration seulement).
+2. Indiquer le **Dernier jour de travail** et, si besoin, choisir le **Successeur**, puis **Enregistrer**. La liste affiche ensuite « Départ » avec la date.
+3. Jusqu’au dernier jour de travail inclus, la personne travaille normalement. Dès le lendemain, elle ne peut plus se connecter ; ses données restent dans le CRM. Une erreur ? **Annuler le départ**.
+
 ### Fixer les droits et les domaines visibles
 
 1. Domaine **Rôles et droits** : par rôle, les **Droits du rôle** et les domaines visibles.
@@ -103,6 +109,7 @@ Tout ce qui se règle dans le CRM se trouve ici, en quatre groupes : **Entrepris
 
 ## Automatique {#automatisch}
 
+- Après le dernier jour de travail, le serveur désactive la personne et met fin à sa connexion. Le successeur reprend les offres ouvertes, projets en cours, cas de service ouverts, tâches, e-mails, clients et responsabilités ; ce qui est terminé reste chez la personne.
 - Une nouvelle adresse sans région la reçoit à l’enregistrement selon le NPA (première région correspondante par numéro). Un choix manuel reste.
 - Chaque modification va dans le journal, aussi les automatiques (comme « Système »).
 - La base de données attribue les nouveaux leads, offres et cas SAV selon les responsabilités, pas l’app.
@@ -131,6 +138,7 @@ La personne se reconnecte dans Mon compte avec **Reconnecter**. Si cela n’aide
 
 ## Nouveautés {#neu}
 
+- 27.11.2026 : **Saisir un départ** sur la personne : dernier jour de travail et successeur. Ensuite l’accès expire tout seul, les données restent.
 - 27.11.2026 : Seule l’administration (Chris et Loris) voit tout. Tous les autres, direction comprise, ne voient que les domaines autorisés sous **Personnes › Domaines par personne** ; sans autorisation, seulement Ma journée. Rôles du 2.11 enregistrés (Andy et José gestion de projet, Filipe vente, Erich comptabilité, Davis service interne).
 - 19.11.2026 : Attribution de nouveau comme dans l’ancien CRM (leads selon le site du NPA, offres à qui s’est rendu sur place, offres indicatives à Andy) ; nouveau **Attribuer les cas SAV** ; fiches mal attribuées corrigées, avec **Annuler la correction**.
 - 19.11.2026 : **Personnes › Domaines par personne** : toutes les personnes et tous les domaines d’un coup d’œil, avec des coches comme dans la gestion des utilisateurs de l’ancien CRM. Retour au rôle en un clic.
