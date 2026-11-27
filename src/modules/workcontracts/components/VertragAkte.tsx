@@ -17,9 +17,11 @@ import { melde } from '@/services/meldungen'
 import { useVertragAenderung } from '../hooks/useWerkvertraege'
 import { NAECHSTE, VERTRAG_TON } from '../lib/status'
 import { vertragInhalt } from '../lib/vertragInhalt'
+import { ladePositionen } from '../services/auftragsdaten'
 import { ladeEinstellung, setzeVertragStatus } from '../services/werkvertraege'
 import { werkvertragPdf } from '../services/vertragPdf'
 import type { Werkvertrag, WerkvertragStatus } from '../types'
+import { AuftragStand } from './AuftragStand'
 import { SendenDialog } from './SendenDialog'
 import { Zahlungsplan } from './Zahlungsplan'
 
@@ -74,7 +76,7 @@ export default function VertragAkte({
     if (!w) return
     setPdfLaeuft(true)
     try {
-      pdfZeigen(await werkvertragPdf(vertragInhalt(w, await ladeEinstellung())))
+      pdfZeigen(await werkvertragPdf(vertragInhalt(w, await ladeEinstellung(), await ladePositionen(w.offerteId))))
     } catch (f) {
       meldeFehler(f, 'werkvertraege.pdf')
     } finally {
@@ -82,7 +84,10 @@ export default function VertragAkte({
     }
   }
 
-  const moeglich = w ? NAECHSTE[w.status] : []
+  const ab = w?.angaben.art === 'auftragsbestaetigung'
+  // Eine Auftragsbestätigung unterschreibt der Kunde nicht (die Offerte ist schon unterschrieben).
+  const moeglich = w ? NAECHSTE[w.status].filter((z) => !(ab && z === 'unterschrieben')) : []
+  const inhalt = w ? vertragInhalt(w, LEER) : null
   return (
     <Dialog
       open
@@ -92,7 +97,11 @@ export default function VertragAkte({
     >
       <DialogInhalt
         art="seite"
-        titel={w ? `${t('werkvertraege.akte.titel')} ${w.nummer}` : t('werkvertraege.titel')}
+        titel={
+          w
+            ? `${t(ab ? 'werkvertraege.art.auftragsbestaetigung' : 'werkvertraege.akte.titel')} ${w.nummer}`
+            : t('werkvertraege.titel')
+        }
         {...(w ? { beschreibung: `${w.name} · ${formatKundennummer(w.kundennummer)}` } : {})}
       >
         {!w ? (
@@ -105,6 +114,10 @@ export default function VertragAkte({
               </Badge>
               <Badge ton="neutral">{w.sprache === 'fr' ? 'FR' : 'DE'}</Badge>
               {w.version > 1 && <Badge ton="neutral">V{w.version}</Badge>}
+              {ab && <Badge ton="info">{t('werkvertraege.art.kurzAb')}</Badge>}
+            </div>
+            <div className="pb-3">
+              <AuftragStand vertrag={w} />
             </div>
             <Knopfleiste haupt="erste" className="border-b pb-3">
               {w.status !== 'storniert' && w.status !== 'unterschrieben' && (
@@ -236,8 +249,25 @@ export default function VertragAkte({
             </AkteAbschnitt>
             <AkteAbschnitt titel={t('werkvertraege.akte.imVertrag')}>
               <dl>
-                <Angabe label={t('werkvertraege.felder.gegenstand')}>{vertragInhalt(w, LEER).gegenstand}</Angabe>
-                {vertragInhalt(w, LEER).termine.map(([l, wert]) => (
+                <Angabe label={t('werkvertraege.felder.art')}>
+                  {t(`werkvertraege.art.${w.angaben.art ?? 'werkvertrag'}`)}
+                </Angabe>
+                <Angabe label={t('werkvertraege.felder.gegenstand')}>{inhalt?.gegenstand}</Angabe>
+                {inhalt?.ziele && inhalt.ziele.punkte.length > 0 && (
+                  <Angabe label={t('werkvertraege.felder.ziele')}>
+                    <ul className="list-disc pl-4">
+                      {inhalt.ziele.punkte.map((p) => (
+                        <li key={p.map((x) => x.text).join('')}>{p.map((x) => x.text).join('')}</li>
+                      ))}
+                    </ul>
+                  </Angabe>
+                )}
+                {w.angaben.bemerkungen && (
+                  <Angabe label={t('werkvertraege.felder.bemerkungen')}>
+                    <span className="whitespace-pre-line">{w.angaben.bemerkungen}</span>
+                  </Angabe>
+                )}
+                {inhalt?.termine.map(([l, wert]) => (
                   <Angabe key={l} label={l.replace(/\s*:$/, '')}>
                     {wert}
                   </Angabe>

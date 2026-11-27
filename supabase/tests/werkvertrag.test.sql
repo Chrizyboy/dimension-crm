@@ -3,7 +3,7 @@
 -- Anzahlungsrechnung aus dem Vertrag (nur mit Recht «finanzen», keine doppelte) und Einstellung nur Administration.
 -- Ausführen: npm run db:test
 begin;
-select plan(24);
+select plan(26);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000030a1', 'wv-admin@test.local'),
@@ -90,6 +90,12 @@ select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-000000
 select is((select wert ->> 'unterzeichner' from public.einstellungen where schluessel = 'werkvertrag'), 'Chris Rosenberg',
   'Unterzeichner ist Chris Rosenberg');
 reset role;
+
+-- Neue Angaben (Auftragsbestätigung, Ziele, Bemerkungen, bestellte Optionen)
+select is(intern.werkvertrag_angaben('{"art": "auftragsbestaetigung", "ziele": ["Eigenverbrauch erhöhen"], "bemerkungen": "Hund im Garten", "gewaehlt": ["Ladestation"], "fremd": 1}'),
+  '{"art": "auftragsbestaetigung", "ziele": ["Eigenverbrauch erhöhen"], "bemerkungen": "Hund im Garten", "gewaehlt": ["Ladestation"]}'::jsonb,
+  'Angaben behalten Art, Ziele, Bemerkungen und Optionen, nichts Fremdes');
+select is(intern.werkvertrag_angaben('{"art": "quittung", "ziele": []}'), '{}'::jsonb, 'Unbekannte Art und leere Ziele fallen weg');
 
 select * from finish();
 rollback;
