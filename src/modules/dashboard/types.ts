@@ -10,6 +10,7 @@ export type Bereich = (typeof BEREICHE)[number]
 
 /** Reiter der Seite; jede Rolle startet in ihrem (siehe `lib/rolle.ts`). */
 export const KENNZAHLEN_REITER = [
+  'start',
   'ueberblick',
   'verkauf',
   'pipeline',

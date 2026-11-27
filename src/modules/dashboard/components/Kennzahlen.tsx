@@ -38,6 +38,7 @@ import { Finanzen } from './ReiterFinanzen'
 import { PipelineReiter } from './ReiterPipeline'
 import type { ReiterProps } from './reiterProps'
 import { Service } from './ReiterService'
+import { Start } from './ReiterStart'
 import { Ueberblick } from './ReiterUeberblick'
 import { Verkauf } from './ReiterVerkauf'
 import { ZieleDialog } from './ZieleDialog'
@@ -97,6 +98,11 @@ export default function Kennzahlen({
   const verkaeufer = (personen.data ?? []).filter((p) =>
     (jetzt.data ?? []).some((f) => f.person_id === p.id && ['gesendet', 'angenommen', 'offen'].includes(f.schluessel)),
   )
+  // Personen für die Chips im Start: ich zuerst, dann wer verkauft.
+  const personenWahl = [
+    ...(ich ? (personen.data ?? []).filter((p) => p.id === ich.id) : []),
+    ...verkaeufer.filter((p) => p.id !== ich?.id),
+  ]
   const props: ReiterProps = {
     fakten: filtern(jetzt.data ?? []),
     alleFakten,
@@ -119,6 +125,7 @@ export default function Kennzahlen({
   const inhalt = (r: KennzahlenReiter) => {
     if (jetzt.isError) return <Fehlerzustand onNochmal={jetzt.refetch} />
     if (!jetzt.data) return <Skelett className="h-64" />
+    if (r === 'start') return <Start {...props} />
     if (r === 'ueberblick') return <Ueberblick {...props} />
     if (r === 'verkauf') return <Verkauf {...props} />
     if (r === 'pipeline') return <PipelineReiter {...props} />
@@ -176,8 +183,43 @@ export default function Kennzahlen({
             </ReiterKnopf>
           ))}
         </ReiterListe>
+        {/* Start wie im alten CRM: Person, Firma und Zeitraum offen nebeneinander. */}
+        {auswahl.reiter === 'start' && (
+          <div className="flex flex-wrap items-end gap-x-6 gap-y-3 pt-4" data-testid="kz-start-filter">
+            <Filterchips
+              einzeln
+              beschriftung={t('kz.person.titel')}
+              gewaehlt={[auswahl.person ?? ALLE]}
+              optionen={[
+                { wert: ALLE, text: t('kz.person.alleKurz') },
+                ...personenWahl.map((p) => ({ wert: p.id, text: p.name.split(' ')[0] ?? p.name })),
+              ]}
+              onChange={([w]) => {
+                onAuswahl({ person: !w || w === ALLE ? null : w })
+              }}
+            />
+            <Filterchips
+              einzeln
+              beschriftung={t('kz.bereich.titel')}
+              gewaehlt={[auswahl.bereich]}
+              optionen={BEREICHE.map((b) => ({ wert: b, text: t(`kz.bereich.${b}`) }))}
+              onChange={([b]) => {
+                onAuswahl({ bereich: (b ?? 'alle') as Bereich })
+              }}
+            />
+            <Filterchips
+              einzeln
+              beschriftung={t('kz.zeitraum.titel')}
+              gewaehlt={[auswahl.zeitraum]}
+              optionen={ZEITRAEUME.map((z) => ({ wert: z, text: t(`kz.zeitraum.${z}`) }))}
+              onChange={([z]) => {
+                onAuswahl({ zeitraum: (z ?? 'monat') as Zeitraum })
+              }}
+            />
+          </div>
+        )}
         {/* Unter den Reitern wie in jedem Bereich; Zeitraum offen, der Rest hinter «Filter». */}
-        <div className="pt-4">
+        <div className={auswahl.reiter === 'start' ? 'hidden' : 'pt-4'}>
           <FilterBereich
             aktiv={
               [auswahl.vergleich !== 'vorjahr', auswahl.bereich !== 'alle', Boolean(auswahl.person)].filter(Boolean)
@@ -193,7 +235,7 @@ export default function Kennzahlen({
                 gewaehlt={[auswahl.zeitraum]}
                 optionen={ZEITRAEUME.map((z) => ({ wert: z, text: t(`kz.zeitraum.${z}`) }))}
                 onChange={([z]) => {
-                  onAuswahl({ zeitraum: (z ?? 'jahr') as Zeitraum })
+                  onAuswahl({ zeitraum: (z ?? 'monat') as Zeitraum })
                 }}
               />
             }

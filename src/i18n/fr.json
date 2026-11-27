@@ -382,7 +382,7 @@
     },
     "bereicheWieRolle_other": "Désactivé : affiche les {{count}} domaines du rôle.",
     "bereicheWieRolle_one": "Désactivé : affiche le domaine du rôle.",
-    "bereicheAlle": "Désactivé : affiche tous les domaines, comme le rôle.",
+    "bereicheAlle": "Désactivé : seulement Ma journée, jusqu’à ce que des domaines soient autorisés.",
     "einladenHinweisLeer": "En cliquant sur «Envoyer l’invitation», un e-mail part immédiatement à l’adresse saisie.",
     "kurzzeichen": "Initiales",
     "kurzzeichenHinweis": "Affichées dans les listes, le planning et les documents. Laisser vide pour la proposition {{vorschlag}}.",
@@ -402,10 +402,11 @@
     "ansichtBereiche": "Domaines par personne",
     "matrix": {
       "titel": "Domaines par personne",
-      "hinweis": "Les domaines que chaque personne voit dans la barre latérale. Sans choix propre, le rôle s’applique ; la première coche en fait un choix propre. Enregistre tout de suite.",
+      "hinweis": "Les domaines que chaque personne voit. Seule l’administration voit tout, les autres seulement ce qui est autorisé ici. Sans choix propre, le rôle s’applique ; la première coche en fait un choix propre. Enregistre tout de suite.",
       "eigene": "choix propre",
       "wieRolle": "comme le rôle",
-      "gl": "Direction, voit tout",
+      "gl": "Administration, voit tout",
+      "keine": "seulement Ma journée, rien d’autorisé",
       "zuruecksetzen": "{{name}} : de nouveau comme le rôle",
       "legende": "Les coches pâles viennent du rôle. La base de données protège en plus les données (droits)."
     }
@@ -9189,6 +9190,7 @@
     "titel": "Tableau de bord",
     "beschreibung": "Où en sommes-nous ? Chaque chiffre est cliquable et montre ce qu’il contient.",
     "reiter": {
+      "start": "Départ",
       "verkauf": "Vente",
       "pipeline": "Pipeline et prévision",
       "ueberblick": "Vue d'ensemble",
@@ -9584,7 +9586,8 @@
       "titel": "Personne",
       "alle": "Toutes les personnes",
       "ich": "Moi seulement",
-      "hinweis": "Aucun lead pour cette personne dans la période."
+      "hinweis": "Aucun lead pour cette personne dans la période.",
+      "alleKurz": "Tous"
     },
     "bericht": {
       "knopf": "Rapport mensuel PDF",
@@ -9635,6 +9638,10 @@
         "faelle_dauer": "Ø cas SAV jusqu’à la clôture"
       },
       "titel": "Déroulement et valeurs cibles"
+    },
+    "start": {
+      "standorte": "Muri · Bulle",
+      "personen": "Par personne"
     }
   },
   "handbuch": {

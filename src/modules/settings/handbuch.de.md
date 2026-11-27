@@ -1,5 +1,5 @@
 ---
-stand: 2026-11-19
+stand: 2026-11-27
 rollen: administration
 ---
 
@@ -10,7 +10,7 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 ## Wer arbeitet hier {#wer}
 
 - **Administration**: alle Bereiche, ändert alles.
-- **Geschäftsleitung**: sieht alle Bereiche, ändert nichts.
+- **Geschäftsleitung**: sieht die freigegebenen Bereiche mit allen Zahlen, ändert nichts. Alles sieht nur die Administration.
 - **Alle anderen**: keine Firmen-Einstellungen, nur das Eigene in [Mein Konto](/konto).
 - **Alle**: [Mein Konto](/konto) über das Bild oben rechts.
 
@@ -37,8 +37,8 @@ Alles, was man im CRM einstellt, steht hier an einem Ort, in vier Gruppen: **Fir
 ### Rechte und sichtbare Bereiche festlegen
 
 1. Bereich **Rollen & Rechte**: je Rolle die **Rechte der Rolle** und die sichtbaren Bereiche.
-2. Bereich **Personen**, Person öffnen, unter **Zusätze**: **Zusatz Geschäftsleitung** (sieht alles inkl. Finanzen) und **Zusatz Administration** (richtet das System ein, sieht keine Finanzen und keine fremden Personal-Akten).
-3. Für eine einzelne Person: Person öffnen, **Eigene Auswahl für diese Person**. Für alle auf einmal: in **Personen** oben **Bereiche je Person**, dort Häkchen setzen (speichert sofort). Blasse Häkchen kommen von der Rolle, der Pfeil im Kreis setzt eine Person wieder auf ihre Rolle zurück.
+2. Bereich **Personen**, Person öffnen, unter **Zusätze**: **Zusatz Geschäftsleitung** (sieht in den freigegebenen Bereichen alles inkl. Finanzen) und **Zusatz Administration** (richtet das System ein, sieht keine Finanzen und keine fremden Personal-Akten).
+3. Für eine einzelne Person: Person öffnen, **Eigene Auswahl für diese Person**. Für alle auf einmal: in **Personen** oben **Bereiche je Person**, dort Häkchen setzen (speichert sofort). Blasse Häkchen kommen von der Rolle, der Pfeil im Kreis setzt eine Person wieder auf ihre Rolle zurück. Wer weder eigene Häkchen noch eine Rolle mit Bereichen hat, sieht nur Mein Tag.
 4. **Einfache Ansicht (nur Arbeitszeit und Spesen)** bei der Rolle: nur Arbeitszeit, Spesen und Plan. Die Montage arbeitet mit der normalen Ansicht, damit sie Rapporte, Service und Fahrzeuge erreicht.
 
 ### Zuständigkeiten einstellen
@@ -131,6 +131,7 @@ Die Person verbindet sich in Mein Konto mit **Neu verbinden**. Hilft das nicht, 
 
 ## Neu {#neu}
 
+- 27.11.2026: Alles sieht nur noch die Administration (Chris und Loris). Alle anderen, auch die Geschäftsleitung, sehen nur die Bereiche, die unter **Personen › Bereiche je Person** freigegeben sind; ohne Freigabe nur Mein Tag. Rollen vom 2.11. eingetragen (Andy und José Projektleitung, Filipe Verkauf, Erich Buchhaltung, Davis Innendienst).
 - 19.11.2026: Zuteilung wieder wie im alten CRM (Leads nach Standort der PLZ, Offerten an wer vor Ort war, Richtofferten an Andy); neu **Service-Fälle zuteilen**; falsch zugeteilte Datensätze korrigiert, mit **Korrektur rückgängig machen**.
 - 19.11.2026: **Personen › Bereiche je Person**: alle Personen und Bereiche auf einen Blick, mit Häkchen wie in der Nutzerverwaltung des alten CRM. Zurück auf die Rolle mit einem Klick.
 - 05.11.2026: Lehnt ASPSMS die Zugangsdaten ab, prüft das CRM die SMS-Verbindung nur noch einmal am Tag statt stündlich, bis **Jetzt testen** wieder klappt.

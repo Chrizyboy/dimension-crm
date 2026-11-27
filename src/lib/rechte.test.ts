@@ -38,29 +38,34 @@ describe('Rechte in der Oberfläche', () => {
     expect(hatRecht(null, 'basis')).toBe(false)
   })
 
-  it('zeigt nur freigegebene Bereiche, leere Auswahl heisst alle', () => {
+  it('zeigt nur freigegebene Bereiche, ohne Freigabe nur «immer»', () => {
     const vera = person({ bereiche: ['sales'] })
     expect(darfModul(modul({}), vera)).toBe(true)
     expect(darfModul(modul({ id: 'projects' }), vera)).toBe(false)
-    expect(darfModul(modul({ id: 'projects' }), person({}))).toBe(true)
+    expect(darfModul(modul({ id: 'projects' }), person({}))).toBe(false)
+    expect(darfModul(modul({ id: 'today', immer: true }), person({}))).toBe(true)
   })
 
   it('«immer» ist für alle da, ein fehlendes Recht verbirgt trotzdem', () => {
     const vera = person({ bereiche: ['sales'] })
     expect(darfModul(modul({ id: 'today', immer: true }), vera)).toBe(true)
     expect(darfModul(modul({ id: 'finance', recht: 'finanzen' }), person({}))).toBe(false)
-    expect(darfModul(modul({ id: 'finance', recht: 'finanzen' }), person({ rechte: ['finanzen'] }))).toBe(true)
+    expect(
+      darfModul(modul({ id: 'finance', recht: 'finanzen' }), person({ rechte: ['finanzen'], bereiche: ['finance'] })),
+    ).toBe(true)
   })
 
-  it('Administration sieht System-Bereiche und die Bereiche der Rolle, GL alle', () => {
+  it('Administration sieht alles, GL nur freigegebene Bereiche (Chris 27.11.2026)', () => {
     const adi = person({ rechte: ['admin'], bereiche: ['sales'] })
     expect(darfModul(modul({ id: 'settings', recht: ['admin', 'gl'] }), adi)).toBe(true)
     expect(darfModul(modul({ id: 'automations', recht: 'admin' }), adi)).toBe(true)
-    expect(darfModul(modul({ id: 'projects' }), adi)).toBe(false)
+    expect(darfModul(modul({ id: 'projects' }), adi)).toBe(true)
     const gina = person({ rechte: ['gl', 'finanzen'], bereiche: [] })
     expect(darfModul(modul({ id: 'settings', recht: ['admin', 'gl'] }), gina)).toBe(true)
     expect(darfModul(modul({ id: 'automations', recht: 'admin' }), gina)).toBe(false)
-    expect(darfModul(modul({ id: 'projects' }), person({ rechte: ['gl'], bereiche: ['sales'] }))).toBe(true)
+    expect(darfModul(modul({ id: 'projects' }), person({ rechte: ['gl'], bereiche: ['sales'] }))).toBe(false)
+    // Übergang bis zum Cloud-Update: alte Anmeldung liefert für «gl» eine leere Liste.
+    expect(darfModul(modul({ id: 'projects' }), person({ rechte: ['gl'], bereiche: [] }))).toBe(true)
   })
 
   it('ohne Datenbank (Vorschau) ist alles sichtbar', () => {

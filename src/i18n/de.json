@@ -382,7 +382,7 @@
     },
     "bereicheWieRolle_other": "Aus: zeigt die {{count}} Bereiche der Rolle.",
     "bereicheWieRolle_one": "Aus: zeigt den einen Bereich der Rolle.",
-    "bereicheAlle": "Aus: zeigt alle Bereiche, wie die Rolle.",
+    "bereicheAlle": "Aus: nur Mein Tag, bis Bereiche freigegeben sind.",
     "einladenHinweisLeer": "Beim Klick auf «Einladung senden» geht sofort eine Mail an die eingetragene Adresse.",
     "kurzzeichen": "Kurzzeichen",
     "kurzzeichenHinweis": "Steht in Listen, Planung und auf Dokumenten. Leer lassen für den Vorschlag {{vorschlag}}.",
@@ -402,10 +402,11 @@
     "ansichtBereiche": "Bereiche je Person",
     "matrix": {
       "titel": "Bereiche je Person",
-      "hinweis": "Welche Bereiche jede Person in der Seitenleiste sieht. Ohne eigene Auswahl gilt die Rolle; das erste Häkchen macht daraus eine eigene Auswahl. Speichert sofort.",
+      "hinweis": "Welche Bereiche jede Person sieht. Alles sieht nur die Administration, alle anderen nur, was hier freigegeben ist. Ohne eigene Auswahl gilt die Rolle; das erste Häkchen macht daraus eine eigene Auswahl. Speichert sofort.",
       "eigene": "eigene Auswahl",
       "wieRolle": "wie Rolle",
-      "gl": "Geschäftsleitung, sieht alles",
+      "gl": "Administration, sieht alles",
+      "keine": "nur Mein Tag, nichts freigegeben",
       "zuruecksetzen": "{{name}}: wieder wie die Rolle",
       "legende": "Blasse Häkchen kommen von der Rolle. Daten schützt zusätzlich die Datenbank (Rechte)."
     }
@@ -9189,6 +9190,7 @@
     "titel": "Dashboard",
     "beschreibung": "Wie läuft es? Jede Zahl lässt sich anklicken und zeigt, was dahinter steht.",
     "reiter": {
+      "start": "Start",
       "verkauf": "Verkauf",
       "pipeline": "Pipeline & Prognose",
       "ueberblick": "Überblick",
@@ -9584,7 +9586,8 @@
       "titel": "Person",
       "alle": "Alle Personen",
       "ich": "Nur ich",
-      "hinweis": "Für diese Person gibt es im Zeitraum keine Leads."
+      "hinweis": "Für diese Person gibt es im Zeitraum keine Leads.",
+      "alleKurz": "Alle"
     },
     "bericht": {
       "knopf": "Monatsbericht PDF",
@@ -9635,6 +9638,10 @@
         "faelle_dauer": "Ø Service-Fall bis erledigt"
       },
       "titel": "Abläufe und Richtwerte"
+    },
+    "start": {
+      "standorte": "Muri · Bulle",
+      "personen": "Pro Person"
     }
   },
   "handbuch": {

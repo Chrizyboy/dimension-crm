@@ -16,7 +16,7 @@ import type { Person, Rolle } from '../types'
 /**
  * «Bereiche je Person» (wie die Häkchen der Nutzerverwaltung in V234, aber alle Personen auf einen Blick): Zeile je
  * Person, Spalte je Bereich. Ohne eigene Auswahl gilt die Rolle (grau «wie Rolle»); das erste Häkchen macht daraus
- * eine eigene Auswahl, «Wie Rolle» setzt sie zurück. Mit «gl» sieht die Person ohnehin alles. Speichert sofort.
+ * eine eigene Auswahl, «Wie Rolle» setzt sie zurück. Nur die Administration sieht ohnehin alles; ohne Auswahl gibt es nur Mein Tag. Speichert sofort.
  */
 export function BereicheMatrix({
   personen,
@@ -84,7 +84,7 @@ export function BereicheMatrix({
               .map((p) => {
                 const rolle = rollen.find((r) => r.schluessel === p.rolle)
                 const { bereiche, quelle } = wirksameBereiche(p, rolle, alle)
-                const gl = quelle === 'alle' && (p.rechte.includes('gl') || rolle?.rechte.includes('gl'))
+                const alles = quelle === 'alle'
                 return (
                   <tr key={p.id} className="hover:bg-surface-2/60">
                     <th
@@ -98,11 +98,13 @@ export function BereicheMatrix({
                           <span className="text-muted-foreground truncate text-xs">
                             {rollenName(rolle)}
                             {' · '}
-                            {gl
+                            {alles
                               ? t('benutzer.matrix.gl')
                               : quelle === 'person'
                                 ? t('benutzer.matrix.eigene')
-                                : t('benutzer.matrix.wieRolle')}
+                                : quelle === 'keine'
+                                  ? t('benutzer.matrix.keine')
+                                  : t('benutzer.matrix.wieRolle')}
                           </span>
                         </span>
                         {quelle === 'person' && (
@@ -128,7 +130,7 @@ export function BereicheMatrix({
                           <Checkbox
                             className={quelle === 'person' ? 'mx-auto' : 'mx-auto opacity-60'}
                             checked={an}
-                            disabled={Boolean(gl) || (an && bereiche.length === 1)}
+                            disabled={alles || (an && bereiche.length === 1 && Boolean(rolle?.bereiche.length))}
                             aria-label={`${p.name}: ${m.titel[sprache]}`}
                             onCheckedChange={(wert) => {
                               setze(p.id, umschalten(bereiche, m.id, wert === true))

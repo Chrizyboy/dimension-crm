@@ -17,13 +17,13 @@ Wie läuft es? Verkauf, offene Pipeline pro Region, Auftragsbestand, Auslastung 
 
 ### Den Monat anschauen
 
-1. Reiter **Verkauf**, **Zeitraum** auf **Monat**, **Firma** auf **Beide**, **Muri** oder **Bulle**.
+1. Das Dashboard öffnet im Reiter **Start** wie im alten CRM, Zeitraum **Monat**. Oben Person (**Alle** oder ein Name), **Beide**, **Muri** oder **Bulle** und den Zeitraum wählen.
 2. Die Kacheln zeigen neue Leads, gesendete Offerten, Angenommene, Abschlussquote und fälliges Nachfassen.
 3. Klick auf eine Zahl öffnet die Liste dahinter. Von dort führt ein Klick in den Datensatz.
 
 ### Wer hat wie viel gemacht
 
-1. Unten **Nach Person** oder **Nach Standort** wählen.
+1. Im **Start** unten die Tabellen **Muri · Bulle** und **Pro Person** (im Reiter **Alle Zahlen** mit Vorjahr).
 2. Die Tabelle zeigt Leads, Offerten, Zahlungen und Service je Person oder Standort.
 
 ### Lead-Quellen und Kosten pro Lead
@@ -59,6 +59,7 @@ Offerten mit Entscheid «Gewonnen» im gewählten Zeitraum. Die Quote rechnet nu
 
 ## Neu {#neu}
 
+- 27.11.2026: Neuer Reiter **Start** wie im alten CRM: Person, Muri/Bulle und Zeitraum oben, fünf Zahlen, gesendete Offerten pro Tag, Tabellen **Muri · Bulle** und **Pro Person**, Lead-Quellen. Die übrigen Reiter bleiben dahinter.
 - 27.11.2026: «Kennzahlen» heisst wieder **Dashboard** und steht unter Übersicht, wie im alten CRM.
 - 20.11.2026: Unter den Reitern steht der Zeitraum; Vergleich, Bereich und Person unter **Filter**.
 - 03.11.2026: Kosten pro Lead, Ziele und Wahrscheinlichkeiten ändert nur noch die Administration.

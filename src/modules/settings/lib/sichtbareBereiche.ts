@@ -8,24 +8,25 @@ export function waehlbareBereiche(module: readonly ModulMeta[]): ModulMeta[] {
   )
 }
 
-/** Sieht die Person mit «gl» ohnehin alles? (Zusatz an der Person oder an der Rolle) */
+/** Sieht die Person ohnehin alles? Nur die Administration (Zusatz an der Person oder an der Rolle), nicht mehr «gl». */
 export function siehtAlles(p: Person, rolle: Rolle | undefined): boolean {
-  return p.rechte.includes('gl') || (rolle?.rechte.includes('gl') ?? false)
+  return p.rechte.includes('admin') || (rolle?.rechte.includes('admin') ?? false)
 }
 
 /**
- * Welche Bereiche die Person sieht und woher: eigene Auswahl an der Person, sonst die der Rolle, leer = alle.
+ * Welche Bereiche die Person sieht und woher: eigene Auswahl an der Person, sonst die der Rolle, sonst keine
+ * (nur Mein Tag, bis jemand freigibt).
  * Gleiche Regel wie `meine_anmeldung` in der Datenbank.
  */
 export function wirksameBereiche(
   p: Person,
   rolle: Rolle | undefined,
   alle: readonly string[],
-): { bereiche: string[]; quelle: 'person' | 'rolle' | 'alle' } {
+): { bereiche: string[]; quelle: 'person' | 'rolle' | 'alle' | 'keine' } {
   if (siehtAlles(p, rolle)) return { bereiche: [...alle], quelle: 'alle' }
   if (p.bereiche.length > 0) return { bereiche: p.bereiche, quelle: 'person' }
   if (rolle?.bereiche.length) return { bereiche: rolle.bereiche, quelle: 'rolle' }
-  return { bereiche: [...alle], quelle: 'alle' }
+  return { bereiche: [], quelle: 'keine' }
 }
 
 /** Neue eigene Auswahl nach einem Häkchen; ab dem ersten Häkchen weicht die Person von ihrer Rolle ab. */

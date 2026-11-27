@@ -13,15 +13,16 @@ describe('wirksameBereiche', () => {
       quelle: 'person',
     })
   })
-  it('nimmt sonst die Rolle, ohne Rolle alle', () => {
+  it('nimmt sonst die Rolle, ohne Rolle keine (nur Mein Tag)', () => {
     expect(wirksameBereiche(person({}), rolle({ bereiche: ['quotes'] }), ALLE).quelle).toBe('rolle')
-    expect(wirksameBereiche(person({}), rolle({}), ALLE).bereiche).toEqual(ALLE)
+    expect(wirksameBereiche(person({}), rolle({}), ALLE)).toEqual({ bereiche: [], quelle: 'keine' })
   })
-  it('gibt mit «gl» immer alle', () => {
-    expect(wirksameBereiche(person({ rechte: ['gl'], bereiche: ['sales'] }), undefined, ALLE)).toEqual({
+  it('gibt nur der Administration alle, «gl» braucht eine Freigabe', () => {
+    expect(wirksameBereiche(person({ rechte: ['admin'], bereiche: ['sales'] }), undefined, ALLE)).toEqual({
       bereiche: ALLE,
       quelle: 'alle',
     })
+    expect(wirksameBereiche(person({ rechte: ['gl'], bereiche: ['sales'] }), undefined, ALLE).quelle).toBe('person')
   })
 })
 

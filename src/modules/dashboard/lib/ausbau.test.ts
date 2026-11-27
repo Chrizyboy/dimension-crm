@@ -175,10 +175,7 @@ describe('Monatsbericht, CSV, Startreiter', () => {
     expect(csv).toContain('"12500.00"')
   })
 
-  it('wählt den Startreiter nach Rolle', () => {
-    expect(startReiter({ rolle: 'buchhaltung', rechte: [] })).toBe('finanzen')
-    expect(startReiter({ rolle: 'verkauf', rechte: [] })).toBe('verkauf')
-    expect(startReiter({ rolle: 'monteur', rechte: [] })).toBe('abwicklung')
-    expect(startReiter({ rolle: 'admin', rechte: ['finanzen'] })).toBe('ueberblick')
+  it('startet für alle im Start wie im alten CRM', () => {
+    expect(startReiter()).toBe('start')
   })
 })

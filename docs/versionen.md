@@ -6,6 +6,12 @@ Neue Version: Abschnitt oben ergänzen und `version` in `package.json` erhöhen;
 Veröffentlichung von selbst. Die Vorschau ist nur zum Anschauen; Chris gibt im Chat frei, dann übernimmt Claude
 die Änderung mit Version und Abschnitt hier (docs/installation.md).
 
+## 1.3.14
+
+- Wer was sieht, pro Person: alles sieht nur die Administration (Chris, Loris), alle anderen nur, was unter Einstellungen › Personen › «Bereiche je Person» angehakt ist.
+- Rollen vom 2.11. eingetragen (Andy und José Projektleitung, Filipe Verkauf, Erich Buchhaltung, Davis Innendienst). Braucht das Cloud-Update.
+- Dashboard startet wie im alten CRM: Person, Muri/Bulle, Zeitraum, fünf Zahlen, Offerten pro Tag, Tabellen «Muri · Bulle» und «Pro Person». Die Reiter bleiben dahinter.
+
 ## 1.3.13
 
 - «Mein Tag» wie im alten CRM: alle Karten in einem Raster ohne Zwischentitel, leere Listen als Häkchen in «Nichts offen».

@@ -48,7 +48,8 @@ select is((select count(*)::int from public.posteingang where id = '00000000-000
 
 -- 3. Geschäftsleitung
 select set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-0000000055a1", "role": "authenticated"}', true);
-select is(public.meine_anmeldung() -> 'bereiche', '[]'::jsonb, 'GL sieht alle Bereiche');
+select is(public.meine_anmeldung() -> 'bereiche', (select to_jsonb(bereiche) from public.rollen where schluessel = 'projektleitung'),
+  'GL sieht nur freigegebene Bereiche (Rolle), alles nur die Administration (Entscheid 0064)');
 select is((select count(*)::int from public.zeiten where id = '00000000-0000-0000-0000-0000000055c1'), 1, 'GL sieht alle Zeiten');
 select is((select count(*)::int from public.posteingang where id = '00000000-0000-0000-0000-0000000055d1'), 0,
   'auch GL sieht kein fremdes Postfach');
