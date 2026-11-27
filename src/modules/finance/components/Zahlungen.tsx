@@ -1,4 +1,4 @@
-import { ListChecks, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AkteAbschnitt } from '@/components/shared/AkteAbschnitt'
@@ -25,13 +25,11 @@ export function Zahlungen({
   lohnZeigen,
   onAktion,
   onNeu,
-  onZahllauf,
 }: {
   daten: Finanzdaten
   lohnZeigen: boolean
   onAktion: (b: Bewegung, a: BewegungAktion) => void
   onNeu: () => void
-  onZahllauf: () => void
 }) {
   const { t } = useTranslation()
   const [schritt, setSchritt] = useState<string>('alle')
@@ -110,10 +108,6 @@ export function Zahlungen({
             }}
             className="w-56"
           />
-          <Button variant="secondary" onClick={onZahllauf}>
-            <ListChecks />
-            {t('finanzen.zahllauf.knopf')}
-          </Button>
           <Button onClick={onNeu}>
             <Plus />
             {t('finanzen.zahlungNeu')}
@@ -123,15 +117,13 @@ export function Zahlungen({
       <Filterchips
         einzeln
         beschriftung={t('finanzen.lief.schritt')}
-        optionen={(['alle', 'freigabe', 'bereit', 'zahllauf', 'klaeren', 'zurueckgehalten'] as const).map((w) =>
+        optionen={(['alle', 'freigabe', 'bereit', 'klaeren', 'zurueckgehalten'] as const).map((w) =>
           w === 'alle'
             ? { wert: w, text: t('finanzen.alle') }
             : {
                 wert: w,
-                text: w === 'zahllauf' ? t('finanzen.zl.imZahllauf') : t(`finanzen.pruefung.${w}`),
-                anzahl: daten.zahlungen.filter(
-                  (z) => z.status === 'offen' && (w === 'zahllauf' ? Boolean(z.zahllauf_id) : z.pruefung === w),
-                ).length,
+                text: t(`finanzen.pruefung.${w}`),
+                anzahl: daten.zahlungen.filter((z) => z.status === 'offen' && z.pruefung === w).length,
               },
         )}
         gewaehlt={[schritt]}

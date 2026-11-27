@@ -11,6 +11,7 @@ import { melde } from '@/services/meldungen'
 import { useNeuLaden } from '../hooks/useAufgaben'
 import { dringlichkeit, heuteZuerich, naechsterArbeitstag } from '../lib/faelligkeit'
 import { aendere, erledige, oeffneWieder } from '../services/aufgaben'
+import { AUFGABEN_ZUSAETZE } from '../lib/zusaetze'
 import type { Aufgabe, Person } from '../types'
 
 const TON = {
@@ -60,7 +61,7 @@ export function AufgabeZeile({
   const { t } = useTranslation()
   const neuLaden = useNeuLaden()
   const person = personen.find((p) => p.id === a.person_id)
-  const schritte = a.teilschritte.length
+  const schritte = AUFGABEN_ZUSAETZE ? a.teilschritte.length : 0
   const fertig = a.teilschritte.filter((s) => s.erledigt).length
 
   async function haken(an: boolean) {
@@ -122,13 +123,13 @@ export function AufgabeZeile({
               : t(`aufgaben.herkunft.${a.herkunft}`)}
           </span>
           {schritte > 0 && <span className="tabular-nums">{t('aufgaben.schritteZahl', { fertig, schritte })}</span>}
-          {a.kommentare > 0 && (
+          {AUFGABEN_ZUSAETZE && a.kommentare > 0 && (
             <span className="inline-flex items-center gap-1 tabular-nums">
               <MessageSquare className="size-3" aria-hidden="true" />
               {a.kommentare}
             </span>
           )}
-          {a.wiederholung && (
+          {AUFGABEN_ZUSAETZE && a.wiederholung && (
             <span className="inline-flex items-center gap-1">
               <Repeat className="size-3" aria-hidden="true" />
               {t(`aufgaben.wiederholung.${a.wiederholung}`)}

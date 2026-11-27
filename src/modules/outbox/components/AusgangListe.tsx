@@ -11,7 +11,7 @@ import type { AusgangEintrag, AusgangGruppe } from '../types'
 const KANAL_ICON = { mail: Mail, sms: MessageSquareText, brief: FileText } as const
 
 /**
- * Liste der Werkbank: Gruppen (Serien zuerst, dann heute, gestern, älter), je Zeile Empfänger, Betreff und die
+ * Liste der Werkbank: Gruppen nach Alter (heute, gestern, älter; Serien seit 27.11.2026 aus), je Zeile Empfänger, Betreff und die
  * wichtigsten Marken. Ankreuzen für mehrere auf einmal; eine Serie lässt sich als Ganzes wählen.
  */
 export function AusgangListe({
@@ -186,11 +186,6 @@ function Zeile({
             <Badge ton="ok">
               <Reply />
               {t('ausgang.antwort')}
-            </Badge>
-          )}
-          {e.kanal === 'brief' && e.status === 'gesendet' && (
-            <Badge ton={e.ruecklauf_am ? 'ok' : 'warnung'}>
-              {t(e.ruecklauf_am ? 'ausgang.brief.zurueck' : 'ausgang.brief.offen')}
             </Badge>
           )}
           {offen && !e.darf_freigeben && <Badge>{t('ausgang.nichtMeins')}</Badge>}

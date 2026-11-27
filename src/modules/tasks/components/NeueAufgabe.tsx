@@ -11,6 +11,7 @@ import { meldeFehler } from '@/services/fehler'
 import { melde } from '@/services/meldungen'
 import { aufgabeSchema } from '../schema'
 import { legeAufgabeAn } from '../services/aufgaben'
+import { AUFGABEN_ZUSAETZE } from '../lib/zusaetze'
 import type { Person } from '../types'
 
 /** Vorbelegung aus der Schnelleingabe oder von einem Datensatz (Lead, Projekt …). */
@@ -137,19 +138,21 @@ export function NeueAufgabe({
             </Feld>
           </div>
           <div className="grid items-end gap-3 sm:grid-cols-2">
-            <Feld id="aufgabe-wiederholung" label={t('aufgaben.feld.wiederholung')}>
-              <Auswahl
-                id="aufgabe-wiederholung"
-                value={e.wiederholung}
-                optionen={(['nie', 'woche', 'monat', 'quartal', 'jahr'] as const).map((w) => ({
-                  wert: w,
-                  text: t(`aufgaben.wiederholung.${w}`),
-                }))}
-                onValueChange={(wiederholung) => {
-                  setE({ ...e, wiederholung })
-                }}
-              />
-            </Feld>
+            {AUFGABEN_ZUSAETZE && (
+              <Feld id="aufgabe-wiederholung" label={t('aufgaben.feld.wiederholung')}>
+                <Auswahl
+                  id="aufgabe-wiederholung"
+                  value={e.wiederholung}
+                  optionen={(['nie', 'woche', 'monat', 'quartal', 'jahr'] as const).map((w) => ({
+                    wert: w,
+                    text: t(`aufgaben.wiederholung.${w}`),
+                  }))}
+                  onValueChange={(wiederholung) => {
+                    setE({ ...e, wiederholung })
+                  }}
+                />
+              </Feld>
+            )}
             <label className="flex h-8 items-center gap-2 text-sm">
               <Switch
                 checked={e.wichtig}

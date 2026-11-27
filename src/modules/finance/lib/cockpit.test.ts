@@ -70,32 +70,6 @@ describe('Heute zu tun', () => {
     expect(l.map((x) => x.schluessel)).toEqual(['skonto', 'freigabe', 'kontoAlt'])
     expect(l[0]?.werte.betrag).toBe(2000)
   })
-
-  it('Zahllauf: wer vorbereitet hat, wartet; die anderen geben frei', () => {
-    const d = daten({
-      zahllaeufe: [
-        {
-          id: 'zl',
-          firma_id: F,
-          konto_id: null,
-          ausfuehren_am: '2026-11-06',
-          status: 'zur_freigabe',
-          vorbereitet_von: 'erich',
-          freigegeben_von: null,
-          freigegeben_am: null,
-          erledigt_am: null,
-          erstellt_am: HEUTE,
-          notiz: null,
-        },
-      ],
-      zahlungen: [z({ zahllauf_id: 'zl' })],
-    })
-    expect(heuteZuTun(d, HEUTE, 'erich')[0]?.schluessel).toBe('zahllaufWartet')
-    expect(heuteZuTun(d, HEUTE, 'chris')[0]).toMatchObject({
-      schluessel: 'zahllaufFreigeben',
-      werte: { count: 1, betrag: 100_000 },
-    })
-  })
 })
 
 describe('Zahllauf-Vorschlag', () => {

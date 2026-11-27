@@ -14,9 +14,10 @@ const offenBetrag = (z: Zahlung) => z.offen_rappen ?? z.betrag_rappen ?? 0
 
 /**
  * Was Buchhaltung und Geschäftsleitung heute erledigen sollten, das Dringendste zuerst: Skonto läuft ab, Betreibung
- * droht, Freigaben, Zahllauf wartet, Kontostand alt, MWST fällig, Posten ohne Gesellschaft.
+ * droht, Freigaben, zu klären, Kontostand alt, Posten ohne Gesellschaft. Zahllauf und MWST sind seit 27.11.2026
+ * ausgeblendet (nie besprochen).
  */
-export function heuteZuTun(d: Finanzdaten, heute: string, ichId: string | null): ZuTun[] {
+export function heuteZuTun(d: Finanzdaten, heute: string, _ichId: string | null): ZuTun[] {
   const liste: ZuTun[] = []
   const offen = d.zahlungen.filter((z) => z.status === 'offen')
 
@@ -29,7 +30,7 @@ export function heuteZuTun(d: Finanzdaten, heute: string, ichId: string | null):
       schluessel: 'skonto',
       werte: { count: skonto.length, betrag: skonto.reduce((s, z) => s + (z.skonto_rappen ?? 0), 0) },
       ton: 'kritisch',
-      reiter: 'zahllauf',
+      reiter: 'lieferanten',
     })
   const betreibung = offen.filter((z) => z.prioritaet === 'betreibung')
   if (betreibung.length)
@@ -47,28 +48,6 @@ export function heuteZuTun(d: Finanzdaten, heute: string, ichId: string | null):
       ton: 'warnung',
       reiter: 'lieferanten',
     })
-  for (const zl of d.zahllaeufe.filter((x) => x.status === 'zur_freigabe')) {
-    const z = d.zahlungen.filter((x) => x.zahllauf_id === zl.id)
-    liste.push({
-      schluessel: zl.vorbereitet_von === ichId ? 'zahllaufWartet' : 'zahllaufFreigeben',
-      werte: {
-        count: z.length,
-        betrag: z.reduce((s, x) => s + offenBetrag(x), 0),
-        datum: zl.ausfuehren_am,
-        firma: d.firmen.find((f) => f.id === zl.firma_id)?.name ?? '',
-      },
-      ton: 'warnung',
-      reiter: 'zahllauf',
-    })
-  }
-  const freigegeben = d.zahllaeufe.filter((x) => x.status === 'freigegeben' && x.ausfuehren_am <= heute)
-  if (freigegeben.length)
-    liste.push({
-      schluessel: 'zahllaufAusfuehren',
-      werte: { count: freigegeben.length },
-      ton: 'warnung',
-      reiter: 'zahllauf',
-    })
   const klaeren = offen.filter((z) => z.pruefung === 'klaeren')
   if (klaeren.length)
     liste.push({ schluessel: 'klaeren', werte: { count: klaeren.length }, ton: 'warnung', reiter: 'lieferanten' })
@@ -78,24 +57,11 @@ export function heuteZuTun(d: Finanzdaten, heute: string, ichId: string | null):
         schluessel: k.stand_am ? 'kontoAlt' : 'kontoFehlt',
         werte: { konto: k.name, datum: k.stand_am ?? '' },
         ton: 'warnung',
-        reiter: 'abschluss',
+        reiter: 'liquiditaet',
       })
   }
-  if (d.konten.length === 0) liste.push({ schluessel: 'kontenFehlen', werte: {}, ton: 'warnung', reiter: 'abschluss' })
-  for (const m of d.mwst) {
-    if (m.bezahlt_am || m.zahllast_rappen <= 0 || m.bis >= heute || m.faellig_am > plusTage(heute, 45)) continue
-    liste.push({
-      schluessel: m.verbindlich ? 'mwst' : 'mwstSchaetzung',
-      werte: {
-        periode: m.periode,
-        firma: d.firmen.find((f) => f.id === m.firma_id)?.name ?? '',
-        betrag: m.zahllast_rappen,
-        datum: m.faellig_am,
-      },
-      ton: 'info',
-      reiter: 'abschluss',
-    })
-  }
+  if (d.konten.length === 0)
+    liste.push({ schluessel: 'kontenFehlen', werte: {}, ton: 'warnung', reiter: 'liquiditaet' })
   const ohneFirma = offen.filter((z) => !z.firma_id).length
   if (ohneFirma && d.firmen.length > 1)
     liste.push({ schluessel: 'ohneFirma', werte: { count: ohneFirma }, ton: 'info', reiter: 'lieferanten' })
